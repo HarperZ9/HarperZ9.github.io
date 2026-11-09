@@ -1,0 +1,9 @@
+{
+  "date": "2026-11-09",
+  "note": "The findings pages on the research presentation system: sitemap.xml lists the 30 finding pages and the findings glossary, publications/build.json pins the new sitemap, and index.html carries the new world asset revision on its world stylesheets and scripts. Not merged until the author reviews the renders (author, 2026-11-02: \"We will assess the site together before pushing live.\").",
+  "paths": {
+    "index.html": "eee1600d90fd1555a4035015bc9069f44b8d28104323ac51617ad7f48e4601dc",
+    "publications/build.json": "f2d314ed4806fac028a7e429cb813228a663c06a46a9f97bb4358ab193a833df",
+    "sitemap.xml": "1b7aeb20b60e7e7a910fdbfa8ba528755724d1427daee760dee20614d5042c84"
+  }
+}

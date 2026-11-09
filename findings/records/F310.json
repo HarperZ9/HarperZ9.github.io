@@ -1,0 +1,437 @@
+{
+ "schema": "research-record/1",
+ "built": "2026-11-09 by scripts/record-findings.mjs from paper.txt, the register row and the findings ledger",
+ "document": {
+  "id": "F310",
+  "kind": "finding",
+  "title": "Titius-Bode regularity in 122 exoplanet systems sits in gap sizes; their order adds nothing",
+  "standfirst": "Exoplanet systems do look more regular than random gaps would make them, but shuffling each system's own gaps into a new order leaves that regularity in place. A planet's position is predicted better by its two neighbours than by a Titius-Bode fit.",
+  "date_found": "2026-10-31",
+  "fields": [
+   "physics-other",
+   "method"
+  ],
+  "tier": "B",
+  "tier_reason": "Locked null with a fair control.",
+  "rung": "thesis",
+  "rung_reason": "Survives Titius-Bode spacing is a law-like rule for exoplanet systems. Decisive observation: fails gap-order shuffle on all three forms at p 0.85, 0.995, 0.68.",
+  "outcome": "null",
+  "bound": "Against each system's own gaps put in a new order, none of the three forms scored above the shuffled range (p 0.85, 0.995 and 0.68). Regularity in gap sizes is shown; an ordering law is not.",
+  "objection": "The three forms were written from memory of the published ones, and a later review of our own ledger flagged that. A published form that differs could score differently, so the result covers these three versions only. Blagg's formula with its periodic term was not tested.",
+  "objection_source": "the paper's first stated limitation; no reviewer attack is on file",
+  "would_change": "No condition for raising or overturning the call is on file in the register.",
+  "sections": [
+   {
+    "id": "reader",
+    "title": "What this means for a reader",
+    "role": "lead",
+    "paragraphs": [
+     "If a paper says a {g:titius-bode}Titius-Bode{/g} fit predicts a missing planet at a given period, ask what the two neighbouring planets alone would predict. A Titius-Bode rule, in planetary astronomy, is any formula that places a system's planets at distances or periods growing by a near-constant ratio from one to the next; it is a description of where planets sit and carries no model of how they formed or migrated. In our sample the neighbours win. A system's planets do tend to sit at similar spacing ratios, a pattern known from Kepler data as \"{g:peas-in-a-pod}peas in a pod{/g}\" {cite:r8}, and any rule that fits a geometric sequence will fit such a system well. That good fit is not evidence that the sequence itself is a law. The exoplanet survey phrase covers planets inside one system being alike in size and in spacing ratio; it states no rule for the order of the gaps."
+    ]
+   },
+   {
+    "id": "abstract",
+    "title": "Abstract",
+    "role": "argument",
+    "paragraphs": [
+     "The Titius-Bode rule says planets sit at distances that grow by a steady ratio, and its generalised forms have been used to predict planets nobody has seen. We asked whether exoplanet spacing follows such a rule beyond what each system's own set of gaps explains. On 122 systems with four or more planets (543 planets) from the NASA Exoplanet Archive, three forms of the rule were scored against two controls fixed in advance. {c1}The real systems beat a control that draws gaps from the whole catalogue (p 0.0005, 2,000 draws), and none of the three forms beat a control that keeps each system's gaps and shuffles their order (p 0.85, 0.995 and 0.68).{/c1} {c2}When an interior planet is dropped, the geometric mean of its two neighbours predicts its period better than the rule does: median error 0.107 against 0.131 in log period, a ratio of 1.23.{/c2} The regularity is real, and it is the regularity of similar gaps inside one system. The order of those gaps adds nothing we could detect. The preregistered law-like verdict failed."
+    ]
+   },
+   {
+    "id": "intro",
+    "title": "Introduction",
+    "role": "argument",
+    "paragraphs": [
+     "Johann Titius noticed in 1766 that the planets then known sit near distances given by a simple doubling sequence, and Johann Bode popularised it. The rule matched Uranus and the asteroid belt and missed Neptune. It has been rewritten many times since. Blagg {cite:r2} fitted the Solar System and the moons of the giant planets with a periodic correction to a geometric progression; Richardson {cite:r3} gave another version.",
+     "The question of whether the rule means anything was put sharply by Hayes and Tremaine {cite:r4}. They drew random planetary systems, rejected the ones that would be unstable, and found that the survivors fit a Titius-Bode law about as well as the Solar System. Their conclusion was that stable systems tend to be regularly spaced, and that this is the whole content of the rule.",
+     "Exoplanets gave the rule new material. Bovaird and Lineweaver {cite:r5} fitted a generalised Titius-Bode relation to multi-planet systems, allowed for unseen planets in the gaps, and predicted 141 new planets. Huang and Bakos {cite:r6} searched the Kepler data for 97 of those predictions and found 5. Bovaird, Lineweaver and Jacobsen {cite:r7} replied that many predicted planets would not transit and should not be expected in the data, and ranked new predictions by their chance of transiting.",
+     "This paper adds one {g:control}control{/g} to that argument. A control, in the sense of experimental design, is a copy of the data with one structure removed and scored exactly like the real data; a comparison with another catalogue or a published number would not count as one. A rule about a sequence should beat a version of the same system with its gaps put in a different order. If it does not, the rule describes the sizes of the gaps and nothing about their arrangement.",
+     "![fig:plate width=0.5 alt=A white-on-black 1889 engraving of the Sun at the centre of concentric orbit rings with the outer planets and their moons](plate-traxler-fig4.png) Robert P. Traxler, Fig. IV, \"Sectional side view of the Sun with Jupiter, Saturn, Uranus, Neptune etc.\", from The Principles of Mechanics as Applied to the Solar System (San Francisco, 1889) {cite:r9}. Traxler drew his plates to argue for a repelling force from the Sun, his own theory in 1889, which physics did not adopt. The orbit rings sit at the spacings a Titius-Bode rule tries to describe. Public domain; scan from the Internet Archive, University of California Libraries."
+    ]
+   },
+   {
+    "id": "prereg",
+    "title": "Preregistration and design",
+    "role": "argument",
+    "paragraphs": [
+     "The design was written and hash-locked on 31 October 2026 as a {g:preregistration}preregistration{/g}, after the archive file was fetched and its first two rows were seen and before any spacing was computed. The practice comes from clinical trials and psychology: a dated plan fixed before any result is seen, so a plan revised after a look at the outcome does not qualify. The decision it informs was stated in the same file: if the rule fails, it is reported as spacing, and predicted-planet claims built on it get no weight in our work.",
+     "The locked file names the data, the three forms, the per-system statistic, the {g:leave-one-out}leave-one-out{/g} prediction test, the {g:planted-check}planted systems{/g}, both controls, the forecasts and the {g:kill-condition}kill conditions{/g}. Leave-one-out is a validation method from statistics: drop one planet, fit the rest and predict the one dropped, so no planet is scored by a fit that has seen it. The planted systems are our planted check, synthetic systems with a known regularity run through the same analysis first to show the score can find regularity when it is there, which no check on real data can show. A kill condition is a rule in the plan that decides against the claim when it is met, with no room for judgement after the run. Nothing was added after the run. The preregistration's {g:sha-256}SHA-256{/g} is given in the reproduction section. SHA-256 is a cryptographic hash, a 64-character fingerprint of a file that changes if any byte changes; it shows the plan was not edited and keeps nothing secret, since it is not encryption.",
+     "The two controls are our own constructions, set out in the methods. The {g:order-shuffle}order-shuffle control{/g} keeps each system's own gaps and puts them in a random order. The {g:pooled-gap}pooled-gap control{/g} rebuilds each system from gaps drawn from the whole sample. Neither brings in any planet from outside the 122 systems.",
+     "Kill conditions, without discretion:",
+     "- {g:void}Void{/g} if the planted systems score at or below the pooled-gap control's 95th percentile, or if fewer than 60 systems qualify. A void run, in our usage, says nothing for or against the rule, and differs from a null result, which comes from an instrument that works.",
+     "- {g:law-like}Law-like{/g} only if the plain form beats the order-shuffle control's 95th percentile and the leave-one-out ratio is below 1. Otherwise the rule is reported as explained by spacing. Law-like is our label for a rule whose sequence carries information past the sizes of the gaps; regularity that similar gaps alone produce falls outside it."
+    ]
+   },
+   {
+    "id": "data",
+    "title": "Data and provenance",
+    "role": "argument",
+    "paragraphs": [
+     "The data are the NASA Exoplanet Archive Planetary Systems Composite Parameters table {cite:r1}, retrieved on 31 October 2026 through the archive's {g:tap}TAP service{/g}. TAP, the Table Access Protocol set by the International Virtual Observatory Alliance, is the standard query interface of astronomical archives; it fetches rows and applies no selection of its own. A system qualified with at least four listed planets that have orbital periods and a {g:controversy-flag}controversy flag{/g} of zero. The archive sets that flag to 1 when a planet's existence has been questioned in the published literature, so 0 means no published dispute, which is weaker than independent confirmation. This gave 122 systems and 543 planets. The archive is public and places no restriction on use.",
+     "Two selection effects shape the sample. {g:transit}Transit{/g} surveys find short periods and planets whose orbits are close to edge-on, so long periods and tilted planets are missing, and the gaps we see are partly survey-shaped. A transit survey, in observational astronomy, finds a planet by the dip in starlight as it crosses its star's disc; planets found only by other methods, such as radial velocity, are outside that term. Multi-planet entries in the catalogue are also a selected set. The order-shuffle control keeps both effects, because it uses the same gaps from the same systems. That is why it is the fair control for a claim about order."
+    ]
+   },
+   {
+    "id": "methods",
+    "title": "Methods",
+    "role": "argument",
+    "paragraphs": [
+     "## The three forms",
+     "For a system with planets sorted by period, let {m:P_n} be the period of the {m:n}th planet. The plain form is log-linear in the index:",
+     "$$ \\ln P_n = a + b n {eq:plain}",
+     "The Blagg-Richardson style form adds an offset period {m:P_0}, a three-parameter form in period:",
+     "$$ \\ln (P_n - P_0) = a + b n {eq:blagg}",
+     "The gapped form, in the style of Bovaird and Lineweaver, replaces the index by integers {m:k_n} that may skip up to two places, so that up to two unseen planets can be inserted wherever they lower the residual:",
+     "$$ \\ln P_n = a + b k_n {eq:gapped}",
+     "All three forms were written from the published descriptions as remembered, not copied from the papers. Blagg's own formula has a periodic correction term that eq. {ref:eq:blagg} does not carry. The result is therefore about these three versions.",
+     "## The regularity score",
+     "For system {m:s}, let {m:\\sigma_s} be the {g:rms-residual}root mean square residual{/g} of the fit in {m:\\ln P}, and {m:g_s} the mean gap in {m:\\ln P} between neighbouring planets. The per-system statistic divides one by the other, so that systems with wide and narrow spacing are compared on one scale. The residual term is from statistics: the square root of the mean squared difference between fitted and observed {m:\\ln P}, a measure of scatter about the fit that leaves out any offset the fit has already absorbed:",
+     "$$ r_s = \\frac{\\sigma_s}{g_s} {eq:r}",
+     "The sample score {m:S} is minus the median of {m:r_s} over the systems, so a higher score means more regular. Each form has its own score.",
+     "## Prediction by leave-one-out",
+     "For each interior planet {m:j}, the planet is dropped, the plain form is fitted to the rest, and the fitted {m:\\ln P_j} is compared with the true value. The baseline predicts {m:\\ln P_j} as the mean of its two neighbours' {m:\\ln P}, which is the {g:geometric-mean}geometric mean{/g} of their periods. The geometric mean of two numbers is the square root of their product, the plain average taken on a log scale; it is smaller than the ordinary average whenever the two differ. The ratio of median absolute errors is",
+     "$$ L = \\frac{M_{fit}}{M_{nb}} {eq:loo}",
+     "where {m:M_{fit}} is the median error of the fit and {m:M_{nb}} that of the neighbour baseline. A ratio above 1 means the neighbours win.",
+     "## Controls",
+     "The order-shuffle control keeps each system's set of gaps in {m:\\ln P} and puts them in a random order, then rebuilds the periods from the innermost planet. The pooled-gap control rebuilds each system from gaps drawn at random from all systems' gaps. Each control is scored with the same form and the same freedom as the real data; for the gapped form that includes the inserted planets. The plain form's controls ran 2,000 draws each and the other two forms' order controls ran 200 each.",
+     "The {g:p-value-draws}p value{/g} reported for each comparison is the share of control draws scoring at or above the real score, counted with one added to both the numerator and the denominator. It is a p value from draws, as in permutation statistics, and assumes no textbook distribution:",
+     "$$ p = \\frac{k + 1}{n + 1} {eq:p}",
+     "where {m:k} is the number of draws at or above the real score and {m:n} the number of draws. This is why the smallest possible value at 2,000 draws is 0.0005."
+    ]
+   },
+   {
+    "id": "controls",
+    "title": "Controls and planted checks",
+    "role": "argument",
+    "paragraphs": [
+     "The instrument was checked on planted systems before the real data were read. Planted systems have exactly log-linear periods with 5 percent jitter and the same numbers of planets as the real systems. {c3}They scored -0.050 against the pooled-gap control's 95th percentile of -0.190, so the score sees regularity when it is there.{/c3} The void condition did not fire.",
+     "The two controls ask different questions, and they are read in that order. Beating the pooled-gap control says the gaps inside a system resemble each other more than gaps drawn from other systems. Beating the order-shuffle control would say the order of those gaps is regular as well. Only the second is a claim about a sequence."
+    ]
+   },
+   {
+    "id": "results",
+    "title": "Results",
+    "role": "argument",
+    "paragraphs": [
+     "Table {ref:tab:scores} gives the score of each form against its controls, and Figure {ref:fig:reg} draws the same numbers. The plain form scores -0.157. The real systems are far more regular than systems built from pooled gaps. They are not more regular than their own gaps in a shuffled order: the real score sits inside the order-shuffle range for all three forms.",
+     "::table tab:scores cols=0.31,0.11,0.12,0.22,0.11,0.1 Regularity scores against the two controls. The interval is the 5th to 95th percentile of the control draws.\nForm and control ¦ Real score ¦ Control mean ¦ Control interval ¦ p ¦ Draws\nPlain, pooled gaps ¦ -0.157 ¦ -0.213 ¦ -0.236 to -0.190 ¦ 0.0005 ¦ 2,000\nPlain, order shuffled ¦ -0.157 ¦ -0.153 ¦ -0.161 to -0.145 ¦ 0.85 ¦ 2,000\nBlagg-Richardson style, order shuffled ¦ -0.141 ¦ -0.125 ¦ -0.134 to -0.116 ¦ 0.995 ¦ 200\nGapped, order shuffled ¦ -0.079 ¦ -0.078 ¦ -0.081 to -0.074 ¦ 0.68 ¦ 200\n::end",
+     "![fig:reg width=0.98 alt=Diamonds for the real scores against grey bars for the control ranges](fig-regularity.png) Real regularity scores (diamonds) against the 5th to 95th percentile range (bars) and mean (ticks) of each control. Only the pooled-gap control is beaten. Drawn from the run's result file.",
+     "{c4}The Blagg-Richardson style form scores below its own order-shuffle mean, and the gapped form sits at its mean.{/c4} The extra freedom in those forms fits shuffled systems as well as real ones.",
+     "{c2}When an interior planet is dropped, the geometric mean of its two neighbours predicts its period better than the rule does: median error 0.107 against 0.131 in log period, a ratio of 1.23.{/c2} Figure {ref:fig:loo} shows the two errors.",
+     "![fig:loo width=0.98 alt=Two horizontal bars, the fit's error longer than the neighbours' error](fig-loo.png) Leave-one-out prediction of an interior planet's period: the plain form fitted to the other planets against the geometric mean of the two neighbours.",
+     "The Solar System was scored beside the test and is not part of it. It has {m:r} of 0.32 on the plain form and 0.17 on the gapped form, against a catalogue median of 0.157 on the plain form. On this statistic the median exoplanet system is more regular than ours.",
+     "Table {ref:tab:forecast} sets the forecasts written before the run against the outcomes.",
+     "::table tab:forecast cols=0.46,0.27,0.27 Forecasts fixed in the preregistration against what the run gave.\nQuantity ¦ Forecast ¦ Outcome\nQualifying systems ¦ 150 ¦ 122\nMedian residual ratio, plain form ¦ 0.22 ¦ 0.157\nBeats the pooled-gap control ¦ probability 0.8 ¦ yes\nBeats the order-shuffle control, plain ¦ probability 0.15 ¦ no\nBeats the order-shuffle control, gapped ¦ probability 0.15 ¦ no\nBeats the order-shuffle control, Blagg style ¦ probability 0.2 ¦ no\nLeave-one-out ratio ¦ 1.15 ¦ 1.23\nPlanted systems caught ¦ 1.0 ¦ yes\n::end"
+    ]
+   },
+   {
+    "id": "discussion",
+    "title": "Discussion",
+    "role": "argument",
+    "paragraphs": [
+     "Hayes and Tremaine {cite:r4} argued that a Titius-Bode law is what stable spacing looks like. Our result is a direct check of one consequence of that view on exoplanets. If the rule only describes similar gaps, then a system with its gaps shuffled should fit as well as the real one. It does, for three forms.",
+     "The prediction test points the same way. A rule that captured a law of sequence should predict a missing planet better than a local average of its neighbours, because it uses the whole system. It predicts worse. Local spacing carries the information, which fits the correlated period ratios of neighbouring planets reported by Weiss and colleagues {cite:r8}.",
+     "This bears on the prediction debate between Bovaird and Lineweaver {cite:r5} {cite:r7} and Huang and Bakos {cite:r6} in one way. A predicted planet in a gap is a claim that the gaps should be more equal than they look. That claim can be useful as a search target. It does not need a law of sequence, and it should be weighed against the neighbour baseline rather than against no prediction at all."
+    ]
+   },
+   {
+    "id": "limits",
+    "title": "Limitations",
+    "role": "argument",
+    "paragraphs": [
+     "- The three forms were written from memory of the published ones, and a later review of our own ledger flagged that. A published form that differs could score differently, so the result covers these three versions only. Blagg's formula with its periodic term was not tested.",
+     "- Transit surveys miss long periods and tilted planets, so the gaps are survey-shaped. The order shuffle keeps that effect, which is why it is the fair control, but the pooled-gap result is partly a survey result.",
+     "- The catalogue's multi-planet entries are a selected set, and the sample is 122 systems, short of the 150 we forecast.",
+     "- The 200-draw controls for the two richer forms give coarse p values.",
+     "- The finding says nothing about the physics that sets spacing.",
+     "- Scoring was done by our own code and was not blind."
+    ]
+   },
+   {
+    "id": "appendix",
+    "title": "Appendix A. The preregistered verdicts",
+    "role": "evidence",
+    "paragraphs": [
+     "Each {g:verdict}verdict{/g} is a set of rules written before the run. The word is ours for the pass or fail of one such rule set, read off by code, and it never covers a reading written after the numbers were seen. A verdict passes only when every rule holds. Values are read from the run's result file.",
+     "::table tab:verdicts cols=0.26,0.48,0.13,0.13 Preregistered verdicts and the rule that decided each one.\nVerdict ¦ Deciding rule ¦ Value ¦ Holds\nInstrument works ¦ planted score above pooled-gap 95th percentile (-0.190); at least 60 systems ¦ -0.050; 122 ¦ yes\nBeats pooled gaps ¦ plain score above pooled-gap 95th percentile (-0.190) ¦ -0.157 ¦ yes\nBeats order shuffle, plain ¦ plain score above order-shuffle 95th percentile (-0.145) ¦ -0.157 ¦ no\nBeats order shuffle, Blagg style ¦ Blagg-style score above its order-shuffle 95th percentile (-0.116) ¦ -0.141 ¦ no\nBeats order shuffle, gapped ¦ gapped score above its order-shuffle 95th percentile (-0.074) ¦ -0.079 ¦ no\nLaw-like ¦ beats the plain order shuffle and leave-one-out ratio below 1 ¦ -0.157; 1.23 ¦ no\n::end"
+    ]
+   }
+  ]
+ },
+ "claims": [
+  {
+   "id": "c1",
+   "text": "The real systems beat a control that draws gaps from the whole catalogue (p 0.0005, 2,000 draws), and none of the three forms beat a control that keeps each system's gaps and shuffles their order (p 0.85, 0.995 and 0.68).",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e1"
+   ]
+  },
+  {
+   "id": "c2",
+   "text": "When an interior planet is dropped, the geometric mean of its two neighbours predicts its period better than the rule does: median error 0.107 against 0.131 in log period, a ratio of 1.23.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e2"
+   ]
+  },
+  {
+   "id": "c3",
+   "text": "They scored -0.050 against the pooled-gap control's 95th percentile of -0.190, so the score sees regularity when it is there.",
+   "section": "controls",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e3"
+   ]
+  },
+  {
+   "id": "c4",
+   "text": "The Blagg-Richardson style form scores below its own order-shuffle mean, and the gapped form sits at its mean.",
+   "section": "results",
+   "basis": "observed",
+   "refs": []
+  }
+ ],
+ "evidence": [
+  {
+   "id": "e1",
+   "kind": "number",
+   "label": "The numbers in claim 1",
+   "value": "0.0005; 2,000; 0.85; 0.995; 0.68",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e2",
+   "kind": "number",
+   "label": "The numbers in claim 2",
+   "value": "0.107; 0.131; 1.23",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e3",
+   "kind": "number",
+   "label": "The numbers in claim 3",
+   "value": "-0.050; 95; -0.190",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  }
+ ],
+ "references": [
+  {
+   "id": "r1",
+   "key": "NASA Exoplanet Archive",
+   "kind": "dataset",
+   "title": "NASA Exoplanet Archive. Planetary Systems Composite Parameters table (pscomppars). NASA Exoplanet Science Institute, Caltech/IPAC. Retrieved 31 October 2026. https://exoplanetarchive.ipac.caltech.edu",
+   "access": "run",
+   "target": "https://exoplanetarchive.ipac.caltech.edu",
+   "licence": "as stated in the paper's data section"
+  },
+  {
+   "id": "r2",
+   "key": "Blagg 1913",
+   "kind": "paper",
+   "title": "Blagg, M. A. (1913). On a suggested substitute for Bode's law. Monthly Notices of the Royal Astronomical Society 73, 414-422. doi:10.1093/mnras/73.6.414",
+   "access": "snippet",
+   "target": "https://doi.org/10.1093/mnras/73.6.414",
+   "access_note": "abstracts and publisher pages; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r3",
+   "key": "Richardson 1945",
+   "kind": "paper",
+   "title": "Richardson, D. E. (1945). Distances of the planets from the Sun and of satellites from their primaries. Popular Astronomy 53, 14.",
+   "access": "snippet",
+   "access_note": "abstracts and publisher pages; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r4",
+   "key": "Hayes 1998",
+   "kind": "paper",
+   "title": "Hayes, W. and Tremaine, S. (1998). Fitting selected random planetary systems to Titius-Bode laws. Icarus 135, 549-557. doi:10.1006/icar.1998.5999",
+   "access": "snippet",
+   "target": "https://doi.org/10.1006/icar.1998.5999",
+   "access_note": "abstracts and publisher pages; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r5",
+   "key": "Bovaird 2013",
+   "kind": "paper",
+   "title": "Bovaird, T. and Lineweaver, C. H. (2013). Exoplanet predictions based on the generalized Titius-Bode relation. Monthly Notices of the Royal Astronomical Society 435, 1126-1138. doi:10.1093/mnras/stt1357",
+   "access": "snippet",
+   "target": "https://doi.org/10.1093/mnras/stt1357",
+   "access_note": "abstracts and publisher pages; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r6",
+   "key": "Huang 2014",
+   "kind": "paper",
+   "title": "Huang, C. X. and Bakos, G. A. (2014). Testing the Titius-Bode law predictions for Kepler multi-planet systems. Monthly Notices of the Royal Astronomical Society 442, 674. arXiv:1405.2259",
+   "access": "snippet",
+   "target": "https://arxiv.org/abs/1405.2259",
+   "access_note": "abstracts and publisher pages; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r7",
+   "key": "Bovaird 2015",
+   "kind": "paper",
+   "title": "Bovaird, T., Lineweaver, C. H. and Jacobsen, S. K. (2015). Using the inclinations of Kepler systems to prioritize new Titius-Bode-based exoplanet predictions. Monthly Notices of the Royal Astronomical Society. arXiv:1412.6230",
+   "access": "snippet",
+   "target": "https://arxiv.org/abs/1412.6230",
+   "access_note": "abstracts and publisher pages; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r8",
+   "key": "Weiss 2018",
+   "kind": "paper",
+   "title": "Weiss, L. M., Marcy, G. W., Petigura, E. A. and others (2018). The California-Kepler Survey. V. Peas in a pod: planets in a Kepler multi-planet system are similar in size and regularly spaced. The Astronomical Journal 155, 48. doi:10.3847/1538-3881/aa9ff6",
+   "access": "snippet",
+   "target": "https://doi.org/10.3847/1538-3881/aa9ff6",
+   "access_note": "abstracts and publisher pages; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r9",
+   "key": "Traxler 1889",
+   "kind": "record",
+   "title": "Traxler, R. P. (1889). The Principles of Mechanics as Applied to the Solar System. San Francisco: C. A. Murdock and Co. Internet Archive item principlesofmech00traxiala.",
+   "access": "read",
+   "access_note": "the scan, read in full on the Internet Archive"
+  }
+ ],
+ "relations": [
+  {
+   "from": "F422",
+   "to": "F310",
+   "type": "narrowed",
+   "scope": "the three forms",
+   "date": "2026-10-31",
+   "note": "The correction pass coded one memory value: the three forms were written from memory, so the result covers these three versions only."
+  }
+ ],
+ "corrections": [
+  {
+   "id": "x1",
+   "date": "2026-10-31",
+   "target": "document",
+   "type": "wording",
+   "after": "This paper states it in the methods and the limitations.",
+   "reason": "A review of our ledger noted that the three forms were written from memory.",
+   "found_by": "a review of our findings ledger"
+  }
+ ],
+ "versions": [
+  {
+   "n": 1,
+   "date": "2026-10-31",
+   "what": "entered in the findings ledger"
+  },
+  {
+   "n": 2,
+   "date": "2026-11-09",
+   "what": "paper version 1.0, first published",
+   "hash": "ecfdc95d5bfb55aea39aa2b9465e8f8f493e3db406f6d61620613dacc620f28c"
+  }
+ ],
+ "grade": {
+  "lowers": [
+   {
+    "domain": "scoring",
+    "text": "Scored by code and by the agent that ran it; self-graded.",
+    "from": "register scorer"
+   },
+   {
+    "domain": "blinding",
+    "text": "Not blind, as the paper's limitations state.",
+    "from": "paper Limitations"
+   },
+   {
+    "domain": "single source",
+    "text": "The cited literature was read at the level of abstracts and publisher pages; full texts were not read.",
+    "from": "paper Verified"
+   }
+  ],
+  "holds": [
+   {
+    "domain": "preregistration",
+    "text": "Preregistered and hash-locked before the run (sha256 c11616a0).",
+    "from": "paper Reproduction"
+   }
+  ]
+ },
+ "reproduce": {
+  "data": [
+   {
+    "name": "NASA Exoplanet Archive",
+    "licence": "as stated in the paper's data section",
+    "url": "https://exoplanetarchive.ipac.caltech.edu"
+   }
+  ],
+  "prereg": {
+   "hash": "c11616a0373890eb2c65e76375f2a8cd122223f4cd04a624a105d7f29f721b62",
+   "plan": "45f201bb0197a18dae140e101293b335e179b1bf0ecac6ae48a602712088fdb0"
+  },
+  "cost": "the whole run took under two minutes on one desktop CPU.",
+  "steps": [
+   "Data: query the NASA Exoplanet Archive Planetary Systems Composite Parameters table (pscomppars) for systems with four or more planets with orbital periods and a controversy flag of zero.",
+   "For each system, sort planets by period and fit eqs. {ref:eq:plain}, {ref:eq:blagg} and {ref:eq:gapped}, the last with up to two inserted empty places chosen to minimise the residual.",
+   "Score each system with eq. {ref:eq:r}, take minus the median, and build both controls with the same fitting freedom: 2,000 draws for the plain form, 200 for the others.",
+   "Compute the leave-one-out ratio, eq. {ref:eq:loo}, over interior planets.",
+   "Preregistration SHA-256: c11616a0373890eb2c65e76375f2a8cd122223f4cd04a624a105d7f29f721b62. Plan SHA-256: 45f201bb0197a18dae140e101293b335e179b1bf0ecac6ae48a602712088fdb0. Run 20261031T220149Z."
+  ],
+  "not_rerun": "The study was not re-run for this paper."
+ },
+ "verified": {
+  "date": "2026-11-09",
+  "checks": [
+   {
+    "what": "On 9 November 2026 the counts (122 systems, 543 planets), the three real scores, every control mean and percentile, the p values, the draw counts, the planted score, the two leave-one-out errors and their ratio, and the Solar System values were re-read from the run's result file.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   },
+   {
+    "what": "They match the {g:findings-ledger}findings ledger{/g}, our append-only, dated list of every recorded result, where corrections enter as new lines, old entries are never rewritten and failures stand beside successes.",
+    "by": "the paper's Verified pass",
+    "result": "match"
+   },
+   {
+    "what": "The preregistration's SHA-256 matches the hash recorded in the result file.",
+    "by": "the paper's Verified pass",
+    "result": "match"
+   },
+   {
+    "what": "Both figures were drawn by a script that reads only that result file.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   }
+  ],
+  "not_checked": [
+   "The study was not re-run for this paper.",
+   "The literature in the introduction was found by searches run on 9 November 2026 and read at the level of abstracts and publisher pages; the full texts of the cited papers were not read."
+  ]
+ }
+}

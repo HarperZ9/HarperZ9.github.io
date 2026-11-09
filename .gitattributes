@@ -71,3 +71,5 @@ media/school/receipts/** -text
 
 # The vendored CMMNS core is pinned by SHA256SUMS against its release tag: no EOL conversion.
 vendor/cmmns/** -text
+# BuildTeX sources are hashed by their build receipts (findings/papers/*.buildtex.json), so keep their LF bytes.
+*.bld text eol=lf

@@ -1,0 +1,3366 @@
+{
+ "schema": "glossary/1",
+ "about": "One entry per term and scope. A finding's first use of a term marks it; the page links each use to its entry, and the glossary page links each entry to every use.",
+ "terms": [
+  {
+   "key": "preregistration",
+   "scope": "shared",
+   "term": "preregistration",
+   "field": "research method (metascience)",
+   "definition": "a dated written plan for a study, fixed and hash-locked before any result is seen: the question, the data, the statistic, the controls, the forecasts and the kill conditions",
+   "excludes": "a plan revised after looking at the outcome, and a protocol written only for the record after the run"
+  },
+  {
+   "key": "planted-check",
+   "scope": "shared",
+   "term": "planted check",
+   "field": "research method; called a positive control in experimental science",
+   "definition": "data built so that the right answer is known, run through the same analysis before the real data, to show that the analysis can see the effect when it is there",
+   "excludes": "any check made on the real data, which cannot show what the analysis misses"
+  },
+  {
+   "key": "control",
+   "scope": "shared",
+   "term": "control",
+   "field": "statistics and experimental design",
+   "definition": "a version of the data with the structure under test removed (for example shuffled or pooled), scored the same way as the real data, so the real score has something to beat",
+   "excludes": "a comparison with a different dataset or with a published number"
+  },
+  {
+   "key": "null-distribution",
+   "scope": "shared",
+   "term": "null distribution",
+   "field": "statistics",
+   "definition": "the spread of scores a control gives over many random draws; its 95th percentile is the bar a real score must clear",
+   "excludes": "a theoretical distribution assumed rather than drawn from the data"
+  },
+  {
+   "key": "kill-condition",
+   "scope": "shared",
+   "term": "kill condition",
+   "field": "research method (our usage, after Popper's falsification)",
+   "definition": "a rule written in the preregistration that, when met, decides against the claim with no room for judgement after the run",
+   "excludes": "reasons found after the run for setting a result aside"
+  },
+  {
+   "key": "void",
+   "scope": "shared",
+   "term": "void",
+   "field": "research method (our usage)",
+   "definition": "the verdict of a run whose planted check failed or whose sample fell below its stated minimum; it says nothing for or against the claim",
+   "excludes": "a null result, which comes from a working instrument"
+  },
+  {
+   "key": "honest-null",
+   "scope": "shared",
+   "term": "honest null",
+   "field": "research method (our usage)",
+   "definition": "a working test that found no effect beyond a stated bound, a forecast that failed, or an error of our own found and fixed, reported with the same weight as a positive result",
+   "excludes": "a void run, and a result left unpublished because it was negative"
+  },
+  {
+   "key": "verdict",
+   "scope": "shared",
+   "term": "verdict",
+   "field": "research method (our usage)",
+   "definition": "the pass or fail of one preregistered rule set against the run's numbers, read off by code",
+   "excludes": "an interpretation written after reading the numbers"
+  },
+  {
+   "key": "tier",
+   "scope": "shared",
+   "term": "tier",
+   "field": "our publication register",
+   "definition": "how ready a finding is to publish: A candidate, B signal worth expanding (B* strong), C internal, D honest null worth reporting, E not reliable as it stands",
+   "excludes": "a measure of how large or how true an effect is"
+  },
+  {
+   "key": "rung",
+   "scope": "shared",
+   "term": "rung",
+   "field": "our findings ladder",
+   "definition": "where a claim stands logically: lead, hypothesis, thesis, conjecture, theorem, law candidate, or killed",
+   "excludes": "how ready the write-up is, which the tier records"
+  },
+  {
+   "key": "standing",
+   "scope": "shared",
+   "term": "standing",
+   "field": "our findings ledger, after the citators used in law (KeyCite, Shepard's)",
+   "definition": "what later records did to a finding: held, extended, narrowed, questioned, refuted, retracted or superseded, computed from those records and never set by hand",
+   "excludes": "the finding's own verdict at the time it was run"
+  },
+  {
+   "key": "findings-ledger",
+   "scope": "shared",
+   "term": "findings ledger",
+   "field": "our records",
+   "definition": "the append-only, dated list of every result we have recorded, numbered F1, F2 and on; corrections are added as new dated lines and old entries are never rewritten",
+   "excludes": "a curated list of successes"
+  },
+  {
+   "key": "verified-line",
+   "scope": "shared",
+   "term": "Verified line",
+   "field": "our publication rule",
+   "definition": "the closing statement of what was checked for publication, by what means, with what result and on what date; anything not checked is named as such",
+   "excludes": "a claim that the finding is true"
+  },
+  {
+   "key": "p-value-draws",
+   "scope": "shared",
+   "term": "p value (from draws)",
+   "field": "statistics",
+   "definition": "the share of control draws scoring at or above the real score, with one added to the count and to the number of draws, so it is never zero",
+   "excludes": "a p value from a textbook formula that assumes a distribution"
+  },
+  {
+   "key": "interval-95",
+   "scope": "shared",
+   "term": "95% interval",
+   "field": "statistics",
+   "definition": "the range that holds the middle 95 percent of the bootstrap or control draws for a number; we report it beside the number",
+   "excludes": "a statement that the true value lies inside with 95 percent probability"
+  },
+  {
+   "key": "newtons-rings",
+   "scope": "F14",
+   "term": "Newton's rings",
+   "field": "optics",
+   "definition": "the bright and dark circles seen where a curved lens rests on flat glass, made by light reflected from the two faces of the thin air gap between them, whose thickness grows with distance from the point of contact",
+   "excludes": "rings made by diffraction at an edge or an aperture"
+  },
+  {
+   "key": "obliquity",
+   "scope": "F14",
+   "term": "obliquity",
+   "field": "optics, in Newton's usage",
+   "definition": "the angle between the light's path and the perpendicular to the glass; Newton's table gives it twice, once inside the glass and once in the air gap",
+   "excludes": "the tilt of the glass itself, which stays fixed"
+  },
+  {
+   "key": "secant-law",
+   "scope": "F14",
+   "term": "secant law",
+   "field": "thin-film optics",
+   "definition": "the statement that the air thickness at which a given ring appears grows as one over the cosine of the light's angle in the air gap, scaled here so that perpendicular light gives 10",
+   "excludes": "any rule built from the angle in the glass"
+  },
+  {
+   "key": "means-rule",
+   "scope": "F14",
+   "term": "106-means rule",
+   "field": "history of optics; Newton's own rule in Opticks, Book II",
+   "definition": "Newton's statement that the thickness goes as the secant of an angle whose sine is the first of 106 arithmetical means between the sines of incidence and refraction, counted from the bigger sine",
+   "excludes": "the secant law, which uses the air angle alone"
+  },
+  {
+   "key": "airy-reflectance",
+   "scope": "F14",
+   "term": "Airy reflectance",
+   "field": "optics; named after George Airy",
+   "definition": "the share of light power a thin layer reflects when every reflected and re-reflected beam inside it is summed, rather than only the first two",
+   "excludes": "the two-beam approximation, and absorption in the glass"
+  },
+  {
+   "key": "polarisation",
+   "scope": "F14",
+   "term": "s and p polarisation",
+   "field": "optics",
+   "definition": "the two directions of the light's electric field relative to the plane that holds the ray and the perpendicular to the surface: s across that plane and p within it; unpolarised light is their average",
+   "excludes": "circular polarisation, which this study does not model"
+  },
+  {
+   "key": "half-wave-flip",
+   "scope": "F14",
+   "term": "half-wave flip",
+   "field": "optics",
+   "definition": "the change of sign of the reflected wave at one face of the air gap and not the other, which makes the centre of the rings dark in reflected light",
+   "excludes": "the phase delay from the path across the gap"
+  },
+  {
+   "key": "d65",
+   "scope": "F14",
+   "term": "CIE D65",
+   "field": "colour science (International Commission on Illumination)",
+   "definition": "a standard table of the power in average midday daylight at each wavelength, used as the white light in this study",
+   "excludes": "the measured spectrum of any one day's sunlight, and Newton's own light"
+  },
+  {
+   "key": "luminance-y",
+   "scope": "F14",
+   "term": "luminance",
+   "field": "colour science",
+   "definition": "the brightness of light as the standard eye weighs it, computed by weighting power at each wavelength with the CIE 1931 2 degree observer's brightness curve",
+   "excludes": "hue and saturation, which the study does not score"
+  },
+  {
+   "key": "mycorrhiza",
+   "scope": "F23",
+   "term": "mycorrhiza",
+   "field": "mycology and plant ecology",
+   "definition": "a root tip of a plant enclosed by a fungus that lives with it, the fungus taking sugars from the plant and passing it water and soil nutrients; here the tuberculate root tips that Rhizopogon fungi form on Douglas-fir",
+   "excludes": "fungi that rot wood or cause disease, and fungal threads in the soil away from a root"
+  },
+  {
+   "key": "genet",
+   "scope": "F23",
+   "term": "genet",
+   "field": "population genetics of clonal organisms",
+   "definition": "one genetic individual of a fungus, recognised by its microsatellite profile, which may spread through the soil and colonise many root tips",
+   "excludes": "a species, and a single fungal thread or fruiting body"
+  },
+  {
+   "key": "bipartite-network",
+   "scope": "F23",
+   "term": "bipartite network",
+   "field": "network science",
+   "definition": "a network with two kinds of node, here trees and fungal genets, in which a link joins a tree to a genet found on at least one of its root tips and never joins two nodes of the same kind",
+   "excludes": "a network of measured flows between trees"
+  },
+  {
+   "key": "degree",
+   "scope": "F23",
+   "term": "degree",
+   "field": "network science",
+   "definition": "the number of links a node has: the genets on one tree, the trees one genet reaches, or, in the tree-tree view, the other trees that share at least one genet with a tree",
+   "excludes": "the strength or direction of a link"
+  },
+  {
+   "key": "degree-preserving-null",
+   "scope": "F23",
+   "term": "degree-preserving shuffle",
+   "field": "network ecology",
+   "definition": "a control that rewires the links of a network at random while every tree keeps its number of genets and every genet its number of trees, drawn here by the curveball algorithm 1,000 times per plot",
+   "excludes": "a shuffle that also changes how many links each node has"
+  },
+  {
+   "key": "hub-share",
+   "scope": "F23",
+   "term": "hub concentration",
+   "field": "network science, our usage",
+   "definition": "the share of all tree-tree links held by the top 10 percent of trees ranked by their number of tree-tree links",
+   "excludes": "a measure of how much a hub tree passes to others"
+  },
+  {
+   "key": "nodf",
+   "scope": "F23",
+   "term": "nestedness (NODF)",
+   "field": "network ecology",
+   "definition": "the degree to which the partners of poorly linked nodes are a subset of the partners of well linked nodes, scored from 0 to 100 by the NODF index (nestedness based on overlap and decreasing fill)",
+   "excludes": "modules, which are groups of nodes linked mostly among themselves"
+  },
+  {
+   "key": "modularity",
+   "scope": "F23",
+   "term": "modularity",
+   "field": "network science",
+   "definition": "Newman's Q: how far links fall inside groups of nodes rather than between groups, beyond what random links with the same degrees would give; here the best of 20 Louvain runs",
+   "excludes": "spatial clumping of samples, which can produce modules without any network structure"
+  },
+  {
+   "key": "z-score",
+   "scope": "F23",
+   "term": "z score against the null",
+   "field": "statistics",
+   "definition": "the real value minus the mean of the control draws, divided by their standard deviation; values beyond 2 in size are rare under the control",
+   "excludes": "a p value, and a measure of effect size in the units of the data"
+  },
+  {
+   "key": "power-law",
+   "scope": "F23",
+   "term": "power law (scale-free)",
+   "field": "network science",
+   "definition": "a degree distribution whose tail falls as a fixed power of the degree, so that a few nodes have very many links; a network with such a tail is called scale-free",
+   "excludes": "skewed distributions with an exponential tail, which also have a few well linked nodes"
+  },
+  {
+   "key": "aic",
+   "scope": "F23",
+   "term": "AIC",
+   "field": "statistics (model selection)",
+   "definition": "the Akaike information criterion, twice the number of fitted parameters minus twice the log-likelihood; between two models fitted to the same data the lower value is preferred, and a gap of 2 or more is the usual bar",
+   "excludes": "a test that one model is true"
+  },
+  {
+   "key": "spearman",
+   "scope": "F23",
+   "term": "Spearman rho",
+   "field": "statistics",
+   "definition": "the correlation between the ranks of two quantities, from -1 to 1, which counts any steadily rising or falling relation and is not pulled by single extreme values",
+   "excludes": "the slope of a relation, and evidence of cause"
+  },
+  {
+   "key": "partial-rho",
+   "scope": "F23",
+   "term": "partial Spearman rho",
+   "field": "statistics",
+   "definition": "the Spearman correlation between two quantities after the ranks of a third, here the number of root tips sampled per tree, have been regressed out of both",
+   "excludes": "a causal effect, and a correction that is known to be the right size"
+  },
+  {
+   "key": "bootstrap",
+   "scope": "F23",
+   "term": "bootstrap interval",
+   "field": "statistics",
+   "definition": "an interval made by recomputing a number many times on units drawn with replacement from the data, here trees, logs or inventory plots, and keeping the middle 95 percent of the results",
+   "excludes": "an interval that also covers doubt about the model's form"
+  },
+  {
+   "key": "relative-density",
+   "scope": "F23",
+   "term": "relative density",
+   "field": "wood science and decomposition ecology",
+   "definition": "the apparent density of a log tissue at a sampling time divided by the same log's density of that tissue when the log was laid out in 1985",
+   "excludes": "mass loss and carbon loss, which also count the volume a log loses as it fragments"
+  },
+  {
+   "key": "decay-rate",
+   "scope": "F23",
+   "term": "decay rate k",
+   "field": "decomposition ecology",
+   "definition": "the constant k in the single-exponential model, the fraction of remaining density lost per year; a half-life is the natural log of 2 divided by k",
+   "excludes": "a rate measured from mass, and the rate in the first years of a lag model"
+  },
+  {
+   "key": "carry-forward",
+   "scope": "F23",
+   "term": "carry-forward baseline",
+   "field": "forecast verification",
+   "definition": "the forecast that a later sampling will show the same mean relative density as the last sampling used for fitting, here year 16",
+   "excludes": "a forecast from a fitted decay curve"
+  },
+  {
+   "key": "skill",
+   "scope": "F23",
+   "term": "forecast skill",
+   "field": "forecast verification",
+   "definition": "one minus the mean absolute error of a model's forecast divided by the mean absolute error of a baseline on the same held-out logs; 0 means no better than the baseline and 1 means perfect",
+   "excludes": "a score on the logs used to fit the model"
+  },
+  {
+   "key": "logistic-regression",
+   "scope": "F23",
+   "term": "logistic regression",
+   "field": "statistics",
+   "definition": "a model that gives the log odds of a yes-or-no outcome, here recorded wind damage, as a weighted sum of the features; here fitted with an L2 penalty on standardised features",
+   "excludes": "a model of how much damage a tree has"
+  },
+  {
+   "key": "odds-ratio",
+   "scope": "F23",
+   "term": "odds ratio per SD",
+   "field": "statistics",
+   "definition": "the factor by which the odds of the outcome change when a feature rises by one standard deviation and the other features stay fixed; 1 means no change",
+   "excludes": "a ratio of probabilities, and a causal effect"
+  },
+  {
+   "key": "slenderness",
+   "scope": "F23",
+   "term": "slenderness",
+   "field": "forestry and tree biomechanics",
+   "definition": "tree height divided by stem diameter at breast height, both in the same units",
+   "excludes": "the height-to-diameter ratio measured at the base of the stem"
+  },
+  {
+   "key": "auc",
+   "scope": "F23",
+   "term": "AUC",
+   "field": "statistics (signal detection)",
+   "definition": "the area under the ROC curve: the chance that a randomly chosen damaged tree is ranked above a randomly chosen undamaged one, with 0.5 for guessing",
+   "excludes": "how close the predicted probabilities are to the observed rates"
+  },
+  {
+   "key": "brier-skill",
+   "scope": "F23",
+   "term": "Brier skill",
+   "field": "forecast verification (meteorology)",
+   "definition": "one minus the Brier score of a model divided by the Brier score of always forecasting the base rate, where the Brier score is the mean squared gap between a probability and the outcome coded 0 or 1",
+   "excludes": "a ranking measure such as AUC, which ignores whether the probabilities are right in size"
+  },
+  {
+   "key": "emotional-inertia",
+   "scope": "F27",
+   "term": "emotional inertia",
+   "field": "affective science",
+   "definition": "how far a person's mood at one prompt predicts their mood at the next, measured as the lag-one correlation of their own mood series",
+   "excludes": "average mood, how much mood varies, and any claim about what causes the carryover"
+  },
+  {
+   "key": "esm",
+   "scope": "F27",
+   "term": "experience sampling",
+   "field": "psychology (methods)",
+   "definition": "a study design in which people answer short questions on a phone several times a day, so that mood is recorded close to the moment it is felt",
+   "excludes": "one-off questionnaires and recall of past weeks"
+  },
+  {
+   "key": "lag-pair",
+   "scope": "F27",
+   "term": "lag pair",
+   "field": "time-series analysis",
+   "definition": "two adjacent prompts on the same study day, the earlier one called the lead; a missed prompt or a night breaks the pair",
+   "excludes": "pairs that cross a night or skip a prompt"
+  },
+  {
+   "key": "spike",
+   "scope": "F27",
+   "term": "spike",
+   "field": "our usage",
+   "definition": "a lead prompt whose mood sits at least 1.5 of the person's own standard deviations from the person's own mean",
+   "excludes": "deviations judged against other people or against a population norm"
+  },
+  {
+   "key": "recovery",
+   "scope": "F27",
+   "term": "recovery",
+   "field": "affective science (our operational form)",
+   "definition": "the median, over a person's spikes, of the share of each spike's distance from the person's mean that has gone by the next prompt, with 1 meaning back at the mean and 0 meaning no change",
+   "excludes": "recovery measured in clock time, and recovery after events that did not produce a spike"
+  },
+  {
+   "key": "ar1",
+   "scope": "F27",
+   "term": "AR(1) process",
+   "field": "time-series statistics",
+   "definition": "a series in which each value is the mean plus a fixed fraction of the previous value's distance from the mean, plus fresh random noise; the fraction is the single parameter",
+   "excludes": "models with separate rates for small and large deviations, and models with measurement noise on top"
+  },
+  {
+   "key": "pearson-r",
+   "scope": "F27",
+   "term": "Pearson r",
+   "field": "statistics",
+   "definition": "the correlation coefficient between two quantities measured on the same units, from -1 through 0 for no linear relation to 1",
+   "excludes": "non-linear relations and any statement about cause"
+  },
+  {
+   "key": "person-bootstrap",
+   "scope": "F27",
+   "term": "person bootstrap",
+   "field": "statistics (resampling)",
+   "definition": "an interval found by drawing people with replacement many times, recomputing the statistic each time, and taking the middle of the resulting spread",
+   "excludes": "resampling of single prompts, which would treat one person's prompts as independent"
+  },
+  {
+   "key": "split-half",
+   "scope": "F27",
+   "term": "split-half reliability",
+   "field": "psychometrics",
+   "definition": "the correlation across people between a measure computed on one half of each person's data and the same measure on the other half; here the halves are odd and even study days",
+   "excludes": "test-retest reliability over months, and the validity of the measure"
+  },
+  {
+   "key": "factor-model",
+   "scope": "F27",
+   "term": "factor model",
+   "field": "psychometrics (confirmatory factor analysis)",
+   "definition": "a model that explains the correlations among several measured indicators by a smaller number of unseen common factors, fitted by maximum likelihood",
+   "excludes": "exploratory searches for the number of factors, and models of change over time"
+  },
+  {
+   "key": "bic",
+   "scope": "F27",
+   "term": "BIC",
+   "field": "statistics (model selection)",
+   "definition": "the Bayesian information criterion, a fit score that charges each extra parameter a penalty growing with sample size; the lower value is preferred",
+   "excludes": "a test of whether either model is true"
+  },
+  {
+   "key": "kendall-bias",
+   "scope": "F27",
+   "term": "Kendall bias",
+   "field": "time-series statistics",
+   "definition": "the downward bias of a lag-one correlation estimated from a short series, about (1 + 3 phi)/n for a series of n values with true value phi (Kendall 1954)",
+   "excludes": "bias from measurement noise, which is a separate attenuation"
+  },
+  {
+   "key": "attenuation",
+   "scope": "F27",
+   "term": "attenuation",
+   "field": "psychometrics",
+   "definition": "the shrinking of an observed correlation toward zero when the measures that enter it are noisy",
+   "excludes": "a true weak relation between the underlying quantities"
+  },
+  {
+   "key": "chi2-diff",
+   "scope": "F27",
+   "term": "chi-square difference test",
+   "field": "statistics (model comparison)",
+   "definition": "a test of whether a model with more free parameters fits nested data better than a simpler model, using the drop in the chi-square fit statistic against its degrees of freedom",
+   "excludes": "comparisons of models that are not nested"
+  },
+  {
+   "key": "proper-scoring-rule",
+   "scope": "F32",
+   "term": "proper scoring rule",
+   "field": "decision theory and forecast verification",
+   "definition": "a score for probability forecasts on which a forecaster does best in expectation by stating their true belief",
+   "excludes": "scores that pay for shading a forecast toward some answer, and any rule for which questions to answer"
+  },
+  {
+   "key": "brier",
+   "scope": "F32",
+   "term": "Brier score",
+   "field": "forecast verification, from weather forecasting",
+   "definition": "the squared difference between the stated probabilities and the outcomes, here summed over the answer options in the GJP form so it runs from 0 to 2; lower is better",
+   "excludes": "questions left unanswered, which it does not score"
+  },
+  {
+   "key": "selective-prediction",
+   "scope": "F32",
+   "term": "selective prediction",
+   "field": "machine learning",
+   "definition": "prediction with a reject option, where a system answers only the inputs it ranks most likely to be right and declines the rest",
+   "excludes": "how the kept answers are produced"
+  },
+  {
+   "key": "risk-coverage",
+   "scope": "F32",
+   "term": "risk-coverage curve",
+   "field": "machine learning, selective prediction",
+   "definition": "the error on kept items against the share kept; here risk is the mean Brier score of kept forecasts and coverage the share kept",
+   "excludes": "any score for the forecasts withheld"
+  },
+  {
+   "key": "extremising",
+   "scope": "F32",
+   "term": "extremising",
+   "field": "forecast aggregation",
+   "definition": "pushing a probability away from 50 percent by multiplying its log-odds by a factor a, with a below 1 pulling it inward instead",
+   "excludes": "changing which side a forecast leans to"
+  },
+  {
+   "key": "cc0",
+   "scope": "F32",
+   "term": "CC0 1.0",
+   "field": "copyright and data licensing",
+   "definition": "the Creative Commons public domain dedication, under which anyone may reuse the work for any purpose without permission",
+   "excludes": "a licence condition requiring citation, which stays a scholarly courtesy"
+  },
+  {
+   "key": "prediction-market",
+   "scope": "F32",
+   "term": "prediction market",
+   "field": "economics and forecasting",
+   "definition": "a market in which people trade contracts that pay on an outcome, with the price read as a probability",
+   "excludes": "the individual survey forecasts analysed in this paper"
+  },
+  {
+   "key": "sha-256",
+   "scope": "F32",
+   "term": "SHA-256",
+   "field": "cryptography",
+   "definition": "a hash function that turns a file into a 64-character fingerprint which changes if any byte changes; a recorded hash shows the file was not altered after it was taken",
+   "excludes": "encryption, because the hash keeps nothing secret and cannot be turned back into the file"
+  },
+  {
+   "key": "voided-question",
+   "scope": "F32",
+   "term": "voided question",
+   "field": "the Good Judgment Project tournament",
+   "definition": "a question the tournament cancelled without scoring, so no forecast on it has an outcome",
+   "excludes": "a void verdict in our sense, which concerns a failed planted check or a sample below its minimum"
+  },
+  {
+   "key": "superteam",
+   "scope": "F32",
+   "term": "superteam",
+   "field": "the Good Judgment Project design",
+   "definition": "a team made up of forecasters drawn from the top performers of the previous tournament year (condition 5)",
+   "excludes": "ordinary teams (condition 4), formed without selection on past accuracy"
+  },
+  {
+   "key": "skip",
+   "scope": "F32",
+   "term": "skip",
+   "field": "our usage",
+   "definition": "a closed question that was open during a forecaster's active window in a year and that they never answered, inferred from the data",
+   "excludes": "questions outside the active window, and any recorded decision to decline, which the data do not hold"
+  },
+  {
+   "key": "relative-brier",
+   "scope": "F32",
+   "term": "relative Brier score",
+   "field": "forecast verification, our usage",
+   "definition": "a forecaster's mean, over the questions they answered, of their first-forecast Brier score minus the median first-forecast Brier score on that question; lower is better",
+   "excludes": "the difficulty of the question, which subtracting the median removes"
+  },
+  {
+   "key": "forecaster-year",
+   "scope": "F32",
+   "term": "forecaster-year",
+   "field": "our usage",
+   "definition": "one person's forecasts within one tournament year, the unit for skip rate and relative score",
+   "excludes": "pooling of different people, and pooling one person's years"
+  },
+  {
+   "key": "stratum",
+   "scope": "F32",
+   "term": "stratum",
+   "field": "survey statistics",
+   "definition": "a group of units alike on the matched variables, here year and twentieth of forecast count, inside which a statistic is computed before averaging",
+   "excludes": "control for variables that were not matched"
+  },
+  {
+   "key": "spearman",
+   "scope": "F32",
+   "term": "Spearman correlation (rho)",
+   "field": "rank statistics",
+   "definition": "the correlation between the ranks of two quantities, from -1 to +1, which reads any steady rise or fall",
+   "excludes": "the shape of the relation and the pull of outliers on the raw values"
+  },
+  {
+   "key": "bootstrap",
+   "scope": "F32",
+   "term": "bootstrap",
+   "field": "statistics",
+   "definition": "recomputing a number many times on data resampled with replacement, here within strata or over questions, to see how much it varies",
+   "excludes": "an interval from a textbook formula that assumes a distribution"
+  },
+  {
+   "key": "log-odds",
+   "scope": "F32",
+   "term": "log-odds",
+   "field": "statistics",
+   "definition": "for a probability p, the natural log of p divided by 1 minus p; 0 at 50 percent and unbounded toward certainty",
+   "excludes": "any information beyond the probability, of which it is a rescaling"
+  },
+  {
+   "key": "held-out",
+   "scope": "F32",
+   "term": "held-out gain",
+   "field": "machine learning",
+   "definition": "the drop in Brier score from extremising, with the factor fitted on one half of the questions and scored on the other half",
+   "excludes": "the in-sample improvement any fitted factor gives on the data it was fitted to"
+  },
+  {
+   "key": "out-of-fold",
+   "scope": "F32",
+   "term": "out-of-fold prediction",
+   "field": "machine learning, cross-validation",
+   "definition": "a prediction for each item made from a fit on the other folds only",
+   "excludes": "any use of the item's own outcome to predict it"
+  },
+  {
+   "key": "aurc",
+   "scope": "F32",
+   "term": "area under the risk-coverage curve",
+   "field": "machine learning, selective prediction",
+   "definition": "the mean risk over coverages from 10 to 100 percent in steps of 5, one number for a whole filter; lower is better",
+   "excludes": "coverages below 10 percent"
+  },
+  {
+   "key": "positive-control",
+   "scope": "F32",
+   "term": "positive control",
+   "field": "experimental design",
+   "definition": "a test of an effect already known to be present, which the instrument must detect for its other readings to be trusted",
+   "excludes": "a shuffle control, which removes an effect instead"
+  },
+  {
+   "key": "test-retest",
+   "scope": "F32",
+   "term": "test-retest correlation",
+   "field": "psychometrics",
+   "definition": "the correlation between one person's value in one year and the same person's value in the next, a measure of how stable the quantity is",
+   "excludes": "change caused by anything the person did between the two years"
+  },
+  {
+   "key": "ece",
+   "scope": "F32",
+   "term": "expected calibration error",
+   "field": "forecast verification and machine learning",
+   "definition": "the gap between stated probability and hit rate, averaged over probability bins and weighted by bin size; folded here by taking each forecast on the side it leans to",
+   "excludes": "how informative forecasts are, since a forecast of the base rate every time can score zero"
+  },
+  {
+   "key": "arousal-valence",
+   "scope": "F39",
+   "term": "arousal and valence",
+   "field": "psychology of emotion (the circumplex model)",
+   "definition": "two rating scales for emotion: arousal runs from calm to excited and valence from unpleasant to pleasant; in DEAM each is a nine-point scale averaged over crowd raters",
+   "excludes": "named emotions such as sadness or nostalgia, which the ratings place only as points on the two scales"
+  },
+  {
+   "key": "perceived-emotion",
+   "scope": "F39",
+   "term": "perceived emotion",
+   "field": "music psychology",
+   "definition": "the emotion a listener judges the music to express, as opposed to the emotion the listener feels",
+   "excludes": "felt or induced emotion, physiological response and any change in mood or symptoms"
+  },
+  {
+   "key": "onset-tail",
+   "scope": "F39",
+   "term": "onset-locked tail",
+   "field": "audio signal processing (our measure)",
+   "definition": "for each note onset found in the energy envelope, the time constant of the envelope's decay from its peak to the next minimum, with the median taken over onsets; it follows whichever of the note's own decay and the room's decay is slower",
+   "excludes": "the reverberation time of the room on its own, which this measure cannot separate in dense music"
+  },
+  {
+   "key": "spectral-slope",
+   "scope": "F39",
+   "term": "spectral slope",
+   "field": "audio signal processing",
+   "definition": "the slope of log power against log frequency between 110 Hz and 5.5 kHz; a more negative slope means energy leans toward low frequencies and the sound is darker",
+   "excludes": "pitch, loudness and the shape of the spectrum beyond its overall tilt"
+  },
+  {
+   "key": "partial-correlation",
+   "scope": "F39",
+   "term": "partial correlation",
+   "field": "statistics",
+   "definition": "the correlation between two quantities after each has had the linear effect of a set of control variables removed by least squares",
+   "excludes": "a causal effect, and any non-linear dependence on the controls"
+  },
+  {
+   "key": "held-out",
+   "scope": "F39",
+   "term": "held-out test set",
+   "field": "statistics and machine learning",
+   "definition": "data kept apart from everything that was fitted or standardised, here every clip by 30 percent of the artists, so that a result on it is a check on new material",
+   "excludes": "data used to fit the model, choose a threshold or compute a scaling"
+  },
+  {
+   "key": "r2-gain",
+   "scope": "F39",
+   "term": "held-out R2 gain",
+   "field": "statistics",
+   "definition": "the share of variance in the test outcome explained by a model fitted on training data with the added measures, minus the same share for the model without them",
+   "excludes": "the in-sample R2 of a fit, which can only grow as variables are added"
+  },
+  {
+   "key": "cluster-bootstrap",
+   "scope": "F39",
+   "term": "cluster bootstrap",
+   "field": "statistics",
+   "definition": "a bootstrap that resamples whole groups, here artists with all their clips, so that clips by one artist count as one draw",
+   "excludes": "a bootstrap over single clips, which treats one artist's clips as independent"
+  },
+  {
+   "key": "noise-ceiling",
+   "scope": "F47",
+   "term": "noise ceiling",
+   "field": "measurement theory and computational neuroscience",
+   "definition": "the best held-out score any model could reach on a target, given how far repeated measurements of that same target disagree; it is estimated from the data's own repeats",
+   "excludes": "the best score reached so far by any model, and a bound set by missing variables"
+  },
+  {
+   "key": "held-out-skill",
+   "scope": "F47",
+   "term": "held-out skill",
+   "field": "statistics and machine learning",
+   "definition": "a model's score on cases kept apart from fitting: R2 for numbers, the area under the ROC curve for yes-or-no outcomes, and accuracy for triplet choices",
+   "excludes": "the score on the data used to fit the model"
+  },
+  {
+   "key": "auc",
+   "scope": "F47",
+   "term": "AUC",
+   "field": "statistics (signal detection)",
+   "definition": "the area under the ROC curve: the chance that a randomly chosen positive case is ranked above a randomly chosen negative one, with 0.5 for guessing",
+   "excludes": "accuracy at any one threshold"
+  },
+  {
+   "key": "ridge",
+   "scope": "F47",
+   "term": "ridge regression",
+   "field": "statistics",
+   "definition": "least squares with a penalty on the size of the coefficients, chosen by leave-one-out error, so that many variables can be fitted without chasing noise",
+   "excludes": "non-linear models such as boosted trees or neural networks"
+  },
+  {
+   "key": "share-of-ceiling",
+   "scope": "F47",
+   "term": "share of ceiling",
+   "field": "our usage",
+   "definition": "held-out skill above chance divided by the noise ceiling above chance; 1 means the model scores as well as the measurements allow",
+   "excludes": "the raw skill, which is not comparable across targets"
+  },
+  {
+   "key": "saturating-fit",
+   "scope": "F47",
+   "term": "saturating curve",
+   "field": "curve fitting",
+   "definition": "the curve s(k) = a k / (k + h) fitted to skill above chance against the number of variables k, where a is the level it approaches",
+   "excludes": "a forecast of skill with variables not in the dataset"
+  },
+  {
+   "key": "brier",
+   "scope": "F47",
+   "term": "Brier score",
+   "field": "forecast verification (meteorology)",
+   "definition": "the mean squared difference between a probability forecast and the outcome coded 0 or 1; lower is better",
+   "excludes": "measures that score only whether the most likely outcome happened"
+  },
+  {
+   "key": "split-half",
+   "scope": "F47",
+   "term": "split-half reliability",
+   "field": "psychometrics",
+   "definition": "the correlation between scores computed on two halves of the same items, here a forecaster's accuracy on the odd and the even questions",
+   "excludes": "agreement between different people or different occasions"
+  },
+  {
+   "key": "parallel-forms",
+   "scope": "F47",
+   "term": "parallel forms",
+   "field": "psychometrics",
+   "definition": "two items meant to measure the same thing, answered at the same time; their correlation estimates reliability, here happy and cheerful at the same beep",
+   "excludes": "the same item repeated later, which also picks up real change"
+  },
+  {
+   "key": "strong-variable",
+   "scope": "F47",
+   "term": "strong variable",
+   "field": "our usage in this study",
+   "definition": "a variable of a different kind from the base set, named for each target before the run: past behaviour of the same unit, or a human rating of a related quantity",
+   "excludes": "one more variable of the kind already in the base set"
+  },
+  {
+   "key": "lorenz-horizon",
+   "scope": "F47",
+   "term": "forecast horizon",
+   "field": "dynamical systems (chaos)",
+   "definition": "the time until a forecast from a slightly wrong starting state differs from the truth by more than a set tolerance; in a chaotic system it grows with the logarithm of the starting precision",
+   "excludes": "errors from a wrong model, which the toy does not have"
+  },
+  {
+   "key": "reflexive",
+   "scope": "F47",
+   "term": "reflexive forecast",
+   "field": "economics and social science",
+   "definition": "a published forecast that the forecast population reads and reacts to, so that publishing it changes the outcome it predicts",
+   "excludes": "a forecast kept private from the people it describes"
+  },
+  {
+   "key": "ctq",
+   "scope": "F50",
+   "term": "Childhood Trauma Questionnaire (CTQ)",
+   "field": "clinical psychology",
+   "definition": "a 28-item adult self-report questionnaire about childhood experiences, scored as five subscales (emotional abuse, physical abuse, sexual abuse, emotional neglect, physical neglect) of 5 to 25 each and a total of 25 to 125, plus minimisation items that flag denial",
+   "excludes": "records of maltreatment from the time it happened, and clinical diagnosis"
+  },
+  {
+   "key": "rsfc",
+   "scope": "F50",
+   "term": "resting-state functional connectivity",
+   "field": "neuroimaging",
+   "definition": "the correlation over time between the blood-oxygen signals of two brain regions while a person lies in the scanner with no task",
+   "excludes": "anatomical connections, activity evoked by a task, and the direction of any influence between regions"
+  },
+  {
+   "key": "amygdala",
+   "scope": "F50",
+   "term": "amygdala",
+   "field": "neuroanatomy",
+   "definition": "a pair of almond-shaped structures deep in the temporal lobes, one per hemisphere, involved in detecting threat and in emotional learning",
+   "excludes": "its separate subnuclei, which the anatomical masks here do not distinguish"
+  },
+  {
+   "key": "vmpfc",
+   "scope": "F50",
+   "term": "ventromedial prefrontal cortex (vmPFC)",
+   "field": "neuroanatomy",
+   "definition": "the lower middle part of the frontal lobe, linked to the regulation of emotional responses; here defined by the Harvard-Oxford label Frontal Medial Cortex",
+   "excludes": "functional definitions from a task, and the dorsal and lateral prefrontal cortex"
+  },
+  {
+   "key": "harvard-oxford",
+   "scope": "F50",
+   "term": "Harvard-Oxford atlas",
+   "field": "neuroimaging",
+   "definition": "a probabilistic atlas of cortical and subcortical regions in standard brain space; at a 50 percent threshold a voxel belongs to a region when at least half of the reference brains placed it there",
+   "excludes": "regions drawn from each participant's own anatomy or from functional data"
+  },
+  {
+   "key": "fmriprep",
+   "scope": "F50",
+   "term": "fMRIPrep",
+   "field": "neuroimaging software",
+   "definition": "an open preprocessing pipeline for functional MRI that corrects head motion and distortion, aligns images to a standard brain space and writes nuisance signals for later cleaning",
+   "excludes": "the denoising and statistics that follow, which were run by our own code"
+  },
+  {
+   "key": "fd",
+   "scope": "F50",
+   "term": "framewise displacement",
+   "field": "neuroimaging (motion quality control)",
+   "definition": "a summary of how far the head moved between two consecutive brain volumes, in millimetres, from the six rigid-body motion parameters",
+   "excludes": "motion within a single volume"
+  },
+  {
+   "key": "censoring",
+   "scope": "F50",
+   "term": "censoring",
+   "field": "neuroimaging (motion quality control)",
+   "definition": "dropping single brain volumes whose head motion exceeds a threshold before connectivity is computed",
+   "excludes": "dropping whole runs or whole participants, which follow separate rules"
+  },
+  {
+   "key": "acompcor",
+   "scope": "F50",
+   "term": "aCompCor",
+   "field": "neuroimaging (denoising)",
+   "definition": "anatomical component correction: the main components of the signal in white matter and cerebrospinal fluid, where little neural signal is expected, are regressed out as noise",
+   "excludes": "global signal regression, which removes the mean of the whole brain"
+  },
+  {
+   "key": "gsr",
+   "scope": "F50",
+   "term": "global signal regression",
+   "field": "neuroimaging (denoising)",
+   "definition": "removing the average signal of the whole brain from every region before connectivity is computed",
+   "excludes": "aCompCor and motion regression, which remove other nuisance signals"
+  },
+  {
+   "key": "fisher-z",
+   "scope": "F50",
+   "term": "Fisher z",
+   "field": "statistics",
+   "definition": "the transform z = artanh(r) of a correlation, which makes its sampling spread close to normal so that correlations can be averaged and given intervals",
+   "excludes": "any change to the sign or ranking of correlations"
+  },
+  {
+   "key": "partial-r",
+   "scope": "F50",
+   "term": "partial correlation",
+   "field": "statistics",
+   "definition": "the correlation between two quantities after the linear effect of a set of covariates has been removed from both",
+   "excludes": "adjustment for covariates that were not measured, and any statement about cause"
+  },
+  {
+   "key": "sesoi",
+   "scope": "F50",
+   "term": "smallest effect of interest",
+   "field": "statistics (equivalence testing)",
+   "definition": "the size of effect, fixed before the data are seen, below which an effect is treated as too small to matter for the decision at hand; here a correlation of 0.20 in size",
+   "excludes": "a claim that smaller effects are zero"
+  },
+  {
+   "key": "tost",
+   "scope": "F50",
+   "term": "equivalence test (two one-sided tests)",
+   "field": "statistics",
+   "definition": "a test that supports the absence of a meaningful effect when the 90 percent interval of the estimate lies wholly inside the band set by the smallest effect of interest, which is the same as rejecting both edges of the band at the 5 percent level",
+   "excludes": "a test of whether the effect is exactly zero"
+  },
+  {
+   "key": "holm",
+   "scope": "F50",
+   "term": "Holm correction",
+   "field": "statistics (multiple testing)",
+   "definition": "a step-down adjustment of p values across a family of tests that keeps the chance of any false positive in the family at the stated level",
+   "excludes": "adjustment for analyses outside the declared family, such as the exploratory sensitivity checks"
+  },
+  {
+   "key": "stat-power",
+   "scope": "F50",
+   "term": "statistical power",
+   "field": "statistics",
+   "definition": "the chance that a test detects an effect of a stated size, given the sample size and the threshold for significance",
+   "excludes": "the chance that a detected effect is real"
+  },
+  {
+   "key": "deviation",
+   "scope": "F50",
+   "term": "deviation",
+   "field": "research method (metascience)",
+   "definition": "a dated, reasoned change to a preregistered plan, written into the plan's log, with the point in the study at which it was decided",
+   "excludes": "a silent change to the analysis"
+  },
+  {
+   "key": "positive-control",
+   "scope": "F50",
+   "term": "positive control",
+   "field": "experimental design",
+   "definition": "a test of a known effect run through the same pipeline, to show that the pipeline can find an effect of the expected kind",
+   "excludes": "shuffled controls, which show what no effect looks like"
+  },
+  {
+   "key": "steeling",
+   "scope": "F63",
+   "term": "steeling",
+   "field": "psychology and stress biology, here applied to trees",
+   "definition": "the idea that a moderate earlier stress leaves an organism better able to cope with a later, harder one; here, that a tree which lived through a moderate drought loses less growth to a later severe drought",
+   "excludes": "recovery from the same drought, and any gain that follows only from how the growth indices are computed"
+  },
+  {
+   "key": "drought-legacy",
+   "scope": "F63",
+   "term": "drought legacy",
+   "field": "forest ecology",
+   "definition": "growth that stays below its expected level for one or more years after a drought ends",
+   "excludes": "the loss of growth in the drought year itself"
+  },
+  {
+   "key": "chronology",
+   "scope": "F63",
+   "term": "standard chronology",
+   "field": "dendrochronology",
+   "definition": "one yearly ring-width index for a site, made by removing each tree's age trend and averaging the trees, scaled so that an ordinary year is near 1",
+   "excludes": "raw ring widths of single trees, and density or isotope records"
+  },
+  {
+   "key": "pdsi",
+   "scope": "F63",
+   "term": "Palmer Drought Severity Index (PDSI)",
+   "field": "climatology and hydrology",
+   "definition": "a monthly index of soil-moisture supply against demand built from temperature and precipitation; 0 is normal, -2 is moderate drought and -3 or lower is severe drought",
+   "excludes": "a direct measurement of soil water, and drought indices built on precipitation alone"
+  },
+  {
+   "key": "scpdsi",
+   "scope": "F63",
+   "term": "self-calibrating PDSI (scPDSI)",
+   "field": "climatology",
+   "definition": "a version of the Palmer index whose constants are fitted to each location's own climate, so that the thresholds mean similar rarity everywhere; here taken from the CRU TS gridded product at 0.5 degree",
+   "excludes": "the original Palmer index with fixed constants, and station measurements"
+  },
+  {
+   "key": "climate-division",
+   "scope": "F63",
+   "term": "climate division",
+   "field": "US climatology (NOAA)",
+   "definition": "one of the regions into which NOAA splits the contiguous United States for climate records, each with one averaged monthly series per variable",
+   "excludes": "a single weather station, and a regular grid cell"
+  },
+  {
+   "key": "lloret-indices",
+   "scope": "F63",
+   "term": "Lloret indices",
+   "field": "dendroecology",
+   "definition": "three ratios of ring growth around a drought year: resistance is the drought-year growth over the mean of the three years before, recovery is the mean of the three years after over the drought-year growth, and resilience is the mean after over the mean before",
+   "excludes": "measures of tree death, and growth responses that unfold over more than three years"
+  },
+  {
+   "key": "fixed-effects",
+   "scope": "F63",
+   "term": "fixed effects",
+   "field": "econometrics and statistics",
+   "definition": "one free constant per site (or species) and one per calendar year in a regression, so that differences between sites and between years cannot be mistaken for the effect of the variable under test",
+   "excludes": "random effects, which treat those constants as draws from one distribution"
+  },
+  {
+   "key": "clustered-errors",
+   "scope": "F63",
+   "term": "clustered standard errors",
+   "field": "econometrics",
+   "definition": "standard errors computed so that events in the same climate division may be correlated with each other, which widens the interval when they are",
+   "excludes": "ordinary standard errors that treat every event as independent"
+  },
+  {
+   "key": "time-shift-null",
+   "scope": "F63",
+   "term": "time-shift null",
+   "field": "time-series statistics, surrogate data",
+   "definition": "a control in which each drought record is moved in time by a random offset of 20 years or more, with the end wrapped round to the start, and the events rebuilt; it keeps each record's own pattern of droughts and breaks its timing against the rings",
+   "excludes": "shuffling single years, which also destroys the drought record's own pattern"
+  },
+  {
+   "key": "label-permutation",
+   "scope": "F63",
+   "term": "label-permutation null",
+   "field": "statistics",
+   "definition": "a control in which the prior-drought labels are shuffled among each site's own events, keeping every drought date in place",
+   "excludes": "a null that moves the droughts themselves"
+  },
+  {
+   "key": "placebo-window",
+   "scope": "F63",
+   "term": "placebo window",
+   "field": "statistics and econometrics",
+   "definition": "the same test run with the exposure window placed after the event, years 5 to 12 later, where no causal effect is possible, so that any effect found there points to a flaw in the design",
+   "excludes": "a control on the outcome data"
+  },
+  {
+   "key": "benjamini-hochberg",
+   "scope": "F63",
+   "term": "Benjamini-Hochberg correction",
+   "field": "statistics, multiple testing",
+   "definition": "a rule that adjusts a set of p values so that, among the tests called significant, the expected share of false calls stays at or below a chosen rate, here 0.05; the adjusted value is called q",
+   "excludes": "the stricter Bonferroni rule, which bounds the chance of any false call"
+  },
+  {
+   "key": "two-lines",
+   "scope": "F63",
+   "term": "two-lines test",
+   "field": "statistics (Simonsohn 2018)",
+   "definition": "a test for a rise-then-fall shape that fits one straight line on each side of a data-chosen break point and asks whether the first rises and the second falls, both significantly",
+   "excludes": "a quadratic fit, which can report a peak where none exists"
+  },
+  {
+   "key": "spectrum",
+   "scope": "F76",
+   "term": "power spectrum",
+   "field": "time-series analysis and signal processing",
+   "definition": "how a series' variance is spread over frequencies, from slow swings to fast jitter",
+   "excludes": "the timing or phase of the swings, which the spectrum does not record"
+  },
+  {
+   "key": "spectral-flatness",
+   "scope": "F76",
+   "term": "spectral flatness",
+   "field": "signal processing (speech coding) and the theory of stationary processes",
+   "definition": "the geometric mean of a power spectrum divided by its arithmetic mean; it is 1 for white noise and near 0 when a few frequencies hold most of the variance",
+   "excludes": "flatness of the series itself in time, and measures that use the spectrum's entropy instead of its geometric mean"
+  },
+  {
+   "key": "ks-bound",
+   "scope": "F76",
+   "term": "Kolmogorov-Szego bound",
+   "field": "the theory of weakly stationary processes",
+   "definition": "the smallest one-step error variance any linear predictor can reach on a weakly stationary series, equal to the exponential of the average log spectrum; one minus the flatness is therefore the most variance a linear one-step forecast can remove",
+   "excludes": "nonlinear predictors on non-Gaussian series, multi-step forecasts, and series whose statistics drift over time"
+  },
+  {
+   "key": "stationary",
+   "scope": "F76",
+   "term": "weakly stationary",
+   "field": "probability and time-series analysis",
+   "definition": "a series whose mean and autocovariance do not change over time",
+   "excludes": "series with trends, level shifts or drifting variance, such as a machine whose load changes between the halves"
+  },
+  {
+   "key": "periodogram",
+   "scope": "F76",
+   "term": "tapered periodogram",
+   "field": "spectral estimation",
+   "definition": "the squared Fourier transform of a series after its ends are faded with a Hann window, used as a raw estimate of the power spectrum at each Fourier frequency",
+   "excludes": "smoothed or averaged spectrum estimates such as Welch's method, which we report only as secondaries"
+  },
+  {
+   "key": "ar-model",
+   "scope": "F76",
+   "term": "autoregressive model",
+   "field": "time-series statistics",
+   "definition": "a linear forecast of the next value from a weighted sum of the last p values, with the weights fitted by least squares; p is the order",
+   "excludes": "models with moving-average terms, external inputs or nonlinear terms"
+  },
+  {
+   "key": "aic",
+   "scope": "F76",
+   "term": "AIC",
+   "field": "statistical model selection",
+   "definition": "the Akaike information criterion, a fit score that adds a penalty of two per fitted parameter, used here to choose the autoregressive order",
+   "excludes": "choice by held-out error, which would use the test half"
+  },
+  {
+   "key": "one-step-skill",
+   "scope": "F76",
+   "term": "one-step skill",
+   "field": "forecast verification",
+   "definition": "one minus the mean squared error of one-step-ahead forecasts on the test half, divided by the test half's variance; 0 matches forecasting the mean and 1 is perfect",
+   "excludes": "skill at longer horizons and skill measured on the data used to fit the model"
+  },
+  {
+   "key": "phase-surrogate",
+   "scope": "F76",
+   "term": "phase-randomised surrogate",
+   "field": "nonlinear time-series analysis (surrogate data)",
+   "definition": "a copy of a series with the same power spectrum and random Fourier phases, so it keeps the autocorrelation and is Gaussian and stationary by construction",
+   "excludes": "shuffling in time, which also destroys the spectrum"
+  },
+  {
+   "key": "violation",
+   "scope": "F76",
+   "term": "violation of the bound",
+   "field": "our usage in this study",
+   "definition": "a series whose excess skill over the bound beats that of at least 38 of its own 39 phase-randomised surrogates, which happens to 5 percent of Gaussian stationary series by chance",
+   "excludes": "a series whose skill merely exceeds the point bound, which estimation error makes common"
+  },
+  {
+   "key": "spearman",
+   "scope": "F76",
+   "term": "Spearman rho",
+   "field": "statistics (rank correlation)",
+   "definition": "the correlation between the ranks of two quantities across cases; 1 means the same order, 0 no relation of order",
+   "excludes": "agreement in size, since two quantities can share an order and differ in scale"
+  },
+  {
+   "key": "analogue",
+   "scope": "F76",
+   "term": "analogue forecaster",
+   "field": "nonlinear time-series prediction (method of analogues)",
+   "definition": "a forecast that finds the k past states most like the present one and averages what came next; it can follow nonlinear structure a linear model misses",
+   "excludes": "trained nonlinear models such as neural networks"
+  },
+  {
+   "key": "wilson",
+   "scope": "F76",
+   "term": "Wilson interval",
+   "field": "statistics (binomial proportions)",
+   "definition": "a 95 percent interval for a proportion that stays inside 0 and 1 and behaves well when the count is small",
+   "excludes": "intervals from resampling"
+  },
+  {
+   "key": "bh",
+   "scope": "F76",
+   "term": "Benjamini-Hochberg correction",
+   "field": "statistics (multiple testing)",
+   "definition": "a rule that adjusts a set of p values so that, among the tests called significant, the expected share of false calls stays at or below a chosen rate, here 0.05",
+   "excludes": "corrections that control the chance of any false call at all, such as Bonferroni"
+  },
+  {
+   "key": "reflectance-spectrum",
+   "scope": "F81",
+   "term": "reflectance spectrum",
+   "field": "optics and visual ecology",
+   "definition": "the share of light a surface reflects at each wavelength, here measured from 300 to 700 nm, which includes the ultraviolet below 400 nm",
+   "excludes": "the colour a viewer sees, which also depends on the light and the eye"
+  },
+  {
+   "key": "photoreceptor-class",
+   "scope": "F81",
+   "term": "receptor class",
+   "field": "vision science",
+   "definition": "one kind of light-sensitive cell in the eye, defined by the wavelengths it responds to; humans have three cone classes, bees three including one for ultraviolet, blue tits four",
+   "excludes": "the rods used in dim light, and the nerve cells that compare receptor signals"
+  },
+  {
+   "key": "quantum-catch",
+   "scope": "F81",
+   "term": "quantum catch",
+   "field": "vision science",
+   "definition": "the number of photons a receptor class absorbs from a surface, the sum over wavelength of reflectance times light times the receptor's sensitivity, here divided by the catch from a perfect white under the same light",
+   "excludes": "the brightness a viewer reports"
+  },
+  {
+   "key": "von-kries",
+   "scope": "F81",
+   "term": "von Kries adaptation",
+   "field": "colour science",
+   "definition": "scaling each receptor class's catch by its catch from a white under the same light, a simple model of how eyes adjust to the colour of the light",
+   "excludes": "adaptation that mixes signals between receptor classes"
+  },
+  {
+   "key": "rnl",
+   "scope": "F81",
+   "term": "receptor-noise-limited model",
+   "field": "visual ecology",
+   "definition": "the model of Vorobyev and Osorio in which two colours can be told apart when the difference in log receptor signals is large compared with the noise in each receptor class; brightness differences are left out",
+   "excludes": "models of colour appearance, and any effect of pattern, motion or learning"
+  },
+  {
+   "key": "jnd",
+   "scope": "F81",
+   "term": "just-noticeable difference (JND)",
+   "field": "psychophysics",
+   "definition": "the unit of colour distance in the receptor-noise-limited model; a distance of 1 is treated as the threshold, so pairs at or below 1 count as indistinguishable for that observer",
+   "excludes": "a measured threshold for a real animal on a real task"
+  },
+  {
+   "key": "weber-fraction",
+   "scope": "F81",
+   "term": "Weber fraction",
+   "field": "psychophysics and vision science",
+   "definition": "the noise in one receptor class as a fixed share of its signal, the same at every light level; we call a model with only this noise the Weber model",
+   "excludes": "photon noise, which grows in relative size as the catch falls"
+  },
+  {
+   "key": "photon-noise",
+   "scope": "F81",
+   "term": "photon noise",
+   "field": "physics of light detection",
+   "definition": "the random variation in how many photons a receptor absorbs, which every real receptor has and which matters most when the catch is small; added here as a term that falls with the catch",
+   "excludes": "noise in the nerve cells after the receptors"
+  },
+  {
+   "key": "human-blind-pair",
+   "scope": "F81",
+   "term": "human-blind pair",
+   "field": "our usage, after the metamer of colour science",
+   "definition": "a pair of surfaces whose modelled colour distance for the human trichromat is at most 1 JND, so the model says a person cannot tell them apart by colour; dog-blind pairs are defined the same way",
+   "excludes": "pairs a person cannot tell apart by brightness, which the model does not test"
+  },
+  {
+   "key": "separation-ratio",
+   "scope": "F81",
+   "term": "separation ratio",
+   "field": "our usage",
+   "definition": "among pairs one observer cannot separate, the share of flower-background pairs a second observer separates divided by the share of background-background pairs it separates; 1 means flowers gain nothing over the background",
+   "excludes": "how far apart the pairs are for the second observer"
+  },
+  {
+   "key": "label-shuffle",
+   "scope": "F81",
+   "term": "label shuffle",
+   "field": "statistics (permutation test)",
+   "definition": "a control that randomly reassigns the flower and background labels over the same surfaces, here 500 times, and recomputes the separation ratio, which shows how large it gets when the labels carry no meaning",
+   "excludes": "a shuffle of the spectra themselves"
+  },
+  {
+   "key": "uv-share",
+   "scope": "F81",
+   "term": "UV share",
+   "field": "our usage",
+   "definition": "a surface's mean reflectance below 400 nm divided by its mean reflectance from 400 to 700 nm",
+   "excludes": "whether the ultraviolet forms a pattern on the petal"
+  },
+  {
+   "key": "pollination-syndrome",
+   "scope": "F81",
+   "term": "insect- and bird-pollinated",
+   "field": "pollination ecology",
+   "definition": "the dataset's labels for flowers whose recorded pollinators are insects only or birds only",
+   "excludes": "flowers visited by both, which the dataset does not include in these groups"
+  },
+  {
+   "key": "benjamini-hochberg",
+   "scope": "F81",
+   "term": "Benjamini-Hochberg correction",
+   "field": "statistics, multiple testing",
+   "definition": "a rule that adjusts a set of p values so that, among the tests called significant, the expected share of false calls stays at or below a chosen rate q, here 0.05",
+   "excludes": "the stricter Bonferroni rule, which bounds the chance of any false call"
+  },
+  {
+   "key": "instrument-check",
+   "scope": "F81",
+   "term": "instrument check",
+   "field": "our usage; a known-answer test of the model against behaviour",
+   "definition": "a preregistered test in which the model must reproduce published behavioural measurements, here the smallest wavelength step each observer can detect; if it fails, only ranks and ratios from the model are used",
+   "excludes": "a test of the model against its own output, and a planted check on synthetic data"
+  },
+  {
+   "key": "scpdsi",
+   "scope": "F97",
+   "term": "self-calibrating Palmer Drought Severity Index (scPDSI)",
+   "field": "climatology and hydrology",
+   "definition": "a monthly drought index computed from temperature and precipitation through a simple soil water balance, with its constants calibrated to each location so values compare across places",
+   "excludes": "a direct measurement of soil moisture or of streamflow"
+  },
+  {
+   "key": "chronology",
+   "scope": "F97",
+   "term": "tree-ring chronology",
+   "field": "dendrochronology",
+   "definition": "one yearly series for a site, built by dating many cores, removing each core's age and size trend and averaging the results into a dimensionless index",
+   "excludes": "a single core's raw ring widths, and a climate reconstruction made from the series"
+  },
+  {
+   "key": "space-band",
+   "scope": "F97",
+   "term": "space band",
+   "field": "signal processing on irregular sites, our usage",
+   "definition": "the part of a field that varies between two spatial scales, taken as the difference of two Gaussian smoothings of the site values with the two scales as widths; the six bands add back to the field",
+   "excludes": "an exact wavenumber, because the bands overlap and the sites are irregular"
+  },
+  {
+   "key": "time-band",
+   "scope": "F97",
+   "term": "time band",
+   "field": "spectral analysis",
+   "definition": "the part of a yearly series whose period lies between two limits, kept by masking its Fourier transform",
+   "excludes": "a moving average or a fitted trend"
+  },
+  {
+   "key": "squared-coherence",
+   "scope": "F97",
+   "term": "squared coherence",
+   "field": "spectral analysis",
+   "definition": "the share of one series' variance in a frequency band that a linear filter of the other series can account for, between 0 and 1; here pooled over sites and years in each space and time band and called the passed share",
+   "excludes": "a nonlinear dependence, and the size of the response, which the gain measures"
+  },
+  {
+   "key": "separable",
+   "scope": "F97",
+   "term": "separable covariance",
+   "field": "space-time statistics",
+   "definition": "a covariance that factors into a function of distance times a function of time lag, so the spatial pattern of correlation has the same shape at every lag",
+   "excludes": "fields whose anomalies travel or whose broad and fine patterns fade at different rates"
+  },
+  {
+   "key": "dispersion-exponent",
+   "scope": "F97",
+   "term": "dispersion exponent",
+   "field": "physics of waves and diffusion",
+   "definition": "the power beta in a decay rate that grows as the wavenumber to the power beta; diffusion gives about 2, and fine and broad patterns that fade at the same rate give 0",
+   "excludes": "a speed of travel, which the propagation test measures"
+  },
+  {
+   "key": "phase-randomisation",
+   "scope": "F97",
+   "term": "phase randomisation",
+   "field": "time-series statistics, surrogate data",
+   "definition": "a copy of a series with the same power spectrum and random Fourier phases, so it keeps the series' autocorrelation and loses its timing against any other series",
+   "excludes": "shuffling years, which also destroys the autocorrelation"
+  },
+  {
+   "key": "block-bootstrap",
+   "scope": "F97",
+   "term": "moving-block bootstrap",
+   "field": "statistics",
+   "definition": "an interval made by recomputing a statistic many times on years resampled in runs of consecutive years, here 10, so that year-to-year correlation is kept inside each run",
+   "excludes": "resampling single years as if they were independent"
+  },
+  {
+   "key": "benjamini-hochberg",
+   "scope": "F97",
+   "term": "Benjamini-Hochberg correction",
+   "field": "statistics, multiple testing",
+   "definition": "a rule that adjusts a set of p values so that, among the tests called significant, the expected share of false calls stays at or below a chosen rate q, here 0.05",
+   "excludes": "the stricter Bonferroni rule, which bounds the chance of any false call"
+  },
+  {
+   "key": "ring-channel",
+   "scope": "F114",
+   "term": "ring channel",
+   "field": "dendrochronology, our usage after the channel of information theory",
+   "definition": "one quantity measured in every annual ring of a site's trees and kept as a yearly series: ring width, earlywood width, latewood width, minimum density or maximum latewood density",
+   "excludes": "a climate variable, and a combination of several measured quantities"
+  },
+  {
+   "key": "mxd",
+   "scope": "F114",
+   "term": "maximum latewood density",
+   "field": "dendrochronology (densitometry)",
+   "definition": "the highest wood density in the late, dense part of an annual ring, read from an X-ray image of a thin lath of the core",
+   "excludes": "ring width and the mean density of the whole ring"
+  },
+  {
+   "key": "bit",
+   "scope": "F114",
+   "term": "bit",
+   "field": "information theory",
+   "definition": "the unit of information: one bit halves the uncertainty about an outcome, so a record that keeps b bits a year narrows each year's range of possible summers by a factor of 2 to the power b, as measured by its standard deviation",
+   "excludes": "a count of stored numbers, and any statement about which way the dependence runs"
+  },
+  {
+   "key": "ce",
+   "scope": "F114",
+   "term": "coefficient of efficiency (CE)",
+   "field": "hydrology and dendroclimatology; also called the Nash-Sutcliffe efficiency",
+   "definition": "one minus the mean squared error of a reconstruction on held-out years divided by the variance of the true values in those years; 1 is perfect and 0 means no better than the held-out years' own mean",
+   "excludes": "a correlation, which ignores bias and scale errors"
+  },
+  {
+   "key": "re",
+   "scope": "F114",
+   "term": "reduction of error (RE)",
+   "field": "dendroclimatology",
+   "definition": "the same as the coefficient of efficiency, except that the reference is the mean of the calibration years, so it rewards getting a shift in mean right",
+   "excludes": "a score computed on the years used to fit the model"
+  },
+  {
+   "key": "block-cv",
+   "scope": "F114",
+   "term": "block cross-validation",
+   "field": "statistics and machine learning",
+   "definition": "the years are split into contiguous blocks, here five; each block in turn is held out, the model is fitted on the rest and scored on the held-out block",
+   "excludes": "a score on the fitting years, and splits that scatter single years so that neighbouring years leak into the fit"
+  },
+  {
+   "key": "mutual-information",
+   "scope": "F114",
+   "term": "mutual information",
+   "field": "information theory",
+   "definition": "the reduction in uncertainty about one variable from knowing another, in bits, which counts any dependence and not only linear dependence",
+   "excludes": "a measure of the size of a slope or of causation"
+  },
+  {
+   "key": "ksg",
+   "scope": "F114",
+   "term": "KSG estimator",
+   "field": "statistics and information theory",
+   "definition": "the k-nearest-neighbour estimate of mutual information from samples given by Kraskov, Stoegbauer and Grassberger, here with 4 neighbours",
+   "excludes": "estimates that first bin the data into histograms"
+  },
+  {
+   "key": "eps",
+   "scope": "F114",
+   "term": "expressed population signal (EPS)",
+   "field": "dendrochronology",
+   "definition": "how well the mean of k series stands for the mean of an infinite set of such series, k r over 1 plus (k minus 1) r, with r the mean correlation between series; 0.85 is the conventional threshold",
+   "excludes": "a measure of how well the series track climate"
+  },
+  {
+   "key": "high-pass",
+   "scope": "F114",
+   "term": "high-pass filter",
+   "field": "signal processing",
+   "definition": "a filter that keeps fast variation and removes slow trends; here each series minus a Gaussian smooth of width 10 years, which keeps roughly the 2 to 30 year band",
+   "excludes": "a fixed polynomial detrend"
+  },
+  {
+   "key": "phase-randomisation",
+   "scope": "F114",
+   "term": "phase randomisation",
+   "field": "time-series statistics, surrogate data",
+   "definition": "a copy of a series with the same power spectrum and random Fourier phases, so it keeps the series' autocorrelation and loses its timing against any other series",
+   "excludes": "shuffling years, which also destroys the autocorrelation"
+  },
+  {
+   "key": "benjamini-hochberg",
+   "scope": "F114",
+   "term": "Benjamini-Hochberg correction",
+   "field": "statistics, multiple testing",
+   "definition": "a rule that adjusts a set of p values so that, among the tests called significant, the expected share of false calls stays at or below a chosen rate q, here 0.05",
+   "excludes": "the stricter Bonferroni rule, which bounds the chance of any false call"
+  },
+  {
+   "key": "site-bootstrap",
+   "scope": "F114",
+   "term": "site bootstrap",
+   "field": "statistics",
+   "definition": "an interval made by recomputing a network mean many times on sites drawn with replacement from the panel, so the spread reflects differences between sites",
+   "excludes": "an interval over years or over model refits at one site"
+  },
+  {
+   "key": "transfer-entropy",
+   "scope": "F132",
+   "term": "transfer entropy",
+   "field": "information theory (Schreiber 2000)",
+   "definition": "the information, in bits, that the past of one series adds about the next value of a second series beyond what the second series' own past already gives; a larger value one way than the other is commonly read as the direction of influence",
+   "excludes": "plain correlation or mutual information, which are the same in both directions, and any proof of a physical cause"
+  },
+  {
+   "key": "known-answer-test",
+   "scope": "F132",
+   "term": "known-answer test",
+   "field": "measurement and method validation",
+   "definition": "a test of a method on a case where the true answer is fixed by physics or by construction, so that any wrong reading is a fault of the method",
+   "excludes": "agreement with another method, which can share the same fault"
+  },
+  {
+   "key": "ksg-conditional",
+   "scope": "F132",
+   "term": "KSG estimator, conditional form",
+   "field": "statistics and information theory",
+   "definition": "the k-nearest-neighbour estimate of information from samples given by Kraskov, Stoegbauer and Grassberger and extended to conditional information by Frenzel and Pompe, here with 4 neighbours and the maximum norm",
+   "excludes": "estimates that first bin the data into histograms"
+  },
+  {
+   "key": "iaaft",
+   "scope": "F132",
+   "term": "iAAFT surrogate",
+   "field": "time-series statistics, surrogate data",
+   "definition": "a copy of a series built by repeated rounds of Fourier phase randomisation and rank reordering, so that it keeps both the original spectrum, and with it the autocorrelation, and the original set of values, while its timing against any other series is lost",
+   "excludes": "a shuffle of single years, which destroys the autocorrelation"
+  },
+  {
+   "key": "high-pass",
+   "scope": "F132",
+   "term": "high-pass filter",
+   "field": "signal processing",
+   "definition": "a filter that keeps fast variation and removes slow trends; here each series minus a Gaussian smooth of width 10 years",
+   "excludes": "a fixed polynomial detrend"
+  },
+  {
+   "key": "detection-rate",
+   "scope": "F132",
+   "term": "detection rate",
+   "field": "statistics, our usage",
+   "definition": "the share of sites at which the score in one direction beats its own surrogates at p 0.05 or below",
+   "excludes": "a rate corrected for testing 135 sites, which is reported separately"
+  },
+  {
+   "key": "direction-accuracy",
+   "scope": "F132",
+   "term": "direction accuracy",
+   "field": "method validation, our usage",
+   "definition": "the share of sites at which the climate-to-ring score is larger than the ring-to-climate score; 0.5 is what a coin would give",
+   "excludes": "whether either score is significant"
+  },
+  {
+   "key": "block-bootstrap",
+   "scope": "F132",
+   "term": "block bootstrap",
+   "field": "statistics",
+   "definition": "an interval made by resampling whole 2 degree blocks of sites with replacement, so that neighbouring sites that share climate move together and the interval is not too narrow",
+   "excludes": "a bootstrap over single sites, and a binomial interval that treats sites as independent"
+  },
+  {
+   "key": "site-pairing",
+   "scope": "F132",
+   "term": "far-site pairing",
+   "field": "statistics, our usage",
+   "definition": "a control in which each ring series is paired with the climate of a random site at least 1,000 km away, so that real coupling is removed while both series keep their own form",
+   "excludes": "pairings with nearby sites, which share regional climate"
+  },
+  {
+   "key": "time-reversal",
+   "scope": "F132",
+   "term": "time reversal",
+   "field": "time-series analysis",
+   "definition": "the same test run on both series read backwards in time; a method that reads direction from lag order should weaken or flip",
+   "excludes": "a control on coupling strength"
+  },
+  {
+   "key": "ccm",
+   "scope": "F132",
+   "term": "convergent cross mapping",
+   "field": "nonlinear dynamics and ecology (Sugihara and colleagues 2012)",
+   "definition": "a test that rebuilds the state of one series from its own lagged values and asks how well that rebuilt state predicts the other series; the driven series is expected to predict the driver",
+   "excludes": "regression of one series on the lagged values of the other"
+  },
+  {
+   "key": "granger",
+   "scope": "F132",
+   "term": "Granger test",
+   "field": "econometrics and time-series statistics",
+   "definition": "a regression test of whether the past values of one series improve the prediction of another beyond that series' own past; for Gaussian data it is equivalent to transfer entropy",
+   "excludes": "a test of same-year effects, and proof of a physical cause"
+  },
+  {
+   "key": "benjamini-hochberg",
+   "scope": "F132",
+   "term": "Benjamini-Hochberg correction",
+   "field": "statistics, multiple testing",
+   "definition": "a rule that adjusts a set of p values so that, among the tests called significant, the expected share of false calls stays at or below a chosen rate, here 0.05; the adjusted value is called q",
+   "excludes": "the stricter Bonferroni rule, which bounds the chance of any false call"
+  },
+  {
+   "key": "dqe",
+   "scope": "F147",
+   "term": "detective quantum efficiency (DQE)",
+   "field": "imaging science and detector physics",
+   "definition": "the share of the information carried by the arriving photons that a detector's output keeps, measured as the square of its output signal-to-noise ratio divided by the square of the input's; 1 is a perfect photon counter",
+   "excludes": "the plain share of photons absorbed, and the speed of a film"
+  },
+  {
+   "key": "neq",
+   "scope": "F147",
+   "term": "noise-equivalent quanta (NEQ)",
+   "field": "imaging science",
+   "definition": "the number of photons a perfect detector would need to give the same signal-to-noise ratio as the real output",
+   "excludes": "the number of photons that arrived"
+  },
+  {
+   "key": "characteristic-curve",
+   "scope": "F147",
+   "term": "characteristic curve",
+   "field": "photographic sensitometry; also called the H and D curve",
+   "definition": "the developed optical density of a film plotted against the logarithm of the exposure it received",
+   "excludes": "the film's spectral sensitivity and its grain"
+  },
+  {
+   "key": "net-density",
+   "scope": "F147",
+   "term": "net density",
+   "field": "photographic sensitometry",
+   "definition": "optical density above the film's base and fog, so that unexposed film reads zero",
+   "excludes": "the density of the base and the fog themselves"
+  },
+  {
+   "key": "gamma",
+   "scope": "F147",
+   "term": "gamma",
+   "field": "photographic sensitometry",
+   "definition": "the local slope of the characteristic curve: the change in density per unit change in log exposure",
+   "excludes": "the display gamma of video and computer screens"
+  },
+  {
+   "key": "granularity",
+   "scope": "F147",
+   "term": "rms granularity",
+   "field": "photographic sensitometry",
+   "definition": "the standard deviation of density read through a small round aperture scanned across a uniformly exposed patch; Kodak's sheets use a 48 micrometre aperture",
+   "excludes": "how grainy the image looks to a viewer, and noise measured at other apertures"
+  },
+  {
+   "key": "spectral-sensitivity",
+   "scope": "F147",
+   "term": "spectral sensitivity",
+   "field": "photographic sensitometry",
+   "definition": "for each wavelength, the reciprocal of the exposure energy per unit area needed to reach a stated net density, here 0.2",
+   "excludes": "sensitivity to white light or to a named illuminant"
+  },
+  {
+   "key": "siedentopf-rule",
+   "scope": "F147",
+   "term": "Siedentopf's rule",
+   "field": "photographic science",
+   "definition": "the classic statement that the variance of density grows in proportion to the mean density, so that rms granularity grows as its square root",
+   "excludes": "Selwyn's law, which concerns the size of the measuring aperture"
+  },
+  {
+   "key": "hold-out",
+   "scope": "F147",
+   "term": "hold-out score",
+   "field": "statistics and machine learning",
+   "definition": "the error of a model fitted on one part of the data and scored on a part it never saw; here fitted on the lowest 70 percent of the axis and scored on the top 30 percent",
+   "excludes": "an error computed on the points used to fit"
+  },
+  {
+   "key": "bic",
+   "scope": "F147",
+   "term": "BIC",
+   "field": "statistics; the Bayesian information criterion",
+   "definition": "a model score that adds a penalty for each fitted parameter to the misfit, lower being better, so that a more flexible model must earn its extra parameters",
+   "excludes": "a test on held-out data"
+  },
+  {
+   "key": "hinge-form",
+   "scope": "F147",
+   "term": "hinge",
+   "field": "curve fitting",
+   "definition": "a response that is zero below a threshold exposure and rises in a straight line above it, here in log exposure",
+   "excludes": "any form that saturates at high exposure"
+  },
+  {
+   "key": "poisson-threshold",
+   "scope": "F147",
+   "term": "Poisson threshold model",
+   "field": "photographic science and visual physiology",
+   "definition": "a model in which each grain, or each rod cell, responds once it has absorbed at least n photons, with photon counts following Poisson statistics; n is the hit number",
+   "excludes": "models in which response grows smoothly with every photon"
+  },
+  {
+   "key": "benjamini-hochberg",
+   "scope": "F147",
+   "term": "Benjamini-Hochberg correction",
+   "field": "statistics",
+   "definition": "a rule for many tests at once: rank the p values from smallest, and reject the k smallest when the kth is no larger than k over the number of tests times the chosen false discovery rate, here 0.05",
+   "excludes": "a correction for one test, and the stricter Bonferroni rule"
+  },
+  {
+   "key": "cmn",
+   "scope": "F149",
+   "term": "common mycorrhizal network",
+   "field": "forest ecology and mycology",
+   "definition": "a set of fungal threads that colonise the roots of two or more plants at once and so may link them below ground",
+   "excludes": "claims about what such a network does, such as moving carbon or signals between trees, which are the matters in dispute"
+  },
+  {
+   "key": "focal-study",
+   "scope": "F149",
+   "term": "focal study",
+   "field": "our usage, following Karst and colleagues",
+   "definition": "one of the 18 field studies on these networks whose later citations the original authors read and coded, 11 on network function and 7 on network structure",
+   "excludes": "the citing papers, which are the units counted inside each focal study"
+  },
+  {
+   "key": "unsupported-citation",
+   "scope": "F149",
+   "term": "unsupported citation",
+   "field": "citation analysis, as coded by Karst and colleagues",
+   "definition": "a citation that credits a focal study with a claim that the original authors judged the study's results do not support",
+   "excludes": "any judgement of ours: every coding in this paper is the original authors'"
+  },
+  {
+   "key": "rate-table",
+   "scope": "F149",
+   "term": "study-year rate",
+   "field": "our usage for the deposited table",
+   "definition": "the share of one focal study's citations in one calendar year that were coded unsupported, as stored in the deposit without its denominator",
+   "excludes": "a count of citations, which the deposit does not hold"
+  },
+  {
+   "key": "denominator-rebuild",
+   "scope": "F149",
+   "term": "rebuilt denominator",
+   "field": "our usage in this study",
+   "definition": "the number of citations a focal study received in a year, recovered by finding the whole number n for which a published count k gives the deposited rate k over n",
+   "excludes": "a count read directly from any source; years with a rate of zero share what remains of the study's total and are the least certain"
+  },
+  {
+   "key": "negative-binomial",
+   "scope": "F149",
+   "term": "negative binomial model",
+   "field": "statistics (count regression)",
+   "definition": "a regression for counts whose variance can exceed their mean, fitted here with a log link so that the fitted rate changes by a fixed factor per year",
+   "excludes": "models that weight each year by how many citations it holds"
+  },
+  {
+   "key": "within-study",
+   "scope": "F149",
+   "term": "within-study model",
+   "field": "statistics (fixed effects)",
+   "definition": "a regression with its own baseline level for each focal study, so the year slope is estimated only from change inside studies",
+   "excludes": "change that comes from which focal studies happen to be cited in early and late years"
+  },
+  {
+   "key": "quasi-poisson",
+   "scope": "F149",
+   "term": "quasi-Poisson fit",
+   "field": "statistics (count regression)",
+   "definition": "a log-linear count regression whose standard errors are scaled by the observed spread, used here for the within-study model",
+   "excludes": "a full probability model for the counts"
+  },
+  {
+   "key": "citation-weighted",
+   "scope": "F149",
+   "term": "citation-weighted share model",
+   "field": "statistics (logistic regression)",
+   "definition": "a regression of the number of unsupported citations out of all citations in each study-year on the year, so a year with thirty citations counts thirty times as much as a year with one",
+   "excludes": "the equal weight per study-year that a model of the deposited percentages gives"
+  },
+  {
+   "key": "study-resampling",
+   "scope": "F149",
+   "term": "study resampling",
+   "field": "statistics (cluster bootstrap)",
+   "definition": "drawing focal studies with replacement, refitting the model each time, and taking the middle 95 percent of the refitted ratios as the interval",
+   "excludes": "resampling single study-years, which would ignore that citations of one study move together"
+  },
+  {
+   "key": "power",
+   "scope": "F149",
+   "term": "statistical power",
+   "field": "statistics",
+   "definition": "the chance that a test detects an effect of a given size when that effect is real, measured here on planted data with a known doubling",
+   "excludes": "the chance that an effect is real given that the test detected it"
+  },
+  {
+   "key": "lbd",
+   "scope": "F152",
+   "term": "literature-based discovery",
+   "field": "information science, after Swanson",
+   "definition": "the search for connections that no single document states but that follow from linking what separate documents say",
+   "excludes": "finding links that some document already states, which is ordinary retrieval"
+  },
+  {
+   "key": "link-prediction",
+   "scope": "F152",
+   "term": "link prediction",
+   "field": "network science",
+   "definition": "ranking pairs of nodes that are not yet joined in a network by how likely they are to become joined later",
+   "excludes": "recovering links that exist but were hidden at random from the same snapshot"
+  },
+  {
+   "key": "concept-link",
+   "scope": "F152",
+   "term": "link",
+   "field": "our usage for this study",
+   "definition": "two concepts appearing in the same document; a concept here is a question tag on the Stack Exchange sites and a word or word pair on the research notes",
+   "excludes": "any judgement that the two concepts are related in fact"
+  },
+  {
+   "key": "target-pair",
+   "scope": "F152",
+   "term": "target",
+   "field": "our usage for this study",
+   "definition": "a pair of concepts never linked in the training slices that appears together in at least two documents of the next slice",
+   "excludes": "pairs that appear together only once in the test slice, and any check that the later pairing is true"
+  },
+  {
+   "key": "time-slice",
+   "scope": "F152",
+   "term": "time slice",
+   "field": "forecast evaluation",
+   "definition": "one of five blocks of equal document count cut from a corpus ordered by date; a fold trains on the early slices and tests on the next one",
+   "excludes": "random splits, which let later documents inform the training graph"
+  },
+  {
+   "key": "degree",
+   "scope": "F152",
+   "term": "degree",
+   "field": "network science",
+   "definition": "the number of other concepts a concept is linked to in the training graph, our measure of how popular it is",
+   "excludes": "how many documents mention the concept"
+  },
+  {
+   "key": "abc-model",
+   "scope": "F152",
+   "term": "A-B-C ranking",
+   "field": "literature-based discovery, after Swanson",
+   "definition": "scoring an unlinked pair A and C by the intermediate concepts B that each is linked to; here a cosine over shared neighbours with each edge weighted down when both of its ends are popular",
+   "excludes": "methods trained on known outcomes, and the expert reading that Swanson applied to each candidate"
+  },
+  {
+   "key": "preferential-attachment",
+   "scope": "F152",
+   "term": "preferential attachment",
+   "field": "network science",
+   "definition": "a ranking of unlinked pairs by the product of the two concepts' degrees, so the most popular pairs come first",
+   "excludes": "any use of which neighbours the two concepts share"
+  },
+  {
+   "key": "adamic-adar",
+   "scope": "F152",
+   "term": "Adamic-Adar index",
+   "field": "network science",
+   "definition": "a count of the neighbours two nodes share in which each shared neighbour is weighted by one over the logarithm of its own degree",
+   "excludes": "the popularity discount on edges that the A-B-C score uses"
+  },
+  {
+   "key": "precision-at-k",
+   "scope": "F152",
+   "term": "precision in the top 200",
+   "field": "information retrieval",
+   "definition": "the share of a ranker's 200 highest-scored unlinked pairs that turn out to be targets",
+   "excludes": "how the ranker orders pairs below the top 200"
+  },
+  {
+   "key": "base-rate",
+   "scope": "F152",
+   "term": "base rate",
+   "field": "statistics",
+   "definition": "the share of all unlinked candidate pairs that are targets, the precision a random ranking would reach on average",
+   "excludes": "the precision of any particular ranker"
+  },
+  {
+   "key": "document-bootstrap",
+   "scope": "F152",
+   "term": "document bootstrap",
+   "field": "statistics (resampling)",
+   "definition": "redrawing the test slice's documents with replacement, recomputing which pairs are targets, and rescoring the fixed top-200 lists each time, so the interval shows how much the result depends on which documents happened to arrive",
+   "excludes": "uncertainty from the training graph, which is held fixed"
+  },
+  {
+   "key": "roc-auc",
+   "scope": "F152",
+   "term": "area under the ROC curve",
+   "field": "statistics and machine learning",
+   "definition": "the chance that a randomly chosen target scores above a randomly chosen non-target; 0.5 is chance and 1 is perfect",
+   "excludes": "how the top of the list performs, which precision in the top 200 measures"
+  },
+  {
+   "key": "stratified-auc",
+   "scope": "F152",
+   "term": "within-decile AUC",
+   "field": "our usage for this study",
+   "definition": "the area under the ROC curve computed separately inside each tenth of the candidate pairs ranked by degree product, then averaged with weights equal to each tenth's number of targets",
+   "excludes": "any advantage that comes from ranking popular pairs above unpopular ones"
+  },
+  {
+   "key": "degree-preserving-rewiring",
+   "scope": "F152",
+   "term": "degree-preserving rewiring",
+   "field": "network science, after Maslov and Sneppen",
+   "definition": "repeatedly swapping the ends of two randomly chosen edges, so every concept keeps its degree while who is linked to whom is scrambled",
+   "excludes": "changes to any concept's popularity"
+  },
+  {
+   "key": "node-permutation",
+   "scope": "F152",
+   "term": "node-label permutation",
+   "field": "statistics (permutation test)",
+   "definition": "shuffling which concept sits at which node of the training graph, so the graph's shape stays and its link to the real concepts is broken",
+   "excludes": "any change to the shape of the graph"
+  },
+  {
+   "key": "cpt",
+   "scope": "F166",
+   "term": "cumulative prospect theory (CPT)",
+   "field": "behavioural economics",
+   "definition": "a model of choice between gambles with a value function concave for gains and steeper for losses, a loss aversion coefficient and a probability weighting function applied to cumulative probabilities; here six parameters",
+   "excludes": "any account of the feelings or brain processes behind a choice"
+  },
+  {
+   "key": "loss-aversion",
+   "scope": "F166",
+   "term": "loss aversion",
+   "field": "behavioural economics",
+   "definition": "the factor lambda by which a loss weighs more than an equal gain in the value function; 1 means losses and gains count alike",
+   "excludes": "a dislike of risk as such, which curvature and weighting carry"
+  },
+  {
+   "key": "probability-weighting",
+   "scope": "F166",
+   "term": "probability weighting function",
+   "field": "behavioural economics",
+   "definition": "a function that maps a stated probability to the weight a choice gives it, so that small chances can count for more than their size and large ones for less",
+   "excludes": "a person's belief about the odds, which in these problems are stated"
+  },
+  {
+   "key": "meta-analysis",
+   "scope": "F166",
+   "term": "meta-analysis",
+   "field": "statistics, research synthesis",
+   "definition": "the statistical pooling of published estimates of one quantity into a summary and a measure of their spread",
+   "excludes": "collecting new data"
+  },
+  {
+   "key": "description-experience-gap",
+   "scope": "F166",
+   "term": "description-experience gap",
+   "field": "decision research",
+   "definition": "the pattern that people choose as if they overweight rare events when choosing from stated odds and underweight them when they learn the odds from sampled outcomes",
+   "excludes": "differences in the gambles themselves"
+  },
+  {
+   "key": "combined-formula",
+   "scope": "F166",
+   "term": "combined value formula (COMB)",
+   "field": "our usage",
+   "definition": "CPT's value difference plus four added terms in one choice rule: entropy for information, loss probability for threat, and the mean and mean square of outcomes for drive toward a setpoint; ten parameters",
+   "excludes": "any claim about mechanisms in the brain, and any reading of the terms other than this operationalisation"
+  },
+  {
+   "key": "description-setting",
+   "scope": "F166",
+   "term": "description setting",
+   "field": "our usage, after decision research",
+   "definition": "the 1,928 choices13k problems answered without outcome feedback, where people chose from stated odds alone",
+   "excludes": "the 9,831 problems answered with feedback on outcomes"
+  },
+  {
+   "key": "log-odds",
+   "scope": "F166",
+   "term": "log odds",
+   "field": "statistics",
+   "definition": "for a rate p, the natural log of p divided by 1 minus p; 0 at an even split and unbounded toward certainty",
+   "excludes": "any information beyond the rate, of which it is a rescaling"
+  },
+  {
+   "key": "binomial-likelihood",
+   "scope": "F166",
+   "term": "binomial likelihood",
+   "field": "statistics",
+   "definition": "fitting by choosing the parameters under which the observed counts of B choices are most probable, treating each choice as an independent draw at the predicted rate; here five choices per listed participant",
+   "excludes": "extra scatter between problems, which the dispersion handles"
+  },
+  {
+   "key": "expected-value",
+   "scope": "F166",
+   "term": "expected value (EV)",
+   "field": "probability theory",
+   "definition": "the probability-weighted average payoff of a gamble, used here as the baseline value model",
+   "excludes": "any allowance for risk, loss or probability weighting"
+  },
+  {
+   "key": "rank-dependent",
+   "scope": "F166",
+   "term": "rank-dependent weights",
+   "field": "decision theory",
+   "definition": "decision weights that depend on where an outcome ranks among a gamble's outcomes, taken as differences of the weighting function at cumulative probabilities",
+   "excludes": "weighting each outcome's probability on its own, as the original 1979 prospect theory did"
+  },
+  {
+   "key": "prelec",
+   "scope": "F166",
+   "term": "Prelec weighting function",
+   "field": "decision theory",
+   "definition": "a two-parameter probability weighting function, exp of minus delta times minus log p to the power gamma, that sets the curvature and the crossing point of the curve separately",
+   "excludes": "the one-parameter Tversky and Kahneman function used in CPT"
+  },
+  {
+   "key": "shannon-entropy",
+   "scope": "F166",
+   "term": "Shannon entropy",
+   "field": "information theory",
+   "definition": "minus the sum of p log2 p over a gamble's outcomes, in bits: how uncertain the outcome is before it happens, 0 for a sure thing",
+   "excludes": "the sizes of the payoffs"
+  },
+  {
+   "key": "drive-reduction",
+   "scope": "F166",
+   "term": "drive reduction",
+   "field": "motivation psychology, our operationalisation",
+   "definition": "for a setpoint S, the quantity S squared minus (S minus x) squared for an outcome x, whose expectation is linear in the mean and mean square of outcomes",
+   "excludes": "any measured need or state of the people choosing"
+  },
+  {
+   "key": "cv-r2",
+   "scope": "F166",
+   "term": "cross-validated R²",
+   "field": "statistics and machine learning",
+   "definition": "one minus the squared error of out-of-fold predictions over the variance of the observed rates, with 10 folds grouped by problem: the share of variance that predictions made without seeing those rates account for",
+   "excludes": "in-sample R², which rewards fitting noise"
+  },
+  {
+   "key": "bic",
+   "scope": "F166",
+   "term": "quasi-binomial BIC",
+   "field": "statistics, model selection",
+   "definition": "the Bayesian information criterion with the log-likelihood divided by the dispersion: a score that trades fit against the number of parameters, lower being better",
+   "excludes": "an absolute test of a model, since it only compares models on the same data"
+  },
+  {
+   "key": "dispersion",
+   "scope": "F166",
+   "term": "dispersion",
+   "field": "statistics, quasi-likelihood",
+   "definition": "the factor phi by which observed rates scatter more than independent binomial choices would allow, taken from the COMB fit in each setting",
+   "excludes": "a parameter of choice behaviour"
+  },
+  {
+   "key": "boosted-trees",
+   "scope": "F166",
+   "term": "gradient-boosted trees",
+   "field": "machine learning",
+   "definition": "a predictor built by adding many small decision trees, each fitted to what the previous ones missed; here a flexible learner's score on the same folds",
+   "excludes": "a theory of choice, since it states no value function"
+  },
+  {
+   "key": "sampling-ceiling",
+   "scope": "F166",
+   "term": "sampling ceiling",
+   "field": "our usage, after reliability analysis",
+   "definition": "one minus the mean sampling variance of the observed rates over their variance across problems: the share of variance not explained by finite samples of participants",
+   "excludes": "noise of other kinds, such as the structured decision noise reported for these data"
+  },
+  {
+   "key": "offset",
+   "scope": "F166",
+   "term": "offset",
+   "field": "regression",
+   "definition": "a part of the prediction fixed in advance and never refitted; here the fitted CPT log odds, so an added term can only explain what CPT leaves over",
+   "excludes": "refitting CPT together with the added term"
+  },
+  {
+   "key": "irls",
+   "scope": "F166",
+   "term": "iteratively reweighted least squares",
+   "field": "statistics, generalised linear models",
+   "definition": "the standard routine for fitting a logistic model by repeated weighted least-squares steps",
+   "excludes": "any effect on what is tested, since it is only the fitting method"
+  },
+  {
+   "key": "deviance",
+   "scope": "F166",
+   "term": "deviance",
+   "field": "statistics, generalised linear models",
+   "definition": "twice the log-likelihood shortfall of a model against a perfect fit; a deviance gain is the fall in deviance when a term is added",
+   "excludes": "any penalty for the added parameter"
+  },
+  {
+   "key": "benjamini-hochberg",
+   "scope": "F166",
+   "term": "Benjamini-Hochberg correction",
+   "field": "statistics, multiple testing",
+   "definition": "a rule that adjusts a set of p values into q values so that, among the tests called significant, the expected share of false calls stays at or below a chosen rate q, here 0.05",
+   "excludes": "the stricter Bonferroni rule, which bounds the chance of any false call"
+  },
+  {
+   "key": "bootstrap",
+   "scope": "F166",
+   "term": "bootstrap",
+   "field": "statistics",
+   "definition": "refitting a model many times on problems resampled with replacement to read how much an estimate varies",
+   "excludes": "an interval from a textbook formula that assumes a distribution"
+  },
+  {
+   "key": "extra-binomial",
+   "scope": "F166",
+   "term": "extra-binomial noise",
+   "field": "statistics",
+   "definition": "scatter in a choice rate from problem to problem beyond what independent choices would give, simulated here with a Beta distribution",
+   "excludes": "a bias in the rate"
+  },
+  {
+   "key": "false-success",
+   "scope": "F166",
+   "term": "false-success check",
+   "field": "our usage",
+   "definition": "a run of the full procedure on data simulated with no added effect, showing how large a gain the procedure finds when there is nothing to find",
+   "excludes": "a planted check, which asks whether a real effect is found"
+  },
+  {
+   "key": "significance-filter",
+   "scope": "F172",
+   "term": "significance filter (winner's curse)",
+   "field": "metascience and statistics",
+   "definition": "the selection of published results by a significance threshold, which lets lucky overestimates through more often than underestimates, so the published effects of a set of studies are on average larger than the true ones",
+   "excludes": "deliberate misconduct, which the filter neither requires nor detects"
+  },
+  {
+   "key": "selection-model",
+   "scope": "F172",
+   "term": "selection model",
+   "field": "meta-analysis and statistics",
+   "definition": "a model of observed results that writes down both a distribution of true effects and the rule by which results get seen, here the rule that only originals with z above 1.96 in absolute value are seen, and fits both together",
+   "excludes": "a model that takes the observed results as an unselected sample"
+  },
+  {
+   "key": "fisher-z",
+   "scope": "F172",
+   "term": "Fisher z",
+   "field": "statistics",
+   "definition": "the transform of a correlation r to half the natural log of (1 + r) over (1 - r), on which the sampling error is close to normal with standard error 1 over the square root of n minus 3",
+   "excludes": "the z statistic of a test, which is an effect divided by its standard error"
+  },
+  {
+   "key": "face-value",
+   "scope": "F172",
+   "term": "face-value forecast",
+   "field": "forecasting, our usage",
+   "definition": "a forecast that takes each published original effect as the true effect and predicts replication from the power a replication of the given size would have against it",
+   "excludes": "any correction for how the original was selected"
+  },
+  {
+   "key": "base-rate",
+   "scope": "F172",
+   "term": "base-rate forecast",
+   "field": "forecasting",
+   "definition": "a forecast that gives every effect in a held-out field the same chance of replicating, the share that replicated in the training fields",
+   "excludes": "any use of an effect's own statistics"
+  },
+  {
+   "key": "brier-score",
+   "scope": "F172",
+   "term": "Brier score",
+   "field": "forecast verification",
+   "definition": "the mean squared difference between a forecast probability and the outcome coded 1 or 0, from 0 for a perfect forecast to 1 for a confident wrong one; 0.25 is what a forecast of one half always earns",
+   "excludes": "a ranking measure such as AUC, which ignores whether the probabilities are at the right level"
+  },
+  {
+   "key": "logistic-regression",
+   "scope": "F172",
+   "term": "logistic regression",
+   "field": "statistics",
+   "definition": "a model in which the log odds of success are a weighted sum of predictors, here the original z value, the log of the original sample size and the log of the replication sample size, fitted by maximum likelihood on the training fields",
+   "excludes": "any model of how originals were selected"
+  },
+  {
+   "key": "leave-one-field-out",
+   "scope": "F172",
+   "term": "leave-one-field-out test",
+   "field": "statistics, cross-validation",
+   "definition": "a test in which each field in turn is held out, every parameter is fitted on the other fields, and forecasts are scored only on the held-out field",
+   "excludes": "scoring forecasts on the rows that were used to fit them"
+  },
+  {
+   "key": "cluster-bootstrap",
+   "scope": "F172",
+   "term": "project-cluster bootstrap",
+   "field": "statistics",
+   "definition": "an interval made by recomputing a statistic many times, here 2,000, on samples of whole replication projects drawn with replacement, so rows from one project stay together",
+   "excludes": "resampling single rows as if they were independent"
+  },
+  {
+   "key": "sign-flip",
+   "scope": "F172",
+   "term": "sign-flip permutation test",
+   "field": "statistics",
+   "definition": "a test that sums the per-project differences between two forecasts' scores, then flips the sign of each project's difference at random many times, here 4,000, to see how often a sum as large arises with no true difference",
+   "excludes": "a test that treats rows inside one project as independent"
+  },
+  {
+   "key": "benjamini-hochberg",
+   "scope": "F172",
+   "term": "Benjamini-Hochberg correction",
+   "field": "statistics, multiple testing",
+   "definition": "a rule that adjusts a set of p values so that, among the tests called significant, the expected share of false calls stays at or below a chosen rate q, here 0.05; the adjusted values are called q values",
+   "excludes": "the stricter Bonferroni rule, which bounds the chance of any false call"
+  },
+  {
+   "key": "bic",
+   "scope": "F172",
+   "term": "BIC",
+   "field": "statistics, model comparison",
+   "definition": "the Bayesian information criterion, minus twice the maximised log likelihood plus the number of parameters times the log of the number of rows; lower is better, and a difference of 10 is the usual bar for strong preference",
+   "excludes": "a test of whether either model is right"
+  },
+  {
+   "key": "calibration",
+   "scope": "F172",
+   "term": "calibration",
+   "field": "forecast verification",
+   "definition": "agreement between forecast probabilities and observed frequencies: among effects given a chance near 0.7, about 70 percent should replicate; checked here in five bands of equal count",
+   "excludes": "discrimination, the separate question of whether higher forecasts go with more successes"
+  },
+  {
+   "key": "metaheuristic",
+   "scope": "F183",
+   "term": "metaheuristic",
+   "field": "optimisation",
+   "definition": "a general recipe for searching for the minimum of a function by sampling and updating a set of candidate points, used when the function gives no gradient or has many local minima",
+   "excludes": "exact methods that come with a proof of finding the minimum"
+  },
+  {
+   "key": "bio-label",
+   "scope": "F183",
+   "term": "biologically labelled method",
+   "field": "our usage for this study",
+   "definition": "an optimiser whose published description is framed by an animal, plant or other organism, here slime mould, grey wolf, particle swarm, bee colony, ant colony and invasive weed",
+   "excludes": "any claim that the method works the way the organism does"
+  },
+  {
+   "key": "benchmark-function",
+   "scope": "F183",
+   "term": "test function",
+   "field": "optimisation benchmarking",
+   "definition": "a formula with a known minimum, chosen to be easy or hard in a known way, on which optimisers are compared by how close they get",
+   "excludes": "real engineering problems, whose minimum is unknown"
+  },
+  {
+   "key": "cma-es",
+   "scope": "F183",
+   "term": "CMA-ES",
+   "field": "evolutionary computation, after Hansen and colleagues",
+   "definition": "covariance matrix adaptation evolution strategy: it samples candidates from a multivariate normal distribution and adapts the distribution's centre, shape and step size from the best samples",
+   "excludes": "the larger-population restart schedule known as IPOP, which our version did not use"
+  },
+  {
+   "key": "search-box",
+   "scope": "F183",
+   "term": "search box",
+   "field": "optimisation",
+   "definition": "the allowed region, here every coordinate between -100 and 100; a method may only propose and keep points inside it",
+   "excludes": "constraints other than simple bounds on each coordinate"
+  },
+  {
+   "key": "centre-bias",
+   "scope": "F183",
+   "term": "centre bias",
+   "field": "evolutionary computation benchmarking, after Kudela",
+   "definition": "a tendency of a method's update rule to pull candidates toward the centre of the search box, which helps on any function whose minimum happens to sit there",
+   "excludes": "good performance that survives when the minimum is moved"
+  },
+  {
+   "key": "shifted-arm",
+   "scope": "F183",
+   "term": "shifted arm",
+   "field": "our usage for this study",
+   "definition": "the version of each test function whose minimum is moved to a random point with every coordinate between -70 and 70 and whose axes are turned by a random rotation, the same for every method within one repeat",
+   "excludes": "the unshifted arm, with the minimum at the centre and the axes aligned"
+  },
+  {
+   "key": "mean-rank",
+   "scope": "F183",
+   "term": "mean rank",
+   "field": "benchmarking statistics",
+   "definition": "each method's rank on each function by median final error, averaged over the seven functions; 1 is best and 10 is worst",
+   "excludes": "how large the differences in error are"
+  },
+  {
+   "key": "decade",
+   "scope": "F183",
+   "term": "decade",
+   "field": "measurement",
+   "definition": "a factor of ten; a change of one decade in error is a change of one in its base-10 logarithm",
+   "excludes": "a difference on a linear scale"
+  },
+  {
+   "key": "shift-penalty",
+   "scope": "F183",
+   "term": "shift penalty",
+   "field": "our usage for this study",
+   "definition": "for one method, the median over the seven functions of how many decades its median error grows when the function moves from the unshifted arm to the shifted arm",
+   "excludes": "effects of the rotation alone, which the design does not separate from the shift"
+  },
+  {
+   "key": "label-permutation",
+   "scope": "F183",
+   "term": "label permutation",
+   "field": "statistics (permutation test)",
+   "definition": "shuffling which method name goes with which rank within each function, 2,000 times, to see how large a gap between the two groups' mean ranks arises by chance",
+   "excludes": "uncertainty from the random repeats of each run"
+  },
+  {
+   "key": "no-free-lunch",
+   "scope": "F183",
+   "term": "no free lunch",
+   "field": "optimisation theory, after Wolpert and Macready",
+   "definition": "the result that, averaged over all possible functions, every search method that never revisits a point does equally well, so any advantage on one class of functions is paid for on another",
+   "excludes": "claims about any one class of functions, such as the test functions here"
+  },
+  {
+   "key": "kruskal-wallis",
+   "scope": "F183",
+   "term": "Kruskal-Wallis test",
+   "field": "statistics",
+   "definition": "a rank-based test of whether several groups of numbers come from the same distribution",
+   "excludes": "a test of which group is better"
+  },
+  {
+   "key": "centre-cheat",
+   "scope": "F183",
+   "term": "centre cheat",
+   "field": "our usage for this study",
+   "definition": "a dummy method that only samples points within a tiny distance of the centre of the box, so it solves any function whose minimum sits there and nothing else",
+   "excludes": "any real optimiser"
+  },
+  {
+   "key": "public-good",
+   "scope": "F190",
+   "term": "public good",
+   "field": "social evolution and economics",
+   "definition": "a product that costs its maker something and benefits others nearby, such as an enzyme or iron-scavenging molecule a microbe releases into its surroundings",
+   "excludes": "products the maker keeps for itself"
+  },
+  {
+   "key": "producer-cheater",
+   "scope": "F190",
+   "term": "producer and cheater",
+   "field": "social evolution",
+   "definition": "a producer pays a cost to make the public good; a cheater makes none and still gains from the goods of producers near it",
+   "excludes": "any intention on either side; the words name two fixed strategies"
+  },
+  {
+   "key": "torus-grid",
+   "scope": "F190",
+   "term": "torus grid",
+   "field": "simulation",
+   "definition": "a square grid whose opposite edges are joined, so every cell has the same number of neighbours and there is no border",
+   "excludes": "grids with edges, where border cells have fewer neighbours"
+  },
+  {
+   "key": "fitness-proportional",
+   "scope": "F190",
+   "term": "fitness-proportional replacement",
+   "field": "evolutionary dynamics",
+   "definition": "the update rule in which a cell's next occupant is copied from a parent drawn with chance in proportion to the parent's fitness, here among the 3 by 3 window around the cell including the cell itself",
+   "excludes": "other update rules, such as death followed by birth from neighbours only, or imitation of the best neighbour"
+  },
+  {
+   "key": "synchronous",
+   "scope": "F190",
+   "term": "synchronous update",
+   "field": "simulation",
+   "definition": "every cell of the grid is replaced at once in each generation, from the fitnesses of the previous generation",
+   "excludes": "asynchronous updating, where one cell at a time is replaced"
+  },
+  {
+   "key": "goods-box",
+   "scope": "F190",
+   "term": "goods box",
+   "field": "our usage for this study",
+   "definition": "the square of cells over which one producer's goods are spread, 3 by 3 at range 1 and 5 by 5 at range 2",
+   "excludes": "the 3 by 3 window from which parents are drawn, which stays fixed"
+  },
+  {
+   "key": "self-benefit",
+   "scope": "F190",
+   "term": "self-benefit",
+   "field": "social evolution",
+   "definition": "the part of a producer's own goods that returns to the producer itself; with a 3 by 3 box a producer keeps a ninth of what it makes",
+   "excludes": "benefit from the goods of other producers, including relatives"
+  },
+  {
+   "key": "bc-ratio",
+   "scope": "F190",
+   "term": "benefit-to-cost ratio",
+   "field": "social evolution",
+   "definition": "the benefit b that one producer's goods give in total divided by the cost c it pays, written b/c",
+   "excludes": "the net payoff to any one cell, which also depends on its neighbours"
+  },
+  {
+   "key": "mixed-arm",
+   "scope": "F190",
+   "term": "mixed arm",
+   "field": "our usage for this study",
+   "definition": "the version of the model in which every cell gains from the producer share of the whole population and parents are drawn from the whole population, so neighbours mean nothing",
+   "excludes": "any spatial structure"
+  },
+  {
+   "key": "shuffled-arm",
+   "scope": "F190",
+   "term": "shuffled arm",
+   "field": "our usage for this study",
+   "definition": "the version of the model in which all positions are shuffled at random before each generation and the local rules then apply, so neighbours are strangers",
+   "excludes": "the clustering of relatives that the local arm allows"
+  },
+  {
+   "key": "mean-field",
+   "scope": "F190",
+   "term": "mean-field recursion",
+   "field": "population genetics",
+   "definition": "an exact formula for next generation's producer share in the mixed arm, used here as a known answer the simulation must match",
+   "excludes": "the local and shuffled arms, which have no such formula"
+  },
+  {
+   "key": "local-competition",
+   "scope": "F190",
+   "term": "local competition",
+   "field": "social evolution, after Taylor and after Griffin and colleagues",
+   "definition": "competition for space or resources among neighbours, which, when neighbours are relatives, can cancel the benefit that helping relatives brings",
+   "excludes": "competition spread over the whole population"
+  },
+  {
+   "key": "final-share",
+   "scope": "F190",
+   "term": "final producer share",
+   "field": "our usage for this study",
+   "definition": "the share of producers in the grid at the end of a run, averaged over the replicate runs; a run stops early when one type takes the whole grid",
+   "excludes": "the share of runs in which producers survived"
+  },
+  {
+   "key": "liv",
+   "scope": "F281",
+   "term": "Lorentz invariance violation",
+   "field": "particle physics and quantum gravity phenomenology",
+   "definition": "any departure from the rule of special relativity that every observer measures the same speed of light; the form tested here is a speed of light in vacuum that changes with photon energy",
+   "excludes": "the slowing of light in a medium such as glass or plasma, which is ordinary optics"
+  },
+  {
+   "key": "eqg",
+   "scope": "F281",
+   "term": "linear energy scale (E_QG,1)",
+   "field": "quantum gravity phenomenology",
+   "definition": "the photon energy at which a speed change that grows in proportion to energy would reach the full speed of light; a lower limit on it is the usual way to state a time-of-flight bound",
+   "excludes": "the quadratic scale, for a speed change that grows with the square of energy, which this paper does not bound"
+  },
+  {
+   "key": "planck-energy",
+   "scope": "F281",
+   "term": "Planck energy",
+   "field": "physics",
+   "definition": "the energy built from the constant of gravitation, Planck's constant and the speed of light, about 1.22e19 GeV; many quantum-gravity models expect new effects near it",
+   "excludes": "any energy reached by a particle accelerator, which is about fifteen powers of ten lower"
+  },
+  {
+   "key": "dispersion",
+   "scope": "F281",
+   "term": "dispersion",
+   "field": "wave physics",
+   "definition": "the dependence of a wave's speed on its frequency or energy, written as a relation between frequency and wavenumber",
+   "excludes": "a delay that is the same at every energy, such as a fixed travel time"
+  },
+  {
+   "key": "bootstrap",
+   "scope": "F281",
+   "term": "bootstrap",
+   "field": "statistics",
+   "definition": "resampling the data with replacement many times and recomputing the estimate each time, so that the spread of the recomputed values gives an interval for it",
+   "excludes": "an interval taken from a formula that assumes a distribution"
+  },
+  {
+   "key": "group-velocity",
+   "scope": "F281",
+   "term": "group velocity",
+   "field": "wave physics",
+   "definition": "the speed at which a packet of waves, and the energy it carries, moves; it equals the slope of frequency against wavenumber",
+   "excludes": "the phase velocity, the speed of a single crest, which can differ from it"
+  },
+  {
+   "key": "bogoliubov",
+   "scope": "F281",
+   "term": "Bogoliubov dispersion",
+   "field": "condensed-matter physics (Bose-Einstein condensates)",
+   "definition": "the frequency of small waves in a uniform condensate: equal to the sound speed times the wavenumber at long wavelength and rising faster, towards the free-particle law, at wavelengths near the healing length",
+   "excludes": "sound in an ordinary gas or solid, whose dispersion is set by other physics"
+  },
+  {
+   "key": "healing-length",
+   "scope": "F281",
+   "term": "healing length",
+   "field": "condensed-matter physics",
+   "definition": "the length below which a condensate's density cannot change smoothly; waves shorter than it stop behaving like sound",
+   "excludes": "the wavelength of any particular wave"
+  },
+  {
+   "key": "acoustic-horizon",
+   "scope": "F281",
+   "term": "acoustic horizon",
+   "field": "analogue gravity",
+   "definition": "the place in a moving fluid where the flow speed equals the sound speed, so that sound travelling against the flow cannot get out; it mimics the horizon of a black hole",
+   "excludes": "a gravitational horizon, and any place where the flow is slower than sound"
+  },
+  {
+   "key": "surface-gravity",
+   "scope": "F281",
+   "term": "surface gravity (of a horizon)",
+   "field": "analogue gravity, after black-hole physics",
+   "definition": "the slope of the flow speed at the acoustic horizon; it sets how fast a trapped wave's wavelength is stretched",
+   "excludes": "the pull of gravity at a planet's surface"
+  },
+  {
+   "key": "oeis",
+   "scope": "F308",
+   "term": "OEIS",
+   "field": "mathematics (reference databases)",
+   "definition": "the On-Line Encyclopedia of Integer Sequences, a public database of number sequences in which each entry carries the first terms, formulas, comments and links contributed by many people",
+   "excludes": "a peer-reviewed journal; a line in an entry is a contribution, and a conjecture line in it carries no proof"
+  },
+  {
+   "key": "b-file",
+   "scope": "F308",
+   "term": "b-file",
+   "field": "the OEIS",
+   "definition": "a text file stored beside an OEIS entry that lists the sequence's index and term pairs much further than the entry's own data section, often to thousands of terms",
+   "excludes": "the entry's data section, which holds only the first few dozen terms"
+  },
+  {
+   "key": "conjecture-line",
+   "scope": "F308",
+   "term": "conjecture line",
+   "field": "the OEIS, our usage",
+   "definition": "a comment or formula line in an OEIS entry that states an equation for the sequence and labels it a conjecture; most were found by fitting the terms then known",
+   "excludes": "a line marked as proved, and a statement with no equation"
+  },
+  {
+   "key": "linear-recurrence",
+   "scope": "F308",
+   "term": "linear recurrence",
+   "field": "mathematics (combinatorics)",
+   "definition": "an equation that gives each term of a sequence as a fixed weighted sum of a set number of earlier terms, possibly with terms in n; here with integer coefficients",
+   "excludes": "an equation with a product of earlier terms, and an equation with coefficients that are not integers"
+  },
+  {
+   "key": "counterexample",
+   "scope": "F308",
+   "term": "counterexample",
+   "field": "mathematics (logic)",
+   "definition": "a single case where a general statement is false; one is enough to refute a conjecture",
+   "excludes": "a term that disagrees because the data are wrong"
+  },
+  {
+   "key": "ast-whitelist",
+   "scope": "F308",
+   "term": "parser whitelist",
+   "field": "computer science (parsing)",
+   "definition": "a rule that turns each line into a syntax tree and accepts it only if every part is on a fixed list: integers, n, the terms a(n-k), addition, subtraction, multiplication and powers",
+   "excludes": "any line that needs division, sums, named functions or words to state"
+  },
+  {
+   "key": "sampling-frame",
+   "scope": "F308",
+   "term": "sampling frame",
+   "field": "survey statistics",
+   "definition": "the list from which a sample is drawn; a result describes the frame, so a change of frame changes what the result is about",
+   "excludes": "the sample itself"
+  },
+  {
+   "key": "deviation",
+   "scope": "F308",
+   "term": "deviation",
+   "field": "research method (metascience)",
+   "definition": "a dated, recorded change from the preregistered plan, stated with its reason and with what had been seen when it was made",
+   "excludes": "a change made silently, and a change made after seeing the outcome it would affect without saying so"
+  },
+  {
+   "key": "wilson",
+   "scope": "F308",
+   "term": "Wilson interval",
+   "field": "statistics",
+   "definition": "a 95 percent interval for a proportion, found by inverting the score test; it stays inside 0 to 1 and behaves well when the count is small or near zero",
+   "excludes": "the simple interval of the proportion plus or minus 1.96 standard errors, which fails near zero"
+  },
+  {
+   "key": "titius-bode",
+   "scope": "F310",
+   "term": "Titius-Bode rule",
+   "field": "planetary astronomy",
+   "definition": "any formula that places a system's planets at distances or periods growing by a near-constant ratio from one planet to the next, here fitted in three forms to the log of orbital period",
+   "excludes": "a physical model of how planets form or migrate"
+  },
+  {
+   "key": "peas-in-a-pod",
+   "scope": "F310",
+   "term": "peas in a pod",
+   "field": "exoplanet surveys",
+   "definition": "the pattern, reported from Kepler data, that planets inside one system tend to be alike in size and in the ratios between neighbouring periods",
+   "excludes": "a rule for the order of the gaps, and any likeness between planets of different systems"
+  },
+  {
+   "key": "leave-one-out",
+   "scope": "F310",
+   "term": "leave-one-out prediction",
+   "field": "statistics, cross-validation",
+   "definition": "dropping one interior planet, fitting the rule to the others and comparing the predicted period with the true one, repeated for every interior planet",
+   "excludes": "scoring a planet with a fit that has already seen it"
+  },
+  {
+   "key": "sha-256",
+   "scope": "F310",
+   "term": "SHA-256",
+   "field": "cryptography",
+   "definition": "a hash function that turns a file into a 64-character fingerprint which changes if any byte of the file changes; a recorded hash shows the file was not edited after it was taken",
+   "excludes": "encryption, because the hash keeps nothing secret and cannot be turned back into the file"
+  },
+  {
+   "key": "order-shuffle",
+   "scope": "F310",
+   "term": "order-shuffle control",
+   "field": "our usage, a permutation control",
+   "definition": "each system rebuilt from its own innermost period and its own gaps in log period, put in a random order, and scored with the same form and freedom as the real system",
+   "excludes": "gaps borrowed from other systems, which the pooled-gap control uses"
+  },
+  {
+   "key": "pooled-gap",
+   "scope": "F310",
+   "term": "pooled-gap control",
+   "field": "our usage, a resampling control",
+   "definition": "each system rebuilt from gaps in log period drawn at random from all systems' gaps, and scored with the same form and freedom as the real system",
+   "excludes": "planets or gaps from outside the 122 systems in the sample"
+  },
+  {
+   "key": "law-like",
+   "scope": "F310",
+   "term": "law-like",
+   "field": "our usage, fixed in the preregistration",
+   "definition": "the verdict that a Titius-Bode form beats the order-shuffle control's 95th percentile and predicts dropped planets better than the neighbour baseline",
+   "excludes": "regularity that similar gaps alone produce, which beats only the pooled-gap control"
+  },
+  {
+   "key": "tap",
+   "scope": "F310",
+   "term": "TAP service",
+   "field": "astronomical data services",
+   "definition": "the Table Access Protocol of the International Virtual Observatory Alliance, the standard query interface through which astronomical archives return table rows",
+   "excludes": "any selection or cleaning of the rows, which the query itself sets"
+  },
+  {
+   "key": "controversy-flag",
+   "scope": "F310",
+   "term": "controversy flag",
+   "field": "NASA Exoplanet Archive catalogue fields",
+   "definition": "a catalogue field set to 1 when a planet's existence or confirmation has been questioned in the published literature and 0 otherwise",
+   "excludes": "independent confirmation, which a flag of 0 does not give"
+  },
+  {
+   "key": "transit",
+   "scope": "F310",
+   "term": "transit survey",
+   "field": "observational astronomy",
+   "definition": "a search that finds planets by the small dip in a star's light as a planet crosses its disc, which favours short periods and orbits seen close to edge-on",
+   "excludes": "planets found only by other methods, such as radial velocity or direct imaging"
+  },
+  {
+   "key": "rms-residual",
+   "scope": "F310",
+   "term": "root mean square residual",
+   "field": "statistics",
+   "definition": "the square root of the mean squared difference between fitted and observed log period across a system's planets, a measure of scatter about the fit",
+   "excludes": "any offset or trend the fit has already absorbed into its parameters"
+  },
+  {
+   "key": "geometric-mean",
+   "scope": "F310",
+   "term": "geometric mean",
+   "field": "statistics",
+   "definition": "for two numbers, the square root of their product, which is the plain average taken on a log scale; here the neighbour baseline for a dropped planet's period",
+   "excludes": "the ordinary average of the two periods, which is larger whenever they differ"
+  },
+  {
+   "key": "auc",
+   "scope": "F320",
+   "term": "AUC (area under the ROC curve)",
+   "field": "statistics and machine learning",
+   "definition": "the probability that a classifier gives a randomly chosen positive case a higher score than a randomly chosen negative case; 0.5 is chance and 1 is perfect separation",
+   "excludes": "accuracy at one threshold, and any statement about how well the scores are calibrated as probabilities"
+  },
+  {
+   "key": "overlapping-windows",
+   "scope": "F320",
+   "term": "overlapping windows",
+   "field": "signal processing",
+   "definition": "fixed-length stretches cut from a recording at a step shorter than their length, so that neighbouring windows share samples; here 60 s windows every 15 s share 75 percent of their samples",
+   "excludes": "windows cut end to end with no shared samples"
+  },
+  {
+   "key": "random-split",
+   "scope": "F320",
+   "term": "random split over windows",
+   "field": "machine learning evaluation; called record-wise cross-validation in the clinical literature",
+   "definition": "assigning windows to training and test sets at random, so that windows from the same person and the same recording block fall on both sides",
+   "excludes": "any split that keeps all of one person's data on one side"
+  },
+  {
+   "key": "loso",
+   "scope": "F320",
+   "term": "held-out person (leave one subject out)",
+   "field": "machine learning evaluation; called subject-wise cross-validation",
+   "definition": "training on all people but one and scoring on the one left out, repeated so that each person is held out once",
+   "excludes": "a test on people from another study, lab or protocol"
+  },
+  {
+   "key": "within-person-auc",
+   "scope": "F320",
+   "term": "within-person AUC",
+   "field": "machine learning evaluation, our usage",
+   "definition": "the AUC computed on one held-out person's windows alone, then averaged over people; it asks whether the classifier ranks that person's stress windows above their other windows",
+   "excludes": "the global AUC, which pools all held-out windows and also rewards separating people from each other"
+  },
+  {
+   "key": "random-forest",
+   "scope": "F320",
+   "term": "random forest",
+   "field": "machine learning",
+   "definition": "a classifier that averages many decision trees, each grown on a resampled copy of the training data with a random subset of features tried at each split; here 100 trees with at least 3 windows per leaf",
+   "excludes": "any model tuned on the test person"
+  },
+  {
+   "key": "logistic-regression",
+   "scope": "F320",
+   "term": "logistic regression",
+   "field": "statistics",
+   "definition": "a classifier that models the log odds of the positive class as a weighted sum of the features; here on standardised features with an L2 (ridge) penalty at strength C = 1",
+   "excludes": "interactions between features, which it does not model unless they are added by hand"
+  },
+  {
+   "key": "tsst",
+   "scope": "F320",
+   "term": "Trier Social Stress Test",
+   "field": "psychology and psychoneuroendocrinology",
+   "definition": "a laboratory stressor in which a person prepares and gives a short public talk and then does mental arithmetic aloud in front of an evaluating panel",
+   "excludes": "daily stress, chronic stress and trauma"
+  },
+  {
+   "key": "stai",
+   "scope": "F320",
+   "term": "STAI, six-item form",
+   "field": "psychology",
+   "definition": "a short form of the State-Trait Anxiety Inventory in which a person rates six statements about how they feel at that moment; positive items are reverse scored so that a higher total means more anxiety",
+   "excludes": "a clinical diagnosis, and anxiety as a lasting trait"
+  },
+  {
+   "key": "eda",
+   "scope": "F320",
+   "term": "electrodermal activity (EDA)",
+   "field": "psychophysiology",
+   "definition": "the electrical conductance of the skin, which rises with sweat gland activity under sympathetic nervous control",
+   "excludes": "a direct reading of emotion; temperature and movement also change it"
+  },
+  {
+   "key": "planted-shift",
+   "scope": "F320",
+   "term": "planted shared shift",
+   "field": "research method, our usage",
+   "definition": "a fixed amount added to one feature in every stress window of every person in planted data, in the same direction for all, so that a classifier tested on a new person has something real to find",
+   "excludes": "the per-person, per-block offsets, which point in a random direction and carry nothing from one person to the next"
+  },
+  {
+   "key": "ceiling-auc",
+   "scope": "F320",
+   "term": "ceiling AUC for a shift",
+   "field": "statistics, our derivation",
+   "definition": "the AUC a perfect reader of the one shifted feature could reach when the stress and non-stress values of that feature are normal with a variance of 1.09 each (a block offset of variance 1 plus window noise of variance 0.09)",
+   "excludes": "the effect of the 19 features that carry no shift, and of the small number of people"
+  },
+  {
+   "key": "benjamini-hochberg",
+   "scope": "F320",
+   "term": "Benjamini-Hochberg correction",
+   "field": "statistics, multiple testing",
+   "definition": "a rule that adjusts a set of p values so that, among the tests called significant, the expected share of false discoveries stays at or below a chosen level q",
+   "excludes": "control of the chance of even one false discovery, which is a stricter rule"
+  },
+  {
+   "key": "spearman-rho",
+   "scope": "F320",
+   "term": "Spearman rho",
+   "field": "statistics",
+   "definition": "the correlation between the ranks of two quantities; it runs from -1 to 1 and measures how well one quantity's order follows the other's, whatever the shape of the relation",
+   "excludes": "the size of the change, and any causal direction"
+  },
+  {
+   "key": "cluster-bootstrap",
+   "scope": "F320",
+   "term": "bootstrap by person",
+   "field": "statistics, resampling",
+   "definition": "redrawing people with replacement, 2,000 times, and recomputing the mean of the per-person scores each time; the middle 95 percent of those means is the interval",
+   "excludes": "redrawing single windows, which would treat one person's many windows as many independent people"
+  },
+  {
+   "key": "reporting-task",
+   "scope": "F329",
+   "term": "private reporting task (die-under-the-cup)",
+   "field": "experimental economics and psychology",
+   "definition": "an experiment in which a person observes a random outcome in private, such as a die roll or coin toss, reports it, and is paid by the report, so a lie pays and cannot be caught for any one person; lying shows only in the distribution of many reports",
+   "excludes": "tasks where the experimenter can see each person's true outcome"
+  },
+  {
+   "key": "standardised-report",
+   "scope": "F329",
+   "term": "standardised report",
+   "field": "experimental economics; the measure Abeler, Nosenzo and Raymond report, computed here by our own code",
+   "definition": "the mean report of a treatment after the outcomes are mapped evenly onto -1 for the lowest-paying report and +1 for the highest, so honest reporting gives 0 in expectation and everyone claiming the top gives 1; here averaged over treatments without weights",
+   "excludes": "a share of liars, which the mean alone does not give"
+  },
+  {
+   "key": "log-loss",
+   "scope": "F329",
+   "term": "log loss (nats per report)",
+   "field": "statistics and forecast verification",
+   "definition": "minus the average natural log of the probability a model gave to each report that was made; lower is better, and the difference between two models in nats per report is how much better one predicts each report",
+   "excludes": "an accuracy count, which ignores how much probability a model gave to what happened"
+  },
+  {
+   "key": "held-out-papers",
+   "scope": "F329",
+   "term": "held-out papers",
+   "field": "statistics, cross-validation",
+   "definition": "papers kept out of all fitting, chosen by a hash of the citation (30 percent of papers), on which every model is scored once; all treatments from one paper fall on the same side",
+   "excludes": "a split by treatment or subject, which would let one paper's design appear in both fitting and scoring"
+  },
+  {
+   "key": "maximum-likelihood",
+   "scope": "F329",
+   "term": "maximum likelihood",
+   "field": "statistics",
+   "definition": "fitting a model's parameters by choosing the values that make the observed data most probable under the model",
+   "excludes": "choosing parameters by hand or by fit to the test data"
+  },
+  {
+   "key": "tremble",
+   "scope": "F329",
+   "term": "tremble",
+   "field": "game theory and behavioural economics",
+   "definition": "a parameter that mixes a share of uniformly random reports into a model's prediction, standing for mistakes and inattention; in these models it is the only source of downward lies",
+   "excludes": "a preference, since the tremble does not depend on payoffs"
+  },
+  {
+   "key": "stakes-elasticity",
+   "scope": "F329",
+   "term": "stakes elasticity",
+   "field": "behavioural economics, our parametrisation",
+   "definition": "the parameter epsilon in a stakes factor (G/5) to the power 1 minus epsilon, where G is the money at stake; at epsilon 1 the size of the payment has no effect on reports, and at 0 the pull to lie grows in proportion to the payment",
+   "excludes": "the effect of payment on whether people take part"
+  },
+  {
+   "key": "fixed-point",
+   "scope": "F329",
+   "term": "fixed point (reputation model)",
+   "field": "game theory",
+   "definition": "a report distribution that, when used to compute how honest each report looks, leads people to make the same distribution of reports; found here by repeated damped updates starting from honest reporting",
+   "excludes": "a guarantee that the fixed point found is the only one"
+  },
+  {
+   "key": "three-part-reading",
+   "scope": "F329",
+   "term": "three-part reading",
+   "field": "experimental economics, after Fischbacher and Föllmi-Heusi",
+   "definition": "a split of a report distribution into honest reporters, read as the number of outcomes times the share reporting the lowest outcome, maximal liars, the excess at the top over the honest share, and partial liars, the rest",
+   "excludes": "an observation of any person's lie; it assumes the true outcomes are uniform and that no one lies downward on purpose"
+  },
+  {
+   "key": "climatology",
+   "scope": "F329",
+   "term": "training-average baseline",
+   "field": "forecast verification, where it is called climatology",
+   "definition": "a forecast that gives each held-out treatment the average report distribution of training treatments with the same number of outcomes",
+   "excludes": "any theory of why people report as they do"
+  },
+  {
+   "key": "sign-permutation-paper",
+   "scope": "F329",
+   "term": "paper-level sign permutation test",
+   "field": "statistics",
+   "definition": "a test that sums each held-out paper's difference in log loss between two models, then flips the sign of each paper's difference at random 5,000 times to see how often a sum as large arises with no true difference",
+   "excludes": "a test that treats subjects within one paper as independent"
+  },
+  {
+   "key": "benjamini-hochberg",
+   "scope": "F329",
+   "term": "Benjamini-Hochberg correction",
+   "field": "statistics, multiple testing",
+   "definition": "a rule that adjusts a set of p values so that, among the tests called significant, the expected share of false calls stays at or below a chosen rate q, here 0.05",
+   "excludes": "the stricter Bonferroni rule, which bounds the chance of any false call"
+  },
+  {
+   "key": "paper-bootstrap",
+   "scope": "F329",
+   "term": "paper bootstrap",
+   "field": "statistics",
+   "definition": "an interval made by recomputing a statistic 2,000 times on held-out papers drawn with replacement, so subjects from one paper stay together",
+   "excludes": "resampling single subjects as if they were independent"
+  },
+  {
+   "key": "uhecr",
+   "scope": "F344",
+   "term": "ultra-high-energy cosmic ray",
+   "field": "astroparticle physics",
+   "definition": "a charged particle from space, a proton or heavier nucleus, arriving with an energy above about 1e18 electronvolts; it is recorded through the shower of secondary particles it makes in the atmosphere",
+   "excludes": "photons and neutrinos, and the far more common cosmic rays of lower energy"
+  },
+  {
+   "key": "eev",
+   "scope": "F344",
+   "term": "EeV",
+   "field": "physics (units)",
+   "definition": "an exaelectronvolt, 1e18 electronvolts, or 1e9 GeV, carried by a single particle",
+   "excludes": "the total energy of the shower in a detector, which is spread over many secondary particles"
+  },
+  {
+   "key": "lattice-spacing",
+   "scope": "F344",
+   "term": "lattice spacing",
+   "field": "lattice field theory",
+   "definition": "the distance between neighbouring points of a grid on which space is modelled; on a grid, waves shorter than about twice the spacing cannot exist and the speed of a wave depends on its direction",
+   "excludes": "the Planck length, which is a scale built from constants and not a measured grid"
+  },
+  {
+   "key": "cubic-harmonic",
+   "scope": "F344",
+   "term": "cubic harmonic",
+   "field": "mathematics (spherical harmonics) and crystallography",
+   "definition": "the simplest pattern on a sphere with the symmetry of a cube: here x^4 + y^4 + z^4 minus its average, largest along the six cube axes and smallest along the eight diagonals",
+   "excludes": "a dipole, a single hot spot, or any pattern that a rotation of the cube by a right angle would change"
+  },
+  {
+   "key": "exposure",
+   "scope": "F344",
+   "term": "exposure",
+   "field": "astroparticle physics",
+   "definition": "how much of each part of the sky a detector watched over time; a ground array sees some declinations far more than others, so an isotropic sky still looks uneven in its data",
+   "excludes": "the number of events, which is exposure times the true flux"
+  },
+  {
+   "key": "ra-scramble",
+   "scope": "F344",
+   "term": "right-ascension scramble",
+   "field": "astroparticle physics (anisotropy searches)",
+   "definition": "a control sky made by keeping each event's declination and giving it a random right ascension; the Earth's rotation makes a ground array's exposure nearly even in right ascension, so the scramble keeps the exposure and removes any pattern",
+   "excludes": "a fully random sky, which would ignore the detector's exposure"
+  },
+  {
+   "key": "benjamini-hochberg",
+   "scope": "F344",
+   "term": "Benjamini-Hochberg correction",
+   "field": "statistics (multiple testing)",
+   "definition": "a rule that raises a set of p values to control the expected share of false discoveries among the tests called significant; the smallest raw p is multiplied by the number of tests and larger ones by less",
+   "excludes": "an uncorrected p value read on its own when several tests were run"
+  },
+  {
+   "key": "power",
+   "scope": "F344",
+   "term": "detection power",
+   "field": "statistics",
+   "definition": "the share of planted skies, each with a pattern of known strength, in which the search finds the pattern at its preregistered threshold",
+   "excludes": "the chance that a pattern exists in the real sky"
+  },
+  {
+   "key": "standard-uncertainty",
+   "scope": "F362",
+   "term": "stated 1 sigma uncertainty",
+   "field": "metrology (the standard uncertainty of the GUM) and physics data tables",
+   "definition": "the plus-or-minus a table prints beside a value, meant as one standard deviation of the value's error; for a normal error the interval of one sigma either side holds the truth 68.27 percent of the time and two sigma 95.45 percent",
+   "excludes": "an expanded uncertainty already multiplied by a coverage factor, and any bound meant to hold always"
+  },
+  {
+   "key": "coverage",
+   "scope": "F362",
+   "term": "coverage",
+   "field": "statistics and metrology",
+   "definition": "the share of cases in which an interval drawn round an earlier value contains the value that later replaced it; here the interval is one or two of the earlier value's own stated sigma either side",
+   "excludes": "the share of intervals that contain the true value, which no later table can supply"
+  },
+  {
+   "key": "shift-z",
+   "scope": "F362",
+   "term": "shift in units of the earlier sigma",
+   "field": "statistics, our usage; called a normalised residual in metrology",
+   "definition": "the size of the change in a quantity's value between an earlier and a later edition of a table, divided by the uncertainty stated in the earlier edition",
+   "excludes": "the sign of the change, and any uncertainty in the later value"
+  },
+  {
+   "key": "needed-multiple",
+   "scope": "F362",
+   "term": "needed multiple",
+   "field": "metrology, our usage; a coverage factor fitted after the fact",
+   "definition": "the multiple of the stated sigma that would have covered 68.27 or 95.45 percent of the later values; it is the matching percentile of the shifts in units of the earlier sigma, written k68 and k95",
+   "excludes": "a factor known before the later values were published"
+  },
+  {
+   "key": "student-t",
+   "scope": "F362",
+   "term": "Student t distribution and its tail index nu",
+   "field": "statistics",
+   "definition": "a bell-shaped family with heavier tails than the normal curve; its degrees of freedom nu set the tail weight, so small nu means large shifts are common, nu of 1 is the Cauchy distribution and nu without limit is the normal curve",
+   "excludes": "skewed or bounded shapes"
+  },
+  {
+   "key": "cauchy",
+   "scope": "F362",
+   "term": "Cauchy distribution",
+   "field": "probability",
+   "definition": "the Student t distribution with nu equal to 1, whose tails are so heavy that its mean and variance do not exist",
+   "excludes": "any distribution with a finite variance"
+  },
+  {
+   "key": "moved-arm",
+   "scope": "F362",
+   "term": "moved-values arm",
+   "field": "research method, our usage",
+   "definition": "the same coverage count repeated after dropping every quantity whose value did not change between the two editions, since an unchanged value counts as covered whatever its stated uncertainty",
+   "excludes": "a test of whether the unchanged values were right"
+  },
+  {
+   "key": "proxy-truth",
+   "scope": "F362",
+   "term": "proxy truth",
+   "field": "research method, our usage",
+   "definition": "a value fixed in advance and used in place of the unknown true value where no later edition settles it; here three values of the Hubble constant, 67.4, 70 and 73 km/s/Mpc, each reported on its own",
+   "excludes": "a claim that any of the three is the true value"
+  },
+  {
+   "key": "shared-inputs",
+   "scope": "F362",
+   "term": "shared inputs",
+   "field": "metrology and data evaluation",
+   "definition": "measurements or derived values that feed both an earlier and a later edition of a table, so that the two editions are not independent and agree more than independent work would",
+   "excludes": "measurements made only for the later edition"
+  },
+  {
+   "key": "bootstrap",
+   "scope": "F362",
+   "term": "bootstrap",
+   "field": "statistics, resampling",
+   "definition": "redrawing the quantities of a table with replacement, here 300 times, and recomputing the coverage each time; the middle 95 percent of the recomputed values is the interval",
+   "excludes": "uncertainty from the choice of editions or from shared inputs, which resampling quantities does not touch"
+  },
+  {
+   "key": "honest-gaussian",
+   "scope": "F362",
+   "term": "honest normal world",
+   "field": "statistics, our control",
+   "definition": "simulated shifts drawn from a standard normal distribution at the PDG sample size, so that every stated sigma is exactly right, scored the same way as the real shifts",
+   "excludes": "heavy tails and shared inputs"
+  },
+  {
+   "key": "bits-per-letter",
+   "scope": "F508",
+   "term": "bits per letter",
+   "field": "information theory",
+   "definition": "the average number of binary digits needed to write down each letter of a text under a given model of the text; one bit halves the number of equally likely choices, so 4.75 bits per letter is the cost of picking blindly among 27 symbols",
+   "excludes": "a count of bytes in a file, and any statement about meaning"
+  },
+  {
+   "key": "n-gram-entropy",
+   "scope": "F508",
+   "term": "N-gram entropy",
+   "field": "information theory, after Shannon 1951",
+   "definition": "the uncertainty of the next letter when the N minus 1 letters before it are known, averaged over the text; Shannon wrote it F with a subscript N, so F1 uses single-letter counts, F2 one letter of context and F3 two",
+   "excludes": "the entropy of the language as a whole, which is the limit as N grows"
+  },
+  {
+   "key": "plug-in",
+   "scope": "F508",
+   "term": "plug-in estimate",
+   "field": "statistics",
+   "definition": "an entropy computed by putting the observed relative frequencies of a sample straight into the entropy formula, with no correction for the size of the sample",
+   "excludes": "corrected estimators that add a term for unseen or rare events"
+  },
+  {
+   "key": "context-model",
+   "scope": "F508",
+   "term": "context model",
+   "field": "data compression and statistical language modelling",
+   "definition": "a model that predicts the next symbol from counts of what followed the same few preceding symbols in training text, blending long and short contexts; prediction by partial matching (PPM) is the classic form",
+   "excludes": "models that use word meaning, grammar or knowledge outside the letter counts"
+  },
+  {
+   "key": "log-loss",
+   "scope": "F508",
+   "term": "log loss",
+   "field": "information theory and machine learning; also called cross-entropy",
+   "definition": "the average of minus the base-2 logarithm of the probability a model gave to the letter that came next, in bits per letter; it is the length of the code an ideal coder driven by the model would write",
+   "excludes": "the share of letters guessed right, and the entropy of the text itself, which log loss can only bound from above"
+  },
+  {
+   "key": "held-out",
+   "scope": "F508",
+   "term": "held-out text",
+   "field": "statistics and machine learning",
+   "definition": "text kept apart from the text a model was trained on and used only to score it",
+   "excludes": "any text whose counts entered the model"
+  },
+  {
+   "key": "guessing-game",
+   "scope": "F508",
+   "term": "guessing game",
+   "field": "information theory, after Shannon 1951",
+   "definition": "a reader guesses the next letter in order of preference until right; the share of letters found at the first, second and later guesses gives an upper and a lower bound on the entropy",
+   "excludes": "a direct measure of the probabilities a reader holds"
+  },
+  {
+   "key": "markov-chain",
+   "scope": "F508",
+   "term": "order-2 Markov chain",
+   "field": "probability",
+   "definition": "a random text in which each symbol depends only on the two symbols before it, through a fixed table of probabilities, so its entropy per symbol can be computed exactly",
+   "excludes": "real text, whose dependence reaches further back"
+  },
+  {
+   "key": "zipf",
+   "scope": "F508",
+   "term": "Zipf's law",
+   "field": "quantitative linguistics",
+   "definition": "the observation that the frequency of a word falls roughly in inverse proportion to its rank in the frequency list",
+   "excludes": "an exact law that holds for every word or every text"
+  },
+  {
+   "key": "penalty",
+   "scope": "F508",
+   "term": "transfer penalty",
+   "field": "our usage, from machine learning practice on domain shift",
+   "definition": "the extra log loss a reader pays on another kind of text compared with a reader trained on that kind of text, both scored on the same held-out passage",
+   "excludes": "the difference in difficulty between two texts read by their own readers"
+  },
+  {
+   "key": "bpc",
+   "scope": "F515",
+   "term": "bits per character",
+   "field": "information theory and data compression",
+   "definition": "the length of a compressed text in bits divided by the number of characters in the original; lower is better, and 8 is the cost of plain one-byte text",
+   "excludes": "bits per token or per byte, which divide by a different count"
+  },
+  {
+   "key": "arithmetic-coding",
+   "scope": "F515",
+   "term": "arithmetic coding",
+   "field": "data compression",
+   "definition": "a method that turns a model's probability for each next symbol into a single binary number, so a symbol given probability p costs close to minus log2 p bits, and a decoder with the same model recovers the text exactly",
+   "excludes": "codes that give each symbol a fixed whole number of bits, such as Huffman codes"
+  },
+  {
+   "key": "ideal-code-length",
+   "scope": "F515",
+   "term": "ideal code length",
+   "field": "information theory",
+   "definition": "the sum over a text of minus log2 of the probability the model gave to each symbol that came next; a real arithmetic coder comes within a few bits of it",
+   "excludes": "a measured file size, and any cost of storing the model"
+  },
+  {
+   "key": "ppm",
+   "scope": "F515",
+   "term": "PPM",
+   "field": "data compression",
+   "definition": "prediction by partial matching, a compressor that predicts each character from counts of what followed the same preceding characters, falling back to shorter contexts when a longer one has not been seen; here method C with exclusion and contexts of up to 5 characters",
+   "excludes": "models with learned weights, such as neural language models"
+  },
+  {
+   "key": "xz",
+   "scope": "F515",
+   "term": "xz",
+   "field": "data compression software",
+   "definition": "a general-purpose file compressor using the LZMA method, which replaces repeated strings with references to earlier copies; here at its strongest preset",
+   "excludes": "any model of language beyond repeated byte strings"
+  },
+  {
+   "key": "token",
+   "scope": "F515",
+   "term": "token",
+   "field": "natural language processing",
+   "definition": "the unit a language model reads and predicts, a whole word, part of a word or a single character taken from a fixed vocabulary of tens of thousands of pieces",
+   "excludes": "a character or a byte"
+  },
+  {
+   "key": "memorisation",
+   "scope": "F515",
+   "term": "memorisation",
+   "field": "machine learning; in evaluation also called training-data contamination",
+   "definition": "a model's ability to predict a specific text because that text, or close copies of it, was in its training data, as distinct from predicting text of the same kind it has not seen",
+   "excludes": "any claim about how the model stores the text internally"
+  },
+  {
+   "key": "post-hoc",
+   "scope": "F515",
+   "term": "post hoc control",
+   "field": "research method",
+   "definition": "a control added after the first results were seen; it can test an explanation but carries less weight than a control fixed in advance, because the choice of control could follow the result",
+   "excludes": "controls named in the preregistration"
+  },
+  {
+   "key": "payback",
+   "scope": "F515",
+   "term": "payback length",
+   "field": "our usage, after the two-part code of minimum description length",
+   "definition": "the number of characters a model must compress before the bits it saves over another compressor add up to the size of the model itself, when the model has to be sent along with the message",
+   "excludes": "a compression ratio on one text, which ignores the cost of the model"
+  },
+  {
+   "key": "known-answer-test",
+   "scope": "F675",
+   "term": "known-answer test",
+   "field": "measurement and method validation",
+   "definition": "a test of a method on a case where the true answer is fixed by physics or by construction, so that any wrong reading is a fault of the method",
+   "excludes": "agreement with another method, which can share the same fault"
+  },
+  {
+   "key": "granger",
+   "scope": "F675",
+   "term": "Granger test",
+   "field": "econometrics and time-series statistics",
+   "definition": "a regression test of whether the past values of one series improve the prediction of another beyond that series' own past; here an F test on lags 1 and 2",
+   "excludes": "a test of same-year effects, and proof of a physical cause"
+  },
+  {
+   "key": "panel",
+   "scope": "F675",
+   "term": "panel",
+   "field": "statistics and econometrics",
+   "definition": "a set of units, here tree-ring sites, each observed over time and analysed together so that one statistic summarises all of them",
+   "excludes": "a verdict reached site by site, and a pooled regression that treats all years of all sites as one series"
+  },
+  {
+   "key": "direction-index",
+   "scope": "F675",
+   "term": "panel direction index",
+   "field": "time-series statistics, our usage",
+   "definition": "the mean over sites of d, the z-score of the climate-to-ring Granger test minus that of the ring-to-climate test; positive values point from summer temperature to ring width",
+   "excludes": "a test of significance at any one site"
+  },
+  {
+   "key": "z-score",
+   "scope": "F675",
+   "term": "z-score of a p value",
+   "field": "statistics",
+   "definition": "the point of the standard normal distribution that leaves the p value above it, so that a smaller p gives a larger z; here capped at 6",
+   "excludes": "a standardised value of the data themselves"
+  },
+  {
+   "key": "high-pass",
+   "scope": "F675",
+   "term": "high-pass filter",
+   "field": "signal processing",
+   "definition": "a filter that keeps fast variation and removes slow trends; here each series minus a Gaussian smooth of width 10 years, then scaled to unit variance",
+   "excludes": "first differences, which are reported as a separate arm"
+  },
+  {
+   "key": "first-difference",
+   "scope": "F675",
+   "term": "first differences",
+   "field": "time-series statistics",
+   "definition": "each year's value minus the previous year's, a second way to remove slow trends that weights the fastest changes most",
+   "excludes": "the high-pass filter, which removes trends by smoothing"
+  },
+  {
+   "key": "iaaft",
+   "scope": "F675",
+   "term": "iAAFT surrogate",
+   "field": "time-series statistics, surrogate data",
+   "definition": "a copy of a series built by repeated rounds of Fourier phase randomisation and rank reordering, so that it keeps both the original spectrum, and with it the autocorrelation, and the original set of values, while its timing against any other series is lost",
+   "excludes": "a shuffle of single years, which destroys the autocorrelation"
+  },
+  {
+   "key": "detection-rate",
+   "scope": "F675",
+   "term": "detection rate",
+   "field": "statistics, our usage",
+   "definition": "the share of sites at which the Granger test in one direction gives p 0.05 or below; for synthetic worlds it is averaged over the draws",
+   "excludes": "a rate corrected for testing 161 sites"
+  },
+  {
+   "key": "direction-accuracy",
+   "scope": "F675",
+   "term": "direction accuracy",
+   "field": "method validation, our usage",
+   "definition": "the share of sites at which the sign of d matches the direction planted in a synthetic world; 0.5 is what a coin would give",
+   "excludes": "whether the test at any site is significant"
+  },
+  {
+   "key": "block-bootstrap",
+   "scope": "F675",
+   "term": "block bootstrap",
+   "field": "statistics",
+   "definition": "an interval made by resampling whole 2 degree blocks of sites with replacement, here 2,000 times, so that neighbouring sites that share climate move together and the interval is not too narrow",
+   "excludes": "a bootstrap over single sites, and a binomial interval that treats sites as independent"
+  },
+  {
+   "key": "site-pairing",
+   "scope": "F675",
+   "term": "far-site pairing",
+   "field": "statistics, our usage",
+   "definition": "a control in which each ring series is paired with the summer temperature of a random site at least 1,000 km away, so that real coupling is removed while both series keep their own form; repeated 199 times",
+   "excludes": "pairings with nearby sites, which share regional climate"
+  },
+  {
+   "key": "time-reversal",
+   "scope": "F675",
+   "term": "time reversal",
+   "field": "time-series analysis",
+   "definition": "the same test run on both series read backwards in time; a method that reads direction from lag order should flip",
+   "excludes": "a control on coupling strength"
+  },
+  {
+   "key": "gating-check",
+   "scope": "F675",
+   "term": "binding check",
+   "field": "research method, our usage",
+   "definition": "a preregistered rule on a synthetic world that the instrument must pass before any reading of the real data counts; under the kill condition a single failure removes all standing",
+   "excludes": "power checks and limit checks, which were recorded but could not remove standing"
+  },
+  {
+   "key": "benjamini-hochberg",
+   "scope": "F675",
+   "term": "Benjamini-Hochberg correction",
+   "field": "statistics, multiple testing",
+   "definition": "a rule that adjusts a set of p values so that, among the tests called significant, the expected share of false calls stays at or below a chosen rate, here 0.05; the adjusted value is called q",
+   "excludes": "the stricter Bonferroni rule, which bounds the chance of any false call"
+  },
+  {
+   "key": "prior-summer",
+   "scope": "F675",
+   "term": "prior-summer coefficient",
+   "field": "dendroclimatology",
+   "definition": "the slope on the previous year's summer temperature in a regression of this year's ring width on this year's and last year's summer temperature",
+   "excludes": "the same-year slope, and any effect of the ring's own past unless it is added to the regression"
+  }
+ ]
+}

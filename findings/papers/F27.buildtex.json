@@ -1,0 +1,65 @@
+{
+ "schema": "buildlang.buildtex-receipt/v0",
+ "source": {
+  "path": "F27.bld",
+  "sha256": "a648cea4dcbe3eb20eb1c0bd4c1201634852c1e5921b7f834394743b0b698f48"
+ },
+ "ir_sha256": "56c9bd8945c70740f84e71fc6fec26365d4670882926e5cb497da668a8efd825",
+ "theme": "paper",
+ "overrides": [],
+ "outputs": {
+  "F27.pdf": "d09dea91f6a8d1b4f450329ef61092a8f35f5d7f050f7218c5201e42b47baaa3"
+ },
+ "pdf_metadata": {
+  "pdfa": false,
+  "creation_date": "D:20261109000000Z"
+ },
+ "facts": {
+  "pages": 9,
+  "pages_layout": 9,
+  "overfull": [],
+  "underfull": 0,
+  "missing_glyphs": [],
+  "glyph_fallbacks": [],
+  "math_errors": [],
+  "fonts": [
+   {
+    "name": "AKDLLI+AccessionDisplay-Master",
+    "embedded": true
+   },
+   {
+    "name": "CKPOGJ+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "GCBMEL+NotoSansMath-Regular",
+    "embedded": true
+   },
+   {
+    "name": "IEDHNF+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "JCIDHF+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "NEDDPP+HankenGrotesk-Regular",
+    "embedded": true
+   }
+  ],
+  "images": 3,
+  "blind_text_runs": 0,
+  "reading_order": true,
+  "blocks_missing_from_text": [],
+  "pdf_bytes": 558322
+ },
+ "failed": [],
+ "notes": [
+  "buildc run F27.bld -> F27.doc.tsv",
+  "press: relief 1275x475 px at 150 dpi; 0 blind line(s); foil colour source: fallback constant"
+ ],
+ "external_programs": [
+  "buildc"
+ ]
+}

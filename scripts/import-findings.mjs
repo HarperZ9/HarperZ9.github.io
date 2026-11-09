@@ -1,44 +1,86 @@
 #!/usr/bin/env node
-// Bring the findings write-ups from the workshop into findings/src/, ready for scripts/build-findings.mjs.
+// Bring each finding's public inputs from the workshop into the site, ready for scripts/record-findings.mjs.
 //
-//   node scripts/import-findings.mjs --src <folder of write-ups>   (or FINDINGS_SRC=<folder>)
+//   node scripts/import-findings.mjs --papers <papers folder> --register <PUBLICATION-REGISTER.json>
 //
-// Each write-up is one Markdown file with a front block (id, slug, title, tier, fields, date_found, standfirst,
-// status, figure, data, internal_evidence) and nine sections. The import drops internal_evidence (the workshop's
-// own file list), skips any piece marked status: drop, and refuses a piece whose public text names a local path,
-// carries an em or en dash, or lacks a section. A refused piece stops the import, so nothing half-checked lands.
-import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
+// Per finding (a folder <id>/ with paper.txt): paper.txt, terms.json and the chart figures the paper names go to
+// findings/src/<id>/; the typeset PDF, its BuildTeX source <id>.bld and its build receipt go to findings/papers/,
+// beside one copy of the shared doc.bld module the source imports. The shared glossary goes to
+// findings/data/glossary.json. The register rows for these findings go to findings/data/register.json with the
+// workshop's file names taken out. Result files are never copied: the papers carry their numbers, and each paper's
+// Verified section says they were re-read from the result files. Period plates are not copied either; the site
+// already carries them as media/findings/traxler/*.webp (findings/figures.json maps a finding to its leaf).
+// A file whose public text names a local path stops the import, so nothing half-checked lands.
+import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const site = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const arg = (k) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : null; };
-const SRC = arg("--src") ?? process.env.FINDINGS_SRC;
-if (!SRC || !existsSync(SRC)) { console.error("pass --src <folder of write-ups> (or set FINDINGS_SRC)"); process.exit(2); }
-const OUT = path.join(site, "findings/src");
+const PAPERS = arg("--papers") ?? process.env.FINDINGS_PAPERS;
+const REGISTER = arg("--register") ?? process.env.FINDINGS_REGISTER;
+if (!PAPERS || !existsSync(PAPERS) || !REGISTER || !existsSync(REGISTER)) {
+  console.error("pass --papers <papers folder> and --register <PUBLICATION-REGISTER.json>");
+  process.exit(2);
+}
+// a drive path (C:\ or C:/, not the "m:\" of inline maths), a home folder, a UNC path or a workshop folder name
+const LOCAL = /(?<![A-Za-z{])[A-Za-z]:[\\/](?![\\/])|\/Users\/|\\\\[A-Za-z]|mission-control|\.scratch/;
+const WORKSHOP = /\b\d{4}-\d{2}-\d{2}-[a-z0-9][a-z0-9-]*(?:\/[^\s,;)]*)?/g;
+const DASH = /[\u2013\u2014]/;
+const SRC = path.join(site, "findings/src"), OUT = path.join(site, "findings/papers"), DATA = path.join(site, "findings/data");
 
-export const SECTIONS = ["What it means", "The question", "How we tested it", "Controls and planted checks", "Result", "Limits", "Verified", "Reproduce", "Sources"];
-// a drive path (C:\ or C:/, never the "s:/" inside https://), a home folder, a UNC path or a workshop folder name
-const LOCAL = /(?<![A-Za-z])[A-Za-z]:[\\/](?![\\/])|\/Users\/|\\\\|mission-control|\.scratch/;
-const DASH = /[–—]/;
+function figuresOf(paper) {
+  return [...paper.matchAll(/^!\[fig:\S+[^\]]*\]\(([^)]+)\)/gm)].map((m) => m[1]).filter((f) => !f.startsWith("plate-"));
+}
+
+function checkText(name, text, problems) {
+  if (LOCAL.test(text)) problems.push(`${name}: names a local path`);
+  if (DASH.test(text)) problems.push(`${name}: em or en dash`);
+}
+
+// the register row as the site may carry it: no workshop file names, no internal paths
+function publicRow(row) {
+  const keep = ["f", "tier", "strong_b", "tier_reason", "fields", "reviewer_attack", "raise_tier", "does_not_prove",
+    "scorer", "scored_by", "evidence", "literature", "data_licence", "verified_numbers", "corrections", "correction_pass",
+    "rung", "ladder", "venue_type"];
+  const out = {};
+  for (const k of keep) if (row[k] !== undefined && row[k] !== null) out[k] = row[k];
+  if (out.evidence && typeof out.evidence === "object") { const { source, ...rest } = out.evidence; out.evidence = rest; }
+  else delete out.evidence;
+  if (row.publication) out.publication = { date: row.publication.date, wave: row.publication.wave, status: row.publication.status };
+  return JSON.parse(JSON.stringify(out), (k, v) => (typeof v === "string" ? v.replace(WORKSHOP, "internal file").replace(/(?:\.\.\/)+internal file/g, "internal file") : v));
+}
 
 const problems = [];
-const kept = [];
-mkdirSync(OUT, { recursive: true });
-for (const f of readdirSync(OUT)) if (f.endsWith(".md")) rmSync(path.join(OUT, f));
-for (const name of readdirSync(SRC).filter((f) => /^F\d+-.+\.md$/.test(f)).sort()) {
-  const text = readFileSync(path.join(SRC, name), "utf8").replace(/\r/g, "");
-  const m = text.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
-  if (!m) { problems.push(`${name}: no front block`); continue; }
-  const front = m[1].split("\n").filter((l) => !l.startsWith("internal_evidence:")).join("\n");
-  const status = (front.match(/^status:\s*(\S+)/m) || [])[1];
-  if (status === "drop") continue;
-  const out = `---\n${front}\n---\n${m[2].trim()}\n`;
-  if (LOCAL.test(out)) problems.push(`${name}: names a local path`);
-  if (DASH.test(out)) problems.push(`${name}: em or en dash`);
-  for (const s of SECTIONS) if (!new RegExp(`^## ${s}$`, "m").test(m[2])) problems.push(`${name}: no "## ${s}" section`);
-  kept.push([name, out]);
+const ids = readdirSync(PAPERS).filter((d) => /^F\d+$/.test(d) && existsSync(path.join(PAPERS, d, "paper.txt"))).sort();
+const register = JSON.parse(readFileSync(REGISTER, "utf8"));
+const rows = Object.fromEntries(register.rows.filter((r) => ids.includes(r.f)).map((r) => [r.f, r]));
+const plan = [];
+for (const id of ids) {
+  const dir = path.join(PAPERS, id), paper = readFileSync(path.join(dir, "paper.txt"), "utf8").replace(/\r/g, "");
+  if (!rows[id]) { problems.push(`${id}: no register row`); continue; }
+  if (rows[id].publication?.status === "drop") continue;
+  checkText(`${id}/paper.txt`, paper, problems);
+  const terms = path.join(dir, "terms.json");
+  if (existsSync(terms)) checkText(`${id}/terms.json`, readFileSync(terms, "utf8"), problems);
+  const files = [["paper.txt", SRC], ...(existsSync(terms) ? [["terms.json", SRC]] : []), ...figuresOf(paper).map((f) => [f, SRC]),
+    [`${id}.pdf`, OUT], [`${id}.bld`, OUT], [`${id}.buildtex.json`, OUT]];
+  for (const [f] of files) if (!existsSync(path.join(dir, f))) problems.push(`${id}: missing ${f}`);
+  checkText(`${id}/${id}.buildtex.json`, readFileSync(path.join(dir, `${id}.buildtex.json`), "utf8"), problems);
+  plan.push([id, dir, files]);
 }
 if (problems.length) { console.error(problems.join("\n")); process.exit(1); }
-for (const [name, out] of kept) writeFileSync(path.join(OUT, name), out);
-console.log(`findings: ${kept.length} write-ups imported into findings/src`);
+
+rmSync(SRC, { recursive: true, force: true });
+mkdirSync(OUT, { recursive: true }); mkdirSync(DATA, { recursive: true });
+for (const f of readdirSync(OUT)) rmSync(path.join(OUT, f));
+for (const [id, dir, files] of plan) {
+  mkdirSync(path.join(SRC, id), { recursive: true });
+  for (const [f, to] of files) copyFileSync(path.join(dir, f), path.join(to === SRC ? path.join(SRC, id) : OUT, f));
+}
+copyFileSync(path.join(PAPERS, plan[0][0], "doc.bld"), path.join(OUT, "doc.bld"));
+copyFileSync(path.join(PAPERS, "glossary.json"), path.join(DATA, "glossary.json"));
+const reg = { about: "Publication register rows for the published findings, public fields only.", built: register.built,
+  ladder_rules: register.ladder_rules, rows: plan.map(([id]) => publicRow(rows[id])) };
+writeFileSync(path.join(DATA, "register.json"), JSON.stringify(reg, null, 1) + "\n");
+console.log(`findings: ${plan.length} papers imported into findings/src and findings/papers`);

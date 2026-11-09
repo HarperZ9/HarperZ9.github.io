@@ -1,0 +1,65 @@
+{
+ "schema": "buildlang.buildtex-receipt/v0",
+ "source": {
+  "path": "F508.bld",
+  "sha256": "a9a7cbf9bbcc7dce08bc0fde548462c723f3e036fc50f8387b12347d37dbe75d"
+ },
+ "ir_sha256": "c7823d5807b56a1c12479aa05e2d7d78ccb7b0853392b33fc056191d5fc20b9e",
+ "theme": "paper",
+ "overrides": [],
+ "outputs": {
+  "F508.pdf": "63a28ee325a02899f7cbad4e24e273beabe79989f01848471f6a92cf43350fc7"
+ },
+ "pdf_metadata": {
+  "pdfa": false,
+  "creation_date": "D:20261109000000Z"
+ },
+ "facts": {
+  "pages": 9,
+  "pages_layout": 9,
+  "overfull": [],
+  "underfull": 0,
+  "missing_glyphs": [],
+  "glyph_fallbacks": [],
+  "math_errors": [],
+  "fonts": [
+   {
+    "name": "AKDEPM+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "BPCMLH+NotoSansMath-Regular",
+    "embedded": true
+   },
+   {
+    "name": "EIJKCC+AccessionDisplay-Master",
+    "embedded": true
+   },
+   {
+    "name": "IKIBOI+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "NMLPIF+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "OABIKG+HankenGrotesk-Regular",
+    "embedded": true
+   }
+  ],
+  "images": 3,
+  "blind_text_runs": 0,
+  "reading_order": true,
+  "blocks_missing_from_text": [],
+  "pdf_bytes": 535202
+ },
+ "failed": [],
+ "notes": [
+  "buildc run F508.bld -> F508.doc.tsv",
+  "press: relief 1275x475 px at 150 dpi; 0 blind line(s); foil colour source: fallback constant"
+ ],
+ "external_programs": [
+  "buildc"
+ ]
+}

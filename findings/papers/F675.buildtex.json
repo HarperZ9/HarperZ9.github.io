@@ -1,0 +1,65 @@
+{
+ "schema": "buildlang.buildtex-receipt/v0",
+ "source": {
+  "path": "F675.bld",
+  "sha256": "2522678cae5be2d96291bdbc7b6a2f49719c01b298a0c62600e201a45cdcd80d"
+ },
+ "ir_sha256": "d8c1fb42589409005bcca2259024e63769d2594321e139a9a27513a888f8008d",
+ "theme": "paper",
+ "overrides": [],
+ "outputs": {
+  "F675.pdf": "28aafe8cdbb9685fb973cf4d2dfae84111257f11e10d40968e945f3d4c932294"
+ },
+ "pdf_metadata": {
+  "pdfa": false,
+  "creation_date": "D:20261109000000Z"
+ },
+ "facts": {
+  "pages": 11,
+  "pages_layout": 11,
+  "overfull": [],
+  "underfull": 0,
+  "missing_glyphs": [],
+  "glyph_fallbacks": [],
+  "math_errors": [],
+  "fonts": [
+   {
+    "name": "AGKMAN+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "HEAOFI+AccessionDisplay-Master",
+    "embedded": true
+   },
+   {
+    "name": "ICEDFD+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "KNAFIF+NotoSansMath-Regular",
+    "embedded": true
+   },
+   {
+    "name": "NAGGIB+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "OBNFJJ+HankenGrotesk-Regular",
+    "embedded": true
+   }
+  ],
+  "images": 3,
+  "blind_text_runs": 0,
+  "reading_order": true,
+  "blocks_missing_from_text": [],
+  "pdf_bytes": 597296
+ },
+ "failed": [],
+ "notes": [
+  "buildc run F675.bld -> F675.doc.tsv",
+  "press: relief 1275x475 px at 150 dpi; 0 blind line(s); foil colour source: fallback constant"
+ ],
+ "external_programs": [
+  "buildc"
+ ]
+}

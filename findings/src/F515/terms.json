@@ -1,0 +1,32 @@
+{
+ "_about": "Field terms for F515, same shape as papers/glossary.json.",
+ "terms": {
+  "bpc": {"term": "bits per character", "field": "information theory and data compression",
+   "definition": "the length of a compressed text in bits divided by the number of characters in the original; lower is better, and 8 is the cost of plain one-byte text",
+   "excludes": "bits per token or per byte, which divide by a different count"},
+  "arithmetic-coding": {"term": "arithmetic coding", "field": "data compression",
+   "definition": "a method that turns a model's probability for each next symbol into a single binary number, so a symbol given probability p costs close to minus log2 p bits, and a decoder with the same model recovers the text exactly",
+   "excludes": "codes that give each symbol a fixed whole number of bits, such as Huffman codes"},
+  "ideal-code-length": {"term": "ideal code length", "field": "information theory",
+   "definition": "the sum over a text of minus log2 of the probability the model gave to each symbol that came next; a real arithmetic coder comes within a few bits of it",
+   "excludes": "a measured file size, and any cost of storing the model"},
+  "ppm": {"term": "PPM", "field": "data compression",
+   "definition": "prediction by partial matching, a compressor that predicts each character from counts of what followed the same preceding characters, falling back to shorter contexts when a longer one has not been seen; here method C with exclusion and contexts of up to 5 characters",
+   "excludes": "models with learned weights, such as neural language models"},
+  "xz": {"term": "xz", "field": "data compression software",
+   "definition": "a general-purpose file compressor using the LZMA method, which replaces repeated strings with references to earlier copies; here at its strongest preset",
+   "excludes": "any model of language beyond repeated byte strings"},
+  "token": {"term": "token", "field": "natural language processing",
+   "definition": "the unit a language model reads and predicts, a whole word, part of a word or a single character taken from a fixed vocabulary of tens of thousands of pieces",
+   "excludes": "a character or a byte"},
+  "memorisation": {"term": "memorisation", "field": "machine learning; in evaluation also called training-data contamination",
+   "definition": "a model's ability to predict a specific text because that text, or close copies of it, was in its training data, as distinct from predicting text of the same kind it has not seen",
+   "excludes": "any claim about how the model stores the text internally"},
+  "post-hoc": {"term": "post hoc control", "field": "research method",
+   "definition": "a control added after the first results were seen; it can test an explanation but carries less weight than a control fixed in advance, because the choice of control could follow the result",
+   "excludes": "controls named in the preregistration"},
+  "payback": {"term": "payback length", "field": "our usage, after the two-part code of minimum description length",
+   "definition": "the number of characters a model must compress before the bits it saves over another compressor add up to the size of the model itself, when the model has to be sent along with the message",
+   "excludes": "a compression ratio on one text, which ignores the cost of the model"}
+ }
+}

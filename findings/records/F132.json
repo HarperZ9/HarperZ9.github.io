@@ -1,0 +1,580 @@
+{
+ "schema": "research-record/1",
+ "built": "2026-11-09 by scripts/record-findings.mjs from paper.txt, the register row and the findings ledger",
+ "document": {
+  "id": "F132",
+  "kind": "finding",
+  "title": "Transfer entropy could not tell which way climate and tree rings are linked",
+  "standfirst": "Summer warmth drives tree growth, with no meaningful effect the other way, so tree rings make a clean test for tools that claim to read causal direction from data. A standard transfer entropy estimator failed that test on 135 sites, including on synthetic data where we planted the true direction ourselves.",
+  "date_found": "2026-10-31",
+  "fields": [
+   "ecology-climate",
+   "information-theory",
+   "method"
+  ],
+  "tier": "D",
+  "tier_reason": "Locked prereg, kill fired, truth anchor failed: a real negative on real data. Power at about 78 years and r 0.2 is low, and TE's direction failures are known generally, so the news is limited to the proxy setting.",
+  "rung": "killed",
+  "rung_reason": "KSG transfer entropy as a direction reader on annual rings: kill 0.75 fired on planted truth.",
+  "outcome": "failed",
+  "bound": "At the real coupling strength the false direction ranked at or above the true one at 52.6 percent of planted sites, so the estimator gets no direction-reading status on data like these.",
+  "objection": "Power is low at about 78 years and a ring-temperature correlation near 0.2. This is a failure on short annual series. A longer or monthly design might behave differently.",
+  "objection_source": "the paper's first stated limitation; no reviewer attack is on file",
+  "would_change": "A longer-series or monthly design with the anchor at real strength; test the synthetic D statistic of PU30-130 under a new lock.",
+  "sections": [
+   {
+    "id": "reader",
+    "title": "What this means for a reader",
+    "role": "lead",
+    "paragraphs": [
+     "When a study reports that one yearly record drives another because transfer entropy is larger in one direction, ask whether the method was first run on a case where the direction is known. On short, noisy annual records like tree rings, this standard estimator could not tell the right direction from the wrong one, even when we built the right answer into the data ourselves."
+    ]
+   },
+   {
+    "id": "abstract",
+    "title": "Abstract",
+    "role": "argument",
+    "paragraphs": [
+     "Transfer entropy is widely used to read which of two time series drives the other. Tree rings give a case where the answer is known: summer warmth shapes the ring laid down that year, and the ring has no meaningful effect on the following summer. We ran a nearest-neighbour transfer entropy estimator on 135 ring-width chronologies from the International Tree-Ring Data Bank, about 78 years each, against June to August temperature, under a plan hash-locked before any estimate on real data. {c1}On real data the estimator detected climate to ring at 15.6 percent of sites (8.8 to 26.2) and ring to climate at 11.9 percent (4.9 to 22.5), above the 10 percent reverse limit fixed in advance.{/c1} {c3}Read backwards in time, the same series gave 19.3 and 22.2 percent, so the estimator was reading no arrow of time.{/c3} {c2}With a climate-to-ring coupling planted in synthetic rings, the false direction ranked at or above the true one at 52.6 percent of sites at the real coupling strength and at 40.0 percent with strong coupling, where direction accuracy reached 0.600 against the 0.8 required.{/c2} The estimator detected coupling and misread its direction. It gets no direction-reading status for this kind of data."
+    ]
+   },
+   {
+    "id": "intro",
+    "title": "Introduction",
+    "role": "argument",
+    "paragraphs": [
+     "Schreiber {cite:r1} introduced {g:transfer-entropy}transfer entropy{/g} as a measure that separates information exchanged between two systems from information they share through common history, and showed that it can tell a driving element from a responding one. It is now used in climate, ecology, neuroscience and finance to assign a direction to a link between two series. For continuous data it is usually estimated with the nearest-neighbour method of Kraskov, Stoegbauer and Grassberger {cite:r2}, in the conditional form of Frenzel and Pompe {cite:r3}.",
+     "The method has known failure modes. Smirnov {cite:r4} examined spurious causalities with transfer entropy; later papers that cite that work report that the method can fail to recover preset one-way couplings and can give the wrong direction. We read Smirnov's paper only through those citing papers and its title. Runge and colleagues {cite:r6} reviewed causal inference from time series in the Earth sciences and set out the conditions under which such methods can be trusted. Sugihara and colleagues {cite:r5} proposed {g:ccm}convergent cross mapping{/g} as a direction test for weakly coupled ecological systems, and we ran it beside transfer entropy as a second probe.",
+     "What a user of these methods needs is a {g:known-answer-test}known-answer test{/g} on data like their own. Annual tree rings and summer temperature give one. Summer warmth shapes ring width at cold sites, and a ring cannot set the weather. Our searches, run on 9 November 2026, found general studies of transfer entropy direction failure and no planted-direction test on ring-width data. That is a search result, not proof that none exists."
+    ]
+   },
+   {
+    "id": "prereg",
+    "title": "Preregistration and design",
+    "role": "argument",
+    "paragraphs": [
+     "The plan was written as a {g:preregistration}preregistration{/g} and hash-locked on 31 October 2026 at 05:19 UTC, before any transfer entropy, cross mapping or lagged statistic was computed on the real data. Before the lock the estimator was tested on synthetic autoregressive series only, and from the real data only site counts and series lengths were read.",
+     "The decision the study informs was written into the same file: may a direction instrument of this kind be used to read the direction of links between other ecological series? The rule set in advance was yes only if the as-written {g:kill-condition}kill condition{/g} and the planted-truth anchor both pass, or, for a labelled variant, if the variant's kill condition and its anchor both pass. Otherwise the instrument gets no direction-reading status.",
+     "The plan forecast that lag 0 would break the test. A summer and the ring of the same year are simultaneous at annual resolution, so a same-year term carries no time order and can show as a detection in both directions. The design therefore named one variant in advance, the same test with lag 0 removed, and stated that no other variant would be tried."
+    ]
+   },
+   {
+    "id": "data",
+    "title": "Data and provenance",
+    "role": "argument",
+    "paragraphs": [
+     "Rings: ring-width chronologies from the International Tree-Ring Data Bank {cite:r7}, held by NOAA's National Centers for Environmental Information as public data with a request to cite the contributors. A site entered if its series was gap-free from 1901 with at least 50 years. This gave 135 sites in 57 two-degree blocks: 51 in the Alps, 24 in Fennoscandia and 60 elsewhere, with series of 64 to 91 years and a median of 78.",
+     "Climate: June to August mean temperature from the nearest cell of CRU TS 4.10 {cite:r8} {cite:r9}, released under the Open Database License 1.0 with attribution to the Climatic Research Unit, University of East Anglia. June to August precipitation was run as a secondary, descriptive target.",
+     "Both series were passed through a {g:high-pass}high-pass filter{/g}, each minus a Gaussian smooth with a width of 10 years, and scaled to unit variance. The mean absolute same-year correlation between ring and temperature was 0.218."
+    ]
+   },
+   {
+    "id": "methods",
+    "title": "Methods",
+    "role": "argument",
+    "paragraphs": [
+     "## The estimator",
+     "For a source series {m:X} and a target {m:Y}, the transfer entropy at lag {m:l} is the conditional information",
+     "$$ T_{X \\to Y}(l) = I(Y_t ; X_{t-l} | Y_{t-1}) {eq:te}",
+     "estimated in bits with the {g:ksg-conditional}KSG estimator in conditional form{/g} with {m:k = 4}. It was computed at lags 0, 1, 2 and 3 on one common set of years. The site statistic is the largest of the four:",
+     "$$ T_{max} = max(T(0), T(1), T(2), T(3)) {eq:max}",
+     "Forward means climate to ring and reverse means ring to climate.",
+     "## Surrogate test at each site",
+     "Each site statistic was compared with 199 {g:iaaft}iAAFT surrogates{/g} of the source series, each run through the same estimator and maximised over the same lags. The p value is",
+     "$$ p = \\frac{k + 1}{n + 1} {eq:p}",
+     "with {m:k} surrogates at or above the real statistic and {m:n = 199}, so the smallest possible value is 0.005. A site counts as a detection at p 0.05 or below. The {g:detection-rate}detection rate{/g} of an arm is the share of its 135 sites with a detection, and its interval is a {g:block-bootstrap}block bootstrap{/g} over the 57 two-degree blocks.",
+     "## Direction accuracy",
+     "For each arm, {g:direction-accuracy}direction accuracy{/g} is",
+     "$$ A = \\frac{m}{N} {eq:acc}",
+     "where {m:m} is the number of sites whose forward statistic exceeds the reverse one and {m:N = 135}. A coin gives 0.5.",
+     "## Cross mapping",
+     "Convergent cross mapping used an embedding dimension of 3, a delay of 1 year, the full library, leave-one-out prediction and 99 iAAFT surrogates of the predicted series. It was scored with the same detection and accuracy rules.",
+     "## The variant without lag 0",
+     "The preregistered variant is the same test with lag 0 removed from both directions, so eq. {ref:eq:max} takes the largest of lags 1 to 3 for the real data and for the surrogates. It was computed in the same run and is labelled as a variant throughout."
+    ]
+   },
+   {
+    "id": "controls",
+    "title": "Controls and planted checks",
+    "role": "argument",
+    "paragraphs": [
+     "Every {g:control}control{/g} and synthetic arm ran in the same run as the real data.",
+     "- {g:site-pairing}Far-site pairing{/g}: 20 re-pairings in which each ring series meets the climate of a random site at least 1,000 km away, with 99 surrogates each. Its 95th percentile is the bar the real forward rate must beat.",
+     "- {g:time-reversal}Time reversal{/g}: both series read backwards. A method that reads direction from lag order should weaken or flip.",
+     "- No coupling: independent iAAFT copies of each site's ring and climate series.",
+     "- Shared trend: independent copies with a shared line and random walk added before the high-pass.",
+     "- Common driver: a third iAAFT series drives both ring and climate with a squared coupling of 0.2 and no direct link.",
+     "The {g:planted-check}planted checks{/g} build synthetic rings with the true direction known. Each starts from an iAAFT copy {m:S_t} of the site's ring series and adds the site's own climate {m:C_t}:",
+     "$$ R_t = S_t + a C_t + 0.4 a C_{t-1} {eq:plant}",
+     "At real strength, {m:a} is the site's real same-year correlation. In the strong arm the two coefficients are 0.6 and 0.3. Each synthetic arm was drawn once per site.",
+     "The planted anchor passes only if, in the strong arm, the forward rate exceeds 0.8 and direction accuracy exceeds 0.8, and if the no-coupling and shared-trend arms keep both rates at or below 0.10."
+    ]
+   },
+   {
+    "id": "results",
+    "title": "Results",
+    "role": "argument",
+    "paragraphs": [
+     "Table {ref:tab:rates} gives the detection rates and direction accuracy in every arm, and Figure {ref:fig:rates} draws the rates with their intervals.",
+     "::table tab:rates cols=0.3,0.25,0.25,0.2 Detection rates over 135 sites, with block-bootstrap 95% intervals, and direction accuracy, as written (lags 0 to 3).\nArm ¦ Climate to ring ¦ Ring to climate ¦ Accuracy\nReal data ¦ 0.156 (0.088 to 0.262) ¦ 0.119 (0.049 to 0.225) ¦ 0.519\nReal data, time reversed ¦ 0.193 (0.128 to 0.280) ¦ 0.222 (0.154 to 0.327) ¦ 0.511\nNo coupling ¦ 0.074 (0.034 to 0.115) ¦ 0.037 (0.010 to 0.065) ¦ 0.578\nShared trend ¦ 0.126 (0.072 to 0.191) ¦ 0.170 (0.109 to 0.250) ¦ 0.489\nCommon driver ¦ 0.059 (0.023 to 0.112) ¦ 0.096 (0.049 to 0.154) ¦ 0.541\nPlanted, real strength ¦ 0.193 (0.104 to 0.315) ¦ 0.185 (0.108 to 0.292) ¦ 0.474\nPlanted, strong ¦ 0.978 (0.954 to 1.000) ¦ 0.919 (0.857 to 0.963) ¦ 0.600\nReal precipitation ¦ 0.067 (0.028 to 0.115) ¦ 0.096 (0.053 to 0.147) ¦ 0.578\n::end",
+     "![fig:rates width=0.98 alt=Paired horizontal bars of forward and reverse detection rates for seven arms, with a dashed line at 0.10](fig-rates.png) Detection rates in each arm, climate to ring (navy) and ring to climate (ochre), with block-bootstrap 95% intervals. The dashed line is the 0.10 limit. Drawn from the run's result file.",
+     "{c1}On real data the estimator detected climate to ring at 15.6 percent of sites (8.8 to 26.2) and ring to climate at 11.9 percent (4.9 to 22.5), above the 10 percent reverse limit fixed in advance.{/c1} The forward rate beat the far-site pairing, whose mean was 0.056 and 95th percentile 0.082 (p 0.048, the smallest value 20 pairings allow). The reverse rate failed the limit by a narrow margin, and its interval spans 0.10. The kill condition fired. Direction accuracy was 0.519 against a coin's 0.5.",
+     "{c3}Read backwards in time, the same series gave 19.3 and 22.2 percent, so the estimator was reading no arrow of time.{/c3} The mean transfer entropy at lag 0 was 0.044 bits in both directions, which fits the forecast that the same-year term carries no order.",
+     "The planted anchor failed. {c2}With a climate-to-ring coupling planted in synthetic rings, the false direction ranked at or above the true one at 52.6 percent of sites at the real coupling strength and at 40.0 percent with strong coupling, where direction accuracy reached 0.600 against the 0.8 required.{/c2} With strong coupling, detection rose to 0.978 forward and 0.919 reverse: the estimator saw the coupling and could not place its direction. The no-coupling arm stayed inside its limit (0.074 and 0.037). {c5}The shared-trend world produced 12.6 and 17.0 percent, above the 0.10 limit even after the high-pass.{/c5} The common-driver arm stayed under 0.10 (0.059 and 0.096). At a coupling near 0.2 this says more about low power than about any ability to separate a shared driver from a direct link.",
+     "Figure {ref:fig:acc} sets direction accuracy in each arm against the coin and the required bar.",
+     "![fig:acc width=0.98 alt=Horizontal bars of direction accuracy for seven readings, none reaching the dashed line at 0.8](fig-accuracy.png) Direction accuracy for transfer entropy as written (navy), the variant without lag 0 (grey) and convergent cross mapping (ochre). The dotted line is a coin and the dashed line the preregistered bar.",
+     "{c4}The variant without lag 0 passed on real data, 8.9 percent forward and 3.7 percent reverse, and missed the planted effect: with strong coupling it detected the forward link at 2.2 percent of sites, so its pass cannot be credited.{/c4} Its real forward rate beat its pairing 95th percentile of 0.060 and its accuracy was 0.533. In the planted strong arm its accuracy was 0.630, and its shared-trend rates were 0.104 both ways, just over the limit.",
+     "Convergent cross mapping pointed the wrong way on real data: 18.5 percent forward against 28.9 percent reverse, accuracy 0.319. With strong planted coupling its accuracy was 0.378.",
+     "Correcting across sites with the {g:benjamini-hochberg}Benjamini-Hochberg rule{/g} left no detections on real data in any direction. With 199 surrogates the smallest p is 0.005, so the correction over 135 sites can reject only when a large share of sites sit near that floor. It did so in the strong planted arm (0.978 forward) and nowhere in the real data. Over the six preregistered family tests, the reverse rate against its nominal level (q 0.002) and both cross-mapping rates (q below 1e-7) were rejected; the forward and variant-forward rates against the pairing gave q 0.057, limited by the 20-pairing floor.",
+     "By region, Fennoscandia, where the mean same-year correlation was 0.318, gave 0.375 forward and 0.292 reverse; the Alps 0.137 both ways; other sites 0.083 and 0.033.",
+     "Table {ref:tab:forecast} sets the forecasts written before the run against the outcomes.",
+     "::table tab:forecast cols=0.42,0.3,0.28 Forecasts fixed in the preregistration against what the run gave.\nQuantity ¦ Forecast ¦ Outcome\nForward rate, as written ¦ 0.35 (0.20 to 0.55) ¦ 0.156\nReverse rate, as written ¦ 0.30 (0.15 to 0.50) ¦ 0.119\nKill condition fires ¦ probability 0.75 ¦ fired\nForward rate above 0.5 fails ¦ probability 0.8 ¦ failed\nVariant forward rate ¦ 0.15 (0.07 to 0.30) ¦ 0.089\nVariant reverse rate ¦ 0.07 (0.03 to 0.12) ¦ 0.037\nVariant accuracy ¦ 0.58 (0.50 to 0.68) ¦ 0.533\nVariant kill condition passes ¦ probability 0.45 ¦ passed\nCross mapping direction test passes ¦ probability 0.25 ¦ failed\nPlanted strong forward rate ¦ above 0.9 ¦ 0.978\nPlanted real-strength forward rate ¦ 0.35 ¦ 0.193\nShared trend under 0.10 ¦ expected ¦ no, 0.126 and 0.170\nCommon driver above 0.10, failing ¦ probability 0.85 ¦ passed\n::end"
+    ]
+   },
+   {
+    "id": "discussion",
+    "title": "Discussion",
+    "role": "argument",
+    "paragraphs": [
+     "The test has a known answer, and the estimator did not find it. On real data the two directions were detected at similar rates, reversing time made no difference, and when we planted the right direction the estimator ranked the wrong one at or above it at about half the sites. This is an {g:honest-null}honest null{/g}: the method's failure on this kind of data, measured against a truth we built in.",
+     "Two mechanisms fit the pattern. The same-year term is symmetric, as forecast, and it dominates the estimate at these lengths. The lagged terms are small, and conditioning on the ring's own previous year can absorb a planted lag-one effect, because the previous ring already holds the previous summer. That second reading is an inference from a look after the run: real data showed mean transfer entropy at lag 1 of 0.035 bits forward and 0.002 reverse, an asymmetry in the known direction, while the planted lag-one arms showed about 0.01 or less. We did not test it.",
+     "The result agrees in kind with the general failures reported for transfer entropy {cite:r4} and with the caution of Runge and colleagues {cite:r6}. Its contribution is narrower: a measured failure on public ring-width data, at the length and coupling strength that ring studies have.",
+     "Two later rounds asked the same question with a different instrument: lagged {g:granger}Granger tests{/g} read across the whole panel of sites at once. On 161 held-out high-latitude sites (finding F675), the panel index pointed from summer to ring at +1.206 (95% interval +0.871 to +1.591) against a far-pairing 95th percentile of +0.213, and flipped under time reversal. Two of its locked first-difference checks missed by small margins (0.584 against 0.6, and 0.117 against 0.10), so its own kill condition fired. On a third panel of 145 held-out sites (finding F676), with the planted prior-summer term fitted to the measured sign, the panel index was +1.204 against a pairing 95th percentile of +0.461, every binding check but one passed, and the kill condition did not fire. That panel method earned a limited direction status at that coupling strength. Neither round changes the result for transfer entropy read site by site."
+    ]
+   },
+   {
+    "id": "limits",
+    "title": "Limitations",
+    "role": "argument",
+    "paragraphs": [
+     "- Power is low at about 78 years and a ring-temperature correlation near 0.2. This is a failure on short annual series. A longer or monthly design might behave differently.",
+     "- Rings here are width only, which carries less of the summer warmth signal than wood density.",
+     "- With 199 surrogates the smallest p is 0.005, so correcting across 135 sites could reject nothing at the detection rates the real data showed. That is a design error we should have caught before the lock.",
+     "- The far-site pairing ran 20 times, so its p value cannot go below 0.048.",
+     "- The planted prior-summer term in eq. {ref:eq:plant} was positive. The later round on 161 sites found the real prior-summer coefficient negative at most sites (median -0.127, positive at 21.7 percent), so the planted world did not match the real lag structure at those sites.",
+     "- CRU temperature is a gridded product with thin station coverage in early decades. Ring-to-climate influence is taken as absent at site scale on these time scales; if it were not, the reverse rule would mislabel.",
+     "- Scoring was done by our own code and was not blind."
+    ]
+   },
+   {
+    "id": "appendix",
+    "title": "Appendix A. The preregistered verdicts",
+    "role": "evidence",
+    "paragraphs": [
+     "Each {g:verdict}verdict{/g} is a set of rules written before the run. A verdict passes only when every rule holds. Values are read from the run's result file.",
+     "::table tab:verdicts cols=0.2,0.5,0.18,0.12 Preregistered verdicts and the rules that decided them.\nVerdict ¦ Deciding rule ¦ Value ¦ Holds\nKill condition survived, as written ¦ forward rate above pairing 95th percentile (0.082); reverse rate at most 0.10 ¦ 0.156; 0.119 ¦ no\nPlanted anchor ¦ strong forward rate above 0.8; strong accuracy above 0.8; no-coupling rates at most 0.10; shared-trend rates at most 0.10 ¦ 0.978; 0.600; 0.074 and 0.037; 0.126 and 0.170 ¦ no\nVariant kill condition survived ¦ variant forward above its pairing 95th percentile (0.060); variant reverse at most 0.10; variant accuracy above 0.5 ¦ 0.089; 0.037; 0.533 ¦ yes\nVariant planted anchor ¦ the planted anchor's rules on the variant ¦ 0.022; 0.630; 0.067 and 0.074; 0.104 and 0.104 ¦ no\nCommon driver ¦ common-driver rates at most 0.10 ¦ 0.059; 0.096 ¦ yes\nVariant common driver ¦ variant common-driver rates at most 0.10 ¦ 0.037; 0.052 ¦ yes\nP1 ¦ forward rate above 0.5 ¦ 0.156 ¦ no\nP2 ¦ reverse rate at most 0.05 ¦ 0.119 ¦ no\nP3 cross mapping ¦ forward rate above reverse; reverse at most 0.10 ¦ 0.185 against 0.289 ¦ no\nDecision ¦ as written: kill condition and anchor both pass; or variant: both variant rules pass ¦ no; no ¦ no status\n::end"
+    ]
+   }
+  ]
+ },
+ "claims": [
+  {
+   "id": "c1",
+   "text": "On real data the estimator detected climate to ring at 15.6 percent of sites (8.8 to 26.2) and ring to climate at 11.9 percent (4.9 to 22.5), above the 10 percent reverse limit fixed in advance.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e1"
+   ]
+  },
+  {
+   "id": "c2",
+   "text": "With a climate-to-ring coupling planted in synthetic rings, the false direction ranked at or above the true one at 52.6 percent of sites at the real coupling strength and at 40.0 percent with strong coupling, where direction accuracy reached 0.600 against the 0.8 required.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e2"
+   ]
+  },
+  {
+   "id": "c3",
+   "text": "Read backwards in time, the same series gave 19.3 and 22.2 percent, so the estimator was reading no arrow of time.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e3"
+   ]
+  },
+  {
+   "id": "c4",
+   "text": "The variant without lag 0 passed on real data, 8.9 percent forward and 3.7 percent reverse, and missed the planted effect: with strong coupling it detected the forward link at 2.2 percent of sites, so its pass cannot be credited.",
+   "section": "results",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e4"
+   ]
+  },
+  {
+   "id": "c5",
+   "text": "The shared-trend world produced 12.6 and 17.0 percent, above the 0.10 limit even after the high-pass.",
+   "section": "results",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e5"
+   ]
+  }
+ ],
+ "evidence": [
+  {
+   "id": "e1",
+   "kind": "number",
+   "label": "The numbers in claim 1",
+   "value": "15.6; 8.8; 26.2; 11.9; 4.9; 22.5; 10",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e2",
+   "kind": "number",
+   "label": "The numbers in claim 2",
+   "value": "52.6; 40.0; 0.600; 0.8",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e3",
+   "kind": "number",
+   "label": "The numbers in claim 3",
+   "value": "19.3; 22.2",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e4",
+   "kind": "number",
+   "label": "The numbers in claim 4",
+   "value": "0; 8.9; 3.7; 2.2",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e5",
+   "kind": "number",
+   "label": "The numbers in claim 5",
+   "value": "12.6; 17.0; 0.10",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e6",
+   "kind": "number",
+   "label": "Sample",
+   "value": "135 sites, 57 2-degree blocks, median 78 years, 199 surrogates per test",
+   "check": {
+    "by": "the register's evidence fields",
+    "result": "not_checked",
+    "note": "as recorded in the publication register"
+   }
+  },
+  {
+   "id": "e7",
+   "kind": "number",
+   "label": "Main estimate and interval",
+   "value": "real forward 0.088 to 0.262, reverse 0.049 to 0.225 (block bootstrap)",
+   "check": {
+    "by": "the register's evidence fields",
+    "result": "not_checked",
+    "note": "as recorded in the publication register"
+   }
+  },
+  {
+   "id": "e8",
+   "kind": "number",
+   "label": "Forecast against outcome",
+   "value": "forward 0.35 got 0.156; reverse 0.30 got 0.119; kill 0.75 fired; Hc fail 0.85 did not fail",
+   "check": {
+    "by": "the register's evidence fields",
+    "result": "not_checked",
+    "note": "as recorded in the publication register"
+   }
+  },
+  {
+   "id": "e9",
+   "kind": "control",
+   "label": "Known-answer check",
+   "value": "planted direction arms: failed, accuracy 0.60 strong, 0.474 matched",
+   "check": {
+    "by": "the register's evidence fields",
+    "result": "not_checked",
+    "note": "as recorded in the publication register"
+   }
+  }
+ ],
+ "references": [
+  {
+   "id": "r1",
+   "key": "Schreiber 2000",
+   "kind": "paper",
+   "title": "Schreiber, T. (2000). Measuring information transfer. Physical Review Letters 85, 461. doi:10.1103/PhysRevLett.85.461",
+   "access": "snippet",
+   "target": "https://doi.org/10.1103/PhysRevLett.85.461",
+   "access_note": "abstracts, publisher pages and search summaries; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r2",
+   "key": "Kraskov 2004",
+   "kind": "paper",
+   "title": "Kraskov, A., Stögbauer, H. and Grassberger, P. (2004). Estimating mutual information. Physical Review E 69, 066138. doi:10.1103/PhysRevE.69.066138",
+   "access": "snippet",
+   "target": "https://doi.org/10.1103/PhysRevE.69.066138",
+   "access_note": "abstracts, publisher pages and search summaries; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r3",
+   "key": "Frenzel 2007",
+   "kind": "paper",
+   "title": "Frenzel, S. and Pompe, B. (2007). Partial mutual information for coupling analysis of multivariate time series. Physical Review Letters 99, 204101. doi:10.1103/PhysRevLett.99.204101",
+   "access": "snippet",
+   "target": "https://doi.org/10.1103/PhysRevLett.99.204101",
+   "access_note": "abstracts, publisher pages and search summaries; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r4",
+   "key": "Smirnov 2013",
+   "kind": "paper",
+   "title": "Smirnov, D. A. (2013). Spurious causalities with transfer entropy. Physical Review E 87, 042917.",
+   "access": "snippet",
+   "access_note": "abstracts, publisher pages and search summaries; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r5",
+   "key": "Sugihara 2012",
+   "kind": "paper",
+   "title": "Sugihara, G., May, R., Ye, H., Hsieh, C., Deyle, E., Fogarty, M. and Munch, S. (2012). Detecting causality in complex ecosystems. Science 338, 496-500. doi:10.1126/science.1227079",
+   "access": "snippet",
+   "target": "https://doi.org/10.1126/science.1227079",
+   "access_note": "abstracts, publisher pages and search summaries; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r6",
+   "key": "Runge 2019",
+   "kind": "paper",
+   "title": "Runge, J., Bathiany, S., Bollt, E. and others (2019). Inferring causation from time series in Earth system sciences. Nature Communications 10, 2553. doi:10.1038/s41467-019-10105-3",
+   "access": "snippet",
+   "target": "https://doi.org/10.1038/s41467-019-10105-3",
+   "access_note": "abstracts, publisher pages and search summaries; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r7",
+   "key": "International Tree-Ring Data Bank",
+   "kind": "dataset",
+   "title": "International Tree-Ring Data Bank. NOAA National Centers for Environmental Information, World Data Service for Paleoclimatology. Ring-width chronologies. https://www.ncei.noaa.gov/pub/data/paleo/treering/",
+   "access": "run",
+   "target": "https://www.ncei.noaa.gov/pub/data/paleo/treering/",
+   "licence": "ITRDB and CRU TS; terms not checked here"
+  },
+  {
+   "id": "r8",
+   "key": "Harris 2020",
+   "kind": "dataset",
+   "title": "Harris, I., Osborn, T. J., Jones, P. and Lister, D. (2020). Version 4 of the CRU TS monthly high-resolution gridded multivariate climate dataset. Scientific Data 7, 109. doi:10.1038/s41597-020-0453-3",
+   "access": "run",
+   "target": "https://doi.org/10.1038/s41597-020-0453-3",
+   "licence": "ITRDB and CRU TS; terms not checked here"
+  },
+  {
+   "id": "r9",
+   "key": "cruts",
+   "kind": "dataset",
+   "title": "Climatic Research Unit, University of East Anglia. CRU TS 4.10 monthly temperature and precipitation, 0.5 degree. Open Database License 1.0. https://crudata.uea.ac.uk/cru/data/hrg/",
+   "access": "run",
+   "target": "https://crudata.uea.ac.uk/cru/data/hrg/",
+   "licence": "ITRDB and CRU TS; terms not checked here"
+  },
+  {
+   "id": "r10",
+   "key": "F675",
+   "kind": "finding",
+   "title": "A panel test read climate driving tree rings correctly, and our own rule still failed it",
+   "target": "F675",
+   "access": "run"
+  }
+ ],
+ "relations": [
+  {
+   "from": "F675",
+   "to": "F132",
+   "type": "held",
+   "scope": "no direction-reading status",
+   "date": "2026-11-02",
+   "note": "On 161 held-out boreal sites the panel instrument's kill fired too; F132's block on direction readings stands."
+  },
+  {
+   "from": "F675",
+   "to": "F132",
+   "type": "questioned",
+   "scope": "account of the planted lag-1 arm",
+   "date": "2026-11-02",
+   "note": "Exploratory and post hoc: a negative prior-summer term adds to the Granger signal, so F132's absorption account holds only for same-sign terms, and its planted arm had the wrong sign for these stands."
+  },
+  {
+   "from": "F676",
+   "to": "F132",
+   "type": "extended",
+   "scope": "direction on rings, read on a panel",
+   "date": "2026-11-02",
+   "note": "A third round on 145 new sites: the lagged panel instrument passes every binding verdict but one and earns exclusion and forward status at that coupling strength."
+  },
+  {
+   "from": "F676",
+   "to": "F675",
+   "type": "narrowed",
+   "scope": "the exploratory negative prior-summer term",
+   "date": "2026-11-02",
+   "note": "On a third held-out panel the negative prior-summer term is species-dependent, not a panel result; the same instrument passes every binding verdict but one there."
+  }
+ ],
+ "corrections": [],
+ "versions": [
+  {
+   "n": 1,
+   "date": "2026-10-31",
+   "what": "entered in the findings ledger"
+  },
+  {
+   "n": 2,
+   "date": "2026-11-09",
+   "what": "paper version 1.0, first published",
+   "hash": "ce8fd604b0fb8a13d08f5d72d1c5a64015212b34ade4731ec9f0e4fc6e6229fc"
+  }
+ ],
+ "grade": {
+  "lowers": [
+   {
+    "domain": "blinding",
+    "text": "Not blind. BH across sites nearly unable to reject at 199 surrogates; noted after the lock",
+    "from": "register scorer.blind"
+   },
+   {
+    "domain": "missing control",
+    "text": "Controls: null arm working (0.074, 0.037); shared-trend arm failed (0.126, 0.170 against 0.10); time reversal 0.193, 0.222; 20-repeat pairing floor limits p.",
+    "from": "register evidence.controls"
+   },
+   {
+    "domain": "novelty",
+    "text": "Nearby work exists; novelty is not shown.",
+    "from": "register literature.verdict"
+   },
+   {
+    "domain": "single source",
+    "text": "The cited literature was read at the level of abstracts, publisher pages and search summaries; full texts were not read.",
+    "from": "paper Verified"
+   }
+  ],
+  "holds": [
+   {
+    "domain": "scoring",
+    "text": "Scored by code against rules fixed in advance.",
+    "from": "register scorer.who"
+   },
+   {
+    "domain": "preregistration",
+    "text": "Preregistered and hash-locked before the run (sha256 54fc1c57).",
+    "from": "paper Reproduction"
+   },
+   {
+    "domain": "replication",
+    "text": "Rechecked by F675 (no direction-reading status): On 161 held-out boreal sites the panel instrument's kill fired too; F132's block on direction readings stands.",
+    "from": "relations"
+   }
+  ]
+ },
+ "reproduce": {
+  "data": [
+   {
+    "name": "International Tree-Ring Data Bank",
+    "licence": "ITRDB and CRU TS; terms not checked here",
+    "url": "https://www.ncei.noaa.gov/pub/data/paleo/treering/"
+   },
+   {
+    "name": "Harris 2020",
+    "licence": "ITRDB and CRU TS; terms not checked here",
+    "url": "https://doi.org/10.1038/s41597-020-0453-3"
+   },
+   {
+    "name": "cruts",
+    "licence": "ITRDB and CRU TS; terms not checked here",
+    "url": "https://crudata.uea.ac.uk/cru/data/hrg/"
+   }
+  ],
+  "prereg": {
+   "hash": "54fc1c57bcd3fe569455c2bf4203e4a4c59054b3a81099266db058289a7089da",
+   "plan": "7a1ef29b4cc14024600c542bbe2fcfb706e7086845a4014fc501becb18884d4c"
+  },
+  "cost": "the analysis took about five minutes (315 seconds) on one desktop CPU.",
+  "steps": [
+   "Data: ITRDB ring-width chronologies gap-free from 1901 with at least 50 years; June to August temperature from the nearest CRU TS 4.10 cell.",
+   "High-pass both series with a 10-year Gaussian and scale them.",
+   "At each site compute eq. {ref:eq:te} both ways at lags 0 to 3 with the conditional KSG estimator, take eq. {ref:eq:max}, and compare with 199 iAAFT surrogates of the source by eq. {ref:eq:p}.",
+   "Repeat on the time-reversed series, the 20 far-site pairings and the synthetic arms, including the planted rings of eq. {ref:eq:plant}, and score eq. {ref:eq:acc}.",
+   "Repeat without lag 0 for the variant, and run convergent cross mapping with embedding dimension 3.",
+   "Preregistration SHA-256: 54fc1c57bcd3fe569455c2bf4203e4a4c59054b3a81099266db058289a7089da. Plan SHA-256: 7a1ef29b4cc14024600c542bbe2fcfb706e7086845a4014fc501becb18884d4c. Run 20261031T051913Z. Result file SHA-256: 420dc9e020273a5680c67fd7186e08b5de6e7862da2d7859ed5adf3de5843ef7."
+  ],
+  "not_rerun": "The study was not re-run for this paper."
+ },
+ "verified": {
+  "date": "2026-11-09",
+  "checks": [
+   {
+    "what": "On 9 November 2026 the site, block and length counts, every rate, interval and accuracy in Table {ref:tab:rates}, the pairing mean, percentile and p value, the lag-0 and lag-1 mean transfer entropy, the false-ranking shares, the variant's rates and accuracy, the cross-mapping rates and accuracy, the family q values, the per-site correction result and the regional rates were re-read from the run's result file and match the findings ledger.",
+    "by": "the paper's Verified pass",
+    "result": "match"
+   },
+   {
+    "what": "The forecasts in Table {ref:tab:forecast} were re-read from the preregistration.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   },
+   {
+    "what": "The SHA-256 of the preregistration matches the hash recorded in the result file, and the SHA-256 of the result file matches the abbreviated hash in the ledger.",
+    "by": "the paper's Verified pass",
+    "result": "match"
+   },
+   {
+    "what": "Both figures were drawn by a script that reads only that result file.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   },
+   {
+    "what": "The literature was found by searches run on 9 November 2026 and read at the level of abstracts, publisher pages and search summaries; Smirnov's paper was read only through papers that cite it.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   }
+  ],
+  "not_checked": [
+   "The later-round values in the discussion and limitations were read from the findings ledger and their published write-ups; their result files were not opened for this paper.",
+   "The study was not re-run for this paper."
+  ]
+ }
+}

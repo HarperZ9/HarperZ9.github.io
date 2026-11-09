@@ -1,0 +1,29 @@
+{
+ "_about": "Field terms for F344, same shape as papers/glossary.json.",
+ "terms": {
+  "uhecr": {"term": "ultra-high-energy cosmic ray", "field": "astroparticle physics",
+   "definition": "a charged particle from space, a proton or heavier nucleus, arriving with an energy above about 1e18 electronvolts; it is recorded through the shower of secondary particles it makes in the atmosphere",
+   "excludes": "photons and neutrinos, and the far more common cosmic rays of lower energy"},
+  "eev": {"term": "EeV", "field": "physics (units)",
+   "definition": "an exaelectronvolt, 1e18 electronvolts, or 1e9 GeV, carried by a single particle",
+   "excludes": "the total energy of the shower in a detector, which is spread over many secondary particles"},
+  "lattice-spacing": {"term": "lattice spacing", "field": "lattice field theory",
+   "definition": "the distance between neighbouring points of a grid on which space is modelled; on a grid, waves shorter than about twice the spacing cannot exist and the speed of a wave depends on its direction",
+   "excludes": "the Planck length, which is a scale built from constants and not a measured grid"},
+  "cubic-harmonic": {"term": "cubic harmonic", "field": "mathematics (spherical harmonics) and crystallography",
+   "definition": "the simplest pattern on a sphere with the symmetry of a cube: here x^4 + y^4 + z^4 minus its average, largest along the six cube axes and smallest along the eight diagonals",
+   "excludes": "a dipole, a single hot spot, or any pattern that a rotation of the cube by a right angle would change"},
+  "exposure": {"term": "exposure", "field": "astroparticle physics",
+   "definition": "how much of each part of the sky a detector watched over time; a ground array sees some declinations far more than others, so an isotropic sky still looks uneven in its data",
+   "excludes": "the number of events, which is exposure times the true flux"},
+  "ra-scramble": {"term": "right-ascension scramble", "field": "astroparticle physics (anisotropy searches)",
+   "definition": "a control sky made by keeping each event's declination and giving it a random right ascension; the Earth's rotation makes a ground array's exposure nearly even in right ascension, so the scramble keeps the exposure and removes any pattern",
+   "excludes": "a fully random sky, which would ignore the detector's exposure"},
+  "benjamini-hochberg": {"term": "Benjamini-Hochberg correction", "field": "statistics (multiple testing)",
+   "definition": "a rule that raises a set of p values to control the expected share of false discoveries among the tests called significant; the smallest raw p is multiplied by the number of tests and larger ones by less",
+   "excludes": "an uncorrected p value read on its own when several tests were run"},
+  "power": {"term": "detection power", "field": "statistics",
+   "definition": "the share of planted skies, each with a pattern of known strength, in which the search finds the pattern at its preregistered threshold",
+   "excludes": "the chance that a pattern exists in the real sky"}
+ }
+}

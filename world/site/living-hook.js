@@ -27,7 +27,8 @@ function sheetControl(onChange) {
   const b = document.createElement("button"); b.type = "button"; b.dataset.sheetToggle = ""; b.className = "o-sheet"; b.textContent = "Lit sheet";
   b.setAttribute("aria-pressed", String(remember.get() === "lit"));
   b.addEventListener("click", () => { remember.set(remember.get() === "lit" ? "night" : "lit"); onChange(); });
-  hand.insertBefore(b, hand.querySelector('[data-o="peel"]'));
+  const peel = hand.querySelector('[data-o="peel"]');  // the peel may sit in a label wrapper, not directly in the hand
+  if (peel) peel.before(b); else hand.append(b);
   return b;
 }
 

@@ -38,3 +38,4 @@
 @media (max-width: 600px) { .fd-key { grid-template-columns: 1fr; } .fd-key dd { margin-bottom: 8px; } .fd-standfirst { font-size: var(--fs-3) !important; } }
 @media (prefers-reduced-motion: reduce) { .fd-mark g { transition: none; } }
 @media (forced-colors: active) { .fd-glyph, .fd-mark { color: CanvasText; } }
+.xf figcaption .fd-glyph { display: inline-block; width: 12px; height: 12px; }

@@ -1,0 +1,417 @@
+{
+ "schema": "research-record/1",
+ "built": "2026-11-09 by scripts/record-findings.mjs from paper.txt, the register row and the findings ledger",
+ "document": {
+  "id": "F190",
+  "kind": "finding",
+  "title": "Our model of cooperation on a grid had been rewarding selfishness",
+  "standfirst": "We set out to reproduce a textbook result, that living near relatives lets costly cooperation survive cheaters, and our model appeared to succeed. It had a flaw: cooperators were paid back by their own contribution. With that removed, cooperation collapsed at every sensible cost under our update rule.",
+  "date_found": "2026-10-31",
+  "fields": [
+   "biology-other",
+   "economy"
+  ],
+  "tier": "D",
+  "tier_reason": "My reproduction was self-benefit; corrected null under one update rule.",
+  "rung": "killed",
+  "rung_reason": "Our reproduction of the cheater result: it was self-benefit.",
+  "outcome": "failed",
+  "bound": "With goods paid to others only, local producers never reached the preregistered mean share of 0.5 (0.48 at a benefit-to-cost ratio of 400).",
+  "objection": "One update rule, fitness-proportional and synchronous, with invented numbers. Other update rules, asynchronous timing, other neighbourhood sizes or a parent window separate from the goods box could let producers persist.",
+  "objection_source": "the paper's first stated limitation; no reviewer attack is on file",
+  "would_change": "No condition for raising or overturning the call is on file in the register.",
+  "sections": [
+   {
+    "id": "reader",
+    "title": "What this means for a reader",
+    "role": "lead",
+    "paragraphs": [
+     "A simulation can match a known answer for the wrong reason. Ours produced a clean threshold for when cooperation survives, close to a number from the theory literature, and we credited the theory. The match came from a coding choice that let each cooperator keep part of its own contribution, which turns cooperation into private investment. If you build or read individual-based models of microbes, markets or teams, check whether the \"cooperators\" are paid by their own act."
+    ]
+   },
+   {
+    "id": "abstract",
+    "title": "Abstract",
+    "role": "argument",
+    "paragraphs": [
+     "Microbes that release costly products into their surroundings are exposed to cheaters that take the benefit and skip the cost. A standard result in social evolution says that when relatives stay near each other, producers can persist anyway. We tried to reproduce that on a simple grid model before using the idea in our own writing, and in the second of three preregistered rounds the model seemed to succeed, with a threshold that matched a rule from the theory literature. It had a flaw: each producer received a share of its own goods. {c1}The shuffled control, which should have collapsed, kept producers at a mean share of 0.37 (95th percentile 0.52), and with a 3 by 3 goods box a producer recovers a ninth of its own output, so producing paid for itself whenever the benefit-to-cost ratio passed 9.{/c1} The third round paid goods to others only. {c2}With goods paid to others only, local producers ended at a share of 0.03 at a benefit-to-cost ratio of 100, 0.19 at 200 and 0.48 at 400, and never reached the preregistered bar of 0.5.{/c2} Under this update rule, space alone gave producers no foothold at any sensible cost."
+    ]
+   },
+   {
+    "id": "intro",
+    "title": "Introduction",
+    "role": "argument",
+    "paragraphs": [
+     "Many bacteria release a {g:public-good}public good{/g}, a product that costs its maker something and helps others nearby. Iron-scavenging siderophores are a studied case. In a population where everyone meets everyone, a {g:producer-cheater}cheater{/g} that makes none and takes the benefit should win. Kin selection gives one way out: if producers mostly help relatives, which are also producers, production can spread.",
+     "Space is the usual route to relatedness in microbes, because daughter cells stay near their parents. Nadell, Drescher and Foster {cite:r1} review how the spatial arrangement of clones and species in biofilms shapes cooperation and competition. Space also has a cost. Taylor {cite:r2} showed with an inclusive fitness model that in a patch-structured population the benefit of helping relatives and the cost of {g:local-competition}local competition{/g} among them can cancel exactly, the same result Wilson, Pollock and Dugatkin {cite:r3} reached by simulation. Griffin, West and Buckling {cite:r4} tested it in the bacterium Pseudomonas aeruginosa by setting relatedness and the scale of competition independently, and found that cooperation rose with relatedness and fell when competition was more local.",
+     "On graphs, Ohtsuki, Hauert, Lieberman and Nowak {cite:r5} found that selection favours cooperation when the benefit-to-cost ratio exceeds the average number of neighbours. We used that rule in our second round to forecast a threshold, and the forecast came true for a reason the rule had nothing to do with."
+    ]
+   },
+   {
+    "id": "prereg",
+    "title": "Preregistration and design",
+    "role": "argument",
+    "paragraphs": [
+     "The study ran in three rounds on 31 October 2026, each under its own {g:preregistration}preregistration{/g}, hash-locked before that round ran and written after reading the round before. The decision they inform was stated in the third: whether our own writing may say that space protects cooperators on the strength of our own model, or must only cite published work for it.",
+     "- Round one asked whether producers persist under local rules at {m:b} of 2 and {m:c} of 0.3 and collapse when mixed or shuffled. Its {g:kill-condition}kill conditions{/g}: if the mixed arm does not collapse or its early decline misses a closed form, the model is wrong; if the shuffled arm keeps producers, space was not the cause.",
+     "- Round two, after round one missed, swept the {g:bc-ratio}benefit-to-cost ratio{/g} from 5 to 16 at {m:b} of 1, 2 and 4 and forecast that persistence would begin between ratios of 7 and 12. Its kill conditions: a mean-field error above 0.03, or a shuffled arm that keeps producers.",
+     "- Round three, after reading round two's control, ran goods to others only beside the old version, at ratios from 2 to 400. It had no kill condition: it said in advance that whatever it gave would be the report.",
+     "The SHA-256 of each preregistration is in the reproduction section."
+    ]
+   },
+   {
+    "id": "data",
+    "title": "Data and provenance",
+    "role": "argument",
+    "paragraphs": [
+     "No external data were used. The model and all its numbers are our own and invented for the check. It describes no organism. Every number in this paper is read from the three rounds' result files."
+    ]
+   },
+   {
+    "id": "methods",
+    "title": "Methods",
+    "role": "argument",
+    "paragraphs": [
+     "## The model",
+     "A {g:torus-grid}torus grid{/g} of 100 by 100 cells holds producers and cheaters, starting half and half at random. Let {m:z} be 1 for a producer and 0 for a cheater. A cell's fitness is",
+     "$$ W = 1 + b \\phi - c z {eq:fit}",
+     "floored at a small positive value, where {m:\\phi} is the share of producers in the cell's {g:goods-box}goods box{/g}. Each generation is a {g:synchronous}synchronous update{/g} by {g:fitness-proportional}fitness-proportional replacement{/g}: every cell's next occupant is copied from a parent drawn from the 3 by 3 window around the cell, the cell included, with chance in proportion to fitness.",
+     "In rounds one and two the producer share counts the cell itself:",
+     "$$ \\phi = \\frac{n}{N} {eq:self}",
+     "where {m:n} is the number of producers in the box, the cell included, and {m:N} the number of cells in the box, 9 for a 3 by 3 box. In round three, goods reach others only:",
+     "$$ \\phi = \\frac{n - z}{N - 1} {eq:others}",
+     "## Arms",
+     "The local arm uses the rules above. The {g:mixed-arm}mixed arm{/g} sets {m:\\phi} to the producer share of the whole grid and draws parents from the whole grid. The {g:shuffled-arm}shuffled arm{/g} shuffles all positions before each generation and then applies the local rules, so neighbours are strangers.",
+     "## The flaw",
+     "Under eq. {ref:eq:self} a producer is one of the {m:N} cells its own goods reach, so it receives {m:b/N} of its own output. Producing then pays the producer directly whenever",
+     "$$ \\frac{b}{N} > c {eq:flaw}",
+     "that is, whenever {m:b/c} exceeds {m:N}, which is 9 for a 3 by 3 box. That is a private return. It needs no relatives nearby, so it survives in the shuffled arm too.",
+     "## Measures",
+     "The {g:final-share}final producer share{/g} is the share of producers at the end of a run, averaged over replicate runs; a run stops early when one type fills the grid. A ratio counts as persistence when that average reaches 0.5. Round one ran 1,500 generations and 8 replicates; round two 1,200 generations and 6 replicates; round three 1,000 generations and 5 replicates."
+    ]
+   },
+   {
+    "id": "controls",
+    "title": "Controls and planted checks",
+    "role": "argument",
+    "paragraphs": [
+     "The shuffled arm is the {g:control}control{/g} on which the study turns. If space is what keeps producers alive, removing space must make them collapse. Rounds two and three ran it 20 times at the most favourable setting.",
+     "Round two added a known answer for the mixed arm. Producers have fitness {m:1 + bp - c} and cheaters {m:1 + bp}, where {m:p} is the producer share, so the {g:mean-field}mean-field recursion{/g} is",
+     "$$ p_{t+1} = \\frac{p_t (1 + b p_t - c)}{1 + b p_t - c p_t} {eq:rec}",
+     "The simulated mixed arm, on a 300 by 300 grid averaged over 8 runs, had to match it within 0.03 over the first 20 generations. It did, with a maximum error of 0.0019.",
+     "Round one's known answer for the mixed arm was a closed-form slope for the early decline of the producer share on the log-odds scale. It failed, with an error of 0.117 against a bar of 0.05. The closed form was our mistake: it held the producer share fixed at one half while the share fell. Round two replaced it with eq. {ref:eq:rec}."
+    ]
+   },
+   {
+    "id": "results",
+    "title": "Results",
+    "role": "argument",
+    "paragraphs": [
+     "## Round one",
+     "At {m:b} of 2 and {m:c} of 0.3, a ratio of 6.7, local producers collapsed in every run, against our forecast of a final share of 0.6. The mixed and shuffled arms collapsed too. The cost sweep at {m:b} of 2 kept producers at {m:c} of 0.1 and 0.2, ratios of 20 and 10, and lost them from 0.3 up. Read with eq. {ref:eq:flaw}, that pattern already fits the flaw.",
+     "## Round two",
+     "Figure {ref:fig:round2} shows the threshold. Local producers first reached a final share of 0.5 at a ratio of 9 for every value of {m:b}: 0.52 at {m:b} of 1, 0.66 at 2 and 0.88 at 4. We had forecast 7 to 12 from the rule that cooperation wins when the ratio exceeds the number of neighbours, 8 here, and counted it a pass.",
+     "The control did not hold. {c1}The shuffled control, which should have collapsed, kept producers at a mean share of 0.37 (95th percentile 0.52), and with a 3 by 3 goods box a producer recovers a ninth of its own output, so producing paid for itself whenever the benefit-to-cost ratio passed 9.{/c1} The control ran at a ratio of 20 with 20 draws; its 5th percentile was 0.26. The same round's goods-range sweep at a ratio of 20 kept producers at range 1 and lost them at range 2, where the box holds 25 cells and the private return {m:b/25} falls below {m:c}. The threshold was the size of the goods box.",
+     "![fig:round2 width=0.85 alt=Three rising curves of final producer share against benefit-to-cost ratio, all at zero up to 8 and rising sharply at 9](fig-round2.png) Round two, goods shared with the producer itself: final producer share against the benefit-to-cost ratio at three values of the benefit b, 6 runs each. Every curve rises at 9, the number of cells in the goods box. Drawn from the round's result file.",
+     "## Round three",
+     "Table {ref:tab:round3} and Figure {ref:fig:round3} give the side-by-side run at {m:b} of 2. {c3}With self-benefit put back, local producers reached a share of 0.70 at a ratio of 9 and 1.0 from 12 up, and shuffled producers reached 1.0 from a ratio of 30 up.{/c3} The artefact reproduced.",
+     "{c2}With goods paid to others only, local producers ended at a share of 0.03 at a benefit-to-cost ratio of 100, 0.19 at 200 and 0.48 at 400, and never reached the preregistered bar of 0.5.{/c2} {c4}Mixed producers ended at 0.04 or less at every ratio, and shuffled producers with goods to others only ended at zero at every ratio.{/c4}",
+     "::table tab:round3 cols=0.16,0.17,0.17,0.17,0.17,0.16 Round three, b of 2: final producer share, mean of 5 runs, at each benefit-to-cost ratio.\nRatio ¦ Local, own goods included ¦ Shuffled, own goods included ¦ Local, others only ¦ Shuffled, others only ¦ Mixed\n2 ¦ 0 ¦ 0 ¦ 0 ¦ 0 ¦ 0\n5 ¦ 0 ¦ 0 ¦ 0 ¦ 0 ¦ 0\n9 ¦ 0.70 ¦ 0 ¦ 0 ¦ 0 ¦ 0\n12 ¦ 1.00 ¦ 0 ¦ 0 ¦ 0 ¦ 0\n16 ¦ 1.00 ¦ 0 ¦ 0 ¦ 0 ¦ 0\n20 ¦ 1.00 ¦ 0.37 ¦ 0 ¦ 0 ¦ 0\n30 ¦ 1.00 ¦ 1.00 ¦ 0 ¦ 0 ¦ 0\n50 ¦ 1.00 ¦ 1.00 ¦ 0 ¦ 0 ¦ 0\n100 ¦ 1.00 ¦ 1.00 ¦ 0.028 ¦ 0 ¦ 0\n200 ¦ 1.00 ¦ 1.00 ¦ 0.185 ¦ 0 ¦ 0.003\n400 ¦ 1.00 ¦ 1.00 ¦ 0.483 ¦ 0 ¦ 0.038\n::end",
+     "![fig:round3 width=0.95 alt=Five curves of final producer share against ratio on a log scale; the two own-goods curves rise to 1, the others-only local curve rises late to just under 0.5, the rest stay near zero](fig-round3.png) Round three at b of 2: final producer share against the benefit-to-cost ratio for five arms, 5 runs each. Ochre arms give the producer a share of its own goods; navy arms do not.",
+     "At a ratio of 400, widening the goods box lowered the others-only local share from 0.47 at range 1 to 0.18 at range 2, 0.21 at range 3 and 0.15 at range 5. These come from a separate set of 5 runs; the range 1 value of 0.47 is that set's counterpart of the 0.48 in Table {ref:tab:round3}.",
+     "The round-three shuffled control, with goods to others only at a ratio of 400, ended at zero in all 20 runs. The local arm's 0.48 is above every one of them. The preregistered verdict that compares the two was recorded as untestable, because the control's draws had no spread for a 95th percentile to mean anything.",
+     "Table {ref:tab:forecast} sets the forecasts against the outcomes.",
+     "::table tab:forecast cols=0.5,0.25,0.25 Forecasts fixed in each round's preregistration against what the round gave.\nRound and quantity ¦ Forecast ¦ Outcome\nOne: local final share at ratio 6.7 ¦ 0.6 ¦ 0\nOne: cost at which local collapses ¦ near 0.6 ¦ 0.3\nTwo: first ratio with persistence ¦ 7 to 12 ¦ 9 at every b\nTwo: local final share at ratio 20 ¦ above 0.8 ¦ 1.0\nTwo: mixed lawn invaded by a cheater patch ¦ below 0.05 ¦ 0.5\nThree: threshold with own goods included ¦ 9 ¦ 9\nThree: shuffled with own goods persists above 9 ¦ yes ¦ from 30; 0.37 at 20\nThree: mixed and shuffled collapse, others only ¦ yes ¦ yes\nThree: others-only local never persists up to 400 ¦ probability 0.4 ¦ it did not persist\n::end"
+    ]
+   },
+   {
+    "id": "discussion",
+    "title": "Discussion",
+    "role": "argument",
+    "paragraphs": [
+     "The second round looked like a textbook reproduction, and the shuffled control is what showed it was not one. Scrambling positions every generation removes relatives from a producer's neighbourhood, so any persistence that survives scrambling cannot come from kin. Producers kept a mean share of 0.37 in the scrambled grid. Reading that number led to eq. {ref:eq:flaw}: the threshold of 9 was the size of the goods box, and the match with the neighbour count of 8 in the rule of Ohtsuki and colleagues {cite:r5} was a coincidence. Their rule concerns a game played between pairs of neighbours on a graph. Ours shares a public good over a box, a different model, so the match was never a test of their rule.",
+     "With the private return removed, local producers did not persist anywhere up to a ratio of 400, and widening the goods box made them worse off. This fits the result of Taylor {cite:r2} and of Griffin and colleagues {cite:r4}: when relatives compete for the same space, the competition can cancel the benefit of living near them. In our model the parent window and the goods box overlap, so a producer's goods feed the same neighbours that compete for its offspring's cells. The model does not show that space never protects cooperators. It shows that this model, with this update rule, gives them no protection at sensible costs.",
+     "The claim that space protects cooperators in microbes therefore stays a citation of published work, such as the review of Nadell and colleagues {cite:r1} and the experiment of Griffin and colleagues {cite:r4}. It is not a result of ours."
+    ]
+   },
+   {
+    "id": "limits",
+    "title": "Limitations",
+    "role": "argument",
+    "paragraphs": [
+     "- One update rule, fitness-proportional and synchronous, with invented numbers. Other update rules, asynchronous timing, other neighbourhood sizes or a parent window separate from the goods box could let producers persist.",
+     "- The model describes no organism and says nothing about any real microbe.",
+     "- The ratio grid is coarse. Round three's threshold with own goods lies somewhere between ratios of 5 and 9, and round two's between 8 and 9.",
+     "- Few replicates: 5 per setting in round three. The others-only local share of 0.48 at 400 sits close to the 0.5 bar, and another 5 runs could fall on either side.",
+     "- The final share averages runs that mostly end at 0 or 1, so it tracks the share of runs won by producers more than any mixed state.",
+     "- The runs were scored by code and checked by the same analyst who wrote them, with no outside review."
+    ]
+   },
+   {
+    "id": "appendix",
+    "title": "Appendix A. The preregistered verdicts",
+    "role": "evidence",
+    "paragraphs": [
+     "Each verdict is a set of rules written before its round. A verdict passes only when every rule holds. Values are read from the result files.",
+     "::table tab:verdicts cols=0.3,0.42,0.14,0.14 Preregistered verdicts of all three rounds and the rule that decided each one.\nRound and verdict ¦ Deciding rule ¦ Value ¦ Holds\nOne: mixed collapses ¦ mixed final share below 0.01 ¦ 0 ¦ yes\nOne: slope matches ¦ slope error below 0.05 ¦ 0.117 ¦ no\nOne: shuffled collapses ¦ shuffled final share below 0.05 ¦ 0 ¦ yes\nOne: space keeps producers ¦ persistence in at least half the runs and above the shuffled 95th percentile ¦ 0 ¦ no\nOne: range fails ¦ final share at range 25 below 0.05 ¦ 0 ¦ yes\nOne: invasion resisted ¦ local lawn above 0.3 and mixed lawn below 0.05 ¦ 0.75; 0.125 ¦ no\nTwo: recursion matches ¦ maximum error below 0.03 ¦ 0.0019 ¦ yes\nTwo: mixed collapses ¦ mixed final share below 0.01 ¦ 0 ¦ yes\nTwo: space keeps producers ¦ local above 0.8 and above the shuffled 95th percentile (0.52) ¦ 1.0 ¦ yes\nTwo: threshold near 8 ¦ first persistence ratio from 7 to 12 at every b ¦ 9 ¦ yes\nTwo: range fails ¦ final share at range 25 below 0.05 ¦ 0 ¦ yes\nTwo: invasion resisted ¦ local lawn above 0.8 and mixed lawn below 0.05 ¦ 1.0; 0.5 ¦ no\nThree: artefact shown ¦ shuffled with own goods above 0.5 at ratio 400 ¦ 1.0 ¦ yes\nThree: mixed collapses ¦ mixed final share below 0.05 at ratio 400 ¦ 0.038 ¦ yes\nThree: others only persist somewhere ¦ some ratio with final share of at least 0.5 ¦ none ¦ no\nThree: space credited ¦ local others-only above the shuffled 95th percentile ¦ 0.48 against 0 ¦ untestable\n::end",
+     "Round two's two passing verdicts on space and on the threshold were produced by the flaw described in the methods, and round three withdrew them."
+    ]
+   }
+  ]
+ },
+ "claims": [
+  {
+   "id": "c1",
+   "text": "The shuffled control, which should have collapsed, kept producers at a mean share of 0.37 (95th percentile 0.52), and with a 3 by 3 goods box a producer recovers a ninth of its own output, so producing paid for itself whenever the benefit-to-cost ratio passed 9.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e1"
+   ]
+  },
+  {
+   "id": "c2",
+   "text": "With goods paid to others only, local producers ended at a share of 0.03 at a benefit-to-cost ratio of 100, 0.19 at 200 and 0.48 at 400, and never reached the preregistered bar of 0.5.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e2"
+   ]
+  },
+  {
+   "id": "c3",
+   "text": "With self-benefit put back, local producers reached a share of 0.70 at a ratio of 9 and 1.0 from 12 up, and shuffled producers reached 1.0 from a ratio of 30 up.",
+   "section": "results",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e3"
+   ]
+  },
+  {
+   "id": "c4",
+   "text": "Mixed producers ended at 0.04 or less at every ratio, and shuffled producers with goods to others only ended at zero at every ratio.",
+   "section": "results",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e4"
+   ]
+  }
+ ],
+ "evidence": [
+  {
+   "id": "e1",
+   "kind": "number",
+   "label": "The numbers in claim 1",
+   "value": "0.37; 95; 0.52; 3; 9",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e2",
+   "kind": "number",
+   "label": "The numbers in claim 2",
+   "value": "0.03; 100,; 0.19; 200; 0.48; 400,; 0.5",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e3",
+   "kind": "number",
+   "label": "The numbers in claim 3",
+   "value": "0.70; 9; 1.0; 12; 30",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e4",
+   "kind": "number",
+   "label": "The numbers in claim 4",
+   "value": "0.04",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  }
+ ],
+ "references": [
+  {
+   "id": "r1",
+   "key": "Nadell 2016",
+   "kind": "paper",
+   "title": "Nadell, C. D., Drescher, K. and Foster, K. R. (2016). Spatial structure, cooperation and competition in biofilms. Nature Reviews Microbiology 14(9), 589-600. doi:10.1038/nrmicro.2016.84",
+   "access": "snippet",
+   "target": "https://doi.org/10.1038/nrmicro.2016.84",
+   "access_note": "abstracts and publisher pages; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r2",
+   "key": "Taylor 1992",
+   "kind": "paper",
+   "title": "Taylor, P. D. (1992). Altruism in viscous populations: an inclusive fitness model. Evolutionary Ecology 6, 352-356. doi:10.1007/BF02270971",
+   "access": "snippet",
+   "target": "https://doi.org/10.1007/BF02270971",
+   "access_note": "abstracts and publisher pages; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r3",
+   "key": "Wilson 1992",
+   "kind": "paper",
+   "title": "Wilson, D. S., Pollock, G. B. and Dugatkin, L. A. (1992). Can altruism evolve in purely viscous populations? Evolutionary Ecology 6, 331-341. doi:10.1007/BF02270969",
+   "access": "snippet",
+   "target": "https://doi.org/10.1007/BF02270969",
+   "access_note": "abstracts and publisher pages; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r4",
+   "key": "Griffin 2004",
+   "kind": "paper",
+   "title": "Griffin, A. S., West, S. A. and Buckling, A. (2004). Cooperation and competition in pathogenic bacteria. Nature 430, 1024-1027. doi:10.1038/nature02744",
+   "access": "snippet",
+   "target": "https://doi.org/10.1038/nature02744",
+   "access_note": "abstracts and publisher pages; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r5",
+   "key": "Ohtsuki 2006",
+   "kind": "paper",
+   "title": "Ohtsuki, H., Hauert, C., Lieberman, E. and Nowak, M. A. (2006). A simple rule for the evolution of cooperation on graphs and social networks. Nature 441, 502-505. doi:10.1038/nature04605",
+   "access": "snippet",
+   "target": "https://doi.org/10.1038/nature04605",
+   "access_note": "abstracts and publisher pages; full text not read",
+   "accessed": "2026-11-09"
+  }
+ ],
+ "relations": [],
+ "corrections": [
+  {
+   "id": "x1",
+   "date": "2026-10-31",
+   "target": "document",
+   "type": "retraction",
+   "after": "The threshold came from producers receiving their own goods. Round three tested this and the reading was withdrawn.",
+   "reason": "Round two was first read as reproducing the kin-and-space result, with a threshold credited to the neighbour rule of Ohtsuki and colleagues.",
+   "found_by": "the study itself, before publication"
+  },
+  {
+   "id": "x2",
+   "date": "2026-10-31",
+   "target": "document",
+   "type": "wording",
+   "after": "Round two replaced it with the exact recursion.",
+   "reason": "Round one's closed-form slope check failed because the formula held the producer share fixed.",
+   "found_by": "the study itself, before publication"
+  },
+  {
+   "id": "x3",
+   "date": "2026-11-09",
+   "target": "document",
+   "type": "wording",
+   "after": "The rule was a mean final share of at least 0.5, and this paper says so. It also did not report that round three's space verdict was recorded as untestable; this paper does.",
+   "reason": "Our earlier write-up said local producers in round two \"persisted in the majority of runs\" at a ratio of 9.",
+   "found_by": "the publication pass"
+  }
+ ],
+ "versions": [
+  {
+   "n": 1,
+   "date": "2026-10-31",
+   "what": "entered in the findings ledger"
+  },
+  {
+   "n": 2,
+   "date": "2026-11-09",
+   "what": "paper version 1.0, first published",
+   "hash": "f7c998c6f2d486003a0291a2273c0bd36ed6bd07c339e834ce02e4e257de0d2e"
+  }
+ ],
+ "grade": {
+  "lowers": [
+   {
+    "domain": "scoring",
+    "text": "Scored by code and by the agent that ran it; self-graded.",
+    "from": "register scorer"
+   },
+   {
+    "domain": "single source",
+    "text": "The cited literature was read at the level of abstracts and publisher pages; full texts were not read.",
+    "from": "paper Verified"
+   }
+  ],
+  "holds": [
+   {
+    "domain": "preregistration",
+    "text": "Preregistered and hash-locked before the run (sha256 40a99201).",
+    "from": "paper Reproduction"
+   }
+  ]
+ },
+ "reproduce": {
+  "data": [],
+  "prereg": {
+   "hash": "40a9920161815ca8341b659c890d121cae7bb9668eb84f625054a5a44654177c",
+   "plan": "654439252dcf316de5ffa21bb074a7accf9e903f79e78ef58b47ef87c31c8203"
+  },
+  "cost": "the timing records give 54, 236 and 131 seconds for rounds one, two and three on one desktop CPU.",
+  "steps": [
+   "Build a 100 by 100 torus of producers and cheaters, half and half at random.",
+   "Give each cell the fitness of eq. {ref:eq:fit} with the producer share of eq. {ref:eq:others}, so a producer gains nothing from its own goods. Replace every cell each generation by a parent drawn from its 3 by 3 window in proportion to fitness.",
+   "Run 1,000 generations, 5 replicates per setting, at {m:b} of 2 and ratios from 2 to 400, with the local, shuffled and mixed arms, and repeat with eq. {ref:eq:self} to see the artefact.",
+   "Check the mixed arm against eq. {ref:eq:rec}.",
+   "Round three preregistration SHA-256: 40a9920161815ca8341b659c890d121cae7bb9668eb84f625054a5a44654177c. Plan SHA-256: 654439252dcf316de5ffa21bb074a7accf9e903f79e78ef58b47ef87c31c8203. Run 20261031T085106Z, seed 20261062.",
+   "Round two preregistration SHA-256: 156dfcf54e061acb39e5f34a1e7a6e6673dbc8e547add3a7ba18cb40bf762dc1. Plan SHA-256: cf4fcd9b6c9847bb63fcb60b696dbda0dfb56ee59fcdad675779f7b0b2790731. Run 20261031T084103Z, seed 20261061.",
+   "Round one preregistration SHA-256: 8b31350baad5d1520dfb9044c0252f65ab0bc2a909f8720a975ca276a1a7cc52. Plan SHA-256: c0077cdc4144e2cc160c49bd2ad6ea9694592d5168b127cffb01a282900cddec. Run 20261031T083720Z, seed 20261051."
+  ],
+  "not_rerun": "The study was not re-run for this paper."
+ },
+ "verified": {
+  "date": "2026-11-09",
+  "checks": [
+   {
+    "what": "On 9 November 2026 every final share, threshold, sweep value, control mean, percentile and p value, the recursion error and the slope error in this paper were re-read from the three rounds' result files, and the headline values match the findings ledger.",
+    "by": "the paper's Verified pass",
+    "result": "match"
+   },
+   {
+    "what": "Grid size, generations, replicates, ratio grids and range grids were read from each round's build file, and the fitness rules from the model code.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   },
+   {
+    "what": "Each preregistration's SHA-256 was recomputed from the locked file and matches the hash recorded in its result file.",
+    "by": "the paper's Verified pass",
+    "result": "match"
+   },
+   {
+    "what": "Both figures were drawn by a script that reads only the round two and round three result files.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   }
+  ],
+  "not_checked": [
+   "The study was not re-run for this paper.",
+   "The literature in the introduction was found by searches run on 9 November 2026 and read at the level of abstracts and publisher pages; the full texts of the cited papers were not read."
+  ]
+ }
+}

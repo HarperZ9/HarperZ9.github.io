@@ -6,8 +6,8 @@
 // Steps, in order (each is its own script and can run alone):
 //   1. import-mission-control.mjs   copy the pieces into world/ (and Accession into system/fonts/accession)
 //   2. import-media.mjs             encode the name art, the loops and the theme into media/world/
-//   3. build-studies.mjs, build-cmmns.mjs, build-experiments.mjs, build-findings.mjs (from findings/src/, which
-//      scripts/import-findings.mjs fills from the workshop's write-ups)
+//   3. build-studies.mjs, build-cmmns.mjs, build-experiments.mjs, record-findings.mjs and build-findings.mjs (from
+//      findings/src/ and findings/data/, which scripts/import-findings.mjs fills from the workshop's papers)
 //   4. build-world-home.mjs, build-world-pages.mjs, world-asset-revision.mjs, world-discovery.mjs
 //      render-route-registry.mjs, render-site-index.mjs (the World family and pillar)
 //   5. link cards for new sitemap pages, then the card tags on the world's pages only
@@ -40,12 +40,14 @@ node("build-studies.mjs", pass);
 node("sync-field-css.mjs");
 node("build-cmmns.mjs");
 node("build-experiments.mjs");
+node("record-findings.mjs");
 node("build-findings.mjs");
 node("build-glass-water.mjs");
 node("build-world-home.mjs");
 node("build-world-pages.mjs");
 node("world-asset-revision.mjs");
 node("world-discovery.mjs");
+node("finding-flags.mjs");
 node("render-route-registry.mjs");
 node("render-site-index.mjs");
 run(py, ["-m", "tools.repo_art.render_missing"]);

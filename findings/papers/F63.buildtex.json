@@ -1,0 +1,65 @@
+{
+ "schema": "buildlang.buildtex-receipt/v0",
+ "source": {
+  "path": "F63.bld",
+  "sha256": "ebb3c84ec8138ed26f0e34a1b176d3660a328fa1bf4c99e069d60b91ae22c5ed"
+ },
+ "ir_sha256": "2f2effbaac93250f9dc3b1dea5773b684ba1b81ce60410bea5196919baf923c3",
+ "theme": "paper",
+ "overrides": [],
+ "outputs": {
+  "F63.pdf": "0d2acf8b4815746b102fb6ea83c828e3ec40528f132990c3ec45b7fee13a432f"
+ },
+ "pdf_metadata": {
+  "pdfa": false,
+  "creation_date": "D:20261109000000Z"
+ },
+ "facts": {
+  "pages": 10,
+  "pages_layout": 10,
+  "overfull": [],
+  "underfull": 0,
+  "missing_glyphs": [],
+  "glyph_fallbacks": [],
+  "math_errors": [],
+  "fonts": [
+   {
+    "name": "BCFOEK+AccessionDisplay-Master",
+    "embedded": true
+   },
+   {
+    "name": "DBMGIG+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "EKFFFH+NotoSansMath-Regular",
+    "embedded": true
+   },
+   {
+    "name": "FBHKCN+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "KOCIPA+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "MEPKKM+HankenGrotesk-Regular",
+    "embedded": true
+   }
+  ],
+  "images": 3,
+  "blind_text_runs": 0,
+  "reading_order": true,
+  "blocks_missing_from_text": [],
+  "pdf_bytes": 491691
+ },
+ "failed": [],
+ "notes": [
+  "buildc run F63.bld -> F63.doc.tsv",
+  "press: relief 1275x424 px at 150 dpi; 0 blind line(s); foil colour source: fallback constant"
+ ],
+ "external_programs": [
+  "buildc"
+ ]
+}

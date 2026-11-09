@@ -1,0 +1,70 @@
+{
+ "terms": {
+  "cmn": {
+   "term": "common mycorrhizal network",
+   "field": "forest ecology and mycology",
+   "definition": "a set of fungal threads that colonise the roots of two or more plants at once and so may link them below ground",
+   "excludes": "claims about what such a network does, such as moving carbon or signals between trees, which are the matters in dispute"
+  },
+  "focal-study": {
+   "term": "focal study",
+   "field": "our usage, following Karst and colleagues",
+   "definition": "one of the 18 field studies on these networks whose later citations the original authors read and coded, 11 on network function and 7 on network structure",
+   "excludes": "the citing papers, which are the units counted inside each focal study"
+  },
+  "unsupported-citation": {
+   "term": "unsupported citation",
+   "field": "citation analysis, as coded by Karst and colleagues",
+   "definition": "a citation that credits a focal study with a claim that the original authors judged the study's results do not support",
+   "excludes": "any judgement of ours: every coding in this paper is the original authors'"
+  },
+  "rate-table": {
+   "term": "study-year rate",
+   "field": "our usage for the deposited table",
+   "definition": "the share of one focal study's citations in one calendar year that were coded unsupported, as stored in the deposit without its denominator",
+   "excludes": "a count of citations, which the deposit does not hold"
+  },
+  "denominator-rebuild": {
+   "term": "rebuilt denominator",
+   "field": "our usage in this study",
+   "definition": "the number of citations a focal study received in a year, recovered by finding the whole number n for which a published count k gives the deposited rate k over n",
+   "excludes": "a count read directly from any source; years with a rate of zero share what remains of the study's total and are the least certain"
+  },
+  "negative-binomial": {
+   "term": "negative binomial model",
+   "field": "statistics (count regression)",
+   "definition": "a regression for counts whose variance can exceed their mean, fitted here with a log link so that the fitted rate changes by a fixed factor per year",
+   "excludes": "models that weight each year by how many citations it holds"
+  },
+  "within-study": {
+   "term": "within-study model",
+   "field": "statistics (fixed effects)",
+   "definition": "a regression with its own baseline level for each focal study, so the year slope is estimated only from change inside studies",
+   "excludes": "change that comes from which focal studies happen to be cited in early and late years"
+  },
+  "quasi-poisson": {
+   "term": "quasi-Poisson fit",
+   "field": "statistics (count regression)",
+   "definition": "a log-linear count regression whose standard errors are scaled by the observed spread, used here for the within-study model",
+   "excludes": "a full probability model for the counts"
+  },
+  "citation-weighted": {
+   "term": "citation-weighted share model",
+   "field": "statistics (logistic regression)",
+   "definition": "a regression of the number of unsupported citations out of all citations in each study-year on the year, so a year with thirty citations counts thirty times as much as a year with one",
+   "excludes": "the equal weight per study-year that a model of the deposited percentages gives"
+  },
+  "study-resampling": {
+   "term": "study resampling",
+   "field": "statistics (cluster bootstrap)",
+   "definition": "drawing focal studies with replacement, refitting the model each time, and taking the middle 95 percent of the refitted ratios as the interval",
+   "excludes": "resampling single study-years, which would ignore that citations of one study move together"
+  },
+  "power": {
+   "term": "statistical power",
+   "field": "statistics",
+   "definition": "the chance that a test detects an effect of a given size when that effect is real, measured here on planted data with a known doubling",
+   "excludes": "the chance that an effect is real given that the test detected it"
+  }
+ }
+}

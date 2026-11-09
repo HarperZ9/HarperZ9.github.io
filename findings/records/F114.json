@@ -1,0 +1,574 @@
+{
+ "schema": "research-record/1",
+ "built": "2026-11-09 by scripts/record-findings.mjs from paper.txt, the register row and the findings ledger",
+ "document": {
+  "id": "F114",
+  "kind": "finding",
+  "title": "How much summer warmth one tree ring remembers, measured in bits",
+  "standfirst": "A single Alpine tree-ring site keeps about a tenth of a bit per year about summer warmth on years it never saw, most of it in the density of its latewood. Averaging many sites buys far more than adding a measurement or one more tree past the usual replication threshold.",
+  "date_found": "2026-10-30",
+  "fields": [
+   "biology-plant-forest-pathology",
+   "ecology-climate",
+   "information-theory"
+  ],
+  "tier": "B*",
+  "tier_reason": "Real data, prereg, truth anchor, working controls and a second code path in a second region, but bits are a monotone transform of CE and the density-over-width ranking is long known. The added-channel against added-tree comparison is an inconclusive null.",
+  "rung": "hypothesis",
+  "rung_reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
+  "outcome": "held",
+  "objection": "Bits relabel CE, so what is new? Next: the regional gain partly reflects a smoother target, P3's null is underpowered, cores stand in for trees, cloud is interpolated, and windows end near 1975.",
+  "objection_source": "the register's reviewer attack",
+  "would_change": "Power P3 with wider panels and nested best-subset selection, an outside dendrochronologist's review, and a band or period out of sample past 1975",
+  "sections": [
+   {
+    "id": "reader",
+    "title": "What this means for a reader",
+    "role": "lead",
+    "paragraphs": [
+     "A single tree-ring site keeps about a tenth of a bit a year about summer warmth, and most of that sits in the density of its late wood. That ranking of density over width is old news to tree-ring scientists. What is new is one shared unit: a second measurement in the same trees, one more tree at a site and a network of sites can now be priced against each other, and the network wins by a wide margin."
+    ]
+   },
+   {
+    "id": "abstract",
+    "title": "Abstract",
+    "role": "argument",
+    "paragraphs": [
+     "Tree rings hold several measurable records of each summer: the width of the ring, of its early and late wood, and the density of its wood. We put all of them on one scale, bits per year of summer climate recovered on years the model never saw, so that a new channel, a new tree and a new site can be compared directly. The data are 51 Alpine and 24 Fennoscandian sites from the International Tree-Ring Data Bank with five channels gap-free from 1901, and June to August climate from CRU TS 4.10. {c1}In the Alps, maximum latewood density kept 0.090 bits per year of summer warmth on held-out years and ring width 0.028; density beat width by 0.062 bits (95% interval 0.034 to 0.089).{/c1} {c2}In Fennoscandia, density beat width by 0.28 bits (0.23 to 0.33).{/c2} {c5}The gain from extra channels did not saturate by three: the saturation ratio was 0.25 against a forecast bound of 0.10.{/c5} {c3}An added channel and one more tree past an expressed population signal of 0.85 could not be told apart: the difference was 0.011 bits (-0.003 to 0.025) over 43 sites.{/c3} {c4}Averaging all 51 Alpine sites reconstructed summer warmth with a held-out coefficient of efficiency of 0.317, which is 0.275 bits per year.{/c4} At one site a ring is a narrow channel. Most of the gain comes from averaging across sites."
+    ]
+   },
+   {
+    "id": "intro",
+    "title": "Introduction",
+    "role": "argument",
+    "paragraphs": [
+     "Dendroclimatology, the reading of past climate from tree rings, measures several {g:ring-channel}ring channels{/g} in each annual ring. For summer temperature at cold sites, {g:mxd}maximum latewood density{/g} has long been the stronger channel. Grudd {cite:r3} updated the Torneträsk width and density series in northern Sweden to cover AD 500 to 2004 and reported that a reconstruction from density captures 63 to 64 percent of the year-to-year variation in summer temperature. Römer and colleagues {cite:r4} compared eleven proxies measured in the same ten pines in Greece, including width, density, stable isotopes and cell anatomy, and reported their covariance and climate signals as correlations.",
+     "Replication is the other lever. Wigley, Briffa and Jones {cite:r1} derived how well the mean of a finite number of series stands for the population, the {g:eps}expressed population signal{/g}. A value of 0.85 became the common threshold for enough trees. Buras {cite:r2} pointed out that the original paper offered its value only as a rough guide, so 0.85 is a convention.",
+     "These comparisons use correlation, and each answers one question at a time: which channel, or how many trees. Information theory offers a unit that adds across sources and does not depend on which question is asked. The {g:bit}bit{/g} is that unit. Searches we ran on 9 November 2026 found no study that scores tree-ring channels against climate in bits; the closest work compares channels in correlation units. A search that finds nothing is a search result, not proof that nothing exists.",
+     "This paper asks four things. How many bits per year of summer warmth, rain and sunshine survive into each ring channel? What does each added channel buy? What does each added tree buy past an expressed population signal of 0.85? Can the season be reconstructed on held-out years?"
+    ]
+   },
+   {
+    "id": "prereg",
+    "title": "Preregistration and design",
+    "role": "argument",
+    "paragraphs": [
+     "The design was written and hash-locked as a {g:preregistration}preregistration{/g} on 30 October 2026 at 12:18 UTC, before any ring or climate outcome was computed. Site availability had been counted before the lock without looking at outcomes: 51 Alpine and 24 Fennoscandian sites, with median series lengths of 79 and 78 years.",
+     "The locked file names the data, the targets, the filter, the three measures, the planted signals with their pass rules, the three {g:control}controls{/g}, the {g:kill-condition}kill condition{/g}, five predictions with their rules, the multiple-testing plan and a replication on Fennoscandia by a second code path. The kill condition: the study fails if no channel carries more than the controls, that is, if the best channel does not beat the 95th percentile of all three controls or no test survives correction.",
+     "Two deviations were recorded after the lock and before any outcome was seen. The first Alpine run stopped with an error inside the isotope step because one isotope site held six missing values that the parser read as numbers. The fix keeps only finite values, so that site fails the existing gap-free rule and leaves the isotope panel, which drops to 19 sites; the failed run printed no number. The second: the Alpine check by the second code path was blocked by our run tool because a shared file changed during that fix, and it was rerun unchanged. The plan hash did not change."
+    ]
+   },
+   {
+    "id": "data",
+    "title": "Data and provenance",
+    "role": "argument",
+    "paragraphs": [
+     "Rings: International Tree-Ring Data Bank chronologies for Europe {cite:r8}, held by NOAA's National Centers for Environmental Information as open federal data, with a request to cite the original study, landing page and access date. Five channels per site: ring width, earlywood width, latewood width, minimum density and maximum latewood density, with raw measurement files for width and density. A site entered when all five channels were gap-free from 1901 to their common end year, with at least 50 years. The Alpine box is 43.5 to 48.5 N and 5 to 17 E, and the Fennoscandian box is 58 to 71.5 N and 4 to 32 E. Most of these density sites come from the Schweingruber collection, so the series end about 1975 to 1990.",
+     "Isotopes: ISONET latewood or whole-ring cellulose oxygen isotope chronologies {cite:r9}, released under CC BY 4.0. 19 European sites with complete values from 1901 to 2002 were used.",
+     "Climate: CRU TS 4.10 monthly temperature, precipitation and cloud cover at 0.5 degree, 1901 to 2025 {cite:r6} {cite:r7}, released under the Open Database License 1.0. Each site takes the nearest land cell with complete data. The targets are the June to August mean temperature (warmth), total precipitation (rain) and 100 minus mean cloud cover in percent (sunshine, a proxy for light).",
+     "Every channel and target series was passed through a {g:high-pass}high-pass filter{/g} on its own window: the series minus a Gaussian smooth of width 10 years, renormalised at the edges, then scaled to zero mean and unit variance. The study therefore measures variation from 2 years to roughly 30 years."
+    ]
+   },
+   {
+    "id": "methods",
+    "title": "Methods",
+    "role": "argument",
+    "paragraphs": [
+     "## Held-out bits",
+     "For each channel and target at a site, a linear reconstruction was fitted by {g:block-cv}block cross-validation{/g} with five contiguous blocks. Let {m:y_t} be the target in a held-out year, {m:f_t} the reconstruction and {m:m_v} the mean of the held-out years. The {g:ce}coefficient of efficiency{/g} {m:E} is",
+     "$$ E = 1 - \\frac{\\sum_t (y_t - f_t)^2}{\\sum_t (y_t - m_v)^2} {eq:ce}",
+     "and the held-out information in bits per year is",
+     "$$ B = -\\frac{1}{2} \\log_2 (1 - E) {eq:bits}",
+     "For a Gaussian target with variance {m:\\sigma^2}, any predictor that carries {m:I} bits of {g:mutual-information}mutual information{/g} has a mean squared error of at least {m:\\sigma^2 2^{-2I}}. So {m:B} is a lower bound on the information the ring carries, read off held-out years. It is negative when the reconstruction does worse than the held-out mean. The network value is the mean of {m:B} over sites. Beside it we report the {g:ksg}KSG estimator{/g} of mutual information {cite:r5} with 4 neighbours, and an in-sample Gaussian value from the correlation.",
+     "## Channels, trees and sites",
+     "Prediction P1, density beats width: the 95% {g:site-bootstrap}site bootstrap{/g} interval of the mean difference in {m:B} between maximum latewood density and ring width for warmth lies above 0, the KSG difference is positive, and density survives correction.",
+     "Prediction P2, channels saturate by three: let {m:M_k} be the mean of the network {m:B} over all subsets of {m:k} channels, and {m:M_{45}} the larger of {m:M_4} and {m:M_5}. The saturation ratio is",
+     "$$ R = \\frac{M_{45} - M_3}{M_3 - M_1} {eq:sat}",
+     "and P2 passes if {m:M_3} exceeds {m:M_1} and {m:R} is at most 0.10.",
+     "Prediction P3, a channel buys more than a tree: at each site, {m:k_*} is the smallest number of density series whose expressed population signal reaches 0.85,",
+     "$$ S_{eps} = \\frac{k r}{1 + (k - 1) r} {eq:eps}",
+     "with {m:r} the mean correlation between density series. The tree gain is the held-out bits of the mean of {m:k_* + 1} density series minus those of {m:k_*} series. The channel gain is the bits of density and width means from the same {m:k_*} series minus those of density alone. Each gain is averaged over 50 random draws of series. P3 passes if at least 10 sites qualify and the site bootstrap interval of the mean difference, channel gain minus tree gain, lies above 0. Each raw series is a core and stands in for a tree.",
+     "Prediction H4, the season can be reconstructed: the site means of each channel predict the regional warmth. It passes if the cross-validated {m:E} is above 0, the {g:re}reduction of error{/g} on a classic split (verify 1901 to 1930, calibrate 1931 to the end) is above 0, and {m:E} beats the 95th percentile of 1,000 {g:phase-randomisation}phase-randomised{/g} composites.",
+     "Prediction H5, isotopes carry climate: at least one of warmth, rain and sunshine survives correction on {m:B} at the 19 isotope sites.",
+     "## Controls, p values and correction",
+     "Three controls, 1,000 draws each, give the kill statistic's {g:null-distribution}null distribution{/g}: each site channel replaced by a phase-randomised copy; the years of each channel shuffled; and each channel replaced by high-passed white noise. The statistic is the largest network mean {m:B} over the 15 channel and target tests. Each test's p value comes from 1,000 phase-randomised copies of the network mean, as a {g:p-value-draws}p value from draws{/g}:",
+     "$$ p = \\frac{k + 1}{n + 1} {eq:p}",
+     "with {m:k} the draws at or above the real value and {m:n} the draws, so the smallest possible value is 0.001. The 15 tests of each measure, and the 3 isotope tests, were adjusted with the {g:benjamini-hochberg}Benjamini-Hochberg correction{/g} at q 0.05.",
+     "## Second code path",
+     "A second program, written apart and sharing no code with the first, repeats the analysis with different filters, a k-d tree KSG, normal-equation cross-validation and full-length Fourier surrogates. It ran on the Alps as a check of the code and on Fennoscandia as a replication, with the same rules and without the isotope test. The replication passes when every primary verdict matches and, for the Alpine check, the P1 effect falls inside the first path's interval. A different region may differ, and any difference is reported as a result about that region."
+    ]
+   },
+   {
+    "id": "controls",
+    "title": "Controls and planted checks",
+    "role": "argument",
+    "paragraphs": [
+     "The {g:planted-check}planted check{/g} ran in the same job, four synthetic sites per real site, on the panel's own series lengths. A target with year-to-year persistence of 0.3 was paired with a channel at correlation 0.6, which carries 0.322 bits. {c6}The planted 0.322 bits read 0.331 by the Gaussian value, 0.308 by KSG and 0.269 on held-out years.{/c6} The held-out reading falls short of the truth, as a lower bound should, and inside the preregistered range. A second independent channel worth 0.222 bits more added 0.201 on held-out years. A white-noise channel scored -0.050 and a near-copy of the first channel added -0.012, so neither was mistaken for signal. Every anchor rule held.",
+     "On the real data the best test scored 0.095 bits, sunshine from maximum latewood density, against control 95th percentiles of -0.014 (phase), -0.017 (shuffle) and -0.017 (white noise), each with p 0.001. Of the 15 channel and target tests, 14 survived correction on held-out bits and 9 on KSG. The kill condition did not fire."
+    ]
+   },
+   {
+    "id": "results",
+    "title": "Results",
+    "role": "argument",
+    "paragraphs": [
+     "## One channel at a time",
+     "Table {ref:tab:single} and Figure {ref:fig:channels} give the held-out bits of every channel in the Alps. {c1}In the Alps, maximum latewood density kept 0.090 bits per year of summer warmth on held-out years and ring width 0.028; density beat width by 0.062 bits (95% interval 0.034 to 0.089).{/c1} The KSG difference was 0.067. Density also carried 0.080 bits about rain and 0.095 about sunshine. Earlywood width and minimum density carried little or nothing on held-out years.",
+     "::table tab:single cols=0.28,0.18,0.18,0.18,0.18 Network mean held-out bits per year in the Alps, 51 sites. Every entry survived Benjamini-Hochberg correction on held-out bits except minimum density for sunshine.\nChannel ¦ Warmth ¦ Rain ¦ Sunshine ¦ KSG, warmth\nRing width ¦ 0.028 ¦ -0.012 ¦ -0.026 ¦ 0.038\nEarlywood width ¦ 0.009 ¦ -0.021 ¦ -0.043 ¦ 0.037\nLatewood width ¦ 0.035 ¦ 0.016 ¦ 0.024 ¦ 0.063\nMinimum density ¦ -0.016 ¦ -0.010 ¦ -0.051 ¦ 0.006\nMaximum latewood density ¦ 0.090 ¦ 0.080 ¦ 0.095 ¦ 0.105\n::end",
+     "![fig:channels width=0.9 alt=Grouped bars; maximum latewood density is tallest for all three targets](fig-channels.png) Held-out bits per year for each ring channel and summer target, network mean over 51 Alpine sites. The dashed line is the highest of the three controls' 95th percentiles. Drawn from the run's result file.",
+     "## More channels",
+     "{c5}The gain from extra channels did not saturate by three: the saturation ratio was 0.25 against a forecast bound of 0.10.{/c5} The mean over subsets of each size ran 0.029, 0.060, 0.080, 0.088 and 0.092 bits for one to five channels, so P2 failed. The mean over subsets mixes two things: which channel is chosen and how many. The best subset of each size, which we did not preregister, peaked at three channels (0.117 bits, ring width, latewood width and density) and fell to 0.092 with all five. With about 80 summers per site, more than three channels overfit. Figure {ref:fig:subsets} shows both curves.",
+     "![fig:subsets width=0.9 alt=Two curves; the mean over subsets rises steadily, the best subset peaks at three channels](fig-subsets.png) Held-out bits for warmth against the number of channels in the Alps: the preregistered mean over all subsets of each size, and the best subset of each size, which was not preregistered. Drawn from the run's result file.",
+     "## A channel or a tree",
+     "{c3}An added channel and one more tree past an expressed population signal of 0.85 could not be told apart: the difference was 0.011 bits (-0.003 to 0.025) over 43 sites.{/c3} The added channel gained 0.014 bits and the added tree 0.004. The median site needed 5 density series to reach 0.85. P3 failed, and its null is inconclusive: the interval is wide compared with both gains. Read as a curve, the held-out bits of density means rose from 0.044 with one series to 0.099 with 12, at the 29 sites that had 12 series.",
+     "## Many sites",
+     "{c4}Averaging all 51 Alpine sites reconstructed summer warmth with a held-out coefficient of efficiency of 0.317, which is 0.275 bits per year.{/c4} The reduction of error on the classic split was 0.391, and the phase-randomised composites' 95th percentile was 0.023, so H4 passed. The regional means reached 0.217 bits for rain and 0.168 for sunshine. By month, the five regional channels together gave held-out efficiencies of -0.03 in April, -0.06 in May, 0.17 in June, 0.16 in July and 0.27 in both August and September. Density alone gave 0.31 in August and 0.33 in September.",
+     "## Isotopes",
+     "At the 19 European isotope sites, oxygen isotopes carried 0.052 bits of warmth, 0.102 of rain and 0.110 of sunshine on held-out years, and all three survived correction, so H5 passed.",
+     "## The second code path and Fennoscandia",
+     "Table {ref:tab:rep} and Figure {ref:fig:compare} set the two code paths and the two regions side by side. On the Alps the second path gave the same six verdicts, and its P1 effect of 0.062 (0.035 to 0.089) sits inside the first path's interval. {c2}In Fennoscandia, density beat width by 0.28 bits (0.23 to 0.33).{/c2} That is outside the Alpine interval: the same sign and a larger effect at the cold northern tree line. Regional warmth there was reconstructed with a held-out efficiency of 0.72, which is 0.93 bits. P2 and P3 failed in Fennoscandia as well. Maximum latewood density kept 0.24 bits about warmth there and -0.08 about sunshine, while in the Alps it kept about as much about sunshine (0.095) as about warmth (0.090).",
+     "![fig:compare width=0.95 alt=Two panels of intervals; density minus width is above zero in all three rows, channel minus tree crosses zero in all three](fig-compare.png) The two preregistered comparisons with their 95% site bootstrap intervals, for both code paths in the Alps and the second code path in Fennoscandia. Drawn from the three result files.",
+     "::table tab:rep cols=0.34,0.22,0.22,0.22 Main quantities from the two code paths and the two regions. Intervals are 95% site bootstrap intervals.\nQuantity ¦ Alps, first path ¦ Alps, second path ¦ Fennoscandia, second path\nSites ¦ 51 ¦ 51 ¦ 24\nDensity minus width, bits ¦ 0.062 (0.034 to 0.089) ¦ 0.062 (0.035 to 0.089) ¦ 0.280 (0.229 to 0.330)\nSaturation ratio ¦ 0.25 ¦ 0.23 ¦ 0.54\nChannel minus tree, bits ¦ 0.011 (-0.003 to 0.025) ¦ 0.007 (-0.005 to 0.020) ¦ 0.003 (-0.016 to 0.024)\nSites for channel against tree ¦ 43 ¦ 42 ¦ 23\nRegional held-out efficiency ¦ 0.317 ¦ 0.315 ¦ 0.723\nRegional bits per year ¦ 0.275 ¦ 0.273 ¦ 0.927\nTests surviving correction ¦ 14 of 15 ¦ 14 of 15 ¦ 10 of 15\n::end"
+    ]
+   },
+   {
+    "id": "discussion",
+    "title": "Discussion",
+    "role": "argument",
+    "paragraphs": [
+     "On one shared scale the ranking is plain. A site's densest latewood keeps about three times what its ring width keeps about summer warmth, and at the northern tree line the gap is larger. This agrees with what Grudd {cite:r3} and Römer and colleagues {cite:r4} report in correlation units. The unit adds one thing: the second channel, the extra tree and the site network can be compared directly.",
+     "Read that way, a ring at one site is a narrow channel, about a tenth of a bit a year. A second channel in the same trees and one more tree past the usual replication threshold both buy around a hundredth of a bit, and we could not tell them apart. Averaging 51 sites buys about three times what the best single channel keeps at one site. Part of that gain is a property of the target: a regional mean of summer warmth is smoother than the climate at one grid cell, so it is easier to predict.",
+     "The failed saturation forecast has a plain cause. The mean over subsets of a given size includes the weak channels, so it keeps rising as the chance of including density rises. The best subset peaks at three channels, as we forecast, but that curve was not preregistered and is reported as exploration. Next time the best-subset curve, with the subset chosen inside each fold, should be the registered one.",
+     "The tree-against-channel comparison follows Wigley, Briffa and Jones {cite:r1}. Past an expressed population signal of 0.85, another tree adds little, which is what the threshold is meant to say. Our run did not have the power to show that a second channel adds more."
+    ]
+   },
+   {
+    "id": "limits",
+    "title": "Limitations",
+    "role": "argument",
+    "paragraphs": [
+     "- Bits here are a monotone function of the coefficient of efficiency, so the unit relabels a familiar skill score. Its value is that channels, trees and sites share one scale.",
+     "- The ranking of density over width is long known.",
+     "- Part of the regional gain comes from a smoother regional target.",
+     "- The channel against tree comparison is underpowered, and its null is inconclusive.",
+     "- Cores stand in for trees.",
+     "- CRU cloud cover is partly interpolated and relaxed toward climatology where stations are sparse, so the sunshine bits are a floor.",
+     "- The windows end about 1975, and early CRU data are thin.",
+     "- The held-out bits are a lower bound for a near-Gaussian target, and the targets cover June to August, the 2 to 30 year band and one grid cell per site.",
+     "- The isotope panel is Europe-wide, not Alpine. The carbon isotope set could not be downloaded and was not used.",
+     "- Scoring was done by our own code and was not blind."
+    ]
+   },
+   {
+    "id": "appendix",
+    "title": "Appendix A. The preregistered verdicts",
+    "role": "evidence",
+    "paragraphs": [
+     "Each {g:verdict}verdict{/g} is a set of rules written before the run, and it passes only when every rule holds. Values are from the Alpine result file.",
+     "::table tab:verdicts cols=0.24,0.46,0.18,0.12 Preregistered verdicts and the rules that decided them, Alps.\nVerdict ¦ Deciding rule ¦ Value ¦ Holds\nPlanted anchor ¦ Gaussian error at most 0.04, KSG error at most 0.03, held-out reading within -0.12 to +0.02 of truth, pair gain at least 0.12, KSG pair error at most 0.10, white noise at most 0 and its KSG within 0.02, redundant gain at most 0 ¦ 0.009; 0.014; -0.053; 0.201; 0.068; -0.050; 0.007; -0.012 ¦ yes\nKill test survived ¦ best test above all three controls' 95th percentiles; at least one test survives correction ¦ 0.095 against -0.014; 14 ¦ yes\nP1 density beats width ¦ interval lower end above 0; KSG difference above 0; density survives correction ¦ 0.034; 0.067; yes ¦ yes\nP2 saturates by three ¦ gain from one to three above 0; saturation ratio at most 0.10 ¦ 0.051; 0.25 ¦ no\nP3 channel beats tree ¦ at least 10 sites; interval lower end above 0 ¦ 43; -0.003 ¦ no\nH4 season reconstructed ¦ held-out efficiency above 0 and above the surrogate 95th percentile; split reduction of error above 0 ¦ 0.317 against 0.023; 0.391 ¦ yes\nH5 isotopes carry climate ¦ at least one of three targets survives correction ¦ 3 ¦ yes\n::end"
+    ]
+   }
+  ]
+ },
+ "claims": [
+  {
+   "id": "c1",
+   "text": "In the Alps, maximum latewood density kept 0.090 bits per year of summer warmth on held-out years and ring width 0.028; density beat width by 0.062 bits (95% interval 0.034 to 0.089).",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e1"
+   ]
+  },
+  {
+   "id": "c2",
+   "text": "In Fennoscandia, density beat width by 0.28 bits (0.23 to 0.33).",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e2"
+   ]
+  },
+  {
+   "id": "c3",
+   "text": "An added channel and one more tree past an expressed population signal of 0.85 could not be told apart: the difference was 0.011 bits (-0.003 to 0.025) over 43 sites.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e3"
+   ]
+  },
+  {
+   "id": "c4",
+   "text": "Averaging all 51 Alpine sites reconstructed summer warmth with a held-out coefficient of efficiency of 0.317, which is 0.275 bits per year.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e4"
+   ]
+  },
+  {
+   "id": "c5",
+   "text": "The gain from extra channels did not saturate by three: the saturation ratio was 0.25 against a forecast bound of 0.10.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e5"
+   ]
+  },
+  {
+   "id": "c6",
+   "text": "The planted 0.322 bits read 0.331 by the Gaussian value, 0.308 by KSG and 0.269 on held-out years.",
+   "section": "controls",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e6"
+   ]
+  }
+ ],
+ "evidence": [
+  {
+   "id": "e1",
+   "kind": "number",
+   "label": "The numbers in claim 1",
+   "value": "0.090; 0.028; 0.062; 95; 0.034; 0.089",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e2",
+   "kind": "number",
+   "label": "The numbers in claim 2",
+   "value": "0.28; 0.23; 0.33",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e3",
+   "kind": "number",
+   "label": "The numbers in claim 3",
+   "value": "0.85; 0.011; -0.003; 0.025; 43",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e4",
+   "kind": "number",
+   "label": "The numbers in claim 4",
+   "value": "51; 0.317; 0.275",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e5",
+   "kind": "number",
+   "label": "The numbers in claim 5",
+   "value": "0.25; 0.10",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e6",
+   "kind": "number",
+   "label": "The numbers in claim 6",
+   "value": "0.322; 0.331; 0.308; 0.269",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e7",
+   "kind": "number",
+   "label": "Sample",
+   "value": "51 Alpine and 24 Fennoscandian sites, 74 to 78 regional years, 43 sites for P3, 19 d18O sites",
+   "check": {
+    "by": "the register's evidence fields",
+    "result": "not_checked",
+    "note": "as recorded in the publication register"
+   }
+  },
+  {
+   "id": "e8",
+   "kind": "number",
+   "label": "Main estimate and interval",
+   "value": "P1 +0.062 bits (0.034 to 0.089); Fennoscandia +0.28 (0.23 to 0.33); P3 difference 0.011 (-0.003 to 0.025)",
+   "check": {
+    "by": "the register's evidence fields",
+    "result": "not_checked",
+    "note": "as recorded in the publication register"
+   }
+  },
+  {
+   "id": "e9",
+   "kind": "number",
+   "label": "Forecast against outcome",
+   "value": "P1, H4, H5 PASS; P2 saturation FAIL (0.25 against 0.10); P3 FAIL; both fail in Fennoscandia too",
+   "check": {
+    "by": "the register's evidence fields",
+    "result": "not_checked",
+    "note": "as recorded in the publication register"
+   }
+  },
+  {
+   "id": "e10",
+   "kind": "control",
+   "label": "Known-answer check",
+   "value": "planted 0.322 bits read 0.331 Gaussian, 0.308 KSG, 0.269 held-out",
+   "check": {
+    "by": "the register's evidence fields",
+    "result": "not_checked",
+    "note": "as recorded in the publication register"
+   }
+  }
+ ],
+ "references": [
+  {
+   "id": "r1",
+   "key": "Wigley 1984",
+   "kind": "paper",
+   "title": "Wigley, T. M. L., Briffa, K. R. and Jones, P. D. (1984). On the average value of correlated time series, with applications in dendroclimatology and hydrometeorology. Journal of Climate and Applied Meteorology 23, 201-213. doi:10.1175/1520-0450(1984)023<0201:OTAVOC>2.0.CO;2",
+   "access": "snippet",
+   "target": "https://doi.org/10.1175/1520-0450(1984)023<0201:OTAVOC>2.0.CO;2",
+   "access_note": "abstracts, publisher pages and search summaries; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r2",
+   "key": "Buras 2017",
+   "kind": "paper",
+   "title": "Buras, A. (2017). A comment on the Expressed Population Signal. Dendrochronologia. doi:10.1016/j.dendro.2017.03.005",
+   "access": "snippet",
+   "target": "https://doi.org/10.1016/j.dendro.2017.03.005",
+   "access_note": "abstracts, publisher pages and search summaries; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r3",
+   "key": "Grudd 2008",
+   "kind": "paper",
+   "title": "Grudd, H. (2008). Torneträsk tree-ring width and density AD 500-2004: a test of climatic sensitivity and a new 1500-year reconstruction of north Fennoscandian summers. Climate Dynamics 31, 843-857. doi:10.1007/s00382-007-0358-2",
+   "access": "snippet",
+   "target": "https://doi.org/10.1007/s00382-007-0358-2",
+   "access_note": "abstracts, publisher pages and search summaries; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r4",
+   "key": "Römer 2025",
+   "kind": "paper",
+   "title": "Römer, P., Wieland, A., Torbenson, M. C. A., Esper, J. and others (2025). Covariance and climate signals among state-of-the-art tree-ring proxies. Quaternary Science Reviews 355, 109270. doi:10.1016/j.quascirev.2025.109270",
+   "access": "snippet",
+   "target": "https://doi.org/10.1016/j.quascirev.2025.109270",
+   "access_note": "abstracts, publisher pages and search summaries; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r5",
+   "key": "Kraskov 2004",
+   "kind": "paper",
+   "title": "Kraskov, A., Stögbauer, H. and Grassberger, P. (2004). Estimating mutual information. Physical Review E 69, 066138. doi:10.1103/PhysRevE.69.066138",
+   "access": "snippet",
+   "target": "https://doi.org/10.1103/PhysRevE.69.066138",
+   "access_note": "abstracts, publisher pages and search summaries; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r6",
+   "key": "Harris 2020",
+   "kind": "dataset",
+   "title": "Harris, I., Osborn, T. J., Jones, P. and Lister, D. (2020). Version 4 of the CRU TS monthly high-resolution gridded multivariate climate dataset. Scientific Data 7, 109. doi:10.1038/s41597-020-0453-3",
+   "access": "run",
+   "target": "https://doi.org/10.1038/s41597-020-0453-3",
+   "licence": "ITRDB open, cite; ISONET CC BY 4.0; CRU TS ODbL 1.0"
+  },
+  {
+   "id": "r7",
+   "key": "cruts",
+   "kind": "dataset",
+   "title": "Climatic Research Unit, University of East Anglia. CRU TS 4.10 monthly temperature, precipitation and cloud cover. Open Database License 1.0. https://crudata.uea.ac.uk/cru/data/hrg/",
+   "access": "run",
+   "target": "https://crudata.uea.ac.uk/cru/data/hrg/",
+   "licence": "ITRDB open, cite; ISONET CC BY 4.0; CRU TS ODbL 1.0"
+  },
+  {
+   "id": "r8",
+   "key": "International Tree-Ring Data Bank",
+   "kind": "dataset",
+   "title": "International Tree-Ring Data Bank. NOAA National Centers for Environmental Information, World Data Service for Paleoclimatology. Chronologies and measurements, Europe. Accessed 30 October 2026. https://www.ncei.noaa.gov/pub/data/paleo/treering/",
+   "access": "run",
+   "target": "https://www.ncei.noaa.gov/pub/data/paleo/treering/",
+   "licence": "ITRDB open, cite; ISONET CC BY 4.0; CRU TS ODbL 1.0"
+  },
+  {
+   "id": "r9",
+   "key": "ISONET Project Members 2023",
+   "kind": "dataset",
+   "title": "ISONET Project Members, Schleser, G. H. and others (2023). ISONET tree-ring cellulose oxygen isotope chronologies, Europe. GFZ Data Services, CC BY 4.0. doi:10.5880/GFZ.4.3.2023.001",
+   "access": "run",
+   "target": "https://doi.org/10.5880/GFZ.4.3.2023.001",
+   "licence": "ITRDB open, cite; ISONET CC BY 4.0; CRU TS ODbL 1.0"
+  }
+ ],
+ "relations": [],
+ "corrections": [
+  {
+   "id": "x1",
+   "date": "2026-10-30",
+   "target": "document",
+   "type": "wording",
+   "after": "Two deviations from the preregistration, both before any outcome was seen, recorded in the design section above.",
+   "reason": "Dated in the paper's Corrections section; found by the study itself, before publication.",
+   "found_by": "the study itself, before publication"
+  }
+ ],
+ "versions": [
+  {
+   "n": 1,
+   "date": "2026-10-30",
+   "what": "entered in the findings ledger"
+  },
+  {
+   "n": 2,
+   "date": "2026-11-09",
+   "what": "paper version 1.0, first published",
+   "hash": "d00805eade920732d487165305965b563e3e561ff0bdd71bd22dafc5b7c8fa58"
+  }
+ ],
+ "grade": {
+  "lowers": [
+   {
+    "domain": "blinding",
+    "text": "Not blind. Held-out skill against instrumental climate; second code path shares no code",
+    "from": "register scorer.blind"
+   },
+   {
+    "domain": "single source",
+    "text": "The cited literature was read at the level of abstracts, publisher pages and search summaries; full texts were not read.",
+    "from": "paper Verified"
+   }
+  ],
+  "holds": [
+   {
+    "domain": "scoring",
+    "text": "Scored by code against rules fixed in advance.",
+    "from": "register scorer.who"
+   },
+   {
+    "domain": "preregistration",
+    "text": "Preregistered and hash-locked before the run (sha256 bfec0fce).",
+    "from": "paper Reproduction"
+   },
+   {
+    "domain": "control",
+    "text": "Controls: working: phase, shuffle and white q95 -0.014 to -0.017 against 0.095 bits; 14 of 15 tests survive BH.",
+    "from": "register evidence.controls"
+   },
+   {
+    "domain": "open data",
+    "text": "Public data.",
+    "from": "register data_licence"
+   }
+  ]
+ },
+ "reproduce": {
+  "data": [
+   {
+    "name": "Harris 2020",
+    "licence": "ITRDB open, cite; ISONET CC BY 4.0; CRU TS ODbL 1.0",
+    "url": "https://doi.org/10.1038/s41597-020-0453-3"
+   },
+   {
+    "name": "cruts",
+    "licence": "ITRDB open, cite; ISONET CC BY 4.0; CRU TS ODbL 1.0",
+    "url": "https://crudata.uea.ac.uk/cru/data/hrg/"
+   },
+   {
+    "name": "International Tree-Ring Data Bank",
+    "licence": "ITRDB open, cite; ISONET CC BY 4.0; CRU TS ODbL 1.0",
+    "url": "https://www.ncei.noaa.gov/pub/data/paleo/treering/"
+   },
+   {
+    "name": "ISONET Project Members 2023",
+    "licence": "ITRDB open, cite; ISONET CC BY 4.0; CRU TS ODbL 1.0",
+    "url": "https://doi.org/10.5880/GFZ.4.3.2023.001"
+   }
+  ],
+  "prereg": {
+   "hash": "bfec0fceb32bf9299844575ae5155d7bed603dc92d53e76e6a1fcb46d37bc609",
+   "plan": "not recorded"
+  },
+  "cost": "about 18 minutes for the main run, 8 for the Alpine check and 4 for Fennoscandia, on one desktop CPU.",
+  "steps": [
+   "Data: ITRDB European sites with ring width, earlywood and latewood width and minimum and maximum density gap-free from 1901; ISONET oxygen isotope chronologies; CRU TS 4.10 temperature, precipitation and cloud cover at each site's nearest land cell.",
+   "High-pass every series with a 10-year Gaussian and scale it.",
+   "For each channel and target, fit a linear reconstruction with five-fold block cross-validation, compute eq. {ref:eq:ce} on the held-out blocks and convert with eq. {ref:eq:bits}. Average over sites.",
+   "Compare density with width, build the subset curve and eq. {ref:eq:sat}, compare an added channel with an added tree past eq. {ref:eq:eps} at 0.85, and score the regional mean; test against the three controls with eq. {ref:eq:p} and correct with Benjamini-Hochberg.",
+   "Preregistration SHA-256: bfec0fceb32bf9299844575ae5155d7bed603dc92d53e76e6a1fcb46d37bc609. Plan SHA-256 of the main run: 6b038615377aad2c11c456f135e0b705bc638ca02eff47a09543c0ef2cb83ba7. Runs: Alps 20261030T123853Z, Alps second path 20261030T124501Z, Fennoscandia second path 20261030T123301Z.",
+   "Result file SHA-256: Alps 65d480942aad29a6838af7468aecf78184d00689b20182ec52689b79c53a1e63; Alps second path 5f6ba9957994f12b3cf511994e22a87bb6b3c32b06628e05b2b4963325a6b565; Fennoscandia d7e616aecfae261d49be8e9b33625a9e4469d55f702af4bd8464119269bb4cc0."
+  ],
+  "not_rerun": "The study was not re-run for this paper."
+ },
+ "verified": {
+  "date": "2026-11-09",
+  "checks": [
+   {
+    "what": "On 9 November 2026 every Alpine verdict, the planted-signal readings, the control percentiles, the 14 of 15 surviving tests, the single-channel bits in Table {ref:tab:single}, the density-over-width difference with its interval, the subset curves and saturation ratio, the channel and tree gains with their interval, the regional, monthly and isotope values were re-read from the Alpine result file.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   },
+   {
+    "what": "The second code path's Alpine and Fennoscandian values in Table {ref:tab:rep} were re-read from their own result files.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   },
+   {
+    "what": "Every one of these values that the findings ledger records matches it.",
+    "by": "the paper's Verified pass",
+    "result": "match"
+   },
+   {
+    "what": "The SHA-256 of the preregistration matches the hash recorded in all three runs, and the SHA-256 of each result file matches the run record.",
+    "by": "the paper's Verified pass",
+    "result": "match"
+   },
+   {
+    "what": "All three figures were drawn by a script that reads only the three result files.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   }
+  ],
+  "not_checked": [
+   "The study was not re-run for this paper.",
+   "The literature was found by searches run on 9 November 2026 and read at the level of abstracts, publisher pages and search summaries; the full texts were not read."
+  ]
+ }
+}

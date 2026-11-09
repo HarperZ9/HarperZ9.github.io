@@ -1,0 +1,65 @@
+{
+ "schema": "buildlang.buildtex-receipt/v0",
+ "source": {
+  "path": "F114.bld",
+  "sha256": "82f026a4db25fd3bc1859bb10e382d333ca6765c60bcc9e728e8331c2f21abe8"
+ },
+ "ir_sha256": "a65434d35d7d5b8ac268f19db94321fa4241d8c986921071cda603f42cbacb88",
+ "theme": "paper",
+ "overrides": [],
+ "outputs": {
+  "F114.pdf": "d00805eade920732d487165305965b563e3e561ff0bdd71bd22dafc5b7c8fa58"
+ },
+ "pdf_metadata": {
+  "pdfa": false,
+  "creation_date": "D:20261109000000Z"
+ },
+ "facts": {
+  "pages": 10,
+  "pages_layout": 10,
+  "overfull": [],
+  "underfull": 0,
+  "missing_glyphs": [],
+  "glyph_fallbacks": [],
+  "math_errors": [],
+  "fonts": [
+   {
+    "name": "FFBBOL+NotoSansMath-Regular",
+    "embedded": true
+   },
+   {
+    "name": "HFEIKE+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "LLFBNC+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "MCCILM+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "NONFFN+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "PKPDFB+AccessionDisplay-Master",
+    "embedded": true
+   }
+  ],
+  "images": 4,
+  "blind_text_runs": 0,
+  "reading_order": true,
+  "blocks_missing_from_text": [],
+  "pdf_bytes": 573614
+ },
+ "failed": [],
+ "notes": [
+  "buildc run F114.bld -> F114.doc.tsv",
+  "press: relief 1275x475 px at 150 dpi; 0 blind line(s); foil colour source: fallback constant"
+ ],
+ "external_programs": [
+  "buildc"
+ ]
+}

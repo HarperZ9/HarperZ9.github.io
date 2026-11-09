@@ -1,0 +1,195 @@
+---
+id: F63
+title: No drought steeling in 1,175 tree-ring sites
+subtitle: A preregistered test of whether a moderate earlier drought makes trees more resilient to a later severe one, with time-shift, permutation and placebo controls and a rerun on gridded drought data
+version: 1.0
+date: 9 November 2026
+line: Finding F63 in the findings ledger, Test A. Honest null (tier D).
+pdf_author: Zain Dana Harper
+subject: A preregistered test of drought steeling on International Tree-Ring Data Bank chronologies in the contiguous United States, with a rerun on CRU TS self-calibrating PDSI
+footer: F63, no drought steeling in tree rings, version 1.0
+---
+# abstract
+A common intuition holds that stress hardens: a tree that came through a dry spell should cope better with the next one. We tested that idea on 1,175 tree-ring sites in the contiguous United States, 65 species and 3,780 site-drought events, with the test written down and hash-locked before the run. {c1}A moderate drought four to eleven years earlier moved log resilience to a later severe drought by +0.039 (95% interval -0.011 to +0.090), inside a time-shift null whose 95th percentile was 0.065 (p 0.18).{/c1} The preregistered steeling test failed. {c2}A severe prior drought lowered growth in the drought year (resistance -0.087, p 0.006) and raised recovery after it by +0.096, so resilience barely moved.{/c2} Part of that recovery gain follows from how the indices are built. {c3}A rerun with drought taken from 0.5 degree gridded data on 1,097 sites gave +0.025 (-0.009 to +0.059), below its own time-shift 95th percentile of 0.038 (p 0.14).{/c3} The interval still allows a gain of up to about 9 percent in resilience, so small conditioning effects are not ruled out.
+
+# section What this means for a reader {sec:reader}
+If someone tells you that forests exposed to drought become hardened against the next one, ask for the test against a version of the drought record moved in time. Across a large public archive of tree rings, trees that had lived through an earlier drought grew less in the severe drought year and bounced back more afterwards, and the two roughly cancelled. At this scale, drought "priming" of trees is not shown.
+
+# section Introduction {sec:intro}
+The question comes from a broad idea about stress and adaptation: that a moderate earlier stress leaves an organism better prepared for a harder one. Applied to trees, we call this {g:steeling}steeling{/g}. Trees make a good test, because each annual ring records growth, and public archives hold thousands of sites with records over a century long.
+
+Forest ecology points mostly the other way. Anderegg and colleagues {cite:anderegg2015} examined stem growth after severe drought at 1,338 forest sites worldwide and reported a widespread {g:drought-legacy}drought legacy{/g}: growth stayed low for one to four years after the drought, most often in dry ecosystems and in the pine family. Anderegg and colleagues {cite:anderegg2020} later asked whether forests acclimate to repeated droughts or become more vulnerable, and concluded that successive droughts are generally more damaging, with conifers the most affected. We read that paper at the level of its publisher page and press coverage.
+
+The usual measures of drought response come from Lloret, Keeling and Sala {cite:lloret2011}, who proposed resistance, recovery and resilience indices from ring growth around a low-growth episode in ponderosa pine. Schwarz and colleagues {cite:schwarz2020} reviewed 82 studies that used these indices and listed cases where they mislead: a lagged growth minimum, depressed growth in the reference years before the drought, and repeated droughts. Their review bears on our result, because resilience equals resistance times recovery, so a weak drought-year ring raises recovery by arithmetic alone.
+
+Our searches, run on 9 November 2026, found these and related studies on legacies and repeated drought. We did not find a study of this exact contrast, moderate earlier drought against later resilience, scored against a time-shifted drought record. That is a search result, not proof that none exists.
+
+# section Preregistration and design {sec:prereg}
+The design was written as a {g:preregistration}preregistration{/g} and hash-locked on 29 October 2026 at 22:54 UTC, before any hypothesis value was computed. A smoke run at small sizes before the lock printed design counts only: 1,175 sites, 3,780 events, 65 species, 177 climate divisions, and the prior-drought group sizes. No coefficient was printed or read.
+
+The locked file covers four tests, A to D. Tests B to D are simulations of a loaded rod, a small neural network and a Bayesian learner, and they say nothing about trees. This paper reports Test A, the only test on real data. Across all four tests the run returned 22 {g:verdict}verdicts{/g}, 10 passing and 12 failing.
+
+Test A had four preregistered predictions, each a set of rules that must all hold:
+- A1, steeling: the moderate-drought coefficient is above 0, its {g:benjamini-hochberg}Benjamini-Hochberg{/g} adjusted q is below 0.05, and it is above the 95th percentile of both nulls.
+- A2: the moderate-drought coefficient exceeds the severe-drought coefficient, with q below 0.05.
+- A3: resilience rises and then falls with drought dose, by the {g:two-lines}two-lines test{/g}, with a statistic above 1.96 and above its shuffle 95th percentile.
+- A placebo: grouping by a window after the event must not predict resilience (p at or above 0.05).
+
+The forecast written before the run: A1 weak or null, A2 likely positive because severe drought leaves legacies, and A3 failing.
+
+# section Data and provenance {sec:data}
+Rings: {g:chronology}standard chronologies{/g} for the contiguous United States from the International Tree-Ring Data Bank {cite:itrdb}, held by NOAA's National Centers for Environmental Information as public data with a request to cite the contributors. Ring width only. Years from 1896 with at least 5 samples where a sample count exists; index values at or below 0 dropped.
+
+Drought, main test: NOAA nClimDiv divisional {g:pdsi}Palmer Drought Severity Index{/g}, version 1.0.0 built on 6 October 2026 {cite:nclimdiv}, US federal data with no restriction on use. Each site was placed in its {g:climate-division}climate division{/g} by its coordinates, and the yearly drought value is the June to August mean of that division. The final sample is 1,175 sites, 65 species and 177 divisions, with 579 division drought years and 3,780 site-drought events.
+
+Drought, rerun: the {g:scpdsi}self-calibrating PDSI{/g} from CRU TS 4.10 at 0.5 degree, 1903 to 2025 {cite:harris2020} {cite:cruts}, released under the Open Database License 1.0 with attribution to the Climatic Research Unit, University of East Anglia. Each site takes the nearest cell with complete June to August data in at least 60 years, within 1 degree. This gave 1,097 sites, 64 species, 505 cells and 2,549 events.
+
+A division averages over a large area, and a site sits at one point in it. The rerun exists to pay that debt. A 0.5 degree cell is closer to the site and is still not a station.
+
+# section Methods {sec:methods}
+## Events
+A focal year {m:t} is a division year with June to August PDSI at or below -3. An event needs ring growth in years {m:t-3} to {m:t+3}, no other severe year in {m:t-3} to {m:t-1} or {m:t+1} to {m:t+3}, and drought data for the exposure window {m:t-11} to {m:t-4}.
+
+## The Lloret indices
+With {m:g_t} the ring index in the drought year, {m:G_{pre}} the mean of the three years before and {m:G_{post}} the mean of the three years after, the {g:lloret-indices}Lloret indices{/g} are resistance, recovery and resilience:
+$$ R_t = \frac{g_t}{G_{pre}} , R_c = \frac{G_{post}}{g_t} , R_s = \frac{G_{post}}{G_{pre}} = R_t \cdot R_c {eq:lloret}
+All three are analysed as natural logarithms. The product in eq. {ref:eq:lloret} matters later: a lower drought-year ring lowers {m:R_t} and raises {m:R_c} by the same factor.
+
+## Exposure groups
+The exposure is the lowest June to August PDSI in years {m:t-11} to {m:t-4}. An event is in the none group if that minimum is above -2, moderate if it lies above -3 and at or below -2, and severe if it is at or below -3. The groups held 986, 941 and 1,853 events. The dose is the larger of 0 and minus that minimum.
+
+## The model
+For event {m:i} at site {m:s} in year {m:t}:
+$$ \ln R_s = \beta_m M_i + \beta_s S_i + \gamma_1 D_t + \gamma_2 D_{pre} + \gamma_3 D_{post} + \alpha_s + \tau_t + \epsilon_i {eq:model}
+where {m:M_i} and {m:S_i} mark the moderate and severe groups, {m:D_t}, {m:D_{pre}} and {m:D_{post}} are the drought-year PDSI and the mean PDSI of the three years before and after, and {m:\alpha_s} and {m:\tau_t} are site and year {g:fixed-effects}fixed effects{/g}. Species are constant within a site, so site effects absorb them; a model with species and year effects was reported as secondary. Standard errors are {g:clustered-errors}clustered{/g} by climate division. Resistance and recovery were fitted with the same model as secondary outcomes. The coefficient under test is {m:\beta_m}.
+
+In the rerun, the preregistered primary model used species and year effects in place of site effects, with the same covariates and the same clustering by division.
+
+## Shape in dose
+For prediction A3, resilience with site, year and covariate effects removed and no group terms was set against the dose, and the two-lines test was applied. Its statistic is the smaller of the rising line's z and minus the falling line's z, so a large positive value means a rise and then a fall.
+
+# section Controls and planted checks {sec:controls}
+Test A had no {g:planted-check}planted check{/g}: no synthetic forest with a known steeling effect was built and run through the model. The placebo window serves as the design check, together with three {g:control}controls{/g}.
+
+- The {g:time-shift-null}time-shift null{/g} moves each division's PDSI record by a random offset of at least 20 years, wraps it, and rebuilds every event and group. It keeps each record's pattern of droughts and breaks its link with the rings. 200 draws. This is the null the preregistered rule binds.
+- The {g:label-permutation}label-permutation null{/g} shuffles the prior-drought labels among each site's own events, 500 draws. It keeps every drought date in place, so it is the weaker comparison.
+- The dose shuffle permutes residual resilience across dose for the two-lines test, 200 draws.
+- The {g:placebo-window}placebo window{/g} groups each event by drought in years {m:t+5} to {m:t+12}, after the event.
+
+Each p value from draws is the share of draws at or above the real value, with one added to the count and to the number of draws:
+$$ p = \frac{k + 1}{n + 1} {eq:p}
+where {m:k} is the number of draws at or above the real value and {m:n} the number of draws. The real value is compared with the {g:null-distribution}null distribution{/g}'s 95th percentile. The rerun used the same time-shift null on each grid cell's record, 200 draws.
+
+# section Results {sec:results}
+Table {ref:tab:main} gives the estimates, and Figure {ref:fig:est} draws the main ones. {c1}A moderate drought four to eleven years earlier moved log resilience to a later severe drought by +0.039 (95% interval -0.011 to +0.090), inside a time-shift null whose 95th percentile was 0.065 (p 0.18).{/c1} Its raw p was 0.128 and its adjusted q 0.166. A severe prior drought gave +0.009 (-0.039 to +0.057). Moderate minus severe was +0.030 (-0.014 to +0.074, q 0.214).
+
+::table tab:main cols=0.36,0.15,0.25,0.12,0.12 Estimates on the log Lloret index, division PDSI, with 95% intervals clustered by climate division. Site and year effects unless stated.
+Outcome and term ¦ Estimate ¦ 95% interval ¦ p ¦ Events
+Resilience, moderate prior ¦ +0.039 ¦ -0.011 to +0.090 ¦ 0.128 ¦ 3,780
+Resilience, severe prior ¦ +0.009 ¦ -0.039 to +0.057 ¦ 0.71 ¦ 3,780
+Resilience, moderate minus severe ¦ +0.030 ¦ -0.014 to +0.074 ¦ 0.18 ¦ 3,780
+Placebo window, moderate ¦ +0.006 ¦ -0.059 to +0.070 ¦ 0.86 ¦ 3,976
+Species effects, moderate ¦ +0.037 ¦ 0.000 to +0.074 ¦ 0.047 ¦ 3,780
+Species effects, severe ¦ +0.035 ¦ -0.005 to +0.076 ¦ 0.089 ¦ 3,780
+Resistance, moderate prior ¦ -0.063 ¦ -0.155 to +0.028 ¦ 0.18 ¦ 3,780
+Resistance, severe prior ¦ -0.087 ¦ -0.149 to -0.025 ¦ 0.006 ¦ 3,780
+Recovery, moderate prior ¦ +0.103 ¦ +0.025 to +0.180 ¦ 0.010 ¦ 3,780
+Recovery, severe prior ¦ +0.096 ¦ +0.035 to +0.158 ¦ 0.002 ¦ 3,780
+::end
+
+![fig:est width=0.98 alt=Diamonds with interval bars for six estimates, the resilience ones crossing zero, resistance below and recovery above](fig-estimates.png) Estimates with 95% intervals. Navy: resilience under the preregistered model and the rerun. Grey: the placebo window. Ochre: the two components after a severe prior drought. Drawn from the two runs' result files.
+
+Figure {ref:fig:nulls} sets the moderate-drought estimate against the three null ranges. It sits inside the time-shift range in both runs and above the label-permutation range (95th percentile 0.020, p 0.004). The label permutation keeps each site's drought timing, so beating it says less, and the preregistered rule used the time shift.
+
+![fig:nulls width=0.98 alt=Grey bars for three null ranges with the real estimate marked as a diamond on each](fig-nulls.png) The moderate prior drought estimate (diamond) against the 5th to 95th percentile range (bar) and mean (tick) of each null. Ochre marks an estimate inside the range, navy one above it.
+
+The components explain the null in resilience. {c2}A severe prior drought lowered growth in the drought year (resistance -0.087, p 0.006) and raised recovery after it by +0.096, so resilience barely moved.{/c2} By eq. {ref:eq:lloret}, a lower drought-year ring raises recovery by the same factor it lowers resistance, so the recovery gain is partly arithmetic and is not evidence of conditioning.
+
+{c4}The placebo window was clean: drought after the event gave +0.006 (p 0.86).{/c4} No rise-then-fall shape appeared with dose. The two lines fell and then rose, neither significantly (z -0.89 and +0.81), and the statistic of -0.89 sat below its shuffle 95th percentile of 1.26. The mean residual resilience by number of moderate-drought years in the window was -0.007 for none (1,705 events), +0.005 for one (1,268), +0.008 for two (643), -0.019 for three (103) and +0.059 for four (44).
+
+With species and year effects in place of site effects, the moderate prior drought gave +0.037 (0.000 to +0.074, p 0.047), and severe +0.035 (p 0.089). The two did not differ (+0.002), so under that model any prior drought went with slightly higher resilience, with no edge for a moderate one. The rerun tested that sign.
+
+## The rerun on gridded drought
+The rerun, preregistered and locked on 30 October 2026 at 03:20 UTC, took drought from the nearest 0.5 degree cell of the CRU self-calibrating PDSI. Its {g:kill-condition}kill condition{/g} fires when the 95% interval of the species-effects estimate includes 0 or the estimate sits at or below the time-shift 95th percentile. Table {ref:tab:rerun} gives its estimates.
+
+::table tab:rerun cols=0.40,0.15,0.25,0.10,0.10 Rerun on gridded scPDSI, 1,097 sites. Species and year effects unless stated; 95% intervals clustered by climate division.
+Outcome and term ¦ Estimate ¦ 95% interval ¦ p ¦ Events
+Resilience, moderate prior ¦ +0.025 ¦ -0.009 to +0.059 ¦ 0.15 ¦ 2,549
+Resilience, severe prior ¦ +0.018 ¦ -0.022 to +0.058 ¦ 0.37 ¦ 2,549
+Site effects, moderate prior ¦ +0.049 ¦ -0.002 to +0.101 ¦ 0.062 ¦ 2,549
+Site effects, severe prior ¦ +0.064 ¦ +0.009 to +0.118 ¦ 0.022 ¦ 2,549
+Resistance, moderate prior ¦ -0.046 ¦ -0.110 to +0.017 ¦ 0.15 ¦ 2,549
+Recovery, moderate prior ¦ +0.072 ¦ +0.009 to +0.134 ¦ 0.024 ¦ 2,549
+Placebo window, moderate ¦ -0.010 ¦ -0.041 to +0.022 ¦ 0.55 ¦ 2,803
+::end
+
+{c3}A rerun with drought taken from 0.5 degree gridded data on 1,097 sites gave +0.025 (-0.009 to +0.059), below its own time-shift 95th percentile of 0.038 (p 0.14).{/c3} The kill condition fired on both of its rules, and the adjusted q was 0.174. The small positive sign under division drought with species effects did not survive the finer drought data. Resistance fell and recovery rose, as in the main run.
+
+Table {ref:tab:forecast} sets the forecasts written before the main run against the outcomes.
+
+::table tab:forecast cols=0.40,0.32,0.28 Forecasts fixed in the preregistration against what the run gave.
+Prediction ¦ Forecast ¦ Outcome
+A1 steeling ¦ weak or null ¦ fail, null
+A2 moderate beats severe ¦ likely positive ¦ fail, +0.030 with q 0.214
+A3 rise then fall in dose ¦ fail ¦ fail
+Placebo window ¦ clean ¦ clean
+::end
+
+# section Discussion {sec:discussion}
+The test asked whether moderate drought conditions trees for a later severe one. It found no effect beyond what a drought record moved in time also produces, in two runs with two drought products. That is an {g:honest-null}honest null{/g}: a working test, a clean placebo, and an estimate inside its null.
+
+The result fits the direction of Anderegg and colleagues {cite:anderegg2020}, who reported that repeated droughts tend to hurt more. Our severe-prior estimates of resistance fit the legacy picture of Anderegg and colleagues {cite:anderegg2015}: a tree that has been through a severe drought lays down a narrower ring in the next one.
+
+The recovery gain is where a careless reading would find steeling. Recovery rose by about as much as resistance fell. Schwarz and colleagues {cite:schwarz2020} warned that Lloret's indices mislead when growth in the reference years is depressed or droughts repeat, and eq. {ref:eq:lloret} shows the simplest version of the problem. A study that reported recovery alone would see trees "bouncing back" better after earlier drought. The resilience ratio, which cancels the drought-year ring, shows no net gain.
+
+The label-permutation null is the trap on the other side. The estimate beat it with p 0.004. That null keeps every drought date in place, so it compares events within a site's own history and does not remove effects tied to when droughts fell. We fixed the time-shift null as binding before the run, and it was not beaten.
+
+# section Limitations {sec:limits}
+- The 95% interval reaches +0.090 in log resilience, a gain of about 9 percent. Small conditioning effects are not ruled out.
+- No planted forest with a known steeling effect was run through the model, so the design's ability to detect an effect is shown only by the width of its interval.
+- No autocorrelation baseline for growth memory was fitted, so part of any legacy could be the persistence of the ring series itself.
+- The recovery gain is partly mechanical, by eq. {ref:eq:lloret}.
+- Division drought is coarse. The rerun's 0.5 degree cells are closer to the sites and are still gridded estimates, not station data.
+- In the rerun with site effects in place of species effects, a severe prior drought gave +0.064 (+0.009 to +0.118, uncorrected p 0.022). That model was not the preregistered test there. We read it as a lead for a new locked study.
+- Sites are in the contiguous United States and the record is ring width only.
+- Scoring was done by our own code and was not blind.
+
+# section Verified {sec:verified}
+Verified: on 9 November 2026 the counts (1,175 sites, 65 species, 177 divisions, 579 division droughts, 3,780 events and the three group sizes), every estimate, interval and p value in Table {ref:tab:main}, the adjusted q values, the time-shift and label-permutation null percentiles and p values, the two-lines statistics and the residuals by number of moderate years were re-read from the main run's result file. The rerun's counts and every value in Table {ref:tab:rerun}, its null percentile, p and q, and its kill verdict were re-read from its own result file. All tree values match the findings ledger. The SHA-256 of each preregistration matches the hash recorded in its result file. Both figures were drawn by a script that reads only the two result files. The verdict count across all four tests, 10 passing and 12 failing, was counted from the main result file and differs from the ledger headline; see Corrections. The study was not re-run for this paper. The literature was found by searches run on 9 November 2026 and read at the level of abstracts, publisher pages, press coverage and search summaries; the full texts were not read.
+
+# section Corrections {sec:corrections}
+- 30 October 2026: the gridded rerun found that the positive sign under division drought with species effects (+0.037, p 0.047) did not survive site-scale drought (+0.025, below the time-shift 95th percentile of 0.038). Forest and stress models keep no steeling as the default. This paper reports both.
+- 9 November 2026: the findings ledger headline and the run's own summary gave 9 passing and 13 failing verdicts across Tests A to D. The result file and the ledger entry's own list of names give 10 passing and 12 failing. No tree value changes.
+- 9 November 2026: first published version.
+
+# section Reproduction {sec:repro}
+- Data: ITRDB standard ring-width chronologies for the contiguous United States; NOAA nClimDiv divisional PDSI; for the rerun, CRU TS 4.10 scPDSI at 0.5 degree.
+- Place each site in its climate division and take the June to August mean PDSI. Mark severe drought years at -3 or below and build events and exposure groups as in the methods.
+- Compute eq. {ref:eq:lloret} as logarithms and fit eq. {ref:eq:model} with site and year effects and division-clustered errors.
+- Repeat with each division's PDSI record shifted by a random offset of 20 years or more, 200 times, and compute eq. {ref:eq:p}. Run the label permutation 500 times and the placebo window once.
+- Rerun with the nearest scPDSI cell for each site, species and year effects, and 200 shifts of each cell's record.
+- Main run: preregistration SHA-256 1e7230973641a2c07fe5eb1b44bc6874eff80c7b85ff081920c22d21ee93ca7c. Plan SHA-256 99b4edfab5def0ab554b7188acd68254cc4d5fc80d9bcd5b07625c1c9ff583ce. Run 20261029T225453Z. Result file SHA-256 0ef775ca981f2cdaca7b4df602b1c6514daba73ccb3035def7f36ef15d3c6828.
+- Rerun: preregistration SHA-256 aabf64d9ea802d33515d9cf768a30fabaf9e9d61587b0431b72fd495147938c8. Plan SHA-256 ec3e804546d9bc3654c41c19e1b781d5b95aded086f8f1bbf2aed72f49688d6c. Run 20261030T033057Z. Result file SHA-256 fbfc39401773f4e60332c386f7672bf077eb41b0438317cfc61aa9dd028ce53f.
+- Cost: the main run took about ten minutes on one desktop CPU for all four tests, 132.4 kJ measured at the machine; Test A's model took 2.3 seconds and its time-shift null 132 seconds. The rerun's tree test took 18 seconds.
+
+# section Appendix A. The preregistered verdicts {sec:appendix}
+Each verdict is a set of rules written before the run. A verdict passes only when every rule holds. Values are read from the result files.
+
+::table tab:verdicts cols=0.22,0.50,0.16,0.12 Preregistered verdicts for Test A and the rerun, and the rules that decided them.
+Verdict ¦ Deciding rule ¦ Value ¦ Holds
+A1 steeling ¦ moderate estimate above 0; q below 0.05; above time-shift 95th percentile (0.065); above permutation 95th percentile (0.020) ¦ 0.039; 0.166; 0.039; 0.039 ¦ no
+A2 moderate beats severe ¦ difference above 0; q below 0.05 ¦ 0.030; 0.214 ¦ no
+A3 rise then fall ¦ two-lines statistic above 1.96 and above its shuffle 95th percentile (1.26) ¦ -0.89 ¦ no
+Placebo clean ¦ placebo p at or above 0.05 ¦ 0.86 ¦ yes
+Rerun, steeling holds ¦ kill condition not met: interval excludes 0 and estimate above time-shift 95th percentile (0.038) ¦ -0.009 to +0.059; 0.025 ¦ no
+::end
+
+# references
+[anderegg2015] Anderegg, W. R. L., Schwalm, C., Biondi, F., Camarero, J. J., Koch, G., Litvak, M., Ogle, K., Shaw, J. D., Shevliakova, E., Williams, A. P., Wolf, A., Ziaco, E. and Pacala, S. (2015). Pervasive drought legacies in forest ecosystems and their implications for carbon cycle models. Science 349, 528-532. doi:10.1126/science.aab1833
+[anderegg2020] Anderegg, W. R. L., Trugman, A. T., Badgley, G., Konings, A. and Shaw, J. (2020). Divergent forest sensitivity to repeated extreme droughts. Nature Climate Change 10, 1091-1095. doi:10.1038/s41558-020-00919-1
+[lloret2011] Lloret, F., Keeling, E. G. and Sala, A. (2011). Components of tree resilience: effects of successive low-growth episodes in old ponderosa pine forests. Oikos 120, 1909-1920. doi:10.1111/j.1600-0706.2011.19372.x
+[schwarz2020] Schwarz, J., Skiadaresis, G., Kohler, M., Kunz, J., Schnabel, F., Vitali, V. and Bauhus, J. (2020). Quantifying growth responses of trees to drought: a critique of commonly used resilience indices and recommendations for future studies. Current Forestry Reports 6, 185-200. doi:10.1007/s40725-020-00119-2
+[itrdb] International Tree-Ring Data Bank. NOAA National Centers for Environmental Information, World Data Service for Paleoclimatology. Standard chronologies, North America. https://www.ncei.noaa.gov/pub/data/paleo/treering/
+[nclimdiv] NOAA National Centers for Environmental Information. nClimDiv climate division data, Palmer Drought Severity Index, version 1.0.0, build of 6 October 2026, with the contiguous US climate division boundaries. Retrieved 29 October 2026.
+[harris2020] Harris, I., Osborn, T. J., Jones, P. and Lister, D. (2020). Version 4 of the CRU TS monthly high-resolution gridded multivariate climate dataset. Scientific Data 7, 109. doi:10.1038/s41597-020-0453-3
+[cruts] Climatic Research Unit, University of East Anglia. CRU TS 4.10 self-calibrating Palmer Drought Severity Index, 0.5 degree, 1903 to 2025. Open Database License 1.0. https://crudata.uea.ac.uk/cru/data/hrg/

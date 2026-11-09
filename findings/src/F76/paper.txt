@@ -1,0 +1,190 @@
+---
+id: F76
+title: How flat a spectrum is ranks forecast skill on real series, and real series follow it loosely
+subtitle: A preregistered test of the Kolmogorov-Szego predictability bound on 1,236 tree-ring, mood and machine-power series, against time-shuffled and phase-randomised controls
+version: 1.0
+date: 9 November 2026
+line: Finding F76 in the findings ledger. Strong signal (tier B*).
+pdf_author: Zain Dana Harper
+subject: A preregistered test of whether one minus spectral flatness ranks and bounds held-out one-step linear forecast skill on real time series, with time-shuffled and phase-randomised surrogate controls and planted linear and nonlinear series
+footer: F76, Flatness ceiling on real series, version 1.0
+---
+# abstract
+A classical result says how well any linear rule can forecast a stationary series one step ahead, using nothing but the series' spectrum: the flatter the spectrum, the less a forecast can win. We asked whether that ceiling, estimated on the first half of a real series, ranks and bounds the skill of a forecast on the second half. On 1,236 series (1,128 tree-ring chronologies, 106 experience-sampling mood series and two machine power logs) the design was hash-locked before any real-series statistic was computed. {c1}One minus spectral flatness ranked held-out one-step forecast skill with Spearman rho 0.414 (95% interval 0.361 to 0.461), against a time-shuffled control whose 95th percentile was -0.023.{/c1} {c2}80 of 1,236 series (6.5 percent, 5.2 to 8.0) beat the bound beyond estimation error, under the preregistered 10 percent kill.{/c2} {c3}Real series tracked the bound less tightly than copies with the same spectra: rho 0.414 against 0.568 to 0.628 on 39 phase-randomised surrogate sets.{/c3} {c4}A nonlinear analogue forecaster beat the bound in 6.4 percent of series, the same as its false rate of 6.3 percent on planted Gaussian series, so no predictability beyond the linear bound turned up.{/c4} All six primary verdicts passed and both secondaries failed. The bound works as a rough ceiling with an error band, not as an exact number for one series.
+
+# section What this means for a reader {sec:reader}
+Before you fit any forecasting model, you can compute from the data alone a rough upper limit on how much a linear forecast can help. On real tree-ring and mood series that limit sorted series by how forecastable they turned out to be, though less sharply than it does on idealised copies. Treat it as a ceiling with an error band: useful for deciding which series deserve modelling effort, unreliable as a promise about any one series.
+
+# section Introduction and motivation {sec:intro}
+The {g:spectrum}power spectrum{/g} of a series says how its variance spreads over frequencies, from slow swings to fast jitter. A series with all its variance in a few frequencies, like the phases of the Moon, is easy to forecast. White noise spreads its variance evenly and cannot be forecast at all. {g:spectral-flatness}Spectral flatness{/g}, the geometric mean of the spectrum over its arithmetic mean, puts that contrast on a scale from 0 to 1.
+
+The link to forecasting is exact for one class of series. For a {g:stationary}weakly stationary{/g} series, one whose mean and autocovariance do not change over time, the smallest one-step error variance any linear predictor can reach equals the exponential of the average log spectrum. We call this the {g:ks-bound}Kolmogorov-Szego bound{/g}. Divided by the variance, that error is the flatness, so one minus the flatness is the most variance a linear one-step forecast can remove. For Gaussian series the best linear predictor is the best predictor of any kind, so the bound then covers every forecaster.
+
+Davis and Jones {cite:davisjones1968} turned the formula into an estimator: the average log periodogram plus a constant estimates the log of the innovation variance. Luati, Proietti and Reale {cite:luati2012} later generalised that estimator into a family they call the variance profile. In machine learning, Goerg {cite:goerg2013} built Forecastable Component Analysis on a related quantity, the entropy of the normalised spectrum, and searched for the most forecastable combination of several series. Wang, Klee and Roos {cite:wang2025} proposed a spectral predictability score as a check made before any model is built and reported that it tracked the performance of several forecasting models on the M5 retail data.
+
+Those works use spectral measures as indices of forecastability. We asked a narrower question about the bound itself. On real series that are not exactly stationary or Gaussian, does one minus flatness, estimated on the first half, rank the held-out skill of a linear forecast on the second half, and does it hold as a ceiling once estimation error is allowed for? And does it do so as well on real data as on Gaussian copies with the same spectra? The searches behind this section, run on 9 November 2026, did not return a test that sets real series against their own phase-randomised copies in this way. That is what the searches returned; it does not show that no such test exists.
+
+![fig:plate width=0.5 alt=A white-on-black 1889 engraving of the Sun with two looping paths of the Moon around it, month names and lunar phases marked along each path](plate-traxler-moon.png) Robert P. Traxler, plate on page 30, "The Moon's path shown along the Earth's orbit during the years 1888 and 1889", from The Principles of Mechanics as Applied to the Solar System (San Francisco, 1889) {cite:traxler1889}. Traxler drew his plates to argue for a repelling force from the Sun, his own theory in 1889, which physics did not adopt. The Moon's monthly wave along the orbit is the kind of series whose spectrum sits in a few lines and whose next step is close to certain. Public domain; scan from the Internet Archive, University of California Libraries.
+
+# section Preregistration and design {sec:prereg}
+The {g:preregistration}preregistration{/g} was written on 29 October 2026 and hash-locked at 00:35:53 UTC on 30 October. Before the lock, two things had run: a smoke test on scrambled data, with every real series permuted in time and only counts and timings printed, and a calibration of the bound estimator on synthetic autoregressive series only. No statistic of an unscrambled real series was computed before the lock.
+
+One change came before the lock and is disclosed in the locked file. The first estimator, a Welch spectrum with a log-bias correction, underestimated the true bound on synthetic series by 0.13, 0.12, 0.06 and 0.02 at lengths 60, 150, 300 and 1000. A Hann-tapered periodogram with the Euler-gamma log correction gave 0.07, 0.04, 0.02 and 0.01. The tapered periodogram became the primary estimator and both Welch forms became secondaries.
+
+The decision the study informs was written in the same file: whether the flatness estimator is adopted into our study tooling as a predictability bound. It is adopted only if the planted check, the ranking test and the ceiling test all pass.
+
+{g:kill-condition}Kill conditions{/g}, without discretion:
+- The bound's rank correlation with skill at or below the 95th percentile of the time-shuffled control.
+- More than 10 percent of series beating the bound beyond estimation error.
+
+The full set of preregistered {g:verdict}verdicts{/g} and their rules is in Appendix A.
+
+# section Data and provenance {sec:data}
+Three kinds of series were read, without modification.
+
+- Tree rings: 1,128 ring-width index series from the International Tree-Ring Data Bank {cite:itrdb}, standard chronologies for sites in the conterminous United States, each at least 200 years long with no gaps. Median length 398 years. These are public data from NOAA's National Centers for Environmental Information, with credit to the contributors of each chronology. The site list was the one built for an earlier study of ours.
+- Mood: 106 experience-sampling mood series, each at least 100 prompts long, in prompt order, from four openESM datasets {cite:openesm} (Westhoff, Bailon, Neubauer and Bayer), each released under CC BY 4.0. Median length 113 prompts.
+- Machine power: CPU package and GPU watts from one workstation, the longest unbroken run on a 1 second grid, 20,145 seconds each. These two logs are not public.
+
+Tree-ring indices arrive already standardised by their chronology method, which removes slow growth trends before this study sees them. Mood series have night gaps that the prompt order ignores. Series whose training or test half was constant would have been dropped and counted; none was.
+
+# section Methods {sec:methods}
+## The bound
+Each series of length {m:n} is split in half by time. On the training half, demeaned, the spectrum {m:S(\omega)} is estimated with a {g:periodogram}tapered periodogram{/g} {m:I_j} at the Fourier frequencies {m:\omega_j}. The Kolmogorov-Szego formula gives the smallest linear one-step error variance {m:V_1} through
+$$ \ln V_1 = \frac{1}{2\pi} \int \ln S(\omega) d\omega {eq:ks}
+with the integral taken over frequencies from {m:-\pi} to {m:\pi}, and the Davis-Jones form estimates the right-hand side from the periodogram as
+$$ \ln V_1 \approx \frac{1}{m} \sum_{j} \ln I_j + \gamma {eq:dj}
+where {m:m} is the number of frequencies used and {m:\gamma \approx 0.5772} is Euler's constant, which corrects the downward bias of a log periodogram. With {m:V} the variance of the training half, the flatness and the bound are
+$$ r = \frac{V_1}{V}, b = 1 - r {eq:bound}
+
+## The forecast and its skill
+An {g:ar-model}autoregressive model{/g} is fitted by least squares to the mean-centred training half. Its order {m:p} runs from 0 to {m:p_{max}}, the smaller of 20 and one tenth of the training length, and is chosen by {g:aic}AIC{/g} on a common sample, then refitted. On the test half the model forecasts each value from the true past, with the end of the training half as context. The {g:one-step-skill}one-step skill{/g} is
+$$ s = 1 - \frac{M}{V_{test}} {eq:skill}
+where {m:M} is the mean squared one-step error on the test half and {m:V_{test}} its variance. Using the test half's own variance means a level shift between halves counts against skill.
+
+## Ranking
+The ranking test is the {g:spearman}Spearman rho{/g} between {m:b} and {m:s} over all series pooled, with a 95 percent interval from 1,000 bootstrap resamples of series.
+
+## The ceiling and estimation error
+Skill estimated on a finite half and a bound estimated on the other half both carry error, so a series can beat the point bound by chance. The rule for a real breach uses the series' own surrogates. For each series, 39 {g:phase-surrogate}phase-randomised surrogates{/g} of the whole series, with the mean restored, go through the same pipeline, in the surrogate-data tradition of Theiler and colleagues {cite:theiler1992}. With excess {m:d = s - b}, a {g:violation}violation{/g} is a series whose {m:d} beats the excess of at least 38 of its 39 surrogates. The per-series p value is
+$$ p_i = \frac{k_i + 1}{40} {eq:pviol}
+where {m:k_i} is the number of surrogates whose excess is at or above the real one. For a Gaussian stationary series with that spectrum, violations occur 2 times in 40, or 5 percent, by chance. The share of violating series is reported with a {g:wilson}Wilson interval{/g}.
+
+## The nonlinear check
+Because the bound covers nonlinear forecasts only for Gaussian series, an {g:analogue}analogue forecaster{/g} was run beside the linear model. It works on the standardised series, chooses an embedding dimension from 1, 2, 3, 4 and 6 on the last quarter of the training half, uses the square root of the library size as the number of neighbours, and takes its library from the training half only, at most the last 4,000 states. Its violations are counted by the same surrogate rule.
+
+## Multiple testing
+A {g:bh}Benjamini-Hochberg correction{/g} at 0.05 runs over five p values: the pooled rho, the tree-ring rho, the mood rho, the binomial test that linear violations exceed 5 percent, and the same test for the analogue forecaster.
+
+# section Controls and planted checks {sec:controls}
+Two {g:control}controls{/g} and two {g:planted-check}planted checks{/g} ran with the same pipeline.
+
+The time-shuffled control permutes every series in time, which destroys both the spectrum and any forecastable structure, and recomputes the pooled rho; 100 draws. Its 95th percentile was -0.023, the cut a real rho must clear. The p value against it is counted as a {g:p-value-draws}p value from draws{/g}, so with 100 draws the smallest possible value is 1 in 101, or 0.0099.
+
+The phase-surrogate control keeps each series' spectrum and makes it Gaussian and stationary. On those sets the bound should rank skill well and the violation rule should fire 5 percent of the time. Over the 39 surrogate sets the pooled rho ran from 0.568 to 0.628 (5th to 95th percentile, mean 0.595), and the mean violation rate of each set against the other 38 was 5.1 percent. The violation rule is calibrated.
+
+Planted linear series: 300 Gaussian autoregressive series of order 1 to 4 with random stable roots and lengths drawn from the real tree and mood lengths, whose true bound is known analytically. The estimated bound correlated 0.925 with skill and 0.946 with the true bound, with a mean bias of -0.020 and a mean absolute error of 0.077. Their violation rate was 4.3 percent (2.5 to 7.3).
+
+Planted nonlinear series: 50 noisy logistic maps of length 400, a deterministic nonlinear system that a linear forecast handles poorly. The analogue forecaster beat the linear bound in all 50, with median skill 0.987 against a median bound of 0.084, while the linear forecast violated in 6 percent. The nonlinear check can see nonlinear predictability when it is there.
+
+# section Results {sec:results}
+All 1,236 series were kept. Figure {ref:fig:rho} sets the ranking against both controls and Table {ref:tab:main} gives the main numbers.
+
+{c1}One minus spectral flatness ranked held-out one-step forecast skill with Spearman rho 0.414 (95% interval 0.361 to 0.461), against a time-shuffled control whose 95th percentile was -0.023.{/c1} The ranking passed the Benjamini-Hochberg correction. A separate permutation of the pairing between bound and skill gave p 0.0005.
+
+![fig:rho width=0.7 alt=Diamonds for real and planted rank correlations against grey bars for the two control ranges](fig-rho.png) Rank correlation between the bound and one-step AR skill. Grey bars are the 5th to 95th percentile of each control, with ticks at the mean; the blue bar is the bootstrap interval of the pooled real value. Real series sit far above the time-shuffled control and below every phase-randomised surrogate set. Drawn from the run's result file.
+
+::table tab:main cols=0.38,0.27,0.35 Main results on 1,236 series. Intervals are 95 percent: bootstrap over series for rho, Wilson for rates.
+Quantity ¦ Value ¦ Interval or comparison
+Spearman rho, bound against AR skill ¦ 0.414 ¦ 0.361 to 0.461
+Time-shuffled control, 95th percentile ¦ -0.023 ¦ p 0.0099, 100 draws
+Phase-surrogate sets, rho ¦ 0.595 mean ¦ 0.568 to 0.628, 39 sets
+Violations, AR forecast ¦ 80 of 1,236, 6.5 percent ¦ 5.2 to 8.0
+Violations, analogue forecast ¦ 79 of 1,236, 6.4 percent ¦ 5.2 to 7.9
+Median bound ¦ 0.203 ¦
+Median AR skill ¦ 0.129 ¦
+Median excess, skill minus bound ¦ -0.063 ¦
+AR skill above the point bound ¦ 36.4 percent ¦ planted AR: 45.7 percent
+::end
+
+{c3}Real series tracked the bound less tightly than copies with the same spectra: rho 0.414 against 0.568 to 0.628 on 39 phase-randomised surrogate sets.{/c3} The real value sits below every one of the 39 sets. Gaussian stationary series with the same spectra let the bound rank skill better than the real series do.
+
+{c2}80 of 1,236 series (6.5 percent, 5.2 to 8.0) beat the bound beyond estimation error, under the preregistered 10 percent kill.{/c2} The rate sits above the 5 percent expected by chance (binomial p 0.013, which passed the correction), yet no single series survives a Benjamini-Hochberg correction across series: 0 of 1,236. Figure {ref:fig:viol} shows the rates. Without the surrogate rule the bound would look much weaker as a ceiling: AR skill exceeded the point bound in 36.4 percent of real series and in 45.7 percent of planted Gaussian ones, where the bound is true by construction.
+
+![fig:viol width=0.85 alt=Diamonds with interval bars for violation rates near five to seven percent, with lines at five and ten percent](fig-violations.png) Share of series whose excess skill beats at least 38 of 39 of their own surrogates, with Wilson intervals where the result file gives one. The dotted line is the 5 percent chance rate and the dashed line the 10 percent kill.
+
+{c4}A nonlinear analogue forecaster beat the bound in 6.4 percent of series, the same as its false rate of 6.3 percent on planted Gaussian series, so no predictability beyond the linear bound turned up.{/c4} Its median skill was 0.044 below the linear model's. The secondary verdict for nonlinear excess failed.
+
+Table {ref:tab:groups} breaks the result down by kind of series.
+
+::table tab:groups cols=0.16,0.09,0.13,0.15,0.14,0.15,0.18 Results by kind of series. Rho is Spearman between bound and AR skill; the shuffle cut is the 95th percentile of that group's time-shuffled control.
+Group ¦ Series ¦ Rho ¦ Shuffle cut ¦ Median bound ¦ Median skill ¦ Violations
+Tree rings ¦ 1,128 ¦ 0.396 ¦ -0.030 ¦ 0.213 ¦ 0.146 ¦ 6.1 percent
+Mood ¦ 106 ¦ 0.035 ¦ 0.098 ¦ 0.024 ¦ -0.072 ¦ 8.5 percent
+Machine power ¦ 2 ¦ none ¦ none ¦ 0.638 ¦ 0.838 ¦ 2 of 2
+::end
+
+Tree rings carry the pooled result: rho 0.396, p 0.0099, passing the correction, with a median AR order of 2. Mood gives rho 0.035 (p 0.19, failing the correction), because its bound, median 0.024, leaves almost nothing to rank, and its median skill is below zero. Both power series beat the bound. Their load drifts between the two halves, so they are not stationary, and the bound does not apply to them.
+
+Two secondaries ran as planned. The spectral exponent alone, the slope of the log spectrum against log frequency on the training half, ranked skill at rho 0.394 against 0.414 for flatness, so that verdict failed; the two measures correlate at 0.697 and the result file gives no interval on their difference, so we treat them as close. On sensitivities, the Welch estimator with segments of one eighth of the series gave rho 0.399 with a lower median bound of 0.099, a second Welch rule gave 0.441, and linear detrending in place of demeaning gave 0.423.
+
+A later round of our own, run on 30 October 2026 with its own preregistration, tested four drift-aware versions of the bound on a split of the same tree-ring and mood series, choosing on 649 development series and testing on 585. None beat the original, which was chosen. On the 585 test series the original gave rho 0.404 against 0.595 on surrogates. The gap between real and surrogate series repeated on a split of the same data, not on new series.
+
+# section Discussion {sec:discussion}
+The bound does two things on real series. It ranks them: series with peaked spectra in the first half are the ones a linear model forecasts best in the second half. And, read with its own surrogate envelope, it holds as a ceiling for about 94 percent of series. The cheap number is useful for triage, the use Wang and colleagues {cite:wang2025} propose for their spectral score.
+
+The part worth more work is the gap. Real series rank less well than Gaussian stationary series with identical spectra. Three explanations compete, and this study does not separate them. Fitting a model on half a series adds estimation error, which the surrogates share but may not share in full. Real series drift, as the power logs do in the extreme, and a bound estimated on one half then describes the other half less well. And real series may carry non-Gaussian structure, though the analogue forecaster found none that it could use. The violation rate sitting slightly above 5 percent fits the same picture: a small excess spread thinly across many series and not concentrated in a few series that clearly break the bound.
+
+The surrogate rule matters for anyone who uses such a bound. Compared against the point bound, skill looked like a breach in a third of real series and almost half of planted ones. Compared against each series' own surrogates, breaches fell to the chance rate in planted data and slightly above it in real data.
+
+# section Limitations {sec:limits}
+- Tree rings are 91 percent of the series and arrive already standardised, so the pooled rho may come partly from the mix of groups. Mood contributes almost no range of bound to rank.
+- The study does not separate estimation error, drift and non-Gaussian structure as causes of the gap between real and surrogate series.
+- The bound is a ceiling only after estimation error is allowed for; as a point value it was beaten in 36 percent of real series.
+- Only one-step forecasts were tested. Nothing here covers longer horizons.
+- The analogue forecaster finding no excess says nothing about stronger nonlinear models.
+- The power logs are not public and are not stationary across halves.
+- The bound itself is classical, and close heuristics exist; what is tested here is how it behaves on real series against their surrogates.
+- The study was not blind to the kinds of data, and scoring was done by our own code.
+
+# section Verified {sec:verified}
+Verified: on 9 November 2026 the series counts by group, the pooled and group rho values with their intervals and shuffle cuts, the violation counts, rates and Wilson intervals, the binomial p values, the medians, the share above the point bound, every control percentile and mean, the planted linear and nonlinear values, the secondaries and sensitivities, and all eight verdicts were re-read from the run's result file; they match the findings ledger. The preregistration's SHA-256 and the result file's SHA-256 match the hashes recorded beside them. The follow-up values (649 and 585 series, rho 0.404 and 0.595, the original bound chosen) were re-read from the later round's result file. Both data figures were drawn by a script that reads only the result file. The study was not re-run for this paper. The literature in the introduction was found by searches run on 9 November 2026 and read at the level of abstracts, search summaries and publisher pages; the full texts of the cited papers were not read.
+
+# section Corrections {sec:corrections}
+- 29 October 2026, before the lock: the first bound estimator underestimated the true bound on synthetic data, and the tapered periodogram became primary. Disclosed in the preregistration and in the preregistration section here.
+- 30 October 2026: a follow-up round tested drift-aware versions of the bound on a split of the same series; none beat the original. Added to the results here.
+- 9 November 2026: first published version.
+
+# section Reproduction {sec:repro}
+- Data: ITRDB standard chronologies for the conterminous United States of at least 200 years with no gaps; the four openESM mood datasets named above, series of at least 100 prompts in prompt order. The two power logs are not public.
+- Split each series in half by time. On the training half, demeaned, compute the Hann-tapered periodogram and eq. {ref:eq:dj}, then the bound of eq. {ref:eq:bound}.
+- Fit an AR model by least squares with order chosen by AIC up to the smaller of 20 and one tenth of the training length; score eq. {ref:eq:skill} on the test half from the true past.
+- Build 39 phase-randomised surrogates of each whole series, run the same pipeline, and flag violations by eq. {ref:eq:pviol} at 38 of 39.
+- Correlate bound and skill across series with Spearman rho; run 100 time-shuffled controls and a 1,000-resample bootstrap.
+- Preregistration SHA-256: fe8ddb061ffc02c3f22d89222fb6b5e20baf402e128c930a85242f161207dae7. Plan SHA-256: 4b0268f175706e5803a21cd91d320ebb96e62f3fe97a67639030c3a7bd2c3d26. Run 20261030T003557Z. Result file SHA-256: d7c106b84548d9b9859404325c8529c1aaef21923c5ebe3ffa0b2d1229c66c28.
+- Cost: the analysis took 272 seconds on one desktop computer. Machine energy over the run window was 47.1 kJ, shared with other work on the same machine.
+
+# section Appendix A. The preregistered verdicts {sec:appendix}
+Each verdict is a set of rules written before the run. A verdict passes only when every rule holds. Values are read from the run's result file.
+
+::table tab:verdicts cols=0.25,0.45,0.18,0.12 Preregistered verdicts and the rules that decided each one.
+Verdict ¦ Deciding rule ¦ Value ¦ Holds
+Planted linear series ¦ rho of estimate with skill at least 0.7; with true bound at least 0.8; violations at most 0.10 ¦ 0.925; 0.946; 0.043 ¦ yes
+Planted nonlinear series ¦ analogue violations at least 0.5; AR violations at most 0.10 ¦ 1.0; 0.06 ¦ yes
+Flatness tracks skill ¦ rho above shuffle 95th percentile (-0.023); passes the correction; bootstrap lower bound above 0 ¦ 0.414; yes; 0.361 ¦ yes
+Bound holds ¦ AR violation rate at most 0.10 ¦ 0.065 ¦ yes
+Phase surrogates keep the bound ¦ surrogate 5th percentile above shuffle 95th percentile; mean surrogate violation rate at most 0.10 ¦ 0.568; 0.051 ¦ yes
+Adopt the flatness unit ¦ every rule of the planted linear, tracking and holding verdicts ¦ all hold ¦ yes
+Nonlinear beats the linear bound, secondary ¦ analogue violations above 0.10; above its planted rate (0.063); passes the correction ¦ 0.064; yes; yes ¦ no
+Exponent alone, secondary ¦ absolute rho of spectral exponent with skill at least the flatness rho (0.414) ¦ 0.394 ¦ no
+::end
+
+# references
+[davisjones1968] Davis, H. T. and Jones, R. H. (1968). Estimation of the innovation variance of a stationary time series. Journal of the American Statistical Association 63 (321), 141-149. doi:10.1080/01621459.1968.11009229
+[luati2012] Luati, A., Proietti, T. and Reale, M. (2012). The variance profile. Journal of the American Statistical Association 107 (498), 607-621.
+[goerg2013] Goerg, G. M. (2013). Forecastable component analysis. Proceedings of the 30th International Conference on Machine Learning, PMLR 28 (2), 64-72. arXiv:1205.4591
+[wang2025] Wang, R., Klee, S. and Roos, A. (2025). Time series forecastability measures. arXiv:2507.13556
+[theiler1992] Theiler, J., Eubank, S., Longtin, A., Galdrikian, B. and Farmer, J. D. (1992). Testing for nonlinearity in time series: the method of surrogate data. Physica D 58, 77-94. doi:10.1016/0167-2789(92)90102-S
+[itrdb] International Tree-Ring Data Bank. NOAA National Centers for Environmental Information, World Data Service for Paleoclimatology. Standard chronologies, retrieved October 2026. https://www.ncei.noaa.gov/products/paleoclimatology/tree-ring
+[openesm] openESM experience-sampling datasets 0008 Westhoff, 0018 Bailon, 0062 Neubauer and 0076 Bayer. Zenodo, CC BY 4.0. doi:10.5281/zenodo.17347510, doi:10.5281/zenodo.22763396, doi:10.5281/zenodo.17347974, doi:10.5281/zenodo.22911022
+[traxler1889] Traxler, R. P. (1889). The Principles of Mechanics as Applied to the Solar System. San Francisco: C. A. Murdock and Co. Internet Archive item principlesofmech00traxiala.

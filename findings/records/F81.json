@@ -1,0 +1,487 @@
+{
+ "schema": "research-record/1",
+ "built": "2026-11-09 by scripts/record-findings.mjs from paper.txt, the register row and the findings ledger",
+ "document": {
+  "id": "F81",
+  "kind": "finding",
+  "title": "Among colours people cannot tell apart, bees and birds split flowers from backgrounds more often",
+  "standfirst": "On 728 measured natural surfaces, modelled bees and blue tits separate flower-against-background pairs that look identical to people far more often than background-against-background pairs. The direction held on a second surface set and under a second noise model; the size of the effect did not travel.",
+  "date_found": "2026-10-29",
+  "fields": [
+   "biology-other",
+   "colour-film",
+   "ecology-climate"
+  ],
+  "tier": "B",
+  "tier_reason": "Real spectra and working shuffles, and the direction replicates on a second set, but V0 failed twice, so only ranks and ratios stand. Sizes do not travel, and Dorin et al. 2023 used this very data for flower signalling.",
+  "rung": "hypothesis",
+  "rung_reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
+  "outcome": "held",
+  "objection": "The instrument check failed twice, with Weber noise and with photon noise, so the model is too fine for at least the bee. Only the direction of the ratio is claimed.",
+  "objection_source": "the paper's first stated limitation; no reviewer attack is on file",
+  "would_change": "Pass V0 with sourced per-species noise, then match backgrounds to flowers' own sites and test behaviour.",
+  "sections": [
+   {
+    "id": "reader",
+    "title": "What this means for a reader",
+    "role": "lead",
+    "paragraphs": [
+     "A meadow that looks plain to us is full of colour differences we cannot see. In this collection of surfaces, those hidden differences cluster between flowers and what surrounds them, which fits the old idea that flower colours are tuned to the animals that visit them. The ultraviolet channel is textbook, and earlier work used this same data to study flower signals. What this paper adds is a direct count of the differences a person misses, with a control for chance and a check of how far the count can be trusted. The direction can be trusted on two sets of surfaces; the exact size cannot."
+    ]
+   },
+   {
+    "id": "abstract",
+    "title": "Abstract",
+    "role": "argument",
+    "paragraphs": [
+     "Two surfaces can look the same colour to a person and differ sharply to a bee, which sees ultraviolet. We asked where such hidden differences fall among 728 measured Australian surfaces: 221 flower petals and 507 rocks, bark and leaves. Each observer was modelled with the receptor-noise-limited model and published receptor curves. {c1}Among pairs a modelled human cannot separate, modelled bees and blue tits separate flower-background pairs more often than background-background pairs, and the separation ratio exceeded its label-shuffle 95th percentile in every condition tested: two noise models on the first set, and two on a second set of Californian flowers against North American soil and leaf litter.{/c1} {c2}The size of the ratio did not travel: for the bee it was 2.04 with Weber noise and 1.67 with photon noise added on the first set, and 45.6 on the second set, where the backgrounds are brown and alike.{/c2} {c3}A preregistered instrument check failed under both noise models: the model resolves finer wavelength steps than bees show in behaviour, so only the direction of the effect is claimed.{/c3}"
+    ]
+   },
+   {
+    "id": "intro",
+    "title": "Introduction",
+    "role": "argument",
+    "paragraphs": [
+     "Each animal's colour vision rests on a few {g:photoreceptor-class}receptor classes{/g}. People have three cone classes, the honeybee three with one in the ultraviolet, and the blue tit four with one in the ultraviolet. Two surfaces can give the same signals in a person's cones and different signals in a bee's, so the bee tells apart what the person cannot.",
+     "The standard way to compute such differences is the {g:rnl}receptor-noise-limited model{/g} of Vorobyev and Osorio {cite:r1}. It treats colour as coded by comparisons between receptor classes and sets the threshold by the noise in each class. A distance of one {g:jnd}just-noticeable difference (JND){/g} is the threshold. The model was built to predict colour thresholds for animals whose eyes have been measured but whose thresholds have not.",
+     "The link between flower colour and pollinator vision has a long record. Chittka and Menzel {cite:r2} analysed 180 flower {g:reflectance-spectrum}reflectance spectra{/g} and found that sharp steps in reflectance fall where bee-like insects discriminate best; their calculations of the best set of three receptors for telling flower colours apart matched the receptors measured in many Hymenoptera. Dorin, Shrestha, Garcia, Burd and Dyer {cite:r3} measured the surface set used here, flowers with rocks, minerals, bark and leaves from Australia, and found that the share of flowers with sharp spectral steps was an order of magnitude above the share among background samples. They argued that insect colour vision is older than flowers and was shaped by flight among rocks and plants, and that flowers evolved colours that stand out against that background.",
+     "This paper asks a narrower question that the model can answer directly. Among the pairs of surfaces a person cannot tell apart, does a modelled bee or blue tit tell apart flower-background pairs more often than background-background pairs? Searches we ran on 9 November 2026 found the work above and no direct count of this kind; that is what the searches returned, not proof that none exists."
+    ]
+   },
+   {
+    "id": "prereg",
+    "title": "Preregistration and design",
+    "role": "argument",
+    "paragraphs": [
+     "The first study was written as a {g:preregistration}preregistration{/g} on 29 October 2026 and locked at 01:27:38 UTC on 30 October. Before the lock, the code was run only on scrambled data, with every spectrum permuted across wavelength and the group labels permuted, and only keys, counts and timings were printed. The model was checked against its published closed forms on random numbers, to 4 times 10 to the power -16. No statistic of a real spectrum seen through any observer was computed before the lock.",
+     "The locked file names the data, the observers and their noise values with a grade for each source, the model, the measures, the hypotheses with their pass rules and {g:kill-condition}kill conditions{/g}, the {g:control}controls{/g} and the multiple-testing plan. This paper reports hypothesis H2, the flower test, with its secondary H2b and the instrument check V0. The same run tested other hypotheses about the information each observer carries; those are reported in the findings ledger and are not part of this paper.",
+     "H2 reads: among pairs one observer X cannot separate, the share another observer Y separates is larger for flower-background pairs than for background-background pairs. It was tested for four pairs of observers: human then bee, human then blue tit, dog then bee, and dog then blue tit. The kill condition: a ratio at or below 1, or inside the label-shuffle range. Each conditional share needs at least 20 pairs.",
+     "A second study, written after the first and locked at 02:40:37 UTC on 30 October, added {g:photon-noise}photon noise{/g} to the model, reran the instrument check, and repeated H2 on the first set and on a second set of surfaces. Its preregistration was hash-locked in the same way. Its result narrows this finding and is reported here as the replication."
+    ]
+   },
+   {
+    "id": "data",
+    "title": "Data and provenance",
+    "role": "argument",
+    "paragraphs": [
+     "Set 1 is the 728 reflectance spectra of Dorin and colleagues {cite:r4}, under CC0: 346 rocks and minerals, 96 bark, sticks and dry plant material, 65 green leaves, 153 insect-pollinated and 68 bird-pollinated flower petals, measured from 300 to 700 nm. The files were fetched from the Zenodo mirror of the Dryad deposit, because the Dryad file interface needed a token; the archive hashes equal those Dryad publishes.",
+     "Human cones are the CIE 2006 two-degree cone fundamentals, and the light is CIE standard illuminant D65, both under CC BY-SA 4.0 {cite:r5}. Bee, dog and blue tit receptor curves, blue tit ocular media and two natural lights come from the data inside the pavo 2.10.0 R package {cite:r6}, under GPL version 2 or later; they were read with a pure-Python reader and no package code was run.",
+     "Set 2, used only in the replication, joins 512 flower spectra from Californian serpentine seeps (LeCroy and colleagues {cite:r7}, CC0) with 41 eastern North American forest-floor backgrounds: 20 soils, 10 dry litter and 11 wet litter samples (Kraemer and Adams {cite:r8}, CC0). Flowers and backgrounds come from different deposits and places."
+    ]
+   },
+   {
+    "id": "methods",
+    "title": "Methods",
+    "role": "argument",
+    "paragraphs": [
+     "## The model",
+     "For a surface with reflectance {m:R} under light {m:I}, the {g:quantum-catch}quantum catch{/g} of receptor class {m:i} with sensitivity {m:S_i} is",
+     "$$ Q_i = \\sum_{\\lambda} R(\\lambda) I(\\lambda) S_i(\\lambda) {eq:catch}",
+     "summed over wavelength {m:\\lambda} in photon units. With {g:von-kries}von Kries adaptation{/g}, {m:q_i} is {m:Q_i} divided by the catch from a perfect white, and the receptor signal is {m:f_i = \\ln q_i}. For two surfaces, let {m:d_i} be the difference in {m:f_i}. For an observer with three receptor classes and noise {m:e_1}, {m:e_2}, {m:e_3}, the colour distance in JND is",
+     "$$ S^2 = \\frac{(e_1)^2 (d_3 - d_2)^2 + (e_2)^2 (d_3 - d_1)^2 + (e_3)^2 (d_1 - d_2)^2}{(e_1 e_2)^2 + (e_1 e_3)^2 + (e_2 e_3)^2} {eq:rnl}",
+     "Two- and four-class observers use the general form of the same model {cite:r1}. Brightness differences are left out.",
+     "## Noise",
+     "In the first study each receptor's noise is a {g:weber-fraction}Weber fraction{/g}, a fixed share of its signal. The human values are 0.063, 0.028 and 0.020 for the short, middle and long cones, from a long-cone fraction of 0.02 and relative cone densities of 1 to 5 to 10. The bee values are 0.13, 0.06 and 0.12. The blue tit uses 0.1 for its long-wave class with relative densities 0.37 to 0.70 to 0.99 to 1. The dog uses 0.05 for its long-wave class with densities 1 to 9. The preregistration grades these sources: the human densities and fraction are from memory with low confidence, the bee and blue tit values from memory of published sources with moderate confidence, and the dog value assumed.",
+     "The replication adds photon noise:",
+     "$$ (e_i)^2 = (w_i)^2 + \\frac{1}{N_i q_i} {eq:photon}",
+     "where {m:w_i} is the Weber fraction above, {m:q_i} the catch, and {m:N_i} the photon catch from the white per receptor and integration time. {m:N_i} is {m:N} scaled by each class's relative density, with {m:N} set to 10,000. That value is an order-of-magnitude memory with low confidence. Noise is evaluated at the mean catch of the pair.",
+     "## The test statistic",
+     "A {g:human-blind-pair}human-blind pair{/g} is a pair with {m:S \\le 1} for the human model. Among the human-blind pairs, let {m:P_{FB}} be the share of flower-background pairs with {m:S > 1} for the second observer, and {m:P_{BB}} the same share among background-background pairs. The {g:separation-ratio}separation ratio{/g} is",
+     "$$ H = \\frac{P_{FB}}{P_{BB}} {eq:ratio}",
+     "Dog-blind pairs are treated the same way. Flower-flower pairs are not counted.",
+     "## Secondary test and named examples",
+     "H2b compares, for each flower, the median bee distance to all backgrounds between {g:pollination-syndrome}insect- and bird-pollinated{/g} flowers, with a one-sided label-permutation p value. Named examples were listed among human-blind flower-background pairs, with each surface's {g:uv-share}UV share{/g}.",
+     "## Instrument check",
+     "The {g:instrument-check}instrument check{/g}, V0, asks the model for the smallest step in wavelength between two pure spectral lights that reaches 1 JND, in steps of 0.1 nm. In the first study the human minimum had to lie between 0.5 and 5 nm and the bee minimum between 1.5 and 12 nm, against behavioural values of about 1 to 2 nm for people and 4 to 5 nm for bees. In the replication the rules were tightened to a factor of 2 of the behavioural values at named wavelengths, for example a human step between 3 and 12 nm at 640 nm and a bee minimum between 2.25 and 9 nm. The behavioural values come from secondary sources and memory; the primary papers were not in hand. If V0 fails, absolute sizes from the model are not used."
+    ]
+   },
+   {
+    "id": "controls",
+    "title": "Controls and planted checks",
+    "role": "argument",
+    "paragraphs": [
+     "The control for H2 is a {g:label-shuffle}label shuffle{/g}: the flower and background labels are permuted over the same surfaces 500 times and the ratio recomputed. The {g:null-distribution}null distribution{/g} of the ratio has a mean near 1, as it should. A real ratio must exceed the shuffle's 95th percentile. The {g:p-value-draws}p value from draws{/g} is the share of shuffles at or above the real ratio, counted with one added to both counts, so with 500 draws the smallest possible value is 0.002. The p values were then put through the {g:benjamini-hochberg}Benjamini-Hochberg correction{/g}: over 7 tests in the first study and 14 in the replication.",
+     "Two code checks stand in for a {g:planted-check}planted check{/g}. The model's distances agreed with the published closed forms for two and three receptor classes to 4 times 10 to the power -16 on random inputs, and pavo's D65 equalled the CIE D65 to within 8 times 10 to the power -6. The instrument check is the known-answer test against behaviour. No surface set with a planted flower effect was run."
+    ]
+   },
+   {
+    "id": "results",
+    "title": "Results",
+    "role": "argument",
+    "paragraphs": [
+     "## The first study",
+     "{c1}Among pairs a modelled human cannot separate, modelled bees and blue tits separate flower-background pairs more often than background-background pairs, and the separation ratio exceeded its label-shuffle 95th percentile in every condition tested: two noise models on the first set, and two on a second set of Californian flowers against North American soil and leaf litter.{/c1} In the first study, with Weber noise, the bee separated 0.98 of 1,108 human-blind flower-background pairs and 0.48 of 3,892 human-blind background pairs, a ratio of 2.04 against a shuffle 95th percentile of 1.08. The blue tit separated 0.99 against 0.45, a ratio of 2.22 against 1.09. Among dog-blind pairs the ratios were 1.45 for the bee and 1.16 for the blue tit, each above its shuffle percentile. All four had p 0.002 and passed the correction (Table {ref:tab:h2}).",
+     "![fig:shares width=0.95 alt=Paired bars showing that bee and blue tit separate nearly all human-blind flower-background pairs and about half of the background pairs](fig-shares.png) Share of human-blind pairs that the bee and the blue tit separate, set 1, under Weber noise and with photon noise added. Each label gives the share and the number of pairs. Drawn from the two runs' result files.",
+     "H2b passed for the bee: the median bee distance from a flower to the backgrounds was 9.47 JND for insect-pollinated flowers and 6.83 for bird-pollinated flowers (p 0.002). It is not specific to bees. The human model also separates insect-pollinated flowers more (13.7 against 9.4, p 0.010), and for the blue tit the order reverses (9.65 against 10.16, p 0.79).",
+     "The named examples show what the count is made of. A petal of Hypericum pygmaeum against a dry, thin brown leaf sits 0.63 JND apart for the human model and 22.4 for the bee, with a UV share of 0.70 for the petal and 0.00 for the leaf. The reverse also occurs. The red, bird-pollinated Calothamnus graniticus sits 0.63 JND from fuchsite and 0.71 from white opal for the bee, and about 30 for the human model.",
+     "## The instrument check",
+     "{c3}A preregistered instrument check failed under both noise models: the model resolves finer wavelength steps than bees show in behaviour, so only the direction of the effect is claimed.{/c3} With Weber noise the model's smallest step was 0.4 nm for the human, at 615 nm, and 0.3 nm for the bee, at 540 nm. Weber-only noise lets a receptor with a near-zero catch report changes that photon noise would bury. With photon noise the human minimum rose to 0.8 nm at 500 nm, which passes, but the human step at 640 nm was 2.2 nm against a required 3 to 12 nm. The bee minimum was 0.7 nm at 540 nm, outside both the required range and the required place. The model is still too fine for the bee.",
+     "## The replication",
+     "{c2}The size of the ratio did not travel: for the bee it was 2.04 with Weber noise and 1.67 with photon noise added on the first set, and 45.6 on the second set, where the backgrounds are brown and alike.{/c2} With photon noise on set 1, more pairs became human-blind (2,201 flower-background and 9,185 background pairs), and the bee separated 0.96 against 0.58 of them. The blue tit's ratio fell from 2.22 to 1.50. Every one of the 12 replication ratios exceeded its shuffle percentile and passed the correction, with p 0.002 to 0.004. Figure {ref:fig:ratios} draws all 16 ratios against their shuffle ranges.",
+     "On set 2 the bee separated 0.98 of 1,374 human-blind flower-background pairs and only 0.022 of 465 background pairs. The 41 background spectra are brown and alike, so a bee separates few background pairs a human confuses. There the ratio measures how uniform the backgrounds are as much as anything about flowers.",
+     "::table tab:h2 cols=0.36,0.13,0.13,0.13,0.14,0.11 Separation ratios with their pair counts and label-shuffle 95th percentiles (500 shuffles each). FB and BB are the numbers of flower-background and background-background pairs the first observer cannot separate.\nTest and condition ¦ FB pairs ¦ BB pairs ¦ Ratio ¦ Shuffle q95 ¦ p\nBee given human, set 1, Weber ¦ 1,108 ¦ 3,892 ¦ 2.04 ¦ 1.08 ¦ 0.002\nBlue tit given human, set 1, Weber ¦ 1,108 ¦ 3,892 ¦ 2.22 ¦ 1.09 ¦ 0.002\nBee given dog, set 1, Weber ¦ 14,166 ¦ 21,257 ¦ 1.45 ¦ 1.03 ¦ 0.002\nBlue tit given dog, set 1, Weber ¦ 14,166 ¦ 21,257 ¦ 1.16 ¦ 1.02 ¦ 0.002\nBee given human, set 1, photon ¦ 2,201 ¦ 9,185 ¦ 1.67 ¦ 1.06 ¦ 0.002\nBlue tit given human, set 1, photon ¦ 2,201 ¦ 9,185 ¦ 1.50 ¦ 1.04 ¦ 0.002\nBee given dog, set 1, photon ¦ 16,557 ¦ 26,035 ¦ 1.38 ¦ 1.03 ¦ 0.002\nBlue tit given dog, set 1, photon ¦ 16,557 ¦ 26,035 ¦ 1.14 ¦ 1.01 ¦ 0.002\nBee given human, set 2, photon ¦ 1,374 ¦ 465 ¦ 45.6 ¦ 1.24 ¦ 0.002\nBlue tit given human, set 2, photon ¦ 1,374 ¦ 465 ¦ 3.85 ¦ 1.21 ¦ 0.002\nBee given dog, set 2, photon ¦ 3,071 ¦ 595 ¦ 9.80 ¦ 1.06 ¦ 0.002\nBlue tit given dog, set 2, photon ¦ 3,071 ¦ 595 ¦ 2.37 ¦ 1.05 ¦ 0.002\nBee given human, set 2, Weber ¦ 566 ¦ 316 ¦ 313 ¦ 1.31 ¦ 0.004\nBlue tit given human, set 2, Weber ¦ 566 ¦ 316 ¦ 52.3 ¦ 1.26 ¦ 0.004\nBee given dog, set 2, Weber ¦ 2,750 ¦ 570 ¦ 15.0 ¦ 1.08 ¦ 0.002\nBlue tit given dog, set 2, Weber ¦ 2,750 ¦ 570 ¦ 2.40 ¦ 1.05 ¦ 0.002\n::end",
+     "![fig:ratios width=0.98 alt=Sixteen markers on a log scale, every one to the right of its grey shuffle bar, ranging from about 1.1 to over 300](fig-ratios.png) Separation ratios (markers) against the range from 1 to the label-shuffle 95th percentile (grey bars), for four observer pairs under two noise models on two surface sets. Every marker clears its bar; the sizes range over two orders of magnitude. Drawn from the two runs' result files."
+    ]
+   },
+   {
+    "id": "discussion",
+    "title": "Discussion",
+    "role": "argument",
+    "paragraphs": [
+     "The result agrees with Chittka and Menzel {cite:r2} and with Dorin and colleagues {cite:r3}, who used this same surface set: flower colours stand apart from their backgrounds in ways insect vision can see. This paper puts a different number on it. Of the colour differences a person cannot see, a larger share falls between a flower and a background than between two backgrounds, for a modelled bee and a modelled blue tit. The control for chance holds that number up in every condition.",
+     "The size of the effect is a property of the model and the surfaces together. Photon noise made more pairs human-blind and cut the bee's ratio from 2.04 to 1.67. A second set of surfaces with uniform brown backgrounds pushed it to 45.6. None of these values is the ratio in a real meadow. The direction, flowers ahead of backgrounds, survived both changes, and that is the claim this paper makes.",
+     "The instrument check marks the limit. The model resolves wavelength steps finer than bees can in behaviour. A model that is too fine for the bee would separate pairs a real bee cannot, and we expect that error to raise both shares in the ratio. The shuffle shows that the labels carry the difference between the shares, but the absolute shares should not be read as what a bee sees. Each failed check here is an {g:honest-null}honest null{/g} and is reported with the result.",
+     "H2b shows why care is needed with stories of design. Insect-pollinated flowers stand further from the backgrounds than bird-pollinated ones for the bee, and also for the human model. A colour that stands out for many eyes is not evidence of tuning to one."
+    ]
+   },
+   {
+    "id": "limits",
+    "title": "Limitations",
+    "role": "argument",
+    "paragraphs": [
+     "- The instrument check failed twice, with Weber noise and with photon noise, so the model is too fine for at least the bee. Only the direction of the ratio is claimed.",
+     "- Several receptor noise values come from memory or secondary sources, and the photon count is an order-of-magnitude memory. Absolute sizes depend on them.",
+     "- The model uses whole-surface spectra and ignores pattern, so nectar guides and other patterns inside one flower are out of reach.",
+     "- Backgrounds were not matched to each flower's own site, and set 2 joins flowers and backgrounds from different places. Two sets agreeing is not generality across the world's surfaces.",
+     "- Discrimination capacity in a model is not what the animal experiences, and no behaviour was tested.",
+     "- Dorin and colleagues studied flower signalling on set 1 before us, so set 1 was not a new sample for the general idea.",
+     "- The analysis was run by our own code and was not blind. For these reasons the finding is published at {g:tier}tier{/g} B, a signal worth expanding."
+    ]
+   },
+   {
+    "id": "appendix",
+    "title": "Appendix A. The preregistered verdicts",
+    "role": "evidence",
+    "paragraphs": [
+     "Each {g:verdict}verdict{/g} is a set of rules written before the run, and it passes only when every rule holds. Values are read from the runs' result files.",
+     "::table tab:verdicts cols=0.26,0.46,0.16,0.12 Preregistered verdicts for the flower test and the instrument check, and the rule that decided each.\nVerdict ¦ Deciding rule ¦ Value ¦ Holds\nH2, bee given human ¦ ratio above 1 and above its shuffle 95th percentile (1.08), corrected ¦ 2.04 ¦ yes\nH2, blue tit given human ¦ ratio above 1 and above its shuffle 95th percentile (1.09), corrected ¦ 2.22 ¦ yes\nH2, bee given dog ¦ ratio above 1 and above its shuffle 95th percentile (1.03), corrected ¦ 1.45 ¦ yes\nH2, blue tit given dog ¦ ratio above 1 and above its shuffle 95th percentile (1.02), corrected ¦ 1.16 ¦ yes\nH2b, bee ¦ insect minus bird median distance above 0, one-sided p below 0.05 ¦ 2.64; p 0.002 ¦ yes\nV0, first study ¦ human minimum step 0.5 to 5 nm; bee minimum 1.5 to 12 nm ¦ 0.4; 0.3 nm ¦ no\nV0, replication ¦ every model step within a factor of 2 of behaviour at named wavelengths ¦ human 2.2 nm at 640; bee 0.7 nm ¦ no\nH2 replication, 12 tests ¦ each ratio above 1 and above its shuffle 95th percentile, corrected ¦ 1.14 to 313 ¦ yes, 12 of 12\n::end"
+    ]
+   }
+  ]
+ },
+ "claims": [
+  {
+   "id": "c1",
+   "text": "Among pairs a modelled human cannot separate, modelled bees and blue tits separate flower-background pairs more often than background-background pairs, and the separation ratio exceeded its label-shuffle 95th percentile in every condition tested: two noise models on the first set, and two on a second set of Californian flowers against North American soil and leaf litter.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e1"
+   ]
+  },
+  {
+   "id": "c2",
+   "text": "The size of the ratio did not travel: for the bee it was 2.04 with Weber noise and 1.67 with photon noise added on the first set, and 45.6 on the second set, where the backgrounds are brown and alike.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e2"
+   ]
+  },
+  {
+   "id": "c3",
+   "text": "A preregistered instrument check failed under both noise models: the model resolves finer wavelength steps than bees show in behaviour, so only the direction of the effect is claimed.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": []
+  }
+ ],
+ "evidence": [
+  {
+   "id": "e1",
+   "kind": "number",
+   "label": "The numbers in claim 1",
+   "value": "95",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e2",
+   "kind": "number",
+   "label": "The numbers in claim 2",
+   "value": "2.04; 1.67; 45.6",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e3",
+   "kind": "number",
+   "label": "Sample",
+   "value": "728 surfaces (507 background, 221 flower); 1,108 FB and 3,892 BB pairs for bee given human",
+   "check": {
+    "by": "the register's evidence fields",
+    "result": "not_checked",
+    "note": "as recorded in the publication register"
+   }
+  },
+  {
+   "id": "e4",
+   "kind": "number",
+   "label": "Main estimate and interval",
+   "value": "ratio 2.04 (shuffle q95 1.08, p 0.002); H3 rho 0.92 (q95 0.54)",
+   "check": {
+    "by": "the register's evidence fields",
+    "result": "not_checked",
+    "note": "as recorded in the publication register"
+   }
+  },
+  {
+   "id": "e5",
+   "kind": "number",
+   "label": "Forecast against outcome",
+   "value": "H2 forecast ratio above 1 passed; H5 reversed",
+   "check": {
+    "by": "the register's evidence fields",
+    "result": "not_checked",
+    "note": "as recorded in the publication register"
+   }
+  },
+  {
+   "id": "e6",
+   "kind": "control",
+   "label": "Known-answer check",
+   "value": "V0 failed: human 0.4 nm, bee 0.3 nm, too fine; coded mantis 17.4 nm passed",
+   "check": {
+    "by": "the register's evidence fields",
+    "result": "not_checked",
+    "note": "as recorded in the publication register"
+   }
+  }
+ ],
+ "references": [
+  {
+   "id": "r1",
+   "key": "Vorobyev 1998",
+   "kind": "paper",
+   "title": "Vorobyev, M. and Osorio, D. (1998). Receptor noise as a determinant of colour thresholds. Proceedings of the Royal Society B 265, 351-358. doi:10.1098/rspb.1998.0302",
+   "access": "snippet",
+   "target": "https://doi.org/10.1098/rspb.1998.0302",
+   "access_note": "abstracts, publisher pages and search summaries; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r2",
+   "key": "Chittka 1992",
+   "kind": "paper",
+   "title": "Chittka, L. and Menzel, R. (1992). The evolutionary adaptation of flower colours and the insect pollinators' colour vision. Journal of Comparative Physiology A 171, 171-181. doi:10.1007/BF00188925",
+   "access": "snippet",
+   "target": "https://doi.org/10.1007/BF00188925",
+   "access_note": "abstracts, publisher pages and search summaries; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r3",
+   "key": "Dorin 2023",
+   "kind": "paper",
+   "title": "Dorin, A., Shrestha, M., Garcia, J. E., Burd, M. and Dyer, A. G. (2023). Ancient insect vision tuned for flight among rocks and plants underpins natural flower colour diversity. Proceedings of the Royal Society B 290, 20232018. doi:10.1098/rspb.2023.2018",
+   "access": "snippet",
+   "target": "https://doi.org/10.1098/rspb.2023.2018",
+   "access_note": "abstracts, publisher pages and search summaries; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r4",
+   "key": "Dorin, A., Shrestha, M., Garcia, J",
+   "kind": "dataset",
+   "title": "Dorin, A., Shrestha, M., Garcia, J. E., Burd, M. and Dyer, A. G. Reflectance spectra of rocks, minerals, sticks, bark, leaves and bird- and insect-pollinated flower petals (data deposit). Dryad, doi:10.5061/dryad.fn2z34v2c; Zenodo mirror record 10641891. CC0.",
+   "access": "run",
+   "target": "https://doi.org/10.5061/dryad.fn2z34v2c",
+   "licence": "spectra CC0 (Dryad fn2z34v2c); CIE 2006 and D65 CC BY-SA 4.0; pavo curves GPL, check reuse"
+  },
+  {
+   "id": "r5",
+   "key": "CIE",
+   "kind": "dataset",
+   "title": "CIE. CIE 2006 LMS cone fundamentals, 2 degree, and CIE standard illuminant D65. CIE datasets, doi:10.25039/CIE.DS.tijidesg. CC BY-SA 4.0.",
+   "access": "run",
+   "target": "https://doi.org/10.25039/CIE.DS.tijidesg",
+   "licence": "spectra CC0 (Dryad fn2z34v2c); CIE 2006 and D65 CC BY-SA 4.0; pavo curves GPL, check reuse"
+  },
+  {
+   "id": "r6",
+   "key": "pavo",
+   "kind": "dataset",
+   "title": "pavo: perceptual analysis, visualization and organization of spectral colour data. R package version 2.10.0, internal data (receptor sensitivities, ocular media and illuminants). GPL version 2 or later.",
+   "access": "run",
+   "licence": "spectra CC0 (Dryad fn2z34v2c); CIE 2006 and D65 CC BY-SA 4.0; pavo curves GPL, check reuse"
+  },
+  {
+   "id": "r7",
+   "key": "LeCroy and colleagues",
+   "kind": "dataset",
+   "title": "LeCroy and colleagues. Flower reflectance spectra from Californian serpentine seeps. Dryad dataset v41ns1rtq, read through its Zenodo mirror. CC0.",
+   "access": "run",
+   "licence": "spectra CC0 (Dryad fn2z34v2c); CIE 2006 and D65 CC BY-SA 4.0; pavo curves GPL, check reuse"
+  },
+  {
+   "id": "r8",
+   "key": "Kraemer and Adams",
+   "kind": "dataset",
+   "title": "Kraemer and Adams. Soil and leaf litter reflectance spectra. Dryad dataset 4dv78, read through its Zenodo mirror. CC0.",
+   "access": "run",
+   "licence": "spectra CC0 (Dryad fn2z34v2c); CIE 2006 and D65 CC BY-SA 4.0; pavo curves GPL, check reuse"
+  }
+ ],
+ "relations": [
+  {
+   "from": "F88",
+   "to": "F81",
+   "type": "narrowed",
+   "scope": "size of the ratios and the union gain",
+   "date": "2026-10-30",
+   "note": "Under photon noise the set 1 ratios fall to 1.67 for the bee and 1.50 for the blue tit, and the post hoc union gain of +0.39 shrinks to a null. Publication carries the direction only."
+  }
+ ],
+ "corrections": [
+  {
+   "id": "x1",
+   "date": "2026-10-30",
+   "target": "document",
+   "type": "scope",
+   "after": "A later dated line in the findings ledger narrows the published claim to the direction of the effect, and this paper follows it.",
+   "reason": "The replication run with photon noise lowered the set 1 ratios to 1.67 for the bee and 1.50 for the blue tit.",
+   "found_by": "a later study of ours"
+  }
+ ],
+ "versions": [
+  {
+   "n": 1,
+   "date": "2026-10-29",
+   "what": "entered in the findings ledger"
+  },
+  {
+   "n": 2,
+   "date": "2026-10-30",
+   "what": "dated correction, 1 item"
+  },
+  {
+   "n": 3,
+   "date": "2026-11-09",
+   "what": "paper version 1.0, first published",
+   "hash": "43d4098cd03bf7bb5e2b3f9eb37d6e4e0163f323188575bc11a298064fc41935"
+  }
+ ],
+ "grade": {
+  "lowers": [
+   {
+    "domain": "blinding",
+    "text": "Not blind. H3 overlap and reception draw on the same partitions; noise values partly from memory",
+    "from": "register scorer.blind"
+   },
+   {
+    "domain": "missing control",
+    "text": "Controls: label shuffles working; V0 instrument failed; H1c, H4, H4b, H5 failed.",
+    "from": "register evidence.controls"
+   },
+   {
+    "domain": "novelty",
+    "text": "Nearby work exists; novelty is not shown.",
+    "from": "register literature.verdict"
+   },
+   {
+    "domain": "single source",
+    "text": "The cited literature was read at the level of abstracts, publisher pages and search summaries; full texts were not read.",
+    "from": "paper Verified"
+   }
+  ],
+  "holds": [
+   {
+    "domain": "scoring",
+    "text": "Scored by code against rules fixed in advance.",
+    "from": "register scorer.who"
+   },
+   {
+    "domain": "preregistration",
+    "text": "Preregistered and hash-locked before the run (sha256 fec1f165).",
+    "from": "paper Reproduction"
+   },
+   {
+    "domain": "open data",
+    "text": "Public data.",
+    "from": "register data_licence"
+   }
+  ]
+ },
+ "reproduce": {
+  "data": [
+   {
+    "name": "Dorin, A., Shrestha, M., Garcia, J",
+    "licence": "spectra CC0 (Dryad fn2z34v2c); CIE 2006 and D65 CC BY-SA 4.0; pavo curves GPL, check reuse",
+    "url": "https://doi.org/10.5061/dryad.fn2z34v2c"
+   },
+   {
+    "name": "CIE",
+    "licence": "spectra CC0 (Dryad fn2z34v2c); CIE 2006 and D65 CC BY-SA 4.0; pavo curves GPL, check reuse",
+    "url": "https://doi.org/10.25039/CIE.DS.tijidesg"
+   },
+   {
+    "name": "pavo",
+    "licence": "spectra CC0 (Dryad fn2z34v2c); CIE 2006 and D65 CC BY-SA 4.0; pavo curves GPL, check reuse",
+    "url": ""
+   },
+   {
+    "name": "LeCroy and colleagues",
+    "licence": "spectra CC0 (Dryad fn2z34v2c); CIE 2006 and D65 CC BY-SA 4.0; pavo curves GPL, check reuse",
+    "url": ""
+   },
+   {
+    "name": "Kraemer and Adams",
+    "licence": "spectra CC0 (Dryad fn2z34v2c); CIE 2006 and D65 CC BY-SA 4.0; pavo curves GPL, check reuse",
+    "url": ""
+   }
+  ],
+  "prereg": {
+   "hash": "fec1f1655ac86d3c16394e1947b9e2919225d9420680e5981e219f5a7f8fccd2",
+   "plan": "not recorded"
+  },
+  "cost": "the first run took 19.7 minutes of wall time on one desktop; the energy attributed to it by a CPU-share model, which is a model and not a measurement, was 1,645 J. The replication run took 7.3 minutes, with 1,995 J attributed the same way.",
+  "steps": [
+   "Data: download the Dorin and colleagues spectra from Dryad (or its Zenodo mirror), the CIE 2006 cone fundamentals and D65, and the pavo 2.10.0 receptor curves; for set 2, the LeCroy and colleagues flower spectra and the Kraemer and Adams soil and litter spectra.",
+   "Resample every spectrum to 300 to 700 nm in 1 nm steps, compute catches with eq. {ref:eq:catch} under D65 with von Kries adaptation, and distances with eq. {ref:eq:rnl} and its general form; for the replication, use the noise of eq. {ref:eq:photon} with N 10,000.",
+   "Mark pairs at or below 1 JND for the human (or dog), compute eq. {ref:eq:ratio} for the bee and the blue tit, and compare it with 500 label shuffles; correct the p values by Benjamini-Hochberg at q 0.05.",
+   "First study: preregistration SHA-256 fec1f1655ac86d3c16394e1947b9e2919225d9420680e5981e219f5a7f8fccd2, plan SHA-256 cc9c52ac2d9456618a10e1429f135574afe43466735b431b2ee002b6c9c6531f, run 20261030T012757Z.",
+   "Replication: preregistration SHA-256 54571ccf85df9f48772bd0d03446598c3aa08cbdde1c29c9e27592895662e45d, plan SHA-256 95ba3678d3e9a2b1a3579aa1d1b1522ba59c6b699bf91761621d341517475a54, run 20261030T024058Z."
+  ],
+  "not_rerun": "The studies were not re-run for this paper."
+ },
+ "verified": {
+  "date": "2026-11-09",
+  "checks": [
+   {
+    "what": "On 9 November 2026 the 728 surfaces and their group counts, every flower-background and background share with its pair count, every ratio with its shuffle percentile and p value, the H2b medians and p values, the named example distances and UV shares, the instrument-check values under both noise models, the set 2 group counts and the photon count were re-read from the two runs' result files.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   },
+   {
+    "what": "They match the {g:findings-ledger}findings ledger{/g}, including the ledger's later line that the set 1 photon ratios are 1.67 and 1.50 and that publication carries the direction only.",
+    "by": "the paper's Verified pass",
+    "result": "match"
+   },
+   {
+    "what": "The SHA-256 of each preregistration matches the hash recorded in its result file.",
+    "by": "the paper's Verified pass",
+    "result": "match"
+   },
+   {
+    "what": "Both figures were drawn by a script that reads only those two files.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   }
+  ],
+  "not_checked": [
+   "The Calothamnus example, which the web write-up marked as not re-read, was re-read here from the first run's example list.",
+   "The studies were not re-run for this paper.",
+   "The literature in the introduction was found by searches run on 9 November 2026 and read at the level of abstracts, publisher pages and search summaries; the full texts were not read."
+  ]
+ }
+}

@@ -1,0 +1,515 @@
+{
+ "schema": "research-record/1",
+ "built": "2026-11-09 by scripts/record-findings.mjs from paper.txt, the register row and the findings ledger",
+ "document": {
+  "id": "F152",
+  "kind": "finding",
+  "title": "Finding missing links by shared neighbours lost to simple popularity on three corpora",
+  "standfirst": "The classic way to hunt for undiscovered connections, ranking unlinked pairs of ideas by the neighbours they share, found fewer of the links that later appeared than just pairing the most common ideas. Among pairs of equal popularity it still carried some signal.",
+  "date_found": "2026-10-31",
+  "fields": [
+   "method",
+   "forecasting-prediction",
+   "information-theory"
+  ],
+  "tier": "D",
+  "tier_reason": "A registered null with real corpora and a rewired control. It agrees with link-prediction practice, where degree baselines are hard to beat, so its value is the honest baseline test for gap tools.",
+  "rung": "killed",
+  "rung_reason": "A-B-C shared-neighbour ranking as a gap finder: loses to popularity.",
+  "outcome": "failed",
+  "bound": "Shared-neighbour ranking found fewer later links than popularity on all three corpora; among pairs of similar popularity it still separated later links (AUC 0.569 to 0.757).",
+  "objection": "A later co-occurrence is an attention event. A hit means two concepts were later used together; it does not show that a link between them is true or new to science.",
+  "objection_source": "the paper's first stated limitation; no reviewer attack is on file",
+  "would_change": "Preregister Adamic-Adar on a citation corpus with dated held-out links.",
+  "sections": [
+   {
+    "id": "reader",
+    "title": "What this means for a reader",
+    "role": "lead",
+    "paragraphs": [
+     "If a discovery tool shows you a ranked list of \"missing links\", ask how it does against a list that simply pairs the most common terms. In our test the common-terms list won on every corpus. The shared-neighbour idea is not empty: among pairs that are equally common, it does pick out the ones that later appear together more often than chance. Its weakness sits at the top of the list, which is where a reader looks first."
+    ]
+   },
+   {
+    "id": "abstract",
+    "title": "Abstract",
+    "role": "argument",
+    "paragraphs": [
+     "Tools that promise to find undiscovered connections often rank unlinked pairs of concepts by the neighbours they share: if A goes with B and B goes with C, perhaps A goes with C. We tested that ranking against the plainest baseline there is, which pairs the most popular concepts. Each corpus was cut by date, and a ranker scored a hit when a pair it proposed from the early documents appeared together at least twice in the next stretch of documents. {c1}Ranking unlinked pairs by shared neighbours found fewer later links than ranking them by popularity on all three corpora: precision in the top 200 of 0.127 against 0.268 on our research notes, 0.018 against 0.088 on Biology Stack Exchange and 0.007 against 0.043 on Skeptics Stack Exchange.{/c1} {c2}On degree-preserving rewired graphs the shared-neighbour score reached a 95th percentile of 0.164, above its real score of 0.127, so at the top of the list it added nothing we could detect beyond popularity.{/c2} {c3}Among pairs of similar popularity the shared-neighbour score still separated later links from the rest: area under the curve 0.569 on the research notes, 0.757 on Biology and 0.696 on Skeptics.{/c3} Three of four preregistered verdicts failed."
+    ]
+   },
+   {
+    "id": "intro",
+    "title": "Introduction",
+    "role": "argument",
+    "paragraphs": [
+     "Swanson {cite:r1} described knowledge that is public and still undiscovered: two bodies of literature that each hold half of an argument and never cite each other. His method, now called {g:lbd}literature-based discovery{/g}, looks for a term C that is linked to a term B in one literature while B is linked to A in another, so that A and C become a candidate pair. Later work recast the problem as {g:link-prediction}link prediction{/g}, the ranking of node pairs in a network by how likely they are to become joined. Liben-Nowell and Kleinberg {cite:r2} set out the problem on coauthorship networks, built rankers from measures of how close two nodes sit in the network, and found that subtle proximity measures can outperform direct ones. One such measure is the Adamic-Adar index {cite:r3}. Kastrin, Rindflesch and Hristovski {cite:r4} applied proximity measures, among them common neighbours, the Adamic-Adar index and preferential attachment, to a network of co-occurring MeSH terms with its history of link formation, and reported that supervised methods outperform the unsupervised ones.",
+     "Krenn and Zeilinger {cite:r5} built a semantic network of quantum physics concepts from 750,000 papers, linked two concepts when one article studies both, and trained a neural network to predict which concept pairs researchers will study in the next five years. Krenn and colleagues {cite:r6} later built a benchmark, Science4Cast, from about 143,000 papers on artificial intelligence and compared ten prediction methods on it; in the authors' public summary, the most effective methods used a curated set of network features.",
+     "This study asks a narrower question that sits under all of that work. Before a gap ranking is trusted to point at undiscovered connections, does it beat a ranking that knows only how popular each concept is? The shared-neighbour score in our test discounts popular concepts on purpose, in the form used for time-sliced tests by Krenn and Zeilinger. The baseline is {g:preferential-attachment}preferential attachment{/g}, the product of the two concepts' degrees."
+    ]
+   },
+   {
+    "id": "prereg",
+    "title": "Preregistration and design",
+    "role": "argument",
+    "paragraphs": [
+     "The design was written and hash-locked on 31 October 2026 as a {g:preregistration}preregistration{/g}, before any score of the study was computed. Exploration before the lock read schemas, field names and date ranges only. The locked file names the corpora, the slicing, the vocabulary rules, the definition of a link and of a target, the ranker and its baseline, both {g:control}controls{/g}, the measures, four verdicts, the forecasts and one kill condition. The preregistration's SHA-256 is given in the reproduction section.",
+     "Each {g:verdict}verdict{/g} is a rule read off by code:",
+     "- Beats popularity: the bootstrap interval of the shared-neighbour precision minus the popularity precision lies above zero on the research notes.",
+     "- Beats controls: the shared-neighbour precision on the research notes lies above the 95th percentile of both controls.",
+     "- Holds with popularity fixed: the within-decile area under the curve on the research notes lies above 0.55.",
+     "- Replicates on Biology: the same interval as the first verdict lies above zero on Biology Stack Exchange.",
+     "The {g:kill-condition}kill condition{/g} reads: if the ranking fails to beat popularity and also fails with popularity fixed, absent-link scores say nothing beyond how common a word is, and its top gaps get reported only as prompts for reading."
+    ]
+   },
+   {
+    "id": "data",
+    "title": "Data and provenance",
+    "role": "argument",
+    "paragraphs": [
+     "Three corpora were used. The first is our own research notes: entries of our {g:findings-ledger}findings ledger{/g}, the titles of saved readings, a catalogue of laws and a table of checks, each dated. They are internal records and are not public, so no one outside can reproduce that arm. Their dates span days of reading, not years, so a slice of them is a stretch of attention, not a stretch of a field's history.",
+     "The other two are the question posts of Biology Stack Exchange (28,798 questions) and Skeptics Stack Exchange (11,202 questions), 2011 to 2024, taken from the sites' public data dump. Each question's tags serve as its concepts. Stack Exchange content is licensed CC BY-SA {cite:r7}; this paper reports statistics only.",
+     "Each corpus was ordered by date and cut into five {g:time-slice}time slices{/g} of equal document count. The fifth slice was held back for a later study and was not read here. A vocabulary was built from the training slices only: at most 1,500 concepts, each appearing in at least four documents and in no more than 10 percent of them, with each document keeping at most 40 concepts by tf-idf weight. On the research notes the concepts are single words and word pairs; on the Stack Exchange sites they are tags.",
+     "A {g:concept-link}link{/g} is two concepts in one document. A {g:target-pair}target{/g} is a pair with no link in the training slices that appears together in at least two documents of the test slice."
+    ]
+   },
+   {
+    "id": "methods",
+    "title": "Methods",
+    "role": "argument",
+    "paragraphs": [
+     "## Folds",
+     "Three folds trained on slice 1, slices 1 to 2 and slices 1 to 3, and each tested on the slice after its training block. Every number in the results is the mean over the three folds unless a fold is named.",
+     "## The rankers",
+     "Let {m:A} be the training graph, {m:d_i} the {g:degree}degree{/g} of concept {m:i}, and {m:E} the number of edges. Each edge between {m:i} and {m:k} gets a weight that falls as both ends become popular, floored at zero:",
+     "$$ w_{ik} = \\ln \\frac{2E}{d_i d_k} {eq:weight}",
+     "The {g:abc-model}A-B-C ranking{/g} scores an unlinked pair {m:i} and {m:j} by the cosine of their weighted neighbour rows, so that it is high when the two concepts share specific neighbours:",
+     "$$ S_{ij} = \\frac{\\sum_k w_{ik} w_{jk}}{\\sqrt{\\sum_k w_{ik} w_{ik}} \\sqrt{\\sum_k w_{jk} w_{jk}}} {eq:abc}",
+     "The popularity baseline is",
+     "$$ P_{ij} = d_i d_j {eq:pa}",
+     "The {g:adamic-adar}Adamic-Adar index{/g} was reported beside them as a secondary measure. It was not in the preregistration, and its result is read as a lead only:",
+     "$$ AA_{ij} = \\sum_k \\frac{1}{\\ln d_k} {eq:aa}",
+     "where the sum runs over the neighbours {m:k} that {m:i} and {m:j} share. Ties in any score are broken by a fixed small noise term, the same in every run.",
+     "## Measures",
+     "The main measure is {g:precision-at-k}precision in the top 200{/g}:",
+     "$$ P_{200} = \\frac{h}{200} {eq:p200}",
+     "where {m:h} is the number of targets among a ranker's 200 highest-scored unlinked pairs. It is set beside the {g:base-rate}base rate{/g}, the share of all unlinked candidate pairs that are targets.",
+     "The interval for the difference in precision comes from a {g:document-bootstrap}document bootstrap{/g}: 200 times, the test slice's documents are reweighted by a multinomial draw, the targets are recomputed, and both fixed top-200 lists are rescored. The difference is averaged over the three folds within each draw, and the 2.5th and 97.5th percentiles of the 200 averages form the {g:interval-95}95 percent interval{/g}.",
+     "The second measure holds popularity fixed. Candidate pairs are split into tenths by the product of their degrees, and the {g:roc-auc}area under the ROC curve{/g} is computed inside each tenth from 40,000 sampled pairs of a target and a non-target. The {g:stratified-auc}within-decile AUC{/g} is their weighted mean:",
+     "$$ A_{strat} = \\frac{\\sum_b n_b A_b}{\\sum_b n_b} {eq:strat}",
+     "where {m:A_b} is the area in tenth {m:b} and {m:n_b} its number of targets."
+    ]
+   },
+   {
+    "id": "controls",
+    "title": "Controls and planted checks",
+    "role": "argument",
+    "paragraphs": [
+     "Two controls were run on the research notes, 20 draws each, scored against the true targets of each fold. {g:degree-preserving-rewiring}Degree-preserving rewiring{/g} attempts two random double-edge swaps per edge on the training graph, skipping any swap that would duplicate an edge. Every concept keeps its popularity and loses its real neighbourhood. If the shared-neighbour score finds anything beyond popularity at the top of the list, it must beat this control. {g:node-permutation}Node-label permutation{/g} keeps the graph's shape and breaks its tie to the real concepts. It is the weaker control: a score that loses to it would be worse than noise. The 95th percentile of each control's {g:null-distribution}null distribution{/g} is the bar.",
+     "There was no planted check. No corpus with a known set of future links was built, so the study cannot say how often the instrument misses a real effect."
+    ]
+   },
+   {
+    "id": "results",
+    "title": "Results",
+    "role": "argument",
+    "paragraphs": [
+     "Table {ref:tab:main} gives the main measure on each corpus and Figure {ref:fig:precision} draws it. {c1}Ranking unlinked pairs by shared neighbours found fewer later links than ranking them by popularity on all three corpora: precision in the top 200 of 0.127 against 0.268 on our research notes, 0.018 against 0.088 on Biology Stack Exchange and 0.007 against 0.043 on Skeptics Stack Exchange.{/c1} All three bootstrap intervals for the difference lie below zero.",
+     "::table tab:main cols=0.2,0.11,0.11,0.11,0.11,0.21,0.15 Precision in the top 200, mean of three folds, with the document-bootstrap interval for the shared-neighbour score minus popularity (200 draws). The last column is the within-decile area under the curve of the shared-neighbour score.\nCorpus ¦ Shared neighbours ¦ Popularity ¦ Adamic-Adar ¦ Base rate ¦ Difference interval ¦ Within-decile AUC\nResearch notes ¦ 0.127 ¦ 0.268 ¦ 0.273 ¦ 0.032 ¦ -0.182 to -0.125 ¦ 0.569\nBiology ¦ 0.018 ¦ 0.088 ¦ 0.122 ¦ 0.0038 ¦ -0.105 to -0.062 ¦ 0.757\nSkeptics ¦ 0.007 ¦ 0.043 ¦ 0.055 ¦ 0.0026 ¦ -0.077 to -0.042 ¦ 0.696\n::end",
+     "![fig:precision width=0.85 alt=Three panels of bars, one per corpus, with the popularity bar taller than the shared-neighbour bar in each](fig-precision.png) Precision in the top 200 for each ranker on each corpus, mean of three folds. Note the different vertical scales. Drawn from the run's result file.",
+     "Figure {ref:fig:controls} sets the research-notes score against its controls. {c2}On degree-preserving rewired graphs the shared-neighbour score reached a 95th percentile of 0.164, above its real score of 0.127, so at the top of the list it added nothing we could detect beyond popularity.{/c2} The rewired draws had a mean of 0.146, and 19 of 20 met or beat the real score ({g:p-value-draws}p value from draws{/g} 0.95). The score did beat the node-permuted graphs, whose 95th percentile was 0.048 (p 0.048, the smallest value 20 draws allow).",
+     "![fig:controls width=0.85 alt=Two control ranges with the real score marked as a diamond; the diamond sits below the rewired range and above the permuted range, and a dashed line marks popularity further right](fig-controls.png) The shared-neighbour score on the research notes (diamonds) against the 5th to 95th percentile range (bars) and mean (ticks) of each control, 20 draws each. The dashed line is the popularity baseline.",
+     "{c3}Among pairs of similar popularity the shared-neighbour score still separated later links from the rest: area under the curve 0.569 on the research notes, 0.757 on Biology and 0.696 on Skeptics.{/c3} Over all candidate pairs, without holding popularity fixed, its area was 0.739 on the research notes against 0.782 for popularity, 0.810 against 0.815 on Biology, and 0.762 against 0.836 on Skeptics.",
+     "{c4}Adamic-Adar, not preregistered, matched or beat popularity: 0.273 against 0.268 on the research notes and 0.122 against 0.088 on Biology.{/c4} No interval was computed for that comparison.",
+     "The folds explain much of the research-notes result. Table {ref:tab:folds} shows that the first fold, with 285 concepts and a base rate of 0.094, holds almost all of the hits. The later folds have 1,500 concepts and base rates near 0.001, and the shared-neighbour score found no target in its top 200 in either of them.",
+     "::table tab:folds cols=0.19,0.11,0.1,0.12,0.1,0.12,0.12,0.14 Each fold separately. Concepts and targets are counts; the last three columns are precision in the top 200, with A-B-C the shared-neighbour score.\nCorpus and fold ¦ Concepts ¦ Targets ¦ Candidates ¦ Base rate ¦ A-B-C ¦ Popularity ¦ Adamic-Adar\nResearch notes, 1 ¦ 285 ¦ 2,889 ¦ 30,841 ¦ 0.094 ¦ 0.380 ¦ 0.750 ¦ 0.775\nResearch notes, 2 ¦ 1,500 ¦ 1,054 ¦ 966,650 ¦ 0.0011 ¦ 0.000 ¦ 0.040 ¦ 0.030\nResearch notes, 3 ¦ 1,500 ¦ 1,378 ¦ 979,245 ¦ 0.0014 ¦ 0.000 ¦ 0.015 ¦ 0.015\nBiology, 1 ¦ 378 ¦ 487 ¦ 66,577 ¦ 0.0073 ¦ 0.040 ¦ 0.150 ¦ 0.205\nBiology, 2 ¦ 540 ¦ 371 ¦ 136,117 ¦ 0.0027 ¦ 0.010 ¦ 0.095 ¦ 0.125\nBiology, 3 ¦ 609 ¦ 218 ¦ 172,390 ¦ 0.0013 ¦ 0.005 ¦ 0.020 ¦ 0.035\nSkeptics, 1 ¦ 252 ¦ 158 ¦ 29,894 ¦ 0.0053 ¦ 0.010 ¦ 0.065 ¦ 0.100\nSkeptics, 2 ¦ 391 ¦ 101 ¦ 72,530 ¦ 0.0014 ¦ 0.010 ¦ 0.030 ¦ 0.030\nSkeptics, 3 ¦ 476 ¦ 123 ¦ 107,553 ¦ 0.0011 ¦ 0.000 ¦ 0.035 ¦ 0.035\n::end",
+     "Table {ref:tab:forecast} sets the forecasts written before the run against the outcomes.",
+     "::table tab:forecast cols=0.5,0.25,0.25 Forecasts fixed in the preregistration against what the run gave.\nQuantity ¦ Forecast ¦ Outcome\nResearch notes, popularity precision ¦ 0.25 ¦ 0.268\nResearch notes, shared-neighbour precision ¦ 0.15 ¦ 0.127\nResearch notes, base rate ¦ 0.02 ¦ 0.032\nWithin-decile AUC, research notes ¦ 0.62 ¦ 0.569\nBiology, popularity precision ¦ 0.03 ¦ 0.088\nBiology, shared-neighbour precision ¦ 0.03 ¦ 0.018\nBeats popularity, research notes ¦ probability 0.25 ¦ no\nBeats popularity, Biology ¦ probability 0.3 ¦ no\nBeats both controls ¦ probability 0.85 ¦ no\n::end"
+    ]
+   },
+   {
+    "id": "discussion",
+    "title": "Discussion",
+    "role": "argument",
+    "paragraphs": [
+     "Kastrin and colleagues {cite:r4} carry preferential attachment among their unsupervised measures, and our test adds a narrow fact to that line of work: a popularity-discounted shared-neighbour score falls below it at the top of the list on these three corpora. The rewired control sharpens that. A graph that keeps every concept's popularity and scrambles its neighbours gives the shared-neighbour score a higher top-200 precision than the real graph does. On the research notes, then, the neighbourhoods the score reads add nothing at the top that popularity alone does not carry.",
+     "The within-decile result points the other way, and both can hold at once. Inside a band of similar popularity, shared neighbours do separate future pairs from the rest. The discount in eq. {ref:eq:weight} pushes popular pairs down the list, and popular pairs are where most of the later links are. A gap tool built on shared neighbours may therefore be useful as a re-ranker within a popularity band, which this study did not test.",
+     "The Adamic-Adar result is the lead worth a new test. It weights shared neighbours by their rarity without discounting the pair itself, and on two corpora it met or passed the popularity baseline. That was not preregistered and carries no interval here.",
+     "Krenn and Zeilinger {cite:r5} and Krenn and colleagues {cite:r6} predict concept pairs with richer features and learned models. Our result does not bear on those methods. It bears on any tool that shows shared-neighbour gaps to a reader as candidate discoveries without first showing how a popularity list would do."
+    ]
+   },
+   {
+    "id": "limits",
+    "title": "Limitations",
+    "role": "argument",
+    "paragraphs": [
+     "- A later co-occurrence is an attention event. A hit means two concepts were later used together; it does not show that a link between them is true or new to science.",
+     "- On the research notes almost all hits come from the first fold, with 285 concepts. Later folds ran at base rates near 0.001, where precision in the top 200 rests on a handful of pairs.",
+     "- The research notes span days of reading rather than years, come from a few reading batches, and are not public. The two Stack Exchange corpora carry the reproducible part of the result.",
+     "- Both controls were run on the research notes only. The rewired control was not run on the public corpora.",
+     "- One tokenizer was used on the research notes, with no synonym handling; tags on the Stack Exchange sites are chosen by users and moderators and merge synonyms by their own rules.",
+     "- The study does not show that Adamic-Adar is the better method. It was not preregistered.",
+     "- There was no planted check, so the study has no measure of how often the instrument misses a real effect.",
+     "- Scoring was done by our own code and was not blind."
+    ]
+   },
+   {
+    "id": "appendix",
+    "title": "Appendix A. The preregistered verdicts",
+    "role": "evidence",
+    "paragraphs": [
+     "Each verdict is a set of rules written before the run. A verdict passes only when every rule holds. Values are read from the run's result file.",
+     "::table tab:verdicts cols=0.24,0.46,0.16,0.14 Preregistered verdicts and the rule that decided each one.\nVerdict ¦ Deciding rule ¦ Value ¦ Holds\nBeats popularity ¦ lower end of the research-notes difference interval above 0 ¦ -0.182 ¦ no\nBeats controls ¦ research-notes precision above the rewired 95th percentile (0.164) ¦ 0.127 ¦ no\nBeats controls ¦ research-notes precision above the permuted 95th percentile (0.048) ¦ 0.127 ¦ yes\nHolds with popularity fixed ¦ research-notes within-decile AUC above 0.55 ¦ 0.569 ¦ yes\nReplicates on Biology ¦ lower end of the Biology difference interval above 0 ¦ -0.105 ¦ no\nKill condition ¦ fails to beat popularity and fails with popularity fixed ¦ second part holds ¦ not met\n::end",
+     "The verdict \"Beats controls\" needs both of its rules and so fails. The kill condition did not fire, because the within-decile result passed."
+    ]
+   }
+  ]
+ },
+ "claims": [
+  {
+   "id": "c1",
+   "text": "Ranking unlinked pairs by shared neighbours found fewer later links than ranking them by popularity on all three corpora: precision in the top 200 of 0.127 against 0.268 on our research notes, 0.018 against 0.088 on Biology Stack Exchange and 0.007 against 0.043 on Skeptics Stack Exchange.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e1"
+   ]
+  },
+  {
+   "id": "c2",
+   "text": "On degree-preserving rewired graphs the shared-neighbour score reached a 95th percentile of 0.164, above its real score of 0.127, so at the top of the list it added nothing we could detect beyond popularity.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e2"
+   ]
+  },
+  {
+   "id": "c3",
+   "text": "Among pairs of similar popularity the shared-neighbour score still separated later links from the rest: area under the curve 0.569 on the research notes, 0.757 on Biology and 0.696 on Skeptics.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e3"
+   ]
+  },
+  {
+   "id": "c4",
+   "text": "Adamic-Adar, not preregistered, matched or beat popularity: 0.273 against 0.268 on the research notes and 0.122 against 0.088 on Biology.",
+   "section": "results",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e4"
+   ]
+  }
+ ],
+ "evidence": [
+  {
+   "id": "e1",
+   "kind": "number",
+   "label": "The numbers in claim 1",
+   "value": "200; 0.127; 0.268; 0.018; 0.088; 0.007; 0.043",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e2",
+   "kind": "number",
+   "label": "The numbers in claim 2",
+   "value": "95; 0.164; 0.127",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e3",
+   "kind": "number",
+   "label": "The numbers in claim 3",
+   "value": "0.569; 0.757; 0.696",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e4",
+   "kind": "number",
+   "label": "The numbers in claim 4",
+   "value": "0.273; 0.268; 0.122; 0.088",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e5",
+   "kind": "number",
+   "label": "Sample",
+   "value": "3 corpora; precision at 200",
+   "check": {
+    "by": "the register's evidence fields",
+    "result": "not_checked",
+    "note": "as recorded in the publication register"
+   }
+  },
+  {
+   "id": "e6",
+   "kind": "number",
+   "label": "Main estimate and interval",
+   "value": "own -0.182 to -0.125 against PA",
+   "check": {
+    "by": "the register's evidence fields",
+    "result": "not_checked",
+    "note": "as recorded in the publication register"
+   }
+  },
+  {
+   "id": "e7",
+   "kind": "number",
+   "label": "Forecast against outcome",
+   "value": "BEAT_PA 0.25, correct direction; BEAT_CONTROLS 0.85, failed",
+   "check": {
+    "by": "the register's evidence fields",
+    "result": "not_checked",
+    "note": "as recorded in the publication register"
+   }
+  },
+  {
+   "id": "e8",
+   "kind": "control",
+   "label": "Known-answer check",
+   "value": "none",
+   "check": {
+    "by": "the register's evidence fields",
+    "result": "not_checked",
+    "note": "as recorded in the publication register"
+   }
+  }
+ ],
+ "references": [
+  {
+   "id": "r1",
+   "key": "Swanson 1986",
+   "kind": "paper",
+   "title": "Swanson, D. R. (1986). Undiscovered public knowledge. The Library Quarterly 56(2), 103-118. doi:10.1086/601720",
+   "access": "snippet",
+   "target": "https://doi.org/10.1086/601720",
+   "access_note": "abstracts and publisher pages; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r2",
+   "key": "Liben-Nowell 2007",
+   "kind": "paper",
+   "title": "Liben-Nowell, D. and Kleinberg, J. (2007). The link-prediction problem for social networks. Journal of the American Society for Information Science and Technology 58(7), 1019-1031. doi:10.1002/asi.20591",
+   "access": "snippet",
+   "target": "https://doi.org/10.1002/asi.20591",
+   "access_note": "abstracts and publisher pages; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r3",
+   "key": "Adamic 2003",
+   "kind": "paper",
+   "title": "Adamic, L. A. and Adar, E. (2003). Friends and neighbors on the web. Social Networks 25, 211-230.",
+   "access": "snippet",
+   "access_note": "abstracts and publisher pages; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r4",
+   "key": "Kastrin 2016",
+   "kind": "paper",
+   "title": "Kastrin, A., Rindflesch, T. C. and Hristovski, D. (2016). Link prediction on a network of co-occurring MeSH terms: towards literature-based discovery. Methods of Information in Medicine 55(4), 340-346. doi:10.3414/ME15-01-0108",
+   "access": "snippet",
+   "target": "https://doi.org/10.3414/ME15-01-0108",
+   "access_note": "abstracts and publisher pages; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r5",
+   "key": "Krenn 2020",
+   "kind": "paper",
+   "title": "Krenn, M. and Zeilinger, A. (2020). Predicting research trends with semantic and neural networks with an application in quantum physics. Proceedings of the National Academy of Sciences 117(4), 1910-1916. doi:10.1073/pnas.1914370116",
+   "access": "snippet",
+   "target": "https://doi.org/10.1073/pnas.1914370116",
+   "access_note": "abstracts and publisher pages; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r6",
+   "key": "Krenn 2023",
+   "kind": "paper",
+   "title": "Krenn, M., Buffoni, L., Coutinho, B. and others (2023). Forecasting the future of artificial intelligence with machine learning-based link prediction in an exponentially growing knowledge network. Nature Machine Intelligence 5, 1326-1335. doi:10.1038/s42256-023-00735-0",
+   "access": "snippet",
+   "target": "https://doi.org/10.1038/s42256-023-00735-0",
+   "access_note": "abstracts and publisher pages; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r7",
+   "key": "Stack Exchange, Inc",
+   "kind": "dataset",
+   "title": "Stack Exchange, Inc. Stack Exchange data dump, Biology and Skeptics sites, question posts 2011 to 2024. Licensed CC BY-SA.",
+   "access": "run",
+   "licence": "Stack Exchange text under CC BY-SA; own records internal"
+  }
+ ],
+ "relations": [
+  {
+   "from": "F206",
+   "to": "F152",
+   "type": "held",
+   "scope": "corpus gap ranking",
+   "date": "2026-10-31",
+   "note": "F152's corpus gap ranking stays failed."
+  }
+ ],
+ "corrections": [
+  {
+   "id": "x1",
+   "date": "2026-11-09",
+   "target": "document",
+   "type": "wording",
+   "after": "It is a higher point value with no interval, and this paper says so.",
+   "reason": "Our earlier write-up called Adamic-Adar's 0.122 on Biology a win over popularity.",
+   "found_by": "the publication pass"
+  }
+ ],
+ "versions": [
+  {
+   "n": 1,
+   "date": "2026-10-31",
+   "what": "entered in the findings ledger"
+  },
+  {
+   "n": 2,
+   "date": "2026-11-09",
+   "what": "paper version 1.0, first published",
+   "hash": "e9660d3b34f12f9b01b9062f25a9c5de0b2af0a36d80706e78d6ba2127bd07e9"
+  }
+ ],
+ "grade": {
+  "lowers": [
+   {
+    "domain": "blinding",
+    "text": "Not blind. The project chose corpora and rules; judges come from one vendor.",
+    "from": "register scorer.blind"
+   },
+   {
+    "domain": "scoring",
+    "text": "Graded by the same agent that ran it.",
+    "from": "register scorer.self_graded"
+   },
+   {
+    "domain": "missing control",
+    "text": "Controls: rewired graph q95 0.164, working; BEAT_CONTROLS failed.",
+    "from": "register evidence.controls"
+   },
+   {
+    "domain": "missing control",
+    "text": "No positive control.",
+    "from": "register evidence.known_answer"
+   },
+   {
+    "domain": "novelty",
+    "text": "Nearby work exists; novelty is not shown.",
+    "from": "register literature.verdict"
+   },
+   {
+    "domain": "single source",
+    "text": "The cited literature was read at the level of abstracts and publisher pages; full texts were not read.",
+    "from": "paper Verified"
+   }
+  ],
+  "holds": [
+   {
+    "domain": "preregistration",
+    "text": "Preregistered and hash-locked before the run (sha256 9ccb8658).",
+    "from": "paper Reproduction"
+   },
+   {
+    "domain": "replication",
+    "text": "Rechecked by F206 (corpus gap ranking): F152's corpus gap ranking stays failed.",
+    "from": "relations"
+   },
+   {
+    "domain": "open data",
+    "text": "Public data.",
+    "from": "register data_licence"
+   }
+  ]
+ },
+ "reproduce": {
+  "data": [
+   {
+    "name": "Stack Exchange, Inc",
+    "licence": "Stack Exchange text under CC BY-SA; own records internal",
+    "url": ""
+   }
+  ],
+  "prereg": {
+   "hash": "9ccb8658ff6af3c02a9e7d3e6185577c4ba835892b50ed43fd9f4c6baf263b92",
+   "plan": "bc0c19899c7bb9f51879f64bdd951f523953362060ecb0a2b5b84b39cc7d15c2"
+  },
+  "cost": "the run's timing record gives 29 seconds for the analysis and 112 seconds for the two controls, on one desktop CPU.",
+  "steps": [
+   "Data: the public Stack Exchange data dump for the Biology and Skeptics sites (CC BY-SA). From each site's posts file keep question posts only, with their id, creation date and tags.",
+   "Order each site's questions by date and cut them into five slices of equal count. Build the vocabulary from the training slices: tags in at least four documents and at most 10 percent of them, the 1,500 most frequent kept.",
+   "For folds training on slice 1, slices 1 to 2 and slices 1 to 3, build the training co-occurrence graph and list as targets the unlinked pairs that co-occur in at least two documents of the next slice.",
+   "Score candidates with eqs. {ref:eq:abc}, {ref:eq:pa} and {ref:eq:aa}, compute eq. {ref:eq:p200} and eq. {ref:eq:strat}, and take the document-bootstrap interval of the difference with 200 draws.",
+   "Build the rewired control with two double-edge swaps per edge and score the shared-neighbour ranking on it against the true targets, 20 draws.",
+   "Preregistration SHA-256: 9ccb8658ff6af3c02a9e7d3e6185577c4ba835892b50ed43fd9f4c6baf263b92. Plan SHA-256: bc0c19899c7bb9f51879f64bdd951f523953362060ecb0a2b5b84b39cc7d15c2. Run 20261031T065109Z, seed 20261031."
+  ],
+  "not_rerun": "The study was not re-run for this paper."
+ },
+ "verified": {
+  "date": "2026-11-09",
+  "checks": [
+   {
+    "what": "On 9 November 2026 every precision value, base rate, fold count, bootstrap interval, area under the curve, control mean, percentile and p value in this paper was re-read from the run's result file.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   },
+   {
+    "what": "The headline values match the findings ledger.",
+    "by": "the paper's Verified pass",
+    "result": "match"
+   },
+   {
+    "what": "The preregistration's SHA-256 was recomputed from the locked file and matches the hash recorded in the result file.",
+    "by": "the paper's Verified pass",
+    "result": "match"
+   },
+   {
+    "what": "The question counts for the two Stack Exchange sites were counted from the extracted question file the run read.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   },
+   {
+    "what": "Both figures were drawn by a script that reads only the result file.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   }
+  ],
+  "not_checked": [
+   "The study was not re-run for this paper.",
+   "The literature in the introduction was found by searches run on 9 November 2026 and read at the level of abstracts and publisher pages; the full texts of the cited papers were not read."
+  ]
+ }
+}

@@ -1,0 +1,82 @@
+{
+ "terms": {
+  "public-good": {
+   "term": "public good",
+   "field": "social evolution and economics",
+   "definition": "a product that costs its maker something and benefits others nearby, such as an enzyme or iron-scavenging molecule a microbe releases into its surroundings",
+   "excludes": "products the maker keeps for itself"
+  },
+  "producer-cheater": {
+   "term": "producer and cheater",
+   "field": "social evolution",
+   "definition": "a producer pays a cost to make the public good; a cheater makes none and still gains from the goods of producers near it",
+   "excludes": "any intention on either side; the words name two fixed strategies"
+  },
+  "torus-grid": {
+   "term": "torus grid",
+   "field": "simulation",
+   "definition": "a square grid whose opposite edges are joined, so every cell has the same number of neighbours and there is no border",
+   "excludes": "grids with edges, where border cells have fewer neighbours"
+  },
+  "fitness-proportional": {
+   "term": "fitness-proportional replacement",
+   "field": "evolutionary dynamics",
+   "definition": "the update rule in which a cell's next occupant is copied from a parent drawn with chance in proportion to the parent's fitness, here among the 3 by 3 window around the cell including the cell itself",
+   "excludes": "other update rules, such as death followed by birth from neighbours only, or imitation of the best neighbour"
+  },
+  "synchronous": {
+   "term": "synchronous update",
+   "field": "simulation",
+   "definition": "every cell of the grid is replaced at once in each generation, from the fitnesses of the previous generation",
+   "excludes": "asynchronous updating, where one cell at a time is replaced"
+  },
+  "goods-box": {
+   "term": "goods box",
+   "field": "our usage for this study",
+   "definition": "the square of cells over which one producer's goods are spread, 3 by 3 at range 1 and 5 by 5 at range 2",
+   "excludes": "the 3 by 3 window from which parents are drawn, which stays fixed"
+  },
+  "self-benefit": {
+   "term": "self-benefit",
+   "field": "social evolution",
+   "definition": "the part of a producer's own goods that returns to the producer itself; with a 3 by 3 box a producer keeps a ninth of what it makes",
+   "excludes": "benefit from the goods of other producers, including relatives"
+  },
+  "bc-ratio": {
+   "term": "benefit-to-cost ratio",
+   "field": "social evolution",
+   "definition": "the benefit b that one producer's goods give in total divided by the cost c it pays, written b/c",
+   "excludes": "the net payoff to any one cell, which also depends on its neighbours"
+  },
+  "mixed-arm": {
+   "term": "mixed arm",
+   "field": "our usage for this study",
+   "definition": "the version of the model in which every cell gains from the producer share of the whole population and parents are drawn from the whole population, so neighbours mean nothing",
+   "excludes": "any spatial structure"
+  },
+  "shuffled-arm": {
+   "term": "shuffled arm",
+   "field": "our usage for this study",
+   "definition": "the version of the model in which all positions are shuffled at random before each generation and the local rules then apply, so neighbours are strangers",
+   "excludes": "the clustering of relatives that the local arm allows"
+  },
+  "mean-field": {
+   "term": "mean-field recursion",
+   "field": "population genetics",
+   "definition": "an exact formula for next generation's producer share in the mixed arm, used here as a known answer the simulation must match",
+   "excludes": "the local and shuffled arms, which have no such formula"
+  },
+  "local-competition": {
+   "term": "local competition",
+   "field": "social evolution, after Taylor and after Griffin and colleagues",
+   "definition": "competition for space or resources among neighbours, which, when neighbours are relatives, can cancel the benefit that helping relatives brings",
+   "excludes": "competition spread over the whole population"
+  },
+  "final-share": {
+   "term": "final producer share",
+   "field": "our usage for this study",
+   "definition": "the share of producers in the grid at the end of a run, averaged over the replicate runs; a run stops early when one type takes the whole grid",
+   "excludes": "the share of runs in which producers survived"
+  }
+ }
+}

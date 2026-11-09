@@ -1,0 +1,65 @@
+{
+ "schema": "buildlang.buildtex-receipt/v0",
+ "source": {
+  "path": "F50.bld",
+  "sha256": "bc7711983b2c6a87e468b25b339060eb5914206f3a91032b1f3adef111576eea"
+ },
+ "ir_sha256": "f6f15d8111b61196292f30eed3082f66a4106b99c1c459c551761f567618ada7",
+ "theme": "paper",
+ "overrides": [],
+ "outputs": {
+  "F50.pdf": "656e5d6d455e965caddd8d0522e85ea32fd3805f2c2c9049ec70ae0434e9da3a"
+ },
+ "pdf_metadata": {
+  "pdfa": false,
+  "creation_date": "D:20261109000000Z"
+ },
+ "facts": {
+  "pages": 9,
+  "pages_layout": 9,
+  "overfull": [],
+  "underfull": 0,
+  "missing_glyphs": [],
+  "glyph_fallbacks": [],
+  "math_errors": [],
+  "fonts": [
+   {
+    "name": "AMGKCL+AccessionDisplay-Master",
+    "embedded": true
+   },
+   {
+    "name": "BOOAGG+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "GLOPEC+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "KILKIC+NotoSansMath-Regular",
+    "embedded": true
+   },
+   {
+    "name": "MMLPEC+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "PJPHID+HankenGrotesk-Regular",
+    "embedded": true
+   }
+  ],
+  "images": 3,
+  "blind_text_runs": 0,
+  "reading_order": true,
+  "blocks_missing_from_text": [],
+  "pdf_bytes": 577616
+ },
+ "failed": [],
+ "notes": [
+  "buildc run F50.bld -> F50.doc.tsv",
+  "press: relief 1275x475 px at 150 dpi; 0 blind line(s); foil colour source: fallback constant"
+ ],
+ "external_programs": [
+  "buildc"
+ ]
+}

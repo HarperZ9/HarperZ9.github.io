@@ -1,0 +1,65 @@
+{
+ "schema": "buildlang.buildtex-receipt/v0",
+ "source": {
+  "path": "F320.bld",
+  "sha256": "83a60a08e755b4c5244768f0b14c4e15ef4fb6bfe6b5c1b6ee7151785697bbda"
+ },
+ "ir_sha256": "b73569e5be8cb9b2c5a4e663416dbcd6b91484dca8fa53d53ca877bd70dabbce",
+ "theme": "paper",
+ "overrides": [],
+ "outputs": {
+  "F320.pdf": "d26e7ed246f323258e6dfe6adddf93518a9e07ea6214fbfa27d1eb02276608cb"
+ },
+ "pdf_metadata": {
+  "pdfa": false,
+  "creation_date": "D:20261109000000Z"
+ },
+ "facts": {
+  "pages": 11,
+  "pages_layout": 11,
+  "overfull": [],
+  "underfull": 0,
+  "missing_glyphs": [],
+  "glyph_fallbacks": [],
+  "math_errors": [],
+  "fonts": [
+   {
+    "name": "BPGMMD+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "DMDOFH+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "EJJNJG+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "EJNOGH+NotoSansMath-Regular",
+    "embedded": true
+   },
+   {
+    "name": "MBKAHD+AccessionDisplay-Master",
+    "embedded": true
+   },
+   {
+    "name": "NCLGLC+HankenGrotesk-Regular",
+    "embedded": true
+   }
+  ],
+  "images": 4,
+  "blind_text_runs": 0,
+  "reading_order": true,
+  "blocks_missing_from_text": [],
+  "pdf_bytes": 600622
+ },
+ "failed": [],
+ "notes": [
+  "buildc run F320.bld -> F320.doc.tsv",
+  "press: relief 1275x475 px at 150 dpi; 0 blind line(s); foil colour source: fallback constant"
+ ],
+ "external_programs": [
+  "buildc"
+ ]
+}

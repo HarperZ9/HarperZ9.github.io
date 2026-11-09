@@ -1,0 +1,503 @@
+{
+ "schema": "research-record/1",
+ "built": "2026-11-09 by scripts/record-findings.mjs from paper.txt, the register row and the findings ledger",
+ "document": {
+  "id": "F362",
+  "kind": "finding",
+  "title": "Published 1 sigma error bars hold near nominal; a 95 percent interval needs 3 to 5 sigma",
+  "standfirst": "When a particle mass or an atomic mass moves between editions of its reference table, the old 1 sigma error bar covers the new value about as often as it should. The tails are far heavier than a bell curve, so covering 95 percent of later values takes 3 to 5 times the stated sigma.",
+  "date_found": "2026-10-31",
+  "fields": [
+   "instruments-metrology",
+   "physics-other",
+   "method"
+  ],
+  "tier": "B",
+  "tier_reason": "Real public tables with planted and honest controls, and a clear statement of correlated inputs.",
+  "rung": "hypothesis",
+  "rung_reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
+  "outcome": "held",
+  "objection": "Later tables reuse inputs from earlier ones (shared inputs), so the later edition is not independent of the earlier one. That flatters every coverage figure here. Editions that share no inputs would be the cleaner test.",
+  "objection_source": "the paper's first stated limitation; no reviewer attack is on file",
+  "would_change": "No condition for raising or overturning the call is on file in the register.",
+  "sections": [
+   {
+    "id": "reader",
+    "title": "What this means for a reader",
+    "role": "lead",
+    "paragraphs": [
+     "When a table prints a value plus or minus one sigma, the next edition usually lands about as close as that promise says. Large misses are the problem: shifts of four or five sigma happen far more often than a bell curve allows. If you need 95 percent confidence from a published plus-or-minus, multiply it by three to five, and by more for an astronomical quantity that is still being settled."
+    ]
+   },
+   {
+    "id": "abstract",
+    "title": "Abstract",
+    "role": "argument",
+    "paragraphs": [
+     "A stated uncertainty is a forecast of where later, better measurements will put a value. We scored that forecast on four reference sources: particle masses and widths in the Particle Data Group tables (2010 to 2025), atomic masses in the Atomic Mass Evaluation (2003 to 2020), the CODATA recommended constants (2002 to 2022) and Huchra's compilation of published Hubble constant values. For each quantity we measured the shift between the first and last edition in units of the first edition's stated sigma. {c1}The earlier 1 sigma interval covered 0.68 of later PDG values that moved (n 227) and 0.66 of later AME values (n 2,213, nearly all of which moved), close to the nominal 0.6827.{/c1} The tails are far heavier than a normal curve. {c2}Covering 95.45 percent of later values took 3.8 times the stated sigma for moved PDG values, 4.0 for AME and 4.9 for CODATA.{/c2} {c3}Student t fits to the nonzero shifts gave nu of 1.67 for PDG, 1.22 for AME and 2.17 for CODATA, close to the Cauchy shape.{/c3} {c4}Published Hubble constant values before 1990 covered a proxy truth of 70 km/s/Mpc within 1 sigma in 0.35 of 115 cases.{/c4} Later tables reuse inputs from earlier ones, which flatters every coverage figure here."
+    ]
+   },
+   {
+    "id": "intro",
+    "title": "Introduction",
+    "role": "argument",
+    "paragraphs": [
+     "A {g:standard-uncertainty}stated 1 sigma uncertainty{/g} is the plus-or-minus a table prints beside a value, meant as one standard deviation of its error. For a normal error, one sigma either side should hold the truth 68.27 percent of the time and two sigma 95.45 percent. Later editions of the same table give a better estimate of the true value, so the share of later values that fall inside an earlier interval, its {g:coverage}coverage{/g}, can be counted.",
+     "Henrion and Fischhoff {cite:r5} examined the history of the physical constants, including the speed of light, and found that reported uncertainties were consistently too small, with recommended values often moving by more than their stated errors. Chen, Gott and Ratra {cite:r6} built the error distribution of 461 Hubble constant measurements in Huchra's compilation against a central value of 71 km/s/Mpc. They found it non-Gaussian, with 95.4 percent limits at 7.0 times the quoted errors and a shape described by a widened Student t with two degrees of freedom. Bailey {cite:r7} analysed about 41,000 measurements of 3,200 quantities from medicine, nuclear and particle physics and interlaboratory comparisons, and found the normalised differences between measurements of the same quantity close to Student t distributions, often almost Cauchy. Its reading is that researchers estimate the size of typical errors well and underestimate the chance of large ones.",
+     "This paper asks the same question of edition-to-edition changes in four large tables at once, with a planted check, a normal-world control, a test that removes unchanged values, and forecasts fixed in advance. Bailey's data include nuclear and particle physics. Our searches on 9 November 2026 did not return a study that scores the PDG mass-width files edition against edition; that is what the searches returned, and it does not show that none exists.",
+     "![fig:plate width=0.45 alt=A white-on-black 1889 engraving comparing the Sun, Jupiter, the Earth and the Moon as stacked circles](plate-traxler-fig1.png) Robert P. Traxler, Fig. I, \"The sizes of the Sun, Jupiter, the Earth and the Moon, with Jupiter and the Earth enlarged, compared by their diameters\", from The Principles of Mechanics as Applied to the Solar System (San Francisco, 1889) {cite:r8}. Traxler drew his plates to argue for a repelling force from the Sun, his own theory in 1889, which physics did not adopt. Traxler compares sizes by laying one body's diameter across another's, much as this paper measures each shift in units of the table's own stated sigma. Public domain; scan from the Internet Archive, University of California Libraries."
+    ]
+   },
+   {
+    "id": "prereg",
+    "title": "Preregistration and design",
+    "role": "argument",
+    "paragraphs": [
+     "The design was written as a {g:preregistration}preregistration{/g} dated 31 October 2026 and hash-locked on 1 November 2026 at 01:54 UTC. The forecasts were copied from an earlier forecast file written and hashed before any data were read. Before the lock, the file formats of the PDG, AME and Huchra tables were read; no coverage was computed. The decision it informs was stated in the file: whether stated uncertainties, and our own forecast bands, get a correction factor.",
+     "The locked file names the tables and editions, the coverage count, a {g:moved-arm}moved-values arm{/g} that drops every quantity whose value did not change (an unchanged value counts as covered whatever its sigma), the {g:proxy-truth}proxy truth{/g} values for the Hubble constant, a {g:planted-check}planted check{/g} (data built so the right answer is known, run through the same analysis), a {g:control}control{/g} (a version of the data with the structure under test removed, scored the same way), the assumptions to be changed one at a time, the forecasts and a {g:kill-condition}kill condition{/g}, a rule that decides against the claim with no room for judgement after the run.",
+     "Kill condition, without discretion: if the planted check fails, no coverage claim counts.",
+     "The same run also scored our own numeric forecast bands from earlier studies. That arm is reported as a separate finding (F366) and appears here only in the appendix."
+    ]
+   },
+   {
+    "id": "data",
+    "title": "Data and provenance",
+    "role": "argument",
+    "paragraphs": [
+     "- Particle Data Group, Review of Particle Physics, mass and width files for Monte Carlo programs, editions 2010, 2012, 2014, 2016, 2018, 2020, 2022, 2024 and 2025 {cite:r1}. Recent editions are released under CC BY 4.0; the terms for older editions were not read. Asymmetric errors were averaged into one sigma.",
+     "- Atomic Mass Evaluation, editions 2003, 2012, 2016 and 2020 {cite:r2}. The 2016 and 2020 files came from the IAEA Atomic Mass Data Center; the 2003 and 2012 files were refused by the live server and taken from Internet Archive copies of the same addresses. No licence was stated on the pages read. Values marked as estimated were removed.",
+     "- CODATA recommended values of the fundamental constants, 2002 to 2022, from the NIST archive of ASCII tables {cite:r3}. Values with zero stated uncertainty (exact values) do not enter as earlier values.",
+     "- Huchra's table of published Hubble constant estimates, last updated 7 October 2010 {cite:r4}, from an Internet Archive copy of 2012. No licence was stated. Asymmetric errors were averaged.",
+     "All four are public tables of measured values. The files were read as data. If the PDG 2016 file had been identical to 2014 it would have been dropped; it was not."
+    ]
+   },
+   {
+    "id": "methods",
+    "title": "Methods",
+    "role": "argument",
+    "paragraphs": [
+     "## Shift in units of the earlier sigma",
+     "For quantity {m:i} with value {m:a_i} and stated sigma {m:s_i} in the first edition and value {m:b_i} in the last, the {g:shift-z}shift in units of the earlier sigma{/g} is",
+     "$$ z_i = \\frac{|b_i - a_i|}{s_i} {eq:z}",
+     "Only quantities present in both editions with {m:s_i > 0} enter.",
+     "## Coverage and needed multiple",
+     "Coverage at {m:m} sigma is the share of quantities with {m:z_i \\le m}:",
+     "$$ C_m = \\frac{N(z \\le m)}{n} {eq:cov}",
+     "where {m:N(z \\le m)} counts the quantities whose shift is at most {m:m} and {m:n} is the number of quantities. The {g:needed-multiple}needed multiple{/g} {m:k_{68}} is the 68.27th percentile of the shifts and {m:k_{95}} the 95.45th percentile: the multiples of the stated sigma that would have covered those shares. For honest normal errors both coverages sit at 0.6827 and 0.9545 and the two multiples at 1 and 2.",
+     "## Tail shape",
+     "A folded {g:student-t}Student t distribution{/g} with a scale and degrees of freedom nu was fitted by maximum likelihood to the nonzero shifts. Small nu means heavy tails; nu of 1 is the {g:cauchy}Cauchy distribution{/g}, and a normal curve has nu without limit.",
+     "## Intervals",
+     "The interval on each 1 sigma coverage comes from a {g:bootstrap}bootstrap{/g}: quantities are redrawn with replacement 300 times and the coverage recomputed; the {g:interval-95}95% interval{/g} is the middle 95 percent of the redrawn values.",
+     "## The Hubble constant",
+     "Huchra's table has no later edition of each entry. Each published value was scored against a proxy truth fixed in advance, 67.4, 70 or 73 km/s/Mpc, reported separately, and the values published before 1990 were scored against 70.",
+     "## Changes of assumption",
+     "Each was run apart: the moved-values arm; the top 1 percent of shifts removed; the last pair of editions alone; and, for CODATA, one row per distinct shift rounded to two decimals, since many constants are derived from the same inputs. A shrink test asked, for each quantity in three or more editions, whether its stated error fell faster than its edition-to-edition steps. An out-of-sample test fitted the needed multiples on the earlier half of the editions and applied them to the later half."
+    ]
+   },
+   {
+    "id": "controls",
+    "title": "Controls and planted checks",
+    "role": "argument",
+    "paragraphs": [
+     "The planted check built 4,000 shifts in a world where the stated sigma is half the true error and the errors follow a Student t with three degrees of freedom. The true {m:k_{68}} is",
+     "$$ k_{true} = 2 q_3 {eq:planted}",
+     "where {m:q_3} is the 0.84135 quantile of that t distribution. {c5}On a planted world with stated errors set to half the true error, the method recovered the needed multiple as 2.405 against a true 2.394.{/c5} The fitted nu was 3.002 against a true 3. The kill condition did not fire.",
+     "The {g:honest-gaussian}honest normal world{/g} draws standard normal shifts at the PDG sample size (347) and scores the same shortfall",
+     "$$ S = 0.6827 - C_1 {eq:short}",
+     "Over 500 draws the shortfall had mean 0.0005 and 95th percentile 0.040, the top of its {g:null-distribution}null distribution{/g}. The real PDG shortfall over all values was -0.110: the PDG tables over-cover, so the preregistered hypothesis that their shortfall exceeds chance failed ({g:p-value-draws}p from draws{/g} 1.0)."
+    ]
+   },
+   {
+    "id": "results",
+    "title": "Results",
+    "role": "argument",
+    "paragraphs": [
+     "Table {ref:tab:cov} gives every field and Figure {ref:fig:cov} draws the same numbers. {c1}The earlier 1 sigma interval covered 0.68 of later PDG values that moved (n 227) and 0.66 of later AME values (n 2,213, nearly all of which moved), close to the nominal 0.6827.{/c1} The 95% intervals on those two coverages are 0.63 to 0.74 for PDG and 0.65 to 0.68 for AME; only 0.3 percent of the AME values did not move. At 2 sigma both fall short of 0.9545, at 0.85 and 0.82.",
+     "::table tab:cov cols=0.25,0.13,0.08,0.1,0.1,0.1,0.1,0.14 Coverage of the last edition by the first edition's stated intervals. k68 and k95 are the multiples of the stated sigma needed to cover 68.27 and 95.45 percent. nu is the fitted Student t degrees of freedom on nonzero shifts.\nTable ¦ Editions ¦ n ¦ Within 1 sigma ¦ Within 2 sigma ¦ k68 ¦ k95 ¦ nu\nPDG, moved values ¦ 2010 to 2025 ¦ 227 ¦ 0.68 ¦ 0.85 ¦ 1.00 ¦ 3.8 ¦ 1.67\nPDG, all values ¦ 2010 to 2025 ¦ 347 ¦ 0.79 ¦ 0.90 ¦ 0.56 ¦ 3.1 ¦ not fitted\nAME ¦ 2003 to 2020 ¦ 2,213 ¦ 0.66 ¦ 0.82 ¦ 1.10 ¦ 4.0 ¦ 1.22\nCODATA ¦ 2002 to 2022 ¦ 211 ¦ 0.85 ¦ 0.92 ¦ 0.75 ¦ 4.9 ¦ 2.17\nCODATA, last step ¦ 2018 to 2022 ¦ 273 ¦ 0.47 ¦ 0.56 ¦ 4.4 ¦ 4.7 ¦ not fitted\nHubble constant, truth 67.4 ¦ to 2010 ¦ 544 ¦ 0.49 ¦ 0.74 ¦ 1.66 ¦ 5.4 ¦ not fitted\nHubble constant, truth 70 ¦ to 2010 ¦ 544 ¦ 0.53 ¦ 0.75 ¦ 1.67 ¦ 6.5 ¦ not fitted\nHubble constant, truth 73 ¦ to 2010 ¦ 544 ¦ 0.49 ¦ 0.70 ¦ 2.0 ¦ 7.7 ¦ not fitted\nHubble constant before 1990, truth 70 ¦ before 1990 ¦ 115 ¦ 0.35 ¦ 0.55 ¦ 2.9 ¦ 9.8 ¦ not fitted\n::end",
+     "![fig:cov width=0.98 alt=Two dot plots by table, coverage at 1 and 2 sigma on the left and needed multiples on a log scale on the right](fig-coverage.png) Left: share of later values inside the first edition's 1 sigma (diamonds, with bootstrap 95% intervals where computed) and 2 sigma (circles) intervals; dashed lines mark 0.6827 and 0.9545. Right: the multiple of the stated sigma needed to cover 68.27 percent (diamonds) and 95.45 percent (circles); dashed lines mark 1 and 2. Drawn from the run's result file.",
+     "{c2}Covering 95.45 percent of later values took 3.8 times the stated sigma for moved PDG values, 4.0 for AME and 4.9 for CODATA.{/c2} {c3}Student t fits to the nonzero shifts gave nu of 1.67 for PDG, 1.22 for AME and 2.17 for CODATA, close to the Cauchy shape.{/c3}",
+     "Over all PDG values, including the 0.35 that never moved, the tables over-cover at 1 sigma (0.79). In the last PDG step, 2024 to 2025, 0.96 of 421 values did not move. Coverage that counts those values says more about which values were carried forward than about how honest the stated errors are.",
+     "The CODATA step from 2018 to 2022 covered only 0.47 at 1 sigma. A later reading of this run, made after the lock and recorded as a separate finding, traced most of that step to one input: 99 of the 273 rows moved by 4.2 to 4.7 of their 2018 sigma when the fine-structure constant moved by 4.55 of its own. The CODATA 2022 adjustment reports that move; we did not re-read the report for this paper. The rows are not independent: kept to one row per distinct shift, CODATA has 76 rows, with 1 sigma coverage 0.63 and {m:k_{95}} 5.1.",
+     "{c4}Published Hubble constant values before 1990 covered a proxy truth of 70 km/s/Mpc within 1 sigma in 0.35 of 115 cases.{/c4} Over all 544 values the needed {m:k_{95}} was 5.4 to 7.7 depending on the proxy, the worst field in the set at every proxy. Ten published speed-of-light values from before 1983, scored against the defined value, covered 0.5 at 1 sigma; six of those came from fetched sources and the rest were transcribed, so we give that row no weight.",
+     "Removing the top 1 percent of shifts changed 1 sigma coverage by about 0.01 (PDG 0.80, AME 0.67, CODATA 0.86) and lowered {m:k_{95}} to 2.8 for PDG, 3.6 for AME and 3.2 for CODATA. The largest single shift, the alpha particle molar mass in CODATA at 74 sigma, comes from the 2019 redefinition of the SI changing the molar mass rows. The largest PDG shift (12.7) and the largest AME shift (silicon-32, 64) were not traced.",
+     "Needed multiples did not carry forward in time where values moved. Fitted on CODATA 2002 to 2014 and applied to 2014 to 2022, {m:k_{68}} of 0.65 lowered 1 sigma coverage from 0.40 to 0.32, and {m:k_{95}} of 1.46 reached 0.79 where 0.9545 was the aim. In AME, 2016 to 2020 hardly moved, and coverage stayed at 0.94.",
+     "The shrink test found stated errors falling faster than the steps between editions in 0.66 of 287 CODATA quantities, 0.52 of 104 PDG quantities and 0.25 of 2,227 AME quantities. No general rule that uncertainty shrinks faster than values settle follows from that.",
+     "Table {ref:tab:forecast} sets the forecasts against the outcomes.",
+     "::table tab:forecast cols=0.46,0.27,0.27 Forecasts fixed before any data were read, against the run.\nQuantity ¦ Forecast (band) ¦ Outcome\nPDG, all values, within 1 sigma ¦ 0.55 (0.40 to 0.68) ¦ 0.79\nPDG, all values, within 2 sigma ¦ 0.80 (0.65 to 0.92) ¦ 0.90\nPDG, k68 ¦ 1.5 (1.2 to 2.2) ¦ 0.56\nPDG, k95 ¦ 2.5 (1.5 to 5) ¦ 3.1\nPDG, nu ¦ 3 (1.5 to 6) ¦ 1.67\nCODATA 2002 to 2022, within 1 sigma ¦ 0.35 to 0.70 ¦ 0.85\nPDG moved values below all values ¦ yes ¦ 0.68 against 0.79\nCODATA errors fall faster than steps ¦ in more than half ¦ 0.66\n::end"
+    ]
+   },
+   {
+    "id": "discussion",
+    "title": "Discussion",
+    "role": "argument",
+    "paragraphs": [
+     "The pattern matches Bailey {cite:r7}: the core of a stated uncertainty is about right and the tails are not. Our fitted nu values, 1.2 to 2.2, sit at or below the heavy end of what that paper describes, and nearer the Cauchy shape. Our Hubble constant result agrees with Chen, Gott and Ratra {cite:r6} in kind: they put 95.4 percent limits at 7.0 times the quoted errors against a central value of 71, and we find 6.5 against 70 on a larger version of the same compilation.",
+     "In these tables the fault sits in the tails. Bailey draws the same distinction: underestimating every sigma by one factor widens a normal curve without giving it heavy tails. In our tables, the 1 sigma multiple sits near 1 while the 95.45 percent multiple sits near 4. A single scaling of every error bar cannot fix both.",
+     "The CODATA step from 2018 to 2022 shows how the tails arise in a table built from shared inputs: one input moves and carries many derived values with it. Henrion and Fischhoff {cite:r5} found the reported uncertainties of the constants too small across their history. A correction factor fitted on quiet years will miss the next one, which is what the out-of-sample test found."
+    ]
+   },
+   {
+    "id": "limits",
+    "title": "Limitations",
+    "role": "argument",
+    "paragraphs": [
+     "- Later tables reuse inputs from earlier ones ({g:shared-inputs}shared inputs{/g}), so the later edition is not independent of the earlier one. That flatters every coverage figure here. Editions that share no inputs would be the cleaner test.",
+     "- The Hubble constant numbers depend on the proxy truth chosen. Read them per proxy.",
+     "- PDG editions before 2010 could not be reached. The older AME files came through the Internet Archive and their terms were not read.",
+     "- An unchanged value counts as covered. The moved-values arm removes those values but keeps quantities whose change was small for reasons of bookkeeping.",
+     "- Needed multiples fitted on early CODATA editions did not carry forward. The 3 to 5 sigma figure describes the past and will miss when a shared input breaks.",
+     "- Our forecast of 0.55 for PDG coverage over all values missed at 0.79, because 0.35 of those values never moved.",
+     "- Scoring was by our own code and was not blind."
+    ]
+   },
+   {
+    "id": "appendix",
+    "title": "Appendix A. The preregistered verdicts",
+    "role": "evidence",
+    "paragraphs": [
+     "Each {g:verdict}verdict{/g} is a set of rules written before the run, read off by code. A verdict passes only when every rule holds. Values are read from the run's result file. The last three rows belong to the arm on our own forecast bands, reported as a separate finding.",
+     "::table tab:verdicts cols=0.28,0.46,0.13,0.13 Preregistered verdicts and the rule that decided each one.\nVerdict ¦ Deciding rule ¦ Value ¦ Holds\nKill not fired ¦ planted multiple within 0.15 of truth (relative); planted own-band check within 0.15; at least 50 own bands ¦ 0.004; 0; 175 ¦ yes\nPDG within 1 sigma ¦ all values, between 0.40 and 0.68 ¦ 0.79 ¦ no\nPDG within 2 sigma ¦ all values, between 0.65 and 0.92 ¦ 0.90 ¦ yes\nPDG k68 ¦ between 1.2 and 2.2 ¦ 0.56 ¦ no\nPDG k95 ¦ between 1.5 and 5 ¦ 3.1 ¦ yes\nPDG nu ¦ between 1.5 and 6 ¦ 1.67 ¦ yes\nCODATA within 1 sigma ¦ between 0.35 and 0.70 ¦ 0.85 ¦ no\nMoved below all ¦ PDG moved coverage below all-values coverage (0.79) ¦ 0.68 ¦ yes\nCODATA shrink ¦ errors fall faster than steps in more than half ¦ 0.66 ¦ yes\nPDG shortfall ¦ shortfall above the honest normal world's 95th percentile (0.040) ¦ -0.110 ¦ no\nOwn bands hold ¦ hold share between 0.40 and 0.70 ¦ 0.65 ¦ yes\nOwn bands factor ¦ 80th-percentile widening between 1.5 and 5 ¦ 1.36 ¦ no\nOwn bands beat shuffle ¦ hold share above the shuffled 95th percentile (0.223) ¦ 0.65 ¦ yes\n::end"
+    ]
+   }
+  ]
+ },
+ "claims": [
+  {
+   "id": "c1",
+   "text": "The earlier 1 sigma interval covered 0.68 of later PDG values that moved (n 227) and 0.66 of later AME values (n 2,213, nearly all of which moved), close to the nominal 0.6827.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e1"
+   ]
+  },
+  {
+   "id": "c2",
+   "text": "Covering 95.45 percent of later values took 3.8 times the stated sigma for moved PDG values, 4.0 for AME and 4.9 for CODATA.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e2"
+   ]
+  },
+  {
+   "id": "c3",
+   "text": "Student t fits to the nonzero shifts gave nu of 1.67 for PDG, 1.22 for AME and 2.17 for CODATA, close to the Cauchy shape.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e3"
+   ]
+  },
+  {
+   "id": "c4",
+   "text": "Published Hubble constant values before 1990 covered a proxy truth of 70 km/s/Mpc within 1 sigma in 0.35 of 115 cases.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e4"
+   ]
+  },
+  {
+   "id": "c5",
+   "text": "On a planted world with stated errors set to half the true error, the method recovered the needed multiple as 2.405 against a true 2.394.",
+   "section": "controls",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e5"
+   ]
+  }
+ ],
+ "evidence": [
+  {
+   "id": "e1",
+   "kind": "number",
+   "label": "The numbers in claim 1",
+   "value": "1; 0.68; 227; 0.66; 2,213,; 0.6827",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e2",
+   "kind": "number",
+   "label": "The numbers in claim 2",
+   "value": "95.45; 3.8; 4.0; 4.9",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e3",
+   "kind": "number",
+   "label": "The numbers in claim 3",
+   "value": "1.67; 1.22; 2.17",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e4",
+   "kind": "number",
+   "label": "The numbers in claim 4",
+   "value": "1990; 70; 1; 0.35; 115",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e5",
+   "kind": "number",
+   "label": "The numbers in claim 5",
+   "value": "2.405; 2.394",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  }
+ ],
+ "references": [
+  {
+   "id": "r1",
+   "key": "Particle Data Group",
+   "kind": "dataset",
+   "title": "Particle Data Group. Review of Particle Physics, mass and width tables for Monte Carlo programs, one file per edition, 2010 to 2025. https://pdg.lbl.gov. Retrieved 31 October 2026.",
+   "access": "run",
+   "target": "https://pdg.lbl.gov",
+   "licence": "as stated in the paper's data section"
+  },
+  {
+   "id": "r2",
+   "key": "Atomic Mass Data Center",
+   "kind": "dataset",
+   "title": "Atomic Mass Data Center. Atomic Mass Evaluation mass tables, 2003, 2012, 2016 and 2020. IAEA Nuclear Data Section, https://www-nds.iaea.org/amdc/; 2003 and 2012 files from Internet Archive copies. Retrieved 31 October 2026.",
+   "access": "run",
+   "target": "https://www-nds.iaea.org/amdc/",
+   "licence": "as stated in the paper's data section"
+  },
+  {
+   "id": "r3",
+   "key": "NIST",
+   "kind": "dataset",
+   "title": "NIST. CODATA recommended values of the fundamental physical constants, archive ASCII tables, 2002 to 2022. https://physics.nist.gov/cuu/Constants/. Retrieved 31 October 2026.",
+   "access": "run",
+   "target": "https://physics.nist.gov/cuu/Constants/",
+   "licence": "as stated in the paper's data section"
+  },
+  {
+   "id": "r4",
+   "key": "Huchra, J",
+   "kind": "dataset",
+   "title": "Huchra, J. Estimates of the Hubble constant, compiled table, last updated 7 October 2010. Internet Archive copy of 2012. Retrieved 31 October 2026.",
+   "access": "run",
+   "licence": "as stated in the paper's data section"
+  },
+  {
+   "id": "r5",
+   "key": "Henrion 1986",
+   "kind": "paper",
+   "title": "Henrion, M. and Fischhoff, B. (1986). Assessing uncertainty in physical constants. American Journal of Physics 54, 791-798. doi:10.1119/1.14447",
+   "access": "snippet",
+   "target": "https://doi.org/10.1119/1.14447",
+   "access_note": "abstracts and search summaries; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r6",
+   "key": "Chen 2003",
+   "kind": "paper",
+   "title": "Chen, G., Gott, J. R. and Ratra, B. (2003). Non-Gaussian error distribution of Hubble constant measurements. Publications of the Astronomical Society of the Pacific 115, 1269-1279. doi:10.1086/379219",
+   "access": "snippet",
+   "target": "https://doi.org/10.1086/379219",
+   "access_note": "abstracts and search summaries; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r7",
+   "key": "Bailey 2017",
+   "kind": "paper",
+   "title": "Bailey, D. C. (2017). Not Normal: the uncertainties of scientific measurements. Royal Society Open Science 4, 160600. doi:10.1098/rsos.160600",
+   "access": "snippet",
+   "target": "https://doi.org/10.1098/rsos.160600",
+   "access_note": "abstracts and search summaries; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r8",
+   "key": "Traxler 1889",
+   "kind": "record",
+   "title": "Traxler, R. P. (1889). The Principles of Mechanics as Applied to the Solar System. San Francisco: C. A. Murdock and Co. Internet Archive item principlesofmech00traxiala.",
+   "access": "read",
+   "access_note": "the scan, read in full on the Internet Archive"
+  }
+ ],
+ "relations": [
+  {
+   "from": "F422",
+   "to": "F362",
+   "type": "narrowed",
+   "scope": "reused inputs and a proxy truth",
+   "date": "2026-10-31",
+   "note": "The correction pass coded two errors: later tables reuse inputs, and the Hubble constant truth is a proxy."
+  }
+ ],
+ "corrections": [
+  {
+   "id": "x1",
+   "date": "2026-10-31",
+   "target": "document",
+   "type": "wording",
+   "after": "Both are stated in the limitations, and Hubble coverage is reported per proxy.",
+   "reason": "A review of our ledger noted that later tables reuse inputs and that the Hubble constant truth is a proxy.",
+   "found_by": "a review of our findings ledger"
+  },
+  {
+   "id": "x2",
+   "date": "2026-11-09",
+   "target": "document",
+   "type": "scope",
+   "after": "Every preregistered verdict is listed in the appendix.",
+   "reason": "The ledger entry's count of forecasts held is left out of this paper, following a dated ledger note that it could not be reproduced from the result file.",
+   "found_by": "the publication pass"
+  },
+  {
+   "id": "x3",
+   "target": "document",
+   "date": "2026-11-09",
+   "type": "number",
+   "reason": "A first publication-pass note said the ledger's \"6 of 10 forecasts held\" could not be reproduced from the result file.",
+   "after": "Later the same day the ledger withdrew that note: the result file has 10 forecast verdicts and 6 pass, so \"6 of 10 forecasts held\" reproduces. The paper still leaves the count out, following the first note; every verdict is listed in its appendix.",
+   "found_by": "the publication pass, correcting itself",
+   "record": "findings ledger, publication pass"
+  }
+ ],
+ "versions": [
+  {
+   "n": 1,
+   "date": "2026-10-31",
+   "what": "entered in the findings ledger"
+  },
+  {
+   "n": 2,
+   "date": "2026-11-09",
+   "what": "paper version 1.0, first published",
+   "hash": "fe079e0366b41ba012c4b158b24a40d25532938f097a8317673ce863c7ff76b0"
+  }
+ ],
+ "grade": {
+  "lowers": [
+   {
+    "domain": "scoring",
+    "text": "Scored by code and by the agent that ran it; self-graded.",
+    "from": "register scorer"
+   },
+   {
+    "domain": "blinding",
+    "text": "Not blind, as the paper's limitations state.",
+    "from": "paper Limitations"
+   },
+   {
+    "domain": "single source",
+    "text": "The cited literature was read at the level of abstracts and search summaries; full texts were not read.",
+    "from": "paper Verified"
+   }
+  ],
+  "holds": [
+   {
+    "domain": "preregistration",
+    "text": "Preregistered and hash-locked before the run (sha256 fd8fcf7a).",
+    "from": "paper Reproduction"
+   }
+  ]
+ },
+ "reproduce": {
+  "data": [
+   {
+    "name": "Particle Data Group",
+    "licence": "as stated in the paper's data section",
+    "url": "https://pdg.lbl.gov"
+   },
+   {
+    "name": "Atomic Mass Data Center",
+    "licence": "as stated in the paper's data section",
+    "url": "https://www-nds.iaea.org/amdc/"
+   },
+   {
+    "name": "NIST",
+    "licence": "as stated in the paper's data section",
+    "url": "https://physics.nist.gov/cuu/Constants/"
+   },
+   {
+    "name": "Huchra, J",
+    "licence": "as stated in the paper's data section",
+    "url": ""
+   }
+  ],
+  "prereg": {
+   "hash": "fd8fcf7aeea1db717bce5553792bfbc63c88d7e69ee503256ccf7fc5215e2ec1",
+   "plan": "adcbbf0f6bd1d24178e5ebaafcf3c7a5de1cca88489f5e5cdf7b1a754dec662c"
+  },
+  "cost": "the analysis took under two seconds on one desktop CPU and the two controls under one second.",
+  "steps": [
+   "Data: download the PDG mass-width files for 2010 to 2025, the AME mass tables for 2003, 2012, 2016 and 2020, the NIST CODATA ASCII tables for 2002 to 2022, and Huchra's Hubble constant table.",
+   "Match quantities between the first and last edition of each table and compute eq. {ref:eq:z} with the first edition's stated sigma.",
+   "Report coverage at 1 and 2 sigma, eq. {ref:eq:cov}, the 68.27th and 95.45th percentiles of the shifts, a folded Student t fit to the nonzero shifts, and a bootstrap interval on the 1 sigma coverage.",
+   "Repeat with unchanged values removed, the top 1 percent removed and the last pair of editions alone. For the Hubble constant, fix candidate truths in advance and report each.",
+   "Preregistration SHA-256: fd8fcf7aeea1db717bce5553792bfbc63c88d7e69ee503256ccf7fc5215e2ec1. Plan SHA-256: adcbbf0f6bd1d24178e5ebaafcf3c7a5de1cca88489f5e5cdf7b1a754dec662c. Run 20261101T015415Z. Result SHA-256: 808cc6bdfb4881a9ef594399a848dc0cde0ecacfd73497e0e5f42b70524c613d."
+  ],
+  "not_rerun": "The study was not re-run for this paper."
+ },
+ "verified": {
+  "date": "2026-11-09",
+  "checks": [
+   {
+    "what": "On 9 November 2026 every n, coverage, needed multiple and nu in Table {ref:tab:cov}, the PDG and AME coverage intervals, the 0.35 unchanged PDG share, the Hubble constant values at all three proxies, the changes of assumption, the out-of-sample and shrink results, the planted recovery (2.405 against 2.394) and the honest normal control were re-read from the run's result file.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   },
+   {
+    "what": "They match the {g:findings-ledger}findings ledger{/g}, the dated append-only list of our results.",
+    "by": "the paper's Verified pass",
+    "result": "match"
+   },
+   {
+    "what": "The preregistration's SHA-256 matches the hash recorded in the result file.",
+    "by": "the paper's Verified pass",
+    "result": "match"
+   },
+   {
+    "what": "The figure was drawn by a script that reads only that result file.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   },
+   {
+    "what": "The 2018 to 2022 CODATA tracing (99 of 273 rows, 4.55 sigma) was read from the ledger entry for the later reading; this run's result file does not hold it.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   }
+  ],
+  "not_checked": [
+   "The study was not re-run for this paper.",
+   "The cited papers were found by searches run on 9 November 2026 and read at the level of abstracts and search summaries; their full texts were not read for this paper."
+  ]
+ }
+}

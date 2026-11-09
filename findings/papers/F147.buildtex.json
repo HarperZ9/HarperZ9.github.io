@@ -1,0 +1,65 @@
+{
+ "schema": "buildlang.buildtex-receipt/v0",
+ "source": {
+  "path": "F147.bld",
+  "sha256": "9fcf03cb891261944fcced16cd3de5b47052e5983bb1ad8d949dc1148007453a"
+ },
+ "ir_sha256": "233145dc428a01705faafd90890809994f04d6ab9295d1687af62c2e005df50a",
+ "theme": "paper",
+ "overrides": [],
+ "outputs": {
+  "F147.pdf": "91f5daaa7942c3c11dbfeb4470651949d65b89fe2e259fcec7cbe5e86cb57e3c"
+ },
+ "pdf_metadata": {
+  "pdfa": false,
+  "creation_date": "D:20261109000000Z"
+ },
+ "facts": {
+  "pages": 9,
+  "pages_layout": 9,
+  "overfull": [],
+  "underfull": 0,
+  "missing_glyphs": [],
+  "glyph_fallbacks": [],
+  "math_errors": [],
+  "fonts": [
+   {
+    "name": "CMKDEM+NotoSansMath-Regular",
+    "embedded": true
+   },
+   {
+    "name": "DAPCJA+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "GLJIPO+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "LFFBIC+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "LFKENN+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "PMBPOF+AccessionDisplay-Master",
+    "embedded": true
+   }
+  ],
+  "images": 4,
+  "blind_text_runs": 0,
+  "reading_order": true,
+  "blocks_missing_from_text": [],
+  "pdf_bytes": 505798
+ },
+ "failed": [],
+ "notes": [
+  "buildc run F147.bld -> F147.doc.tsv",
+  "press: relief 1275x424 px at 150 dpi; 0 blind line(s); foil colour source: fallback constant"
+ ],
+ "external_programs": [
+  "buildc"
+ ]
+}

@@ -1,0 +1,392 @@
+{
+ "about": "Per finding: the reader's title, slug, standfirst, fields and date from the wave 1 write-ups, and the outcome word with its bound, chosen by hand from each paper's abstract (DATA.md: the outcome needs the verdict keys, so it is chosen by hand).",
+ "findings": {
+  "F14": {
+   "slug": "newtons-obliquity-table",
+   "title": "Newton's grazing-angle ring table follows his fitted rule, which runs 27% low at 85°",
+   "standfirst": "Up to 60 degrees, Newton's table of ring thickness against viewing angle matches modern thin-film physics within half a percent. From 65 degrees to 90 degrees every row matches a rule he fitted himself, and at 85 degrees that rule sits 27 percent below what the physics gives.",
+   "fields": [
+    "history-philosophy-science",
+    "physics-optics"
+   ],
+   "date_found": "2026-10-28",
+   "figure": "traxler-slot",
+   "outcome": "held"
+  },
+  "F23": {
+   "slug": "forest-hubs-cedar-decay-wind",
+   "title": "Fungal hub trees mostly track sampling, cedar heartwood rots slowest, wind damage evades prediction",
+   "standfirst": "In a public map of fungi shared between Douglas-fir roots, the hub trees are largely what the sampling and the number of links produce. In a 30-year log experiment, western redcedar heartwood lost density slowest of four species, and in a large forest inventory, wind damage ranked well but forecast almost nothing.",
+   "fields": [
+    "biology-plant-forest-pathology",
+    "biology-mycology",
+    "ecology-climate"
+   ],
+   "date_found": "2026-10-29",
+   "figure": "none",
+   "outcome": "held"
+  },
+  "F27": {
+   "slug": "emotional-inertia-and-recovery",
+   "title": "Mood that lingers and mood that bounces back were not shown to be separate traits",
+   "standfirst": "In four open phone-survey mood datasets, people whose mood carries over from one prompt to the next also tend to return more slowly after a spike. A two-trait model never beat a one-trait model, but the measures were too noisy for that test to have much power.",
+   "fields": [
+    "psychology"
+   ],
+   "date_found": "2026-10-29",
+   "figure": "none",
+   "outcome": "null",
+   "bound": "Split-half reliability ran from 0.03 to 0.47, so the factor test had little power; two separate traits are not ruled out."
+  },
+  "F32": {
+   "slug": "skipping-and-abstain-gates",
+   "title": "Forecasters who skip questions score better, and the best filter reads the probability",
+   "standfirst": "In 410,451 forecasts from the Good Judgment Project, a filter that holds back forecasts by their stated probability cut the average error far more than one that reads the forecaster's own expertise rating. People who skip more questions also score better on their first answers, though a person who skips more in one year is not clearly better for it.",
+   "fields": [
+    "forecasting-prediction",
+    "psychology",
+    "method"
+   ],
+   "date_found": "2026-10-29",
+   "figure": "none",
+   "outcome": "held"
+  },
+  "F39": {
+   "slug": "long-tails-dark-spectra",
+   "title": "Music with long ringing tails and dark spectra is rated calmer, and also sadder",
+   "standfirst": "Across 502 held-out music clips by 270 artists, sounds that ring on longer and lean toward low frequencies were rated lower in arousal, beyond loudness, genre and year. We forecast they would also be rated more pleasant; they were rated less pleasant instead.",
+   "fields": [
+    "music-acoustics",
+    "psychology"
+   ],
+   "date_found": "2026-10-29",
+   "figure": "none",
+   "outcome": "held"
+  },
+  "F47": {
+   "slug": "skill-against-noise-ceilings",
+   "title": "More variables raise prediction skill, yet most targets stall far below their noise ceiling",
+   "standfirst": "Across trees, mood, music ratings, forecasters and a similarity task, held-out skill grew as we added measured variables and always beat a shuffled baseline. In five of six targets with a measurable ceiling it stopped between 0.18 and 0.65 of the way there, and the gap closed mainly when a different kind of variable arrived.",
+   "fields": [
+    "forecasting-prediction",
+    "method",
+    "psychology"
+   ],
+   "date_found": "2026-10-29",
+   "figure": "none",
+   "outcome": "held"
+  },
+  "F50": {
+   "slug": "childhood-trauma-amygdala-vmpfc-null",
+   "title": "Childhood trauma scores showed no meaningful link to amygdala-prefrontal coupling in 187 adults",
+   "standfirst": "In a preregistered test on open brain-scan data, adults' childhood trauma questionnaire scores were unrelated to resting connectivity between the amygdala and the ventromedial prefrontal cortex (partial r -0.006). The result rules out effects of 0.20 or larger and leaves smaller ones between 0.10 and 0.20 open.",
+   "fields": [
+    "biology-neuro",
+    "psychology",
+    "medicine"
+   ],
+   "date_found": "2026-10-29",
+   "figure": "none",
+   "outcome": "null",
+   "bound": "Correlations of 0.20 or larger in size are excluded at the preregistered bound (90 percent interval -0.129 to 0.117); true effects between 0.10 and 0.20 remain open."
+  },
+  "F63": {
+   "slug": "no-drought-steeling-in-tree-rings",
+   "title": "Across 1,175 tree-ring sites, an earlier moderate drought did not toughen trees",
+   "standfirst": "We tested whether trees that lived through a moderate drought came through a later severe drought better. Across 1,175 North American tree-ring sites they did not, detectably, and a rerun with a finer drought grid gave the same null.",
+   "fields": [
+    "biology-plant-forest-pathology",
+    "ecology-climate"
+   ],
+   "date_found": "2026-10-29",
+   "figure": "none",
+   "outcome": "null",
+   "bound": "The 95 percent interval runs to +0.090 in log resilience, about a 9 percent gain, so small conditioning effects stay open."
+  },
+  "F76": {
+   "slug": "flatness-ceiling-on-real-series",
+   "title": "How flat a spectrum is predicts forecast skill, but real series follow it loosely",
+   "standfirst": "A 1940s formula says how predictable a series can be from its spectrum alone. On 1,236 real series it ranked held-out forecast skill (rho 0.41) and held as a ceiling in about 94 percent of them, yet real series tracked it less tightly than copies with the same spectrum and scrambled phases.",
+   "fields": [
+    "forecasting-prediction",
+    "information-theory",
+    "instruments-metrology"
+   ],
+   "date_found": "2026-10-29",
+   "figure": "traxler-slot",
+   "outcome": "held"
+  },
+  "F81": {
+   "slug": "flower-colour-differences-humans-miss",
+   "title": "Among colours people cannot tell apart, bees and birds split flowers from backgrounds more often",
+   "standfirst": "On 728 measured natural surfaces, modelled bees and blue tits separate flower-against-background pairs that look identical to people far more often than background-against-background pairs. The direction held on a second surface set and under a second noise model; the size of the effect did not travel.",
+   "fields": [
+    "biology-other",
+    "colour-film",
+    "ecology-climate"
+   ],
+   "date_found": "2026-10-29",
+   "figure": "none",
+   "outcome": "held"
+  },
+  "F97": {
+   "slug": "drought-space-time-tree-lens",
+   "title": "Tree rings record the broad drought pattern and almost none of the local one",
+   "standfirst": "Across 664 western North American tree-ring sites, the trees pass almost none of the summer drought signal at scales below about 55 km and most of it above about 460 km. A tree-ring record that looks like a weak, flat climate recorder site by site is acting as a spatial filter.",
+   "fields": [
+    "ecology-climate",
+    "biology-plant-forest-pathology"
+   ],
+   "date_found": "2026-10-29",
+   "figure": "none",
+   "outcome": "held"
+  },
+  "F114": {
+   "slug": "ring-channel-bits-per-year",
+   "title": "How much summer warmth one tree ring remembers, measured in bits",
+   "standfirst": "A single Alpine tree-ring site keeps about a tenth of a bit per year about summer warmth on years it never saw, most of it in the density of its latewood. Averaging many sites buys far more than adding a measurement or one more tree past the usual replication threshold.",
+   "fields": [
+    "biology-plant-forest-pathology",
+    "ecology-climate",
+    "information-theory"
+   ],
+   "date_found": "2026-10-30",
+   "figure": "none",
+   "outcome": "held"
+  },
+  "F132": {
+   "slug": "transfer-entropy-direction-fails-on-rings",
+   "title": "Transfer entropy could not tell which way climate and tree rings are linked",
+   "standfirst": "Summer warmth drives tree growth, with no meaningful effect the other way, so tree rings make a clean test for tools that claim to read causal direction from data. A standard transfer entropy estimator failed that test on 135 sites, including on synthetic data where we planted the true direction ourselves.",
+   "fields": [
+    "ecology-climate",
+    "information-theory",
+    "method"
+   ],
+   "date_found": "2026-10-31",
+   "figure": "none",
+   "outcome": "failed",
+   "bound": "At the real coupling strength the false direction ranked at or above the true one at 52.6 percent of planted sites, so the estimator gets no direction-reading status on data like these."
+  },
+  "F147": {
+   "slug": "film-as-a-photon-detector",
+   "title": "Kodak's own curves put modern colour negative at 0.6 to 4.9 percent quantum efficiency",
+   "standfirst": "Reading three Kodak VISION3 data sheets as if the film were a photon counter, the best layer uses about 5 percent of the light's information and the median layer about 2 percent. The 500T and 200T stocks match each other within 10 percent although one needs about twice the photons of the other.",
+   "fields": [
+    "colour-film",
+    "instruments-metrology"
+   ],
+   "date_found": "2026-10-31",
+   "figure": "traxler-slot",
+   "outcome": "held"
+  },
+  "F149": {
+   "slug": "karst-doubled-reread",
+   "title": "Did unsupported citations about fungal networks double? It depends on the weighting",
+   "standfirst": "A 2023 paper reported that citations overstating the evidence for forest fungal networks roughly doubled over time. On the authors' own deposited table, their model gives about 2.2 and 2.8 times, while weighting each year by its number of citations gives about 1.8 and 1.5, and only one of the four intervals clears 1.",
+   "fields": [
+    "law-governance",
+    "biology-mycology",
+    "method"
+   ],
+   "date_found": "2026-10-31",
+   "figure": "none",
+   "outcome": "held"
+  },
+  "F152": {
+   "slug": "gap-ranking-loses-to-popularity",
+   "title": "Finding missing links by shared neighbours lost to simple popularity on three corpora",
+   "standfirst": "The classic way to hunt for undiscovered connections, ranking unlinked pairs of ideas by the neighbours they share, found fewer of the links that later appeared than just pairing the most common ideas. Among pairs of equal popularity it still carried some signal.",
+   "fields": [
+    "method",
+    "forecasting-prediction",
+    "information-theory"
+   ],
+   "date_found": "2026-10-31",
+   "figure": "none",
+   "outcome": "failed",
+   "bound": "Shared-neighbour ranking found fewer later links than popularity on all three corpora; among pairs of similar popularity it still separated later links (AUC 0.569 to 0.757)."
+  },
+  "F166": {
+   "slug": "combined-value-formula-retired",
+   "title": "Our combined value formula lost to plain prospect theory on 11,759 risky choice problems",
+   "standfirst": "We tested our own formula for how people value risky options, prospect theory plus terms for information, threat and drive, against a richer version of prospect theory on the public choices13k data. It never beat that richer model, so we retired it. Fitted loss aversion came out at 1.16 when people chose from descriptions and 0.89 when they learned from feedback.",
+   "fields": [
+    "psychology",
+    "economy",
+    "method"
+   ],
+   "date_found": "2026-10-31",
+   "figure": "none",
+   "outcome": "failed",
+   "bound": "The combined formula never beat flexible prospect theory by the preregistered 0.005 in cross-validated R2 (0.634 against 0.645 without feedback, 0.597 against 0.596 with it)."
+  },
+  "F172": {
+   "slug": "selection-model-of-replication",
+   "title": "A selection model shrinks the overstatement in published effects but cannot pick which replicate",
+   "standfirst": "Fitted to published original results from other fields, a model that accounts for the significance filter predicted replication far better than taking originals at face value. In a held-out field it did no better than the plain base rate, and a small logistic model beat it.",
+   "fields": [
+    "psychology",
+    "method",
+    "forecasting-prediction"
+   ],
+   "date_found": "2026-10-31",
+   "figure": "none",
+   "outcome": "held"
+  },
+  "F183": {
+   "slug": "shifted-optima-plain-beats-bio-optimisers",
+   "title": "After we fixed our own bug, plain optimisers beat nature-inspired ones on shifted tests",
+   "standfirst": "Our first benchmark said optimisers named after slime moulds, wolves, bees and ants beat the standard methods. The win came partly from a bug in our own CMA-ES code. Fixed, CMA-ES ranked first, and two popular nature-inspired methods turned out to work well only when the answer sits at the centre of the search box.",
+   "fields": [
+    "cs-systems",
+    "method"
+   ],
+   "date_found": "2026-10-31",
+   "figure": "none",
+   "outcome": "mixed",
+   "bound": "The group contest between plain and biologically labelled optimisers sat inside the label-permutation range (p 0.45); the method-level ranks hold."
+  },
+  "F190": {
+   "slug": "public-goods-self-benefit-correction",
+   "title": "Our model of cooperation on a grid had been rewarding selfishness",
+   "standfirst": "We set out to reproduce a textbook result, that living near relatives lets costly cooperation survive cheaters, and our model appeared to succeed. It had a flaw: cooperators were paid back by their own contribution. With that removed, cooperation collapsed at every sensible cost under our update rule.",
+   "fields": [
+    "biology-other",
+    "economy"
+   ],
+   "date_found": "2026-10-31",
+   "figure": "none",
+   "outcome": "failed",
+   "bound": "With goods paid to others only, local producers never reached the preregistered mean share of 0.5 (0.48 at a benefit-to-cost ratio of 400)."
+  },
+  "F281": {
+   "slug": "speed-limit-rerun",
+   "title": "A home rerun of the GRB 090510 light-speed test, and sound waves that keep their own limit",
+   "standfirst": "Using public Fermi photons from one gamma-ray burst, we bound any energy-dependent change in light speed to under 7.6 parts in a quintillion at 30 GeV, about 24 times weaker than the published limit from the same burst. In a simulated fluid, sound obeys its own speed limit at long wavelengths and leaves it at short ones by a known law.",
+   "fields": [
+    "physics",
+    "physics-other"
+   ],
+   "date_found": "2026-10-31",
+   "figure": "traxler-slot",
+   "outcome": "null",
+   "bound": "Rules out a linear energy-dependent change in light speed larger than 7.6e-18 of c at 29.9 GeV, an energy scale below 0.32 Planck energies; the published bound from the same burst is about 24 times stronger."
+  },
+  "F308": {
+   "slug": "oeis-recurrence-conjectures",
+   "title": "Checking 213 OEIS recurrence conjectures against their b-files finds one failure, already known",
+   "standfirst": "We tested a random sample of conjectured recurrences in the On-Line Encyclopedia of Integer Sequences against the long term lists stored beside them. One of 213 failed, and the entry itself had recorded that failure in 2016, so the sweep produced no new counterexample.",
+   "fields": [
+    "mathematics-complexity",
+    "method"
+   ],
+   "date_found": "2026-10-31",
+   "figure": "none",
+   "outcome": "null",
+   "bound": "One failure in 213 tested lines, 0.47 percent; the 95 percent Wilson interval runs to 2.6 percent, so failure rates above that are ruled out for lines of this kind."
+  },
+  "F310": {
+   "slug": "titius-bode-is-spacing",
+   "title": "Titius-Bode regularity in 122 exoplanet systems sits in gap sizes; their order adds nothing",
+   "standfirst": "Exoplanet systems do look more regular than random gaps would make them, but shuffling each system's own gaps into a new order leaves that regularity in place. A planet's position is predicted better by its two neighbours than by a Titius-Bode fit.",
+   "fields": [
+    "physics-other",
+    "method"
+   ],
+   "date_found": "2026-10-31",
+   "figure": "traxler-slot",
+   "outcome": "null",
+   "bound": "Against each system's own gaps put in a new order, none of the three forms scored above the shuffled range (p 0.85, 0.995 and 0.68). Regularity in gap sizes is shown; an ordering law is not."
+  },
+  "F320": {
+   "slug": "stress-classifier-leakage",
+   "title": "A random split scores a stress classifier perfect on data with nothing to learn",
+   "standfirst": "On planted data where nothing carries from one person to the next, a random train-test split still gives a perfect score of 1.00, while holding out whole people gives chance. On the real WESAD recordings the classifier does hold across 15 people, at an AUC of 0.966, and how stressed people said they felt did not track how much their bodies changed.",
+   "fields": [
+    "method",
+    "human-studies",
+    "psychology"
+   ],
+   "date_found": "2026-10-31",
+   "figure": "none",
+   "outcome": "held"
+  },
+  "F329": {
+   "slug": "lying-in-die-tasks",
+   "title": "In 27,039 private die rolls, about 45 percent report honestly, and the reports cannot tell us why",
+   "standfirst": "Payoff maximisation says everyone in a private die-roll task should claim the top number. Across 58 published studies with 27,039 subjects, the held-out reports look like about 45 percent honest, 26 percent claiming the maximum and 29 percent shading upward partway. Six competing theories of why people hold back fit those reports almost equally well.",
+   "fields": [
+    "psychology",
+    "economy",
+    "human-studies"
+   ],
+   "date_found": "2026-10-31",
+   "figure": "none",
+   "outcome": "held"
+  },
+  "F344": {
+   "slug": "auger-cubic-null",
+   "title": "No cubic pattern in public Auger cosmic-ray directions, at sensitivity that sees only large ones",
+   "standfirst": "If space were a fine cubic grid, the highest-energy cosmic rays might arrive in a pattern aligned with its axes. In the public Pierre Auger sample we find no such pattern at any of five energy cuts, and our planted tests show the search could only have seen a strong one.",
+   "fields": [
+    "physics-other",
+    "method"
+   ],
+   "date_found": "2026-10-31",
+   "figure": "traxler-slot",
+   "outcome": "null",
+   "bound": "Only strong cubic patterns are ruled out: power 0.9 at planted strength 0.2 at 8 EeV, and at 32 EeV only at strength 1.0, where the sky along the cube axes is twice the average."
+  },
+  "F362": {
+   "slug": "stated-uncertainty-tails",
+   "title": "Published 1 sigma error bars hold near nominal; a 95 percent interval needs 3 to 5 sigma",
+   "standfirst": "When a particle mass or an atomic mass moves between editions of its reference table, the old 1 sigma error bar covers the new value about as often as it should. The tails are far heavier than a bell curve, so covering 95 percent of later values takes 3 to 5 times the stated sigma.",
+   "fields": [
+    "instruments-metrology",
+    "physics-other",
+    "method"
+   ],
+   "date_found": "2026-10-31",
+   "figure": "traxler-slot",
+   "outcome": "held"
+  },
+  "F508": {
+   "slug": "shannon-entropy-old-and-new-text",
+   "title": "Shannon's 1951 letter statistics hold on old and new English; his third-order value reads high",
+   "standfirst": "Shannon's first- and second-order entropy figures for English letters match ours within 0.12 bits on books from 1788 to 1925 and on present-day Wikipedia. His third-order figure sits 0.23 to 0.39 bits above ours, and an n-gram reader never gets near his 1.3 bits per letter.",
+   "fields": [
+    "information-theory",
+    "linguistics-literature"
+   ],
+   "date_found": "2026-11-01",
+   "figure": "none",
+   "outcome": "held"
+  },
+  "F515": {
+   "slug": "llm-compression-and-memorisation",
+   "title": "A small language model squeezes the UDHR to 0.27 bits a letter, and fresh text to 1.59",
+   "standfirst": "Used as a compressor, SmolLM2 encodes the English Universal Declaration of Human Rights at 0.27 bits per character, far below any classical compressor. On 30,000 characters written after its training it needs 1.59, so most of the headline figure comes from text the model has already seen.",
+   "fields": [
+    "information-theory",
+    "linguistics-literature"
+   ],
+   "date_found": "2026-11-01",
+   "figure": "none",
+   "outcome": "held"
+  },
+  "F675": {
+   "slug": "granger-panel-ring-direction-kill-fires",
+   "title": "A panel test read climate driving tree rings correctly, and our own rule still failed it",
+   "standfirst": "On 161 northern tree-ring sites a panel-wide lagged test pointed from summer temperature to ring width, the known direction, with a wide margin. Two of its locked checks missed their bars by less than 0.02, so by the rule we wrote first the method earned no standing in this round.",
+   "fields": [
+    "ecology-climate",
+    "method"
+   ],
+   "date_found": "2026-11-02",
+   "figure": "none",
+   "outcome": "failed",
+   "bound": "Two binding first-difference checks failed by less than 0.02, so the preregistered kill fired and the panel instrument earned no standing in this round."
+  }
+ }
+}

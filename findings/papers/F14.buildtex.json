@@ -1,0 +1,65 @@
+{
+ "schema": "buildlang.buildtex-receipt/v0",
+ "source": {
+  "path": "F14.bld",
+  "sha256": "8df3533992a7a969b06ba2482840cd381331f84591d7835c59278359d7313a63"
+ },
+ "ir_sha256": "31554a81a63e38a48fd7ff9b1f024d0c78b082925a0c4d13b055c0a629191afe",
+ "theme": "paper",
+ "overrides": [],
+ "outputs": {
+  "F14.pdf": "577f0a6b199c39a908aabf9e79ef01f6d52ff96ae581e9da48c9b03d9d9f3dec"
+ },
+ "pdf_metadata": {
+  "pdfa": false,
+  "creation_date": "D:20261109000000Z"
+ },
+ "facts": {
+  "pages": 8,
+  "pages_layout": 8,
+  "overfull": [],
+  "underfull": 0,
+  "missing_glyphs": [],
+  "glyph_fallbacks": [],
+  "math_errors": [],
+  "fonts": [
+   {
+    "name": "ANMCEM+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "FPKJOJ+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "HNHCKM+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "IFNCDM+AccessionDisplay-Master",
+    "embedded": true
+   },
+   {
+    "name": "MPNIAB+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "PCJMHL+NotoSansMath-Regular",
+    "embedded": true
+   }
+  ],
+  "images": 4,
+  "blind_text_runs": 0,
+  "reading_order": true,
+  "blocks_missing_from_text": [],
+  "pdf_bytes": 1512320
+ },
+ "failed": [],
+ "notes": [
+  "buildc run F14.bld -> F14.doc.tsv",
+  "press: relief 1275x393 px at 150 dpi; 0 blind line(s); foil colour source: fallback constant"
+ ],
+ "external_programs": [
+  "buildc"
+ ]
+}
