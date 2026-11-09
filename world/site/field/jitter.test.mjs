@@ -44,6 +44,6 @@ test("the shader carries the same kernel text and constants", () => {
   for (const [name, src] of [["scene", SCENE_FRAG], ["post", POST_FRAG]]) {
     assert.ok(src.includes(body), `${name}: ign differs from the reference`);
     assert.ok(src.includes(walk), `${name}: jit differs from the reference`);
-    assert.match(src, /uniform float [^;]*uSeq/, `${name}: uSeq missing`);
+    assert.ok(src.includes("uniform float uSeq"), `${name}: uSeq missing`);
   }
 });

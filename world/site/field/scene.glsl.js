@@ -36,8 +36,7 @@ const float SUN_R = 0.004654;  // rad: the Sun's mean angular radius, 0.2666 deg
 const float MOON_R = 0.004521; // rad: the Moon's mean angular radius, 0.2590 deg
 float hash(vec2 p) { p = fract(p * vec2(443.897, 441.423)); p += dot(p, p.yx + 19.19); return fract((p.x + p.y) * p.x); }
 // sample jitter kernel (jitter.mjs holds the reference and its test): interleaved gradient noise per pixel (Jimenez 2014),
-// shifted by the golden ratio per accumulated sample and by the plastic number per march step, so a still's samples
-// spread evenly through each step and neighbouring steps do not share an offset
+// walked by the golden ratio per frame or accumulated sample, so a still's samples spread evenly; dim separates uses
 float ign(vec2 p) { return fract(52.9829189 * fract(dot(p, vec2(0.06711056, 0.00583715)))); }
 float jit(float dim) { return fract(ign(gl_FragCoord.xy) + 0.61803399 * uSeq + 0.75487767 * dim); }
 float hgp(float c, float g) { return (1.0 - g * g) / (12.566370614 * pow(1.0 + g * g - 2.0 * g * c, 1.5)); }
