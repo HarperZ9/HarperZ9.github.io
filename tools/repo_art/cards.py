@@ -18,6 +18,7 @@ import hashlib
 from itertools import combinations
 from pathlib import Path
 
+from .card_work import plate_width, sheet, work_image
 from .compose import figure_for, wrap
 from .ctx import Ctx
 from .page_covers import cover_svg
@@ -48,45 +49,19 @@ def balanced(text: str, face: str, size: float, width: float) -> list[str]:
 
 
 TITLE_FACE = "grotesk-semibold"
+SKY_INK, SKY_HAZE = "#1a1b22", "#fcf7eb"  # the measured black and paper of the print (crossover/icon-palette.json)
 X0 = 72  # the left edge every line of type hangs from
 FOOT_PICTURE = 540  # height of the picture on a foot card; the band of type covers the rest
-PLATE_MIN, PLATE_MAX = 500, 730  # width of an upright sheet standing down the right of a plate card
-
-
-def plate_width(path: Path) -> int:
-    """How wide an upright scan stands on a plate card: its own shape at full card height, within limits."""
-    from PIL import Image
-    with Image.open(path) as im:
-        return int(min(PLATE_MAX, max(PLATE_MIN, round(H * im.width / im.height))))
-
-
-def work_image(path: Path, scale: int = 2, box: tuple[int, int] = (W, H), anchor: float = 0.5) -> tuple[str, str]:
-    """The render cropped to cover `box` at `scale` x, as a JPEG data URI, with the file's hash.
-    anchor is where the crop sits down the image's height: 0 keeps the top, 0.5 the middle."""
-    import io
-    from PIL import Image
-    try:
-        im = Image.open(path).convert("RGB")
-    except Exception:  # a format Pillow lacks: let ffmpeg decode it
-        import subprocess
-        import imageio_ffmpeg
-        raw = subprocess.run([imageio_ffmpeg.get_ffmpeg_exe(), "-v", "error", "-i", str(path), "-frames:v", "1",
-                              "-f", "image2pipe", "-vcodec", "png", "-"], capture_output=True, check=True).stdout
-        im = Image.open(io.BytesIO(raw)).convert("RGB")
-    tw, th = box[0] * scale, box[1] * scale
-    k = max(tw / im.width, th / im.height)
-    im = im.resize((round(im.width * k), round(im.height * k)), Image.LANCZOS)
-    x0, y0 = (im.width - tw) // 2, round((im.height - th) * anchor)
-    buf = io.BytesIO()
-    im.crop((x0, y0, x0 + tw, y0 + th)).save(buf, "JPEG", quality=92, subsampling=0)
-    return "data:image/jpeg;base64," + base64.b64encode(buf.getvalue()).decode(), hashlib.sha256(path.read_bytes()).hexdigest()
-
 
 def scrim(uid: str, ground: str, layout: str, over_image: bool, lift: float = 0.0) -> tuple[str, str]:
     """(defs, body): the dark the type sits on. Stops are (offset, opacity) along x for side, y for foot."""
     if layout.startswith("plate:"):  # the sheet's left edge fades into the ground: no frame, no hard box
         x = (W - int(layout.split(":")[1])) / W
         stops, vec = [(0, 1), (num(x), 1), (num(x + 0.07), 0)], 'x1="0" y1="0" x2="1" y2="0"'
+    elif layout == "sky":  # dark type on a bright sky: a pale haze behind it, nothing over the rest of the picture
+        ground, stops, vec = SKY_HAZE, [(0, 0.34), (0.5, 0.26), (0.78, 0)], 'x1="0" y1="0" x2="1" y2="0.35"'
+    elif layout == "low":  # one line of title low on a full-height picture: the dark starts lower and stays lighter above it
+        stops, vec = [(0.56, 0), (0.72, 0.62), (0.78, 0.9), (1, 0.97)], 'x1="0" y1="0" x2="0" y2="1"'
     elif layout == "foot":
         # solid under the type, so nothing lettered in the render shows through the title or the byline
         base = [(0.52, 0), (0.67, 0.84), (0.74, 0.985)]
@@ -101,6 +76,11 @@ def scrim(uid: str, ground: str, layout: str, over_image: bool, lift: float = 0.
             f'<rect width="{W}" height="{H}" fill="url(#{uid}-veil)"/>')
 
 
+def card_words(card: dict) -> str:
+    """The page's own words a cover is drawn from: the title, a line break, the summary."""
+    return f'{card["title"]}\n{card.get("dek") or ""}'
+
+
 def art_layer(card: dict, uid: str, p: dict, repos: dict, scene: dict) -> tuple[str, str]:
     """(defs, body) for the picture under the type; records what it drew from in `scene`."""
     if card.get("work") and card.get("layout") == "plate":
@@ -108,17 +88,22 @@ def art_layer(card: dict, uid: str, p: dict, repos: dict, scene: dict) -> tuple[
         uri, scene["work_sha256"] = work_image(ROOT / card["work"], box=(pw, H), anchor=card.get("anchor", 0.0))
         scene["plate_width"] = pw
         return "", f'<image x="{W - pw}" y="0" width="{pw}" height="{H}" preserveAspectRatio="xMidYMid slice" href="{uri}"/>'
+    if card.get("work") and card.get("layout") == "sheet":
+        uri, scene["work_sha256"] = work_image(ROOT / card["work"], box=(760, 760), gain=card.get("gain", 1.0))
+        scene["cover"] = "cut-paper/1"
+        return sheet(uid, uri, card.get("under", "yellow"), card.get("anchor", 5.0))
     if card.get("work"):
         # a foot card's picture sits in the part of the card the type leaves clear, so its middle stays in view
-        ih = FOOT_PICTURE if card.get("layout") == "foot" else H
-        uri, scene["work_sha256"] = work_image(ROOT / card["work"], box=(W, ih), anchor=card.get("anchor", 0.5))
+        ih = FOOT_PICTURE if card.get("layout") == "foot" and not card.get("veil") else H
+        uri, scene["work_sha256"] = work_image(ROOT / card["work"], box=(W, ih), anchor=card.get("anchor", 0.5), crop=card.get("crop"))
         return "", f'<image x="0" y="0" width="{W}" height="{ih}" preserveAspectRatio="xMidYMid slice" href="{uri}"/>'
     if card.get("motif"):
         scene["motif"] = card["motif"]
         if card.get("alternate"):  # the line drawings of 2026-11-09, kept for comparison
             return motif_svg(card["motif"], card["slug"], uid, p, True)
         scene["cover"] = "cut-paper/1"
-        return cover_svg(card["motif"], card["slug"], uid, p["ground"])
+        return cover_svg(card["motif"], card["slug"], uid, p["ground"], card_words(card), card.get("shape"),
+                         card.get("lead"))
     if card.get("cover"):
         raw = (ROOT / "art" / "aperture" / f"{card['cover']}-dark.svg").read_bytes()
         scene["cover_sha256"] = hashlib.sha256(raw).hexdigest()
@@ -201,9 +186,22 @@ def type_foot(card: dict, p: dict, face: str) -> list[dict]:
     return out + footer(card, p, one_row=True)
 
 
+def type_sky(card: dict, face: str) -> list[dict]:
+    """Title, byline and kicker set dark in the sky at the top left of a picture, so the water under it stays clear."""
+    lines, size = fitted(card["title"], face, 52, 600, 3, 36)
+    out, y = [], 84 + size * 0.8
+    for ln in lines:
+        out.append(run(ln, face, size, X0, y, SKY_INK, -0.015))
+        y += size * 1.1
+    return out + [run("Zain Dana Harper", "grotesk-medium", 26, X0, y + 14, SKY_INK, role="byline"),
+                  run(kicker(card), "mono-medium", 17, X0, y + 50, SKY_INK, 0.1, "kicker")]
+
+
 def card_runs(card: dict, p: dict, plate: int | None = None) -> list[dict]:
     """Every line of type on a card, as data."""
     face = card.get("face", TITLE_FACE)
+    if card.get("veil") == "sky":
+        return type_sky(card, face)
     if card.get("layout", "side") == "foot":
         return type_foot(card, p, face)
     return type_side(card, p, face, W - plate - X0 - 48 if plate else 500 if card.get("work") else 540)
@@ -220,7 +218,7 @@ def card_svg(card: dict, repos: dict, words: bool = True) -> tuple[str, dict]:
     runs = card_runs(card, p, pw)
     # a second title line on a foot card lifts the solid band with it, so no line of type sits on the picture
     lift = sum(r["role"] == "title" for r in runs) - 1 if layout == "foot" else 0
-    veil_defs, veil = scrim(uid, p["ground"], f"plate:{pw}" if pw else layout, bool(card.get("work")),
+    veil_defs, veil = scrim(uid, p["ground"], f"plate:{pw}" if pw else card.get("veil") or layout, bool(card.get("work")),
                             lift * runs[0]["size"] * 1.1 / H)
     flat = card.get("work") or scene.get("cover") == "cut-paper/1"
     if scene.get("cover") == "cut-paper/1":  # cut paper keeps clear of the type by its own geometry: no veil over it

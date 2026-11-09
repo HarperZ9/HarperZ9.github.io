@@ -69,3 +69,24 @@ def test_contrast_matches_the_wcag_end_points():
 def test_a_title_too_small_for_a_preview_is_a_fault():
     assert cc.thumb_faults([line(size=28)]) != []
     assert cc.thumb_faults([line(size=44)]) == []
+
+
+def test_two_pictures_that_differ_by_a_small_part_are_flagged_as_the_same():
+    base = bytes([10] * 300)
+    near = bytes([10] * 290 + [200] * 10)          # one small part changed: about 2.5 percent
+    far = bytes([10] * 150 + [200] * 150)          # half the picture changed
+    family = {"a": "plot", "b": "plot", "c": "plot"}
+    pairs = cc.sameness({"a": base, "b": near, "c": far}, family)
+    assert [p["cards"] for p in pairs] == [["a", "b"]]
+    assert 2.0 < pairs[0]["difference"] < cc.SAME
+
+
+def test_the_same_picture_in_two_families_is_not_flagged():
+    same = bytes([40] * 300)
+    assert cc.sameness({"a": same, "b": same}, {"a": "plot", "b": "strip"}) == []
+    assert cc.sameness({"a": same, "b": same}, {"a": "plot", "b": "plot"})[0]["difference"] == 0
+
+
+def test_nearest_reports_the_closest_pair_in_each_family():
+    halves = {"a": bytes([0] * 100), "b": bytes([255] * 100), "c": bytes([0] * 50 + [255] * 50)}
+    assert cc.nearest(halves, {"a": "map", "b": "map", "c": "map"}) == {"map": 50.0}

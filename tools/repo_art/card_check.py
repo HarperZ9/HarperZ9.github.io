@@ -8,6 +8,12 @@ dark enough for its ink. The contrast figure is WCAG 2 relative luminance, the i
 brightest part of the picture under the line (the 99th percentile, so one stray pixel does not
 decide it). The title is also sized as it shows in a 300 px wide preview.
 
+Sameness: the picture half of each drawn cover (the right 600 px, type off) is cut to a 60 x 63
+thumbnail, and two cards of one family are flagged when their thumbnails differ by less than SAME,
+the mean absolute difference over every channel as a percentage of full range. Two cards that differ
+only by a small part moved or by one accent colour land under it. Pages that share one cover by design
+(a pillar cover) are counted in the report and are not faults.
+
 Pure functions over explicit data; only `grounds` touches a browser.
 """
 
@@ -29,6 +35,8 @@ GAP = 24            # px kept between a line of type and an upright plate
 FLOOR = 4.5         # WCAG 2 AA contrast for body text; applied to every line, titles included
 THUMB = 300         # px width of a chat or feed preview
 TITLE_MIN = 8.0     # px a title must keep at THUMB to stay readable
+SAME = 4.0          # percent of full range two picture halves in one family must differ by
+HALF = (60, 63)     # px of the thumbnail a picture half is compared at
 ASCENT, DESCENT = 0.74, 0.22   # of the type size: cap height above the baseline, descender below
 
 
@@ -103,8 +111,31 @@ def check(runs: list[dict], plate: int | None, pixel_lums) -> dict:
             "lines": len(runs)}
 
 
+def difference(a: bytes, b: bytes) -> float:
+    """Mean absolute difference of two equal-sized thumbnails, as a percentage of full range."""
+    return 100 * sum(abs(x - y) for x, y in zip(a, b)) / (255 * len(a))
+
+
+def sameness(halves: dict[str, bytes], family: dict[str, str], floor: float = SAME) -> list[dict]:
+    """Every pair of cards in one family whose picture halves differ by less than `floor`, closest first."""
+    out = []
+    for a, b in combinations(sorted(halves), 2):
+        if family[a] == family[b] and (d := difference(halves[a], halves[b])) < floor:
+            out.append({"family": family[a], "cards": [a, b], "difference": round(d, 2)})
+    return sorted(out, key=lambda pair: pair["difference"])
+
+
+def nearest(halves: dict[str, bytes], family: dict[str, str]) -> dict[str, float]:
+    """For each family of two or more cards, the smallest difference between any two of them."""
+    out: dict[str, float] = {}
+    for a, b in combinations(sorted(halves), 2):
+        if family[a] == family[b]:
+            out[family[a]] = round(min(out.get(family[a], 100.0), difference(halves[a], halves[b])), 2)
+    return out
+
+
 def grounds(cards: list[dict], repos: dict):
-    """Yield (card, runs, plate width, pixel_lums) with each card drawn once, type left off."""
+    """Yield (card, runs, plate width, pixel_lums, picture half) with each card drawn once, type left off."""
     from PIL import Image
     from playwright.sync_api import sync_playwright
 
@@ -128,7 +159,8 @@ def grounds(cards: list[dict], repos: dict):
                     return [luminance(raw[i:i + 3]) for i in range(0, len(raw), 3)]
 
                 plate = scene.get("plate_width")
-                yield card, card_runs(card, PAL["dark"], plate), plate, pixel_lums
+                half = im.crop((W // 2, 0, W, H)).resize(HALF, Image.BOX).tobytes()
+                yield card, card_runs(card, PAL["dark"], plate), plate, pixel_lums, half
         finally:
             browser.close()
             tmp.unlink(missing_ok=True)
@@ -140,7 +172,17 @@ def main(argv: list[str]) -> int:
     only = set(argv[argv.index("--only") + 1].split(",")) if "--only" in argv else None
     repos = json.loads((Path(__file__).parent / "repos.json").read_text("utf-8"))["repos"]
     cards = [c for c in site_cards.plan() if only is None or c["slug"] in only]
-    report = {c["slug"]: check(runs, plate, lums) for c, runs, plate, lums in grounds(cards, repos)}
+    report, halves = {}, {}
+    for c, runs, plate, lums, half in grounds(cards, repos):
+        report[c["slug"]] = check(runs, plate, lums)
+        halves[c["slug"]] = half
+    drawn = {c["slug"]: c["motif"] for c in cards if c.get("motif")}       # a cover drawn for the page
+    shared = {c["slug"]: c["cover"] for c in cards if c.get("cover")}      # one cover many pages carry by design
+    alike = sameness({s: halves[s] for s in drawn}, drawn)
+    for pair in alike:
+        for slug in pair["cards"]:
+            other = pair["cards"][1] if slug == pair["cards"][0] else pair["cards"][0]
+            report[slug]["faults"].append(f"picture differs from {other} by {pair['difference']} percent, under {SAME}")
     bad = {slug: r["faults"] for slug, r in report.items() if r["faults"]}
     for slug, faults in bad.items():
         for fault in faults:
@@ -148,8 +190,12 @@ def main(argv: list[str]) -> int:
     lowest = min(report.items(), key=lambda kv: kv[1]["lowest_contrast"])
     print(f"{len(report)} cards, {sum(r['lines'] for r in report.values())} lines of type, {len(bad)} cards with a fault; "
           f"lowest contrast {lowest[1]['lowest_contrast']} on {lowest[0]}")
+    close = nearest({s: halves[s] for s in drawn}, drawn)
+    print(f"sameness: {len(alike)} pairs under {SAME} percent; nearest pair in each family {close}; "
+          f"{len(sameness({s: halves[s] for s in shared}, shared, 0.01))} pairs share one cover by design")
     if "--report" in argv:
-        Path(argv[argv.index("--report") + 1]).write_text(json.dumps(report, indent=1, sort_keys=True) + "\n", "utf-8")
+        full = {"cards": report, "sameness": {"threshold_percent": SAME, "pairs_under": alike, "nearest_in_family": close}}
+        Path(argv[argv.index("--report") + 1]).write_text(json.dumps(full, indent=1, sort_keys=True) + "\n", "utf-8")
     return 1 if bad else 0
 
 
