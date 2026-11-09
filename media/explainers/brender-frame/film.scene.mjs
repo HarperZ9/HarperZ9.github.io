@@ -3,12 +3,15 @@
 // timing.json); this scene adds no claim. Every cue is a sentence or word time from timing.json,
 // so the pictures re-time when the real narration replaces the provisional timing.
 // Host: Tallow, in his home style (the retro thriller) for the cold open and the close.
-import { C, cues, put, clearCaptionArea, stroke, image, box, contour, text, tabShape, loadImages, span, window, ease, lerp, lerpLog } from "./scene/lib.mjs";
+import { C, cues, put, clearCaptionArea, stroke, image, box, contour, text, tabShape, loadImages, span, window, ease, lerp, lerpLog, rect, bounds } from "./scene/lib.mjs";
 import * as world from "./scene/world.mjs";
 import * as room from "./scene/room.mjs";
 import * as plates from "./scene/plates.mjs";
 import * as surface from "./scene/surface.mjs";
 import * as close from "./scene/close.mjs";
+
+const hex = (c) => "#" + c.map((v) => Math.round(v * 255).toString(16).padStart(2, "0")).join("");
+const GROUND = hex(C.void), GROUND_HOST = hex([0.012, 0.011, 0.014]);
 
 const FPS = 30;
 const PLAIN = { bloom: 0.35, threshold: 0.85, vignette: 0.3, grain: 0.008 };
@@ -109,8 +112,19 @@ export default {
       put(items, shape, C.ink, a, { screen: true });
       if (tg) put(items, tg, C.ink2, a, { screen: true });
     }
-    for (const tb of A.tabs) put(items, tb.shape, C.dim, window(t, tb.t0, tb.t1, 0.6, 0.6), { screen: true });
     const hostStyle = inRoom || t >= T.s8;
+    // On the ladder each source tab sits on a band of the ground, so the frame lines pass behind its words.
+    const ground = hostStyle ? GROUND_HOST : GROUND;
+    for (const tb of A.tabs) {
+      const a = window(t, tb.t0, tb.t1, 0.6, 0.6);
+      const b = tb.box || (tb.box = bounds(tb.shape));
+      // the band runs from the frame's top edge to under the words and fades out over 48 px, so it reads as
+      // ground, not as a box
+      const x = b.x0 - 40, w = b.w + 80, y1 = b.y0 + b.h + 14;
+      if (!inRoom) put(items, rect(x, 0, w, y1), ground, 0.95 * a, { screen: true });  // the room has no line-work behind its tabs
+      if (!inRoom) for (let k = 0; k < 6; k++) put(items, rect(x, y1 + k * 8, w, 8), ground, 0.95 * a * (1 - (k + 1) / 7), { screen: true });
+      put(items, tb.shape, C.dim, a, { screen: true });
+    }
     return { background: hostStyle ? [0.012, 0.011, 0.014] : C.void, camera, items, post: inRoom ? room.THRILLER_POST : PLAIN };
   },
 };

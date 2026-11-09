@@ -146,7 +146,7 @@ export const T = (A, s, { size = 34, x = 960, y = 540, anchor = "center", atlas 
 export const put = (items, shape, color, o, extra = {}) => { if (o > 0.004) items.push({ shape, fill: color, opacity: Math.min(1, o), screen: true, ...extra }); };
 export function tab(A, ev, id, extra = "") {
   const e = ev.sources[id];
-  return text(`${e.short}${extra ? " . " + extra : ""}`, { atlas: A.mono, size: 28, x: 96, y: 66 }).shape;
+  return text(`${e.short}${extra ? " · " + extra : ""}`, { atlas: A.mono, size: 28, x: 96, y: 66 }).shape;
 }
 // A claim tag: one short phrase in the drift ink, under the tab.
 export const tag = (A, s, y = 108) => text(s, { atlas: A.mono, size: 28, x: 96, y }).shape;

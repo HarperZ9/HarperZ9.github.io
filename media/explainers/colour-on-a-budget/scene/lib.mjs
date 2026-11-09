@@ -43,9 +43,9 @@ export function words(str, atlas, size, x, y, anchor = "left") {
 
 // The source tab, top left; a source read only at second hand says so.
 export function tab(evidence, id, mono) {
-  const e = evidence.sources[id], head = e.short.replace(/(\d{4}), /, "$1 . ");
-  const n = /^not applicable/i.test(e.n || "") ? "" : ` . ${e.n}`;
-  const read = /^(secondary|metadata)/.test(e.read) ? ` . ${e.read.split(" ")[0]}` : "";
+  const e = evidence.sources[id], head = e.short.replace(/(\d{4}), /, "$1 · ");
+  const n = /^not applicable/i.test(e.n || "") ? "" : ` · ${e.n}`;
+  const read = /^(secondary|metadata)/.test(e.read) ? ` · ${e.read.split(" ")[0]}` : "";
   const shape = words(`${head}${n}${read}`, mono, 28, 96, 58).shape;
   TAB_OF.set(shape, id);
   return shape;
