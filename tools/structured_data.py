@@ -98,7 +98,9 @@ def load_context(root: Path = ROOT, published: dict[str, str] | None = None) -> 
     tools = {f"{ORIGIN}/{t['page']}": t for t in _registry(root / "discover.json", "tools") if t.get("page")}
     videos: dict[str, list[dict]] = {}
     for video in _registry(root / "system/videos.json", "videos"):
-        videos.setdefault(f"{ORIGIN}/{video['page']}", []).append(video)
+        # the home's canonical URL is the site root, not /index.html (2026-10-28: the home plays the Low Water loop)
+        page = "" if video["page"] == "index.html" else video["page"]
+        videos.setdefault(f"{ORIGIN}/{page}", []).append(video)
     return Context(published, products, records, landing, tools, videos)
 
 
