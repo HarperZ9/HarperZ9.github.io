@@ -159,4 +159,9 @@ def test_buildlang_separates_the_github_release_from_the_crates_io_version() -> 
         source = read(page)
         assert "GitHub release v1.4.0; buildlang 1.2.0 on crates.io" in source, page
         assert "stable v1.2.0" not in source, page
-    assert "buildlang 1.2.0 on crates.io" in read("buildlang.html")
+    # buildlang.html is generated from the fetched releases (scripts/build-product-pages.mjs): it names the release
+    # and the crates.io version it read, whatever they are on the day of the build
+    releases = json.loads(read("site-src/world/releases.json"))["products"]["buildlang"]
+    page = read("buildlang.html")
+    assert f"cargo install buildlang --version {releases['github']['version']} --locked" in page
+    assert f"crates.io lists {releases['registry']['version']}" in page

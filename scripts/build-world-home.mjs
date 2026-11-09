@@ -8,7 +8,8 @@ import { readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { PLACES } from "../site-src/world/bazaar.mjs";
-import { PLATFORMS, CHECKED } from "../site-src/world/platforms.mjs";
+import { PLATFORMS, LANDMARKS, CHECKED } from "../site-src/world/platforms.mjs";
+import { menuDialog } from "./hand-menu.mjs";
 import { workSection } from "../site-src/world/work.mjs";
 import { labelHand } from "./hand-labels.mjs";
 import { backdrop } from "./field-backdrop.mjs";
@@ -36,12 +37,8 @@ function roadParts() {
     .replace(/\s*<button type="button" id="back"[^>]*>[\s\S]*?<\/button>/, "")
     .replace(/\s*<button type="button" data-o="record"[\s\S]*?<\/button>/, "");
   hand = labelHand(hand);
-  // the menu names each platform's own page on this site, and the CV, beside the road's places
-  const menu = absolute(pick(p, /<dialog id="o-menu"[\s\S]*?<\/dialog>/, "the menu"))
-    .replace('href="https://github.com/HarperZ9/cmmns"', 'href="/cmmns.html"')
-    .replace(/(<li><a href="\/buildlang\.html">[\s\S]*?<\/li>)/, '$1\n      <li><a href="/superframe.html"><span class="o-word" data-display-on-open="glyphcell">Superframe</span></a></li>\n      <li><a href="/research.html"><span class="o-word" data-display-on-open="swarm">Research</span></a></li>')
-    .replace(/(<li><a href="\/hire\.html">[\s\S]*?<\/li>)/, '$1\n      <li><a href="/cv.html"><span class="o-word" data-display-on-open="rope">CV</span></a></li>')
-    .replace(/<p class="o-menu-foot">/, '<p class="o-menu-foot"><a href="/elements.html">Elements</a> <a href="/swatches.html">Swatches</a> <a href="/studies/">Studies</a> ');
+  // the menu is the site's one list: the six landmarks in the author's order, then the rest (scripts/hand-menu.mjs)
+  const menu = menuDialog({ here: "/" });
   const canvases = (p.match(/<canvas id="[^"]+" class="[^"]+" data-art aria-hidden="true"><\/canvas>/g) || []).join("\n");
   const main = pick(p, /<main id="main">[\s\S]*?<\/main>/, "the road");
   // the road's stops, each heading given the living-type hook (Hanken underneath until the engine paints it)
@@ -74,44 +71,67 @@ function lead(pl) {
   if (L.kind === "living") return `<div class="lead" data-alive="livestill"><img src="${L.src}" width="${L.w}" height="${L.h}" alt="${esc(L.alt)}" loading="lazy" decoding="async"></div>`;
   return `<img class="lead" src="${L.src}" width="${L.w}" height="${L.h}" alt="${esc(L.alt)}" loading="lazy" decoding="async" data-uncover>`;
 }
+// each place on the front door states its first law; the rest live in the place itself, so the home reads as media first
 function bazaar(rules) {
   return PLACES.map((pl, i) => `
   <article class="place" id="p-${pl.id}" data-place="${pl.id}" data-form="${pl.form}" data-medium="${pl.medium}" aria-labelledby="hp-${pl.id}">
     <div class="place-in">
       <figure class="lead-box">${lead(pl)}</figure>
       <div class="place-words">
-        <h2 id="hp-${pl.id}">${esc(pl.title)}</h2>
-        ${lawsOf(pl.laws, rules)}
+        <h3 id="hp-${pl.id}">${esc(pl.title)}</h3>
+        ${lawsOf(pl.laws.slice(0, 1), rules)}
         <nav class="ways" aria-label="${esc(pl.title)}">${pl.ways.map(([href, t]) => `<a href="${href}"${caps(t)}>${esc(t)}</a>`).join("")}</nav>
       </div>
     </div>
   </article>`).join("\n");
 }
 
-// the front door's index of the work: each platform, what it does, where to see it, how to run it, its source
-function platforms() {
-  const rows = PLATFORMS.map((p) => {
-    // package and file names stay whole on narrow screens (scripts/ident-tokens.mjs, tests/ident-narrow-reading.cjs)
-    const ident = (t) => esc(t).replace(/(^|[\s(])([a-z0-9]+(?:-[a-z0-9.]+)+)(?=$|[\s),])/g, '$1<span class="ident" translate="no">$2</span>');
-    const run = p.run ? `<p class="pf-run">${p.runIsProse ? ident(p.run) : `<code>${ident(p.run)}</code>`}${p.then ? `, then <code>${ident(p.then)}</code>` : ""}${p.note ? ` <span class="pf-note">(${esc(p.note)})</span>` : ""}</p>` : "";
-    const ver = p.version ? ` <span class="pf-ver">${esc(p.version)}</span>` : "";
-    const ways = [`<a class="pf-go" href="${p.see[0]}">${esc(p.see[1])}</a>`, `<a href="${p.more[0]}">${esc(p.more[1])}</a>`, p.repo ? `<a href="${p.repo}">Source</a>` : ""].join("");
-    return `
-    <li class="pf" id="pf-${p.id}">
-      <div class="pf-words">
-        <h3 id="hpf-${p.id}"><span class="pf-name">${esc(p.name)}</span>${p.mark ? `<span class="pf-mark">${esc(p.mark)}</span>` : ""}<span class="pf-product">${esc(p.product)}${ver}</span></h3>
-        <p class="pf-what">${esc(p.what)}</p>
-        ${run}
-        <nav class="pf-ways" aria-labelledby="hpf-${p.id}">${ways}</nav>
-        ${p.verified ? `<p class="pf-verified"><b>Verified</b> ${esc(CHECKED)}: ${esc(p.verified)}</p>` : ""}
-      </div>
-    </li>`;
-  }).join("");
-  return `<section class="platforms" id="work" aria-labelledby="h-work" data-medium="viscous">
-    <h2 id="h-work">The work</h2>
-    <ol class="pf-list">${rows}
-    </ol>
-  </section>`;
+// the front door: the six landmarks in the author's order, each with the work under it. Site carries the places
+// (the bazaar); Everything carries the rest of the work and the way to every piece.
+const ident = (t) => esc(t).replace(/(^|[\s(])([a-z0-9]+(?:-[a-z0-9.]+)+)(?=$|[\s),])/g, '$1<span class="ident" translate="no">$2</span>');
+function row(p) {
+  // package and file names stay whole on narrow screens (scripts/ident-tokens.mjs, tests/ident-narrow-reading.cjs)
+  const run = p.run ? `<p class="pf-run">${p.runIsProse ? ident(p.run) : `<code>${ident(p.run)}</code>`}${p.then ? `, then <code>${ident(p.then)}</code>` : ""}${p.note ? ` <span class="pf-note">(${esc(p.note)})</span>` : ""}</p>` : "";
+  // the version opens to its release: every number on the front door leads to where it came from
+  const ver = p.version ? ` <a class="pf-ver" href="${p.releaseUrl}">${esc(p.version)}</a>` : "";
+  // "See it work" opens the dial's panel for this piece in place (site-src/world/work.mjs), so every row leads to
+  // something to play with before a page of words
+  const ways = [p.try ? `<a class="pf-go" href="${p.try}">See it work</a>` : "", `<a${p.try ? "" : ' class="pf-go"'} href="${p.see[0]}">${esc(p.see[1])}</a>`, p.repo ? `<a href="${p.repo}">Source</a>` : ""].join("");
+  const name = p.name ? `<span class="pf-name">${esc(p.name)}</span>${p.mark ? `<span class="pf-mark">${esc(p.mark)}</span>` : ""}` : "";
+  return `
+      <div class="pf" id="pf-${p.id}">
+        <div class="pf-words">
+          <h3 id="hpf-${p.id}">${name}<span class="pf-product">${esc(p.product)}${ver}</span></h3>
+          <p class="pf-what">${esc(p.what)}</p>
+          ${run}
+          <nav class="pf-ways" aria-labelledby="hpf-${p.id}">${ways}</nav>
+          ${p.verified ? `<p class="pf-verified"><b>Verified</b> ${esc(CHECKED)}: ${esc(p.verified)}</p>` : ""}
+        </div>
+      </div>`;
+}
+export function ways() {
+  return LANDMARKS.map((l) => `<a href="#${l.id === "site" ? "site" : l.id === "everything" ? "everything" : "lm-" + l.id}">${esc(l.word)}</a>`).join("");
+}
+function landmarks(rules) {
+  const head = (l) => `<h2 id="h-${l.id}" class="lm-word">${esc(l.word)}${l.mark ? ` <span class="pf-mark">${esc(l.mark)}</span>` : ""}</h2>`;
+  const rows = (l) => l.rows.map((id) => row(PLATFORMS.find((p) => p.id === id))).join("");
+  const work = LANDMARKS.filter((l) => !["site", "everything"].includes(l.id)).map((l) => `
+    <section class="lm" id="lm-${l.id}" aria-labelledby="h-${l.id}"><div class="lm-in">
+      ${head(l)}${rows(l)}
+    </div></section>`).join("");
+  const site = LANDMARKS.find((l) => l.id === "site"), all = LANDMARKS.find((l) => l.id === "everything");
+  return `<div class="landmarks" id="work" data-medium="viscous">${work}
+  </div>
+  <section class="lm lm-site" id="site" aria-labelledby="h-site">
+    <div class="lm-in">${head(site)}${rows(site)}</div>
+    <div class="bazaar" aria-label="Places">
+${bazaar(rules)}
+    </div>
+  </section>
+  <section class="lm lm-everything" id="everything" aria-labelledby="h-everything"><div class="lm-in">
+    ${head(all)}${rows(all)}
+    <p class="lm-floor"><a href="/floor.html">Every piece of work, current and past, and every page of the site</a></p>
+  </div></section>`;
 }
 
 function build() {
@@ -119,7 +139,7 @@ function build() {
   const rules = new Map(world.rules.map((x) => [x.id, x]));
   const html = read("site-src/world/home.html.tmpl")
     .replace("{{BODY_CLASS}}", r.bodyClass).replace("{{HAND}}", r.hand).replace("{{MENU}}", r.menu)
-    .replace("{{CANVASES}}", r.canvases).replace("{{ROAD}}", r.stops).replace("{{BAZAAR}}", bazaar(rules)).replace("{{PLATFORMS}}", platforms()).replace("{{WORK}}", workSection()).replace("{{BACKDROP}}", backdrop({ priority: "high", live: true })).replace("{{ARRIVAL_SOURCES}}", sources("/media/world/name-art/glass-tubes"));
+    .replace("{{CANVASES}}", r.canvases).replace("{{ROAD}}", r.stops).replace("{{LANDMARKS}}", landmarks(rules)).replace("{{WORK}}", workSection()).replace("{{WAYS}}", ways()).replace("{{BACKDROP}}", backdrop({ priority: "high", live: true })).replace("{{ARRIVAL_SOURCES}}", sources("/media/world/name-art/glass-tubes"));
   if (/\{\{[A-Z_]+\}\}/.test(html)) throw new Error("home: a placeholder was left unfilled");
   if (/[A-Za-z]:[\\/](?:dev|Users|Downloads)/.test(html) || html.includes("—")) throw new Error("home: a local path or an em dash reached the page");
   writeFileSync(path.join(site, "index.html"), html);

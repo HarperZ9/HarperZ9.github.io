@@ -1,0 +1,114 @@
+/* landmark.css: a landmark's own page (buildlang.html, low-water.html) in the field. Words sit on the water with the
+   shell's halo; nothing is boxed. A figure is a number in display weight that opens in place to its source (a native
+   <details>, so focus, Enter, Space and a tap all open it, and nothing depends on hover). */
+body.landmark main { max-width: 1180px; padding-inline: clamp(16px, 4vw, 56px); }
+.lp { position: relative; z-index: 2; text-shadow: 0 0 14px var(--halo), 0 0 4px var(--halo), 0 0 1px var(--halo), 0 0 22px var(--halo); }
+.lp-head { min-height: 62vh; display: grid; align-content: end; gap: 18px; padding-bottom: 6vh; }
+.lp h1 { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 18px; margin: 0; font: 800 clamp(56px, 11vw, 168px)/.9 var(--face-display); letter-spacing: calc(-.045em * var(--display-track, 1)); color: var(--ink); }
+.lp .pf-mark { font: 400 var(--fs-1)/1 var(--face-utility); letter-spacing: .08em; color: var(--ink); }
+.lp p { margin: 0; max-width: 66ch; }
+.lp p.lp-lede { margin: 0; max-width: 62ch; font: 400 var(--fs-4)/1.5 var(--face-text); color: var(--ink); }
+.lp p.lp-lede-1 { max-width: 34ch; font: 500 var(--fs-5)/1.3 var(--face-text); }
+.lp p.lp-note, .lp p.lp-limit, .lp p.lp-source, .lp p.lp-rel, .lp p.lp-status { margin: 0; max-width: 66ch; font: 400 var(--fs-3)/1.55 var(--face-text); color: var(--soft); }
+.lp p.lp-note, .lp p.lp-status { color: var(--ink); }
+.lp p.lp-purpose { font: 400 var(--fs-3)/1.55 var(--face-text); color: var(--soft); max-width: 66ch; }
+.lp p.lp-status { font: 600 var(--fs-3)/1.5 var(--face-text); }
+.lp p.lp-run { margin: 0; max-width: 100%; overflow-x: auto; }
+.lp-run code, .lp-code { font: 400 var(--fs-2)/1.5 var(--face-utility); color: var(--ink); letter-spacing: normal; }
+.lp-ways, .lp p.lp-ways-end { display: flex; flex-wrap: wrap; gap: 4px 22px; margin: 0; }
+.lp-ways a, .lp-ways-end a { display: inline-flex; align-items: center; min-height: 44px; color: var(--ink); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .3em; font: 600 var(--fs-2)/1 var(--face-text); }
+.lp a:hover { text-decoration-thickness: 2px; }
+.lp a:focus-visible, .fig summary:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+.lp-sec { display: grid; gap: 16px; padding-block: clamp(48px, 10vh, 120px) 0; scroll-margin-top: 72px; }
+.lp-sec h2 { margin: 0; font: 800 var(--fs-6)/1 var(--face-display); letter-spacing: calc(-.035em * var(--display-track, 1)); color: var(--ink); text-wrap: balance; }
+
+/* the figures: the number leads, the claim follows, the source opens beneath the line it belongs to */
+.figs { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 6px; max-width: 74ch; }
+.fig { margin: 0; }
+.fig details { padding: 0; }
+.fig summary { display: block; list-style: none; cursor: pointer; padding: 8px 0; min-height: 44px; font: 400 var(--fs-4)/1.4 var(--face-text); color: var(--ink); }
+.fig summary::-webkit-details-marker { display: none; }
+.fig-n { font: 800 var(--fs-5)/1.05 var(--face-display); letter-spacing: calc(-.02em * var(--display-track, 1)); margin-right: .3em; text-decoration: underline dotted 2px; text-underline-offset: .18em; }
+.fig summary:hover .fig-n, .fig details[open] .fig-n { text-decoration-style: solid; }
+.fig[data-state="open"] .fig-n { text-decoration-style: dashed; }
+.lp p.fig-src { margin: 0 0 10px; padding-left: 1.1em; max-width: 66ch; font: 400 var(--fs-3)/1.55 var(--face-text); color: var(--soft); border-left: 1px solid var(--line); }
+.fig-src a { color: var(--ink); }
+
+.lp-pkgs { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 26px; max-width: 74ch; }
+.lp-pkgs li { margin: 0; font: 600 var(--fs-3)/1.4 var(--face-utility); color: var(--ink); }
+.lp-v { font: 400 var(--fs-1)/1 var(--face-utility); color: var(--soft); }
+.lp-code { margin: 0; padding: 0 0 0 1.1em; border-left: 1px solid var(--line); overflow-x: auto; white-space: pre; max-width: 100%; }
+.lw-eras { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.lw-eras li { margin: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; font: 400 var(--fs-4)/1.3 var(--face-text); color: var(--ink); }
+.lw-eras b { font: 800 var(--fs-5)/1.1 var(--face-display); letter-spacing: calc(-.02em * var(--display-track, 1)); }
+.lw-n { font: 400 var(--fs-2)/1 var(--face-utility); color: var(--soft); min-width: 1.4em; }
+.lp p.lp-verified { margin: clamp(56px, 10vh, 112px) 0 0; max-width: 74ch; font: 400 var(--fs-3)/1.55 var(--face-text); color: var(--ink); }
+.lp-verified b { margin-right: .35em; }
+.lp p.lp-ways-end { margin-top: 40px; }
+
+@media (max-width: 860px) {
+  .lp-head { min-height: 52vh; }
+  .lp p.lp-lede-1 { font-size: var(--fs-4); }
+  .fig summary { font-size: var(--fs-3); }
+  .lp p.lp-lede { font-size: var(--fs-3); }
+  .fig-n { font-size: var(--fs-4); }
+}
+@media (forced-colors: active) { .fig-n { text-decoration-color: CanvasText; } }
+
+/* the toys: a piece of the product to play with, in place. Controls are words and drawn forms on the water, each a
+   real button or input, so keys, taps and screen readers reach every one. */
+.lp h3.lp-h3 { margin: 24px 0 0; font: 800 var(--fs-5)/1.1 var(--face-display); color: var(--ink); }
+.toy { display: grid; gap: 14px; max-width: 74ch; }
+.toy-set { border: 0; padding: 0; margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 26px; }
+.toy-set legend { padding: 0; margin: 0 0 6px; font: 600 var(--fs-3)/1.4 var(--face-text); color: var(--ink); }
+.toy-pick { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; font: 400 var(--fs-3)/1 var(--face-text); color: var(--ink); cursor: pointer; }
+.toy-pick input { width: 22px; height: 22px; margin: 0; accent-color: var(--ink); }
+.lp p.toy-verdict { font: 700 var(--fs-4)/1.35 var(--face-text); color: var(--ink); min-height: 1.35em; }
+.toy-out { color: var(--soft); }
+.toy-row { display: flex; flex-wrap: wrap; align-items: center; gap: 24px 40px; }
+.tell-arc { width: clamp(140px, 18vw, 220px); height: auto; flex: none; }
+.tell-ring { fill: none; stroke: var(--line); stroke-width: 3; }
+.tell-fill { fill: none; stroke: var(--ink); stroke-width: 7; stroke-linecap: round; }
+.toy-side { display: grid; gap: 10px; }
+.lp p.tell-count { font: 400 var(--fs-3)/1 var(--face-utility); color: var(--soft); }
+.lp p.toy-buttons { display: flex; flex-wrap: wrap; gap: 4px 22px; }
+.toy-btn { min-height: 44px; padding: 0; border: 0; background: none; color: var(--ink); cursor: pointer; font: 700 var(--fs-3)/1 var(--face-text); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .3em; text-shadow: inherit; }
+.toy-btn:hover { text-decoration-thickness: 2px; }
+.toy-btn:disabled { color: var(--soft); text-decoration-style: dotted; cursor: default; }
+.toy-btn:focus-visible, .toy-pick:focus-within { outline: 3px solid var(--ink); outline-offset: 3px; }
+.toy-snd[aria-pressed="true"] { text-decoration-style: solid; }
+.toy-snd[aria-pressed="false"] { font-weight: 500; }
+
+/* package and file names stay whole on narrow screens (tests/test_ident_tokens.py) */
+.ident{display:inline-block;max-width:100%;overflow-wrap:anywhere;text-decoration:inherit}
+
+/* a 4K screen at 100% scaling: lay the page out as it reads at 1920, at twice the size, so the type, the hand and
+   the measure keep their proportions instead of shrinking into the middle of a 3840-pixel field */
+@media (min-width: 2560px) and (max-width: 3199px) and (max-resolution: 1.4dppx) { html { zoom: 1.5; } }
+@media (min-width: 3200px) and (max-resolution: 1.4dppx) { html { zoom: 2; } }
+
+/* the registry field: ten marks, the shape saying where each came from; the pressed one is filled */
+.rgy { display: grid; gap: 14px; max-width: 74ch; }
+.rgy-field { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 22px; }
+.rgy-mark { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0; border: 0; background: none; color: var(--ink); cursor: pointer; font: 600 var(--fs-3)/1.2 var(--face-utility); text-shadow: inherit; }
+.rgy-mark svg, .rgy-key svg { width: 28px; height: 28px; flex: none; fill: none; stroke: currentColor; stroke-width: 2.5; }
+.rgy-mark[aria-pressed="true"] svg { fill: currentColor; }
+.rgy-mark:hover svg { stroke-width: 3.5; }
+.rgy-mark:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+.lp p.rgy-check { font: 400 var(--fs-4)/1.4 var(--face-text); color: var(--ink); min-height: 2.8em; }
+.rgy-key { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 4px 22px; font: 400 var(--fs-2)/1.4 var(--face-text); color: var(--soft); }
+.rgy-key li { display: inline-flex; align-items: center; gap: 6px; }
+.rgy-key svg { width: 18px; height: 18px; stroke-width: 3; }
+/* a pair of frames to switch between */
+.pair { margin: 8px 0 0; display: grid; gap: 12px; max-width: 760px; }
+.pair-buttons { display: flex; gap: 4px 22px; flex-wrap: wrap; }
+.pair-frames img { display: block; width: 100%; height: auto; }
+.pair:not(.pair-on) .pair-frames { display: grid; gap: 12px; }
+.pair figcaption { font: 400 var(--fs-3)/1.5 var(--face-text); color: var(--soft); max-width: 66ch; }
+.toy-btn[aria-pressed="true"] { text-decoration-thickness: 3px; }
+.lp .figs + p.lp-limit { margin-top: 14px; }
+.pair-frames img[hidden] { display: none; }
+.pair-buttons { border: 0; padding: 0; margin: 0; }
+.lp .pair .pair-buttons { border: 0; }
+.lp .pair .pair-frames { border: 0; padding: 0; }
+.lp .pair { grid-template-columns: minmax(0, 1fr); }

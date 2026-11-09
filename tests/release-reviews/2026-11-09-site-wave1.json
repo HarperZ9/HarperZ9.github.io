@@ -1,0 +1,12 @@
+{
+  "date": "2026-11-09",
+  "note": "Wave 1 after review: rebased on #483 and #487; the field runs the full page; one left edge; CMMNS and Articulate with Flywheel; shorter words; registry field, light pair and dial links; release states refreshed (#160, #161, #162 merged).",
+  "paths": {
+    "index.html": "0af10ce756e5f367aa3b93656fb7bc64356274a4b904c0d73c01adca45986e64",
+    "publications/build.json": "d87e14800b52ed669190880d6a6d3b86add91831f5021b60947750e02c904bb7",
+    "site-index.html": "3601513b344d82a9fa1fb71e9b4c3212c936122e0956906236f7c57ecef0c988",
+    "sitemap.xml": "02343f379edd0b168e232f3aa049f8b9a8382b3a39c6fbc63109a7b5bdaff606",
+    "system/routes.js": "fc292e82d3cdd5442c8a1c7143e1b14b5313bb31f94b920a567d5f7e02d858db",
+    "system/system.css": "292d1299ff4e7821ddeb251ba6ba1bf0e677804f607b719eb4b4837719e13839"
+  }
+}

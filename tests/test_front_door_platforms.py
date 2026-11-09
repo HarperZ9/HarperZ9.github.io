@@ -25,8 +25,10 @@ def test_every_platform_row_is_complete_and_its_links_resolve():
     rows = _platforms()
     assert len(rows) >= 5
     for p in rows:
-        assert p["name"] and p["what"] and p["see"] and p["more"], p["id"]
+        assert p["product"] and p["what"] and p["see"] and p["more"], p["id"]
         for href in (p["see"][0], p["more"][0]):
+            if href.startswith("#"):
+                continue
             if href.startswith("/"):
                 target = ROOT / href.split("#")[0].lstrip("/")
                 assert target.exists() or (target / "index.html").exists(), f"{p['id']}: {href} does not exist"
@@ -47,7 +49,31 @@ def test_the_rows_keep_the_public_voice():
 
 def test_the_home_page_carries_every_platform():
     home = (ROOT / "index.html").read_text(encoding="utf-8")
-    assert 'id="work"' in home and 'href="#work"' in home
+    assert 'id="work"' in home
+    # the six landmarks, in the author's order (2026-11-09), lead the arrival's ways in and sit on the page in order
+    order = ["lm-buildlang", "lm-flywheel", "lm-engine", "lm-game", "site", "everything"]
+    for anchor in order:
+        assert f'href="#{anchor}"' in home and f'id="{anchor}"' in home, anchor
+    positions = [home.index(f'id="{anchor}"') for anchor in order]
+    assert positions == sorted(positions), "the landmarks are out of their fixed order"
     for p in _platforms():
         assert f'id="pf-{p["id"]}"' in home, p["id"]
     assert home.count('id="say"') <= 1, "the home has at most one live region"
+
+
+def test_the_menu_leads_with_the_six_landmarks_on_every_generated_page():
+    """Landmarks keep their place (DESIGN-RULES.md): the same six words, in the same order, on every page."""
+    words = ["BuildLang", "Flywheel", "Engine", "Game", "Site", "Everything"]
+    for page in ("index.html", "buildlang.html", "low-water.html", "floor.html", "credits.html"):
+        html = (ROOT / page).read_text(encoding="utf-8")
+        menu = html.split('<ul class="o-places">', 1)[1].split("</ul>", 1)[0]
+        found = re.findall(r'<span class="o-word"[^>]*>([^<]+)</span>', menu)
+        assert found[:6] == words, (page, found[:6])
+
+
+def test_the_home_versions_come_from_the_fetched_releases():
+    releases = json.loads((ROOT / "site-src" / "world" / "releases.json").read_text(encoding="utf-8"))["products"]
+    home = (ROOT / "index.html").read_text(encoding="utf-8")
+    for pid in ("buildlang", "flywheel", "raw-native", "superframe", "cmmns", "articulate"):
+        g = releases[pid]["github"]
+        assert f'href="{g["url"]}">{g["version"]}</a>' in home, pid

@@ -46,12 +46,12 @@ export function camera(el, onChange) {
   cam.stop = () => { if (cam.anim) { const a = cam.anim; cam.anim = null; a.done(); } };  // a hand on the map takes over
   cam.fitAll = (ms) => cam.go(WORLD.w / 2, WORLD.h / 2, cam.fit, ms);
 
-  // Input: wheel zooms about the pointer; drag pans; two pointers pinch.
+  // Input: a plain wheel is the page's own scroll and is never taken; a pinch or ctrl+wheel zooms about the
+  // pointer; drag pans; two pointers pinch. (Author, 2026-11-09, on native scroll for the map: "yes".)
   const pts = new Map(); let pinch = null, moved = 0;
   el.addEventListener("wheel", (e) => {
+    if (!e.ctrlKey) return;
     e.preventDefault(); cam.stop();
-    // a plain scroll travels the tour (nav.js) at the wheel's own speed; a pinch or ctrl+wheel changes depth
-    if (!e.ctrlKey && cam.onScroll) { cam.onScroll(e.deltaY * (e.deltaMode === 1 ? 40 : e.deltaMode === 2 ? 800 : 1)); return; }
     const [wx, wy] = cam.toWorld(e.offsetX, e.offsetY), f = Math.exp(-e.deltaY * 0.0015);
     cam.k *= f; cam.clamp();
     const [nx, ny] = cam.toWorld(e.offsetX, e.offsetY); cam.x += wx - nx; cam.y += wy - ny; cam.clamp(); onChange();

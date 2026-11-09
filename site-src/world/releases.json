@@ -1,0 +1,257 @@
+{
+ "checkedAt": "2026-11-09T05:35:29Z",
+ "products": {
+  "buildlang": {
+   "id": "buildlang",
+   "github": {
+    "repo": "HarperZ9/buildlang",
+    "tag": "v1.11.0",
+    "version": "1.11.0",
+    "published": "2026-11-09",
+    "publishedAt": "2026-11-09T00:14:45Z",
+    "url": "https://github.com/HarperZ9/buildlang/releases/tag/v1.11.0"
+   },
+   "registry": {
+    "kind": "crates",
+    "name": "buildlang",
+    "version": "1.11.0",
+    "url": "https://crates.io/crates/buildlang/1.11.0"
+   }
+  },
+  "flywheel": {
+   "id": "flywheel",
+   "github": {
+    "repo": "HarperZ9/flywheel",
+    "tag": "v1.9.0",
+    "version": "1.9.0",
+    "published": "2026-10-15",
+    "publishedAt": "2026-10-15T19:02:40Z",
+    "url": "https://github.com/HarperZ9/flywheel/releases/tag/v1.9.0"
+   },
+   "registry": {
+    "kind": "pypi",
+    "name": "flywheel-verify",
+    "version": "1.9.0",
+    "url": "https://pypi.org/project/flywheel-verify/1.9.0/"
+   }
+  },
+  "raw-native": {
+   "id": "raw-native",
+   "github": {
+    "repo": "HarperZ9/raw-native",
+    "tag": "v0.8.0",
+    "version": "0.8.0",
+    "published": "2026-10-14",
+    "publishedAt": "2026-10-14T21:07:35Z",
+    "url": "https://github.com/HarperZ9/raw-native/releases/tag/v0.8.0",
+    "asset": {
+     "name": "raw-native-0.8.0-windows-x64.zip",
+     "attached": true
+    }
+   }
+  },
+  "superframe": {
+   "id": "superframe",
+   "github": {
+    "repo": "HarperZ9/superframe",
+    "tag": "v0.2.0",
+    "version": "0.2.0",
+    "published": "2026-10-28",
+    "publishedAt": "2026-10-28T08:22:21Z",
+    "url": "https://github.com/HarperZ9/superframe/releases/tag/v0.2.0"
+   }
+  },
+  "cmmns": {
+   "id": "cmmns",
+   "github": {
+    "repo": "HarperZ9/cmmns",
+    "tag": "v3.9.1",
+    "version": "3.9.1",
+    "published": "2026-10-28",
+    "publishedAt": "2026-10-28T21:18:39Z",
+    "url": "https://github.com/HarperZ9/cmmns/releases/tag/v3.9.1",
+    "asset": {
+     "name": "cmmns-chrome-3.9.1.zip",
+     "attached": true
+    }
+   }
+  },
+  "articulate": {
+   "id": "articulate",
+   "github": {
+    "repo": "HarperZ9/articulate",
+    "tag": "v0.18.0",
+    "version": "0.18.0",
+    "published": "2026-11-05",
+    "publishedAt": "2026-11-05T02:57:25Z",
+    "url": "https://github.com/HarperZ9/articulate/releases/tag/v0.18.0"
+   },
+   "registry": {
+    "kind": "pypi",
+    "name": "articulate-writing",
+    "version": "0.18.0",
+    "url": "https://pypi.org/project/articulate-writing/0.18.0/"
+   }
+  },
+  "low-water": {
+   "id": "low-water",
+   "prs": [
+    {
+     "repo": "HarperZ9/raw-native",
+     "number": 239,
+     "title": "Action-timeline core with JS parity (raw/game/action, action-dump)",
+     "merged": true,
+     "mergedAt": "2026-11-08",
+     "mergedTime": "2026-11-08T04:41:03Z",
+     "commit": "ab0e692",
+     "url": "https://github.com/HarperZ9/raw-native/pull/239"
+    },
+    {
+     "repo": "HarperZ9/raw-native",
+     "number": 242,
+     "title": "Hit volumes from clip markers (G3) and telegraph retiming as data (G5)",
+     "merged": true,
+     "mergedAt": "2026-11-09",
+     "mergedTime": "2026-11-09T00:13:14Z",
+     "commit": "7cfc64a",
+     "url": "https://github.com/HarperZ9/raw-native/pull/242"
+    },
+    {
+     "repo": "HarperZ9/buildlang",
+     "number": 135,
+     "title": "M4 C ABI: opaque handles, and the Low Water rules module in BuildLang",
+     "merged": true,
+     "mergedAt": "2026-11-08",
+     "mergedTime": "2026-11-08T04:53:44Z",
+     "commit": "d9ea546",
+     "url": "https://github.com/HarperZ9/buildlang/pull/135"
+    },
+    {
+     "repo": "HarperZ9/buildlang",
+     "number": 158,
+     "title": "bench5: M3 and M4 scored on 1.11.0",
+     "merged": true,
+     "mergedAt": "2026-11-09",
+     "mergedTime": "2026-11-09T01:16:08Z",
+     "commit": "3c7cc54",
+     "url": "https://github.com/HarperZ9/buildlang/pull/158"
+    }
+   ]
+  },
+  "buildlang-page": {
+   "id": "buildlang-page",
+   "prs": [
+    {
+     "repo": "HarperZ9/buildlang",
+     "number": 118,
+     "title": "buildc bql: a compiled program as BuildDB tables, and the 2026-11 vision",
+     "merged": true,
+     "mergedAt": "2026-11-04",
+     "mergedTime": "2026-11-04T06:58:54Z",
+     "commit": "0caed2d",
+     "url": "https://github.com/HarperZ9/buildlang/pull/118"
+    },
+    {
+     "repo": "HarperZ9/buildlang",
+     "number": 119,
+     "title": "bql verify: an incremental store checked against a rebuild",
+     "merged": true,
+     "mergedAt": "2026-11-05",
+     "mergedTime": "2026-11-05T02:27:34Z",
+     "commit": "0246f5b",
+     "url": "https://github.com/HarperZ9/buildlang/pull/119"
+    },
+    {
+     "repo": "HarperZ9/buildlang",
+     "number": 135,
+     "title": "M4 C ABI: opaque handles, and the Low Water rules module in BuildLang",
+     "merged": true,
+     "mergedAt": "2026-11-08",
+     "mergedTime": "2026-11-08T04:53:44Z",
+     "commit": "d9ea546",
+     "url": "https://github.com/HarperZ9/buildlang/pull/135"
+    },
+    {
+     "repo": "HarperZ9/buildlang",
+     "number": 136,
+     "title": "M5: par_for and par_map with a checked empty effect row",
+     "merged": true,
+     "mergedAt": "2026-11-08",
+     "mergedTime": "2026-11-08T05:20:26Z",
+     "commit": "bbcf9dd",
+     "url": "https://github.com/HarperZ9/buildlang/pull/136"
+    },
+    {
+     "repo": "HarperZ9/buildlang",
+     "number": 137,
+     "title": "feat(pkg): publish, resolve, lock and build packages offline",
+     "merged": true,
+     "mergedAt": "2026-11-08",
+     "mergedTime": "2026-11-08T18:30:26Z",
+     "commit": "585ed28",
+     "url": "https://github.com/HarperZ9/buildlang/pull/137"
+    },
+    {
+     "repo": "HarperZ9/buildlang",
+     "number": 138,
+     "title": "Laws and contracts, checked by the compiler",
+     "merged": true,
+     "mergedAt": "2026-11-09",
+     "mergedTime": "2026-11-09T01:50:59Z",
+     "commit": "25d1171",
+     "url": "https://github.com/HarperZ9/buildlang/pull/138"
+    },
+    {
+     "repo": "HarperZ9/buildlang",
+     "number": 156,
+     "title": "feat(registry): canonical-record, color, repo-art, readability and art-receipts packages",
+     "merged": true,
+     "mergedAt": "2026-11-09",
+     "mergedTime": "2026-11-09T00:30:42Z",
+     "commit": "b1a4df2",
+     "url": "https://github.com/HarperZ9/buildlang/pull/156"
+    },
+    {
+     "repo": "HarperZ9/buildlang",
+     "number": 158,
+     "title": "bench5: M3 and M4 scored on 1.11.0",
+     "merged": true,
+     "mergedAt": "2026-11-09",
+     "mergedTime": "2026-11-09T01:16:08Z",
+     "commit": "3c7cc54",
+     "url": "https://github.com/HarperZ9/buildlang/pull/158"
+    },
+    {
+     "repo": "HarperZ9/buildlang",
+     "number": 160,
+     "title": "feat(registry): Low Water kernels as AGPL packages",
+     "merged": true,
+     "mergedAt": "2026-11-09",
+     "mergedTime": "2026-11-09T02:53:29Z",
+     "commit": "217224f",
+     "url": "https://github.com/HarperZ9/buildlang/pull/160"
+    },
+    {
+     "repo": "HarperZ9/buildlang",
+     "number": 161,
+     "title": "Translation validation for the C backend",
+     "merged": true,
+     "mergedAt": "2026-11-09",
+     "mergedTime": "2026-11-09T02:33:51Z",
+     "commit": "6c90a98",
+     "url": "https://github.com/HarperZ9/buildlang/pull/161"
+    },
+    {
+     "repo": "HarperZ9/buildlang",
+     "number": 162,
+     "title": "fix: unannotated integer let takes the checker's inferred type (#159)",
+     "merged": true,
+     "mergedAt": "2026-11-09",
+     "mergedTime": "2026-11-09T05:29:48Z",
+     "commit": "5bb8fad",
+     "url": "https://github.com/HarperZ9/buildlang/pull/162"
+    }
+   ]
+  }
+ }
+}

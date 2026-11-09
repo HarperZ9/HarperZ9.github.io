@@ -45,7 +45,9 @@ function loop(now) { raf = 0; cur = RM ? target : cur + (target - cur) * .14; if
 const kick = () => { if (!raf) raf = requestAnimationFrame(loop); };
 ['pointermove', 'pointerdown', 'keydown'].forEach(ev => $('art').addEventListener(ev, kick));
 const goStep = n => scrollTo({ top: clamp(n, 0, N) * stepPx(), behavior: RM ? 'auto' : 'smooth' });
-addEventListener('scroll', () => { target = clamp(scrollY / stepPx(), 0, N); kick(); clearTimeout(idleT); idleT = setTimeout(() => { const n = Math.round(target); if (Math.abs(target - n) > .01) goStep(n); }, 200); }, { passive: true });
+// the scroll is the reader's: the scale follows it and never pulls the page to a step on its own (site scroll audit,
+// 2026-11-09); the buttons and keys still go step by step
+addEventListener('scroll', () => { target = clamp(scrollY / stepPx(), 0, N); kick(); }, { passive: true });
 addEventListener('resize', () => { fit(); target = clamp(scrollY / stepPx(), 0, N); kick(); });
 $('prev').onclick = () => goStep(Math.round(target) - 1); $('next').onclick = () => goStep(Math.round(target) + 1);
 addEventListener('keydown', e => { if (e.target.closest && e.target.closest('button, a, input')) return; const k = e.key, fwd = ['ArrowDown', 'ArrowRight', 'PageDown', ' '].includes(k), back = ['ArrowUp', 'ArrowLeft', 'PageUp'].includes(k);

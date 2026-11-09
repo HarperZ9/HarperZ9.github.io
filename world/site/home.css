@@ -14,7 +14,7 @@
 body.past-road .road, body.past-road .strata, body.past-road .carry { opacity: 0; }
 .crossing { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 1; pointer-events: none; }
 .place-in { position: relative; z-index: 2; }
-.place-words h2, .laws li, .place-words, .arrival h1, .platforms > h2 { text-shadow: 0 0 14px var(--halo), 0 0 4px var(--halo), 0 0 1px var(--halo), 0 0 22px var(--halo); }
+.place-words h3, .laws li, .place-words, .arrival h1, .lm-word, .lm-floor { text-shadow: 0 0 14px var(--halo), 0 0 4px var(--halo), 0 0 1px var(--halo), 0 0 22px var(--halo); }
 html.plain .crossing, html.plain .uncover { display: none; }
 
 /* the places: motion first, then the place's name, its laws and the ways in */
@@ -28,7 +28,7 @@ html.plain .crossing, html.plain .uncover { display: none; }
 .lead-box video.lead { aspect-ratio: 16 / 9; object-fit: cover; background: var(--wall); }
 .lead-box .uncover { position: absolute; inset: 0; width: 100%; height: 100%; image-rendering: pixelated; transition: opacity .4s ease; }
 .place-words { display: grid; gap: 18px; align-content: start; }
-.place-words h2 { margin: 0; font: 800 var(--fs-6)/1.02 var(--face-display); letter-spacing: calc(-.035em * var(--display-track, 1)); color: var(--ink); text-wrap: balance; }
+.place-words h3 { margin: 0; font: 800 var(--fs-6)/1.02 var(--face-display); letter-spacing: calc(-.035em * var(--display-track, 1)); color: var(--ink); text-wrap: balance; }
 .laws { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; max-width: 52ch; }
 .laws li { font: 400 var(--fs-3)/1.5 var(--face-text); color: var(--ink); padding: 0; }
 
@@ -74,7 +74,24 @@ html.plain .crossing, html.plain .uncover { display: none; }
 
 /* the work: one row per platform, a plate beside its words; the row is the way in */
 .platforms { position: relative; z-index: 2; padding: clamp(56px, 10vh, 120px) clamp(16px, 4vw, 56px) clamp(48px, 8vh, 96px); }
-.platforms > h2 { max-width: 1360px; margin: 0 auto clamp(24px, 4vh, 48px); font: 800 var(--fs-6)/1 var(--face-display); letter-spacing: calc(-.035em * var(--display-track, 1)); color: var(--ink); }
+/* a landmark: its word in display type at one size and one place, every visit; the field around it changes, the
+   word does not (DESIGN-RULES: landmarks keep their place). Its edge is the space and the rule of the type, no box.
+   Every landmark, every place, the arrival and the dial share one left edge: the page's gutter. */
+.landmarks { position: relative; z-index: 2; padding-bottom: clamp(24px, 4vh, 48px); }
+.lm { position: relative; z-index: 2; scroll-margin-top: 72px; }
+.lm-in { box-sizing: border-box; max-width: none; margin: 0; padding: clamp(40px, 8vh, 96px) clamp(16px, 4vw, 56px) 0; }
+.lm-word { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 18px; margin: 0 0 clamp(4px, 1vh, 12px); font: 800 var(--fs-7, var(--fs-6))/.95 var(--face-display); letter-spacing: calc(-.04em * var(--display-track, 1)); color: var(--ink); }
+.lm-word .pf-mark { font-size: var(--fs-1); letter-spacing: .08em; }
+.lm .pf { padding-block: clamp(14px, 2.5vh, 28px); }
+.lm-site > .bazaar { padding-top: 4vh; }
+.lm-everything { padding-bottom: clamp(24px, 4vh, 48px); }
+.lm-floor { margin: clamp(16px, 3vh, 32px) 0 0; font: 700 var(--fs-3)/1.4 var(--face-text); }
+.lm-floor a { color: var(--ink); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .3em; min-height: 44px; display: inline-flex; align-items: center; }
+.lm-floor a:hover { text-decoration-thickness: 2px; }
+.lm-floor a:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+a.pf-ver { text-decoration: underline dotted 1px; text-underline-offset: .3em; }
+a.pf-ver:hover { text-decoration-style: solid; }
+a.pf-ver:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
 .pf-list { list-style: none; margin: 0 auto; padding: 0; max-width: 1360px; }
 .pf { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(16px, 3vw, 40px); padding: clamp(28px, 5vh, 56px) 0; align-items: start; text-shadow: 0 0 14px var(--halo), 0 0 4px var(--halo), 0 0 1px var(--halo), 0 0 22px var(--halo); }
 .pf-words { display: grid; gap: 12px; align-content: start; max-width: 68ch; }
@@ -96,6 +113,7 @@ html.plain .crossing, html.plain .uncover { display: none; }
 .pf-verified b { color: var(--ink); margin-right: .3em; }
 @media (max-width: 600px) {
   .pf-name { font-size: var(--fs-4); }
+  .lm-word { font-size: var(--fs-6); }
   .arrival-lede { font-size: var(--fs-3); }
 }
 @media (prefers-reduced-motion: reduce) { .pf-ways a { transition: none; } }
@@ -143,3 +161,17 @@ html.plain
 .sky-status{font-weight:600}
 .sky-end{display:flex;gap:10px;flex-wrap:wrap}
 .sky-row[hidden]{display:none}
+
+/* a 4K screen at 100% scaling: lay the page out as it reads at 1920, at twice the size, so the type, the hand and
+   the measure keep their proportions instead of shrinking into the middle of a 3840-pixel field */
+@media (min-width: 2560px) and (max-width: 3199px) and (max-resolution: 1.4dppx) { html { zoom: 1.5; } }
+@media (min-width: 3200px) and (max-resolution: 1.4dppx) { html { zoom: 2; } }
+
+/* one left edge for the whole home: the places start at the page's gutter like the arrival, the dial and the
+   landmarks, and their lead media take the width that frees */
+.place-in, .place:nth-child(even) .place-in { max-width: none; margin: 0; }
+
+/* the dial sits in the field: no wall of its own, so the water runs from the arrival through the dial to the end of
+   the page; the words keep the field's halo */
+.world-home .work { background: none; text-shadow: 0 0 14px var(--halo), 0 0 4px var(--halo), 0 0 1px var(--halo), 0 0 22px var(--halo); }
+.world-home .work :is(button, .w-try, .w-out, pre, figure img) { text-shadow: none; }

@@ -318,6 +318,60 @@
       "find": "    btn.querySelector(\".o-name\").textContent = dark ? \"Lamp on\" : \"Lamp off\";",
       "replace": "    btn.querySelector(\".o-name\").textContent = \"Day\"; // a toggle: pressed in daylight, its name says what it sets",
       "why": "the author, 2026-11-03, on the hand's icons: \"I can't really tell what each one does either\"; the lamp's name is the word under it"
+    },
+    {
+      "file": "2026-10-23-universe/lib/camera.js",
+      "find": "  // Input: wheel zooms about the pointer; drag pans; two pointers pinch.\n  const pts = new Map(); let pinch = null, moved = 0;\n  el.addEventListener(\"wheel\", (e) => {\n    e.preventDefault(); cam.stop();\n    // a plain scroll travels the tour (nav.js) at the wheel's own speed; a pinch or ctrl+wheel changes depth\n    if (!e.ctrlKey && cam.onScroll) { cam.onScroll(e.deltaY * (e.deltaMode === 1 ? 40 : e.deltaMode === 2 ? 800 : 1)); return; }\n    const [wx, wy]",
+      "replace": "  // Input: a plain wheel is the page's own scroll and is never taken; a pinch or ctrl+wheel zooms about the\n  // pointer; drag pans; two pointers pinch. (Author, 2026-11-09, on native scroll for the map: \"yes\".)\n  const pts = new Map(); let pinch = null, moved = 0;\n  el.addEventListener(\"wheel\", (e) => {\n    if (!e.ctrlKey) return;\n    e.preventDefault(); cam.stop();\n    const [wx, wy]",
+      "why": "site scroll audit 2026-11-09 (author: \"yes\" to native scroll on the map): the plain wheel stays the page scroll"
+    },
+    {
+      "file": "2026-10-23-universe/lib/nav.js",
+      "find": "// Scrolling moves tau one to one with the wheel's own pixels, so the platform's speed and momentum carry it;\n// nothing snaps and nothing traps: back, forward, Escape and the index always work.",
+      "replace": "// The wheel is the page's own scroll and never moves the tour (author, 2026-11-09: \"yes\" to native scroll). The tour\n// moves by its keys (PageDown and PageUp, j and k, Space, Home, End, 1 to 7) and by the place list under the map;\n// nothing snaps and nothing traps: back, forward, Escape and the index always work.",
+      "why": "site scroll audit 2026-11-09: the tour no longer rides the wheel"
+    },
+    {
+      "file": "2026-10-23-universe/lib/nav.js",
+      "find": "const PX_PER_PLACE = 520;  // wheel pixels between two places: about one long trackpad flick\n",
+      "replace": "",
+      "why": "site scroll audit 2026-11-09: no wheel-driven tour, so no wheel distance per place"
+    },
+    {
+      "file": "2026-10-23-universe/lib/nav.js",
+      "find": "  cam.onScroll = (dy) => {\n    if (document.querySelector(\".room-layer:not(.standby)\")) return;  // inside a place, the page scrolls itself\n    const tau = (S.tau = Math.min(N - 1, Math.max(-1, S.tau + dy / PX_PER_PLACE)));\n    const p = placeAt(tau); cam.x = p.x; cam.y = p.y; cam.k = p.k; cam.clamp();\n    here.progress((tau + 1) / N); S.onCam?.();\n    const near = Math.round(tau), d = Math.abs(tau - near);\n    const id = near >= 0 && d < 0.22 ? tour[near] : null;\n    if (id !== last) {\n      last = id;\n      if (id) { quietFocus(id); history.replaceState({ n: id }, \"\", `?n=${encodeURIComponent(id)}`); announce(where(id)); }\n      else if (tau < -0.5) { unfocus(); history.replaceState({}, \"\", location.pathname); announce(`The whole map. ${N} places.`); }\n      else unfocus();\n    }\n    S.dirty = true;\n  };\n\n",
+      "replace": "",
+      "why": "site scroll audit 2026-11-09: the wheel handler that drove the tour is gone"
+    },
+    {
+      "file": "2026-10-23-universe/lib/nav.js",
+      "find": "  return { tour, go };\n}",
+      "replace": "  // the place list: the tour as words under the map, each one a way to its place (keys and taps reach it too)\n  const list = document.createElement(\"nav\");\n  list.className = \"tour-list\"; list.setAttribute(\"aria-label\", \"The tour\");\n  list.innerHTML = `<h2 class=\"tour-h\">The tour</h2><ol>${tour.map((id, i) => `<li><button type=\"button\" data-i=\"${i}\"><span class=\"tour-n\">${i + 1}</span> ${u.byId.get(id).title.replace(/[&<>]/g, (c) => ({ \"&\": \"&amp;\", \"<\": \"&lt;\", \">\": \"&gt;\" }[c]))}</button></li>`).join(\"\")}</ol><p class=\"tour-keys\">Keys: PageDown and PageUp, or 1 to ${N}.</p>`;\n  list.addEventListener(\"click\", (e) => { const b = e.target.closest(\"button[data-i]\"); if (b) { document.getElementById(\"stage\")?.scrollIntoView({ block: \"start\" }); go(+b.dataset.i); } });\n  document.getElementById(\"main\")?.after(list);\n  return { tour, go };\n}",
+      "why": "site scroll audit 2026-11-09: the place list moves the tour"
+    },
+    {
+      "file": "2026-10-23-universe/lib/nav.js",
+      "find": "    const k = e.key;\n    if (k === \"PageDown\"",
+      "replace": "    const k = e.key;\n    // the page's own scroll keys move the tour only while the map has focus; elsewhere they scroll the page\n    const onStage = !!e.target.closest?.(\"#stage\");\n    if (!onStage && [\"PageDown\", \"PageUp\", \" \", \"Home\", \"End\"].includes(k)) return;\n    if (k === \"PageDown\"",
+      "why": "site scroll audit 2026-11-09: scroll keys stay the page scroll off the map"
+    },
+    {
+      "file": "2026-10-23-universe/lib/nav.js",
+      "find": "<p class=\"tour-keys\">Keys: PageDown and PageUp, or 1 to ${N}.</p>",
+      "replace": "<p class=\"tour-keys\">Keys: j and k, or 1 to ${N}; on the map, PageDown and PageUp too.</p>",
+      "why": "site scroll audit 2026-11-09: the place list names its keys"
+    },
+    {
+      "file": "2026-10-23-universe/proto/u.css",
+      "find": "body.universe { height: 100dvh; display: flex; flex-direction: column; overflow: hidden; }",
+      "replace": "/* the page scrolls natively: the map fills the first screen and the tour's place list follows under it\n   (author, 2026-11-09: \"yes\" to native scroll on the map) */\nbody.universe { min-height: 100dvh; display: block; }\nbody.universe > main { height: 100dvh; }\n.tour-list { position: relative; z-index: 2; max-width: 1360px; margin: 0 auto; padding: 48px clamp(16px, 4vw, 56px) 96px; }\n.tour-h { margin: 0 0 12px; font: 800 var(--fs-5)/1.05 var(--face-display); }\n.tour-list ol { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 4px 26px; }\n.tour-list button { min-height: 44px; padding: 0; border: 0; background: none; color: var(--ink); cursor: pointer; font: 600 var(--fs-3)/1.2 var(--face-text); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .3em; }\n.tour-list button:hover { text-decoration-thickness: 2px; }\n.tour-list button:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }\n.tour-n { font: 400 var(--fs-1)/1 var(--face-utility); margin-right: 4px; }\n.tour-keys { margin: 16px 0 0; font: 400 var(--fs-2)/1.5 var(--face-text); color: var(--soft); }\n@media (max-width: 860px) { body.universe > main { height: 84dvh; } }",
+      "why": "site scroll audit 2026-11-09: native page scroll on the map, with the place list under it"
+    },
+    {
+      "file": "2026-10-23-phase-design/pieces/powers.js",
+      "find": "addEventListener('scroll', () => { target = clamp(scrollY / stepPx(), 0, N); kick(); clearTimeout(idleT); idleT = setTimeout(() => { const n = Math.round(target); if (Math.abs(target - n) > .01) goStep(n); }, 200); }, { passive: true });",
+      "replace": "// the scroll is the reader's: the scale follows it and never pulls the page to a step on its own (site scroll audit,\n// 2026-11-09); the buttons and keys still go step by step\naddEventListener('scroll', () => { target = clamp(scrollY / stepPx(), 0, N); kick(); }, { passive: true });",
+      "why": "site scroll audit 2026-11-09: no idle snap; the page moves only when the reader moves it"
     }
   ]
 }
