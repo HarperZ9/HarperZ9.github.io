@@ -4,6 +4,10 @@ name: publish-metadata
 # a fetch header, or author fields in images, PDFs and Office files. Findings
 # that already existed are frozen in .github/publish-metadata-baseline.json,
 # which may only shrink. The checker is Flywheel's, pinned by commit.
+# tools/publish_metadata_site_gate.py runs it with .github/publish-metadata-allow.json:
+# the author's own contact address may appear on the site (the author, 2026-11-09:
+# "It's my lab site. All my personal information and contact information can stay.").
+# Fetch headers stay blocked for every address.
 on:
   push:
     branches: [main]
@@ -27,5 +31,5 @@ jobs:
           python-version: '3.12'
       - name: Publish metadata gate
         run: >-
-          python .publish-metadata-checker/scripts/publish_metadata_gate.py .
+          python tools/publish_metadata_site_gate.py .
           --baseline .github/publish-metadata-baseline.json
