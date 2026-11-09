@@ -78,19 +78,31 @@ def _meta(src: str, key: str) -> str:
 
 # A page titled with the author's name alone (the home) gets its card title from what the site does: the name stays
 # a byline on the card and is never the picture (the author, 2026-11-09).
-NAME_TITLE = "Tools that check AI work against its sources, and an engine that renders one idea in every medium"
+NAME_TITLE = "Tools that check AI work, and an engine that renders every medium"
 
 
 def clean_title(title: str) -> str:
     """The page title as a card shows it: no site suffix, no author prefix, no dashes."""
-    title = SUFFIX.sub("", title).strip()
+    title = SUFFIX.sub("", html.unescape(title)).strip()  # a head escaped twice still reads as words
     if title == "Zain Dana Harper":
         return NAME_TITLE
     title = re.sub(r"^Zain Dana Harper\s*[|:]\s*", "", title)
     seps = chr(0x2014) + chr(0x2013) + chr(0xB7)  # em dash, en dash, middle dot
-    title = re.sub(r"\s+[" + seps + r"]\s+", ", ", title).replace(chr(0x2014), ", ")  # none on a card
+    title = re.sub(r"\s+[" + seps + r"-]\s+", ", ", title).replace(chr(0x2014), ", ")  # none on a card
     title = re.sub(r",\s*(Editorial essay|Essay|Paper|Briefing)$", "", title)
     return title
+
+
+def _plain(text: str) -> str:
+    return re.sub(r"[^a-z0-9]+", " ", text.lower()).strip()
+
+
+def dek_for(title: str, desc: str) -> str:
+    """The line under a card's title: the description's first sentence, when it adds to the title and fits."""
+    first = re.split(r"(?<=[.!?])\s", html.unescape(desc), maxsplit=1)[0] if desc else ""
+    if not first or len(first) > 150 or _plain(title) in _plain(first) or _plain(first) in _plain(title):
+        return ""
+    return first
 
 
 def page_info(rel: str) -> dict:
@@ -100,9 +112,8 @@ def page_info(rel: str) -> dict:
     title = clean_title(title)
     og_type = _meta(src, "og:type")
     desc = _meta(src, "og:description") or _meta(src, "description")
-    first = re.split(r"(?<=[.!?])\s", desc, maxsplit=1)[0] if desc else ""
     return {"rel": rel, "slug": slug_for(rel), "title": title, "description": desc, "og_type": og_type,
-            "dek": first if len(first) <= 150 else "", "src": src}
+            "dek": dek_for(title, desc), "src": src}
 
 
 ART_RULES = [  # (pattern on the slug, kind, art key); the first match wins
@@ -124,36 +135,64 @@ ART_RULES = [  # (pattern on the slug, kind, art key); the first match wins
 ]
 
 
-# Pages that show a render of their own work carry it on their card (the author, 2026-11-09: the site media
-# should show the creative work, never the name as the picture). (slug pattern, render, alt); first match wins.
+# Pages that show a render of their own work carry it on their card, edge to edge (the author, 2026-11-09: the
+# site media should show the creative work, never the name as the picture). (slug pattern, render, alt, layout);
+# the first match wins. "foot" sets the title along the foot, clear of a render that is a word or a whole scene;
+# "side" sets it down the left of a render with room there. A word in the render never sits under the title.
 WORK_RULES = [
-    (r"^(index|home)$", "media/world/glass-water/low-sun-3840.webp",
-     "Glass letters spelling Low Water stand in the sea at a low sun, the light running across the water toward them.", "whole"),
+    (r"^(index|home)$", "media/world/glass-water/field-day-2560.webp",
+     "A rendered sea under a clear sky, a small sun high on the right and its light running down the water.", "foot"),
     (r"^glass-water$|^world--glass--", "media/world/glass-water/close-3840.webp",
-     "Glass letters rendered at the water line, close enough that the horizon runs through them."),
+     "The word light in glass letters standing in a rendered sea, the horizon and a low sun showing through them.", "foot"),
     (r"^superframe$|^world--superframe--", "media/world/superframe/paint-3840.webp",
-     "A superframe render in paint: rust coral ridges, an ink pool, a contour lens drawn in fine lines and an ochre stroke."),
-    (r"^(accession|typeface|fonts|type-forge)$|^world--typeengine--", "media/world/lettering/deco-arc-poster.webp",
-     "Accession set in gold on a stepped deco sunburst, over a green dial of fine rings.", "whole"),
+     "A superframe render in paint: rust coral ridges, an ink pool, a contour lens drawn in fine lines and an ochre stroke.", "foot"),
+    (r"^accession$|^world--typeengine--", "media/world/lettering/deco-arc-poster.webp",
+     "Accession set in gold on a stepped deco sunburst, over a green dial of fine rings.", "foot"),
     (r"^cmmns$|^daylight-commons", "media/world/lettering/mosaic-smalti-poster.webp",
-     "The Commons laid in gold glass smalti with a red border, on a ground of blue tiles.", "whole"),
-    (r"^(flywheel|demo-flywheel|flywheel-pilot|no-receipt-no-accept)$", "media/world/lettering/intaglio-lines-3840.webp",
-     "No receipt no accept engraved in intaglio lines on laid paper, beside an embossed guilloche seal with FW in gold foil.", "whole"),
+     "The Commons laid in gold glass smalti with a red border, on a ground of blue tiles.", "foot"),
+    (r"^(flywheel|flywheel-pilot|no-receipt-no-accept)$", "media/world/lettering/intaglio-lines-3840.webp",
+     "No receipt no accept engraved in intaglio lines on laid paper, beside an embossed guilloche seal with FW in gold foil.", "foot"),
+    (r"^demo-flywheel$", "media/demos/flywheel/flywheel-app-console.png",
+     "The Flywheel console from the demo, with a run, its receipt and the check on it.", "foot"),
     (r"^(elements|swatches)$", "media/world/crossover/overprint-day-3840.webp",
-     "Five inks of an Olivetti print laid down as sheets of tinted glass crossing on warm paper."),
+     "Five inks of an Olivetti print laid down as sheets of tinted glass crossing on warm paper.", "foot"),
 ]
 FILM_POSTERS = [(r"^night-school-(\w+)$", "media/school/{0}/narrated-poster.jpg")]  # a lesson page's own film
 
 
 def work_for(slug: str):
-    for pat, path, alt, *fit in WORK_RULES:
+    for pat, path, alt, layout in WORK_RULES:
         if re.search(pat, slug) and (ROOT / path).exists():
-            return path, alt, (fit or ["cover"])[0]
+            return path, alt, layout
     for pat, tmpl in FILM_POSTERS:
         m = re.search(pat, slug)
         if m and (ROOT / tmpl.format(*m.groups())).exists():
-            return tmpl.format(*m.groups()), f"A still from the {m.group(1)} lesson film, drawn by the raw-native engine.", "cover"
+            return tmpl.format(*m.groups()), f"A still from the {m.group(1)} lesson film, drawn by the raw-native engine.", "foot"
     return None
+
+
+# A page with no render and no cover of its own gets a drawn cover from the family for its kind
+# (tools/repo_art/page_motifs.py). (pattern on the last part of the slug, family); the first match wins.
+MOTIF_RULES = [
+    (r"^obj-", "frames"), (r"^film-", "strip"), (r"^night-school", "plot"),
+    (r"^(explainers|guides?|glossary|catalog|site-index|overview|portfolio|credits|experiments|workshop|floor|"
+     r"repo-explainers|gallery|museum|front|learn|listen|support|current|raw|aleph)", "map"),
+    (r"^(the|who|what|why|how|a|an|we|no|on)-", "column"),
+    (r"", "contours"),
+]
+MOTIF_ALT = {
+    "frames": "A contact sheet of twelve frames following one throw, one frame lit in pale green.",
+    "strip": "A strip of film with a disc rising frame by frame, over a band of sound with the playhead part way along.",
+    "plot": "Measured points scattered on a pair of axes, with one fitted curve drawn through them in rose.",
+    "map": "A wheel of seventy-two violet sectors graded from dark to light, one sector drawn out past the rim.",
+    "column": "A column of set text drawn as bars, one line of it marked in blue.",
+    "contours": "A sphere drawn by its meridians and parallels, with one cell of the grid filled in sand.",
+}
+
+
+def motif_for(slug: str) -> str:
+    part = slug.rsplit("--", 1)[-1]
+    return next(family for pat, family in MOTIF_RULES if re.search(pat, part))
 
 
 def classify(info: dict) -> dict:
@@ -166,12 +205,23 @@ def classify(info: dict) -> dict:
     kind = rule[0] if rule else ("Essay" if article else "Page")
     work = work_for(slug)
     if work:
-        return {"kind": kind, "work": work[0], "work_alt": work[1], "fit": work[2]}
+        return {"kind": kind, "work": work[0], "work_alt": work[1], "layout": work[2]}
     if (ROOT / "art" / "aperture" / f"cover-{slug}-dark.svg").exists():
         return {"kind": kind, "cover": f"cover-{slug}"}
     if rule:
         return {"kind": kind, "cover": rule[1]}
-    return {"kind": kind, "cover": "pillar-writing" if article else "home-hero"}
+    if article:
+        return {"kind": kind, "cover": "pillar-writing"}
+    return {"kind": kind, "motif": motif_for(slug)}
+
+
+def art_alt(c: dict, alts: dict, repos: dict) -> str:
+    """What a card's picture shows, in words, for whichever kind of art it carries."""
+    if "work" in c:
+        return c["work_alt"]
+    if "tool" in c:
+        return repos[c["tool"]]["figure_alt"]
+    return MOTIF_ALT[c["motif"]] if "motif" in c else alts[c["cover"]]
 
 
 def plan() -> list[dict]:
@@ -183,7 +233,8 @@ def plan() -> list[dict]:
             continue
         info = page_info(rel)
         c = {"slug": info["slug"], "rel": rel, "title": info["title"], "dek": info["dek"], **classify(info)}
-        c["alt"] = c.pop("work_alt") if "work" in c else repos[c["tool"]]["figure_alt"] if "tool" in c else alts[c["cover"]]
+        c["alt"] = art_alt(c, alts, repos)
+        c.pop("work_alt", None)
         cards.append(c)
     return cards
 
@@ -195,8 +246,7 @@ def card_alt(rel_or_url: str, title: str, og_type: str = "article") -> str:
     c = classify({"slug": slug_for(rel), "og_type": og_type})
     alts = json.loads((ROOT / "art" / "aperture" / "covers.json").read_text("utf-8"))["alt"]
     repos = json.loads((Path(__file__).parent / "repos.json").read_text("utf-8"))["repos"]
-    alt = c["work_alt"] if "work" in c else repos[c["tool"]]["figure_alt"] if "tool" in c else alts[c["cover"]]
-    return f"{clean_title(title)}, by Zain Dana Harper. {alt}"
+    return f"{clean_title(title)}, by Zain Dana Harper. {art_alt(c, alts, repos)}"
 
 
 NEWLINE = chr(10)
@@ -283,7 +333,7 @@ def main(argv: list[str]) -> int:
     cards = plan()
     if cmd == "plan":
         for c in cards:
-            print(f'{c["slug"]:<58} {c["kind"]:<13} {c.get("tool") or c["cover"]:<36} {c["title"][:60]}')
+            print(f'{c["slug"]:<58} {c["kind"]:<13} {c.get("tool") or c.get("work") or c.get("motif") or c["cover"]:<36} {c["title"][:60]}')
         print(len(cards), "pages")
     elif cmd == "render":  # render [--only slug,slug] [--masters DIR]; held pages keep the card their head pins
         from tools.repo_art.render import render_cards
