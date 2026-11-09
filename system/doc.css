@@ -79,8 +79,8 @@
   --zentropy-signal:var(--signal);
   --zentropy-rust:var(--drift);
 
-  --font-sans:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  --font-mono:"Conso","JetBrains Mono",ui-monospace,"SFMono-Regular",monospace;
+  --font-sans:"Accession Text","Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --font-mono:"Accession Mono","Conso","JetBrains Mono",ui-monospace,"SFMono-Regular",monospace;
   --ground-instrument:#070406;
   --ground-paper:#f2efe6;
   --ink-paper:#111014;

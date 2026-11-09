@@ -1,0 +1,49 @@
+WEBVTT
+
+1
+00:00:02.500 --> 00:00:08.000
+How attention moves information between tokens.
+
+2
+00:00:08.000 --> 00:00:15.000
+Every dot is one number this small model computed: 1,048,576 of them.
+
+3
+00:00:15.000 --> 00:00:21.000
+This is one sequence it read: 64 positions, 64 numbers each.
+
+4
+00:00:21.000 --> 00:00:26.000
+The sequence is 64 random characters. One stretch of them repeats.
+
+5
+00:00:26.000 --> 00:00:32.000
+Outside the repeat the model gets 1.7% of next characters right, about chance. Inside it, 95.8%.
+
+6
+00:00:32.000 --> 00:00:38.000
+First, a head in layer 0 moves each character one position forward.
+
+7
+00:00:38.000 --> 00:00:46.000
+It puts 0.51 of its attention on the previous token. Switch it off and repeat accuracy falls to 7.9%.
+
+8
+00:00:46.000 --> 00:00:51.000
+Then layer 1 looks for the earlier copy of the current character.
+
+9
+00:00:51.000 --> 00:00:55.000
+It attends to the character that came after that copy, and that is the prediction.
+
+10
+00:00:55.000 --> 00:01:01.000
+Switch off both layer 1 heads and repeat accuracy falls to 1.7%.
+
+11
+00:01:02.600 --> 00:01:07.000
+Two steps: copy the previous character forward, then match it to find what came next.
+
+12
+00:01:07.000 --> 00:01:13.000
+Every number here was read from the model's output file while the film was drawn.

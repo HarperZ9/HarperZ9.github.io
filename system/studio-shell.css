@@ -263,3 +263,6 @@ html body.studio-page .studio-timeline.tl-below input[type=range]{width:100%;acc
 html body.studio-page .studio-timeline.tl-below .tl-marks{position:absolute;left:0;right:0;top:-.35rem;height:.3rem;pointer-events:none}
 html body.studio-page .studio-timeline.tl-below .tl-mark{position:absolute;width:2px;height:.45rem;margin-left:-1px;background:currentColor}
 html body.studio-page .studio-timeline.tl-below .tl-note{flex-basis:100%}
+/* The Finish layer (studio-finish.js, 14 October 2026): raw-native's frame laid exactly over #studio-canvas. */
+html body.studio-page #viewport-stage > #finish-canvas{position:absolute;z-index:2;pointer-events:none;margin:0;object-fit:contain}
+html body.studio-page #viewport-stage > #finish-canvas[hidden]{display:none}

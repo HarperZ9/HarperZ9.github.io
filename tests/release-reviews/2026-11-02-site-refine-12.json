@@ -1,0 +1,13 @@
+{
+  "date": "2026-11-02",
+  "note": "Pass 9: guide.html stays (its plates are guarded); the index, stubs and sitemap follow.",
+  "paths": {
+    "index.html": "88cbfb6fdceb34d0aa12307d78ebc774e4187c6824a3c03d36489619eb38a83f",
+    "publications/build.json": "c695617f18dfd46c3d28ab99cf232d5a46e0105d6b0debce4576f27bce80150a",
+    "site-index.html": "2ed8f534829f07e9dd6ef121aa78c1334b764c9f2169c9a7a79944484344ef43",
+    "sitemap.xml": "5c9a9a976ff953bde6a4dd75ccfd96390b0e7601e8cc65dc9bfd8f912044a0df",
+    "system/routes.js": "02570fb3d6aa55ad7be76aa3a80f6eccef323e9d0da6f9b1f60a53f49806a9f2",
+    "typeface.html": "952a03f5fccec61f461b9a2103679cb4b54389624a1a39cdcb666ebe080fd8b5",
+    "work-with-me.html": "e0a3e22b9dce100e192d53c9ff88d0c02e5de61bbe61a7d2796706c5708984b3"
+  }
+}

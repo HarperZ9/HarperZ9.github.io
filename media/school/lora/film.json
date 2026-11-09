@@ -1,0 +1,129 @@
+{
+ "schema": "explainer-film/1",
+ "slug": "lora",
+ "title": "LoRA and fine-tuning",
+ "page": "night-school-lora.html",
+ "seed": 20261032,
+ "voice": "tallow",
+ "draft": true,
+ "numbers_from": "media/school/lora/facts.json, computed by tools/school/fill_lora.mjs; tools/school/fill_script.mjs fills every double-brace token below from it",
+ "host": {
+  "guide": "tallow",
+  "style": "thriller",
+  "open": {
+   "seconds": 4.0,
+   "what": "The lamp room at night. One wall is a ship's hull of small square planks, each a number of the trained model. Tallow runs a finger along a row and stops. No words."
+  },
+  "close": {
+   "seconds": 5.0,
+   "what": "Tallow unclips the two thin strips from the hull and hangs them on a hook by the door, beside other pairs. The hull is as it was. He turns the lamp down."
+  }
+ },
+ "segments": [
+  {
+   "key": "title",
+   "layout": "title",
+   "heading": "LoRA",
+   "lines": [
+    "LoRA and fine-tuning. A small rudder for a big boat.",
+    "A trained model can be taught a new job by training it a little more. That is fine-tuning. Tonight we teach the attention model one new habit, first by changing every number, then by bolting on something small and changing only that."
+   ]
+  },
+  {
+   "key": "job",
+   "heading": "The new job",
+   "sources": [
+    "ours-lora"
+   ],
+   "lines": [
+    "The new habit: things keep their look. \"The boat was bright.\" Maybe a sentence or two about something else. Then \"the boat was\", and the answer is bright again.",
+    "In the guides' usual sentences a thing never keeps its look; the adjective is drawn fresh every time. So the trained model gets the answer right only 15 percent of the time, about what guessing among six looks would give.",
+    "Our yardstick is the answer word. Once the thing is named again, the right look is certain, so a model that has learned the habit gets it right every time."
+   ]
+  },
+  {
+   "key": "full",
+   "heading": "Change every number",
+   "sources": [
+    "ours-lora"
+   ],
+   "lines": [
+    "First, the plain way: train all 20,864 numbers on the new sentences for 1,500 steps.",
+    "It learns the habit: 99 percent right.",
+    "But look at the old job. Before, the model got look-back words right 99 percent of the time. After, 30 percent. It trained only on the new sentences, and it forgot much of the old skill on the way."
+   ]
+  },
+  {
+   "key": "rudder",
+   "heading": "The rudder",
+   "sources": [
+    "ours-lora",
+    "hu2022"
+   ],
+   "lines": [
+    "LoRA, from Hu and colleagues in 2021, leaves the trained numbers alone. Beside a table of weights it adds two thin strips: one with a number for every input, one with a number for every output. Multiply them together and you get a full-sized table of changes, added to the frozen one.",
+    "The table we are looking at is the second floor's query, key and value table, 32 by 96: 3,072 numbers. One pair of strips is 32 plus 96 numbers. That is rank 1. Rank 2 is two pairs, and so on.",
+    "One strip starts at zero, so at the first step the model is exactly the trained one, number for number. We checked: every output the same, bit for bit."
+   ]
+  },
+  {
+   "key": "howmany",
+   "heading": "How many strips",
+   "sources": [
+    "ours-lora"
+   ],
+   "lines": [
+    "Fit rank-1 strips to the four attention tables: 384 numbers. Rank 8: 3,072. The answer word comes out right 18 percent of the time at rank 1, hardly better than before, 24 at rank 4, and 61 at rank 8.",
+    "Strips on the feed-forward and readout tables too: 36 percent at rank 1, 82 at rank 4, and 92 at rank 8, with 6,768 numbers, 32 percent of the model's.",
+    "Something odd happened along the way. Every adapter learned to name the thing again, 98 percent at rank 1. Carrying its look across the sentence was the hard part, and after 1,500 steps the thinner attention strips still had not got it.",
+    "And the seeds often disagree. At rank 2, with strips on the feed-forward and readout tables too, the three runs got 14 to 75 percent."
+   ],
+   "predict": [
+    {
+     "after": [
+      0,
+      1
+     ],
+     "question": "Rank-1 strips on the attention tables: 384 numbers out of 20,864. How much of the habit do they learn?",
+     "hold": 2.5
+    }
+   ]
+  },
+  {
+   "key": "shape",
+   "heading": "The shape of a change",
+   "sources": [
+    "ours-lora",
+    "hu2022"
+   ],
+   "lines": [
+    "Why should a few strips be enough? Hu and colleagues guessed that the change fine-tuning makes has a low rank: most of it points in a few directions. We can check that here, on the change a full fine-tune made.",
+    "For the readout table, the top direction holds 69 percent of the change. For the attention table on the second floor, 26 percent. A random change of that shape would put only 7 percent there. So the change is lopsided.",
+    "But not thin. To hold nine tenths of it, that attention table needs 10 or 11 of its 32 directions. Cut every table's change down to its best rank 1 and the answer is right only 19 percent of the time; at rank 8, 74.",
+    "So on this model and this job, the claim is partly true. The change leans toward a few directions, and it still needs more than a few."
+   ]
+  },
+  {
+   "key": "forget",
+   "heading": "What was lost",
+   "sources": [
+    "ours-lora",
+    "biderman2024"
+   ],
+   "lines": [
+    "Every method here trained only on the new sentences, and every one forgot some of the old job.",
+    "Rank-1 strips on attention forgot least: look-back words still 70 percent right, against 30 after changing everything. They also learned least. Strips on the feed-forward and readout tables too forgot about as much as changing everything.",
+    "Biderman and colleagues found a similar pattern in 2024, on models with billions of numbers: LoRA learned less of a new field than full fine-tuning and forgot less of the old, and more strips meant more forgetting.",
+    "We did not try the usual cure, mixing some old sentences into the new training. That is a lesson for another night."
+   ]
+  },
+  {
+   "key": "close",
+   "heading": "Goodnight",
+   "lines": [
+    "Strips need little memory to train, are small to store and easy to take off again, so one trained model can carry many jobs, one set of strips each. How many strips a job needs, Hu's team expects, depends on the job; we tried only one.",
+    "Next, at the prism: how sure we can be of a number like the ones tonight. Goodnight."
+   ]
+  }
+ ]
+}

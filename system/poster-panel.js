@@ -139,6 +139,12 @@ export function mountPosterWorkshop(deps) {
     clearTimeout(renderT);
     renderT = setTimeout(() => { renderNow(); critiqueNow(false); }, 160);
   }
+  // The poster draws in Hanken Grotesk and Conso on a canvas. The page text may be set in another face, so
+  // these may not have loaded yet: load them, then draw again, so a frame never depends on load timing.
+  if (typeof document !== "undefined" && document.fonts && document.fonts.load) {
+    Promise.all(['500 16px "Hanken Grotesk"', '800 16px "Hanken Grotesk"', '400 16px "Conso"'].map((f) => document.fonts.load(f)))
+      .then(() => queueRender(), (e) => console.warn("[poster] faces did not load; drawing with fallbacks", e));
+  }
 
   // ── the critique ───────────────────────────────────────────────────────────
   const critiqueHost = el("div", "poster-critique");

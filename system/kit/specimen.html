@@ -1,0 +1,648 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Site kit specimen</title>
+<!--
+  Data contract: none. This page shows every part of the kit on one sheet, for screenshots and checks.
+-->
+<!-- site-kit:begin -->
+<style id="site-kit">
+/* system/kit/kit.css: the site's living design for standalone tool pages.
+   Tokens come from world/ui/shell/shell.css, type.css and organic/organic.css,
+   system/fonts/accession/accession.css and world/universe/universe.json regions; tests/test_system_kit.py
+   fails when a shared token drifts from its source. Values the site leaves open are derived from the
+   taste measurements; README.md records each one. Fonts are the site's own files in system/fonts.
+   Pages inline this file with inline.py; the font paths are rewritten relative to the page. */
+
+/* ---------- faces: Accession (OFL 1.1) is material, Hanken and Conso are the still fallback ---------- */
+@font-face{font-family:"Accession Text";src:url("../fonts/accession/variable/AccessionText[INKS,wght].woff2") format("woff2");font-weight:300 800;font-display:swap}
+@font-face{font-family:"Accession Display";src:url("../fonts/accession/variable/AccessionDisplay[wght].woff2") format("woff2");font-weight:300 900;font-display:swap}
+@font-face{font-family:"Accession Mono";src:url("../fonts/accession/variable/AccessionMono[wght].woff2") format("woff2");font-weight:300 700;font-display:swap}
+@font-face{font-family:"Accession Super";src:url("../fonts/accession/variable/AccessionSuper[wght].woff2") format("woff2");font-weight:600 900;font-display:swap}
+@font-face{font-family:"Accession Burin";src:url("../fonts/accession/variable/AccessionBurin[LINE,wght].woff2") format("woff2");font-weight:500 900;font-display:swap}
+@font-face{font-family:"Accession Material";src:url("../fonts/accession/variable/AccessionMaterial[INKS,WEAR,wght].woff2") format("woff2");font-weight:300 900;font-display:swap}
+@font-face{font-family:"Accession Divisumma";src:url("../fonts/accession/variable/AccessionDivisumma[TURN,wght].woff2") format("woff2");font-weight:400 650;font-display:swap}
+@font-face{font-family:"Accession Slab";src:url("../fonts/accession/variable/AccessionSlab[wght].woff2") format("woff2");font-weight:300 900;font-display:swap}
+@font-face{font-family:"Accession Engraved";src:url("../fonts/accession/cuts/AccessionEngraved.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Hanken Grotesk";src:url("../fonts/hanken-grotesk.woff2") format("woff2");font-weight:100 900;font-display:swap}
+@font-face{font-family:"Hanken Grotesk";src:url("../fonts/hanken-grotesk-italic.woff2") format("woff2");font-weight:100 900;font-style:italic;font-display:swap}
+@font-face{font-family:"Conso";src:url("../fonts/conso-regular.woff2") format("woff2");font-weight:400;font-display:swap}
+
+/* ---------- tokens: light (the site's cs-max wall and ink) ---------- */
+:root{color-scheme:light;
+  --wall:#e8e3d9;--wall-2:#ddd6c9;--mat:#f3efe6;--card:#f6f1e3;--ink:#16130f;--soft:#4a443b;--line:#c4baa6;--on-ink:#e8e3d9;
+  --shadow:rgba(22,19,15,.26);--lamp:rgba(255,250,238,0);--grid-col:rgba(22,19,15,.10);--super-ink:rgba(22,19,15,.16);
+  --verified:#0a6b61;--drift:#8f3a19;--unverifiable:#4e4d85;
+  /* the site's four primaries (universe/lib/here.js), and text-safe inks drawn from them (AA on --wall) */
+  --red:#c8322b;--ochre:#d79e35;--navy:#1d2562;--black:#151314;
+  --ember-1:#a3241e;--ember-2:#8f3517;--ember-3:#73490a;--tide:#1d2562;--tide-2:#2f4a8f;
+  /* series for figures: primaries first, then the red-to-orange walk; five hues at most per view */
+  --s1:#c8322b;--s2:#1d2562;--s3:#94640f;--s4:#151314;--s5:#b4491a;
+  --o-film-a:#c58a2a;--o-film-b:#4f7fc4;
+  --face-text:"Accession Text","Hanken Grotesk",system-ui,sans-serif;
+  --face-display:"Accession Display","Hanken Grotesk",system-ui,sans-serif;
+  --face-utility:"Accession Mono","Conso",ui-monospace,monospace;
+  --face-still:"Hanken Grotesk",system-ui,sans-serif;--face-still-mono:"Conso",ui-monospace,monospace;
+  --face-head:var(--face-display);--sans:var(--face-text);--mono:var(--face-utility);
+  /* the site's type scale (QUALITY-SPEC T8) */
+  --fs-1:13px;--fs-2:15px;--fs-3:17px;--fs-4:22px;--fs-5:30px;--fs-6:64px;--fs-7:96px;
+  /* rhythm: the site's 8 px cell, grouped on 8 x (1,2,3,5,8,13); see README "negative space" */
+  --sp-1:4px;--sp-2:8px;--sp-3:16px;--sp-4:24px;--sp-5:40px;--sp-6:64px;--sp-7:104px;--measure:62ch;--page:1320px;
+  --ease-standard:cubic-bezier(0.2,0,0,1);--ease-enter:cubic-bezier(0,0,0.2,1);--ease-film:cubic-bezier(0.65,0,0.35,1);
+  --ease-engrave:linear(0 0%,0 16.67%,0.1 27.78%,0.5 42.22%,0.9 68.89%,1 100%);
+  --ease-spring:linear(0,0.1132,0.3184,0.5137,0.6686,0.7812,0.8588,0.9104,0.944,0.9654,0.9788,0.9871,0.9922,0.9953,0.9972,0.9983,1);
+  --dur-quick:120ms;--dur-base:200ms;--dur-slow:320ms;--dur-scene:900ms;--grain:.07;--rule:1px solid var(--line)}
+/* ---------- tokens: dark (the night ground) ---------- */
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;
+  --wall:#0a0a0c;--wall-2:#141418;--mat:#111114;--card:#1a1918;--ink:#ece5d6;--soft:#b8b0a0;--line:#2e2c31;--on-ink:#0a0a0c;
+  --shadow:rgba(0,0,0,.75);--lamp:rgba(236,229,214,.075);--grid-col:rgba(236,229,214,.08);--super-ink:rgba(236,229,214,.13);
+  --verified:#63d4ce;--drift:#e29472;--unverifiable:#b3b1e6;--red:#e2584a;--ochre:#e3b25a;--navy:#8e9be6;--black:#ece5d6;
+  --ember-1:#f07a68;--ember-2:#f09356;--ember-3:#e8b75a;--tide:#9fb0f0;--tide-2:#8e9be6;
+  --s1:#ef6a55;--s2:#8fa0e8;--s3:#e8b75a;--s4:#ece5d6;--s5:#f08a4b;--grain:.05}}
+:root[data-theme="dark"]{color-scheme:dark;
+  --wall:#0a0a0c;--wall-2:#141418;--mat:#111114;--card:#1a1918;--ink:#ece5d6;--soft:#b8b0a0;--line:#2e2c31;--on-ink:#0a0a0c;
+  --shadow:rgba(0,0,0,.75);--lamp:rgba(236,229,214,.075);--grid-col:rgba(236,229,214,.08);--super-ink:rgba(236,229,214,.13);
+  --verified:#63d4ce;--drift:#e29472;--unverifiable:#b3b1e6;--red:#e2584a;--ochre:#e3b25a;--navy:#8e9be6;--black:#ece5d6;
+  --ember-1:#f07a68;--ember-2:#f09356;--ember-3:#e8b75a;--tide:#9fb0f0;--tide-2:#8e9be6;
+  --s1:#ef6a55;--s2:#8fa0e8;--s3:#e8b75a;--s4:#ece5d6;--s5:#f08a4b;--grain:.05}
+@media (prefers-reduced-motion:reduce){:root{--dur-quick:0ms;--dur-base:0ms;--dur-slow:0ms;--dur-scene:0ms}}
+@media (max-width:860px){:root{--fs-4:20px;--fs-5:26px;--fs-6:40px;--fs-7:60px;--sp-6:48px;--sp-7:72px}}
+
+/* ---------- regions: the universe's laws, one per page (universe.json "regions") ---------- */
+body[data-region="grid"]{--face-head:var(--face-display);--region-ease:cubic-bezier(.25,.46,.45,.94)}
+body[data-region="deco"]{--face-head:"Accession Divisumma",var(--face-display);--region-ease:cubic-bezier(.37,0,.63,1)}
+body[data-region="brut"]{--face-head:"Accession Super",var(--face-display);--region-ease:steps(1,end)}
+body[data-region="surreal"]{--face-head:var(--face-display);--region-ease:cubic-bezier(.37,0,.63,1)}
+body[data-region="print"]{--face-head:"Accession Material",var(--face-display);--region-ease:steps(12,end)}
+body[data-region="glitch"]{--face-head:"Accession Mono",var(--face-utility);--region-ease:steps(6,end)}
+body[data-region="archive"]{--face-head:"Accession Burin",var(--face-display);--region-ease:var(--ease-engrave)}
+
+/* ---------- ground: wall, grain, the exposed twelve-column grid ---------- */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;overflow-x:clip;font-synthesis:none;font-kerning:normal;scrollbar-color:color-mix(in srgb,var(--ink) 55%,transparent) transparent;scrollbar-width:thin}
+body{margin:0;overflow-x:clip;background:var(--wall);color:var(--ink);font:400 var(--fs-3)/1.55 var(--face-text);
+  background-image:radial-gradient(ellipse 70% 60% at 78% 0,var(--lamp),transparent 70%)}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:var(--grain);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .5 0 0 0 0 .5 0 0 0 1.2 -.1'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
+body[data-region="grid"]::after,body[data-region="brut"]::after{content:"";position:fixed;inset:0 clamp(16px,4vw,56px);pointer-events:none;z-index:0;
+  background:repeating-linear-gradient(90deg,var(--grid-col) 0 1px,transparent 1px calc((100% + 20px) / 12))}
+body[data-region="glitch"]::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.5;background:repeating-linear-gradient(0deg,var(--grid-col) 0 1px,transparent 1px 3px)}
+body[data-region="print"]::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(circle,var(--grid-col) 30%,transparent 33%) 0 0/6px 6px}
+body > *{position:relative;z-index:1}
+img,svg,video{max-width:100%}
+.k-page{max-width:var(--page);margin:0 auto;padding:var(--sp-6) clamp(16px,4vw,56px) var(--sp-7)}
+.k-page > * + *{margin-top:var(--sp-5)}
+
+/* ---------- type: display for heads (living), text for reading, mono for data ---------- */
+h1{font-family:var(--face-head)}
+h2,h3,h4{font-family:var(--face-display)}
+h1,h2,h3,h4{color:var(--ink);text-wrap:balance;margin:0 0 var(--sp-3)}
+h1{font-weight:800;font-size:var(--fs-6);line-height:1;letter-spacing:-.035em;max-width:18ch}
+h2{font-weight:750;font-size:var(--fs-5);line-height:1.08;letter-spacing:-.02em;margin-top:var(--sp-6)}
+h3{font-weight:700;font-size:var(--fs-4);line-height:1.15;letter-spacing:-.01em}
+h4{font:700 var(--fs-3)/1.3 var(--face-text)}
+p,li,dd,figcaption{text-wrap:pretty}
+p{max-width:var(--measure);margin:0 0 var(--sp-3)}
+.k-lede{font-size:var(--fs-4);line-height:1.45;max-width:34ch}
+small,.k-small,.k-meta{font:400 var(--fs-2)/1.45 var(--face-still);color:var(--soft)}
+code,kbd,samp,pre,.k-mono{font-family:var(--face-utility);font-variant-numeric:tabular-nums slashed-zero}
+pre{overflow-x:auto;max-width:100%}
+a{color:inherit;text-decoration-thickness:1px;text-underline-offset:4px}
+a:hover{text-decoration-thickness:2px;color:var(--ember-1)}
+hr{border:0;height:1px;background:var(--ink);margin:var(--sp-5) 0}
+/* the horizon: one strong rule under the title (taste profile: horizon strength) */
+.k-horizon{border:0;height:3px;background:linear-gradient(90deg,var(--ink) 0 62%,var(--red) 62% 76%,var(--ochre) 76% 88%,var(--navy) 88%);margin:var(--sp-4) 0 var(--sp-5)}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.skip{position:absolute;left:12px;top:-60px;z-index:50;padding:10px 14px;background:var(--ink);color:var(--wall);font:600 var(--fs-2) var(--face-still);text-decoration:none}
+.skip:focus{top:12px}
+:focus-visible{outline:3px solid var(--o-film-a);outline-offset:3px;box-shadow:0 0 0 6px color-mix(in srgb,var(--o-film-b) 55%,transparent)}
+
+/* ---------- living type: the heading's words stay real; the hook moves weight, ink and medium ---------- */
+[data-living]{position:relative;font-variation-settings:"wght" var(--lv-w,800);
+  text-shadow:var(--lv-dx,.04em) var(--lv-dy,.03em) 0 color-mix(in srgb,var(--lv-ink,var(--red)) var(--lv-mix,38%),transparent)}
+[data-living] .lv-layer{position:absolute;inset:0 0 auto 0;pointer-events:none;opacity:var(--lv-o,0);text-shadow:none;color:var(--ink)}
+.lv-on{color:color-mix(in srgb,var(--ink) calc(100% - var(--lv-o,0) * 100%),transparent)}
+html.plain [data-living],html.plain .lv-layer{text-shadow:none;font-variation-settings:normal}
+html.plain .lv-layer{display:none}html.plain .lv-on{color:var(--ink)}
+@media (forced-colors:active){[data-living]{text-shadow:none}.lv-layer{display:none}.lv-on{color:CanvasText}}
+
+/* ---------- the rail: where am I, where can I go, how do I get back; every route has a visible name ---------- */
+.k-rail{position:sticky;top:0;z-index:40;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px 16px;
+  padding:6px clamp(12px,3vw,40px);background:color-mix(in srgb,var(--wall) 94%,transparent);border-bottom:1px solid var(--line)}
+.k-trail{display:flex;flex-wrap:wrap;align-items:center;gap:0 4px;margin:0;padding:0;list-style:none;font:600 var(--fs-2)/1.2 var(--face-still);min-width:0}
+.k-trail li{display:inline-flex;align-items:center;min-width:0}
+.k-trail li + li::before{content:"/";color:var(--soft);font-weight:400;padding:0 8px}
+.k-trail a,.k-trail button{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 4px;color:var(--ink);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px;
+  background:none;border:0;font:inherit;cursor:pointer;box-shadow:none}
+.k-trail button:hover,.k-trail a:hover{background:none;text-decoration-thickness:2px;color:var(--ember-1)}
+.k-trail [aria-current="page"]{font-weight:800;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:min(42ch,60vw)}
+.k-mark{display:inline-flex;gap:2px}.k-mark i{width:8px;height:8px;display:block}
+.k-tools{display:flex;flex-wrap:wrap;gap:4px;align-items:center}
+.k-tools button{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 12px 0 8px;border:1.5px solid var(--ink);border-radius:22px;
+  background:var(--wall);color:var(--ink);font:600 var(--fs-2)/1 var(--face-still);box-shadow:none}
+.k-tools button:hover{background:var(--wall-2)}
+.k-tools button[aria-pressed="true"]{background:var(--wall);color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--ink)}
+.k-tools .k-glyph{width:20px;height:20px;border-radius:50%;flex:none;box-shadow:inset 0 0 0 1.5px var(--ink)}
+[data-k="map"] .k-glyph{border-radius:2px;background:linear-gradient(90deg,var(--ink) 0 1.5px,transparent 0) 6px 0/6px 100%}
+[data-k="back"] .k-glyph{box-shadow:none;background:linear-gradient(var(--ink),var(--ink)) 4px 9px/13px 2px no-repeat,linear-gradient(45deg,transparent 45%,var(--ink) 45% 60%,transparent 60%) 2px 4px/8px 8px no-repeat,linear-gradient(-45deg,transparent 45%,var(--ink) 45% 60%,transparent 60%) 2px 9px/8px 8px no-repeat}
+[data-k="lamp"] .k-glyph{background:radial-gradient(circle at 50% 45%,#fff6d8 0 18%,#f2c46b 34%,transparent 64%)}
+[data-k="lamp"][aria-pressed="false"] .k-glyph{background:radial-gradient(circle at 50% 45%,#5a5040 0 18%,transparent 42%)}
+[data-k="motion"] .k-glyph{background:repeating-linear-gradient(90deg,var(--ink) 0 2px,transparent 2px 5px)}
+[data-k="motion"][aria-pressed="false"] .k-glyph{background:linear-gradient(var(--ink),var(--ink)) 50% 50%/60% 2px no-repeat}
+[data-k="sound"] .k-glyph{background:linear-gradient(var(--ink),var(--ink)) 50% 50%/70% 2px no-repeat}
+[data-k="sound"][aria-pressed="true"] .k-glyph{background:repeating-linear-gradient(90deg,var(--ink) 0 2px,transparent 2px 4px) 50% 50%/70% 10px no-repeat}
+[data-k="peel"] .k-glyph{border-radius:0;background:linear-gradient(225deg,var(--wall) 0 30%,var(--ink) 30% 36%,transparent 36%)}
+.k-jumps{display:flex;flex-wrap:wrap;gap:4px 18px;margin:0;padding:0;list-style:none;font:600 var(--fs-2)/1 var(--face-still);flex-basis:100%}
+.k-jumps a{display:inline-flex;align-items:center;gap:8px;min-height:36px;text-decoration:none}
+.k-jumps a::before{content:attr(data-n);font:500 var(--fs-1)/1 var(--face-utility);border:1.5px solid currentColor;border-radius:50%;width:22px;height:22px;display:inline-grid;place-items:center}
+.k-jumps a[aria-current="true"]{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:6px}
+@media (max-width:860px){
+  .k-rail{position:static;padding:4px 12px}.k-trail [aria-current="page"]{max-width:46vw}
+  /* one line on a phone: the mark stands for World, the group and the page shorten with an ellipsis */
+  .k-trail{flex-wrap:nowrap;min-width:0;width:100%}.k-trail li{flex:0 1 auto}.k-trail li:first-child{flex:none}
+  .k-world{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+  .k-trail [data-k="map"]{display:block;max-width:34vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:44px}
+  .k-trail li + li::before{padding:0 5px}
+  .k-tools{position:fixed;z-index:40;left:0;right:0;bottom:0;padding:6px 8px max(6px,env(safe-area-inset-bottom));justify-content:space-around;
+    background:color-mix(in srgb,var(--wall) 96%,transparent);border-top:1px solid var(--line)}
+  .k-tools button{flex-direction:column;gap:3px;padding:4px 2px;min-width:52px;border:0;border-radius:6px;font-size:12px}
+  .k-tools button[aria-pressed="true"]{box-shadow:inset 0 -3px 0 var(--ink)}
+  body:has(.k-tools){padding-bottom:76px}.k-jumps{display:none}}
+/* the map: every page, grouped by what it tells the reader */
+dialog.k-map{width:min(980px,calc(100vw - 24px));max-height:calc(100dvh - 24px);margin:auto;padding:var(--sp-4);border:1.5px solid var(--ink);background:var(--wall);color:var(--ink);box-shadow:0 30px 60px -30px var(--shadow)}
+dialog.k-map::backdrop{background:color-mix(in srgb,var(--wall) 70%,transparent)}
+.k-map header{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-bottom:var(--sp-3)}
+.k-map h2{margin:0;font-size:var(--fs-5)}
+.k-map input[type="search"]{flex:1 1 220px}
+.k-map section{border-top:1.5px solid var(--ink);padding-top:var(--sp-2);margin-top:var(--sp-4)}
+.k-map h3{font:700 var(--fs-3)/1.3 var(--face-text);margin:0 0 var(--sp-2)}
+.k-map ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,280px),1fr));gap:var(--sp-2) var(--sp-4)}
+.k-map li a{display:block;padding:8px 0;text-decoration:none;min-height:44px}
+.k-map li a b{display:block;font:700 var(--fs-3)/1.25 var(--face-text);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px}
+.k-map li a span{display:block;font:400 var(--fs-2)/1.4 var(--face-still);color:var(--soft)}
+.k-map li a[aria-current="page"] b::after{content:" (you are here)";font-weight:500;color:var(--ember-1)}
+/* layers: play, then plain words, then the working; each deeper than the last (after the Eames zoom) */
+.k-layer{position:relative;margin-top:var(--sp-6);scroll-margin-top:calc(var(--k-rail) + 16px)}
+.k-layer > .k-layer-head{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 12px;border-top:3px solid var(--ink);padding-top:var(--sp-2);margin-bottom:var(--sp-3)}
+.k-layer > .k-layer-head h2{margin:0}
+.k-layer > .k-layer-head .k-depth{font:500 var(--fs-2)/1 var(--face-utility);color:var(--soft)}
+.k-layer[data-layer="toy"] > .k-layer-head{border-top-color:var(--red)}
+/* one horizon per view: when the toy follows the title, the title's horizon is its top edge (no second rule) */
+.k-head:has(> .k-horizon) ~ .k-layer[data-layer="toy"]{margin-top:0}
+.k-head:has(> .k-horizon) ~ .k-layer[data-layer="toy"] > .k-layer-head{border-top:0;padding-top:0}
+.k-head:has(> .k-horizon){padding-top:var(--sp-4)}.k-head > .k-horizon{margin-bottom:var(--sp-4)}
+.k-layer[data-layer="plain"] > .k-layer-head{border-top-color:var(--ochre)}
+.k-layer[data-layer="pro"] > .k-layer-head{border-top-color:var(--navy)}
+.k-toy{position:relative;background:var(--mat);box-shadow:0 0 0 1px var(--line);padding:var(--sp-3)}
+.k-toy button,.k-toy select{min-height:48px}
+.k-message{font:700 var(--fs-4)/1.35 var(--face-text);max-width:44ch;margin:var(--sp-4) 0 0;padding-left:var(--sp-3);border-left:4px solid var(--red)}
+.k-plain p{font-size:var(--fs-4);line-height:1.5;max-width:40ch}
+:root{--k-rail:0px}
+
+/* ---------- controls: native underneath, tactile on top ---------- */
+button,.k-btn,input[type="button"],input[type="submit"]{font:600 var(--fs-2)/1.1 var(--face-still);color:var(--ink);background:var(--wall);border:1.5px solid var(--ink);border-radius:0;
+  padding:10px 16px;min-height:44px;cursor:pointer;transition:background-color var(--dur-quick) var(--ease-standard),transform var(--dur-quick) var(--ease-standard),box-shadow var(--dur-quick)}
+button:hover,.k-btn:hover{background:var(--wall-2)}
+button:active,.k-btn:active{transform:translateY(1px);box-shadow:inset 0 2px 0 color-mix(in srgb,var(--ink) 25%,transparent)}
+button[aria-pressed="true"],.k-btn[aria-pressed="true"]{background:var(--ink);color:var(--on-ink)}
+button.k-primary,.k-btn.k-primary{background:var(--ink);color:var(--on-ink);box-shadow:3px 2px 0 var(--red);font-size:var(--fs-3);padding:12px 22px}
+button.k-primary:hover{background:color-mix(in srgb,var(--ink) 88%,var(--red))}
+button:disabled{opacity:.45;cursor:not-allowed}
+input:not([type="range"]):not([type="checkbox"]):not([type="radio"]),select,textarea{font:400 var(--fs-2)/1.3 var(--face-utility);color:var(--ink);background:var(--mat);border:1.5px solid var(--ink);border-radius:0;padding:9px 10px;min-height:44px}
+select{cursor:pointer}
+input[type="checkbox"],input[type="radio"]{accent-color:var(--ink);width:20px;height:20px;margin:0 8px 0 0;vertical-align:-4px}
+label{font:500 var(--fs-2)/1.3 var(--face-still)}
+fieldset,.k-group{border:0;border-top:1.5px solid var(--ink);padding:var(--sp-3) 0 0;margin:0;min-width:0}
+legend,.k-group > .k-legend{font:700 var(--fs-2)/1 var(--face-utility);letter-spacing:.04em;padding:0 var(--sp-2) 0 0}
+.k-controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:var(--sp-4) var(--sp-5)}
+/* the fader: a hairline slot and a machined cap */
+input[type="range"]{-webkit-appearance:none;appearance:none;width:100%;height:44px;margin:0;background:transparent;cursor:ew-resize;color:var(--ink)}
+input[type="range"]::-webkit-slider-runnable-track{height:3px;background:linear-gradient(90deg,var(--ink) 0 var(--k-fill,0%),var(--line) var(--k-fill,0%))}
+input[type="range"]::-moz-range-track{height:3px;background:var(--line)}input[type="range"]::-moz-range-progress{height:3px;background:var(--ink)}
+input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:28px;margin-top:-12.5px;border-radius:2px;background:linear-gradient(90deg,var(--wall-2),var(--mat) 45%,var(--wall-2));box-shadow:inset 0 0 0 1.5px var(--ink),inset 0 13px 0 -12px var(--ink),0 2px 0 var(--shadow);transition:transform var(--dur-quick)}
+input[type="range"]::-moz-range-thumb{width:14px;height:28px;border-radius:2px;background:var(--mat);border:1.5px solid var(--ink)}
+input[type="range"]:active::-webkit-slider-thumb{transform:scaleY(.92)}
+input[type="range"]:focus-visible{outline-offset:0}
+output,.k-value{font:500 var(--fs-2)/1 var(--face-utility);font-variant-numeric:tabular-nums}
+
+/* ---------- the knob: hardware, with detents on stepped values ---------- */
+.k-knob{display:inline-grid;justify-items:center;gap:6px;user-select:none;touch-action:none;min-width:84px}
+.k-knob > .k-dial{position:relative;width:64px;height:64px;cursor:ns-resize}
+.k-knob svg{display:block;width:64px;height:64px;overflow:visible}
+.k-knob .k-cap{fill:var(--mat);stroke:var(--ink);stroke-width:1.5}
+.k-knob .k-skirt{fill:var(--wall-2);stroke:var(--ink);stroke-width:1}
+.k-knob .k-grip{stroke:color-mix(in srgb,var(--ink) 22%,transparent);stroke-width:1}
+.k-knob .k-ptr{stroke:var(--ink);stroke-width:3;stroke-linecap:round}
+.k-knob .k-arc{fill:none;stroke:var(--line);stroke-width:2}.k-knob .k-arc-on{fill:none;stroke:var(--red);stroke-width:2.5}
+.k-knob .k-tick{stroke:var(--ink);stroke-width:1.2}
+.k-knob .k-face{transition:transform 60ms linear}
+.k-knob:active .k-cap{fill:var(--wall-2)}
+.k-knob .k-label{font:600 var(--fs-1)/1.2 var(--face-still);text-align:center;max-width:12ch}
+.k-knob .k-read{font:500 var(--fs-1)/1 var(--face-utility);font-variant-numeric:tabular-nums;color:var(--soft)}
+.k-knob:has(input:focus-visible) .k-dial{outline:3px solid var(--o-film-a);outline-offset:4px;border-radius:50%;box-shadow:0 0 0 7px color-mix(in srgb,var(--o-film-b) 55%,transparent)}
+.k-knob input[type="range"]{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.k-rack{display:flex;flex-wrap:wrap;gap:var(--sp-4) var(--sp-3);padding:var(--sp-3);background:var(--wall-2);box-shadow:inset 0 0 0 1px var(--line),inset 0 2px 0 var(--shadow)}
+
+/* ---------- records: tables, details, frames, verdicts ---------- */
+table{border-collapse:collapse;width:100%;font-size:var(--fs-2);font-variant-numeric:tabular-nums}
+th{font:700 var(--fs-2)/1.25 var(--face-still);text-align:left;border-bottom:1.5px solid var(--ink);padding:8px 10px 8px 0;vertical-align:bottom}
+td{border-bottom:1px solid var(--line);padding:8px 10px 8px 0;vertical-align:top}
+tbody tr:hover td{background:color-mix(in srgb,var(--ink) 4%,transparent)}
+.k-scroll{overflow-x:auto;max-width:100%}
+details > summary{cursor:pointer;font:600 var(--fs-2)/1.3 var(--face-still);min-height:44px;display:flex;align-items:center;gap:8px;list-style:none}
+details > summary::-webkit-details-marker{display:none}
+details > summary::before{content:"";width:8px;height:8px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(-45deg);transition:transform var(--dur-base) var(--ease-standard)}
+details[open] > summary::before{transform:rotate(45deg)}
+.k-frame{position:relative;background:var(--mat);padding:clamp(10px,1.4vw,22px);box-shadow:0 0 0 1px var(--line)}
+.k-frame::before{content:"";position:absolute;inset:-14px;pointer-events:none;--m:linear-gradient(var(--ink),var(--ink));
+  background:var(--m) 0 13px/var(--k-cm,9px) 1px no-repeat,var(--m) 13px 0/1px var(--k-cm,9px) no-repeat,var(--m) 100% 13px/var(--k-cm,9px) 1px no-repeat,var(--m) calc(100% - 13px) 0/1px var(--k-cm,9px) no-repeat,
+  var(--m) 0 calc(100% - 13px)/var(--k-cm,9px) 1px no-repeat,var(--m) 13px 100%/1px var(--k-cm,9px) no-repeat,var(--m) 100% calc(100% - 13px)/var(--k-cm,9px) 1px no-repeat,var(--m) calc(100% - 13px) 100%/1px var(--k-cm,9px) no-repeat}
+/* the registration mark in the slug: seeded position, the region's species (kit.js marks()) */
+.k-frame > .k-reg{position:absolute;bottom:-20px;width:16px;height:16px;margin-left:-8px;pointer-events:none;background:var(--ink);opacity:.8;
+  -webkit-mask:var(--k-reg) center/contain no-repeat;mask:var(--k-reg) center/contain no-repeat}
+html.plain .k-reg{display:none}
+@media (forced-colors:active){.k-reg{display:none}}
+.k-frame canvas,.k-frame svg{display:block;width:100%;height:auto}
+.k-card{background:var(--mat);box-shadow:0 0 0 1px var(--line);padding:var(--sp-4)}
+.k-super{position:absolute;z-index:0;margin:0;pointer-events:none;user-select:none;white-space:nowrap;right:-2vw;top:var(--sp-5);
+  font:900 min(26vw,420px)/.78 var(--face-display);letter-spacing:-.07em;color:transparent;
+  background:radial-gradient(circle,var(--super-ink) 36%,transparent 39%) 0 0/7px 7px;-webkit-background-clip:text;background-clip:text}
+.k-head{position:relative;isolation:isolate;padding-top:var(--sp-5)}
+.k-head > :not(.k-super){position:relative;z-index:1}
+.k-head > p:not(.k-super){background:var(--wall);box-shadow:0 0 0 6px var(--wall);width:fit-content;max-width:min(100%,var(--measure))}
+[data-verdict]{font:600 var(--fs-2)/1.3 var(--face-still)}
+[data-verdict]::before{content:"";display:inline-block;width:.8em;height:.8em;margin-right:.45em;vertical-align:-.05em;background:currentColor}
+[data-verdict="verified"],[data-verdict="pass"]{color:var(--verified)}[data-verdict="verified"]::before,[data-verdict="pass"]::before{border-radius:50%}
+[data-verdict="drift"],[data-verdict="fail"]{color:var(--drift)}[data-verdict="drift"]::before,[data-verdict="fail"]::before{clip-path:polygon(50% 0,100% 100%,0 100%)}
+[data-verdict="unverifiable"],[data-verdict="open"]{color:var(--unverifiable)}[data-verdict="unverifiable"]::before,[data-verdict="open"]::before{background:none;border:2px solid currentColor}
+.k-foot{margin-top:var(--sp-7);padding-top:var(--sp-4);border-top:1px solid var(--line);font:400 var(--fs-2)/1.5 var(--face-still);color:var(--soft)}
+
+/* ---------- cinema: grade, halation, optical falloff (the 2026-10-30 colour-film study) ----------
+   Split toning (raw-grade): the warm key from the site's lamp, top right, and a cool fill low left in the
+   night grade. Halation (mc-film-halation-base): light on the base bleeds back into the red layer first,
+   so the night title carries a faint red bloom. Optical vignette (elder-cfx-optical-vignette, cos^4 of the
+   field angle): a toy's frame darkens toward its corners, at 18% of the physical falloff so text stays AA. */
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) body{background-image:radial-gradient(ellipse 70% 60% at 78% 0,var(--lamp),transparent 70%),radial-gradient(ellipse 60% 50% at 0 100%,rgba(79,127,196,.06),transparent 70%)}
+  :root:not([data-theme="light"]) h1{text-shadow:var(--lv-dx,.04em) var(--lv-dy,.03em) 0 color-mix(in srgb,var(--lv-ink,var(--red)) var(--lv-mix,38%),transparent),0 0 .2em rgba(226,88,74,.28)}}
+:root[data-theme="dark"] body{background-image:radial-gradient(ellipse 70% 60% at 78% 0,var(--lamp),transparent 70%),radial-gradient(ellipse 60% 50% at 0 100%,rgba(79,127,196,.06),transparent 70%)}
+:root[data-theme="dark"] h1{text-shadow:var(--lv-dx,.04em) var(--lv-dy,.03em) 0 color-mix(in srgb,var(--lv-ink,var(--red)) var(--lv-mix,38%),transparent),0 0 .2em rgba(226,88,74,.28)}
+.k-toy::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 75% 75% at 50% 50%,transparent 55%,rgba(10,8,6,.11) 100%)}
+html.plain .k-toy::after{display:none}
+
+/* ---------- still states ---------- */
+html.plain body::before,html.plain body::after,html.plain .k-super,html.plain [data-art]{display:none!important}
+html.plain *{animation:none!important;transition:none!important}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}.k-knob .k-face{transition:none}}
+@media (forced-colors:active){.k-super,body::before,body::after{display:none}.k-horizon{background:CanvasText}}
+@media print{.k-rail,.k-tools,.k-super,body::before,body::after{display:none!important}body{background:#fff;color:#000}}
+</style>
+<script id="site-kit-js">
+/* site-kit/kit.js: the rail (trail, map, back, lamp, motion, sound, plain view), living type, faders and knobs.
+   Dependency-free; inlined into each page by inline.py. Storage keys match the live site's shell.js
+   ("ui-theme", "ui-plain") so a viewer's choices carry between the site and these pages.
+   Page API:  Kit.still() is true under reduced motion, Motion off or Plain view; loops should draw one
+   settled frame and stop. Kit.on(fn) runs on every change of theme, motion, plain or sound.
+   Kit.knob(input) upgrades one range input; [data-knob] inputs are upgraded on load. */
+(() => {
+  const root = document.documentElement, KEY = { theme: "ui-theme", plain: "ui-plain", motion: "ui-motion", sound: "ui-sound" };
+  const store = { get: (k) => { try { return localStorage.getItem(k); } catch { return null; } },
+    set: (k, v) => { try { localStorage.setItem(k, v); } catch { /* private mode: the choice lasts for this page */ } } };
+  const mqDark = matchMedia("(prefers-color-scheme: dark)"), mqReduce = matchMedia("(prefers-reduced-motion: reduce)");
+  const subs = new Set();
+  const state = { motion: store.get(KEY.motion) !== "0", sound: store.get(KEY.sound) === "1" };
+  root.classList.add("js");
+  const saved = store.get(KEY.theme); if (saved === "light" || saved === "dark") root.dataset.theme = saved;
+  if (store.get(KEY.plain) === "1") root.classList.add("plain");
+  const isDark = () => (root.dataset.theme ? root.dataset.theme === "dark" : mqDark.matches);
+  const still = () => mqReduce.matches || !state.motion || root.classList.contains("plain");
+  const emit = () => { root.classList.toggle("still", still()); for (const f of subs) { try { f(Kit); } catch (e) { console.error("kit subscriber failed", e); } } };
+
+  /* ---------- sound: off by default; one short filtered tick for presses and detents ---------- */
+  let ac = null;
+  function tick(pitch = 1) {
+    if (!state.sound) return;
+    try {
+      ac = ac || new AudioContext();
+      const n = Math.floor(ac.sampleRate * 0.012), buf = ac.createBuffer(1, n, ac.sampleRate), d = buf.getChannelData(0);
+      for (let i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / n, 6);
+      const src = ac.createBufferSource(), bp = ac.createBiquadFilter(), g = ac.createGain();
+      bp.type = "bandpass"; bp.frequency.value = 2400 * pitch; bp.Q.value = 6; g.gain.value = 0.35;
+      src.buffer = buf; src.connect(bp).connect(g).connect(ac.destination); src.start();
+    } catch (e) { console.info("kit: no audio here", e.message); }
+  }
+
+  /* ---------- the rail: trail (world / group / page), named tools, the map, the layer jumps ---------- */
+  const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+  const norm = (u) => { try { return decodeURIComponent(new URL(u, location.href).href).toLowerCase().replace(/[#?].*$/, ""); } catch { return String(u).toLowerCase(); } };
+  function mapData() {
+    const m = window.KIT_MAP; if (!m || !Array.isArray(m.groups)) return null;
+    const here = norm(location.href);
+    for (const g of m.groups) for (const p of g.pages) p.here = norm(p.href) === here;
+    return m;
+  }
+  function rail() {
+    if (document.querySelector(".k-rail") || document.body.dataset.kRail === "off") return;
+    const m = mapData(), group = m && m.groups.find((g) => g.pages.some((p) => p.here));
+    const title = document.body.dataset.title || (document.querySelector("h1") || {}).textContent || document.title;
+    const home = document.body.dataset.home || "https://harperz9.github.io/";
+    const nav = document.createElement("nav"); nav.className = "k-rail"; nav.setAttribute("aria-label", "Where you are");
+    const tool = (k, name, tip) => `<button type="button" data-k="${k}" title="${esc(tip)}"><span class="k-glyph" aria-hidden="true"></span>${name}</button>`;
+    nav.innerHTML = `<ol class="k-trail"><li><a href="${esc(home)}"><span class="k-mark" aria-hidden="true"><i style="background:#c8322b"></i><i style="background:#d79e35"></i><i style="background:#1d2562"></i></span><span class="k-world">World</span></a></li>`
+      + (m ? `<li><button type="button" data-k="map" data-group="${esc(group ? group.id : "")}" aria-haspopup="dialog">${esc(group ? group.name : "Workshop")}</button></li>` : "")
+      + `<li><span aria-current="page">${esc(title.trim())}</span></li></ol>`
+      + `<div class="k-tools" role="group" aria-label="Page tools">`
+      + (m ? tool("map", "Map", "Every page, by what it tells you (M)") : "")
+      + tool("back", "Back", "Back to where you came from")
+      + tool("lamp", "Lamp", "Lamp on: light page. Lamp off: dark page")
+      + tool("motion", "Motion", "Moving type and simulations")
+      + tool("sound", "Sound", "A soft tick when you press or turn something. Off unless you turn it on")
+      + tool("peel", "Plain", "Plain view: text and controls only, no art layer") + `</div>`;
+    const layers = [...document.querySelectorAll("[data-layer]")];
+    if (layers.length) {
+      const ul = document.createElement("ul"); ul.className = "k-jumps"; ul.setAttribute("aria-label", "On this page");
+      layers.forEach((l, i) => { if (!l.id) l.id = `layer-${l.dataset.layer}`; const h = l.querySelector("h2"); ul.insertAdjacentHTML("beforeend", `<li><a href="#${l.id}" data-n="${i + 1}">${esc(h ? h.textContent.trim() : l.dataset.layer)}</a></li>`); });
+      nav.append(ul);
+      const io = new IntersectionObserver((es) => { for (const e of es) if (e.isIntersecting) ul.querySelectorAll("a").forEach((a) => a.setAttribute("aria-current", String(a.hash === `#${e.target.id}`))); }, { rootMargin: "-40% 0px -55% 0px" });
+      layers.forEach((l) => io.observe(l));
+    }
+    const skip = document.querySelector("body > .skip, body > a.skip"); if (skip) skip.after(nav); else document.body.prepend(nav);
+    const size = () => root.style.setProperty("--k-rail", `${getComputedStyle(nav).position === "sticky" ? nav.offsetHeight : 0}px`);
+    size(); addEventListener("resize", size);
+    if (m) mapDialog(m);
+  }
+  function mapDialog(m) {
+    const d = document.createElement("dialog"); d.className = "k-map"; d.setAttribute("aria-labelledby", "k-map-h");
+    d.innerHTML = `<header><h2 id="k-map-h">The workshop map</h2><input type="search" aria-label="Find a page" placeholder="Find a page"><button type="button" data-close>Close</button></header>`
+      + m.groups.map((g) => `<section data-group="${esc(g.id)}"><h3>${esc(g.name)}</h3><ul>${g.pages.map((p) => `<li><a href="${esc(p.href)}"${p.here ? ' aria-current="page"' : ""}><b>${esc(p.title)}</b><span>${esc(p.message || "")}</span></a></li>`).join("")}</ul></section>`).join("");
+    document.body.append(d);
+    const find = d.querySelector("input");
+    find.addEventListener("input", () => { const q = find.value.trim().toLowerCase();
+      for (const li of d.querySelectorAll("li")) li.hidden = q && !li.textContent.toLowerCase().includes(q);
+      for (const s of d.querySelectorAll("section")) s.hidden = ![...s.querySelectorAll("li")].some((li) => !li.hidden); });
+    d.querySelector("[data-close]").addEventListener("click", () => d.close());
+    d.addEventListener("keydown", (e) => { if (e.key === "Escape") { e.preventDefault(); d.close(); } });
+    d.addEventListener("click", (e) => { if (e.target === d) d.close(); });
+    Kit.openMap = (groupId) => { d.showModal(); const s = groupId && d.querySelector(`section[data-group="${CSS.escape(groupId)}"]`); (s ? s.querySelector("a") : find).focus(); };
+    document.addEventListener("keydown", (e) => {
+      if (e.key.toLowerCase() !== "m" || e.ctrlKey || e.metaKey || e.altKey || e.target.closest("input,textarea,select,[contenteditable]")) return;
+      e.preventDefault(); if (d.open) d.close(); else Kit.openMap();
+    });
+  }
+  function bindTools() {
+    const sync = () => {
+      for (const b of document.querySelectorAll('[data-k="lamp"],[data-theme-toggle]')) b.setAttribute("aria-pressed", String(!isDark()));
+      for (const b of document.querySelectorAll('[data-k="motion"]')) b.setAttribute("aria-pressed", String(state.motion && !mqReduce.matches));
+      for (const b of document.querySelectorAll('[data-k="sound"]')) b.setAttribute("aria-pressed", String(state.sound));
+      for (const b of document.querySelectorAll('[data-k="peel"],[data-plain-toggle]')) b.setAttribute("aria-pressed", String(root.classList.contains("plain")));
+    };
+    document.addEventListener("click", (e) => {
+      const b = e.target.closest('[data-k],[data-theme-toggle],[data-plain-toggle]'); if (!b) return;
+      const k = b.dataset.k || ("themeToggle" in b.dataset ? "lamp" : "peel");
+      if (k === "map") { Kit.openMap && Kit.openMap(b.dataset.group); return; }
+      if (k === "back") { if (history.length > 1 && document.referrer) history.back(); else if (Kit.openMap) Kit.openMap(); else location.href = document.body.dataset.home || "https://harperz9.github.io/"; return; }
+      if (k === "lamp") { root.dataset.theme = isDark() ? "light" : "dark"; store.set(KEY.theme, root.dataset.theme); }
+      else if (k === "motion") { state.motion = !state.motion; store.set(KEY.motion, state.motion ? "1" : "0"); }
+      else if (k === "sound") { state.sound = !state.sound; store.set(KEY.sound, state.sound ? "1" : "0"); tick(); }
+      else if (k === "peel") { root.classList.toggle("plain"); store.set(KEY.plain, root.classList.contains("plain") ? "1" : "0"); }
+      else return;
+      sync(); emit();
+    });
+    mqDark.addEventListener("change", () => { sync(); emit(); }); mqReduce.addEventListener("change", () => { sync(); emit(); });
+    sync();
+  }
+
+  /* ---------- living type: weight, second ink and medium move with the reader and the clock ---------- */
+  const FACES = { display: "Accession Display", burin: "Accession Burin", material: "Accession Material", super: "Accession Super", mono: "Accession Mono",
+    slab: "Accession Slab", divisumma: "Accession Divisumma", engraved: "Accession Engraved", text: "Accession Text" };
+  const REGION_STOPS = { grid: "display slab", deco: "divisumma display", brut: "super slab", surreal: "display material", print: "material display", glitch: "mono display", archive: "burin engraved" };
+  /* period: seconds each medium holds; fade: share of the period spent bleeding into the next medium */
+  const LIVING = { wLow: 620, wHigh: 860, breath: 26, breathRate: 0.8, inkRate: 0.35, drift: 0.02, period: 9, fade: 0.22, fitTol: 0.15 };
+  function living() {
+    const region = document.body.dataset.region || "grid";
+    const heads = [...document.querySelectorAll("[data-living]")];
+    const h1 = document.querySelector("h1"); if (h1 && !h1.hasAttribute("data-living") && h1.dataset.living !== "off") { h1.dataset.living = REGION_STOPS[region] || "display"; heads.unshift(h1); }
+    const items = heads.filter((el) => el.dataset.living !== "off").map((el) => {
+      const stops = el.dataset.living.split(/\s+/).map((s) => FACES[s]).filter(Boolean);
+      let layer = null;
+      if (stops.length > 1) { layer = document.createElement("span"); layer.className = "lv-layer"; layer.setAttribute("aria-hidden", "true"); layer.textContent = el.textContent; el.append(layer); }
+      return { el, stops, layer, seen: false };
+    });
+    if (!items.length) return;
+
+    const io = new IntersectionObserver((es) => { for (const e of es) { const it = items.find((x) => x.el === e.target); if (it) it.seen = e.isIntersecting; } }, { rootMargin: "20% 0px" });
+    items.forEach((it) => io.observe(it.el));
+    const t0 = performance.now();
+    function paint(it, t, rm) {
+      const r = it.el.getBoundingClientRect(), q = Math.min(1, Math.max(0, (innerHeight - r.top) / (innerHeight + r.height)));
+      const n = it.stops.length, ph = rm ? 0 : ((t / LIVING.period + q) % n + n) % n, i = Math.floor(ph), local = ph - i;
+      const w = LIVING.wLow + (LIVING.wHigh - LIVING.wLow) * (rm ? 0.6 : q) + (rm ? 0 : LIVING.breath * Math.sin(t * LIVING.breathRate));
+      const f = rm ? 0 : 0.5 + 0.5 * Math.sin(t * LIVING.inkRate + q * Math.PI);
+      const st = it.el.style;
+      st.setProperty("--lv-w", w.toFixed(0)); st.fontFamily = `"${it.stops[i]}", var(--face-head)`;
+      st.setProperty("--lv-ink", `color-mix(in oklab, var(--red) ${(100 - f * 100).toFixed(0)}%, var(--s5))`);
+      st.setProperty("--lv-dx", `${(0.035 + (rm ? 0 : LIVING.drift * Math.sin(t * 0.5))).toFixed(3)}em`);
+      if (it.layer) {
+        const o = rm || local < 1 - LIVING.fade ? 0 : (local - (1 - LIVING.fade)) / LIVING.fade;
+        /* the next medium's face is requested only once the bleed starts, so a still page loads one face */
+        if (o > 0 || local > 1 - LIVING.fade - 0.04) it.layer.style.fontFamily = `"${it.stops[(i + 1) % n]}", var(--face-head)`;
+        const o2 = o > 0 && Math.abs(it.layer.offsetHeight - it.el.offsetHeight) > it.el.offsetHeight * LIVING.fitTol ? 0 : o; st.setProperty("--lv-o", o2.toFixed(3)); it.el.classList.toggle("lv-on", o2 > 0);
+      }
+    }
+    function frame() {
+      if (root.classList.contains("plain")) { for (const it of items) { it.el.removeAttribute("style"); it.el.classList.remove("lv-on"); } return; }
+      const rm = still(), t = rm ? 0 : (performance.now() - t0) / 1000;
+      for (const it of items) if (it.seen || rm) paint(it, t, rm);
+    }
+    let raf = 0;
+    const loop = () => { frame(); raf = still() || document.hidden ? 0 : requestAnimationFrame(loop); };
+    const kick = () => { if (!raf) raf = requestAnimationFrame(loop); };
+    addEventListener("scroll", () => { if (still()) frame(); else kick(); }, { passive: true });
+    document.addEventListener("visibilitychange", kick); subs.add(() => { frame(); kick(); });
+    kick();
+  }
+
+  /* ---------- faders: Shift moves ten steps; the filled part of the slot follows the value ---------- */
+  const COARSE = 10;
+  const fill = (r) => { const lo = +r.min || 0, hi = r.max === "" ? 100 : +r.max; r.style.setProperty("--k-fill", `${((+r.value - lo) / ((hi - lo) || 1)) * 100}%`); };
+  function stepOf(r) { return r.step === "any" || !r.step ? ((+r.max || 100) - (+r.min || 0)) / 100 : +r.step; }
+  function setRange(r, v, fire = "input") {
+    const lo = +r.min || 0, hi = r.max === "" ? 100 : +r.max, st = stepOf(r);
+    const snapped = Math.min(hi, Math.max(lo, lo + Math.round((v - lo) / st) * st));
+    const before = r.value; r.value = String(+snapped.toFixed(6)); fill(r);
+    if (r.value !== before) { r.dispatchEvent(new Event(fire, { bubbles: true })); if (fire === "input") r._kitDirty = true; return true; }
+    return false;
+  }
+  function faders() {
+    document.addEventListener("keydown", (e) => {
+      const r = e.target; if (!(r instanceof HTMLInputElement) || r.type !== "range" || !e.shiftKey) return;
+      const dir = { ArrowUp: 1, ArrowRight: 1, ArrowDown: -1, ArrowLeft: -1 }[e.key]; if (!dir) return;
+      e.preventDefault(); if (setRange(r, +r.value + dir * stepOf(r) * COARSE)) { r.dispatchEvent(new Event("change", { bubbles: true })); tick(1.2); }
+    });
+    document.addEventListener("input", (e) => { if (e.target.type === "range") fill(e.target); });
+    document.addEventListener("pointerdown", (e) => { if (e.target.closest("button")) tick(0.8); });
+    document.querySelectorAll('input[type="range"]').forEach(fill);
+  }
+
+  /* ---------- knobs: a 270 degree sweep, detents on stepped values, momentum on continuous ones ---------- */
+  const KNOB = { sweep: 270, pxPerRange: 180, maxDetents: 24, friction: 0.9, minSpeed: 1e-5, velWindowMs: 80 };
+  const NS = "http://www.w3.org/2000/svg";
+  function knob(input) {
+    if (input._kitKnob) return; input._kitKnob = true;
+    const lo = +input.min || 0, hi = input.max === "" ? 100 : +input.max, st = stepOf(input), steps = Math.round((hi - lo) / st);
+    const detents = input.step !== "any" && steps <= KNOB.maxDetents;
+    let wrap0 = false;
+    const lab = input.id && document.querySelector(`label[for="${CSS.escape(input.id)}"]`);
+    const name = input.dataset.label || (lab ? lab.textContent.trim() : input.getAttribute("aria-label") || input.name || "");
+    if (lab && !input.hasAttribute("data-keep-label")) lab.classList.add("sr-only"); else if (lab) wrap0 = true; else if (!input.getAttribute("aria-label")) input.setAttribute("aria-label", name);
+    const wrap = document.createElement("div"); wrap.className = "k-knob";
+    wrap.innerHTML = `<span class="k-label" aria-hidden="true"></span><div class="k-dial" aria-hidden="true"><svg viewBox="-32 -32 64 64"></svg></div><span class="k-read" aria-hidden="true"></span>`;
+    wrap.querySelector(".k-label").textContent = wrap0 ? "" : name; if (wrap0) wrap.classList.add("k-keep-label");
+    input.replaceWith(wrap); wrap.append(input);
+    const svg = wrap.querySelector("svg"), dial = wrap.querySelector(".k-dial"), read = wrap.querySelector(".k-read");
+    const ang = (v) => -KNOB.sweep / 2 + ((v - lo) / ((hi - lo) || 1)) * KNOB.sweep;
+    const pt = (a, rad) => [rad * Math.sin((a * Math.PI) / 180), -rad * Math.cos((a * Math.PI) / 180)];
+    const arcPath = (a0, a1, rad) => { const [x0, y0] = pt(a0, rad), [x1, y1] = pt(a1, rad); return `M${x0} ${y0}A${rad} ${rad} 0 ${a1 - a0 > 180 ? 1 : 0} 1 ${x1} ${y1}`; };
+    const el = (tag, attrs, parent = svg) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent.append(e); return e; };
+    el("path", { class: "k-arc", d: arcPath(-KNOB.sweep / 2, KNOB.sweep / 2, 30) });
+    const on = el("path", { class: "k-arc-on" });
+    const nt = detents ? steps : 10;
+    for (let i = 0; i <= nt; i++) { const a = -KNOB.sweep / 2 + (i / nt) * KNOB.sweep, [x0, y0] = pt(a, 26), [x1, y1] = pt(a, detents ? 23 : 24); el("line", { class: "k-tick", x1: x0, y1: y0, x2: x1, y2: y1 }); }
+    el("circle", { class: "k-skirt", r: 21 });
+    const face = el("g", { class: "k-face" });
+    el("circle", { class: "k-cap", r: 17 }, face);
+    for (let i = 0; i < 24; i++) { const [x0, y0] = pt(i * 15, 17), [x1, y1] = pt(i * 15, 14.5); el("line", { class: "k-grip", x1: x0, y1: y0, x2: x1, y2: y1 }, face); }
+    el("line", { class: "k-ptr", x1: 0, y1: -6, x2: 0, y2: -15 }, face);
+    const dec = String(st).includes(".") ? Math.min(4, String(st).split(".")[1].length) : 0;
+    const names = input.dataset.labels ? input.dataset.labels.split("|") : null;
+    const draw = () => {
+      const v = +input.value, a = ang(v), txt = names ? (names[Math.round((v - lo) / st)] ?? "") : (+v).toFixed(dec) + (input.dataset.unit || "");
+      face.setAttribute("transform", `rotate(${a})`); on.setAttribute("d", a > -KNOB.sweep / 2 + 0.5 ? arcPath(-KNOB.sweep / 2, a, 30) : "");
+      read.textContent = txt; input.setAttribute("aria-valuetext", txt);
+    };
+    const desc = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value");
+    Object.defineProperty(input, "value", { get() { return desc.get.call(this); }, set(v) { desc.set.call(this, v); draw(); }, configurable: true });
+    input.addEventListener("input", draw); input.addEventListener("change", draw);
+    let drag = null, coast = 0;
+    const commit = (v) => { const d0 = Math.round((+input.value - lo) / st); if (setRange(input, v)) { if (detents && Math.round((+input.value - lo) / st) !== d0) { tick(1 + (+input.value - lo) / (hi - lo || 1) * 0.5); navigator.vibrate?.(4); } } };
+    dial.addEventListener("pointerdown", (e) => {
+      e.preventDefault(); cancelAnimationFrame(coast); input.focus({ preventScroll: true }); dial.setPointerCapture(e.pointerId);
+      drag = { y: e.clientY, v: +input.value, acc: +input.value, hist: [[performance.now(), +input.value]] };
+    });
+    dial.addEventListener("pointermove", (e) => {
+      if (!drag) return;
+      const gain = (e.shiftKey ? 4 : 1) * (hi - lo) / KNOB.pxPerRange;
+      drag.acc = drag.v + (drag.y - e.clientY) * gain; commit(drag.acc);
+      const now = performance.now(); drag.hist.push([now, drag.acc]); while (drag.hist.length > 2 && now - drag.hist[0][0] > KNOB.velWindowMs) drag.hist.shift();
+    });
+    const end = () => {
+      if (!drag) return; const h = drag.hist, a = h[0], b = h[h.length - 1]; let vel = (b[1] - a[1]) / Math.max(1, b[0] - a[0]) * 16; drag = null;
+      const done = () => { if (input._kitDirty) { input._kitDirty = false; input.dispatchEvent(new Event("change", { bubbles: true })); } };
+      if (detents || still() || Math.abs(vel) < (hi - lo) * 0.002) return done();
+      let v = +input.value;
+      const glide = () => { vel *= KNOB.friction; v += vel; commit(v); if (Math.abs(vel) > (hi - lo) * KNOB.minSpeed && v > lo && v < hi) coast = requestAnimationFrame(glide); else done(); };
+      coast = requestAnimationFrame(glide);
+    };
+    dial.addEventListener("pointerup", end); dial.addEventListener("pointercancel", end);
+    dial.addEventListener("wheel", (e) => { e.preventDefault(); commit(+input.value - Math.sign(e.deltaY) * st * (e.shiftKey ? COARSE : 1)); input.dispatchEvent(new Event("change", { bubbles: true })); }, { passive: false });
+    dial.addEventListener("dblclick", () => { if (setRange(input, +input.defaultValue)) input.dispatchEvent(new Event("change", { bubbles: true })); });
+    draw();
+  }
+
+
+  /* ---------- registration marks: each frame's slug carries one mark grown from a seed and the region's species.
+     After generative borders made from frame size, a seed and a species file. Deterministic per page and frame;
+     drawn in the slug below the frame (never beside it, so nothing widens the page); hidden in plain view. ---------- */
+  const SPECIES = {
+    grid: (r) => `<circle cx="11" cy="11" r="${4 + r() * 2 | 0}"/><path d="M11 1v20M1 11h20"/>`,
+    brut: (r) => `<rect x="${6 + r() * 3 | 0}" y="6" width="10" height="10" fill="#000"/><path d="M1 11h20"/>`,
+    print: () => `<circle cx="5" cy="11" r="3" fill="#000"/><circle cx="11" cy="11" r="3" fill="#000"/><circle cx="17" cy="11" r="3" fill="#000"/>`,
+    glitch: (r) => `<path d="M1 ${8 + r() * 3 | 0}h9M12 ${12 + r() * 3 | 0}h9"/>`,
+    archive: () => `<path d="M2 15h18M2 18h18"/><circle cx="11" cy="8" r="3"/>`,
+    deco: () => `<path d="M3 19a16 16 0 0 1 16-16M7 19a12 12 0 0 1 12-12M11 19a8 8 0 0 1 8-8"/>`,
+    surreal: (r) => `<ellipse cx="11" cy="11" rx="9" ry="${4 + r() * 2 | 0}"/><circle cx="11" cy="11" r="2" fill="#000"/>`,
+  };
+  function marks() {
+    const species = SPECIES[document.body.dataset.region] || SPECIES.grid;
+    let h = 2166136261; for (const c of location.pathname + (document.querySelector("h1") || {}).textContent) h = Math.imul(h ^ c.charCodeAt(0), 16777619);
+    document.querySelectorAll(".k-frame").forEach((f, i) => {
+      if (f.querySelector(":scope > .k-reg") || f.closest("[data-k-marks='off']")) return;
+      let s = (h ^ Math.imul(i + 1, 2654435761)) >>> 0; const r = () => ((s = Math.imul(s ^ (s >>> 15), 2246822507) >>> 0) % 1000) / 1000;
+      const x = 18 + r() * 64, cm = 7 + Math.round(r() * 6);
+      f.style.setProperty("--k-cm", `${cm}px`);
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22" fill="none" stroke="#000" stroke-width="1.2">${species(r)}</svg>`;
+      const mark = document.createElement("i"); mark.className = "k-reg"; mark.setAttribute("aria-hidden", "true");
+      mark.style.left = `${x.toFixed(1)}%`; mark.style.setProperty("--k-reg", `url("data:image/svg+xml,${encodeURIComponent(svg)}")`);
+      f.append(mark); /* an <i> with a mask, not an <svg>, so a page's own frame.querySelector("svg") still finds its figure */
+    });
+  }
+
+  /* ---------- every canvas gets a text alternative; the page's own label wins ---------- */
+  function canvases() {
+    const missing = [];
+    for (const c of document.querySelectorAll("canvas")) {
+      if (c.getAttribute("aria-hidden") === "true" || c.getAttribute("aria-label") || c.getAttribute("aria-labelledby")) continue;
+      const fig = c.closest("figure"), cap = fig && fig.querySelector("figcaption");
+      const sec = c.closest("section,article,main"), head = sec && sec.querySelector("h1,h2,h3");
+      c.setAttribute("role", "img"); c.setAttribute("aria-label", c.dataset.alt || c.title || (cap ? cap.textContent.trim() : head ? `Figure: ${head.textContent.trim()}` : "Figure"));
+      missing.push(c.id || c.className || "canvas");
+    }
+    if (missing.length) console.info("kit: canvases labelled from context; give them data-alt:", missing.join(", "));
+  }
+
+  const Kit = window.Kit = { still, isDark, tick, knob, setRange, on: (f) => { subs.add(f); return () => subs.delete(f); }, get sound() { return state.sound; } };
+  function boot() { rail(); bindTools(); faders(); document.querySelectorAll('input[type="range"][data-knob]').forEach(knob); canvases(); marks(); living(); emit(); }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot); else boot();
+})();
+</script>
+<!-- site-kit:end -->
+</head>
+<body data-region="grid">
+<a class="skip" href="#main">Skip to the page</a>
+<main id="main" class="k-page">
+  <header class="k-head">
+    <p class="k-super" aria-hidden="true">Kit</p>
+    <h1>The kit, on one sheet</h1>
+    <p class="k-lede">Every part a tool page needs, drawn from the live site.</p>
+    <hr class="k-horizon">
+  </header>
+  <section>
+    <h2 data-living="display burin">Controls</h2>
+    <div class="k-controls">
+      <fieldset><legend>Run</legend>
+        <button class="k-primary" type="button">Run</button> <button type="button">Reset</button> <button type="button" aria-pressed="true">Pinned</button>
+      </fieldset>
+      <fieldset><legend>Field</legend>
+        <label for="f1">Seed</label><br><input id="f1" value="1337"><br>
+        <label for="f2">Mode</label><br><select id="f2"><option>Diffuse</option><option>Advect</option></select>
+      </fieldset>
+      <fieldset><legend>Fader</legend>
+        <label for="r1">Gain</label><input id="r1" type="range" min="0" max="1" step="0.01" value="0.4">
+      </fieldset>
+    </div>
+    <div class="k-rack" style="margin-top:24px">
+      <label for="k1">Cutoff</label><input id="k1" type="range" min="20" max="2000" step="1" value="800" data-knob data-unit=" Hz">
+      <label for="k2">Voices</label><input id="k2" type="range" min="1" max="8" step="1" value="3" data-knob>
+      <label for="k3">Drive</label><input id="k3" type="range" min="0" max="1" step="0.01" value="0.25" data-knob>
+    </div>
+  </section>
+  <section>
+    <h2>Records</h2>
+    <figure class="k-frame"><canvas id="c" width="800" height="200" data-alt="A sine trace across the frame"></canvas><figcaption class="k-meta">A trace.</figcaption></figure>
+    <div class="k-scroll"><table><thead><tr><th>Law</th><th>Value</th><th>Verdict</th></tr></thead>
+    <tbody><tr><td>Hooke</td><td class="k-mono">0.982</td><td><span data-verdict="pass">holds</span></td></tr>
+    <tr><td>Kepler</td><td class="k-mono">0.411</td><td><span data-verdict="fail">fails</span></td></tr>
+    <tr><td>Zipf</td><td class="k-mono">n/a</td><td><span data-verdict="open">open</span></td></tr></tbody></table></div>
+    <details><summary>Show the source</summary><p>Rows come from <code>laws.json</code>.</p></details>
+    <p>Body text in Accession Text. <a href="#main">A link</a>. <small>Small print in the still face.</small></p>
+  </section>
+  <footer class="k-foot">Kit specimen.</footer>
+</main>
+<script>
+const c=document.getElementById("c"),g=c.getContext("2d");
+function draw(){const s=getComputedStyle(document.documentElement);g.clearRect(0,0,800,200);g.strokeStyle=s.getPropertyValue("--s1");g.lineWidth=2;g.beginPath();for(let x=0;x<800;x++)g.lineTo(x,100+60*Math.sin(x/40));g.stroke();}
+draw();Kit.on(draw);
+</script>
+</body>
+</html>

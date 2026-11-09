@@ -1,0 +1,145 @@
+/* home.css: the world's entrance and its places. Layout and type come from the shell (shell.css: --ink, --wall,
+   the type scale and the faces); this file places the arrival, the bazaar and the colophon on the page's water. */
+
+/* the arrival: the name drawn in glass, the real words over it */
+.arrival { position: relative; min-height: 100vh; display: grid; grid-template-rows: 1fr auto auto; align-items: end; padding: 96px clamp(16px, 4vw, 56px) 48px; gap: 18px; }
+.arrival h1 { position: relative; margin: 0; font: 800 clamp(48px, 9vw, 132px)/.95 var(--face-display); letter-spacing: calc(-.04em * var(--display-track, 1)); color: var(--ink); max-width: 12ch; }
+.arrival-ways, .ways, .colophon nav { position: relative; display: flex; flex-wrap: wrap; gap: 4px 22px; }
+.arrival-ways a, .ways a, .colophon a { display: inline-flex; align-items: center; min-height: 44px; padding: 0; color: var(--ink); background: none; border: 0; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .3em; font: 600 var(--fs-2)/1 var(--face-text); text-shadow: 0 0 14px var(--halo), 0 0 4px var(--halo), 0 0 1px var(--halo), 0 0 22px var(--halo); }
+.arrival-ways a:hover, .ways a:hover, .colophon a:hover { text-decoration-thickness: 2px; }
+.arrival-ways a:focus-visible, .ways a:focus-visible, .colophon a:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+
+/* the road steps back once the places begin */
+.road, .strata, .carry { transition: opacity .6s ease; }
+body.past-road .road, body.past-road .strata, body.past-road .carry { opacity: 0; }
+.crossing { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 1; pointer-events: none; }
+.place-in { position: relative; z-index: 2; }
+.place-words h2, .laws li, .place-words, .arrival h1, .platforms > h2 { text-shadow: 0 0 14px var(--halo), 0 0 4px var(--halo), 0 0 1px var(--halo), 0 0 22px var(--halo); }
+html.plain .crossing, html.plain .uncover { display: none; }
+
+/* the places: motion first, then the place's name, its laws and the ways in */
+.bazaar { position: relative; padding: 12vh 0 6vh; }
+.place { position: relative; min-height: 92vh; display: grid; align-items: center; padding: 6vh clamp(16px, 4vw, 56px); }
+.place-in { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(20px, 4vw, 64px); align-items: center; max-width: 1360px; margin: 0 auto; width: 100%; }
+.place:nth-child(even) .place-in { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
+.place:nth-child(even) .lead-box { order: 2; }
+.lead-box { position: relative; margin: 0; }
+.lead-box .lead, .lead-box .lead img { display: block; width: 100%; height: auto; max-height: 78vh; object-fit: contain; }
+.lead-box video.lead { aspect-ratio: 16 / 9; object-fit: cover; background: var(--wall); }
+.lead-box .uncover { position: absolute; inset: 0; width: 100%; height: 100%; image-rendering: pixelated; transition: opacity .4s ease; }
+.place-words { display: grid; gap: 18px; align-content: start; }
+.place-words h2 { margin: 0; font: 800 var(--fs-6)/1.02 var(--face-display); letter-spacing: calc(-.035em * var(--display-track, 1)); color: var(--ink); text-wrap: balance; }
+.laws { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; max-width: 52ch; }
+.laws li { font: 400 var(--fs-3)/1.5 var(--face-text); color: var(--ink); padding: 0; }
+
+/* the sound place: the press is the theme, the line is its live waveform */
+.lead.hum { aspect-ratio: 16 / 9; display: grid; place-items: center; }
+.hum-wave { position: absolute; inset: 18% 6%; width: 88%; height: 64%; }
+.hum-press { position: relative; min-height: 64px; min-width: 64px; padding: 0 12px; border: 0; background: none; color: var(--ink); font: 700 var(--fs-4)/1 var(--face-display); cursor: pointer; text-decoration: underline transparent 2px; text-underline-offset: .3em; text-shadow: 0 0 14px var(--halo), 0 0 4px var(--halo), 0 0 1px var(--halo), 0 0 22px var(--halo); }
+.hum-press[aria-pressed="true"], .hum-press:hover { text-decoration-color: currentColor; }
+.hum-press:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+
+/* living type: the painting sits exactly over the heading; the heading's own words stay under it */
+.living-host { position: relative; }
+.living-paint { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; opacity: 0; transition: opacity .3s ease; }
+.living-on > .living-paint { opacity: 1; }
+.living-on { color: transparent !important; }
+.living-on::selection { color: var(--ink); }
+
+.colophon { padding: 8vh clamp(16px, 4vw, 56px) 12vh; }
+
+@media (max-width: 860px) {
+  .arrival { padding: 88px 16px 48px; min-height: 92vh; }
+  .place { min-height: auto; padding: 8vh 16px; }
+  .place-in, .place:nth-child(even) .place-in { grid-template-columns: 1fr; }
+  .place:nth-child(even) .lead-box { order: 0; }
+}
+@media (prefers-reduced-motion: reduce) { .road, .strata, .carry, .lead-box .uncover, .living-paint { transition: none; } }
+@media (forced-colors: active) { .crossing, .uncover, .living-paint { display: none; } .living-on { color: CanvasText !important; } }
+/* the lit-sheet choice for living type in dark mode; hidden in light mode */
+.o-hand .o-sheet { min-height: 44px; padding: 0 6px; border: 0; background: none; color: var(--ink); font: 600 var(--fs-1)/1 var(--face-text); cursor: pointer; text-decoration: underline transparent 2px; text-underline-offset: .3em; }
+.o-hand .o-sheet[aria-pressed="true"] { text-decoration-color: currentColor; }
+.o-hand .o-sheet:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+.o-hand .o-sheet[hidden] { display: none; }
+.caps { letter-spacing: .06em; }
+
+/* run-it-now commands under Tools; package names (span.ident) stay whole when the line has room */
+.try{list-style:none;margin:1.1rem 0 0;padding:0;display:grid;gap:.45rem;font-size:.92rem}
+.try code{font-family:var(--mono,"Conso",ui-monospace,monospace);white-space:normal}
+.ident{display:inline-block;max-width:100%;overflow-wrap:anywhere;text-decoration:inherit}
+
+/* the arrival's one sentence: what the work is, under the name */
+.arrival-lede { position: relative; margin: 0; max-width: 34ch; font: 500 var(--fs-4)/1.35 var(--face-text); color: var(--ink); padding: 0; justify-self: start; text-wrap: pretty; text-shadow: 0 0 14px var(--halo), 0 0 4px var(--halo), 0 0 1px var(--halo), 0 0 22px var(--halo); }
+.arrival { grid-template-rows: 1fr auto auto auto; }
+
+/* the work: one row per platform, a plate beside its words; the row is the way in */
+.platforms { position: relative; z-index: 2; padding: clamp(56px, 10vh, 120px) clamp(16px, 4vw, 56px) clamp(48px, 8vh, 96px); }
+.platforms > h2 { max-width: 1360px; margin: 0 auto clamp(24px, 4vh, 48px); font: 800 var(--fs-6)/1 var(--face-display); letter-spacing: calc(-.035em * var(--display-track, 1)); color: var(--ink); }
+.pf-list { list-style: none; margin: 0 auto; padding: 0; max-width: 1360px; }
+.pf { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(16px, 3vw, 40px); padding: clamp(28px, 5vh, 56px) 0; align-items: start; text-shadow: 0 0 14px var(--halo), 0 0 4px var(--halo), 0 0 1px var(--halo), 0 0 22px var(--halo); }
+.pf-words { display: grid; gap: 12px; align-content: start; max-width: 68ch; }
+.pf h3 { margin: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 16px; }
+.pf-name { font: 800 var(--fs-5)/1.05 var(--face-display); letter-spacing: calc(-.01em * var(--display-track, 1)); color: var(--ink); }
+.pf-product { font: 600 var(--fs-2)/1.3 var(--face-text); color: var(--ink); }
+.pf-ver { font: 400 var(--fs-1)/1 var(--face-utility); margin-left: 8px; color: var(--ink); }
+.pf-mark { font: 400 var(--fs-1)/1 var(--face-utility); letter-spacing: .08em; color: var(--ink); }
+.pf-what { margin: 0; font: 400 var(--fs-3)/1.55 var(--face-text); color: var(--ink); }
+.pf-run { margin: 0; font: 400 var(--fs-2)/1.6 var(--face-text); color: var(--ink); overflow-wrap: anywhere; }
+.pf-run code { font: 400 var(--fs-2)/1.4 var(--face-utility, var(--mono)); color: var(--ink); padding: 0; }
+.pf-note { white-space: nowrap; }
+.pf-ways { display: flex; flex-wrap: wrap; gap: 4px 22px; }
+.pf-ways a { display: inline-flex; align-items: center; min-height: 44px; padding: 0; color: var(--ink); background: none; border: 0; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .3em; font: 600 var(--fs-2)/1 var(--face-text); text-shadow: 0 0 14px var(--halo), 0 0 4px var(--halo), 0 0 1px var(--halo), 0 0 22px var(--halo); }
+.pf-ways a.pf-go { font-weight: 800; }
+.pf-ways a:hover { text-decoration-thickness: 2px; }
+.pf-ways a:focus-visible, .arrival-ways a:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+.pf-verified { margin: 4px 0 0; padding-left: 0; font: 400 var(--fs-1)/1.5 var(--face-text); color: var(--ink); }
+.pf-verified b { color: var(--ink); margin-right: .3em; }
+@media (max-width: 600px) {
+  .pf-name { font-size: var(--fs-4); }
+  .arrival-lede { font-size: var(--fs-3); }
+}
+@media (prefers-reduced-motion: reduce) { .pf-ways a { transition: none; } }
+@media (forced-colors: active) { .pf-ways a.pf-go { forced-color-adjust: auto; } }
+@media (max-width: 860px) {
+  /* the glass name sits in the upper half of a phone's first screen, clear of the real heading under it */
+  }
+
+/* motion for the work: each row's plate wakes as the row scrolls into view, tied to the scroll itself, so it
+   arrives where the reader is going and stops when they stop; nothing moves on its own */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+        @keyframes pf-wake { from { opacity: .3; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  }
+}
+html.plain 
+/* the road's 34-tile survey band is clutter in the hand; the menu holds the map */
+.world-home .o-hand [data-o="band"] { display: none; }
+
+/* over the field the words of every place sit in the left column, where the field's wash holds them readable;
+   the place's own lead sits to their right */
+@media (min-width: 861px) {
+  .place-in, .place:nth-child(even) .place-in { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
+  .place .lead-box, .place:nth-child(even) .lead-box { order: 2; }
+}
+
+/* Sky: the visitor's own Sun and Moon on the water (sky/sky.js). The control is a horizon with a body above it. */
+[data-o="sky"]{position:relative;width:44px;height:44px;padding:0;border:0;border-radius:50%;cursor:pointer;background:none;box-shadow:inset 0 0 0 2px var(--ink)}
+[data-o="sky"]::before{content:"";position:absolute;left:8px;right:8px;top:27px;height:2px;background:var(--ink)}
+[data-o="sky"]::after{content:"";position:absolute;left:19px;top:13px;width:8px;height:8px;border-radius:50%;background:var(--ink)}
+[data-o="sky"][aria-pressed="true"]{background:var(--ink)}
+[data-o="sky"][aria-pressed="true"]::before,[data-o="sky"][aria-pressed="true"]::after{background:var(--wall,#fff)}
+.sky-dialog{max-width:min(560px,calc(100vw - 32px));padding:0;border:2px solid var(--ink);background:var(--wall,#f4efe6);color:var(--ink)}
+.sky-dialog::backdrop{background:rgba(0,0,0,.35)}
+.sky-panel{padding:20px 22px;display:grid;gap:12px;font:400 var(--fs-2,15px)/1.45 var(--face-text,sans-serif)}
+.sky-panel h2{margin:0;font:700 var(--fs-5,26px)/1.1 var(--face-text,sans-serif)}
+.sky-panel p{margin:0}
+.sky-row{display:grid;gap:4px}
+.sky-row p,.sky-check span{opacity:.86}
+.sky-panel button{justify-self:start;min-height:44px;padding:8px 14px;font:600 var(--fs-2,15px) var(--face-text,sans-serif);color:var(--ink);background:none;border:2px solid var(--ink);cursor:pointer}
+.sky-panel button[aria-pressed="true"]{background:var(--ink);color:var(--wall,#fff)}
+.sky-check{grid-template-columns:auto 1fr;align-items:start;gap:10px}
+.sky-check input{width:20px;height:20px;margin:2px 0 0}
+.sky-status:empty{display:none}
+.sky-status{font-weight:600}
+.sky-end{display:flex;gap:10px;flex-wrap:wrap}
+.sky-row[hidden]{display:none}

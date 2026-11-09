@@ -59,6 +59,14 @@ The publishing agent performs these checks before push:
 
 The review artifact records the reviewed commit and findings. Any fix invalidates affected review evidence and requires the relevant checks again.
 
+### Release spine pins (from 16 October 2026)
+
+The bytes of every release-spine path are pinned in two places. `tests/release-pins/<path>.pin` holds one line, the id of the review that covers that path's current bytes; a path is in the spine when its pin exists. `tests/release-reviews/<YYYY-MM-DD-slug>.json` is one file per reviewed change, with its date, a note and the SHA-256 of each path it covers. `tests/test_capability_publication_release.py` fails when any pinned path's bytes differ from its review.
+
+A change that edits release paths runs `python -m tools.release_reviews record <YYYY-MM-DD-slug> --note "..." --stale` (or names the paths) and commits the new review file and the rewritten pins. Use a new id for every change, merges included. Two changes to different paths touch different pins and merge without conflict. Two changes to the same path rewrite the same pin and conflict; resolve by merging the content, then recording a new review over the merged bytes. Naming a new path adds it to the spine; deleting a pin removes one.
+
+Until 15 October 2026 the spine was one tuple of paths and one aggregate SHA-256 in that test. `2026-10-15-baseline.json` holds every path's digest at that point, the dated notes that sat above the aggregate, and the aggregate itself, and `tests/test_release_reviews.py` checks that the digests compose to it.
+
 ## Pull request, merge, Pages, and live receipts
 
 The agent pushes once, opens one destination-specific pull request, and records its URL and head commit. It waits for relevant CI and Pages prerequisites. A stale, red, or incomplete branch is not mergeable.

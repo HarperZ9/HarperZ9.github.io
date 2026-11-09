@@ -1,0 +1,36 @@
+// Six claims from this week's case files. Each has the careful version, the louder version, and what the louder one dropped.
+// Sources are in the figure caption and linked on each card. Nothing here is stored or sent anywhere.
+export const CLAIMS = [
+  { id: 'aid', topic: 'The Channel 10 interview', short: 'IS OVER',
+    careful: 'Netanyahu said US aid “is over, only a question of time.” (Channel 10, 23 Oct 2026)',
+    loud: 'Netanyahu: US aid is over.',
+    dropped: '“only a question of time”. A forecast became a present cut.', src: 1 },
+  { id: 'murder', topic: 'The murder rate', short: 'RECORD LOW',
+    careful: 'The FBI puts 2025 US murder at 4.1 per 100,000, tied with 1955 and 1956 for the lowest on its series. The CDC series, 5.9 in 2024, is not a record.',
+    loud: 'US murder rate at a record low.',
+    dropped: 'The tie, and the second series where it is not a record.', src: 2 },
+  { id: 'handshake', topic: 'The Baghdad handshake', short: 'GASSING KURDS',
+    careful: 'Rumsfeld met Saddam in Baghdad on 20 Dec 1983 as Reagan’s envoy. A State memo of 1 Nov 1983 reports near-daily Iraqi chemical use, against Iran. The gassing of Kurds came in 1987 to 1988.',
+    loud: 'Rumsfeld shook hands with Saddam in 1983 while he was gassing Kurdish civilians.',
+    dropped: 'The dates. The 1983 record says Iran, and the Kurdish attacks came four years on.', src: 3 },
+  { id: 'lawyers', topic: 'The midterm lawyers', short: 'COUP',
+    careful: 'Hundreds of volunteer lawyers are preparing to sue over any alleged interference in the midterms. (FT, 22 Oct 2026)',
+    loud: 'Their army of lawyers already has the complaints written. That is a coup attempt.',
+    dropped: '“Volunteer”, “any alleged interference”, and the difference between a lawsuit and an overthrow.', src: 4 },
+  { id: 'verify', topic: 'The verification paper', short: '$100M',
+    careful: 'Anthropic’s post proves no-crash properties for 239 entry points in 123 libraries and says “‘Formally verified’ does not mean ‘bug-free’.”',
+    loud: 'Prove bug-freeness of the entire software stack for about $100M.',
+    dropped: 'The scope, the disclaimer, and the price: the post gives no dollar cost.', src: 5 },
+  { id: 'name', topic: 'The party’s name', short: 'FAR LEFT',
+    careful: '“Socialist” entered the Nazi party’s name in 1920. In 1933 the regime banned the KPD and SPD, dissolved the unions and filled Dachau with left-wing prisoners.',
+    loud: 'Hitler was a far left socialist. Literally in the name of his party.',
+    dropped: 'What the party did once it held power.', src: 6 },
+];
+export const SOURCES = [
+  ['Ynet, 23 Oct 2026, Hebrew quotes of the Channel 10 interview', 'https://www.ynet.co.il/economy/article/ry6wxet3gx'],
+  ['FBI 2025 crime data, as reported by HSToday, and the CDC homicide series', 'https://www.hstoday.us/subject-matter-areas/law-enforcement-and-public-safety/fbi-releases-2025-crime-data-showing-sharp-drop-in-violent-offenses/'],
+  ['National Security Archive, Briefing Book 82: the Iraq documents', 'https://nsarchive2.gwu.edu/NSAEBB/NSAEBB82/'],
+  ['Political Wire, 22 Oct 2026, quoting the Financial Times', 'https://politicalwire.com/2026/10/22/armies-of-lawyers-prepare-to-stop-election-interference/'],
+  ['Anthropic, formal verification research post', 'https://www.anthropic.com/research/formal-verification'],
+  ['Full Fact, Were the Nazis socialists?', 'https://fullfact.org/online/nazis-socialists/'],
+];

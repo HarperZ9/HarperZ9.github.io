@@ -272,8 +272,9 @@ const loadPlotBridge = lazyLoader(() => import("./plot-bridge.js"), m => { _plot
 // manifest into a catalogue the picker can band the same way the archive page bands it.
 let _library = null;
 let _libraryMod = null;
-const loadLibraryMod = lazyLoader(() => import("./studio-library.js"), m => { _libraryMod = m; });
+const loadLibraryMod = lazyLoader(() => import("./studio-library.js?v=20261014-plot-order"), m => { _libraryMod = m; });
 let _libraryFilter = "all";
+let _libraryOrder = "archived";   // the archive page's orderings (studio-library.js LIBRARY_ORDERS)
 // The work a deep link or a restored pin asked for, held until the picker exists to receive it.
 // Without it, whichever async path filled the picker first selected the first work in the band,
 // drew it, and the requested work then drew second — two sheets, the first one wrong.
@@ -418,7 +419,7 @@ const loadMediaEngine = lazyLoader(async () => {
 
 // Music source: the reactive engine + its tab UI (both publish window globals, imported for effect).
 const loadReactive = lazyLoader(async () => {
-  await import("./reactive.js?v=20260625b");          // sets window.MusicExperience + window.ReactiveVisuals
+  await import("./reactive.js?v=20261014-flow-gpu");          // sets window.MusicExperience + window.ReactiveVisuals
   await import("./reactive-music-ui.js?v=20261004-music-still"); // wires the Music tab controls to it
   feedEngineCapability();                             // the engine exists now; hand it the probed capability
 });
@@ -739,7 +740,7 @@ async function enterFilmsSource(epoch) {
 }
 
 // The Verified viewer: raw-native's viewer page from a pinned release, on the stage (studio-viewer.js).
-const loadViewer = lazyLoader(() => import("./studio-viewer.js?v=20261012-viewer"));
+const loadViewer = lazyLoader(() => import("./studio-viewer.js?v=20261014-viewer-080"));
 let _viewer = null;
 async function enterViewerSource(epoch) {
   try {
@@ -759,6 +760,24 @@ function initViewerControls() {
     const el = document.getElementById(id);
     if (el) el.addEventListener("click", () => { if (activeSource === "viewer" && _viewer) _viewer.pressViewer(target); });
   }
+}
+
+// The Finish layer (studio-finish.js): raw-native's post stack draws the stage's frame again through
+// one of the engine's looks, over #studio-canvas. Loaded on the first choice other than Off.
+const loadFinish = lazyLoader(() => import("./studio-finish.js?v=20261015-finish"));
+function initFinishControls() {
+  const sel = document.getElementById("finish-look");
+  if (!sel) return;
+  sel.addEventListener("change", () => {
+    const look = sel.value;
+    loadFinish()
+      .then((m) => m.setFinish(look, { stage: $("viewport-stage"), status: $("finish-status") }))
+      .catch((err) => {
+        console.error("[studio] the finish failed to load:", err);
+        const st = $("finish-status");
+        if (st) st.textContent = "Off: the finish could not load. The source draws as it is.";
+      });
+  });
 }
 
 // The Loom: loom.html's whole loom, adopted in place (studio-loom.js).
@@ -1634,7 +1653,11 @@ function fillLibraryPicker(keepId) {
   const sel = $("plot-work");
   if (!sel) return Promise.resolve(null);
   return loadLibrary().then(lib => {
-    const shown = _libraryMod.filterWorks(lib.works, _libraryFilter);
+    const shown = _libraryMod.orderWorks(_libraryMod.filterWorks(lib.works, _libraryFilter), _libraryOrder, lib.works);
+    document.querySelectorAll("[data-plot-order]").forEach(b => {
+      const on = b.dataset.plotOrder === _libraryOrder;
+      b.classList.toggle("active", on); b.setAttribute("aria-pressed", String(on));
+    });
     const want = keepId || _libraryWant || sel.value;
     sel.innerHTML = "";
     shown.forEach((w, i) => {
@@ -1698,6 +1721,13 @@ function initPlotMapControls() {
           drawPlotMap();
         }
       });
+    });
+  });
+  // The order changes the list, never the work on the canvas: the chosen work stays chosen.
+  document.querySelectorAll("[data-plot-order]").forEach(chip => {
+    chip.addEventListener("click", () => {
+      _libraryOrder = chip.dataset.plotOrder;
+      fillLibraryPicker(($("plot-work") || {}).value);
     });
   });
   const workSel = $("plot-work");
@@ -2780,6 +2810,7 @@ initNeuralControls();
 initThreadsControls();
 initWorldsControls();
 initViewerControls();
+initFinishControls();
 // The Films panel fills itself the first time it is opened.
 import("./studio-films.js?v=20261004-films").then((m) => m.mountFilms(document.getElementById("studio-films")))
   .catch((e) => console.error("[studio] the films panel failed to load:", e));

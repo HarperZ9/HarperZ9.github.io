@@ -48,8 +48,8 @@ details[id$="-transcript"] h4{margin:1rem 0 .3rem}
 .fl-src-facts{display:grid;grid-template-columns:7.2rem minmax(0,1fr);gap:.45rem .8rem;margin:0;font-size:.94rem;line-height:1.5}
 .fl-src-facts dt{padding-top:.18rem}
 .fl-src-facts dd{margin:0}
-.fl-src-facts dt.fl-null{color:var(--drift,#b0581c);font-weight:600}
-.fl-src-facts dd.fl-null{padding-left:.6rem;border-left:2px solid var(--drift,#b0581c)}
+.fl-src-facts dt.fl-context{font-weight:600}
+.fl-src-facts dd.fl-context{padding-left:.6rem;border-left:2px solid currentColor}
 .fl-src-cite{margin-top:.75rem!important;font-size:.8rem;line-height:1.5;color:color-mix(in srgb,currentColor 72%,transparent);overflow-wrap:anywhere}
 @container (max-width:26rem){.fl-src-facts{grid-template-columns:minmax(0,1fr);gap:.1rem}.fl-src-facts dd{margin-bottom:.45rem}}
 /* The transcript, timed: each sentence seeks the film, and the one being spoken is marked. */
@@ -63,7 +63,7 @@ details[id$="-transcript"] h4{margin:1rem 0 .3rem}
 .fl-s:hover{text-decoration:underline;text-underline-offset:.2em;text-decoration-thickness:1px}
 .fl-s.is-now{background:color-mix(in srgb,currentColor 16%,transparent);box-shadow:0 0 0 .14em color-mix(in srgb,currentColor 16%,transparent);text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:.22em}
 @media (prefers-reduced-motion:reduce){.fl-s{transition:none}}
-@media (forced-colors:active){.fl-s.is-now{outline:1px solid CanvasText}.fl-src-facts dd.fl-null{border-left-color:CanvasText}}
+@media (forced-colors:active){.fl-s.is-now{outline:1px solid CanvasText}.fl-src-facts dd.fl-context{border-left-color:CanvasText}}
 @media (max-width:600px){
   .fl-index ol{gap:.7rem}
   .fl-index a{grid-template-columns:7.5rem minmax(0,1fr);column-gap:.8rem;row-gap:.1rem;align-content:start}

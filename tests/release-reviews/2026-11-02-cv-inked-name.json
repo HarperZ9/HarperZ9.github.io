@@ -1,0 +1,11 @@
+{
+  "date": "2026-11-02",
+  "note": "Designed PDFs rebuilt with the inked deboss stated explicitly; the name measures 16.86:1 against the paper. Bytes recorded for the author's review in the pull request before merge.",
+  "paths": {
+    "career/designed/Zain-Dana-Harper-CV.buildtex.json": "999a65b7065327340f8477acfab863b12cebb89c561276539618d4136e6ae1d1",
+    "career/designed/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.buildtex.json": "da0934ecadfbae7a3711f4db1549ae5112cf13ac2a95c544266e1e42729d6add",
+    "career/designed/Zain-Dana-Harper-Resume-Grounds.buildtex.json": "bdf9c023bb73a3ee1a9793fb0a91072a6d929b17f031fbe45cf1a015d05c83d5",
+    "career/designed/Zain-Dana-Harper-Resume-Public-Operations.buildtex.json": "6a0cbc847421b8b5b623852cb0b5721d997bd5042b066beb4f44206e71c47010",
+    "career/designed/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.buildtex.json": "8437f7a9833b53b8468778d76556b8461989a2e98e4bb5b1ff4bda5969910da0"
+  }
+}

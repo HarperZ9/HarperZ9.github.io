@@ -1,0 +1,22 @@
+{
+  "date": "2026-11-02",
+  "note": "Certification wording keeps issuer assessment scores labelled as assessments; source ledger points at the Microsoft credential-ID pages. Bytes recorded for the author's review in the pull request before merge.",
+  "paths": {
+    "career/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.docx": "659c33998e303adbdc94f33b69862258d09d26b2fc2ceedfe74c8196c31f7bfb",
+    "career/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.pdf": "e125c8dc8827e092a20f00cc5be5395309ea3db5e27984cb96e565e90a9280a6",
+    "career/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.docx": "74dd6606f9680bfa4e066ca147e6fa7fe81f173c87a3b88caa448da0a12e3b53",
+    "career/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.pdf": "35bb879a3dda035c596037a8066ff20ceab4bae65869eb181665dbf9d2b0da84",
+    "career/career-artifacts.json": "1f2edb723bbc7cee31d12b69a4a80288523c0c7005813d17ab03f32d96d0dd00",
+    "career/career-build-receipt.json": "04421ddd5c558a078528e8d4c216abdb4ae8fe7df13e23eb52c96656d942892a",
+    "career/designed/Zain-Dana-Harper-CV.buildtex.json": "c083a52a25f27dcd11d7f4d4d6504dd56c3d169dc971457f7d707d4e0dd0f575",
+    "career/designed/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.buildtex.json": "6cfa7a16c22e0e6e5dcb762fe57fcb3c20a3d362f1c62ac49a3bc55469790d7c",
+    "career/designed/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.pdf": "b7c931353f7acad9d4af7442a7895d83f9b3533e1dae8c41241b8a247c00279f",
+    "career/designed/Zain-Dana-Harper-Resume-Graphics-Developer-Tools.buildtex.json": "4a552892b996e6d805a124b157d81c8a75955d634d6a7c7dea9dfe20213e1eca",
+    "career/designed/Zain-Dana-Harper-Resume-Grounds.buildtex.json": "3de4d1e8f1bbcc1a172144da3e1f67ccb7de8ae64e23d72ae99e5061762b7d6a",
+    "career/designed/Zain-Dana-Harper-Resume-Public-Operations.buildtex.json": "358e420838ee78330ff46ba0e9c6eb702d009b04c0ac6dfab3c2e23be88f5c86",
+    "career/designed/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.buildtex.json": "eb796d67f430f21071f85d5e719c6b3c53b8eb47443a027dc4cff0b77f8ed49b",
+    "career/designed/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.pdf": "356664afb3f714fdf3444b33d27766d169b5cb78c29cda41181d9c6478f91880",
+    "resume-evaluation-tooling.html": "3e3d15639cc0b53f7fb3b4dd9830bf0b5ffb4e5b365b8070ffea322727b73341",
+    "resume-support-operations.html": "29f8bfb8b8d8b0265ad26bc1a06a6b47ba986280db0584c05a78375bdcdc9a8d"
+  }
+}

@@ -1,0 +1,69 @@
+{
+ "schema": "raw-native.media-render/1",
+ "scene": "which-source",
+ "title": "Which source decides",
+ "kind": "explainer",
+ "commit": "ff67e163fa20b8e24cbd29f9e08b3a1ba0e39db8",
+ "narrated": false,
+ "captions_burned": true,
+ "width": 960,
+ "height": 540,
+ "fps": 30,
+ "duration": 55.546,
+ "frames": 1667,
+ "adapter": {
+  "vendor": "google",
+  "architecture": "swiftshader",
+  "device": "",
+  "description": ""
+ },
+ "adapter_kind": "swiftshader",
+ "frame_ms_median": 321.4,
+ "frame_ms_p95": 394.4,
+ "wall_seconds": 497.5,
+ "chapters": [
+  {
+   "t": 0,
+   "title": "The value"
+  },
+  {
+   "t": 13.353846153846153,
+   "title": "Two sources"
+  },
+  {
+   "t": 33.315384615384616,
+   "title": "The check"
+  }
+ ],
+ "files": {
+  "engine/camera.mjs": "687cae2adcda0eabb18adbc5432536a1692b271bcf9b28cce3477f078bdc2659",
+  "engine/frame-graph.mjs": "71244a0e499ce3d61758fa9237e686fbfdc827979ac4718415934607e9f93bef",
+  "engine/motion/capture.html": "55fb90e221e348364335cad1e7f883d48063a3feccdfbef52af0ce71bc2587e4",
+  "engine/motion/engine.mjs": "8725bf9d55f282b4e1e90351fcd18419457aeca7e1e6abd3eb1227889c41124b",
+  "engine/motion/morph.mjs": "ed8776e6400cbf0e63c597d384669f40ccbc47b6790ec15a03dedbc1bf68c2cd",
+  "engine/motion/narration.mjs": "dee2b86087d8681d968ddbacf8d80d12cd73f898dd8b5683df7b7b88c13ed94f",
+  "engine/motion/particles.mjs": "5af2a3fe756dcfb7eac69766e35f55905db57ba40993f078b77c5159bb0932a9",
+  "engine/motion/path.mjs": "7b802dbf34ed4f930aa0223d61d64b2e98b0cb8de24d93d2d47a7ccc085a4a44",
+  "engine/motion/player.mjs": "2b6183000ef19436588a9e9e70adc04478f7c59f2407c69fa96248021963b7a7",
+  "engine/motion/renderer.mjs": "165f1256576f1a64e6ddfb7d28450fee44d2f79fb6c66abd1d888dc6f2047553",
+  "engine/motion/scene.mjs": "591d2df9d167045f65cb1d3fc68bdd6261e943e57752c0fbb4e32b9c92b1e11c",
+  "engine/motion/shaders.mjs": "987b6255e6b6bad7eb5a7273641d7b337cba6278c78bf39ad4e48520d9a7631d",
+  "engine/motion/text.mjs": "f895f535ad21bf88e18c8daa55fdab36939c0219d2e25d275bb6e561494eea73",
+  "engine/motion/timeline.mjs": "ad6fcef445ddecc1aee634d2124759cb4a357d04e14428b9f3e4a6df67f4eb1e",
+  "engine/motion/vector.mjs": "9fccd3cbf6dbeb2ff60c9bef4541f55d1ed5ae46fed45661ddc67a4c8a247ab0",
+  "engine/motion/walkthrough.mjs": "056dd9aef7ada369df854c69595e3d1cc9d1ae4348d7b75aff1c62c33c8bb696",
+  "engine/raw-gpu.mjs": "f394638ae60db17cdf545c3e862b2e5029dfec58aeb89f1526a99c94d6f8850f",
+  "engine/threads.mjs": "8fe4f8d5119563faec3ed1aaf796a57833a5a77a34e41a33e00040d5ca5e34ea",
+  "engine/threads.wgsl": "8fa08424ec68ee1de040b090e671897ce9897be2cb75cca59c2f4637b1c30632",
+  "engine/worlds.mjs": "8eed84d837ab2710a3e17d267e76b957d2c7422f47a7c7ffe9a64b20640967f8",
+  "engine/worlds.wgsl": "09f6372edc4bbbb8e6a138ba5b15cbc64ee6d063555dbf452ac4a9ba4d9f9cf1",
+  "facts.json": "56e3e8361293a5c07f69775ef6b84ccecbe5e4c6584759132d25a331bf044984",
+  "index.html": "201f053a6a08a945ab6c30732342c9c6e0bbb946a23a16aa82763f64129c4006",
+  "poster.jpg": "2c928ad5922f247b43d8b2e00f65325fb73350e60cc1deb414fccdb0a409b4d4",
+  "scene/atlas.json": "e319da67ce990a6d163411db1ef81641fbe76b9047f98575e9067280f69cb6bd",
+  "scene/which-source.scene.mjs": "a5050f3333708134d6a25ae6cee257bfe9b2fd4044733fc5e43ee193a52f61fe",
+  "which-source-540p.mp4": "01e39bdb4db604f0bffde08fb3092ff9d8f25887a2d7323be5eb90d676bbafcc",
+  "which-source.script.json": "af0b201190e19e726bd526adcf54a0193b1142407045767deef633529fa8b046",
+  "which-source.vtt": "ebde3bcdbef8aab0cb8ce861a6ab6da29d97b0c545d30aa93ff33befc800ca31"
+ }
+}

@@ -1,0 +1,69 @@
+{
+ "schema": "explainer-evidence/1",
+ "explainer": "precision",
+ "read": "2026-10-16",
+ "sources": {
+  "ours-precision": {
+   "short": "Night School's precision measurements, computed for this film",
+   "citation": "media/school/precision/facts.json, written by tools/school/fill_precision.mjs from system/school/precision*.mjs: exact fp16 and bf16 rounding checked on every bit pattern; spacing and error by magnitude; long sums; the attention model's layers and the whole model run with 16-bit storage and 32-bit or 16-bit accumulation, scored on 1,024 held-out rows with paired intervals.",
+   "url": "https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/precision",
+   "read": "full",
+   "claims": [
+    "Near 110: fp16 spacing 0.0625, worst rounding 0.03125; 13 significand bits needed for 1e-4, fp16 has 11.",
+    "Adding 1 stalls at 2,048 in fp16 and 256 in bf16.",
+    "Whole-model loss changes under 1e-3 nats in every 16-bit mode."
+   ],
+   "n": "1,024 held-out rows.",
+   "interval": "Paired row bootstrap in facts.json.",
+   "does_not_prove": "Anything about large models trained in 16 bits."
+  },
+  "ieee754": {
+   "short": "IEEE 754-2019 binary16",
+   "citation": "IEEE (2019). IEEE Standard for Floating-Point Arithmetic, IEEE 754-2019 (binary16 parameters, checked against ISO/IEC TS 18661-3).",
+   "url": "https://standards.ieee.org/ieee/754/6210/",
+   "read": "parameters checked against ISO/IEC TS 18661-3; the standard itself is paywalled and was not read",
+   "claims": [
+    "binary16: 11-bit significand, 5-bit exponent, largest finite 65,504."
+   ],
+   "n": "Not applicable.",
+   "interval": "Not applicable.",
+   "does_not_prove": "Anything about bf16."
+  },
+  "micikevicius2018": {
+   "short": "Micikevicius and others 2018, Mixed Precision Training",
+   "citation": "Micikevicius, P., Narang, S., Alben, J., and others (2018). Mixed Precision Training. ICLR 2018. arXiv:1710.03740.",
+   "url": "https://arxiv.org/abs/1710.03740",
+   "read": "read by the fact-check, 2026-10-16",
+   "claims": [
+    "Train in fp16 with an fp32 master copy of weights, loss scaling, and fp32 accumulation of products."
+   ],
+   "n": "Not applicable.",
+   "interval": "Not applicable.",
+   "does_not_prove": "Anything about this model."
+  },
+  "nvidia": {
+   "short": "NVIDIA CUDA Programming Guide, tensor core element types",
+   "citation": "NVIDIA (2026). CUDA Programming Guide 13.4.2, section 5.4.11.6, Element Types and Matrix Sizes.",
+   "url": "https://docs.nvidia.com/cuda/cuda-programming-guide/",
+   "read": "read by the fact-check, 2026-10-16",
+   "claims": [
+    "Tensor core operations take fp16 inputs with fp16 or fp32 accumulators, and bf16 inputs with fp32 accumulators."
+   ],
+   "n": "Not applicable.",
+   "interval": "Not applicable.",
+   "does_not_prove": "Anything about other vendors."
+  },
+  "rawnative": {
+   "short": "raw-native evidence note on the denoiser's tensor-core parity, 15 October 2026",
+   "citation": "HarperZ9/raw-native, evidence/rr-tc-note-2026-10-15.json.",
+   "url": "https://github.com/HarperZ9/raw-native/blob/main/evidence/rr-tc-note-2026-10-15.json",
+   "read": "full",
+   "claims": [
+    "A value near 110 needs about 1e-4 relative precision; fp16 holds about 1e-3 there (order of magnitude)."
+   ],
+   "n": "Not applicable.",
+   "interval": "Not applicable.",
+   "does_not_prove": "Anything about this film's arithmetic beyond the stated figures."
+  }
+ }
+}

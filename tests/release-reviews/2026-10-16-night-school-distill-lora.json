@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-16",
+  "note": "Lessons S17 Distillation and S19 LoRA join the sitemap (each with its own link card), the route registry and the site index; the publication build receipt records the new sitemap; the home bundle is rebuilt from the registry as index-CoD1AHwR.js, and index-DWytnneE.js stays as retained history.",
+  "paths": {
+    "assets/index-CoD1AHwR.js": "01b8e87f68c769a0aacbc5dbc7d7f8049060832bb8e11efb655c36fb505013dd",
+    "index.html": "5f2c81236c452c8059f9e97cdfde4eef88d94f9ee86b904eaec08eacad4161c5",
+    "publications/build.json": "d16db7cac670e376d745a4250173b55beb03f4f58dd9b755b0f703e074d3f1d3",
+    "site-index.html": "9c95471df95561972aeb523cc5fd9e34b954fad6e90bde26c1fcbcb07fa3f187",
+    "sitemap.xml": "cd2040ac391b718172212cc7b48604b39a0b0592bd974a68fe3d7184c8d8e594",
+    "system/routes.js": "00f27f85ff39b6b162878294cd542863595a964c19a7e33f743cf74a21c53e25"
+  }
+}

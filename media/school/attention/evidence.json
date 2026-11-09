@@ -1,0 +1,124 @@
+{
+  "schema": "explainer-evidence/1",
+  "explainer": "attention",
+  "read": "2026-10-15",
+  "sources": {
+    "vaswani2017": {
+      "short": "Vaswani and others 2017, Attention Is All You Need",
+      "citation": "Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A. N., Kaiser, L., Polosukhin, I. (2017). Attention Is All You Need. Advances in Neural Information Processing Systems 30.",
+      "url": "https://arxiv.org/abs/1706.03762",
+      "read": "full",
+      "claims": [
+        "Scaled dot-product attention computes softmax(Q K^T / sqrt(d_k)) V: queries are compared with keys by dot products, the scores are divided by the square root of the key dimension, turned into weights by a softmax, and used to average the values (section 3.2.1).",
+        "The authors suspect that for large d_k the dot products grow large, pushing the softmax into regions with extremely small gradients, and scale by 1/sqrt(d_k) to counteract it (section 3.2.1).",
+        "Multi-head attention runs several attention functions in parallel on learned projections; the base model uses h = 8 heads and the big model h = 16 (section 3.2.2, Table 3).",
+        "The decoder's self-attention masks later positions, so a position can attend only to itself and earlier positions (section 3.2.3).",
+        "Self-attention's cost per layer grows with the square of the sequence length (Table 1, O(n^2 d))."
+      ],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "does_not_prove": "Anything about how attention behaves inside a particular trained model; the paper defines the mechanism."
+    },
+    "bahdanau2015": {
+      "short": "Bahdanau, Cho and Bengio 2015, neural machine translation by jointly learning to align and translate",
+      "citation": "Bahdanau, D., Cho, K., Bengio, Y. (2015). Neural Machine Translation by Jointly Learning to Align and Translate. ICLR 2015 (oral). arXiv:1409.0473, first posted 1 September 2014.",
+      "url": "https://arxiv.org/abs/1409.0473",
+      "read": "full",
+      "claims": [
+        "Neural encoder-decoder translation models encoded a source sentence into a fixed-length vector, which the authors conjecture is a bottleneck for long sentences; the baseline's score drops sharply with sentence length (sections 1 and 5.1).",
+        "Their model searches the source positions and weighs them for each output word; they call it an alignment model, and section 3.1 says it implements a mechanism of attention in the decoder."
+      ],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "does_not_prove": "That early words in particular fade; the paper shows degradation with sentence length."
+    },
+    "olsson2022": {
+      "short": "Olsson and others 2022, In-context Learning and Induction Heads",
+      "citation": "Olsson, C., Elhage, N., Nanda, N., Joseph, N., DasSarma, N., Henighan, T., and others (2022). In-context Learning and Induction Heads. Transformer Circuits Thread, Anthropic. arXiv:2209.11895.",
+      "url": "https://arxiv.org/abs/2209.11895",
+      "read": "full",
+      "claims": [
+        "An induction head attends to the token that followed an earlier occurrence of the current token and copies it ([A][B] ... [A] -> [B]).",
+        "It works with a previous-token head in an earlier layer (K-composition), first described for two-layer attention-only models in Elhage and others 2021."
+      ],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "does_not_prove": "That the heads in our tiny model are induction heads; that is measured on our own model, separately."
+    },
+    "jain2019": {
+      "short": "Jain and Wallace 2019, Attention is not Explanation",
+      "citation": "Jain, S., Wallace, B. C. (2019). Attention is not Explanation. NAACL-HLT 2019. arXiv:1902.10186.",
+      "url": "https://arxiv.org/abs/1902.10186",
+      "read": "full",
+      "claims": [
+        "In the recurrent text-classification and question-answering models studied, attention weights often correlate weakly with gradient-based importance, and very different attention distributions can give equivalent predictions; simpler averaging encoders behaved better."
+      ],
+      "n": "Several classification and question-answering datasets.",
+      "interval": "Not applicable.",
+      "does_not_prove": "That attention never explains a prediction, or anything about transformer language models in particular."
+    },
+    "wiegreffe2019": {
+      "short": "Wiegreffe and Pinter 2019, Attention is not not Explanation",
+      "citation": "Wiegreffe, S., Pinter, Y. (2019). Attention is not not Explanation. EMNLP-IJCNLP 2019. arXiv:1908.04626.",
+      "url": "https://arxiv.org/abs/1908.04626",
+      "read": "full",
+      "claims": [
+        "Argues that whether attention is an explanation depends on the definition of explanation, and that the earlier experiments do not settle it; proposes tests for when attention can serve as one."
+      ],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "does_not_prove": "That attention is an explanation; it argues the earlier experiments do not settle the question."
+    },
+    "dao2022": {
+      "short": "Dao and others 2022, FlashAttention",
+      "citation": "Dao, T., Fu, D. Y., Ermon, S., Rudra, A., Re, C. (2022). FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness. arXiv:2205.14135.",
+      "url": "https://arxiv.org/abs/2205.14135",
+      "read": "full",
+      "claims": [
+        "Standard attention's time and memory grow quadratically with sequence length; FlashAttention computes exact attention in tiles to cut reads and writes to GPU memory.",
+        "FlashAttention keeps the exact result and the quadratic arithmetic; it cuts memory traffic and makes memory use linear in sequence length."
+      ],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "does_not_prove": "Anything about this lesson's model, which runs on a CPU."
+    },
+    "ours-model": {
+      "short": "Night School's tiny transformer, trained for this film",
+      "citation": "media/school/attention/model.json, written by tools/school/train_film_weights.mjs from system/school/tinyformer.mjs at a fixed seed; the same code the lab runs in the browser.",
+      "url": "https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/attention",
+      "read": "full",
+      "claims": [
+        "Every number the film states about 'our model' (size, heads, the probe's attention share, copy accuracy with and without attention) is read from model.json by tools/school/fill_film.mjs."
+      ],
+      "n": "One training run per arm at a fixed seed; held-out sentences from a separate seed.",
+      "interval": "One seed per arm, so no interval across seeds; the lab lets a reader rerun with other seeds.",
+      "does_not_prove": "Anything about large language models' attention; it is a two-layer model on a toy language."
+    },
+    "arithmetic": {
+      "short": "Counting comparisons",
+      "citation": "A causal attention head compares each of n positions with itself and every earlier one: n (n + 1) / 2 scores, 500,500 for n = 1,000, or n (n - 1) / 2 = 499,500 counting only earlier words. Doubling n multiplies either by about four.",
+      "url": "",
+      "read": "full",
+      "claims": [
+        "In each head, a thousand words means about half a million comparisons; doubling the text multiplies the attention work by about four (3.998)."
+      ],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "does_not_prove": "Wall-clock time, which also depends on memory traffic (see dao2022)."
+    },
+    "elhage2021": {
+      "short": "Elhage and others 2021, A Mathematical Framework for Transformer Circuits",
+      "citation": "Elhage, N., Nanda, N., Olsson, C., Henighan, T., Joseph, N., Mann, B., and others (2021). A Mathematical Framework for Transformer Circuits. Transformer Circuits Thread, Anthropic.",
+      "url": "https://transformer-circuits.pub/2021/framework/index.html",
+      "read": "full",
+      "claims": [
+        "Induction heads were first described in two-layer attention-only models, working with a previous-token head through K-composition.",
+        "An attention pattern can be very informative and also misleading about what a head does."
+      ],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "does_not_prove": "Anything about models with MLP layers, such as ours, without measuring them."
+    }
+  },
+  "factcheck": "FACTCHECK.md, an independent read of every source paper on 2026-10-15 (UTC); all rewordings it proposed were applied."
+}
