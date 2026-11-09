@@ -1,0 +1,174 @@
+{
+ "schema": "film-frames/1",
+ "film": "brender-frame",
+ "source": "HarperZ9/brender-archival, origin/main 94f809d, gallery/ and gallery/release-20260827/ (copied byte for byte)",
+ "licence": "MIT, copyright 2026 Zain Dana Harper (brender-archival gallery/LICENSE-NOTE.md); any BRender asset they depict stays MIT, copyright 1998 Argonaut Software Limited",
+ "provenance": "gallery/release-20260827/provenance-manifest.json in brender-archival",
+ "files": {
+  "01-wireframe-cube.png": {
+   "sha256": "7caa3fdffba2666ead882f0ad4aca5cd9e3c9d2a669c7867eebd170c5956f1ce",
+   "width": 320,
+   "height": 240,
+   "from": "gallery/01-wireframe-cube.png"
+  },
+  "02-scene-graph-cube.png": {
+   "sha256": "e0d61cd295ce3115065ac1d2bef07acf1e4788c5bba05c4adb80977ea95c59a1",
+   "width": 320,
+   "height": 240,
+   "from": "gallery/02-scene-graph-cube.png"
+  },
+  "03-solid-shaded.png": {
+   "sha256": "99263cabcea1b273af0018b8ec94bcfd38c03155c2d04027dade846f4f5c1d66",
+   "width": 320,
+   "height": 240,
+   "from": "gallery/03-solid-shaded.png"
+  },
+  "04-depth-buffer.png": {
+   "sha256": "1417dde07f043fb94d8866a3c9a6aa77ece0d7707e787f0a9a887e404cea07a2",
+   "width": 320,
+   "height": 240,
+   "from": "gallery/04-depth-buffer.png"
+  },
+  "05-texture-mapped.png": {
+   "sha256": "d4ebf0d9db580e802ec01f2585375cbbac0772229182d0010eafe777f3930c92",
+   "width": 320,
+   "height": 240,
+   "from": "gallery/05-texture-mapped.png"
+  },
+  "06-datafile-models.png": {
+   "sha256": "6905626a2151ba7f0ff40eb6acfa16388e226d096b4f48cab63763cda0b97972",
+   "width": 640,
+   "height": 480,
+   "from": "gallery/06-datafile-models.png"
+  },
+  "07-uv-textured-globe.png": {
+   "sha256": "550ac52aa751d759002b0fb4fb5054541049ff9165f8db327322ac1724e55522",
+   "width": 320,
+   "height": 240,
+   "from": "gallery/07-uv-textured-globe.png"
+  },
+  "08-multipart-coupe.png": {
+   "sha256": "d2be455e1110139068d449d3a083576130dfeffabc287f2bb70e1e49a8fb4745",
+   "width": 320,
+   "height": 240,
+   "from": "gallery/08-multipart-coupe.png"
+  },
+  "09-gouraud-sphere.png": {
+   "sha256": "66fb2058d3d4e3f920c2ee11f4f30fec1bc6ce17f06222fa75067ea87e6bbac0",
+   "width": 320,
+   "height": 240,
+   "from": "gallery/09-gouraud-sphere.png"
+  },
+  "10-teapot-plotter.png": {
+   "sha256": "c7f0a0df1cab4c5e3ec42cf034bca1fd91934ce1f83318f53faff5891d5d095c",
+   "width": 640,
+   "height": 480,
+   "from": "gallery/10-teapot-plotter.png"
+  },
+  "period-pipeline-orbit-00.png": {
+   "sha256": "7b9da4cd507851bf56df2e238f7a8c8fb6ba662a2f77e5c0288d0a09d63666ed",
+   "width": 320,
+   "height": 240,
+   "from": "gallery/release-20260827/period-pipeline-orbit-00.png"
+  },
+  "period-pipeline-orbit-01.png": {
+   "sha256": "2c17b8fff47a981be28eb93c25bbb21b88bf1cc68094187e7fd57e7ea7de7316",
+   "width": 320,
+   "height": 240,
+   "from": "gallery/release-20260827/period-pipeline-orbit-01.png"
+  },
+  "period-pipeline-orbit-02.png": {
+   "sha256": "1ada0d42490e6509e1db14a40cc102931f6a0c97cd0d15df220ab43385913989",
+   "width": 320,
+   "height": 240,
+   "from": "gallery/release-20260827/period-pipeline-orbit-02.png"
+  },
+  "period-pipeline-orbit-03.png": {
+   "sha256": "a541d61a05511898458f7a6ba4408b607282457cc3e0230ecc19dcdd57b33c44",
+   "width": 320,
+   "height": 240,
+   "from": "gallery/release-20260827/period-pipeline-orbit-03.png"
+  },
+  "period-pipeline-orbit-04.png": {
+   "sha256": "bbfedea0104695c3f667168b9393758a86094644950e8b43de3c7011ae3a3928",
+   "width": 320,
+   "height": 240,
+   "from": "gallery/release-20260827/period-pipeline-orbit-04.png"
+  },
+  "period-pipeline-orbit-05.png": {
+   "sha256": "89f714524c4ea5be650c7d5704d05bbb254c6e71d4ce7750418a88e2a44d71dd",
+   "width": 320,
+   "height": 240,
+   "from": "gallery/release-20260827/period-pipeline-orbit-05.png"
+  },
+  "period-pipeline-orbit-06.png": {
+   "sha256": "dca01c297f04fadd2c188f5b3727363a3091f899bd63d5a060b4114e776837a0",
+   "width": 320,
+   "height": 240,
+   "from": "gallery/release-20260827/period-pipeline-orbit-06.png"
+  },
+  "period-pipeline-orbit-07.png": {
+   "sha256": "026c8138565485e06d7392d9f87e0631f64c7aae51c5237a3fe77bf17ad249c9",
+   "width": 320,
+   "height": 240,
+   "from": "gallery/release-20260827/period-pipeline-orbit-07.png"
+  },
+  "keepers-lamp-0.png": {
+   "sha256": "dc2ed48374a9f79c41c79846055bcd8918e0acc9d8024eaf8d67d005f763d7c4",
+   "width": 400,
+   "height": 225,
+   "from": "The Keeper's Hour 0.3.1 (keepers-v0.3.1, Windows x64), KEEPERS_ROOM=lamp KEEPERS_FPS=30 KEEPERS_SECONDS=4 KEEPERS_YAW_SPEED=6 KEEPERS_CLOCK=0 --force-software, frame 0 of 120, cropped to x 160..1120, y 0..540 and scaled by 0.4167 (nearest)",
+   "source_ppm_sha256": "4653a50dc74146476044add8a6eaa3eab23958ae3bb018bad952f50ab70dca98"
+  },
+  "keepers-lamp-1.png": {
+   "sha256": "d0aaa0bb7a41de5e4b3b915727811b80c6a1129b2722b01114774590d0250a0e",
+   "width": 400,
+   "height": 225,
+   "from": "The Keeper's Hour 0.3.1 (keepers-v0.3.1, Windows x64), KEEPERS_ROOM=lamp KEEPERS_FPS=30 KEEPERS_SECONDS=4 KEEPERS_YAW_SPEED=6 KEEPERS_CLOCK=0 --force-software, frame 15 of 120, cropped to x 160..1120, y 0..540 and scaled by 0.4167 (nearest)",
+   "source_ppm_sha256": "fd8b3ef62b0d997993f2acfbbcd2b69d9fe1d8fb6e5e9c02d09cf3c5a6811d74"
+  },
+  "keepers-lamp-2.png": {
+   "sha256": "36df4f25f839ac7207e01cf2be17d31a3e5c7eb5ac550bda709ef68b3203f43a",
+   "width": 400,
+   "height": 225,
+   "from": "The Keeper's Hour 0.3.1 (keepers-v0.3.1, Windows x64), KEEPERS_ROOM=lamp KEEPERS_FPS=30 KEEPERS_SECONDS=4 KEEPERS_YAW_SPEED=6 KEEPERS_CLOCK=0 --force-software, frame 30 of 120, cropped to x 160..1120, y 0..540 and scaled by 0.4167 (nearest)",
+   "source_ppm_sha256": "84a4aa8fb42c7cf039239b00fbe77ba4a0d3f79f55b5a38bc64b8bcac7ddee13"
+  },
+  "keepers-lamp-3.png": {
+   "sha256": "243f8015c44cde5d584c4f0da59d327e5184ed2359c76e19470c867e132f2a07",
+   "width": 400,
+   "height": 225,
+   "from": "The Keeper's Hour 0.3.1 (keepers-v0.3.1, Windows x64), KEEPERS_ROOM=lamp KEEPERS_FPS=30 KEEPERS_SECONDS=4 KEEPERS_YAW_SPEED=6 KEEPERS_CLOCK=0 --force-software, frame 45 of 120, cropped to x 160..1120, y 0..540 and scaled by 0.4167 (nearest)",
+   "source_ppm_sha256": "dc0a88e897fdb318117d6bfae7036165a1ca4b30b1e25714194133c50b40cc69"
+  },
+  "keepers-lamp-4.png": {
+   "sha256": "7c46184f9b3fda3de4ff8829812127498990851c83ec554fec3570ea3b68b7a8",
+   "width": 400,
+   "height": 225,
+   "from": "The Keeper's Hour 0.3.1 (keepers-v0.3.1, Windows x64), KEEPERS_ROOM=lamp KEEPERS_FPS=30 KEEPERS_SECONDS=4 KEEPERS_YAW_SPEED=6 KEEPERS_CLOCK=0 --force-software, frame 60 of 120, cropped to x 160..1120, y 0..540 and scaled by 0.4167 (nearest)",
+   "source_ppm_sha256": "a029c72c0f22e693734b2cc31fe0b073c4c144eabd1df970072cce18068d499c"
+  },
+  "keepers-lamp-5.png": {
+   "sha256": "aa98c446cf9c9e9ee58e7674d6028a298ad3ff4de5c9886bc2a824cce03db897",
+   "width": 400,
+   "height": 225,
+   "from": "The Keeper's Hour 0.3.1 (keepers-v0.3.1, Windows x64), KEEPERS_ROOM=lamp KEEPERS_FPS=30 KEEPERS_SECONDS=4 KEEPERS_YAW_SPEED=6 KEEPERS_CLOCK=0 --force-software, frame 75 of 120, cropped to x 160..1120, y 0..540 and scaled by 0.4167 (nearest)",
+   "source_ppm_sha256": "3880d406d0cc5aaa67cd4dd67dcbe0fab75250e39cf57434df39f0191a799200"
+  },
+  "keepers-lamp-6.png": {
+   "sha256": "e47608b3bb234a3d11ade12efadcbf2f321af6daec872fbb7ecba0881c0e3188",
+   "width": 400,
+   "height": 225,
+   "from": "The Keeper's Hour 0.3.1 (keepers-v0.3.1, Windows x64), KEEPERS_ROOM=lamp KEEPERS_FPS=30 KEEPERS_SECONDS=4 KEEPERS_YAW_SPEED=6 KEEPERS_CLOCK=0 --force-software, frame 90 of 120, cropped to x 160..1120, y 0..540 and scaled by 0.4167 (nearest)",
+   "source_ppm_sha256": "f6c5e50bf632ff223be9ebb13393d35cbae07f34b84f0525a4bff77d18e31602"
+  },
+  "keepers-lamp-7.png": {
+   "sha256": "abe154c5521378668ee6121335533990d0e1c33161240dd080d836c97da4c78d",
+   "width": 400,
+   "height": 225,
+   "from": "The Keeper's Hour 0.3.1 (keepers-v0.3.1, Windows x64), KEEPERS_ROOM=lamp KEEPERS_FPS=30 KEEPERS_SECONDS=4 KEEPERS_YAW_SPEED=6 KEEPERS_CLOCK=0 --force-software, frame 105 of 120, cropped to x 160..1120, y 0..540 and scaled by 0.4167 (nearest)",
+   "source_ppm_sha256": "3a93f4261493107ae558380b16f7bbf39eb9a015b4e94e83128320fb14f3ce7b"
+  }
+ },
+ "keepers_licence": "The Keeper's Hour by Zain Dana Harper, CC BY 4.0 (words and art); code MIT; drawn by BRender 1.4 (BlazingRenderer/BRender, MIT)"
+}
