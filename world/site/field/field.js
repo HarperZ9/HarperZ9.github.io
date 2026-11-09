@@ -10,7 +10,7 @@ const D = Math.PI / 180;
 // light: elevation and azimuth in degrees; moon: phase angle in degrees (0 full); wind U10 in m/s; camera height m,
 // pitch and yaw in degrees; glass: the word, its distance, cap height, thickness (m); expo: exposure multiplier
 export const SPACES = {
-  "low-sun": { label: "Low sun", word: "Zain Dana Harper", light: { el: 2.2, az: 0 }, wind: 5, cam: { h: 2.2, pitch: 1.0, yaw: 0 }, glass: { z: 90, cap: 6.5, thick: 1.6 }, expo: 9 },
+  "low-sun": { label: "Low sun", word: "Low Water", light: { el: 2.2, az: 0 }, wind: 5, cam: { h: 2.2, pitch: 1.0, yaw: 0 }, glass: { z: 90, cap: 6.5, thick: 1.6 }, expo: 9 },
   "close": { label: "Close to the glass", word: "light", light: { el: 11, az: 24 }, wind: 4, cam: { h: 1.2, pitch: 2.5, yaw: 0 }, glass: { z: 22, cap: 4.2, thick: 1.4 }, expo: 7 },
   // the field behind the home and the reading pages carries no word: glass lettering stays where it means something
   // (the author, 2026-11-03, on the word "light" here: "I think it is decoration without meaning")

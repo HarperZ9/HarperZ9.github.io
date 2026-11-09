@@ -7084,18 +7084,18 @@
    "sourceSha256": "f83dbc05fb91c2cf9eff2d772f10f995f23d30bcc27df40838e3ef82bf9c1eda"
   },
   {
-   "path": "world/typeengine/living/baked/name-tiles-code.png",
-   "source": "2026-10-23-typeengine/living/baked/name-tiles-code.png",
+   "path": "world/typeengine/living/baked/flywheel-tiles-code.png",
+   "source": "2026-10-23-typeengine/living/baked/flywheel-tiles-code.png",
    "folder": "2026-10-23-typeengine",
-   "bytes": 1451127,
-   "sourceSha256": "7595740723b572189a098551436b867de985d7a955645de78297aedce40e8f81"
+   "bytes": 1421853,
+   "sourceSha256": "be7249f395a0b134e74e380b3834e89e9247d99674518996bcbf16d8a577b1a6"
   },
   {
    "path": "world/typeengine/living/bakes.mjs",
    "source": "2026-10-23-typeengine/living/bakes.mjs",
    "folder": "2026-10-23-typeengine",
-   "bytes": 254,
-   "sourceSha256": "dead18e3ffc69e5a99084636b87dfb85f4a3c6fea85889cd8171f24219f724a7"
+   "bytes": 250,
+   "sourceSha256": "eee1ddba776ae5fbe7ca7bd8ad664a31fecbcdd3c2fb46667187a997ee6b3cef"
   },
   {
    "path": "world/typeengine/living/index.html",
@@ -7123,7 +7123,7 @@
    "source": "2026-10-23-typeengine/living/passages.mjs",
    "folder": "2026-10-23-typeengine",
    "bytes": 1187,
-   "sourceSha256": "ddd533b13a6d18b79ad943bc8813a60026de04c3674301f39df7053a371be764"
+   "sourceSha256": "9e054bac0741d1e14985b30ab770388ff056e70c56a8b9c428f3b027b8c037ee"
   },
   {
    "path": "world/typeengine/room/exports.mjs",
@@ -10237,15 +10237,15 @@
    "path": "world/name-art/superframe/mosaic-node.mjs",
    "source": "2026-10-24-name-art/superframe/mosaic-node.mjs",
    "folder": "2026-10-24-name-art",
-   "bytes": 2985,
-   "sourceSha256": "4a7610a8cbd77f26655ae073b0a16e7dca6859f84f80cb940135450f8a6303ae"
+   "bytes": 3015,
+   "sourceSha256": "13cc68977b48dc0d5c1485a758988769d7732eeab4399ecf725e1b234a75b042"
   },
   {
    "path": "world/name-art/superframe/nameart.mjs",
    "source": "2026-10-24-name-art/superframe/nameart.mjs",
    "folder": "2026-10-24-name-art",
-   "bytes": 5512,
-   "sourceSha256": "8744fc8da6e3159f1724618aaa9eca3fdfc3302f7f9416a2f8d01630194418c9"
+   "bytes": 5568,
+   "sourceSha256": "604befa8232719603e0dfc5565d01e0cadd1e0bdce430e694537d376d7394c88"
   },
   {
    "path": "world/visualizer/lib/draw.mjs",
@@ -10542,7 +10542,7 @@
    "sourceSha256": "096ffb594b7dc75a2017aad71ff4d54d1455f0656d71a2225a299f454198eb0b"
   }
  ],
- "assetRevision": "world-efe34ecaf7",
+ "assetRevision": "world-6173c8bbb7",
  "assetRevisionScope": [
   "world/",
   "studies/",
