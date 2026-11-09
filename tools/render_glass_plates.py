@@ -9,7 +9,7 @@ word or light is one command away from a matching plate.
     python tools/render_glass_plates.py low-sun noon --n 32
 
 The page is served from the repository root on a loopback port. The capture is 3840 x 2160 and the plates are
-downsampled from it with Lanczos, then written as WebP at the quality the existing plates use.
+written at full size for 2x and 4K screens and downsampled with Lanczos to 1920 and 960, all as WebP.
 """
 
 from __future__ import annotations
@@ -26,7 +26,7 @@ from PIL import Image
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 OUT = ROOT / "media" / "world" / "glass-water"
-SIZES = {1920: 86, 960: 84}
+SIZES = {3840: 90, 1920: 90, 960: 88}
 
 
 class Quiet(http.server.SimpleHTTPRequestHandler):
@@ -44,6 +44,31 @@ def serve() -> tuple[http.server.ThreadingHTTPServer, int]:
     return srv, srv.server_address[1]
 
 
+def dither(img: Image.Image, seed: int = 1) -> Image.Image:
+    """One step of triangular noise before 8-bit encoding, so the night sky's slow gradients do not settle into
+    flat bands that the encoder then turns into visible blocks."""
+    import numpy as np
+    rng = np.random.default_rng(seed)
+    a = np.asarray(img, np.float32) + rng.random((img.height, img.width, 1), np.float32) - rng.random((img.height, img.width, 1), np.float32)
+    return Image.fromarray(a.round().clip(0, 255).astype("uint8"))
+
+
+def despeckle(img: Image.Image, k: float = 0.04, passes: int = 2) -> Image.Image:
+    """Remove fireflies: a pixel brighter than the median of its 3 x 3 neighbours by more than `k` (0-1) in luma
+    is a few unlucky light samples that the accumulation has not averaged out; it takes the median instead."""
+    import numpy as np
+    from PIL import ImageFilter
+    w = np.array([0.2126, 0.7152, 0.0722], np.float32)
+    for _ in range(passes):
+        a = np.asarray(img, np.float32) / 255
+        m = np.asarray(img.filter(ImageFilter.MedianFilter(3)), np.float32) / 255
+        hot = (a @ w - m @ w) > k
+        a[hot] = m[hot]
+        print(f"    despeckle: {hot.mean() * 100:.3f}% of pixels replaced")
+        img = Image.fromarray((a * 255 + 0.5).clip(0, 255).astype("uint8"))
+    return img
+
+
 def capture(page, port: int, space: str, n: int) -> Image.Image:
     url = f"http://127.0.0.1:{port}/glass-water.html?space={space}&still=1&w=3840&h=2160&n={n}"
     page.goto(url)
@@ -52,7 +77,7 @@ def capture(page, port: int, space: str, n: int) -> Image.Image:
     # only the field: the page's words and the plates below it stay out of the picture
     page.add_style_tag(content=".gw-words, .gw-plates, .site-nav, header, footer { visibility: hidden !important; }")
     shot = page.locator("canvas.gw-field").screenshot()
-    return Image.open(BytesIO(shot)).convert("RGB")
+    return despeckle(Image.open(BytesIO(shot)).convert("RGB"))
 
 
 def main() -> int:
@@ -80,7 +105,7 @@ def main() -> int:
                 img = capture(page, port, space, args.n)
                 for w, q in SIZES.items():
                     out = OUT / f"{space}-{w}.webp"
-                    img.resize((w, round(w * img.height / img.width)), Image.LANCZOS).save(out, "WEBP", quality=q, method=6)
+                    dither(img.resize((w, round(w * img.height / img.width)), Image.LANCZOS)).save(out, "WEBP", quality=q, method=6)
                     print(f"  {out.relative_to(ROOT).as_posix():44} {out.stat().st_size / 1024:>6.0f} kB")
             browser.close()
     finally:

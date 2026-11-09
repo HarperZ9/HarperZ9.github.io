@@ -1,69 +1,29 @@
 {
- "encodedAt": "2026-11-09T09:47:52.880Z",
+ "encodedAt": "2026-11-09T15:14:06.222Z",
  "files": [
   {
+   "path": "media/world/lettering/intaglio-lines-3840.webp",
+   "bytes": 1170416
+  },
+  {
+   "path": "media/world/lettering/intaglio-lines-3840.avif",
+   "bytes": 675814
+  },
+  {
    "path": "media/world/lettering/intaglio-lines-1920.webp",
-   "bytes": 407920
+   "bytes": 420688
   },
   {
    "path": "media/world/lettering/intaglio-lines-1920.avif",
-   "bytes": 236036
+   "bytes": 234954
   },
   {
    "path": "media/world/lettering/intaglio-lines-960.webp",
-   "bytes": 98184
+   "bytes": 128270
   },
   {
    "path": "media/world/lettering/intaglio-lines-960.avif",
-   "bytes": 53643
-  },
-  {
-   "path": "media/world/lettering/deco-arc-1920.webp",
-   "bytes": 127340
-  },
-  {
-   "path": "media/world/lettering/deco-arc-1920.avif",
-   "bytes": 88068
-  },
-  {
-   "path": "media/world/lettering/deco-arc-960.webp",
-   "bytes": 55328
-  },
-  {
-   "path": "media/world/lettering/deco-arc-960.avif",
-   "bytes": 39195
-  },
-  {
-   "path": "media/world/lettering/pearls-1920.webp",
-   "bytes": 158892
-  },
-  {
-   "path": "media/world/lettering/pearls-1920.avif",
-   "bytes": 273152
-  },
-  {
-   "path": "media/world/lettering/pearls-960.webp",
-   "bytes": 58538
-  },
-  {
-   "path": "media/world/lettering/pearls-960.avif",
-   "bytes": 95036
-  },
-  {
-   "path": "media/world/lettering/mosaic-smalti-1920.webp",
-   "bytes": 644784
-  },
-  {
-   "path": "media/world/lettering/mosaic-smalti-1920.avif",
-   "bytes": 901165
-  },
-  {
-   "path": "media/world/lettering/mosaic-smalti-960.webp",
-   "bytes": 191026
-  },
-  {
-   "path": "media/world/lettering/mosaic-smalti-960.avif",
-   "bytes": 235552
+   "bytes": 69552
   },
   {
    "path": "media/world/lettering/deco-arc.webm",
@@ -75,11 +35,11 @@
   },
   {
    "path": "media/world/lettering/deco-arc-poster.webp",
-   "bytes": 64532
+   "bytes": 127378
   },
   {
    "path": "media/world/lettering/deco-arc-640.webm",
-   "bytes": 73605
+   "bytes": 84660
   },
   {
    "path": "media/world/lettering/deco-arc-640.mp4",
@@ -91,7 +51,7 @@
   },
   {
    "path": "media/world/lettering/pearls.webm",
-   "bytes": 2785516
+   "bytes": 2214915
   },
   {
    "path": "media/world/lettering/pearls.mp4",
@@ -99,11 +59,11 @@
   },
   {
    "path": "media/world/lettering/pearls-poster.webp",
-   "bytes": 77468
+   "bytes": 158998
   },
   {
    "path": "media/world/lettering/pearls-640.webm",
-   "bytes": 79041
+   "bytes": 83518
   },
   {
    "path": "media/world/lettering/pearls-640.mp4",
@@ -115,7 +75,7 @@
   },
   {
    "path": "media/world/lettering/mosaic-smalti.webm",
-   "bytes": 5595385
+   "bytes": 4272489
   },
   {
    "path": "media/world/lettering/mosaic-smalti.mp4",
@@ -123,11 +83,11 @@
   },
   {
    "path": "media/world/lettering/mosaic-smalti-poster.webp",
-   "bytes": 286438
+   "bytes": 656842
   },
   {
    "path": "media/world/lettering/mosaic-smalti-640.webm",
-   "bytes": 257378
+   "bytes": 357079
   },
   {
    "path": "media/world/lettering/mosaic-smalti-640.mp4",
