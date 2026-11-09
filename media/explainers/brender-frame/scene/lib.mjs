@@ -75,8 +75,8 @@ export const box = (x, y, w, h) => [contour([x, y, x + w, y, x + w, y + h, x, y 
 export function tabShape(evidence, mono, id, extra = "") {
   const e = evidence.sources[id];
   if (!e) throw new Error(`no source ${id} in evidence.json`);
-  const read = e.read === "secondary" ? " . secondary" : "";
-  return text(`${e.short}${read}${extra ? " . " + extra : ""}`, { atlas: mono, size: 28, x: 96, y: 66 }).shape;
+  const read = e.read === "secondary" ? " · secondary" : "";
+  return text(`${e.short}${read}${extra ? " · " + extra : ""}`, { atlas: mono, size: 28, x: 96, y: 66 }).shape;
 }
 
 // Fade world labels that would sit where captions are drawn (x 384 to 1536, y from 772 in

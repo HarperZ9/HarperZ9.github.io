@@ -51,8 +51,8 @@ export function words(str, atlas, size, x, y, anchor = "left") {
 // The source tab: evidence.json's short name and sample, top left (the caption area is the
 // lower third, so tabs sit where the live films put them).
 export function tab(evidence, id, mono) {
-  const e = evidence.sources[id], head = e.short.replace(/(\d{4}), /, "$1 . ");
-  const n = /^not applicable/i.test(e.n || "") ? "" : ` . ${e.n}`;   // no sample to state: the tab names the source alone
+  const e = evidence.sources[id], head = e.short.replace(/(\d{4}), /, "$1 · ");
+  const n = /^not applicable/i.test(e.n || "") ? "" : ` · ${e.n}`;   // no sample to state: the tab names the source alone
   const shape = words(`${head}${n}`, mono, 28, 96, 58).shape;
   TAB_OF.set(shape, id);
   return shape;
