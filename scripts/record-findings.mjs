@@ -85,10 +85,13 @@ function correctionsFor(id, items, ledger, published) {
   return corr;
 }
 
-// the PDF the site offers must be the one its build receipt names
+// the PDF the site offers must be the one its build receipt names, with only its hidden author fields blanked
+// (findings/data/copies.json, written by the import, which checked the built hash before blanking)
 function checkedPdfHash(id) {
   const pdfHash = json(path.join(F, "papers", `${id}.buildtex.json`)).outputs[`${id}.pdf`];
-  if (createHash("sha256").update(readFileSync(path.join(F, "papers", `${id}.pdf`))).digest("hex") !== pdfHash) throw new Error(`${id}: the PDF does not match its build receipt`);
+  const copy = json(path.join(F, "data", "copies.json")).pdfs[id];
+  if (!copy || copy.built_sha256 !== pdfHash) throw new Error(`${id}: the PDF copy record does not match its build receipt`);
+  if (createHash("sha256").update(readFileSync(path.join(F, "papers", `${id}.pdf`))).digest("hex") !== copy.site_sha256) throw new Error(`${id}: the PDF differs from its recorded site copy`);
   return pdfHash;
 }
 

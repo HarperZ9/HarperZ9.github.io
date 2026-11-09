@@ -21,6 +21,7 @@ F = ROOT / "findings"
 PAGES = json.loads((F / "pages.json").read_text("utf-8"))["pages"]
 FINDINGS = [p for p in PAGES if p.get("id")]
 RECORDS = {p.name.removesuffix(".json"): json.loads(p.read_text("utf-8")) for p in (F / "records").glob("F*.json")}
+COPIES = json.loads((F / "data" / "copies.json").read_text("utf-8"))["pdfs"]
 LEDGER = json.loads((F / "data" / "ledger.json").read_text("utf-8"))
 LOCAL = re.compile(r"(?<![A-Za-z{])[A-Za-z]:[\\/](?![\\/])|/Users/|mission-control|\.scratch")
 SEVERITY = ["retracted", "refuted", "questioned", "narrowed", "superseded", "extended", "held"]
@@ -114,7 +115,11 @@ def test_every_page_offers_its_pdf_and_buildtex_source() -> None:
             assert f.is_file() and f.stat().st_size > 0, f
             assert f'href="/findings/papers/{fid}{ext}"' in html, f"{fid}: no link to {fid}{ext}"
         receipt = json.loads((F / "papers" / f"{fid}.buildtex.json").read_text("utf-8"))
-        assert hashlib.sha256((F / "papers" / f"{fid}.pdf").read_bytes()).hexdigest() == receipt["outputs"][f"{fid}.pdf"], fid
+        pdf = (F / "papers" / f"{fid}.pdf").read_bytes()
+        copy = COPIES[fid]
+        assert copy["built_sha256"] == receipt["outputs"][f"{fid}.pdf"], f"{fid}: copy record and build receipt disagree"
+        assert hashlib.sha256(pdf).hexdigest() == copy["site_sha256"], f"{fid}: the PDF is not the recorded site copy"
+        assert not re.search(rb"/(?:Author|Creator)\s*\((?!\s*\))", pdf), f"{fid}: the PDF still carries an author field"
         assert hashlib.sha256((F / "papers" / f"{fid}.bld").read_bytes()).hexdigest() == receipt["source"]["sha256"], fid
     assert (F / "papers" / "doc.bld").is_file()
 

@@ -10,10 +10,13 @@
 // workshop's file names taken out. Result files are never copied: the papers carry their numbers, and each paper's
 // Verified section says they were re-read from the result files. Period plates are not copied either; the site
 // already carries them as media/findings/traxler/*.webp (findings/figures.json maps a finding to its leaf).
-// A file whose public text names a local path stops the import, so nothing half-checked lands.
+// Figures lose their PNG text chunks and PDFs their hidden author fields (scripts/findings-metadata.mjs), as the
+// site's publish metadata gate requires. A file whose public text names a local path stops the import.
+import { createHash } from "node:crypto";
 import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { blankPdf, stripPng } from "./findings-metadata.mjs";
 
 const site = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const arg = (k) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : null; };
@@ -74,10 +77,23 @@ if (problems.length) { console.error(problems.join("\n")); process.exit(1); }
 rmSync(SRC, { recursive: true, force: true });
 mkdirSync(OUT, { recursive: true }); mkdirSync(DATA, { recursive: true });
 for (const f of readdirSync(OUT)) rmSync(path.join(OUT, f));
+const copies = {};
+const sha = (b) => createHash("sha256").update(b).digest("hex");
 for (const [id, dir, files] of plan) {
   mkdirSync(path.join(SRC, id), { recursive: true });
-  for (const [f, to] of files) copyFileSync(path.join(dir, f), path.join(to === SRC ? path.join(SRC, id) : OUT, f));
+  for (const [f, to] of files) {
+    const dest = path.join(to === SRC ? path.join(SRC, id) : OUT, f), raw = readFileSync(path.join(dir, f));
+    if (f.endsWith(".png")) writeFileSync(dest, stripPng(raw));
+    else if (f.endsWith(".pdf")) {
+      const built = JSON.parse(readFileSync(path.join(dir, `${id}.buildtex.json`), "utf8")).outputs[f];
+      if (sha(raw) !== built) { console.error(`${id}: ${f} does not match its build receipt`); process.exit(1); }
+      const site = blankPdf(raw);
+      writeFileSync(dest, site);
+      copies[id] = { built_sha256: built, site_sha256: sha(site), blanked: ["/Author", "/Creator"] };
+    } else copyFileSync(path.join(dir, f), dest);
+  }
 }
+writeFileSync(path.join(DATA, "copies.json"), JSON.stringify({ about: "Each PDF as built (its build receipt's hash) and as the site carries it, with author metadata fields blanked to the same length (scripts/findings-metadata.mjs). Blank the same fields in a rebuild to compare.", pdfs: copies }, null, 1) + "\n");
 copyFileSync(path.join(PAPERS, plan[0][0], "doc.bld"), path.join(OUT, "doc.bld"));
 copyFileSync(path.join(PAPERS, "glossary.json"), path.join(DATA, "glossary.json"));
 const reg = { about: "Publication register rows for the published findings, public fields only.", built: register.built,

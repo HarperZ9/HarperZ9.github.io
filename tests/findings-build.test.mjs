@@ -65,3 +65,22 @@ test("maths becomes MathML, and an unknown command stops the build", () => {
   assert.match(mathml("\\sum_{i} p_i \\log_2 p_i", true), /<munder><mo largeop="true" movablelimits="false">∑<\/mo>/);
   assert.throws(() => mathml("\\unheardof x"), /unknown command/);
 });
+
+test("the site's PDFs and figures carry no hidden author metadata", async () => {
+  const { readdirSync } = await import("node:fs");
+  const { blankPdf, leftover, stripPng } = await import("../scripts/findings-metadata.mjs");
+  const dir = new URL("../findings/", import.meta.url);
+  for (const f of readdirSync(new URL("papers/", dir)).filter((x) => x.endsWith(".pdf"))) {
+    const b = readFileSync(new URL(`papers/${f}`, dir));
+    assert.deepEqual(leftover(b, "pdf"), [], f);
+    assert.ok(blankPdf(b).equals(b), `${f}: blanking again changes it`);
+  }
+  for (const id of readdirSync(new URL("src/", dir))) for (const f of readdirSync(new URL(`src/${id}/`, dir)).filter((x) => x.endsWith(".png"))) {
+    const b = readFileSync(new URL(`src/${id}/${f}`, dir));
+    assert.deepEqual(leftover(b, "png"), [], `${id}/${f}`);
+    assert.ok(stripPng(b).equals(b));
+  }
+  const sample = Buffer.from("1 0 obj << /Author (Someone Else) /Title (x) >> endobj", "latin1");
+  assert.equal(blankPdf(sample).toString("latin1"), "1 0 obj << /Author (            ) /Title (x) >> endobj");
+  assert.deepEqual(leftover(sample, "pdf"), ["Author"]);
+});
