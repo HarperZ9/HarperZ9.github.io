@@ -31,8 +31,8 @@
 /* 1. Light, the default. */
 html:root{
   color-scheme:light;
-  --font-sans:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  --font-mono:"Conso","JetBrains Mono",ui-monospace,"SFMono-Regular",monospace;
+  --font-sans:"Accession Text","Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --font-mono:"Accession Mono","Conso","JetBrains Mono",ui-monospace,"SFMono-Regular",monospace;
 
   --paper:#ebe5d8;        /* page ground */
   --inset:#e4ddcd;        /* recessed band, code block ground */

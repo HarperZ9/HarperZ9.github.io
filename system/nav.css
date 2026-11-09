@@ -15,9 +15,14 @@
    on the few pages that load no token file.
    ============================================================================ */
 
+/* Trial, 2026-11-05: Accession as the site's face (text, display, mono); Hanken Grotesk and Conso stay as fallbacks */
+@font-face{font-family:"Accession Text"; src:url("fonts/accession/variable/AccessionText%5BINKS,wght%5D.woff2") format("woff2"); font-weight:300 800; font-style:normal; font-display:swap}
+@font-face{font-family:"Accession Text"; src:url("fonts/accession/variable/AccessionText-Italic%5BINKS,wght%5D.woff2") format("woff2"); font-weight:300 800; font-style:italic; font-display:swap}
+@font-face{font-family:"Accession Display"; src:url("fonts/accession/variable/AccessionDisplay%5Bwght%5D.woff2") format("woff2"); font-weight:300 900; font-style:normal; font-display:swap}
+@font-face{font-family:"Accession Mono"; src:url("fonts/accession/variable/AccessionMono%5Bwght%5D.woff2") format("woff2"); font-weight:300 700; font-style:normal; font-display:swap}
 :root{
-  --font-sans:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  --font-mono:"Conso","JetBrains Mono",ui-monospace,"SFMono-Regular",monospace;
+  --font-sans:"Accession Text","Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --font-mono:"Accession Mono","Conso","JetBrains Mono",ui-monospace,"SFMono-Regular",monospace;
   --ground-instrument:#070406;
   --ground-paper:#f2efe6;
   --ink-paper:#111014;

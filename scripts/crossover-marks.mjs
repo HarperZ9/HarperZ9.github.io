@@ -1,6 +1,7 @@
-// crossover-marks.mjs: the six platform marks, each drawn by what its platform does, rendered as overprint glass
-// (world/site/crossover/, encoded by tools/crossover/render.mjs into media/world/marks/): the glass lit from behind,
-// its light carried as alpha so it adds to the dark field it sits on.
+// crossover-marks.mjs: the six platform marks, each drawn by what its platform does. Since 2026-11-04 they are drawn
+// as inline SVG in flat inks whose overlaps are computed (scripts/marks/); the glass renders of the same ideas
+// (MARK_ALT below, media/world/marks/) are kept for the record and no page loads them.
+import { PLATFORM_MARKS } from "./marks/platform-marks.mjs";
 import { esc } from "./studies-markdown.mjs";
 
 export const MARK_ALT = {
@@ -12,8 +13,10 @@ export const MARK_ALT = {
   RSRCH: "Drawn mark: arrows branching in two, some ending in a stop bar where a line of inquiry came back null.",
 };
 
+// the mark as a small SVG file in flat overprinted inks (scripts/marks/platform-marks.mjs, written by
+// scripts/build-marks.mjs), key ink light for the water field. A file rather than inline markup keeps the index's
+// first response inside one round trip on a slow phone.
 export function markImg(mark) {
-  if (!MARK_ALT[mark]) return "";
-  const s = `/media/world/marks/${mark.toLowerCase()}`;
-  return `<picture class="xo-mark"><source type="image/avif" srcset="${s}.avif"><img src="${s}.webp" width="256" height="256" alt="${esc(MARK_ALT[mark])}" loading="lazy" decoding="async" fetchpriority="low"></picture>`;
+  const m = PLATFORM_MARKS[mark]; if (!m) return "";
+  return `<img class="xo-mark" src="/media/world/icons/${mark.toLowerCase()}-on-dark.svg" width="104" height="104" alt="${esc(m[1])}" loading="lazy" decoding="async">`;
 }

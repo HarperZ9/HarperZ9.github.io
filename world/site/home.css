@@ -3,7 +3,7 @@
 
 /* the arrival: the name drawn in glass, the real words over it */
 .arrival { position: relative; min-height: 100vh; display: grid; grid-template-rows: 1fr auto auto; align-items: end; padding: 96px clamp(16px, 4vw, 56px) 48px; gap: 18px; }
-.arrival h1 { position: relative; margin: 0; font: 800 clamp(48px, 9vw, 132px)/.95 var(--face-display); letter-spacing: -.04em; color: var(--ink); max-width: 12ch; }
+.arrival h1 { position: relative; margin: 0; font: 800 clamp(48px, 9vw, 132px)/.95 var(--face-display); letter-spacing: calc(-.04em * var(--display-track, 1)); color: var(--ink); max-width: 12ch; }
 .arrival-ways, .ways, .colophon nav { position: relative; display: flex; flex-wrap: wrap; gap: 4px 22px; }
 .arrival-ways a, .ways a, .colophon a { display: inline-flex; align-items: center; min-height: 44px; padding: 0; color: var(--ink); background: none; border: 0; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .3em; font: 600 var(--fs-2)/1 var(--face-text); text-shadow: 0 0 14px var(--halo), 0 0 4px var(--halo), 0 0 1px var(--halo), 0 0 22px var(--halo); }
 .arrival-ways a:hover, .ways a:hover, .colophon a:hover { text-decoration-thickness: 2px; }
@@ -28,7 +28,7 @@ html.plain .crossing, html.plain .uncover { display: none; }
 .lead-box video.lead { aspect-ratio: 16 / 9; object-fit: cover; background: var(--wall); }
 .lead-box .uncover { position: absolute; inset: 0; width: 100%; height: 100%; image-rendering: pixelated; transition: opacity .4s ease; }
 .place-words { display: grid; gap: 18px; align-content: start; }
-.place-words h2 { margin: 0; font: 800 var(--fs-6)/1.02 var(--face-display); letter-spacing: -.035em; color: var(--ink); text-wrap: balance; }
+.place-words h2 { margin: 0; font: 800 var(--fs-6)/1.02 var(--face-display); letter-spacing: calc(-.035em * var(--display-track, 1)); color: var(--ink); text-wrap: balance; }
 .laws { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; max-width: 52ch; }
 .laws li { font: 400 var(--fs-3)/1.5 var(--face-text); color: var(--ink); padding: 0; }
 
@@ -74,12 +74,12 @@ html.plain .crossing, html.plain .uncover { display: none; }
 
 /* the work: one row per platform, a plate beside its words; the row is the way in */
 .platforms { position: relative; z-index: 2; padding: clamp(56px, 10vh, 120px) clamp(16px, 4vw, 56px) clamp(48px, 8vh, 96px); }
-.platforms > h2 { max-width: 1360px; margin: 0 auto clamp(24px, 4vh, 48px); font: 800 var(--fs-6)/1 var(--face-display); letter-spacing: -.035em; color: var(--ink); }
+.platforms > h2 { max-width: 1360px; margin: 0 auto clamp(24px, 4vh, 48px); font: 800 var(--fs-6)/1 var(--face-display); letter-spacing: calc(-.035em * var(--display-track, 1)); color: var(--ink); }
 .pf-list { list-style: none; margin: 0 auto; padding: 0; max-width: 1360px; }
 .pf { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(16px, 3vw, 40px); padding: clamp(28px, 5vh, 56px) 0; align-items: start; text-shadow: 0 0 14px var(--halo), 0 0 4px var(--halo), 0 0 1px var(--halo), 0 0 22px var(--halo); }
 .pf-words { display: grid; gap: 12px; align-content: start; max-width: 68ch; }
 .pf h3 { margin: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 16px; }
-.pf-name { font: 800 var(--fs-5)/1.05 var(--face-display); letter-spacing: -.01em; color: var(--ink); }
+.pf-name { font: 800 var(--fs-5)/1.05 var(--face-display); letter-spacing: calc(-.01em * var(--display-track, 1)); color: var(--ink); }
 .pf-product { font: 600 var(--fs-2)/1.3 var(--face-text); color: var(--ink); }
 .pf-ver { font: 400 var(--fs-1)/1 var(--face-utility); margin-left: 8px; color: var(--ink); }
 .pf-mark { font: 400 var(--fs-1)/1 var(--face-utility); letter-spacing: .08em; color: var(--ink); }
@@ -121,3 +121,25 @@ html.plain
   .place-in, .place:nth-child(even) .place-in { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
   .place .lead-box, .place:nth-child(even) .lead-box { order: 2; }
 }
+
+/* Sky: the visitor's own Sun and Moon on the water (sky/sky.js). The control is a horizon with a body above it. */
+[data-o="sky"]{position:relative;width:44px;height:44px;padding:0;border:0;border-radius:50%;cursor:pointer;background:none;box-shadow:inset 0 0 0 2px var(--ink)}
+[data-o="sky"]::before{content:"";position:absolute;left:8px;right:8px;top:27px;height:2px;background:var(--ink)}
+[data-o="sky"]::after{content:"";position:absolute;left:19px;top:13px;width:8px;height:8px;border-radius:50%;background:var(--ink)}
+[data-o="sky"][aria-pressed="true"]{background:var(--ink)}
+[data-o="sky"][aria-pressed="true"]::before,[data-o="sky"][aria-pressed="true"]::after{background:var(--wall,#fff)}
+.sky-dialog{max-width:min(560px,calc(100vw - 32px));padding:0;border:2px solid var(--ink);background:var(--wall,#f4efe6);color:var(--ink)}
+.sky-dialog::backdrop{background:rgba(0,0,0,.35)}
+.sky-panel{padding:20px 22px;display:grid;gap:12px;font:400 var(--fs-2,15px)/1.45 var(--face-text,sans-serif)}
+.sky-panel h2{margin:0;font:700 var(--fs-5,26px)/1.1 var(--face-text,sans-serif)}
+.sky-panel p{margin:0}
+.sky-row{display:grid;gap:4px}
+.sky-row p,.sky-check span{opacity:.86}
+.sky-panel button{justify-self:start;min-height:44px;padding:8px 14px;font:600 var(--fs-2,15px) var(--face-text,sans-serif);color:var(--ink);background:none;border:2px solid var(--ink);cursor:pointer}
+.sky-panel button[aria-pressed="true"]{background:var(--ink);color:var(--wall,#fff)}
+.sky-check{grid-template-columns:auto 1fr;align-items:start;gap:10px}
+.sky-check input{width:20px;height:20px;margin:2px 0 0}
+.sky-status:empty{display:none}
+.sky-status{font-weight:600}
+.sky-end{display:flex;gap:10px;flex-wrap:wrap}
+.sky-row[hidden]{display:none}

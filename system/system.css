@@ -8,6 +8,11 @@
 /* ---- Two-face type system (2026-08-28).
        Hanken Grotesk carries prose, display, route, and project marks. Conso
        carries mono data, labels, and code. ---- */
+/* Trial, 2026-11-05: Accession as the site's face (text, display, mono); Hanken Grotesk and Conso stay as fallbacks */
+@font-face{font-family:"Accession Text"; src:url("fonts/accession/variable/AccessionText%5BINKS,wght%5D.woff2") format("woff2"); font-weight:300 800; font-style:normal; font-display:swap}
+@font-face{font-family:"Accession Text"; src:url("fonts/accession/variable/AccessionText-Italic%5BINKS,wght%5D.woff2") format("woff2"); font-weight:300 800; font-style:italic; font-display:swap}
+@font-face{font-family:"Accession Display"; src:url("fonts/accession/variable/AccessionDisplay%5Bwght%5D.woff2") format("woff2"); font-weight:300 900; font-style:normal; font-display:swap}
+@font-face{font-family:"Accession Mono"; src:url("fonts/accession/variable/AccessionMono%5Bwght%5D.woff2") format("woff2"); font-weight:300 700; font-style:normal; font-display:swap}
 @font-face{font-family:"Hanken Grotesk"; src:url("fonts/hanken-grotesk.woff2") format("woff2"); font-weight:100 900; font-style:normal; font-display:swap}
 @font-face{font-family:"Hanken Grotesk"; src:url("fonts/hanken-grotesk-italic.woff2") format("woff2"); font-weight:400; font-style:italic; font-display:swap}
 @font-face{font-family:"Conso"; src:url("fonts/conso-regular.woff2") format("woff2"),url("fonts/conso-regular.woff") format("woff"); font-weight:400; font-style:normal; font-display:swap}
@@ -31,13 +36,14 @@
   --line:rgba(11,12,14,.14); --line-soft:rgba(11,12,14,.08);
   --card:rgba(255,255,255,.6);
   /* type */
-  --font-sans:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  --font-mono:"Conso","JetBrains Mono",ui-monospace,"SFMono-Regular",monospace;
+  --font-sans:"Accession Text","Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --font-house-display:"Accession Display","Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --font-mono:"Accession Mono","Conso","JetBrains Mono",ui-monospace,"SFMono-Regular",monospace;
   --ground-instrument:#070406;
   --ground-paper:#f2efe6;
   --ink-paper:#111014;
   --brand-display:var(--font-sans);
-  --display:var(--font-sans);
+  --display:var(--font-house-display);
   --body:var(--font-sans);
   --mono:var(--font-mono);
   /* legacy names remapped to the ceramic system (do not break the contract) */
@@ -3149,7 +3155,7 @@ section.mv{
   --zentropy-rust:#c86a44;
   --zentropy-oxblood:#1e0f14;
   --brand-display:var(--font-sans);
-  --display:var(--font-sans);
+  --display:var(--font-house-display);
   --body:var(--font-sans);
   --mono:var(--font-mono);
   --void:var(--zentropy-void);
@@ -3657,3 +3663,7 @@ body.inner-clean:not(.studio-page):not(.studio-app) main {background:#101416}
 body.inner-clean:not(.studio-page):not(.studio-app) :is(h1,h2,h3) {text-shadow:none}
 body.frontier-briefing .edition-readout > div:not(:first-child),
 body.frontier-briefing .briefing-hero > .seal {display:none}
+
+/* a drawn mark beside a page's first words (scripts/place-marks.mjs): flat overprinted inks, no frame */
+.xo-hero{--xo-k:currentColor;display:block;width:clamp(96px,16vw,220px);height:auto;aspect-ratio:1;margin:0 0 clamp(.75rem,2vw,1.5rem) -.25rem}
+@media (min-width:1100px){.mid > .xo-hero{position:absolute;right:clamp(2.4rem,8vw,9rem);top:50%;translate:0 -50%;margin:0}}

@@ -1,0 +1,7 @@
+{
+  "date": "2026-11-06",
+  "note": "Sky control on the home: the visitor's own Sun and Moon (NOAA, Meeus), weather (estimated, or Open-Meteo by opt-in), clouds, rainbow and halo, lens rain, sound by physics. Off until asked. Not merged; author review pending.",
+  "paths": {
+    "index.html": "30b622b865ffd7f8ce6e5445d673b968f25c6e964ccb06d9fcd1eb5435dd3498"
+  }
+}
