@@ -1,18 +1,25 @@
-// The arrival's supergraphic: six upright signs standing in the water at the horizon, one letter size for all,
-// each crowned with its platform's drawn sign (world/site/supergraphic.css). Pure functions over explicit data:
-// the colour tokens go in, markup comes out. Colour follows the hierarchy colour system
-// (world/site/crossover/colour-tokens.json): platform is a hue, package is a lightness inside that hue, and every
-// colour comes with a shape. Decoration only: hidden from assistive technology, since the same names are the
+// The arrival's supergraphic: six signs standing in the water at the horizon, one letter size for all, each word
+// set on its side like a spine and crowned with its platform's drawn sign (world/site/supergraphic.css). Pure
+// functions over explicit data: names and inks go in, markup comes out. Every colour comes with a shape. Decoration only: hidden from assistive technology, since the same names are the
 // landmarks' headings below.
 
-// [name, platform, package tone 0..3 used as the face]. Engine and Game share The Playground's hue at two tones.
-export const SIGNS = [["BUILDLANG", "bldlng", 3], ["FLYWHEEL", "theflywheel", 3], ["ENGINE", "theplygrnd", 2], ["GAME", "theplygrnd", 3], ["CMMNS", "thecmmns", 3], ["ARTICULATE", "artiql8", 3]];
+// The poster palette (the author, 2026-11-09: pink stays, and green, red, black and yellow are welcome). Each sign is
+// printed in three flat inks, after Italian poster work of the 1950s to 1970s: the face in the platform's own hue at
+// full strength, a narrow band of a second ink, and the solid in that second ink's deep tone, over a black key line.
+// At night the face is the bright ink on the dark sky. By day the stack turns over: the face prints in black, the
+// platform's hue becomes the band and the second ink the solid, so the word keeps 4.5:1 against a bright sky.
+// supergraphic.css maps the three inks (--sg-hue, --sg-ink, --sg-deep) onto the depth model per theme.
+const INK = { pink: ["#ff6fb1", "#701f46"], red: ["#f53e39", "#721212"], yellow: ["#fcde3d", "#594d0e"] };
+// [name, platform (the drawn sign), face, second ink]. Engine and Game share The Playground's hue at two tones.
+// The second ink is chosen from the opposite side of the hue circle, after Chevreul's first chromatic circle (1861),
+// where facing wedges strengthen each other when set side by side: violet takes yellow, blue-green and green take
+// red, blue takes yellow. Amber and the pale blue-green have no facing ink among the three, so they take pink, the
+// farthest one. No two neighbours share a second ink.
+export const SIGNS = [["BUILDLANG", "bldlng", "#ada2ff", "yellow"], ["FLYWHEEL", "theflywheel", "#ffb94c", "pink"], ["ENGINE", "theplygrnd", "#3fdfd1", "red"],
+  ["GAME", "theplygrnd", "#a6f7ec", "pink"], ["CMMNS", "thecmmns", "#b0e562", "red"], ["ARTICULATE", "artiql8", "#8cc6ff", "yellow"]];
 
-// the four colours of the depth model (depth.css) for one sign, read from the platform's measured ramps
-export function ramp(platform, step) {
-  const pk = platform.package_tones.map((t) => t.hex);
-  return { face: pk[step], lit: platform.tint.hex, side: step < 3 ? platform.study_ramp[0].hex : pk[0], key: platform.dark.tint.hex };
-}
+// the three inks of one sign as custom properties
+export function inks(face, ink) { return `--sg-hue:${face};--sg-ink:${INK[ink][0]};--sg-deep:${INK[ink][1]}`; }
 
 const f = (x) => x.toFixed(1);
 const R = 46; // the glyph's radius inside a -50..50 box
@@ -40,17 +47,16 @@ export function glyph(id) {
   return "";
 }
 
-// one sign: the glyph crown over the upright name. The mirror copy carries no depth: it is the reflection.
-export function sign([name, id, step], platforms, mirror = false) {
-  const r = ramp(platforms[id], step);
-  const st = `--d-face:${r.face};--d-lit:${r.lit};--d-side:${r.side};--d-key:${r.key}`;
+// one sign: the glyph crown over the name set on its side. The mirror copy carries no depth: it is the reflection.
+export function sign([name, id, face, ink], mirror = false) {
+  const st = inks(face, ink);
   return `<div class="sg-sign"><svg class="sg-glyph" viewBox="-50 -50 100 100" focusable="false" style="${st}">${glyph(id)}</svg><p class="sg-name${mirror ? "" : " d-3d"}" style="${st}">${name}</p></div>`;
 }
 
 const RIPPLE = `<svg class="sg-defs" width="0" height="0" focusable="false"><filter id="sg-ripple" x="-8%" y="-4%" width="116%" height="108%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency=".006 .11" numOctaves="2" seed="11"/><feDisplacementMap in="SourceGraphic" scale="18" xChannelSelector="R" yChannelSelector="G"/></filter></svg>`;
 
 export function supergraphic(platforms, signs = SIGNS) {
-  const wall = (mirror) => signs.map((s) => sign(s, platforms, mirror)).join("");
+  const wall = (mirror) => signs.map((s) => sign(s, mirror)).join("");
   return `<div class="sg" aria-hidden="true">
       ${RIPPLE}
       <div class="sg-wall">${wall(false)}</div>
