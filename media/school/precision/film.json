@@ -1,0 +1,113 @@
+{
+ "schema": "explainer-film/1",
+ "slug": "precision",
+ "title": "fp16, bf16 and tensor cores",
+ "page": "night-school-precision.html",
+ "seed": 20261040,
+ "voice": "tallow",
+ "draft": true,
+ "numbers_from": "media/school/precision/facts.json, computed by tools/school/fill_precision.mjs; tools/school/fill_script.mjs fills every double-brace token below from it",
+ "host": {
+  "guide": "tallow",
+  "style": "thriller",
+  "open": {
+   "seconds": 4.0,
+   "what": "The lamp room. Three measuring jugs on the sill: a tall one with fine marks, a tall one with coarse marks, a short one with medium marks. Tallow pours the same oil into each and squints at the lines. No words."
+  },
+  "close": {
+   "seconds": 5.0,
+   "what": "Tallow writes a number on a card, holds it up against each jug's marks, and puts the short jug back on the shelf. He turns the lamp down."
+  }
+ },
+ "segments": [
+  {
+   "key": "title",
+   "layout": "title",
+   "heading": "fp16, bf16 and tensor cores",
+   "lines": [
+    "fp16, bf16 and tensor cores.",
+    "Graphics chips multiply much faster in 16-bit numbers than in 32-bit ones. Tonight Tallow measures what a 16-bit number can hold, where it goes wrong, and why the sums are often kept in 32 bits."
+   ]
+  },
+  {
+   "key": "jugs",
+   "heading": "Measuring jugs",
+   "sources": [
+    "ours-precision",
+    "ieee754"
+   ],
+   "lines": [
+    "Think of a number format as a measuring jug. The marks are its precision; the height is its range.",
+    "fp16 has 11 bits of significand and tops out at 65,504. bf16 keeps the range of 32-bit numbers but has only 8 bits of significand. 32-bit numbers have 24."
+   ]
+  },
+  {
+   "key": "near110",
+   "heading": "Near one hundred and ten",
+   "sources": [
+    "ours-precision",
+    "rawnative"
+   ],
+   "lines": [
+    "Look at the marks near 110. In fp16 they are 0.0625 apart. In bf16, 0.5. Any number in between is rounded to the nearest mark.",
+    "So in fp16 a number near 110 can be off by up to one thirty-second, about 0.03. That is about three parts in ten thousand. A job that needs one part in ten thousand needs a significand of 13 bits; fp16 has 11. We will need that in the next lesson."
+   ],
+   "predict": [
+    {
+     "after": [
+      0,
+      0
+     ],
+     "question": "fp16 near 110. How far apart are the marks?",
+     "hold": 2.5
+    }
+   ]
+  },
+  {
+   "key": "stuck",
+   "heading": "A sum that stops",
+   "sources": [
+    "ours-precision"
+   ],
+   "lines": [
+    "Now add 1 to a running total, five thousand times, keeping the total in fp16.",
+    "It stops at 2,048. There the marks are 2 apart, and adding 1 rounds back to where it was. In bf16 it stops at 256."
+   ]
+  },
+  {
+   "key": "cores",
+   "heading": "Small inputs, big sums",
+   "sources": [
+    "ours-precision",
+    "micikevicius2018",
+    "nvidia"
+   ],
+   "lines": [
+    "This is why tensor cores, the units that multiply small tables of numbers in one step, can take 16-bit inputs and keep the running sums in 32 bits. With fp16 inputs they can also sum in fp16. With bf16 inputs, the sums are always 32-bit.",
+    "Paulius Micikevicius and colleagues trained large networks this way in 2018 and kept a 32-bit master copy of the weights.",
+    "On the second floor's feed-forward table of our model, the error with fp16 inputs and 32-bit sums is about 0.0003 of the answer's size. Keep the sums in fp16 too, and it grows to about 0.001."
+   ]
+  },
+  {
+   "key": "model",
+   "heading": "The whole model",
+   "sources": [
+    "ours-precision",
+    "micikevicius2018"
+   ],
+   "lines": [
+    "Run the whole model with every stored number rounded to 16 bits and score it on 1,024 held-out rows.",
+    "The loss barely moves. It stays at 0.6676 with fp16 inputs and 32-bit sums, and rises to 0.6679 with bf16 throughout. Its numbers stay far below fp16's limit, so nothing overflows. Its sums are short, at most 64 terms, so the rounding hardly shows.",
+    "We only ran this model in 16 bits; we did not train it that way. When large models are trained in 16 bits, the rounding can show. Micikevicius and colleagues needed three fixes to stop it."
+   ]
+  },
+  {
+   "key": "close",
+   "heading": "Goodnight",
+   "lines": [
+    "Small inputs, big sums: the marks you can afford for the parts, and the marks you need for the total.",
+    "Next, at the prism: one glint of light that 16 bits could not hold precisely enough. Goodnight."
+   ]
+  }
+ ]
+}

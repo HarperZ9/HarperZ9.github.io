@@ -77,6 +77,24 @@ STUBS = {
     },
 }
 
+# Consolidation of 2 November 2026 (the author: "I think that the non-destructive rules should start being favored
+# less than consolidation and reintegration."). The list pages fold into the one index of the work on floor.html;
+# the type pages into the Accession page; the second contact page into Work. Git history keeps every retired page.
+_INDEX = "The site's list pages are now one index of all the work, current and past, by platform."
+for _page, _target in {
+    # site-index.html stays (the navigation search reads it); overview.html and catalog.html stay: they carry each product's Verified line and limits, which the index does
+    # not; portfolio.html is a career document; workshop.html carries the React app; fonts.html the font previews
+    "demonstrations.html": "/floor.html",
+    "tour.html": "/floor.html",
+    "toolkit.html": "/floor.html#theflywheel", "build-products.html": "/floor.html#bldlng",
+}.items():
+    STUBS[_page] = {"target": _target, "note": _INDEX, "title": "Moved to the index of the work", "link": "Open the index", "fragments": {}, "keep_hash": "#" not in _target}
+for _page in ("typeface.html",):
+    STUBS[_page] = {"target": "/accession.html", "note": "The site's type now lives on one page: Accession and the faces the site draws on.", "title": "Moved to the Accession page", "link": "Open the Accession page", "fragments": {}}
+STUBS["work-with-me.html"] = {"target": "/hire.html", "note": "Working with me is now on the Work page.", "title": "Moved to the Work page", "link": "Open the Work page", "fragments": {}, "keep_hash": True}
+STUBS["start-here.html"] = {"target": "/", "note": "The front door is now the place to start: what the work is, then each platform.", "title": "Moved to the home page", "link": "Open the home page", "fragments": {}}
+STUBS["brand/zentropy-logo.html"].update(target="/accession.html", note="This page is retired. The type the site uses now is on the Accession page.", title="Moved to the Accession page", link="Open the Accession page")
+
 LABELS = {
     "verified-is-not-trustworthy.html": "Verified Is Not Trustworthy",
     "conferred-existence-essay.html": "Conferred Existence",
@@ -114,7 +132,8 @@ def render_stub(path: str, spec: dict) -> str:
             for _key, href in sorted(fragments.items(), key=lambda pair: pair[1])
         ) + "</ul>\n"
     else:
-        script = f'<script>location.replace("{target}");</script>\n'
+        script = (f'<script>location.replace("{target}"+location.hash);</script>\n' if spec.get("keep_hash")
+                  else f'<script>location.replace("{target}");</script>\n')
     return f"""<!doctype html>
 <html lang="en">
 <head>

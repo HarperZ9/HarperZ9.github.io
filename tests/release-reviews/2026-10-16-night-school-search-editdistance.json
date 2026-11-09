@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-16",
+  "note": "Night School pair 14: A26 Search and sorting and A27 Dynamic programming join the sitemap, route registry, site index and home bundle. The home bundle is rebuilt from the registry as index-C7QqdyWX.js, and index-1pL-pv-D.js stays as retained history.",
+  "paths": {
+    "assets/index-C7QqdyWX.js": "64868daa5e478db3c42156252835668e818dc24960df1a622caa2d9b8e79b92a",
+    "index.html": "79bd021c9e120fef40bfa00518c903ec93bcaeb36c03547eeeb31b4467d0acad",
+    "publications/build.json": "112b3e9bbc3b827865147c7f75ac47671b78479e26754ad92414396fc2768004",
+    "site-index.html": "93c837b7605bb08b229c28aab122866eea2589ff7557e67b3563cf094501112c",
+    "sitemap.xml": "fa7fd7a208e6355cb91a147f4c083466d00587a591ad2b61f71c792f735d54ba",
+    "system/routes.js": "2713abf3fbf6da556d1b77839dff55f3100268d6ad733e3806acbcdf4cd87a64"
+  }
+}

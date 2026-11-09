@@ -1,0 +1,6 @@
+/* grid.css: the struck grid page; it adds to vis.css. Two inks only: the ground and the ink. */
+:root { --ink-2: rgba(230, 237, 247, 0.74); }
+.br .def { text-align: right; margin-left: auto; }
+.br { width: auto; min-width: 0; max-width: 44ch; }
+#play { border-radius: 0; }
+@media (max-aspect-ratio: 6/5) { .bl { bottom: calc(var(--mg) + 100px); } }

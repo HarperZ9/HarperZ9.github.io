@@ -6,6 +6,7 @@
 //     params: [{ id: "share", label: "share fabricated", min: 0, max: 1, step: 0.01, value: 0.55 }],
 //     layers: { threads: { world: 5 }, worlds: false },     // optional engine layers to create
 //     chapters: [{ t: 0, title: "One reference" }, ...],
+//     burnsCaptions: false,          // true when frame() draws its own captions (the player's start off)
 //     async load(ctx) { return { atlas: await ctx.json("hanken-500.json") }; },   // assets, particle systems
 //     frame(t, ctx) { return { background, camera, items, post }; },             // pure in t and ctx.params
 //   };

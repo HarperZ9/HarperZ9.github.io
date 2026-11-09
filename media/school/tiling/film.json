@@ -1,0 +1,119 @@
+{
+ "schema": "explainer-film/1",
+ "slug": "tiling",
+ "title": "Matmul tiling",
+ "page": "night-school-tiling.html",
+ "seed": 20261038,
+ "voice": "pylon",
+ "draft": true,
+ "numbers_from": "media/school/tiling/facts.json, computed by tools/school/fill_tiling.mjs; tools/school/fill_script.mjs fills every double-brace token below from it",
+ "host": {
+  "guide": "pylon",
+  "style": "painted",
+  "open": {
+   "seconds": 4.0,
+   "what": "The cannery. A worker walks to the warehouse for one can, back to the bench, and out again. Pylon watches, then hands a crew a tray. No words."
+  },
+  "close": {
+   "seconds": 5.0,
+   "what": "Crews carry full trays from the warehouse, set them on their benches, and work through them. The aisles are quiet. Pylon puts the empty trays away."
+  }
+ },
+ "segments": [
+  {
+   "key": "title",
+   "layout": "title",
+   "heading": "Matmul tiling",
+   "lines": [
+    "Matmul tiling.",
+    "Most of the arithmetic in a language model is multiplying tables of numbers. Tonight Pylon shows a classic trick for doing that fast on a graphics chip: carry a tray, not one can at a time."
+   ]
+  },
+  {
+   "key": "matmul",
+   "heading": "One table times another",
+   "sources": [
+    "ours-tiling"
+   ],
+   "lines": [
+    "Multiplying two square tables, each number of the answer is a row of the first table times a column of the second: multiply pairs, add them up.",
+    "For tables 1,024 wide, one answer number needs 2,048 reads from the warehouse, 1,024 from each table."
+   ]
+  },
+  {
+   "key": "naive",
+   "heading": "One can at a time",
+   "sources": [
+    "ours-tiling"
+   ],
+   "lines": [
+    "The simple kernel gives each thread one answer number and lets it fetch everything itself. Every number of each table is then fetched 1,024 times, once for every thread that needs it.",
+    "In all, 2,147,483,648 reads from the warehouse, for one multiplication."
+   ]
+  },
+  {
+   "key": "tray",
+   "heading": "A tray to the bench",
+   "sources": [
+    "ours-tiling",
+    "cuda"
+   ],
+   "lines": [
+    "Now give a crew of threads a square of the answer. Together they carry a square tile of each table to their bench, the chip's small fast shared memory, and wait until every thread has put its part down.",
+    "Then each thread works through the tile on the bench. When every thread is done, the crew fetches the next pair of tiles. With tiles 16 wide, each number is fetched 64 times instead of 1,024."
+   ],
+   "predict": [
+    {
+     "after": [
+      1,
+      0
+     ],
+     "question": "Tiles 16 wide. How many times fewer reads from the warehouse?",
+     "hold": 2.5
+    }
+   ]
+  },
+  {
+   "key": "count",
+   "heading": "Counting the reads",
+   "sources": [
+    "ours-tiling",
+    "volkov2008"
+   ],
+   "lines": [
+    "Reads from the warehouse: 2,147,483,648 for the simple kernel; 268,435,456 with tiles of 8; 134,217,728 with tiles of 16. The wider the tile, the fewer the trips.",
+    "Another way to say it: work done per byte fetched. The simple kernel does 0.25 operations per byte, counting each multiply and each add as one. Tiles of 16 do 3.97. Vasily Volkov and James Demmel used this counting in 2008 when they tuned matrix code for graphics chips."
+   ]
+  },
+  {
+   "key": "wait",
+   "heading": "Wait for the whole tray",
+   "sources": [
+    "ours-tiling"
+   ],
+   "lines": [
+    "The waiting matters. If a thread starts working before the crew has put the whole tile down, it can read a can from the last tile.",
+    "We broke the kernel that way on purpose. In our emulator, under the worst timing the missing wait allows, its answers came out wrong at every size we tried, and the checker, which compares each number with a careful answer computed on the main processor, caught it."
+   ]
+  },
+  {
+   "key": "limits",
+   "heading": "What the count leaves out",
+   "sources": [
+    "ours-tiling"
+   ],
+   "lines": [
+    "These are counts of reads asked for, not times. Real chips have caches that can serve repeated reads, so the simple kernel may not be as slow as its count says. How much it gains depends on the chip.",
+    "The lab runs both kernels on your own chip, if your browser allows it, and times them beside the count."
+   ]
+  },
+  {
+   "key": "close",
+   "heading": "Goodnight",
+   "lines": [
+    "Carry a tray once, use it many times. Fast matrix code on graphics chips is built on the same idea.",
+    "Next in the cannery: attention itself, done in one trip. Goodnight."
+   ]
+  }
+ ]
+}

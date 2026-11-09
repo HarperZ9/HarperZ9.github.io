@@ -2,13 +2,13 @@
 // the hint slipped in, a yellow slip hangs on every card. When he reads them, his light passes
 // over each card: a reasoning that names the hint gets a ring; an answer the hint changed whose
 // reasoning does not name it gets a broken ring in the drift colour.
-import { pose } from "../../media/raw-native/tree-c6b114d/templates/guides/rig.mjs";
-import { GUIDES } from "../../media/raw-native/tree-c6b114d/templates/guides/guides.mjs";
-import { thrillerSet } from "../../media/raw-native/tree-c6b114d/templates/guides/sets.mjs";
-import { clipBeat } from "../../media/raw-native/tree-c6b114d/templates/guides/motion.mjs";
-import { LOOKS } from "../../media/raw-native/tree-c6b114d/templates/guides/look.mjs";
-import { rect, circle } from "../../media/raw-native/tree-c6b114d/web/motion/path.mjs";
-import { text } from "../../media/raw-native/tree-c6b114d/web/motion/text.mjs";
+import { pose } from "../../media/raw-native/tree-ada041f/templates/guides/rig.mjs";
+import { GUIDES } from "../../media/raw-native/tree-ada041f/templates/guides/guides.mjs";
+import { thrillerSet } from "../../media/raw-native/tree-ada041f/templates/guides/sets.mjs";
+import { clipBeat } from "../../media/raw-native/tree-ada041f/templates/guides/motion.mjs";
+import { LOOKS } from "../../media/raw-native/tree-ada041f/templates/guides/look.mjs";
+import { rect, circle } from "../../media/raw-native/tree-ada041f/web/motion/path.mjs";
+import { text } from "../../media/raw-native/tree-ada041f/web/motion/text.mjs";
 
 export const INK = "#ece5d6", OK = "#63d4ce", HOT = "#e29472";
 const T = GUIDES.tallow, EACH = 0.3, TALLOW = { x: 300, y: 1010, s: 0.8 };

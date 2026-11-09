@@ -1,0 +1,31 @@
+{
+ "schema": "explainer-film/1",
+ "slug": "first-check",
+ "title": "Flywheel: check an answer against its source",
+ "segments": [
+  {
+   "key": "title",
+   "lines": [
+    "Flywheel. check an answer against its source."
+   ]
+  },
+  {
+   "key": "c0",
+   "lines": [
+    "Check the answer as it was filed. The contract names the tax table as the authority, and the filed tax disagrees with it."
+   ]
+  },
+  {
+   "key": "c1",
+   "lines": [
+    "Check the answer that took its tax from the table. It passes."
+   ]
+  },
+  {
+   "key": "c2",
+   "lines": [
+    "Run the same check with nothing allowed to decide. The same correct answer is unverifiable, not passed."
+   ]
+  }
+ ]
+}

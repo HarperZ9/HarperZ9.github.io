@@ -36,17 +36,17 @@
 <div class="frame">
   <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">security products</span></div>
   <div class="mid">
-    <h1>Security systems, <span class="g">each named for its actual job.</span></h1>
-    <p class="lede">The work spans public security products, verification infrastructure, and a private operational line. Each project keeps its own runtime, capability, maturity, dependencies, and audience.</p>
-    <p class="close">Every promoted item has a <a href="security-tools.json">public record</a>. Unknown release or CI state stays unknown until revalidated.</p>
+    <h1>Security tools</h1>
+    <p class="lede">Public security tools you can install, a toolkit of small utilities, the advisories filed against my own tools, and an index of private systems used only under written authorization.</p>
+    <p class="close">Machine-readable status for each tool: <a href="security-tools.json">security-tools.json</a>.</p>
     <figure class="art art-pillar"><img class="art-light" src="art/aperture/pillar-security-light.svg" width="1200" height="900" alt="An iris shutter drawn in fine hatched blades, closed down to a small hole with a bright core showing through it, inside a ringed housing." decoding="async"><img class="art-dark" src="art/aperture/pillar-security-dark.svg" width="1200" height="900" alt="An iris shutter drawn in fine hatched blades, closed down to a small hole with a bright core showing through it, inside a ringed housing." decoding="async"></figure>
   </div>
-  <div class="seal">evidence through 2026-09-27 &middot; shipped, active, toolkit, controlled private</div>
+  <div class="seal">updated 2026-09-27</div>
 </div>
 
 <main id="main">
 <section class="mv" id="map" aria-labelledby="map-h">
-  <h2 id="map-h">Public security maturity index.</h2>
+  <h2 id="map-h">Public security maturity index</h2>
   <div class="index" role="list">
     <div class="index-row" role="listitem">
       <span class="index-term">Public systems</span>
@@ -54,11 +54,11 @@
     </div>
     <div class="index-row" role="listitem">
       <span class="index-term">Toolkit</span>
-      <span class="index-gloss"><a href="security-toolkit.html">Security toolkit</a>: grouped review, redaction, provenance, and public-surface utilities with honest unknowns where release state has not been revalidated.</span>
+      <span class="index-gloss"><a href="security-toolkit.html">Security toolkit</a>: small utilities for pre-publication review, secret redaction, release source records and hooks.</span>
     </div>
     <div class="index-row" role="listitem">
       <span class="index-term">Product and theory</span>
-      <span class="index-gloss"><a href="accountable-surface.html">Accountable Surface</a> is the product route. <a href="accountable-machines.html">Accountable Machines</a> is the companion theory route.</span>
+      <span class="index-gloss"><a href="accountable-surface.html">Accountable Surface</a> is the product. <a href="accountable-machines.html">Accountable Machines</a> is the essay behind it.</span>
     </div>
     <div class="index-row" role="listitem">
       <span class="index-term">Authorized private practice</span>
@@ -68,7 +68,7 @@
 </section>
 
 <section class="mv" id="advisories" aria-labelledby="advisories-h">
-  <h2 id="advisories-h">Security advisories in my own tools.</h2>
+  <h2 id="advisories-h">Security advisories in my own tools</h2>
   <p class="body-text">The GitHub security advisories below each cover a flaw in a released version of one of my tools. A row names what could happen, the versions affected and the release that fixes it. Seven were published on 26 September 2026 and five on 27 September 2026, Pacific time. None has a CVE. Each tool&rsquo;s newest release fixes every advisory listed for it: Gather 1.9.1, Relay 0.5.0, Forum 1.15.1, Crucible 1.3.0, Canon 0.4.2 and Mneme 0.5.1.</p>
   <div class="index" role="list">
     <div class="index-row" role="listitem">
@@ -125,20 +125,19 @@
 </section>
 
 <section class="mv" id="private-systems" aria-labelledby="private-systems-h">
-  <h2 id="private-systems-h">Private operational systems.</h2>
+  <h2 id="private-systems-h">Private operational systems</h2>
   <p class="body-text">Array controls authorized campaigns and assessment waves. Seed supplies the native C++23 assessment engine. Sofer coordinates private-line agents, models, probes, tools, and domain packages. Isomorph tests model refusal and jailbreak-class inference boundaries. Bounds verifies agent, runtime, and release trust. Kun records path-only access-recovery memory without retaining raw credentials. ORCA operates engagement state, modules, findings, reports, and bundles. Gate decides whether the connected line is ready to release or hand off.</p>
-  <p class="body-text"><a href="private-practice.html">Read the capability-level practice map</a>. It describes what each project does while keeping targets, credentials, live payloads, client data, and engagement findings private.</p>
+  <p class="body-text"><a href="private-practice.html">Read the practice map</a> for what each one does. Targets, credentials, payloads, client data and findings are not published.</p>
 </section>
 
 <section class="mv" id="authorization" aria-labelledby="authorization-h">
-  <h2 id="authorization-h">Authorization boundary.</h2>
-  <p class="body-text">Public tools may be read and run within their licenses and documented limits. Written authorization first: private security practice begins only after written authorization, written scope, and lawful authority are established. This page does not publish source for private systems, counterparties, sensitive deployment detail, target specifics, or operational methods.</p>
-  <p class="pull">A request without a lawful basis receives only public material.</p>
+  <h2 id="authorization-h">Authorization</h2>
+  <p class="body-text">Public tools may be run within their licenses. Private security work starts only after written authorization, a written scope and lawful authority are in place.</p>
 </section>
 
 <section class="mv" id="data" aria-labelledby="data-h">
-  <h2 id="data-h">Data-backed claims.</h2>
-  <p class="body-text">The claim registry is public: <a href="security-tools.json">the public security registry</a>. It records purpose, maturity, source, install or entry route, verification command, evidence date, limitations, and authorization boundary for each promoted item.</p>
+  <h2 id="data-h">Registry</h2>
+  <p class="body-text"><a href="security-tools.json">The public security registry</a> lists each tool with its purpose, maturity, source, install command, verification command and date.</p>
   <div class="channels">
     <span class="g">Public</span>: <a href="phantom.html">Phantom</a> &middot; <a href="accountable-surface.html">Accountable Surface</a> &middot; <a href="proof-surface.html">Proof Surface</a> &middot; <a href="emet.html">EMET</a>
     &nbsp;&middot;&nbsp;

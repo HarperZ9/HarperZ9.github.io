@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-16",
+  "note": "The fourteen Night School lesson pages beside the pilot join the sitemap (each with its own link card), the route registry and the site index; the route renderer now decodes the &#x27; apostrophe, so no summary shows it double-escaped; the publication build receipt records the new sitemap; the home bundle is rebuilt from the registry as index-DWytnneE.js, and index-amx6uI37.js stays as retained history.",
+  "paths": {
+    "assets/index-DWytnneE.js": "22bdeafcaafb912604c5c68bb44638343eb06c6aceff13f4273f1c5bbbce6e1c",
+    "index.html": "24e0dce89fc790318ddea7ed6abf674aa124c2c75adba763600ebcc8b05fa3db",
+    "publications/build.json": "9b8c7e13a7d622d596a7cbd38321d1b873c9b06527f07d0d98c9bdbdaf9275e1",
+    "site-index.html": "862749a31c5b9e4eb45d9afc33b8c85de9e533d0eb2d9c28dbd084c30782a51c",
+    "sitemap.xml": "25849ccdbfc28f2746baebb2197b285837aef10b0870f9008ab8291355fc5d17",
+    "system/routes.js": "9cadfe227d989b5398f3d71da183db6e359e7a7dfbf087530e456021fab199e1"
+  }
+}

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import posixpath
+import json
 import re
 import subprocess
 from pathlib import Path
@@ -128,6 +129,18 @@ NEURAL_GPU_REVISION = "20261010-neural-gpu"
 # 12 October 2026: the Verified viewer source (raw-native 0.7.0); studio.js and studio-shell.css take
 # a new stamp.
 VIEWER_REVISION = "20261012-viewer"
+# 14 October 2026: the Music attractor draws through raw-native, with a log tone map chosen by
+# test; studio.js takes a new stamp and imports reactive.js at a new stamp.
+ATTRACTOR_GPU_REVISION = "20261014-attractor-gpu"
+# 14 October 2026, later: the Music flow field draws through raw-native; studio.js takes a new
+# stamp and imports reactive.js at a new stamp.
+FLOW_GPU_REVISION = "20261014-flow-gpu"
+# 14 October 2026: the Finish layer (raw-native 0.8.0's post stack over the stage); studio.js and
+# studio-shell.css take a new stamp (15 October: after the Music attractor and flow field).
+FINISH_REVISION = "20261015-finish"
+# 15 October 2026: Plot maps orders the archive as the archive page does; studio.js takes a new
+# stamp.
+PLOT_ORDER_REVISION = "20261015-plot-order"
 # 27 September 2026, copy pass: the sheets that gained the .ident rule (system.css,
 # figure.css) and the record-facts flex change (catalog.css) take one new revision on
 # every page, generator and builder that links them. A cached catalog sheet from
@@ -151,6 +164,10 @@ REVIEWED_ASSET_REVISIONS = {
     # The playable lesson and the film demos beside each explainer film (2026-10-14).
     "system/lessons/lessons.css": "20261014-lessons",
     "system/lessons/launch.mjs": "20261014-lessons",
+    # Night School: the school pages, the attention film player and its lab (2026-10-15).
+    "system/school/school.css": "20261016-school-2",
+    "system/school/launch.mjs": "20261016-school-2",
+    "system/school/coast.css": "20261016-coast-1",
     "system/career.css": VOID_PLATES_REVISION,
     "system/hire.css": VOID_PLATES_REVISION,
     "system/bulletin-board.js": "20260909-media-filters",
@@ -184,9 +201,9 @@ REVIEWED_ASSET_REVISIONS = {
     "system/publications.js": SITE_IA_REVISION,
     "system/series.css": "20261001-series-opener",
     "system/series-table.css": "20261001-series-opener",
-    "system/studio.js": VIEWER_REVISION,
+    "system/studio.js": PLOT_ORDER_REVISION,
     "system/gallery-desk.js": GALLERY_DESK_REVISION,
-    "system/studio-shell.css": VIEWER_REVISION,
+    "system/studio-shell.css": FINISH_REVISION,
     "system/atelier.js": STUDIO_ENTRY_REVISION,
     "system/type-forge/forge-page.css": MEDIA_ENGINE_REVISION,
     "system/type-forge/forge-page.js": MEDIA_ENGINE_REVISION,
@@ -227,8 +244,9 @@ PLATE_STYLE_SHEETS = (
     "system/figure.css",
 )
 SHARED_VISUAL_TOKENS = (
-    '--font-sans:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;',
-    '--font-mono:"Conso","JetBrains Mono",ui-monospace,"SFMono-Regular",monospace;',
+    # Accession trial, 2026-11-05: the house faces first, Hanken Grotesk and Conso as the fallbacks
+    '--font-sans:"Accession Text","Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;',
+    '--font-mono:"Accession Mono","Conso","JetBrains Mono",ui-monospace,"SFMono-Regular",monospace;',
     "--ground-instrument:#070406;",
     "--ground-paper:#f2efe6;",
     "--ink-paper:#111014;",
@@ -492,7 +510,20 @@ def expected_asset_revision(relative: Path, target: str) -> str:
     if not raw_asset_path.startswith("/"):
         asset_path = posixpath.normpath(posixpath.join(posixpath.dirname(relative.as_posix()), raw_asset_path))
 
+    world = WORLD_ASSET_REVISION()
+    if world and any(asset_path.startswith(scope) for scope in world[1]):
+        return world[0]
     return REVIEWED_ASSET_REVISIONS.get(asset_path, DEFAULT_ASSET_REVISION)
+
+
+# 26 October 2026: the world's pieces (world/, studies/, system/fonts/accession/) carry one revision, a hash of
+# the imported files and the site's world code, written to world/IMPORT.json by scripts/world-asset-revision.mjs.
+def WORLD_ASSET_REVISION() -> tuple[str, list[str]] | None:
+    path = ROOT / "world" / "IMPORT.json"
+    if not path.is_file():
+        return None
+    record = json.loads(path.read_text(encoding="utf-8"))
+    return (record["assetRevision"], record["assetRevisionScope"]) if record.get("assetRevision") else None
 
 
 def assert_reviewed_asset_revision(relative: Path, target: str) -> None:
@@ -964,8 +995,8 @@ def test_current_zentropy_assets_are_shipped() -> None:
 
 
 def test_representative_pages_keep_route_art_metadata() -> None:
+    # typeface.html retired to a redirect into accession.html on 2026-11-02
     pages = (
-        "typeface.html",
         "overview.html",
         "catalog.html",
         "research.html",

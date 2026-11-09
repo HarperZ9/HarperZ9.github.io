@@ -1,0 +1,92 @@
+{
+  "schema": "explainer-film/1",
+  "slug": "block",
+  "title": "The transformer block",
+  "page": "night-school-block.html",
+  "seed": 20261026,
+  "voice": "tallow",
+  "draft": true,
+  "numbers_from": "media/school/block/facts.json, computed by tools/school/fill_block.mjs; tools/school/fill_script.mjs fills every double-brace token below from it",
+  "host": {
+    "guide": "tallow",
+    "style": "thriller",
+    "open": { "seconds": 4.0, "what": "The lighthouse in cutaway: a beam rises up the stair from the ground floor to the lamp, passing two landings. Tallow lights his wick at the bottom. No words." },
+    "close": { "seconds": 5.0, "what": "The beam reaches the lamp and fans out into the wheel of next words. Tallow climbs the last step and turns the lamp down." }
+  },
+  "segments": [
+    {
+      "key": "title",
+      "layout": "title",
+      "heading": "The transformer block",
+      "lines": [
+        "The transformer block. Two floors, one stream.",
+        "Every word's list of numbers climbs the tower. On each floor, two rooms read it and add something to it. Tonight, what those rooms are, and what each one adds."
+      ]
+    },
+    {
+      "key": "stream",
+      "heading": "The stream",
+      "sources": ["ours-block", "radford2019"],
+      "lines": [
+        "Start with a word's {{params.config.dModel}} numbers from the word table, its embedding, and add to them, number by number, {{params.config.dModel}} more from a second table for its place in the sentence. Call that the stream.",
+        "Each room reads the stream, works out something, and adds its answer back on. Nothing is thrown away. That adding is called the residual connection.",
+        "Before each room reads, it takes a copy of the stream rescaled to a steady size. That is layer norm, and in this model, as in GPT-2, it comes first in each room. The stream itself is left alone."
+      ]
+    },
+    {
+      "key": "rooms",
+      "heading": "Two rooms per floor",
+      "sources": ["ours-block", "vaswani2017"],
+      "lines": [
+        "The first room is attention: each word looks back along the sentence and takes in what it needs. This model has {{params.config.nHeads}} heads per floor, two separate ways of looking.",
+        "The second room is a small network that works on each word alone, called the MLP or feed-forward layer. It widens the {{params.config.dModel}} numbers to {{params.config.dFF}}, bends them, and narrows them back.",
+        "Attention and the MLP hold almost the same number of the model's {{params.counts.total|int}} numbers: {{params.counts.attention|int}} and {{params.counts.mlp|int}}."
+      ]
+    },
+    {
+      "key": "climb",
+      "heading": "Reading the stream on the way up",
+      "sources": ["ours-block", "nostalgebraist2020"],
+      "lines": [
+        "We can stop the stream on any landing and ask it to guess the next word early, using the model's own last two steps: its final layer norm and its output table.",
+        "Straight from the table, the guess has a held-out loss of {{lens.trained.0.loss|f2}}. After the first floor, {{lens.trained.2.loss|f2}}. After the second, {{lens.trained.4.loss|f2}}.",
+        "Copying a word from far back is the slow part: right {{lens.trained.2.copyAccuracy|pct}} percent of the time after the first floor, and {{lens.trained.4.copyAccuracy|pct}} percent at the top."
+      ],
+      "predict": [
+        { "after": [0, 0], "question": "Which floor will matter most for copying a word from far back?", "hold": 2.5 }
+      ]
+    },
+    {
+      "key": "knockout",
+      "heading": "Switch one room off",
+      "sources": ["ours-block"],
+      "lines": [
+        "Now switch rooms off, one at a time, and score the model again. With everything on, it copies right {{ablations.trained.base.copyAccuracy|pct}} percent of the time.",
+        "Silence the second head on the top floor, and copying falls to {{ablations.trained.rows.14.copyAccuracy|pct}} percent. Silence the first head there, and nothing changes: {{ablations.trained.rows.13.copyAccuracy|pct}} percent. On the top floor, one head does most of the copying, and its neighbour is close to idle. Copying needs a head on the first floor too: silence it, and copying falls to {{ablations.trained.rows.2.copyAccuracy|pct}} percent.",
+        "Switch off the first floor's MLP, and the loss jumps from {{ablations.trained.base.loss|f2}} to {{ablations.trained.rows.3.loss|f2}}, worse than a blind guess.",
+        "On an untrained model, the same switches barely move the loss. The jobs were learned, not built in."
+      ]
+    },
+    {
+      "key": "residual",
+      "heading": "Why add, not replace",
+      "sources": ["ours-block"],
+      "lines": [
+        "What if a room replaced the stream with its answer, instead of adding to it?",
+        "For the top floor's attention, the loss goes to {{residual.trained.rows.2.loss|f2}}. The room was only ever adding a little, and the rest of the stream was still needed.",
+        "One room is the odd one out. The first floor's MLP adds a vector about {{stream.trained.adds.1.ratioToStream|int}} times the size of the stream it reads, so replacing barely matters there: {{residual.trained.rows.1.loss|f2}}."
+      ],
+      "predict": [
+        { "after": [0, 0], "question": "If a room replaces the stream instead of adding to it, what happens to the loss?", "hold": 2.5 }
+      ]
+    },
+    {
+      "key": "close",
+      "heading": "Goodnight",
+      "lines": [
+        "A block is two rooms on one stream: attention looks along the sentence, the MLP works on each word, and each adds its answer back on.",
+        "Next in the lighthouse: how the whole tower is trained. Goodnight."
+      ]
+    }
+  ]
+}

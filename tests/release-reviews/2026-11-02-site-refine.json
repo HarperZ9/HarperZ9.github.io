@@ -1,0 +1,9 @@
+{
+  "date": "2026-11-02",
+  "note": "Site refinement pass 1: front door gains The work (platforms with Verified lines), menu links CMMNS on site and adds Superframe, Research and CV, home defers its GPU ground and living type until idle.",
+  "paths": {
+    "index.html": "2416256961ac2497a2adb4532bc8e2132aca31ddab3db49837b9d0ab4f330c4b",
+    "site-index.html": "858677957b6f32a7a3e14f2b5f1d1219e6609a2992c9430aae14e8f3ae82baed",
+    "system/routes.js": "9e8d3b9664ec553ebefdf6cd2ebda07cb3b27148f2cbf6273b88aac0fa120533"
+  }
+}

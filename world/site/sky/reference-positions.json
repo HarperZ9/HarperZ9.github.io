@@ -1,0 +1,110 @@
+{
+ "source": "astropy 8.0.2, built-in ephemeris, no refraction, topocentric",
+ "cases": [
+  {
+   "name": "Denver, SPA paper example",
+   "lat": 39.742476,
+   "lon": -105.1786,
+   "time": "2003-10-17T19:30:30Z",
+   "sun": {
+    "alt": 39.8723,
+    "az": 194.3383
+   },
+   "moon": {
+    "alt": 5.1433,
+    "az": 300.0591
+   },
+   "elongation": 97.996
+  },
+  {
+   "name": "London, summer solstice noon",
+   "lat": 51.5,
+   "lon": -0.1,
+   "time": "2026-06-21T12:00:00Z",
+   "sun": {
+    "alt": 61.9334,
+    "az": 178.919
+   },
+   "moon": {
+    "alt": 2.0757,
+    "az": 93.7195
+   },
+   "elongation": 85.076
+  },
+  {
+   "name": "Sydney, winter sunset",
+   "lat": -33.9,
+   "lon": 151.2,
+   "time": "2026-06-21T07:00:00Z",
+   "sun": {
+    "alt": -1.9787,
+    "az": 297.1496
+   },
+   "moon": {
+    "alt": 53.6543,
+    "az": 11.539
+   },
+   "elongation": 82.571
+  },
+  {
+   "name": "Quito, equinox morning",
+   "lat": -0.2,
+   "lon": -78.5,
+   "time": "2026-03-20T13:00:00Z",
+   "sun": {
+    "alt": 24.6419,
+    "az": 89.9402
+   },
+   "moon": {
+    "alt": 6.767,
+    "az": 79.102
+   },
+   "elongation": 19.817
+  },
+  {
+   "name": "Reykjavik, midwinter midday",
+   "lat": 64.1,
+   "lon": -21.9,
+   "time": "2026-12-21T13:30:00Z",
+   "sun": {
+    "alt": 2.4564,
+    "az": 180.9877
+   },
+   "moon": {
+    "alt": 2.2858,
+    "az": 36.0644
+   },
+   "elongation": 144.47
+  },
+  {
+   "name": "Tokyo, night",
+   "lat": 35.7,
+   "lon": 139.7,
+   "time": "2026-11-05T13:00:00Z",
+   "sun": {
+    "alt": -62.5347,
+    "az": 311.0268
+   },
+   "moon": {
+    "alt": -51.5991,
+    "az": 35.352
+   },
+   "elongation": 44.081
+  },
+  {
+   "name": "Seattle, full moon night",
+   "lat": 47.6,
+   "lon": -122.3,
+   "time": "2026-11-24T07:00:00Z",
+   "sun": {
+    "alt": -60.7007,
+    "az": 332.5257
+   },
+   "moon": {
+    "alt": 65.5886,
+    "az": 162.0352
+   },
+   "elongation": 173.208
+  }
+ ]
+}

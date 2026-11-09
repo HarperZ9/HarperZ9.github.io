@@ -1,0 +1,55 @@
+{
+ "schema": "explainer-film/1",
+ "slug": "which-source",
+ "title": "Which source decides",
+ "segments": [
+  {
+   "key": "c0",
+   "lines": [
+    "Flywheel 1.5.1 checks a value against the source that decides it."
+   ]
+  },
+  {
+   "key": "c1",
+   "lines": [
+    "A published demo filed a Form 1040 with a taxable income of $36,700 and a tax of $4,165.50."
+   ]
+  },
+  {
+   "key": "c2",
+   "lines": [
+    "The rate schedule gives that figure: 10 percent up to $11,925, then 12 percent on the rest."
+   ]
+  },
+  {
+   "key": "c3",
+   "lines": [
+    "But the form requires the tax table. Its rows are $50 wide, and it charges tax on the middle of the row, $36,725."
+   ]
+  },
+  {
+   "key": "c4",
+   "lines": [
+    "That gives $4,169. Both numbers are arithmetically correct."
+   ]
+  },
+  {
+   "key": "c5",
+   "lines": [
+    "So the check does not reread the arithmetic. It asks the source the contract names, and the filed answer reads FAIL."
+   ]
+  },
+  {
+   "key": "c6",
+   "lines": [
+    "The answer from the table reads PASS. With nothing allowed to decide, the same answer reads UNVERIFIABLE."
+   ]
+  },
+  {
+   "key": "c7",
+   "lines": [
+    "A check nobody could run never reads as a check that passed."
+   ]
+  }
+ ]
+}

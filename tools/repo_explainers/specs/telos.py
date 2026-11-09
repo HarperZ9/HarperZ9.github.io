@@ -41,7 +41,7 @@ SPEC = {
          "scene": [{"pipe": {"stages": LOOP, "active": 4}},
                    {"io": {"lines": ["[1] GENERIC  -> UNVERIFIABLE  vertices=12 edges=32 (pixel: v=0 e=0)", "[2] VIEW2    -> UNVERIFIABLE  vertices=16 edges=32 (pixel: v=184 e=49)",
                                      "[3] VIEW3    -> UNVERIFIABLE  vertices=16 edges=32 (pixel: v=184 e=49)", ["[4] SOUND    -> UNVERIFIABLE  vertices=16 edges=32 (pixel: v=49 e=40)", "hi"]],
-                           "verdict": ["UNVERIFIABLE", "unv", "recheck() true: the verdict re-derives, and it is not a pass"]}}]},
+                           "verdict": ["UNVERIFIABLE", "unv", "recheck() true: the verdict re-derives as UNVERIFIABLE"]}}]},
         {"title": "A proof packet carries its materials",
          "paras": ["<code>node demo/proof.mjs agent-action --demo</code> assembles a packet for one admitted action: the objective, two source refs with content hashes, a context envelope, the route that decided it, the admission decision, the action's side effect, the output digests and the artifact text itself.",
                    "The packet embeds what is needed to recompute its claims, so a verifier never has to trust the run that made it."],

@@ -1,0 +1,30 @@
+{
+  "date": "2026-11-02",
+  "note": "Certifications: each track resume carries a short Certifications and Education section; all 42 credentials with their public verification results on published-work.html and in career/credentials.json; Microsoft Applied Skills links now point at the credential-ID pages that verify. Bytes recorded for the author's review in the pull request before merge.",
+  "paths": {
+    "career/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.docx": "683c00de3c513f90e477220946f4b054ac174fe843b134954408418c712ef31d",
+    "career/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.pdf": "74dca806a3b3912397272e69721633edc1a26cbc25476dfc9d88ed9032124c51",
+    "career/Zain-Dana-Harper-Resume-Graphics-Developer-Tools.docx": "ec81dea810663cede2371a1282e0b6b4d5b55b17c1cb398242bca94d94f3ae0d",
+    "career/Zain-Dana-Harper-Resume-Graphics-Developer-Tools.pdf": "e9ac34c71fb9c8dd51cb0310d5511854048cb61b100f7ceb910814bd3cf99941",
+    "career/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.docx": "de2999d3faa3dd7b59badf8842a2abb7476ee5cd1227eb2f8120b4f92b6837c9",
+    "career/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.pdf": "831849d2720eb3b39636ac2b6bb20da9a6a75bb60c3f3288b432a394292d7a64",
+    "career/career-artifacts.json": "b15ef3910c7307774cb515c153a195d8b50fc7b951da7fb23db3e47adb3489d5",
+    "career/career-build-receipt.json": "fea8f4d8e2fd217e349a3517801f05e0d3a1174a35b26587c42c90c11ab1658b",
+    "career/credentials.json": "61b598367840126f40a4671832578b648b73fd9b69032506dfe7c564076d5288",
+    "career/designed/Zain-Dana-Harper-CV.buildtex.json": "0cbbfa50bd7e29b341ffbefa1ce7a55afca2bb76c8fcc0d52ee7370ef4a49fe5",
+    "career/designed/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.buildtex.json": "bdc2147b28aabdf39186365ca21bc9fe70069dcf8da6090f4c9aaa9100886e97",
+    "career/designed/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.pdf": "b83e16fe691b193c09e8c466717f05debe1897593f4cc9feb42c9a056a87d33d",
+    "career/designed/Zain-Dana-Harper-Resume-Graphics-Developer-Tools.buildtex.json": "3e908e6a42f1f7fcda2c3d0e0440f23e48bb89cef11cc0c7b526cc4d20abbd28",
+    "career/designed/Zain-Dana-Harper-Resume-Graphics-Developer-Tools.pdf": "24ad7a588da9158c476f241a0e14fe65a2a49a216c921686b26d3d2cc02f4c1c",
+    "career/designed/Zain-Dana-Harper-Resume-Grounds.buildtex.json": "819fa67aa4f14002dd8fd775fb79c0cbdc9fd30b34f2b0a957219ef6f62ce057",
+    "career/designed/Zain-Dana-Harper-Resume-Public-Operations.buildtex.json": "66fe35ca548c071c84cca678885e8f5d58d2b40b631212be2d4f8774c4961530",
+    "career/designed/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.buildtex.json": "82bbb0132241b34cd4f9f2b55316bbfe3f520b524b1c9cbadf1537d197d40957",
+    "career/designed/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.pdf": "b874f98b91e8ff3497e29e02c5dc913a03b97f0f4e9d5e69f6e0a6538575c550",
+    "hire.html": "3c491a0177fdf6aee4add3f7b490e6e9a3721850972fb988f3836c3fd980a66c",
+    "published-work.html": "d7c49cb0f12bec44e87085d00909333c1b51781c07013f8185d6448ba422ccbd",
+    "resume-evaluation-tooling.html": "0e471523b6dc67bd8c14954d3ec6020d03950d14662c26af3514a252bb14d94e",
+    "resume-graphics-developer-tools.html": "acb3a2b4b1b6c2d832dca68370d80017554eef5650a994498c00f0940811a109",
+    "resume-support-operations.html": "2172dd7a510e75e35632bd9950d86dbbc8b9b21cf899a9bf288090eb6246e429",
+    "resume.html": "a7ae2f2a16f8d6b08766725fffb2ca3cb02cb3c8a6f700b82f3752688623f4f1"
+  }
+}

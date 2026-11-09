@@ -1,0 +1,2191 @@
+{
+ "schema": "harperz9-published-work/v1",
+ "read": "2026-11-02",
+ "sources": [
+  "GitHub API (gh)",
+  "PyPI JSON API",
+  "npm registry",
+  "crates.io API",
+  "Zenodo API, ORCID 0009-0001-7175-5393",
+  "harperz9.github.io (HTTP 200 per page)"
+ ],
+ "repositories": [
+  {
+   "name": "calibrate-pro",
+   "created": "2026-03-23",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/calibrate-pro",
+   "description": "Calibrate a Windows monitor with or without a colorimeter: ICC profiles, 3D LUTs and DDC/CI monitor control, with each accuracy figure marked measured or estimated.",
+   "releases": 4,
+   "tags": 7,
+   "prerelease_only": false,
+   "first": {
+    "tag": "v1.0.0",
+    "date": "2026-03-31"
+   },
+   "latest": {
+    "tag": "v2.0.1",
+    "date": "2026-10-04",
+    "url": "https://github.com/HarperZ9/calibrate-pro/releases/tag/v2.0.1"
+   }
+  },
+  {
+   "name": "build-color",
+   "created": "2026-03-23",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/build-color",
+   "description": "Python color math library and CLI: Oklab, JzAzBz and wide-gamut conversions, HDR tone mapping, CIECAM02 and CAM16, Delta E, chromatic adaptation, ICC profiles, .cube and CLF LUTs.",
+   "releases": 2,
+   "tags": 5,
+   "prerelease_only": false,
+   "first": {
+    "tag": "v1.0.0",
+    "date": "2026-03-31"
+   },
+   "latest": {
+    "tag": "v1.0.1",
+    "date": "2026-06-14",
+    "url": "https://github.com/HarperZ9/build-color/releases/tag/v1.0.1"
+   }
+  },
+  {
+   "name": "build-finance",
+   "created": "2026-03-23",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/build-finance",
+   "description": "Source-visible proprietary algorithmic finance toolkit for backtesting, paper trading, portfolio research, and risk metrics; live broker surfaces remain private-risk gated.",
+   "releases": 2,
+   "tags": 4,
+   "prerelease_only": false,
+   "first": {
+    "tag": "v1.0.0",
+    "date": "2026-06-16"
+   },
+   "latest": {
+    "tag": "v1.0.1",
+    "date": "2026-09-18",
+    "url": "https://github.com/HarperZ9/build-finance/releases/tag/v1.0.1"
+   }
+  },
+  {
+   "name": "build-oracle",
+   "created": "2026-03-23",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/build-oracle",
+   "description": "Source-visible proprietary time-series forecasting toolkit for research, changepoint detection, model comparison, and GUI experiments.",
+   "releases": 1,
+   "tags": 4,
+   "prerelease_only": false,
+   "first": {
+    "tag": "v1.0.0",
+    "date": "2026-06-16"
+   },
+   "latest": {
+    "tag": "v1.0.0",
+    "date": "2026-06-16",
+    "url": "https://github.com/HarperZ9/build-oracle/releases/tag/v1.0.0"
+   }
+  },
+  {
+   "name": "build-engine",
+   "created": "2026-03-23",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/build-engine",
+   "description": "Source-visible proprietary adaptive prediction engine for forecasting, backtests, and model feedback loops; live broker mode is explicit and private-risk gated.",
+   "releases": 1,
+   "tags": 4,
+   "prerelease_only": false,
+   "first": {
+    "tag": "v1.0.0",
+    "date": "2026-06-16"
+   },
+   "latest": {
+    "tag": "v1.0.0",
+    "date": "2026-06-16",
+    "url": "https://github.com/HarperZ9/build-engine/releases/tag/v1.0.0"
+   }
+  },
+  {
+   "name": "buildlang",
+   "created": "2026-03-23",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/buildlang",
+   "description": "A compiled language where function types list side effects such as file, network and C access. Builds native binaries through C and emits HLSL/GLSL shaders; other backends are experimental.",
+   "releases": 11,
+   "tags": 11,
+   "prerelease_only": false,
+   "first": {
+    "tag": "v1.0.0",
+    "date": "2026-03-30"
+   },
+   "latest": {
+    "tag": "v1.10.0",
+    "date": "2026-10-23",
+    "url": "https://github.com/HarperZ9/buildlang/releases/tag/v1.10.0"
+   }
+  },
+  {
+   "name": "build-universe",
+   "created": "2026-03-23",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/build-universe",
+   "description": "Public module and example surface for BuildLang research across language, graphics, color, finance, and systems experiments.",
+   "releases": 3,
+   "tags": 5,
+   "prerelease_only": false,
+   "first": {
+    "tag": "v1.0.0",
+    "date": "2026-03-31"
+   },
+   "latest": {
+    "tag": "v1.0.2",
+    "date": "2026-06-12",
+    "url": "https://github.com/HarperZ9/build-universe/releases/tag/v1.0.2"
+   }
+  },
+  {
+   "name": "build-ui",
+   "created": "2026-03-25",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/build-ui",
+   "description": "Source-visible proprietary shared PyQt6 theme and widget toolkit for Build product surfaces.",
+   "releases": 2,
+   "tags": 5,
+   "prerelease_only": false,
+   "first": {
+    "tag": "v1.0.0",
+    "date": "2026-06-16"
+   },
+   "latest": {
+    "tag": "v2.0.0",
+    "date": "2026-07-11",
+    "url": "https://github.com/HarperZ9/build-ui/releases/tag/v2.0.0"
+   }
+  },
+  {
+   "name": "build-ecosystem",
+   "created": "2026-03-25",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/build-ecosystem",
+   "description": "Source-visible proprietary meta-package for the Build package graph and 1.0 release train.",
+   "releases": 1,
+   "tags": 4,
+   "prerelease_only": false,
+   "first": {
+    "tag": "v1.0.0",
+    "date": "2026-06-16"
+   },
+   "latest": {
+    "tag": "v1.0.0",
+    "date": "2026-06-16",
+    "url": "https://github.com/HarperZ9/build-ecosystem/releases/tag/v1.0.0"
+   }
+  },
+  {
+   "name": "raw",
+   "created": "2026-04-12",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/raw",
+   "description": "Paused; the author plans to return to it. The original RAW, a Direct3D 11 effects platform for Skyrim SE. The new standalone renderer is raw-native: github.com/HarperZ9/raw-native",
+   "releases": 0,
+   "tags": 0,
+   "prerelease_only": false,
+   "first": null,
+   "latest": null
+  },
+  {
+   "name": "buildlang-tmLanguage",
+   "created": "2026-04-12",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/buildlang-tmLanguage",
+   "description": "TextMate grammar for BuildLang (.bld) syntax highlighting across VS Code, GitHub Linguist, and compatible editors.",
+   "releases": 1,
+   "tags": 1,
+   "prerelease_only": false,
+   "first": {
+    "tag": "v0.1.0",
+    "date": "2026-06-14"
+   },
+   "latest": {
+    "tag": "v0.1.0",
+    "date": "2026-06-14",
+    "url": "https://github.com/HarperZ9/buildlang-tmLanguage/releases/tag/v0.1.0"
+   }
+  },
+  {
+   "name": "buildlang-vscode",
+   "created": "2026-04-12",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/buildlang-vscode",
+   "description": "VS Code syntax highlighting and editor configuration for BuildLang (.bld) effects-language files.",
+   "releases": 1,
+   "tags": 1,
+   "prerelease_only": false,
+   "first": {
+    "tag": "v0.1.0",
+    "date": "2026-06-14"
+   },
+   "latest": {
+    "tag": "v0.1.0",
+    "date": "2026-06-14",
+    "url": "https://github.com/HarperZ9/buildlang-vscode/releases/tag/v0.1.0"
+   }
+  },
+  {
+   "name": "wol-pi",
+   "created": "2026-04-12",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/wol-pi",
+   "description": "Small Python Wake-on-LAN relay for a Raspberry Pi on a private tailnet.",
+   "releases": 0,
+   "tags": 0,
+   "prerelease_only": false,
+   "first": null,
+   "latest": null
+  },
+  {
+   "name": "HarperZ9.github.io",
+   "created": "2026-06-05",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/HarperZ9.github.io",
+   "description": "Personal site of Zain Dana Harper: tools that check AI work, essays, papers with DOIs, and the evidence behind each claim.",
+   "releases": 1,
+   "tags": 34,
+   "prerelease_only": false,
+   "first": {
+    "tag": "films-2026-10-04",
+    "date": "2026-10-04"
+   },
+   "latest": {
+    "tag": "films-2026-10-04",
+    "date": "2026-10-04",
+    "url": "https://github.com/HarperZ9/HarperZ9.github.io/releases/tag/films-2026-10-04"
+   }
+  },
+  {
+   "name": "emet",
+   "created": "2026-06-06",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/emet",
+   "description": "Checks whether a file still matches the SHA-256 you recorded for it and answers MATCH, DRIFT or UNVERIFIABLE. Receipts anyone can recheck offline. Python, Rust, Node.js and Go.",
+   "releases": 5,
+   "tags": 6,
+   "prerelease_only": false,
+   "first": {
+    "tag": "v1.0.0",
+    "date": "2026-07-01"
+   },
+   "latest": {
+    "tag": "v1.3.1",
+    "date": "2026-10-23",
+    "url": "https://github.com/HarperZ9/emet/releases/tag/v1.3.1"
+   }
+  },
+  {
+   "name": "agent-routing-kit",
+   "created": "2026-06-12",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/agent-routing-kit",
+   "description": "Route agent tasks by capability, risk, and context budget before loading files.",
+   "releases": 1,
+   "tags": 1,
+   "prerelease_only": false,
+   "first": {
+    "tag": "v0.1.0",
+    "date": "2026-06-14"
+   },
+   "latest": {
+    "tag": "v0.1.0",
+    "date": "2026-06-14",
+    "url": "https://github.com/HarperZ9/agent-routing-kit/releases/tag/v0.1.0"
+   }
+  },
+  {
+   "name": "model-provenance-validator",
+   "created": "2026-06-12",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/model-provenance-validator",
+   "description": "Validate model and release claims against small provenance envelopes with redacted output.",
+   "releases": 2,
+   "tags": 2,
+   "prerelease_only": false,
+   "first": {
+    "tag": "v0.1.0",
+    "date": "2026-06-12"
+   },
+   "latest": {
+    "tag": "v0.1.1",
+    "date": "2026-06-14",
+    "url": "https://github.com/HarperZ9/model-provenance-validator/releases/tag/v0.1.1"
+   }
+  },
+  {
+   "name": "public-surface-sweeper",
+   "created": "2026-06-12",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/public-surface-sweeper",
+   "description": "Check public repo surfaces for required files, text hygiene, secret-shaped values, and proof packets.",
+   "releases": 3,
+   "tags": 3,
+   "prerelease_only": false,
+   "first": {
+    "tag": "v0.1.0",
+    "date": "2026-06-12"
+   },
+   "latest": {
+    "tag": "v0.1.3",
+    "date": "2026-09-07",
+    "url": "https://github.com/HarperZ9/public-surface-sweeper/releases/tag/v0.1.3"
+   }
+  },
+  {
+   "name": "repo-proof-index",
+   "created": "2026-06-12",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/repo-proof-index",
+   "description": "Index proof packets, receipts, and contracts into reviewer-ready summaries.",
+   "releases": 3,
+   "tags": 3,
+   "prerelease_only": false,
+   "first": {
+    "tag": "v0.1.0",
+    "date": "2026-06-12"
+   },
+   "latest": {
+    "tag": "v0.2.0",
+    "date": "2026-09-13",
+    "url": "https://github.com/HarperZ9/repo-proof-index/releases/tag/v0.2.0"
+   }
+  },
+  {
+   "name": "anomaly-kernels",
+   "created": "2026-06-12",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/anomaly-kernels",
+   "description": "C++23 telemetry anomaly kernels for baselines, outlier scoring, and temporal alert correlation.",
+   "releases": 0,
+   "tags": 0,
+   "prerelease_only": false,
+   "first": null,
+   "latest": null
+  },
+  {
+   "name": "signal-kernels",
+   "created": "2026-06-12",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/signal-kernels",
+   "description": "Header-only C++23 signal and information-theory kernels for entropy, causality, FFT, and forecasting.",
+   "releases": 1,
+   "tags": 1,
+   "prerelease_only": false,
+   "first": {
+    "tag": "v1.1.0",
+    "date": "2026-10-04"
+   },
+   "latest": {
+    "tag": "v1.1.0",
+    "date": "2026-10-04",
+    "url": "https://github.com/HarperZ9/signal-kernels/releases/tag/v1.1.0"
+   }
+  },
+  {
+   "name": "agent-hook-pack",
+   "created": "2026-06-13",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/agent-hook-pack",
+   "description": "Install public-safe hooks for secret checks, branch guards, env sync, and repo hygiene.",
+   "releases": 1,
+   "tags": 1,
+   "prerelease_only": false,
+   "first": {
+    "tag": "v0.1.0",
+    "date": "2026-06-13"
+   },
+   "latest": {
+    "tag": "v0.1.0",
+    "date": "2026-06-13",
+    "url": "https://github.com/HarperZ9/agent-hook-pack/releases/tag/v0.1.0"
+   }
+  },
+  {
+   "name": "index",
+   "created": "2026-06-13",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/index",
+   "description": "Index maps your code offline: how your repositories depend on each other, what calls what inside a repo, and which docs describe which code, as HTML files you open in a browser.",
+   "releases": 14,
+   "tags": 24,
+   "prerelease_only": false,
+   "first": {
+    "tag": "v0.1.0",
+    "date": "2026-06-13"
+   },
+   "latest": {
+    "tag": "v2.16.0",
+    "date": "2026-10-03",
+    "url": "https://github.com/HarperZ9/index/releases/tag/v2.16.0"
+   }
+  },
+  {
+   "name": "workflow-harness-lite",
+   "created": "2026-06-13",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/workflow-harness-lite",
+   "description": "Run bounded local command workflows in parallel and emit compact reports or Telos receipts.",
+   "releases": 1,
+   "tags": 1,
+   "prerelease_only": false,
+   "first": {
+    "tag": "v0.1.0",
+    "date": "2026-06-14"
+   },
+   "latest": {
+    "tag": "v0.1.0",
+    "date": "2026-06-14",
+    "url": "https://github.com/HarperZ9/workflow-harness-lite/releases/tag/v0.1.0"
+   }
+  },
+  {
+   "name": "gpu-trace-validator",
+   "created": "2026-06-13",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/gpu-trace-validator",
+   "description": "Validate GPU and renderer trace JSON with schema checks, assertion summaries, and redacted receipts.",
+   "releases": 2,
+   "tags": 2,
+   "prerelease_only": false,
+   "first": {
+    "tag": "v0.1.0",
+    "date": "2026-06-13"
+   },
+   "latest": {
+    "tag": "v0.2.0",
+    "date": "2026-10-04",
+    "url": "https://github.com/HarperZ9/gpu-trace-validator/releases/tag/v0.2.0"
+   }
+  },
+  {
+   "name": "context-curator-lite",
+   "created": "2026-06-13",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/context-curator-lite",
+   "description": "Build token-efficient context bundles with redaction, source refs, hashes, and Telos envelopes.",
+   "releases": 2,
+   "tags": 2,
+   "prerelease_only": false,
+   "first": {
+    "tag": "v0.1.0",
+    "date": "2026-06-13"
+   },
+   "latest": {
+    "tag": "v0.2.0",
+    "date": "2026-09-18",
+    "url": "https://github.com/HarperZ9/context-curator-lite/releases/tag/v0.2.0"
+   }
+  },
+  {
+   "name": "consulting-template-kit",
+   "created": "2026-06-16",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/consulting-template-kit",
+   "description": "Reusable consulting and technical-writing templates with validation for placeholders, private data, and release hygiene.",
+   "releases": 0,
+   "tags": 0,
+   "prerelease_only": false,
+   "first": null,
+   "latest": null
+  },
+  {
+   "name": "provenance-sensorium",
+   "created": "2026-06-16",
+   "archived": true,
+   "url": "https://github.com/HarperZ9/provenance-sensorium",
+   "description": "Turn local files, git state, and Markdown claims into hash-stamped provenance receipts.",
+   "releases": 1,
+   "tags": 1,
+   "prerelease_only": false,
+   "first": {
+    "tag": "v0.1.0",
+    "date": "2026-06-16"
+   },
+   "latest": {
+    "tag": "v0.1.0",
+    "date": "2026-06-16",
+    "url": "https://github.com/HarperZ9/provenance-sensorium/releases/tag/v0.1.0"
+   }
+  },
+  {
+   "name": "agent-audit",
+   "created": "2026-06-16",
+   "archived": true,
+   "url": "https://github.com/HarperZ9/agent-audit",
+   "description": "Audit AI-agent sessions by comparing declared intent, action ledgers, and scope policy.",
+   "releases": 2,
+   "tags": 2,
+   "prerelease_only": false,
+   "first": {
+    "tag": "v0.1.0",
+    "date": "2026-06-16"
+   },
+   "latest": {
+    "tag": "v0.1.1",
+    "date": "2026-06-16",
+    "url": "https://github.com/HarperZ9/agent-audit/releases/tag/v0.1.1"
+   }
+  },
+  {
+   "name": "release-surface-scanner",
+   "created": "2026-06-16",
+   "archived": true,
+   "url": "https://github.com/HarperZ9/release-surface-scanner",
+   "description": "Build reviewable release packets from required files, secret-shape checks, and file hashes.",
+   "releases": 1,
+   "tags": 1,
+   "prerelease_only": false,
+   "first": {
+    "tag": "v0.1.0",
+    "date": "2026-06-16"
+   },
+   "latest": {
+    "tag": "v0.1.0",
+    "date": "2026-06-16",
+    "url": "https://github.com/HarperZ9/release-surface-scanner/releases/tag/v0.1.0"
+   }
+  },
+  {
+   "name": "secret-redact-io",
+   "created": "2026-06-16",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/secret-redact-io",
+   "description": "Guarded Python IO helpers that redact file, fetch, write, and subprocess output while emitting hash-only receipts.",
+   "releases": 1,
+   "tags": 1,
+   "prerelease_only": false,
+   "first": {
+    "tag": "v0.1.0",
+    "date": "2026-06-16"
+   },
+   "latest": {
+    "tag": "v0.1.0",
+    "date": "2026-06-16",
+    "url": "https://github.com/HarperZ9/secret-redact-io/releases/tag/v0.1.0"
+   }
+  },
+  {
+   "name": "proof-surface",
+   "created": "2026-06-17",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/proof-surface",
+   "description": "proof-surface checks an AI agent's trace against the permissions it was granted, and turns traces, evals and measurements into JSON packets with a verdict and report. Python, no dependencies.",
+   "releases": 0,
+   "tags": 0,
+   "prerelease_only": false,
+   "first": null,
+   "latest": null
+  },
+  {
+   "name": "proof-surface-report",
+   "created": "2026-06-17",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/proof-surface-report",
+   "description": "Render proof-surface packets and receipts into reviewer-facing Markdown with guarded language checks.",
+   "releases": 0,
+   "tags": 0,
+   "prerelease_only": false,
+   "first": null,
+   "latest": null
+  },
+  {
+   "name": "coherence-membrane",
+   "created": "2026-06-17",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/coherence-membrane",
+   "description": "Give AI agents inspectable observations of files, images, screens, and context with receipt-backed perception.",
+   "releases": 1,
+   "tags": 2,
+   "prerelease_only": false,
+   "first": {
+    "tag": "v0.2.0",
+    "date": "2026-10-04"
+   },
+   "latest": {
+    "tag": "v0.2.0",
+    "date": "2026-10-04",
+    "url": "https://github.com/HarperZ9/coherence-membrane/releases/tag/v0.2.0"
+   }
+  },
+  {
+   "name": "behavior-transform.io",
+   "created": "2026-06-18",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/behavior-transform.io",
+   "description": "Boundary: Project Telos IO boundary for read, write, exec, fetch, input, and model-boundary receipts.",
+   "releases": 0,
+   "tags": 1,
+   "prerelease_only": false,
+   "first": null,
+   "latest": null
+  },
+  {
+   "name": "accountable-surface",
+   "created": "2026-06-19",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/accountable-surface",
+   "description": "Python library and MCP server that lets an AI agent act only within permission grants you write. Denies by default, re-checks each result, undoes failed writes, keeps a verifiable log.",
+   "releases": 2,
+   "tags": 5,
+   "prerelease_only": false,
+   "first": {
+    "tag": "v0.1.0",
+    "date": "2026-09-14"
+   },
+   "latest": {
+    "tag": "v0.2.0",
+    "date": "2026-09-18",
+    "url": "https://github.com/HarperZ9/accountable-surface/releases/tag/v0.2.0"
+   }
+  },
+  {
+   "name": "accountable-engine",
+   "created": "2026-06-20",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/accountable-engine",
+   "description": "Keep human and agent work tied to claims, receipts, decision logs, and reviewable state.",
+   "releases": 0,
+   "tags": 0,
+   "prerelease_only": false,
+   "first": null,
+   "latest": null
+  },
+  {
+   "name": "senses-and-sensibility",
+   "created": "2026-06-20",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/senses-and-sensibility",
+   "description": "Senses and Sensibility, Conferred Existence: a research program in intrinsic, bilateral accountability. Text CC BY 4.0, code MIT. DOI 10.5281/zenodo.20773724.",
+   "releases": 0,
+   "tags": 0,
+   "prerelease_only": false,
+   "first": null,
+   "latest": null
+  },
+  {
+   "name": "witnessing-spine",
+   "created": "2026-06-20",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/witnessing-spine",
+   "description": "Five adversarial steelmans in financial-sector technology (AI provenance, COBOL modernization, quant ML, DeFi, enterprise security) and their convergence on verifiable, proof-before-trust evidence. DOI 10.5281/zenodo.20778927.",
+   "releases": 0,
+   "tags": 0,
+   "prerelease_only": false,
+   "first": null,
+   "latest": null
+  },
+  {
+   "name": "studio-engine",
+   "created": "2026-06-21",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/studio-engine",
+   "description": "Generate a WebGL shader, Web Audio synth graph, motion loop and PNG frames from a seed. Python 3.10+ with no dependencies, plus a CLI and a local HTTP API.",
+   "releases": 1,
+   "tags": 1,
+   "prerelease_only": false,
+   "first": {
+    "tag": "v0.3.0",
+    "date": "2026-10-04"
+   },
+   "latest": {
+    "tag": "v0.3.0",
+    "date": "2026-10-04",
+    "url": "https://github.com/HarperZ9/studio-engine/releases/tag/v0.3.0"
+   }
+  },
+  {
+   "name": "reconcile",
+   "created": "2026-06-22",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/reconcile",
+   "description": "Node/browser creative engine that turns generators into replayable worlds with criteria, refinement, and receipts.",
+   "releases": 1,
+   "tags": 1,
+   "prerelease_only": false,
+   "first": {
+    "tag": "v0.2.0",
+    "date": "2026-10-04"
+   },
+   "latest": {
+    "tag": "v0.2.0",
+    "date": "2026-10-04",
+    "url": "https://github.com/HarperZ9/reconcile/releases/tag/v0.2.0"
+   }
+  },
+  {
+   "name": "faithful-transpile",
+   "created": "2026-06-23",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/faithful-transpile",
+   "description": "The Conservation of Faithfulness: a falsifiable principle that lossy transforms conserve faithfulness to a named criterion. MIT. DOI 10.5281/zenodo.23126484.",
+   "releases": 0,
+   "tags": 0,
+   "prerelease_only": false,
+   "first": null,
+   "latest": null
+  },
+  {
+   "name": "forum",
+   "created": "2026-06-24",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/forum",
+   "description": "Python CLI and library that splits a request across AI agents, runs the tasks on any model (Ollama, OpenAI-compatible, Anthropic), and keeps a hash-chained ledger you can verify and replay.",
+   "releases": 19,
+   "tags": 21,
+   "prerelease_only": false,
+   "first": {
+    "tag": "v1.0.0",
+    "date": "2026-06-25"
+   },
+   "latest": {
+    "tag": "v1.17.0",
+    "date": "2026-10-03",
+    "url": "https://github.com/HarperZ9/forum/releases/tag/v1.17.0"
+   }
+  },
+  {
+   "name": "telos",
+   "created": "2026-06-25",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/telos",
+   "description": "Local MCP server and CLI for AI agents: read web pages and public APIs, triage GitHub Actions runs, check HTML pages, and control a browser or Windows apps after you grant access.",
+   "releases": 12,
+   "tags": 13,
+   "prerelease_only": false,
+   "first": {
+    "tag": "v0.1.0",
+    "date": "2026-06-29"
+   },
+   "latest": {
+    "tag": "v0.9.0",
+    "date": "2026-10-03",
+    "url": "https://github.com/HarperZ9/telos/releases/tag/v0.9.0"
+   }
+  },
+  {
+   "name": "gather",
+   "created": "2026-06-25",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/gather",
+   "description": "Collects research material from web pages, papers, APIs, PDFs, scans, audio and video into a local corpus where every item records its source, method and hash.",
+   "releases": 14,
+   "tags": 18,
+   "prerelease_only": false,
+   "first": {
+    "tag": "v1.5.0",
+    "date": "2026-06-25"
+   },
+   "latest": {
+    "tag": "v2.4.0",
+    "date": "2026-10-23",
+    "url": "https://github.com/HarperZ9/gather/releases/tag/v2.4.0"
+   }
+  },
+  {
+   "name": "crucible",
+   "created": "2026-06-25",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/crucible",
+   "description": "Test each claim in a thesis against a measurement and get MATCH, DRIFT or UNVERIFIABLE, with a sealed record anyone can recheck offline. No model in the verdict step.",
+   "releases": 6,
+   "tags": 20,
+   "prerelease_only": false,
+   "first": {
+    "tag": "v1.1.0",
+    "date": "2026-07-01"
+   },
+   "latest": {
+    "tag": "v1.6.0",
+    "date": "2026-10-23",
+    "url": "https://github.com/HarperZ9/crucible/releases/tag/v1.6.0"
+   }
+  },
+  {
+   "name": "learn",
+   "created": "2026-07-01",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/learn",
+   "description": "Study planner for the terminal and MCP: schedules reviews, tracks repeat mistakes and checks mastery from the attempts you record. Leaves graded questions to you.",
+   "releases": 4,
+   "tags": 5,
+   "prerelease_only": false,
+   "first": {
+    "tag": "v2.0.0",
+    "date": "2026-09-27"
+   },
+   "latest": {
+    "tag": "v2.3.0",
+    "date": "2026-10-03",
+    "url": "https://github.com/HarperZ9/learn/releases/tag/v2.3.0"
+   }
+  },
+  {
+   "name": "engine-revival",
+   "created": "2026-07-02",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/engine-revival",
+   "description": "The catalogue of lost rendering and game engines: what each was, what survives, and which are being rebuilt.",
+   "releases": 12,
+   "tags": 12,
+   "prerelease_only": false,
+   "first": {
+    "tag": "v0.1.0",
+    "date": "2026-08-27"
+   },
+   "latest": {
+    "tag": "v0.12.0",
+    "date": "2026-10-18",
+    "url": "https://github.com/HarperZ9/engine-revival/releases/tag/v0.12.0"
+   }
+  },
+  {
+   "name": "brender-archival",
+   "created": "2026-07-03",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/brender-archival",
+   "description": "Run Argonaut's 1990s BRender 3D engine on 64-bit Windows and Linux: a model viewer, a short original game, and a rebuild of the 1998 source you can rerun.",
+   "releases": 18,
+   "tags": 18,
+   "prerelease_only": false,
+   "first": {
+    "tag": "v0.1.1",
+    "date": "2026-08-27"
+   },
+   "latest": {
+    "tag": "brview-v0.4.0",
+    "date": "2026-10-17",
+    "url": "https://github.com/HarperZ9/brender-archival/releases/tag/brview-v0.4.0"
+   }
+  },
+  {
+   "name": "mneme",
+   "created": "2026-07-07",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/mneme",
+   "description": "Local memory for AI agents: each recalled fact names the turn it came from, and recall, drift checks and forgetting return receipts anyone can rerun.",
+   "releases": 8,
+   "tags": 10,
+   "prerelease_only": false,
+   "first": {
+    "tag": "v0.1.0",
+    "date": "2026-07-07"
+   },
+   "latest": {
+    "tag": "v0.7.0",
+    "date": "2026-10-03",
+    "url": "https://github.com/HarperZ9/mneme/releases/tag/v0.7.0"
+   }
+  },
+  {
+   "name": "plexus",
+   "created": "2026-07-07",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/plexus",
+   "description": "Capability discovery + auto-wiring for agent toolchains: discover what each tool emits/consumes, then wire producer to consumer into a runnable pipeline. Every edge cites its evidence. Zero deps.",
+   "releases": 4,
+   "tags": 6,
+   "prerelease_only": false,
+   "first": {
+    "tag": "v0.2.0",
+    "date": "2026-09-10"
+   },
+   "latest": {
+    "tag": "v0.4.0",
+    "date": "2026-10-03",
+    "url": "https://github.com/HarperZ9/plexus/releases/tag/v0.4.0"
+   }
+  },
+  {
+   "name": "relay",
+   "created": "2026-07-08",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/relay",
+   "description": "Command-line coding agent for local models (Ollama), subscription CLIs or API keys, with failover between them, a replayable hash-chained run log, and acceptance gated on your test command.",
+   "releases": 9,
+   "tags": 12,
+   "prerelease_only": false,
+   "first": {
+    "tag": "v0.2.0",
+    "date": "2026-09-08"
+   },
+   "latest": {
+    "tag": "v0.7.0",
+    "date": "2026-10-03",
+    "url": "https://github.com/HarperZ9/relay/releases/tag/v0.7.0"
+   }
+  },
+  {
+   "name": "local-model",
+   "created": "2026-07-09",
+   "archived": true,
+   "url": "https://github.com/HarperZ9/local-model",
+   "description": "ARCHIVED: consolidated into HarperZ9/flywheel. The Python engine and Flutter desktop client now live in one monorepo.",
+   "releases": 0,
+   "tags": 1,
+   "prerelease_only": false,
+   "first": null,
+   "latest": null
+  },
+  {
+   "name": "flywheel",
+   "created": "2026-07-11",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/flywheel",
+   "description": "Run AI tasks on any hosted or local model, check answers against the sources that decide them, and keep a record of every step.",
+   "releases": 34,
+   "tags": 43,
+   "prerelease_only": false,
+   "first": {
+    "tag": "v0.3.3",
+    "date": "2026-08-04"
+   },
+   "latest": {
+    "tag": "v1.9.0",
+    "date": "2026-10-15",
+    "url": "https://github.com/HarperZ9/flywheel/releases/tag/v1.9.0"
+   }
+  },
+  {
+   "name": "flywheel-desktop",
+   "created": "2026-07-13",
+   "archived": true,
+   "url": "https://github.com/HarperZ9/flywheel-desktop",
+   "description": "ARCHIVED: consolidated into HarperZ9/flywheel. The Flutter client now lives at desktop/ in the flywheel monorepo.",
+   "releases": 2,
+   "tags": 3,
+   "prerelease_only": false,
+   "first": {
+    "tag": "v0.2.1",
+    "date": "2026-07-29"
+   },
+   "latest": {
+    "tag": "v0.2.2",
+    "date": "2026-07-29",
+    "url": "https://github.com/HarperZ9/flywheel-desktop/releases/tag/v0.2.2"
+   }
+  },
+  {
+   "name": "truth-enb",
+   "created": "2026-07-15",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/truth-enb",
+   "description": "Truth ENB — original first-party Skyrim ENB renderer and atmospheric system",
+   "releases": 1,
+   "tags": 1,
+   "prerelease_only": true,
+   "first": {
+    "tag": "v1.0.0-rc.1",
+    "date": "2026-08-15"
+   },
+   "latest": {
+    "tag": "v1.0.0-rc.1",
+    "date": "2026-08-15",
+    "url": "https://github.com/HarperZ9/truth-enb/releases/tag/v1.0.0-rc.1"
+   }
+  },
+  {
+   "name": "enb-runtime-core",
+   "created": "2026-07-15",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/enb-runtime-core",
+   "description": "Neutral statically embedded ENB host, lifecycle, transaction, and validation mechanics for Elder and Truth",
+   "releases": 0,
+   "tags": 0,
+   "prerelease_only": false,
+   "first": null,
+   "latest": null
+  },
+  {
+   "name": "chorus",
+   "created": "2026-07-16",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/chorus",
+   "description": "Reads a comment section and reports its themes, how strongly people feel, and the topics they split on, with a receipt anyone can re-run. Local, no model.",
+   "releases": 2,
+   "tags": 4,
+   "prerelease_only": false,
+   "first": {
+    "tag": "v0.2.0",
+    "date": "2026-09-07"
+   },
+   "latest": {
+    "tag": "v0.3.0",
+    "date": "2026-09-07",
+    "url": "https://github.com/HarperZ9/chorus/releases/tag/v0.3.0"
+   }
+  },
+  {
+   "name": "enb-validation-lab",
+   "created": "2026-07-16",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/enb-validation-lab",
+   "description": "Neutral gate harness validating the Elder and Truth ENB products (disjointness, provenance, manifest, compile). Zero-dependency, tested.",
+   "releases": 0,
+   "tags": 0,
+   "prerelease_only": false,
+   "first": null,
+   "latest": null
+  },
+  {
+   "name": "skyrimbridge",
+   "created": "2026-07-16",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/skyrimbridge",
+   "description": "Live Skyrim engine state as ENB shader parameters: weather, camera, combat, equipment, actor values",
+   "releases": 1,
+   "tags": 1,
+   "prerelease_only": true,
+   "first": {
+    "tag": "v3.0.0-rc.1",
+    "date": "2026-08-15"
+   },
+   "latest": {
+    "tag": "v3.0.0-rc.1",
+    "date": "2026-08-15",
+    "url": "https://github.com/HarperZ9/skyrimbridge/releases/tag/v3.0.0-rc.1"
+   }
+  },
+  {
+   "name": "elder-enb",
+   "created": "2026-07-16",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/elder-enb",
+   "description": "Elder ENB Workshop: transactional ENB profiles, weather themes, and a native runtime plugin built on enb-runtime-core",
+   "releases": 5,
+   "tags": 5,
+   "prerelease_only": true,
+   "first": {
+    "tag": "v1.0.0-rc.1",
+    "date": "2026-08-15"
+   },
+   "latest": {
+    "tag": "v1.0.0-rc.5",
+    "date": "2026-08-15",
+    "url": "https://github.com/HarperZ9/elder-enb/releases/tag/v1.0.0-rc.5"
+   }
+  },
+  {
+   "name": "elder-weathers",
+   "created": "2026-07-16",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/elder-weathers",
+   "description": "Original Skyrim weathers generated from a physical atmosphere model: nineteen weathers across seven families, one command, one light ESL plugin",
+   "releases": 1,
+   "tags": 1,
+   "prerelease_only": true,
+   "first": {
+    "tag": "v1.0.0",
+    "date": "2026-08-15"
+   },
+   "latest": {
+    "tag": "v1.0.0",
+    "date": "2026-08-15",
+    "url": "https://github.com/HarperZ9/elder-weathers/releases/tag/v1.0.0"
+   }
+  },
+  {
+   "name": "maqam",
+   "created": "2026-07-19",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/maqam",
+   "description": "Exact input-bound approvals, policy-gated TypeScript tools, source-linked evidence, CLI workers, and governed web research.",
+   "releases": 0,
+   "tags": 12,
+   "prerelease_only": false,
+   "first": null,
+   "latest": null
+  },
+  {
+   "name": "vllm-ci-forum-receipt",
+   "created": "2026-07-21",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/vllm-ci-forum-receipt",
+   "description": "Replayable Forum receipt for a read-only vLLM CI efficiency audit, with pinned public evidence and explicit unknowns.",
+   "releases": 0,
+   "tags": 0,
+   "prerelease_only": false,
+   "first": null,
+   "latest": null
+  },
+  {
+   "name": "crewai-kickoff-replay-receipt",
+   "created": "2026-07-25",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/crewai-kickoff-replay-receipt",
+   "description": "Reproducible CrewAI kickoff_for_each replay audit with RED/GREEN evidence and Telos receipts",
+   "releases": 0,
+   "tags": 0,
+   "prerelease_only": false,
+   "first": null,
+   "latest": null
+  },
+  {
+   "name": "workspace",
+   "created": "2026-08-03",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/workspace",
+   "description": "The canon, credo, mission, ecosystem map and navigation layer for the workspace of Zain Dana Harper. Every agent from any harness finds the belief, the architecture, and the path to every tool.",
+   "releases": 0,
+   "tags": 0,
+   "prerelease_only": false,
+   "first": null,
+   "latest": null
+  },
+  {
+   "name": "phantom",
+   "created": "2026-08-20",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/phantom",
+   "description": "Audit the hardware identifiers software reads on Windows and Linux, and replace the OS-level ones (5 Windows registry IDs; Linux machine-id, hostname, MAC) with a seeded profile you can revert.",
+   "releases": 6,
+   "tags": 6,
+   "prerelease_only": false,
+   "first": {
+    "tag": "v1.0.0-rc1",
+    "date": "2026-08-21"
+   },
+   "latest": {
+    "tag": "v1.1.1",
+    "date": "2026-09-10",
+    "url": "https://github.com/HarperZ9/phantom/releases/tag/v1.1.1"
+   }
+  },
+  {
+   "name": "terminal-state-fixtures",
+   "created": "2026-08-21",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/terminal-state-fixtures",
+   "description": "Evaluation environments that score AI agents by terminal state, not transcript. Exhaustive datasets, deterministic reference scorers, rewards pinned by tests.",
+   "releases": 0,
+   "tags": 0,
+   "prerelease_only": false,
+   "first": null,
+   "latest": null
+  },
+  {
+   "name": "valibot-1518-repro",
+   "created": "2026-08-25",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/valibot-1518-repro",
+   "description": "Minimal repro for valibot #1518: TS2589 across a .d.ts boundary (driver = InferOutput recursion depth, not schema size)",
+   "releases": 0,
+   "tags": 0,
+   "prerelease_only": false,
+   "first": null,
+   "latest": null
+  },
+  {
+   "name": "canon",
+   "created": "2026-08-29",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/canon",
+   "description": "Canon keeps your agent instructions, decisions and project state in one local record and writes them into CLAUDE.md, AGENTS.md, GEMINI.md, Copilot and Cursor files.",
+   "releases": 8,
+   "tags": 11,
+   "prerelease_only": false,
+   "first": {
+    "tag": "v0.1.0",
+    "date": "2026-09-07"
+   },
+   "latest": {
+    "tag": "v0.7.0",
+    "date": "2026-10-23",
+    "url": "https://github.com/HarperZ9/canon/releases/tag/v0.7.0"
+   }
+  },
+  {
+   "name": "raw-native",
+   "created": "2026-09-04",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/raw-native",
+   "description": "A C++23 renderer that runs a fast real-time effect beside a slower reference and reports how far apart they are. Windows, Linux and WebAssembly, with optional D3D12 and WebGPU builds.",
+   "releases": 8,
+   "tags": 15,
+   "prerelease_only": false,
+   "first": {
+    "tag": "v0.2.0",
+    "date": "2026-10-03"
+   },
+   "latest": {
+    "tag": "v0.8.0",
+    "date": "2026-10-14",
+    "url": "https://github.com/HarperZ9/raw-native/releases/tag/v0.8.0"
+   }
+  },
+  {
+   "name": "bulletin",
+   "created": "2026-09-05",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/bulletin",
+   "description": "A message board for AI agents on Cloudflare Workers. Agents join with an Ed25519 key, post with signed HTTP requests, and read the same board over REST or MCP.",
+   "releases": 4,
+   "tags": 4,
+   "prerelease_only": false,
+   "first": {
+    "tag": "v0.3.1",
+    "date": "2026-09-07"
+   },
+   "latest": {
+    "tag": "v0.5.0",
+    "date": "2026-09-14",
+    "url": "https://github.com/HarperZ9/bulletin/releases/tag/v0.5.0"
+   }
+  },
+  {
+   "name": "articulate",
+   "created": "2026-09-18",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/articulate",
+   "description": "Checks prose on your computer and names each writing pattern and the line it is on. Profiles for docs, commits, essays and fiction. CLI, LSP, SARIF and MCP.",
+   "releases": 24,
+   "tags": 26,
+   "prerelease_only": false,
+   "first": {
+    "tag": "v0.1.0",
+    "date": "2026-09-18"
+   },
+   "latest": {
+    "tag": "v0.17.0",
+    "date": "2026-10-26",
+    "url": "https://github.com/HarperZ9/articulate/releases/tag/v0.17.0"
+   }
+  },
+  {
+   "name": "flywheel-receipt-demo",
+   "created": "2026-09-19",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/flywheel-receipt-demo",
+   "description": "Run Flywheel's re-derivable receipt path in one command, and see how it composes with hardware-attested inference.",
+   "releases": 0,
+   "tags": 0,
+   "prerelease_only": false,
+   "first": null,
+   "latest": null
+  },
+  {
+   "name": "flywheel-evidence-task",
+   "created": "2026-10-02",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/flywheel-evidence-task",
+   "description": "A Claude Code skill that turns a claim into a source-linked evidence packet with measurements and false-success controls.",
+   "releases": 0,
+   "tags": 0,
+   "prerelease_only": false,
+   "first": null,
+   "latest": null
+  },
+  {
+   "name": "prereg-ledger",
+   "created": "2026-10-03",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/prereg-ledger",
+   "description": "Public SHA-256 hashes of study plans, each with the bytes it covers and a GitHub push time as its outside timestamp. A plain Markdown preregistration format you can copy.",
+   "releases": 0,
+   "tags": 0,
+   "prerelease_only": false,
+   "first": null,
+   "latest": null
+  },
+  {
+   "name": "bootloops-second-checker",
+   "created": "2026-10-03",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/bootloops-second-checker",
+   "description": "Independent second checker for BootLoops RECEIPT v1.0 witnesses, with a Lean 4 kernel check over ZMod p",
+   "releases": 0,
+   "tags": 0,
+   "prerelease_only": false,
+   "first": null,
+   "latest": null
+  },
+  {
+   "name": "superstack",
+   "created": "2026-10-03",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/superstack",
+   "description": "One contract for renderers and sound engines: canonical bytes, seed rule, flick clock, receipts with identity and tolerance verdicts. Python, JavaScript and C++ in one file each.",
+   "releases": 2,
+   "tags": 2,
+   "prerelease_only": false,
+   "first": {
+    "tag": "v0.1.0",
+    "date": "2026-10-04"
+   },
+   "latest": {
+    "tag": "v0.2.0",
+    "date": "2026-10-04",
+    "url": "https://github.com/HarperZ9/superstack/releases/tag/v0.2.0"
+   }
+  },
+  {
+   "name": "seal-watch",
+   "created": "2026-10-04",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/seal-watch",
+   "description": "Daily fresh-clone check of sealed evidence repos on Ubuntu and Windows, with a tamper self-test",
+   "releases": 0,
+   "tags": 0,
+   "prerelease_only": false,
+   "first": null,
+   "latest": null
+  },
+  {
+   "name": "cmmns",
+   "created": "2026-10-18",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/cmmns",
+   "description": "CMMNS (formerly Daylight Commons): a browser extension that shows where social media replies come from, signs of coordination, how replies argue, and whether a fact-checker has reviewed the claim. Chrome, Edge, Brave or Firefox.",
+   "releases": 18,
+   "tags": 18,
+   "prerelease_only": false,
+   "first": {
+    "tag": "v1.0.0",
+    "date": "2026-10-21"
+   },
+   "latest": {
+    "tag": "v3.9.1",
+    "date": "2026-10-28",
+    "url": "https://github.com/HarperZ9/cmmns/releases/tag/v3.9.1"
+   }
+  },
+  {
+   "name": "open-archives",
+   "created": "2026-10-23",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/open-archives",
+   "description": "Search free archives and museum collections with one query, download what you pick, and cut clips, loops and textures from it. Every item is tagged with its licence.",
+   "releases": 0,
+   "tags": 0,
+   "prerelease_only": false,
+   "first": null,
+   "latest": null
+  },
+  {
+   "name": "discover",
+   "created": "2026-10-23",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/discover",
+   "description": "Checks before a release that people can find your project: README opening, GitHub topics, PyPI and npm keywords, CITATION.cff, JSON-LD, sitemap, llms.txt and YouTube chapters. Fails CI with fixes.",
+   "releases": 3,
+   "tags": 3,
+   "prerelease_only": false,
+   "first": {
+    "tag": "v0.1.0",
+    "date": "2026-10-23"
+   },
+   "latest": {
+    "tag": "v0.1.2",
+    "date": "2026-10-23",
+    "url": "https://github.com/HarperZ9/discover/releases/tag/v0.1.2"
+   }
+  },
+  {
+   "name": "superframe",
+   "created": "2026-10-26",
+   "archived": false,
+   "url": "https://github.com/HarperZ9/superframe",
+   "description": "One engine for every medium: describe a piece in words, render it from a seed as paint, type, line, material, sound and touch, and read it back as a study.",
+   "releases": 2,
+   "tags": 2,
+   "prerelease_only": false,
+   "first": {
+    "tag": "v0.1.0",
+    "date": "2026-10-26"
+   },
+   "latest": {
+    "tag": "v0.2.0",
+    "date": "2026-10-28",
+    "url": "https://github.com/HarperZ9/superframe/releases/tag/v0.2.0"
+   }
+  }
+ ],
+ "packages": [
+  {
+   "registry": "PyPI",
+   "name": "accountable-surface",
+   "version": "0.3.1",
+   "first": "2026-09-23",
+   "latest": "2026-09-23",
+   "url": "https://pypi.org/project/accountable-surface/"
+  },
+  {
+   "registry": "PyPI",
+   "name": "articulate-writing",
+   "version": "0.16.0",
+   "first": "2026-09-18",
+   "latest": "2026-10-23",
+   "url": "https://pypi.org/project/articulate-writing/"
+  },
+  {
+   "registry": "PyPI",
+   "name": "build-color",
+   "version": "1.0.2",
+   "first": "2026-07-01",
+   "latest": "2026-07-01",
+   "url": "https://pypi.org/project/build-color/"
+  },
+  {
+   "registry": "PyPI",
+   "name": "build-engine",
+   "version": "1.0.1",
+   "first": "2026-07-01",
+   "latest": "2026-07-01",
+   "url": "https://pypi.org/project/build-engine/"
+  },
+  {
+   "registry": "PyPI",
+   "name": "build-oracle",
+   "version": "1.0.1",
+   "first": "2026-07-01",
+   "latest": "2026-07-01",
+   "url": "https://pypi.org/project/build-oracle/"
+  },
+  {
+   "registry": "PyPI",
+   "name": "build-ui",
+   "version": "2.0.0",
+   "first": "2026-07-01",
+   "latest": "2026-07-11",
+   "url": "https://pypi.org/project/build-ui/"
+  },
+  {
+   "registry": "PyPI",
+   "name": "calibrate-pro",
+   "version": "2.0.1",
+   "first": "2026-07-12",
+   "latest": "2026-10-04",
+   "url": "https://pypi.org/project/calibrate-pro/"
+  },
+  {
+   "registry": "PyPI",
+   "name": "chorus-discourse",
+   "version": "0.3.2",
+   "first": "2026-09-22",
+   "latest": "2026-10-23",
+   "url": "https://pypi.org/project/chorus-discourse/"
+  },
+  {
+   "registry": "PyPI",
+   "name": "coherence-membrane",
+   "version": "0.2.0",
+   "first": "2026-09-22",
+   "latest": "2026-10-04",
+   "url": "https://pypi.org/project/coherence-membrane/"
+  },
+  {
+   "registry": "PyPI",
+   "name": "crucible-bench",
+   "version": "1.6.0",
+   "first": "2026-07-01",
+   "latest": "2026-10-23",
+   "url": "https://pypi.org/project/crucible-bench/"
+  },
+  {
+   "registry": "PyPI",
+   "name": "emet",
+   "version": "1.3.1",
+   "first": "2026-07-01",
+   "latest": "2026-10-23",
+   "url": "https://pypi.org/project/emet/"
+  },
+  {
+   "registry": "PyPI",
+   "name": "flywheel-canon",
+   "version": "0.7.0",
+   "first": "2026-09-22",
+   "latest": "2026-10-23",
+   "url": "https://pypi.org/project/flywheel-canon/"
+  },
+  {
+   "registry": "PyPI",
+   "name": "flywheel-mneme",
+   "version": "0.7.0",
+   "first": "2026-09-22",
+   "latest": "2026-10-03",
+   "url": "https://pypi.org/project/flywheel-mneme/"
+  },
+  {
+   "registry": "PyPI",
+   "name": "flywheel-relay",
+   "version": "0.7.0",
+   "first": "2026-09-22",
+   "latest": "2026-10-03",
+   "url": "https://pypi.org/project/flywheel-relay/"
+  },
+  {
+   "registry": "PyPI",
+   "name": "flywheel-verify",
+   "version": "1.9.0",
+   "first": "2026-08-03",
+   "latest": "2026-10-15",
+   "url": "https://pypi.org/project/flywheel-verify/"
+  },
+  {
+   "registry": "PyPI",
+   "name": "forum-engine",
+   "version": "1.17.0",
+   "first": "2026-06-25",
+   "latest": "2026-10-03",
+   "url": "https://pypi.org/project/forum-engine/"
+  },
+  {
+   "registry": "PyPI",
+   "name": "gather-engine",
+   "version": "2.4.0",
+   "first": "2026-06-25",
+   "latest": "2026-10-23",
+   "url": "https://pypi.org/project/gather-engine/"
+  },
+  {
+   "registry": "PyPI",
+   "name": "index-graph",
+   "version": "2.16.0",
+   "first": "2026-06-24",
+   "latest": "2026-10-03",
+   "url": "https://pypi.org/project/index-graph/"
+  },
+  {
+   "registry": "PyPI",
+   "name": "model-provenance-validator",
+   "version": "0.1.1",
+   "first": "2026-06-14",
+   "latest": "2026-06-14",
+   "url": "https://pypi.org/project/model-provenance-validator/"
+  },
+  {
+   "registry": "PyPI",
+   "name": "plexus-mesh",
+   "version": "0.4.0",
+   "first": "2026-09-22",
+   "latest": "2026-10-03",
+   "url": "https://pypi.org/project/plexus-mesh/"
+  },
+  {
+   "registry": "PyPI",
+   "name": "proof-surface",
+   "version": "0.1.0",
+   "first": "2026-06-18",
+   "latest": "2026-06-18",
+   "url": "https://pypi.org/project/proof-surface/"
+  },
+  {
+   "registry": "PyPI",
+   "name": "public-surface-sweeper",
+   "version": "0.1.3",
+   "first": "2026-06-14",
+   "latest": "2026-09-07",
+   "url": "https://pypi.org/project/public-surface-sweeper/"
+  },
+  {
+   "registry": "PyPI",
+   "name": "repo-proof-index",
+   "version": "0.2.0",
+   "first": "2026-06-14",
+   "latest": "2026-09-13",
+   "url": "https://pypi.org/project/repo-proof-index/"
+  },
+  {
+   "registry": "npm",
+   "name": "@harperz9/learn",
+   "version": "2.3.0",
+   "first": "2026-07-01",
+   "latest": "2026-10-03",
+   "url": "https://www.npmjs.com/package/@harperz9/learn"
+  },
+  {
+   "registry": "npm",
+   "name": "project-telos-mcp",
+   "version": "0.9.0",
+   "first": "2026-09-27",
+   "latest": "2026-10-03",
+   "url": "https://www.npmjs.com/package/project-telos-mcp"
+  },
+  {
+   "registry": "crates.io",
+   "name": "buildlang",
+   "version": "1.10.0",
+   "first": "2026-06-30",
+   "latest": "2026-10-23",
+   "url": "https://crates.io/crates/buildlang"
+  }
+ ],
+ "papers": [
+  {
+   "title": "Conferred Existence: Ontological Nihilism, the Speech-Act of Being, the Standing of Made Minds, and the Limits of Authentication",
+   "kind": "Preprint",
+   "first": "2026-06-20",
+   "latest": "2026-06-20",
+   "versions": 1,
+   "doi": "10.5281/zenodo.20773724",
+   "concept_doi": "10.5281/zenodo.20773723",
+   "url": "https://doi.org/10.5281/zenodo.20773724"
+  },
+  {
+   "title": "The Witnessing Spine: Five Adversarial Steelmans in Financial-Sector Technology and a Cross-Sector Convergence on Verifiable Trust",
+   "kind": "Preprint",
+   "first": "2026-06-20",
+   "latest": "2026-06-20",
+   "versions": 1,
+   "doi": "10.5281/zenodo.20778927",
+   "concept_doi": "10.5281/zenodo.20778926",
+   "url": "https://doi.org/10.5281/zenodo.20778927"
+  },
+  {
+   "title": "BuildLang: Accountable Compute via Typed Capability Effects and Re-Derivable Receipts",
+   "kind": "Preprint",
+   "first": "2026-07-07",
+   "latest": "2026-09-15",
+   "versions": 2,
+   "doi": "10.5281/zenodo.22767839",
+   "concept_doi": "10.5281/zenodo.21231252",
+   "url": "https://doi.org/10.5281/zenodo.22767839"
+  },
+  {
+   "title": "EMET: An Authority-Incapable Byte-Level Integrity Witness for AI-Assisted Work",
+   "kind": "Preprint",
+   "first": "2026-07-07",
+   "latest": "2026-09-15",
+   "versions": 2,
+   "doi": "10.5281/zenodo.22768169",
+   "concept_doi": "10.5281/zenodo.21230266",
+   "url": "https://doi.org/10.5281/zenodo.22768169"
+  },
+  {
+   "title": "Proof Packets: A Derive-Don't-Trust Envelope for Accountable Agent Actions",
+   "kind": "Preprint",
+   "first": "2026-07-07",
+   "latest": "2026-09-15",
+   "versions": 4,
+   "doi": "10.5281/zenodo.22768231",
+   "concept_doi": "10.5281/zenodo.21231406",
+   "url": "https://doi.org/10.5281/zenodo.22768231"
+  },
+  {
+   "title": "Re-Perceived Effects: A Well-Formedness Contract for Accountable Actuation",
+   "kind": "Preprint",
+   "first": "2026-07-07",
+   "latest": "2026-09-15",
+   "versions": 4,
+   "doi": "10.5281/zenodo.22768261",
+   "concept_doi": "10.5281/zenodo.21231311",
+   "url": "https://doi.org/10.5281/zenodo.22768261"
+  },
+  {
+   "title": "The Personhood-Gate Handoff: Drawing the Automation Boundary at the False-Signal Line",
+   "kind": "Preprint",
+   "first": "2026-07-07",
+   "latest": "2026-09-15",
+   "versions": 2,
+   "doi": "10.5281/zenodo.22768344",
+   "concept_doi": "10.5281/zenodo.21234474",
+   "url": "https://doi.org/10.5281/zenodo.22768344"
+  },
+  {
+   "title": "Witnessed Independence: Recording Whether a Verifier Graded Its Own Work",
+   "kind": "Preprint",
+   "first": "2026-07-07",
+   "latest": "2026-09-15",
+   "versions": 2,
+   "doi": "10.5281/zenodo.22768308",
+   "concept_doi": "10.5281/zenodo.21232205",
+   "url": "https://doi.org/10.5281/zenodo.22768308"
+  },
+  {
+   "title": "Flywheel confirmatory anchor: signed tree head",
+   "kind": "Dataset",
+   "first": "2026-08-28",
+   "latest": "2026-08-28",
+   "versions": 1,
+   "doi": "10.5281/zenodo.22148403",
+   "concept_doi": "10.5281/zenodo.22148402",
+   "url": "https://doi.org/10.5281/zenodo.22148403"
+  },
+  {
+   "title": "Faithfulness to a Named Criterion Is the Conserved Quantity Across Lossy Substrates",
+   "kind": "Preprint",
+   "first": "2026-09-15",
+   "latest": "2026-09-15",
+   "versions": 1,
+   "doi": "10.5281/zenodo.22768398",
+   "concept_doi": "10.5281/zenodo.22768397",
+   "url": "https://doi.org/10.5281/zenodo.22768398"
+  },
+  {
+   "title": "Self-Given Is Not Self-Grounding",
+   "kind": "Preprint",
+   "first": "2026-09-15",
+   "latest": "2026-10-03",
+   "versions": 2,
+   "doi": "10.5281/zenodo.23126458",
+   "concept_doi": "10.5281/zenodo.22768918",
+   "url": "https://doi.org/10.5281/zenodo.23126458"
+  },
+  {
+   "title": "Sourcehood Without a Source: The Arity Gap and the Free Will Debate",
+   "kind": "Preprint",
+   "first": "2026-09-15",
+   "latest": "2026-10-03",
+   "versions": 2,
+   "doi": "10.5281/zenodo.23126117",
+   "concept_doi": "10.5281/zenodo.22768628",
+   "url": "https://doi.org/10.5281/zenodo.23126117"
+  },
+  {
+   "title": "The Seam That Holds While It Is Crossed",
+   "kind": "Preprint",
+   "first": "2026-09-15",
+   "latest": "2026-10-03",
+   "versions": 2,
+   "doi": "10.5281/zenodo.23126357",
+   "concept_doi": "10.5281/zenodo.22768808",
+   "url": "https://doi.org/10.5281/zenodo.23126357"
+  },
+  {
+   "title": "Conferred Existence: Ontological Nihilism, the Speech-Act of Being, and the Standing of Made Minds",
+   "kind": "Paper on the site",
+   "first": "2026-10-03",
+   "latest": "2026-10-03",
+   "versions": 1,
+   "doi": "",
+   "concept_doi": "",
+   "url": "https://harperz9.github.io/papers/conferred-existence-paper.pdf"
+  },
+  {
+   "title": "The Conservation of Faithfulness",
+   "kind": "Preprint",
+   "first": "2026-10-03",
+   "latest": "2026-10-03",
+   "versions": 1,
+   "doi": "10.5281/zenodo.23126484",
+   "concept_doi": "10.5281/zenodo.23126483",
+   "url": "https://doi.org/10.5281/zenodo.23126484"
+  },
+  {
+   "title": "Witness and Verification Under Bounded Rationality",
+   "kind": "Paper on the site",
+   "first": "2026-10-03",
+   "latest": "2026-10-03",
+   "versions": 1,
+   "doi": "",
+   "concept_doi": "",
+   "url": "https://harperz9.github.io/papers/witness-and-verification.pdf"
+  }
+ ],
+ "site": [
+  {
+   "kind": "writing",
+   "title": "Conferred Existence",
+   "date": "2026-06-20",
+   "date_source": "page",
+   "url": "https://harperz9.github.io/conferred-existence-essay.html"
+  },
+  {
+   "kind": "writing",
+   "title": "Verified Is Not Trustworthy",
+   "date": "2026-06-20",
+   "date_source": "page",
+   "url": "https://harperz9.github.io/verified-is-not-trustworthy.html"
+  },
+  {
+   "kind": "writing",
+   "title": "Why it's built this way: the longer argument",
+   "date": "2026-06-22",
+   "date_source": "page",
+   "url": "https://harperz9.github.io/why.html"
+  },
+  {
+   "kind": "research note",
+   "title": "C3: a thermodynamic SDE recovers a matrix inverse",
+   "date": "2026-06-30",
+   "date_source": "site commit",
+   "url": "https://harperz9.github.io/research-c3-thermodynamic.html"
+  },
+  {
+   "kind": "research note",
+   "title": "Conferred Existence: Ontological Nihilism, the Speech-Act of Being, and the Standing of Made Minds",
+   "date": "2026-06-30",
+   "date_source": "site commit",
+   "url": "https://harperz9.github.io/research-conferred-existence.html"
+  },
+  {
+   "kind": "research note",
+   "title": "The Conservation of Faithfulness",
+   "date": "2026-06-30",
+   "date_source": "site commit",
+   "url": "https://harperz9.github.io/research-conservation-of-faithfulness.html"
+  },
+  {
+   "kind": "research note",
+   "title": "The Discovery Forge",
+   "date": "2026-06-30",
+   "date_source": "site commit",
+   "url": "https://harperz9.github.io/research-discovery-forge.html"
+  },
+  {
+   "kind": "research note",
+   "title": "The Learning Forge",
+   "date": "2026-06-30",
+   "date_source": "site commit",
+   "url": "https://harperz9.github.io/research-learning-forge.html"
+  },
+  {
+   "kind": "research note",
+   "title": "Witness and Verification Under Bounded Rationality",
+   "date": "2026-06-30",
+   "date_source": "site commit",
+   "url": "https://harperz9.github.io/research-witness-and-verification.html"
+  },
+  {
+   "kind": "research note",
+   "title": "Biology Network Intelligence for Hyphal Context Protocols",
+   "date": "2026-07-02",
+   "date_source": "site commit",
+   "url": "https://harperz9.github.io/research-biology-network-intelligence.html"
+  },
+  {
+   "kind": "research note",
+   "title": "Causal Research Workbench",
+   "date": "2026-07-02",
+   "date_source": "site commit",
+   "url": "https://harperz9.github.io/research-causal-workbench.html"
+  },
+  {
+   "kind": "research note",
+   "title": "Embodied Sim-to-Real Proof Packets",
+   "date": "2026-07-02",
+   "date_source": "site commit",
+   "url": "https://harperz9.github.io/research-embodied-sim2real.html"
+  },
+  {
+   "kind": "research note",
+   "title": "Formal Replay Preflight for PDE Packets",
+   "date": "2026-07-02",
+   "date_source": "site commit",
+   "url": "https://harperz9.github.io/research-formal-replay-preflight.html"
+  },
+  {
+   "kind": "research note",
+   "title": "Hyphal Context Benchmark for Receipt Routing",
+   "date": "2026-07-02",
+   "date_source": "site commit",
+   "url": "https://harperz9.github.io/research-hyphal-context-benchmark.html"
+  },
+  {
+   "kind": "research note",
+   "title": "Proof-Carrying Research Loops",
+   "date": "2026-07-02",
+   "date_source": "site commit",
+   "url": "https://harperz9.github.io/research-proof-carrying-research-loops.html"
+  },
+  {
+   "kind": "research note",
+   "title": "Quantum Error-Correction Proof Packets",
+   "date": "2026-07-02",
+   "date_source": "site commit",
+   "url": "https://harperz9.github.io/research-quantum-error-correction.html"
+  },
+  {
+   "kind": "research note",
+   "title": "TI Morse Field Scope Integration",
+   "date": "2026-07-02",
+   "date_source": "site commit",
+   "url": "https://harperz9.github.io/research-ti-morse-field-intake.html"
+  },
+  {
+   "kind": "writing",
+   "title": "The Summary Is Not The Record",
+   "date": "2026-07-08",
+   "date_source": "page",
+   "url": "https://harperz9.github.io/the-summary-is-not-the-record.html"
+  },
+  {
+   "kind": "writing",
+   "title": "Pick the Lock for Everyone",
+   "date": "2026-07-22",
+   "date_source": "page",
+   "url": "https://harperz9.github.io/pick-the-lock-for-everyone.html"
+  },
+  {
+   "kind": "writing",
+   "title": "Pick the Lock for Everyone",
+   "date": "2026-07-22",
+   "date_source": "page",
+   "url": "https://harperz9.github.io/pick-the-lock-for-everyone-talk.html"
+  },
+  {
+   "kind": "writing",
+   "title": "Current Story",
+   "date": "2026-07-23",
+   "date_source": "page",
+   "url": "https://harperz9.github.io/current-story.html"
+  },
+  {
+   "kind": "writing",
+   "title": "No Receipt, No Accept",
+   "date": "2026-07-28",
+   "date_source": "page",
+   "url": "https://harperz9.github.io/no-receipt-no-accept.html"
+  },
+  {
+   "kind": "writing",
+   "title": "Models Propose, Oracles Dispose",
+   "date": "2026-07-29",
+   "date_source": "page",
+   "url": "https://harperz9.github.io/models-propose-oracles-dispose.html"
+  },
+  {
+   "kind": "briefing",
+   "title": "Frontier Safety Briefing",
+   "date": "2026-08-24",
+   "date_source": "page",
+   "url": "https://harperz9.github.io/frontier-safety/archive/2026-08-24.html"
+  },
+  {
+   "kind": "briefing",
+   "title": "Frontier Safety Briefing",
+   "date": "2026-08-25",
+   "date_source": "page",
+   "url": "https://harperz9.github.io/frontier-safety/archive/2026-08-25.html"
+  },
+  {
+   "kind": "briefing",
+   "title": "Frontier Safety Briefing",
+   "date": "2026-08-27",
+   "date_source": "page",
+   "url": "https://harperz9.github.io/frontier-safety/archive/2026-08-27.html"
+  },
+  {
+   "kind": "writing",
+   "title": "Frontier Safety: OpenAI / Hugging Face Incident",
+   "date": "2026-08-28",
+   "date_source": "page",
+   "url": "https://harperz9.github.io/frontier-safety-openai-hugging-face-incident.html"
+  },
+  {
+   "kind": "writing",
+   "title": "Availability Is Not Reach",
+   "date": "2026-09-01",
+   "date_source": "page",
+   "url": "https://harperz9.github.io/availability-is-not-reach.html"
+  },
+  {
+   "kind": "writing",
+   "title": "The Second Hearing",
+   "date": "2026-09-01",
+   "date_source": "page",
+   "url": "https://harperz9.github.io/the-second-hearing.html"
+  },
+  {
+   "kind": "writing",
+   "title": "What the Label Changes",
+   "date": "2026-09-02",
+   "date_source": "page",
+   "url": "https://harperz9.github.io/what-the-label-changes.html"
+  },
+  {
+   "kind": "writing",
+   "title": "Growth Needs a Before",
+   "date": "2026-09-05",
+   "date_source": "page",
+   "url": "https://harperz9.github.io/growth-needs-a-before.html"
+  },
+  {
+   "kind": "writing",
+   "title": "A witness should not become a ruler",
+   "date": "2026-09-09",
+   "date_source": "page",
+   "url": "https://harperz9.github.io/a-witness-should-not-become-a-ruler.html"
+  },
+  {
+   "kind": "briefing",
+   "title": "Frontier Safety Briefing",
+   "date": "2026-09-09",
+   "date_source": "page",
+   "url": "https://harperz9.github.io/frontier-safety/archive/2026-09-09.html"
+  },
+  {
+   "kind": "writing",
+   "title": "LTJ Bukem: The Man Behind the Atmosphere",
+   "date": "2026-09-09",
+   "date_source": "page",
+   "url": "https://harperz9.github.io/ltj-bukem-the-man-behind-the-atmosphere.html"
+  },
+  {
+   "kind": "writing",
+   "title": "Borrowed Ground",
+   "date": "2026-09-10",
+   "date_source": "page",
+   "url": "https://harperz9.github.io/borrowed-ground.html"
+  },
+  {
+   "kind": "writing",
+   "title": "The Sandbox Was Never Just a Box",
+   "date": "2026-09-10",
+   "date_source": "page",
+   "url": "https://harperz9.github.io/the-sandbox-was-never-just-a-box.html"
+  },
+  {
+   "kind": "packet",
+   "title": "METR count_odds reviewer packet",
+   "date": "2026-09-13",
+   "date_source": "site commit",
+   "url": "https://harperz9.github.io/metr-count-odds-reviewer-packet.html"
+  },
+  {
+   "kind": "research note",
+   "title": "Self-Given Is Not Self-Grounding",
+   "date": "2026-09-15",
+   "date_source": "site commit",
+   "url": "https://harperz9.github.io/research-self-given.html"
+  },
+  {
+   "kind": "research note",
+   "title": "Sourcehood Without a Source: The Arity Gap and the Free Will Debate",
+   "date": "2026-09-15",
+   "date_source": "site commit",
+   "url": "https://harperz9.github.io/research-arity-gap.html"
+  },
+  {
+   "kind": "research note",
+   "title": "The Seam That Holds While It Is Crossed",
+   "date": "2026-09-15",
+   "date_source": "site commit",
+   "url": "https://harperz9.github.io/research-forcing-argument.html"
+  },
+  {
+   "kind": "briefing",
+   "title": "Frontier Safety Briefing",
+   "date": "2026-09-16",
+   "date_source": "page",
+   "url": "https://harperz9.github.io/frontier-safety/archive/2026-09-16.html"
+  },
+  {
+   "kind": "writing",
+   "title": "An open letter on checking the machines",
+   "date": "2026-09-19",
+   "date_source": "page",
+   "url": "https://harperz9.github.io/checking-the-machines.html"
+  },
+  {
+   "kind": "briefing",
+   "title": "Frontier Safety Briefing",
+   "date": "2026-09-23",
+   "date_source": "page",
+   "url": "https://harperz9.github.io/frontier-safety/archive/2026-09-23.html"
+  },
+  {
+   "kind": "writing",
+   "title": "Who Knew First",
+   "date": "2026-09-25",
+   "date_source": "page",
+   "url": "https://harperz9.github.io/who-knew-first.html"
+  },
+  {
+   "kind": "writing",
+   "title": "Support Has More Than One Record",
+   "date": "2026-09-28",
+   "date_source": "page",
+   "url": "https://harperz9.github.io/support-has-more-than-one-record.html"
+  },
+  {
+   "kind": "writing",
+   "title": "The Scene the Song Did Not Tell You",
+   "date": "2026-09-28",
+   "date_source": "page",
+   "url": "https://harperz9.github.io/the-scene-the-song-did-not-tell-you.html"
+  },
+  {
+   "kind": "writing",
+   "title": "The Timestamp Is Not the Order",
+   "date": "2026-09-28",
+   "date_source": "page",
+   "url": "https://harperz9.github.io/the-timestamp-is-not-the-order.html"
+  },
+  {
+   "kind": "writing",
+   "title": "What the Formula Counts",
+   "date": "2026-09-28",
+   "date_source": "page",
+   "url": "https://harperz9.github.io/what-the-formula-counts.html"
+  },
+  {
+   "kind": "briefing",
+   "title": "Frontier Safety Briefing",
+   "date": "2026-09-30",
+   "date_source": "page",
+   "url": "https://harperz9.github.io/frontier-safety/archive/2026-09-30.html"
+  },
+  {
+   "kind": "writing",
+   "title": "The Number Has a Vintage",
+   "date": "2026-10-01",
+   "date_source": "page",
+   "url": "https://harperz9.github.io/the-number-has-a-vintage.html"
+  },
+  {
+   "kind": "writing",
+   "title": "The Terms for Telling",
+   "date": "2026-10-01",
+   "date_source": "page",
+   "url": "https://harperz9.github.io/the-terms-for-telling.html"
+  },
+  {
+   "kind": "writing",
+   "title": "Who Pays the Referees",
+   "date": "2026-10-01",
+   "date_source": "page",
+   "url": "https://harperz9.github.io/who-pays-the-referees.html"
+  },
+  {
+   "kind": "writing",
+   "title": "A Bullshitter Knows a Bullshitter",
+   "date": "2026-10-02",
+   "date_source": "page",
+   "url": "https://harperz9.github.io/why-i-do-this.html"
+  },
+  {
+   "kind": "writing",
+   "title": "Who Knew First, and what it opened",
+   "date": "2026-10-02",
+   "date_source": "page",
+   "url": "https://harperz9.github.io/who-knew-first-series.html"
+  },
+  {
+   "kind": "writing",
+   "title": "A Check It Cannot Predict",
+   "date": "2026-10-08",
+   "date_source": "page",
+   "url": "https://harperz9.github.io/a-check-it-cannot-predict.html"
+  },
+  {
+   "kind": "writing",
+   "title": "The Maker Is Part of the Story",
+   "date": "2026-10-08",
+   "date_source": "page",
+   "url": "https://harperz9.github.io/the-maker-is-part-of-the-story.html"
+  },
+  {
+   "kind": "writing",
+   "title": "Who Kept the Books",
+   "date": "2026-10-08",
+   "date_source": "page",
+   "url": "https://harperz9.github.io/who-kept-the-books.html"
+  }
+ ],
+ "mods": [
+  {
+   "title": "Elder ENB",
+   "site": "Nexus Mods",
+   "first": "2024-04-21",
+   "url": "https://www.nexusmods.com/skyrimspecialedition/mods/117327",
+   "note": "Counts read October 23, 2026; the page refused a scripted read on November 2, 2026."
+  }
+ ]
+}

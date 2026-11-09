@@ -1,0 +1,21 @@
+/* alive.css: the few rules the alive layer needs. Colours come from the shell's tokens. */
+.alive-c { position: absolute; pointer-events: none; opacity: 0; transition: opacity .6s var(--ease-engrave, ease-out); }
+.alive-c.alive-on { opacity: 1; }
+:where(.alive-loop-host) { position: relative; }
+.alive-loop-host > img { transition: opacity .6s ease-out; }
+.alive-loop-host.alive-on > img { opacity: 0; }
+.alive-loop-host > .alive-loop { inset: 0; width: 100%; height: 100%; object-fit: contain; }
+.alive-loop-host.alive-on > .alive-loop { opacity: 1; }
+:where([data-alive~="framemosaic"], [data-alive~="mosaic"]) { position: relative; }
+[data-alive~="framemosaic"] > .alive-mosaic, [data-alive~="mosaic"] > .alive-mosaic { inset: 0; }
+[data-alive~="framemosaic"].alive-on > .alive-mosaic, [data-alive~="mosaic"].alive-on > .alive-mosaic { opacity: 1; }
+.alive-grain { position: fixed; inset: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 2147483000; opacity: .055; mix-blend-mode: overlay; image-rendering: pixelated; }
+:where(.alive-light) { position: relative; isolation: isolate; }
+.alive-light::after { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 1;
+  background: linear-gradient(105deg, transparent calc(var(--alive-lx, -30%) - 18%), rgb(255 250 235 / calc(var(--alive-la, 0) * .22)) var(--alive-lx, -30%), transparent calc(var(--alive-lx, -30%) + 18%));
+  mix-blend-mode: soft-light; }
+.alive-still .alive-c, .plain .alive-c, .plain .alive-grain, .alive-still .alive-light::after { opacity: 0 !important; }
+.plain .alive-loop-host > img, .alive-still .alive-loop-host > img { opacity: 1 !important; }
+@media (prefers-reduced-motion: reduce) { .alive-c { transition: none; } }
+@media print { .alive-c, .alive-grain { display: none !important; } }
+.alive-btn[aria-pressed="false"] { opacity: .72; }

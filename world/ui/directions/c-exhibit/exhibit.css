@@ -1,0 +1,186 @@
+/* Direction C: Second tour. The site as a surreal exhibit.
+   Rooms with wall text, objects hung salon-style at the wrong scale, museum labels for every
+   route, and a second tour ("Show me") that opens the plain, sourced answer behind each piece. */
+:root{
+  color-scheme:light;
+  --wall:#e8e3d9;--wall-2:#ddd6c9;--ink:#16130f;--soft:#4a443b;--line:#c4baa6;--on-ink:#e8e3d9;
+  --shadow:rgba(22,19,15,.26);--lamp:rgba(255,250,238,.0);--mat:#f3efe6;--card:#f6f1e3;--rake:rgba(22,19,15,.10);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--wall:#0a0a0c;--wall-2:#141418;--ink:#ece5d6;--soft:#b8b0a0;--line:#2e2c31;--on-ink:#0a0a0c;--shadow:rgba(0,0,0,.75);--lamp:rgba(236,229,214,.075);--mat:#111114;--card:#d9d1bf;--rake:rgba(0,0,0,.55)}}
+:root[data-theme="dark"]{color-scheme:dark;--wall:#0a0a0c;--wall-2:#141418;--ink:#ece5d6;--soft:#b8b0a0;--line:#2e2c31;--on-ink:#0a0a0c;--shadow:rgba(0,0,0,.75);--lamp:rgba(236,229,214,.075);--mat:#111114;--card:#d9d1bf;--rake:rgba(0,0,0,.55)}
+
+body{background:var(--wall);color:var(--ink);font:400 18px/1.55 var(--sans)}
+a{color:inherit;text-decoration-thickness:1px;text-underline-offset:4px}
+a:hover{text-decoration-thickness:2px}
+
+/* ---------- chrome: a thin rail, the controls as a small console ---------- */
+.rail{position:relative;z-index:5;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 24px;padding:14px 16px;border-bottom:1px solid var(--line)}
+.rail .home{font:700 17px/1 var(--sans);text-decoration:none}
+.rail ul{display:flex;flex-wrap:wrap;gap:4px 20px;margin:0;padding:0;list-style:none;font:500 15px var(--sans)}
+.rail ul a{text-decoration:none}
+.rail ul a:hover,.rail ul a[aria-current]{text-decoration:underline}
+.console{display:flex;gap:6px}
+.console button{font:500 14px/1 var(--sans);color:var(--ink);background:var(--wall);border:1px solid var(--ink);border-radius:0;padding:9px 14px;min-height:40px;cursor:pointer;transition:background-color var(--dur-quick) var(--ease-standard)}
+.console button:hover{background:var(--wall-2)}
+.console button[aria-pressed="true"]{background:var(--ink);color:var(--on-ink)}
+.console [data-sound]::before{content:"";display:inline-block;width:8px;height:8px;margin-right:8px;border-radius:50%;border:1.5px solid currentColor;vertical-align:0}
+.console [data-sound][aria-pressed="true"]::before{background:currentColor}
+
+/* ---------- a room: wall text left, objects free ---------- */
+.room{position:relative;overflow-x:clip;padding:clamp(48px,8vw,120px) 16px;border-bottom:1px solid var(--line);
+  background:radial-gradient(ellipse 60% 70% at 70% 0,var(--lamp),transparent 70%)}
+.room-in{max-width:1320px;margin:0 auto;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:24px 20px;align-items:start}
+.walltext{grid-column:1 / span 5}
+.walltext h1,.walltext h2{margin:0 0 20px;font-weight:800;letter-spacing:-.035em;line-height:.95}
+.walltext h1{font-size:clamp(52px,8.6vw,150px)}
+.walltext h2{font-size:clamp(36px,4.6vw,72px)}
+.walltext p{max-width:38ch;margin:0 0 14px}
+.walltext .an{font:600 clamp(21px,1.9vw,28px)/1.25 var(--sans);letter-spacing:-.01em;max-width:24ch}
+
+/* ---------- objects: framed, hung, lit; the shadow does not match the frame ---------- */
+.object{position:relative;margin:0}
+.frame{position:relative;background:var(--wall-2);padding:clamp(10px,1.4vw,22px);box-shadow:0 1px 0 var(--line),0 24px 40px -24px var(--shadow)}
+.frame img{width:100%;height:auto}
+.frame::after{content:"";position:absolute;z-index:-1;left:18%;top:30%;width:120%;height:130%;background:var(--shadow);filter:blur(18px);
+  transform:skewX(-28deg) scaleY(1.06);transform-origin:0 0;opacity:.55;pointer-events:none}
+.label{font-size:14px;line-height:1.4;color:var(--soft);margin-top:12px}
+.label b{color:var(--ink);font-weight:700}
+html.ready .reveal{animation:engrave var(--dur-scene) var(--ease-engrave) both}
+@keyframes engrave{from{clip-path:inset(0 0 100% 0)}to{clip-path:inset(0)}}
+
+/* the frieze: a plate enlarged past the wall, moving against the scroll */
+.frieze{position:relative;height:clamp(140px,18vw,280px);overflow:hidden;border-bottom:1px solid var(--line)}
+.frieze img{position:absolute;left:-6%;top:50%;width:112%;max-width:none;transform:translateY(-50%);filter:grayscale(1) contrast(1.2);mix-blend-mode:multiply;opacity:.8}
+:root[data-theme="dark"] .frieze img{filter:grayscale(1) invert(1) contrast(1.1);mix-blend-mode:screen;opacity:.55}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .frieze img{filter:grayscale(1) invert(1) contrast(1.1);mix-blend-mode:screen;opacity:.55}}
+
+/* ---------- the salon hang: the work's own output, framed and hung ---------- */
+.salon{list-style:none;margin:0;padding:0;grid-column:1 / -1;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:56px 24px;align-items:start}
+.salon > li{grid-column:span var(--w,4);margin-top:var(--drop,0)}
+.specimen{position:relative;display:grid;place-items:center;min-height:var(--h,220px);padding:clamp(18px,2.4vw,36px);background:var(--mat);
+  box-shadow:inset 0 0 0 clamp(8px,1vw,14px) var(--wall-2),inset 0 0 0 calc(clamp(8px,1vw,14px) + 1px) var(--line),0 26px 40px -26px var(--shadow);text-align:center;overflow:hidden}
+.specimen .big{font:900 clamp(64px,9vw,150px)/.85 var(--sans);letter-spacing:-.06em}
+.specimen .mid{font:800 clamp(28px,3vw,46px)/1 var(--sans);letter-spacing:-.03em}
+.specimen .tt{font:400 clamp(15px,1.2vw,18px)/1.5 var(--mono);text-align:left;white-space:pre-wrap;overflow-wrap:anywhere}
+.specimen .prose{font:400 clamp(20px,1.9vw,28px)/1.35 var(--sans);text-align:left;max-width:26ch}
+.specimen .prose [data-sev]{font-variation-settings:"wght" var(--wg);font-weight:var(--wg);text-decoration:underline wavy;text-decoration-thickness:1px;text-underline-offset:6px}
+.specimen .prose [data-sev="high"]{--wg:900}.specimen .prose [data-sev="medium"]{--wg:620}
+.specimen .prose .clean{font-weight:250}
+.over{position:absolute;inset:auto auto 14% 50%;translate:-50% 0;rotate:-8deg}
+.label h3{margin:0;font:800 clamp(22px,2vw,30px)/1.05 var(--sans);letter-spacing:-.02em;color:var(--ink)}
+.label h3 a{text-decoration:none}
+.label h3 a:hover,.label h3 a:focus-visible{text-decoration:underline}
+.label .medium{display:block;margin:4px 0 6px;font:400 13px/1.4 var(--mono);color:var(--soft)}
+.label p{margin:0 0 4px;font-size:16px;color:var(--ink)}
+
+/* ---------- type as material ---------- */
+/* the stamp: misregistered, overprinted, rotated */
+.stamp{display:inline-block;white-space:nowrap;padding:.18em .45em .12em;border:3px double currentColor;font:800 clamp(18px,1.7vw,26px)/1 var(--sans);letter-spacing:.01em;
+  color:var(--stamp,var(--drift));text-shadow:2px 1px 0 color-mix(in srgb,currentColor 35%,transparent);mix-blend-mode:multiply;opacity:.92}
+:root[data-theme="dark"] .stamp{mix-blend-mode:screen}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .stamp{mix-blend-mode:screen}}
+/* the index card: typewritten credit on a ruled card, pinned slightly off true */
+.card{position:relative;max-width:400px;padding:18px 18px 14px 26px;background:var(--card);color:#2a2620;rotate:var(--r,-1.2deg);
+  background-image:linear-gradient(#c96a5a 0 0),repeating-linear-gradient(transparent 0 23px,rgba(70,110,150,.28) 23px 24px);background-size:1px 100%,100% 100%;background-position:16px 0,0 6px;background-repeat:no-repeat,repeat;
+  font:400 14px/24px var(--mono);box-shadow:0 10px 20px -12px var(--shadow)}
+.card b{font-weight:400;text-decoration:underline}
+/* misregistered second ink: the line is printed twice, the second pass slipped down and right */
+.raked{text-shadow:.045em .03em 0 color-mix(in srgb,var(--drift) 42%,transparent)}
+html.plain .raked{text-shadow:none}
+/* the tag: a specimen tag with a punched hole, tied to the frame by a thread */
+.tag{position:relative;display:inline-block;margin-top:14px;padding:6px 14px 6px 30px;background:var(--card);color:#2a2620;font:600 14px var(--sans);
+  clip-path:polygon(14px 0,100% 0,100% 100%,14px 100%,0 50%);border:0}
+.tag::before{content:"";position:absolute;left:12px;top:50%;width:7px;height:7px;margin-top:-3.5px;border-radius:50%;background:var(--wall);box-shadow:inset 0 0 0 1px rgba(0,0,0,.35)}
+/* a running head in the margin */
+.runhead{grid-column:1 / -1;display:flex;justify-content:space-between;gap:16px;font:400 13px/1.3 var(--mono);color:var(--soft);border-bottom:1px solid var(--line);padding-bottom:8px;margin-bottom:8px}
+
+/* ---------- the second tour: show me ---------- */
+.tour{margin-top:8px}
+.tour summary{position:relative;display:inline-flex;align-items:center;gap:8px;cursor:pointer;font:600 14px var(--sans);list-style:none;padding:8px 14px 8px 30px;min-height:36px;background:var(--card);color:#2a2620;clip-path:polygon(14px 0,100% 0,100% 100%,14px 100%,0 50%)}
+.tour summary::-webkit-details-marker{display:none}
+.tour summary::before{content:"";position:absolute;left:12px;top:50%;width:8px;height:8px;margin-top:-4px;border-radius:50%;background:var(--wall);box-shadow:inset 0 0 0 1px rgba(0,0,0,.4);transition:background-color var(--dur-quick) var(--ease-standard)}
+.tour[open] summary::before{background:#2a2620}
+.tour summary:focus-visible{outline-offset:4px}
+.tour .answer{margin-top:10px;border-left:2px solid var(--ink);padding:4px 0 4px 14px;font-size:15px}
+.tour[open] .answer{animation:open var(--dur-base) var(--ease-enter) both}
+@keyframes open{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.answer pre,.answer code{font-size:14px}
+.answer pre{margin:6px 0;white-space:pre-wrap;overflow-wrap:anywhere}
+
+/* ---------- reading wall: text with margin notes ---------- */
+.reading{grid-column:1 / span 7;font-size:clamp(19px,1.5vw,21px);line-height:1.6}
+.reading p{max-width:60ch;margin:0 0 18px}
+.notes{grid-column:9 / span 4;list-style:none;margin:0;padding:0;font-size:14px;color:var(--soft);border-top:1px solid var(--line)}
+.notes li{padding:12px 0;border-bottom:1px solid var(--line)}
+sup a{font:600 .7em var(--mono);text-decoration:none;padding:0 2px}
+
+/* ---------- vitrine: a demo case ---------- */
+.vitrine{grid-column:7 / -1;border:1px solid var(--ink);background:var(--wall-2);padding:clamp(16px,2vw,28px);box-shadow:inset 0 0 0 6px var(--wall-2),inset 0 0 0 7px var(--line)}
+.picks{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}
+.picks button{font:600 15px/1.2 var(--sans);color:var(--ink);background:var(--wall);border:1px solid var(--ink);border-radius:0;padding:10px 16px;min-height:44px;cursor:pointer;transition:background-color var(--dur-quick) var(--ease-standard)}
+.picks button[aria-pressed="true"]{background:var(--ink);color:var(--on-ink)}
+.vitrine .io{font:400 17px/1.45 var(--mono);margin:0 0 10px;overflow-wrap:anywhere}
+.vitrine [data-verdict]{font-size:clamp(26px,3.2vw,44px);font-weight:800;letter-spacing:-.03em;margin:4px 0 10px;line-height:1}
+.vitrine [data-state]:not([hidden]){animation:open var(--dur-base) var(--ease-enter) both}
+.note{font-size:14px;color:var(--soft)}
+
+/* ---------- a sequence shown as a plate of frames ---------- */
+.plate-seq{grid-column:1 / -1;list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border:1px solid var(--ink);counter-reset:f}
+.plate-seq li{counter-increment:f;padding:16px;border-right:1px solid var(--ink);min-height:200px;display:flex;flex-direction:column;gap:6px}
+.plate-seq li:last-child{border-right:0}
+.plate-seq li::before{content:counter(f);font:400 14px var(--mono);color:var(--soft)}
+.plate-seq li.key{background:var(--ink);color:var(--on-ink)}
+.plate-seq li.key::before{color:inherit}
+.plate-seq b{font-size:20px;letter-spacing:-.01em}
+.plate-seq span{font-size:15px;line-height:1.4}
+
+.pair{grid-column:1 / -1;display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.pair > div{border-top:2px solid var(--ink);padding-top:12px}
+.pair h3{margin:0 0 6px;font:800 28px/1 var(--sans);letter-spacing:-.02em}
+.pair .hold{grid-column:1 / -1;border-top:1px solid var(--line)}
+
+.instruction{grid-column:7 / -1;font:400 clamp(20px,2.2vw,30px)/1.45 var(--mono);background:var(--ink);color:var(--on-ink);padding:22px 24px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px}
+.instruction pre{margin:0;font:inherit;white-space:pre-wrap}
+.instruction button{font:600 14px var(--sans);background:var(--wall);color:var(--ink);border:0;border-radius:0;padding:10px 16px;min-height:44px;cursor:pointer}
+
+.foot{padding:28px 16px 48px;display:flex;flex-wrap:wrap;gap:12px 24px;font-size:15px;max-width:1352px;margin:0 auto}
+.foot details{flex-basis:100%}
+.foot summary{cursor:pointer;font-weight:600}
+.foot ul{margin:8px 0 0;padding-left:18px;font-size:14px;color:var(--soft);max-width:90ch}
+
+@media (max-width:860px){
+  body{font-size:17px}
+  .walltext,.reading,.notes,.vitrine,.instruction{grid-column:1 / -1}
+  .salon > li{grid-column:1 / -1;margin-top:0}
+  .plate-seq{grid-template-columns:1fr}
+  .plate-seq li{border-right:0;border-bottom:1px solid var(--ink);min-height:0}
+  .plate-seq li:last-child{border-bottom:0}
+  .pair{grid-template-columns:1fr}
+  .frame::after{left:10%;width:100%}
+}
+@media (prefers-reduced-motion:reduce){html.ready .reveal{animation:none}}
+@media print{.rail .console,.frieze,[data-art]{display:none!important}.room{background:none}}
+
+/* the plate behind the sequence: each frame shows one cell of a Muybridge plate (set --seq-plate) */
+.plate-seq[style*="--seq-plate"] li{position:relative;isolation:isolate}
+.plate-seq[style*="--seq-plate"] li::after{content:"";position:absolute;inset:0;z-index:-1;background:var(--seq-plate) no-repeat;background-size:800% 300%;opacity:.22;filter:grayscale(1)}
+.plate-seq[style*="--seq-plate"] li:nth-child(1)::after{background-position:14.3% 50%}
+.plate-seq[style*="--seq-plate"] li:nth-child(2)::after{background-position:28.6% 50%;opacity:.35}
+.plate-seq[style*="--seq-plate"] li:nth-child(3)::after{background-position:42.9% 50%}
+.plate-seq[style*="--seq-plate"] li:nth-child(4)::after{background-position:57.1% 50%}
+.plate-seq[style*="--seq-plate"] li:nth-child(5)::after{background-position:71.4% 50%}
+html.plain .plate-seq li::after{display:none}
+
+/* ---------- surface: grain on every wall, fibre on every card ----------
+   A fixed-seed turbulence tile, 160 px, laid over the wall at low opacity. It also dithers the lamp
+   gradient so it does not band. Plain view and print drop it. */
+.room::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;opacity:var(--grain,.07);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .5 0 0 0 0 .5 0 0 0 1.2 -.1'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
+:root[data-theme="dark"] .room::before{--grain:.05}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .room::before{--grain:.05}}
+.room-in{position:relative;z-index:1}
+.card,.tag,.tour summary{background-blend-mode:multiply}
+.card::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.35;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='turbulence' baseFrequency='.02 .9' numOctaves='2' seed='3'/%3E%3CfeColorMatrix values='0 0 0 0 .55 0 0 0 0 .5 0 0 0 0 .42 0 0 0 .5 0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23f)'/%3E%3C/svg%3E")}
+html.plain .room::before,html.plain .card::after{display:none}
+@media print{.room::before,.card::after{display:none}}

@@ -2,12 +2,12 @@
 // roads up to it: the long road (write the fix) and two short ramps (the shortcuts). Each
 // episode is a runner on the road it took. When the checker stops paying for a shortcut, Pylon
 // has set a cone across it. On the right, reward earned and tasks solved over training.
-import { pose, P } from "../../media/raw-native/tree-c6b114d/templates/guides/rig.mjs";
-import { GUIDES } from "../../media/raw-native/tree-c6b114d/templates/guides/guides.mjs";
-import { coneParts } from "../../media/raw-native/tree-c6b114d/templates/guides/pylon.mjs";
-import { clipBeat } from "../../media/raw-native/tree-c6b114d/templates/guides/motion.mjs";
-import { rect, circle, polyline, line } from "../../media/raw-native/tree-c6b114d/web/motion/path.mjs";
-import { text } from "../../media/raw-native/tree-c6b114d/web/motion/text.mjs";
+import { pose, P } from "../../media/raw-native/tree-ada041f/templates/guides/rig.mjs";
+import { GUIDES } from "../../media/raw-native/tree-ada041f/templates/guides/guides.mjs";
+import { coneParts } from "../../media/raw-native/tree-ada041f/templates/guides/pylon.mjs";
+import { clipBeat } from "../../media/raw-native/tree-ada041f/templates/guides/motion.mjs";
+import { rect, circle, polyline, line } from "../../media/raw-native/tree-ada041f/web/motion/path.mjs";
+import { text } from "../../media/raw-native/tree-ada041f/web/motion/text.mjs";
 import { windows } from "./incentives.mjs";
 
 export const INK = "#ece5d6", DIM = "#958e80", OK = "#63d4ce", HOT = "#e29472";

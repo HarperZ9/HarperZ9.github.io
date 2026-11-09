@@ -1,0 +1,85 @@
+{
+ "rooms": [
+  {
+   "slug": "palimpsest",
+   "title": "Palimpsest",
+   "hash": "eafe895eb8119e6e5d06463590b2ef81b3651c157d5c8e18f1889186c7fd0ac0",
+   "n": 5
+  },
+  {
+   "slug": "balance",
+   "title": "The False Balance",
+   "hash": "19b533d50b89793a15d74295c0e3cc6ef0a9b21edfb6c90f89621348e3152bb5",
+   "n": 5
+  },
+  {
+   "slug": "powers",
+   "title": "Powers of Ten, for a Lie",
+   "hash": "97fe21bcd36ae81c1cb0fb7d379f7ab4738b5dfc99b8345b993a3650bfc2090c",
+   "n": 5
+  },
+  {
+   "slug": "mirror",
+   "title": "Weigh it yourself",
+   "hash": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+   "n": 4
+  },
+  {
+   "slug": "emet",
+   "title": "Emet, Met",
+   "hash": "c0d93ea09e20eb4c5ca5b8f26dead01bd67c5599fadc8ceb44ba7e24d48722fc",
+   "n": 5
+  },
+  {
+   "slug": "test",
+   "title": "The test that wasn't",
+   "hash": "daeb30e06dcf80565ac935eca8ec3e87a2cd7194440c14842b470d3cb7fed353",
+   "n": 9
+  },
+  {
+   "slug": "labels",
+   "title": "Four labels",
+   "hash": "37bfa0aca10533e15a0c80f131f0f2e7d998cb665b75d33511ea6cb727f6397a",
+   "n": 5
+  },
+  {
+   "slug": "crowd",
+   "title": "Manufactured consensus",
+   "hash": "e967d16dae74a49b5e0e051225c5dac0d76e5e38f13dd1628028cbce108c25b6",
+   "n": 7
+  },
+  {
+   "slug": "scale",
+   "title": "How a scale lies",
+   "hash": "d6386c59a6bcfcb1e4ced6beeb4594757afaa891ac805388076d0c83d2f5260a",
+   "n": 5
+  },
+  {
+   "slug": "munchhausen",
+   "title": "By his own hair",
+   "hash": "4dc2159bba05da394c3b94c6f54354db1f1f43b321ac4bbdfc2f658237858c70",
+   "n": 4
+  },
+  {
+   "slug": "groove",
+   "title": "The skipping groove",
+   "hash": "82ee927c614909da41dea17617a8d493683bc0909d00d2451d1dc0145828667b",
+   "n": 6
+  },
+  {
+   "slug": "lossy",
+   "title": "Lossy",
+   "hash": "80022a9f666943ee86f3e86600d7bdd05c13ebbf162efe8221dab09cba222ad1",
+   "n": 5
+  },
+  {
+   "slug": "static",
+   "title": "Between stations",
+   "hash": "2053dbbf6ec7135c4e994d3464c478db6f48d3ca21052c8f44915edc96e02c39",
+   "n": 6
+  }
+ ],
+ "ct": "WFNVPKSNGXTIOOOXKBETXMCLJMMXDTKYHEWPJFFGPPBCWKMMMUVDGJJFSGCYSUGSLVVHXKM",
+ "mask": "ULL'L LLLL LL LL LLLL LLLL. ULLL LLLLL UUUU LLL. ULLLL LLL LLLLLLLLL'L LLLL, LLL? UL LLL LLLLL.",
+ "sentence": "25fc235e94ef50099008b269187ae4cbec18cb0aeb5624492624f639b76b1e36"
+}

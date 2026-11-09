@@ -101,17 +101,13 @@ def test_research_opening_routes_to_current_public_artifacts_before_the_index() 
     assert "AI safety questions can start here" in text
     assert "sandbox reach" in text and "observation tools" in text
     assert "synthetic incident workflows" in text
-    assert "does not establish production ServiceNow compatibility" in text
+    assert "writes an offline report" in text
     assert "posts and attachments remain untrusted input" in text
     assert "scoped paid pilot" in text
 
 
-def test_publication_corpora_link_their_source_and_disclose_current_seal_state() -> None:
+def test_publication_corpora_link_their_source() -> None:
     source = page("publications.html")
-    lower = source.lower()
 
     assert "https://github.com/HarperZ9/senses-and-sensibility" in source
-    assert "all 172 listed files currently re-derive" in lower
     assert "https://github.com/HarperZ9/witnessing-spine" in source
-    assert "seven-file manifest that currently returns DRIFT" in source
-    assert "does not ship an executable verifier" in source

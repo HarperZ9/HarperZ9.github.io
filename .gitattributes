@@ -12,6 +12,9 @@
 *.tex text eol=lf
 *.srt text eol=lf
 *.vtt text eol=lf
+# Markdown sources are hashed by their builders (the open letter, the career release), so a
+# Windows checkout must keep the LF bytes Git stores.
+*.md text eol=lf
 frontier-safety/data/*.json text eol=lf
 frontier-safety/data/**/*.json text eol=lf
 frontier-safety/social/*.txt text eol=lf
@@ -30,6 +33,8 @@ media/raw-native/wasm-*/** -text
 media/raw-native/web-*/** -text
 # raw-native's sound engine, pinned by SHA256SUMS in its directory: no EOL conversion.
 media/raw-native/sound-*/** -text
+# raw-native's post stack (the Studio's Finish layer), pinned by SHA256SUMS in its directory: no EOL conversion.
+media/raw-native/post-*/** -text
 
 # The vendored Learn copy is checked byte for byte against VENDOR.json.
 system/vendor/learn/** -text
@@ -59,3 +64,10 @@ media/releases/** -text
 media/raw-native/viewer-*/** -text
 # raw-native at one commit in its repository layout (web/, templates/guides/, docs/motion/), pinned by SHA256SUMS: no EOL conversion.
 media/raw-native/tree-*/** -text
+# One-line release pins (tests/release-pins/): LF everywhere so a pin conflicts only on its review id.
+tests/release-pins/** text eol=lf
+# E25's receipt bundle is a byte-for-byte copy of a Flywheel fixture; its hashes cover these exact bytes.
+media/school/receipts/** -text
+
+# The vendored CMMNS core is pinned by SHA256SUMS against its release tag: no EOL conversion.
+vendor/cmmns/** -text

@@ -1,0 +1,45 @@
+{
+ "schema": "explainer-evidence/1",
+ "explainer": "errorbars",
+ "read": "2026-10-15",
+ "sources": {
+  "ours-errorbars": {
+   "short": "Night School's error-bar measurements, computed for this film",
+   "citation": "media/school/errorbars/facts.json, written by tools/school/fill_errorbars.mjs from system/school/errorbars.mjs and errorbars-truth.mjs: the attention model scored on 1,024 held-out rows; percentile and normal bootstrap intervals by row and by word at 16, 64, 256 and 1,024 rows; the generator's exact expected loss and 1,000-trial coverage checks; a duplicated-row control; a paired comparison of two S17 students; five seeds per student.",
+   "url": "https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/errorbars",
+   "read": "full",
+   "claims": [
+    "Loss 0.6676 and accuracy 0.7332 on 1,024 rows; row-bootstrap widths 0.0838, 0.0559, 0.0311, 0.0161 at 16, 64, 256, 1,024 rows.",
+    "Exact truth 0.6361; row percentile coverage 0.934, 0.931, 0.953 at 16, 64, 256 rows; word-level 0.998 to 1; 16 rows copied four times 0.669, by distinct row 0.933.",
+    "Paired difference -0.0045 [-0.0081, -0.0011], unpaired 3.27 times as wide; seed spread 11.8 times the row standard error."
+   ],
+   "n": "1,024 rows; 1,000 coverage trials per size; 5 seeds per student.",
+   "interval": "Coverage standard errors in facts.json.",
+   "does_not_prove": "Anything about large models or other test sets; the rows here are balanced by position, which is why word-level intervals came out too wide."
+  },
+  "efron1979": {
+   "short": "Efron 1979, Bootstrap Methods: Another Look at the Jackknife",
+   "citation": "Efron, B. (1979). Bootstrap Methods: Another Look at the Jackknife. The Annals of Statistics 7(1), 1-26.",
+   "url": "https://projecteuclid.org/journals/annals-of-statistics/volume-7/issue-1/Bootstrap-Methods-Another-Look-at-the-Jackknife/10.1214/aos/1176344552.full",
+   "read": "to be read by the fact-check",
+   "claims": [
+    "Introduces the bootstrap: estimate the sampling distribution of a statistic by resampling the observed data with replacement."
+   ],
+   "n": "Not applicable.",
+   "interval": "Not applicable.",
+   "does_not_prove": "Anything about this model."
+  },
+  "miller2024": {
+   "short": "Miller 2024, Adding Error Bars to Evals",
+   "citation": "Miller, E. (2024). Adding Error Bars to Evals: A Statistical Approach to Language Model Evaluations. arXiv:2411.00640.",
+   "url": "https://arxiv.org/abs/2411.00640",
+   "read": "to be read by the fact-check",
+   "claims": [
+    "Evaluation questions that come in related groups need clustered standard errors, which can be much larger than the naive ones; paired differences reduce variance when two models answer the same questions."
+   ],
+   "n": "Not applicable.",
+   "interval": "Not applicable.",
+   "does_not_prove": "Anything about this model."
+  }
+ }
+}

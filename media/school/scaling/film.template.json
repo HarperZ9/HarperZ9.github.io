@@ -1,0 +1,77 @@
+{
+  "schema": "explainer-film/1",
+  "slug": "scaling",
+  "title": "Scaling: bigger, longer, how much",
+  "page": "night-school-scaling.html",
+  "seed": 20261029,
+  "voice": "tallow",
+  "draft": true,
+  "numbers_from": "media/school/scaling/facts.json, computed by tools/school/fill_scaling.mjs; tools/school/fill_script.mjs fills every double-brace token below from it",
+  "host": {
+    "guide": "tallow",
+    "style": "thriller",
+    "open": { "seconds": 4.0, "what": "The lamp room, with a shelf of lighthouse models in a row, from a stub of a tower to one three floors high, each with a lamp. Tallow lights the smallest. No words." },
+    "close": { "seconds": 5.0, "what": "All the little lighthouses are lit. The tallest is no brighter than the middle ones. Tallow looks at the distant coast, where much larger lights burn, and turns the lamp down." }
+  },
+  "segments": [
+    {
+      "key": "title",
+      "layout": "title",
+      "heading": "Scaling",
+      "lines": [
+        "Scaling. Bigger, longer, how much.",
+        "Large language models are large because, for years, making them bigger and training them longer kept making them better. Tonight we try that on a shelf of small ones, and we are honest about what a shelf this small can show."
+      ]
+    },
+    {
+      "key": "shelf",
+      "heading": "The shelf",
+      "sources": ["ours-scaling"],
+      "lines": [
+        "We built {{grid.runs.length}} versions of the attention model: {{grid.runs.0.config.dModel}} to {{grid.runs.11.config.dModel}} numbers per word, one to three floors. The smallest has {{grid.runs.0.params.nonEmbedding|int}} numbers outside its word and place tables; the largest, {{grid.runs.11.params.nonEmbedding|int}}.",
+        "Each trained for {{grid.runs.0.final.step|int}} steps on the same text, and each is scored by how far its held-out loss sits above the floor, {{floor}}, the loss of the rules themselves."
+      ]
+    },
+    {
+      "key": "bigger",
+      "heading": "Bigger",
+      "sources": ["ours-scaling"],
+      "lines": [
+        "The smallest ends {{grid.runs.0.final.excess|f2}} above the floor and gets {{grid.runs.0.final.copyAccuracy|pct}} percent of look-back words right. Two floors of {{grid.runs.4.config.dModel}}: {{grid.runs.4.final.excess|f4}} above the floor, and {{grid.runs.4.final.copyAccuracy|pct1}} percent.",
+        "Past that, for the models with two or three floors, the gap barely moves. The lesson's own recipe, trained twice as long, ends {{grid.runs.7.final.excess|f4}} above the floor, and the largest {{grid.runs.11.final.excess|f4}}.",
+        "Three runs of the same model with different seeds spread about as much as that. So on this text, at this length, we cannot see any gain from size above about {{grid.runs.4.params.nonEmbedding|int}} numbers."
+      ],
+      "predict": [
+        { "after": [0, 1], "question": "Over twenty times more numbers than the two-floor model of 16. How much closer to the floor?", "hold": 2.5 }
+      ]
+    },
+    {
+      "key": "compute",
+      "heading": "Longer, and the frontier",
+      "sources": ["ours-scaling"],
+      "lines": [
+        "Now count the work instead: the arithmetic each training run has done, in floating-point operations.",
+        "At every amount of work, take the lowest loss any model on the shelf had reached. Plotted on a log-log chart, their gaps above the floor fall on a straight line, with a slope of {{frontier.fitExcess.slope|f2}}. More work, a smaller gap, at a steady rate.",
+        "And the best model for each amount of work mostly grows as the work grows: small models win the small budgets and bigger ones the big ones, though not at every step."
+      ]
+    },
+    {
+      "key": "papers",
+      "heading": "The real curves",
+      "sources": ["ours-scaling", "kaplan2020", "hoffmann2022"],
+      "lines": [
+        "Kaplan and colleagues, in 2020, found curves like this over models from hundreds of numbers to more than a billion, and over a much wider range of work.",
+        "Hoffmann and colleagues, in 2022, found that most large models of the time were too big for their training text. Their Chinchilla had 70 billion numbers, a quarter of Gopher's, trained on more than four times the text, and beat it.",
+        "Our shelf is far too small to test their numbers. What it can show is the shape: a floor, a gap that shrinks with work, and a best size that grows with the budget."
+      ]
+    },
+    {
+      "key": "close",
+      "heading": "Goodnight",
+      "lines": [
+        "Bigger and longer help until a model gets close to what its text allows. On our shelf, that comes early.",
+        "Goodnight."
+      ]
+    }
+  ]
+}
