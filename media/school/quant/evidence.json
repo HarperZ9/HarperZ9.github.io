@@ -1,0 +1,57 @@
+{
+ "schema": "explainer-evidence/1",
+ "explainer": "quant",
+ "read": "2026-10-15",
+ "sources": {
+  "ours-quant": {
+   "short": "Night School's quantisation runs, computed for this film",
+   "citation": "media/school/quant/facts.json, written by tools/school/fill_quant.mjs from system/school/quant.mjs and quant-gptq.mjs: the attention model's weights quantised by round-to-nearest and GPTQ at 8, 6, 4, 3 and 2 bits, per tensor, per output channel and per group, scored on 1,024 held-out rows with bootstrap intervals; one tensor at a time; controls.",
+   "url": "https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/quant",
+   "read": "full",
+   "claims": [
+    "Float loss 0.6676; per channel round-to-nearest 8/6/4/3/2 bits: 0.668, 0.668, 0.675, 0.725, 3.483.",
+    "4 bits per channel: 15,376 bytes (18 percent); rise +0.0078 (round-to-nearest) and +0.0028 (GPTQ).",
+    "Readout alone at 4 bits: +0.0276."
+   ],
+   "n": "1,024 held-out rows.",
+   "interval": "Row bootstrap, paired differences, in facts.json.",
+   "does_not_prove": "Anything about large models; activations stay in float."
+  },
+  "jacob2018": {
+   "short": "Jacob and others 2018, Quantization and Training of Neural Networks for Efficient Integer-Arithmetic-Only Inference",
+   "citation": "Jacob, B., Kligys, S., Chen, B., and others (2018). CVPR 2018. arXiv:1712.05877.",
+   "url": "https://arxiv.org/abs/1712.05877",
+   "read": "read by the fact-check, 2026-10-15",
+   "claims": [
+    "Real values are represented by an integer and a scale (and zero point): r = S (q - Z)."
+   ],
+   "n": "Not applicable.",
+   "interval": "Not applicable.",
+   "does_not_prove": "Anything about this model."
+  },
+  "dettmers2022": {
+   "short": "Dettmers and others 2022, LLM.int8()",
+   "citation": "Dettmers, T., Lewis, M., Belkada, Y., Zettlemoyer, L. (2022). LLM.int8(): 8-bit Matrix Multiplication for Transformers at Scale. NeurIPS 2022. arXiv:2208.07339.",
+   "url": "https://arxiv.org/abs/2208.07339",
+   "read": "read by the fact-check, 2026-10-15",
+   "claims": [
+    "Large-magnitude outlier features in activations emerge in large transformers and break naive 8-bit quantisation."
+   ],
+   "n": "Not applicable.",
+   "interval": "Not applicable.",
+   "does_not_prove": "Anything about this model."
+  },
+  "frantar2023": {
+   "short": "Frantar and others 2023, GPTQ",
+   "citation": "Frantar, E., Ashkboos, S., Hoefler, T., Alistarh, D. (2023). GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers. ICLR 2023. arXiv:2210.17323.",
+   "url": "https://arxiv.org/abs/2210.17323",
+   "read": "read by the fact-check, 2026-10-15",
+   "claims": [
+    "Quantises weights column by column, updating the not-yet-quantised weights to compensate, using second-order information from calibration data."
+   ],
+   "n": "Not applicable.",
+   "interval": "Not applicable.",
+   "does_not_prove": "Anything about this model."
+  }
+ }
+}

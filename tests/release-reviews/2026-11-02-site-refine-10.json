@@ -1,0 +1,9 @@
+{
+  "date": "2026-11-02",
+  "note": "Pass 8: the glass-and-water field behind the home and the reading pages; BLDLNG and RSRCH marks.",
+  "paths": {
+    "index.html": "e9fa8de353e7f366f0ec5d17287b8da75ccff45d5ee7c2c39fd4f319455cd094",
+    "site-index.html": "838a964204c6f27511d3e09330a8b4622fb86c96451c980cde52985c2df1b12f",
+    "system/routes.js": "4d034462b2674d52611719c6c715f13fb6fd8d4afb71a558feb80aef4a6b442a"
+  }
+}

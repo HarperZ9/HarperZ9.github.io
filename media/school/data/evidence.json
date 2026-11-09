@@ -1,0 +1,24 @@
+{
+ "schema": "explainer-evidence/1",
+ "explainer": "data",
+ "read": "2026-10-15",
+ "sources": {
+  "ours-data": {
+   "short": "Night School's attention model, retrained on altered crates for this film",
+   "citation": "media/school/data/facts.json, written by tools/school/fill_data.mjs from system/school/data.mjs: the same model, seeds and 2,000 steps on altered training data (look-back share, copy episodes removed, label noise, a small repeated pool, a guide never shown in one role), each scored on the same 256 held-out rows; the default recipe reproduces the lesson's curve exactly.",
+   "url": "https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/data",
+   "read": "full",
+   "claims": [
+    "Look-back accuracy by look-back share of episodes: 0: 0.0316, 0.01: 0.1798, 0.05: 0.1917, 0.2: 0.5593, 0.4: 0.9862, 0.8: 0.9921; with none, held-out loss 8.2495 (untrained 3.84).",
+    "Copy episodes removed: who look-back 1, copy-only rows 0.0464.",
+    "Label noise 10% and 30%: look-back 0.7609 and 0.3281; local accuracy 0.7001.",
+    "Pools of 64, 256 and 1,024 rows at the same tokens: held-out 3.0157, 1.7508, 0.7062; fresh rows 0.6874.",
+    "Rerun never the doer in training: names Rerun 0 of the time when he is the answer, others 1."
+   ],
+   "n": "256 held-out rows (6,144 next words); one seed per variant; three seeds at the default recipe and at 5% look-back.",
+   "interval": "Seed range at the default recipe: held-out 0.003, look-back 0.0059; at 5%: 0.0305 and 0.0237.",
+   "does_not_prove": "How much data a skill needs in large models; the removed-copy result could come from the missing sentence frame as much as from the missing skill."
+  }
+ },
+ "factcheck": "Independent fact-check 2026-10-15 (FACTCHECK.md): 30 correct, 2 reword, 2 wrong. Wrong: 'copies only 76 percent' (that is all look-back words; copy episodes stay at 100 and the who questions take the loss) and 'best at step 100, before it started memorising' (step 100 is the first check and the pool was already below the floor). Both corrected; the blind-guess comparison now uses the untrained model; copy episodes named as a kind never seen."
+}

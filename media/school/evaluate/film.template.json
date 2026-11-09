@@ -1,0 +1,126 @@
+{
+ "schema": "explainer-film/1",
+ "slug": "evaluate",
+ "title": "Evaluating a language model",
+ "page": "night-school-evaluate.html",
+ "seed": 20261035,
+ "voice": "rerun",
+ "draft": true,
+ "numbers_from": "media/school/evaluate/facts.json, computed by tools/school/fill_evaluate.mjs; tools/school/fill_script.mjs fills every double-brace token below from it",
+ "host": {
+  "guide": "rerun",
+  "style": "thriller",
+  "open": {
+   "seconds": 4.0,
+   "what": "The tide line. Rerun holds one model's answers up to the prism; three beams come out the far side and land on three different instruments. No words."
+  },
+  "close": {
+   "seconds": 5.0,
+   "what": "Rerun lines the three instruments up side by side, taps each one, and leaves them standing in the sand. He knocks twice on the prism."
+  }
+ },
+ "segments": [
+  {
+   "key": "title",
+   "layout": "title",
+   "heading": "Evaluating a language model",
+   "lines": [
+    "Evaluating a language model.",
+    "There is no single number for how good a language model is. Tonight Rerun scores the same small model three ways, and watches the three scores tell different stories."
+   ]
+  },
+  {
+   "key": "three",
+   "heading": "Three ways to score",
+   "sources": [
+    "ours-evaluate"
+   ],
+   "lines": [
+    "The first way is the loss: how surprised the model is by every next word of held-out text. Lower is better.",
+    "The second is exact match. Some questions have one right answer, like \"who painted the rope?\" Count how many the model gets exactly right.",
+    "The third is a judge: let the model write freely, and have something read what it wrote and say whether it is good."
+   ]
+  },
+  {
+   "key": "curve",
+   "heading": "Watching it learn",
+   "sources": [
+    "ours-evaluate"
+   ],
+   "lines": [
+    "Train the same model three times, and score each run as it trains. On average, at step 200, the loss is {{checkpoints.across.200.loss.mean|f2}} and exact match is {{checkpoints.across.200.exact.mean|pct}} percent.",
+    "By step 2,000, the loss is {{checkpoints.across.2000.loss.mean|f2}} and exact match is {{checkpoints.across.2000.exact.mean|pct}} percent. All three seeds agree on that much."
+   ],
+   "predict": [
+    {
+     "after": [
+      0,
+      1
+     ],
+     "question": "At step 200, exact match is low. What does a judge that reads only neighbouring words say?",
+     "hold": 2.5
+    }
+   ]
+  },
+  {
+   "key": "judges",
+   "heading": "Two judges",
+   "sources": [
+    "ours-evaluate",
+    "zheng2023"
+   ],
+   "lines": [
+    "Here we can build a perfect judge, because the rules that write the guides' sentences can say whether they could have written a given text, at least as the start of a longer one. In the real world no such judge exists; people use another model, or people.",
+    "So build a cheap judge too. It passes any text where every pair of neighbouring words also turns up in a sample of the same kind of text the model trained on. At step 200 it passes {{checkpoints.across.200.fluent.mean|pct}} percent of what the model writes. The perfect judge passes {{checkpoints.across.200.perfect.mean|pct}}.",
+    "Of the writing the perfect judge rejects, the cheap one still accepts between {{judges.perSeed.2.200.falseAccept|pct}} and {{judges.perSeed.1.200.falseAccept|pct}} percent, depending on the run. It reads each pair of words and never the whole sentence, so a wrong fact in fluent words gets through."
+   ]
+  },
+  {
+   "key": "disagree",
+   "heading": "When the scores disagree",
+   "sources": [
+    "ours-evaluate"
+   ],
+   "lines": [
+    "Compare checkpoints in pairs, with error bars on each difference. In {{disagreements.counts.lossOnly}} of {{disagreements.counts.pairs}} pairs, the loss says the later model is better while exact match cannot tell.",
+    "In one pair, the scores point opposite ways. Between steps 400 and 600 of the second training run, loss, exact match and the perfect judge all say the model improved. The cheap judge says it got worse.",
+    "Each score sees part of the model. Loss sees every word. Exact match sees only the questions with one answer, and stops moving once those are right. A judge sees what it was built to look for."
+   ]
+  },
+  {
+   "key": "order",
+   "heading": "Who goes first",
+   "sources": [
+    "ours-evaluate",
+    "zheng2023"
+   ],
+   "lines": [
+    "Judges are often asked which of two answers is better. Give our cheap judge pairs of answers, an early model's and a late one's, then the same pairs with the order swapped.",
+    "Where the two answers differ, it keeps its verdict after the swap only {{pairwise.pairs.1.200.consistentDiffer|pct}} percent of the time in our first run. We wrote that habit into its rule, to show what it does: the first answer shown wins.",
+    "Lianmin Zheng and colleagues ran a similar test on real model judges in 2023. GPT-4, the most consistent of the three they tried, gave the same verdict after a swap in 65 percent of cases. Most of its flips favoured the answer shown first."
+   ]
+  },
+  {
+   "key": "leak",
+   "heading": "The test that was in the textbook",
+   "sources": [
+    "ours-evaluate",
+    "sainz2023"
+   ],
+   "lines": [
+    "One more way scores lie: the test questions leak into the training text. Oscar Sainz and colleagues warned in 2023 that this happens with large models trained on the web.",
+    "So leak our test rows into training on purpose. Mixed in once, they change nothing we can measure. Even mixed in {{contamination.arms.2000.256x16.repeats}} times, the loss on them improves by only {{contamination.arms.2000.256x16.gap.loss.mean|f4}} nats more than on fresh rows, and in two of three runs that is within the noise.",
+    "But leak a few rows many times, {{contamination.arms.2000.32x250.rows}} rows {{contamination.arms.2000.32x250.repeats}} times each, and the model starts to learn them by heart: their loss drops below the floor no honest model can beat, and improves by {{contamination.arms.2000.32x250.gap.loss.mean|f2}} nats more than on fresh rows. A leak shows when the same text is seen often.",
+    "And some overlap happens by chance: {{sets.overlap.1.A.seenInTraining}} of our {{sets.A.rows}} test rows already appeared, word for word, in a clean training run."
+   ]
+  },
+  {
+   "key": "close",
+   "heading": "Goodnight",
+   "lines": [
+    "Ask what a score can see before you trust what it says. Use more than one, put error bars on each, and check that the test was never in the textbook. Apart from the 65 percent, all of tonight's numbers come from one small model, trained a few times over; the questions carry over.",
+    "Next, in the cannery: how a graphics chip does thousands of small sums at once. Goodnight."
+   ]
+  }
+ ]
+}

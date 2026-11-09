@@ -25,7 +25,7 @@
       "name": "Essays and letters",
       "short": "Essays and letters",
       "more": "More essays",
-      "explainer": "Signed essays, letters and arguments, each with its sources and what it does not claim.",
+      "explainer": "Signed essays, letters and arguments.",
       "members": [
         {"id": "checking-the-machines", "kind": "Open letter", "topic": "verification"},
         {"id": "a-witness-should-not-become-a-ruler", "kind": "Essay", "topic": "verification and education"},

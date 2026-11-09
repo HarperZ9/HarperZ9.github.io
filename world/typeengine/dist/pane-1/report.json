@@ -1,0 +1,47 @@
+{
+ "family": "Pane 1",
+ "ground": "#0b0b0d",
+ "axes": [
+  "wght",
+  "SQUR"
+ ],
+ "classes": {
+  "bindings": {
+   "fill": {
+    "material": "glass",
+    "kind": "colr",
+    "how": "a vertical environment gradient, an inner thinned highlight and a rim; refraction, dispersion and caustics stay live",
+    "live": [
+     "refraction",
+     "dispersion",
+     "caustics"
+    ]
+   }
+  },
+  "axes": [
+   {
+    "tag": "wght",
+    "target": "skeleton.weight",
+    "kind": "variable"
+   },
+   {
+    "tag": "SQUR",
+    "target": "skeleton.extra.n",
+    "kind": "variable"
+   }
+  ]
+ },
+ "colr_glyphs": 524,
+ "files": {
+  "variable": {
+   "ttf": 262468,
+   "woff2": 89800,
+   "name": "Pane1[SQUR,wght]"
+  },
+  "cut": {
+   "ttf": 193668,
+   "woff2": 61088,
+   "name": "Pane1-Cut"
+  }
+ }
+}

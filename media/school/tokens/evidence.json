@@ -1,0 +1,98 @@
+{
+  "schema": "explainer-evidence/1",
+  "explainer": "tokens",
+  "read": "2026-10-15",
+  "sources": {
+    "ours-corpus": {
+      "short": "Night School's tokenizer runs, computed for this film",
+      "citation": "media/school/tokens/facts.json, written by tools/school/fill_tokens.mjs from system/school/tokens.mjs: BPE learned on the guides' corpus (3,000 generated episodes, 47,002 words) and on the first five paragraphs of Moby-Dick (716 words), measured on held-out text.",
+      "url": "https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/tokens",
+      "read": "full",
+      "claims": [
+        "Guides' corpus: 4.39 tokens per word at 0 merges (characters plus one end-of-word symbol per word; '.' and '?' count as words), 1.80 at 50 merges, 1.00 at 136 merges (vocabulary 160). The first merge is e with the end-of-word mark; the fifth makes 'the'.",
+        "Unseen 'lamplit' is cut into l, am, p, lit (end of word). Ten runs of 136 random merges leave 1.32 to 1.67 tokens per word.",
+        "English: with 400 merges learned on Moby-Dick (716 pre-tokens, 599 words split on spaces), the opening of Pride and Prejudice takes 2.14 tokens per word; 'lighthouse' is cut into li, gh, thou, se, the same at 400 and at 878 merges.",
+        "The attention model is word-level with 46 entries: 44 words and two marks ('.' and '?')."
+      ],
+      "n": "47,002 corpus pre-tokens (9,334 of them punctuation); 716 and 281 English pre-tokens (599 and 233 words split on spaces); 10 random-merge seeds.",
+      "interval": "Range over 10 random seeds, stated.",
+      "does_not_prove": "Anything about large tokenizers; small texts chosen to show the mechanism."
+    },
+    "sennrich2016": {
+      "short": "Sennrich, Haddow and Birch 2016, Neural Machine Translation of Rare Words with Subword Units",
+      "citation": "Sennrich, R., Haddow, B., Birch, A. (2016). Neural Machine Translation of Rare Words with Subword Units. ACL 2016. arXiv:1508.07909.",
+      "url": "https://arxiv.org/abs/1508.07909",
+      "read": "full text, arXiv v5: sections 1 and 3.2, Algorithm 1, Figure 1 (on arXiv August 2015; ACL 2016). The prose writes the end-of-word symbol as a middle dot; Algorithm 1 uses </w>.",
+      "claims": [
+        "Byte-pair encoding for word segmentation: start from characters with an end-of-word symbol, repeatedly merge the most frequent adjacent pair of symbols within words, and add the merged symbol to the vocabulary (section 3.2, Algorithm 1).",
+        "Rare and unseen words are represented as sequences of subword units, which lets a translation model handle them."
+      ],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "does_not_prove": "That BPE is the best segmentation for every language or task."
+    },
+    "gage1994": {
+      "short": "Gage 1994, A New Algorithm for Data Compression",
+      "citation": "Gage, P. (1994). A New Algorithm for Data Compression. The C Users Journal 12(2), 23-38.",
+      "url": "https://www.derczynski.com/papers/archive/BPE_Gage.pdf",
+      "read": "a reconstructed copy (abstract and section 1), DOI 10.5555/177910.177914; the volume, issue and pages are not confirmed by that copy",
+      "claims": [
+        "Byte pair encoding began as compression: replace the most frequent adjacent pair of bytes with a byte that does not occur in the data, and repeat."
+      ],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "does_not_prove": "Anything about language models."
+    },
+    "melville1851": {
+      "short": "Melville 1851, Moby-Dick",
+      "citation": "Melville, H. (1851). Moby-Dick; or, The Whale. Chapter 1, paragraphs 1 to 5. Project Gutenberg eBook #2701.",
+      "url": "https://www.gutenberg.org/ebooks/2701",
+      "read": "full (the passage used)",
+      "claims": [
+        "Public-domain English text used as training text for the English BPE."
+      ],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "does_not_prove": "Nothing; it is sample text."
+    },
+    "austen1813": {
+      "short": "Austen 1813, Pride and Prejudice",
+      "citation": "Austen, J. (1813). Pride and Prejudice. Chapter 1, paragraphs 1 to 10. Project Gutenberg eBook #1342.",
+      "url": "https://www.gutenberg.org/ebooks/1342",
+      "read": "full (the passage used)",
+      "claims": [
+        "Public-domain English text used as held-out text."
+      ],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "does_not_prove": "Nothing; it is sample text."
+    },
+    "radford2019": {
+      "short": "Radford and others 2019, Language Models are Unsupervised Multitask Learners (GPT-2)",
+      "citation": "Radford, A., Wu, J., Child, R., Luan, D., Amodei, D., Sutskever, I. (2019). Language Models are Unsupervised Multitask Learners. OpenAI.",
+      "url": "https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf",
+      "read": "full text, sections 2.2 and 2.3 (confirmed by the fact-check)",
+      "claims": [
+        "GPT-2 applies BPE to bytes rather than Unicode code points: a base vocabulary of 256 instead of over 130,000, so any string can be encoded (section 2.2).",
+        "Its vocabulary has 50,257 entries (section 2.3)."
+      ],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "does_not_prove": "That byte-level BPE is better on every measure; ours compresses slightly worse than character-level BPE on the held-out page."
+    },
+    "ours-bytes": {
+      "short": "UTF-8 byte counts and byte-level BPE, computed for this film",
+      "citation": "media/school/tokens/facts.json (bytes section): TextEncoder byte counts; character-level and byte-level BPE with 878 merges on Moby-Dick, measured on Pride and Prejudice.",
+      "url": "https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/tokens",
+      "read": "full",
+      "claims": [
+        "UTF-8: a is 1 byte, a precomposed accented e (U+00E9) 2 (an e with a combining accent is 3), a curly apostrophe 3, the seal emoji 4.",
+        "On the held-out page, character-level BPE leaves 16 unknown tokens (7 open and 7 close curly quotes, one D and one E never seen in training); byte-level BPE leaves 0."
+      ],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "does_not_prove": "That bytes are the right base for every language model."
+    }
+  },
+  "factcheck": "media/school/tokens/FACTCHECK.md (independent sub-agent, 2026-10-15); every rewording applied"
+}

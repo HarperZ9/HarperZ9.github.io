@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-17",
+  "note": "Night School S20, the MMBU Challenge case study, joins the site (sitemap, route registry, site index, its own link card); the school page and the coast map link it. The home bundle is rebuilt from the registry as index-mxSUkjU6.js, and index-T9NjSt7K.js stays as retained history.",
+  "paths": {
+    "assets/index-mxSUkjU6.js": "38585dbf3e50d5c76ad9e28e06a0c6417becc5492bf788fcfff8357bfb8f7062",
+    "index.html": "8028f5482b400a9dea9474c2c6be7a9b067222d6e0df36649c1e86782542f16b",
+    "publications/build.json": "767e6d4727be2d9ebd1f948f56e2046ea087e37bde12d23b2e7a2185d3654c62",
+    "site-index.html": "9258d775cb6f003edcbbc8a02893b29dd0a50f32143247c93ecf2aa694ba3780",
+    "sitemap.xml": "33e36b67ffc425b2b65193363df572c23bf326ec75fa5f99183fbdbe98d82e31",
+    "system/routes.js": "12a97a366aef294132b1803e31d55378226ceb95a464cd01c4edc4fc65dd31ec"
+  }
+}

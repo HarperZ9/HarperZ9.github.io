@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-16",
+  "note": "Lessons S18 Quantisation and K22 Matmul tiling join the sitemap (each with its own link card), the route registry and the site index; the publication build receipt records the new sitemap. The home bundle is rebuilt from the registry as index-bJe3vRuh.js, and index-Bm2nPm2b.js stays as retained history.",
+  "paths": {
+    "assets/index-bJe3vRuh.js": "206f0d99de807287b9cce46ca1df1d2e0f757cac16ed0ada51c21c8a08901116",
+    "index.html": "5d40b7dce8401ec485be7a3c6520129fbd6a383929d352350baa451e90ea7ed9",
+    "publications/build.json": "6ecbe2d217d208d71a50458a7071745d77cb0a11568feaaaba0678d418c4c144",
+    "site-index.html": "f2bdf1ffd567b76b6ff1398b351401b2484c6cebe3b8cac15c342e7fbc87de66",
+    "sitemap.xml": "4c3de55f990ae0afa6d8a3297c9b4cbfe16b901be7517db9a19a8218a509d4b8",
+    "system/routes.js": "83d0cf7f0c788462d804bfa31b41068b39dcabdcc90f609b1aaf23d29fc38021"
+  }
+}

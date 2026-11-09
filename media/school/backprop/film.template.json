@@ -1,0 +1,104 @@
+{
+  "schema": "explainer-film/1",
+  "slug": "backprop",
+  "title": "Backpropagation: blame, passed backwards",
+  "page": "night-school-backprop.html",
+  "seed": 20261019,
+  "voice": "pylon",
+  "draft": true,
+  "numbers_from": "media/school/backprop/facts.json, computed by tools/school/fill_backprop.mjs (a small network on two spirals, and the attention lesson's trained model); tools/school/fill_script.mjs fills every double-brace token below from it",
+  "host": {
+    "guide": "pylon",
+    "style": "painted",
+    "open": { "seconds": 4.0, "what": "A line of buckets on posts down the hillside at night. Pylon tips water into the top one; it runs down from bucket to bucket and spills at the bottom. No words." },
+    "close": { "seconds": 5.0, "what": "The buckets hang still. Pylon walks back up the line touching each one, then sets a cone on the top post and goes home." }
+  },
+  "segments": [
+    {
+      "key": "title",
+      "layout": "title",
+      "heading": "Backpropagation",
+      "lines": [
+        "Backpropagation. Blame, passed backwards.",
+        "Last time I could feel the slope for two numbers. A model has thousands. Tonight, how it gets all their slopes in one go."
+      ]
+    },
+    {
+      "key": "network",
+      "heading": "A chain of buckets",
+      "sources": ["ours-net"],
+      "lines": [
+        "Here is a small network. It looks at a point on a map and says which of two spirals the point belongs to.",
+        "It has {{net.nParams|int}} numbers. Two go in at the top, pass through two layers of {{net.sizes.1}} buckets each, and come out as two guesses at the bottom.",
+        "Every bucket in the middle takes what the buckets above hand it, weighs it, adds it up, and squashes the total through a smooth curve. The last two turn their totals into two guesses that add up to one. That's the forward pass."
+      ]
+    },
+    {
+      "key": "nudge",
+      "heading": "Feeling every slope by hand",
+      "sources": ["ours-net"],
+      "lines": [
+        "At the bottom we measure how wrong it was: the loss. Now we want each of the {{net.nParams|int}} slopes.",
+        "The slow way: nudge one number, run the whole chain again, see how the loss moved. That's one extra run for every number. For the model from the attention lesson, that's {{gradients:gradientNorm.nParams|int}} runs, for every single step of training."
+      ]
+    },
+    {
+      "key": "back",
+      "heading": "Pass the blame back",
+      "sources": ["linnainmaa1970", "rumelhart1986"],
+      "lines": [
+        "The fast way runs the chain once, then walks it backwards.",
+        "Each bucket at the bottom knows how much the loss changes when its own output changes. It hands that blame up to each bucket that fed it, multiplied by how much its own output moved when that input moved. A bucket that fed several adds up the blame from all of them, then does the same, all the way to the top.",
+        "That's the chain rule from school, done in reverse order. Seppo Linnainmaa worked out this reverse order in 1970, and in 1986 Rumelhart, Hinton and Williams showed what it could do for training networks."
+      ],
+      "predict": [
+        { "after": [0, 0], "question": "How many backward walks does it take to get all the slopes?", "hold": 2.5 }
+      ]
+    },
+    {
+      "key": "cost",
+      "heading": "One walk back",
+      "sources": ["griewank2008", "ours-net"],
+      "lines": [
+        "One. A single walk back hands every number its slope.",
+        "Counting multiply-adds for one point, and leaving the curves aside: the forward pass takes {{cost.forward}}, the backward pass {{cost.backward}}, about {{cost.ratio|f2}} times as many. Not {{net.nParams|int}} extra runs. About two runs' worth."
+      ]
+    },
+    {
+      "key": "check",
+      "heading": "Checking the chain",
+      "sources": ["ours-net"],
+      "lines": [
+        "A walk back like this is easy to get slightly wrong, so we check it the slow way. Nudge every number, compare.",
+        "After training, they agree layer by layer to about one part in a billion, and the worst single number is off by about three parts in a hundred million.",
+        "Now I break one link on purpose: in the second layer, the curve's slope is written wrong. The check fails in that layer and every layer above it, and still passes in the last layer, below the break. The check doesn't just say something is wrong. It points to where."
+      ]
+    },
+    {
+      "key": "learn",
+      "heading": "Downhill, every number at once",
+      "sources": ["ours-net"],
+      "lines": [
+        "Now put it together with last time: walk forward, walk back, step every number a little downhill, repeat.",
+        "On points it never trained on, the network starts out right {{training.curve.0.heldAccuracy|pct}} percent of the time. It is past {{training.target|pct}} percent by step {{training.firstStepAtTarget|int}}, and after {{training.steps|int}} steps it gets {{training.finalHeldAccuracy|pct1}} percent right."
+      ]
+    },
+    {
+      "key": "big",
+      "heading": "The same walk, inside the language model",
+      "sources": ["ours-model"],
+      "lines": [
+        "The model from the attention lesson walks forward and back the same way, with a backward pass written out by hand for every part: the attention, the layer norms, the bends. It steps downhill a little more cleverly, and that's next time.",
+        "We checked it the slow way too, on {{attention.entries}} of its numbers. In full precision the worst disagreement is a few parts in ten million."
+      ]
+    },
+    {
+      "key": "close",
+      "heading": "Goodnight",
+      "lines": [
+        "Run forward once, pass the blame back once, and every number knows its slope.",
+        "Next along the hill: better ways to step than straight downhill. Goodnight."
+      ]
+    }
+  ]
+}

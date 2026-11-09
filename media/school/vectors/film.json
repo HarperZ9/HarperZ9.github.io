@@ -1,0 +1,122 @@
+{
+  "schema": "explainer-film/1",
+  "slug": "vectors",
+  "title": "Vectors: a list of numbers is a place",
+  "page": "night-school-vectors.html",
+  "seed": 20261016,
+  "voice": "pylon",
+  "draft": true,
+  "numbers_from": "media/school/vectors/facts.json, computed from the attention film's model.json by tools/school/fill_vectors.mjs; tools/school/fill_script.mjs fills every double-brace token below from it",
+  "host": {
+    "guide": "pylon",
+    "style": "painted",
+    "open": { "seconds": 4.0, "what": "Pylon's desk at night. She inks an address on a crate's label, stamps it, and slides a chart out from under the lamp. No words." },
+    "close": { "seconds": 5.0, "what": "Back at the desk. Pylon sets her cone on the word cone on the chart, among the verbs, and turns the lamp down." }
+  },
+  "segments": [
+    {
+      "key": "title",
+      "layout": "title",
+      "heading": "Vectors",
+      "lines": [
+        "Vectors. A list of numbers is a place.",
+        "I run the dock at Night School. Every crate that comes in gets an address on my chart."
+      ]
+    },
+    {
+      "key": "place",
+      "heading": "Two numbers make a place",
+      "sources": ["strang2016"],
+      "lines": [
+        "Here is a crate. It sits four squares east of the corner and one and a half squares north.",
+        "Write that down as a list: four, then one and a half. That list is a vector.",
+        "You can read it as a place, or as an arrow from the corner to the crate. Same list, same thing."
+      ]
+    },
+    {
+      "key": "arrows",
+      "heading": "Arrows add and stretch",
+      "sources": ["strang2016"],
+      "lines": [
+        "Arrows add. Walk the first one, then walk the second from where you stopped. Where you end up is the sum, and its numbers are the two lists added place by place.",
+        "Arrows stretch. Times two keeps the direction and doubles the length. Times minus one turns it round to face the other way."
+      ]
+    },
+    {
+      "key": "dot",
+      "heading": "The dot product",
+      "sources": ["strang2016"],
+      "lines": [
+        "Now two crates, and a game. Multiply their lists number by number, and add it all up.",
+        "I'll swing the second crate round the corner while the sum keeps count.",
+        "Right there. At a right angle, the sum is zero. That sum is called the dot product. It is big when two arrows point the same way, zero when they meet at a right angle, and below zero when they point apart."
+      ],
+      "predict": [
+        { "after": [1, 0], "question": "As the second crate swings round, where will the sum hit zero?", "hold": 2.5 }
+      ]
+    },
+    {
+      "key": "cosine",
+      "heading": "Length, and the cosine",
+      "sources": ["strang2016"],
+      "lines": [
+        "The dot product has a catch. Watch what happens if I push the second crate twice as far out, in the same direction.",
+        "It doubles. Nothing about the direction changed, but the score did.",
+        "So divide by the two lengths. What is left depends only on the angle. It is the cosine of the angle between the arrows: one when they point the same way, zero at a right angle, minus one when they point opposite. It always stays between minus one and one."
+      ],
+      "predict": [
+        { "after": [0, 1], "question": "What happens to the dot product?", "hold": 2.5 }
+      ]
+    },
+    {
+      "key": "many",
+      "heading": "Thirty-two directions",
+      "sources": ["strang2016", "ours-model"],
+      "lines": [
+        "My chart has two directions, east and north. A list can be as long as you like.",
+        "In the little language model from the attention lesson, every word starts as a list of 32 numbers. That makes each word a place in a space with 32 directions.",
+        "Nobody can picture 32 directions. The arithmetic doesn't care. The dot product is still multiply and add, now 32 times over, and the cosine is still a cosine."
+      ]
+    },
+    {
+      "key": "words",
+      "heading": "Where the words live",
+      "sources": ["ours-model", "mikolov2013"],
+      "lines": [
+        "Nobody set those numbers by hand. Training moved them, a little at a time, until the model got better at guessing the next word.",
+        "So look at who ended up close to whom. The nearest neighbours of kettle are map, shell and crate. Tallow's are rerun, pylon and map.",
+        "Across all 46 words, 80 percent have a nearest neighbour of the same kind as themselves: names next to names, things next to things, doing words next to doing words. Shuffle which word owns which list, and it drops to about 23 percent. Before training it was 9 percent.",
+        "Trained on hundreds of millions of words, the same idea goes much further. In 2013, researchers reported word lists where king, minus man, plus woman, landed closest to queen, once the three words in the question were left out of the search."
+      ]
+    },
+    {
+      "key": "cone",
+      "heading": "My cone",
+      "sources": ["ours-model"],
+      "lines": [
+        "And then there's my cone.",
+        "A cone is cargo. It should sit with the crates. Its nearest neighbours are who, stood and mended.",
+        "In our sentences a cone only ever turns up in one phrase: put a cone on. Nothing there marks it as cargo, so the model had no reason to park it with the crates. Where it did park it is something we measured. Why there, we can only guess.",
+        "Closeness in these lists comes from how words are used in the training sentences, not from what they mean. Here, with 46 words, you can read every sentence the model learned from."
+      ]
+    },
+    {
+      "key": "flat",
+      "heading": "A flat picture of a big space",
+      "sources": ["jolliffe2016", "ours-model"],
+      "lines": [
+        "One warning about pictures, this lesson's included.",
+        "To lay the words out on my flat chart, I squash 32 directions down to the two that keep the most spread. Those two keep 31 percent of it.",
+        "On the flat chart, only 52 percent of the words sit nearest to a word of the same kind. In all 32 directions it was 80. Flattening throws a lot of closeness away."
+      ]
+    },
+    {
+      "key": "close",
+      "heading": "Goodnight",
+      "lines": [
+        "A list of numbers is a place. The dot product mixes how much two places point the same way with how far out they are, and the cosine keeps only the direction.",
+        "Next along the coast is my crane. It moves every place on the chart at once, and that is a matrix. Goodnight."
+      ]
+    }
+  ]
+}

@@ -15,7 +15,7 @@ const walk = dir => fs.readdirSync(dir, { withFileTypes: true }).flatMap(e =>
   path.join(dir, e.name) === path.join(ROOT, "tools", "repo_explainers") ||
   e.name.startsWith(".") || e.name === "node_modules" || (e.name === "home" && dir === ROOT.replace(/[\\/]$/, "")) || path.join(dir, e.name) === path.join(ROOT, "home") ? []
   : e.isDirectory() ? walk(path.join(dir, e.name))
-  : e.name.endsWith(".html") ? [path.relative(ROOT, path.join(dir, e.name)).replaceAll(path.sep, "/")]
+  : e.name.endsWith(".html") || e.name.endsWith(".htm") ? [path.relative(ROOT, path.join(dir, e.name)).replaceAll(path.sep, "/")]
   : []);
 const PAGES = walk(ROOT).sort();
 const seen = new Map(); let bad = 0, checked = 0;

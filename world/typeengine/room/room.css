@@ -1,0 +1,44 @@
+/* room/room.css: the type room. Built on the shell (shell.css tokens and components); nothing here sets a family
+   by name. The stage is a live canvas with the real word as an input laid exactly over it. */
+.visually-hidden{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.type-room{padding-top:clamp(24px,4vw,56px)}
+.type-room .room-in{grid-template-columns:repeat(12,minmax(0,1fr));row-gap:clamp(20px,3vw,36px)}
+.stage{grid-column:1 / -1;position:relative;aspect-ratio:3 / 1;background:var(--wall-2)}
+.stage canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.word{position:absolute;inset:0;display:block}
+.word input{position:absolute;left:0;top:0;width:100%;height:100%;line-height:1;font-size:12vw;border:0;margin:0;padding:0;background:transparent;text-align:center;
+  font-family:var(--face-display);font-weight:700;color:transparent;caret-color:var(--ink);outline:none;letter-spacing:0;
+  font-kerning:normal;font-synthesis:none}
+.word input::selection{background:color-mix(in srgb,var(--ink) 22%,transparent);color:transparent}
+.stage:focus-within{box-shadow:inset 0 -3px 0 var(--ink)}
+.plain .word input{color:var(--ink)}
+.refusal{position:absolute;left:12px;bottom:8px;margin:0;font:400 13px/1.3 var(--face-utility, var(--mono));color:var(--soft)}
+.stage.refused canvas{filter:grayscale(1) opacity(.45)}
+
+.type-room h1{line-height:1.1}
+#families{min-height:200px}#materials{min-height:80px}#axes{min-height:120px}
+.proof{aspect-ratio:10 / 1}
+.shelf{grid-column:1 / -1;display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end}
+.shelf button{position:relative;padding:0;border:0;background:none;cursor:pointer;line-height:0;min-height:44px}
+.shelf button canvas{display:block;height:56px;width:auto}
+.shelf.swatches button canvas{height:64px;width:64px;clip-path:polygon(4% 9%,93% 2%,99% 88%,8% 97%)}
+.shelf button[aria-pressed="true"]::after{content:"";position:absolute;left:8%;right:8%;bottom:-7px;height:3px;background:var(--ink);
+  clip-path:polygon(0 30%,100% 0,97% 100%,3% 70%)}
+.shelf button[data-layer="true"]::after{content:"";position:absolute;left:30%;right:30%;bottom:-7px;height:3px;background:var(--ink);opacity:.55}
+.shelf button:focus-visible{outline:3px solid var(--ink);outline-offset:4px}
+
+.axes{grid-column:1 / span 8;display:grid;gap:14px}
+.axes input[type=range]{appearance:none;-webkit-appearance:none;width:100%;height:44px;margin:0;background:var(--strip) center / 100% 100% no-repeat;cursor:ew-resize}
+.axes input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:6px;height:44px;background:var(--ink);clip-path:polygon(20% 0,100% 6%,80% 100%,0 94%)}
+.axes input[type=range]::-moz-range-thumb{width:6px;height:44px;background:var(--ink);border:0;border-radius:0}
+.axes input[type=range]:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+.proof{grid-column:1 / -1}
+.proof canvas{width:100%;height:auto;display:block}
+.exports{grid-column:1 / -1;display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.exports .open{display:inline-flex;align-items:center}
+.exports .open:focus-within{outline:3px solid var(--ink);outline-offset:4px}
+#listen canvas{width:40px;height:40px;border-radius:50%}
+.sound-on #listen canvas{animation:spin 1.8s linear infinite}
+@media (max-width:700px){.stage{aspect-ratio:2 / 1}.axes{grid-column:1 / -1}.shelf.swatches button canvas{height:52px;width:52px}}
+@media (prefers-reduced-motion:reduce){.sound-on #listen canvas{animation:none}}
+@media (forced-colors:active){.shelf button[aria-pressed="true"]::after{background:Highlight}.word input{color:CanvasText}}

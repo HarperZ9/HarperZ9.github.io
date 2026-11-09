@@ -1,0 +1,58 @@
+{
+ "family": "Ledger 1",
+ "ground": "#ebe5d8",
+ "axes": [
+  "wght",
+  "CNTR"
+ ],
+ "classes": {
+  "bindings": {
+   "fill": {
+    "material": "ridgeline",
+    "kind": "outline",
+    "how": "glyph AND traces lifted by the envelope (the font holds the envelope it was minted with)",
+    "live": []
+   },
+   "shadow": {
+    "material": "ledger",
+    "kind": "colr",
+    "how": "glyph AND one bar per pitch, height from the series (the font holds the series it was minted with)",
+    "live": []
+   },
+   "sound": {
+    "material": "voice",
+    "kind": "live",
+    "how": "audio rides in the web bundle; a font has no sound table",
+    "live": [
+     "all"
+    ]
+   }
+  },
+  "axes": [
+   {
+    "tag": "wght",
+    "target": "skeleton.weight",
+    "kind": "variable"
+   },
+   {
+    "tag": "CNTR",
+    "target": "skeleton.extra.C",
+    "kind": "variable"
+   }
+  ]
+ },
+ "field_glyphs": 290,
+ "colr_glyphs": 522,
+ "files": {
+  "variable": {
+   "ttf": 240248,
+   "woff2": 88360,
+   "name": "Ledger1[CNTR,wght]"
+  },
+  "cut": {
+   "ttf": 821300,
+   "woff2": 296048,
+   "name": "Ledger1-Cut"
+  }
+ }
+}

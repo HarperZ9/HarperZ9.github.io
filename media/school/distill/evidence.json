@@ -1,0 +1,34 @@
+{
+ "schema": "explainer-evidence/1",
+ "explainer": "distill",
+ "read": "2026-10-15",
+ "sources": {
+  "ours-distill": {
+   "short": "Night School's distillation runs, trained for this film",
+   "citation": "media/school/distill/facts.json, written by tools/school/fill_distill.mjs from system/school/distill.mjs: the attention lesson's model as teacher; a one-floor student of 4,112 numbers trained 2,000 steps on hard labels, the teacher's soft targets at temperatures 1, 2, 4, 8, a half-and-half mix, the teacher's top word, the generator's exact odds, and an untrained teacher; fresh text and fixed pools of 32 and 256 rows; 3 seeds per arm; paired differences called resolved only when every seed agrees in sign and the mean is over two standard errors.",
+   "url": "https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/distill",
+   "read": "full",
+   "claims": [
+    "Full data: hard 0.7213, soft T1 0.7019, T2 0.7355, T4 0.7229 (none resolved against hard), T8 0.7612 (worse, resolved).",
+    "32-row pool: hard 4.801 at the end (best 1.720), soft T2 1.637 (resolved better); 256-row pool: hard 1.276, soft T2 0.727.",
+    "Top word as certain: held-out 3.843, copy accuracy 0.947; untrained teacher 3.839; word counts 3.273."
+   ],
+   "n": "3 seeds per arm; 256 held-out rows (6,144 targets).",
+   "interval": "Per-seed values, sd, and paired differences in facts.json.",
+   "does_not_prove": "Anything about large models; the teacher learned from far more text than the pools, so the low-data result is transfer through the teacher, not learning from 32 rows."
+  },
+  "hinton2015": {
+   "short": "Hinton, Vinyals and Dean 2015, Distilling the Knowledge in a Neural Network",
+   "citation": "Hinton, G., Vinyals, O., Dean, J. (2015). Distilling the Knowledge in a Neural Network. arXiv:1503.02531 (NIPS 2014 Deep Learning Workshop).",
+   "url": "https://arxiv.org/abs/1503.02531",
+   "read": "to be read by the fact-check",
+   "claims": [
+    "Train a small model on the soft targets of a large one, raising the temperature of the final softmax; the soft-target loss is scaled by T squared to keep gradient magnitudes comparable.",
+    "Soft targets let a model trained on very little data (3 percent of the speech training set) keep much of the full model's accuracy."
+   ],
+   "n": "Not applicable.",
+   "interval": "Not applicable.",
+   "does_not_prove": "Anything about this model."
+  }
+ }
+}

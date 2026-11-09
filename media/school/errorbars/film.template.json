@@ -1,0 +1,134 @@
+{
+ "schema": "explainer-film/1",
+ "slug": "errorbars",
+ "title": "Error bars: how sure is the number",
+ "page": "night-school-errorbars.html",
+ "seed": 20261033,
+ "voice": "rerun",
+ "draft": true,
+ "numbers_from": "media/school/errorbars/facts.json, computed by tools/school/fill_errorbars.mjs; tools/school/fill_script.mjs fills every double-brace token below from it",
+ "host": {
+  "guide": "rerun",
+  "style": "thriller",
+  "open": {
+   "seconds": 4.0,
+   "what": "The tide line at night. Rerun sits under the prism on the wet sand, a bucket of shells beside him. He picks one up, looks at it through the prism, and puts it back. No words."
+  },
+  "close": {
+   "seconds": 5.0,
+   "what": "Rerun tips the shells back into the bucket. The band of light under the prism fades to a thin line. He knocks twice on the prism and walks into the dark."
+  }
+ },
+ "segments": [
+  {
+   "key": "title",
+   "layout": "title",
+   "heading": "Error bars",
+   "lines": [
+    "Error bars. How sure is the number.",
+    "Every lesson so far has quoted numbers, a loss here, a share of right answers there. Each came from one set of test rows. Tonight Rerun asks how much those numbers would move if the rows had been different."
+   ]
+  },
+  {
+   "key": "one",
+   "heading": "One number",
+   "sources": [
+    "ours-errorbars"
+   ],
+   "lines": [
+    "Score the attention model on {{items.rows|int}} held-out rows: a loss of {{items.loss|f4}} and {{items.accuracy|pct}} percent of next words right.",
+    "Those rows were drawn at random. Another draw of the same size would give a slightly different loss. The question is how different."
+   ]
+  },
+  {
+   "key": "bootstrap",
+   "heading": "Drawing again from what you have",
+   "sources": [
+    "ours-errorbars",
+    "efron1979"
+   ],
+   "lines": [
+    "Bradley Efron's answer, in 1979, was the bootstrap. You cannot draw more rows from the world, so draw from the rows you have: pick as many as you have, at random, allowing repeats, and score that pile. Do it thousands of times.",
+    "The scores spread out. We take the middle 95 percent of them as the interval.",
+    "With 64 rows the loss is {{widths.at.64.loss.score|f4}}, and the interval runs from {{widths.at.64.loss.rowPct.lo|f4}} to {{widths.at.64.loss.rowPct.hi|f4}}."
+   ],
+   "predict": [
+    {
+     "after": [
+      2,
+      0
+     ],
+     "question": "Four times as many rows. How much narrower does the interval get?",
+     "hold": 2.5
+    }
+   ]
+  },
+  {
+   "key": "shrink",
+   "heading": "More rows, narrower bars",
+   "sources": [
+    "ours-errorbars"
+   ],
+   "lines": [
+    "Its width is {{widths.at.16.loss.rowPct.width|f4}} with 16 rows, {{widths.at.64.loss.rowPct.width|f4}} with 64, {{widths.at.256.loss.rowPct.width|f4}} with 256 and {{widths.at.1024.loss.rowPct.width|f4}} with 1,024.",
+    "From 16 to 64 rows it narrows by a third; after that, by nearly half each time. Averaged over a thousand fresh draws, {{coverage.runs.rows16.rowPct.meanWidth|f4}}, {{coverage.runs.rows64.rowPct.meanWidth|f4}} and {{coverage.runs.rows256.rowPct.meanWidth|f4}}, each fourfold step halves it, as the square root of the number of rows says it should. Four times the rows buys an interval half as wide."
+   ]
+  },
+  {
+   "key": "truth",
+   "heading": "Does it work?",
+   "sources": [
+    "ours-errorbars"
+   ],
+   "lines": [
+    "An interval is only worth something if it catches the truth as often as it claims. Usually nobody knows the truth. Here we do: the rules that write the guides' sentences give an exact average loss for their own guesses, {{coverage.truth|f4}}.",
+    "So draw {{coverage.runs.rows64.trials|int}} fresh sets of 64 rows from the rules, score the rules' own guesses on each, build an interval, and count how many contain {{coverage.truth|f4}}. The answer: {{coverage.runs.rows64.rowPct.coverage|pct1}} percent. With 256 rows, {{coverage.runs.rows256.rowPct.coverage|pct1}}. Close to the 95 promised, a little short when rows are few."
+   ]
+  },
+  {
+   "key": "unit",
+   "heading": "What to draw again",
+   "sources": [
+    "ours-errorbars",
+    "miller2024"
+   ],
+   "lines": [
+    "One choice matters more than it looks: what counts as one draw. Evan Miller's 2024 paper on error bars for evaluations warns that questions which come in clusters must be counted as clusters when the error is worked out, or the interval comes out too narrow.",
+    "Our rows are clusters too, but of a kind that steadies the score. Each holds one word at every position, so a row is a balanced sample of easy and hard places. Resampling single words instead gives intervals that are too wide here: they caught the truth {{coverage.runs.rows64.wordPct.coverage|pct}} percent of the time.",
+    "Now make real clusters: {{coverage.runs.rows16x4.trials|int}} test sets of 16 rows, each row copied four times. Treated as 64 separate rows, the interval catches the truth only {{coverage.runs.rows16x4.rowPct.coverage|pct1}} percent of the time. Resampling the 16 distinct rows brings it back to {{coverage.runs.rows16x4.clusterPct.coverage|pct1}}."
+   ]
+  },
+  {
+   "key": "paired",
+   "heading": "Two models, same rows",
+   "sources": [
+    "ours-errorbars"
+   ],
+   "lines": [
+    "In the distillation lesson, one student learned from the text and one from the teacher's odds. Score both on the same {{paired.at1024.n|int}} rows. The student taught by the text has the lower loss, by {{paired.at1024.diff|abs4}}.",
+    "Resample the rows once for both models, keeping each row's two scores together, and the interval for the difference runs from {{paired.at1024.pairedPct.lo|f4}} to {{paired.at1024.pairedPct.hi|f4}}: it leaves out zero. Resample each model on its own and the interval is {{paired.at1024.widthRatio|f2}} times as wide, and it contains zero.",
+    "Keeping the pairs cancels the rows that are hard for both. Shuffle the pairing and the advantage disappears."
+   ]
+  },
+  {
+   "key": "seeds",
+   "heading": "The spread the rows cannot see",
+   "sources": [
+    "ours-errorbars"
+   ],
+   "lines": [
+    "But that difference came from one training run of each student. Train each with five seeds, the run we just scored and four more, and score them all on the same rows.",
+    "For one student, the spread of loss across seeds is about {{seeds.hard.sdOverRowSE|int}} times the spread the bootstrap found from rows; for the other, about {{seeds.soft1.sdOverRowSE|int}}. Some runs never learned to look back, and those runs make most of it. Seed by seed, the difference between the two students was {{seeds.difference.values.0|f4}}, {{seeds.difference.values.1|f4}}, {{seeds.difference.values.2|f4}}, {{seeds.difference.values.3|f4}} and {{seeds.difference.values.4|f4}}.",
+    "The first seed's interval was honest about its rows. It said nothing about the next seed."
+   ]
+  },
+  {
+   "key": "close",
+   "heading": "Goodnight",
+   "lines": [
+    "A number without its spread is half a number. Ask what was drawn at random, the rows, the seeds or both, and draw again from that. Everything tonight came from one small model and a handful of runs; the method carries over, the numbers do not.",
+    "Next under the prism: what happens when training pushes a model toward the measure instead of the goal. Goodnight."
+   ]
+  }
+ ]
+}

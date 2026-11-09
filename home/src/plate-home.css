@@ -218,3 +218,25 @@ html[data-home-shell] .footer-links a{color:var(--ink)}
 @media (forced-colors:active){
   html[data-home-shell] .btn.solid,html[data-home-shell] .btn.solid:hover{background:ButtonFace;color:ButtonText;border-color:ButtonText}
 }
+
+/* Flagship tools: one lead benefit, one real visual and an install line per tool. */
+html[data-home-shell] .flagship-list{display:grid;gap:clamp(2.5rem,6vw,4.5rem);margin-top:2rem}
+html[data-home-shell] .flagship{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(1.25rem,4vw,3rem);align-items:start;padding-top:clamp(1.5rem,4vw,2.5rem);border-top:1px solid var(--line)}
+html[data-home-shell] .flagship:nth-child(2n) .flagship-copy{order:2}
+html[data-home-shell] .flagship-name{margin:0 0 .4rem;font-weight:600;color:var(--muted)}
+html[data-home-shell] .flagship h3{margin:0 0 .9rem;font-size:clamp(1.6rem,3.2vw,2.35rem);line-height:1.1;letter-spacing:-.01em;color:var(--ink)}
+html[data-home-shell] .flagship-copy p{max-width:36rem;color:var(--soft);line-height:1.6}
+html[data-home-shell] .flagship-proof a{color:var(--ink);text-underline-offset:.2em}
+html[data-home-shell] .flagship-install code{display:inline-block;padding:.45rem .7rem;border:1px solid var(--line-strong);color:var(--ink);font-family:var(--font-mono);font-size:.92rem;overflow-wrap:anywhere}
+html[data-home-shell] .flagship-links{display:flex;flex-wrap:wrap;gap:.6rem 1.2rem;align-items:center;margin-top:1.2rem}
+html[data-home-shell] .flagship-visual{margin:0;min-width:0}
+html[data-home-shell] .flagship-visual figcaption{margin-top:.6rem;font-size:.88rem;line-height:1.5;color:var(--muted)}
+html[data-home-shell] .flagship-image img{display:block;width:100%;height:auto;border:1px solid var(--line-strong);background:var(--panel)}
+html[data-home-shell] .flagship-image-flywheel img{max-height:34rem;width:auto;max-width:100%;margin-inline:auto}
+html[data-home-shell] .flagship-image-raw-native img{max-width:24rem;margin-inline:auto}
+html[data-home-shell] .flagship-terminal{padding:1rem 1.1rem}
+html[data-home-shell] .flagship-terminal pre{margin:0;max-height:none;overflow:visible;white-space:pre-wrap;overflow-wrap:anywhere;font-family:var(--font-mono);font-size:.82rem;line-height:1.55;color:var(--sheet-ink)}
+html[data-home-shell] .flagship-terminal figcaption{color:var(--sheet-soft)}
+html[data-home-shell] .flagship-prompt{font-weight:700}
+@media (max-width:760px){html[data-home-shell] .flagship{grid-template-columns:1fr}html[data-home-shell] .flagship:nth-child(2n) .flagship-copy{order:0}}
+html[data-home-shell] .flagship-image-daylight-commons img{max-width:30rem;margin-inline:auto}

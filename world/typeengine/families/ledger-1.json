@@ -1,0 +1,229 @@
+{
+ "schema": "typeengine.family/1",
+ "id": "ledger-1",
+ "name": "Ledger 1",
+ "ground": "#ebe5d8",
+ "skeleton": {
+  "source": "accession",
+  "style": "display",
+  "weight": 768,
+  "cut": null,
+  "extra": {
+   "n": 3.425,
+   "wd": 1.087,
+   "C": 0.867
+  }
+ },
+ "bindings": {
+  "fill": {
+   "material": "ridgeline",
+   "params": {
+    "pitch": 74,
+    "amp": 104,
+    "weight": 18,
+    "color": "#15130f"
+   },
+   "feed": {
+    "data.series": "sound.pcm"
+   }
+  },
+  "shadow": {
+   "material": "ledger",
+   "params": {
+    "pitch": 39,
+    "gap": 0.246,
+    "floor": -30,
+    "ceil": 613,
+    "color": "#c8553a"
+   },
+   "feed": {
+    "data.series": "data.series"
+   }
+  },
+  "sound": {
+   "material": "voice",
+   "params": {
+    "fLow": 318,
+    "fHigh": 3892,
+    "colSec": 0.009
+   },
+   "from": "letter"
+  }
+ },
+ "regions": {
+  "shadow": {
+   "dx": 0.045,
+   "dy": 0.035
+  }
+ },
+ "inputs": {
+  "data.series": {
+   "values": [
+    1.35,
+    0.92,
+    7.67,
+    17.84,
+    17.28,
+    15.24,
+    15.63,
+    -10.94,
+    -6.16,
+    1.79,
+    0.44,
+    2.43,
+    0.9,
+    -1.93,
+    -1.15,
+    0,
+    -2.67,
+    -8.93,
+    -10.3,
+    -5.19,
+    3.48,
+    2.55,
+    1.03,
+    3.73,
+    -2.03,
+    -1.3,
+    0.72,
+    5.12,
+    10.92,
+    5.97,
+    1.64,
+    2.27,
+    8.48,
+    14.39,
+    7.69,
+    -0.97,
+    1.09,
+    7.86,
+    2.28,
+    0.82,
+    0.31,
+    -0.28,
+    1.53,
+    3.34,
+    2.73,
+    1.01,
+    1.46,
+    1.07,
+    1.2,
+    1.24,
+    1.28,
+    1.59,
+    3.02,
+    2.77,
+    4.27,
+    5.46,
+    5.84,
+    4.29,
+    3.27,
+    6.18,
+    11.05,
+    9.14,
+    5.74,
+    6.5,
+    7.63,
+    11.25,
+    13.55,
+    10.33,
+    6.13,
+    3.21,
+    4.3,
+    3.55,
+    1.9,
+    3.66,
+    4.08,
+    4.83,
+    5.4,
+    4.23,
+    3.03,
+    2.95,
+    2.61,
+    2.81,
+    2.93,
+    2.34,
+    1.55,
+    2.19,
+    3.38,
+    2.83,
+    1.59,
+    2.27,
+    2.68,
+    3.39,
+    3.23,
+    2.85,
+    3.84,
+    -0.36,
+    1.64,
+    3.16,
+    2.07,
+    1.46,
+    1.62,
+    0.12,
+    1.26,
+    2.13,
+    2.44,
+    1.81,
+    1.23,
+    4.7,
+    8,
+    4.12,
+    2.95
+   ],
+   "label": "US CPI inflation, % per year",
+   "unit": "%",
+   "source": "dataviz/data/cpi-annual.json"
+  },
+  "sound.pcm": {
+   "source": "phrase",
+   "seconds": 3.2
+  }
+ },
+ "axes": [
+  {
+   "tag": "wght",
+   "name": "Weight",
+   "min": 600,
+   "max": 900,
+   "default": 768,
+   "target": "skeleton.weight"
+  },
+  {
+   "tag": "CNTR",
+   "name": "Contrast",
+   "min": 0.6,
+   "max": 0.9,
+   "default": 0.867,
+   "target": "skeleton.extra.C"
+  }
+ ],
+ "recipe": {
+  "brief": "ledger",
+  "seed": 1,
+  "index": 0,
+  "seedRule": "xmur3-mulberry32/1",
+  "candidate": "ledger-0",
+  "scores": {
+   "total": 0.6959,
+   "legibility": {
+    "accuracy": 0.903,
+    "margin": 0.156,
+    "misses": [
+     "f>I",
+     "i>I",
+     "O>o"
+    ],
+    "pairs": {
+     "I/l": 0.768,
+     "O/0": 0.669,
+     "rn/m": 0.818,
+     "cl/d": 0.587
+    },
+    "proxy": "template correlation against Accession Display 700, 24 x 24; not OCR"
+   },
+   "contrast": 3.83,
+   "novelty": 0.633
+  }
+ }
+}

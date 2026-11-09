@@ -1,0 +1,99 @@
+{
+ "schema": "typeengine.family/1",
+ "id": "pane-2",
+ "name": "Pane 2",
+ "ground": "#2f2a1d",
+ "skeleton": {
+  "source": "accession",
+  "style": "super",
+  "weight": 777,
+  "cut": null,
+  "extra": {
+   "n": 3.038,
+   "wd": 1.014
+  }
+ },
+ "bindings": {
+  "fill": {
+   "material": "glass",
+   "params": {
+    "glass": "crown",
+    "spread": 2.812,
+    "bevel": 0.04,
+    "thickness": 0.2,
+    "gap": 11,
+    "caustic": 0.109,
+    "rules": 1,
+    "tint": "#cfcea6",
+    "paper": "#cfcea6",
+    "film": 1
+   },
+   "feed": {
+    "surface.albedo": {
+     "material": "crt",
+     "params": {
+      "content": "source",
+      "phosphor": "#deb250",
+      "lines": 287,
+      "bloom": 0.337,
+      "snow": 0.008,
+      "mask": 0.262
+     }
+    }
+   }
+  },
+  "shadow": {
+   "material": "offset",
+   "params": {
+    "color": "#a55f18",
+    "dx": 0.016,
+    "dy": 0.016
+   }
+  }
+ },
+ "axes": [
+  {
+   "tag": "wght",
+   "name": "Weight",
+   "min": 600,
+   "max": 900,
+   "default": 777,
+   "target": "skeleton.weight"
+  },
+  {
+   "tag": "SQUR",
+   "name": "Squareness",
+   "min": 2.4,
+   "max": 3.6,
+   "default": 3.038,
+   "target": "skeleton.extra.n"
+  }
+ ],
+ "recipe": {
+  "brief": "pane",
+  "seed": 1,
+  "index": 29,
+  "seedRule": "xmur3-mulberry32/1",
+  "candidate": "pane-29",
+  "scores": {
+   "total": 0.7851,
+   "legibility": {
+    "accuracy": 0.935,
+    "margin": 0.189,
+    "misses": [
+     "i>I",
+     "O>o"
+    ],
+    "pairs": {
+     "I/l": 0.757,
+     "O/0": 0.733,
+     "rn/m": 0.857,
+     "cl/d": 0.667
+    },
+    "proxy": "template correlation against Accession Display 700, 24 x 24; not OCR"
+   },
+   "contrast": 6.73,
+   "novelty": 0.735
+  }
+ }
+}

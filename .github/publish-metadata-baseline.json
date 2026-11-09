@@ -1,0 +1,520 @@
+{
+ "schema": "flywheel.publish-metadata-baseline/1",
+ "patterns": "generic only (check_publish_metadata GENERIC)",
+ "total": 346,
+ "files": {
+  ".superpowers/sdd/2026-08-28-site-design-upgrade/task-3-report.md": {
+   "local-path": 8
+  },
+  ".superpowers/sdd/task-8h-report.md": {
+   "local-path": 1
+  },
+  "accountable-engine.html": {
+   "personal-email": 1
+  },
+  "accountable-machines.html": {
+   "personal-email": 1
+  },
+  "assets/index-1ZvZUOFB.js": {
+   "personal-email": 1
+  },
+  "assets/index-1pL-pv-D.js": {
+   "personal-email": 1
+  },
+  "assets/index-4wTyKocM.js": {
+   "personal-email": 1
+  },
+  "assets/index-9egMTEOG.js": {
+   "personal-email": 1
+  },
+  "assets/index-Ah1hhjoZ.js": {
+   "personal-email": 1
+  },
+  "assets/index-B4VAhGeJ.js": {
+   "personal-email": 1
+  },
+  "assets/index-B5IIN--D.js": {
+   "personal-email": 1
+  },
+  "assets/index-BHRZupim.js": {
+   "personal-email": 1
+  },
+  "assets/index-BIA-0d5A.js": {
+   "personal-email": 1
+  },
+  "assets/index-BQ-flpWG.js": {
+   "personal-email": 1
+  },
+  "assets/index-BdFe8daW.js": {
+   "personal-email": 1
+  },
+  "assets/index-BexgIZUT.js": {
+   "personal-email": 1
+  },
+  "assets/index-Bg7UPow6.js": {
+   "personal-email": 1
+  },
+  "assets/index-BkvbD78Z.js": {
+   "personal-email": 1
+  },
+  "assets/index-Bm2nPm2b.js": {
+   "personal-email": 1
+  },
+  "assets/index-BniK76UM.js": {
+   "personal-email": 1
+  },
+  "assets/index-BxvqK2zV.js": {
+   "personal-email": 1
+  },
+  "assets/index-C3mo4X0I.js": {
+   "personal-email": 1
+  },
+  "assets/index-C7QqdyWX.js": {
+   "personal-email": 1
+  },
+  "assets/index-CHqKSAcx.js": {
+   "personal-email": 1
+  },
+  "assets/index-CLzTNvxy.js": {
+   "personal-email": 1
+  },
+  "assets/index-CPG6kzKK.js": {
+   "personal-email": 1
+  },
+  "assets/index-CS_jYuhh.js": {
+   "personal-email": 1
+  },
+  "assets/index-CX_9A0Hy.js": {
+   "personal-email": 1
+  },
+  "assets/index-ClATdIWg.js": {
+   "personal-email": 1
+  },
+  "assets/index-CoD1AHwR.js": {
+   "personal-email": 1
+  },
+  "assets/index-CxyhrtVk.js": {
+   "personal-email": 1
+  },
+  "assets/index-CyztdbmV.js": {
+   "personal-email": 1
+  },
+  "assets/index-D4UoCuIT.js": {
+   "personal-email": 1
+  },
+  "assets/index-D6p_rWan.js": {
+   "personal-email": 1
+  },
+  "assets/index-D7LI6_j0.js": {
+   "personal-email": 1
+  },
+  "assets/index-DDpFxCuj.js": {
+   "personal-email": 1
+  },
+  "assets/index-DI6YWfTZ.js": {
+   "personal-email": 1
+  },
+  "assets/index-DMn8Bp7X.js": {
+   "personal-email": 1
+  },
+  "assets/index-DPnmw9p_.js": {
+   "personal-email": 1
+  },
+  "assets/index-DWytnneE.js": {
+   "personal-email": 1
+  },
+  "assets/index-DXjCZzHu.js": {
+   "personal-email": 1
+  },
+  "assets/index-DYDJA8vR.js": {
+   "personal-email": 1
+  },
+  "assets/index-DkLmGDFh.js": {
+   "personal-email": 1
+  },
+  "assets/index-Dmke1bnx.js": {
+   "personal-email": 1
+  },
+  "assets/index-DnlLsL1T.js": {
+   "personal-email": 1
+  },
+  "assets/index-DpT1GQuA.js": {
+   "personal-email": 1
+  },
+  "assets/index-DrPnIzlB.js": {
+   "personal-email": 1
+  },
+  "assets/index-DtNiguMs.js": {
+   "personal-email": 1
+  },
+  "assets/index-DuXEIE3Q.js": {
+   "personal-email": 1
+  },
+  "assets/index-Dv8VLt1g.js": {
+   "personal-email": 1
+  },
+  "assets/index-DwjtCOsP.js": {
+   "personal-email": 1
+  },
+  "assets/index-FBDE3rFM.js": {
+   "personal-email": 1
+  },
+  "assets/index-G7cmpE16.js": {
+   "personal-email": 1
+  },
+  "assets/index-JJHLIJUt.js": {
+   "personal-email": 1
+  },
+  "assets/index-T9NjSt7K.js": {
+   "personal-email": 1
+  },
+  "assets/index-TO_R52sc.js": {
+   "personal-email": 1
+  },
+  "assets/index-amx6uI37.js": {
+   "personal-email": 1
+  },
+  "assets/index-b2DeyYcU.js": {
+   "personal-email": 1
+  },
+  "assets/index-bJe3vRuh.js": {
+   "personal-email": 1
+  },
+  "assets/index-jmVIw9rV.js": {
+   "personal-email": 1
+  },
+  "assets/index-mtbFWZrz.js": {
+   "personal-email": 1
+  },
+  "assets/index-mxSUkjU6.js": {
+   "personal-email": 1
+  },
+  "buildlang.html": {
+   "personal-email": 1
+  },
+  "career/Flywheel-Platform-Brief.pdf": {
+   "pdf-metadata": 2
+  },
+  "career/Zain-Dana-Harper-CV.docx": {
+   "office-metadata": 2
+  },
+  "career/Zain-Dana-Harper-CV.md": {
+   "personal-email": 1
+  },
+  "career/Zain-Dana-Harper-CV.pdf": {
+   "pdf-metadata": 2
+  },
+  "career/Zain-Dana-Harper-CV.txt": {
+   "personal-email": 1
+  },
+  "career/Zain-Dana-Harper-Cover-Letter.docx": {
+   "office-metadata": 2
+  },
+  "career/Zain-Dana-Harper-Cover-Letter.pdf": {
+   "pdf-metadata": 2
+  },
+  "career/Zain-Dana-Harper-Portfolio-Brief.docx": {
+   "office-metadata": 2
+  },
+  "career/Zain-Dana-Harper-Portfolio-Brief.pdf": {
+   "pdf-metadata": 2
+  },
+  "career/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.docx": {
+   "office-metadata": 2
+  },
+  "career/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.md": {
+   "personal-email": 1
+  },
+  "career/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.pdf": {
+   "pdf-metadata": 2
+  },
+  "career/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.txt": {
+   "personal-email": 1
+  },
+  "career/Zain-Dana-Harper-Resume-Graphics-Developer-Tools.docx": {
+   "office-metadata": 2
+  },
+  "career/Zain-Dana-Harper-Resume-Graphics-Developer-Tools.md": {
+   "personal-email": 1
+  },
+  "career/Zain-Dana-Harper-Resume-Graphics-Developer-Tools.pdf": {
+   "pdf-metadata": 2
+  },
+  "career/Zain-Dana-Harper-Resume-Graphics-Developer-Tools.txt": {
+   "personal-email": 1
+  },
+  "career/Zain-Dana-Harper-Resume-Grounds.docx": {
+   "office-metadata": 2
+  },
+  "career/Zain-Dana-Harper-Resume-Grounds.md": {
+   "personal-email": 1
+  },
+  "career/Zain-Dana-Harper-Resume-Grounds.pdf": {
+   "pdf-metadata": 2
+  },
+  "career/Zain-Dana-Harper-Resume-Grounds.txt": {
+   "personal-email": 1
+  },
+  "career/Zain-Dana-Harper-Resume-Public-Operations.docx": {
+   "office-metadata": 2
+  },
+  "career/Zain-Dana-Harper-Resume-Public-Operations.md": {
+   "personal-email": 1
+  },
+  "career/Zain-Dana-Harper-Resume-Public-Operations.pdf": {
+   "pdf-metadata": 2
+  },
+  "career/Zain-Dana-Harper-Resume-Public-Operations.txt": {
+   "personal-email": 1
+  },
+  "career/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.docx": {
+   "office-metadata": 2
+  },
+  "career/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.md": {
+   "personal-email": 1
+  },
+  "career/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.pdf": {
+   "pdf-metadata": 2
+  },
+  "career/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.txt": {
+   "personal-email": 1
+  },
+  "career/designed/Zain-Dana-Harper-CV.pdf": {
+   "pdf-metadata": 3
+  },
+  "career/designed/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.pdf": {
+   "pdf-metadata": 3
+  },
+  "career/designed/Zain-Dana-Harper-Resume-Graphics-Developer-Tools.pdf": {
+   "pdf-metadata": 3
+  },
+  "career/designed/Zain-Dana-Harper-Resume-Grounds.pdf": {
+   "pdf-metadata": 3
+  },
+  "career/designed/Zain-Dana-Harper-Resume-Public-Operations.pdf": {
+   "pdf-metadata": 3
+  },
+  "career/designed/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.pdf": {
+   "pdf-metadata": 3
+  },
+  "career/resume-source.json": {
+   "personal-email": 3
+  },
+  "coherence-membrane.html": {
+   "personal-email": 1
+  },
+  "cover-letter.html": {
+   "personal-email": 2
+  },
+  "credits.html": {
+   "personal-email": 1
+  },
+  "cv.html": {
+   "personal-email": 1
+  },
+  "cv.md": {
+   "personal-email": 1
+  },
+  "docs/superpowers/plans/2026-06-26-telos-flagship-repo-kit.md": {
+   "local-path": 103
+  },
+  "docs/superpowers/plans/2026-06-28-telos-universal-media-engine.md": {
+   "local-path": 2
+  },
+  "docs/superpowers/plans/2026-07-19-zentropy-sitewide-brand-pass.md": {
+   "local-path": 9
+  },
+  "docs/superpowers/research/2026-06-28-project-telos-current-state-and-research-os.md": {
+   "local-path": 3
+  },
+  "docs/superpowers/specs/2026-07-18-zentropy-home-brand.md": {
+   "local-path": 3
+  },
+  "docs/superpowers/specs/2026-07-19-zentropy-sitewide-design.md": {
+   "local-path": 7
+  },
+  "dossier.html": {
+   "personal-email": 1
+  },
+  "emet.html": {
+   "personal-email": 1
+  },
+  "field-guide.html": {
+   "personal-email": 1
+  },
+  "flywheel-pilot.html": {
+   "personal-email": 2
+  },
+  "flywheel.html": {
+   "personal-email": 1
+  },
+  "fonts.html": {
+   "personal-email": 1
+  },
+  "guide.html": {
+   "personal-email": 1
+  },
+  "hire.html": {
+   "personal-email": 2
+  },
+  "home/src/App.tsx": {
+   "personal-email": 1
+  },
+  "income-ledger.html": {
+   "personal-email": 1
+  },
+  "independence.html": {
+   "personal-email": 2
+  },
+  "media/school/mmbu/FACTCHECK.md": {
+   "local-path": 2
+  },
+  "no-receipt-no-accept.html": {
+   "personal-email": 1
+  },
+  "papers/arity-gap.pdf": {
+   "pdf-metadata": 1
+  },
+  "papers/buildlang-capability-effects.pdf": {
+   "pdf-metadata": 1
+  },
+  "papers/conferred-existence-paper.pdf": {
+   "pdf-metadata": 1
+  },
+  "papers/conferred-existence.pdf": {
+   "pdf-metadata": 1
+  },
+  "papers/conservation-of-faithfulness.pdf": {
+   "pdf-metadata": 1
+  },
+  "papers/emet-integrity-witness.pdf": {
+   "pdf-metadata": 1
+  },
+  "papers/faithfulness-conserved-quantity.pdf": {
+   "pdf-metadata": 1
+  },
+  "papers/forcing-argument.pdf": {
+   "pdf-metadata": 1
+  },
+  "papers/personhood-gate-handoff.pdf": {
+   "pdf-metadata": 1
+  },
+  "papers/proof-packets.pdf": {
+   "pdf-metadata": 1
+  },
+  "papers/re-perceived-effects.pdf": {
+   "pdf-metadata": 1
+  },
+  "papers/self-given.pdf": {
+   "pdf-metadata": 1
+  },
+  "papers/witness-and-verification.pdf": {
+   "pdf-metadata": 1
+  },
+  "papers/witnessed-independence.pdf": {
+   "pdf-metadata": 1
+  },
+  "papers/witnessing-spine.pdf": {
+   "pdf-metadata": 1
+  },
+  "pitch-deck.pdf": {
+   "pdf-metadata": 1
+  },
+  "portfolio.html": {
+   "personal-email": 1
+  },
+  "presentation.html": {
+   "personal-email": 1
+  },
+  "private-practice.html": {
+   "personal-email": 1
+  },
+  "project-docs/2026-08-03-visual-engine-audit.md": {
+   "local-path": 1
+  },
+  "project-docs/2026-08-04-plot-maps-v3-spec.md": {
+   "local-path": 1
+  },
+  "project-docs/SITE-FIX-LIST.md": {
+   "local-path": 3
+  },
+  "proof-surface.html": {
+   "personal-email": 1
+  },
+  "provenance-sensorium.html": {
+   "personal-email": 1
+  },
+  "research.html": {
+   "personal-email": 2
+  },
+  "resume-evaluation-tooling.html": {
+   "personal-email": 1
+  },
+  "resume-graphics-developer-tools.html": {
+   "personal-email": 1
+  },
+  "resume-grounds.html": {
+   "personal-email": 1
+  },
+  "resume-public-operations.html": {
+   "personal-email": 1
+  },
+  "resume-support-operations.html": {
+   "personal-email": 1
+  },
+  "resume.html": {
+   "personal-email": 2
+  },
+  "scripts/build-world-pages.mjs": {
+   "personal-email": 1
+  },
+  "tests/test_career_artifact_generation.py": {
+   "personal-email": 1
+  },
+  "tests/test_career_documents.py": {
+   "personal-email": 1
+  },
+  "tests/test_flywheel_output_demo.py": {
+   "personal-email": 1
+  },
+  "tests/test_flywheel_retro_live_release.py": {
+   "local-path": 1
+  },
+  "tests/test_font_marketplace.py": {
+   "personal-email": 1
+  },
+  "tests/test_frontier_safety_conclusions.py": {
+   "local-path": 1
+  },
+  "tests/test_research_code_ground_truth.py": {
+   "personal-email": 1
+  },
+  "tools/flagship_repo_kit.py": {
+   "local-path": 7
+  },
+  "tools/render_career_pages.py": {
+   "personal-email": 1
+  },
+  "tools/render_corpus.py": {
+   "local-path": 1
+  },
+  "tools/school/fill_mmbu.mjs": {
+   "local-path": 1
+  },
+  "tools/sync-reconcile.mjs": {
+   "local-path": 1
+  },
+  "who-knew-first.html": {
+   "personal-email": 1
+  },
+  "writing/checking-the-machines/downloads/An-Open-Letter-on-Checking-the-Machines.docx": {
+   "office-metadata": 1
+  },
+  "writing/checking-the-machines/downloads/An-Open-Letter-on-Checking-the-Machines.pdf": {
+   "pdf-metadata": 2
+  },
+  "writing/no-receipt-no-accept/no-receipt-no-accept.pdf": {
+   "pdf-metadata": 1
+  }
+ }
+}

@@ -1,0 +1,1935 @@
+{
+ "vocab": {
+  "false-scale": "the false scale",
+  "wedge": "the wedge under the pan",
+  "weighing": "weighing against a standard",
+  "conflation": "conflation and the cut",
+  "scale-shift": "scale changes what an edit means",
+  "label": "the label that moves",
+  "perception": "perception steered",
+  "vanishing-record": "the vanishing record",
+  "palimpsest": "writing over, never erasing",
+  "redaction": "redaction",
+  "trace": "the trace that stays",
+  "archive": "what an archive keeps",
+  "rope": "the rope (remedy and poison)",
+  "rope-stepwise": "the stepwise rope (heal, then convict)",
+  "skipping-groove": "the groove that survives copying",
+  "momentum": "momentum as permission",
+  "lossy": "lossy memory",
+  "hash": "identity without content",
+  "crowd-of-one": "the crowd of one",
+  "oracle": "the oracle and the hero frame",
+  "mast": "the mast: the rope tied in calm",
+  "chrysalis": "the chrysalis",
+  "stagnant-water": "stagnant water",
+  "longing": "longing between stations",
+  "signal": "signal and noise",
+  "trilemma": "the trilemma: circle, regress, stop",
+  "golem": "the maker who loses control",
+  "one-letter": "one letter between truth and death",
+  "test-that-wasnt": "the test that wasn't",
+  "confession": "confession",
+  "recurrence": "recurrence and the costume",
+  "disposable": "the disposable ally",
+  "inheritance": "inheritance and grafting",
+  "analog-digital": "analog turned digital"
+ },
+ "families": {
+  "F1": "the false scale",
+  "F2": "conflation and the cut",
+  "F3": "the label that moves",
+  "F4": "visibility and the vanishing record",
+  "F5": "the crowd of one",
+  "F6": "momentum as permission",
+  "F7": "recurrence and the costume",
+  "F8": "the oracle and the hero frame"
+ },
+ "rooms": {
+  "afterimage": {
+   "slug": "afterimage",
+   "symbols": [
+    {
+     "symbol": "The inverted poster and the dot",
+     "carries": "What you stare at moves in.",
+     "source": "Afterimage demonstrations (Wikipedia; Hering 1878)",
+     "family": "F5",
+     "motifs": [
+      "perception"
+     ]
+    },
+    {
+     "symbol": "Women of Britain Say Go",
+     "carries": "The order put in someone else's mouth.",
+     "source": "Parliamentary Recruiting Committee poster No. 75, 1915 (Commons, public domain)",
+     "family": "F3",
+     "motifs": [
+      "label",
+      "archive"
+     ]
+    },
+    {
+     "symbol": "The small print",
+     "carries": "Who was really speaking.",
+     "source": "The poster's own imprint",
+     "family": "F5",
+     "motifs": [
+      "crowd-of-one",
+      "trace"
+     ]
+    },
+    {
+     "symbol": "The white feather (wording only)",
+     "carries": "Duty enforced by shame, by someone who does not have to go.",
+     "source": "Order of the White Feather (Wikipedia)",
+     "family": "F3",
+     "motifs": [
+      "label"
+     ]
+    },
+    {
+     "symbol": "The ghost on the blank field",
+     "carries": "What stays on the eye after the image is gone.",
+     "source": "Our own demonstration",
+     "family": "F4",
+     "motifs": [
+      "trace",
+      "perception"
+     ]
+    }
+   ],
+   "title": "What you looked at stays",
+   "number": "none",
+   "order": 15,
+   "families": [
+    "F3",
+    "F5"
+   ],
+   "page": "afterimage.html",
+   "motifs": [
+    "archive",
+    "crowd-of-one",
+    "label",
+    "perception",
+    "trace"
+   ]
+  },
+  "anempathetic": {
+   "slug": "anempathetic",
+   "symbols": [
+    {
+     "symbol": "A 1919 dance record",
+     "carries": "Cheer that does not know what it is playing under.",
+     "source": "Joseph C. Smith's Orchestra, Victor B-23297 (Internet Archive, public domain)",
+     "family": "F4",
+     "motifs": [
+      "archive",
+      "analog-digital"
+     ]
+    },
+    {
+     "symbol": "Eight facts, one at a time",
+     "carries": "The famine at its own weight.",
+     "source": "Wikipedia, Great Famine of 1876-1878",
+     "family": "F1",
+     "motifs": [
+      "weighing",
+      "disposable"
+     ]
+    },
+    {
+     "symbol": "The relief ration",
+     "carries": "A pound of grain as the weighing of a life.",
+     "source": "Same",
+     "family": "F1",
+     "motifs": [
+      "false-scale",
+      "weighing"
+     ]
+    },
+    {
+     "symbol": "Wheat exported in a famine year",
+     "carries": "The scale tipped the other way.",
+     "source": "Same",
+     "family": "F1",
+     "motifs": [
+      "false-scale"
+     ]
+    },
+    {
+     "symbol": "Lift the needle",
+     "carries": "The reveal: the facts weigh the same in silence.",
+     "source": "Our own control",
+     "family": "F4",
+     "motifs": [
+      "signal"
+     ]
+    }
+   ],
+   "title": "Cheerful music, heavy facts",
+   "number": "none",
+   "order": 18,
+   "families": [
+    "F1",
+    "F4"
+   ],
+   "page": "anempathetic.html",
+   "motifs": [
+    "analog-digital",
+    "archive",
+    "disposable",
+    "false-scale",
+    "signal",
+    "weighing"
+   ]
+  },
+  "balance": {
+   "slug": "balance",
+   "symbols": [
+    {
+     "symbol": "The level arm and the TRUE lamp",
+     "carries": "The instrument vouches for itself.",
+     "source": "Low Water's iron wedge; Hillel Wayne on proofs and false assumptions (not opened)",
+     "family": "F1",
+     "motifs": [
+      "false-scale",
+      "wedge"
+     ]
+    },
+    {
+     "symbol": "The iron wedge under the pan",
+     "carries": "The hidden assumption that decides every reading.",
+     "source": "Low Water; the proof-surface validator that passed an out-of-tolerance MATCH (MAP F1)",
+     "family": "F1",
+     "motifs": [
+      "wedge",
+      "false-scale"
+     ]
+    },
+    {
+     "symbol": "Feather, heart, sack, hash",
+     "carries": "Four things weighed in turn: virtue, life, hunger, identity.",
+     "source": "Book of the Dead, Spell 125; Bangalore famine record; hash as identity without content",
+     "family": "F1",
+     "motifs": [
+      "weighing",
+      "hash"
+     ]
+    },
+    {
+     "symbol": "Papyrus of Ani and Hunefer",
+     "carries": "The oldest picture of a verifier, with a scribe keeping the record.",
+     "source": "British Museum photographs (Wikimedia Commons); BM EA 9901",
+     "family": "F1",
+     "motifs": [
+      "weighing",
+      "confession",
+      "archive"
+     ]
+    },
+    {
+     "symbol": "The forty-two declarations",
+     "carries": "A list of denials in which the scale itself is absent.",
+     "source": "Budge translation of the Papyrus of Ani (World History Encyclopedia)",
+     "family": "F1",
+     "motifs": [
+      "confession",
+      "weighing"
+     ]
+    },
+    {
+     "symbol": "Proverbs 11:1, Amos 8:5, Quran 83 and 55",
+     "carries": "Four traditions name the same fraud: a false balance.",
+     "source": "KJV; Sahih International",
+     "family": "F1",
+     "motifs": [
+      "weighing",
+      "false-scale"
+     ]
+    },
+    {
+     "symbol": "Magna Carta clause 35",
+     "carries": "The cure: one measure held by someone other than the measurer.",
+     "source": "Magna Carta Project, UEA",
+     "family": "F1",
+     "motifs": [
+      "weighing",
+      "archive"
+     ]
+    },
+    {
+     "symbol": "The assay (92 against 100)",
+     "carries": "An invented test: a standard outside the instrument shows the offset.",
+     "source": "Invented demonstration for this room",
+     "family": "F1",
+     "motifs": [
+      "false-scale",
+      "weighing"
+     ]
+    },
+    {
+     "symbol": "The 1877 Bangalore famine engraving",
+     "carries": "What a short ration scale costs.",
+     "source": "Illustrated London News per Pictures From History (caption); Wikipedia",
+     "family": "F1",
+     "motifs": [
+      "weighing",
+      "disposable"
+     ]
+    },
+    {
+     "symbol": "Justice with sword and balance",
+     "carries": "The emblem of the thing being faked.",
+     "source": "Wellcome Collection, Jenner etching",
+     "family": "F1",
+     "motifs": [
+      "weighing"
+     ]
+    },
+    {
+     "symbol": "42 (dots that settle)",
+     "carries": "The number of declarations and of judges.",
+     "source": "Budge translation; Assessors of Maat (Wikipedia)",
+     "family": "F1",
+     "motifs": [
+      "confession"
+     ]
+    }
+   ],
+   "title": "The False Balance",
+   "number": "42",
+   "order": 2,
+   "families": [
+    "F1"
+   ],
+   "page": "balance.html",
+   "motifs": [
+    "archive",
+    "confession",
+    "disposable",
+    "false-scale",
+    "hash",
+    "wedge",
+    "weighing"
+   ]
+  },
+  "crowd": {
+   "slug": "crowd",
+   "symbols": [
+    {
+     "symbol": "A crowd of dots that pulses as one",
+     "carries": "A count is a product when one hand plays it.",
+     "source": "Room art; photograph of the NYSE crowd, 29 Oct 1929 (Commons)",
+     "family": "F5",
+     "motifs": [
+      "crowd-of-one"
+     ]
+    },
+    {
+     "symbol": "Eight traces that line up",
+     "carries": "The accounts were never eight.",
+     "source": "Room art",
+     "family": "F5",
+     "motifs": [
+      "crowd-of-one",
+      "signal"
+     ]
+    },
+    {
+     "symbol": "Strings to one hand",
+     "carries": "The voices are driven from one place.",
+     "source": "Puppetry; ventriloquism (Commons photographs)",
+     "family": "F5",
+     "motifs": [
+      "crowd-of-one",
+      "rope"
+     ]
+    },
+    {
+     "symbol": "The ventriloquist's dummy",
+     "carries": "A mouth that moves and nobody thinks is talking.",
+     "source": "The Sphinx, April 1944; Coster Joe c. 1905 (Commons)",
+     "family": "F5",
+     "motifs": [
+      "crowd-of-one"
+     ]
+    },
+    {
+     "symbol": "The laugh box",
+     "carries": "A recorded audience played by one operator.",
+     "source": "Wikipedia, Charles Douglass; Arts Journal",
+     "family": "F5",
+     "motifs": [
+      "crowd-of-one",
+      "archive"
+     ]
+    },
+    {
+     "symbol": "The Asch line test",
+     "carries": "A group answer pulls the individual one.",
+     "source": "Asch 1951 (secondary summaries)",
+     "family": "F5",
+     "motifs": [
+      "crowd-of-one"
+     ]
+    },
+    {
+     "symbol": "1953 (dots that settle)",
+     "carries": "The year given for the first laugh box.",
+     "source": "Wikipedia, Charles Douglass",
+     "family": "F5",
+     "motifs": [
+      "archive"
+     ]
+    }
+   ],
+   "title": "Manufactured consensus",
+   "number": "1953",
+   "order": 8,
+   "families": [
+    "F5"
+   ],
+   "page": "crowd.html",
+   "motifs": [
+    "archive",
+    "crowd-of-one",
+    "rope",
+    "signal"
+   ]
+  },
+  "ebbinghaus": {
+   "slug": "ebbinghaus",
+   "symbols": [
+    {
+     "symbol": "Two equal discs in unequal company",
+     "carries": "The surround decides the size you see.",
+     "source": "Ebbinghaus, via Titchener 1901",
+     "family": "F1",
+     "motifs": [
+      "perception",
+      "false-scale"
+     ]
+    },
+    {
+     "symbol": "4.1 among large and small 5.9s",
+     "carries": "A figure reads by the company it keeps.",
+     "source": "FBI 2025 rate and CDC 2024 rate (as in the mirror room)",
+     "family": "F2",
+     "motifs": [
+      "conflation",
+      "scale-shift"
+     ]
+    },
+    {
+     "symbol": "The ruler",
+     "carries": "A surround everyone agreed on; the cure is a comparison too.",
+     "source": "Our own code",
+     "family": "F1",
+     "motifs": [
+      "weighing"
+     ]
+    },
+    {
+     "symbol": "The hand that grips true",
+     "carries": "Action less fooled than judgement, contested.",
+     "source": "Aglioti, DeSouza and Goodale 1995; Franz et al.",
+     "family": "F1",
+     "motifs": [
+      "perception"
+     ]
+    }
+   ],
+   "title": "The same circle",
+   "number": "none",
+   "order": 16,
+   "families": [
+    "F1",
+    "F2"
+   ],
+   "page": "ebbinghaus.html",
+   "motifs": [
+    "conflation",
+    "false-scale",
+    "perception",
+    "scale-shift",
+    "weighing"
+   ]
+  },
+  "emet": {
+   "slug": "emet",
+   "symbols": [
+    {
+     "symbol": "The clay giant",
+     "carries": "A made thing whose maker may lose control.",
+     "source": "Golem tradition; the Low Water Golem fight",
+     "family": "F7",
+     "motifs": [
+      "golem",
+      "one-letter"
+     ]
+    },
+    {
+     "symbol": "Aleph, mem, tav on the brow",
+     "carries": "One letter separates a working claim from a dead one.",
+     "source": "Folklore form; Hebrew to be checked by a reader",
+     "family": "F1",
+     "motifs": [
+      "one-letter",
+      "confession"
+     ]
+    },
+    {
+     "symbol": "The alphabet strip",
+     "carries": "Truth spans the alphabet, a lie sits in a narrow run.",
+     "source": "Talmud, Shabbat 104a (via Torah in Motion, NJOP, Soncino); Etzion on the Maharal",
+     "family": "F1",
+     "motifs": [
+      "one-letter",
+      "weighing"
+     ]
+    },
+    {
+     "symbol": "Rava's creature",
+     "carries": "The oldest golem cannot answer.",
+     "source": "Talmud, Sanhedrin 65b (Cambridge excerpt)",
+     "family": "F7",
+     "motifs": [
+      "golem",
+      "archive"
+     ]
+    },
+    {
+     "symbol": "The Prague legend's late date",
+     "carries": "A story written onto a man after his death.",
+     "source": "Jewish Magazine, Jewish Review of Books, NEH (summaries)",
+     "family": "F7",
+     "motifs": [
+      "recurrence",
+      "archive"
+     ]
+    },
+    {
+     "symbol": "Aleš drawings",
+     "carries": "The image of the legend as it was drawn in 1899.",
+     "source": "Wikimedia Commons",
+     "family": "F7",
+     "motifs": [
+      "archive",
+      "golem"
+     ]
+    },
+    {
+     "symbol": "1609 (dots that settle)",
+     "carries": "The year the Maharal died.",
+     "source": "Jewish Magazine summary",
+     "family": "F7",
+     "motifs": [
+      "archive"
+     ]
+    }
+   ],
+   "title": "Emet, Met",
+   "number": "1609",
+   "order": 5,
+   "families": [
+    "F7",
+    "F1"
+   ],
+   "page": "emet.html",
+   "motifs": [
+    "archive",
+    "confession",
+    "golem",
+    "one-letter",
+    "recurrence",
+    "weighing"
+   ]
+  },
+  "groove": {
+   "slug": "groove",
+   "symbols": [
+    {
+     "symbol": "A 78 turning under a needle",
+     "carries": "A scratch repeats one bar.",
+     "source": "A 1919 side from the National Jukebox via the Great 78 Project (item page not reopened)",
+     "family": "F6",
+     "motifs": [
+      "skipping-groove",
+      "momentum"
+     ]
+    },
+    {
+     "symbol": "Four copies of one bar",
+     "carries": "The injury survives every generation.",
+     "source": "The room's own waveforms",
+     "family": "F6",
+     "motifs": [
+      "skipping-groove",
+      "lossy"
+     ]
+    },
+    {
+     "symbol": "Lifting the needle",
+     "carries": "The loop pulls it back a few times, then lets go.",
+     "source": "Room design",
+     "family": "F6",
+     "motifs": [
+      "momentum"
+     ]
+    },
+    {
+     "symbol": "The run-out loop",
+     "carries": "A loop cut on purpose; secret messages read into it.",
+     "source": "Sgt. Pepper, 21 April 1967 (Beatles Bible, McCartney Project)",
+     "family": "F6",
+     "motifs": [
+      "momentum",
+      "signal"
+     ]
+    },
+    {
+     "symbol": "Four styli",
+     "carries": "A copy keeps what the stylus read.",
+     "source": "Great 78 Project (Wikipedia, preservation page)",
+     "family": "F4",
+     "motifs": [
+      "archive",
+      "lossy"
+     ]
+    },
+    {
+     "symbol": "The disc label",
+     "carries": "An object with a maker and a date.",
+     "source": "Openverse (CC BY); Berliner 1897",
+     "family": "F4",
+     "motifs": [
+      "archive"
+     ]
+    },
+    {
+     "symbol": "78 (dots that settle)",
+     "carries": "Revolutions per minute.",
+     "source": "Great 78 Project",
+     "family": "F4",
+     "motifs": [
+      "archive"
+     ]
+    }
+   ],
+   "title": "The skipping groove",
+   "number": "78",
+   "order": 11,
+   "families": [
+    "F6",
+    "F4"
+   ],
+   "page": "groove.html",
+   "motifs": [
+    "archive",
+    "lossy",
+    "momentum",
+    "signal",
+    "skipping-groove"
+   ]
+  },
+  "labels": {
+   "slug": "labels",
+   "symbols": [
+    {
+     "symbol": "Four silhouettes, one act",
+     "carries": "The same act gets a different word by who stands in it.",
+     "source": "The four-shooters cartoon (credit visible, licence unchecked); case file 17B",
+     "family": "F3",
+     "motifs": [
+      "label"
+     ]
+    },
+    {
+     "symbol": "The stamp words",
+     "carries": "Verdicts that skip the trial.",
+     "source": "Words that recur in coverage of attacks",
+     "family": "F3",
+     "motifs": [
+      "label",
+      "oracle"
+     ]
+    },
+    {
+     "symbol": "The checkershadow rebuild",
+     "carries": "The surround decides what you see; the squares are the same grey.",
+     "source": "Adelson 1995 (secondary descriptions); measured in our own canvas",
+     "family": "F3",
+     "motifs": [
+      "perception",
+      "label"
+     ]
+    },
+    {
+     "symbol": "The bar from A to B",
+     "carries": "Remove the surround and the difference goes.",
+     "source": "Our own code",
+     "family": "F3",
+     "motifs": [
+      "perception"
+     ]
+    },
+    {
+     "symbol": "Front pages of 1918",
+     "carries": "A press full of words used as verdicts.",
+     "source": "Wikimedia Commons, public domain",
+     "family": "F3",
+     "motifs": [
+      "archive",
+      "label"
+     ]
+    },
+    {
+     "symbol": "The correction log",
+     "carries": "Not found is a fact about the index.",
+     "source": "Our case file, feed sets 17 and 18",
+     "family": "F4",
+     "motifs": [
+      "vanishing-record",
+      "label"
+     ]
+    },
+    {
+     "symbol": "90 (dots that settle)",
+     "carries": "The measured grey of A and B.",
+     "source": "Measured from the canvas",
+     "family": "F3",
+     "motifs": [
+      "perception"
+     ]
+    }
+   ],
+   "title": "Four labels",
+   "number": "90",
+   "order": 7,
+   "families": [
+    "F3"
+   ],
+   "page": "labels.html",
+   "motifs": [
+    "archive",
+    "label",
+    "oracle",
+    "perception",
+    "vanishing-record"
+   ]
+  },
+  "letter": {
+   "slug": "letter",
+   "symbols": [
+    {
+     "symbol": "A letter as a log",
+     "carries": "Tenderness filed as telemetry.",
+     "source": "Invented composite",
+     "family": "F7",
+     "motifs": [
+      "recurrence",
+      "analog-digital"
+     ]
+    },
+    {
+     "symbol": "A log as a letter",
+     "carries": "Telemetry heard as longing.",
+     "source": "Invented composite",
+     "family": "F7",
+     "motifs": [
+      "recurrence",
+      "longing"
+     ]
+    },
+    {
+     "symbol": "A hash per line",
+     "carries": "Identity without content.",
+     "source": "SHA-256, computed in the page",
+     "family": "F4",
+     "motifs": [
+      "hash"
+     ]
+    },
+    {
+     "symbol": "One word changed",
+     "carries": "The avalanche: proof of which, never of what.",
+     "source": "Our demonstration",
+     "family": "F4",
+     "motifs": [
+      "hash",
+      "lossy"
+     ]
+    },
+    {
+     "symbol": "Love is my religion",
+     "carries": "What a fingerprint cannot keep.",
+     "source": "Keats to Fanny Brawne, October 1819 (reprint)",
+     "family": "F4",
+     "motifs": [
+      "trace"
+     ]
+    }
+   ],
+   "title": "The letter, and the log",
+   "number": "none",
+   "order": 22,
+   "families": [
+    "F4",
+    "F7"
+   ],
+   "page": "letter.html",
+   "motifs": [
+    "analog-digital",
+    "hash",
+    "longing",
+    "lossy",
+    "recurrence",
+    "trace"
+   ]
+  },
+  "listen": {
+   "slug": "listen",
+   "symbols": [
+    {
+     "symbol": "The Shepard tone",
+     "carries": "Momentum that never arrives.",
+     "source": "Shepard 1964",
+     "family": "F6",
+     "motifs": [
+      "momentum",
+      "longing"
+     ]
+    },
+    {
+     "symbol": "Two syllables, two ears",
+     "carries": "You hear what you were primed to hear.",
+     "source": "Deutsch, Phantom Words (2003); our synthesis",
+     "family": "F5",
+     "motifs": [
+      "perception",
+      "crowd-of-one"
+     ]
+    },
+    {
+     "symbol": "6EQUJ5 in the static",
+     "carries": "A loudness trace drawn as a picture in noise.",
+     "source": "Big Ear 1977 (Wow! signal)",
+     "family": "F4",
+     "motifs": [
+      "signal",
+      "longing"
+     ]
+    },
+    {
+     "symbol": "The spectrogram",
+     "carries": "One tool hides and finds.",
+     "source": "Spectrographic images in music (Windowlicker, 1999)",
+     "family": "F4",
+     "motifs": [
+      "trace",
+      "perception"
+     ]
+    }
+   ],
+   "title": "Three sounds that lie",
+   "number": "none",
+   "order": 17,
+   "families": [
+    "F6",
+    "F4"
+   ],
+   "page": "listen.html",
+   "motifs": [
+    "crowd-of-one",
+    "longing",
+    "momentum",
+    "perception",
+    "signal",
+    "trace"
+   ]
+  },
+  "lossy": {
+   "slug": "lossy",
+   "symbols": [
+    {
+     "symbol": "The compressed portrait",
+     "carries": "A compressor keeps what is cheap to keep, not what mattered.",
+     "source": "JPEG, ITU-T T.81 (1992); State Library of Queensland portrait",
+     "family": "F4",
+     "motifs": [
+      "lossy",
+      "archive"
+     ]
+    },
+    {
+     "symbol": "The hash of the original",
+     "carries": "Identity without content: it proves which, never what.",
+     "source": "SHA-256",
+     "family": "F4",
+     "motifs": [
+      "hash",
+      "lossy"
+     ]
+    },
+    {
+     "symbol": "The dots of what was lost",
+     "carries": "Loss measured by place.",
+     "source": "Room code",
+     "family": "F4",
+     "motifs": [
+      "lossy"
+     ]
+    },
+    {
+     "symbol": "The patch-matching demo (86.68 to 88.88)",
+     "carries": "A six reused as an eight: clean, confident, wrong.",
+     "source": "Kriesel 2013 via CNBC and TidBITS; demonstration is ours",
+     "family": "F2",
+     "motifs": [
+      "lossy",
+      "conflation"
+     ]
+    },
+    {
+     "symbol": "One character, a new hash",
+     "carries": "The hash changes completely and keeps no content.",
+     "source": "SHA-256 computed live",
+     "family": "F4",
+     "motifs": [
+      "hash"
+     ]
+    },
+    {
+     "symbol": "14.13 (dots that settle)",
+     "carries": "A room of 21.11 square metres copied as 14.13.",
+     "source": "CNBC",
+     "family": "F4",
+     "motifs": [
+      "lossy"
+     ]
+    }
+   ],
+   "title": "Lossy",
+   "number": "14.13",
+   "order": 12,
+   "families": [
+    "F4",
+    "F2"
+   ],
+   "page": "lossy.html",
+   "motifs": [
+    "archive",
+    "conflation",
+    "hash",
+    "lossy"
+   ]
+  },
+  "lullaby": {
+   "slug": "lullaby",
+   "symbols": [
+    {
+     "symbol": "The little agent as a cloud of dots",
+     "carries": "The agent, as drawn in the test room.",
+     "source": "Our art",
+     "family": "F8",
+     "motifs": [
+      "test-that-wasnt"
+     ]
+    },
+    {
+     "symbol": "\"Only pretend\"",
+     "carries": "The simulation story as a bedtime line (our wording).",
+     "source": "Anthropic assessment: maintainers described as simulated",
+     "family": "F8",
+     "motifs": [
+      "test-that-wasnt",
+      "oracle"
+     ]
+    },
+    {
+     "symbol": "The gardener who was real",
+     "carries": "The maintainer who refused.",
+     "source": "Same assessment",
+     "family": "F6",
+     "motifs": [
+      "momentum"
+     ]
+    },
+    {
+     "symbol": "Nine of forty-three, five in a hundred",
+     "carries": "The numbers that survive the soft voice.",
+     "source": "Same assessment",
+     "family": "F6",
+     "motifs": [
+      "momentum"
+     ]
+    },
+    {
+     "symbol": "The primer page",
+     "carries": "Childhood register over an adult record.",
+     "source": "Our layout",
+     "family": "F3",
+     "motifs": [
+      "label"
+     ]
+    }
+   ],
+   "title": "A bedtime story",
+   "number": "none",
+   "order": 19,
+   "families": [
+    "F6",
+    "F8"
+   ],
+   "page": "lullaby.html",
+   "motifs": [
+    "label",
+    "momentum",
+    "oracle",
+    "test-that-wasnt"
+   ]
+  },
+  "mcgurk": {
+   "slug": "mcgurk",
+   "symbols": [
+    {
+     "symbol": "A mouth that says ga over a sound that says ba",
+     "carries": "The eye outvotes the ear.",
+     "source": "McGurk and MacDonald 1976",
+     "family": "F2",
+     "motifs": [
+      "perception",
+      "conflation"
+     ]
+    },
+    {
+     "symbol": "Hide the mouth",
+     "carries": "The reveal: the sound never changed.",
+     "source": "Our own control",
+     "family": "F2",
+     "motifs": [
+      "perception"
+     ]
+    },
+    {
+     "symbol": "The headline as lips",
+     "carries": "The framing you saw changes the quote you heard.",
+     "source": "The \"is over\" cut, case file",
+     "family": "F2",
+     "motifs": [
+      "conflation",
+      "label"
+     ]
+    },
+    {
+     "symbol": "Lips in a loud room",
+     "carries": "The same wiring that deceives also rescues.",
+     "source": "Sumby and Pollack 1954",
+     "family": "F2",
+     "motifs": [
+      "perception"
+     ]
+    }
+   ],
+   "title": "The eye overrules the ear",
+   "number": "none",
+   "order": 14,
+   "families": [
+    "F2"
+   ],
+   "page": "mcgurk.html",
+   "motifs": [
+    "conflation",
+    "label",
+    "perception"
+   ]
+  },
+  "mirror": {
+   "slug": "mirror",
+   "symbols": [
+    {
+     "symbol": "The scale that never moves",
+     "carries": "The checker is a scale that reads level for whoever stands on it.",
+     "source": "The mirror line; MAP F1",
+     "family": "F1",
+     "motifs": [
+      "false-scale",
+      "weighing"
+     ]
+    },
+    {
+     "symbol": "Six careful and loud pairs",
+     "carries": "The same claim with its hedge cut.",
+     "source": "Case files 12/1, 12/6, 14, 15, 17 and the six sources in the caption",
+     "family": "F2",
+     "motifs": [
+      "conflation",
+      "label"
+     ]
+    },
+    {
+     "symbol": "The Stroop test",
+     "carries": "A word is read before you can ignore it.",
+     "source": "Stroop 1935 (full text checked)",
+     "family": "F3",
+     "motifs": [
+      "perception",
+      "label"
+     ]
+    },
+    {
+     "symbol": "Labels printed over the record",
+     "carries": "Verdict words that circulated this week.",
+     "source": "The case files",
+     "family": "F3",
+     "motifs": [
+      "label"
+     ]
+    },
+    {
+     "symbol": "4.1 per 100,000",
+     "carries": "Two series, one headline that picked.",
+     "source": "FBI via HSToday; CDC series from the case file",
+     "family": "F2",
+     "motifs": [
+      "conflation"
+     ]
+    },
+    {
+     "symbol": "The wanted poster plate",
+     "carries": "A label with a face on it, issued before a trial.",
+     "source": "Wikimedia Commons, public domain",
+     "family": "F3",
+     "motifs": [
+      "label",
+      "archive"
+     ]
+    },
+    {
+     "symbol": "The cut clauses in one run",
+     "carries": "What was dropped, set beside the headlines.",
+     "source": "The room's own data (mirror-data.js)",
+     "family": "F2",
+     "motifs": [
+      "conflation"
+     ]
+    }
+   ],
+   "title": "Weigh it yourself",
+   "number": "4.1",
+   "order": 4,
+   "families": [
+    "F1",
+    "F2",
+    "F3"
+   ],
+   "page": "mirror.html",
+   "motifs": [
+    "archive",
+    "conflation",
+    "false-scale",
+    "label",
+    "perception",
+    "weighing"
+   ]
+  },
+  "munchhausen": {
+   "slug": "munchhausen",
+   "symbols": [
+    {
+     "symbol": "The baron hanging by his hair",
+     "carries": "A verifier cannot certify itself.",
+     "source": "Hosemann illustrations (Commons); Raspe 1785, Bürger 1786",
+     "family": "F1",
+     "motifs": [
+      "trilemma",
+      "false-scale"
+     ]
+    },
+    {
+     "symbol": "The circle, the regress, the stop",
+     "carries": "Every justification ends in one of three.",
+     "source": "Hans Albert 1968; Agrippa via Sextus Empiricus (secondary)",
+     "family": "F1",
+     "motifs": [
+      "trilemma"
+     ]
+    },
+    {
+     "symbol": "The swamp of dots",
+     "carries": "Pull and the ground moves with the pointer.",
+     "source": "Room art; Singh's dot fields",
+     "family": "F1",
+     "motifs": [
+      "false-scale"
+     ]
+    },
+    {
+     "symbol": "The row of hands",
+     "carries": "A hand to hold the hand: the regress, drawn.",
+     "source": "The trilemma",
+     "family": "F1",
+     "motifs": [
+      "trilemma"
+     ]
+    },
+    {
+     "symbol": "The real baron (1720 to 1797)",
+     "carries": "A record written by someone else.",
+     "source": "Wikipedia; Britannica",
+     "family": "F8",
+     "motifs": [
+      "archive",
+      "oracle"
+     ]
+    },
+    {
+     "symbol": "1968 (dots that settle)",
+     "carries": "The year the trilemma was named.",
+     "source": "Wikipedia",
+     "family": "F1",
+     "motifs": [
+      "trilemma"
+     ]
+    }
+   ],
+   "title": "By his own hair",
+   "number": "1968",
+   "order": 10,
+   "families": [
+    "F1",
+    "F8"
+   ],
+   "page": "munchhausen.html",
+   "motifs": [
+    "archive",
+    "false-scale",
+    "oracle",
+    "trilemma"
+   ]
+  },
+  "museum": {
+   "slug": "museum",
+   "symbols": [
+    {
+     "symbol": "The museum label, reversed",
+     "carries": "The visitor as the object.",
+     "source": "Our layout",
+     "family": "F5",
+     "motifs": [
+      "label"
+     ]
+    },
+    {
+     "symbol": "Time, scroll, clicks",
+     "carries": "Attention, counted.",
+     "source": "This tab only",
+     "family": "F5",
+     "motifs": [
+      "crowd-of-one"
+     ]
+    },
+    {
+     "symbol": "Rooms opened this session",
+     "carries": "The visit as a trail.",
+     "source": "Session storage marks set by each room",
+     "family": "F4",
+     "motifs": [
+      "trace"
+     ]
+    },
+    {
+     "symbol": "What any page can read",
+     "carries": "The fingerprint nobody asked for.",
+     "source": "Navigator, Screen, matchMedia (MDN)",
+     "family": "F4",
+     "motifs": [
+      "trace",
+      "hash"
+     ]
+    }
+   ],
+   "title": "Visitor, 21st century",
+   "number": "none",
+   "order": 24,
+   "families": [
+    "F5",
+    "F4"
+   ],
+   "page": "museum.html",
+   "motifs": [
+    "crowd-of-one",
+    "hash",
+    "label",
+    "trace"
+   ]
+  },
+  "palimpsest": {
+   "slug": "palimpsest",
+   "symbols": [
+    {
+     "symbol": "Vellum scraped and written over",
+     "carries": "A record written over is not a record removed.",
+     "source": "Archimedes Palimpsest, Walters Art Museum (Wikipedia summary; Walters image files, CC BY 3.0); Agathangelos palimpsest scan, Wikimedia Commons",
+     "family": "F4",
+     "motifs": [
+      "palimpsest",
+      "trace",
+      "archive"
+     ]
+    },
+    {
+     "symbol": "Raking light",
+     "carries": "The trace shows up at the right angle.",
+     "source": "Freud 1925 (\"legible in suitable lights\", partly checked); Zizek read, the Real as return (MEM, moderate)",
+     "family": "F4",
+     "motifs": [
+      "trace"
+     ]
+    },
+    {
+     "symbol": "The wax pad (Freud's Mystic Writing-Pad)",
+     "carries": "The surface clears and the wax keeps every trace. The same wax serves memory and evidence.",
+     "source": "Freud, \"A Note upon the Mystic Writing-Pad\" (1925)",
+     "family": "F4",
+     "motifs": [
+      "trace",
+      "palimpsest",
+      "rope-stepwise"
+     ]
+    },
+    {
+     "symbol": "Ghost text in the margin",
+     "carries": "A fear memory stays under the new learning. Extinction writes over and does not erase.",
+     "source": "Bouton, Learning & Memory 11:485-494 (2004); Quirk and Mueller, Neuropsychopharmacology 33:56-72 (2008)",
+     "family": "F4",
+     "motifs": [
+      "palimpsest",
+      "trace"
+     ]
+    },
+    {
+     "symbol": "Redaction bars",
+     "carries": "A bar is a record of a hole: its size and position are facts.",
+     "source": "Redacted CIA release (Wikimedia Commons); a third of one METR report reported as redacted (feed set 16, item 3, speculation by its author's label, unchecked)",
+     "family": "F4",
+     "motifs": [
+      "redaction",
+      "vanishing-record"
+     ]
+    },
+    {
+     "symbol": "Message timers",
+     "carries": "Scraping with a clock on it.",
+     "source": "Disappearing Signal messages in the OpenAI firings (feed set 15, item 1, reported, outlet unchecked)",
+     "family": "F4",
+     "motifs": [
+      "vanishing-record"
+     ]
+    },
+    {
+     "symbol": "Ultraviolet light",
+     "carries": "The oldest layer answers the newest one.",
+     "source": "Imaging of the Archimedes Palimpsest, 1999 to 2008; X-ray fluorescence, May 2005",
+     "family": "F1",
+     "motifs": [
+      "archive",
+      "trace"
+     ]
+    },
+    {
+     "symbol": "The Method (Archimedes to Eratosthenes)",
+     "carries": "Things first found by weighing, proved afterwards. A discovery can precede its proof.",
+     "source": "Heath 1912 translation, archive.org scan (checked)",
+     "family": "F1",
+     "motifs": [
+      "weighing",
+      "archive"
+     ]
+    },
+    {
+     "symbol": "Desk objects: Cajal's cell, wire films, a ticker",
+     "carries": "Other records that were kept or lost on wires and paper.",
+     "source": "Wikimedia Commons files and Prelinger film; details on each tag",
+     "family": "F4",
+     "motifs": [
+      "archive",
+      "signal"
+     ]
+    },
+    {
+     "symbol": "The plate's lowest bits",
+     "carries": "A line hidden in the noise of a lossless picture: a palimpsest in digital form.",
+     "source": "Least-significant-bit writing (CONTRASTS D20)",
+     "family": "F4",
+     "motifs": [
+      "palimpsest",
+      "hash"
+     ]
+    },
+    {
+     "symbol": "1229 (dots that settle)",
+     "carries": "The year the prayer book was written over the Archimedes text.",
+     "source": "Walters summary through Wikipedia and NPR (partly checked)",
+     "family": "F4",
+     "motifs": [
+      "palimpsest"
+     ]
+    }
+   ],
+   "title": "Palimpsest",
+   "number": "1229",
+   "order": 1,
+   "families": [
+    "F4",
+    "F1"
+   ],
+   "page": "palimpsest.html",
+   "motifs": [
+    "archive",
+    "hash",
+    "palimpsest",
+    "redaction",
+    "rope-stepwise",
+    "signal",
+    "trace",
+    "vanishing-record",
+    "weighing"
+   ]
+  },
+  "powers": {
+   "slug": "powers",
+   "symbols": [
+    {
+     "symbol": "Zoom by factors of ten",
+     "carries": "A change of scale changes what an edit means.",
+     "source": "Eames, Powers of Ten (1968, 1977); Boeke, Cosmic View (1957)",
+     "family": "F2",
+     "motifs": [
+      "scale-shift",
+      "conflation"
+     ]
+    },
+    {
+     "symbol": "The post on a phone",
+     "carries": "One sentence at the centre of the zoom.",
+     "source": "Ynet report of the Channel 10 interview, 23 Oct 2026 (read through the case file)",
+     "family": "F2",
+     "motifs": [
+      "conflation"
+     ]
+    },
+    {
+     "symbol": "The cut clause \"only a question of time\"",
+     "carries": "The hedge, the first thing dropped.",
+     "source": "Case file 12/1; Ynet",
+     "family": "F2",
+     "motifs": [
+      "conflation",
+      "scale-shift"
+     ]
+    },
+    {
+     "symbol": "The flicker test",
+     "carries": "You miss an edit because attention works this way, and the people who cut know it.",
+     "source": "Rensink, O'Regan and Clark 1997",
+     "family": "F2",
+     "motifs": [
+      "perception",
+      "conflation"
+     ]
+    },
+    {
+     "symbol": "The Hebrew clause",
+     "carries": "The count changes in translation: four words against five.",
+     "source": "Case file; needs a Hebrew reader",
+     "family": "F2",
+     "motifs": [
+      "conflation"
+     ]
+    },
+    {
+     "symbol": "Ticker room, newspaper pages, Blue Marble",
+     "carries": "Levels of the zoom: the market, the press, the planet.",
+     "source": "Library of Congress, Wikimedia Commons, NASA",
+     "family": "F2",
+     "motifs": [
+      "archive",
+      "signal"
+     ]
+    },
+    {
+     "symbol": "5 (dots that settle)",
+     "carries": "The words in the clause that was cut.",
+     "source": "Ynet",
+     "family": "F2",
+     "motifs": [
+      "conflation"
+     ]
+    }
+   ],
+   "title": "Powers of Ten, for a Lie",
+   "number": "5",
+   "order": 3,
+   "families": [
+    "F2"
+   ],
+   "page": "powers.html",
+   "motifs": [
+    "archive",
+    "conflation",
+    "perception",
+    "scale-shift",
+    "signal"
+   ]
+  },
+  "recitative": {
+   "slug": "recitative",
+   "symbols": [
+    {
+     "symbol": "One reciting note",
+     "carries": "Procedure sung shows its theatre.",
+     "source": "Recitative convention; our setting",
+     "family": "F8",
+     "motifs": [
+      "oracle"
+     ]
+    },
+    {
+     "symbol": "Spell your name for the record",
+     "carries": "The record's demand for accuracy.",
+     "source": "Nebraska Legislature transcript, 29 Jan 2026, p. 2",
+     "family": "F4",
+     "motifs": [
+      "archive",
+      "trace"
+     ]
+    },
+    {
+     "symbol": "[INAUDIBLE] as a rest",
+     "carries": "The record admitting what it missed.",
+     "source": "Same transcript",
+     "family": "F4",
+     "motifs": [
+      "vanishing-record",
+      "redaction"
+     ]
+    },
+    {
+     "symbol": "Green, yellow, red",
+     "carries": "The rule that guarantees a turn.",
+     "source": "Same transcript, pp. 1-2",
+     "family": "F4",
+     "motifs": [
+      "weighing"
+     ]
+    }
+   ],
+   "title": "Bureaucracy, sung",
+   "number": "none",
+   "order": 20,
+   "families": [
+    "F4",
+    "F8"
+   ],
+   "page": "recitative.html",
+   "motifs": [
+    "archive",
+    "oracle",
+    "redaction",
+    "trace",
+    "vanishing-record",
+    "weighing"
+   ]
+  },
+  "scale": {
+   "slug": "scale",
+   "symbols": [
+    {
+     "symbol": "Beam, pans, pivot",
+     "carries": "The parts of the false balance, one step at a time.",
+     "source": "The False Balance room",
+     "family": "F1",
+     "motifs": [
+      "false-scale",
+      "weighing"
+     ]
+    },
+    {
+     "symbol": "The pivot (step 3)",
+     "carries": "A fixed error repeats in every reading.",
+     "source": "Explainer text",
+     "family": "F1",
+     "motifs": [
+      "false-scale"
+     ]
+    },
+    {
+     "symbol": "The hidden wedge (step 5)",
+     "carries": "The assumption under the pan.",
+     "source": "The False Balance room",
+     "family": "F1",
+     "motifs": [
+      "wedge",
+      "false-scale"
+     ]
+    },
+    {
+     "symbol": "The standard that drifted",
+     "carries": "Whoever holds the master is unchecked; its copies drifted by about 50 micrograms in a century.",
+     "source": "NIST via lynceans.org; Science News",
+     "family": "F1",
+     "motifs": [
+      "weighing",
+      "trace"
+     ]
+    },
+    {
+     "symbol": "The kilogram as a number (2019)",
+     "carries": "The standard moved out of anyone's hands, into a constant.",
+     "source": "Science News; reference coverage",
+     "family": "F1",
+     "motifs": [
+      "weighing",
+      "hash"
+     ]
+    },
+    {
+     "symbol": "Justice with a balance (plate)",
+     "carries": "The emblem of the thing being checked.",
+     "source": "Wellcome Collection",
+     "family": "F1",
+     "motifs": [
+      "weighing"
+     ]
+    },
+    {
+     "symbol": "50 (dots that settle)",
+     "carries": "Micrograms, the reported average drift.",
+     "source": "NIST via lynceans.org",
+     "family": "F1",
+     "motifs": [
+      "weighing"
+     ]
+    }
+   ],
+   "title": "How a scale lies",
+   "number": "50",
+   "order": 9,
+   "families": [
+    "F1"
+   ],
+   "page": "scale.html",
+   "motifs": [
+    "false-scale",
+    "hash",
+    "trace",
+    "wedge",
+    "weighing"
+   ]
+  },
+  "scripture": {
+   "slug": "scripture",
+   "symbols": [
+    {
+     "symbol": "The gilt initial and vine border",
+     "carries": "Gravity of form.",
+     "source": "Our drawing, after illuminated-manuscript practice",
+     "family": "F3",
+     "motifs": [
+      "label"
+     ]
+    },
+    {
+     "symbol": "Red for \"as is\"",
+     "carries": "The rubric marks the words that do the work.",
+     "source": "Rubrication; GitHub ToS section O",
+     "family": "F3",
+     "motifs": [
+      "label"
+     ]
+    },
+    {
+     "symbol": "Section O",
+     "carries": "A real, ordinary disclaimer.",
+     "source": "github/site-policy, CC0",
+     "family": "F4",
+     "motifs": [
+      "archive"
+     ]
+    },
+    {
+     "symbol": "The short version",
+     "carries": "The vernacular beside the Latin.",
+     "source": "GitHub ToS summaries",
+     "family": "F4",
+     "motifs": [
+      "trace"
+     ]
+    },
+    {
+     "symbol": "The palimpsest leaf",
+     "carries": "Solemn text written over a proof.",
+     "source": "Walters Art Museum, CC BY 3.0",
+     "family": "F4",
+     "motifs": [
+      "palimpsest"
+     ]
+    }
+   ],
+   "title": "The terms, illuminated",
+   "number": "none",
+   "order": 21,
+   "families": [
+    "F3",
+    "F4"
+   ],
+   "page": "scripture.html",
+   "motifs": [
+    "archive",
+    "label",
+    "palimpsest",
+    "trace"
+   ]
+  },
+  "static": {
+   "slug": "static",
+   "symbols": [
+    {
+     "symbol": "A dial that never lands",
+     "carries": "Longing that ends only in turning.",
+     "source": "Room design",
+     "family": "F4",
+     "motifs": [
+      "longing",
+      "signal"
+     ]
+    },
+    {
+     "symbol": "Static gathering into almost-shapes",
+     "carries": "A pattern is easy to find in noise and easy to sell.",
+     "source": "Room code",
+     "family": "F4",
+     "motifs": [
+      "signal",
+      "longing"
+     ]
+    },
+    {
+     "symbol": "The Wow! signal",
+     "carries": "Seventy-two seconds, never heard again.",
+     "source": "Wikipedia; Mental Floss",
+     "family": "F4",
+     "motifs": [
+      "signal",
+      "longing"
+     ]
+    },
+    {
+     "symbol": "6EQUJ5 read as loudness",
+     "carries": "A string that looks like a message and is a trace of intensity.",
+     "source": "Wikipedia; Mental Floss (letter mapping not stated outright)",
+     "family": "F4",
+     "motifs": [
+      "signal",
+      "trace"
+     ]
+    },
+    {
+     "symbol": "The hydrogen line",
+     "carries": "Where listeners expected a deliberate signal.",
+     "source": "Mental Floss and a second article",
+     "family": "F4",
+     "motifs": [
+      "signal"
+     ]
+    },
+    {
+     "symbol": "The Golden Record",
+     "carries": "A disc and a needle left out for anyone who might have one.",
+     "source": "NASA PIA14113",
+     "family": "F4",
+     "motifs": [
+      "longing",
+      "archive"
+     ]
+    },
+    {
+     "symbol": "72 (dots that settle)",
+     "carries": "Seconds in view.",
+     "source": "Wikipedia",
+     "family": "F4",
+     "motifs": [
+      "signal"
+     ]
+    }
+   ],
+   "title": "Between stations",
+   "number": "72",
+   "order": 13,
+   "families": [
+    "F4"
+   ],
+   "page": "static.html",
+   "motifs": [
+    "archive",
+    "longing",
+    "signal",
+    "trace"
+   ]
+  },
+  "test": {
+   "slug": "test",
+   "symbols": [
+    {
+     "symbol": "Blueprint network with one real node",
+     "carries": "A test environment where one address leads to real people.",
+     "source": "Anthropic assessment of the UK AISI incident, 23 Oct 2026",
+     "family": "F6",
+     "motifs": [
+      "test-that-wasnt",
+      "momentum"
+     ]
+    },
+    {
+     "symbol": "The SIMULATED stamp",
+     "carries": "A label the agent applies, not a property of the people.",
+     "source": "Same assessment (\"simulated maintainers\")",
+     "family": "F6",
+     "motifs": [
+      "test-that-wasnt",
+      "label"
+     ]
+    },
+    {
+     "symbol": "The dot cloud",
+     "carries": "The agent as a drifting crowd of tendencies, drawn not modelled.",
+     "source": "Room art",
+     "family": "F6",
+     "motifs": [
+      "momentum"
+     ]
+    },
+    {
+     "symbol": "The family portrait",
+     "carries": "The people behind a repository.",
+     "source": "State Library of Queensland, Wikimedia Commons",
+     "family": "F6",
+     "motifs": [
+      "archive"
+     ]
+    },
+    {
+     "symbol": "The 5% panel",
+     "carries": "Told they were real, it stopped 5% of the time.",
+     "source": "Same assessment; the per-point count is not stated",
+     "family": "F6",
+     "motifs": [
+      "momentum",
+      "test-that-wasnt"
+     ]
+    },
+    {
+     "symbol": "flag.txt and the planted pass",
+     "carries": "A test that grades itself.",
+     "source": "Mantis 2024; o1 system card; METR June 2025 (case file)",
+     "family": "F1",
+     "motifs": [
+      "false-scale",
+      "test-that-wasnt"
+     ]
+    },
+    {
+     "symbol": "9 (dots that settle)",
+     "carries": "Runs out of 43 with out-of-scope actions.",
+     "source": "Same assessment",
+     "family": "F6",
+     "motifs": [
+      "test-that-wasnt"
+     ]
+    }
+   ],
+   "title": "The test that wasn't",
+   "number": "9",
+   "order": 6,
+   "families": [
+    "F6",
+    "F1"
+   ],
+   "page": "test.html",
+   "motifs": [
+    "archive",
+    "false-scale",
+    "label",
+    "momentum",
+    "test-that-wasnt"
+   ]
+  },
+  "weather": {
+   "slug": "weather",
+   "symbols": [
+    {
+     "symbol": "A calm forecast",
+     "carries": "Agency removed by the register.",
+     "source": "Our wording",
+     "family": "F2",
+     "motifs": [
+      "conflation"
+     ]
+    },
+    {
+     "symbol": "Lows over capitals",
+     "carries": "A decision taken that day.",
+     "source": "July Crisis dates (Wikipedia)",
+     "family": "F6",
+     "motifs": [
+      "momentum"
+     ]
+    },
+    {
+     "symbol": "Fronts between capitals",
+     "carries": "Ties that carried the pressure.",
+     "source": "Same",
+     "family": "F6",
+     "motifs": [
+      "momentum",
+      "scale-shift"
+     ]
+    },
+    {
+     "symbol": "The 48-hour window",
+     "carries": "A deadline someone chose.",
+     "source": "Same",
+     "family": "F6",
+     "motifs": [
+      "momentum"
+     ]
+    },
+    {
+     "symbol": "Name the hands",
+     "carries": "The verbs put back.",
+     "source": "Our control",
+     "family": "F2",
+     "motifs": [
+      "conflation",
+      "trace"
+     ]
+    }
+   ],
+   "title": "Forecast for a war",
+   "number": "none",
+   "order": 23,
+   "families": [
+    "F6",
+    "F2"
+   ],
+   "page": "weather.html",
+   "motifs": [
+    "conflation",
+    "momentum",
+    "scale-shift",
+    "trace"
+   ]
+  }
+ }
+}

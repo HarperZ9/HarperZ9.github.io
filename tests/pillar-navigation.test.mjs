@@ -149,11 +149,12 @@ test('site index search includes reviewed route context beyond labels', () => {
   const mneme = entries.find(entry => entry.href === 'systems/mneme.html');
   assert.ok(mneme, 'Mneme route is missing from the site index');
   assert.match(mneme.searchText, /SQLite memory store/);
-  assert.match(mneme.searchText, /recall receipts/);
+  assert.match(mneme.searchText, /recall with sources/);
 
   assert.ok(indexMatches('memory').includes('systems/mneme.html'));
-  for (const href of ['flywheel.html', 'systems/mneme.html', 'emet.html']) {
-    assert.ok(indexMatches('receipts').includes(href), `receipts search should include ${href}`);
+  // 2026-10-23-plain-copy: purposes describe what each tool does, so search by those words.
+  for (const [term, href] of [['contract', 'flywheel.html'], ['recall', 'systems/mneme.html'], ['bytes', 'emet.html']]) {
+    assert.ok(indexMatches(term).includes(href), `${term} search should include ${href}`);
   }
   assert.ok(indexMatches('quantum').includes('research-quantum-error-correction.html'));
   assert.ok(indexMatches('benchmark').includes('research-hyphal-context-benchmark.html'));

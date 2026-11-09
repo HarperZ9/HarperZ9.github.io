@@ -92,3 +92,27 @@ test("a malformed request never puts the pen surface on a material with no work 
   assert.equal(parseStudioLink("?material=plate&work=w001"), null);
   assert.equal(parseStudioLink(""), null);
 });
+
+test("the orderings are the archive page's own", async () => {
+  const { LIBRARY_ORDERS, orderWorks } = await import("./studio-library.js");
+  assert.deepEqual(LIBRARY_ORDERS.map((o) => o.label), ["As archived", "By light", "By tone", "By colour", "By kind"]);
+  const lib = buildLibrary({ works: [
+    work("w001", { measure: { lightness: 0.6, chroma: 5, tone: "mid", family: "warm" } }),
+    work("w002", { kind: "collage", measure: { lightness: 0.1, chroma: 30, tone: "dark", family: "cool" } }),
+    work("w003", { measure: { lightness: 0.9, chroma: 2, tone: "luminous", family: "monochrome" } }),
+    work("w004", { measure: { lightness: 0.3, chroma: 50, tone: "dark", family: "warm" } }),
+  ] });
+  const ids = (key, works = lib.works) => orderWorks(works, key, lib.works).map((w) => w.id);
+  assert.deepEqual(ids("archived"), ["w001", "w002", "w003", "w004"]);
+  assert.deepEqual(ids("spectrum"), ["w002", "w004", "w001", "w003"], "light: darkest first");
+  assert.deepEqual(ids("tone"), ["w002", "w004", "w001", "w003"], "dark band, then mid, then luminous");
+  assert.deepEqual(ids("colour"), ["w003", "w004", "w001", "w002"], "monochrome, warm by chroma down, cool");
+  assert.deepEqual(ids("kind"), ["w001", "w003", "w004", "w002"], "singles in archive order, then collages");
+  assert.deepEqual(ids("nonsense"), ids("archived"), "an unknown key keeps archive order");
+  // A filtered list keeps each work's archive place.
+  const warm = filterWorks(lib.works, "warm");
+  assert.deepEqual(ids("kind", warm), ["w001", "w004"]);
+  assert.deepEqual(ids("spectrum", warm), ["w004", "w001"]);
+  // Nothing is lost or repeated.
+  for (const o of LIBRARY_ORDERS) assert.deepEqual([...ids(o.key)].sort(), ["w001", "w002", "w003", "w004"]);
+});

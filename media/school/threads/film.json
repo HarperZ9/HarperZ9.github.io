@@ -1,0 +1,135 @@
+{
+ "schema": "explainer-film/1",
+ "slug": "threads",
+ "title": "Threads, workgroups and memory",
+ "page": "night-school-threads.html",
+ "seed": 20261036,
+ "voice": "pylon",
+ "draft": true,
+ "numbers_from": "media/school/threads/facts.json, computed by tools/school/fill_threads.mjs; tools/school/fill_script.mjs fills every double-brace token below from it",
+ "host": {
+  "guide": "pylon",
+  "style": "painted",
+  "open": {
+   "seconds": 4.0,
+   "what": "The cannery at night. Long rows of workers wait at their benches; at the far end, the warehouse shelves. Pylon rings the shift bell. No words."
+  },
+  "close": {
+   "seconds": 5.0,
+   "what": "The crews carry their last cans to the line, the warehouse doors close, and Pylon puts a cone on the one bench that sat idle."
+  }
+ },
+ "segments": [
+  {
+   "key": "title",
+   "layout": "title",
+   "heading": "Threads, workgroups and memory",
+   "lines": [
+    "Threads, workgroups and memory.",
+    "A graphics chip does not do one sum very fast. It does thousands of small sums at the same time. Tonight Pylon runs the cannery where that happens, and counts every trip to the warehouse."
+   ]
+  },
+  {
+   "key": "threads",
+   "heading": "One worker, one can",
+   "sources": [
+    "ours-threads",
+    "wgsl"
+   ],
+   "lines": [
+    "The job: add two lists of numbers, element by element, into a third. A list of 1,048,576 numbers.",
+    "On a graphics chip, each element gets its own worker, called a thread. Thread 40 reads number 40 from each list, adds them, and writes the sum to place 40. Every thread runs the same few lines of code."
+   ]
+  },
+  {
+   "key": "crews",
+   "heading": "Crews",
+   "sources": [
+    "ours-threads",
+    "webgpu",
+    "cuda"
+   ],
+   "lines": [
+    "Threads come in crews called workgroups. You choose the crew size; in WebGPU a crew may hold up to 256 threads by default.",
+    "A thread finds its element from its crew's number and its place in the crew: crew number times crew size, plus its place. With crews of 16, crew 2, place 8, is element 40.",
+    "Crews come in whole numbers. Add 1,000 numbers with crews of 64 and you need 16 crews, 1,024 threads. The last 24 have nothing to do, so the code must check that its element exists."
+   ]
+  },
+  {
+   "key": "edge",
+   "heading": "One past the end",
+   "sources": [
+    "ours-threads",
+    "wgsl"
+   ],
+   "lines": [
+    "Get that check wrong by one, and one idle thread writes one place past the end of the list. In a list of 40 numbers, numbered 0 to 39, element 40 has no place of its own.",
+    "On a graphics chip that need not crash. The WGSL rules call it an error, but let it end quietly: the stray write may land anywhere in the same buffer, be dropped, or stop that one thread. So the output can look right while something else in the same buffer was spoiled.",
+    "Our checker compares every sum with a slow, careful one on the main processor, and plants guard values just past the end. Of 12 test cases, nine came from three kernels we broke on purpose, each run three ways. Together the two checks catch seven of the nine. The two they miss are stray writes the chip dropped, which leave every sum right. Only our emulator, which counts every write, sees those."
+   ],
+   "predict": [
+    {
+     "after": [
+      0,
+      0
+     ],
+     "question": "If the check is off by one, does the program crash?",
+     "hold": 2.5
+    }
+   ]
+  },
+  {
+   "key": "warehouse",
+   "heading": "Trips to the warehouse",
+   "sources": [
+    "ours-threads",
+    "cuda"
+   ],
+   "lines": [
+    "On NVIDIA chips, each crew is split into teams of 32 threads, called warps; other chips use other team sizes, from 4 to 128, and our counts use NVIDIA's 32. When a team reads from memory, the chip fetches whole blocks at a time; the current CUDA guide describes blocks of 32 bytes.",
+    "If the 32 threads read 32 neighbouring numbers, 4 bytes each, that is 128 bytes: 4 blocks. One team, a few trips.",
+    "Now spread the reads out, every eighth number. The same 32 reads now touch 32 blocks, one per thread."
+   ]
+  },
+  {
+   "key": "count",
+   "heading": "Counting the trips",
+   "sources": [
+    "ours-threads"
+   ],
+   "lines": [
+    "Count every trip for the whole job, reads and writes. With neighbouring reads: 393,216 blocks. With reads spread eight apart: 2,228,224. That is 5.67 times the trips, not 8, because the writes still go to neighbouring places. Most of each block fetched is thrown away.",
+    "Spreading them further changes nothing more in this model, because each thread already has a block of its own."
+   ],
+   "predict": [
+    {
+     "after": [
+      0,
+      0
+     ],
+     "question": "Reads spread eight apart. How many times the trips?",
+     "hold": 2.5
+    }
+   ]
+  },
+  {
+   "key": "measure",
+   "heading": "Your own chip",
+   "sources": [
+    "ours-threads"
+   ],
+   "lines": [
+    "These are counts from a model of the chip, not times. Real chips have caches that hide some of the cost, and they differ from one another.",
+    "So the lab runs the real kernel on the chip in your own computer, if your browser allows it, and times it. If the time for spread-out reads is far from what the count predicts, then caches, a different team or block size, or the cost of starting the job are at work."
+   ]
+  },
+  {
+   "key": "close",
+   "heading": "Goodnight",
+   "lines": [
+    "Thousands of small workers, in crews, fetching in blocks. Fast code keeps neighbouring workers on neighbouring numbers, and checks the edges.",
+    "Next in the cannery: multiplying whole tables, and carrying trays instead of single cans. Goodnight."
+   ]
+  }
+ ]
+}

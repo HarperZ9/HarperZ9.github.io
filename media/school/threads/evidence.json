@@ -1,0 +1,57 @@
+{
+ "schema": "explainer-evidence/1",
+ "explainer": "threads",
+ "read": "2026-10-15",
+ "sources": {
+  "ours-threads": {
+   "short": "Night School's GPU emulator and kernels, built for this film",
+   "citation": "media/school/threads/facts.json, written by tools/school/fill_threads.mjs from system/school/threads.mjs: WGSL kernels that add two arrays (contiguous and strided), an exact JS emulator of thread grouping, idle threads and memory transactions in 32-byte and 128-byte models, and a checker with canaries tested on nine broken kernels.",
+   "url": "https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/threads",
+   "read": "full",
+   "claims": [
+    "n = 1,000 with workgroups of 64: 16 workgroups, 1,024 threads, 24 idle.",
+    "32-byte model: contiguous 393,216 transactions for the whole job; stride 8 and above 2,228,224 (efficiency 0.1765).",
+    "Of nine broken cases (three kernels, three allowed outcomes each), the output check with canaries misses two (stray writes dropped); the emulator's out-of-bounds store count catches those, and no case escapes both."
+   ],
+   "n": "Exact counts.",
+   "interval": "Not applicable: deterministic.",
+   "does_not_prove": "Any timing on a real GPU; caches are not modelled."
+  },
+  "webgpu": {
+   "short": "W3C WebGPU specification",
+   "citation": "W3C (2026). WebGPU. Candidate Recommendation Draft; supported limits table.",
+   "url": "https://www.w3.org/TR/webgpu/",
+   "read": "to be read by the fact-check",
+   "claims": [
+    "Default maxComputeInvocationsPerWorkgroup 256 and maxComputeWorkgroupSizeX 256."
+   ],
+   "n": "Not applicable.",
+   "interval": "Not applicable.",
+   "does_not_prove": "Anything about a particular device."
+  },
+  "wgsl": {
+   "short": "W3C WGSL specification",
+   "citation": "W3C (2026). WebGPU Shading Language. Candidate Recommendation Draft; built-in values and out-of-bounds access.",
+   "url": "https://www.w3.org/TR/WGSL/",
+   "read": "to be read by the fact-check",
+   "claims": [
+    "global_invocation_id = workgroup_id * workgroup_size + local_invocation_id; an out-of-bounds store may write to any location of the bound buffer or not be executed."
+   ],
+   "n": "Not applicable.",
+   "interval": "Not applicable.",
+   "does_not_prove": "Anything about a particular device."
+  },
+  "cuda": {
+   "short": "NVIDIA CUDA C++ Programming Guide",
+   "citation": "NVIDIA (2026). CUDA Programming Guide, version 13.4.2: section 1.2.2.2 (warps) and section 2.3.4.1 (global memory, 32-byte transactions).",
+   "url": "https://docs.nvidia.com/cuda/cuda-programming-guide/",
+   "read": "to be read by the fact-check",
+   "claims": [
+    "Threads execute in warps of 32; global memory is accessed in 32-byte transactions."
+   ],
+   "n": "Not applicable.",
+   "interval": "Not applicable.",
+   "does_not_prove": "Anything about WebGPU devices from other vendors."
+  }
+ }
+}

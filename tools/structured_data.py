@@ -7,7 +7,9 @@ scripts/system-record-head.mjs. The publication builder and the corpus renderer
 call apply() on the pages they own, so their receipts cover the block.
 
 Every value comes from something the site already publishes: the page's meta
-tags, feed.xml, system/systems.json and system/scholarly-records.json.
+tags, feed.xml, system/systems.json, system/scholarly-records.json, the tool
+records in discover.json (SoftwareApplication, with version, download and
+licence) and system/videos.json (VideoObject, from tools/video_registry.py).
 
     python tools/structured_data.py          rewrite the blocks
     python tools/structured_data.py --check  exit 1 if any block is stale
@@ -32,6 +34,9 @@ SAME_AS = [
     "https://orcid.org/0009-0001-7175-5393",
     "https://www.linkedin.com/in/zaindanaharper/",
     "https://huggingface.co/zaindanaharper",
+    # Checked 2026-10-23: YouTube oEmbed names this channel as the author of the
+    # two videos the site's records cite (IeFOvDYrPCI, K_i9W6xCwKc).
+    "https://www.youtube.com/@zaindanaharper",
 ]
 BEGIN = "<!-- structured-data:begin (tools/structured_data.py) -->"
 END = "<!-- structured-data:end -->"
@@ -46,6 +51,11 @@ FEEDS = [
 PINNED = {"checking-the-machines.html", "frontier-safety.html"}
 META = re.compile(r"<meta\s+([^>]*)>", re.I)
 
+try:
+    from tools.structured_nodes import application_node, video_node
+except ImportError:  # run as a script, with tools/ on the path
+    from structured_nodes import application_node, video_node
+
 
 @dataclass
 class Context:
@@ -53,6 +63,8 @@ class Context:
     products: dict[str, dict] = field(default_factory=dict)
     scholarly: list[dict] = field(default_factory=list)
     landing: dict[str, dict] = field(default_factory=dict)
+    tools: dict[str, dict] = field(default_factory=dict)
+    videos: dict[str, list[dict]] = field(default_factory=dict)
 
 
 def is_public_source(href: object) -> bool:
@@ -83,7 +95,11 @@ def load_context(root: Path = ROOT, published: dict[str, str] | None = None) -> 
     }
     records = _registry(root / "system/scholarly-records.json", "records")
     landing = {f"{ORIGIN}/{r['landing']}": r for r in records if r.get("landing")}
-    return Context(published, products, records, landing)
+    tools = {f"{ORIGIN}/{t['page']}": t for t in _registry(root / "discover.json", "tools") if t.get("page")}
+    videos: dict[str, list[dict]] = {}
+    for video in _registry(root / "system/videos.json", "videos"):
+        videos.setdefault(f"{ORIGIN}/{video['page']}", []).append(video)
+    return Context(published, products, records, landing, tools, videos)
 
 
 def _meta_all(source: str, key: str) -> list[str]:
@@ -188,6 +204,16 @@ def citation_tags(record: dict) -> list[str]:
 
 
 def graph_for(page: dict, ctx: Context) -> tuple[list[dict], list[str]]:
+    graph, extra = page_graph(page, ctx)
+    url = page["canonical"]
+    added = []
+    if url in ctx.tools:
+        added.append(application_node(ctx.tools[url], url))
+    added += [video_node(v) for v in ctx.videos.get(url, [])]
+    return graph + added, extra
+
+
+def page_graph(page: dict, ctx: Context) -> tuple[list[dict], list[str]]:
     url = page["canonical"]
     if url == f"{ORIGIN}/":
         site = {"@type": "WebSite", "@id": WEBSITE_ID, "name": "Zain Dana Harper", "url": f"{ORIGIN}/",

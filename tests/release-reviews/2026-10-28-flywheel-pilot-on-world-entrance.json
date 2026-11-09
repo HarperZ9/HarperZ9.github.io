@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-28",
+  "note": "The Flywheel verification pilot page (review 2026-10-23-flywheel-verification-pilot) is brought up to date with main after the world entrance (#484). The pilot route is inserted into main's route registry after Work with me and the registry is regenerated, with the Superframe entry kept byte for byte as main had it; the site index is re-rendered from it; the sitemap digest in the publication build receipt is recomputed. The home bundle is now index-Bg7UPow6.js, so its embedded registry gains the pilot entry and the two refreshed Work search texts in place, without a rebuild; index-DnlLsL1T.js returns to its retained-history bytes. The home (index.html) is unchanged.",
+  "paths": {
+    "assets/index-Bg7UPow6.js": "f1cd15f7e050c866bd9de814540b62c92ef7a70fb213b85e1653c4508b868a5f",
+    "publications/build.json": "6d472e64d14f4416b23dd1bb23b0d69397d5894aa136eafc53afb3527d7005fb",
+    "site-index.html": "04a5c2b98b1f733e4e9815d9a3016328e1d2f9fb6edfb67258e40aa7ce33fa8d",
+    "sitemap.xml": "b57476320cfadd4f9b8de883c234e9bf364f94676d1055370091d4211db76f92",
+    "system/routes.js": "f983552579d1217c08b9ac4110ea5b5b20d8ea128e9e982c7d1beff44bff4de8",
+    "work-with-me.html": "fff8c08c06b15050d7870427f2dc7d465258ac73e3ea2e2ec9040913f97950e5"
+  }
+}

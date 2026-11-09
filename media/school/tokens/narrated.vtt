@@ -1,0 +1,137 @@
+WEBVTT
+
+00:00:04.600 --> 00:00:05.547
+Tokens.
+
+00:00:05.867 --> 00:00:07.488
+Cutting text into crates.
+
+00:00:08.088 --> 00:00:12.215
+Everything that comes through my customs shed goes into a standard crate.
+
+00:00:12.535 --> 00:00:15.629
+Text too, before any language model can touch it.
+
+00:00:16.829 --> 00:00:18.808
+A language model doesn't read letters.
+
+00:00:19.128 --> 00:00:23.318
+It reads a list of pieces, each one a number from its vocabulary.
+
+00:00:23.638 --> 00:00:26.164
+The question is how big to cut the pieces.
+
+00:00:26.764 --> 00:00:40.153
+Cut by letter, with one extra mark for the end of each word, and the guides' sentences take about 4.39 pieces per word, counting each full stop and question mark as a word: tiny crates, a great many trips.
+
+00:00:40.753 --> 00:00:43.343
+Cut by whole word, and every word is one piece.
+
+00:00:43.663 --> 00:00:47.347
+But a word the model has never seen has no crate at all.
+
+00:00:48.547 --> 00:00:50.800
+Byte-pair encoding meets in the middle.
+
+00:00:51.120 --> 00:00:53.436
+Start from single letters.
+
+00:00:53.756 --> 00:00:56.913
+Count every pair of neighbouring pieces, inside words.
+
+00:00:57.233 --> 00:00:59.718
+The most common pair gets a crate of its own.
+
+00:01:00.038 --> 00:01:01.175
+Then count again.
+
+00:01:01.775 --> 00:01:09.122
+On the guides' sentences, the first merge joins an e to the end-of-word mark, so an e that ends a word gets one crate.
+
+00:01:09.442 --> 00:01:13.589
+By the fifth merge, the whole word 'the' has its own crate.
+
+00:01:14.189 --> 00:01:16.947
+After fifty merges, how many pieces does a word take?
+
+00:01:19.447 --> 00:01:23.679
+After 50 merges, a word takes 1.80 pieces on average.
+
+00:01:23.999 --> 00:01:28.104
+After 136, every one of the guides' words is a single piece.
+
+00:01:29.304 --> 00:01:32.146
+Now a word that never came through the shed: lamplit.
+
+00:01:32.466 --> 00:01:33.897
+There's no crate for it.
+
+00:01:34.497 --> 00:01:40.140
+So it's cut into pieces that do have crates: l, am, p, and lit at the end of a word.
+
+00:01:40.460 --> 00:01:41.786
+Nothing is thrown away.
+
+00:01:42.106 --> 00:01:50.106
+Rico Sennrich and his colleagues used this method, in a 2016 paper, to translate rare words.
+
+00:01:51.306 --> 00:01:54.569
+The guides only know 44 words and 2 marks.
+
+00:01:54.889 --> 00:02:01.731
+So here's real English: the opening of Moby-Dick, about 599 words of it, to learn the merges from.
+
+00:02:02.331 --> 00:02:05.868
+Then a page it never saw, the opening of Pride and Prejudice.
+
+00:02:06.188 --> 00:02:10.883
+With 400 merges, the new page takes 2.14 pieces per word.
+
+00:02:11.203 --> 00:02:15.876
+The word lighthouse, never seen, comes out as li, gh, thou and se.
+
+00:02:17.076 --> 00:02:18.992
+Does it matter which pairs we merge?
+
+00:02:19.312 --> 00:02:29.396
+Merge random pairs instead, the same number of times, and over ten tries the guides' words still take 1.32 to 1.67 pieces each, instead of one.
+
+00:02:30.596 --> 00:02:33.775
+There's one more choice: what the very first pieces are.
+
+00:02:34.095 --> 00:02:35.590
+Characters run out fast.
+
+00:02:35.910 --> 00:02:45.741
+The page from Pride and Prejudice has curly quotation marks, and a capital D and E, that Moby-Dick never used, so with characters as the base, they have no crate.
+
+00:02:46.341 --> 00:02:48.762
+GPT-2 starts from bytes instead.
+
+00:02:49.082 --> 00:02:53.840
+There are only 256 of them, and any text at all is some list of bytes.
+
+00:02:54.160 --> 00:03:02.055
+An a is one byte, an e with its accent built in is two, a curly apostrophe three, and a seal emoji four.
+
+00:03:02.655 --> 00:03:08.444
+Start from bytes, and that new page has 0 pieces without a crate, instead of 16.
+
+00:03:09.644 --> 00:03:13.750
+The little language model from the attention lesson skips all of this.
+
+00:03:14.070 --> 00:03:21.164
+It has one crate per word, 46 of them counting the full stop and question mark, because its whole world is those 46.
+
+00:03:21.764 --> 00:03:32.543
+Byte-pair encoding needs 136 merges, and a vocabulary of 160, to cut the same sentences into whole words, because every piece it made on the way stays in the vocabulary.
+
+00:03:33.743 --> 00:03:41.112
+Common pairs get their own crates, rare words come apart into pieces, and bytes mean nothing is ever left on the dock.
+
+00:03:41.712 --> 00:03:44.596
+Next: giving every crate a place on the chart.
+
+00:03:44.916 --> 00:03:45.653
+Goodnight.
+

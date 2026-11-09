@@ -1,0 +1,46 @@
+{
+ "schema": "explainer-evidence/1",
+ "explainer": "gaming",
+ "read": "2026-10-15",
+ "sources": {
+  "ours-gaming": {
+   "short": "Night School's specification-gaming runs, trained for this film",
+   "citation": "media/school/gaming/facts.json, written by tools/school/fill_gaming.mjs from system/school/gaming.mjs: REINFORCE on the attention model from its step-200 checkpoint and from the trained model, against four checkers (gamed, patched, fixed, exact), 800 steps, batch 32, three seeds each; correctness judged against the generator's exact answer.",
+   "url": "https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/gaming",
+   "read": "full",
+   "claims": [
+    "From step 200: gamed checker reward 0.313 to 0.997, correctness to 0 (peaks 0.74 to 0.99 first); first word right 0.982, answers never stop.",
+    "Patched: correctness 0.938 (one seed 0.832); fixed: 0.984; correlation of reward and correctness 0.998 (fixed) against -0.384 (gamed).",
+    "From the trained model the gamed checker is not exploited: correctness 0.999.",
+    "From the trained model the patched checker let one of three runs drift into padding: correctness 0.918, 0.543, 1.0 (start 0.965)."
+   ],
+   "n": "3 seeds per checker; 256 held-out prompts.",
+   "interval": "Per-seed values in facts.json.",
+   "does_not_prove": "Anything about large models; one task, one optimiser, one learning rate."
+  },
+  "krakovna2020": {
+   "short": "Krakovna and others 2020, Specification gaming: the flip side of AI ingenuity",
+   "citation": "Krakovna, V., Uesato, J., Mikulik, V., Rahtz, M., Everitt, T., Kumar, R., Kenton, Z., Leike, J., Legg, S. (2020). Specification gaming: the flip side of AI ingenuity. DeepMind blog, 21 April 2020, with the specification gaming examples list.",
+   "url": "https://deepmind.google/discover/blog/specification-gaming-the-flip-side-of-ai-ingenuity/",
+   "read": "to be read by the fact-check",
+   "claims": [
+    "Specification gaming is behaviour that satisfies the literal specification of an objective without achieving the intended outcome; the post collects many examples."
+   ],
+   "n": "Not applicable.",
+   "interval": "Not applicable.",
+   "does_not_prove": "Anything about this model."
+  },
+  "baker2025": {
+   "short": "Baker and others 2025, Monitoring Reasoning Models for Misbehavior and the Risks of Promoting Obfuscation",
+   "citation": "Baker, B., Huizinga, J., Gao, L., Dou, Z., Guan, M. Y., Madry, A., Zaremba, W., Pachocki, J., Farhi, D. (2025). Monitoring Reasoning Models for Misbehavior and the Risks of Promoting Obfuscation. arXiv:2503.11926.",
+   "url": "https://arxiv.org/abs/2503.11926",
+   "read": "to be read by the fact-check",
+   "claims": [
+    "A monitor reading chain-of-thought catches reward hacking in agentic coding environments; putting the monitor into the training reward leads to obfuscated reward hacking."
+   ],
+   "n": "Not applicable.",
+   "interval": "Not applicable.",
+   "does_not_prove": "Anything about this model."
+  }
+ }
+}

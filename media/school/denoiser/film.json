@@ -1,0 +1,138 @@
+{
+ "schema": "explainer-film/1",
+ "slug": "denoiser",
+ "title": "Case study: the denoiser's tensor-core parity",
+ "page": "night-school-denoiser.html",
+ "seed": 20261041,
+ "voice": "rerun",
+ "draft": true,
+ "numbers_from": "media/school/denoiser/facts.json, computed by tools/school/fill_denoiser.mjs; tools/school/fill_script.mjs fills every double-brace token below from it",
+ "host": {
+  "guide": "rerun",
+  "style": "thriller",
+  "open": {
+   "seconds": 4.0,
+   "what": "The tide line at night. A patch of wet sand catches one hard glint of light among dull pebbles. Rerun stops, raises the prism, and looks through it at the glint. No words."
+  },
+  "close": {
+   "seconds": 5.0,
+   "what": "Rerun plants a post in the sand where the line was drawn, steps back, and leaves it standing. The glint fades with the tide."
+  }
+ },
+ "segments": [
+  {
+   "key": "title",
+   "layout": "title",
+   "heading": "The denoiser's tensor-core parity",
+   "lines": [
+    "Case study: the denoiser's tensor-core parity.",
+    "Last lesson measured where 16-bit numbers run out. Tonight Rerun follows a real case where they did: a check that failed, the search for why, and the fix that was not made."
+   ]
+  },
+  {
+   "key": "parity",
+   "heading": "Two paths, one check",
+   "sources": [
+    "rn-rtx",
+    "rn-bounds"
+   ],
+   "lines": [
+    "raw-native is a renderer with a small neural denoiser. Its network runs two ways on the graphics chip: one on the tensor cores, with 16-bit inputs and weights and 32-bit sums, and one in plain 32-bit arithmetic.",
+    "Before either ships, a parity check compares every output value with a reference. The rule is fixed in advance: no value may differ by more than 0.01.",
+    "On an RTX 4090, over 64 frames, the 32-bit path's worst difference was 0.0029. The tensor-core path's was 0.1067, at frame 48."
+   ],
+   "predict": [
+    {
+     "after": [
+      2,
+      0
+     ],
+     "question": "The tensor-core path missed by ten times the bound. Wrong everywhere, or in a few places?",
+     "hold": 2.5
+    }
+   ]
+  },
+  {
+   "key": "rare",
+   "heading": "A few places",
+   "sources": [
+    "rn-rtx",
+    "rn-emu"
+   ],
+   "lines": [
+    "In a few places. Out of 24,883,200 values, the average difference was about six millionths, and 99.99 percent were under 0.0018.",
+    "A check on the average would have passed. This one asks for the worst value, so one bad pixel is enough to fail it."
+   ]
+  },
+  {
+   "key": "reproduce",
+   "heading": "Reproduce before fixing",
+   "sources": [
+    "rn-note",
+    "rn-emu"
+   ],
+   "lines": [
+    "Before trying any fix, the note on this miss wrote down its predictions, then ran the network on the main processor with the same 16-bit rounding.",
+    "The emulation missed by 0.1085, at the same frame and the same pixel as the chip. So 16-bit arithmetic alone reproduces the miss; no fault in the chip is needed to explain it.",
+    "The note had set out two guesses: the weights alone, or the inputs alone. Both were refuted as stated. Rounding only the weights gave 0.1370, and rounding only the inputs gave 0.1041, so either rounding by itself misses the bound."
+   ]
+  },
+  {
+   "key": "glint",
+   "heading": "A sun glint",
+   "sources": [
+    "rn-note"
+   ],
+   "lines": [
+    "The bad pixels were single sun glints. At frame 48, one sample on a glossy surface carried 1,087 units of light beside neighbours near 0.1.",
+    "The denoiser first divides by the surface's specular reflectance, 0.04 plus a small 0.01, which turns that sample into about 21,700. Its five by five filter then weighs it down to around a hundred: the note gives 105, against a reference of 110."
+   ]
+  },
+  {
+   "key": "arithmetic",
+   "heading": "The arithmetic",
+   "sources": [
+    "rn-note",
+    "ours-denoiser",
+    "ours-precision"
+   ],
+   "lines": [
+    "Now the bound. Missing by no more than 0.01 on a value of 110 asks for about one part in ten thousand. Near 110, 16-bit marks are 0.0625 apart, as we measured last lesson.",
+    "The filter itself runs in 32-bit. The rounding happens earlier, in the 16-bit layers that compute the filter's weights. 16-bit numbers hold about one part in a thousand, and any error that size feeding the filter, times a value of 110, moves the answer by about a tenth.",
+    "We rebuilt that step at small scale, with a made-up glint of the same size. In our seeded case the stand-in misses by 0.0789 with 16-bit inputs and weights, and differs by only 0.00002289 in 32-bit; across 200 seeds it misses in 180. Take the glint away and every version passes. These are the stand-in's numbers, not the real network's."
+   ]
+  },
+  {
+   "key": "fixes",
+   "heading": "Fixes that fell short",
+   "sources": [
+    "rn-note",
+    "rn-mixed"
+   ],
+   "lines": [
+    "The natural fix is mixed precision: keep the most sensitive layers in 32-bit and the rest on the tensor cores.",
+    "In the emulation, with the full-resolution head in 32-bit, the worst difference fell to 0.0512. With three layers, 0.0341. With six, 0.0340, on 4 pixels. Still over.",
+    "None of the mixed splits tried met the bound; 32-bit throughout did."
+   ]
+  },
+  {
+   "key": "bound",
+   "heading": "The bound stays",
+   "sources": [
+    "rn-note"
+   ],
+   "lines": [
+    "So the tensor-core path stays unchanged this round, and its parity check still fails. The options named are 32-bit throughout, which costs speed, or a model change that keeps the filter away from values that large, for example filtering a squeezed range and expanding it after, which also affects image quality.",
+    "And the note says plainly that the bound is not loosened. In our view that is the lesson: a bound loosened after the miss is seen no longer tests the result. It is fitted to it."
+   ]
+  },
+  {
+   "key": "close",
+   "heading": "Goodnight",
+   "lines": [
+    "Reproduce the miss, find the arithmetic, and leave the post where you planted it.",
+    "Goodnight."
+   ]
+  }
+ ]
+}

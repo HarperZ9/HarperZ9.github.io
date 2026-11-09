@@ -103,6 +103,7 @@
     <p class="lead">Extract the archive and use its bundled verifier against the exact Flywheel source checkout named in the packet README:</p>
     <pre class="transcript"><code>python .\tools\verify_packet.py --flywheel-source &lt;flywheel-checkout&gt; --out .\_verify\packet-verification</code></pre>
     <p class="entry-note">The verifier checks the retained manifests, hashes, and referenced local packet structure. It does not rerun METR infrastructure or establish general conformance.</p>
+    <p class="lead">To recheck the same claim from a clean Flywheel clone instead, run <code>python -m harness.recheck run recheck/metr-count-odds-packet.json</code>. The runner fetches the packet, refuses it unless its sha256 matches, reruns the check and then a control that must fail. <a href="https://github.com/HarperZ9/flywheel/blob/main/RECHECK.md">RECHECK.md</a> describes the runner.</p>
   </section>
 
   <section aria-labelledby="limits">

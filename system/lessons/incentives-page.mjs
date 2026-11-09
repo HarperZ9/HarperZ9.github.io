@@ -3,7 +3,7 @@
 import { MOVES, RULES, train, summarize } from "./incentives.mjs";
 import { frame } from "./incentives-view.mjs";
 import { el, loadAtlas, backend, fitCanvas } from "./stage.mjs";
-import { pylonTextures } from "../../media/raw-native/tree-c6b114d/templates/guides/pylon.mjs";
+import { pylonTextures } from "../../media/raw-native/tree-ada041f/templates/guides/pylon.mjs";
 
 export async function mount(box, { force2d = false, seed = 5 } = {}) {
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;

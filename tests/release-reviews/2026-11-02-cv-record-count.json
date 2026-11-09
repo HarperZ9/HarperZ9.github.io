@@ -1,0 +1,20 @@
+{
+  "date": "2026-11-02",
+  "note": "Keep the thirteen-record count the publication record test pins; label the CV inventory heading as papers, corpora and data; LF line endings for the generated sources. Bytes recorded for the author's review in the pull request before merge.",
+  "paths": {
+    "career/Zain-Dana-Harper-CV.docx": "026e5bf76a94e5d2349611ab0086522a002d13343c2c6527c9b7d84be9648732",
+    "career/Zain-Dana-Harper-CV.pdf": "bbba84c6ca8f77df394b0533b04917098ab38370bd3d6a733fb6495015779c0f",
+    "career/career-artifacts.json": "51ef08b8bb745b45892bf76e304ead3115d92f1817113d727d9e9dba12eca2b8",
+    "career/career-build-receipt.json": "f6ec02f9c7cdc8454a87910422aea2684f6c2f7e85cac621e9327e37ee20670e",
+    "career/designed/Zain-Dana-Harper-CV.buildtex.json": "0fdaeeaec301988eefc31941c821b750f9e7ec49fbdf0cfd028fd21aca4a8c89",
+    "career/designed/Zain-Dana-Harper-CV.pdf": "79f2a30e3aa63f8da9e669dffabb81a24fa69454881b61fb874f32819f071817",
+    "career/designed/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.buildtex.json": "de0e9ceddf51faf1d0f9b64ef6ddc354e694a1ae2712edb5a3e59c223e45f7dd",
+    "career/designed/Zain-Dana-Harper-Resume-Grounds.buildtex.json": "301e90c34208dc20e3753154f8d7bc0993fc1201abfed90d7ee50599cbe51d7d",
+    "career/designed/Zain-Dana-Harper-Resume-Public-Operations.buildtex.json": "886d36c63b773092c7c70c706eb79c1452fefddddb51e7e4c59ea2fcb8019987",
+    "career/designed/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.buildtex.json": "c77a916a8783d4c1758e99e27fe456d47ed40ce9dccb65ac27645200ead42549",
+    "cv.html": "277c9d8ffa27af13139b359b3eeabcc72c6bee9b41265716f5316002f145d1d6",
+    "cv.md": "ddaf374356e401704cdcfc2a4b8d51aaa5f9899458042eb67bbae5363df260ff",
+    "hire.html": "33412160bc08c1fa47ccff42abea3580cc52204d93cf733ff52b0655498eaed4",
+    "resume.html": "6ce4991816c460fea152a1117e359f3b235fbb30266361362d8962fb264c25fa"
+  }
+}

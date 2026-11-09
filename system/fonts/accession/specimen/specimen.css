@@ -1,0 +1,19 @@
+/* Specimen subsets of Accession for accession.html: only the letters the specimen sets, each face keeps its axes.
+   Built from accession.css by the site refinement of 2026-11-02 (fontTools subset). SIL Open Font License 1.1, OFL.txt in the folder above;
+   the full faces are in accession.css. */
+@font-face{font-family:"Accession Text";src:url("AccessionText-INKS-wght.woff2") format("woff2");font-weight:300 800;font-style:normal;font-display:swap}
+@font-face{font-family:"Accession Display";src:url("AccessionDisplay-wght.woff2") format("woff2");font-weight:300 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Accession Mono";src:url("AccessionMono-wght.woff2") format("woff2");font-weight:300 700;font-style:normal;font-display:swap}
+@font-face{font-family:"Accession Super";src:url("AccessionSuper-wght.woff2") format("woff2");font-weight:600 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Accession Burin";src:url("AccessionBurin-LINE-wght.woff2") format("woff2");font-weight:500 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Accession Divisumma";src:url("AccessionDivisumma-TURN-wght.woff2") format("woff2");font-weight:400 650;font-style:normal;font-display:swap}
+@font-face{font-family:"Accession Material";src:url("AccessionMaterial-INKS-WEAR-wght.woff2") format("woff2");font-weight:300 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Accession Stencil";src:url("AccessionStencil-wght.woff2") format("woff2");font-weight:300 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Accession Slab";src:url("AccessionSlab-wght.woff2") format("woff2");font-weight:300 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Accession Carved";src:url("AccessionCarved-wght.woff2") format("woff2");font-weight:300 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Accession Worn";src:url("AccessionWorn.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Accession Engraved";src:url("AccessionEngraved.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Accession Screen";src:url("AccessionScreen.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Accession Two Ink";src:url("AccessionTwoInk.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Accession Lit";src:url("AccessionLit.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Accession Tray";src:url("AccessionTray.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
