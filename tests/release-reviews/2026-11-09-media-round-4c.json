@@ -1,0 +1,14 @@
+{
+  "date": "2026-11-09",
+  "note": "Link cards redrawn: cut-paper covers in flat colour with cast shadows, archive object cards showing their own scan, and title fit fixes. Only each page's card version stamp changed.",
+  "paths": {
+    "catalog.html": "9e6f0738d5d1e559db456702a2b8432b0c8db7649a08df3ffc220b61fa5319a7",
+    "demos/crucible-cleanroom/index.html": "1b77c5f1b81b8bb8636ce51cbbeda25e860df286eccff19ee238e56ee6b3a6ca",
+    "index.html": "aea156693716486034b59b5f19a14d299001d06d8bdb1db747e98e1f684b9610",
+    "overview.html": "e633ef4a2034b9975a417463456320e1b97de6b92678db8453666bdfc3710edc",
+    "proof-surface-sample.html": "5066e01116e426a926b30794aa5efd06f2f990ea0eeeb17dbfb34af8907c6ceb",
+    "public-surface-sweeper-sample.html": "7cdaaecd5748ff099cde57dbe9595fb747a6cf2d490b1bd5a4944ffa61128975",
+    "site-index.html": "4fc9ee84b01909cca0ee5e8c86c23bf39f20d61ebd1379465f7373c43d28ea4f",
+    "systems/behavior-transform.html": "8c3632769e8837d8e38bd1325db7008b34213935b9bc742c256df939fabfb81d"
+  }
+}

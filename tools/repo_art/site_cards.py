@@ -19,6 +19,11 @@ import re
 import sys
 from pathlib import Path
 
+if __package__ in {None, ""}:  # run as a file: make the package importable
+    sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.repo_art.archive_objects import object_work  # noqa: E402
+from tools.repo_art.page_covers import ALT as COVER_ALT  # noqa: E402
+
 ROOT = Path(__file__).resolve().parents[2]
 SITE = "https://harperz9.github.io/"
 OUT = ROOT / "img" / "og" / "p"
@@ -90,7 +95,7 @@ def clean_title(title: str) -> str:
     seps = chr(0x2014) + chr(0x2013) + chr(0xB7)  # em dash, en dash, middle dot
     title = re.sub(r"\s+[" + seps + r"-]\s+", ", ", title).replace(chr(0x2014), ", ")  # none on a card
     title = re.sub(r",\s*(Editorial essay|Essay|Paper|Briefing)$", "", title)
-    return title
+    return re.sub(r"\s+LCCN\d+", "", title)  # a library control number is a record key, not a title
 
 
 def _plain(text: str) -> str:
@@ -161,13 +166,17 @@ FILM_POSTERS = [(r"^night-school-(\w+)$", "media/school/{0}/narrated-poster.jpg"
 
 
 def work_for(slug: str):
+    """(render, alt, layout, anchor) for a page that has a picture of its own work or subject."""
+    obj = object_work(slug, ROOT)
+    if obj:
+        return obj
     for pat, path, alt, layout in WORK_RULES:
         if re.search(pat, slug) and (ROOT / path).exists():
-            return path, alt, layout
+            return path, alt, layout, 0.5
     for pat, tmpl in FILM_POSTERS:
         m = re.search(pat, slug)
         if m and (ROOT / tmpl.format(*m.groups())).exists():
-            return tmpl.format(*m.groups()), f"A still from the {m.group(1)} lesson film, drawn by the raw-native engine.", "foot"
+            return tmpl.format(*m.groups()), f"A still from the {m.group(1)} lesson film, drawn by the raw-native engine.", "foot", 0.5
     return None
 
 
@@ -180,14 +189,7 @@ MOTIF_RULES = [
     (r"^(the|who|what|why|how|a|an|we|no|on)-", "column"),
     (r"", "contours"),
 ]
-MOTIF_ALT = {
-    "frames": "A contact sheet of twelve frames following one throw, one frame lit in pale green.",
-    "strip": "A strip of film with a disc rising frame by frame, over a band of sound with the playhead part way along.",
-    "plot": "Measured points scattered on a pair of axes, with one fitted curve drawn through them in rose.",
-    "map": "A wheel of seventy-two violet sectors graded from dark to light, one sector drawn out past the rim.",
-    "column": "A column of set text drawn as bars, one line of it marked in blue.",
-    "contours": "A sphere drawn by its meridians and parallels, with one cell of the grid filled in sand.",
-}
+MOTIF_ALT = COVER_ALT  # what each family of cut-paper cover shows
 
 
 def motif_for(slug: str) -> str:
@@ -205,7 +207,7 @@ def classify(info: dict) -> dict:
     kind = rule[0] if rule else ("Essay" if article else "Page")
     work = work_for(slug)
     if work:
-        return {"kind": kind, "work": work[0], "work_alt": work[1], "layout": work[2]}
+        return {"kind": kind, "work": work[0], "work_alt": work[1], "layout": work[2], "anchor": work[3]}
     if (ROOT / "art" / "aperture" / f"cover-{slug}-dark.svg").exists():
         return {"kind": kind, "cover": f"cover-{slug}"}
     if rule:
