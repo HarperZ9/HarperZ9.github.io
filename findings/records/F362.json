@@ -122,7 +122,7 @@
      "Removing the top 1 percent of shifts changed 1 sigma coverage by about 0.01 (PDG 0.80, AME 0.67, CODATA 0.86) and lowered {m:k_{95}} to 2.8 for PDG, 3.6 for AME and 3.2 for CODATA. The largest single shift, the alpha particle molar mass in CODATA at 74 sigma, comes from the 2019 redefinition of the SI changing the molar mass rows. The largest PDG shift (12.7) and the largest AME shift (silicon-32, 64) were not traced.",
      "Needed multiples did not carry forward in time where values moved. Fitted on CODATA 2002 to 2014 and applied to 2014 to 2022, {m:k_{68}} of 0.65 lowered 1 sigma coverage from 0.40 to 0.32, and {m:k_{95}} of 1.46 reached 0.79 where 0.9545 was the aim. In AME, 2016 to 2020 hardly moved, and coverage stayed at 0.94.",
      "The shrink test found stated errors falling faster than the steps between editions in 0.66 of 287 CODATA quantities, 0.52 of 104 PDG quantities and 0.25 of 2,227 AME quantities. No general rule that uncertainty shrinks faster than values settle follows from that.",
-     "Table {ref:tab:forecast} sets the forecasts against the outcomes.",
+     "Table {ref:tab:forecast} sets the forecasts against the outcomes. Of the ten forecast verdicts in the result file, six held.",
      "::table tab:forecast cols=0.46,0.27,0.27 Forecasts fixed before any data were read, against the run.\nQuantity ¦ Forecast (band) ¦ Outcome\nPDG, all values, within 1 sigma ¦ 0.55 (0.40 to 0.68) ¦ 0.79\nPDG, all values, within 2 sigma ¦ 0.80 (0.65 to 0.92) ¦ 0.90\nPDG, k68 ¦ 1.5 (1.2 to 2.2) ¦ 0.56\nPDG, k95 ¦ 2.5 (1.5 to 5) ¦ 3.1\nPDG, nu ¦ 3 (1.5 to 6) ¦ 1.67\nCODATA 2002 to 2022, within 1 sigma ¦ 0.35 to 0.70 ¦ 0.85\nPDG moved values below all values ¦ yes ¦ 0.68 against 0.79\nCODATA errors fall faster than steps ¦ in more than half ¦ 0.66\n::end"
     ]
    },
@@ -374,9 +374,9 @@
    "id": "x2",
    "date": "2026-11-09",
    "target": "document",
-   "type": "scope",
-   "after": "Every preregistered verdict is listed in the appendix.",
-   "reason": "The ledger entry's count of forecasts held is left out of this paper, following a dated ledger note that it could not be reproduced from the result file.",
+   "type": "retraction",
+   "after": "That note was wrong and was withdrawn the same day: the result file has ten forecast verdicts, and six pass (cov2, k95, nu, moved, shrink, own_hold), so 6 of 10 forecasts held, as the ledger says. Every preregistered verdict is listed in the appendix.",
+   "reason": "A first publication note said the ledger's count of forecasts held could not be reproduced.",
    "found_by": "the publication pass"
   },
   {
@@ -400,7 +400,7 @@
    "n": 2,
    "date": "2026-11-09",
    "what": "paper version 1.0, first published",
-   "hash": "fe079e0366b41ba012c4b158b24a40d25532938f097a8317673ce863c7ff76b0"
+   "hash": "712109ae8ebf3f4880d3f9bf072f252166c78f3f3df5ab976e0a80f159d5e3fc"
   }
  ],
  "grade": {

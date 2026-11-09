@@ -2,13 +2,13 @@
  "schema": "buildlang.buildtex-receipt/v0",
  "source": {
   "path": "F362.bld",
-  "sha256": "a95ac302d92ff4375741e6b33b00d87aafa6b504eb9132dbfcb8741ba9843b7d"
+  "sha256": "26066db559c20ce23796ca35e1c4f437e2c731345adce453a549465558e2e158"
  },
- "ir_sha256": "c31339357e1837282bbffe782eb475ff00e97c4de7e0fca3a6acd6edd6cff403",
+ "ir_sha256": "4b6484a765f84ebd61b7e669ac038dc180fd48c28ededdada35d5b998c300296",
  "theme": "paper",
  "overrides": [],
  "outputs": {
-  "F362.pdf": "fe079e0366b41ba012c4b158b24a40d25532938f097a8317673ce863c7ff76b0"
+  "F362.pdf": "712109ae8ebf3f4880d3f9bf072f252166c78f3f3df5ab976e0a80f159d5e3fc"
  },
  "pdf_metadata": {
   "pdfa": false,
@@ -32,15 +32,15 @@
     "embedded": true
    },
    {
+    "name": "CAFHIE+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
     "name": "CFBLMK+NotoSansMath-Regular",
     "embedded": true
    },
    {
     "name": "FOFGCK+AccessionDisplay-Master",
-    "embedded": true
-   },
-   {
-    "name": "JMIJAM+HankenGrotesk-Regular",
     "embedded": true
    },
    {
@@ -52,7 +52,7 @@
   "blind_text_runs": 0,
   "reading_order": true,
   "blocks_missing_from_text": [],
-  "pdf_bytes": 3632725
+  "pdf_bytes": 3633326
  },
  "failed": [],
  "notes": [

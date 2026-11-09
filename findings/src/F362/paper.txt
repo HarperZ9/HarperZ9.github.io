@@ -105,7 +105,7 @@ Needed multiples did not carry forward in time where values moved. Fitted on COD
 
 The shrink test found stated errors falling faster than the steps between editions in 0.66 of 287 CODATA quantities, 0.52 of 104 PDG quantities and 0.25 of 2,227 AME quantities. No general rule that uncertainty shrinks faster than values settle follows from that.
 
-Table {ref:tab:forecast} sets the forecasts against the outcomes.
+Table {ref:tab:forecast} sets the forecasts against the outcomes. Of the ten forecast verdicts in the result file, six held.
 
 ::table tab:forecast cols=0.46,0.27,0.27 Forecasts fixed before any data were read, against the run.
 Quantity ¦ Forecast (band) ¦ Outcome
@@ -140,7 +140,7 @@ Verified: on 9 November 2026 every n, coverage, needed multiple and nu in Table 
 
 # section Corrections {sec:corrections}
 - 31 October 2026: a review of our ledger noted that later tables reuse inputs and that the Hubble constant truth is a proxy. Both are stated in the limitations, and Hubble coverage is reported per proxy.
-- 9 November 2026: the ledger entry's count of forecasts held is left out of this paper, following a dated ledger note that it could not be reproduced from the result file. Every preregistered verdict is listed in the appendix.
+- 9 November 2026: a first publication note said the ledger's count of forecasts held could not be reproduced. That note was wrong and was withdrawn the same day: the result file has ten forecast verdicts, and six pass (cov2, k95, nu, moved, shrink, own_hold), so 6 of 10 forecasts held, as the ledger says. Every preregistered verdict is listed in the appendix.
 - 9 November 2026: first published version.
 
 # section Reproduction {sec:repro}
