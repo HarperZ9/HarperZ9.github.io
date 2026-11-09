@@ -14,6 +14,7 @@ FRESH_STAMP = "20260925-void-plates"
 NAV_CACHE_STAMP = "20260909-pillar-navigation"
 
 
+# 2026-10-26: the React home moved to workshop.html when the home became the world's entrance (index.html).
 def read(relative: str) -> str:
     return (ROOT / relative).read_text(encoding="utf-8")
 
@@ -96,7 +97,7 @@ def test_font_marketplace_cache_stamp_covers_the_sitewide_navigation_chain() -> 
     routes = read("system/routes.js")
     home_routes = read("home/src/site-routes.ts")
     renderer = read("scripts/render-route-registry.mjs")
-    bundle_match = re.search(r'src="/(assets/index-[^"]+\.js)"', read("index.html"))
+    bundle_match = re.search(r'src="/(assets/index-[^"]+\.js)"', read("workshop.html"))
     assert bundle_match, "built home page does not reference its JavaScript bundle"
     bundle = read(bundle_match.group(1))
     assert f'export const ROUTE_CACHE_STAMP = "{FRESH_STAMP}"' in routes
@@ -107,9 +108,8 @@ def test_font_marketplace_cache_stamp_covers_the_sitewide_navigation_chain() -> 
     assert f'./routes.js?v={FRESH_STAMP}' in nav
     assert f'./nav.js?v={NAV_CACHE_STAMP}' in home_art
     assert f'./routes.js?v={FRESH_STAMP}' in home_art
-    # 2026-10-23: the front door no longer loads home-art.js; it carries its own small script.
-    assert "/system/home-art" not in home_template
-    assert "home-art" not in bundle
+    assert f'/system/home-art" + ".js?v={FRESH_STAMP}' in home_template
+    assert f'/system/home-art.js?v={FRESH_STAMP}' in bundle
 
 
 def test_sitemap_keeps_legacy_routes_and_adds_capability_publication_routes() -> None:

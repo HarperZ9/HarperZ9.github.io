@@ -1,0 +1,81 @@
+{
+  "schema": "vis.settings/1",
+  "note": "Paths are relative to this folder. A source is audio (a WAV) or a series (a JSON file and a column). Drives map features to parameters of nodes in the scene recipe (lib/scene.mjs); any node id in the recipe can be driven, and lib/drive.mjs documents the fields.",
+  "sources": {
+    "hum": {
+      "kind": "audio", "path": "../sound/renders/v2/hum3-48k-24bit.wav",
+      "title": "Hum v3", "credit": ["Zain Dana Harper, 2026", "88 bars at 140, rendered 48 kHz 24-bit"]
+    },
+    "sax": {
+      "kind": "audio", "path": "cc0-alto-sax-iluppai.wav",
+      "title": "alto saxophone solo", "credit": ["iluppai, Freesound 180451", "CC0 1.0, no rights reserved"],
+      "provenance": { "landing": "https://freesound.org/people/iluppai/sounds/180451", "licence": "CC0 1.0", "file_sha256": "c8e68a7c013222100da0cf24296dd4f90a8285c5fb416268e1908f34285ad898", "note": "the keyless hq preview MP3 from the open-archives library, converted to 48 kHz WAV" }
+    },
+    "satie": {
+      "kind": "audio", "path": "pd-satie-gymnopedie3.wav",
+      "title": "Gymnop\u00e9die No. 3", "credit": ["Erik Satie, 1888; piano recording on Wikimedia Commons", "public domain"],
+      "provenance": { "landing": "https://commons.wikimedia.org/wiki/File:Satie_Gymnopedie_No._3_for_piano_solo_01.wav", "licence": "public domain", "file_sha256": "40b26ebc537d84180f7c13702152393a016347736a199d50e603b15f2676905f" }
+    },
+    "hum4": {
+      "kind": "audio", "path": "../sound/renders/v4/hum4-theme-48k-24bit.wav",
+      "title": "Hum v4", "credit": ["Zain Dana Harper, 2026", "the site theme, 48 bars at 112"]
+    },
+    "humGrid": {
+      "kind": "midi", "midi": "scores/hum3.mid", "path": "../sound/renders/v2/hum3-48k-24bit.wav",
+      "title": "Hum v3, the score", "credit": ["Zain Dana Harper, 2026", "13 instruments, one key each"],
+      "grid": { "cols": 4, "rows": 4, "mapping": "rank", "fade": 1.6 }
+    },
+    "cpi": {
+      "kind": "series", "file": "../dataviz/data/cpi-annual.json", "column": "inflation_pct", "label": "year", "unit": "%",
+      "title": "Prices, 1914 to 2024", "credit": ["US CPI-U, annual average of monthly values", "BLS via FRED, series CPIAUCNS"],
+      "group": 10, "groupAlign": true, "duration": 30, "digits": 1, "derived": "cents_left",
+      "seriesCaption": "inflation, % a year"
+    }
+  },
+  "scene": {
+    "grid": { "cols": 5, "rows": 5, "fade": 2.5, "mapping": "pitch", "mask": "track", "ground": "#02040b", "ink": "#e6edf7" },
+    "figure": { "cx": 0.56, "cy": 0.5, "r": 0.25, "turn": 0.21, "history": 2 },
+    "plate": { "fine": 26, "coarse": 150, "warp": 22, "lampDeg": 16, "azDeg": 300 },
+    "seabed": { "depth": 0.05, "caustic": 0.85, "focus": 1.0, "fine": 1, "sim": 0.15, "crest": 0.6, "crestLevel": 0.3, "deep": "#02040b", "low": "#0b1d4a", "mid": "#1d4fae", "light": "#b4cdf5" },
+    "water": { "gain": 5, "radius": 4.5, "damping": 0.012, "wind": 0.0003 },
+    "ribbons": { "count": 4, "inner": 0.33, "outer": 0.47, "thickness": 0.04, "width": 0.036, "striae": 3, "caustic": 0.5, "seed": 31 },
+    "phosphor": { "gain": 0.9, "glow": 0.35, "colour": "#dfe8f6" },
+    "ink": "#e6edf7", "amber": "#ffb15c",
+    "finish": { "grain": { "sd": 3.2, "cell": 2.1, "rate": 24 }, "vignette": 0.32, "shoulder": 0.82 }
+  },
+  "drives": [
+    { "node": "clock", "param": "t", "from": "clock" },
+    { "node": "sea", "param": "exposure", "from": "lufsS", "range": [0.7, 1.25], "attack": 0.4, "release": 1.2 },
+    { "node": "sea", "param": "caustic", "pulse": "bar", "decay": 0.35, "range": [0.7, 1.35] },
+    { "node": "sea", "param": "fine", "from": "air", "range": [0.55, 1.5], "attack": 0.05, "release": 0.35, "curve": "smooth" },
+    { "node": "glass", "param": "swirl", "from": "beatStep", "range": [0, 0.19], "ease": 0.2 },
+    { "node": "glass", "param": "thickness", "from": "low", "range": [0.03, 0.055], "attack": 0.03, "release": 0.25 },
+    { "node": "glass", "param": "breathe", "from": "lufsS", "range": [-0.4, 0.6], "attack": 0.5, "release": 1.5 },
+    { "node": "glass", "param": "striae", "from": "presence", "range": [1, 4], "attack": 0.2, "release": 0.8 },
+    { "node": "lines", "param": "gain", "from": "lufsM", "range": [0.55, 1.05], "attack": 0.05, "release": 0.4 }
+  ],
+  "hud": {
+    "defineEvery": 8,
+    "definitions": [
+      { "term": "Beat", "text": "The pulse a listener taps along to. Found here as the best path through onset strength.", "source": "after Ellis, J. New Music Research, 2007" },
+      { "term": "Loudness", "text": "Power after a K-weighting filter that follows the ear's sensitivity, gated, in LUFS.", "source": "ITU-R BS.1770-4" },
+      { "term": "Spectral flux", "text": "How much the spectrum rose since the frame before, summed over bands.", "source": "after Masri, 1996" },
+      { "term": "Meter", "text": "How beats group into bars. Read here from accents and from what repeats every three or four beats.", "source": "tested against shuffled beats" },
+      { "term": "Caustic", "text": "Light gathered by a curved surface onto another: the bright net on the floor of moving water.", "source": "inverse area change of the refracted rays" }
+    ],
+    "seriesDefinitions": [
+      { "term": "Inflation", "text": "The change in the average level of prices from one year to the next.", "source": "CPI-U annual average, BLS" },
+      { "term": "A 1913 dollar", "text": "What a dollar of 1913 prices buys in a later year, in cents of that year.", "source": "100 x CPI 1913 / CPI year" }
+    ]
+  },
+  "pieces": {
+    "still": { "source": "hum", "size": [3840, 2160], "t": "auto-downbeat:64" },
+    "video": { "source": "hum", "size": [1920, 1080], "fps": 24, "from": 70.35, "seconds": 32 },
+    "data": { "source": "cpi", "size": [1920, 1080], "fps": 24, "seconds": 30 },
+    "cc0": { "source": "sax", "size": [1280, 720], "fps": 24, "from": 20, "seconds": 20 },
+    "waltz": { "source": "satie", "size": [1920, 1080], "t": 14.0 },
+    "grid": { "source": "humGrid", "size": [1920, 1080], "fps": 24, "from": 96.0, "seconds": 20 },
+    "gridStill": { "source": "humGrid", "size": [3840, 2160], "t": 99.55 }
+  },
+  "flow": { "nx": 192, "ny": 108 }
+}

@@ -1,5 +1,9 @@
 # The front door, 23 October 2026
 
+Update, 9 November 2026: this record merged with the review queue. The live home kept the world's
+entrance (#484), and the astrolabe reached it through #487, which combines the two. The front door's
+own `home/` code is not in the tree; it stays in this branch's history.
+
 Internal record. The home page was a long React page of twelve sections (mission, recent work,
 Flywheel table, product list, evidence board, pilot routes, figures, live board, graphics,
 security, hiring). It is now one entrance: the name, one line, five routes, a generated form and
@@ -101,7 +105,7 @@ Direction relayed from the author, 2026-10-23: "Perhaps more design ideas and co
 based on this principle... we want the best design, voice, tooling, marketing materials, and
 graphics, and to deeply improve upon what has been released. Possibly introduce new aesthetics
 entirely." The principle is Tegmark's chart of spacetime dimensions (arXiv gr-qc/9702052, Fig. 1).
-Source: `C:/dev/mission-control/2026-10-23-phase-design/` (CONCEPT.md and the index.html prototype).
+Source: the workshop's 2026-10-23 phase-design folder, outside this repository (CONCEPT.md and the index.html prototype).
 
 - Built as `home/src/phase-map.ts`: the prototype's fields, wavy world edge, stamps and grid; the
   eight pillars as dots in the white cell (each opens its facet); four travellers drifting in from
@@ -129,8 +133,8 @@ crossover between digital<->analog". And: "they feel light, low on resource cost
 lacking original materials and assets from inspirations and reference material media; we have
 access to the entire web archive."
 
-- Material, gathered with open-archives on 23 October 2026 (receipts in `E:/archive-library/receipts`,
-  shared copies and the full credit records in `C:/dev/mission-control/2026-10-23-phase-design/archive/`),
+- Material, gathered with open-archives on 23 October 2026 (receipts in the archive library,
+  shared copies and the full credit records in the phase-design archive, both outside this repository),
   all public domain or CC0, credited in `media/front-door/CREDITS.md` and in the page footer:
   - Regiomontanus's brass astrolabe, 1462 (Met, CC0): the scan sits under the line-work form,
     duotoned to ink in light mode and inverted to bone in dark.

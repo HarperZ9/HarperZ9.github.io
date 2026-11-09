@@ -1,0 +1,9 @@
+{
+  "date": "2026-11-03",
+  "note": "index rows below the first screen load from a fragment file; link labels by destination",
+  "paths": {
+    "index.html": "a9c8b0d07b76fd4a255e25f7e645923d0aa210ce906402f4e6369c8167e1e4e8",
+    "site-index.html": "4635f7c84697e22dbf7f2608c02a6a6839afe0efcd540ae5b1ea8e075ebf2987",
+    "system/routes.js": "12c50059ce925f25a3294939efa4be44a1ccbd5b8f6bf30a6b5ce5715beb925f"
+  }
+}

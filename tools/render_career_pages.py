@@ -33,7 +33,7 @@ def expand(blocks: list[dict], groups: dict, stack: tuple[str, ...] = ()) -> lis
 
 
 def linkify(text: str) -> str:
-    pattern = r'(?:https?://)?(?:github\.com/|harperz9\.github\.io(?:/|\b)|linkedin\.com/|orcid\.org/|doi\.org/|nexusmods\.com/)[^\s|]*'
+    pattern = r'(?:https?://)?(?:github\.com/|harperz9\.github\.io(?:/|\b)|linkedin\.com/|orcid\.org/|doi\.org/|nexusmods\.com/|learn\.microsoft\.com/|academy\.claude\.com/|credly\.com/|coursera\.org/|trainingportal\.linuxfoundation\.org/|qualys\.com/|skills\.google/|bluedot\.org/)[^\s|]*'
     parts, previous = [], 0
     for match in re.finditer(pattern, text):
         end = match.end()
@@ -128,6 +128,9 @@ def downloads(doc: dict, include_html: bool = True) -> str:
         links.append(f'<a href="{doc["route"]}">' + ('Read the CV' if doc['route'] == 'cv.html' else 'Read resume') + '</a>')
     for suffix, label in [('pdf', 'PDF'), ('docx', 'DOCX'), ('txt', 'Plain text'), ('md', 'Markdown')]:
         links.append(f'<a href="career/{doc["stem"]}.{suffix}" download>{label}</a>')
+        if suffix == 'pdf' and (ROOT / 'career' / 'designed' / f'{doc["stem"]}.pdf').exists():
+            # The designed print edition, typeset by BuildLang's BuildTeX with the press finish.
+            links.append(f'<a href="career/designed/{doc["stem"]}.pdf" download>Designed PDF</a>')
     return '<div class="career-downloads" aria-label="' + escape(doc['title'], quote=True) + ' formats">' + ''.join(links) + '</div>'
 
 
@@ -216,7 +219,7 @@ def router_body(source: dict, *, hire: bool) -> str:
         out[4] = out[4].replace('</header>', f'<p>{escape(availability["roles"])} {escape(availability["travel"])}</p><p>Sole proprietor since September 2026; no paid software clients.</p></header>')
     cards = [
         ('support-operations-qa', 'engineering-path', 'Support, developer operations, and software quality', 'Technical support and self-directed developer tools: reproducible troubleshooting, accepted tests and documentation for Free Law Project, Hebbian Robotics, and Voxwire, software delivery, and customer communication.'),
-        ('evaluation-python-tools', 'technical-operations-path', 'AI and security evaluation, and Python tooling', 'Flywheel, Daylight Commons, release checks scored against planted faults, and verification tools, alongside accepted fixes in DeepEval, TOMLKit, and Datasette.'),
+        ('evaluation-python-tools', 'technical-operations-path', 'AI and security evaluation, and Python tooling', 'Flywheel, CMMNS (formerly Daylight Commons), release checks scored against planted faults, and verification tools, alongside accepted fixes in DeepEval, TOMLKit, and Datasette.'),
         ('grounds', 'public-service-field-path', 'Arboriculture, field operations, and estimating', 'Eleven years of ground-based tree-care operations, site assessment, estimates, scheduling, client education, and safety coordination. A public-operations variant is also available.'),
     ]
     for key, anchor, title, description in cards:
@@ -276,9 +279,25 @@ def render(source: dict) -> dict[str, str]:
         outputs[f'career/{stem}.md'] = plain(blocks, markdown=True)
         if route == 'cv.html':
             outputs['cv.md'] = plain(blocks, markdown=True)
+    inventory = ROOT / 'career' / 'published-work.json'
+    if inventory.is_file():
+        # The full published-work inventory has its own page; the resumes and CV link to it.
+        import importlib.util
+        spec = importlib.util.spec_from_file_location('published_work_blocks', ROOT / 'tools' / 'published_work_blocks.py')
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        inventory_blocks = module.blocks
+        rows = inventory_blocks(json.loads(inventory.read_text(encoding='utf-8')))
+        page = [{'kind': 'h1', 'text': 'Published work'}] + [dict(r, kind='h2') if r['kind'] == 'h3' else r for r in rows[1:]]
+        credentials = ROOT / 'career' / 'credentials.json'
+        if credentials.is_file():
+            page += module.credential_blocks(json.loads(credentials.read_text(encoding='utf-8')))
+        outputs['published-work.html'] = shell('published-work.html', 'Zain Dana Harper | Published work',
+            'Every public release, package, paper, essay, briefing and packet by Zain Dana Harper, with dates and links.',
+            '<article class="sheet doc-rail">\n' + blocks_html(page) + '\n</article>\n')
     for route, hire in [('hire.html', True), ('resume.html', False)]:
         outputs[route] = shell(route, 'Zain Dana Harper | ' + ('Hire' if hire else 'Resumes'), 'Current resumes for systems engineering, developer operations, and field operations, plus a full CV.', router_body(source, hire=hire), hire=hire)
-    lines = ['# Zain Dana Harper: Resumes', '', 'Updated ' + source['reviewed'] + '.', '', 'Three primary families: support/developer operations/QA; AI systems/evaluation/Python tooling; arboriculture/field operations/estimating. Each targeted resume is one page. A public-operations variant and full CV are also available.', '']
+    lines = ['# Zain Dana Harper: Resumes', '', 'Updated ' + source['reviewed'] + '.', '', 'Four primary families: support/developer operations/QA; AI systems/evaluation/Python tooling; graphics, rendering and developer tools; arboriculture/field operations/estimating. Each targeted resume is one page. A public-operations variant and full CV are also available.', '']
     for doc in source['documents']:
         lines += ['## ' + doc['title'], '', 'https://harperz9.github.io/' + doc['route'], '']
         lines += [f'[{suffix.upper()}](https://harperz9.github.io/career/{doc["stem"]}.{suffix})' for suffix in ('pdf', 'docx', 'txt', 'md')]

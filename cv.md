@@ -2,7 +2,7 @@
 
 Kent, Washington | zaindharper@gmail.com | harperz9.github.io
 
-linkedin.com/in/zaindanaharper | github.com/HarperZ9
+linkedin.com/in/zaindanaharper | github.com/HarperZ9 | harperz9.github.io/published-work.html
 
 Curriculum Vitae | Security Evaluation, AI Evaluation, Graphics, and Developer Tools
 
@@ -22,11 +22,11 @@ Seeking red-team, purple-team and security-evaluation work, AI evaluation roles,
 
 - Flywheel runs AI tasks with the model you choose and checks each answer against a task contract. In 1.9.0, behavior-check flagged 20 of 20 planted behavior changes and 0 of 50 unchanged pairs. github.com/HarperZ9/flywheel/releases/tag/v1.9.0
 
-- Daylight Commons is a browser extension that shows the sources behind replies on nine social platforms. Its slur sign has 91.0% precision, 3,995 of 4,392, on public human-labelled corpora. github.com/HarperZ9/daylight-commons/blob/main/project-docs/EVALUATION.md
+- CMMNS (formerly Daylight Commons) is a browser extension that shows the sources behind replies on nine social platforms. Its slur sign has 91.0% precision, 3,995 of 4,392, on public human-labelled corpora. github.com/HarperZ9/cmmns/blob/main/project-docs/EVALUATION.md
 
 - Articulate is prose analysis and model-assisted editing for the command line, editors and CI. In 0.14.0, Markdown masks removed 5,123 findings on table separator rows across 3,000 files and added none. github.com/HarperZ9/articulate/releases/tag/v0.14.0
 
-- BuildLang is a systems language in which a program declares what it may touch, and the compiler checks it. Version 1.8.0 is on crates.io. crates.io/crates/buildlang
+- BuildLang is a systems language in which a program declares what it may touch, and the compiler checks it. Version 1.10.0 is on crates.io. crates.io/crates/buildlang
 
 - raw-native is a C++ renderer with a CPU reference and D3D12 and WebGPU backends. In release 0.8.0, default renders were byte-identical across the Windows, D3D12, Linux and WebAssembly builds. github.com/HarperZ9/raw-native/releases/tag/v0.8.0
 
@@ -102,13 +102,13 @@ Primary owned platform. Flywheel 1.9.0, released October 15, 2026, is on PyPI as
 
 Test infrastructure for evaluating AI agents: 324 terminal-state fixtures and 337 component cases that tell a failed answer apart from a provider failure or missing evidence. Ran a pinned METR count_odds task through the Inspect-to-Flywheel bridge with three deterministic controls. github.com/HarperZ9/terminal-state-fixtures
 
-### Daylight Commons | Browser extension for checking where replies come from
+### CMMNS (formerly Daylight Commons) | Browser extension for checking where replies come from
 
-A browser extension that shows the sources behind replies on X, YouTube, Reddit, Facebook, Instagram, Bluesky, Threads, TikTok and Mastodon. Runs locally with no account. Open source (AGPL-3.0). Version 3.2.2, released October 23, 2026. github.com/HarperZ9/daylight-commons/releases/tag/v3.2.2
+A browser extension that shows the sources behind replies on X, YouTube, Reddit, Facebook, Instagram, Bluesky, Threads, TikTok and Mastodon. Runs locally with no account. Open source (AGPL-3.0). Version 3.2.2, released October 23, 2026. github.com/HarperZ9/cmmns/releases/tag/v3.2.2
 
 ### Articulate | Prose analysis and editing
 
-Prose analysis and model-assisted editing for the command line, editors and CI. It names each writing pattern it finds and the line it is on, in the terminal, in an editor through its language server, or as SARIF in code review. Version 0.15.1 is on PyPI as articulate-writing. pypi.org/project/articulate-writing
+Prose analysis and model-assisted editing for the command line, editors and CI. It names each writing pattern it finds and the line it is on, in the terminal, in an editor through its language server, or as SARIF in code review. Version 0.16.0 is on PyPI as articulate-writing. pypi.org/project/articulate-writing
 
 ## Graphics and Rendering
 
@@ -134,7 +134,7 @@ Earlier HLSL and C++ modding covered post-processing, Direct3D 11 integration, s
 
 ### BuildLang | Rust compiler and developer tooling
 
-Developed a systems-language toolchain with typed capability effects, type inference, parser and intermediate-representation work, native C output, shader output, and language-server support. Version 1.8.0, published to crates.io on October 23, 2026, adds Box<T> and recursive types. crates.io/crates/buildlang
+Developed a systems-language toolchain with typed capability effects, type inference, parser and intermediate-representation work, native C output, shader output, and language-server support. Version 1.10.0 is on crates.io, published October 23, 2026; the 1.8.0 release that day added Box<T> and recursive types. crates.io/crates/buildlang
 
 ### EMET | Byte-integrity witnessing
 

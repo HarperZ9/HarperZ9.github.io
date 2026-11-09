@@ -102,6 +102,7 @@ CONTROLLED_PUBLIC_FORBIDDEN = (
 )
 
 
+# 2026-10-26: the React home moved to workshop.html when the home became the world's entrance (index.html).
 def _text(relative: str) -> str:
     return (ROOT / relative).read_text(encoding="utf-8")
 
@@ -152,15 +153,18 @@ def test_required_live_routes_and_assets_exist() -> None:
     for route in REQUIRED_ROUTES:
         assert (ROOT / route).is_file(), route
 
-    home = _text("index.html")
+    home = _text("workshop.html")
     assert "<title>Zain Dana Harper | Tools for testing AI systems</title>" in home
-    # 2026-10-23 front door: the home page is one generated form and eight facets. The old
-    # section headings (evidence board, measured evidence, recent work) left the home page;
-    # their pages stay at their own addresses and are one click away through the facets.
-    for facet in ("Flywheel", "Articulate", "Daylight Commons", "BuildLang", "The engine",
-                  "Low Water", "Essays and films", "Work and CV"):
-        assert facet in home, facet
-    assert "Try Flywheel" in home
+    assert "Flywheel and open-source tools for testing AI systems" in home
+    assert "Inspect Flywheel" in home
+    assert "Flagship platform: Flywheel" in home
+    assert "Built tooling ecosystem" in home
+    assert "Evidence board" in home
+    assert "Research, pilot, and support routes" in home
+    assert "Measured evidence" in home
+    assert "Recovered-actions dataset" in home
+    assert "Motive-label dataset" in home
+    assert "Recent work" in home
     assert "Hire or collaborate" in home
 
     for asset in _asset_paths(home):
@@ -195,7 +199,7 @@ def test_system_registry_keeps_flywheel_primary_and_private_security_bounded() -
     for record in records.values():
         href = record.get("href")
         if href:
-            target = _resolve_internal_href("index.html", href)
+            target = _resolve_internal_href("workshop.html", href)
             if target is not None:
                 assert (ROOT / target).is_file(), (record["id"], href)
 
@@ -254,7 +258,7 @@ def test_incident_briefing_and_figures_are_published_with_receipts_and_fallbacks
 def test_route_registry_and_sitemap_cover_the_capability_constellation() -> None:
     routes = _text("system/routes.js")
     sitemap = _text("sitemap.xml")
-    home = _text("index.html")
+    home = _text("workshop.html")
     for route in (
         "flywheel.html",
         "analytics/exploratory-stack-comparison.html",

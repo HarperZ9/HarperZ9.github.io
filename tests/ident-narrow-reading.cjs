@@ -15,10 +15,9 @@ const WIDTHS = [320, 375, 390];
 const PAGES = [
   'security.html', 'gather.html', 'forum.html', 'crucible.html', 'canon.html',
   'systems/relay.html', 'systems/mneme.html', 'systems/plexus.html', 'accountable-surface.html',
-  'catalog.html', 'overview.html', 'site-index.html', 'toolkit.html', 'index-graph.html',
+  'catalog.html', 'overview.html', 'site-index.html', 'index-graph.html',
   'chorus.html', 'proof-surface.html', 'security-toolkit.html', 'flywheel.html',
-  // 2026-10-23: the front door shows one facet at a time; the hash opens the facet with the package name.
-  'articulate.html', 'figures/system-capability-map.html', 'figures/verification-capability-map.html', 'index.html#articulate',
+  'articulate.html', 'figures/system-capability-map.html', 'figures/verification-capability-map.html', 'index.html',
   'provenance-sensorium.html',
 ];
 

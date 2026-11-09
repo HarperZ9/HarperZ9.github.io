@@ -1,0 +1,41 @@
+{
+ "family": "Current 1",
+ "ground": "#ebe5d8",
+ "axes": [
+  "wght"
+ ],
+ "classes": {
+  "bindings": {
+   "fill": {
+    "material": "ink",
+    "kind": "outline",
+    "how": "the outline itself; colour from CSS or a COLRv1 palette entry",
+    "live": []
+   }
+  },
+  "axes": [
+   {
+    "tag": "wght",
+    "target": "skeleton.weight",
+    "kind": "variable"
+   },
+   {
+    "tag": "FLOW",
+    "target": "skeleton.modifiers.1.amp",
+    "kind": "live"
+   }
+  ]
+ },
+ "files": {
+  "variable": {
+   "ttf": 238252,
+   "woff2": 110380,
+   "name": "Current1[wght]"
+  },
+  "cut": {
+   "ttf": 115280,
+   "woff2": 44144,
+   "name": "Current1-Cut"
+  }
+ }
+}

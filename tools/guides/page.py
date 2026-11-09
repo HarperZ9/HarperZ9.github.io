@@ -161,6 +161,10 @@ def main() -> None:
     (ROOT / "guides.html").write_text(page(), encoding="utf-8", newline="\n")
     from tools.repo_art import site_cards  # point the head tags at the page's own link card
     site_cards.stamp(next(c for c in site_cards.plan() if c["rel"] == "guides.html"))
+    from tools import structured_data  # the VideoObject markup for the three intro films
+    path = ROOT / "guides.html"
+    path.write_text(structured_data.apply(path.read_text(encoding="utf-8"), structured_data.load_context()),
+                    encoding="utf-8", newline="\n")
     print("guides.html written")
 
 

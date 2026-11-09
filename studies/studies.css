@@ -1,0 +1,149 @@
+/* Reading pages in the world's shell: studies, boards and tool pages. Colours and faces come from the shell's
+   tokens (--wall, --ink, --soft, --line, --face-text, --face-display, --face-utility, --fs-1 to --fs-7). */
+main { display: block; max-width: 74ch; margin: 0 auto; padding: 112px 16px 96px; }
+main:focus { outline: none; }
+.st h1, .bd h1, .tool h1 { font: 800 clamp(36px, 7vw, var(--fs-6))/1.02 var(--face-display); letter-spacing: -.03em; margin: 0 0 16px; text-wrap: balance; }
+.st h2, .bd h2, .tool h2 { font: 700 var(--fs-5)/1.15 var(--face-display); margin: 56px 0 12px; text-wrap: balance; }
+.st h3, .tool h3 { font: 700 var(--fs-3)/1.3 var(--face-text); margin: 28px 0 8px; }
+.st p, .st li, .bd p, .tool p, .tool li { font: 400 var(--fs-3)/1.6 var(--face-text); }
+.st p, .tool p { margin: 0 0 14px; }
+.st ul, .st ol, .tool ul, .tool ol { padding-left: 1.3em; margin: 0 0 16px; }
+.st li + li, .tool li + li { margin-top: 6px; }
+.st code, .tool code { font: 400 .9em/1 var(--face-utility); }
+a { color: var(--ink); text-decoration-thickness: 1px; text-underline-offset: .2em; }
+a:hover { text-decoration-thickness: 2px; }
+.st-lane, .bd-run, .st-by, .bd-medium, .st-share { font: 500 var(--fs-1)/1.4 var(--face-utility); color: var(--soft); }
+.st-lane { margin: 0 0 6px; text-transform: lowercase; }
+.st-credit { color: var(--soft); }
+.st-n { font-family: var(--face-utility); color: var(--soft); }
+.st-table { overflow-x: auto; margin: 0 0 18px; border-top: 1px solid var(--ink); }
+.st-table:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+.st table { border-collapse: collapse; width: 100%; font: 400 var(--fs-2)/1.45 var(--face-text); }
+.st th, .st td { text-align: left; vertical-align: top; padding: 8px 10px 8px 0; border-bottom: 1px solid var(--line); }
+.st th { font-weight: 700; }
+.st-measures { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
+.st-measure h3 { margin-top: 0; }
+.st-chips { list-style: none; padding: 0; margin: 0 0 10px; display: grid; gap: 4px; }
+.st-chips li { display: flex; align-items: center; gap: 8px; font: 400 var(--fs-2)/1.3 var(--face-utility); margin: 0; }
+.st-chip { width: 18px; height: 18px; flex: none; background: var(--c); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink) 30%, transparent); }
+.st-measure dl { display: grid; grid-template-columns: auto 1fr; gap: 2px 12px; margin: 0; font: 400 var(--fs-2)/1.4 var(--face-text); }
+.st-measure dt { color: var(--soft); }
+.st-measure dd { margin: 0; font-family: var(--face-utility); }
+.st-concepts { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 14px; }
+.st .st-concepts li, .bd .st-concepts li { margin: 0; font: 400 var(--fs-2)/1.4 var(--face-text); }
+.st-list { list-style: none; padding: 0; }
+.st-list li { padding: 10px 0; border-bottom: 1px solid var(--line); margin: 0; }
+.st-back { margin-top: 56px; }
+.bd-run { display: flex; justify-content: space-between; gap: 16px; border-bottom: 1px solid var(--ink); padding-bottom: 6px; margin: 0 0 24px; }
+.bd-keys { font: 400 var(--fs-4)/1.4 var(--face-text); margin: 0 0 6px; }
+.bd-plates { list-style: none; padding: 0; margin: 32px 0; display: grid; gap: 0; }
+.bd-plate { display: grid; grid-template-columns: 3.2em 1fr; gap: 12px; padding: 16px 0; border-top: 1px solid var(--line); }
+.bd-n { font: 800 var(--fs-5)/1 var(--face-display); }
+.bd-cap { font-weight: 600; margin: 0 0 4px; }
+.bd-medium { margin: 0 0 6px; }
+.bd-also { color: var(--soft); }
+.tool .cmd { overflow-x: auto; padding: 12px 14px; border: 1px solid var(--ink); font: 400 var(--fs-2)/1.55 var(--face-utility); white-space: pre; }
+.tool .facts { display: grid; grid-template-columns: auto 1fr; gap: 6px 16px; font: 400 var(--fs-2)/1.45 var(--face-text); }
+.tool .facts dt { color: var(--soft); }
+.tool .facts dd { margin: 0; }
+@media (max-width: 860px) { main { padding: 32px 16px 120px; } }
+@media (forced-colors: active) { .st-chip { forced-color-adjust: none; } }
+.st p, .tool p, .bd p { max-width: none; }
+.st code, .tool code, .tool .cmd { letter-spacing: normal; }
+.o-hand .skip { position: fixed; top: -80px; left: 12px; }
+.o-hand .skip:focus { top: 12px; }
+/* the Verified line on a publication: what was checked, by what, with what result */
+.verified { margin: 28px 0 0; padding: 10px 0 0 14px; border-left: 2px solid var(--ink); font: 400 var(--fs-2)/1.5 var(--face-text) !important; color: var(--ink); }
+.verified b { font-weight: 700; margin-right: .35em; }
+
+/* THE COMMONS, tried on the visitor's own words (system/commons-try.js) */
+.ct { margin: 40px 0 8px; padding: 24px 0 8px; border-top: 2px solid var(--ink); }
+.ct h2 { margin-top: 0; }
+.ct-label-for { display: block; font: 600 var(--fs-2)/1.4 var(--face-text); margin: 16px 0 6px; }
+.ct textarea { box-sizing: border-box; width: 100%; min-height: 8em; padding: 12px; font: 400 var(--fs-3)/1.5 var(--face-text); color: var(--ink); background: var(--wall); border: 1.5px solid var(--ink); border-radius: 0; resize: vertical; }
+.ct textarea:focus-visible, .ct button:focus-visible, .ct input:focus-visible, .ct-item:focus { outline: 3px solid var(--ink); outline-offset: 3px; }
+.ct-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin: 10px 0 0; }
+.ct button { min-height: 44px; padding: 0 16px; font: 600 var(--fs-2)/1 var(--face-text); color: var(--ink); background: var(--wall); border: 1.5px solid var(--ink); border-radius: 0; cursor: pointer; }
+.ct .ct-go { background: var(--ink); color: var(--wall); }
+.ct-hint { font: 400 var(--fs-1)/1.4 var(--face-text); color: var(--soft); }
+.ct-out:empty, .ct-file-out:empty { display: none; }
+.ct-out, .ct-file-out { margin: 20px 0 0; }
+.ct-read { padding: 14px 16px; font: 400 var(--fs-3)/1.7 var(--face-text); background: var(--wall-2); white-space: pre-wrap; overflow-wrap: anywhere; }
+.ct-mark { color: inherit; background: linear-gradient(color-mix(in srgb, #d79e35 55%, transparent), color-mix(in srgb, #d79e35 55%, transparent)) no-repeat 0 100% / 100% 100%; padding: 1px 0; cursor: pointer; }
+.ct-held { text-decoration: underline dotted 2px; text-underline-offset: .25em; text-decoration-color: var(--soft); }
+.ct-mark::after, .ct-held::after { content: attr(data-n); font: 600 .62em/1 var(--face-utility); vertical-align: super; margin-left: 2px; color: var(--soft); }
+/* latent to active: the marks draw left to right when a reading lands, in the reading direction */
+.ct-out.ct-on .ct-mark { animation: ct-draw .42s cubic-bezier(.2, 0, 0, 1) both; }
+@keyframes ct-draw { from { background-size: 0% 100%; } to { background-size: 100% 100%; } }
+.ct-h { display: flex; align-items: baseline; gap: 10px; }
+.ct-count { font: 400 var(--fs-1)/1 var(--face-utility); padding: 2px 6px; border: 1px solid var(--line); }
+.ct-list { list-style: none; padding: 0 !important; margin: 0 0 12px; }
+.ct-item { padding: 12px 0; border-top: 1px solid var(--line); margin: 0 !important; }
+.ct-label { margin: 0 0 6px !important; font: 700 var(--fs-3)/1.35 var(--face-text) !important; }
+.ct-n { display: inline-block; min-width: 2.2em; font: 600 var(--fs-1)/1 var(--face-utility); color: var(--soft); }
+.ct-level { font: 400 var(--fs-1)/1 var(--face-utility); color: var(--soft); margin-left: 6px; }
+.ct-how { display: grid; grid-template-columns: minmax(8em, 12em) 1fr; gap: 4px 16px; margin: 0; font: 400 var(--fs-2)/1.5 var(--face-text); }
+.ct-how dt { color: var(--soft); }
+.ct-how dd { margin: 0; }
+.ct-note, .ct-limit, .ct-empty, .ct-source { font-size: var(--fs-2) !important; color: var(--soft); }
+.ct-file { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; font: 600 var(--fs-2)/1.3 var(--face-text); }
+.ct-badge { display: block; padding: 10px 12px; border: 1.5px solid var(--ink); overflow-wrap: anywhere; }
+.ct-badge-dot { display: inline-block; vertical-align: -1px; margin-right: 8px; width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--ink); }
+.ct-badge[data-state="valid"] .ct-badge-dot { background: var(--ink); }
+@media (max-width: 600px) { .ct-how { grid-template-columns: 1fr; } .ct-how dd { margin-bottom: 6px; } }
+@media (prefers-reduced-motion: reduce) { .ct-out.ct-on .ct-mark { animation: none; } }
+@media (forced-colors: active) { .ct-mark { background: Highlight; color: HighlightText; } }
+.ct-badge[data-level="warn"] .ct-badge-dot { background: color-mix(in srgb, #d79e35 80%, var(--ink)); }
+.ct-badge[data-level="flag"] { border-width: 3px; }
+.ct-badge[data-level="flag"] .ct-badge-dot { background: var(--ink); }
+.ct-part[data-id="unchecked"] { color: var(--soft); }
+.ct-report { margin: 14px 0; }
+.ct-spec { white-space: nowrap; font-family: var(--face-utility); }
+/* a platform's display name and mark, over its page title */
+.mark-line { margin: 0 0 6px !important; font: 500 var(--fs-1)/1.4 var(--face-utility) !important; letter-spacing: .08em; color: var(--soft); }
+
+/* ---- the field (copied from world/site/field.css by scripts/sync-field-css.mjs; edit field.css) ---- */
+/* the halo that keeps text readable over the moving field: the page's own ground, in either scheme (the road can
+   tint --wall per district, so the halo takes the scheme's ground, not the district's) */
+:root { --halo: #e8e3d9; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --halo: #0a0a0c; } }
+:root[data-theme="dark"] { --halo: #0a0a0c; }
+
+/* the field: glass and water behind the whole page; a rendered plate first, the live render over it where the
+   device can carry it (world/site/home-field.js); night in the dark scheme */
+.gw-backdrop { position: fixed; inset: 0; z-index: 0; pointer-events: none; background: #0d1a24; }
+.gw-backdrop picture, .gw-backdrop img, .gw-backdrop canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.gw-backdrop img { object-fit: cover; }
+.gw-backdrop canvas { opacity: 0; transition: opacity .9s var(--ease-standard, ease); }
+.gw-backdrop.live canvas { opacity: 1; }
+html.plain .gw-backdrop canvas { display: none; }
+main#main, body > footer { position: relative; z-index: 1; }
+@media (prefers-reduced-motion: reduce) { .gw-backdrop canvas { transition: none; } }
+
+/* reading pages: the field is the rendered plate only; their words keep AA contrast through the halo */
+
+/* pages over the field read in light ink in both schemes: the field's sea and night sky are dark, and a soft wash of
+   the field's own deep water (a gradient, no edge) holds the words at AA contrast over its brightest pixels; the
+   measurement is in PASSES.md, pass 8 */
+body:has(.gw-backdrop) { --ink: #f4efe6; --soft: #e3ddd0; --wall: #0c1620; --wall-2: #13212d; --line: rgba(244, 239, 230, .34); --on-ink: #0c1620; --halo: #07101a; color-scheme: dark; background: #0c1620; color: var(--ink); }
+.gw-backdrop::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(7, 16, 26, .78) 0%, rgba(7, 16, 26, .62) 42%, rgba(7, 16, 26, .18) 70%, rgba(7, 16, 26, .06) 100%); }
+body.reading .gw-backdrop::after { background: radial-gradient(ellipse 70% 120% at 50% 50%, rgba(7, 16, 26, .8) 0%, rgba(7, 16, 26, .7) 55%, rgba(7, 16, 26, .45) 100%); }
+@media (max-width: 860px) { .gw-backdrop::after { background: linear-gradient(180deg, rgba(7, 16, 26, .66) 0%, rgba(7, 16, 26, .8) 45%, rgba(7, 16, 26, .88) 100%); } }
+/* on phones the hand sits at the top edge; a reading page's first words start below it */
+@media (max-width: 860px) { body.reading main { padding-top: 96px !important; } }
+/* magnetic links (world/site/magnet.js): the held link leans toward the pointer and its underline takes full weight */
+:is(.wi-links, .wi-jump, .floor-list) a { display: inline-block; } /* the hand's links are flex items already */
+a[data-held] { text-decoration-thickness: 2px; text-underline-offset: .2em; }
+/* the drawn platform marks (scripts/crossover-marks.mjs): glass lit from behind, its light carried as alpha */
+.xo-mark, .xo-mark img { display: block; width: 112px; height: 112px; }
+.xo-mark { margin: 0 0 4px -10px; }
+/* the hand says what each control does: a word under each form, which is also its accessible name
+   (scripts/hand-labels.mjs). The forms stay; nothing is boxed. */
+.o-hand.o-said { padding-bottom: 22px; gap: 14px; }
+.o-hand.o-said > :is(a[data-o], button), .o-hand.o-said .o-cell { position: relative; }
+.o-hand.o-said .o-cell { display: inline-flex; }
+.o-hand.o-said > :is(a[data-o], button) .o-name, .o-hand.o-said .o-under { position: absolute; top: calc(50% + 27px); left: 50%; translate: -50% 0; width: auto; height: auto; overflow: visible; clip-path: none; white-space: nowrap;
+  font: 600 11px/1.1 var(--face-text); letter-spacing: .05em; color: var(--ink); pointer-events: none; }
+/* every label hangs a fixed distance below its control's centre, and the hand centres its controls on one line, so
+   the labels share one baseline whatever height a form takes (the fold is 52 px, the rest 44, and a form may grow) */
+.o-hand.o-said > :is(a[data-o], button) .o-name, .o-hand.o-said .o-under { text-shadow: 0 0 8px var(--wall, #0c1620), 0 0 3px var(--wall, #0c1620), 0 0 1px var(--wall, #0c1620); }

@@ -1,0 +1,38 @@
+/* Shared page chrome for the set pieces. Two faces, self-hosted: Hanken Grotesk (variable, roman and italic) and Conso.
+   Quality pass 2026-10-23: the Google Fonts link served Hanken at 400/600/800 only (700 was synthesised) and a third
+   family (Libre Caslon); late font swaps also shifted layout. */
+@font-face{font-family:"Hanken Grotesk";src:url("fonts/hanken-grotesk.woff2") format("woff2");font-weight:100 900;font-style:normal;font-display:block}  /* local and preloaded: block avoids the swap reflow (M3) */
+@font-face{font-family:"Hanken Grotesk";src:url("fonts/hanken-grotesk-italic.woff2") format("woff2");font-weight:100 900;font-style:italic;font-display:swap}
+@font-face{font-family:"Conso";src:url("fonts/conso-regular.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Conso";src:url("fonts/conso-medium.woff2") format("woff2");font-weight:500 700;font-display:swap}
+:root { --ground:#111; --ink:#eee9df; --muted:#a39e94; --line:#3a3833; --hot:#e0177e; color-scheme: dark; }
+/* Gallery pages stay dark: the wall is the room. */
+* { box-sizing:border-box; }
+html { -webkit-text-size-adjust:100%; }
+body { margin:0; background:var(--ground); color:var(--ink); font-family:"Hanken Grotesk",system-ui,sans-serif; font-synthesis:none; font-kerning:normal; font-optical-sizing:auto; }
+p { text-wrap:pretty; }
+.top { display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; min-height:52px; }  /* reserves the Sound button that sound.js adds after load (M3: it shifted every room 6 px) */
+h1 { font-weight:800; font-size:clamp(26px,5vw,46px); line-height:1; letter-spacing:-.02em; margin:0; }
+.back, .foot a { color:var(--muted); font-size:16px; text-underline-offset:3px; }
+.back:hover, .foot a:hover { color:var(--ink); }
+button { font:inherit; font-weight:600; font-size:16px; color:var(--ink); background:transparent; border:2px solid var(--ink); padding:9px 14px; min-height:44px; cursor:pointer; }
+button:hover { background:var(--ink); color:var(--ground); }
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible { outline:3px solid var(--hot); outline-offset:2px; }
+button[aria-pressed="true"] { background:var(--hot); border-color:var(--hot); color:#fff; }
+figcaption { font-family:"Hanken Grotesk",sans-serif; font-size:16px; line-height:1.5; color:var(--muted); margin-top:10px; max-width:56ch; }
+figcaption a { color:inherit; }
+.sr { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+.foot { margin-top:14px; display:flex; gap:16px; flex-wrap:wrap; font-size:16px; }
+.need-http { padding:24px; font-family:"Hanken Grotesk",sans-serif; max-width:60ch; }
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior:auto !important; } }
+.sndbtn { min-height:36px; padding:4px 12px; font-size:16px; }
+.top .sndbtn { margin-left:auto; }
+/* Quality pass (M3): the depth layer's stylesheet is attached by script, so its absolute tag overlay first lays
+   out in flow and then jumps. The overlay's position rules live here, in the head, so it never pushes content. */
+.dp-tags { position:absolute; inset:0; pointer-events:none; z-index:30; }
+/* Quality pass (T2): Hanken's ch is a narrow zero, so 64ch held 81 to 86 characters a line and 74ch more.
+   56ch sets about 70 characters, inside the 45 to 80 band. Captions and the Sallow card's line included. */
+main p, main figcaption, main .sl-meta, main .note, main .dp-rnote { max-width:min(100%, 56ch); }
+/* Quality pass (T3): the puzzle note and the number caption are running text (three lines and more), set at
+   1.2; running text sits at 1.35 to 1.75. */
+main .dp-rnote, main .dp-numcap { line-height:1.5; }  /* main: depth.css loads later and its font shorthand resets line-height */
