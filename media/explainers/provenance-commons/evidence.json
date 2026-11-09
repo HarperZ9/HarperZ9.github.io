@@ -1,0 +1,128 @@
+{
+  "schema": "explainer-evidence/1",
+  "explainer": "provenance-commons",
+  "read": "2026-10-10",
+  "sources": {
+    "collin2022": {
+      "short": "Collin 2022, xz-devel mailing list",
+      "citation": "Collin, L. (8 June 2022). Message to the xz-devel mailing list, msg00567.",
+      "url": "https://www.mail-archive.com/xz-devel@tukaani.org/msg00567.html",
+      "read": "full",
+      "claims": ["The maintainer described xz as an unpaid hobby project."],
+      "n": "one message",
+      "interval": "Not applicable.",
+      "quote": "this is an unpaid hobby project",
+      "does_not_prove": "Anything about other projects' funding."
+    },
+    "collin2022b": {
+      "short": "Collin 2022, xz-devel mailing list",
+      "citation": "Collin, L. (29 June 2022). Message to the xz-devel mailing list, msg00571.",
+      "url": "https://www.mail-archive.com/xz-devel@tukaani.org/msg00571.html",
+      "read": "full",
+      "claims": ["The maintainer called the contributor practically a co-maintainer."],
+      "n": "one message",
+      "interval": "Not applicable.",
+      "quote": "practically a co-maintainer already",
+      "does_not_prove": "Anything about the contributor's intent at that time."
+    },
+    "cox-timeline": {
+      "short": "Cox 2024, timeline of the xz attack",
+      "citation": "Cox, R. (2024). Timeline of the xz open source attack. research.swtch.com.",
+      "url": "https://research.swtch.com/xz-timeline",
+      "read": "secondary",
+      "claims": ["First patch from the contributor 2021-10-29; xz 5.6.0 tagged 2024-02-24."],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "quote": "",
+      "does_not_prove": "Its dates are a secondary compilation linking primary messages."
+    },
+    "tukaani": {
+      "short": "Collin, XZ Utils backdoor notice",
+      "citation": "Collin, L. XZ Utils backdoor. tukaani.org.",
+      "url": "https://tukaani.org/xz-backdoor/",
+      "read": "full",
+      "claims": ["The 5.6.0 and 5.6.1 release tarballs were created and signed by the contributor."],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "quote": "created and signed by Jia Tan",
+      "does_not_prove": "Who the contributor is."
+    },
+    "freund2024": {
+      "short": "Freund 2024, oss-security",
+      "citation": "Freund, A. (29 March 2024). backdoor in upstream xz/liblzma leading to ssh server compromise. oss-security mailing list.",
+      "url": "https://www.openwall.com/lists/oss-security/2024/03/29/4",
+      "read": "full",
+      "claims": ["Part of the backdoor existed solely in the distributed tarballs; sshd logins took about 0.5 s against about 0.01 s, which led to the discovery."],
+      "n": "one investigation",
+      "interval": "Not applicable.",
+      "quote": "solely in the distributed tarballs",
+      "does_not_prove": "That any provenance system would have caught it; most of the payload was in the repository."
+    },
+    "nvd2024": {
+      "short": "NVD, CVE-2024-3094",
+      "citation": "National Vulnerability Database. CVE-2024-3094, published 29 March 2024, CVSS 3.1 base 10.0.",
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-3094",
+      "read": "full",
+      "claims": ["Malicious code was discovered in the upstream tarballs of xz, starting with version 5.6.0."],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "quote": "discovered in the upstream tarballs of xz",
+      "does_not_prove": "Exploitation in the wild."
+    },
+    "hardin1968": {
+      "short": "Hardin 1968, Science",
+      "citation": "Hardin, G. (1968). The Tragedy of the Commons. Science 162(3859), 1243-1248. Read via the Garrett Hardin Society reprint; the publisher page returned 403.",
+      "url": "https://doi.org/10.1126/science.162.3859.1243",
+      "read": "full (reprint)",
+      "claims": ["Hardin wrote that freedom in a commons brings ruin to all, and proposed mutual coercion mutually agreed upon by the majority of the people affected."],
+      "n": "an essay, not a study",
+      "interval": "Not applicable.",
+      "quote": "Freedom in a commons brings ruin to all.",
+      "does_not_prove": "Anything empirical; it is an argument."
+    },
+    "ostrom2010": {
+      "short": "Ostrom 2010, American Economic Review",
+      "citation": "Ostrom, E. (2010). Beyond Markets and States: Polycentric Governance of Complex Economic Systems. American Economic Review 100(3), 641-672 (Nobel Prize lecture, 8 December 2009).",
+      "url": "https://doi.org/10.1257/aer.100.3.641",
+      "read": "full (Nobel Foundation version)",
+      "claims": ["Eight design principles of long-enduring common-pool resource institutions.", "Of over 100 studies reviewed by Cox, Arnold and Villamayor-Tomas, two-thirds confirm the principles.", "Across 178 forest user groups, monitoring was strongly correlated with forest density."],
+      "n": "over 100 studies; 178 forest user groups",
+      "interval": "None reported in the lecture.",
+      "quote": "authorized to participate in making and modifying its rules",
+      "does_not_prove": "That the principles hold for digital commons; the evidence is correlational field work on natural resources, and a third of the reviewed studies did not confirm them."
+    },
+    "longpre2023": {
+      "short": "Longpre et al. 2023, Data Provenance Initiative",
+      "citation": "Longpre, S., Mahari, R., Chen, A., et al. (2023). The Data Provenance Initiative: A Large Scale Audit of Dataset Licensing and Attribution in AI. arXiv:2310.16787v3.",
+      "url": "https://arxiv.org/abs/2310.16787",
+      "read": "full (abstract, introduction, Table 2)",
+      "claims": ["Of 1,858 datasets, licences were unspecified on GitHub 72%, Hugging Face 69%, Papers with Code 70%; the authors' tracing left 30% unspecified.", "Licences listed more permissively than the author's terms: 29% (GitHub), 27% (Hugging Face), 16% (Papers with Code)."],
+      "n": "1,858 datasets from 44 collections",
+      "interval": "None; counts over a curated sample.",
+      "quote": "yields only 30% 'Unspecified'",
+      "does_not_prove": "Downstream harm or legal exposure; the sample is popular fine-tuning collections."
+    },
+    "longpre2024": {
+      "short": "Longpre et al. 2024, Consent in Crisis",
+      "citation": "Longpre, S., Mahari, R., Lee, A., et al. (2024). Consent in Crisis: The Rapid Decline of the AI Data Commons. arXiv:2407.14933v2.",
+      "url": "https://arxiv.org/abs/2407.14933",
+      "read": "full (abstract, introduction, methods, section 3)",
+      "claims": ["From April 2023 to April 2024, about 5% or more of all tokens in C4 became fully restricted by robots.txt (body: about 1% to 5-7%)."],
+      "n": "14,000 web domains audited",
+      "interval": "None; the authors say values may be slightly high owing to Wayback Machine gaps.",
+      "quote": "~5%+ of all tokens in C4",
+      "does_not_prove": "Crawler compliance, or that loss of provenance caused the restrictions."
+    },
+    "slsa12": {
+      "short": "SLSA Build Provenance v1.2",
+      "citation": "SLSA. Build Provenance, specification v1.2 (approved).",
+      "url": "https://slsa.dev/spec/v1.2/build-provenance",
+      "read": "full",
+      "claims": ["Provenance is verifiable information about software artifacts describing where, when and how something was produced."],
+      "n": "a standard, not a study",
+      "interval": "Not applicable.",
+      "quote": "where, when, and how something was produced",
+      "does_not_prove": "That the source is benign, or how widely it is adopted."
+    }
+  }
+}

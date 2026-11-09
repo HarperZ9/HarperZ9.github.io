@@ -1,0 +1,174 @@
+{
+  "schema": "trailer-capture/1",
+  "game": "The Keeper's Hour 0.3.1 (HarperZ9/brender-archival release keepers-v0.3.1, keepers-hour-0.3.1-windows-x64.zip)",
+  "recorder": "KEEPERS_RECORD (games/keepers-hour/src/kh_capture.h): frame n shows game time KEEPERS_CLOCK + n / KEEPERS_FPS exactly, so two runs give the same bytes",
+  "renderer": "--force-software: BRender's software rasteriser on the CPU (the storyboard's OpenGL path would draw on the GPU, which this draft does not use)",
+  "fps": 30,
+  "note": "KEEPERS_CLOCK is the trailer time at the shot's first frame, so the lamp keeps one phase across every cut.",
+  "shots": [
+    {
+      "sweeps": [
+        1,
+        3
+      ],
+      "room": "gallery",
+      "yaw": 0,
+      "yaw_speed": 3,
+      "push": [
+        1.0,
+        1.12
+      ],
+      "clock": 0,
+      "seconds": 12
+    },
+    {
+      "sweeps": [
+        4,
+        5
+      ],
+      "room": "gallery",
+      "yaw": 300,
+      "yaw_speed": 3,
+      "push": [
+        1.0,
+        1.0
+      ],
+      "clock": 12,
+      "seconds": 8
+    },
+    {
+      "sweeps": [
+        6,
+        7
+      ],
+      "room": "lamp",
+      "yaw": 0,
+      "yaw_speed": 2,
+      "push": [
+        1.4,
+        1.75
+      ],
+      "focus": [
+        0.5,
+        0.25
+      ],
+      "clock": 20,
+      "seconds": 8
+    },
+    {
+      "sweeps": [
+        8,
+        9
+      ],
+      "room": "keeper",
+      "yaw": 0,
+      "yaw_speed": 4,
+      "push": [
+        1.15,
+        1.25
+      ],
+      "clock": 28,
+      "seconds": 8
+    },
+    {
+      "sweeps": [
+        10,
+        11
+      ],
+      "room": "radio",
+      "yaw": 0,
+      "yaw_speed": 3,
+      "push": [
+        1.0,
+        1.15
+      ],
+      "clock": 36,
+      "seconds": 8
+    },
+    {
+      "sweeps": [
+        12,
+        12
+      ],
+      "room": "lamp",
+      "yaw": 0,
+      "yaw_speed": 0,
+      "push": [
+        2.0,
+        2.0
+      ],
+      "ui": true,
+      "open": "logbook",
+      "focus": [
+        0.349,
+        0.909
+      ],
+      "clock": 44,
+      "seconds": 4,
+      "pad": true
+    },
+    {
+      "sweeps": [
+        13,
+        15
+      ],
+      "room": "radio",
+      "yaw": 180,
+      "yaw_speed": 3,
+      "push": [
+        1.1,
+        1.3
+      ],
+      "clock": 48,
+      "seconds": 12
+    },
+    {
+      "sweeps": [
+        16,
+        16
+      ],
+      "room": "gallery",
+      "yaw": 60,
+      "yaw_speed": 4,
+      "push": [
+        1.0,
+        1.1
+      ],
+      "clock": 60,
+      "seconds": 4
+    },
+    {
+      "sweeps": [
+        17,
+        18
+      ],
+      "room": "stairs",
+      "yaw": 0,
+      "yaw_speed": 4,
+      "push": [
+        1.0,
+        1.1
+      ],
+      "clock": 64,
+      "seconds": 8
+    },
+    {
+      "sweeps": [
+        19,
+        19
+      ],
+      "room": "lamp",
+      "yaw": 90,
+      "yaw_speed": 2,
+      "push": [
+        1.4,
+        1.6
+      ],
+      "clock": 72,
+      "seconds": 4
+    }
+  ],
+  "camera_note": "The recorder's camera orbits above each room, so the storyboard's low angle on the tower, the dry seabed and the town far off are not in view; the yaw of each gallery shot was chosen from four test stills (60, 120, 210, 300 degrees) as the one with the most of the tower in frame.",
+  "ui_note": "KEEPERS_OPEN=logbook opens the node's first line; reaching its [TIDE 8] check needs a choice the recorder cannot make, so sweep 12 shows the game's dialogue box on the logbook's opening line instead of the check (pending: a scripted choice in the recorder, owned by the brender-archival session).",
+  "status": "All ten shots recorded on 14 October 2026 from keepers-hour-0.3.1-windows-x64.zip (sha256 3fbad7fb4f8dbb368a967d62eb0333a8c9e68dc9cfc18834049b9ea3e36c11ae, the digest GitHub reports for the asset): 2,280 frames, 1280 x 720, software rasteriser on the CPU. Shot s16 recorded twice: 120 of 120 frames byte-identical. Each shot's clock is its trailer time; one sweep is one full turn of the lamp, so the beam keeps its phase across cuts."
+}
