@@ -47,9 +47,9 @@ node("build-world-home.mjs");
 node("build-world-pages.mjs");
 node("world-asset-revision.mjs");
 node("world-discovery.mjs");
-node("finding-flags.mjs");
 node("render-route-registry.mjs");
 node("render-site-index.mjs");
+node("finding-flags.mjs");  // after every page that can link to a finding is written
 run(py, ["-m", "tools.repo_art.render_missing"]);
 run(py, ["-c", WORLD_STAMP]);
 run(py, ["tools/structured_data.py"]);

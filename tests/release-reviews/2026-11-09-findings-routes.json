@@ -1,0 +1,8 @@
+{
+  "date": "2026-11-09",
+  "note": "The route registry and the full site index list the findings index, the findings glossary and the 30 finding pages, so the public sitemap inventory and the registry agree. Not merged until the author reviews the renders.",
+  "paths": {
+    "site-index.html": "513551d4b708a417a50bd4967aa861ee1f495d0186cbfb863402e653b8e09abf",
+    "system/routes.js": "4cf44169c8e81eced0a04ddf29b32eab2e47e24f11dd7490878e112976cfabcf"
+  }
+}
