@@ -140,7 +140,7 @@ export const PILLARS = [
         <li><a href="/cv.html">Full CV</a></li>
         <li><a href="/resume.html">Resume</a></li>
       </ul>
-      <p class="w-go"><a class="w-try" href="/hire.html">Hire or collaborate</a> <a href="mailto:zaindharper@gmail.com">Email</a></p>`,
+      <p class="w-go"><a class="w-try" href="/hire.html">Hire or collaborate</a></p>`,
   },
 ];
 
