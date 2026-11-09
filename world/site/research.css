@@ -13,11 +13,6 @@ main:has(> .rp) { max-width: calc(var(--measure) + var(--margin-w) + 3rem + 32px
 .soft { color: var(--soft); }
 .kicker { font: 500 var(--fs-1)/1.4 var(--face-utility); color: var(--soft); margin: 0 0 12px; }
 .kicker a { color: var(--ink); }
-.living-host { position: relative; }
-.living-paint { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; opacity: 0; transition: opacity .3s ease; }
-.living-on > .living-paint { opacity: 1; }
-.living-on { color: transparent !important; }
-.living-on::selection { color: var(--ink); }
 
 /* marks */
 .mk { width: 1.05em; height: 1.05em; vertical-align: -.17em; fill: currentColor; stroke: currentColor; stroke-width: 0; flex: none; }
@@ -173,8 +168,6 @@ a.out { overflow-wrap: anywhere; font-size: var(--fs-1); }
 .gl-uses { font: 400 var(--fs-1)/1.6 var(--face-utility) !important; color: var(--soft); }
 .gl-uses a { color: var(--ink); }
 
-@media (prefers-reduced-motion: reduce) { .living-paint { transition: none; } }
-@media (forced-colors: active) { .living-paint { display: none; } .living-on { color: CanvasText !important; } }
 @media print { .apparatus { background: none; box-shadow: none; } .trace:not([open]) { display: block; } }
 .rp .fd-plate, .rp .fd-fig, .rp .fd-tab { margin-left: 0; margin-right: 0; }
 @media (min-width: 1100px) { .rp .para .gd-f { display: block; margin-bottom: 2px; } }
@@ -184,7 +177,6 @@ a.out { overflow-wrap: anywhere; font-size: var(--fs-1); }
 @media (min-width: 1100px) { .rp .para .gd-t::after, .rp .para .gd-f::after, .rp .arg-sec li .gd-t::after, .rp .arg-sec li .gd-f::after { content: none; } }
 .rp .fd-plate img, .rp .fd-plate figcaption { margin-left: 0; margin-right: 0; }
 .refs .key { font-family: var(--face-utility); font-weight: 700; }
-.fd [data-living] { width: fit-content; max-width: 100%; }
 .xc-title .sflag, .fd-next .sflag { font-size: var(--fs-1); }
 .gd { margin: 0 .15em; }
 .gd-f, .gl-scope { font-family: var(--face-text); font-style: italic; }
@@ -201,8 +193,60 @@ a.out { overflow-wrap: anywhere; font-size: var(--fs-1); }
 /* the field of marks: row labels at the body's small size (the drawing scales by about 0.73 at desktop width) */
 .fd .xf-lab { font-size: 18px; }
 @media (max-width: 600px) { .fd .xf-lab { font-size: 16px; } }
-/* living type sits on the field: over the always-dark reading ground the night sheet blends away (lighten) so only the
-   letters show. The reading page's main lifts itself with z-index 1, which would isolate the blend from the field;
-   z-index auto keeps the same paint order (main still follows the fixed field in the tree) and lets it through. */
-main#main:has(> .fd) { z-index: auto; }
-[data-living-ground="night"] > .living-paint { mix-blend-mode: lighten; }
+
+/* ---------- depth and letter colour (world/site/research-type.js moves --sx, --sy and --rt-shift) ----------
+   The light comes from the plate's sun, upper right; depth falls away from it, to the lower left. Hues come from
+   the platform inks (RSRCH #bb7196, PLYGRND #427f78, BLDLNG #8a81c8) lifted toward the field's ink so they read on
+   the water; the gold is the field's sun. Verdict teal and rust stay with verdicts. */
+:root {
+  --sx: -0.616; --sy: 0.788; --rt-shift: 0%;
+  --rt-rs: color-mix(in oklab, #bb7196 34%, #f4efe6); --rt-pg: color-mix(in oklab, #427f78 28%, #f4efe6);
+  --rt-bl: color-mix(in oklab, #8a81c8 34%, #f4efe6); --rt-gold: color-mix(in oklab, #d79e35 42%, #f4efe6);
+  --rt-cream: #f4efe6;
+  --rt-rs2: oklch(0.82 0.11 349); --rt-pg2: oklch(0.84 0.09 186);
+  --rt-bl2: oklch(0.81 0.10 288); --rt-gold2: oklch(0.86 0.12 80);  /* the platform inks' hues at a lightness that reads on the water */ --rt-deep: #241520; --rt-lit: rgba(255, 248, 236, .82);
+}
+/* titles: a spectral fill through the strokes, and a full extrusion on a layer that is never read aloud */
+.rt-title { position: relative; isolation: isolate; color: transparent; -webkit-text-fill-color: transparent; }
+/* the fill sits on a second unread layer above the depth: a fill on the heading itself would paint under its own
+   negative-z depth layer */
+.rt-title::after { content: attr(data-depth) / ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  color: transparent; -webkit-text-fill-color: transparent;
+  background: linear-gradient(100deg, var(--rt-rs2), var(--rt-gold2) 18%, var(--rt-cream) 34%, var(--rt-pg2) 52%, var(--rt-bl2) 70%, var(--rt-rs2) 86%, var(--rt-gold2));
+  background-size: 160% 100%; background-position: var(--rt-shift) 0; -webkit-background-clip: text; background-clip: text; }
+.rt-title::before { content: attr(data-depth) / ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  color: transparent; -webkit-text-fill-color: transparent;
+  text-shadow:
+    calc(var(--sx) * -1.6px) calc(var(--sy) * -1.6px) 0 var(--rt-lit),
+    calc(var(--sx) * 1px) calc(var(--sy) * 1px) 0 #7d4a66, calc(var(--sx) * 2px) calc(var(--sy) * 2px) 0 #6a3d57,
+    calc(var(--sx) * 3px) calc(var(--sy) * 3px) 0 #573149, calc(var(--sx) * 4px) calc(var(--sy) * 4px) 0 #46273b,
+    calc(var(--sx) * 5px) calc(var(--sy) * 5px) 0 #371e2e, calc(var(--sx) * 6px) calc(var(--sy) * 6px) 0 #2b1724,
+    calc(var(--sx) * 7px) calc(var(--sy) * 7px) 0 var(--rt-deep),
+    calc(var(--sx) * 16px) calc(var(--sy) * 16px) 18px rgba(0, 0, 0, .62); }
+/* headings: a shallower extrusion, coloured by what they are */
+.fd h2, .fd h3 { text-shadow:
+  calc(var(--sx) * -1px) calc(var(--sy) * -1px) 0 rgba(255, 248, 236, .45),
+  calc(var(--sx) * 1px) calc(var(--sy) * 1px) 0 #4a2a3d, calc(var(--sx) * 2px) calc(var(--sy) * 2px) 0 #3a2030,
+  calc(var(--sx) * 3px) calc(var(--sy) * 3px) 0 var(--rt-deep), calc(var(--sx) * 8px) calc(var(--sy) * 8px) 10px rgba(0, 0, 0, .55); }
+.fd h3 { text-shadow: calc(var(--sx) * 1px) calc(var(--sy) * 1px) 0 #3a2030, calc(var(--sx) * 4px) calc(var(--sy) * 4px) 6px rgba(0, 0, 0, .5); }
+.fd .lead-sec h2, .fd .arg-sec h2, .fd .objection h2 { color: var(--rt-cream); }
+.fd #evidence h2, .fd .grade h3, .fd .ladder h3 { color: var(--rt-pg); }
+.fd .apparatus h2 { color: var(--rt-bl); }
+/* tier colour on the words it belongs to: each finding's title on the index, and the tier word beside it */
+.fd-item[data-tier="strong"] .xc-title a, .fd-item[data-tier="strong"] .fd-tier { color: var(--rt-rs); }
+.fd-item[data-tier="signal"] .xc-title a, .fd-item[data-tier="signal"] .fd-tier { color: var(--rt-pg); }
+.fd-item[data-tier="null"] .xc-title a, .fd-item[data-tier="null"] .fd-tier { color: var(--rt-bl); }
+.gl-term h2 { color: var(--rt-rs); }
+/* body: a soft letterpress, one pixel of lit edge above and one of shadow below, no blur, so 16 px stays crisp */
+.fd p, .fd li, .fd dd, .fd td, .fd th, .fd figcaption { text-shadow: 0 -1px 0 rgba(255, 248, 236, .07), 0 1px 0 rgba(0, 0, 0, .6); }
+/* key words in the body take colour: defined terms, numbers, a claim's own words */
+.fd .gt { color: var(--rt-rs); text-decoration-color: color-mix(in oklab, var(--rt-rs) 70%, transparent); }
+.fd .n { color: var(--rt-gold); font-variant-numeric: tabular-nums; }
+.fd .gd-t { color: var(--rt-rs); }
+/* plain view and forced colours: ink on a calm ground, no depth, no colour */
+html.plain .rt-title, html.plain .fd .gt, html.plain .fd .n, html.plain .fd h2, html.plain .fd h3, html.plain .fd .xc-title a, html.plain .fd .fd-tier {
+  color: var(--ink) !important; -webkit-text-fill-color: currentColor; background: none; text-shadow: none !important; }
+html.plain .rt-title::before, html.plain .rt-title::after { content: none; }
+html.plain .fd p, html.plain .fd li, html.plain .fd dd, html.plain .fd td, html.plain .fd th, html.plain .fd figcaption { text-shadow: none; }
+@media (forced-colors: active) { .rt-title { color: CanvasText; -webkit-text-fill-color: CanvasText; } .rt-title::before, .rt-title::after { content: none; } .fd * { text-shadow: none !important; } }
+@media print { .rt-title { color: #000; -webkit-text-fill-color: #000; } .rt-title::before, .rt-title::after { content: none; } .fd * { text-shadow: none !important; } }

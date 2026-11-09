@@ -51,7 +51,7 @@ export function indexBody(list) {
   const tierKey = tiers.map((t) => `<dt>${glyph(t)}${esc(TIERS[t].label)}</dt><dd>${esc(TIERS[t].blurb)}.</dd>`).join("");
   const standKey = ["held", "extended", "narrowed", "questioned", "refuted", "retracted"].map((s) => `<span class="lbl">${standingMark(s)}${STANDING_WORD[s]}</span>`).join(" ");
   return `<article class="tool xp fd">
-<h1 data-living="ink engraved" data-living-ground="night">Findings</h1>
+<h1 class="rt-title" data-depth="Findings">Findings</h1>
 <p>What our experiments found, one finding at a time. Each page leads with where the result stands, puts the strongest objection before the argument, marks every checkable claim with its evidence, defines each technical term where it is first used, and ends with the dated trail of corrections, the references both ways, the steps to repeat it and a Verified line. Each offers its whitepaper as a PDF and its BuildTeX source.</p>
 <p class="fd-count">${list.length} findings so far. <b>${nulls} of them are honest nulls</b>: tests that failed, claims that did not hold, and errors of our own that we found and fixed. ${outNull} findings in all report a null result with its bound. They carry the same weight as the results that held, because knowing what does not work saves the next person the trip.</p>
 <dl class="fd-key">${tierKey}</dl>
@@ -83,7 +83,7 @@ export function glossaryBody(glossary, uses, pages, titles) {
   }).join("\n");
   return `<article class="tool st fd gl">
 <p class="kicker"><a class="fd-up" href="/findings/">Findings</a></p>
-<h1 data-living="ink engraved" data-living-ground="night">Glossary</h1>
+<h1 class="rt-title" data-depth="Glossary">Glossary</h1>
 <p>Each technical term on the findings pages, defined the way we use it: what we mean, the field the term comes from and what it excludes. A term shared across the findings has one definition; a term one study fixed for itself is defined in that study's scope. Each definition lists every page that uses it, and each use links back here.</p>
 <p class="fd-count">${groups.size} terms, ${glossary.terms.length} scoped definitions, ${uses.length} first uses across ${new Set(uses.map((u) => u.page)).size} findings.</p>
 <ol class="gl-list">${entries}</ol>

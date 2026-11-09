@@ -14,9 +14,6 @@ const SHEET_KEY = "living-sheet";
 const remember = { get: () => { try { return localStorage.getItem(SHEET_KEY); } catch { return null; } }, set: (v) => { try { localStorage.setItem(SHEET_KEY, v); } catch { /* private mode: the choice lasts for this page */ } } };
 const isDark = () => { const t = root.dataset.theme; return t ? t === "dark" : matchMedia("(prefers-color-scheme: dark)").matches; };
 const schemeNow = () => (isDark() && remember.get() !== "lit" ? "night" : "day");
-// a heading over a ground that is always dark (the reading pages' field) asks for the night ground with
-// data-living-ground="night", so no lit sheet is painted behind it whatever the lamp says
-const schemeOf = (el) => el?.dataset.livingGround || schemeNow();
 const LIVE = 3, heads = [...document.querySelectorAll("[data-living]")];
 // the still face paints first; the engine starts once the page has loaded and the main thread is idle, and on touch
 // screens at the visitor's first touch or scroll (budget.js), so living type never delays the first screen
@@ -51,7 +48,7 @@ async function boot() {
     pending.delete(`${p.id}/${m.op}/${m.i}`);
     if (m.op === "stop") p.g.stop(m.i, m.part); else { p.g.move(m.i, m.part); p.moves[m.i] = m.part; }
   };
-  const init = (p) => worker.postMessage({ id: p.id, op: "init", w: p.w, h: p.h, seed: 3, scheme: schemeOf(p.el),
+  const init = (p) => worker.postMessage({ id: p.id, op: "init", w: p.w, h: p.h, seed: 3, scheme: schemeNow(),
     stops: p.states.map((s, i) => (i ? { state: s } : { state: s, text: p.text })) });
   function claim(el) {
     if ([...P.values()].filter((x) => x.g).length >= LIVE) return null;
@@ -59,7 +56,7 @@ async function boot() {
     const c = document.createElement("canvas"); c.className = "living-paint"; c.setAttribute("aria-hidden", "true"); c.dataset.art = ""; c.width = w; c.height = h;
     let g; try { g = createLivingGL(c); } catch (e) { console.info("living: no GL here", e.message); return null; }
     el.classList.add("living-host"); el.append(c);
-    const p = { id: `h${seq++}`, el, c, g, w, h, stops: null, ready: false, gen: 0, moves: {}, scheme: schemeOf(el),
+    const p = { id: `h${seq++}`, el, c, g, w, h, stops: null, ready: false, gen: 0, moves: {}, scheme: schemeNow(),
       states: el.dataset.living.split(/\s+/).filter(Boolean), text: el.firstChild?.textContent?.trim() || el.textContent.trim() };
     P.set(el, p); init(p); return p;
   }
@@ -70,8 +67,8 @@ async function boot() {
     if (refuse) p.el.removeAttribute("data-living");
   }
   function rescheme() {
-    if (btn) { btn.hidden = !isDark(); btn.setAttribute("aria-pressed", String(remember.get() === "lit")); }
-    for (const p of P.values()) { const sch = schemeOf(p.el); if (!p.g || p.scheme === sch) continue; p.scheme = sch; p.gen++; p.ready = false; p.moves = {}; p.g.reset?.(); for (const k of [...pending]) if (k.startsWith(p.id + "/")) pending.delete(k); init(p); }
+    const sch = schemeNow(); if (btn) { btn.hidden = !isDark(); btn.setAttribute("aria-pressed", String(remember.get() === "lit")); }
+    for (const p of P.values()) { if (!p.g || p.scheme === sch) continue; p.scheme = sch; p.gen++; p.ready = false; p.moves = {}; p.g.reset?.(); for (const k of [...pending]) if (k.startsWith(p.id + "/")) pending.delete(k); init(p); }
   }
   const btn = sheetControl(rescheme);
   new MutationObserver(rescheme).observe(root, { attributes: true, attributeFilter: ["data-theme"] });

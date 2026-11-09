@@ -61,7 +61,7 @@ export function findingBody(rec, env) {
   const body = `<article class="tool st fd fd-page rp" data-tier="${esc(d.tier)}">
 <header class="rp-lead">
 <p class="kicker"><a class="fd-up" href="/findings/">Findings</a> <span aria-hidden="true">/</span> ${esc(d.id)} <span aria-hidden="true">/</span> ${esc(fields)} <span aria-hidden="true">/</span> found ${esc(d.date_found)}</p>
-<h1>${esc(d.title)}</h1>
+<h1 class="rt-title" data-depth="${esc(d.title)}">${esc(d.title)}</h1>
 <p class="fd-standfirst">${esc(d.standfirst)}</p>
 ${standingLine(rec, env.relations)}
 ${downloads(rec, "lead")}

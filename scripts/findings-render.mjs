@@ -30,9 +30,12 @@ export function numberLabels(ctx) {
   }
 }
 
+// numbers in running prose take their own colour (class n); the colour is decoration, the digits stay text
+const NUM = /(?<![\w.#&;-])([-+\u2212]?\d[\d,]*(?:\.\d+)?%?)(?![\w])/g;
 function text(v, ctx) {
   // the first mention of another published finding in a paragraph links to it; the flag step marks its standing
-  return esc(v).replace(/\bF\d+\b/g, (f) => {
+  const t = esc(v), withNums = ctx.body ? t.replace(NUM, '<span class="n">$1</span>') : t;
+  return withNums.replace(/\bF\d+\b/g, (f) => {
     if (f === ctx.id || !ctx.pages[f] || ctx.linkedF.has(f)) return f;
     ctx.linkedF.add(f);
     return `<a href="${ctx.pages[f]}">${f}</a>`;
@@ -125,8 +128,8 @@ export function sectionBody(sec, ctx, { keep = false } = {}) {
   const flush = () => { if (list.length) { out.push(`<ul>${list.join("")}</ul>`); list = []; } };
   for (const p of sec.paragraphs) for (const b of blocks(p)) {
     if (b.kind !== "li") flush();
-    if (b.kind === "p") { const before = ctx.traces.length; const html = prose(b.text, ctx); out.push(`<div class="para"><p>${html}</p></div>${traces(ctx, before)}`); }
-    else if (b.kind === "li") { const before = ctx.traces.length; list.push(`<li>${prose(b.text, ctx)}${traces(ctx, before)}</li>`); }
+    if (b.kind === "p") { const before = ctx.traces.length; ctx.body = true; const html = prose(b.text, ctx); ctx.body = false; out.push(`<div class="para"><p>${html}</p></div>${traces(ctx, before)}`); }
+    else if (b.kind === "li") { const before = ctx.traces.length; ctx.body = true; const li = prose(b.text, ctx); ctx.body = false; list.push(`<li>${li}${traces(ctx, before)}</li>`); }
     else if (b.kind === "subsection") out.push(`<h3${b.label ? ` id="${anchorOf(b.label)}"` : ""}>${esc(b.text)}</h3>`);
     else if (b.kind === "eq") out.push(`<div class="eq" id="${anchorOf(b.label)}">${mathml(b.text, true)}<span class="eqn" aria-label="equation ${ctx.numbers[b.label]}">(${ctx.numbers[b.label]})</span></div>`);
     else if (b.kind === "figure") { if (b.src.startsWith("plate-") || keep) out.push(figure(b, ctx)); else ctx.figures.push(figure(b, ctx)); }

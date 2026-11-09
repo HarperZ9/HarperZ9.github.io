@@ -22,7 +22,7 @@ import { glossaryBody, indexBody, items } from "./findings-index.mjs";
 const site = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const DIR = path.join(site, "findings");
 const json = (p) => JSON.parse(readFileSync(p, "utf8"));
-const CSS = '<link rel="stylesheet" href="/world/site/experiments.css">\n<link rel="stylesheet" href="/world/site/findings.css">\n<link rel="stylesheet" href="/world/site/research.css">\n<script type="module" src="/world/site/research.js"></script>\n<script type="module" src="/world/site/living-hook.js"></script>\n';
+const CSS = '<link rel="stylesheet" href="/world/site/experiments.css">\n<link rel="stylesheet" href="/world/site/findings.css">\n<link rel="stylesheet" href="/world/site/research.css">\n<script type="module" src="/world/site/research.js"></script>\n<script type="module" src="/world/site/research-type.js"></script>\n';
 const AUTHOR = { "@type": "Person", name: "Zain Dana Harper", url: "https://harperz9.github.io/" };
 
 // the plate beside a physics finding: the site's own copy of the period plate, with the paper's caption and alt text
