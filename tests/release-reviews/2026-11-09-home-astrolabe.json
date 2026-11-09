@@ -2,6 +2,6 @@
   "date": "2026-11-09",
   "note": "Home combined branch updated from main for the review queue (author, 2026-11-09: Push). The astrolabe section follows main's The work platforms on the world entrance, under its own id (dial); its CMMNS pillar takes main's name and links; asset revision regenerated. The Work and CV panel drops its mailto link (publish metadata gate); hire.html carries contact.",
   "paths": {
-    "index.html": "8e7433de5cf64358434016a34e7469085511f2868ab74a608d353d1c78cb8a80"
+    "index.html": "2a1898a0fe3c59bce32a9aee5ae3dc96a7106fbc2c62de10e4b69296449d803a"
   }
 }
