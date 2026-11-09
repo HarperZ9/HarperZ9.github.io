@@ -54,7 +54,7 @@ function mixSpace(a, b, k) {
     windAngle: lerp(a.windAngle ?? 0.35, b.windAngle ?? 0.35, k), wx: Object.fromEntries(WX.map((key) => [key, lerp(a.wx?.[key] ?? 0, b.wx?.[key] ?? 0, k)])) };
 }
 
-export function createField(canvas, { space = "close", dprCap = 1.5, reduced = false } = {}) {
+export function createField(canvas, { space = "close", dprCap = 1.5, reduced = false, budgetMs = 16.7, minScale = 0.6, history = 0 } = {}) {
   const gl = canvas.getContext("webgl2", { antialias: false, alpha: false, preserveDrawingBuffer: true, powerPreference: "high-performance" });
   if (!gl || !gl.getExtension("EXT_color_buffer_float")) throw new Error("glass-water field: WebGL2 with float targets is not available here");
   // a software rasteriser (SwiftShader, llvmpipe, WARP) runs this shader on the CPU and blocks the page; such a
@@ -178,13 +178,28 @@ export function createField(canvas, { space = "close", dprCap = 1.5, reduced = f
   let flash = 0, strokes = [], held = 0, bolt = [3, 0.5, 6];
   const flashAt = (now) => held || strokes.reduce((m, k) => (now >= k.t ? Math.max(m, k.s * Math.exp(-(now - k.t) / 45)) : m), 0);
   let running = false, last = 0, visible = true;
+  // resolution follows the frame budget: the render scale starts at the device's cap and steps down when frames run
+  // long (a mean over 30 frames above `budgetMs`), back up when they run short, never below `minScale`
+  let scale = Math.min(devicePixelRatio || 1, dprCap), ema = 0, seen = 0, k = 0;
+  // temporal anti-aliasing: each frame is drawn with a subpixel jitter from the R2 sequence and blended into the last
+  // frames' mean, so edges and the glints on the water resolve below a pixel. The blend keeps `history` of the past,
+  // short enough that moving water does not smear (0 turns it off)
+  const R2 = [0.7548776662466927, 0.5698402909980532];
   function loop(ts) {
     if (!running) return;
-    const dt = Math.min(0.05, (ts - last) / 1000); last = ts; clock += dt;
-    const dpr = Math.min(devicePixelRatio || 1, dprCap), r = canvas.getBoundingClientRect(), w = Math.max(2, Math.round(r.width * dpr)), h = Math.max(2, Math.round(r.height * dpr));
-    if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; }
-    flash = flashAt(performance.now()); strokes = strokes.filter((k) => performance.now() - k.t < 400);
-    size(w, h); frame({ t: clock });
+    const dtMs = ts - last, dt = Math.min(0.05, dtMs / 1000); last = ts; clock += dt;
+    if (dtMs > 0 && dtMs < 250) { ema = seen ? ema + (dtMs - ema) / 30 : dtMs; seen++; }
+    if (seen > 30) {
+      if (ema > budgetMs * 1.15 && scale > minScale) { scale = Math.max(minScale, scale * 0.85); seen = 0; }
+      else if (ema < budgetMs * 0.7 && scale < dprCap) { scale = Math.min(dprCap, scale * 1.08); seen = 0; }
+    }
+    const r = canvas.getBoundingClientRect(), w = Math.max(2, Math.round(r.width * scale)), h = Math.max(2, Math.round(r.height * scale));
+    const resized = canvas.width !== w || canvas.height !== h;
+    if (resized) { canvas.width = w; canvas.height = h; }
+    flash = flashAt(performance.now()); strokes = strokes.filter((x) => performance.now() - x.t < 400);
+    size(w, h); k++;
+    const jitter = history > 0 ? [((k * R2[0]) % 1) - 0.5, ((k * R2[1]) % 1) - 0.5] : [0, 0];
+    frame({ t: clock, jitter, blendWeight: resized || history <= 0 ? 1 : 1 - history });
     if (visible) requestAnimationFrame(loop);
   }
   const api = {
@@ -207,6 +222,8 @@ export function createField(canvas, { space = "close", dprCap = 1.5, reduced = f
     go(id, ms = 2600) { if (!SPACES[id]) return; word = progress() < 0.5 ? word : to.word; from = state(); to = SPACES[id]; t0 = performance.now(); dur = reduced ? 1 : ms; if (reduced) api.still(); },
     start() { if (reduced) return api.still(); running = true; last = performance.now(); requestAnimationFrame(loop); },
     stop() { running = false; },
+    // what the field is doing now, for the page's own budget checks and for measurement
+    stats() { return { scale, frameMs: ema, width: canvas.width, height: canvas.height }; },
     setVisible(v) { visible = v; if (v && running) { last = performance.now(); requestAnimationFrame(loop); } },
     // one settled still: n jittered frames averaged at a fixed time (subpixel antialiasing for the glass edges)
     still({ n = 16, w = canvas.width, h = canvas.height, t = 7.0 } = {}) {

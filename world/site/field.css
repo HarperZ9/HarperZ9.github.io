@@ -14,6 +14,9 @@
 .gw-backdrop canvas { opacity: 0; transition: opacity .9s var(--ease-standard, ease); }
 .gw-backdrop.live canvas { opacity: 1; }
 html.plain .gw-backdrop canvas { display: none; }
+/* a display dither: a lossless tile of high-passed noise, +-3 levels about mid grey, laid over the plate in overlay, so
+   the night sky's gradient breaks up where the image encoder smoothed the renderer's own dither away */
+.gw-backdrop .gw-dither { position: absolute; inset: 0; background: url("/media/world/glass-water/dither-128.png") repeat; mix-blend-mode: overlay; }
 main#main, body > footer { position: relative; z-index: 1; }
 @media (prefers-reduced-motion: reduce) { .gw-backdrop canvas { transition: none; } }
 

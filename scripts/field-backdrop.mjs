@@ -12,7 +12,7 @@ new MutationObserver(s).observe(r,{attributes:true,attributeFilter:["data-theme"
 export function backdrop({ priority = "low", live = false } = {}) {
   const src = (scheme, portrait, ext) => {
     const m = portrait ? "(orientation: portrait)" : "";
-    const ws = portrait ? [828, 1242] : [1280, 1920, 2560];
+    const ws = portrait ? [828, 1242] : [1280, 1920, 2560, 3840];
     return `<source data-s="${scheme}" data-m="${m}" media="${m ? m + " and " : ""}(prefers-color-scheme: ${scheme === "night" ? "dark" : "light"})" type="image/${ext}" srcset="${set(`field-${scheme}${portrait ? "-portrait" : ""}`, ext, ws)}" sizes="100vw">`;
   };
   const sources = ["night", "day"].flatMap((s) => [src(s, true, "avif"), src(s, true, "webp"), src(s, false, "avif"), src(s, false, "webp")]).join("\n    ");
@@ -21,6 +21,7 @@ export function backdrop({ priority = "low", live = false } = {}) {
     ${sources}
     <img src="${M}/field-day-1920.webp" width="1920" height="1080" alt="" decoding="async" fetchpriority="${priority}">
   </picture>${live ? '\n  <canvas class="gw-live"></canvas>' : ""}
+  <i class="gw-dither"></i>
 </div>
 ${SWAP}`;
 }

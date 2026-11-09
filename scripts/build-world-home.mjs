@@ -86,6 +86,27 @@ function bazaar(rules) {
   </article>`).join("\n");
 }
 
+// the arrival's supergraphic: the work's names as bands of letters at wall scale, a deco sunburst of stepped rays and
+// arcs, and a brutalist stepped mass (world/site/supergraphic.css). Decoration only: hidden from assistive technology,
+// since the same names are the landmarks' headings below.
+const SG_NAMES = ["BUILDLANG", "FLYWHEEL", "ENGINE", "GAME", "CMMNS", "ARTICULATE"];
+function supergraphic() {
+  const band = (i, names) => `<p class="sg-band sg-${i}">${names.join(" ")}</p>`;
+  const rot = (k) => SG_NAMES.slice(k).concat(SG_NAMES.slice(0, k));
+  // rays fan over the upper half, stepped in length like a deco sunburst; arcs step outward in three tiers
+  const cx = 500, cy = 500, rays = [];
+  for (let i = 0; i <= 36; i++) {
+    const a = Math.PI + (Math.PI * i) / 36, r0 = 120, r1 = i % 3 === 0 ? 490 : i % 3 === 1 ? 400 : 330;
+    rays.push(`<line class="ray" x1="${(cx + r0 * Math.cos(a)).toFixed(1)}" y1="${(cy + r0 * Math.sin(a)).toFixed(1)}" x2="${(cx + r1 * Math.cos(a)).toFixed(1)}" y2="${(cy + r1 * Math.sin(a)).toFixed(1)}"/>`);
+  }
+  const arcs = [150, 210, 280].map((r) => `<path class="arc" d="M${cx - r} ${cy} A${r} ${r} 0 0 1 ${cx + r} ${cy}"/>`).join("");
+  return `<div class="sg" aria-hidden="true">
+      ${band(1, rot(0))}${band(2, rot(3))}${band(3, rot(1))}
+      <svg class="sg-sun" viewBox="0 0 1000 520" focusable="false">${rays.join("")}${arcs}<path class="core" d="M410 500 A90 90 0 0 1 590 500 Z"/></svg>
+      <div class="sg-mass"><i></i><i></i><i></i></div>
+    </div>`;
+}
+
 // the front door: the six landmarks in the author's order, each with the work under it. Site carries the places
 // (the bazaar); Everything carries the rest of the work and the way to every piece.
 const ident = (t) => esc(t).replace(/(^|[\s(])([a-z0-9]+(?:-[a-z0-9.]+)+)(?=$|[\s),])/g, '$1<span class="ident" translate="no">$2</span>');
@@ -139,7 +160,7 @@ function build() {
   const rules = new Map(world.rules.map((x) => [x.id, x]));
   const html = read("site-src/world/home.html.tmpl")
     .replace("{{BODY_CLASS}}", r.bodyClass).replace("{{HAND}}", r.hand).replace("{{MENU}}", r.menu)
-    .replace("{{CANVASES}}", r.canvases).replace("{{ROAD}}", r.stops).replace("{{LANDMARKS}}", landmarks(rules)).replace("{{WORK}}", workSection()).replace("{{WAYS}}", ways()).replace("{{BACKDROP}}", backdrop({ priority: "high", live: true })).replace("{{ARRIVAL_SOURCES}}", sources("/media/world/name-art/glass-tubes"));
+    .replace("{{CANVASES}}", r.canvases).replace("{{ROAD}}", r.stops).replace("{{LANDMARKS}}", landmarks(rules)).replace("{{WORK}}", workSection()).replace("{{SUPER}}", supergraphic()).replace("{{WAYS}}", ways()).replace("{{BACKDROP}}", backdrop({ priority: "high", live: true })).replace("{{ARRIVAL_SOURCES}}", sources("/media/world/name-art/glass-tubes"));
   if (/\{\{[A-Z_]+\}\}/.test(html)) throw new Error("home: a placeholder was left unfilled");
   if (/[A-Za-z]:[\\/](?:dev|Users|Downloads)/.test(html) || html.includes("—")) throw new Error("home: a local path or an em dash reached the page");
   writeFileSync(path.join(site, "index.html"), html);

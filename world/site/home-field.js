@@ -20,7 +20,12 @@ function makeField(asked = false) {
     try {
       const { createField } = await import("/world/site/field/field.js");
       const reduced = reducedMotion();
-      field = createField(canvas, { space: space(), dprCap: 1, reduced });
+      // the quality budget per device class: a desktop with eight or more cores renders above its pixel count (up to
+      // twice) and steps down to hold 60 frames a second; a smaller machine holds the screen's own pixels, stepping
+      // down to 60 percent; phones keep the rendered plate (able() above). History keeps 60 percent of the past and blends
+      // in 40 percent of each new jittered frame, which settles the edges without smearing the water
+      const strong = (navigator.hardwareConcurrency || 4) >= 8 && (navigator.deviceMemory || 8) >= 8;
+      field = createField(canvas, { space: space(), dprCap: strong ? 2 : 1, budgetMs: 16.7, minScale: 0.6, history: 0.6, reduced });
       if (reduced) { const r = canvas.getBoundingClientRect(); field.still({ n: 4, w: Math.round(r.width), h: Math.round(r.height) }); }
       field.start(); requestAnimationFrame(() => requestAnimationFrame(() => box.classList.add("live")));
       document.addEventListener("visibilitychange", () => field.setVisible(!document.hidden));

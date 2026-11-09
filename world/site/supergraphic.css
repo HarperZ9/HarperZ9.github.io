@@ -1,0 +1,65 @@
+/* supergraphic.css: the home's arrival as an environmental supergraphic. The work's names (BuildLang, Flywheel, Engine,
+   Game, CMMNS, Articulate) run as bands of letters at the scale of a wall, off every edge, embossed into the field
+   like letters cast in concrete; a deco sunburst of stepped rays rises behind them; a brutalist stepped mass holds
+   the ground. The letters are dynamic: Accession Divisumma's TURN and weight axes move with the reader's scroll
+   (a scroll-driven animation, no script), and settle once on arrival. Reduced motion shows them still, Plain view
+   removes them, and the name and the words over them keep the field's halo for AA contrast.
+   The faces are letter subsets of Accession (SIL Open Font License 1.1, OFL.txt beside them). */
+@font-face { font-family: "Accession Supergraphic"; src: url("/world/site/supergraphic/AccessionDivisumma-supergraphic.woff2") format("woff2"); font-weight: 400 650; font-display: block; }
+@font-face { font-family: "Accession Supergraphic Stencil"; src: url("/world/site/supergraphic/AccessionStencil-supergraphic.woff2") format("woff2"); font-weight: 300 900; font-display: block; }
+@property --sg-turn { syntax: "<number>"; inherits: true; initial-value: 50; }
+@property --sg-wght { syntax: "<number>"; inherits: true; initial-value: 560; }
+@property --sg-run { syntax: "<length>"; inherits: true; initial-value: 0px; }
+
+.arrival { overflow: clip; isolation: isolate; }
+.sg { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: clip; contain: strict; --sg-ink: rgba(236, 228, 212, .07); --sg-hi: rgba(255, 248, 232, .12); --sg-lo: rgba(0, 4, 10, .5); opacity: .72; --sg-metal: #c9a46a; }
+.arrival > :not(.sg) { position: relative; z-index: 1; }
+
+/* the bands: one line of names each, set larger than the room, offset so every band runs off both edges */
+.sg-band { position: absolute; left: 0; white-space: nowrap; margin: 0; line-height: .78; font-family: "Accession Supergraphic", var(--face-display);
+  font-size: clamp(120px, 31vh, 460px); letter-spacing: -.02em; color: var(--sg-ink);
+  font-variation-settings: "TURN" var(--sg-turn), "wght" var(--sg-wght);
+  /* the emboss: a lit upper-left edge and a cast lower-right edge, so the letters read as relief in the field's own material */
+  text-shadow: -2px -2px 0 var(--sg-hi), 3px 4px 0 var(--sg-lo), 0 0 1px rgba(255, 248, 232, .06);
+  -webkit-text-stroke: 1px rgba(201, 164, 106, .18);
+  transform: translateX(var(--sg-run)); }
+.sg-1 { top: 4vh; left: -9vw; }
+.sg-2 { top: calc(4vh + .8 * clamp(120px, 31vh, 460px)); left: -31vw; font-family: "Accession Supergraphic Stencil", var(--face-display); font-weight: 900; font-variation-settings: "wght" 900; color: rgba(236, 228, 212, .045); }
+.sg-3 { top: calc(4vh + 1.6 * clamp(120px, 31vh, 460px)); left: -17vw; }
+
+/* the deco sunburst: stepped rays and stepped arcs in a thin metallic line, rising from the horizon at the right */
+.sg-sun { position: absolute; right: -12vw; bottom: 18vh; width: min(92vw, 150vh); height: auto; opacity: .5; }
+.sg-sun .ray { stroke: var(--sg-metal); stroke-width: 1; opacity: .55; }
+.sg-sun .arc { fill: none; stroke: var(--sg-metal); stroke-width: 1.25; opacity: .5; }
+.sg-sun .core { fill: rgba(201, 164, 106, .12); stroke: var(--sg-metal); stroke-width: 1.5; }
+
+/* the brutalist mass: stepped blocks of the field's deepest water, embossed on their lit edge, under the name */
+.sg-mass { position: absolute; left: 0; right: 0; bottom: 0; height: 26vh; display: flex; align-items: flex-end; }
+.sg-mass i { display: block; flex: none; background: linear-gradient(180deg, rgba(10, 18, 28, .78), rgba(5, 10, 16, .92)); box-shadow: inset 0 2px 0 rgba(255, 248, 232, .08), inset 2px 0 0 rgba(255, 248, 232, .05); }
+.sg-mass i:nth-child(1) { width: 38vw; height: 58%; }
+.sg-mass i:nth-child(2) { width: 22vw; height: 38%; }
+.sg-mass i:nth-child(3) { width: 14vw; height: 22%; }
+
+/* the name: the heavy cut with an offset emboss in the deco metal, after the research display heads */
+.world-home .arrival h1 { text-shadow: 3px 3px 0 rgba(201, 164, 106, .55), 6px 6px 0 rgba(0, 4, 10, .5), 0 0 14px var(--halo), 0 0 4px var(--halo); }
+
+/* motion: the bands slide apart and turn their letters as the reader leaves the arrival, and settle once on arrival */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes sg-settle { from { --sg-turn: 0; --sg-wght: 420; } to { --sg-turn: 50; --sg-wght: 560; } }
+  .sg-band { animation: sg-settle 2.4s cubic-bezier(.2, 0, 0, 1) both; }
+  @supports (animation-timeline: scroll()) {
+    @keyframes sg-leave { from { --sg-turn: 50; --sg-run: 0px; } to { --sg-turn: 100; --sg-run: -18vw; } }
+    @keyframes sg-leave-back { from { --sg-run: 0px; } to { --sg-run: 14vw; } }
+    .sg-1, .sg-3 { animation: sg-settle 2.4s cubic-bezier(.2, 0, 0, 1) both, sg-leave linear both; animation-timeline: auto, scroll(root); animation-range: normal, 0 100vh; animation-composition: replace, replace; }
+    .sg-2 { animation: sg-leave-back linear both; animation-timeline: scroll(root); animation-range: 0 100vh; }
+  }
+}
+html.plain .sg { display: none; }
+@media (forced-colors: active) { .sg { display: none; } }
+@media (max-width: 860px) {
+  .sg-band { font-size: clamp(96px, 22vh, 220px); }
+  .sg-2 { top: calc(4vh + .8 * clamp(96px, 22vh, 220px)); }
+  .sg-3 { top: calc(4vh + 1.6 * clamp(96px, 22vh, 220px)); }
+  .sg-sun { right: -40vw; bottom: 30vh; width: 140vw; }
+  .sg-mass { height: 18vh; }
+}
