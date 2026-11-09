@@ -54,6 +54,11 @@ test("each named result copy exists and its SHA-256 is the one printed under the
   }
 });
 
+test("Git stores the result copies byte for byte, so the hash printed under a figure is the hash of the served file", () => {
+  // A Windows checkout can hold CRLF bytes that a text rule would store as LF; the hash test above would then pass here and fail on the server.
+  assert.match(readFileSync(join(ROOT, ".gitattributes"), "utf8"), /^findings\/results\/\*\* -text$/m);
+});
+
 test("no spec and no published result copy names a local drive path", () => {
   const files = [...specs.map(({ f }) => join(DIR, f)), ...walk(join(ROOT, "findings", "results"))];
   for (const p of files) assert.ok(!DRIVE.test(readFileSync(p, "utf8")), `${p} names a drive path`);
