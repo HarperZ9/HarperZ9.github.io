@@ -34,7 +34,7 @@ export function numberLabels(ctx) {
 const NUM = /(?<![\w.#&;-])([-+\u2212]?\d[\d,]*(?:\.\d+)?%?)(?![\w])/g;
 function text(v, ctx) {
   // the first mention of another published finding in a paragraph links to it; the flag step marks its standing
-  const t = esc(v), withNums = ctx.body ? t.replace(NUM, '<span class="n">$1</span>') : t;
+  const t = esc(v), withNums = ctx.body ? t.replace(NUM, '<span class="n d-fine" data-hue="brass">$1</span>') : t;
   return withNums.replace(/\bF\d+\b/g, (f) => {
     if (f === ctx.id || !ctx.pages[f] || ctx.linkedF.has(f)) return f;
     ctx.linkedF.add(f);
@@ -58,7 +58,7 @@ function term(n, ctx) {
   ctx.termUses.push({ key: n.key, scope: g.scope, anchor: id, section: ctx.section });
   const d = g.definition.slice(0, 1).toUpperCase() + g.definition.slice(1), cut = clauseEnd(d);
   const first = d.slice(0, cut).replace(/[,;:]$/, ""), rest = d.slice(cut).replace(/^[,;:]?\s*/, "");
-  return `<a class="gt" id="${id}" href="/findings/glossary.html#${g.anchor}">${nodes(n.kids, ctx)}</a><span class="gd" role="note"><span class="sr-only">Definition: </span><b class="gd-t">${esc(g.term)}</b> <span class="gd-f">${esc(g.field)}</span> <span class="gd-1">${esc(first)}.</span><span class="gd-more">${rest ? ` ${esc(rest.slice(0, 1).toUpperCase() + rest.slice(1))}.` : ""} <span class="gd-x">Excludes</span> ${esc(g.excludes)}.</span> <a class="gd-full" href="/findings/glossary.html#${g.anchor}" aria-label="Full definition of ${esc(g.term)}">full definition</a></span>`;
+  return `<a class="gt d-fine" data-hue="rsrch" id="${id}" href="/findings/glossary.html#${g.anchor}">${nodes(n.kids, ctx)}</a><span class="gd" role="note"><span class="sr-only">Definition: </span><b class="gd-t d-fine" data-hue="rsrch">${esc(g.term)}</b> <span class="gd-f">${esc(g.field)}</span> <span class="gd-1">${esc(first)}.</span><span class="gd-more">${rest ? ` ${esc(rest.slice(0, 1).toUpperCase() + rest.slice(1))}.` : ""} <span class="gd-x">Excludes</span> ${esc(g.excludes)}.</span> <a class="gd-full" href="/findings/glossary.html#${g.anchor}" aria-label="Full definition of ${esc(g.term)}">full definition</a></span>`;
 }
 
 // where a definition's first clause ends: the first semicolon, or the first comma after its opening words

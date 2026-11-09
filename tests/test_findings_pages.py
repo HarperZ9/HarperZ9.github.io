@@ -145,7 +145,7 @@ def test_every_glossary_use_links_to_its_entry_and_back() -> None:
     total = 0
     for entry in FINDINGS:
         fid, html = entry["id"], page(entry)
-        uses = re.findall(r'<a class="gt" id="(use-[^"]+)" href="/findings/glossary\.html#([^"]+)">', html)
+        uses = re.findall(r'<a class="gt d-fine" data-hue="rsrch" id="(use-[^"]+)" href="/findings/glossary\.html#([^"]+)">', html)
         marks = re.findall(r"\{g:([a-z0-9-]+)\}", (F / "src" / fid / "paper.txt").read_text("utf-8"))
         assert len(uses) == len(marks), f"{fid}: {len(marks)} first uses marked, {len(uses)} on the page"
         for use, anchor in uses:
