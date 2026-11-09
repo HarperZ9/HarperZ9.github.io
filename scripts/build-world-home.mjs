@@ -93,7 +93,6 @@ const SG_NAMES = ["BUILDLANG", "FLYWHEEL", "ENGINE", "GAME", "CMMNS", "ARTICULAT
 // each name's sign takes its platform's hue from the shared colour tokens, raised to a flat, saturated sign colour
 const SG_HUE = { BUILDLANG: 288, FLYWHEEL: 65, ENGINE: 186, GAME: 186, CMMNS: 118, ARTICULATE: 250 };
 function supergraphic() {
-  const rot = (k) => SG_NAMES.slice(k).concat(SG_NAMES.slice(0, k));
   // the drafted field: white hairline on the dark, after the radial lines, rings and swirling flow lines of 1889
   // astronomy plates (transformed: our own centre, counts and a three-armed logarithmic spiral)
   const cx = 600, cy = 470, lines = [];
@@ -107,13 +106,14 @@ function supergraphic() {
     for (let t = 0; t <= 4.2 * Math.PI; t += 0.08) { const r = 30 * Math.exp(0.21 * t), a = t + (arm * 2 * Math.PI) / 3; pts.push(`${(cx + r * Math.cos(a)).toFixed(1)},${(cy + r * 0.62 * Math.sin(a)).toFixed(1)}`); }
     return `<polyline class="flow" points="${pts.join(" ")}"/>`;
   }).join("");
-  // the signs: each name stacked upright in its own column, at the scale of a building's face
-  const signs = SG_NAMES.map((n, i) => `<p class="sg-sign" style="--h:${SG_HUE[n]};--i:${i}">${n}</p>`).join("");
+  // the sign wall: each name stacked upright, all six the same height, so a short name stands wide and a long one
+  // narrow, like signs on one street of buildings; the count of letters sets each column's size
+  const signs = SG_NAMES.map((n) => `<p class="sg-sign" style="--h:${SG_HUE[n]};--n:${n.length}">${n}</p>`).join("");
   return `<div class="sg" aria-hidden="true">
       <svg class="sg-field" viewBox="0 0 1200 940" preserveAspectRatio="xMidYMid slice" focusable="false">${lines.join("")}${rings}${spiral}</svg>
-      <p class="sg-band sg-1">${rot(0).join(" ")}</p>
-      <div class="sg-signs">${signs}</div>
-      <p class="sg-caption">THE WORK, SHOWN AS SIX LANDMARKS<br>IN THE ORDER A READER MEETS THEM.<br>DRAWN FOR THIS PAGE, 2026.</p>
+      <p class="sg-frieze">${["ENGINE", "FLYWHEEL", "GAME", "BUILDLANG"].join(" ")}</p>
+      <div class="sg-wall">${signs}</div>
+      <p class="sg-caption">THE WORK, SHOWN AS SIX LANDMARKS<br>IN THE ORDER A READER MEETS THEM.</p>
     </div>`;
 }
 
