@@ -7,7 +7,7 @@
 const root = document.documentElement;
 const reducedQ = matchMedia("(prefers-reduced-motion: reduce)");
 const still = () => reducedQ.matches || root.classList.contains("plain");
-const work = document.getElementById("work");
+const work = document.getElementById("dial");
 const say = (t) => { const s = document.getElementById("say"); if (s) s.textContent = t; };
 
 if (work) {

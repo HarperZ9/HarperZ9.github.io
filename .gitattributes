@@ -68,3 +68,6 @@ media/raw-native/tree-*/** -text
 tests/release-pins/** text eol=lf
 # E25's receipt bundle is a byte-for-byte copy of a Flywheel fixture; its hashes cover these exact bytes.
 media/school/receipts/** -text
+
+# The vendored CMMNS core is pinned by SHA256SUMS against its release tag: no EOL conversion.
+vendor/cmmns/** -text

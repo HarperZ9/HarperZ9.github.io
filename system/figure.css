@@ -7,8 +7,8 @@
    the data-theme blocks below let a reader's theme pick win over the system. */
 :root {
   color-scheme: light dark;
-  --font-sans:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  --font-mono:"Conso","JetBrains Mono",ui-monospace,"SFMono-Regular",monospace;
+  --font-sans:"Accession Text","Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --font-mono:"Accession Mono","Conso","JetBrains Mono",ui-monospace,"SFMono-Regular",monospace;
   --figure-page:#ebe5d8;
   --figure-surface:#ebe5d8;
   --figure-raised:#e2dac9;

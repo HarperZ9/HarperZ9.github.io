@@ -147,10 +147,10 @@ main.inside .nodes, main.inside #art { visibility: hidden; }
 .place-stage { position: relative; min-height: 0; overflow: hidden; }
 .pcard { padding-top: 88px; }  /* the hand floats at the top right on desktop; the card starts below it */
 .o-hand .find { display: flex; align-items: center; }
-.o-hand .find input { width: 12ch; min-height: 44px; font: 400 var(--fs-2)/1 var(--face-text); padding: 0 10px; border: 1px solid var(--ink); background: var(--wall); color: var(--ink); border-radius: 0; }
+.o-hand .find input { width: 12ch; min-height: 44px; font: 400 var(--fs-2)/1 var(--face-text); padding: 0 2px; border: 0; border-bottom: 1px solid currentColor; background: transparent; color: var(--ink); border-radius: 0; }
 .o-hand .hits { top: calc(100% + 8px); right: 0; left: auto; }
-.o-back { min-height: 44px; padding: 0 12px; font: 600 var(--fs-2)/1 var(--face-text); color: var(--ink); background: var(--wall); border: 1px solid var(--ink); border-radius: 0; cursor: pointer; }
-.o-back:hover, .o-back:focus-visible { background: var(--ink); color: var(--wall); }
+.o-back { min-height: 44px; padding: 0 8px; font: 600 var(--fs-2)/1 var(--face-text); color: var(--ink); background: none; border: 0; border-radius: 0; cursor: pointer; text-decoration: underline transparent 2px; text-underline-offset: .3em; }
+.o-back:hover, .o-back:focus-visible { text-decoration-color: currentColor; }
 @media (max-width: 860px) {
   .pcard { padding-top: 18px; }
   .o-hand .find input { width: 8ch; }

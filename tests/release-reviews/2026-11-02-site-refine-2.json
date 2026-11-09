@@ -1,0 +1,9 @@
+{
+  "date": "2026-11-02",
+  "note": "Site refinement pass 2: THE COMMONS row leads to the Try it panel on cmmns.html; the work rows wake with the scroll; the hand's band gives way under 600 px.",
+  "paths": {
+    "index.html": "e34939e8686517b59bce45f7548a86a688c064407188fcd148928d5f0ca55a02",
+    "site-index.html": "7f1abc129004e84e260679d231054f8520330d0cc07eca1913ad64ff2d2e52b6",
+    "system/routes.js": "176797579ca0cc1c66bf9b25814524e38b459e5b2781d5fcc37f56559a5b05ef"
+  }
+}

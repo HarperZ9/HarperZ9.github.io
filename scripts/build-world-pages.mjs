@@ -9,6 +9,7 @@ import { fileURLToPath } from "node:url";
 import { page } from "./studies-shell.mjs";
 import { esc } from "./studies-markdown.mjs";
 import { PLACES } from "../site-src/world/bazaar.mjs";
+import { workIndex } from "./work-index.mjs";
 
 const site = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const read = (p) => readFileSync(path.join(site, p), "utf8");
@@ -21,7 +22,7 @@ const write = (p, html) => { writeFileSync(path.join(site, p), html); return p; 
 
 function roadStops() {
   const p = read("world/universe/proto/path.html");
-  return [...p.matchAll(/<section class="stop" id="([^"]+)"[\s\S]*?<h2 id="[^"]+"[^>]*>([^<]+)<\/h2>/g)].map((m) => [`/#${m[1]}`, m[2]]);
+  return [...p.matchAll(/<section class="stop" id="([^"]+)"[\s\S]*?<h2 id="[^"]+"[^>]*>([^<]+)<\/h2>/g)].map((m) => [`/world/universe/proto/path.html#${m[1]}`, m[2]]);
 }
 function mapPlaces() {
   const u = json("world/universe/universe.json"), statics = new Set(readdirSync(path.join(site, "world/universe/proto/places")));
@@ -54,7 +55,12 @@ function studyPages() {
 }
 
 function floor() {
+  const wi = workIndex();
+  write(wi.restPath, wi.rest);
   const body = `<article class="floor"><h1>Everything</h1>
+<p class="wi-lead">All the work, current and past: ${wi.count} pieces by platform, newest first, each with its status as its release or registry records it. The places and pages of the site follow.</p>
+${wi.html}
+<h2 class="wi-rule">The site</h2>
 ${section("road", "The road", roadStops())}
 ${section("places", "The places", PLACES.map((p) => [`/#p-${p.id}`, p.title]))}
 ${section("parts", "Parts", [["/elements.html", "The element table"], ["/swatches.html", "The swatch library"], ["/accession.html", "Accession"], ["/world/universe/proto/index.html", "The map"], ["/credits.html", "Credits"]])}
@@ -63,7 +69,7 @@ ${section("map", "Every place on the map", mapPlaces())}
 ${section("studies", "Studies", studyPages())}
 ${section("site", "Pages, writing and tools", sitePages())}
 </article>`;
-  return write("floor.html", page({ path: "floor.html", title: "Everything", description: "Every page in Zain Dana Harper's world as a plain list of links: the road, the places, live pieces, writing, studies and tools.", body, extraHead: '<link rel="stylesheet" href="/world/site/pages.css">' }));
+  return write("floor.html", page({ path: "floor.html", title: "Everything", description: "All of the work, current and past, by platform: The Flywheel, The Commons, The Playground, Articulate, BuildLang and Research, then every page of the site.", body, extraHead: '<link rel="stylesheet" href="/world/site/pages.css">' }));
 }
 
 function mountPage(file, title, description, heading, script) {
@@ -88,7 +94,9 @@ function accession() {
 <h2>Use it</h2><p><a href="/system/fonts/accession/accession.css">accession.css</a> declares every face with paths relative to its folder; <a href="/system/fonts/accession/OFL.txt">OFL.txt</a> is the licence, and <a href="/system/fonts/accession/MANIFEST.json">MANIFEST.json</a> lists every file with its size, coverage and SHA-256.</p>
 </article>`;
   return write("accession.html", page({ path: "accession.html", title: "Accession", description: "Accession, a type family drawn in code, under the SIL Open Font License 1.1: Text, Display, Mono, Super and the technique cuts.", body,
-    extraHead: '<link rel="stylesheet" href="/system/fonts/accession/accession.css">\n<link rel="stylesheet" href="/world/site/pages.css">' }));
+    // the specimen loads letter subsets of each face (system/fonts/accession/specimen/, about 225 KB against 1.5 MB);
+    // the full faces stay one link away in accession.css
+    extraHead: '<link rel="stylesheet" href="/system/fonts/accession/specimen/specimen.css">\n<link rel="stylesheet" href="/world/site/pages.css">' }));
 }
 
 function credits() {
@@ -96,7 +104,7 @@ function credits() {
   const thumbs = new Set(els.elements.flatMap((e) => (e.refs || []).map((r) => r.thumb).filter(Boolean))).size;
   const body = `<article class="tool"><h1>Credits</h1>
 <h2>Type</h2><p>Accession and its families: Zain Dana Harper, SIL Open Font License 1.1 (<a href="/system/fonts/accession/OFL.txt">OFL.txt</a>). Hanken Grotesk: SIL Open Font License 1.1. Conso: licensed for this site by its designer's terms.</p>
-<h2>Archival plates</h2><p>The exhibit's pictures, film and sound are public domain, CC0 or CC BY, each with its source: <a href="/world/exhibit/credits.html">the exhibit's credits</a>. The shell's plates are public domain scans from open archives.</p>
+<h2>Archival plates</h2><p>The exhibit's pictures, film and sound are public domain, CC0 or CC BY, each with its source: <a href="/world/exhibit/credits.html">the exhibit's credits</a>. The shell's plates are public domain scans from open archives. The home's dial is engraved from Regiomontanus's astrolabe of 1462 (<a href="https://www.metmuseum.org/art/collection/search/923639">The Metropolitan Museum of Art</a>, CC0), and the Low Water loop is low tide from Heavenly Bodies, 1920 (<a href="https://archive.org/details/Heavenly1920">Prelinger Archives</a>, public domain); <a href="/media/front-door/CREDITS.md">the dial's credits</a>.</p>
 <h2>Reference credits</h2><p>The element table shows ${thumbs} small reference thumbnails of other people's published work, each with its maker's name, its title and a link to the original post. They are there as references, credited to their makers. To ask for one to be removed, write to <a href="mailto:zaindharper@gmail.com">zaindharper@gmail.com</a> or open an issue on <a href="https://github.com/HarperZ9/HarperZ9.github.io/issues">the site's repository</a>.</p>
 <h2>Sound</h2><p>Hum v4, the site's theme, and its calm loop: Zain Dana Harper.</p>
 <h2>Where the world's pieces come from</h2><p>The live pieces under /world/ were made in the author's workshop and imported on ${esc(imp.importedAt.slice(0, 10))}; <a href="/world/IMPORT.json">IMPORT.json</a> lists every file with its source folder and SHA-256.</p>

@@ -122,7 +122,7 @@ function lamp(btn) {
   const set = () => {
     const dark = root.dataset.theme ? root.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
     btn.setAttribute("aria-pressed", String(!dark));
-    btn.querySelector(".o-name").textContent = dark ? "Lamp on" : "Lamp off";
+    btn.querySelector(".o-name").textContent = "Day"; // a toggle: pressed in daylight, its name says what it sets
     root.style.setProperty("--o-lamp-x", dark ? "18%" : "78%");
   };
   set();

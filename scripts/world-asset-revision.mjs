@@ -12,7 +12,7 @@ import { fileURLToPath } from "node:url";
 
 const site = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const rel = (p) => path.relative(site, p).split(path.sep).join("/");
-const OWN = ["index.html", "floor.html", "elements.html", "swatches.html", "accession.html", "credits.html", "daylight.html"];
+const OWN = ["index.html", "floor.html", "elements.html", "swatches.html", "accession.html", "credits.html", "cmmns.html", "superframe.html", "experiments/index.html", "glass-water.html"];
 // asset folders governed by the world revision (the test reads the same list from IMPORT.json)
 const SCOPE = ["world/", "studies/", "system/fonts/accession/"];
 
@@ -28,6 +28,8 @@ function walk(dir, out = []) {
 function revision() {
   const h = createHash("sha256"), imp = JSON.parse(readFileSync(path.join(site, "world/IMPORT.json"), "utf8"));
   for (const f of imp.files) h.update(`${f.path}:${f.sourceSha256}\n`);
+  // the site-side patches change the shipped bytes of imported pieces, so they count too
+  h.update(JSON.stringify(JSON.parse(readFileSync(path.join(site, "scripts/import-mission-control.config.json"), "utf8")).patches || []));
   for (const f of walk(path.join(site, "world/site")).sort()) h.update(`${rel(f)}:${createHash("sha256").update(readFileSync(f)).digest("hex")}\n`);
   for (const f of walk(path.join(site, "studies")).filter((p) => p.endsWith(".css")).sort()) h.update(`${rel(f)}:${createHash("sha256").update(readFileSync(f)).digest("hex")}\n`);
   return "world-" + h.digest("hex").slice(0, 10);

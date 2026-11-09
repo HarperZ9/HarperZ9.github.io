@@ -1,0 +1,53 @@
+{
+ "schema": "buildlang.buildtex-receipt/v0",
+ "source": {
+  "path": "career/resume-source.json",
+  "document": "support-operations-qa",
+  "sha256": "9859e3bbbe9a483ba0cba41a14d942248944a64498558ef4f47ed6af5c3c251f"
+ },
+ "ir_sha256": "59fdf4920f00f8f75a4ed322d7e1fb5cca28b840df38b4c4c98c7e61232ece60",
+ "theme": "press-resume",
+ "overrides": [
+  "base.size=10.0",
+  "base.leading=12.8",
+  "emboss.deboss_finish=inked"
+ ],
+ "outputs": {
+  "Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.pdf": "356664afb3f714fdf3444b33d27766d169b5cb78c29cda41181d9c6478f91880"
+ },
+ "facts": {
+  "pages": 1,
+  "pages_layout": 1,
+  "overfull": [],
+  "underfull": 0,
+  "missing_glyphs": [],
+  "fonts": [
+   {
+    "name": "BFGKHN+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "BJEJEB+AccessionDisplay-Master",
+    "embedded": true
+   },
+   {
+    "name": "EMMDHD+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "HPNAAK+HankenGrotesk-Regular",
+    "embedded": true
+   }
+  ],
+  "images": 1,
+  "blind_text_runs": 0,
+  "reading_order": true,
+  "blocks_missing_from_text": [],
+  "pdf_bytes": 228152
+ },
+ "failed": [],
+ "notes": [
+  "press: relief 1275x294 px at 150 dpi; 0 blind line(s); foil colour source: fallback constant"
+ ],
+ "external_programs": []
+}

@@ -1,0 +1,53 @@
+{
+ "schema": "buildlang.buildtex-receipt/v0",
+ "source": {
+  "path": "career/resume-source.json",
+  "document": "public-operations",
+  "sha256": "9859e3bbbe9a483ba0cba41a14d942248944a64498558ef4f47ed6af5c3c251f"
+ },
+ "ir_sha256": "bacbe345fcc8b1f76b2d1913914ef6230b093e7a5232d77b3e40aeeae29763b8",
+ "theme": "press-resume",
+ "overrides": [
+  "base.size=10.0",
+  "base.leading=13.4",
+  "emboss.deboss_finish=inked"
+ ],
+ "outputs": {
+  "Zain-Dana-Harper-Resume-Public-Operations.pdf": "267563e781cde6f3356cf0ff4c9ecaf499be68387cdb102ab090784b81d5afb2"
+ },
+ "facts": {
+  "pages": 1,
+  "pages_layout": 1,
+  "overfull": [],
+  "underfull": 0,
+  "missing_glyphs": [],
+  "fonts": [
+   {
+    "name": "BJEJEB+AccessionDisplay-Master",
+    "embedded": true
+   },
+   {
+    "name": "DBNKMH+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "GJLEJI+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "HPNAAK+HankenGrotesk-Regular",
+    "embedded": true
+   }
+  ],
+  "images": 1,
+  "blind_text_runs": 0,
+  "reading_order": true,
+  "blocks_missing_from_text": [],
+  "pdf_bytes": 220777
+ },
+ "failed": [],
+ "notes": [
+  "press: relief 1275x294 px at 150 dpi; 0 blind line(s); foil colour source: fallback constant"
+ ],
+ "external_programs": []
+}

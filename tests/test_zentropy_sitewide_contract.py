@@ -244,8 +244,9 @@ PLATE_STYLE_SHEETS = (
     "system/figure.css",
 )
 SHARED_VISUAL_TOKENS = (
-    '--font-sans:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;',
-    '--font-mono:"Conso","JetBrains Mono",ui-monospace,"SFMono-Regular",monospace;',
+    # Accession trial, 2026-11-05: the house faces first, Hanken Grotesk and Conso as the fallbacks
+    '--font-sans:"Accession Text","Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;',
+    '--font-mono:"Accession Mono","Conso","JetBrains Mono",ui-monospace,"SFMono-Regular",monospace;',
     "--ground-instrument:#070406;",
     "--ground-paper:#f2efe6;",
     "--ink-paper:#111014;",
@@ -994,8 +995,8 @@ def test_current_zentropy_assets_are_shipped() -> None:
 
 
 def test_representative_pages_keep_route_art_metadata() -> None:
+    # typeface.html retired to a redirect into accession.html on 2026-11-02
     pages = (
-        "typeface.html",
         "overview.html",
         "catalog.html",
         "research.html",

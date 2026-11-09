@@ -170,7 +170,7 @@
     add("p", "k", r.k); add("p", "what", r.what); add("blockquote", "", r.q); add("p", "src", r.src);
     if (k === "here") {
       const ul = document.createElement("ul"); ul.className = "dwellers";
-      for (const [n, u] of [["Daylight Commons", "https://github.com/HarperZ9/daylight-commons"], ["Flywheel", "https://github.com/HarperZ9/flywheel"], ["Articulate", "https://github.com/HarperZ9/articulate"]]) {
+      for (const [n, u] of [["CMMNS", "https://github.com/HarperZ9/cmmns"], ["Flywheel", "https://github.com/HarperZ9/flywheel"], ["Articulate", "https://github.com/HarperZ9/articulate"]]) {
         const li = document.createElement("li"), a = document.createElement("a"); a.href = u; a.textContent = n; li.appendChild(a); ul.appendChild(li);
       }
       panel.appendChild(ul);

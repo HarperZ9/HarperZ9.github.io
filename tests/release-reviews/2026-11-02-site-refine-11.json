@@ -1,0 +1,13 @@
+{
+  "date": "2026-11-02",
+  "note": "Pass 9: one index of all the work on floor.html; list, type, tour and contact pages retired to redirect stubs.",
+  "paths": {
+    "index.html": "88cbfb6fdceb34d0aa12307d78ebc774e4187c6824a3c03d36489619eb38a83f",
+    "publications/build.json": "13f3cad6c85508d17863d907c2fca6ddd0ba81df088ef9b5f551f763fad0a9a8",
+    "site-index.html": "60cf8564bf5f8085da6d46666b5482b579d5f15a40287b073d030a83ba062795",
+    "sitemap.xml": "0cb95af0b74f2f908c55a2fc2373bf255680b49a8ca59414a5aa960de8d1044a",
+    "system/routes.js": "15c07bd68fde89299e9ef9012923a98b84d0b3aa1107e9e38e830cc63aa844f5",
+    "typeface.html": "952a03f5fccec61f461b9a2103679cb4b54389624a1a39cdcb666ebe080fd8b5",
+    "work-with-me.html": "e0a3e22b9dce100e192d53c9ff88d0c02e5de61bbe61a7d2796706c5708984b3"
+  }
+}

@@ -1,5 +1,5 @@
-// Copied unmodified below this header from Daylight Commons (provenance-badges, branch feat/media-toolkit,
-// commit 37b80eef14ca1f13e888749f0049437e2b647966, src/core/media-gif-lzw.js). Same author; licence FSL-1.1-MIT.
+// Copied unmodified below this header from CMMNS, formerly Daylight Commons (HarperZ9/cmmns, branch feat/media-toolkit,
+// commit 37b80eef14ca1f13e888749f0049437e2b647966, src/core/media-gif-lzw.js). Same author; licence AGPL-3.0-only, as in the source.
 // Used read-only by the alive layer's gif.js for decoding. Fix bugs upstream, then copy again.
 // The GIF variant of LZW decompression: variable code size from minCodeSize + 1 up to 12 bits,
 // clear and end-of-information codes, and the deferred-clear case when the table is full.

@@ -30,7 +30,6 @@ export function roadPainter(canvas, { cols = 176 } = {}) {
       c.globalAlpha = 0.85; c.fillStyle = d.wall; c.fillRect(cx - half * W, y, half * W * 2, 1);
       c.globalAlpha = 0.5 + 0.4 * (1 - depth); c.fillStyle = d.ink; c.fillRect(cx - half * W, y, 1, 1); c.fillRect(cx + half * W - 1, y, 1, 1);
       if (Math.floor(z * 8) % 2 === 0) { c.globalAlpha = 0.35; c.fillRect(cx, y, 1, 1); }
-      if (Math.abs(z - next) < 0.025) { c.globalAlpha = 0.9; c.fillStyle = d.accent; c.fillRect(cx - half * W * 0.5, y - 1, half * W, 2); }
     }
     c.globalAlpha = 1;
   }

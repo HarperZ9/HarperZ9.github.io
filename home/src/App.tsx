@@ -364,7 +364,7 @@ const FLAGSHIPS: Flagship[] = [
   },
   {
     id: "daylight-commons",
-    name: "Daylight Commons",
+    name: "CMMNS",
     headline: "See who is behind a reply before you believe it.",
     body: "Rest the pointer on a reply on X, YouTube, Reddit, Facebook, Instagram, Bluesky, Threads, TikTok or Mastodon, and a window opens with where the account is based, how it posts, signs of coordination and who owns the outlets it links, each with its source. It works in Chrome, Edge, Brave and Firefox with no account, and it is open source (AGPL-3.0).",
     visual: {
@@ -372,13 +372,13 @@ const FLAGSHIPS: Flagship[] = [
       srcLight: "/media/daylight-commons/finding-sources.png",
       width: 600,
       height: 690,
-      alt: "Daylight Commons on a synthetic demo thread. A window beside a reply that links rt.com says the outlet is state-owned by Russia, cites Wikidata for RT America, and links the Wikidata entry.",
+      alt: "CMMNS on a synthetic demo thread. A window beside a reply that links rt.com says the outlet is state-owned by Russia, cites Wikidata for RT America, and links the Wikidata entry.",
       caption: "A synthetic demo thread: the window names the owner of a linked outlet and links its Wikidata source.",
     },
     links: [
-      { label: "Install it", href: "https://harperz9.github.io/daylight-commons/install.html" },
-      { label: "Daylight Commons 3.2.2", href: "https://github.com/HarperZ9/daylight-commons/releases/tag/v3.2.2" },
-      { label: "Source", href: "https://github.com/HarperZ9/daylight-commons" },
+      { label: "Install it", href: "https://harperz9.github.io/cmmns/install.html" },
+      { label: "Daylight Commons 3.2.2", href: "https://github.com/HarperZ9/cmmns/releases/tag/v3.2.2" },
+      { label: "Source", href: "https://github.com/HarperZ9/cmmns" },
     ],
   },
   {

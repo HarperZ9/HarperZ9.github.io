@@ -15,7 +15,12 @@ const remember = { get: () => { try { return localStorage.getItem(SHEET_KEY); } 
 const isDark = () => { const t = root.dataset.theme; return t ? t === "dark" : matchMedia("(prefers-color-scheme: dark)").matches; };
 const schemeNow = () => (isDark() && remember.get() !== "lit" ? "night" : "day");
 const LIVE = 3, heads = [...document.querySelectorAll("[data-living]")];
-if (heads.length && "OffscreenCanvas" in window && document.createElement("canvas").getContext("webgl2")) boot();
+// the still face paints first; the engine starts once the page has loaded and the main thread is idle, and on touch
+// screens at the visitor's first touch or scroll (budget.js), so living type never delays the first screen
+const idle = (fn) => () => ("requestIdleCallback" in window ? requestIdleCallback(fn, { timeout: 2000 }) : setTimeout(fn, 400));
+const go = () => { if (heads.length && "OffscreenCanvas" in window && document.createElement("canvas").getContext("webgl2")) boot(); };
+const later = () => (window.__siteWhenVisited ? window.__siteWhenVisited(idle(go)) : idle(go)());
+if (document.readyState === "complete") later(); else addEventListener("load", later, { once: true });
 
 function sheetControl(onChange) {
   const hand = document.querySelector("header.o-hand"); if (!hand) return null;

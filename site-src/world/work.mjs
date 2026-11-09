@@ -1,6 +1,6 @@
 // work.mjs: the astrolabe after the arrival. Its hub is the study that distills one picture; its eight moons are
 // the pillars, and each pillar's panel opens in place on a real output: a study plate, a Flywheel verdict, an
-// Articulate before and after, three Daylight Commons captures, a BuildLang check, the engine's frames, a film.
+// Articulate before and after, three CMMNS captures (taken under its earlier name, Daylight Commons), a BuildLang check, the engine's frames, a film.
 // The two videos use root-relative paths without a leading slash (index.html sits at the root), the form
 // tools/video_registry.py reads. Every panel is plain HTML first: without scripts they read top to bottom, each under its own heading.
 // world/site/work.js turns them into one panel at a time, chosen from the list or the dial, with deep links (/#w-engine).
@@ -64,7 +64,7 @@ export const PILLARS = [
       <p class="w-go"><a class="w-try" href="/articulate.html">Articulate</a> <a href="https://pypi.org/project/articulate-writing/">pip install <span class="ident" translate="no">articulate-writing</span></a></p>`,
   },
   {
-    id: "daylight", title: "Daylight Commons",
+    id: "commons", title: "CMMNS",
     html: `<figure class="w-demo">
         <figcaption>Three findings on a demonstration thread. Every account in it is invented.</figcaption>
         ${choose("Finding", [
@@ -73,7 +73,7 @@ export const PILLARS = [
           { button: "Fact-check", html: `<img src="/media/daylight-commons/front-fact-check.webp" width="600" height="800" loading="lazy" decoding="async" alt="The panel showing that a fact-checker, Logically Facts, rated a matching claim False on 4 December 2024, with a link to the review.">` },
         ])}
       </figure>
-      <p class="w-go"><a class="w-try" href="/daylight.html">Daylight Commons</a> <a href="https://github.com/HarperZ9/daylight-commons">Source</a></p>`,
+      <p class="w-go"><a class="w-try" href="/cmmns.html">CMMNS</a> <a href="https://github.com/HarperZ9/cmmns">Source</a></p>`,
   },
   {
     id: "buildlang", title: "BuildLang",
@@ -155,8 +155,9 @@ export function workSection() {
       <h2 id="wh-${p.id}" tabindex="-1">${esc(p.title)}</h2>
       ${p.html}
     </section>`).join("");
-  return `<section class="work" id="work" aria-label="The work">
-    <nav class="w-list" aria-label="The work"><ol>${list}</ol></nav>
+  return `<section class="work" id="dial" aria-label="The work on the dial">
+    <p id="say" class="sr-only" aria-live="polite" aria-atomic="true"></p>
+    <nav class="w-list" aria-label="The pillars"><ol>${list}</ol></nav>
     <div class="w-dial" aria-hidden="true" data-dial></div>
     <div class="w-panels">${panels}
     </div>
