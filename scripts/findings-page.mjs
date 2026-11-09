@@ -27,7 +27,7 @@ function standingLine(rec, rels) {
 }
 
 function objection(d) {
-  return `<section id="objection" class="objection" aria-labelledby="objection-h"><h2 id="objection-h">Objection</h2>
+  return `<section id="objection" class="objection" aria-labelledby="objection-h"><h2 id="objection-h" class="d-3d" data-hue="brass">Objection</h2>
 <p>${esc(/[.!?]$/.test(d.objection) ? d.objection : d.objection + ".")}</p>
 <p><b>What would change the call.</b> ${esc(/[.!?]$/.test(d.would_change) ? d.would_change : d.would_change + ".")}</p>
 <p class="src">From ${esc(d.objection_source)}.</p></section>`;
@@ -37,7 +37,7 @@ function evidence(rec, ctx, appendix) {
   const d = rec.document;
   const bound = d.bound ? `<p class="bound">${mark("outcome", d.outcome)}<span><b>${esc(OUTCOME_WORD[d.outcome].replace(/^./, (c) => c.toUpperCase()))}.</b> ${esc(d.bound)}</span></p>`
     : `<p class="bound">${mark("outcome", d.outcome)}<span><b>${esc(OUTCOME_WORD[d.outcome].replace(/^./, (c) => c.toUpperCase()))}.</b> ${esc(d.tier_reason)}</span></p>`;
-  return `<section id="evidence" class="landmark" aria-labelledby="evidence-h"><h2 id="evidence-h">Evidence</h2>
+  return `<section id="evidence" class="landmark" aria-labelledby="evidence-h"><h2 id="evidence-h" class="d-3d" data-hue="brass">Evidence</h2>
 ${bound}
 ${ctx.charts && ctx.charts.rest() ? `<h3>Charts</h3>${ctx.charts.rest()}
 ` : ""}${ctx.figures.length ? `<h3>Figures</h3>${ctx.figures.join("\n")}` : ""}
@@ -56,14 +56,14 @@ export function findingBody(rec, env) {
   numberLabels(ctx);
   ctx.charts = env.charts || null;
   const lead = d.sections.filter((s) => s.role === "lead"), arg = d.sections.filter((s) => s.role === "argument"), ev = d.sections.filter((s) => s.role === "evidence");
-  const sec = (s, keep) => `<section id="${s.id}" class="${s.role === "lead" ? "lead-sec" : "arg-sec"}" aria-labelledby="${s.id}-h"><h2 id="${s.id}-h">${esc(s.title)}</h2>\n${sectionBody(s, ctx, { keep })}</section>`;
+  const sec = (s, keep) => `<section id="${s.id}" class="${s.role === "lead" ? "lead-sec" : "arg-sec"}" aria-labelledby="${s.id}-h"><h2 id="${s.id}-h" class="d-3d" data-hue="brass">${esc(s.title)}</h2>\n${sectionBody(s, ctx, { keep })}</section>`;
   const leadHtml = lead.map((s) => sec(s)).join("\n"), argHtml = arg.map((s) => sec(s)).join("\n");
   const appendix = ev.map((s) => `<div id="${s.id}" class="fd-appendix"><h3>${esc(s.title)}</h3>${sectionBody(s, ctx, { keep: true })}</div>`).join("\n");
   const fields = domainsOf(d.fields).map(domainLabel).join(", ");
   const body = `<article class="tool st fd fd-page rp" data-tier="${esc(d.tier)}">
 <header class="rp-lead">
 <p class="kicker"><a class="fd-up" href="/findings/">Findings</a> <span aria-hidden="true">/</span> ${esc(d.id)} <span aria-hidden="true">/</span> ${esc(fields)} <span aria-hidden="true">/</span> found ${esc(d.date_found)}</p>
-<h1 class="rt-title" data-depth="${esc(d.title)}">${esc(d.title)}</h1>
+<h1 class="d-3d" data-hue="rsrch">${esc(d.title)}</h1>
 <p class="fd-standfirst">${esc(d.standfirst)}</p>
 ${standingLine(rec, env.relations)}
 ${downloads(rec, "lead")}

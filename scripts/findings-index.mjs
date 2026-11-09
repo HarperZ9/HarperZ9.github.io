@@ -33,11 +33,13 @@ function filters(list, tiers, domains) {
 <div class="xp-filter fd-filter" role="group" aria-label="Show one field"><button type="button" data-domain="" aria-pressed="true">Every field <span>${list.length}</span></button>${db}</div>`;
 }
 
+// every entry sits in the research hue (hue names the platform); tier is told by the glyph and the word.
+
 function entry(it) {
   const st = it.standing;
-  return `<li class="xc fd-item" id="${it.id.toLowerCase()}" data-tier="${it.tierInfo.key}" data-domains="${it.domains.join(" ")}" data-standing="${st.type}">
-  <p class="xc-meta"><span class="xc-n">${esc(it.id)}</span> <span class="fd-tier" data-tier="${it.tierInfo.key}">${glyph(it.tier)}${esc(it.tierInfo.label)}</span> <span class="fd-out">${mark("outcome", it.outcome)}${esc(OUTCOME_WORD[it.outcome])}</span> <span class="xc-lanes">${it.domains.map((d) => laneMark(d)).join("")}${esc(it.domains.map(domainLabel).join(", "))}</span></p>
-  <h2 class="xc-title">${it.redirect ? `<span>${esc(it.title)}</span>` : `<a href="${it.href}">${esc(it.title)}</a>`}</h2>
+  return `<li class="xc fd-item" id="${it.id.toLowerCase()}" data-tier="${it.tierInfo.key}" data-domains="${it.domains.join(" ")}" data-standing="${st.type}" data-hue="rsrch">
+  <p class="xc-meta"><span class="xc-n">${esc(it.id)}</span> <span class="fd-tier d-fine" data-tier="${it.tierInfo.key}">${glyph(it.tier)}${esc(it.tierInfo.label)}</span> <span class="fd-out">${mark("outcome", it.outcome)}${esc(OUTCOME_WORD[it.outcome])}</span> <span class="xc-lanes">${it.domains.map((d) => laneMark(d)).join("")}${esc(it.domains.map(domainLabel).join(", "))}</span></p>
+  <h2 class="xc-title">${it.redirect ? `<span>${esc(it.title)}</span>` : `<a class="d-fine" href="${it.href}">${esc(it.title)}</a>`}</h2>
   <p class="xc-finding">${esc(it.standfirst)}</p>
   ${it.outcome !== "held" && it.bound ? `<p class="fd-bound"><b>${{ null: "What it rules out", failed: "What fell", mixed: "What did not hold" }[it.outcome] || "Bound"}.</b> ${esc(it.bound)}</p>` : ""}
   ${it.redirect ? `<p class="fd-moved">${standingMark(st.type)} ${esc(STANDING_WORD[st.type])} by ${esc(st.from)}: ${esc(st.scope)}. ${it.redirect.to ? `Its page now opens <a href="${it.redirect.href}">${esc(it.redirect.to)}</a>, which keeps this record in its Trail.` : "Its page now opens this entry."} <a href="/findings/papers/${it.id}.pdf">The old paper</a> stays downloadable.</p>` : ""}
@@ -51,7 +53,7 @@ export function indexBody(list) {
   const tierKey = tiers.map((t) => `<dt>${glyph(t)}${esc(TIERS[t].label)}</dt><dd>${esc(TIERS[t].blurb)}.</dd>`).join("");
   const standKey = ["held", "extended", "narrowed", "questioned", "refuted", "retracted"].map((s) => `<span class="lbl">${standingMark(s)}${STANDING_WORD[s]}</span>`).join(" ");
   return `<article class="tool xp fd">
-<h1 class="rt-title" data-depth="Findings">Findings</h1>
+<h1 class="d-3d" data-hue="rsrch">Findings</h1>
 <p>What our experiments found, one finding at a time. Each page leads with where the result stands, puts the strongest objection before the argument, marks every checkable claim with its evidence, defines each technical term where it is first used, and ends with the dated trail of corrections, the references both ways, the steps to repeat it and a Verified line. Each offers its whitepaper as a PDF and its BuildTeX source.</p>
 <p class="fd-count">${list.length} findings so far. <b>${nulls} of them are honest nulls</b>: tests that failed, claims that did not hold, and errors of our own that we found and fixed. ${outNull} findings in all report a null result with its bound. They carry the same weight as the results that held, because knowing what does not work saves the next person the trip.</p>
 <dl class="fd-key">${tierKey}</dl>
@@ -79,11 +81,11 @@ export function glossaryBody(glossary, uses, pages, titles) {
 <p>${esc(t.definition.slice(0, 1).toUpperCase() + t.definition.slice(1))}. <span class="gd-x">Excludes</span> ${esc(t.excludes)}.</p>
 <p class="gl-uses">${us.length ? `Used in ${links}` : "Not yet used on a findings page."}</p></div>`;
     }).join("");
-    return `<li class="gl-term" id="term-${key}"><h2>${esc(ts[0].term)}</h2>${defs}</li>`;
+    return `<li class="gl-term" id="term-${key}"><h2 class="d-fine" data-hue="rsrch">${esc(ts[0].term)}</h2>${defs}</li>`;
   }).join("\n");
   return `<article class="tool st fd gl">
 <p class="kicker"><a class="fd-up" href="/findings/">Findings</a></p>
-<h1 class="rt-title" data-depth="Glossary">Glossary</h1>
+<h1 class="d-3d" data-hue="rsrch">Glossary</h1>
 <p>Each technical term on the findings pages, defined the way we use it: what we mean, the field the term comes from and what it excludes. A term shared across the findings has one definition; a term one study fixed for itself is defined in that study's scope. Each definition lists every page that uses it, and each use links back here.</p>
 <p class="fd-count">${groups.size} terms, ${glossary.terms.length} scoped definitions, ${uses.length} first uses across ${new Set(uses.map((u) => u.page)).size} findings.</p>
 <ol class="gl-list">${entries}</ol>

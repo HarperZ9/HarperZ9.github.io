@@ -68,7 +68,7 @@ function trail(rec, env, ctx) {
   const replaced = (env.replaced || []).map((o) => `<li id="replaced-${o.id}"><p class="xhead"><b>${esc(o.date)}</b> <span class="xtype">${esc(o.type)}</span> ${standingMark(o.type)} ${esc(o.id)}</p>
 <p><del><span class="sr-only">was </span>${esc(o.title)}. ${esc(o.claim)}</del></p><p>Why it fell: ${esc(o.why)}</p>
 <p><a href="/findings/papers/${o.id}.pdf">The old paper, ${o.id}.pdf</a>, stays downloadable.</p></li>`).join("");
-  return `<section id="trail" class="landmark" aria-labelledby="trail-h"><h2 id="trail-h">Trail</h2>
+  return `<section id="trail" class="landmark" aria-labelledby="trail-h"><h2 id="trail-h" class="d-3d" data-hue="brass">Trail</h2>
 <h3>Versions</h3><ol class="versions" reversed>${vs.map((v) => `<li><b>v${v.n}</b> ${esc(v.date)}, ${esc(v.what)}${v.hash ? ` <span class="hash">PDF sha256 ${esc(v.hash.slice(0, 16))}</span>` : ""}</li>`).join("")}</ol>
 <h3>Corrections</h3>${corr ? `<ol class="corrections">${corr}</ol>` : "<p>None recorded.</p>"}
 ${standingTrail(rec)}
@@ -96,7 +96,7 @@ function references(rec, ctx, env) {
     return `<li id="rel-${esc(r.from)}-${esc(r.to)}-${r.type}">${standingMark(r.type)}<b>${link}</b> ${esc(STANDING_WORD[r.type])}${dir === "in" ? "" : ` by ${esc(r.from)}`}, ${esc(r.scope)}, ${esc(r.date)}${r.record ? ` (record ${esc(r.record)})` : ""}. ${esc(r.note)}</li>`; };
   const into = rec.relations.filter((r) => r.to === rec.document.id).sort((a, b) => b.date.localeCompare(a.date));
   const other = rec.relations.filter((r) => r.to !== rec.document.id);
-  return `<section id="references" class="landmark" aria-labelledby="refs-h"><h2 id="refs-h">References</h2>
+  return `<section id="references" class="landmark" aria-labelledby="refs-h"><h2 id="refs-h" class="d-3d" data-hue="brass">References</h2>
 <ol class="refs">${items}</ol>
 <h3 id="cited-by">Cited by later findings</h3><ul class="cited">${into.map((r) => rel(r, "in")).join("") || "<li>No later record in the findings ledger treats this finding.</li>"}</ul>
 ${other.length ? `<h3>Standing of findings cited here</h3><ul class="cited">${other.map((r) => rel(r, "out")).join("")}</ul>` : ""}</section>`;
@@ -106,7 +106,7 @@ function reproduce(rec, ctx) {
   const r = rec.reproduce;
   const data = (r.data || []).map((x) => `<li>${esc(x.name)}. <span class="soft">Licence: ${esc(x.licence)}.</span>${x.url ? ` <a class="out" href="${esc(x.url)}">${esc(x.url)}</a>` : ""}</li>`).join("");
   const pre = r.prereg ? `<h3>Preregistration</h3><p class="hash">sha256 ${esc(r.prereg.hash)}<br>plan ${esc(r.prereg.plan)}</p>` : "";
-  return `<section id="reproduce" class="landmark" aria-labelledby="repro-h"><h2 id="repro-h">Reproduce</h2>
+  return `<section id="reproduce" class="landmark" aria-labelledby="repro-h"><h2 id="repro-h" class="d-3d" data-hue="brass">Reproduce</h2>
 ${data ? `<h3>Data</h3><ul>${data}</ul>` : ""}${pre}
 <h3>Steps</h3><ol class="steps">${r.steps.map((s) => `<li>${prose(s, ctx)}</li>`).join("")}</ol>
 <p><b>Cost.</b> ${esc(r.cost.replace(/^./, (c) => c.toUpperCase()))}${r.not_rerun ? ` ${esc(r.not_rerun)}` : ""}</p>
@@ -115,7 +115,7 @@ ${downloads(rec, "full")}</section>`;
 
 function verified(rec, ctx) {
   const v = rec.verified;
-  return `<section id="verified" class="landmark" aria-labelledby="ver-h"><h2 id="ver-h">Verified</h2>
+  return `<section id="verified" class="landmark" aria-labelledby="ver-h"><h2 id="ver-h" class="d-3d" data-hue="brass">Verified</h2>
 <p class="verified"><b>Verified on ${esc(v.date)}.</b> ${v.checks.map((c) => prose(c.what, ctx)).join(" ")}</p>
 ${v.not_checked.length ? `<p><b>Not checked.</b> ${v.not_checked.map((s) => prose(s, ctx)).join(" ")}</p>` : ""}</section>`;
 }
@@ -124,7 +124,7 @@ function pageGlossary(ctx) {
   if (!ctx.termUses.length) return "";
   const items = ctx.termUses.map((u) => { const g = ctx.glossary[u.key];
     return `<li><a href="/findings/glossary.html#${g.anchor}">${esc(g.term)}</a> <span class="soft">${esc(g.field)}</span> <a class="gl-entry" href="#${u.anchor}" aria-label="First use of ${esc(g.term)} on this page">first use</a></li>`; }).join("");
-  return `<section id="terms" class="landmark" aria-labelledby="terms-h"><h2 id="terms-h">Terms on this page</h2>
+  return `<section id="terms" class="landmark" aria-labelledby="terms-h"><h2 id="terms-h" class="d-3d" data-hue="brass">Terms on this page</h2>
 <p class="soft">Each term is defined where it is first used on this page. Each name below opens its entry in the <a href="/findings/glossary.html">findings glossary</a>, which lists every page that uses it.</p>
 <ul class="fd-terms">${items}</ul></section>`;
 }

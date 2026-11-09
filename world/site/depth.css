@@ -1,0 +1,43 @@
+/* depth.css: one depth model and one palette for lettering across the site (the author, 2026-11-09: "add the 3D and
+   letter coloring to our typography and text bodies").
+
+   Palette: each platform's hue from the shared colour tokens (world/site/crossover/colour-tokens.json, OKLCH hue),
+   chosen on an element by data-hue. The face is drawn light (OKLCH L .86 at the top to .70 at the foot) so it holds
+   WCAG AA against the field's dark ground at every point of the gradient.
+
+   Depth model, lit by the field's sun at the upper right:
+     - the face: a vertical gradient in the hue, lit from above;
+     - the lit edge: a thin rim offset up and to the right;
+     - the extrusion: steps toward the lower left, each step darker, then a soft cast shadow.
+   Large lettering (.d-3d) takes the full model with chained drop shadows, which keep a gradient face intact. Body
+   text (.term, and figures) takes the fine version: a solid colour and a one-pixel step, which stays crisp at 16 px.
+   Plain view and forced colours drop depth and colour; nothing moves, so reduced motion has nothing to hold.
+   The words stay single text nodes, so assistive technology reads plain text. */
+:root { --d-bldlng: 288; --d-theflywheel: 65; --d-theplygrnd: 186; --d-thecmmns: 118; --d-artiql8: 250; --d-rsrch: 349; --d-brass: 75; }
+[data-hue="bldlng"] { --hue: var(--d-bldlng); --chroma: .13; }
+[data-hue="theflywheel"] { --hue: var(--d-theflywheel); --chroma: .12; }
+[data-hue="theplygrnd"] { --hue: var(--d-theplygrnd); --chroma: .11; }
+[data-hue="game"] { --hue: var(--d-theplygrnd); --chroma: .14; --lift: -.06; }
+[data-hue="thecmmns"] { --hue: var(--d-thecmmns); --chroma: .13; }
+[data-hue="artiql8"] { --hue: var(--d-artiql8); --chroma: .12; }
+[data-hue="rsrch"] { --hue: var(--d-rsrch); --chroma: .12; }
+[data-hue="brass"] { --hue: var(--d-brass); --chroma: .09; }
+
+/* large lettering: the full model */
+.d-3d {
+  color: transparent; -webkit-background-clip: text; background-clip: text;
+  background-image: linear-gradient(180deg, oklch(calc(.93 + var(--lift, 0)) calc(var(--chroma, .09) * .45) var(--hue, 75)) 0%, oklch(calc(.86 + var(--lift, 0)) var(--chroma, .09) var(--hue, 75)) 38%, oklch(calc(.72 + var(--lift, 0)) var(--chroma, .09) var(--hue, 75)) 100%);
+  text-shadow: none !important;
+  filter: drop-shadow(.012em -.012em 0 oklch(.97 .03 var(--hue, 75) / .85))
+          drop-shadow(-.016em .016em 0 oklch(.48 calc(var(--chroma, .09) * .8) var(--hue, 75)))
+          drop-shadow(-.016em .016em 0 oklch(.34 calc(var(--chroma, .09) * .6) var(--hue, 75)))
+          drop-shadow(-.016em .016em 0 oklch(.22 calc(var(--chroma, .09) * .4) var(--hue, 75)))
+          drop-shadow(-.03em .04em .08em rgba(0, 0, 0, .55)); }
+
+/* body text: the fine model, crisp at 16 px */
+.term, dfn.term { font-style: normal; font-weight: 700;
+  color: oklch(.88 var(--chroma, .09) var(--hue, 75)); text-shadow: -1px 1px 0 oklch(.3 calc(var(--chroma, .09) * .6) var(--hue, 75)), 0 0 6px rgba(7, 16, 26, .9); }
+.d-fine { color: oklch(.88 var(--chroma, .09) var(--hue, var(--d-brass))); text-shadow: -1px 1px 0 oklch(.3 calc(var(--chroma, .09) * .6) var(--hue, var(--d-brass))), 0 0 6px rgba(7, 16, 26, .9); }
+
+html.plain .d-3d, html.plain .term, html.plain .d-fine { color: inherit; background: none; filter: none; text-shadow: none; font-weight: inherit; }
+@media (forced-colors: active) { .d-3d, .term, .d-fine { color: CanvasText; background: none; filter: none; text-shadow: none; } }
