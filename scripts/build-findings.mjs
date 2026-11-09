@@ -25,9 +25,7 @@ const DIR = path.join(site, "findings");
 const json = (p) => JSON.parse(readFileSync(p, "utf8"));
 const CSS = '<link rel="stylesheet" href="/world/site/experiments.css">\n<link rel="stylesheet" href="/world/site/findings.css">\n<link rel="stylesheet" href="/world/site/depth.css">\n<link rel="stylesheet" href="/world/site/research.css">\n<script type="module" src="/world/site/research.js"></script>\n';
 // pages that carry charts also load the chart styles and the live re-run loader
-const CHART_HEAD = '<link rel="stylesheet" href="/world/site/findings-figures.css">
-<script type="module" src="/world/site/findings-live.js"></script>
-';
+const CHART_HEAD = '<link rel="stylesheet" href="/world/site/findings-figures.css">\n<script type="module" src="/world/site/findings-live.js"></script>\n';
 const AUTHOR = { "@type": "Person", name: "Zain Dana Harper", url: "https://harperz9.github.io/" };
 
 // the plate beside a physics finding: the site's own copy of the period plate, with the paper's caption and alt text
