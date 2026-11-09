@@ -1,0 +1,7 @@
+{
+  "date": "2026-11-09",
+  "note": "The dial's Work and CV panel carries the author's email again (author, 2026-11-09: \"The emails can stay on the work and the CV panels.\"); the publish metadata gate skips that one address through .github/publish-metadata-allow.json.",
+  "paths": {
+    "index.html": "e9baab72607ec468a7a6f40865b82ffdc51c74b41f37270c50608179907eb3df"
+  }
+}

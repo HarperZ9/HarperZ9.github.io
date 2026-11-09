@@ -1,0 +1,5 @@
+{
+ "about": "Addresses the publish metadata gate does not count as personal-email findings on this site. Read by tools/publish_metadata_site_gate.py. Fetch headers stay blocked for every address.",
+ "ruling": "The author, 2026-11-09: \"The emails can stay on the work and the CV panels. It's my lab site. All my personal information and contact information can stay.\"",
+ "personal_email": ["zaindharper@gmail.com"]
+}
