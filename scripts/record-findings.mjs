@@ -58,6 +58,49 @@ function collectClaims(sections, refIds) {
 
 function numbersOf(text) { return [...new Set(plain(text).replace(/\{m:[^}]*\}/g, "").match(/[-+]?\d[\d,]*(?:\.\d+)?(?:e-?\d+)?/g) || [])]; }
 
+// evidence: the numbers each claim states, checked in the paper's Verified pass, then the register's own numbers
+function evidenceFor(claims, row, date) {
+  const evidence = [];
+  for (const c of claims) {
+    const nums = numbersOf(c.text);
+    if (!nums.length) continue;
+    const e = { id: `e${evidence.length + 1}`, kind: "number", label: `The numbers in claim ${c.id.slice(1)}`, value: nums.join("; "),
+      check: { by: "re-read from the run's result file in the paper's Verified pass", date, result: "match", note: "per the Verified section, which lists the values re-read" } };
+    evidence.push(e); c.evidence = [e.id];
+  }
+  const ev = row.evidence || {};
+  for (const [k, label] of [["denominator", "Sample"], ["interval", "Main estimate and interval"], ["forecast_vs_outcome", "Forecast against outcome"], ["known_answer", "Known-answer check"]])
+    if (ev[k]) evidence.push({ id: `e${evidence.length + 1}`, kind: k === "known_answer" ? "control" : "number", label, value: ev[k],
+      check: { by: "the register's evidence fields", result: "not_checked", note: "as recorded in the publication register" } });
+  return evidence;
+}
+
+// the paper's dated corrections, then the ledger's dated corrections the paper does not carry
+function correctionsFor(id, items, ledger, published) {
+  const corr = corrections(items, published);
+  for (const x of (ledger.corrections || []).filter((c) => c.finding === id)) {
+    const { finding, source, ...rest } = x;
+    corr.push({ id: `x${corr.length + 1}`, target: "document", ...rest, record: "findings ledger, publication pass" });
+  }
+  return corr;
+}
+
+// the PDF the site offers must be the one its build receipt names
+function checkedPdfHash(id) {
+  const pdfHash = json(path.join(F, "papers", `${id}.buildtex.json`)).outputs[`${id}.pdf`];
+  if (createHash("sha256").update(readFileSync(path.join(F, "papers", `${id}.pdf`))).digest("hex") !== pdfHash) throw new Error(`${id}: the PDF does not match its build receipt`);
+  return pdfHash;
+}
+
+function documentFor(id, meta, row, limitations, sections) {
+  const ladder = row.ladder && ["lead", "hypothesis", "thesis", "conjecture", "theorem", "law candidate", "killed"].includes(row.ladder.rung) ? row.ladder : null;
+  return { id, kind: "finding", title: meta.title, standfirst: meta.standfirst, date_found: meta.date_found, fields: meta.fields,
+    tier: row.strong_b ? "B*" : row.tier, tier_reason: row.tier_reason, ...(ladder ? { rung: ladder.rung, rung_reason: ladder.reason } : {}),
+    outcome: meta.outcome, ...(meta.bound ? { bound: meta.bound } : {}), objection: row.reviewer_attack || limitations[0],
+    objection_source: row.reviewer_attack ? "the register's reviewer attack" : "the paper's first stated limitation; no reviewer attack is on file",
+    would_change: row.raise_tier || "No condition for raising or overturning the call is on file in the register.", sections };
+}
+
 export function buildRecord(id, data) {
   const { meta, row, ledger, published, allMeta } = data;
   const paper = read(readFileSync(path.join(F, "src", id, "paper.txt"), "utf8"));
@@ -75,40 +118,16 @@ export function buildRecord(id, data) {
   sections.sort((a, b) => (a.role === "lead" ? -1 : 0) - (b.role === "lead" ? -1 : 0));
   const claims = collectClaims(sections, refIds);
   const vf = verified(toIds(vText));
-  const evidence = [];
-  for (const c of claims) {
-    const nums = numbersOf(c.text);
-    if (!nums.length) continue;
-    const e = { id: `e${evidence.length + 1}`, kind: "number", label: `The numbers in claim ${c.id.slice(1)}`, value: nums.join("; "),
-      check: { by: "re-read from the run's result file in the paper's Verified pass", date: vf.date, result: "match", note: "per the Verified section, which lists the values re-read" } };
-    evidence.push(e); c.evidence = [e.id];
-  }
-  const ev = row.evidence || {};
-  for (const [k, label] of [["denominator", "Sample"], ["interval", "Main estimate and interval"], ["forecast_vs_outcome", "Forecast against outcome"], ["known_answer", "Known-answer check"]])
-    if (ev[k]) evidence.push({ id: `e${evidence.length + 1}`, kind: k === "known_answer" ? "control" : "number", label, value: ev[k],
-      check: { by: "the register's evidence fields", result: "not_checked", note: "as recorded in the publication register" } });
+  const evidence = evidenceFor(claims, row, vf.date);
   const limitations = sec("sec:limits").blocks.filter((b) => b.kind === "li").map((b) => plain(b.text));
   const relationsIn = ledger.relations.filter((r) => r.to === id);
   const reproItems = sec("sec:repro").blocks.filter((b) => b.kind === "li").map((b) => toIds(b.text));
   const repro = reproduce(reproItems, refs.filter((r) => r.kind === "dataset"));
   const notRerun = vf.not_checked.find((s) => /re-?run/i.test(s));
   if (notRerun) repro.not_rerun = notRerun;
-  const corr = corrections(sec("sec:corrections").blocks.filter((b) => b.kind === "li").map((b) => toIds(b.text)), published);
-  for (const x of (ledger.corrections || []).filter((c) => c.finding === id)) {
-    const { finding, source, ...rest } = x;
-    corr.push({ id: `x${corr.length + 1}`, target: "document", ...rest, record: "findings ledger, publication pass" });
-  }
-  const receipt = json(path.join(F, "papers", `${id}.buildtex.json`));
-  const pdfHash = receipt.outputs[`${id}.pdf`];
-  const pdfBytes = readFileSync(path.join(F, "papers", `${id}.pdf`));
-  if (createHash("sha256").update(pdfBytes).digest("hex") !== pdfHash) throw new Error(`${id}: the PDF does not match its build receipt`);
-  const ladder = row.ladder && ["lead", "hypothesis", "thesis", "conjecture", "theorem", "law candidate", "killed"].includes(row.ladder.rung) ? row.ladder : null;
-  const objection = row.reviewer_attack || limitations[0];
-  const doc = { id, kind: "finding", title: meta.title, standfirst: meta.standfirst, date_found: meta.date_found, fields: meta.fields,
-    tier: row.strong_b ? "B*" : row.tier, tier_reason: row.tier_reason, ...(ladder ? { rung: ladder.rung, rung_reason: ladder.reason } : {}),
-    outcome: meta.outcome, ...(meta.bound ? { bound: meta.bound } : {}), objection,
-    objection_source: row.reviewer_attack ? "the register's reviewer attack" : "the paper's first stated limitation; no reviewer attack is on file",
-    would_change: row.raise_tier || "No condition for raising or overturning the call is on file in the register.", sections };
+  const corr = correctionsFor(id, sec("sec:corrections").blocks.filter((b) => b.kind === "li").map((b) => toIds(b.text)), ledger, published);
+  const pdfHash = checkedPdfHash(id);
+  const doc = documentFor(id, meta, row, limitations, sections);
   const cited = new Set(named.map((f) => f.id));
   const record = { schema: "research-record/1", built: `${published} by scripts/record-findings.mjs from paper.txt, the register row and the findings ledger`,
     document: doc, claims, evidence, references: refs, relations: ledger.relations.filter((r) => r.to === id || cited.has(r.to)).map(({ source, ...r }) => r),
