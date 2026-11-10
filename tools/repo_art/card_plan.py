@@ -61,8 +61,8 @@ def _meta(src: str, key: str) -> str:
 
 # A page titled with the author's name alone (the home) gets its card title from what the site does: the name stays
 # a byline on the card and is never the picture (the author, 2026-11-09).
-NAME_TITLE = "Tools that check AI work and render every medium"  # one line on the card, so the water under it shows
-HOME = {"veil": "low", "anchor": 1.0}  # the home card: the picture at full height, the dark low and light
+NAME_TITLE = "Tools that check AI work and render every medium"
+HOME = {"veil": "sky", "anchor": 0.0}  # the home card: dark type in the sky, the whole sea open (author, 2026-11-09: "Card C")
 
 
 def clean_title(title: str) -> str:

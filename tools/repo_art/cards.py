@@ -194,7 +194,7 @@ def type_sky(card: dict, face: str) -> list[dict]:
         out.append(run(ln, face, size, X0, y, SKY_INK, -0.015))
         y += size * 1.1
     return out + [run("Zain Dana Harper", "grotesk-medium", 26, X0, y + 14, SKY_INK, role="byline"),
-                  run(kicker(card), "mono-medium", 17, X0, y + 50, SKY_INK, 0.1, "kicker")]
+                  run(kicker(card), "mono-medium", 20, X0, y + 52, SKY_INK, 0.1, "kicker")]
 
 
 def card_runs(card: dict, p: dict, plate: int | None = None) -> list[dict]:

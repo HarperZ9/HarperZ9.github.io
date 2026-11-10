@@ -2916,7 +2916,7 @@
   },
   "home.jpg": {
    "backend": "chrome-156.0.8078.75-skia-2x-lanczos",
-   "content_sha256": "10669a82028a32f4a4aff617c4694ed99a123a87090abaa6e507ba96bc505244",
+   "content_sha256": "0b8e8479b108f7d2b18d6a704c9e6e823e4424a19836a86cf52589b33251320c",
    "does_not_prove": [
     "It does not show the figure's numbers come from a real run, except where the alt text quotes a README result.",
     "It does not show the PNG bytes are the same under another Chrome build; the SVG and the scene are the portable record.",
@@ -2930,17 +2930,17 @@
     "width": 1200
    },
    "outputs": {
-    "home.jpg": "2a7dfe9c9ff49d1ff25733d42df0b4ad8d1e05c6e64a77df2cb49df97bf99ea9",
-    "home.svg": "67fd0fe85204cdc49a009f1ae7540cfb6a674e98a92ffb321cb2a6031734390b",
-    "home@2x.jpg": "0e3e40c7c0df894fd9fd39de0eb18ee95b2dab00d9a70f163208a45780096632"
+    "home.jpg": "69839437d4921e94f8ba84486eee2e63f7c697515fbe979db50bfdf3f307eae3",
+    "home.svg": "beaf7516ca65c90becc55e79fd47260a5acef0e9758fed4f0dbe97e86cd2436c",
+    "home@2x.jpg": "fa771c33a8d9fe08773844a9a26407c3e80217bede7a4ee347c0117d84f468e9"
    },
    "producer": {
     "name": "harperz9.repo-art",
     "version": "0.1.0"
    },
-   "receipt_sha256": "dc7d16bb5ed175e5e4768a20ebebb69e236ede230b303d2f6f80eaf2cd3239ec",
+   "receipt_sha256": "4e69600af81a6031a6cf35aa778f510dcb203c8cf39465be0f55880b5d497e3d",
    "reconcile": null,
-   "scene_sha256": "5b04cf19280f96ce24e0a15bce8faebe5a1eee66b906284630a147f35589dd96",
+   "scene_sha256": "b87c486d1df3aa0cf10a7f9015e4161f87fa927f93f2cd9dec3ebd43871c2b20",
    "schema": "superstack.receipt/1",
    "seed": "home",
    "seed_rule": "xmur3-mulberry32/1",
