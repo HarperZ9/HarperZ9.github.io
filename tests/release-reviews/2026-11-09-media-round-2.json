@@ -1,0 +1,7 @@
+{
+  "date": "2026-11-09",
+  "note": "Round 2 after the author's review of #501: each home piece dissolves into the water with no frame, the intaglio plate is a 3840 px press-finish render served through srcset, the engine relief gets srcset, the two larger loops are held to their old sizes. The PR carries desktop, phone, reduced-motion and 4K renders for the author to review before merge.",
+  "paths": {
+    "index.html": "20273a9739ce537d00d1820830143b5324c1b692f00e1565bca9ca03c3ef8c84"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-09",
+  "note": "Round 3: link cards drawn from the work at 2x, three archival plates re-cut from museum scans, 19 unreferenced media files moved to the author's archive, generated pages rebuilt. For the author's review before merge.",
+  "paths": {
+    "index.html": "0019df6253697a5962867c1eb77c278bf651236f217e0f78927ed60bf4a930bb",
+    "publications/build.json": "152548e1a316f7cee797d23b2fa5f1f2db57270f9868610a750860663f155679",
+    "site-index.html": "b387593838445fc1073f19d2825aacc59b43057d1a2b97dea9e0087e8858da44",
+    "system/routes.js": "889f3c64380f2e99803260088582daba4b899e0600d9b392e596d08f4045473e"
+  }
+}

@@ -1,6 +1,7 @@
 """Long-form narration in the author's synthesized voice: sentence by sentence, checked by ASR.
 
-    python -m tools.explainer.film.narrate media/explainers/checking-cost OUT_DIR --model DIR
+    python -m tools.explainer.film.narrate media/explainers/checking-cost OUT_DIR --takes DIR
+    python -m tools.explainer.film.narrate media/explainers/checking-cost OUT_DIR --backend qwen --model DIR
 
 Runs on a GPU (bfloat16) or the CPU (float32) with qwen-tts 0.1.1 and the author's fine-tuned Qwen3-TTS checkpoint (private, never
 in this repository). Each sentence is generated alone with a seed derived from its place in the
@@ -11,6 +12,13 @@ the pauses of tools/explainer/film/layout.py (sentence, line and segment gaps, t
 and close, spoken prediction questions with their held silence, picture holds) and the join is
 brought to -16 LUFS by tools/explainer/loudness.py. Writes
 narration.wav, timing.json (one row per sentence) and narration.json (how it was made).
+
+Two backends. "route" (the default since 2026-11-09) reads one chosen take per sentence from --takes: the author's
+narrator renders several takes per sentence on several local engines fine-tuned on his voice, keeps the takes the
+ASR hears word for word with the speaker check passed, and picks per sentence against his own pitch range. That
+renderer is private (it holds the voice models); this file only receives the chosen takes, as <tag>.wav (PCM)
+plus <tag>.json (which engine), and checks each one again with its own ASR rule before it joins the film.
+"qwen" generates each sentence here from one fine-tuned checkpoint (--model), as before.
 """
 
 from __future__ import annotations
@@ -27,6 +35,7 @@ from pathlib import Path
 import numpy as np
 
 ACCEPT, TRIES = 0.92, 5
+from tools.explainer.film.route_takes import describe_route, route_take  # noqa: E402
 from tools.explainer.film.layout import GAP_LINE, GAP_SEGMENT, GAP_SENTENCE, HEAD, plan, sentences  # noqa: F401  (re-exported)
 SETTINGS = {"dtype": "bfloat16", "attn_implementation": "sdpa", "do_sample": True, "temperature": 0.9, "top_k": 50,
             "top_p": 1.0, "repetition_penalty": 1.05, "subtalker_temperature": 0.9, "subtalker_top_k": 50,
@@ -127,6 +136,7 @@ def take(model, asr, text: str, tag: str):
 
 
 RATE_OUT = 48000
+BACKENDS = ("route", "qwen")
 
 
 def to_rate(x: np.ndarray, sr: int, to: int) -> np.ndarray:
@@ -249,21 +259,38 @@ def describe(rows: list[dict], processing: dict, model_dir: Path, asr_name: str)
                                f"Seeds are recorded, but {sampling} was not checked for bit-exact reruns, so a rerun may differ."]}
 
 
-def main() -> int:
+def parse(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("folder", type=Path)
     ap.add_argument("out", type=Path)
-    ap.add_argument("--model", type=Path, required=True)
+    ap.add_argument("--backend", choices=BACKENDS, default="route")
+    ap.add_argument("--takes", type=Path, help="route: folder of chosen takes, <tag>.wav and <tag>.json")
+    ap.add_argument("--model", type=Path, help="qwen: the fine-tuned checkpoint folder")
     ap.add_argument("--asr", default="medium.en")
-    ap.add_argument("--device", default="cuda:0", help="cuda:0 (bfloat16) or cpu (float32)")
-    a = ap.parse_args()
+    ap.add_argument("--device", default="cuda:0", help="qwen: cuda:0 (bfloat16) or cpu (float32)")
+    a = ap.parse_args(argv)
+    if a.backend == "route" and a.takes is None:
+        ap.error("--backend route needs --takes")
+    if a.backend == "qwen" and a.model is None:
+        ap.error("--backend qwen needs --model")
+    return a
+
+
+def main(argv=None) -> int:
+    global take
+    a = parse(argv)
     film = json.loads((a.folder / "film.json").read_text(encoding="utf-8"))
     a.out.mkdir(parents=True, exist_ok=True)
-    model, asr = load_models(a.model, a.asr, a.device)
+    if a.backend == "route":
+        from faster_whisper import WhisperModel
+        take = route_take(a.takes)
+        model, asr = None, WhisperModel(a.asr, device="cpu", compute_type="int8")
+    else:
+        model, asr = load_models(a.model, a.asr, a.device)
     parts, rows, sr = speak(film, model, asr, a.out)
     processing = write_wav(a.out / "narration.wav", parts, sr)
     (a.out / "timing.json").write_text(json.dumps(rows, indent=1) + "\n", encoding="utf-8", newline="\n")
-    info = describe(rows, processing, a.model, a.asr)
+    info = describe_route(rows, processing, a.asr) if a.backend == "route" else describe(rows, processing, a.model, a.asr)
     (a.out / "narration.json").write_text(json.dumps(info, indent=2) + "\n", encoding="utf-8", newline="\n")
     print(json.dumps(info["asr_check"]), processing.get("after_lufs"))
     return 0

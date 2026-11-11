@@ -1,0 +1,7 @@
+{
+  "date": "2026-11-11",
+  "note": "Main and the updated findings publishing branch merged into the findings figures branch. index.html carries both sides' changes; the ?v= world asset revision was regenerated to world-d32bbf91be. The author approved merging on 2026-11-11.",
+  "paths": {
+    "index.html": "c87aeb69d4dc702aadefa0970d20aa08a13c132c3625b0f725adf4a20c521626"
+  }
+}

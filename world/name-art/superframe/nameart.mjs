@@ -32,13 +32,13 @@ export const NODES = [
     inputs: { text: { type: 'text', optional: true, doc: 'the word; replaces the text parameter' }, glyphs: { type: 'glyphs', optional: true, doc: 'its real text is used' }, time: { type: 'time', optional: true, doc: 'loop phase = t / duration' } },
     outputs: { raster: 'raster' },
     params: {
-      text: { type: 'string', default: 'Zain Dana Harper', doc: 'the word or name, up to 40 characters' },
+      text: { type: 'string', default: 'Low Water', doc: 'the word or name, up to 40 characters' },
       style: { type: 'enum', options: Object.keys(STYLES), default: 'glass-tubes' },
       phase: { type: 'number', min: 0, max: 1, default: 0, unit: 'loop share', doc: 'used when no time input arrives' },
     },
     cost: p => ({ 'glass-tubes': 400, 'deco-arc': 160, 'intaglio-lines': 160, 'shallow-glass': 400, 'deco-sunburst': 120, banknote: 160, pearls: 140, 'monogram-orb': 90 })[p?.style] ?? 300,
     render: async ({ inputs, params, w, h }) => {
-      const text = (inputs.text?.text ?? inputs.glyphs?.text ?? params.text).trim().slice(0, 40) || 'Zain Dana Harper';
+      const text = (inputs.text?.text ?? inputs.glyphs?.text ?? params.text).trim().slice(0, 40) || 'Low Water';
       const t = inputs.time ? ((inputs.time.t / (inputs.time.duration || 1)) % 1 + 1) % 1 : params.phase;
       const { image } = await STYLES[params.style].render(w, h, { t, text });
       const R = make.raster(w, h);
@@ -55,7 +55,7 @@ export const NODES = [
     inputs: { text: { type: 'text', optional: true, doc: 'the fill text; replaces the fill parameter' } },
     outputs: { field: 'field' },
     params: {
-      word: { type: 'string', default: 'Zain Dana Harper', doc: 'the shape; empty fills the frame' },
+      word: { type: 'string', default: 'Low Water', doc: 'the shape; empty fills the frame' },
       fill: { type: 'string', default: '1234567890', doc: 'the text the cells read, in order' },
       pitch: { type: 'number', min: 4, max: 60, default: 12, unit: 'px' },
       angle: { type: 'number', min: -90, max: 90, default: 0, unit: 'deg' },

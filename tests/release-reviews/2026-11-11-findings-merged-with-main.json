@@ -1,0 +1,9 @@
+{
+  "date": "2026-11-11",
+  "note": "Main (media rounds 3 and 4, media showcase, cloud march, narrator default) merged into the findings publishing branch. index.html, site-index.html and publications/build.json carry both sides' changes; publications were rebuilt from their records, page card links set to the hash of the card file in the tree, and the ?v= world asset revision regenerated to world-01fa789508. The author approved merging on 2026-11-11.",
+  "paths": {
+    "index.html": "bca80328a619157d15ab13c4fd415e09e2fda215ad6f3930e89beb7de673a81e",
+    "publications/build.json": "8ae04e98b70744b7145221c51e968d5272aa08ff642318a29aab870f7aafe827",
+    "site-index.html": "c650027dbb2c0524785423a5b919645f6e6272f78a01ee8f487dfb87a894919d"
+  }
+}
