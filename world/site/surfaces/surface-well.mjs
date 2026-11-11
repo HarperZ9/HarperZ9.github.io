@@ -1,6 +1,6 @@
 // surface-well.mjs: the well as a surface. mount(host, { elements, weights, settings }, ctx).
 // The visitor acts on the water: drag to stir, press to pour, arrow keys to tilt, Space to pour in the middle,
-// 0 to level, 1 to 4 to choose which element pours. Plain view and a browser without WebGL get the same
+// 0 to level, 1 to 4 to choose which element pours. The ground is paper or dark water. Plain view and a browser without WebGL get the same
 // elements as named colour samples, and nothing that moves.
 import { createWell } from './well.mjs';
 import { driveFor } from './elements-data.mjs';
@@ -12,13 +12,14 @@ const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<
 
 export function mount(host, input, ctx) {
   const { ix } = ctx;
-  let state = { ...input }, slot = 0, well = null, down = null;
+  let state = { ...input }, slot = 0, well = null, down = null, paper = (input.ground ?? 'paper') !== 'water';
   const how = `sf-well-how-${++wells}`;
   host.classList.add('sf-well');
   host.innerHTML = `<div class="sf-water" tabindex="0" role="application" aria-roledescription="well" aria-describedby="${how}"><canvas></canvas></div>
     <p class="sf-how" id="${how}">Drag to stir. Press to pour. Arrow keys tilt the water, Space pours, 0 levels it.</p>
     <div class="sf-acts"><span class="sf-slots" role="radiogroup" aria-label="Which element pours"></span>
-    <button type="button" data-act="level">Level</button><button type="button" data-act="again">Start again</button></div>
+    <button type="button" data-act="level">Level</button><button type="button" data-act="again">Start again</button>
+    <span class="sf-ground" role="radiogroup" aria-label="Ground under the pigment"><button type="button" role="radio" data-ground="paper">Paper</button><button type="button" role="radio" data-ground="water">Dark water</button></span></div>
     <ul class="sf-still" hidden></ul>`;
   const water = host.querySelector('.sf-water'), canvas = host.querySelector('canvas'), slots = host.querySelector('.sf-slots'), still = host.querySelector('.sf-still');
   const parts = () => state.elements.map((id) => ix.byId.get(id)).filter(Boolean).slice(0, 4);
@@ -26,7 +27,7 @@ export function mount(host, input, ctx) {
   const link = (a, b) => Math.min(1, Math.max(a.links.find((l) => l.to === b.id)?.weight ?? 0, b.links.find((l) => l.to === a.id)?.weight ?? 0) / 100) * (state.linkScale ?? 1);
   const toWell = () => parts().map((e, i, P) => ({ links: P.map((o) => (o === e ? 0 : link(e, o))), ok: hexToOk(e.colour?.hex || '#8a8a8a'), weight: Math.max(0.02, +(state.weights?.[i] ?? 1) || 0), drive: driveFor(ix, e, state.settings?.[e.id]).shader }));
 
-  if (!ctx.plain) { try { well = createWell(canvas, { reduced: ctx.reduced, ground: hexToOk(GROUND) }); } catch (e) { console.info('well: no drawing surface here, the samples stand in:', e.message); } }
+  if (!ctx.plain) { try { well = createWell(canvas, { reduced: ctx.reduced, ground: hexToOk(GROUND), paper }); } catch (e) { console.info('well: no drawing surface here, the samples stand in:', e.message); } }
   if (!well) { water.hidden = true; host.querySelector('.sf-how').hidden = true; host.querySelector('.sf-acts').hidden = true; still.hidden = false; }
 
   function paint(reseed) {
@@ -36,8 +37,9 @@ export function mount(host, input, ctx) {
     slots.hidden = P.length < 2;
     slots.innerHTML = P.map((e, i) => `<button type="button" role="radio" aria-checked="${i === slot}" data-slot="${i}"><i style="background:${esc(e.colour?.hex)}"></i>${esc(e.name)}</button>`).join('');
     still.innerHTML = P.map((e) => `<li><i style="background:${esc(e.colour?.hex)}"></i>${esc(e.name)} <span>${esc(e.colour?.hex)}</span></li>`).join('');
-    well?.set(toWell(), { reseed });
+    well?.set(toWell(), { reseed }); grounds();
   }
+  function grounds() { water.dataset.ground = paper ? 'paper' : 'water'; for (const b of host.querySelectorAll('[data-ground]')) b.setAttribute('aria-checked', (b.dataset.ground === 'paper') === paper); }
   const at = (ev) => { const r = canvas.getBoundingClientRect(); return [(ev.clientX - r.left) / r.width, (ev.clientY - r.top) / r.height]; };
   const onDown = (ev) => { if (!well) return; const [x, y] = at(ev); down = { x, y, t: ev.timeStamp }; water.setPointerCapture?.(ev.pointerId); well.pour(slot, x, y, 0.35); };
   const onMove = (ev) => { if (!well || !down) return; const [x, y] = at(ev), dt = Math.max(8, ev.timeStamp - down.t) / 1000;
@@ -55,8 +57,9 @@ export function mount(host, input, ctx) {
     ev.preventDefault();
   };
   const onClick = (ev) => {
-    const s = ev.target.closest('[data-slot]'), a = ev.target.closest('[data-act]');
+    const s = ev.target.closest('[data-slot]'), a = ev.target.closest('[data-act]'), g = ev.target.closest('[data-ground]');
     if (s) { slot = +s.dataset.slot; paint(false); }
+    else if (g) { paper = g.dataset.ground === 'paper'; well?.ground(paper); grounds(); }
     else if (a?.dataset.act === 'level') { tx = ty = 0; well?.tilt(0, 0); }
     else if (a?.dataset.act === 'again') { tx = ty = 0; well?.tilt(0, 0); well?.reset(); }
   };
@@ -68,8 +71,8 @@ export function mount(host, input, ctx) {
   return {
     // same elements in the same order: only how they are drawn changes, and the water keeps what the visitor did
     update(next) { const same = next.elements && next.elements.join() === state.elements.join() && (next.weights || []).join() === (state.weights || []).join() && (next.linkScale ?? state.linkScale) === state.linkScale;
-      state = { ...state, ...next }; paint(!same); },
-    value: () => ({ canvas: well ? well.still() : null, well }),
+      state = { ...state, ...next }; if (next.ground) { paper = next.ground !== 'water'; well?.ground(paper); } paint(!same); },
+    value: () => ({ canvas: well ? well.still() : null, well, ground: paper ? 'paper' : 'water' }),
     destroy() { water.removeEventListener('pointerdown', onDown); water.removeEventListener('pointermove', onMove); water.removeEventListener('pointerup', onUp);
       water.removeEventListener('pointercancel', onUp); water.removeEventListener('keydown', onKey); host.removeEventListener('click', onClick);
       well?.destroy(); host.innerHTML = ''; host.classList.remove('sf-well'); },

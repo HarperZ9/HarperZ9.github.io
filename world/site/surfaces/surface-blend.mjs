@@ -1,11 +1,13 @@
 // surface-blend.mjs: the blend table as a surface. mount(host, { elements, weights, settings }, ctx).
 // Two to four elements side by side: each property with its value, interval and n per part, the mix worked out
 // from the parts (marked computed), the measured links between them, and the blended palette from the studio's
-// own blend (world/studio/lib/blend.mjs, an OKLab mean). Weight controls call ctx.onWeights(weights);
-// a part's Remove calls ctx.onRemove(id).
+// own blend (world/studio/lib/blend.mjs, an OKLab mean). Under the links, every pair is painted twice as two
+// washes on paper, each order once, by the optics the well uses (glaze.mjs), with the overlap's colour and how far
+// the two orders are apart. Weight controls call ctx.onWeights(weights); a part's Remove calls ctx.onRemove(id).
 import { blendTable, materialFor, fmt, RULE_WORD } from './elements-data.mjs';
 import { blend, contrast } from '../../studio/lib/blend.mjs';
 import { mark, pos, term } from './charts.mjs';
+import { paintOf, glazeOf, orderGap, paintGlaze } from './glaze.mjs';
 
 const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
@@ -40,9 +42,25 @@ export function mount(host, input, ctx) {
     host.innerHTML = `<div class="bl-scroll" tabindex="0" role="region" aria-label="Blend table"><table class="bl"><caption class="sr-only">The parts side by side, and the computed mix</caption>
       <thead><tr><th scope="col">Property</th>${head}<th scope="col">Mix <small>computed, not measured. Each row names its rule: an angle takes a circular mean, a ratio a geometric mean, the rest a weighted mean. On the line: the numbered parts and a ring for the mix, across the table's range</small></th></tr></thead><tbody>${body}</tbody></table></div>
       <h4>Links between the parts</h4><p class="bl-note">A link counts the studies in which two elements were found together. It is measured, and it is recorded in each direction.</p><ul class="bl-links">${links}</ul>
+      <h4>Glazes</h4><p class="bl-note">${term('glaze')}: each pair as two washes on paper, one laid over the other, in both orders. The swatches are painted by the same optics as the well (Kubelka-Munk layers, explained under Words) at full strength, with each element's own opacity, grain and edge. Computed. Where a pigment scatters light, the order changes the overlap; where neither does, the two orders match, and the line says so.</p>
+      <ul class="bl-glazes">${glazes(els)}</ul>
       <h4>Blended colour</h4><p class="bl-note">The mean of the parts in OKLab, a colour space built to match how even steps look to the eye, weighted by share. Computed.</p>
       <ul class="bl-pal">${sb.parts.map((p) => `<li><i style="background:${esc(p.hex)}"></i>${esc(p.name)} <code>${esc(p.hex)}</code></li>`).join('')}<li class="bl-mixc" data-hex="${esc(sb.palette.mix)}"><i style="background:${esc(sb.palette.mix)}"></i>mix <code>${esc(sb.palette.mix)}</code> <small>computed${contrast(sb.palette.mix, sb.palette.ground) < 3 ? ', close to the ground colour' : ''}</small></li></ul>`;
+    swatches();
   }
+  // every pair, each order once: the swatch, the overlap's colour, and how far apart the two orders are
+  function glazes(els) {
+    const P = els.map((e) => paintOf(ix, e, state.settings?.[e.id])), out = [];
+    const fig = (t, u) => { const g = glazeOf(t, u); return `<figure><canvas width="216" height="144" role="img" data-top="${esc(t.id)}" data-under="${esc(u.id)}" data-hex="${g.hex}" aria-label="${esc(t.name)} over ${esc(u.name)}: two washes on paper, the overlap is ${g.hex}"></canvas>` +
+      `<figcaption><i style="background:${g.hex}"></i>${esc(t.name)} over ${esc(u.name)} <code>${g.hex}</code></figcaption></figure>`; };
+    for (let i = 0; i < P.length; i++) for (let j = i + 1; j < P.length; j++) { const gap = orderGap(P[i], P[j]);
+      out.push(`<li data-pair="${esc(P[i].id)}|${esc(P[j].id)}" data-gap="${gap.toFixed(2)}">${fig(P[j], P[i])}${fig(P[i], P[j])}<p class="bl-gap">${gap >= 1 ? `The order changes the overlap by ${gap.toFixed(0)} of 255 at most in one colour channel.` : `The two orders match to within 1 of 255: at these opacities neither pigment scatters enough for the order to show.`} ` +
+        `<small>Opacity: ${esc(P[i].name)} ${P[i].opacity.toFixed(2)}, ${esc(P[j].name)} ${P[j].opacity.toFixed(2)}, each from its ink coverage (${esc(P[i].opacityFrom)}, ${esc(P[j].opacityFrom)}).</small></p></li>`); }
+    return out.join('');
+  }
+  let brush = 0;
+  function swatches() { clearTimeout(brush); if (ctx.plain || typeof document === 'undefined') return; brush = setTimeout(() => { const P = new Map(state.elements.filter((id) => ix.byId.has(id)).map((id) => [id, paintOf(ix, ix.byId.get(id), state.settings?.[id])]));
+    for (const c of host.querySelectorAll('.bl-glazes canvas')) { const t = P.get(c.dataset.top), u = P.get(c.dataset.under); if (t && u) { paintGlaze(c, t, u); c.dataset.painted = '1'; } } }, 60); }
   const onInput = (ev) => { const r = ev.target.closest('input[data-w]'); if (!r) return;
     const w = [...host.querySelectorAll('input[data-w]')].map((x) => +x.value / 100); r.nextElementSibling.textContent = r.value + '%'; state.weights = w; ctx.onWeights?.(w, { live: true }); };
   const onChange = (ev) => { if (ev.target.closest('input[data-w]')) { render(); ctx.onWeights?.(state.weights, { live: false }); } };
@@ -52,6 +70,6 @@ export function mount(host, input, ctx) {
   return {
     update(next) { state = { ...state, ...next }; render(); },
     value: () => (state.elements.length >= 2 ? { table: blendTable(ix, state.elements, state.weights), ...studioBlend(ix, state.elements, state.weights, state.settings) } : null),
-    destroy() { host.removeEventListener('input', onInput); host.removeEventListener('change', onChange); host.removeEventListener('click', onClick); host.innerHTML = ''; host.classList.remove('sf-blend'); },
+    destroy() { clearTimeout(brush); host.removeEventListener('input', onInput); host.removeEventListener('change', onChange); host.removeEventListener('click', onClick); host.innerHTML = ''; host.classList.remove('sf-blend'); },
   };
 }

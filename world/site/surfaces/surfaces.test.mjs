@@ -135,3 +135,61 @@ test('an element says which tools draw it and which pages use it', () => {
   assert.deepEqual(pagesFor('pigment', uses).map((p) => p.path), ['swatches.html']); assert.deepEqual(pagesFor('ink', uses).map((p) => p.path).sort(), ['accession.html', 'swatches.html']);
   assert.deepEqual(uses.benches, ['elements.html']); assert.ok(registry.mount && registry.unmountAll);
 });
+
+// Paint optics, conservation and the reaction (km.mjs, glaze.mjs, well-sim.mjs).
+const { pigment, layer, onGround, glaze, apart, PAPER } = await import('./km.mjs');
+const { paintOf, glazeOf, orderGap } = await import('./glaze.mjs');
+const { createSim, STEP, TOLERANCE } = await import('./well-sim.mjs');
+
+test('a pigment worked out from a colour and an opacity gives that colour back over white, and opacity times it over black', () => {
+  for (const [lin, o] of [[[0.5, 0.2, 0.1], 0.5], [[0.9, 0.8, 0.1], 0.05], [[0.08, 0.19, 0.2], 0.39], [[0.3, 0.3, 0.3], 0.9]]) {
+    const L = layer(pigment(lin, o), 1), w = onGround([L], [1, 1, 1]), b = onGround([L], [0, 0, 0]);
+    lin.forEach((c, i) => { assert.ok(Math.abs(w[i] - c) < 1e-6, `over white ${w[i]} for ${c}`); assert.ok(Math.abs(b[i] - o * c) < 1e-6, `over black ${b[i]} for ${o * c}`);
+      assert.ok(L.R[i] >= 0 && L.T[i] >= 0 && L.R[i] + L.T[i] <= 1 + 1e-9, 'a layer sends back and lets through no more light than reached it'); });
+  }
+  const none = layer(pigment([0.5, 0.2, 0.1], 0), 0); assert.deepEqual(none.T.map((t) => +t.toFixed(9)), [1, 1, 1], 'no thickness, no change');
+});
+
+test('glazing order changes the overlap when the pigments scatter, and does not when they do not', () => {
+  const lin = [[0.5, 0.2, 0.1], [0.08, 0.19, 0.2]], gap = (o) => { const a = pigment(lin[0], o), b = pigment(lin[1], o); return apart(glaze(a, b), glaze(b, a)); };
+  assert.ok(gap(0.5) > 20, `scattering pigments: the two orders are ${gap(0.5).toFixed(1)} of 255 apart`);
+  assert.ok(gap(0) < 0.5, `pure absorbers: the two orders are ${gap(0).toFixed(3)} of 255 apart`);
+  let last = 0; for (const o of [0.02, 0.1, 0.3, 0.6]) { const g = gap(o); assert.ok(g > last, 'more opacity, more difference between the orders'); last = g; }
+  // the elements themselves: opacity is the measured ink coverage, and a setting on coverage moves it
+  const water = paintOf(ix, ix.byId.get('water')), fire = paintOf(ix, ix.byId.get('fire-heat'));
+  assert.equal(water.opacity, ix.byId.get('water').properties.find((p) => p.name === 'marks/ink coverage').value); assert.equal(water.opacityFrom, 'measured');
+  assert.ok(orderGap(water, fire) > 20); assert.notEqual(glazeOf(water, fire).hex, glazeOf(fire, water).hex);
+  const clear = (id) => paintOf(ix, ix.byId.get(id), { coverage: 0 }); assert.ok(orderGap(clear('water'), clear('fire-heat')) < 0.5, 'with coverage set to nothing the same pair is order-free');
+  assert.equal(paintOf(ix, data.elements.find((e) => !e.properties.length)).opacityFrom, 'table median', 'an unmeasured coverage is marked');
+  assert.ok(PAPER.every((c) => c > 0.6), 'the paper is light');
+});
+
+const drive = { speed: 0.5, curl: 0.5, coherence: 0.4, bleed: 0.5, scale: 0.5 };
+const pair = (link, d = drive) => [{ weight: 1, drive: d, links: [0, link] }, { weight: 1, drive: d, links: [link, 0] }];
+const shake = (s, steps = 600) => { for (let i = 0; i < steps; i++) { if (i % 40 === 0) s.stir(0.3 + 0.4 * ((i * 37 % 100) / 100), 0.5, 3, 2); if (i === 100) s.pour(0, 0.6, 0.4); if (i === 200) s.tilt(1, 0); if (i === 400) s.tilt(0, 0); s.step(STEP); } return s; };
+
+test('the well keeps the amount of each pigment through stirring, pouring and tilting', () => {
+  const s = createSim(); s.set(pair(0)); s.seed(); const start = s.put();
+  shake(s); const put = s.put(), now = s.amounts();
+  assert.ok(put[0] > start[0] * 1.01 && Math.abs(put[1] - start[1]) < 1e-12, 'a pour adds to what was put in, for that pigment only');
+  for (const i of [0, 1]) assert.ok(Math.abs(now[i] - put[i]) / put[i] <= TOLERANCE, `pigment ${i}: ${now[i]} against ${put[i]}`);
+  assert.ok(s.error() <= TOLERANCE, `worst pigment is ${s.error()} out, the tolerance is ${TOLERANCE}`);
+  // the control: the same run without the correction leaves the tolerance, so this test can fail
+  const raw = createSim({ conserve: false }); raw.set(pair(0)); raw.seed(); shake(raw);
+  assert.ok(raw.error() > TOLERANCE * 100, `without the correction the amount drifts by ${raw.error()}`);
+  assert.ok(s.drift() > TOLERANCE && s.drift() < 0.05, `the worst single step was ${s.drift()} out before it was scaled back`);
+});
+
+test('a link grows a product at the scale the pair sets; no link grows none', () => {
+  const linked = createSim({ reduced: true }); linked.set(pair(0.9)); linked.seed(); linked.settle();
+  const none = createSim({ reduced: true }); none.set(pair(0)); none.seed(); none.settle();
+  assert.ok(linked.product() > 0.01, `a strong link grows a product (${linked.product()})`); assert.equal(none.product(), 0);
+  assert.ok(linked.RV.every((v) => v >= 0 && v <= 1), 'the product stays a share between 0 and 1');
+  assert.ok(linked.error() <= TOLERANCE, 'the reaction takes no pigment away');
+  const fine = createSim({ reduced: true }); fine.set(pair(0.9, { ...drive, scale: 0 })); fine.seed(); fine.settle();
+  const broad = createSim({ reduced: true }); broad.set(pair(0.9, { ...drive, scale: 1 })); broad.seed(); broad.settle();
+  assert.ok(broad.grain > fine.grain, 'a longer measured wave gives the reaction larger features');
+  // feature size, measured: the mean width of the product's strokes along rows through the middle, in reaction cells
+  const width = (s) => { let n = 0, on = 0; for (let y = 40; y < 180; y += 4) for (let x = 1; x < 288; x++) { const a = s.RV[y * 288 + x] > 0.15; if (a) on++; if (a !== (s.RV[y * 288 + x - 1] > 0.15)) n++; } return 2 * on / n; };
+  assert.ok(width(broad) > width(fine) * 1.15, `the broad pattern's strokes are wider (${width(broad).toFixed(1)} cells against ${width(fine).toFixed(1)})`);
+});

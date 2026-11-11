@@ -67,8 +67,15 @@ export const WORDS = Object.freeze([
   ['Log scale', 'An axis where each step multiplies the value instead of adding to it, so very small and very large values both fit.'],
   ['Link', 'How many studies found two elements together.'],
   ['Ground', 'How much is measured about an element: grounded (a law has a measured weight), partial (properties are measured), thought (nothing measured yet).'],
-  ['Reaction', 'Computed. Where two elements with a measured link have mixed in the well, a third body grows between them with a pattern of its own, drawn as a paler tone of their mix. It follows a reaction and diffusion rule (Gray-Scott): one substance feeds, another grows on it and decays. The stronger the link, the more the pattern grows; with no link there is only mixing.'],
-  ['Subtractive mixing', 'How paints mix: each pigment takes light away, so two together are darker and shift in hue. The well mixes pigments this way.'],
+  ['Reaction', 'Computed. Where two elements with a measured link have mixed in the well, a third pigment grows between them in a pattern of its own. It follows a reaction and diffusion rule (Gray-Scott): one substance feeds, another grows on it and decays. The link sets how strongly it grows; with no link there is only mixing. The pair\'s wave length sets the size of the pattern by its rank in the table, and their edge softness sets whether it grows as separate spots or as joined, winding forms. The product\'s colour is worked out from the pair: their midpoint in OKLab, a little lighter, with its hue turned further the stronger the link.'],
+  ['Kubelka-Munk', 'The standard model of how a layer of paint handles light, named for the two people who published it in 1931. Each pigment has two numbers per colour: absorption, the light it takes away, and scattering, the light it turns back. From them a layer gets a reflectance (the light it sends back) and a transmittance (the light it lets through), and layers stack by a formula in which the order matters whenever a pigment scatters. On paper, the well and the glaze swatches are both painted this way. Computed.'],
+  ['Glaze', 'One thin, see-through wash of pigment laid over another, so the overlap shows both and has a hue of its own.'],
+  ['Opacity', 'Computed. How much of its own colour a pigment keeps over black. Here it is the element\'s measured ink coverage, used as it is; an element with no measured coverage takes the table\'s median. The absorption and scattering of each pigment are worked out from its measured colour and this opacity.'],
+  ['Paper and tooth', 'The well\'s light ground is a sheet of paper. Its tooth is the fine up and down of the surface. The other ground is dark water, the well\'s earlier look, where pigments mix by the geometric mean of the light they send back.'],
+  ['Granulation', 'Computed. Pigment settling into the low points of the paper\'s tooth, which shows as fine grain. It is stronger for an element with a low roughness slope, by its rank in the table.'],
+  ['Dried edge', 'Computed. As a wash dries, pigment is carried to its edge and leaves a darker rim. The rim appears a few seconds after the water is left alone, is stronger for an element with hard measured edges, and is absent where the wash met another wet wash.'],
+  ['Wet into wet', 'Computed. Where a wash meets another that is still wet, its edge is wider and softer and its pigment spreads faster. The spread follows the element\'s edge softness and flow speed.'],
+  ['Conserved', 'The well keeps the amount of each pigment. Carrying and spreading do not keep it exactly, so every step ends by scaling each pigment back to what was put in: the start, plus every pour. The total then stays within one part in ten thousand.'],
   ['OKLab', 'A way of writing colours as numbers so that equal steps in the numbers look like equal steps to the eye.'],
 ]);
 const LOG = new Set(['spatial/dominant wavelength', 'spatial/peak strength', 'spatial/edge softness', 'marks/edge density', 'flow/mean speed', 'flow/mean |curl|', 'flow/mean |div|', 'layout/row pitch']);
@@ -132,9 +139,15 @@ export function driveFor(ix, el, settings = {}) {
 function toShader(ix, v) {
   const rel = (k) => { const s = ix.spread.get(DRIVES[k].prop); if (!s || s.max === s.min) return 0.5;
     const t = s.log ? Math.log(v[k] / s.min) / Math.log(s.max / s.min) : (v[k] - s.min) / (s.max - s.min); return Math.min(1.2, Math.max(0, t)); };
-  const sat = ix.spread.get(DRIVES.saturation.prop);
+  const sat = ix.spread.get(DRIVES.saturation.prop), soft = Math.min(1, rel('softness'));
   return { wavelength: v.wavelength, orientation: v.orientation, peak: rel('peak'), beta: v.beta, softness: v.softness, coverage: v.coverage, density: v.density,
-    saturation: sat ? Math.min(2.4, v.saturation / sat.median) : 1, rows: v.rows, speed: rel('speed'), curl: rel('curl'), coherence: v.coherence };
+    saturation: sat ? Math.min(2.4, v.saturation / sat.median) : 1, rows: v.rows, speed: rel('speed'), curl: rel('curl'), coherence: v.coherence,
+    // The paint the well lays down, each from a measured property by a stated rule (computed):
+    //   opacity      ink coverage, as it is: a pigment that covers more of the frame hides more of what is under it
+    //   granulation  the roughness slope, by rank: fine grain (a low slope) settles into the paper's tooth
+    //   rim, bleed   edge softness, by rank: hard edges dry to a dark rim, soft edges bleed
+    //   scale        the wave length, by rank: the size of the reaction's features
+    opacity: Math.min(0.92, Math.max(0, v.coverage)), granulation: 1 - Math.min(1, rel('beta')), rim: 1 - soft, bleed: soft, scale: Math.min(1, rel('wavelength')) };
 }
 
 // How a property's values are combined into a mix. The rule follows the kind of quantity:

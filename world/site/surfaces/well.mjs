@@ -1,71 +1,24 @@
-// well.mjs: the bench's well. A small body of water that carries up to four elements, each drawn from its own
-// measured numbers, and that answers the visitor: drag stirs it, a press pours, the arrow keys tilt it.
+// well.mjs: the bench's well. A sheet of paper (or a body of dark water) that carries up to four elements, each
+// a pigment drawn from its own measured numbers, and that answers the visitor: drag stirs it, a press pours, the
+// arrow keys tilt it.
 //
-//   const well = createWell(canvas, { reduced });
+//   const well = createWell(canvas, { reduced, paper: true });
 //   (each part may carry links: [0..1 to every other part], the measured link strengths that open the reaction)
-//   well.set([{ ok: [L, a, b], weight, drive: { wavelength, orientation, peak, beta, softness, coverage,
-//                                               density, saturation, rows, speed, curl, coherence } }]);
-//   well.pour(slot, x, y); well.stir(x, y, vx, vy); well.tilt(dx, dy); well.reset(); well.destroy();
+//   well.set([{ ok: [L, a, b], weight, drive: { wavelength, orientation, peak, beta, softness, coverage, density,
+//               saturation, rows, speed, curl, coherence, opacity, granulation, rim, bleed, scale } }]);
+//   well.pour(slot, x, y); well.stir(x, y, vx, vy); well.tilt(dx, dy); well.reset(); well.ground(paper); well.destroy();
 //
-// The water is the studio's own solver (world/studio/lib/fluid.mjs, stable fluids on a fixed clock). It moves four
-// dye fields, one per element, and a displacement field that bends each element's pattern where the water has
-// carried it. The picture is one fragment shader: every element is a pigment whose grain comes from its drive
-// numbers, the pigment diffuses, and where pigments meet they mix subtractively (the geometric mean of their
-// reflectances in linear light, weighted by how much of each is there). Coordinates are fractions of the well,
-// x right, y down. Reduced motion: no drift; each act settles at once into a still.
-import { Fluid, STEP } from '../../studio/lib/fluid.mjs';
+// What happens in the well is well-sim.mjs (the water, the pigment it carries and conserves, the reaction). How
+// it looks is well-shader.mjs (washes on paper by Kubelka-Munk layers, or the earlier dark water). The optics
+// are km.mjs, the same module that paints the glaze swatches in the blend table. Coordinates are fractions of the
+// well, x right, y down. Reduced motion: no drift; each act settles at once into a still, shown dry.
+import { createSim, STEP, NX, NY, RX, RY } from './well-sim.mjs';
+import { VERT, FRAG } from './well-shader.mjs';
+import { pigment, okToLinear, productOk, PAPER, PRODUCT_OPACITY } from './km.mjs';
 
-const NX = 96, NY = 72, SLOTS = 4, DIFFUSE = 0.03;
-const VERT = `attribute vec2 p; varying vec2 v; void main(){ v = p * .5 + .5; gl_Position = vec4(p, 0., 1.); }`;
-const FRAG = `precision highp float;
-varying vec2 v;
-uniform sampler2D uDye, uDisp;
-uniform vec3 uGround, uLin[4];      // linear-light colours: the water, and each element's pigment
-uniform vec4 uA[4], uB[4], uC[4];   // A: feature frequency, cos, sin, stretch. B: octave gain, gradient width, coverage, vein strength. C: rows, slot seed, on, unused
-uniform float uAspect;
-float h(vec2 q){ q = fract(q * vec2(.1031, .1030)); q += dot(q, q.yx + 33.33); return fract((q.x + q.y) * q.x); }
-float vn(vec2 q){ vec2 i = floor(q), f = fract(q); f = f * f * (3. - 2. * f);
-  return mix(mix(h(i), h(i + vec2(1, 0)), f.x), mix(h(i + vec2(0, 1)), h(i + vec2(1, 1)), f.x), f.y); }
-float fbm(vec2 q, float gain){ float a = 1., s = 0., t = 0.; for (int k = 0; k < 5; k++){ s += a * vn(q); t += a; q = q * 2.03 + 17.; a *= gain; } return s / t; }
-void main(){
-  vec2 uv = vec2(v.x, 1. - v.y);
-  vec4 dye = texture2D(uDye, uv), dsp = texture2D(uDisp, uv);
-  vec2 q = uv - (dsp.xy - .5) * .6; q.x *= uAspect;
-  vec3 logmix = vec3(0.); float tot = 0.;
-  for (int i = 0; i < 4; i++){
-    if (uC[i].z < .5) continue;
-    float c = i == 0 ? dye.r : i == 1 ? dye.g : i == 2 ? dye.b : dye.a;
-    // the element's own grain: turned to its measured wave angle, drawn out along it by the wave's strength
-    vec2 p = vec2(dot(q, uA[i].yz), dot(q, vec2(-uA[i].z, uA[i].y))); p.y /= uA[i].w; p = p * uA[i].x + uC[i].y;
-    vec2 warp = vec2(fbm(p + 3.1, .5), fbm(p + 7.7, .5)) - .5;          // marbling: the grain is folded through itself
-    float n = fbm(p + 1.6 * warp, uB[i].x);
-    float rows = uC[i].x > 1.5 ? .09 * sin(6.2831853 * uC[i].x * uv.y) : 0.;
-    float body = smoothstep(.5 - uB[i].y, .5 + uB[i].y, n + rows + (uB[i].z - .45) * .5);   // thick and thin pigment; the gradient is the edge softness
-    float vein = 1. - smoothstep(0., .07, abs(fract(n * 6.) - .5));     // fine lines where the pigment parts
-    float d = c * (.25 + 1.25 * uB[i].z) * (.3 + .9 * body) * (1. - uB[i].w * vein);
-    logmix += d * log(max(uLin[i], vec3(.004))); tot += d;
-  }
-  // Where pigments meet they mix subtractively: the geometric mean of their reflectances in linear light, by amount.
-  vec3 lin = uGround;
-  if (tot > .0002) lin = mix(uGround, exp(logmix / tot), 1. - exp(-tot * 2.4));
-  // the reaction's product, where linked elements have met: a paler body of their mix, growing its own pattern
-  lin = mix(lin, sqrt(clamp(lin, 0., 1.)) * 1.04, .85 * smoothstep(.08, .4, dsp.z));
-  lin = clamp(lin, 0., 1.);
-  gl_FragColor = vec4(mix(12.92 * lin, 1.055 * pow(lin, vec3(1. / 2.4)) - .055, step(.0031308, lin)), 1.);
-}`;
-
-// OKLab to linear sRGB, with the chroma scaled first: how the saturation drive reaches the pigment.
-function okToLinear([L, A, B], chroma = 1) {
-  A *= chroma; B *= chroma;
-  const l = (L + 0.3963377774 * A + 0.2158037573 * B) ** 3, m = (L - 0.1055613458 * A - 0.0638541728 * B) ** 3, s = (L - 0.0894841775 * A - 1.291485548 * B) ** 3;
-  return [4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s, -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s, -0.0041960863 * l - 0.7034186147 * m + 1.707614701 * s].map((x) => Math.min(1, Math.max(0, x)));
-}
 const clamp = (x, a, b) => (x < a ? a : x > b ? b : x);
-// Where each slot starts: one element fills the well; more share it as soft-edged bodies that meet in the middle.
-const HOMES = { 1: [[0.5, 0.5, 0.62]], 2: [[0.3, 0.5, 0.42], [0.7, 0.5, 0.42]], 3: [[0.28, 0.36, 0.36], [0.72, 0.36, 0.36], [0.5, 0.72, 0.36]],
-  4: [[0.28, 0.3, 0.32], [0.72, 0.3, 0.32], [0.28, 0.72, 0.32], [0.72, 0.72, 0.32]] };
 
-export function createWell(canvas, { reduced = false, ground = [0.2, -0.01, -0.03] } = {}) {
+export function createWell(canvas, { reduced = false, ground = [0.2, -0.01, -0.03], paper = true } = {}) {
   const gl = canvas.getContext('webgl', { alpha: false, antialias: false, preserveDrawingBuffer: true, powerPreference: 'low-power' });
   if (!gl) return null;
   const sh = (src, type) => { const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s);
@@ -80,104 +33,48 @@ export function createWell(canvas, { reduced = false, ground = [0.2, -0.01, -0.0
   const tex = (unit) => { const t = gl.createTexture(); gl.activeTexture(gl.TEXTURE0 + unit); gl.bindTexture(gl.TEXTURE_2D, t);
     for (const [k, val] of [[gl.TEXTURE_MIN_FILTER, gl.LINEAR], [gl.TEXTURE_MAG_FILTER, gl.LINEAR], [gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE], [gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE]]) gl.texParameteri(gl.TEXTURE_2D, k, val);
     return t; };
-  const tDye = tex(0), tDisp = tex(1);
-  gl.uniform1i(U('uDye'), 0); gl.uniform1i(U('uDisp'), 1);
+  const tDye = tex(0), tDisp = tex(1), tProd = tex(2);
+  gl.uniform1i(U('uDye'), 0); gl.uniform1i(U('uDisp'), 1); gl.uniform1i(U('uProd'), 2); gl.pixelStorei(gl.UNPACK_ALIGNMENT, 1);
 
-  const n = NX * NY, fluid = new Fluid(NX, NY, { seed: 7, iters: 16, dissipation: 1 });
-  const dye = Array.from({ length: SLOTS }, () => new Float32Array(n)), dx = new Float32Array(n), dy = new Float32Array(n);
-  const bDye = new Uint8Array(n * 4), bDisp = new Uint8Array(n * 4);
-  const RU = new Float32Array(n).fill(1), RV = new Float32Array(n), RA = new Float32Array(n), RB = new Float32Array(n), zone = new Float32Array(n);
-  let parts = [], raf = 0, last = 0, dead = false, clock = 0, tiltX = 0, tiltY = 0, idleAt = 0, flow = { speed: 0.3, curl: 0.3, coherence: 0.4 };
+  const sim = createSim({ reduced }), n = NX * NY, bDye = new Uint8Array(n * 4), bDisp = new Uint8Array(n * 4), bProd = new Uint8Array(RX * RY);
+  const gain = [1, 1, 1, 1], time = { sim: 0, gap: 0, frames: 0 };
+  let raf = 0, last = 0, dead = false, idleAt = 0, soft = 0.1, strength = 0, flat = null;
 
-  function splat(F, x, y, r, amount) {
-    const cx = x * NX, cy = y * NY, rr = r * NX;
-    for (let j = Math.max(0, Math.floor(cy - rr * 2)); j < Math.min(NY, Math.ceil(cy + rr * 2)); j++)
-      for (let i = Math.max(0, Math.floor(cx - rr * 2)); i < Math.min(NX, Math.ceil(cx + rr * 2)); i++) {
-        const k = Math.exp(-((i - cx) ** 2 + (j - cy) ** 2) / (rr * rr));
-        F[j * NX + i] = Math.min(1.4, F[j * NX + i] + amount * k);
-      }
-  }
-  function seed() {
-    RU.fill(1); RV.fill(0);
-    for (const F of dye) F.fill(0); dx.fill(0); dy.fill(0); fluid.u.fill(0); fluid.v.fill(0); clock = 0; tiltX = tiltY = 0;
-    const homes = HOMES[Math.max(1, Math.min(SLOTS, parts.length))] || [];
-    const sum = parts.reduce((s, p) => s + p.weight, 0) || 1;
-    parts.forEach((p, i) => { const [x, y, r] = homes[i]; splat(dye[i], x, y, r * (0.6 + 0.8 * p.weight * parts.length / sum) , 0.95); });
-  }
   function uniforms() {
-    const A = new Float32Array(16), B = new Float32Array(16), C = new Float32Array(16), O = new Float32Array(12);
-    let sp = 0, cu = 0, co = 0, w = 0;
-    parts.slice(0, SLOTS).forEach((p, i) => {
-      const d = p.drive, th = (d.orientation ?? 90) * Math.PI / 180;
+    const parts = sim.parts, A = new Float32Array(16), B = new Float32Array(16), C = new Float32Array(16), D = new Float32Array(16), O = new Float32Array(15), K = new Float32Array(15), S = new Float32Array(15);
+    parts.forEach((p, i) => {
+      const d = p.drive, th = (d.orientation ?? 90) * Math.PI / 180, lin = okToLinear(p.ok, d.saturation), pg = pigment(lin, d.opacity);
       // dominant wavelength sets the feature size; the angle turns the grain; wave strength draws it out into bands
       A.set([clamp(0.085 / clamp(d.wavelength, 0.003, 0.3), 0.9, 22), Math.cos(th), Math.sin(th), 1 + 5 * clamp(d.peak, 0, 1.2)], i * 4);
       // spectral slope sets the roughness (a steeper slope keeps less fine detail); edge softness is the width of every gradient
       B.set([clamp(Math.pow(2, -(d.beta - 1.1)), 0.18, 0.8), clamp(d.softness * 0.035, 0.03, 0.5), clamp(d.coverage, 0, 1), clamp(d.density * 8, 0, 0.95)], i * 4);
       C.set([d.rows, 11.3 * (i + 1), 1, 0], i * 4);
-      O.set(okToLinear(p.ok, d.saturation), i * 3);
-      sp += p.weight * d.speed; cu += p.weight * d.curl; co += p.weight * d.coherence; w += p.weight;
+      D.set([clamp(d.granulation ?? 0.5, 0, 1), clamp(d.rim ?? 0.5, 0, 1), clamp(d.bleed ?? 0.5, 0, 1.2), 0], i * 4);
+      O.set(lin, i * 3); K.set(pg.K, i * 3); S.set(pg.S, i * 3);
     });
-    flow = w ? { speed: sp / w, curl: cu / w, coherence: co / w } : flow;
-    gl.uniform4fv(U('uA'), A); gl.uniform4fv(U('uB'), B); gl.uniform4fv(U('uC'), C); gl.uniform3fv(U('uLin'), O);
-    gl.uniform3fv(U('uGround'), new Float32Array(okToLinear(ground)));
-  }
-  // The elements' own measured motion moves the water a little: mean speed sets the drift, coherence how much of it
-  // runs one way, curl how much turns. Slow by rule; the visitor's hand is always the stronger force.
-  function ambient(dt) {
-    clock += dt;
-    const s = 34 * flow.speed, c = clamp((flow.coherence - 0.25) * 3.4, 0, 1), a = clock * 0.11;
-    if (s > 0.01) {
-      fluid.impulse(NX * (0.5 + 0.3 * Math.cos(a)), NY * (0.5 + 0.3 * Math.sin(a * 1.3)), s * c * dt * 9, s * c * 0.2 * Math.sin(a) * dt * 9, 16);
-      const k = 110 * flow.curl * (1 - c * 0.5) * dt * 9, x = 0.5 + 0.22 * Math.sin(a * 0.7), y = 0.5 + 0.22 * Math.cos(a * 0.9);
-      fluid.impulse(NX * x, NY * (y - 0.12), k, 0, 9); fluid.impulse(NX * x, NY * (y + 0.12), -k, 0, 9);
-    }
-    if (tiltX || tiltY) for (let i = 0; i < n; i++) { fluid.u[i] += tiltX * dt * 30; fluid.v[i] += tiltY * dt * 30; }
-  }
-  function step(dt, drift = true) {
-    if (drift) ambient(dt);
-    fluid.step(dt);
-    for (const F of [...dye.slice(0, Math.max(1, parts.length)), dx, dy]) { fluid._advect(F, fluid.t0, dt); F.set(fluid.t0); }
-    // pigment also spreads on its own, slowly: where two bodies touch, a mixing zone grows between them
-    for (const F of dye.slice(0, Math.max(1, parts.length))) { const T = fluid.t0; T.set(F);
-      for (let y = 1; y < NY - 1; y++) for (let x = 1, i = y * NX + 1; x < NX - 1; x++, i++) F[i] = T[i] + DIFFUSE * (T[i - 1] + T[i + 1] + T[i - NX] + T[i + NX] - 4 * T[i]); }
-    fluid._advect(RV, fluid.t0, dt); RV.set(fluid.t0);
-    react(reduced ? 14 : 3);
-    for (let i = 0; i < n; i++) {
-      fluid.u[i] *= 0.985; fluid.v[i] *= 0.985;                        // the water comes to rest
-      dx[i] = (dx[i] + fluid.u[i] * dt / NX) * 0.997; dy[i] = (dy[i] + fluid.v[i] * dt / NY) * 0.997;   // and the pattern eases back
-    }
-  }
-  // Where two elements with a measured link have mixed, a reaction runs between them (Gray-Scott reaction and
-  // diffusion: one substance feeds, the other grows on it and decays). The link's strength sets how far the feed
-  // is open and how many turns the reaction takes each step, so a strong link grows a pattern and no link grows none.
-  function react(turns) {
-    let any = 0;
-    for (let i = 0; i < n; i++) { let z = 0;
-      for (let a = 0; a < parts.length; a++) for (let b = a + 1; b < parts.length; b++) { const l = parts[a].links?.[b] ?? 0; if (l > 0) z = Math.max(z, l * 2.4 * Math.sqrt(Math.min(1, dye[a][i]) * Math.min(1, dye[b][i]))); }
-      zone[i] = Math.min(1, z); any = Math.max(any, zone[i]); }
-    if (any < 0.05) { if (RV.some((v) => v > 0.001)) for (let i = 0; i < n; i++) { RV[i] *= 0.9; RU[i] += (1 - RU[i]) * 0.1; } return; }
-    // the reaction needs a start: a few small patches, chosen by the cell's own number so the same blend starts the same way
-    for (let y = 2; y < NY - 2; y++) for (let x = 2, i = y * NX + 2; x < NX - 2; x++, i++) if (zone[i] > 0.3 && RV[i] < 0.02 && ((i * 2654435761) >>> 0) % 251 < 4)
-      for (let dy = -1; dy <= 1; dy++) for (let dx2 = -1; dx2 <= 1; dx2++) { RV[i + dy * NX + dx2] = 0.5; RU[i + dy * NX + dx2] = 0.35; }
-    for (let t = 0; t < Math.max(1, Math.round(turns * any)); t++) {
-      for (let y = 1; y < NY - 1; y++) for (let x = 1, i = y * NX + 1; x < NX - 1; x++, i++) {
-        const z = zone[i], u = RU[i], v = RV[i];
-        if (z < 0.06) { RA[i] = u + (1 - u) * 0.05; RB[i] = v * 0.95; continue; }
-        const lu = RU[i - 1] + RU[i + 1] + RU[i - NX] + RU[i + NX] - 4 * u, lv = RV[i - 1] + RV[i + 1] + RV[i - NX] + RV[i + NX] - 4 * v;
-        const f = 0.024 + 0.014 * z, uvv = u * v * v;
-        RA[i] = u + 0.16 * lu - uvv + f * (1 - u); RB[i] = v + 0.08 * lv + uvv - (f + 0.061) * v;
-      }
-      RU.set(RA); RV.set(RB);
-    }
+    // the product: one pigment, computed from the linked pairs by the strength of their links
+    let ok = [0, 0, 0], w = 0, sf = 0, pairs = 0;
+    for (let a = 0; a < parts.length; a++) for (let b = a + 1; b < parts.length; b++) { const l = parts[a].links?.[b] ?? 0; if (l <= 0) continue; pairs++;
+      const pk = productOk(parts[a].ok, parts[b].ok, l); ok = ok.map((x, c) => x + l * pk[c]); w += l; sf += l * ((parts[a].drive.bleed ?? 0.5) + (parts[b].drive.bleed ?? 0.5)) / 2; }
+    const pl = okToLinear(w ? ok.map((x) => x / w) : [0.7, 0, 0]), pp = pigment(pl, PRODUCT_OPACITY);
+    O.set(pl, 12); K.set(pp.K, 12); S.set(pp.S, 12); soft = w ? clamp(0.03 + 0.2 * sf / w, 0.03, 0.26) : 0.1; strength = w ? w / pairs : 0;
+    gl.uniform4fv(U('uA'), A); gl.uniform4fv(U('uB'), B); gl.uniform4fv(U('uC'), C); gl.uniform4fv(U('uD'), D);
+    gl.uniform3fv(U('uLin'), O); gl.uniform3fv(U('uK'), K); gl.uniform3fv(U('uS'), S);
+    gl.uniform3fv(U('uGround'), new Float32Array(okToLinear(ground))); gl.uniform3fv(U('uPaper'), new Float32Array(PAPER));
   }
   function draw() {
+    const { dye, dx, dy, RV } = sim;
     for (let i = 0; i < n; i++) {
       for (let c = 0; c < 4; c++) bDye[i * 4 + c] = clamp(dye[c][i], 0, 1) * 255;
-      bDisp[i * 4] = clamp(dx[i] + 0.5, 0, 1) * 255; bDisp[i * 4 + 1] = clamp(dy[i] + 0.5, 0, 1) * 255; bDisp[i * 4 + 2] = clamp(RV[i] * 2.4, 0, 1) * 255; bDisp[i * 4 + 3] = 255;
+      bDisp[i * 4] = clamp(dx[i] + 0.5, 0, 1) * 255; bDisp[i * 4 + 1] = clamp(dy[i] + 0.5, 0, 1) * 255; bDisp[i * 4 + 3] = 255;
     }
+    for (let i = 0; i < bProd.length; i++) bProd[i] = clamp(RV[i] * 2.4, 0, 1) * 255;
     gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, tDye); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, NX, NY, 0, gl.RGBA, gl.UNSIGNED_BYTE, bDye);
     gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, tDisp); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, NX, NY, 0, gl.RGBA, gl.UNSIGNED_BYTE, bDisp);
+    gl.activeTexture(gl.TEXTURE2); gl.bindTexture(gl.TEXTURE_2D, tProd); gl.texImage2D(gl.TEXTURE_2D, 0, gl.LUMINANCE, RX, RY, 0, gl.LUMINANCE, gl.UNSIGNED_BYTE, bProd);
     gl.viewport(0, 0, canvas.width, canvas.height); gl.uniform1f(U('uAspect'), canvas.width / canvas.height);
+    gl.uniform4f(U('uFx'), paper ? 1 : 0, sim.dry, soft, strength); gl.uniform4fv(U('uGain'), gain);
+    gl.uniform1f(U('uFlatOn'), flat ? 1 : 0); gl.uniform4fv(U('uFlat'), flat || [0, 0, 0, 0]);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
   }
   function size() {
@@ -186,20 +83,18 @@ export function createWell(canvas, { reduced = false, ground = [0.2, -0.01, -0.0
   }
   function frame(now) {
     raf = 0; if (dead) return;
-    const dt = Math.min(0.05, (now - (last || now)) / 1000); last = now;
-    if (dt > 0) step(STEP); draw();
+    const dt = Math.min(0.05, (now - (last || now)) / 1000);
+    if (last) { time.gap += now - last; time.frames++; } last = now;
+    if (dt > 0) { const t = performance.now(); sim.step(STEP); time.sim += performance.now() - t; } draw();
     if (now > idleAt || document.hidden) { last = 0; return; }    // the water has had its time: hold the still
     raf = requestAnimationFrame(frame);
   }
   // an act wakes the water for a while; under reduced motion it settles at once and holds a still
   function wake(ms = 45000) {
     if (dead) return;
-    if (reduced) { for (let i = 0; i < 24; i++) step(STEP, false); draw(); return; }
+    if (reduced) { for (let i = 0; i < 24; i++) sim.step(STEP, false); draw(); return; }
     idleAt = performance.now() + ms; if (!raf) raf = requestAnimationFrame(frame);
   }
-  // Reduced motion never sees the drift, so a fresh well is carried a fixed way along its own measured flow first:
-  // the still then shows the elements' speed, turning and direction, the same every time.
-  function settle() { if (reduced) for (let i = 0; i < 150; i++) step(STEP, true); }
   const ro = typeof ResizeObserver === 'function' ? new ResizeObserver(() => { size(); draw(); }) : null;
   ro?.observe(canvas);
   const onVis = () => { if (!document.hidden && !reduced && performance.now() < idleAt && !raf) raf = requestAnimationFrame(frame); };
@@ -207,21 +102,28 @@ export function createWell(canvas, { reduced = false, ground = [0.2, -0.01, -0.0
   size();
 
   const api = {
-    reduced, grid: [NX, NY],
+    reduced, grid: [NX, NY], reactionGrid: [RX, RY], sim,
     // parts: up to four. reseed false keeps the water as it is and only changes how the elements are drawn.
     // Under reduced motion the flow drives can only show in the still, so a change to one of them starts the still again.
-    set(next, { reseed = true } = {}) { const was = JSON.stringify(flow); parts = next.slice(0, SLOTS); uniforms();
-      if (reseed || (reduced && was !== JSON.stringify(flow))) { seed(); settle(); } if (reduced) draw(); else wake(); return api; },
-    pour(slot, x, y, amount = 0.5) { if (slot < parts.length) splat(dye[slot], x, y, 0.09, amount); wake(); return api; },
-    stir(x, y, vx, vy) { fluid.impulse(x * NX, y * NY, vx * NX, vy * NY, 7); wake(); return api; },
-    tilt(tx, ty) { tiltX = clamp(tx, -1, 1); tiltY = clamp(ty, -1, 1); wake(); return api; },
-    reset() { seed(); settle(); if (reduced) draw(); else wake(); return api; },
-    // for checks and for the take-away: the picture as it stands, drawn now
+    set(next, { reseed = true } = {}) { const was = JSON.stringify(sim.flow); sim.set(next); uniforms();
+      if (reseed || (reduced && was !== JSON.stringify(sim.flow))) { sim.seed(); sim.settle(); } if (reduced) draw(); else wake(); return api; },
+    pour(slot, x, y, amount = 0.5) { sim.pour(slot, x, y, amount); wake(); return api; },
+    stir(x, y, vx, vy) { sim.stir(x, y, vx, vy); wake(); return api; },
+    tilt(tx, ty) { sim.tilt(tx, ty); wake(); return api; },
+    reset() { sim.seed(); sim.settle(); if (reduced) draw(); else wake(); return api; },
+    // paper (true) or dark water (false)
+    ground(p) { if (p === undefined) return paper; paper = !!p; draw(); return api; },
+    // for checks: each of granulation, rim, tooth and product can be switched off (0) to see what it adds
+    gain(g = {}) { ['granulation', 'rim', 'tooth', 'product'].forEach((k, i) => { if (typeof g[k] === 'number') gain[i] = g[k]; }); draw(); return api; },
+    // for checks: the shader's answer for flat layers of these thicknesses on untextured paper, as [r, g, b] on 0 to 255
+    optics(d) { flat = new Float32Array(4); flat.set(d.slice(0, 4)); draw(); const px = new Uint8Array(4); gl.readPixels(canvas.width >> 1, canvas.height >> 1, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px); flat = null; draw(); return [px[0], px[1], px[2]]; },
+    // the picture as it stands, drawn now
     still() { draw(); return canvas; },
     read(w = 48, h = 36) { draw(); const c = document.createElement('canvas'); c.width = w; c.height = h; const x = c.getContext('2d'); x.drawImage(canvas, 0, 0, w, h); return x.getImageData(0, 0, w, h).data; },
-    energy: () => fluid.energy(),
-    product: () => { let s = 0; for (let i = 0; i < n; i++) s += RV[i]; return s / n; },
-    amounts: () => dye.map((F) => { let s = 0; for (let i = 0; i < n; i++) s += F[i]; return s / n; }),
+    // mean milliseconds per frame spent in the simulation, and between frames, since the last call
+    timing() { const o = { frames: time.frames, sim: time.frames ? time.sim / time.frames : 0, frame: time.frames ? time.gap / time.frames : 0 }; time.sim = time.gap = time.frames = 0; return o; },
+    energy: () => sim.energy(), product: () => sim.product(), amounts: () => sim.amounts(),
+    conservation: () => ({ put: sim.put(), now: sim.amounts(), error: sim.error(), worstStepBeforeCorrection: sim.drift() }),
     destroy() { dead = true; cancelAnimationFrame(raf); ro?.disconnect(); document.removeEventListener('visibilitychange', onVis); gl.getExtension('WEBGL_lose_context')?.loseContext(); },
   };
   return api;

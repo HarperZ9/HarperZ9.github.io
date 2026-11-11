@@ -42,7 +42,7 @@ export function valueAt(s, pct) {
 // A property's plain name with its one-line meaning: shown on hover and on keyboard focus, and listed in the glossary.
 let terms = 0;
 export function term(name) {
-  const t = TERMS[name]; if (!t) return esc(shortName(name));
+  const t = TERMS[name] || (name === 'glaze' ? ['A glaze', WORDS.find((w) => w[0] === 'Glaze')[1]] : null); if (!t) return esc(shortName(name));
   const id = `term-${++terms}`;
   return `<span class="tm" tabindex="0" aria-describedby="${id}">${esc(t[0])}<span class="tm-tip" role="tooltip" id="${id}">${esc(t[1])}</span></span>`;
 }
