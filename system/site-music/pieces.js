@@ -94,3 +94,18 @@ export const PIECES = {
   },
 };
 export const PIECE_IDS = Object.keys(PIECES);
+
+// Second arrangements: the same composition (chords, lines, tempo, sea) played by other voices from variants.js, so the
+// alternatives can be heard in context. Only the band's voices and the stem levels change; masterDb is measured on the
+// offline render of each arrangement, like the first.
+export const ALT = {
+  'low-tide': { name: 'tenor and piano', band: { lead: 'tenor', keys: 'piano' }, mix: { keys: -1 }, masterDb: 5.4 },
+  'night-school': { name: 'alto flute and bowed bass', band: { lead: 'altoflute', keys: 'tine-soft', bassVoice: 'arco' }, mix: { bass: -3 }, masterDb: 6.3 },
+  'glass-hour': { name: 'picked bass and reed piano', band: { bassVoice: 'picked', keys: 'wurlitzer' }, mix: { bass: 4 }, masterDb: 2.6 },
+  'deep-current': { name: 'vibraphone, strings, synth bass and arpeggio', band: { keys: 'vibraphone', pad: 'strings', subVoice: 'analog', arp: 'pluck' }, mix: { pad: -2 }, masterDb: 2.0 },
+  'clear-line': { name: 'fretless, FM piano, synth lead and brass', band: { bassVoice: 'fretless', keys: 'tx81z', lead: 'synth-lead', pad: 'brass' }, mix: { lead: -2, pad: -4 }, masterDb: 3.0 },
+};
+export function arranged(id, which = 'main') {
+  const P = PIECES[id], A = which === 'alt' ? ALT[id] : null; if (!A) return P;
+  return { ...P, arrangement: A.name, band: { ...P.band, ...A.band }, mix: { ...P.mix, ...(A.mix ? Object.fromEntries(Object.entries(A.mix).map(([k, v]) => [k, (P.mix[k] ?? 0) + v])) : {}) }, masterDb: A.masterDb ?? P.masterDb };
+}

@@ -56,6 +56,10 @@ export function blownPhrase(notes, table, p = {}, sr = 48000, seed = 3) {
   const click = new Biquad('bp', 3200, 2, sr); let c = 0, cn = 0; const kc = rng(seed + 77);
   for (let i = 0; i < len; i++) { if (c < clicks.length && i === clicks[c]) { cn = Math.round(0.004 * sr); c++; } const key = cn > 0 ? (cn--, q.keys * 0.006 * click.tick(kc() * 2 - 1)) : 0; x[i] = clamp(x[i] * q.gain + 0.035 * q.noise * air[i] + key, -1, 1); }
   new Biquad('hp', 30, 0.7, sr).run(x);
+  // a mute in the bell (designed, not measured): a Harmon mute takes out the low end and leaves a nasal band near 1.6 kHz;
+  // a cup mute darkens and narrows the tone
+  if (q.mute === 'harmon') { new Biquad('hp', 750, 0.8, sr).run(x); new Biquad('peak', 1600, 1.4, sr, 9).run(x); new Biquad('lp', 5200, 0.7, sr).run(x); for (let i = 0; i < len; i++) x[i] *= 0.52; }
+  else if (q.mute === 'cup') { new Biquad('hp', 300, 0.7, sr).run(x); new Biquad('lp', 2400, 0.8, sr).run(x); for (let i = 0; i < len; i++) x[i] *= 1.4; }
   // strength per note: the breath already shapes the tone; this sets how loud each note sits
   let g = V[0].gain, kk = 0; for (let i = 0; i < len; i++) { const t = (i - pre) / sr; while (kk + 1 < notes.length && t >= notes[kk + 1].t) kk++; g += kg * (V[kk].gain - g); x[i] *= g; }
   return { x: edges(x, sr, 0.004, 0.05), pre };

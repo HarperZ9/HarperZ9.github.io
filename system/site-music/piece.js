@@ -4,7 +4,7 @@ import { integratedLufs, truePeakDb } from '../../world/studio/lib/loudness.mjs'
 import { compose } from './score.js';
 import { renderBars, mixStems, timeline, STEMS } from './render.js';
 import { createAmbience } from './ambience.js';
-import { PIECES } from './pieces.js';
+import { arranged } from './pieces.js';
 
 export const LEAD_IN = 3;   // seconds of sea and wind before the first chord
 
@@ -34,8 +34,8 @@ export function master(L, R, sr, { target = -14, ceilingDb = -1.8, gainDb = null
 }
 
 // Render a piece. Returns the mastered mix, the layers at the same gain (for the ear), and the score in seconds.
-export function renderPiece(id, { seed = 1, bars = 48, sr = 48000, defects = {}, masterOpts = {}, ambienceDb = 0, responsive = true } = {}) {
-  const P0 = PIECES[id], piece = defects.mix ? { ...P0, mix: { ...P0.mix, ...Object.fromEntries(Object.entries(defects.mix).map(([k, v]) => [k, P0.mix[k] + v])) } } : P0, score = compose(id, { seed, bars, staged: defects.staged !== false, loop: !!defects.loop }), r = renderBars(score.bars, piece, { sr, seed, origin: LEAD_IN, defects }), lead = Math.round(LEAD_IN * sr) - r.pre, total = lead + r.length;
+export function renderPiece(id, { seed = 1, bars = 48, sr = 48000, defects = {}, masterOpts = {}, ambienceDb = 0, responsive = true, arrangement = 'main' } = {}) {
+  const P0 = arranged(id, arrangement), piece = defects.mix ? { ...P0, mix: { ...P0.mix, ...Object.fromEntries(Object.entries(defects.mix).map(([k, v]) => [k, P0.mix[k] + v])) } } : P0, score = compose(id, { seed, bars, staged: defects.staged !== false, loop: !!defects.loop }), r = renderBars(score.bars, piece, { sr, seed, origin: LEAD_IN, defects }), lead = Math.round(LEAD_IN * sr) - r.pre, total = lead + r.length;
   const place = (x) => { const L = new Float32Array(total), R = new Float32Array(total); L.set(x.L, lead); R.set(x.R, lead); return [L, R]; };
   const tl = timeline(score.bars, piece, { t0: LEAD_IN, drift: defects.drift || 0, sr }), sea = createAmbience({ seed, sr, ...piece.ambience, responsive });
   sea.cue({ rests: tl.rests, lead: tl.lead.map((n) => [n.t0 - 0.09, n.t1]) });

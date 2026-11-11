@@ -14,15 +14,15 @@
 import { composer } from './score.js';
 import { renderBars, mixStems, timeline } from './render.js';
 import { createAmbience } from './ambience.js';
-import { PIECES } from './pieces.js';
+import { arranged } from './pieces.js';
 
 export const LEVELS = [{ name: 'full', quality: 'full', rate: 1 }, { name: 'lite', quality: 'lite', rate: 1 }, { name: 'half', quality: 'lite', rate: 0.5 }];
 export const BUDGET = 0.5;   // seconds of rendering allowed per second of audio
 const now = () => (typeof performance !== 'undefined' ? performance.now() : Date.now());
 
 let st = null;
-export function begin({ piece: id, seed = 1, sr = 48000, level = 0, budget = BUDGET }) {
-  const piece = PIECES[id]; if (!piece) throw new Error(`unknown piece ${id}`);
+export function begin({ piece: id, seed = 1, sr = 48000, level = 0, budget = BUDGET, arrangement = 'main' }) {
+  const piece = arranged(id, arrangement); if (!piece) throw new Error(`unknown piece ${id}`);
   st = { id, piece, seed, deviceSr: sr, level: Math.max(0, Math.min(LEVELS.length - 1, level)), comp: composer(id, { seed }), cache: new Map(), origin: 0, leadCount: 0, ahead: [], composed: 0, over: 0, chunks: 0, budget, amb: null };
   st.sr = Math.round(sr * LEVELS[st.level].rate); st.amb = createAmbience({ seed, sr: st.sr, ...piece.ambience });
   return { id, title: piece.title, level: LEVELS[st.level].name };

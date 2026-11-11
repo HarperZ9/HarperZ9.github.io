@@ -2,7 +2,8 @@
 //   node --test system/site-music/voices.test.mjs
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { tine, softBass, brush, TINE } from './voices.js';
+import { tine, brush, TINE } from './voices.js';
+import { upright } from './upright.js';
 import { sax } from './sax.js';
 import { bassGuitar, sub, stringFor } from './bassguitar.js';
 import { spectrum, pitch } from '../ear/index.js';
@@ -33,10 +34,14 @@ test('tine: in tune, fundamental leads, the bell grows with velocity and fades, 
   assert.ok(Math.sqrt(diff / 1440) > 1e-4 && rms(withNoise, 0, a - 10) === rms(without, 0, a - 10), 'the release noise starts at the release and nowhere else');
 });
 
-test('soft bass: in tune, and the upper partials die before the fundamental', () => {
-  const x = softBass(45, 0.7, 2, SR); assert.ok(Math.abs(cents(x.subarray(4800), 45, 60)) < 5, `tuning ${cents(x.subarray(4800), 45, 60)} cents`);
-  assert.ok(rms(x, 72000, 86400) < 0.5 * rms(x, 2400, 16800), 'the string dies away at its measured rates (on the measured double bass the fundamental at this pitch dies faster than the second partial, so the note does not darken)'); assert.ok(Math.abs(mean(x)) < 3e-3, `mean ${mean(x)}`);
-  const y = softBass(45, 0.7, 2, SR, 2); let dot = 0; for (let i = 0; i < 9600; i++) dot += x[i] * y[i]; assert.ok(dot / (9600 * rms(x, 0, 9600) * rms(y, 0, 9600)) < 0.98, 'two plucks of one note are not the same wave');
+test('upright bass: in tune, a thump before the tone, upper partials gone first, a ghost note is short', () => {
+  const x = upright(45, 0.7, 2, {}, SR); assert.ok(Math.abs(cents(x.subarray(4800), 45, 60)) < 5, `tuning ${cents(x.subarray(4800), 45, 60)} cents`);
+  assert.ok(rms(x, 72000, 86400) < 0.5 * rms(x, 2400, 16800), 'the string dies away'); assert.ok(Math.abs(mean(x)) < 3e-3, `mean ${mean(x)}`);
+  assert.ok(band(x, 400, 3200, 0, 4800) > 4 * band(x, 400, 3200, 9600, 14400), 'the pluck is brightest in its first 100 ms (the measured peak level of each harmonic, falling at its measured early rate)');
+  assert.ok(band(x, 400, 2000, 0, 4800) / band(x, 100, 400, 0, 4800) > 1.5 * band(x, 400, 2000, 24000, 28800) / band(x, 100, 400, 24000, 28800), 'the upper partials fall away faster than the low ones in the first half second');
+  const ghost = upright(45, 0.7, 0.5, { ghost: true }, SR); assert.ok(rms(ghost, 9600, 14400) < 0.1 * rms(ghost, 0, 2400), 'a dead note stops within 200 ms');
+  const y = upright(45, 0.7, 2, {}, SR, 2); let dot = 0; for (let i = 0; i < 9600; i++) dot += x[i] * y[i]; assert.ok(dot / (9600 * rms(x, 0, 9600) * rms(y, 0, 9600)) < 0.98, 'two plucks of one note are not the same wave');
+  const slid = upright(45, 0.7, 1, { from: 43 }, SR), f = spectrum.mtof(45); assert.ok(1200 * Math.log2(shortPitch(slid, 0.004, 0.03, f * 0.9) / f) < -60, 'a slide starts on the note it comes from');
 });
 
 test('brushes: the sweep swells in, the tap is short, and no two ride strokes are the same wave', () => {
@@ -73,8 +78,8 @@ test('bass guitar: in tune, stiff-string partials, and four ways to play that so
   for (const m of [33, 40, 45, 52]) { const h = harmonics(bassGuitar(m, 0.7, 1.5, {}, SR), spectrum.mtof(m), 0.2); assert.ok(Math.abs(1200 * Math.log2(h[0].f / spectrum.mtof(m))) < 5, `note ${m}`); }
   const f = spectrum.mtof(40), finger = bassGuitar(40, 0.7, 1, {}, SR), ghost = bassGuitar(40, 0.7, 1, { style: 'ghost' }, SR), pop = bassGuitar(40, 0.7, 1, { style: 'pop' }, SR), slap = bassGuitar(40, 0.7, 1, { style: 'slap' }, SR);
   const h = harmonics(finger, f, 0.1); assert.ok(1200 * Math.log2(h[7].f / (8 * h[0].f)) > 2, `the eighth partial is ${(1200 * Math.log2(h[7].f / (8 * h[0].f))).toFixed(1)} cents sharp of a whole multiple`);
-  assert.ok(ghost.length < 0.4 * SR && rms(ghost, Math.round(0.14 * SR), ghost.length) < 0.03 * rms(ghost, 0, Math.round(0.05 * SR)), 'a ghost note is gone in a tenth of a second');
-  assert.ok(centroid(pop, 0, 24000) > 1.5 * centroid(finger, 0, 24000), 'a pop is brighter than a fingered note'); assert.ok(band(slap, 1500, 5000, 0, 4096) > 1.5 * band(finger, 1500, 5000, 0, 4096), 'a slap starts with a click');
+  assert.ok(ghost.length < 0.6 * SR && rms(ghost, Math.round(0.36 * SR), ghost.length) < 0.03 * rms(ghost, 0, Math.round(0.05 * SR)), 'a ghost note rings under the muting hand for 0.2 s and is gone by 0.36 s');
+  assert.ok(band(pop, 1000, 5000, 0, 9600) / band(pop, 30, 1000, 0, 9600) > 3 * band(finger, 1000, 5000, 0, 9600) / band(finger, 30, 1000, 0, 9600), 'a pop is brighter than a fingered note'); assert.ok(band(slap, 1500, 5000, 0, 4096) > 1.5 * band(finger, 1500, 5000, 0, 4096), 'a slap starts with a click');
   const hammer = bassGuitar(40, 0.7, 1, { style: 'hammer' }, SR); assert.ok(band(hammer, 1500, 5000, 0, 4096) < 0.5 * band(finger, 1500, 5000, 0, 4096), 'a hammer-on has no new attack');
   assert.deepEqual([stringFor(28), stringFor(33), stringFor(36), stringFor(47)], [{ string: 0, fret: 0 }, { string: 0, fret: 5 }, { string: 1, fret: 3 }, { string: 3, fret: 4 }], 'notes are played low on the neck, on the lowest string that reaches');
   const hard = bassGuitar(40, 0.95, 1, {}, SR); assert.ok(1200 * Math.log2(shortPitch(hard, 0.005, 0.07, f) / shortPitch(hard, 0.3, 0.4, f)) > 2.5, 'a hard pluck is sharp for a moment');

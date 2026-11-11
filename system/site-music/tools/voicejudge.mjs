@@ -18,14 +18,14 @@ const pad = (y) => { const x = new Float32Array(y.length + 9600); x.set(y, 4800)
 
 // Every pitched voice the pieces use: the class it claims, the notes to try, and how to play one.
 export async function voices() {
-  const { sax } = await import('../sax.js'), { bassGuitar } = await import('../bassguitar.js'), { tine, softBass, TINE } = await import('../voices.js'), R = await import('../render.js'), out = [];
+  const { sax } = await import('../sax.js'), { bassGuitar } = await import('../bassguitar.js'), { tine, TINE } = await import('../voices.js'), { upright } = await import('../upright.js'), R = await import('../render.js'), out = [];
   for (const [id, P] of Object.entries(PIECES)) {
     const [lo, hi] = P.lead.range, kind = P.band.lead, play = R.leadNote ? (m, v, d, i) => R.leadNote(kind, m, v, d, P.lead.preset, SR, 3 + i) : null;
     out.push({ voice: kind === 'sax' ? 'saxophone' : kind === 'flute' ? 'flute' : 'reed (clarinet)', piece: id, claims: kind === 'sax' ? 'sax' : kind === 'flute' ? 'flute' : 'clarinet', notes: range(lo, hi), vels: [0.45, 0.65, 0.85],
       play: play || (kind === 'sax' ? (m, v, d, i) => sax(m, v, d, P.lead.preset, SR, 3 + i) : await legacyReed(P.lead.preset)) });
     if (P.band.bass === 'guitar' || P.band.fills === 'guitar') out.push({ voice: 'bass guitar', piece: id, claims: 'bassguitar', notes: range(28, 52), vels: [0.45, 0.65, 0.85], play: (m, v, d, i) => bassGuitar(m, v, d, {}, SR, 1 + i) });
     if (P.band.bass === 'guitar') out.push({ voice: 'bass guitar, ghost note', piece: id, claims: 'bassguitar-muted', notes: range(28, 46), vels: [0.5, 0.8], dur: 0.2, play: (m, v, d, i) => bassGuitar(m, v, d, { style: 'ghost' }, SR, 1 + i) });
-    if (P.band.bass === 'upright') out.push({ voice: 'upright bass', piece: id, claims: 'upright', notes: range(28, 47), vels: [0.45, 0.65, 0.85], play: (m, v, d, i) => softBass(m, v, d, SR, 1 + i) });
+    if (P.band.bass === 'upright') out.push({ voice: 'upright bass', piece: id, claims: 'upright', notes: range(28, 47), vels: [0.45, 0.65, 0.85], play: (m, v, d, i) => upright(m, v, d, {}, SR, 1 + i) });
     out.push({ voice: 'electric piano', piece: id, claims: 'epiano', notes: range(43, 82), vels: [0.35, 0.6, 0.85], play: (m, v, d) => tine(m, v, d, { ...TINE, ...P.tine }, SR, 1) });
   }
   return out;

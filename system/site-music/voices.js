@@ -8,10 +8,7 @@
 //              how the tone brightens with a harder strike is this file's own rule (a tilt of the measured levels), not
 //              a measurement. Before round four it was an FM pair tuned by ear-less guesswork, and the ear's identity
 //              judge heard it as an electric piano in one note of seven.
-//   softBass   a plucked upright bass over the measured layer (measured.js, plucked.js): partial levels, decay rates and
-//              inharmonicity measured from pizzicato notes of a real double bass at soft, medium and loud (University of
-//              Iowa Musical Instrument Samples), with a short scoop into the pitch and a soft finger noise. Before round
-//              four it was eight partials from a formula, and the ear's identity judge heard it as a bass guitar.
+//   (the upright bass moved to upright.js in round five)
 //   brush      a brushed kit: the sweep (a brush drawn in a circle on the snare head), the tap, a quiet ride cymbal,
 //              a feathered kick and a pedal hi-hat. The engine's funk kit hits with sticks.
 import { mtof, rng, velocity, expDecay, edges, Biquad, clamp } from '../../world/sound/sound/v3/instruments/core.js';
@@ -19,24 +16,16 @@ import { plucked } from './plucked.js';
 import { TABLES } from './measured.js';
 
 export const TINE = { bell: 0.55, decay: 2.2, tone: 5600, release: 1 };
-const TINE_GAIN = 0.346, MEASURED_AT = 0.7;   // the reference notes were struck at one strength, about this velocity
+const TINE_GAIN = 0.346, MEASURED_AT = 0.7, TINE_EARLY = 0;   // TINE_EARLY: how much of the measured early decay (dec0) to use; 0 keeps round four's single rate, so the strike's brightness with velocity survives the first 200 ms   // the reference notes were struck at one strength, about this velocity
 
 export function tine(m, vel, dur, p = TINE, sr = 48000, seed = 1) {
   const V = velocity(vel, { curve: 1.4 }), r = rng(seed * 7919 + Math.round(m * 31)), at = velocity(MEASURED_AT, { curve: 1.4 }), tilt = 9 * (V.bright - at.bright) * (0.5 + p.bell);
-  const x = plucked(TABLES.epiano, m, MEASURED_AT, dur, { release: 0.07, attack: 0.002, tilt, ring: 2.2 / p.decay, spread: 1, beat: 0.05, tail: 0.45, kmax: 40 }, sr, seed), len = x.length;
+  const x = plucked(TABLES.epiano, m, MEASURED_AT, dur, { release: 0.07, attack: 0.002, tilt, ring: 2.2 / p.decay, spread: 1, beat: 0.05, tail: 0.45, kmax: 40, early: TINE_EARLY }, sr, seed), len = x.length;
   const lp = new Biquad('lp', p.tone * (0.55 + 0.45 * V.bright), 0.6, sr), thump = new Biquad('lp', 500, 0.7, sr), damper = new Biquad('bp', 900, 1, sr);
   for (let i = 0; i < len; i++) { const t = i / sr, nz = r() * 2 - 1; let y = x[i] + 0.15 * V.bright * thump.tick(nz) * expDecay(t, 0.004);   // the hammer's thump
     if (t >= dur) y += 0.2 * (p.release ?? 1) * V.bright * damper.tick(nz) * expDecay(t - dur, 0.012);   // the damper falling back on the tine
     x[i] = lp.tick(y); }
   const g = V.gain * TINE_GAIN; for (let i = 0; i < len; i++) x[i] *= g; return edges(x, sr, 0.001, 0.03);
-}
-
-const BASS_GAIN = 0.67, FINGER = 0.8;
-export function softBass(m, vel, dur, sr = 48000, seed = 1) {
-  const V = velocity(vel, { curve: 1.3 }), r = rng(seed * 104729 + Math.round(m * 17)), fn = new Biquad('bp', 700, 1.2, sr);
-  const x = plucked(TABLES.upright, m, vel, dur, { release: 0.06, attack: 0.006, cents: -25, centsTau: 0.025, tail: 0.25, kmax: 48 }, sr, seed * 13 + 1);   // a short scoop up into the pitch
-  for (let i = 0; i < x.length; i++) x[i] += FINGER * V.bright * fn.tick(r() * 2 - 1) * expDecay(i / sr, 0.006);   // the finger leaving the string
-  const g = V.gain * BASS_GAIN; for (let i = 0; i < x.length; i++) x[i] *= g; return edges(x, sr, 0.001, 0.02);
 }
 
 const RIDE = [1, 1.47, 2.09, 2.56, 3.14, 3.93, 4.71, 5.62, 6.83, 8.21];   // our own inharmonic ratios for a small dark ride

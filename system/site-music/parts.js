@@ -6,6 +6,7 @@
 // bounds (HUMAN, in milliseconds and velocity units, scaled by the piece's `human`). The kick moves least, so the bar
 // line stays where it is; the lead is only ever late, never early.
 import { bassNote } from './chords.js';
+import { rng } from '../../world/sound/sound/v3/instruments/core.js';
 
 export const HUMAN = { keysMs: 6, bassMs: 6, drumsMs: 5, kickMs: 2.5, leadLateMs: [4, 18], velocity: 0.05 };
 const KEYS = {   // comping rhythms as [start beat, length in beats], with a weight; an empty list is a bar of rest
@@ -34,12 +35,29 @@ export function writeKeys(c) {
   if (lay.fill && c.nextVoicing && !lay.final && P.feel !== 'dnb') out.keys.push({ beat: 3.5, beats: 0.45, notes: c.nextVoicing, vel: vary(c, 0.4), roll: 0.01, j: jit(c, HUMAN.keysMs) });
 }
 
+// The bass families: a bass guitar of any kind plays the guitar lines; an upright (plucked or bowed) walks.
+export const GUITARS = ['guitar', 'fretless', 'picked', 'slap', 'muted'];
+export const isGuitar = (P) => GUITARS.includes(P.band.bass);
+// An upright player's feel: the whole line sits a little ahead of or behind the beat, drifting from bar to bar, and each
+// note is moved a little more inside it; the sum never leaves the bass's timing bound (HUMAN.bassMs). The upright's own
+// choices (lengths, dead notes, slides, feel) draw from a separate random stream, so the composition (chords, lead, drums,
+// keys) comes out exactly as it did before the walk was added.
+const own = (c) => c.st.wr || (c.st.wr = rng(9973 + (c.index || 0)));
+const feelOf = (c) => { if (c.st.feelBar !== c.index) { c.st.feelBar = c.index; c.st.feel = Math.max(-4, Math.min(4, 0.7 * (c.st.feel || 0) + (own(c)() - 0.5) * 3)); } return c.st.feel; };
+const walkJit = (c, j) => { const b = HUMAN.bassMs * (c.P.human ?? 1); return Math.max(-b, Math.min(b, feelOf(c) * (c.P.human ?? 1) + 0.5 * j * 1000)) / 1000; };
+
 export function writeBass(c) {
-  const { P, r, out, lay } = c, guitar = P.band.bass === 'guitar', simple = lay.bass === 'simple';
+  const { P, r, out, lay } = c, guitar = isGuitar(P), upright = P.band.bass === 'upright', simple = lay.bass === 'simple';
   c.chords.forEach((ch, i) => {
     const n = bassNote(ch.root), has5 = ch.pcs.includes((ch.root + 7) % 12), fifth = !has5 ? n : n - 5 >= 31 ? n - 5 : n + 7,   // an altered or half-diminished chord has no plain fifth: the bass stays on the root
        nxt = c.chords[i + 1]?.root ?? c.nextRoot, toward = nxt === undefined ? n : bassNote(nxt), b0 = ch.beat, base = 0.6;
-    const add = (beat, m, beats, dv = 0, extra = {}) => out.bass.push({ beat: b0 + beat, m, beats: beats * 0.9, vel: vary(c, base + dv), j: jit(c, HUMAN.bassMs), ...extra });
+    // an upright varies how long it lets each note ring (most legato, some short and detached), and may slide into the
+    // first note of a chord from the approach note before it
+    const w = upright ? own(c) : r, len = (beats) => (upright ? beats * (w() < 0.3 ? 0.66 : 0.97) : beats * 0.9), slid = upright && c.st.slide !== undefined && i === 0 ? { slideFrom: c.st.slide } : {};
+    if (upright && i === 0) c.st.slide = undefined;
+    const add = (beat, m, beats, dv = 0, extra = {}) => out.bass.push({ beat: b0 + beat, m, beats: len(beats), vel: vary(c, base + dv), j: upright ? walkJit(c, jit(c, HUMAN.bassMs)) : jit(c, HUMAN.bassMs), ...(beat === 0 ? slid : {}), ...extra });
+    // a dead note: the string touched and stopped at once, a thump with a trace of pitch, on an off-beat before a change
+    const ghost = (beat, m) => { if (upright && !lay.final && w() < 0.22) out.bass.push({ beat: b0 + beat, m, beats: 0.2, vel: Math.max(0.05, (base - 0.22 + (w() - 0.5) * 0.1) * lay.dyn), j: walkJit(c, (w() - 0.5) * 0.004), style: 'ghost' }); };
     const tone = () => { const iv = ((ch.pcs[r() < 0.5 ? 1 : 3] - ch.root) + 12) % 12; return n + iv <= 50 ? n + iv : n + iv - 12; };
     if (lay.final) return add(0, n, 4, 0, guitar ? { style: 'finger' } : {});
     if (guitar && P.feel === 'fusion') {
@@ -58,14 +76,14 @@ export function writeBass(c) {
     }
     if (ch.beats < 4) return add(0, n, 2, 0, guitar ? { style: 'finger' } : {});
     if (simple) { add(0, n, P.feel === 'modal' ? 3.4 : 2); if (P.feel !== 'modal') add(2, n, 1.6, -0.06); return; }
-    if (lay.fill && !guitar) { add(0, n, 2); add(2, tone(), 0.9, -0.04); add(3, fifth, 0.5, -0.06); add(3.5, toward + (r() < 0.5 ? -1 : 1), 0.5, -0.1); return; }   // walk into the next section
+    if (lay.fill && !guitar) { add(0, n, 2); add(2, tone(), 0.9, -0.04); add(3, fifth, 0.5, -0.06); const ap = toward + (r() < 0.5 ? -1 : 1); add(3.5, ap, 0.5, -0.1); if (upright && w() < 0.4) c.st.slide = ap; return; }   // walk into the next section
     if (P.feel === 'bossa') {
       add(0, n, 1.5, 0, guitar ? { style: 'finger', ...(c.st.slide !== undefined ? { slideFrom: c.st.slide } : {}) } : {}); c.st.slide = undefined;
       if (guitar && r() < 0.5) add(1.25, n, 0.2, -0.22, { style: 'ghost' });
       add(1.5, fifth, 0.5, -0.1); add(2, fifth, guitar ? 0.9 : 1.4, -0.04);
       if (guitar && (lay.fill || r() < 0.14)) { add(3, n + 12, 0.3, -0.02, { style: 'pop' }); add(3.5, toward - 1, 0.45, -0.08); c.st.slide = toward - 1; } else add(3.5, n, 0.5, -0.1);
-    } else if (P.feel === 'modal') { add(0, n, 3); if (r() < 0.6) add(r() < 0.5 ? 3 : 3.5, r() < 0.5 ? fifth : n + 12, 0.8, -0.1); }
-    else { add(0, n, 2); add(2, r() < 0.55 ? n : fifth, 1.5, -0.05); if (r() < 0.35) add(3.5, toward + (r() < 0.5 ? -1 : 1), 0.5, -0.14); }
+    } else if (P.feel === 'modal') { add(0, n, 3); if (r() < 0.6) add(r() < 0.5 ? 3 : 3.5, r() < 0.5 ? fifth : n + 12, 0.8, -0.1); else ghost(3.5, n); }
+    else { add(0, n, 2); add(2, r() < 0.55 ? n : fifth, 1.5, -0.05); if (r() < 0.35) { const ap = toward + (r() < 0.5 ? -1 : 1); add(3.5, ap, 0.5, -0.14); if (upright && Math.abs(ap - toward) === 1 && w() < 0.35) c.st.slide = ap; } else ghost(3.5, fifth); }
   });
 }
 

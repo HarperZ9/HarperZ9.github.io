@@ -3,6 +3,7 @@
 //   await music.start('low-tide')   start a piece; must be called from a click or key press (browsers require it)
 //   music.stop()                    fade out and release the audio device
 //   music.setLevel(0.6)             0 to 1, remembered for this visitor
+//   createSiteMusic({ arrangement: 'alt' })   the pieces' second arrangements (pieces.js ALT)
 //   music.setMood('night-school')   change piece by id, or by any id in the `moods` map (a topic or an element id)
 //   music.on((state) => ...)        { playing, mood, title, level, bar, chords, render } whenever something changes;
 //                                   render is "full", "lite" or "half": how much the renderer has stepped down for the device
@@ -17,7 +18,7 @@ export const DEFAULT_MOODS = { water: 'low-tide', 'ink-and-water': 'low-tide', s
 const weak = () => { try { const n = navigator; return document.documentElement.classList.contains('weak') || (n.deviceMemory && n.deviceMemory < 4) || (n.hardwareConcurrency && n.hardwareConcurrency <= 4) || n.connection?.saveData === true; } catch { return false; } };
 const store = { get(k, d) { try { const v = localStorage.getItem(k); return v === null ? d : v; } catch { return d; } }, set(k, v) { try { localStorage.setItem(k, String(v)); } catch { /* private mode: the choice lasts for this visit only */ } } };
 
-export function createSiteMusic({ moods = {}, ahead = 10, seed = null, level = null, workerUrl = new URL('./worker.js', import.meta.url) } = {}) {
+export function createSiteMusic({ moods = {}, ahead = 10, seed = null, level = null, arrangement = 'main', workerUrl = new URL('./worker.js', import.meta.url) } = {}) {
   const map = { ...DEFAULT_MOODS, ...moods }, listeners = new Set(), resolve = (id) => (PIECES[id] ? id : map[id] && PIECES[map[id]] ? map[id] : null);
   const s = { playing: false, mood: resolve(store.get('site-music-mood', 'low-tide')) || 'low-tide', level: Math.min(1, Math.max(0, +store.get('site-music-level', 0.7))), bar: 0, chords: [], render: 'full' };
   let engine = null, ownEngine = false, worker = null, bus = null, next = 0, timer = null, run = 0, calls = 0, pending = false, sources = [];
@@ -46,7 +47,7 @@ export function createSiteMusic({ moods = {}, ahead = 10, seed = null, level = n
     worker.onerror = (err) => console.error('site music: the render worker failed', err.message);
     bus = ctx.createGain(); bus.gain.value = 1; bus.connect(engine.out); next = 0; pending = false;
     clearInterval(timer); timer = null;
-    ask({ cmd: 'start', piece: s.mood, seed: seed ?? (Date.now() % 100000) + 1, sr: ctx.sampleRate, level: level ?? (weak() ? 1 : 0) }).then(() => { if (mine !== run) return; fill(mine); timer = setInterval(() => fill(mine), 1000); }).catch((err) => console.error('site music: could not start the piece', err));
+    ask({ cmd: 'start', piece: s.mood, arrangement, seed: seed ?? (Date.now() % 100000) + 1, sr: ctx.sampleRate, level: level ?? (weak() ? 1 : 0) }).then(() => { if (mine !== run) return; fill(mine); timer = setInterval(() => fill(mine), 1000); }).catch((err) => console.error('site music: could not start the piece', err));
   }
   function quiet(fade = 0.6) {
     run++; clearInterval(timer); timer = null; worker?.terminate(); worker = null;

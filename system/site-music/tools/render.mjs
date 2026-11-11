@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Render the meditations offline and let the ear report on each. Nothing is played.
-//   node system/site-music/tools/render.mjs --out DIR [--piece ID|all] [--bars N] [--seed N] [--tag NAME]
+//   node system/site-music/tools/render.mjs --out DIR [--piece ID|all] [--bars N] [--seed N] [--tag NAME] [--arrangement main|alt]
 // Writes, per piece: a 16-bit WAV, the ear's report as JSON and as text, and three pictures (spectrogram, chromagram,
 // loudness curve) as PNG.
 import { mkdirSync, writeFileSync } from 'node:fs';
@@ -34,12 +34,12 @@ export function renderAndListen(id, opts = {}) {
 if (process.argv[1] && path.resolve(process.argv[1]) === path.resolve(new URL(import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1'))) {
   const out = arg('--out', null); if (!out) { console.error('pass --out DIR'); process.exit(2); }
   mkdirSync(out, { recursive: true });
-  const which = arg('--piece', 'all'), ids = which === 'all' ? PIECE_IDS : [which], seed = +arg('--seed', 1), tag = arg('--tag', '');
+  const which = arg('--piece', 'all'), ids = which === 'all' ? PIECE_IDS : [which], seed = +arg('--seed', 1), arrangement = arg('--arrangement', 'main'), tag = arg('--tag', arrangement === 'alt' ? 'alt' : '');
   for (const id of ids) {
-    const bars = +arg('--bars', barsFor(id)), { piece, report, renderMs, listenMs } = renderAndListen(id, { seed, bars }), base = path.join(out, `${id}${tag ? '-' + tag : ''}`);
+    const bars = +arg('--bars', barsFor(id)), { piece, report, renderMs, listenMs } = renderAndListen(id, { seed, bars, arrangement }), base = path.join(out, `${id}${tag ? '-' + tag : ''}`);
     writeFileSync(`${base}.wav`, wavBytes(piece.channels, piece.sr));
     writeFileSync(`${base}.report.json`, JSON.stringify({ id, title: piece.piece.title, topic: piece.piece.topic, key: piece.piece.key, bpm: piece.piece.bpm, swing: piece.piece.swing, bars, seed, seconds: piece.seconds, master: piece.master, renderMs, report: slim(report), shape: piece.shape, lead: piece.kinds, sea: seaStats(piece), chords: report.harmony.rows.map((r) => ({ bar: r.bar + 1, written: r.written, heard: r.heard, fit: +r.fit.toFixed(3), root: r.rootMatch })) }, null, 1));
-    const text = `${piece.piece.title} (${id}), ${piece.piece.key}, ${piece.piece.bpm} BPM, ${bars} bars, seed ${seed}\nrender ${(renderMs / 1000).toFixed(1)} s for ${piece.seconds.toFixed(1)} s of audio (${(piece.seconds * 1000 / renderMs).toFixed(1)}x real time); ear ${(listenMs / 1000).toFixed(1)} s\nmaster gain ${piece.master.gainDb.toFixed(2)} dB, limiter touched ${(piece.master.passes[0].limitedShare * 100).toFixed(3)} % of samples, deepest ${Math.max(...piece.master.passes.map((q) => q.maxReductionDb)).toFixed(2)} dB\nshape: ${piece.shape.map((x) => `${x.role} ${x.bars}`).join(', ')}\nlead: ${piece.kinds.join(', ')}\nsea: a wave broke into ${seaStats(piece).restsMet} of ${seaStats(piece).rests} rests; ambience under the lead ${seaStats(piece).underLeadDb.toFixed(1)} dB against the rests\n${summary(report)}\n`;
+    const text = `${piece.piece.title}${piece.piece.arrangement ? `, second arrangement: ${piece.piece.arrangement}` : ''} (${id}), ${piece.piece.key}, ${piece.piece.bpm} BPM, ${bars} bars, seed ${seed}\nrender ${(renderMs / 1000).toFixed(1)} s for ${piece.seconds.toFixed(1)} s of audio (${(piece.seconds * 1000 / renderMs).toFixed(1)}x real time); ear ${(listenMs / 1000).toFixed(1)} s\nmaster gain ${piece.master.gainDb.toFixed(2)} dB, limiter touched ${(piece.master.passes[0].limitedShare * 100).toFixed(3)} % of samples, deepest ${Math.max(...piece.master.passes.map((q) => q.maxReductionDb)).toFixed(2)} dB\nshape: ${piece.shape.map((x) => `${x.role} ${x.bars}`).join(', ')}\nlead: ${piece.kinds.join(', ')}\nsea: a wave broke into ${seaStats(piece).restsMet} of ${seaStats(piece).rests} rests; ambience under the lead ${seaStats(piece).underLeadDb.toFixed(1)} dB against the rests\n${summary(report)}\n`;
     writeFileSync(`${base}.report.txt`, text); console.log(text);
     const png = { deflate: deflateSync };
     writeFileSync(`${base}.spectrogram.png`, pictures.spectrogram(piece.channels, piece.sr, { title: piece.piece.title.toUpperCase() }).png(png));
