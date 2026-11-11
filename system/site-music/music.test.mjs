@@ -149,5 +149,8 @@ test('the live renderer: continues bar by bar, steps down inside a measured budg
   t.diagnostic(`render seconds per second of audio (budget ${BUDGET}): ${Object.entries(cost).map(([k, v]) => `${k} ${v.toFixed(3)}`).join(', ')}`);
   assert.ok(cost.full < BUDGET, `full render takes ${cost.full} of real time here`); assert.ok(cost.half < 0.75 * cost.full, `half ${cost.half} against full ${cost.full}`);
   begin({ piece: 'low-tide', seed: 1, sr: 48000 }); chunk({ bars: 2 }); assert.equal(setLevel(2), 'half'); const h = chunk({ bars: 2 }); assert.equal(h.sr, 24000); assert.equal(h.firstBar, 2); assert.ok(Math.abs(h.audioSec - 2 * 240 / 66) < 0.01, 'after a step down the music carries on from the next bar');
+  // a device that cannot keep up: with an impossible budget the renderer waits out two warm-up chunks, then steps down twice and stops there
+  begin({ piece: 'glass-hour', seed: 1, sr: 24000, budget: 1e-6 }); const seen = []; for (let k = 0; k < 9; k++) { const x = chunk({ bars: 1 }); seen.push(x.level + (x.stepped ? '!' : '')); }
+  assert.deepEqual(seen, ['full', 'full', 'full', 'full!', 'lite', 'lite!', 'half', 'half', 'half'], `levels over nine chunks: ${seen}`);
   for (const id of PIECE_IDS) { const p = renderPiece(id, { bars: (PIECES[id].intro ?? 4) + 28, sr: 24000, masterOpts: { gainDb: PIECES[id].masterDb, ceilingDb: 6 } }), l = integratedLufs(p.channels, p.sr); assert.ok(Math.abs(l + 14) < 1.6, `${id}: ${l} LUFS at its fixed gain`); }
 });
