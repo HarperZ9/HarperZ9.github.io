@@ -48,7 +48,7 @@ function refine(ac, lag, half) { let best = lag, bv = -Infinity; for (let l = Ma
 // Tempo in BPM. Each candidate beat length is scored by the autocorrelation at one, two and four beats, with a broad
 // preference centred on 85 BPM that settles the half-time and double-time readings. `hint` (the score's tempo) narrows the
 // search to one octave around it; without a hint the result is the ear's own reading.
-export function tempo(curve, { min = 45, max = 170, hint = null } = {}) {
+export function tempo(curve, { min = 45, max = 200, hint = null } = {}) {
   const { env, fps } = curve, lo = hint ? hint / 1.35 : min, hi = hint ? hint * 1.35 : max, maxLag = Math.min(env.length - 2, Math.ceil(8.2 * 60 / lo * fps)), ac = autocorr(env, maxLag);
   let best = 0, bs = -Infinity;
   for (let lag = 60 / hi * fps; lag <= 60 / lo * fps; lag += 0.25) {
@@ -66,7 +66,10 @@ export function drift(curve, beatSec, { beats = 16, step = 4 } = {}) {
     const ac = autocorr(env.subarray(s, s + W), Math.ceil(lag4 * 1.15)), l = refine(ac, lag4, lag4 * 0.1);
     if (ac[Math.round(l)] > 0.2 * ac[0]) out.push({ t: (s + W / 2) / fps, pct: (lag4 / l - 1) * 100 });   // windows with no clear pulse (an introduction, a rest) are left out
   }
-  const p = out.map((o) => o.pct); return { windows: out, maxPct: p.length ? Math.max(...p.map(Math.abs)) : 0, spanPct: p.length ? Math.max(...p) - Math.min(...p) : 0 };
+  // a real drift lasts: each window is replaced by the median of itself and its two neighbours, so one misread window
+  // (a rest, a fill) does not stand for a tempo change
+  const raw = out.map((o) => o.pct), p = raw.map((v, i) => { const w = [raw[i - 1] ?? v, v, raw[i + 1] ?? v].sort((a, b) => a - b); return w[1]; });
+  return { windows: out, maxPct: p.length ? Math.max(...p.map(Math.abs)) : 0, spanPct: p.length ? Math.max(...p) - Math.min(...p) : 0 };
 }
 
 // Beat grid, regularity and swing from the onsets and the beat length.

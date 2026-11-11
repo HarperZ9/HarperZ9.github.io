@@ -34,3 +34,15 @@ export function roughness(channels, sr, spans = null) {
   if (spans) out.bars = spans.map((sp) => { const inb = loud.filter((s) => s.t >= sp.t0 && s.t < sp.t1); return { bar: sp.bar, t0: sp.t0, r: inb.reduce((a, s) => a + s.r, 0) / Math.max(1, inb.length) }; });
   return out;
 }
+
+// Roughness between layers only: every pair takes one partial from one layer and one from another, so the seconds and
+// sevenths inside a single chord voicing do not count. Layers that agree on the harmony read low; a layer in the wrong key
+// rubs against the others and reads high. layers: channel arrays of equal length.
+export function crossRoughness(layers, sr) {
+  const pfs = layers.map((ch) => partialFrames(mono(ch), sr, { fmin: 38, fmax: 4000, max: 10 })), n = Math.min(...pfs.map((p) => p.frames.length)), vals = [];
+  for (let f = 0; f < n; f++) { let sum = 0, amp = 0, sounding = 0;
+    for (let a = 0; a < pfs.length; a++) { const A = pfs[a].frames[f], sa = A.reduce((s, q) => s + q.a, 0); amp += sa; if (sa > 1e-3) sounding++;
+      for (let b = a + 1; b < pfs.length; b++) for (const p of A) for (const q of pfs[b].frames[f]) sum += pairRoughness(p.f, q.f, p.a, q.a); }
+    if (sounding >= 2) vals.push(sum / amp); }
+  vals.sort((x, y) => x - y); return { mean: vals.reduce((s, v) => s + v, 0) / Math.max(1, vals.length), p95: vals.length ? vals[Math.floor(0.95 * (vals.length - 1))] : 0, frames: vals.length };
+}
