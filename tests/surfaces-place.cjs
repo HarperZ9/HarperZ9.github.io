@@ -81,11 +81,11 @@ const ACTS = [
     out.loom = loom; assert.ok(loom.threadsFromTheBlend >= FLOOR && loom.said === 'true', `threads from the blend change the cloth (${loom.threadsFromTheBlend})`); assert.ok(loom.plainAgainstTwill >= FLOOR, `the weave shows (${loom.plainAgainstTwill})`);
     assert.ok(loom.spreadAcrossOverDown.satin > 1.5 * loom.spreadAcrossOverDown.plain, `in the well, a wash runs along the satin's weft (${JSON.stringify(loom.spreadAcrossOverDown)})`); assert.deepEqual(loom.recipe, { weave: 'satin5', woven: true });
     assert.deepEqual(errors, []); await ctx.close();
-    // 5: the Studio's loom, plot map and cubes, mounted by their parts, each draw the well
+    // 5: the Studio's loom, plot map and cubes, mounted by their parts, each draw the well; read in the middle of each sheet, so a drawing crowded into a corner fails
     { const { ctx, page, errors } = await open(browser, '/elements.html?e=water,fire-heat,ink', { w: 1280, h: 900, reduced: true });
       await page.evaluate(() => window.__bench.update({ ground: 'paper' }));
       await page.waitForFunction(() => ['loom', 'ridges', 'voxels'].every((k) => window.__bench.value().surfaces[k].value().drawn > 0), null, { timeout: 30000 });
-      const studio = await page.evaluate(() => Object.fromEntries(['loom', 'ridges', 'voxels'].map((k) => { const v = window.__bench.value().surfaces[k].value(), d = v.canvas.getContext('2d').getImageData(0, 0, v.canvas.width, v.canvas.height).data; let lo = 765, hi = 0;
+      const studio = await page.evaluate(() => Object.fromEntries(['loom', 'ridges', 'voxels'].map((k) => { const v = window.__bench.value().surfaces[k].value(), W = v.canvas.width, H = v.canvas.height, d = v.canvas.getContext('2d').getImageData(W >> 2, H >> 2, W >> 1, H >> 1).data; let lo = 765, hi = 0;
         for (let i = 0; i < d.length; i += 16) { const y = d[i] + d[i + 1] + d[i + 2]; lo = Math.min(lo, y); hi = Math.max(hi, y); } return [k, { range: hi - lo, facts: v.facts }]; })));
       out.studio = studio; for (const [k, v] of Object.entries(studio)) assert.ok(v.range > 60, `the ${k} lane drew the well (range ${v.range})`);
       assert.ok(studio.ridges.facts.lines > 20 && studio.voxels.facts.voxels > 100 && studio.loom.facts.ends === 96, 'each lane says what it drew');

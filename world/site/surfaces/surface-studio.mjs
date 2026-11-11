@@ -39,7 +39,7 @@ const KINDS = {
   ridges: { says: 'The well as a plot map: its brightness read as height, drawn as ridgelines a pen could follow, the near rows hiding the far.',
     draw(c, src, hexes) { const w = 240, h = 180, g = grid(src, w, h), lines = ridgelines(g.L, w, h, { rows: 54, lift: 0.3, sampleStep: 2 }), x = c.getContext('2d');
       c.width = 720; c.height = 540; x.fillStyle = '#0c1620'; x.fillRect(0, 0, c.width, c.height); x.strokeStyle = hexes[0] || '#f4efe6'; x.lineWidth = 1.3; x.lineJoin = x.lineCap = 'round';
-      const k = c.width / w; for (const l of lines) { x.beginPath(); l.forEach(([px, py], i) => (i ? x.lineTo(px * k, py * k) : x.moveTo(px * k, py * k))); x.stroke(); }
+      for (const l of lines) { x.beginPath(); l.forEach(([px, py], i) => (i ? x.lineTo(px * c.width, py * c.height) : x.moveTo(px * c.width, py * c.height))); x.stroke(); }   // ridgelines are in shares of the sheet
       return { lines: lines.length, points: lines.reduce((s, l) => s + l.length, 0) }; } },
   voxels: { says: 'The well raised in cubes: each column as tall as the picture is bright there, banded in the blend’s colours by height.', save: 'Save the cubes (.vox)',
     draw(c, src, hexes, st) { const w = 40, h = 30, g = grid(src, w, h), rows = Array.from({ length: h }, (_, y) => Array.from(g.L.subarray(y * w, (y + 1) * w)));
