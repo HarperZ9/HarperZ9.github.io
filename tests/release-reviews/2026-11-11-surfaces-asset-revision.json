@@ -1,7 +1,7 @@
 {
   "date": "2026-11-11",
-  "note": "Asset revision regenerated for the surfaces registry and the element bench (world/site/surfaces). On index.html only the ?v= revision on world assets changed, from world-efe34ecaf7 to world-f0b71a0f6d; no content changed. Opened as a pull request for joint review and not merged.",
+  "note": "Asset revision regenerated for the surfaces registry and the element bench (world/site/surfaces). On index.html only the ?v= revision on world assets changed, from world-efe34ecaf7 to world-4d552c54d7; no content changed. Opened as a pull request for joint review and not merged.",
   "paths": {
-    "index.html": "9d8ca901c3cc96a4371d40a04066148a0863787192552c66e76f3a4fdf6471eb"
+    "index.html": "24c3740ec9e4c7fb9d3c3ba9db38a5298e4fcda2fff2979887b8b74121a40982"
   }
 }

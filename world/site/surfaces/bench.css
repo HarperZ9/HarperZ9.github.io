@@ -1,12 +1,13 @@
 /* bench.css: the front bench and every surface the registry mounts. One calm ground, no panels: parts are set apart
    by space and a hairline. Words stay light on the deep water in day, night and plain view; the wash below holds
-   them at AA contrast over the brightest part of the field (tests/surfaces-bench.cjs measures it). */
+   them at AA contrast over the brightest part of the field (tests/surfaces-bench.cjs measures it). Any page that
+   mounts a surface takes the same wash through body.bench-body, so no surface needs a panel of its own. */
 .bn, [data-surface] {
   --b-ground: #0c1620; --b-ink: #f4efe6; --b-soft: #d9d3c6; --b-line: rgba(244, 239, 230, .3); --b-faint: rgba(244, 239, 230, .12);
   --b1: clamp(13px, .36vw + 9.5px, 22px); --b2: clamp(15px, .44vw + 10.5px, 26px); --b3: clamp(19px, .8vw + 12px, 40px);
   color: var(--b-ink); font: 400 var(--b2)/1.5 var(--face-text); }
 body.bench-body .gw-backdrop::after { background: rgba(7, 16, 26, .88); }
-body.bench-body main { max-width: min(2800px, 96vw); }
+body.parts-body.bench-body:has(.bn) main { max-width: min(2800px, 96vw); }
 .bn :is(button, select, input), [data-surface] :is(button, select, input) { font: inherit; color: inherit; }
 .bn button, [data-surface] button, .tk-load { background: none; border: 0; border-bottom: 1px solid var(--b-line); padding: .4em .1em; min-height: 44px; cursor: pointer; text-align: left; }
 .bn button:hover, [data-surface] button:hover, .tk-load:hover { border-bottom-color: var(--b-ink); }
@@ -99,8 +100,8 @@ body.bench-body main { max-width: min(2800px, 96vw); }
 .pc-meta { font-size: var(--b1); color: var(--b-soft); display: block; }
 .pc-foot { display: grid; gap: .6em; margin-top: 1em; max-width: none; } .pc-foot span { font-size: var(--b1); color: var(--b-soft); max-width: 80ch; } .pc-foot button { justify-self: start; }
 .cmp-pick { display: flex; flex-wrap: wrap; gap: .6em; align-items: center; margin-bottom: .8em; }
-.cmp-axis { display: flex; justify-content: space-between; gap: 1em; max-width: none; font-size: var(--b1); color: var(--b-soft); margin: 0 7.5em 0 14.4em; } .cmp-axis span:nth-child(2) { text-align: center; }
-.bn .cmp-row, [data-surface] .cmp-row { display: grid; grid-template-columns: 13em minmax(0, 1fr) 6.5em; gap: 1.4em; align-items: center; width: 100%; min-height: 30px; padding: 0; border-bottom: 1px solid var(--b-faint); font-size: var(--b1); }
+.cmp-axis { display: flex; justify-content: space-between; gap: 1em; max-width: none; font-size: var(--b1); color: var(--b-soft); margin: 0 9.9em 0 14.4em; } .cmp-axis span:nth-child(2) { text-align: center; }
+.bn .cmp-row, [data-surface] .cmp-row { display: grid; grid-template-columns: 13em minmax(0, 1fr) 8.5em; gap: 1.4em; align-items: center; width: 100%; min-height: 30px; padding: 0; border-bottom: 1px solid var(--b-faint); font-size: var(--b1); }
 .cmp-row .pc-track { height: 26px; } .cmp-name { display: flex; gap: .5em; align-items: baseline; overflow-wrap: anywhere; } .cmp-val { font-family: var(--face-utility, monospace); text-align: right; } .cmp-val small { margin-left: .6em; }
 .cmp-row.on { font-weight: 700; background: linear-gradient(90deg, var(--b-faint), transparent 60%); }
 .cmp-none { max-width: none; margin-top: 1.2em; font-size: var(--b1); color: var(--b-soft); } .bn .cmp-un, [data-surface] .cmp-un { min-height: 0; padding: .2em 0; margin-right: .9em; border-bottom-style: dashed; font-style: italic; }
@@ -119,12 +120,13 @@ body.bench-body main { max-width: min(2800px, 96vw); }
 .bl-pal { display: flex; flex-wrap: wrap; gap: .6em 2em; } .bl-pal li { display: flex; gap: .5em; align-items: center; } .bl-note, .ln-note, .tk-note { font-size: var(--b1); color: var(--b-soft); }
 .bn-lanes { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 17em), 1fr)); gap: 0 clamp(20px, 2.4vw, 64px); margin-top: 1em; }
 .mo { width: 100%; height: auto; display: block; } .mo polyline { fill: none; stroke: var(--b-ink); stroke-width: 1.6; vector-effect: non-scaling-stroke; } .mo-axis { fill: none; stroke: var(--b-line); stroke-width: 1; vector-effect: non-scaling-stroke; }
-.lt-word { font: 800 clamp(30px, 3.2vw, 96px)/1.05 var(--face-display); letter-spacing: -.02em; margin: .2em 0 .4em; overflow-wrap: anywhere; }
+.bn p.lt-word, [data-surface] p.lt-word { font: 800 clamp(30px, 3.2vw, 96px)/1.05 var(--face-display); letter-spacing: -.02em; margin: .2em 0 .4em; overflow-wrap: anywhere; }
 .pl { width: 100%; height: auto; display: block; } .pl-pick { display: flex; gap: .6em; align-items: center; font-size: var(--b1); }
 .tk-load { display: inline-flex; align-items: center; } .bn-toolbox { margin-top: 2em; }
 
 /* a surface on another page: the same parts, a little smaller, with the way to the bench under them */
 [data-surface] { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 20em), 1fr)); gap: clamp(20px, 3vw, 64px); align-items: start; margin: clamp(32px, 4vw, 80px) 0; }
+[data-surface] .mo { max-width: 30em; }
 [data-surface] > .sf-wide { grid-column: 1 / -1; } [data-surface] > p.sf-more { grid-column: 1 / -1; font-size: var(--b1); margin: 0; }
 
 @media (max-width: 900px) {
