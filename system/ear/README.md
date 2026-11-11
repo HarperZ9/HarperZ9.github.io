@@ -48,7 +48,8 @@ lead }`, each a pair of channels the same length as the mix.
 | Presence | mean of the 2, 4 and 8 kHz bands against the target, flagged as dull or bright past 3 dB | the same octave bands |
 | Notes | attack time and its spread, spectral flux inside a note, brightness against level, likeness of repeated notes, inharmonicity | per note of a lead or bass layer, from the score's note list (`note.js`) |
 | Identity | which instrument a single note is nearest to, among real instruments | 25 timbre features per note (`timbre.js`), nearest class over a book of notes recorded from real instruments (`identity.js`, `identity-refs.json`) |
-| | how far a note is from a real note of the same pitch, moment by moment | mel-spectrogram distance in dB (`likeness.js`) |
+| | how far a note is from a real note of the same pitch, moment by moment, over the whole note and per segment (attack, first 150 ms, sustain, tail) | mel-spectrogram distance in dB (`likeness.js`); a second reading with each picture's fixed colour per band removed (`flattened`) |
+| Pluck | the finger or hammer burst above each band's decay, two decay speeds per harmonic, the pitch just after a pluck | short frames per octave band; early and late decay lines; instantaneous frequency of harmonics 3 to 8 (`pluck.js`) |
 | Pictures | log-frequency spectrogram, chromagram, loudness curve | our own PNG writer in `png.js` |
 
 The targets are in `TARGETS` in `index.js`. Loudness (-14 LUFS integrated) and true peak (at most -1 dBTP) are the
@@ -112,6 +113,23 @@ What the judge cannot do, stated from its own failed controls:
 
 Build and report: `node system/ear/tools/identity.mjs build NOTES_DIR`, then `report NOTES_DIR`. Judge our voices:
 `node system/site-music/tools/voicejudge.mjs --notes NOTES_DIR`.
+
+## Placing a fault in time (round five)
+
+A single distance says a voice differs; it does not say where. `segmentDistances` in `likeness.js` splits the distance
+into four parts of the note, in seconds from its onset: the attack (-0.02 to 0.03), the early part (0.03 to 0.15, where a
+plucked string sheds its upper harmonics fastest), the sustain (0.15 to 0.6) and the tail (0.6 to 1.5; reference notes
+ring until they die, so this is the decay). The yardstick is the same split between two real recordings. Bass voices
+are drawn from 30 Hz, so the fundamental of a low string is in the picture (from 60 Hz it was not).
+`system/site-music/tools/segcheck.mjs` runs it for one voice; `voicetable.mjs` for all of them.
+
+Per-source normalisation: each recording carries its microphone and room as a fixed colour across the bands.
+`flattened` removes from a picture its own mean level per band over the note. When the plain distance is large and the
+flattened one small, the difference is mostly fixed colour (a microphone or a body), and not the shape of the note in time.
+
+The harmonic-sum bass reader (`pitch.js`): a partial below four times 135 Hz lends its energy, divided by k, to the
+fundamental it would be harmonic k of. A bass whose second or third harmonic is stronger than its fundamental is still
+read at its fundamental; round four read a strong third harmonic as a fifth in the bass.
 
 ## Limits
 

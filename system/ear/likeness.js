@@ -28,3 +28,24 @@ export function distance(a, b) {
   return c ? Math.sqrt(s / c) : null;
 }
 export const likeness = (x, sx, y, sy, opts) => { const a = melgram(x, sx, opts), b = melgram(y, sy, opts); return a && b ? distance(a, b) : null; };
+// The same distance over parts of the note, so a fault can be placed in time. Frame j of a melgram is centred
+// 5 ms times j minus 20 ms from the onset. Segments, in seconds from the onset:
+//   attack   -0.02 to 0.03   the pluck, strike or tongue itself
+//   early     0.03 to 0.15   the first moments of the tone, where a plucked string sheds its upper harmonics fastest
+//   sustain   0.15 to 0.6    the body of the note
+//   tail      0.6 to 1.5     the decay (reference notes ring until they die, so this is the decay, not a damped stop)
+export const SEGMENTS = { attack: [-0.02, 0.03], early: [0.03, 0.15], sustain: [0.15, 0.6], tail: [0.6, 1.5] };
+export function segmentDistances(a, b, segs = SEGMENTS) {
+  const out = {}, J = Math.min(a.frames.length, b.frames.length);
+  for (const [name, [t0, t1]] of Object.entries(segs)) { let s = 0, c = 0; for (let j = 0; j < J; j++) { const t = j * 0.005 - 0.02; if (t < t0 || t >= t1) continue; for (let k = 0; k < a.frames[j].length; k++) { const u = a.frames[j][k], v = b.frames[j][k]; if (u > -60 || v > -60) { s += (u - v) ** 2; c++; } } } out[name] = c ? Math.sqrt(s / c) : null; }
+  return out;
+}
+// Per-source normalisation: each recording carries its microphone and room as a fixed tilt over the mel bands. Removing
+// from a picture its own mean level per band over the note (keeping the mean over all bands) leaves the shape in time
+// and the balance between neighbouring moments, and takes out a fixed equaliser. Used as a second reading beside the
+// plain distance: when the plain distance is large and this one is small, the difference is mostly fixed colour.
+export function flattened(a) {
+  const K = a.frames[0].length, J = a.frames.length, mu = new Float64Array(K); let all = 0;
+  for (const f of a.frames) for (let k = 0; k < K; k++) mu[k] += f[k] / J; for (let k = 0; k < K; k++) all += mu[k] / K;
+  return { ...a, frames: a.frames.map((f) => f.map((v, k) => (v <= -60 ? -60 : Math.max(-60, v - mu[k] + all)))) };
+}

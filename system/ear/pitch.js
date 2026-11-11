@@ -1,7 +1,7 @@
 // pitch.js: what notes are sounding. The signal is reduced to about 12 kHz, cut into 340 ms frames, and each frame's
 // partials are assigned to the nearest equal-tempered semitone.
 //   chroma        twelve numbers, one per pitch class (C, C sharp, ... B): the share of energy on each, octaves folded together
-//   bass chroma   the same below 135 Hz, where the bass line states the chord's root
+//   bass chroma   the fundamentals below 135 Hz, where the bass line states the chord's root, found by harmonic sum
 //   cents         hundredths of a semitone; a partial's distance from the nearest tempered pitch is the tuning error
 //   chord estimate  the root and chord type whose pitch classes best match the chroma, with the bass deciding close calls.
 //                   The root is judged only where a bass sounds: a rootless piano voicing alone does not state its root.
@@ -39,7 +39,17 @@ export function chromaSpans(pf, spans, { bassMax = 135, tuneMin = 200, tuneMax =
     for (let i = a; i <= Math.max(a, b) && i < pf.frames.length; i++) {
       frames++;
       for (const pk of pf.frames[i]) { const m = ftom(pk.f), near = Math.round(m), pc = ((near % 12) + 12) % 12, e = pk.a * pk.a;
-        c[pc] += e; if (pk.f < bassMax) bass[pc] += e;
+        c[pc] += e; }
+      // the bass by harmonic sum (round five): in each frame, the fundamental whose harmonics (1 to 6,
+      // within 3 percent) hold the most energy among the partials below four times bassMax (a sub-octave reading
+      // lands on the same pitch class, so octave errors do not count); the frame's bass energy goes to that fundamental's pitch class. A bass whose second or third harmonic is
+      // stronger than its fundamental is still read at its fundamental. Round four counted each partial below bassMax
+      // by its own pitch class, and read a strong third harmonic as a fifth in the bass.
+      const low = pf.frames[i].filter((pk) => pk.f < 4 * bassMax); let best = 0, bf = 0, be = 0;
+      for (const p of low) { if (p.f >= bassMax) continue; be += p.a * p.a; for (let k = 1; k <= 2; k++) { const f0 = p.f / k; if (f0 < 27) continue; let sc = 0;   // a candidate has its fundamental or its octave in the bass range, so chord tones above cannot add up to a phantom root
+        for (const q of low) { const h = Math.round(q.f / f0); if (h >= 1 && h <= 6 && Math.abs(q.f / (h * f0) - 1) < 0.03) sc += q.a * q.a * (1 - 0.02 * h); } if (sc > best) { best = sc; bf = f0; } } }
+      if (bf && be > 0) bass[((Math.round(ftom(bf)) % 12) + 12) % 12] += be;
+      for (const pk of pf.frames[i]) { const m = ftom(pk.f), near = Math.round(m), e = pk.a * pk.a;
         if (pk.f >= tuneMin && pk.f <= tuneMax) { dev += Math.abs(m - near) * 100 * e; signed += (m - near) * 100 * e; devW += e; } }
     }
     const norm = (v) => { const s = v.reduce((p, q) => p + q, 0); return Array.from(v, (q) => (s ? q / s : 0)); };
