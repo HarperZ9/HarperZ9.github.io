@@ -248,3 +248,24 @@ test('the state table is consistent: every move lands on a material, every chain
   for (const p of Object.values(LIVING)) { assert.equal(p.label, 'proposed, not measured'); assert.match(p.hex, /^#[0-9a-f]{6}$/); assert.ok(p.settle.length > 20 && p.made.split('. ').length === 1, 'one line on how it is made, and what would settle the guess'); }
   assert.equal(SENSES.label, 'proposed, data only'); assert.equal(SENSES.seeToHear.length, SENSES.hearToSee.length);
 });
+
+test('the well leaves as files for other trades, written by the site own writers: a plot, plotter moves, a relief, a palette', async () => {
+  const { FILES, RELIEF, makeFile, lumaGrid } = await import('./take-files.mjs'), { buildGrid, stlTriangleCount } = await import('../../../system/relief-stl.js'), { toGplPalette } = await import('../../../system/exporters-disciplines.js');
+  // a picture that is dark on the left and light on the right
+  const w = 320, h = 240, half = (dark, light) => { const d = new Uint8Array(w * h * 4); for (let i = 0; i < w * h; i++) { const v = i % w < w / 2 ? dark : light; d[i * 4] = d[i * 4 + 1] = d[i * 4 + 2] = v; d[i * 4 + 3] = 255; } return { data: d, w, h }; };
+  const pic = half(30, 230), pal = [{ name: 'water', hex: '#3f7f7a' }, { name: 'fire heat', hex: '#e2703a' }];
+  assert.deepEqual(FILES.map((f) => f.kind), ['plot-svg', 'plot-gcode', 'relief-stl', 'palette-gpl']); for (const f of FILES) assert.ok(f.says.length > 40 && !f.says.includes('\u2014'), `${f.kind} says what it is`);
+  const svg = makeFile('plot-svg', pic, pal, 'water-fire'), code = makeFile('plot-gcode', pic, pal, 'water-fire');
+  assert.match(svg.body, /<svg[^>]+xmlns/); assert.ok(svg.facts.lines > 50, `the plot has pen lines (${svg.facts.lines})`); assert.ok(!/fill="(?!none)/.test(svg.body), 'and no fills: a pen cannot fill');
+  assert.ok(makeFile('plot-svg', half(30, 30)).facts.lines > 1.5 * svg.facts.lines, 'a darker picture gets more lines'); assert.equal(makeFile('plot-svg', half(250, 250)).facts.lines, 0, 'and a white one none');
+  assert.match(code.body, /^G21$/m); assert.equal((code.body.match(/^G0 /gm) || []).length >= svg.facts.lines, true, 'one travel move to the start of every line'); assert.equal(code.facts.points, svg.facts.points);
+  // the relief: a closed solid of the stated size, thin where the picture is light (a lithophane)
+  const stl = makeFile('relief-stl', pic), dv = new DataView(stl.body), n = stlTriangleCount(RELIEF.w, RELIEF.h); assert.equal(stl.body.byteLength, 84 + 50 * n); assert.equal(dv.getUint32(80, true), n);
+  const g = lumaGrid(pic, RELIEF.w, RELIEF.h); assert.ok(Math.abs(g[0] - 30 / 255) < 1e-6 && Math.abs(g[RELIEF.w - 1] - 230 / 255) < 1e-6);
+  const grid = buildGrid(g, RELIEF.w, RELIEF.h, RELIEF), zs = Array.from(grid.zs ?? grid.z ?? grid.heights ?? []); if (zs.length) assert.ok(zs[0] > zs[RELIEF.w - 1], 'dark is thick and light is thin');
+  let zmax = 0; for (let t = 0; t < n; t++) for (let v = 0; v < 3; v++) zmax = Math.max(zmax, dv.getFloat32(84 + 50 * t + 12 + v * 12 + 8, true)); assert.ok(zmax <= RELIEF.maxMM + 1e-3 && zmax > RELIEF.maxMM * 0.8, `the thickest point is within the stated ${RELIEF.maxMM} mm (${zmax.toFixed(2)})`);
+  const gpl = makeFile('palette-gpl', null, pal, 'water-fire'); assert.equal(gpl.body, toGplPalette({ dominantSwatches: pal.map((c) => ({ hex: c.hex, frac: 0.5 })) }, 'water-fire')); assert.match(gpl.body, /^GIMP Palette\nName: water-fire\n/); assert.match(gpl.body, / 63 127 122\t#3f7f7a/);
+  assert.throws(() => makeFile('relief-stl', null), /no picture/); assert.throws(() => makeFile('nothing', pic), /no such file kind/);
+  const src = readFileSync(new URL('./take-files.mjs', import.meta.url), 'utf8'); assert.ok(!/fetch\(|XMLHttpRequest|sendBeacon|WebSocket/.test(src), 'the file has no way to send anything');
+});
+

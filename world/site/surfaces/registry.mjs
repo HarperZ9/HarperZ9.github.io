@@ -45,8 +45,8 @@ export const TOOLS = Object.freeze([
   row('world/dataviz', 'Data as sound', ['sound', 'chart'], ['numbers'], ['score'], null, 'a chart row could be heard; waits for the sound layer'),
   row('world/typeengine', 'Living type engine', ['type', 'render', 'motion'], ['text', 'numbers'], ['image', 'png'], 'living', 'sets the blend’s name in a family bent by the leading element’s measurements'),
   row('world/visualizer', 'Sound visualizer', ['render', 'sound', 'field'], ['score'], ['image'], null, 'it draws from a score, and nothing on the bench gives a score until the sound layer exists'),
-  row('world/glass', 'Glass, liquid and CRT pieces', ['render', 'physics', 'field'], ['image', 'field'], ['image', 'png'], 'glass', 'shows the blend’s plate through a piece of glass'),
-  row('world/superframe', 'Superframe: the rendering engine', ['render', 'simulation', 'field', 'export'], ['graph', 'material', 'text'], ['image', 'score'], null, 'its water medium is the page field; its nodes are not on the bench yet'),
+  row('world/glass', 'Glass, liquid and CRT pieces', ['render', 'physics', 'field'], ['image', 'field'], ['image', 'png'], 'glass', 'shows the blend’s plate through a piece of glass, and gives the well’s glass and ice grounds their refraction (glass-ground.mjs)'),
+  row('world/superframe', 'Superframe: the rendering engine', ['render', 'simulation', 'field', 'export'], ['graph', 'material', 'text'], ['image', 'score'], 'well', 'its water medium is the page field; its spectral pigment model (lib/medium/spectral.mjs) mixes wet pigments in the well; its nodes are not on the bench yet'),
   row('world/name-art', 'Name art generators', ['geometry', 'paint', 'poster'], ['text', 'palette'], ['image'], null, ''),
   row('world/creation', 'Creation engine', ['paint', 'math'], ['numbers'], ['image'], null, ''),
   row('world/homage', 'Homage portraits by technique', ['paint', 'lettering'], ['text'], ['image'], null, ''),
@@ -85,8 +85,9 @@ const loose = (id, name, offers, note, overlap = null) => Object.freeze({ id, na
 export const LOOSE = Object.freeze([
   loose('system/weave-render.js', 'Cloth and draft chart renderer', ['weave', 'render'], 'thread-level cloth; the base for a textile ground'),
   loose('system/loom-studio.js', 'The loom: an image to threading, tie-up and treadling', ['weave'], 'runs on the loom page and inside the Studio'),
-  loose('system/exporters-disciplines.js', 'Exports by discipline: plotter, knitting chart, palette, relief', ['plot', 'fabricate', 'export'], 'the way out for plot and relief files'),
-  loose('system/relief-stl.js', 'Watertight STL from a height map', ['fabricate'], 'a well could leave as a relief'),
+  loose('system/exporters-disciplines.js', 'Exports by discipline: plotter, knitting chart, palette, relief', ['plot', 'fabricate', 'export'], 'on the bench under Take it with you: its palette writer, through take-files.mjs'),
+  loose('system/relief-stl.js', 'Watertight STL from a height map', ['fabricate'], 'on the bench under Take it with you: the well leaves as a relief to print'),
+  loose('system/plotter.js', 'Pen plotter: a picture to pen lines, SVG and G-code', ['plot', 'export'], 'on the bench under Take it with you: the well leaves as a plot and as plotter moves'),
   loose('system/voxel-forge.js', 'Voxel scenes and files', ['fabricate', 'render'], ''),
   loose('media/raw-native/post-0.8.0/web/shaders/paint', 'Painterly shaders: oil, gouache, watercolour', ['paint', 'render'], 'pigments.mjs mixes four base pigments by Kubelka-Munk over 31 wavelengths, through a latent', 'world/site/surfaces/km.mjs: Kubelka-Munk layers from one measured colour and an opacity per element'),
   loose('media/raw-native/tree-ada041f/web/shaders/fibre', 'Watercolour on a random fibre network', ['paint', 'simulation'], 'capillary flow along fibres with a tensor per cell', 'the fibre sheet ground in grounds.mjs and well-sim.mjs: one fibre direction, two spreading rates'),
@@ -96,7 +97,7 @@ export const EMPTY = Object.freeze(CAPABILITIES.filter((c) => ![...TOOLS, ...LOO
 const S = (id, name, tools, offers, takes, gives, file) => Object.freeze({ id, name, tools, offers, takes, gives, load: () => import(file) });
 export const SURFACES = Object.freeze({
   bench: S('bench', 'The front bench', ['world/site', 'world/studio', 'system/graph'], ['well', 'chart', 'blend', 'export'], ['elements', 'settings'], ['blend', 'palette', 'png', 'json'], './bench.mjs'),
-  well: S('well', 'The well', ['world/studio', 'world/techniques', 'world/feed-23'], ['well', 'simulation', 'field', 'paint'], ['elements', 'settings', 'blend'], ['image', 'png'], './surface-well.mjs'),
+  well: S('well', 'The well', ['world/studio', 'world/techniques', 'world/feed-23', 'world/superframe', 'world/glass'], ['well', 'simulation', 'field', 'paint'], ['elements', 'settings', 'blend'], ['image', 'png'], './surface-well.mjs'),
   chart: S('chart', 'Property charts', ['world/studio'], ['chart'], ['elements', 'settings'], ['numbers'], './surface-chart.mjs'),
   blend: S('blend', 'The blend table', ['world/studio'], ['blend', 'chart'], ['elements'], ['blend', 'material', 'palette'], './surface-blend.mjs'),
   motion: S('motion', 'Motion curve', ['world/studio', 'world/substrate', 'world/techniques'], ['motion', 'chart'], ['blend', 'material'], ['motion'], './surface-lanes.mjs'),

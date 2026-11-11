@@ -10,6 +10,7 @@
 //   well.transform(id, op, seconds)   the ground changes state to another ground behind a front (heat, cool, grind, ...)
 //   well.write(mask, w, h)            letters as a coverage mask, laid as ink on a layered ground; write(null) lifts them
 //   well.brush()                      the layer the site's brush engine paints in (brush-field.mjs), made when first asked for
+//   On the glass and ice grounds the pane refracts: glass-ground.mjs asks the site's glass renderer for the map.
 //   well.fade(slot, share)            a pigment loses its colour by this share, as a fugitive dye does in light
 //
 // What happens in the well is well-sim.mjs (the water, the pigment it carries and conserves, the reaction). How
@@ -41,13 +42,17 @@ export function createWell(canvas, { reduced = false, ground = 'paper' } = {}) {
   const tex = (unit) => { const t = gl.createTexture(); gl.activeTexture(gl.TEXTURE0 + unit); gl.bindTexture(gl.TEXTURE_2D, t);
     for (const [k, val] of [[gl.TEXTURE_MIN_FILTER, gl.LINEAR], [gl.TEXTURE_MAG_FILTER, gl.LINEAR], [gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE], [gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE]]) gl.texParameteri(gl.TEXTURE_2D, k, val);
     return t; };
-  const tDye = tex(0), tDisp = tex(1), tProd = tex(2), tBrush = tex(4), tWrite = tex(3);
+  const tDye = tex(0), tDisp = tex(1), tProd = tex(2), tBrush = tex(4), tGlass = tex(5), tWrite = tex(3);
   gl.texImage2D(gl.TEXTURE_2D, 0, gl.LUMINANCE, 1, 1, 0, gl.LUMINANCE, gl.UNSIGNED_BYTE, new Uint8Array(1));
-  gl.uniform1i(U('uDye'), 0); gl.uniform1i(U('uDisp'), 1); gl.uniform1i(U('uProd'), 2); gl.uniform1i(U('uWrite'), 3); gl.uniform1i(U('uBrush'), 4); gl.uniform3fv(U('uPM'), BAND_RGB); gl.pixelStorei(gl.UNPACK_ALIGNMENT, 1);
+  gl.uniform1i(U('uDye'), 0); gl.uniform1i(U('uDisp'), 1); gl.uniform1i(U('uProd'), 2); gl.uniform1i(U('uWrite'), 3); gl.uniform1i(U('uBrush'), 4); gl.uniform1i(U('uGlass'), 5); gl.uniform3fv(U('uPM'), BAND_RGB); gl.pixelStorei(gl.UNPACK_ALIGNMENT, 1);
 
   const sim = createSim({ reduced }), n = NX * NY, bDye = new Uint8Array(n * 4), bDisp = new Uint8Array(n * 4), bProd = new Uint8Array(RX * RY);
   const gain = [1, 1, 1, 1], time = { sim: 0, gap: 0, frames: 0 };
-  let raf = 0, last = 0, dead = false, idleAt = 0, soft = 0.1, strength = 0, flat = null, next = null, written = false, tl = [0, 0], done = null, layer = null, tick = 0;
+  let raf = 0, last = 0, dead = false, idleAt = 0, soft = 0.1, strength = 0, flat = null, next = null, written = false, tl = [0, 0], done = null, layer = null, tick = 0, pane = null, paneWant = '', refract = 1;
+  // the pane's refraction map, from the site's glass renderer; asked for when a clear ground is first shown
+  function paneFor(id) { const g = GROUNDS[id]; if (!g || g.med !== 3) return; const kind = g.v ? 'ice' : 'glass'; if (paneWant === kind) return; paneWant = kind;
+    import('./glass-ground.mjs').then((m) => m.glassMap(kind)).then((m) => { if (dead || paneWant !== kind) return; gl.activeTexture(gl.TEXTURE5); gl.bindTexture(gl.TEXTURE_2D, tGlass);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, m.w, m.h, 0, gl.RGBA, gl.UNSIGNED_BYTE, m.data); pane = m; draw(); }).catch((e) => console.info('well: the pane is shown without refraction:', e.message)); }
   // How fast a ground takes brushed paint off the mark and into the carried field, per step: a solid leaves it where it
   // was laid, a liquid and a gas carry it off, grains and the data lattice take it whole. Our numbers, none measured.
   const TAKES = { liquid: 0.03, gas: 0.05, powder: 1 }, takes = () => { const g = GROUNDS[ground] || GROUNDS.paper; return g.rule === 'partitive' ? 1 : TAKES[g.state] || 0; };
@@ -81,7 +86,7 @@ export function createWell(canvas, { reduced = false, ground = 'paper' } = {}) {
     gl.uniform4fv(U('uKS'), Q); gl.uniform3fv(U('uLin'), O); gl.uniform3fv(U('uK'), K); gl.uniform3fv(U('uS'), S);
   }
   function draw() {
-    const { dye, dx, dy, RV, phase } = sim; brushUp();
+    const { dye, dx, dy, RV, phase } = sim; brushUp(); paneFor(next ? next.id : ground); if (next) paneFor(ground);
     if (next && !sim.changing) { ground = next.id; next = null; const fn = done; if (fn) setTimeout(() => fn(ground), 0); }   // the front has crossed: the new ground stands
     for (let i = 0; i < n; i++) {
       for (let c = 0; c < 4; c++) bDye[i * 4 + c] = clamp(dye[c][i], 0, 1) * 255;
@@ -94,6 +99,7 @@ export function createWell(canvas, { reduced = false, ground = 'paper' } = {}) {
     gl.viewport(0, 0, canvas.width, canvas.height); gl.uniform1f(U('uAspect'), canvas.width / canvas.height);
     const g = GROUNDS[ground] || GROUNDS.paper, g2 = next ? GROUNDS[next.id] : g; gl.uniform3fv(U('uBase'), new Float32Array(g.base)); gl.uniform3fv(U('uBase2'), new Float32Array(g2.base));
     gl.uniform4f(U('uFx'), g.med, sim.dry, soft, strength); gl.uniform4fv(U('uGain'), gain); gl.uniform4f(U('uEnv'), g.v, tl[0], tl[1], 0); gl.uniform4f(U('uTo'), g2.med, g2.v, next ? OPS[next.op] || 1 : 0, next ? 1 : 0); gl.uniform4f(U('uInk'), 0, 0, 0, written ? 1 : 0); gl.uniform4f(U('uBr'), layer?.box ? 1 : 0, 0, 0, 0);
+    gl.uniform4f(U('uGl'), pane && pane.kind === paneWant ? refract : 0, pane ? pane.reach[0] : 0, pane ? pane.reach[1] : 0, 0); gl.uniform4f(U('uGs'), pane ? pane.spread.r : 1, pane ? pane.spread.b : 1, 0, 0);
     gl.uniform1f(U('uFlatOn'), flat ? 1 : 0); gl.uniform4fv(U('uFlat'), flat || [0, 0, 0, 0]);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
   }
@@ -144,7 +150,8 @@ export function createWell(canvas, { reduced = false, ground = 'paper' } = {}) {
     brushed: () => (layer ? held(layer) : [0, 0, 0, 0]),   // the brushed paint still in the layer, per pigment, in the unit of amounts()
     fade(slot, share) { if (sim.parts[slot]) { sim.parts[slot].fade = share; uniforms(); draw(); } return api; },
     // for checks: each of granulation, rim, tooth and product can be switched off (0) to see what it adds
-    gain(g = {}) { ['granulation', 'rim', 'tooth', 'product'].forEach((k, i) => { if (typeof g[k] === 'number') gain[i] = g[k]; }); draw(); return api; },
+    gain(g = {}) { ['granulation', 'rim', 'tooth', 'product'].forEach((k, i) => { if (typeof g[k] === 'number') gain[i] = g[k]; }); if (typeof g.refract === 'number') refract = g.refract; draw(); return api; },
+    pane: () => (pane && pane.kind === paneWant ? { kind: pane.kind, spread: pane.spread, reach: pane.reach } : null),   // the refraction map in use, once it has come
     // for checks: the shader's answer for flat layers of these thicknesses on untextured paper, as [r, g, b] on 0 to 255
     optics(d) { flat = new Float32Array(4); flat.set(d.slice(0, 4)); draw(); const px = new Uint8Array(4); gl.readPixels(canvas.width >> 1, canvas.height >> 1, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px); flat = null; draw(); return [px[0], px[1], px[2]]; },
     // the picture as it stands, drawn now

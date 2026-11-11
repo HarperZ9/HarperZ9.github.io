@@ -7,7 +7,10 @@
 //                   granulation into the tooth move the thickness.
 //   1 stone         hard, coarse grain: the same layers, but pigment sits on top, beads to hard edges and pools.
 //   2 metal plate   hard, brushed: the same layers on a bright ground with a sheen where it is bare.
-//   3 glass         clear: light comes through from behind, each wash is a filter, the filters multiply.
+//   3 glass         clear: light comes through from behind, each wash is a filter, the filters multiply. The pane
+//                   bends what is behind it (ruled lines, so the bending can be read): uGlass is the site's glass
+//                   renderer's own displacement map (glass-ground.mjs, world/glass), with the green ray's offset, the
+//                   reflected light and the rim; uGl is on, reach x, reach y; uGs is how far red and blue land against green.
 //   4 water         fluid: pigment mixed in dark water band by band over 16 bands of the spectrum (km.mjs mixture(),
 //                   which is world/superframe/lib/medium/spectral.mjs): uKS holds each pigment's 16 ratios of
 //                   absorption to scattering, uPM each band's colour.
@@ -30,10 +33,10 @@
 export const VERT = `attribute vec2 p; varying vec2 v; void main(){ v = p * .5 + .5; gl_Position = vec4(p, 0., 1.); }`;
 export const FRAG = `precision highp float;
 varying vec2 v;
-uniform sampler2D uDye, uDisp, uProd, uWrite, uBrush;
+uniform sampler2D uDye, uDisp, uProd, uWrite, uBrush, uGlass;
 uniform vec3 uBase, uBase2, uLin[5], uK[6], uS[6];   // slot 4 is the reaction's product, slot 5 the written ink
 uniform vec4 uA[4], uB[4], uC[4], uD[4];   // A: feature frequency, cos, sin, stretch. B: octave gain, gradient width, coverage, vein strength. C: rows, slot seed, on, unused. D: granulation, rim, bleed, unused
-uniform vec4 uKS[16]; uniform vec3 uPM[16];   // KS: pigment i's 16 bands are uKS[4 i] to uKS[4 i + 3]. PM: each band's colour
+uniform vec4 uKS[16], uGl, uGs; uniform vec3 uPM[16];   // KS: pigment i's 16 bands are uKS[4 i] to uKS[4 i + 3]. PM: each band's colour
 uniform vec4 uFx, uGain, uFlat, uTo, uEnv, uInk, uBr;   // Fx: ground, dry, product softness, mean link strength. Gain: granulation, rim, tooth, product (1 each; tests set one to 0)
 // To: the next ground, its variant, the operation (1 heat, 2 cool or dry, 3 grind, 4 soak, 5 press), on. Env: this ground's variant, tilt x, tilt y. Ink: unused rgb, on
 uniform float uAspect, uFlatOn;
@@ -57,6 +60,7 @@ vec3 blendBy(float med, vec3 B, vec3 acc, mat4 kq, float tot, float area){
   if (med < 5.5) return tot > .0002 ? mix(B, acc / tot, 1. - exp(-tot * 1.6)) : B;
   if (med < 7.5) return min(vec3(1.), .9 * acc);
   return acc + (1. - area) * B; }
+float rules(vec2 p){ vec2 f = abs(fract(p * vec2(9. * uAspect, 9.)) - .5); return 1. - smoothstep(.012, .04, .5 - max(f.x, f.y)); }
 float part(vec4 d, int i){ return i == 0 ? d.r : i == 1 ? d.g : i == 2 ? d.b : d.a; }
 vec3 shade(float med, float var, vec3 B, vec2 uv, vec4 dye, vec2 q);
 void main(){
@@ -94,7 +98,9 @@ vec3 shade(float med, float var, vec3 B, vec2 uv, vec4 dye, vec2 q){
   if (wood){ float ring = .5 + .5 * sin(46. * (uv.y + .16 * vn(at * vec2(1.4, 5.)) + .03 * vn(at * vec2(30., 6.)))); th = .65 * ring + .35 * vn(at * vec2(8., 160.)); }
   vec3 R = B * (1. + uGain.z * (stone ? .5 : fibre ? .3 : .16) * (th - .5)), acc = vec3(0.); mat4 logmix = mat4(0.); float tot = 0., seen = 0., area = 0.;
   if (fibre) R *= 1. + .16 * strand * (var > 1.5 ? .4 : 1.);
-  if (glass) R = B * (.9 + .1 * vn(uv * 3.));
+  if (glass){ vec4 gm = uGl.x > 0. ? texture2D(uGlass, uv) : vec4(.502, .502, 0., 0.); vec2 off = (gm.rg - .502) * uGl.yz * uGl.x;   // refraction: each colour is read where its own ray lands
+    vec3 lines = vec3(rules(uv + off * uGs.x), rules(uv + off), rules(uv + off * uGs.y));
+    R = B * (.9 + .1 * vn((uv + off) * 3.)) * (1. - .42 * lines) * (1. - .7 * gm.a * uGl.x) + .9 * gm.b * uGl.x; }
   if (melt) B *= .5 + 1.1 * fbm(q * 3.2 + 2., .55);
   if (pulp) B *= .82 + .4 * smoothstep(.6, .95, vn(vec2(q.x * 9., q.y * 70.) + 3. * vn(q * 6.)));
   // the data ground: a lattice, read at each cell's middle. The powder ground: grains, each read at its own middle.
@@ -155,7 +161,7 @@ vec3 shade(float med, float var, vec3 B, vec2 uv, vec4 dye, vec2 q){
       R = R * (.62 + .3 * bare * th) + bare * spec * B * 1.15; }
     if (glass) R += .1 * smoothstep(.75, 1., vn(uv * vec2(2.2, 5.) + 4.)) * (1. - .5 * smoothstep(0., 1., seen));   // glass: a soft glare
     if (ice){ float cr = 1. - smoothstep(0., .012, abs(vn(at * 7. + 1.2 * vn(at * 3.)) - .5)), rimf = smoothstep(.2, 0., min(min(uv.x, 1. - uv.x), min(uv.y, 1. - uv.y)));   // ice: cracks, and frost toward the edge
-      R = mix(R, vec3(.93, .97, 1.), .32 * cr + .45 * rimf * fbm(at * 40., .6)); }
+      R = mix(R, vec3(.93, .97, 1.), .03 * cr + .45 * rimf * fbm(at * 40., .6)); }   // the cracks are faint: the ice's own face does the bending
   } else {
     if (med > 5.5 && med < 7.5) acc += pm * smoothstep(0., .5, tot) * uLin[4];                 // on light the product is one more light
     R = blendBy(med, B, acc, logmix, tot, min(1., area));
@@ -163,7 +169,7 @@ vec3 shade(float med, float var, vec3 B, vec2 uv, vec4 dye, vec2 q){
     if (melt) R += vec3(.5, .16, .01) * smoothstep(.45, .9, fbm(q * 5. + 9., .6)) * exp(-tot * 1.5);   // the melt gives off its own light where no pigment covers it
     if (med > 7.5) R = mix(R, uLin[4], .35 * pm * smoothstep(0., .5, sum));
     if (med > 6.5 && med < 7.5){ vec2 px = uv * vec2(60. * uAspect, 60.); float sx = fract(px.x) * 3.;   // screen: red, green and blue cells with a dark line between rows; a lit cell spills a little into the next
-      vec3 mask = vec3(step(sx, 1.), step(1., sx) * step(sx, 2.), step(2., sx)); R = R * (.34 + 2.3 * mask) * smoothstep(.0, .12, fract(px.y)) * smoothstep(1., .88, fract(px.y)); }
+      vec3 mask = vec3(step(sx, 1.), step(1., sx) * step(sx, 2.), step(2., sx)); R = min(vec3(1.), R * (.45 + 3.1 * mask)) * smoothstep(.0, .09, fract(px.y)) * smoothstep(1., .91, fract(px.y)); }
   }
   return R;
 }`;

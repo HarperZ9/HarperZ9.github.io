@@ -1,0 +1,7 @@
+{
+  "date": "2026-11-11",
+  "note": "studio.html gains one line under its heading that links to the element bench (elements.html). No other byte changed. This record was written by the same change it covers and has not been reviewed by anyone else; it needs the author's confirmation at the joint review. Opened as a pull request and not merged.",
+  "paths": {
+    "studio.html": "260c31ace68a1a3263d182b17da061a5f22fa80a2443f2d05d8f028e8855b003"
+  }
+}

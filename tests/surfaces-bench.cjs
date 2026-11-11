@@ -267,6 +267,10 @@ async function brightestGround(page) {
     // 7: take-away
     const grab = async (sel) => { const [d] = await Promise.all([page.waitForEvent('download'), page.click(sel)]); const p = await d.path(); return { name: d.suggestedFilename(), bytes: fs.readFileSync(p) }; };
     const png = await grab('[data-save="png"]'), pal = await grab('[data-save="palette"]'), rec = await grab('[data-save="recipe"]');
+    // 7b: files for other trades, written by the site's own plot, relief and palette writers; each button says what its file is
+    const trades = {}; for (const k of ['plot-svg', 'plot-gcode', 'relief-stl', 'palette-gpl']) { const f = await grab(`[data-file="${k}"]`); trades[k] = { name: f.name, bytes: f.bytes.length }; assert.ok(f.bytes.length > 60, `${k} saves a file (${f.bytes.length} bytes)`);
+      if (k === 'plot-svg') assert.match(f.bytes.toString('utf8'), /<svg[^>]+xmlns[\s\S]*<(path|polyline)/); if (k === 'plot-gcode') assert.match(f.bytes.toString('utf8'), /^G21$/m); if (k === 'relief-stl') assert.equal(f.bytes.length, 84 + 50 * f.bytes.readUInt32LE(80)); if (k === 'palette-gpl') assert.match(f.bytes.toString('utf8'), /^GIMP Palette/); }
+    out.trades = trades; assert.equal(await page.evaluate(() => [...document.querySelectorAll('.tk-trades dd')].every((d) => d.textContent.length > 40)), true); assert.equal(await page.evaluate(() => document.querySelector('.tk-studio a').getAttribute('href')), '/studio.html', 'the bench links to the Studio');
     assert.equal(png.bytes.subarray(1, 4).toString(), 'PNG'); assert.ok(png.bytes.length > 2000, 'the picture has content');
     const recipe = JSON.parse(rec.bytes.toString()), palette = JSON.parse(pal.bytes.toString());
     assert.equal(recipe.format, 'bench.recipe/1'); assert.equal(recipe.ground, 'paper', 'the chosen ground is in the recipe'); assert.deepEqual(recipe.elements.map((e) => e.id), ['water', 'ink', 'light']); assert.match(recipe.graph, /^[0-9a-f]{8}$/);

@@ -167,3 +167,16 @@ test('the site brush engine paints in the well at its own resolution: bristles s
   const r = makeRecipe(ix, ['water', 'ink'], [1, 1], {}, null, { strokes: [rec, { brush: 'no-such-brush', slot: 0, pts: [[0, 0]] }] }); assert.equal(r.strokes.length, 1);
   assert.deepEqual(readRecipe(ix, JSON.parse(JSON.stringify(r))).strokes, cleanStrokes([rec]), 'the recipe keeps the strokes and gives them back'); assert.deepEqual(readRecipe(ix, makeRecipe(ix, ['water'], [1], {})).strokes, []);
 });
+
+test('the glass and ice grounds refract by the site glass renderer: each colour lands in its own place, ice is the rougher', async () => {
+  const { glassMap, BODIES, W, H } = await import('./glass-ground.mjs'), G = await import('../../glass/glass.js');
+  const glass = await glassMap('glass'), ice = await glassMap('ice'); assert.equal(glass.data.length, W * H * 4); assert.equal(await glassMap('glass'), glass, 'a map is made once');
+  for (const m of [glass, ice]) assert.ok(m.spread.r < 1 && m.spread.b > 1, `red bends least and blue most (${JSON.stringify(m.spread)})`);
+  // the map is the renderer's own: the same body through its displacementMap gives the same offsets
+  const b = BODIES.glass, mask = new Float32Array(W * H); for (let y = b.inset; y < H - b.inset; y++) mask.fill(1, y * W + b.inset, y * W + W - b.inset);
+  const own = G.displacementMap(G.pebble(G.fromMask(mask, W, H, { radius: b.radius, thickness: b.thickness }), { cell: b.cell, depth: b.depth, seed: b.seed, soften: 2 }), { glass: b.glass, gap: b.gap }, 56);
+  for (let i = 0; i < W * H; i += 97) { assert.equal(glass.data[i * 4], own.rgba[i * 4]); assert.equal(glass.data[i * 4 + 1], own.rgba[i * 4 + 1]); }
+  const bend = (m, x0, x1, y0, y1) => { let s = 0, n = 0; for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) { s += Math.hypot(m.data[(y * W + x) * 4] - 128, m.data[(y * W + x) * 4 + 1] - 128); n++; } return s / n; };
+  const mid = bend(glass, 100, 284, 80, 208), edge = bend(glass, 6, 16, 80, 208); assert.ok(edge > 2 * mid && mid > 1, `the pressed edge bends far more than the face (${edge.toFixed(1)} against ${mid.toFixed(1)} of 127)`);
+  assert.ok(bend(ice, 100, 284, 80, 208) > 1.3 * mid, 'the ice face bends more than the glass face'); assert.equal(glass.data[0], 128, 'outside the pane nothing bends');
+});

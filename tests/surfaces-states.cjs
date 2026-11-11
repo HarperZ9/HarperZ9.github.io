@@ -13,6 +13,7 @@
 //   5. The fibre chain can be walked step by step; the sheet's fibres run one way; writing lays ink on it.
 //   6. Living pigments can be chosen, are marked proposed with what would settle each, and fade only as a stated guess.
 //   7. A silent, generated signal pours pigment into the well by the proposed mapping. Nothing makes an audio context.
+//   9. The glass and ice grounds bend what is behind them through the site's glass renderer (world/glass).
 //   8. The site's brush engine paints into the well by pointer and by keyboard, and a recipe lays the strokes again.
 //      Brushed paint lies in a layer ten times finer than the solver: a bristle stroke shows hairs the solver's cells
 //      cannot hold, a nearly dry brush breaks up over the paper's tooth, and a liquid ground takes the paint into its field.
@@ -155,6 +156,11 @@ async function operate(page, op) {
     const wet = await page.evaluate(() => { const well = window.W().value().well; window.empty(); const before = well.amounts()[0]; window.W().value().paint('bristle', window.line, 0); return { before, after: well.amounts()[0], left: well.brushed()[0], error: well.conservation().error }; });
     out.brush.water = wet; assert.ok(wet.after > wet.before + 0.01 && wet.left === 0 && wet.error <= TOLERANCE, `water takes brushed paint into its own field, where it is kept (${JSON.stringify(wet)})`);
     await setGround(page, 'paper'); await page.evaluate(() => { document.querySelector('[data-act="again"]').click(); }); await page.waitForTimeout(60);
+    // 9: the glass and ice grounds refract through the site's glass renderer
+    const clear = {}; for (const g of ['glass', 'ice']) { await setGround(page, g); await page.waitForFunction((k) => window.W().value().well.pane()?.kind === k, g, { timeout: 20000 });
+      clear[g] = await page.evaluate(() => { const w = window.W().value().well, on = window.pic(192, 144); w.gain({ refract: 0 }); const off = window.pic(192, 144); w.gain({ refract: 1 }); return { change: window.diff(on, off), spread: w.pane().spread }; });
+      assert.ok(clear[g].change >= 1, `${g} bends what is behind it (${clear[g].change} of 255 against the same pane with no bending)`); assert.ok(clear[g].spread.r < 1 && clear[g].spread.b > 1, 'and blue bends more than red'); }
+    out.refraction = clear; assert.ok(clear.ice.change > clear.glass.change, 'ice bends more than glass'); await setGround(page, 'paper');
     await page.selectOption('[data-brush]', '');
     // 7: a picture from a silent signal
     const quiet = await page.evaluate(() => window.pic()); await page.click('[data-signal="chord"]'); await page.waitForTimeout(80);
