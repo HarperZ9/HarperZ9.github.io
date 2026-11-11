@@ -28,7 +28,7 @@ export const CAPABILITIES = Object.freeze(['well', 'chart', 'blend', 'field', 'r
   'type', 'lettering', 'print', 'plot', 'fabricate', 'weave', 'poster', 'sound', 'motion', 'export']);
 // What moves between tools.
 export const MEDIA = Object.freeze(['elements', 'settings', 'blend', 'material', 'palette', 'field', 'image', 'motion', 'type', 'score', 'graph', 'text', 'numbers',
-  'png', 'json', 'svg', 'wav', 'font', 'gcode']);
+  'png', 'json', 'svg', 'wav', 'font', 'gcode', 'vox']);
 
 const row = (id, name, offers, takes, gives, mounted, note) => Object.freeze({ id, name, offers, takes, gives, mounted, note });
 // Every tool folder on the site, mounted or not. `mounted` names the surface that loads it on the bench, 'frame'
@@ -41,7 +41,7 @@ export const TOOLS = Object.freeze([
   row('world/techniques', 'Techniques: noise, timing, rope, burin', ['math', 'paint', 'motion'], ['numbers'], ['field', 'motion'], 'well (through the studio)', 'the fluid and motion lanes read it'),
   row('world/substrate', 'Substrate: measured motion curves, thin film', ['motion', 'physics', 'math'], ['numbers'], ['motion', 'field'], 'motion (through the studio)', 'the motion lane reads its measured curves'),
   row('world/feed-25', 'Compositor: layers, blend modes, grain', ['render', 'paint', 'poster'], ['material', 'field'], ['image'], 'plate (through the studio)', 'the studio’s image lane stacks the blend’s plates on it'),
-  row('world/sound', 'Sound engine and voices', ['sound'], ['score'], ['wav'], null, 'waits for the sound layer; nothing plays on its own'),
+  row('world/sound', 'Sound engine and voices', ['sound', 'chart'], ['score', 'numbers'], ['wav', 'image'], 'well', 'its short-time Fourier transform (sound/dsp.js) draws the sound ground as a spectrogram; nothing plays'),
   row('world/dataviz', 'Data as sound', ['sound', 'chart'], ['numbers'], ['score'], null, 'a chart row could be heard; waits for the sound layer'),
   row('world/typeengine', 'Living type engine', ['type', 'render', 'motion'], ['text', 'numbers'], ['image', 'png'], 'living', 'sets the blend’s name in a family bent by the leading element’s measurements'),
   row('world/visualizer', 'Sound visualizer', ['render', 'sound', 'field'], ['score'], ['image'], null, 'it draws from a score, and nothing on the bench gives a score until the sound layer exists'),
@@ -81,23 +81,28 @@ export const TOOLS = Object.freeze([
 // Tools that are single files, or live outside world/ and system/ folders, so the folder walk above cannot see them.
 // None is mounted on the bench. What each offers is read from its own header; `overlap` names bench code that does
 // part of the same job, so the duplication stays visible until it is consolidated.
-const loose = (id, name, offers, note, overlap = null) => Object.freeze({ id, name, offers, takes: [], gives: [], mounted: null, note, overlap });
+// Single files and folders outside the world/ and system/ folder rows. `mounted` names the surface that loads it, or null;
+// `overlap` names bench code that does part of the same job, so the duplication stays visible until it is consolidated.
+const loose = (id, name, offers, note, mounted = null, overlap = null) => Object.freeze({ id, name, offers, takes: [], gives: [], mounted, note, overlap });
 export const LOOSE = Object.freeze([
-  loose('system/weave-render.js', 'Cloth and draft chart renderer', ['weave', 'render'], 'thread-level cloth; the base for a textile ground'),
-  loose('system/loom-studio.js', 'The loom: an image to threading, tie-up and treadling', ['weave'], 'runs on the loom page and inside the Studio'),
-  loose('system/exporters-disciplines.js', 'Exports by discipline: plotter, knitting chart, palette, relief', ['plot', 'fabricate', 'export'], 'on the bench under Take it with you: its palette writer, through take-files.mjs'),
-  loose('system/relief-stl.js', 'Watertight STL from a height map', ['fabricate'], 'on the bench under Take it with you: the well leaves as a relief to print'),
-  loose('system/plotter.js', 'Pen plotter: a picture to pen lines, SVG and G-code', ['plot', 'export'], 'on the bench under Take it with you: the well leaves as a plot and as plotter moves'),
-  loose('system/voxel-forge.js', 'Voxel scenes and files', ['fabricate', 'render'], ''),
-  loose('media/raw-native/post-0.8.0/web/shaders/paint', 'Painterly shaders: oil, gouache, watercolour', ['paint', 'render'], 'pigments.mjs mixes four base pigments by Kubelka-Munk over 31 wavelengths, through a latent', 'world/site/surfaces/km.mjs: Kubelka-Munk layers from one measured colour and an opacity per element'),
-  loose('media/raw-native/tree-ada041f/web/shaders/fibre', 'Watercolour on a random fibre network', ['paint', 'simulation'], 'capillary flow along fibres with a tensor per cell', 'the fibre sheet ground in grounds.mjs and well-sim.mjs: one fibre direction, two spreading rates'),
+  loose('system/weave-engine.js', 'Weave drafts: threading, tie-up, treadling, WIF', ['weave', 'math'], 'the woven ground’s threads (cloth.mjs) and the Loom lane’s jacquard draft', 'well, loom'),
+  loose('system/weave-render.js', 'Cloth and draft chart renderer', ['weave', 'render'], 'draws the Loom lane’s cloth thread by thread', 'loom'),
+  loose('system/loom-studio.js', 'The loom: an image to threading, tie-up and treadling', ['weave'], 'runs on the loom page and inside the Studio; the bench reaches its engine and renderer, not its page controller'),
+  loose('system/exporters-disciplines.js', 'Exports by discipline: plotter, knitting chart, palette, relief', ['plot', 'fabricate', 'export'], 'its palette writer, under Take it with you (take-files.mjs)', 'recipe'),
+  loose('system/relief-stl.js', 'Watertight STL from a height map', ['fabricate'], 'the well leaves as a relief to print, under Take it with you', 'recipe'),
+  loose('system/plotter.js', 'Pen plotter: a picture to pen lines, SVG and G-code', ['plot', 'export'], 'the well leaves as a plot and as plotter moves, under Take it with you, with the bench’s own header', 'recipe'),
+  loose('system/plot-maps.js', 'Plot maps: terrain and ridgelines for a pen', ['plot', 'geometry'], 'the Plot map lane reads the well as terrain', 'ridges'),
+  loose('system/voxel-forge.js', 'Voxel scenes and files', ['fabricate', 'render'], 'the Cubes lane paints the well in cubes and saves a .vox file (with system/voxel.js)', 'voxels'),
+  loose('media/raw-native/post-0.8.0/web/shaders/paint', 'Painterly shaders: oil, gouache, watercolour', ['paint', 'render'], 'pigments.mjs mixes four base pigments by Kubelka-Munk over 31 wavelengths, through a latent', null, 'world/site/surfaces/km.mjs: Kubelka-Munk layers from one measured colour and an opacity per element'),
+  loose('media/raw-native/tree-ada041f/web/shaders/fibre', 'Watercolour on a random fibre network', ['paint', 'simulation'], 'its fibre network and capillary tensor set how a wash spreads on the fibre sheets (spread.mjs); its own wash is not run', 'well'),
+  loose('media/raw-native/tree-ada041f/web/shaders/film', 'Spectral film: negative, print, grain, halation', ['render', 'field'], 'the film stock ground reads its print path through a table, with its halo and grain', 'well'),
 ]);
 export const EMPTY = Object.freeze(CAPABILITIES.filter((c) => ![...TOOLS, ...LOOSE].some((t) => t.offers.includes(c))));
 
 const S = (id, name, tools, offers, takes, gives, file) => Object.freeze({ id, name, tools, offers, takes, gives, load: () => import(file) });
 export const SURFACES = Object.freeze({
   bench: S('bench', 'The front bench', ['world/site', 'world/studio', 'system/graph'], ['well', 'chart', 'blend', 'export'], ['elements', 'settings'], ['blend', 'palette', 'png', 'json'], './bench.mjs'),
-  well: S('well', 'The well', ['world/studio', 'world/techniques', 'world/feed-23', 'world/superframe', 'world/glass'], ['well', 'simulation', 'field', 'paint'], ['elements', 'settings', 'blend'], ['image', 'png'], './surface-well.mjs'),
+  well: S('well', 'The well', ['world/studio', 'world/techniques', 'world/feed-23', 'world/superframe', 'world/glass', 'world/sound'], ['well', 'simulation', 'field', 'paint'], ['elements', 'settings', 'blend'], ['image', 'png'], './surface-well.mjs'),
   chart: S('chart', 'Property charts', ['world/studio'], ['chart'], ['elements', 'settings'], ['numbers'], './surface-chart.mjs'),
   blend: S('blend', 'The blend table', ['world/studio'], ['blend', 'chart'], ['elements'], ['blend', 'material', 'palette'], './surface-blend.mjs'),
   motion: S('motion', 'Motion curve', ['world/studio', 'world/substrate', 'world/techniques'], ['motion', 'chart'], ['blend', 'material'], ['motion'], './surface-lanes.mjs'),
@@ -106,6 +111,9 @@ export const SURFACES = Object.freeze({
   plate: S('plate', 'Plate', ['world/studio', 'world/feed-25', 'world/techniques'], ['render', 'paint', 'poster'], ['blend', 'material'], ['image', 'png'], './surface-more.mjs'),
   glass: S('glass', 'Through glass', ['world/glass', 'world/studio'], ['render', 'physics'], ['blend', 'image'], ['image', 'png'], './surface-more.mjs'),
   living: S('living', 'Living type', ['world/typeengine'], ['type', 'render'], ['elements', 'text', 'numbers'], ['image', 'png'], './surface-more.mjs'),
+  loom: S('loom', 'Loom', ['world/site'], ['weave', 'render'], ['image', 'palette'], ['image', 'png'], './surface-studio.mjs'),
+  ridges: S('ridges', 'Plot map', ['world/site'], ['plot', 'geometry'], ['image', 'palette'], ['image'], './surface-studio.mjs'),
+  voxels: S('voxels', 'Cubes', ['world/site'], ['fabricate', 'render', 'geometry'], ['image', 'palette'], ['image', 'vox'], './surface-studio.mjs'),
   recipe: S('recipe', 'Recipe', ['system/graph', 'world/studio'], ['export', 'math'], ['elements', 'settings', 'blend'], ['graph', 'json'], './recipe.mjs'),
   // A named place for the sound layer. Nothing is mounted behind it in this version and nothing plays.
   // It is shaped to the site music interface being built apart from this work: an object with start(), stop(),

@@ -122,8 +122,8 @@ test('the registry: every tool folder has a row, every surface keeps the contrac
   assert.equal(SURFACES.sound.load, null, 'the sound layer has a place and nothing behind it');
   for (const t of TOOLS.filter((x) => typeof x.mounted === 'string' && x.mounted !== 'frame')) assert.ok(Object.values(SURFACES).some((s) => s.load && s.tools.includes(t.id)), `${t.id} says mounted, and a surface loads it`);
   assert.deepEqual([...EMPTY].sort(), ['print'], 'weave and fabricate have tools on the site (single files, listed as LOOSE); print still has none');
-  for (const t of LOOSE) { assert.ok(existsSync(new URL(t.id, root)), t.id); assert.ok(t.offers.every((c) => CAPABILITIES.includes(c)) && t.mounted === null); }
-  assert.equal(TOOLS.find((t) => t.id === 'world/feed-23').mounted, 'well'); assert.equal(LOOSE.filter((t) => t.overlap).length, 2, 'two overlaps with bench code are named');
+  for (const t of LOOSE) { assert.ok(existsSync(new URL(t.id, root)), t.id); assert.ok(t.offers.every((c) => CAPABILITIES.includes(c)) && (t.mounted === null || t.mounted.split(', ').every((m) => SURFACES[m]?.load)), `${t.id} is mounted by a surface that loads, or by none`); }
+  assert.equal(TOOLS.find((t) => t.id === 'world/feed-23').mounted, 'well'); assert.equal(LOOSE.filter((t) => t.overlap).length, 1, 'one overlap with bench code is named (the fibre sheet now uses the fibre module itself)');
   assert.deepEqual(chain('elements', 'png'), ['well']); assert.deepEqual(chain('elements', 'type'), ['blend', 'lettering']); assert.deepEqual(chain('elements', 'palette'), ['blend']);
   assert.deepEqual(chain('settings', 'json'), ['recipe']); assert.deepEqual(chain('elements', 'motion'), ['blend', 'motion']); assert.equal(chain('elements', 'wav'), null, 'nothing reaches sound yet');
   assert.equal(chain('elements', 'gcode'), null); assert.deepEqual(chain('palette', 'png'), ['plot']);
@@ -205,7 +205,8 @@ test('the ground follows the blend: the first material with a ground, else the p
   assert.deepEqual([g(['ink', 'paper']).id, g(['ink', 'paper']).pigments], ['paper', ['ink']], 'ink on paper: ink has no ground of its own, paper has');
   assert.deepEqual([g(['light', 'glass', 'fire-heat']).id, g(['light', 'glass', 'fire-heat']).pigments], ['light', ['glass', 'fire-heat']]);
   assert.deepEqual([g(['water']).id, g(['water']).pigments, g(['water'], null, true).id], ['paper', ['water'], 'water'], 'one element alone is the pigment; the ground follows the page');
-  assert.equal(g(['fire-heat', 'ink']).id, 'paper'); assert.equal(g(['fire-heat', 'ink'], null, true).id, 'water'); assert.match(g(['fire-heat', 'ink']).why, /no ground of its own yet/);
+  assert.equal(g(['body', 'ink']).id, 'paper'); assert.equal(g(['body', 'ink'], null, true).id, 'water'); assert.match(g(['body', 'ink']).why, /no ground of its own yet/);
+  assert.deepEqual([g(['fire-heat', 'ink']).id, g(['thread-textile', 'water']).id, g(['sound', 'light']).id, g(['film-stock', 'water']).id], ['fire-heat', 'thread-textile', 'sound', 'film-stock'], 'the new grounds follow the blend as the others do');
   const mine = g(['water', 'ink'], 'glass'); assert.deepEqual([mine.id, mine.auto, mine.pigments, mine.why], ['glass', false, ['water', 'ink'], 'your choice']);
   const onTable = Object.keys(GROUNDS).filter((id) => !GROUNDS[id].made);   // the rest are made: reached by an operation or a chain
   for (const id of [...onTable, ...NOT_BUILT]) assert.equal(ix.byId.get(id)?.sheet, 'material', `${id} is on the material sheet`);

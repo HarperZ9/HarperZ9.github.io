@@ -21,7 +21,10 @@ import { createSim, STEP, NX, NY, RX, RY } from './well-sim.mjs';
 import { VERT, FRAG } from './well-shader.mjs';
 import { pigment, okToLinear, productOk, PRODUCT_OPACITY, ksOf, BAND_RGB } from './km.mjs';
 import { GROUNDS, behaviour } from './grounds.mjs';
-import { createLayer, clearLayer, coverage, dissolve, held, FX, FY } from './brush-field.mjs';
+import { draftOf, clothPixels, cleanLoom, ENDS, PICKS } from './cloth.mjs';
+import { FILM, SOUND, HEAT, filmPlan, filmTable, spectrogram, glowTable } from './grounds-more.mjs';
+import { DYE } from './km.mjs';
+import { createLayer, clearLayer, coverage, dissolve, held, FX, FY, CW, CH } from './brush-field.mjs';
 
 const OPS = { heat: 1, cool: 2, dry: 2, grind: 3, dissolve: 4, press: 5 }, INK = pigment([0.035, 0.035, 0.06], 0.6), PALE = [0.8, 0.78, 0.7];
 
@@ -42,13 +45,14 @@ export function createWell(canvas, { reduced = false, ground = 'paper' } = {}) {
   const tex = (unit) => { const t = gl.createTexture(); gl.activeTexture(gl.TEXTURE0 + unit); gl.bindTexture(gl.TEXTURE_2D, t);
     for (const [k, val] of [[gl.TEXTURE_MIN_FILTER, gl.LINEAR], [gl.TEXTURE_MAG_FILTER, gl.LINEAR], [gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE], [gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE]]) gl.texParameteri(gl.TEXTURE_2D, k, val);
     return t; };
-  const tDye = tex(0), tDisp = tex(1), tProd = tex(2), tBrush = tex(4), tGlass = tex(5), tWrite = tex(3);
-  gl.texImage2D(gl.TEXTURE_2D, 0, gl.LUMINANCE, 1, 1, 0, gl.LUMINANCE, gl.UNSIGNED_BYTE, new Uint8Array(1));
-  gl.uniform1i(U('uDye'), 0); gl.uniform1i(U('uDisp'), 1); gl.uniform1i(U('uProd'), 2); gl.uniform1i(U('uWrite'), 3); gl.uniform1i(U('uBrush'), 4); gl.uniform1i(U('uGlass'), 5); gl.uniform3fv(U('uPM'), BAND_RGB); gl.pixelStorei(gl.UNPACK_ALIGNMENT, 1);
+  const tDye = tex(0), tDisp = tex(1), tProd = tex(2), tBrush = tex(4), tGlass = tex(5), tWeave = tex(6), tMore = tex(7), tWrite = tex(3);
+  // unit 3 holds two masks at one size: red is the written letters, green how much the brushed paint at each point catches on the tooth
+  const wb = new Uint8Array(CW * CH * 4); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, CW, CH, 0, gl.RGBA, gl.UNSIGNED_BYTE, wb);
+  gl.uniform1i(U('uDye'), 0); gl.uniform1i(U('uDisp'), 1); gl.uniform1i(U('uProd'), 2); gl.uniform1i(U('uWrite'), 3); gl.uniform1i(U('uBrush'), 4); gl.uniform1i(U('uGlass'), 5); gl.uniform1i(U('uWeave'), 6); gl.uniform1i(U('uMore'), 7); gl.uniform3fv(U('uPM'), BAND_RGB); gl.pixelStorei(gl.UNPACK_ALIGNMENT, 1);
 
   const sim = createSim({ reduced }), n = NX * NY, bDye = new Uint8Array(n * 4), bDisp = new Uint8Array(n * 4), bProd = new Uint8Array(RX * RY);
-  const gain = [1, 1, 1, 1], time = { sim: 0, gap: 0, frames: 0 };
-  let raf = 0, last = 0, dead = false, idleAt = 0, soft = 0.1, strength = 0, flat = null, next = null, written = false, tl = [0, 0], done = null, layer = null, tick = 0, pane = null, paneWant = '', refract = 1;
+  const gain = [1, 1, 1, 1, 1], time = { sim: 0, gap: 0, frames: 0 };
+  let catchAll = 0, loom = cleanLoom(null), heard = null, heardKey = '', wove = '', more = '', raf = 0, last = 0, dead = false, idleAt = 0, soft = 0.1, strength = 0, flat = null, next = null, written = false, tl = [0, 0], done = null, layer = null, tick = 0, pane = null, paneWant = '', refract = 1;
   // the pane's refraction map, from the site's glass renderer; asked for when a clear ground is first shown
   function paneFor(id) { const g = GROUNDS[id]; if (!g || g.med !== 3) return; const kind = g.v ? 'ice' : 'glass'; if (paneWant === kind) return; paneWant = kind;
     import('./glass-ground.mjs').then((m) => m.glassMap(kind)).then((m) => { if (dead || paneWant !== kind) return; gl.activeTexture(gl.TEXTURE5); gl.bindTexture(gl.TEXTURE_2D, tGlass);
@@ -59,10 +63,23 @@ export function createWell(canvas, { reduced = false, ground = 'paper' } = {}) {
   function brushUp(share = 0) {
     if (!layer) return;
     if (share > 0 && layer.box) dissolve(layer, sim, share, sim.parts.length);
+    const cg = layer.caught; if (cg) { layer.caught = null; for (let y = cg.y0; y <= cg.y1; y++) for (let x = 0; x < CW; x++) wb[(y * CW + x) * 4 + 1] = layer.catch[y * CW + x];
+      gl.activeTexture(gl.TEXTURE3); gl.bindTexture(gl.TEXTURE_2D, tWrite); gl.texSubImage2D(gl.TEXTURE_2D, 0, 0, cg.y0, CW, cg.y1 - cg.y0 + 1, gl.RGBA, gl.UNSIGNED_BYTE, wb.subarray(cg.y0 * CW * 4, (cg.y1 + 1) * CW * 4)); }
     const d = layer.surface.takeDirty(); if (!d) return;
     gl.activeTexture(gl.TEXTURE4); gl.bindTexture(gl.TEXTURE_2D, tBrush); gl.texSubImage2D(gl.TEXTURE_2D, 0, d.x0, d.y0, d.x1 - d.x0 + 1, d.y1 - d.y0 + 1, gl.RGBA, gl.UNSIGNED_BYTE, coverage(layer, d));
   }
-  sim.setMedium(behaviour(ground));
+  sim.setMedium(behaviour(ground, loom));
+  // the tables the grounds after the first ten read (cloth.mjs, grounds-more.mjs), sent once each, when the ground is first shown
+  const upload = (unit, t, m) => { gl.activeTexture(gl.TEXTURE0 + unit); gl.bindTexture(gl.TEXTURE_2D, t); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, m.w, m.h, 0, gl.RGBA, gl.UNSIGNED_BYTE, m.data); };
+  function moreFor(id) { const g = GROUNDS[id]; if (!g || g.med < 10) return;
+    if (g.med === 10 && wove !== loom.weave) { upload(6, tWeave, clothPixels(draftOf(loom.weave))); wove = loom.weave; }
+    const kind = g.med === 11 ? 'film' : g.med === 12 ? `sound:${heardKey}` : g.med === 13 ? 'glow' : ''; if (!kind || kind === more) return; more = kind;
+    upload(7, tMore, g.med === 11 ? filmTable() : g.med === 12 ? spectrogram(heard) : glowTable()); }
+  function moreUniforms(g) {
+    if (g.med === 10) { gl.uniform4f(U('uMo'), DYE, 0, 0, 0); gl.uniform4f(U('uCl'), loom.woven ? 1 : 0, sim.parts.length, ENDS, PICKS); gl.uniform4fv(U('uKG'), ksOf(g.base)); }
+    else if (g.med === 11) { const f = filmPlan(canvas.width); gl.uniform4f(U('uMo'), FILM.expo, f.ringFrac, 0, 0); gl.uniform4f(U('uFh'), f.halo[0], f.halo[1], f.halo[2], 1); gl.uniform4f(U('uFg'), f.grainStops[0], f.grainStops[1], f.grainStops[2], 0); }
+    else if (g.med === 12) gl.uniform4f(U('uMo'), 10 ** (SOUND.groundDb / 10), SOUND.unit, SOUND.floorDb, SOUND.rangeDb);
+    else if (g.med === 13) gl.uniform4f(U('uMo'), HEAT.plate, HEAT.unit, HEAT.low, HEAT.high); }
 
   function uniforms() {
     const parts = sim.parts, A = new Float32Array(16), B = new Float32Array(16), C = new Float32Array(16), D = new Float32Array(16), O = new Float32Array(15), K = new Float32Array(18), S = new Float32Array(18), Q = new Float32Array(64);
@@ -86,7 +103,7 @@ export function createWell(canvas, { reduced = false, ground = 'paper' } = {}) {
     gl.uniform4fv(U('uKS'), Q); gl.uniform3fv(U('uLin'), O); gl.uniform3fv(U('uK'), K); gl.uniform3fv(U('uS'), S);
   }
   function draw() {
-    const { dye, dx, dy, RV, phase } = sim; brushUp(); paneFor(next ? next.id : ground); if (next) paneFor(ground);
+    const { dye, dx, dy, RV, phase } = sim; brushUp(); paneFor(next ? next.id : ground); if (next) paneFor(ground); moreFor(ground);
     if (next && !sim.changing) { ground = next.id; next = null; const fn = done; if (fn) setTimeout(() => fn(ground), 0); }   // the front has crossed: the new ground stands
     for (let i = 0; i < n; i++) {
       for (let c = 0; c < 4; c++) bDye[i * 4 + c] = clamp(dye[c][i], 0, 1) * 255;
@@ -98,9 +115,9 @@ export function createWell(canvas, { reduced = false, ground = 'paper' } = {}) {
     gl.activeTexture(gl.TEXTURE2); gl.bindTexture(gl.TEXTURE_2D, tProd); gl.texImage2D(gl.TEXTURE_2D, 0, gl.LUMINANCE, RX, RY, 0, gl.LUMINANCE, gl.UNSIGNED_BYTE, bProd);
     gl.viewport(0, 0, canvas.width, canvas.height); gl.uniform1f(U('uAspect'), canvas.width / canvas.height);
     const g = GROUNDS[ground] || GROUNDS.paper, g2 = next ? GROUNDS[next.id] : g; gl.uniform3fv(U('uBase'), new Float32Array(g.base)); gl.uniform3fv(U('uBase2'), new Float32Array(g2.base));
-    gl.uniform4f(U('uFx'), g.med, sim.dry, soft, strength); gl.uniform4fv(U('uGain'), gain); gl.uniform4f(U('uEnv'), g.v, tl[0], tl[1], 0); gl.uniform4f(U('uTo'), g2.med, g2.v, next ? OPS[next.op] || 1 : 0, next ? 1 : 0); gl.uniform4f(U('uInk'), 0, 0, 0, written ? 1 : 0); gl.uniform4f(U('uBr'), layer?.box ? 1 : 0, 0, 0, 0);
+    gl.uniform4f(U('uFx'), g.med, sim.dry, soft, strength); gl.uniform4fv(U('uGain'), gain.slice(0, 4)); gl.uniform4f(U('uEnv'), g.v, tl[0], tl[1], 0); gl.uniform4f(U('uTo'), g2.med, g2.v, next ? OPS[next.op] || 1 : 0, next ? 1 : 0); gl.uniform4f(U('uInk'), 0, 0, 0, written ? 1 : 0); gl.uniform4f(U('uBr'), layer?.box && gain[4] ? 1 : 0, catchAll, 0, 0);
     gl.uniform4f(U('uGl'), pane && pane.kind === paneWant ? refract : 0, pane ? pane.reach[0] : 0, pane ? pane.reach[1] : 0, 0); gl.uniform4f(U('uGs'), pane ? pane.spread.r : 1, pane ? pane.spread.b : 1, 0, 0);
-    gl.uniform1f(U('uFlatOn'), flat ? 1 : 0); gl.uniform4fv(U('uFlat'), flat || [0, 0, 0, 0]);
+    moreUniforms(g); gl.uniform1f(U('uFlatOn'), flat ? 1 : 0); gl.uniform4fv(U('uFlat'), flat || [0, 0, 0, 0]);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
   }
   function size() {
@@ -139,18 +156,22 @@ export function createWell(canvas, { reduced = false, ground = 'paper' } = {}) {
     touch() { wake(); return api; },   // something outside changed the field (a brush): draw it and let the water run
     reset() { sim.seed(); sim.settle(); if (layer) clearLayer(layer); if (reduced) draw(); else wake(); return api; },
     // the ground the pigment lies on: an id from grounds.mjs
-    ground(id) { if (id === undefined) return ground; if (GROUNDS[id]) { ground = id; next = null; sim.setMedium(behaviour(id)); } draw(); return api; },
+    ground(id) { if (id === undefined) return ground; if (GROUNDS[id]) { ground = id; next = null; sim.setMedium(behaviour(id, loom)); } draw(); return api; },
+    // the woven ground's setting: which weave (cloth.mjs), and whether its threads are spun from the blend
+    loom(l) { if (l === undefined) return { ...loom }; loom = cleanLoom(l); if (GROUNDS[ground]?.loom && !next) sim.setMedium(behaviour(ground, loom)); draw(); return api; },
+    // the sound ground's spectrogram: a signal as numbers (signal.mjs), or null for the quiet hiss
+    listen(samples, key = '') { if (key === heardKey && (samples ? 1 : 0) === (heard ? 1 : 0)) return api; heard = samples || null; heardKey = key; draw(); return api; },
     // the ground changes state: a front crosses the well over `seconds`, and the solver's medium changes behind it.
     // then(id) is called once the new ground stands. Under reduced motion the change is whole at once.
-    transform(id, op, seconds = 9, then = null) { if (!GROUNDS[id] || id === ground) return api; next = { id, op }; done = then; sim.change(behaviour(id), op, seconds); wake(); return api; },
+    transform(id, op, seconds = 9, then = null) { if (!GROUNDS[id] || id === ground) return api; next = { id, op }; done = then; sim.change(behaviour(id, loom), op, seconds); wake(); return api; },
     changing: () => (next ? { to: next.id, op: next.op, f: sim.changing?.f ?? 1 } : null),
-    write(mask, w, h) { written = !!mask; gl.activeTexture(gl.TEXTURE3); gl.bindTexture(gl.TEXTURE_2D, tWrite); const b = mask ? Uint8Array.from(mask, (x) => clamp(x, 0, 1) * 255) : new Uint8Array(1);
-      gl.texImage2D(gl.TEXTURE_2D, 0, gl.LUMINANCE, mask ? w : 1, mask ? h : 1, 0, gl.LUMINANCE, gl.UNSIGNED_BYTE, b); draw(); return api; },
+    write(mask, w = CW, h = CH) { written = !!mask; for (let y = 0; y < CH; y++) for (let x = 0; x < CW; x++) wb[(y * CW + x) * 4] = mask ? clamp(mask[Math.floor(y * h / CH) * w + Math.floor(x * w / CW)], 0, 1) * 255 : 0;
+      gl.activeTexture(gl.TEXTURE3); gl.bindTexture(gl.TEXTURE_2D, tWrite); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, CW, CH, 0, gl.RGBA, gl.UNSIGNED_BYTE, wb); draw(); return api; },
     brush() { if (!layer) { layer = createLayer(); gl.activeTexture(gl.TEXTURE4); gl.bindTexture(gl.TEXTURE_2D, tBrush); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, FX, FY, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array(FX * FY * 4)); } return layer; },
     brushed: () => (layer ? held(layer) : [0, 0, 0, 0]),   // the brushed paint still in the layer, per pigment, in the unit of amounts()
     fade(slot, share) { if (sim.parts[slot]) { sim.parts[slot].fade = share; uniforms(); draw(); } return api; },
     // for checks: each of granulation, rim, tooth and product can be switched off (0) to see what it adds
-    gain(g = {}) { ['granulation', 'rim', 'tooth', 'product'].forEach((k, i) => { if (typeof g[k] === 'number') gain[i] = g[k]; }); if (typeof g.refract === 'number') refract = g.refract; draw(); return api; },
+    gain(g = {}) { ['granulation', 'rim', 'tooth', 'product', 'brush'].forEach((k, i) => { if (typeof g[k] === 'number') gain[i] = g[k]; }); if (typeof g.refract === 'number') refract = g.refract; if (typeof g.catch === 'number') catchAll = g.catch; draw(); return api; },   // catch 1: every brush's paint gated by the tooth, as before the catch map
     pane: () => (pane && pane.kind === paneWant ? { kind: pane.kind, spread: pane.spread, reach: pane.reach } : null),   // the refraction map in use, once it has come
     // for checks: the shader's answer for flat layers of these thicknesses on untextured paper, as [r, g, b] on 0 to 255
     optics(d) { flat = new Float32Array(4); flat.set(d.slice(0, 4)); draw(); const px = new Uint8Array(4); gl.readPixels(canvas.width >> 1, canvas.height >> 1, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px); flat = null; draw(); return [px[0], px[1], px[2]]; },

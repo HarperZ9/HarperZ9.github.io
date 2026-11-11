@@ -93,7 +93,9 @@ test('a fibre sheet wicks a wash along its fibres faster than across them; paper
   assert.ok(ratio(f) > 3, `fibre sheet: the spot grows ${ratio(f).toFixed(2)} times as fast along x (the fibres) as along y`);
   assert.ok(ratio(p) > 0.9 && ratio(p) < 1.1, `paper: the same spot grows evenly (${ratio(p).toFixed(2)})`);
   assert.ok(ratio(w) > 1.5 && ratio(w) < ratio(f), `the wet sheet wicks less sharply than the dry one (${ratio(w).toFixed(2)})`);
-  assert.deepEqual(GROUNDS['fibre-sheet'].wick, [2.2, 0.35]); assert.ok(f.kept <= TOLERANCE);
+  // the sheet is the fibre module's random network (spread.mjs over fibre.mjs), not one fixed direction: its links vary from cell to cell
+  const L = behaviour('fibre-sheet').links, lo = Math.min(...L.s), hi = Math.max(...L.s); assert.ok(L.fibres && hi > 1.5 * lo, `the links follow the fibres, cell by cell (across: ${lo.toFixed(2)} to ${hi.toFixed(2)})`);
+  assert.ok(L.se.some((g) => g > 0.01) || L.sw.some((g) => g > 0.01), 'a fibre that runs at a slant carries the wash along the diagonal'); assert.ok(f.kept <= TOLERANCE);
 });
 
 test('living pigments are proposals: selectable, labelled, with what would settle each; the fade is ours and says so', () => {

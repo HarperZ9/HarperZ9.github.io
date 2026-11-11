@@ -22,8 +22,9 @@
 //
 // MEDIUM. The ground has a state, and the state sets how pigment behaves on it: medium({ carry, spread, lift, wick })
 // (grounds.mjs holds the numbers). carry is the share of the water's motion kept each step, spread scales how fast
-// pigment spreads by itself, lift makes it rise as smoke does, wick is [along, across]: a fibre sheet spreads a wash
-// faster along its fibres (the x direction) than across them.
+// pigment spreads by itself, lift makes it rise as smoke does, wick is [along x, along y]. links (spread.mjs) is the
+// spreading cell by cell, to all eight neighbours: a fibre sheet's fibre network and a cloth's threads each give their
+// own map, and a ground without one spreads by its two wick rates, as before.
 //
 // CHANGE OF STATE. change(next, op, seconds) moves the medium to another one behind a front that crosses the well:
 // heat rises from the bottom, cooling and drying come in from the edges, grinding passes from left to right,
@@ -31,11 +32,14 @@
 // (0 old, 1 new); the picture reads the same field, so the front seen is the front the solver uses. Pigment is
 // kept through it by the same correction as every other step.
 import { Fluid, STEP } from '../../studio/lib/fluid.mjs';
-export { STEP };
+import { NX, NY } from './grid.mjs';
+import { uniformLinks } from './spread.mjs';
+export { STEP, NX, NY };
 
-export const NX = 96, NY = 72, SLOTS = 4, RS = 3, RX = NX * RS, RY = NY * RS, TOLERANCE = 1e-4, DIFFUSE = 0.03;
+export const SLOTS = 4, RS = 3, RX = NX * RS, RY = NY * RS, TOLERANCE = 1e-4, DIFFUSE = 0.03;
 const clamp = (x, a, b) => (x < a ? a : x > b ? b : x);
 export const BASE = Object.freeze({ carry: 0.985, spread: 1, lift: 0, wick: [1, 1] });
+const withLinks = (m) => ({ ...BASE, ...m, links: m.links || uniformLinks(m.wick || BASE.wick) });
 const edge = (x, y) => 2 * Math.min(x, 1 - x, y, 1 - y);
 // where a front starts (0) and where it ends (1), by operation
 export const FRONTS = Object.freeze({ heat: (x, y) => 1 - y, cool: edge, dry: edge, grind: (x) => x, dissolve: (x, y) => y, press: (x, y) => 1 - edge(x, y) });
@@ -49,12 +53,12 @@ export function createSim({ reduced = false, conserve = true } = {}) {
   const n = NX * NY, rn = RX * RY, fluid = new Fluid(NX, NY, { seed: 7, iters: 16, dissipation: 1 });
   const dye = Array.from({ length: SLOTS }, () => new Float32Array(n)), dx = new Float32Array(n), dy = new Float32Array(n), all = new Float32Array(n);
   const RU = new Float32Array(rn).fill(1), RV = new Float32Array(rn), RA = new Float32Array(rn), RB = new Float32Array(rn), zone = new Float32Array(rn), zc = new Float32Array(n);
-  const put = new Float64Array(SLOTS), fade = new Float32Array(rn), phase = new Float32Array(n), ragged = new Float32Array(n);
+  const mix = { e: new Float32Array(n), s: new Float32Array(n), se: new Float32Array(n), sw: new Float32Array(n) }, put = new Float64Array(SLOTS), fade = new Float32Array(rn), phase = new Float32Array(n), ragged = new Float32Array(n);
   for (let y = 0; y < NY; y++) for (let x = 0; x < NX; x++) ragged[y * NX + x] = 0.5 + 0.25 * (Math.sin(x * 0.31 + 2.1 * Math.sin(y * 0.17)) + Math.sin(y * 0.43 + 1.6 * Math.sin(x * 0.13) + 1.9));
   // the reaction fades out before the well's edge, along an uneven line so that no straight front forms there
   for (let y = 0; y < RY; y++) for (let x = 0; x < RX; x++) { const wob = Math.sin(x * 0.071 + 1.3 * Math.sin(y * 0.043)) + Math.sin(y * 0.083 + 1.7 * Math.sin(x * 0.037));
     fade[y * RX + x] = clamp((Math.min(x, RX - 1 - x, y, RY - 1 - y) - 14 - 7 * wob) / 22, 0, 1); }
-  let parts = [], tick = 0, clock = 0, tiltX = 0, tiltY = 0, calm = 0, dry = reduced ? 1 : 0, worst = 0, grain = 1, flow = { speed: 0.3, curl: 0.3, coherence: 0.4 }, cur = BASE, to = null, change = null;
+  let parts = [], tick = 0, clock = 0, tiltX = 0, tiltY = 0, calm = 0, dry = reduced ? 1 : 0, worst = 0, grain = 1, flow = { speed: 0.3, curl: 0.3, coherence: 0.4 }, cur = withLinks(BASE), to = null, change = null;
   const active = () => dye.slice(0, Math.max(1, parts.length));
 
   function splat(F, x, y, r, amount) {
@@ -99,17 +103,20 @@ export function createSim({ reduced = false, conserve = true } = {}) {
   // real is the time that has truly passed, so a front takes its stated seconds whatever the frame rate
   function step(dt = STEP, drift = true, turns = reduced ? 8 : 1, real = dt) {
     if (change) { change.f = Math.min(1, change.f + real / change.seconds); front(); if (change.f >= 1) { cur = to; to = change = null; phase.fill(0); } }
-    const nx = to || cur, dC = nx.carry - cur.carry, dS = nx.spread - cur.spread, dL = nx.lift - cur.lift, dA = nx.wick[0] - cur.wick[0], dB = nx.wick[1] - cur.wick[1];
+    const nx = to || cur, dC = nx.carry - cur.carry, dS = nx.spread - cur.spread, dL = nx.lift - cur.lift, a = cur.links, b = nx.links, same = a === b;
     if (drift) ambient(dt);
     fluid.step(dt);
     const A = active(), moving = fluid.energy() > 1e-5;
     for (const F of [...A, dx, dy]) { fluid._advect(F, fluid.t0, dt); F.set(fluid.t0); }
     for (let i = 0; i < n; i++) { let s = 0; for (const F of A) s += F[i]; all[i] = s; }
+    // the ground's own links: along a sheet's fibres, along a cloth's threads; behind a front each link is mixed toward the next ground's
+    if (!same) for (const m of ['e', 's', 'se', 'sw']) { const A0 = a[m], B0 = b[m], O = mix[m]; for (let i = 0; i < n; i++) O[i] = A0[i] + (B0[i] - A0[i]) * phase[i]; }
+    const { e: gE, s: gS, se: gSE, sw: gSW } = same ? a : mix;
     A.forEach((F, s) => { const T = fluid.t0, rate = DIFFUSE * (0.5 + (parts[s]?.drive.bleed ?? 0.5) + 0.8 * (parts[s]?.drive.speed ?? 0.3)); T.set(F);
       for (let y = 1; y < NY - 1; y++) for (let x = 1, i = y * NX + 1; x < NX - 1; x++, i++) {
-        const ph = phase[i], k = Math.min(0.2, rate * (1 + 2.2 * Math.min(1, all[i] - T[i]))) * (cur.spread + dS * ph);     // faster where it meets a wet neighbour
-        const kx = Math.min(0.24, k * (cur.wick[0] + dA * ph)), ky = Math.min(0.24, k * (cur.wick[1] + dB * ph));           // and along the fibres of a sheet
-        F[i] = T[i] + kx * (T[i - 1] + T[i + 1] - 2 * T[i]) + ky * (T[i - NX] + T[i + NX] - 2 * T[i]); }
+        const k = Math.min(0.2, rate * (1 + 2.2 * Math.min(1, all[i] - T[i]))) * (cur.spread + dS * phase[i]), t = T[i];     // faster where it meets a wet neighbour
+        F[i] = t + Math.min(0.24, k * gE[i]) * (T[i + 1] - t) + Math.min(0.24, k * gE[i - 1]) * (T[i - 1] - t) + Math.min(0.24, k * gS[i]) * (T[i + NX] - t) + Math.min(0.24, k * gS[i - NX]) * (T[i - NX] - t)
+          + Math.min(0.24, k * gSE[i]) * (T[i + NX + 1] - t) + Math.min(0.24, k * gSE[i - NX - 1]) * (T[i - NX - 1] - t) + Math.min(0.24, k * gSW[i]) * (T[i + NX - 1] - t) + Math.min(0.24, k * gSW[i - NX + 1]) * (T[i - NX + 1] - t); }
       const now = total(F); if (put[s] > 1e-9) { worst = Math.max(worst, Math.abs(now - put[s]) / put[s]); if (conserve && now > 1e-9) { const f = put[s] / now; for (let i = 0; i < n; i++) F[i] *= f; } } });
     if (turns > 0 && (reduced || (tick++ & 1))) { if (moving) { carry(RV, RA, dt * (reduced ? 1 : 2)); RV.set(RA); carry(RU, RA, dt * (reduced ? 1 : 2)); RU.set(RA); } react(turns); }   // both substances are carried together
     for (let i = 0; i < n; i++) {
@@ -157,9 +164,9 @@ export function createSim({ reduced = false, conserve = true } = {}) {
     reduced, dye, dx, dy, RV, fluid, phase,
     get changing() { return change ? { op: change.op, f: change.f } : null; }, get medium() { return cur; },
     // the ground's state, at once
-    setMedium(m) { cur = { ...BASE, ...m }; to = change = null; phase.fill(0); return api; },
+    setMedium(m) { cur = withLinks(m); to = change = null; phase.fill(0); return api; },
     // the ground changes state behind a front; under reduced motion it has changed at once
-    change(m, op, seconds = 9) { to = { ...BASE, ...m }; change = { op, f: 0, seconds }; calm = 0; if (reduced) { cur = to; to = change = null; phase.fill(0); } return api; },
+    change(m, op, seconds = 9) { to = withLinks(m); change = { op, f: 0, seconds }; calm = 0; if (reduced) { cur = to; to = change = null; phase.fill(0); } return api; },
     get dry() { return dry; }, get flow() { return flow; }, get parts() { return parts; }, get grain() { return grain; },
     set(next) { parts = next.slice(0, SLOTS); let sp = 0, cu = 0, co = 0, w = 0;
       for (const p of parts) { sp += p.weight * p.drive.speed; cu += p.weight * p.drive.curl; co += p.weight * p.drive.coherence; w += p.weight; }

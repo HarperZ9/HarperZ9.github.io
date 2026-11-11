@@ -44,8 +44,11 @@ export function jump(chainId, step) {
   return { ground: MATERIALS[path[step]].ground, chain: { from: c.from, ops: c.steps.slice(0, step), of: null } };
 }
 
+// Every operation has a home: all six are always drawn, in one order, and the ones the table has no move for are disabled
+// with the reason, so nothing moves when the ground changes.
 export function opsHTML(ground, chain, busy = false) {
-  return opsFor(ground, chain).map((o) => `<button type="button" data-op="${o.op}"${o.ok && !busy ? '' : ' disabled'} title="${esc(cap(o.why))}">${OP_NAME[o.op]}<span class="sr-only">: ${esc(o.why)}</span></button>`).join('');
+  const have = opsFor(ground, chain), m = MATERIALS[current(ground, chain)];
+  return Object.keys(OP_NAME).map((op) => have.find((o) => o.op === op) ?? { op, ok: false, why: m ? `the table has no ${op} for ${m.name}` : `${GROUNDS[ground]?.name ?? ground} has no row in the state table yet` }).map((o) => `<button type="button" data-op="${o.op}"${o.ok && !busy ? '' : ' disabled'} title="${esc(cap(o.why))}">${OP_NAME[o.op]}<span class="sr-only">: ${esc(o.why)}</span></button>`).join('');
 }
 // Each made thing as steps to walk: the step the ground is on is marked, and each step is a button.
 export function chainsHTML(ground, chain) {

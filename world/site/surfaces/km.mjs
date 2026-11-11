@@ -92,3 +92,9 @@ export function mixture(lins, d = lins.map(() => 1)) {
   lins.forEach((lin, i) => { const q = ksOf(lin); for (let b = 0; b < BANDS; b++) K[b] += q[b] * d[i] / tot; });
   return spectrumRGB(fromKS(K)).map((x) => clamp(x, 0, 1));
 }
+// Dye in a fibre: single-constant Kubelka-Munk as textile dyers work out a recipe. The thread's own absorption-to-
+// scattering ratio and each dye's, times its amount and DYE (how strongly a unit of the well's pigment dyes), add band by
+// band; nothing is divided by the total, because the fibre itself stays. Order cannot matter.
+export const DYE = 1.6;
+export function dyedKS(base, lins, d = lins.map(() => 1)) { const K = Float64Array.from(ksOf(base)); lins.forEach((lin, i) => { const q = ksOf(lin); for (let b = 0; b < BANDS; b++) K[b] += DYE * d[i] * q[b]; }); return K; }
+export const dyed = (base, lins, d) => spectrumRGB(fromKS(Array.from(dyedKS(base, lins, d)))).map((x) => clamp(x, 0, 1));

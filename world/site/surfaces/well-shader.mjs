@@ -28,8 +28,11 @@
 // sheet it feathers along the fibres and lies thicker in the hollows.
 // BRUSHED PAINT (uBr.x = 1): uBrush holds, per pigment, how much paint the site's brush engine left at each point
 // (brush-field.mjs), ten times finer than the solver's field. Each amount is one more layer by the ground's rule. On a
-// ground with a tooth, thin paint catches on the high points only, so a nearly dry brush breaks up over the tooth.
+// ground with a tooth, a dry brush's thin paint catches on the high points only and breaks up over the tooth; how much each
+// point catches is the green channel of uWrite (brush-field.mjs stamps it per dab), so a soft brush's haze settles in the hollows too.
+// Grounds 10 to 13 (woven cloth, film stock, sound, fire heat) are drawn by well-shader-more.mjs, whose header says how.
 // uFlatOn = 1 is a probe for tests: flat layers of the thicknesses in uFlat on the bare ground, by the ground's rule.
+import { MORE_HEAD, MORE_FNS } from './well-shader-more.mjs';
 export const VERT = `attribute vec2 p; varying vec2 v; void main(){ v = p * .5 + .5; gl_Position = vec4(p, 0., 1.); }`;
 export const FRAG = `precision highp float;
 varying vec2 v;
@@ -39,7 +42,7 @@ uniform vec4 uA[4], uB[4], uC[4], uD[4];   // A: feature frequency, cos, sin, st
 uniform vec4 uKS[16], uGl, uGs; uniform vec3 uPM[16];   // KS: pigment i's 16 bands are uKS[4 i] to uKS[4 i + 3]. PM: each band's colour
 uniform vec4 uFx, uGain, uFlat, uTo, uEnv, uInk, uBr;   // Fx: ground, dry, product softness, mean link strength. Gain: granulation, rim, tooth, product (1 each; tests set one to 0)
 // To: the next ground, its variant, the operation (1 heat, 2 cool or dry, 3 grind, 4 soak, 5 press), on. Env: this ground's variant, tilt x, tilt y. Ink: unused rgb, on
-uniform float uAspect, uFlatOn;
+uniform float uAspect, uFlatOn;${MORE_HEAD}
 float h(vec2 q){ q = fract(q * vec2(.1031, .1030)); q += dot(q, q.yx + 33.33); return fract((q.x + q.y) * q.x); }
 float vn(vec2 q){ vec2 i = floor(q), f = fract(q); f = f * f * (3. - 2. * f);
   return mix(mix(h(i), h(i + vec2(1, 0)), f.x), mix(h(i + vec2(0, 1)), h(i + vec2(1, 1)), f.x), f.y); }
@@ -65,6 +68,7 @@ float part(vec4 d, int i){ return i == 0 ? d.r : i == 1 ? d.g : i == 2 ? d.b : d
 vec3 shade(float med, float var, vec3 B, vec2 uv, vec4 dye, vec2 q);
 void main(){
   float med = uFx.x; bool layered = med < 2.5, glass = med > 2.5 && med < 3.5, hard = med > .5 && med < 3.5, stone = med > .5 && med < 1.5, metal = med > 1.5 && med < 2.5;
+  if (uFlatOn > .5 && med > 9.5){ gl_FragColor = vec4(enc(flatMore(med)), 1.); return; }
   if (uFlatOn > .5){ vec3 R = uBase, acc = vec3(0.); mat4 lg = mat4(0.); float tot = 0., area = 0.;
     for (int i = 0; i < 4; i++){ float d = i == 0 ? uFlat.x : i == 1 ? uFlat.y : i == 2 ? uFlat.z : uFlat.w;
       if (layered) R = lay(R, uK[i], uS[i], d); else if (glass) R *= thru(uK[i], uS[i], d);
@@ -86,7 +90,7 @@ void main(){
   gl_FragColor = vec4(enc(R), 1.);
 }
 vec3 shade(float med, float var, vec3 B, vec2 uv, vec4 dye, vec2 q){
-  bool layered = med < 2.5, glass = med > 2.5 && med < 3.5, hard = med > .5 && med < 3.5, stone = med > .5 && med < 1.5, metal = med > 1.5 && med < 2.5, powder = med > 8.5;
+  bool layered = med < 2.5, glass = med > 2.5 && med < 3.5, hard = med > .5 && med < 3.5, stone = med > .5 && med < 1.5, metal = med > 1.5 && med < 2.5, powder = med > 8.5 && med < 9.5;
   bool fibre = med < .5 && var > .5, wood = stone && var > .5, ice = glass && var > .5, wet = med > 3.5 && med < 4.5, melt = wet && var > .5 && var < 1.5, pulp = wet && var > 1.5;
   float sum = dye.r + dye.g + dye.b + dye.a;
   // the ground's own surface: paper's tooth, a sheet's fibres, stone's coarse grain, wood's rings, metal's brushing. A height from 0 (low) to 1.
@@ -96,7 +100,7 @@ vec3 shade(float med, float var, vec3 B, vec2 uv, vec4 dye, vec2 q){
   float th = .5 * vn(pq) + .3 * vn(pq * 2.1 + 9.) + .2 * vn(pq * 4.3 + 31.), strand = 0.;
   if (fibre){ vec2 fq = vec2(at.x * 5., at.y * 150. + 5. * vn(at * vec2(3., 2.) + 5.)); strand = smoothstep(.74, .95, vn(fq)) + .6 * smoothstep(.8, .97, vn(fq * vec2(1.7, .6) + 40.)); th = clamp(th + .45 * strand, 0., 1.); }
   if (wood){ float ring = .5 + .5 * sin(46. * (uv.y + .16 * vn(at * vec2(1.4, 5.)) + .03 * vn(at * vec2(30., 6.)))); th = .65 * ring + .35 * vn(at * vec2(8., 160.)); }
-  vec3 R = B * (1. + uGain.z * (stone ? .5 : fibre ? .3 : .16) * (th - .5)), acc = vec3(0.); mat4 logmix = mat4(0.); float tot = 0., seen = 0., area = 0.;
+  vec3 R = B * (1. + uGain.z * (stone ? .5 : fibre ? .3 : .16) * (th - .5)), acc = vec3(0.); mat4 logmix = mat4(0.); vec3 accN = vec3(0.); float tot = 0., seen = 0., area = 0., hsum = 0.;
   if (fibre) R *= 1. + .16 * strand * (var > 1.5 ? .4 : 1.);
   if (glass){ vec4 gm = uGl.x > 0. ? texture2D(uGlass, uv) : vec4(.502, .502, 0., 0.); vec2 off = (gm.rg - .502) * uGl.yz * uGl.x;   // refraction: each colour is read where its own ray lands
     vec3 lines = vec3(rules(uv + off * uGs.x), rules(uv + off), rules(uv + off * uGs.y));
@@ -107,13 +111,13 @@ vec3 shade(float med, float var, vec3 B, vec2 uv, vec4 dye, vec2 q){
   vec2 cells = powder ? (var > 1.5 ? vec2(34. * uAspect, 72.) : vec2(66. * uAspect, 66.)) : vec2(44. * uAspect, 44.);
   vec2 guv = powder ? vec2(uv.x + .5 * mod(floor(uv.y * cells.y), 2.) / cells.x, uv.y) : uv, cell = (floor(guv * cells) + .5) / cells, in01 = fract(guv * cells);
   vec4 dyeC = texture2D(uDye, cell);
-  vec4 br = uBr.x > .5 && med < 7.5 ? texture2D(uBrush, uv) : vec4(0.);
+  vec4 br = uBr.x > .5 && (med < 7.5 || med > 9.5) ? texture2D(uBrush, uv) : vec4(0.);
   float gr2 = h(floor(guv * cells) + 91.3); vec3 grain = B * (.62 + .76 * gr2); bool taken = false;
   if (powder){ q = cell - (texture2D(uDisp, cell).xy - .5) * .6; q.x *= uAspect; }   // a grain takes its colour whole, so the pigment's pattern is read at the grain's middle
   for (int i = 0; i < 4; i++){
     if (uC[i].z < .5) continue;
     float c = powder ? part(dyeC, i) : part(dye, i);
-    if (med > 7.5 && !powder){ float cc = part(dyeC, i);   // one mark per pigment, each in its own quarter of the cell
+    if (med > 7.5 && med < 8.5){ float cc = part(dyeC, i);   // one mark per pigment, each in its own quarter of the cell
       vec2 mk = vec2(i == 0 || i == 2 ? .27 : .73, i < 2 ? .27 : .73); float rr = .24 * sqrt(clamp(cc * cc * (.5 + uB[i].z), 0., 1.));
       float on = 1. - smoothstep(rr - .03, rr + .03, max(abs(in01.x - mk.x), abs(in01.y - mk.y))); acc += on * uLin[i]; area += on; continue; }
     // the element's own grain: turned to its measured wave angle, drawn out along it by the wave's strength
@@ -137,20 +141,23 @@ vec3 shade(float med, float var, vec3 B, vec2 uv, vec4 dye, vec2 q){
       if (med < 1.5) d *= max(0., 1. + uGain.x * (fibre ? max(uD[i].x, .7) * 2.6 : uD[i].x * 1.9) * (.5 - th));   // granulation: more pigment in the low points of paper and stone, and between a sheet's fibres
       if (glass) R *= thru(uK[i], uS[i], d); else R = lay(R, uK[i], uS[i], d);
       float b = part(br, i);
-      if (b > .004){ float bt = glass ? 1. : smoothstep(.07, .34, b + uGain.z * (stone ? 1.1 : fibre ? .9 : .6) * (th - .5)), bd = b * bt * 1.7 * (.3 + uB[i].z); seen += b * bt;   // brushed paint, caught by the tooth
+      if (b > .004){ float bt = glass ? 1. : mix(1., smoothstep(.07, .34, b + uGain.z * (stone ? 1.1 : fibre ? .9 : .6) * (th - .5)), max(texture2D(uWrite, uv).g, uBr.y)), bd = b * bt * 1.7 * (.3 + uB[i].z); seen += b * bt;   // brushed paint, caught by the tooth
         if (glass) R *= thru(uK[i], uS[i], bd); else R = lay(R, uK[i], uS[i], bd); }
     } else {
       float d = c * (.25 + 1.25 * uB[i].z) * (.3 + .9 * body) * (1. - uB[i].w * vein);
       if (med > 4.5 && med < 5.5) d = c * (.3 + 1.1 * uB[i].z) * (.25 + 1.9 * n * n);   // smoke: soft, no veins
       if (med > 5.5 && med < 7.5) d = c * c * (.3 + 1.5 * uB[i].z) * (.04 + 2.3 * body * body * body) * (1. - .6 * uB[i].w * vein);   // light: bright where the pigment is thick, dark between
+      if (med > 11.5 && med < 12.5) d *= .06 + .94 * pow(.5 + .5 * cos(6.2831853 * uv.y * (7. + 3. * float(i) + 9. * uB[i].z)), 10.);   // a sound lies in bands of harmonics
       d += 1.3 * part(br, i) * (.3 + uB[i].z);   // brushed paint not yet carried off
-      if (wet) for (int j = 0; j < 4; j++) logmix[j] += d * uKS[i * 4 + j];
+      accN += d * hueN(uLin[i]); hsum += d * (1. - clamp(lumi(uLin[i]), 0., 1.));
+      if (wet || (med > 9.5 && med < 10.5)) for (int j = 0; j < 4; j++) logmix[j] += d * uKS[i * 4 + j];
       acc += d * uLin[i]; tot += d;
     }
   }
   // the reaction's product, where linked elements have met: a pigment of its own, with its own pattern, laid where the pigments themselves show
   float pm = uGain.w * (.25 + .75 * uFx.w) * smoothstep(.16, .5 + 1.4 * uFx.z, texture2D(uProd, uv).r);
   if (powder){ float gd = length(in01 - .5); return mix(grain, uLin[4], .35 * pm * step(.5, gr2)) * (1. - .5 * smoothstep(.28, .62, gd)) * (var > .5 && var < 1.5 ? 1. + .5 * step(.93, gr2) : 1.); }
+  if (med > 9.5) return finishMore(med, B, uv, q, acc, accN, tot, hsum, logmix, pm);
   if (med < 3.5){ float pd = pm * smoothstep(.3, 1.3, seen) * .6 * max(0., 1. + uGain.x * 1.7 * (.5 - th));
     if (glass) R *= thru(uK[4], uS[4], pd); else R = lay(R, uK[4], uS[4], pd);
     if (uInk.a > .5 && layered){ float w0 = texture2D(uWrite, uv).r, wk = 0., reach = fibre ? .0035 * (.4 + 1.2 * th) : .0012;   // written ink: it feathers along the fibres
@@ -172,4 +179,4 @@ vec3 shade(float med, float var, vec3 B, vec2 uv, vec4 dye, vec2 q){
       vec3 mask = vec3(step(sx, 1.), step(1., sx) * step(sx, 2.), step(2., sx)); R = min(vec3(1.), R * (.45 + 3.1 * mask)) * smoothstep(.0, .09, fract(px.y)) * smoothstep(1., .91, fract(px.y)); }
   }
   return R;
-}`;
+}${MORE_FNS}`;

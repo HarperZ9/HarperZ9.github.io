@@ -18,11 +18,12 @@ import { SIGNALS, toWell as signalToWell } from './signal.mjs';
 import { okToLinear, linToHex } from './km.mjs';
 import { BRUSHES, brushName, beginStroke, replay, cleanStrokes } from './brush-field.mjs';
 import { hexToOk } from '../../studio/lib/blend.mjs';
+import { WEAVES, weaveName, cleanLoom } from './cloth.mjs';
 
 let wells = 0;
 const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const GROUPS = [...new Set(Object.values(GROUNDS).map((g) => g.group))];
-const clean = (s) => ({ ...s, ground: s.ground ?? null, chain: validChain(s.chain) ? s.chain : null, living: (s.living || []).filter((id) => LIVING[id]).slice(0, 3), written: !!s.written, strokes: cleanStrokes(s.strokes) });
+const clean = (s) => ({ ...s, ground: s.ground ?? null, chain: validChain(s.chain) ? s.chain : null, living: (s.living || []).filter((id) => LIVING[id]).slice(0, 3), written: !!s.written, strokes: cleanStrokes(s.strokes), loom: cleanLoom(s.loom) });
 
 export function mount(host, input, ctx) {
   const { ix } = ctx;
@@ -30,16 +31,18 @@ export function mount(host, input, ctx) {
   const how = `sf-well-how-${++wells}`, fades = {}, like = driveFor(ix, { id: '', properties: [] }).shader;
   host.classList.add('sf-well');
   host.innerHTML = `<div class="sf-bar"><label class="sf-ground">Ground <select data-ground><option value="">follow the blend</option>${GROUPS.map((gr) => `<optgroup label="${esc(gr)}">${Object.entries(GROUNDS).filter(([, g]) => g.group === gr).map(([id, g]) => `<option value="${esc(id)}">${esc(g.name)}</option>`).join('')}</optgroup>`).join('')}</select></label>
-    <span class="sf-ops" role="group" aria-label="Change the ground's state"></span>
-    <label class="sf-ground">Brush <select data-brush><option value="">hand: stir and pour</option>${BRUSHES.map((b) => `<option value="${esc(b)}">${esc(brushName(b))}</option>`).join('')}</select></label></div>
-    <div class="sf-water" tabindex="0" role="application" aria-roledescription="well" aria-describedby="${how}"><canvas></canvas><i class="sf-cursor" hidden></i></div>
+    <label class="sf-ground">Brush <select data-brush><option value="">by hand</option>${BRUSHES.map((b) => `<option value="${esc(b)}">${esc(brushName(b))}</option>`).join('')}</select></label>
+    <span class="sf-ops" role="group" aria-label="Change the ground's state"></span></div>
+    <div class="sf-stage"><div class="sf-water" tabindex="0" role="application" aria-roledescription="well" aria-describedby="${how}"><canvas></canvas><i class="sf-cursor" hidden></i></div>
+    <p class="sf-line" aria-live="polite"></p></div>
     <p class="sf-how" id="${how}">Drag to stir. Press to pour. Arrow keys tilt the well, Space pours, 0 levels it.</p>
-    <div class="sf-acts"><span class="sf-slots" role="radiogroup" aria-label="Which pigment pours"></span>
-    <button type="button" data-act="level">Level</button><button type="button" data-act="again">Start again</button><button type="button" data-act="write" aria-pressed="false">Write on it</button></div>
+    <div class="sf-acts"><button type="button" data-act="level">Level</button><button type="button" data-act="again">Start again</button><button type="button" data-act="write" aria-pressed="false">Write on it</button>
+    <label class="sf-ground">Weave <select data-weave>${WEAVES.map((w) => `<option value="${w}">${esc(weaveName(w).toLowerCase())}</option>`).join('')}</select></label><button type="button" data-act="woven" aria-pressed="false">Threads from the blend</button>
+    <span class="sf-slots" role="radiogroup" aria-label="Which pigment pours"></span></div>
     <p class="sf-why" role="status"></p><p class="sf-did" role="status"></p>
     <ul class="sf-chains" aria-label="Made things, step by step"></ul><div class="sf-living"></div><div class="sf-sig"></div>
     <ul class="sf-still" hidden></ul>`;
-  const $ = (q) => host.querySelector(q), water = $('.sf-water'), canvas = $('canvas'), slots = $('.sf-slots'), still = $('.sf-still'), pick = $('[data-ground]'), why = $('.sf-why');
+  const $ = (q) => host.querySelector(q), line = $('.sf-line'), water = $('.sf-water'), canvas = $('canvas'), slots = $('.sf-slots'), still = $('.sf-still'), pick = $('[data-ground]'), why = $('.sf-why');
   const els = () => state.elements.map((id) => ix.byId.get(id)).filter(Boolean).slice(0, 4);
   // the pigments: every chosen element except the one that became the ground, then the living pigments, four at most
   // a silent signal, when one is chosen, takes the well: its notes are the pigments (signal.mjs; proposed)
@@ -75,25 +78,30 @@ export function mount(host, input, ctx) {
     const P = parts(), g = GROUNDS[on.id], k = P.map((p) => p.id).join(), moved = key !== '' && key !== k; key = k;
     slot = Math.min(slot, Math.max(0, P.length - 1));
     water.setAttribute('aria-label', `The well: ${P.map((e) => e.name).join(', ') || 'nothing'} on ${g.name}`); water.dataset.ground = on.id; water.dataset.state = g.state || '';
-    slots.hidden = P.length < 2;
     slots.innerHTML = P.map((e, i) => `<button type="button" role="radio" aria-checked="${i === slot}" data-slot="${i}"><i style="background:${esc(e.colour?.hex)}"></i>${esc(e.name)}</button>`).join('');
     still.innerHTML = P.map((e) => `<li><i style="background:${esc(e.colour?.hex)}"></i>${esc(e.name)} <span>${esc(e.colour?.hex)}${e.living ? ', proposed' : ''}</span></li>`).join('') + `<li>on ${esc(g.name)}${g.state ? `, a ${esc(g.state)}` : ''}</li>`;
-    pick.value = on.auto ? '' : on.id;
+    pick.value = on.auto ? '' : on.id; loomControls(g);
+    // the one line that always says what is in the well, on what, in which state, and with which tool
+    line.textContent = `${P.map((e) => e.name).join(' + ') || 'nothing'}, on ${g.name}${g.state ? ` (a ${g.state})` : ''}, ${brush ? `with the ${brushName(brush)} brush` : 'by hand'}`;
     why.innerHTML = `On <b>${esc(g.name)}</b>: ${esc(on.why)}. <small>${stateWords(on.id, state.chain)}</small>`;
     $('.sf-did').textContent = did;
     fill($('.sf-ops'), opsHTML(on.id, state.chain, !!well?.changing())); fill($('.sf-chains'), chainsHTML(on.id, state.chain));
     fill($('.sf-living'), sig ? '' : livingHTML(state.living, els().filter((e) => on.pigments.includes(e.id)).length + state.living.length >= 4, light)); fadeWords();
+    if (well) { const l = well.loom(); if (l.weave !== state.loom.weave || l.woven !== state.loom.woven) well.loom(state.loom); if (on.id === 'sound') well.listen(sig ? SIGNALS[sig.id].make() : null, sig?.id ?? ''); }
     if (well && well.ground() !== on.id && well.changing()?.to !== on.id) well.ground(on.id);
     fill($('.sf-sig'), signalHTML(sig?.id, sig?.got));
     well?.set(toWell(), { reseed: reseed || moved }); writing();
-    if (!sig && well && (reseed || moved) && state.strokes.length) { replay(well.brush(), state.strokes, P.length); well.touch(); }   // a painting is its strokes, laid again
+    if (!sig && well && (reseed || moved) && state.strokes.length) { replay(well.brush(), state.strokes, P.length, well.sim); well.touch(); }   // a painting is its strokes, laid again
     if (sig && well && (reseed || moved)) { well.sim.clear(); for (const p of sig.got.pours) well.sim.pour(p.slot, p.x, p.y, p.amount); well.tilt(0, 0); }   // the signal's pours, left to right
   }
-  const tellPage = () => { ctx.onGround?.(state.ground); ctx.onWell?.({ chain: state.chain, living: state.living, written: state.written, strokes: state.strokes }); };
+  const tellPage = () => { ctx.onGround?.(state.ground); ctx.onWell?.({ chain: state.chain, living: state.living, written: state.written, strokes: state.strokes, loom: state.loom }); };
+  // the loom's controls have their home in the row under the well; they are live only on the woven ground
+  function loomControls(g) { const on2 = !!g.loom, w = $('[data-weave]'), b = $('[data-act="woven"]'), why = 'The weave and its threads belong to the woven cloth ground';
+    w.value = state.loom.weave; w.disabled = !on2; b.disabled = !on2; b.setAttribute('aria-pressed', on2 && state.loom.woven); w.title = b.title = on2 ? '' : why; }
   // the brush engine (world/feed-23) paints the chosen pigment into the well's field; each stroke is kept so the painting can be laid again
   const HOW = { hand: 'Drag to stir. Press to pour. Arrow keys tilt the well, Space pours, 0 levels it.', brush: 'Drag to paint with the chosen pigment. Arrow keys move the brush and paint, Space lays one dab, 1 to 4 choose the pigment.' };
   const cursor = () => { const c = $('.sf-cursor'); c.hidden = !brush; c.style.left = `${kx * 100}%`; c.style.top = `${ky * 100}%`; };
-  const begin = () => (slot < parts().length ? beginStroke(well.brush(), slot, brush, state.strokes.length + 1) : null);
+  const begin = () => (slot < parts().length ? beginStroke(well.brush(), slot, brush, state.strokes.length + 1, well.sim) : null);
   const keep = (st) => { const s = st.done(); if (s.pts.length) { state.strokes = cleanStrokes([...state.strokes, s]); tellPage(); } };
   const keyStroke = (x, y) => { const st = begin(); if (!st) return; for (let i = 0; i <= 4; i++) st.add(kx + (x - kx) * i / 4, ky + (y - ky) * i / 4, 0.8, i * 0.03); kx = x; ky = y; keep(st); well.touch(); cursor(); };
   // one operation: the table says where it leads; the well shows the change crossing; the page says what happened
@@ -146,11 +154,13 @@ export function mount(host, input, ctx) {
     else if (a?.dataset.act === 'level') { tx = ty = 0; well?.tilt(0, 0); }
     else if (a?.dataset.act === 'again') { tx = ty = 0; well?.tilt(0, 0); for (const id of Object.keys(fades)) delete fades[id]; state.strokes = []; well?.reset(); paint(false); fadeOn(); tellPage(); }
     else if (a?.dataset.act === 'write') { state.written = !state.written; writing(); tellPage(); }
+    else if (a?.dataset.act === 'woven') { state.loom = { ...state.loom, woven: !state.loom.woven }; paint(false); tellPage(); }
   };
   const onPick = (ev) => {
     if (ev.target === pick) { state.ground = pick.value || null; const m = state.ground && materialOf(state.ground); state.chain = m ? { from: m, ops: [], of: null } : null; did = ''; paint(false); tellPage(); }
     else if (ev.target.matches('[data-light]')) { light = ev.target.checked; fadeOn(); }
-    else if (ev.target.matches('[data-brush]')) { brush = ev.target.value; $('.sf-how').textContent = brush ? HOW.brush : HOW.hand; water.style.cursor = brush ? 'crosshair' : ''; cursor(); }
+    else if (ev.target.matches('[data-brush]')) { brush = ev.target.value; $('.sf-how').textContent = brush ? HOW.brush : HOW.hand; water.style.cursor = brush ? 'crosshair' : ''; cursor(); paint(false); }
+    else if (ev.target.matches('[data-weave]')) { state.loom = { ...state.loom, weave: ev.target.value }; paint(false); tellPage(); }
   };
   // the page turning from day to night moves a ground that follows the page
   const mo = typeof MutationObserver === 'function' ? new MutationObserver(() => { if (!state.ground) paint(false); }) : null;
@@ -167,7 +177,7 @@ export function mount(host, input, ctx) {
     update(next) { const same = next.elements && next.elements.join() === state.elements.join() && (next.weights || []).join() === (state.weights || []).join() && (next.linkScale ?? state.linkScale) === state.linkScale;
       const redo = next.strokes !== undefined && JSON.stringify(cleanStrokes(next.strokes)) !== JSON.stringify(state.strokes);   // a recipe brought a painting: lay it on a fresh well
       state = clean({ ...state, ...next }); paint(!same || redo); },
-    value: () => ({ canvas: well ? well.still() : null, well, ground: on.id, auto: on.auto, why: on.why, pigments: on.pigments, state: GROUNDS[on.id].state, chain: state.chain, living: state.living, written: state.written, strokes: state.strokes, brush, paint: paintStroke, did, fades: { ...fades }, signal: sig ? { id: sig.id, classes: sig.got.classes, pours: sig.got.pours.length } : null }),
+    value: () => ({ canvas: well ? well.still() : null, well, ground: on.id, auto: on.auto, why: on.why, pigments: on.pigments, state: GROUNDS[on.id].state, chain: state.chain, living: state.living, written: state.written, strokes: state.strokes, loom: state.loom, brush, paint: paintStroke, did, fades: { ...fades }, signal: sig ? { id: sig.id, classes: sig.got.classes, pours: sig.got.pours.length } : null }),
     act, step,
     destroy() { clearInterval(timer); mo?.disconnect(); water.removeEventListener('pointerdown', onDown); water.removeEventListener('pointermove', onMove); water.removeEventListener('pointerup', onUp);
       water.removeEventListener('pointercancel', onUp); water.removeEventListener('keydown', onKey); host.removeEventListener('click', onClick); host.removeEventListener('change', onPick);

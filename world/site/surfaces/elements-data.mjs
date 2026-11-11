@@ -14,6 +14,7 @@ import { GROUNDS } from './grounds.mjs';
 import { MATERIALS, LIVING, replay } from './states.mjs';
 import { validChain } from './well-ops.mjs';
 import { cleanStrokes } from './brush-field.mjs';
+import { cleanLoom } from './cloth.mjs';
 
 export const GROUND_RANK = { grounded: 0, partial: 1, thought: 2 };
 export const GROUND_WORD = {
@@ -223,7 +224,7 @@ export const RECIPE_FORMAT = 'bench.recipe/1';
 const endsOn = (chain, ground) => validChain(chain) && MATERIALS[replay(chain.from, chain.ops).at(-1)].ground === ground;
 export function makeRecipe(ix, ids, weights, settings, ground = null, more = {}) {
   return { format: RECIPE_FORMAT, ...(ground && GROUNDS[ground] ? { ground, ...(endsOn(more.chain, ground) ? { chain: { from: more.chain.from, ops: [...more.chain.ops], of: more.chain.of ?? null } } : {}) } : {}),
-    ...(more.living?.length ? { living: more.living.filter((id) => LIVING[id]).map((id) => ({ id, label: LIVING[id].label })) } : {}), ...(more.written ? { written: true } : {}), ...(cleanStrokes(more.strokes).length ? { strokes: cleanStrokes(more.strokes) } : {}), elements: ids.map((id, i) => ({ id, name: ix.byId.get(id)?.name ?? id, weight: +(+(weights?.[i] ?? 1)).toFixed(3), settings: { ...(settings?.[id] ?? {}) } })) };
+    ...(more.living?.length ? { living: more.living.filter((id) => LIVING[id]).map((id) => ({ id, label: LIVING[id].label })) } : {}), ...(more.written ? { written: true } : {}), ...(ground && GROUNDS[ground]?.loom && more.loom ? { loom: cleanLoom(more.loom) } : {}), ...(cleanStrokes(more.strokes).length ? { strokes: cleanStrokes(more.strokes) } : {}), elements: ids.map((id, i) => ({ id, name: ix.byId.get(id)?.name ?? id, weight: +(+(weights?.[i] ?? 1)).toFixed(3), settings: { ...(settings?.[id] ?? {}) } })) };
 }
 export function readRecipe(ix, doc) {
   if (!doc || doc.format !== RECIPE_FORMAT || !Array.isArray(doc.elements)) throw new Error(`recipe: not a ${RECIPE_FORMAT} file`);
@@ -233,5 +234,5 @@ export function readRecipe(ix, doc) {
   for (const p of parts) { settings[p.id] = {}; for (const [k, v] of Object.entries(p.settings || {})) if (k in DRIVES && Number.isFinite(v)) settings[p.id][k] = v; }
   const ground = GROUNDS[doc.ground] ? doc.ground : null;
   return { ground, chain: ground && endsOn(doc.chain, ground) ? { from: doc.chain.from, ops: [...doc.chain.ops], of: parts.some((p) => p.id === doc.chain.of) ? doc.chain.of : null } : null,
-    living: (Array.isArray(doc.living) ? doc.living : []).map((l) => l?.id).filter((id) => LIVING[id]).slice(0, 3), written: doc.written === true, strokes: cleanStrokes(doc.strokes), ids: parts.map((p) => p.id), weights: parts.map((p) => (Number.isFinite(p.weight) && p.weight >= 0 ? p.weight : 1)), settings };
+    living: (Array.isArray(doc.living) ? doc.living : []).map((l) => l?.id).filter((id) => LIVING[id]).slice(0, 3), written: doc.written === true, loom: ground && GROUNDS[ground].loom && doc.loom ? cleanLoom(doc.loom) : null, strokes: cleanStrokes(doc.strokes), ids: parts.map((p) => p.id), weights: parts.map((p) => (Number.isFinite(p.weight) && p.weight >= 0 ? p.weight : 1)), settings };
 }

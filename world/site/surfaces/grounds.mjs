@@ -9,7 +9,10 @@
 //
 // Every colour this file returns is computed. The well's shader (well-shader.mjs) carries the same rules; a browser
 // test holds the two together.
-import { layer, onGround, mixture, PAPER } from './km.mjs';
+import { layer, onGround, mixture, dyed, PAPER } from './km.mjs';
+import { fibreLinks } from './spread.mjs';
+import { draftOf, clothLinks, cleanLoom } from './cloth.mjs';
+import { filmLook, exposure, soundMix, glowLook, glowColour, temperature, HEAT } from './grounds-more.mjs';
 
 export const RULES = Object.freeze({
   layers: { ordered: true, word: 'paint layers: each wash takes light away and turns some back (Kubelka-Munk), so two together are darker and the order can matter' },
@@ -18,17 +21,22 @@ export const RULES = Object.freeze({
   volume: { ordered: false, word: 'a scattering volume: pigment hangs like smoke and the eye gets the plain average of what is there, by amount, so the order does not matter' },
   additive: { ordered: false, word: 'light added to light: colours sum, so two together are brighter (red and green go toward yellow) and the order does not matter' },
   partitive: { ordered: false, word: 'marks side by side: each pigment is a separate mark and the eye averages them by the area each covers, so the order does not matter' },
+  exposure: { ordered: false, word: 'light on film: each pigment is light from the scene, the light adds on the negative, and the curves of the negative, the print and the lamp turn the total into the colour seen (the site spectral film model), so the order does not matter and twice the light is not twice as bright' },
+  power: { ordered: false, word: 'sound in a spectrogram: sounds that do not keep step add in power, and power is read in decibels, so two equal sounds read 3 decibels louder, not twice as bright, and the order does not matter' },
+  glow: { ordered: false, word: 'heat: a pigment that absorbs more light takes up and gives off more heat (Kirchhoff), the heat of every pigment adds, and the glow is the colour of a hot body at that temperature (Planck), so the order does not matter and a dark pigment burns brighter than a pale one' },
+  dye: { ordered: false, word: 'dye taken up by a fibre: the thread keeps its own colour, and what each dye absorbs and scatters is added to that of the thread, band by band over 16 bands of the spectrum, by amount (single-constant Kubelka-Munk, the rule textile dyers work a recipe out by), so a dye never covers the thread, it darkens through it, and the order does not matter' },
 });
 const G = (name, group, rule, med, base, state = null, more = {}) => Object.freeze({ name, group, rule, med, base, state, v: 0, ...more });
 // med is the shader's number for the way a ground is drawn and v picks a variant of it. base is the ground's own colour
 // in linear light (for light and screen: black). state is its row in states.mjs (solid, liquid, gas, powder), which
 // sets how the well's solver treats pigment on it (BEHAVE below). wick is how much faster a wash spreads along the
-// sheet's fibres than across them. made marks a ground that is not an element on the table: it is reached by an
+// sheet's fibres than across them. fibres are the fibre module's parameters for a sheet's network (spread.mjs), and loom
+// marks the woven ground, whose threads set how a wash spreads (cloth.mjs). made marks a ground that is not an element on the table: it is reached by an
 // operation or a chain in states.mjs. No base colour here is measured.
 export const GROUNDS = Object.freeze({
   paper: G('paper', 'absorbent, toothed', 'layers', 0, PAPER, 'solid'),
-  'fibre-sheet': G('fibre sheet', 'absorbent, toothed', 'layers', 0, [0.76, 0.7, 0.56], 'solid', { v: 1, wick: [2.2, 0.35] , made: true }),
-  'wet-sheet': G('wet fibre sheet', 'absorbent, toothed', 'layers', 0, [0.5, 0.45, 0.34], 'solid', { v: 2, wick: [1.7, 0.6], spread: 1.5 , made: true }),
+  'fibre-sheet': G('fibre sheet', 'absorbent, toothed', 'layers', 0, [0.76, 0.7, 0.56], 'solid', { v: 1, fibres: { md: 0, spread: 0.2, k0: 0.35, k1: 1.68 }, made: true }),
+  'wet-sheet': G('wet fibre sheet', 'absorbent, toothed', 'layers', 0, [0.5, 0.45, 0.34], 'solid', { v: 2, fibres: { md: 0, spread: 0.5, k0: 0.6, k1: 1.1 }, spread: 1.5, made: true }),
   'stone-sand': G('stone', 'hard', 'layers', 1, [0.30, 0.29, 0.26], 'solid'),
   wood: G('wood', 'hard', 'layers', 1, [0.3, 0.17, 0.075], 'solid', { v: 1 , made: true }),
   'metal-plate': G('metal plate', 'hard', 'layers', 2, [0.52, 0.54, 0.57], 'solid'),
@@ -45,14 +53,22 @@ export const GROUNDS = Object.freeze({
   light: G('light', 'emissive', 'additive', 6, [0, 0, 0]),
   'screen-pixel': G('screen pixel', 'emissive', 'additive', 7, [0, 0, 0]),
   data: G('data', 'symbolic', 'partitive', 8, [0.012, 0.016, 0.022]),
+  'thread-textile': G('woven cloth', 'woven', 'dye', 10, [0.62, 0.56, 0.45], 'solid', { loom: true }),
+  'film-stock': G('film stock', 'photographic', 'exposure', 11, [0.012, 0.012, 0.014]),
+  sound: G('sound, as a spectrogram', 'heard', 'power', 12, [0.1, 0.12, 0.2]),
+  'fire-heat': G('hot plate', 'emissive', 'glow', 13, glowColour(HEAT.plate)),
 });
 // How the solver treats pigment in each state. carry: the share of the water's motion kept each step (a solid lets go
 // of it soonest, a powder at once). spread: how fast pigment spreads by itself, against the well's base rate. lift:
 // how hard pigment rises, as smoke does. Our numbers, chosen to be told apart; none is measured.
 export const BEHAVE = Object.freeze({ solid: { carry: 0.985, spread: 1, lift: 0 }, liquid: { carry: 0.992, spread: 1.7, lift: 0 }, gas: { carry: 0.994, spread: 2.6, lift: 16 }, powder: { carry: 0.8, spread: 0.1, lift: 0 } });
-export function behaviour(id) { const g = GROUNDS[id] || GROUNDS.paper, b = BEHAVE[g.state] || BEHAVE.solid; return { ...b, spread: b.spread * (g.spread ?? 1), wick: g.wick || [1, 1] }; }
+const looms = new Map(), loomLinks = (w) => { if (!looms.has(w)) looms.set(w, clothLinks(draftOf(w))); return looms.get(w); };
+// loom is the woven ground's setting ({ weave }); other grounds ignore it.
+export function behaviour(id, loom = null) { const g = GROUNDS[id] || GROUNDS.paper, b = BEHAVE[g.state] || BEHAVE.solid;
+  const links = g.fibres ? fibreLinks(id, g.fibres) : g.loom ? loomLinks(cleanLoom(loom).weave) : undefined;
+  return { ...b, spread: b.spread * (g.spread ?? 1), wick: g.wick || [1, 1], ...(links ? { links } : {}) }; }
 // Materials on the table with no ground of their own yet.
-export const NOT_BUILT = Object.freeze(['ink', 'type', 'body', 'plant', 'fire-heat', 'thread-textile', 'film-stock', 'pigment', 'city-architecture', 'sound', 'code']);
+export const NOT_BUILT = Object.freeze(['ink', 'type', 'body', 'plant', 'pigment', 'city-architecture', 'code']);
 
 // Which ground, and why. A choice by the visitor stands. Otherwise the first chosen element that is a material with
 // a ground becomes the ground and the rest are the pigments on it, as long as at least one pigment is left. With no
@@ -72,6 +88,10 @@ export const DOT = 0.18;   // on the data ground, the share of a cell one pigmen
 export function mixOn(id, parts, d = parts.map(() => 1)) {
   const g = GROUNDS[id] || GROUNDS.paper, sum = (f) => [0, 1, 2].map((c) => parts.reduce((s, p, i) => s + f(p, i, c), 0)), tot = d.reduce((a, b) => a + b, 0);
   if (g.rule === 'layers') return onGround(parts.map((p, i) => layer(p.pig, d[i])), g.base);
+  if (g.rule === 'dye') return dyed(g.base, parts.map((p) => p.lin), d);
+  if (g.rule === 'exposure') return filmLook(exposure(g.base, parts.map((p) => p.lin), d));
+  if (g.rule === 'power') return soundMix(g.base, parts.map((p) => p.lin), d);
+  if (g.rule === 'glow') return glowLook(temperature(parts.map((p) => p.lin), d));
   if (g.rule === 'transmit') return g.base.map((b, c) => parts.reduce((t, p, i) => t * layer(p.pig, d[i]).T[c], b));
   if (g.rule === 'additive') return sum((p, i, c) => 0.9 * d[i] * p.lin[c]).map((x) => Math.min(1, x));
   if (g.rule === 'partitive') { const a = d.map((x) => DOT * Math.min(1, x)), free = 1 - a.reduce((s, x) => s + x, 0); return sum((p, i, c) => a[i] * p.lin[c]).map((x, c) => x + free * g.base[c]); }
