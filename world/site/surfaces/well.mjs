@@ -8,48 +8,55 @@
 //
 // The water is the studio's own solver (world/studio/lib/fluid.mjs, stable fluids on a fixed clock). It moves four
 // dye fields, one per element, and a displacement field that bends each element's pattern where the water has
-// carried it. The picture is one fragment shader: every element draws its marks from its drive numbers, and the
-// elements mix in OKLab by how much of each is in the water at that point. Coordinates are fractions of the well,
+// carried it. The picture is one fragment shader: every element is a pigment whose grain comes from its drive
+// numbers, the pigment diffuses, and where pigments meet they mix subtractively (the geometric mean of their
+// reflectances in linear light, weighted by how much of each is there). Coordinates are fractions of the well,
 // x right, y down. Reduced motion: no drift; each act settles at once into a still.
 import { Fluid, STEP } from '../../studio/lib/fluid.mjs';
 
-const NX = 96, NY = 72, SLOTS = 4;
+const NX = 96, NY = 72, SLOTS = 4, DIFFUSE = 0.03;
 const VERT = `attribute vec2 p; varying vec2 v; void main(){ v = p * .5 + .5; gl_Position = vec4(p, 0., 1.); }`;
 const FRAG = `precision highp float;
 varying vec2 v;
 uniform sampler2D uDye, uDisp;
-uniform vec3 uGround, uOk[4];
-uniform vec4 uA[4], uB[4], uC[4];   // A: wavelength, cos, sin, peak. B: gain, softness, threshold, base frequency. C: chroma, rows, slot seed, on
+uniform vec3 uGround, uLin[4];      // linear-light colours: the water, and each element's pigment
+uniform vec4 uA[4], uB[4], uC[4];   // A: feature frequency, cos, sin, stretch. B: octave gain, gradient width, coverage, vein strength. C: rows, slot seed, on, unused
 uniform float uAspect;
 float h(vec2 q){ q = fract(q * vec2(.1031, .1030)); q += dot(q, q.yx + 33.33); return fract((q.x + q.y) * q.x); }
 float vn(vec2 q){ vec2 i = floor(q), f = fract(q); f = f * f * (3. - 2. * f);
   return mix(mix(h(i), h(i + vec2(1, 0)), f.x), mix(h(i + vec2(0, 1)), h(i + vec2(1, 1)), f.x), f.y); }
 float fbm(vec2 q, float gain){ float a = 1., s = 0., t = 0.; for (int k = 0; k < 5; k++){ s += a * vn(q); t += a; q = q * 2.03 + 17.; a *= gain; } return s / t; }
-vec3 ok2rgb(vec3 c){ float l = c.x + .3963377774 * c.y + .2158037573 * c.z, m = c.x - .1055613458 * c.y - .0638541728 * c.z, s = c.x - .0894841775 * c.y - 1.291485548 * c.z;
-  l = l * l * l; m = m * m * m; s = s * s * s;
-  vec3 r = vec3(4.0767416621 * l - 3.3077115913 * m + .2309699292 * s, -1.2684380046 * l + 2.6097574011 * m - .3413193965 * s, -.0041960863 * l - .7034186147 * m + 1.707614701 * s);
-  r = clamp(r, 0., 1.); return mix(12.92 * r, 1.055 * pow(r, vec3(1. / 2.4)) - .055, step(.0031308, r)); }
 void main(){
   vec2 uv = vec2(v.x, 1. - v.y);
   vec4 dye = texture2D(uDye, uv);
-  vec2 q = uv - (texture2D(uDisp, uv).xy - .5) * .5; q.x *= uAspect;
-  vec3 acc = vec3(0.); float tot = 0.;
+  vec2 q = uv - (texture2D(uDisp, uv).xy - .5) * .6; q.x *= uAspect;
+  vec3 logmix = vec3(0.); float tot = 0.;
   for (int i = 0; i < 4; i++){
-    if (uC[i].w < .5) continue;
+    if (uC[i].z < .5) continue;
     float c = i == 0 ? dye.r : i == 1 ? dye.g : i == 2 ? dye.b : dye.a;
-    float n = fbm(q * uB[i].w + uC[i].z, uB[i].x);
-    float w = sin(6.2831853 * dot(q, uA[i].yz) / uA[i].x);
-    float f = n + .22 * uA[i].w * w + (uC[i].y > 1.5 ? .05 * sin(6.2831853 * uC[i].y * uv.y) : 0.);
-    float mark = smoothstep(uB[i].z - uB[i].y, uB[i].z + uB[i].y, f);
-    vec3 ok = uOk[i]; ok.yz *= uC[i].x; ok.x += (mark - .5) * .16;
-    float a = c * mix(.3, 1., mark);
-    acc += a * ok; tot += a;
+    // the element's own grain: turned to its measured wave angle, drawn out along it by the wave's strength
+    vec2 p = vec2(dot(q, uA[i].yz), dot(q, vec2(-uA[i].z, uA[i].y))); p.y /= uA[i].w; p = p * uA[i].x + uC[i].y;
+    vec2 warp = vec2(fbm(p + 3.1, .5), fbm(p + 7.7, .5)) - .5;          // marbling: the grain is folded through itself
+    float n = fbm(p + 1.6 * warp, uB[i].x);
+    float rows = uC[i].x > 1.5 ? .09 * sin(6.2831853 * uC[i].x * uv.y) : 0.;
+    float body = smoothstep(.5 - uB[i].y, .5 + uB[i].y, n + rows + (uB[i].z - .45) * .5);   // thick and thin pigment; the gradient is the edge softness
+    float vein = 1. - smoothstep(0., .07, abs(fract(n * 6.) - .5));     // fine lines where the pigment parts
+    float d = c * (.25 + 1.25 * uB[i].z) * (.3 + .9 * body) * (1. - uB[i].w * vein);
+    logmix += d * log(max(uLin[i], vec3(.004))); tot += d;
   }
-  vec3 g = uGround;
-  vec3 col = tot > .0001 ? mix(g, acc / tot, 1. - exp(-tot * 2.6)) : g;
-  gl_FragColor = vec4(ok2rgb(col), 1.);
+  // Where pigments meet they mix subtractively: the geometric mean of their reflectances in linear light, by amount.
+  vec3 lin = uGround;
+  if (tot > .0002) lin = mix(uGround, exp(logmix / tot), 1. - exp(-tot * 2.4));
+  lin = clamp(lin, 0., 1.);
+  gl_FragColor = vec4(mix(12.92 * lin, 1.055 * pow(lin, vec3(1. / 2.4)) - .055, step(.0031308, lin)), 1.);
 }`;
 
+// OKLab to linear sRGB, with the chroma scaled first: how the saturation drive reaches the pigment.
+function okToLinear([L, A, B], chroma = 1) {
+  A *= chroma; B *= chroma;
+  const l = (L + 0.3963377774 * A + 0.2158037573 * B) ** 3, m = (L - 0.1055613458 * A - 0.0638541728 * B) ** 3, s = (L - 0.0894841775 * A - 1.291485548 * B) ** 3;
+  return [4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s, -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s, -0.0041960863 * l - 0.7034186147 * m + 1.707614701 * s].map((x) => Math.min(1, Math.max(0, x)));
+}
 const clamp = (x, a, b) => (x < a ? a : x > b ? b : x);
 // Where each slot starts: one element fills the well; more share it as soft-edged bodies that meet in the middle.
 const HOMES = { 1: [[0.5, 0.5, 0.62]], 2: [[0.3, 0.5, 0.42], [0.7, 0.5, 0.42]], 3: [[0.28, 0.36, 0.36], [0.72, 0.36, 0.36], [0.5, 0.72, 0.36]],
@@ -97,25 +104,26 @@ export function createWell(canvas, { reduced = false, ground = [0.2, -0.01, -0.0
     let sp = 0, cu = 0, co = 0, w = 0;
     parts.slice(0, SLOTS).forEach((p, i) => {
       const d = p.drive, th = (d.orientation ?? 90) * Math.PI / 180;
-      // the wave runs across its crests: an orientation of 90 degrees gives horizontal bands, as in the measured spectra
-      A.set([clamp(d.wavelength, 0.004, 0.2) * 3, Math.cos(th), Math.sin(th), d.peak], i * 4);
-      B.set([clamp(Math.pow(2, -(d.beta - 1)), 0.2, 0.75), clamp(d.softness * 0.006, 0.004, 0.14), 0.74 - 0.5 * clamp(d.coverage, 0, 1), 3 + 70 * d.density], i * 4);
-      C.set([d.saturation, d.rows, 11.3 * (i + 1), 1], i * 4);
-      O.set(p.ok, i * 3);
+      // dominant wavelength sets the feature size; the angle turns the grain; wave strength draws it out into bands
+      A.set([clamp(0.085 / clamp(d.wavelength, 0.003, 0.3), 0.9, 22), Math.cos(th), Math.sin(th), 1 + 5 * clamp(d.peak, 0, 1.2)], i * 4);
+      // spectral slope sets the roughness (a steeper slope keeps less fine detail); edge softness is the width of every gradient
+      B.set([clamp(Math.pow(2, -(d.beta - 1.1)), 0.18, 0.8), clamp(d.softness * 0.035, 0.03, 0.5), clamp(d.coverage, 0, 1), clamp(d.density * 8, 0, 0.95)], i * 4);
+      C.set([d.rows, 11.3 * (i + 1), 1, 0], i * 4);
+      O.set(okToLinear(p.ok, d.saturation), i * 3);
       sp += p.weight * d.speed; cu += p.weight * d.curl; co += p.weight * d.coherence; w += p.weight;
     });
     flow = w ? { speed: sp / w, curl: cu / w, coherence: co / w } : flow;
-    gl.uniform4fv(U('uA'), A); gl.uniform4fv(U('uB'), B); gl.uniform4fv(U('uC'), C); gl.uniform3fv(U('uOk'), O);
-    gl.uniform3fv(U('uGround'), new Float32Array(ground));
+    gl.uniform4fv(U('uA'), A); gl.uniform4fv(U('uB'), B); gl.uniform4fv(U('uC'), C); gl.uniform3fv(U('uLin'), O);
+    gl.uniform3fv(U('uGround'), new Float32Array(okToLinear(ground)));
   }
   // The elements' own measured motion moves the water a little: mean speed sets the drift, coherence how much of it
   // runs one way, curl how much turns. Slow by rule; the visitor's hand is always the stronger force.
   function ambient(dt) {
     clock += dt;
-    const s = 26 * flow.speed, c = clamp(flow.coherence * 1.6, 0, 1), a = clock * 0.11;
+    const s = 34 * flow.speed, c = clamp((flow.coherence - 0.25) * 3.4, 0, 1), a = clock * 0.11;
     if (s > 0.01) {
       fluid.impulse(NX * (0.5 + 0.3 * Math.cos(a)), NY * (0.5 + 0.3 * Math.sin(a * 1.3)), s * c * dt * 9, s * c * 0.2 * Math.sin(a) * dt * 9, 16);
-      const k = 60 * flow.curl * (1 - c * 0.5) * dt * 9, x = 0.5 + 0.22 * Math.sin(a * 0.7), y = 0.5 + 0.22 * Math.cos(a * 0.9);
+      const k = 110 * flow.curl * (1 - c * 0.5) * dt * 9, x = 0.5 + 0.22 * Math.sin(a * 0.7), y = 0.5 + 0.22 * Math.cos(a * 0.9);
       fluid.impulse(NX * x, NY * (y - 0.12), k, 0, 9); fluid.impulse(NX * x, NY * (y + 0.12), -k, 0, 9);
     }
     if (tiltX || tiltY) for (let i = 0; i < n; i++) { fluid.u[i] += tiltX * dt * 30; fluid.v[i] += tiltY * dt * 30; }
@@ -124,6 +132,9 @@ export function createWell(canvas, { reduced = false, ground = [0.2, -0.01, -0.0
     if (drift) ambient(dt);
     fluid.step(dt);
     for (const F of [...dye.slice(0, Math.max(1, parts.length)), dx, dy]) { fluid._advect(F, fluid.t0, dt); F.set(fluid.t0); }
+    // pigment also spreads on its own, slowly: where two bodies touch, a mixing zone grows between them
+    for (const F of dye.slice(0, Math.max(1, parts.length))) { const T = fluid.t0; T.set(F);
+      for (let y = 1; y < NY - 1; y++) for (let x = 1, i = y * NX + 1; x < NX - 1; x++, i++) F[i] = T[i] + DIFFUSE * (T[i - 1] + T[i + 1] + T[i - NX] + T[i + NX] - 4 * T[i]); }
     for (let i = 0; i < n; i++) {
       fluid.u[i] *= 0.985; fluid.v[i] *= 0.985;                        // the water comes to rest
       dx[i] = (dx[i] + fluid.u[i] * dt / NX) * 0.997; dy[i] = (dy[i] + fluid.v[i] * dt / NY) * 0.997;   // and the pattern eases back
@@ -156,6 +167,9 @@ export function createWell(canvas, { reduced = false, ground = [0.2, -0.01, -0.0
     if (reduced) { for (let i = 0; i < 24; i++) step(STEP, false); draw(); return; }
     idleAt = performance.now() + ms; if (!raf) raf = requestAnimationFrame(frame);
   }
+  // Reduced motion never sees the drift, so a fresh well is carried a fixed way along its own measured flow first:
+  // the still then shows the elements' speed, turning and direction, the same every time.
+  function settle() { if (reduced) for (let i = 0; i < 150; i++) step(STEP, true); }
   const ro = typeof ResizeObserver === 'function' ? new ResizeObserver(() => { size(); draw(); }) : null;
   ro?.observe(canvas);
   const onVis = () => { if (!document.hidden && !reduced && performance.now() < idleAt && !raf) raf = requestAnimationFrame(frame); };
@@ -165,11 +179,13 @@ export function createWell(canvas, { reduced = false, ground = [0.2, -0.01, -0.0
   const api = {
     reduced, grid: [NX, NY],
     // parts: up to four. reseed false keeps the water as it is and only changes how the elements are drawn.
-    set(next, { reseed = true } = {}) { parts = next.slice(0, SLOTS); uniforms(); if (reseed) seed(); wake(); if (reduced) draw(); return api; },
+    // Under reduced motion the flow drives can only show in the still, so a change to one of them starts the still again.
+    set(next, { reseed = true } = {}) { const was = JSON.stringify(flow); parts = next.slice(0, SLOTS); uniforms();
+      if (reseed || (reduced && was !== JSON.stringify(flow))) { seed(); settle(); } if (reduced) draw(); else wake(); return api; },
     pour(slot, x, y, amount = 0.5) { if (slot < parts.length) splat(dye[slot], x, y, 0.09, amount); wake(); return api; },
     stir(x, y, vx, vy) { fluid.impulse(x * NX, y * NY, vx * NX, vy * NY, 7); wake(); return api; },
     tilt(tx, ty) { tiltX = clamp(tx, -1, 1); tiltY = clamp(ty, -1, 1); wake(); return api; },
-    reset() { seed(); wake(); if (reduced) draw(); return api; },
+    reset() { seed(); settle(); if (reduced) draw(); else wake(); return api; },
     // for checks and for the take-away: the picture as it stands, drawn now
     still() { draw(); return canvas; },
     read(w = 48, h = 36) { draw(); const c = document.createElement('canvas'); c.width = w; c.height = h; const x = c.getContext('2d'); x.drawImage(canvas, 0, 0, w, h); return x.getImageData(0, 0, w, h).data; },

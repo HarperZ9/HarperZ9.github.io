@@ -56,7 +56,7 @@ export function mount_plot(host, input, ctx) {
     try { lib = lib || await import('../../../system/instruments/wave8-plotter-density.js'); } catch (e) { console.info('pen study: the instrument did not load:', e.message); return; }
     if (mine !== run) return;
     const sb = studioBlend(ctx.ix, ids, state.weights, state.settings), inks = [...sb.parts.map((p) => p.hex), sb.palette.mix, sb.palette.mix].slice(0, 3).map(rgb);
-    if (!host.querySelector('canvas')) host.innerHTML = `<canvas class="pl" width="900" height="600" role="img"></canvas><label class="pl-pick">Study <select>${lib.WAVE8_PLOTTER_META.map((m) => `<option value="${esc(m.name)}">${esc(m.name.replace(/-/g, ' '))}</option>`).join('')}</select></label><p class="ln-note"></p>`;
+    if (!host.querySelector('canvas')) host.innerHTML = `<canvas class="pl" width="900" height="600" role="img"></canvas><label class="pl-pick">Study <select>${lib.WAVE8_PLOTTER_META.map((m) => `<option value="${esc(m.name)}">${esc(m.name.replace(/-/g, ' '))}</option>`).join('')}</select></label><button type="button" data-save-plot>Save this study</button><p class="ln-note"></p>`;
     const c = host.querySelector('canvas'), x = c.getContext('2d'), k = c.height / 300, meta = lib.WAVE8_PLOTTER_META.find((m) => m.name === state.piece);
     host.querySelector('select').value = state.piece;
     c.setAttribute('aria-label', `Pen study, ${state.piece.replace(/-/g, ' ')}: ${meta.blurb}`);
@@ -67,7 +67,11 @@ export function mount_plot(host, input, ctx) {
     c.dataset.inks = inks.map((i) => i.join(',')).join('|');
   }
   const onChange = (ev) => { if (ev.target.matches('.pl-pick select')) { state.piece = ev.target.value; draw(); } };
-  host.addEventListener('change', onChange);
-  const s = surface(host, 'sf-plot', draw, () => { run++; host.removeEventListener('change', onChange); }); draw();
+  // the study is our own drawing in the table's own colours, so it can be taken away as a picture
+  const onClick = (ev) => { if (!ev.target.closest('[data-save-plot]')) return; const c = host.querySelector('canvas');
+    c?.toBlob((blob) => { if (!blob) return; const a = document.createElement('a'), url = URL.createObjectURL(blob); a.href = url; a.download = `${ready(ctx.ix, state).join('-')}.${state.piece}.png`;
+      document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 2000); }, 'image/png'); };
+  host.addEventListener('change', onChange); host.addEventListener('click', onClick);
+  const s = surface(host, 'sf-plot', draw, () => { run++; host.removeEventListener('change', onChange); host.removeEventListener('click', onClick); }); draw();
   return { update(next) { state = { ...state, ...next }; draw(); }, value: () => ({ canvas: host.querySelector('canvas'), piece: state.piece }), destroy: s.destroy };
 }

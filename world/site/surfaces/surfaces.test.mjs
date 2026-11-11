@@ -3,7 +3,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
-import { indexElements, orderCells, blendTable, driveFor, materialFor, makeRecipe, readRecipe, quantile, DRIVES, GROUND_RANK } from './elements-data.mjs';
+import { mixValue, mixRule, indexElements, orderCells, blendTable, driveFor, materialFor, makeRecipe, readRecipe, quantile, DRIVES, GROUND_RANK } from './elements-data.mjs';
 import { propertyChart, compareChart, pos, valueAt, sheetInk, GROUND } from './charts.mjs';
 import { runRecipe, recipeGraph } from './recipe.mjs';
 import { studioBlend } from './surface-blend.mjs';
@@ -64,11 +64,23 @@ test('the blend table: parts side by side, a computed mix, measured links', () =
   assert.deepEqual(t.weights, [0.5, 0.25, 0.25]);
   const val = (id, n) => ix.byId.get(id).properties.find((p) => p.name === n)?.value;
   for (const r of t.rows) { let acc = 0, tw = 0; ['water', 'ink', 'light'].forEach((id, i) => { const v = val(id, r.name); if (v != null) { acc += t.weights[i] * v; tw += t.weights[i]; } });
-    assert.ok(Math.abs(r.computed.value - acc / tw) < 1e-12, r.name); assert.equal(r.computed.label, 'computed'); }
+    assert.equal(r.computed.label, 'computed'); assert.equal(r.computed.rule, mixRule(r.name));
+    if (r.computed.rule === 'weighted') assert.ok(Math.abs(r.computed.value - acc / tw) < 1e-12, r.name); }
+  assert.equal(t.rows.find((r) => r.name === 'spatial/wave orientation').computed.rule, 'circular'); assert.equal(t.rows.find((r) => r.name === 'frame/aspect').computed.rule, 'geometric');
   const some = blendTable(ix, ['water', 'air']).rows.filter((r) => r.parts.includes(null));
   for (const r of some) assert.equal(r.computed.of, 1, 'an unmeasured part stays empty and is left out of the mix');
   const wl = t.links.find((l) => l.a === 'water' && l.b === 'light');
   assert.equal(wl.ab.weight, ix.byId.get('water').links.find((l) => l.to === 'light').weight); assert.equal(wl.ab.label, 'measured');
+});
+
+test('the mix rule follows the kind of quantity: angles wrap, ratios multiply', () => {
+  const near = (a, b, e = 1e-6) => Math.abs(a - b) < e, ang = 'spatial/wave orientation';
+  const wrap = mixValue(ang, [5, 175], [1, 1]); assert.ok(near(wrap, 0) || near(wrap, 180), `5 and 175 degrees meet at 0, not 90 (got ${wrap})`);
+  assert.ok(near(mixValue(ang, [170, 10], [3, 1]), 175, 1.5), 'weights pull along the short way round');
+  assert.ok(near(mixValue(ang, [30, 60], [1, 1]), 45)); assert.ok(near(mixValue(ang, [80, 100], [1, 1]), 90));
+  assert.equal(mixValue(ang, [0, 90], [1, 1]), 0, 'opposite directions have no mean; the first part stands');
+  assert.ok(near(mixValue('frame/aspect', [2, 0.5], [1, 1]), 1), '2:1 and 1:2 mix to square');
+  assert.ok(near(mixValue('marks/ink coverage', [0.2, 0.6], [3, 1]), 0.3));
 });
 
 test('every element becomes a valid studio material, and the studio blends them', () => {

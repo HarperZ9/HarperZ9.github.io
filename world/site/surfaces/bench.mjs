@@ -6,9 +6,10 @@
 // One element chosen: the well shows it, the charts show its measurements, and every measured property the well
 // can use is a control. Two to four chosen: they share the well, and the blend table sets them side by side.
 // Keys in the table: arrows move, Enter or Space chooses, Home and End jump. Nothing here plays sound.
+import { glossary } from './charts.mjs';
 import { tableHTML, aboutHTML, besideHTML, lawsHTML, refsHTML, madeHTML, toolsHTML, esc } from './bench-parts.mjs';
 
-const SECTIONS = [['about', 'About'], ['properties', 'Properties'], ['blend', 'Blend'], ['compare', 'Compare'], ['laws', 'Laws'], ['made', 'Made with'], ['sources', 'Sources'], ['take', 'Take it with you']];
+const SECTIONS = [['about', 'About'], ['properties', 'Properties'], ['blend', 'Blend'], ['compare', 'Compare'], ['words', 'Words'], ['laws', 'Laws'], ['made', 'Made with'], ['sources', 'Sources'], ['take', 'Take it with you']];
 
 export async function mount(host, input, ctx) {
   const { ix, registry } = ctx, assets = ctx.assets ?? '/world/ui/shell/organic/';
@@ -27,6 +28,7 @@ export async function mount(host, input, ctx) {
       <nav class="bn-jump" aria-label="On this bench">${SECTIONS.map(([id, t]) => `<a href="#bn-${id}">${t}</a>`).join('')}</nav></aside>`;
   const $ = (s) => host.querySelector(s), cells = [...host.querySelectorAll('.bn-cell')];
   $('.bn-blend').innerHTML = `<div class="bn-beside-wrap"></div><div data-part="blend"></div><div class="bn-lanes"><div><h4>Timing</h4><div data-part="motion"></div></div><div><h4>Lettering</h4><div data-part="lettering"></div></div><div><h4>Pen study</h4><div data-part="plot"></div></div></div>`;
+  $('.bn-words').innerHTML = glossary(ix);
   $('.bn-properties').innerHTML = '<div data-part="chart"></div>'; $('.bn-compare').innerHTML = '<div data-part="compare"></div>';
   $('.bn-take').innerHTML = `<p>Save what is in the well as a picture, its colours as a palette, or the whole setting as a recipe: a small file naming the elements, their shares and your settings, which this bench opens again. The files hold only what the bench made.</p><div data-part="recipe"></div><div class="bn-toolbox"><h4>The tools behind the bench</h4>${toolsHTML(registry)}</div>`;
 

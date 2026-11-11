@@ -9,9 +9,10 @@
 // values are ticks, the middle half of the table is a band, the element's interquartile range (the middle half of
 // its own measurements) is a bar, its median is the sheet's mark, and the visitor's own setting is an open ring.
 import { legible } from '../../studio/lib/blend.mjs';
-import { DRIVES, fmt, propOf } from './elements-data.mjs';
+import { DRIVES, TERMS, WORDS, fmt, propOf } from './elements-data.mjs';
 
 const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const shortName = (n) => n.split('/')[1] || n;
 export const GROUND = '#0c1620';   // the water the bench sits on, in every scheme
 
 // Seven sheets, seven shapes: a category is never told by colour alone.
@@ -38,8 +39,18 @@ export function valueAt(s, pct) {
   return s.log ? s.lo * Math.pow(s.hi / s.lo, t) : s.lo + (s.hi - s.lo) * t;
 }
 
+// A property's plain name with its one-line meaning: shown on hover and on keyboard focus, and listed in the glossary.
+let terms = 0;
+export function term(name) {
+  const t = TERMS[name]; if (!t) return esc(shortName(name));
+  const id = `term-${++terms}`;
+  return `<span class="tm" tabindex="0" aria-describedby="${id}">${esc(t[0])}<span class="tm-tip" role="tooltip" id="${id}">${esc(t[1])}</span></span>`;
+}
+export function glossary(ix) {
+  const dl = (rows) => `<dl class="gl-list">${rows.map(([k, v, sub]) => `<div><dt>${esc(k)}${sub ? ` <small>${esc(sub)}</small>` : ''}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>`;
+  return `<h4>The properties</h4>${dl(ix.propNames.filter((n) => TERMS[n]).map((n) => [TERMS[n][0], TERMS[n][1], n]))}<h4>Other words</h4>${dl(WORDS)}`;
+}
 const sheetColour = (ix, id) => ix.sheets.find((s) => s.id === id)?.colour || '#888888';
-const shortName = (n) => n.split('/')[1] || n;
 const driveOf = (name) => Object.entries(DRIVES).find(([, d]) => d.prop === name) || null;
 
 function track(s, inner) {
@@ -62,7 +73,7 @@ export function propertyChart(ix, el, { settings = {} } = {}) {
       : `<span class="pc-val pc-un">not measured</span><span class="pc-meta">${s.count} other elements have it; the well uses their median, ${fmt(s.median)}</span>`;
     const ctl = dv ? `<label class="pc-ctl"><span class="sr-only">${esc(dv[1].label)} for ${esc(el.name)}: ${esc(dv[1].does)}</span>` +
       `<input type="range" min="0" max="100" step="0.5" data-drive="${key}" value="${pos(s, set ?? p?.value ?? s.median)}" aria-valuetext="${fmt(set ?? p?.value ?? s.median)}"></label>` : '';
-    return `<li class="pc-row${p ? '' : ' is-un'}${dv ? ' is-live' : ''}" data-prop="${esc(name)}"><span class="pc-name" title="${esc(dv ? dv[1].what : name)}">${esc(dv ? dv[1].label : shortName(name))}<small>${esc(name)}</small></span>` +
+    return `<li class="pc-row${p ? '' : ' is-un'}${dv ? ' is-live' : ''}" data-prop="${esc(name)}"><span class="pc-name">${term(name)}<small>${esc(name)}${dv ? `. The control ${esc(dv[1].does)}.` : ''}</small></span>` +
       `<span class="pc-plot">${body}${ctl}<span class="pc-ends"><span>${fmt(s.lo)}</span><span>${s.log ? 'log scale' : ''}</span><span>${fmt(s.hi)}</span></span></span><span class="pc-read">${read}</span></li>`;
   }).join('');
   return `<ol class="pc" aria-label="Measured properties of ${esc(el.name)}">${rows}</ol>`;
@@ -78,7 +89,7 @@ export function compareChart(ix, name, { selected = [] } = {}) {
       `<span class="pc-track">${m.iqr ? `<i class="pc-iqr" style="left:${pos(s, m.iqr[0])}%;width:${(pos(s, m.iqr[1]) - pos(s, m.iqr[0])).toFixed(2)}%"></i>` : ''}<i class="pc-at" style="left:${pos(s, m.value)}%">${mark(e.sheet, sheetColour(ix, e.sheet))}</i></span>` +
       `<span class="cmp-val">${fmt(m.value)}<small>n ${m.n ?? '?'}</small></span></button></li>`; }).join('');
   const have = new Set(s.members.map((m) => m.id)), none = ix.data.elements.filter((e) => !have.has(e.id));
-  return `<div class="cmp" data-prop="${esc(name)}"><p class="cmp-axis"><span>${fmt(s.lo)}</span><span>${esc(name)}${s.log ? ', log scale' : ''}, measured with ${esc(s.instrument || 'an unrecorded instrument')}</span><span>${fmt(s.hi)}</span></p>` +
+  return `<div class="cmp" data-prop="${esc(name)}"><p class="cmp-what">${term(name)}: ${esc(TERMS[name]?.[1] || '')}</p><p class="cmp-axis"><span>${fmt(s.lo)}</span><span>${esc(name)}${s.log ? ', log scale' : ''}, measured with ${esc(s.instrument || 'an unrecorded instrument')}</span><span>${fmt(s.hi)}</span></p>` +
     `<ol class="cmp-rows">${rows}</ol>` +
     `<p class="cmp-none"><b>Not measured on ${none.length} elements:</b> ${none.map((e) => `<button type="button" class="cmp-un" data-id="${esc(e.id)}">${esc(e.name)}</button>`).join(' ')}</p></div>`;
 }

@@ -24,7 +24,7 @@ export function mount(host, input, ctx) {
     const set = state.settings?.[el.id] || {}, changed = Object.keys(set).length > 0;
     host.innerHTML = propertyChart(ix, el, { settings: set }) +
       `<p class="pc-foot"><button type="button" data-act="measured"${changed ? '' : ' disabled'}>Back to the measured values</button>` +
-      `<span>Each row is one property. The small ticks are every element that has it, the pale band is the middle half of the table, the bar is this element's own middle half, and the mark is its median. Drag a control and the open ring shows your setting; the well follows it.</span></p>`;
+      `<span><a href="${document.getElementById('bn-words') ? '' : '/elements.html'}#bn-words">What these words mean</a>. Each row is one property. The small ticks are every element that has it, the pale band is the middle half of the table, the bar is this element's own middle half, and the mark is its median. Drag a control and the open ring shows your setting; the well follows it.</span></p>`;
   }
   const onInput = (ev) => {
     const r = ev.target.closest('input[data-drive]'); if (!r) return;

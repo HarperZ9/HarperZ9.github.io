@@ -46,17 +46,19 @@ function contrastProbe() {
   const lin = (c) => { c /= 255; return c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4; };
   const L = ([r, g, b]) => 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b);
   const rgba = (s) => { const m = s.match(/[\d.]+/g).map(Number); return [m[0], m[1], m[2], m[3] ?? 1]; };
-  const wash = rgba(getComputedStyle(document.querySelector('.gw-backdrop'), '::after').backgroundColor);
-  const under = (px) => [0, 1, 2].map((i) => wash[i] * wash[3] + px[i] * (1 - wash[3]));
-  const grounds = [under([255, 255, 255]), under([0, 0, 0])];
-  let worst = { ratio: 99 };
-  for (const el of document.querySelectorAll('.parts-page h1, .parts-lead, .bn *')) {
+  // every reading area carries its own scrim; a word is checked against that scrim laid over a white pixel and a black one
+  const AREAS = '.bn-main, .bn-side, .parts-lead, .parts-surface';
+  let worst = { ratio: 99 }, least = 1, outside = 0;
+  for (const el of document.querySelectorAll('.parts-lead, .bn *, .parts-surface *')) {
     if (![...el.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim())) continue;
     const cs = getComputedStyle(el); if (cs.visibility === 'hidden' || cs.display === 'none' || el.closest('[hidden], .sr-only, canvas, svg, .bl-dot, .bl-n, .lt-word')) continue;
     const fg = rgba(cs.color); if (fg[3] < 1) continue;
-    for (const g of grounds) { const a = L(fg), b = L(g), ratio = (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05); if (ratio < worst.ratio) worst = { ratio: +ratio.toFixed(2), text: el.textContent.trim().slice(0, 40), colour: cs.color }; }
+    const area = el.closest(AREAS); if (!area) { outside++; continue; }
+    const wash = rgba(getComputedStyle(area).backgroundColor); least = Math.min(least, wash[3]);
+    const under = (px) => [0, 1, 2].map((i) => wash[i] * wash[3] + px[i] * (1 - wash[3]));
+    for (const g of [under([255, 255, 255]), under([0, 0, 0])]) { const a = L(fg), b = L(g), ratio = (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05); if (ratio < worst.ratio) worst = { ratio: +ratio.toFixed(2), text: el.textContent.trim().slice(0, 40), colour: cs.color }; }
   }
-  return { wash: wash[3], worst };
+  return { scrim: least, outside, worst };
 }
 
 (async () => {
@@ -77,7 +79,8 @@ function contrastProbe() {
       const { ctx, page } = await open(browser, '/elements.html?e=water,ink', { w: 1280, h: 720, scheme: mode === 'night' ? 'dark' : 'light' });
       if (mode === 'plain') { await page.click('[data-plain-toggle]'); await page.waitForTimeout(300); assert.ok(await page.evaluate(() => document.documentElement.classList.contains('plain')), 'plain view is on'); }
       const c = await page.evaluate(contrastProbe); out[`contrast ${mode}`] = c;
-      assert.ok(c.worst.ratio >= 4.5, `${mode}: worst text contrast ${c.worst.ratio} (${c.worst.text})`);
+      assert.ok(c.worst.ratio >= 4.5, `${mode}: worst text contrast ${c.worst.ratio} (${c.worst.text})`); assert.equal(c.outside, 0, `${mode}: every word of the bench sits in a reading area`);
+      assert.ok(await page.evaluate(() => { const m = getComputedStyle(document.querySelector('.gw-backdrop'), '::after').backgroundImage; return /gradient/.test(m); }), `${mode}: the field keeps its own light wash, so the sky shows`);
       if (mode === 'plain') assert.equal(await page.evaluate(() => getComputedStyle(document.querySelector('.sf-water')).display), 'none', 'plain view shows no well canvas');
       await ctx.close();
     }
@@ -119,6 +122,16 @@ function contrastProbe() {
     await page.click('[data-act="measured"]');
     assert.ok(diff(first, await read()) < 0.01, 'back to the measured values gives the first picture');
 
+    // 5b: each of the twelve controls, from the table's lowest value to its highest, must move the picture
+    const moves = await page.evaluate(async () => { const ix = await window.__surfaces.elements(), { DRIVES } = await import('/world/site/surfaces/elements-data.mjs'), b = window.__bench, o = {};
+      const rd = () => Array.from(b.value().surfaces.well.value().well.read());
+      const df = (a, c) => { let s = 0; for (let i = 0; i < a.length; i += 4) s += Math.abs(a[i] - c[i]) + Math.abs(a[i + 1] - c[i + 1]) + Math.abs(a[i + 2] - c[i + 2]); return +(s / (a.length / 4 * 3)).toFixed(2); };
+      for (const [k, d] of Object.entries(DRIVES)) { const s = ix.spread.get(d.prop); b.update({ elements: ['water'], settings: { water: { [k]: s.min } } }); const lo = rd();
+        b.update({ elements: ['water'], settings: { water: { [k]: s.max } } }); o[k] = df(lo, rd()); }
+      b.update({ elements: ['water'], settings: {} }); return o; });
+    out.controls = { floor: FLOOR, moves, under: Object.keys(moves).filter((k) => moves[k] < FLOOR) };
+    assert.equal(Object.keys(moves).length, 12); assert.deepEqual(out.controls.under, [], 'every control moves the picture past the floor');
+
     // 6: every element's still, compared with every other
     const stills = await page.evaluate(async () => { const ix = await window.__surfaces.elements(), { driveFor } = await import('/world/site/surfaces/elements-data.mjs'), b = window.__bench, o = {};
       for (const e of ix.data.elements) { b.update({ elements: [e.id], settings: {} });
@@ -132,24 +145,28 @@ function contrastProbe() {
       if (d < min.d) min = { d: +d.toFixed(2), a: ids[i], b: ids[j] };
       if (d < FLOOR) close.push({ a: ids[i], b: ids[j], d: +d.toFixed(2) });
     }
-    for (const id of ids) { const p = stills[id].px; let lo = 255, hi = 0; for (let i = 0; i < p.length; i += 4) { lo = Math.min(lo, p[i + 1]); hi = Math.max(hi, p[i + 1]); } if (hi - lo < 6) flat++; }
+    const flatIds = [];
+    for (const id of ids) { const p = stills[id].px; let lo = 255, hi = 0; for (let i = 0; i < p.length; i += 4) { const y = p[i] + p[i + 1] + p[i + 2]; lo = Math.min(lo, y); hi = Math.max(hi, y); } if (hi - lo < 18) { flat++; flatIds.push(id); } }
     out.stills = { elements: ids.length, withMeasuredProperties: ids.filter((i) => stills[i].measured).length, distinctData: keys.size, pairsWithIdenticalData: sameData,
-      smallestDifferenceBetweenDifferentData: min, floor: FLOOR, pairsUnderFloor: close.length, close: close.slice(0, 10), flat };
+      smallestDifferenceBetweenDifferentData: min, floor: FLOOR, pairsUnderFloor: close.length, close: close.slice(0, 10), flat, flatIds: flatIds.slice(0, 12) };
     assert.equal(flat, 0, 'no still is a flat field');
     assert.ok(min.d >= FLOOR, `two elements with different data look alike: ${JSON.stringify(min)}`);
 
     // 4: the blend table's numbers
     await page.evaluate(() => window.__bench.update({ elements: ['water', 'ink', 'light'], weights: [2, 1, 1], settings: {} }));
-    const bl = await page.evaluate(async () => { const ix = await window.__surfaces.elements(), ids = ['water', 'ink', 'light'], w = [0.5, 0.25, 0.25], bad = [];
-      for (const tr of document.querySelectorAll('.bl tbody tr')) { const name = tr.dataset.prop; let acc = 0, tw = 0;
-        ids.forEach((id, i) => { const p = ix.byId.get(id).properties.find((x) => x.name === name); if (p) { acc += w[i] * p.value; tw += w[i]; } });
-        if (Math.abs(+tr.querySelector('.bl-mix').dataset.value - acc / tw) > 1e-9) bad.push(name);
+    const bl = await page.evaluate(async () => { const ix = await window.__surfaces.elements(), { mixValue } = await import('/world/site/surfaces/elements-data.mjs'), ids = ['water', 'ink', 'light'], w = [0.5, 0.25, 0.25], bad = [];
+      for (const tr of document.querySelectorAll('.bl tbody tr')) { const name = tr.dataset.prop, vs = [], ws = [];
+        ids.forEach((id, i) => { const p = ix.byId.get(id).properties.find((x) => x.name === name); if (p) { vs.push(p.value); ws.push(w[i]); } });
+        if (Math.abs(+tr.querySelector('.bl-mix').dataset.value - mixValue(name, vs, ws)) > 1e-9) bad.push(name);
+        if (name === 'spatial/wave orientation' && !/circular/.test(tr.querySelector('.bl-mix').textContent)) bad.push('rule ' + name);
         if (!/computed/.test(tr.querySelector('.bl-mix').textContent)) bad.push('label ' + name); }
       const links = [...document.querySelectorAll('.bl-links li')].map((li) => li.dataset.pair), wl = ix.byId.get('water').links.find((l) => l.to === 'light');
       return { rows: document.querySelectorAll('.bl tbody tr').length, bad, links, waterLight: wl?.weight, shown: document.querySelector('.bl-links li[data-pair="water|light"]').textContent, parts: window.__bench.value().surfaces.well.value().well.amounts().filter((a) => a > 0.001).length,
         lettered: window.__bench.value().surfaces.lettering.value(), curve: document.querySelector('.sf-motion [data-curve]').dataset.curve, inks: document.querySelector('.sf-plot canvas')?.dataset.inks || null }; });
-    out.blend = bl; assert.deepEqual(bl.bad, [], 'blend mix equals the weighted mean of the measured parts, and says computed');
+    out.blend = bl; assert.deepEqual(bl.bad, [], 'blend mix equals the rule for each property worked from the measured parts, and says computed');
     assert.equal(bl.links.length, 3); assert.ok(bl.shown.includes(String(bl.waterLight)), 'the measured link weight is shown'); assert.equal(bl.parts, 3, 'three elements are in the well');
+    const study = await (async () => { const [d] = await Promise.all([page.waitForEvent('download'), page.click('[data-save-plot]')]); return { name: d.suggestedFilename(), bytes: fs.readFileSync(await d.path()).length }; })();
+    out.study = study; assert.match(study.name, /\.png$/); assert.ok(study.bytes > 2000, 'the pen study saves as a picture');
     assert.ok(bl.curve.length > 0, 'the motion lane drew a curve'); assert.ok(bl.inks, 'the pen study drew with the parts as inks');
 
     // 7: take-away
@@ -177,6 +194,7 @@ function contrastProbe() {
       const o = await open(browser, path, { w: 1280, h: 800, reduced: true });
       const r = await o.page.evaluate(() => ({ mounted: window.__surfaces.mounted(), link: document.querySelector('.sf-more a')?.getAttribute('href'), canvas: !!document.querySelector('[data-surface] .sf-water canvas'), audio: window.__audio,
         sideways: document.documentElement.scrollWidth - document.documentElement.clientWidth }));
+      const c = await o.page.evaluate(contrastProbe); r.contrast = c.worst.ratio; assert.ok(c.worst.ratio >= 4.5, `${path}: worst text contrast ${c.worst.ratio} (${c.worst.text})`);
       out[path] = r; assert.deepEqual(r.mounted.sort(), [...want].sort()); assert.equal(r.link, '/elements.html?e=' + ids); assert.ok(r.canvas); assert.equal(r.audio, 0); assert.ok(r.sideways <= 0); assert.deepEqual(o.errors, []);
       if (path === '/swatches.html') { const a = await o.page.evaluate(() => Array.from(window.__surfaces.mounted && document.querySelector('.sf-water canvas').toDataURL().length ? [document.querySelector('.sf-water canvas').toDataURL()] : []));
         await o.page.locator('input[data-drive="coverage"]').focus(); for (let i = 0; i < 30; i++) await o.page.keyboard.press('ArrowLeft');

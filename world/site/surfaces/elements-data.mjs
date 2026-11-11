@@ -34,6 +34,42 @@ export const DRIVES = Object.freeze({
   curl: { prop: 'flow/mean |curl|', label: 'Turning', what: 'how much the motion turns on itself', does: 'sets how much the water turns' },
   coherence: { prop: 'flow/direction coherence', label: 'One direction', what: 'how much of the motion runs the same way', does: 'sets how much of the drift runs one way' },
 });
+// Every property in plain words: a short name, and one line a visitor with no signal-processing background can follow.
+export const TERMS = Object.freeze({
+  'spatial/dominant wavelength': ['Wave length', 'Pictures of this element tend to repeat at one spacing more than any other, like ripples a set distance apart. This is that distance, as a share of the picture\'s width. Small means fine ripples.'],
+  'spatial/edge softness': ['Edge softness', 'How gradually one tone turns into the next. A low number is a hard edge, like cut paper. A high number is a slow fade, like mist.'],
+  'spatial/peak strength': ['Wave strength', 'How much that one repeating spacing stands out from everything else in the picture. Near zero, there is no clear repeat. Higher, the ripples are plain to see.'],
+  'spatial/spectral slope beta': ['Roughness slope', 'How the picture\'s detail is shared between large shapes and fine grain. A high slope means mostly large, smooth shapes. A low slope means a lot of fine grain.'],
+  'spatial/wave orientation': ['Wave angle', 'The direction the repeating ripples run, in degrees. 0 and 180 are the same direction, so this number goes round in a circle.'],
+  'colour/mean saturation': ['Saturation', 'How strong the colour is on average, from 0 (grey) to 1 (as vivid as the screen can show).'],
+  'frame/aspect': ['Frame shape', 'The width of the picture divided by its height. 1 is square, above 1 is wide, below 1 is tall.'],
+  'layout/dark-mark rows': ['Rows', 'How many separate dark bands lie across the picture from top to bottom, like lines of writing.'],
+  'marks/edge density': ['Edge density', 'The share of the picture that is an edge between two tones. More edges means busier, finer marks.'],
+  'marks/ink coverage': ['Ink coverage', 'The share of the picture covered by marks, from 0 (bare) to 1 (covered).'],
+  'flow/direction coherence': ['One direction', 'In film of this element, how much of the movement goes the same way. Low is movement in all directions. High is everything moving together.'],
+  'flow/mean divergence': ['Spreading', 'Whether movement in the film tends to spread outward from points (above zero) or draw inward (below zero). Near zero, neither.'],
+  'flow/mean speed': ['Flow speed', 'How fast things move between one film frame and the next, on average.'],
+  'flow/mean |curl|': ['Turning', 'How much the movement in the film turns on itself, like an eddy, whichever way it turns.'],
+  'flow/mean |div|': ['Spreading and gathering', 'How much the movement spreads out or draws in, counted together, whichever of the two it is.'],
+  'layout/row pitch': ['Row spacing', 'The distance from one dark row to the next, as a share of the picture\'s height.'],
+  'flow/vorticity share': ['Share of turning', 'Of all the movement in the film, the part that is turning and not travelling.'],
+  'marks/light ground': ['Light ground', 'The share of the picture that is light, unmarked ground.'],
+  'radial/concentricity': ['Rings', 'How strongly the picture is arranged in rings around a centre, from 0 (no rings) to 1.'],
+});
+// The other words the bench uses, for the glossary under the charts.
+export const WORDS = Object.freeze([
+  ['Measured', 'Read from studied pictures and film by a named instrument. The number comes with how many were read.'],
+  ['Computed', 'Worked out on this page from measured numbers. A computed number is always labelled so.'],
+  ['Median', 'The middle value: half of the measurements are below it and half above.'],
+  ['Interquartile range', 'The span that holds the middle half of the measurements. A short bar means they agree; a long bar means they vary.'],
+  ['n', 'How many pictures or films the number was measured on.'],
+  ['Instrument', 'The method that took the measurement. "f^2-whitened spectrum" looks at how often patterns repeat at each size; "Farneback optical flow" follows movement between film frames; "deterministic image measures" counts marks, edges and colour directly.'],
+  ['Log scale', 'An axis where each step multiplies the value instead of adding to it, so very small and very large values both fit.'],
+  ['Link', 'How many studies found two elements together.'],
+  ['Ground', 'How much is measured about an element: grounded (a law has a measured weight), partial (properties are measured), thought (nothing measured yet).'],
+  ['Subtractive mixing', 'How paints mix: each pigment takes light away, so two together are darker and shift in hue. The well mixes pigments this way.'],
+  ['OKLab', 'A way of writing colours as numbers so that equal steps in the numbers look like equal steps to the eye.'],
+]);
 const LOG = new Set(['spatial/dominant wavelength', 'spatial/peak strength', 'spatial/edge softness', 'marks/edge density', 'flow/mean speed', 'flow/mean |curl|', 'flow/mean |div|', 'layout/row pitch']);
 
 export const quantile = (sorted, q) => {
@@ -94,6 +130,23 @@ function toShader(ix, v) {
     saturation: sat ? Math.min(2.4, v.saturation / sat.median) : 1, rows: v.rows, speed: rel('speed'), curl: rel('curl'), coherence: v.coherence };
 }
 
+// How a property's values are combined into a mix. The rule follows the kind of quantity:
+//   circular   an orientation, where 0 and 180 degrees are the same direction: the mean of the doubled angles as
+//              directions, halved. A plain average of 5 and 175 would give 90, the one direction neither has.
+//   geometric  a ratio (frame aspect is width over height): the mean of the logarithms, so 2:1 and 1:2 mix to 1:1.
+//   weighted   everything else (shares, counts, speeds, lengths): the weighted arithmetic mean.
+const RULES = { 'spatial/wave orientation': 'circular', 'frame/aspect': 'geometric' };
+export const RULE_WORD = { circular: 'circular mean, 0 and 180 degrees being one direction', geometric: 'geometric mean, as it is a ratio', weighted: 'weighted mean' };
+export const mixRule = (name) => RULES[name] || 'weighted';
+export function mixValue(name, values, weights) {
+  const tw = weights.reduce((a, b) => a + b, 0) || 1, rule = mixRule(name);
+  if (rule === 'circular') { let x = 0, y = 0; values.forEach((v, i) => { const a = 2 * v * Math.PI / 180; x += weights[i] * Math.cos(a); y += weights[i] * Math.sin(a); });
+    if (Math.hypot(x, y) < 1e-9 * tw) return values[0];           // opposite directions cancel: no mean exists, so the first part stands
+    const d = Math.atan2(y, x) * 90 / Math.PI; return +((d % 180 + 180) % 180).toFixed(6); }
+  if (rule === 'geometric' && values.every((v) => v > 0)) return Math.exp(values.reduce((s, v, i) => s + weights[i] * Math.log(v), 0) / tw);
+  return values.reduce((s, v, i) => s + weights[i] * v, 0) / tw;
+}
+
 // The blend table. For every property any part has: each part's value, interval and n (or null where unmeasured),
 // and the mix worked out from the parts that have it, by weight. The mix is computed, never measured.
 export function blendTable(ix, ids, weights = null) {
@@ -103,9 +156,9 @@ export function blendTable(ix, ids, weights = null) {
   for (const name of ix.propNames) {
     const parts = els.map((e) => propOf(e, name));
     if (!parts.some(Boolean)) continue;
-    let acc = 0, tw = 0; parts.forEach((p, i) => { if (p) { acc += w[i] * p.value; tw += w[i]; } });
+    const have = parts.map((p, i) => (p ? [p.value, w[i]] : null)).filter(Boolean);
     rows.push({ name, parts: parts.map((p) => (p ? { value: p.value, iqr: p.iqr || null, n: p.n ?? null } : null)),
-      computed: tw > 0 ? { value: acc / tw, of: parts.filter(Boolean).length, label: 'computed' } : null });
+      computed: have.length ? { value: mixValue(name, have.map((h) => h[0]), have.map((h) => h[1])), of: have.length, label: 'computed', rule: mixRule(name) } : null });
   }
   // links are the table's own measured bridges: how often two elements were found together, each way as recorded
   const links = [];

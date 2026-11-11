@@ -3,9 +3,9 @@
 // from the parts (marked computed), the measured links between them, and the blended palette from the studio's
 // own blend (world/studio/lib/blend.mjs, an OKLab mean). Weight controls call ctx.onWeights(weights);
 // a part's Remove calls ctx.onRemove(id).
-import { blendTable, materialFor, fmt } from './elements-data.mjs';
+import { blendTable, materialFor, fmt, RULE_WORD } from './elements-data.mjs';
 import { blend, contrast } from '../../studio/lib/blend.mjs';
-import { mark, pos } from './charts.mjs';
+import { mark, pos, term } from './charts.mjs';
 
 const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
@@ -33,12 +33,12 @@ export function mount(host, input, ctx) {
     const where = (r) => { const sp = ix.spread.get(r.name); return `<span class="pc-track" role="img" aria-label="${esc(r.name)}: the parts and the computed mix on the table's range">` +
       r.parts.map((p, i) => (p ? `<i class="bl-dot" style="left:${pos(sp, p.value)}%;background:${esc(els[i].colour?.hex)}">${i + 1}</i>` : '')).join('') + `<i class="pc-set" style="left:${pos(sp, r.computed.value)}%"></i></span>`; };
     const cell = (p) => (p ? `<td><b>${fmt(p.value)}</b><small>${p.iqr ? `${fmt(p.iqr[0])} to ${fmt(p.iqr[1])}` : 'no interval'}, n ${p.n ?? '?'}</small></td>` : `<td class="is-un">not measured</td>`);
-    const body = t.rows.map((r) => `<tr data-prop="${esc(r.name)}"><th scope="row">${esc(r.name)}</th>${r.parts.map(cell).join('')}` +
-      `<td class="bl-mix" data-value="${r.computed.value}"><b>${fmt(r.computed.value)}</b><small>computed from ${r.computed.of} of ${ids.length}</small>${where(r)}</td></tr>`).join('');
+    const body = t.rows.map((r) => `<tr data-prop="${esc(r.name)}"><th scope="row">${term(r.name)}<small>${esc(r.name)}</small></th>${r.parts.map(cell).join('')}` +
+      `<td class="bl-mix" data-value="${r.computed.value}"><b>${fmt(r.computed.value)}</b><small>computed from ${r.computed.of} of ${ids.length}: ${RULE_WORD[r.computed.rule]}</small>${where(r)}</td></tr>`).join('');
     const link = (l) => (l ? `${l.weight} <small>${esc(l.label)}</small>` : '<span class="is-un">no link recorded</span>');
     const links = t.links.map((l) => `<li data-pair="${esc(l.a)}|${esc(l.b)}"><span>${esc(ix.byId.get(l.a).name)} to ${esc(ix.byId.get(l.b).name)}: ${link(l.ab)}</span><span>${esc(ix.byId.get(l.b).name)} to ${esc(ix.byId.get(l.a).name)}: ${link(l.ba)}</span></li>`).join('');
     host.innerHTML = `<div class="bl-scroll" tabindex="0" role="region" aria-label="Blend table"><table class="bl"><caption class="sr-only">The parts side by side, and the computed mix</caption>
-      <thead><tr><th scope="col">Property</th>${head}<th scope="col">Mix <small>computed, not measured. On the line: the numbered parts and a ring for the mix, across the table's range</small></th></tr></thead><tbody>${body}</tbody></table></div>
+      <thead><tr><th scope="col">Property</th>${head}<th scope="col">Mix <small>computed, not measured. Each row names its rule: an angle takes a circular mean, a ratio a geometric mean, the rest a weighted mean. On the line: the numbered parts and a ring for the mix, across the table's range</small></th></tr></thead><tbody>${body}</tbody></table></div>
       <h4>Links between the parts</h4><p class="bl-note">A link counts the studies in which two elements were found together. It is measured, and it is recorded in each direction.</p><ul class="bl-links">${links}</ul>
       <h4>Blended colour</h4><p class="bl-note">The mean of the parts in OKLab, a colour space built to match how even steps look to the eye, weighted by share. Computed.</p>
       <ul class="bl-pal">${sb.parts.map((p) => `<li><i style="background:${esc(p.hex)}"></i>${esc(p.name)} <code>${esc(p.hex)}</code></li>`).join('')}<li class="bl-mixc" data-hex="${esc(sb.palette.mix)}"><i style="background:${esc(sb.palette.mix)}"></i>mix <code>${esc(sb.palette.mix)}</code> <small>computed${contrast(sb.palette.mix, sb.palette.ground) < 3 ? ', close to the ground colour' : ''}</small></li></ul>`;

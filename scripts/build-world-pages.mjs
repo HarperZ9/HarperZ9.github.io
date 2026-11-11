@@ -78,7 +78,7 @@ function mountPage(file, title, description, heading, script, { lead = "", after
   const body = `<article class="parts-page"><h1>${esc(heading)}</h1><h2 class="sr-only">${esc(title)}</h2>${lead ? `<p class="parts-lead">${esc(lead)}</p>` : ""}<div class="parts" id="parts"></div>${after}</article>
 <script type="module">${script}</script>
 <script type="module" src="/world/alive/alive.js"></script>`;
-  return write(file, page({ path: file, title, description, body, htmlAttrs: 'data-alive-grain="off" data-lettering="/world/lettering/lib/letter.mjs"', bodyClass: bench || after ? "parts-body bench-body" : "parts-body",
+  return write(file, page({ path: file, title, description, body, htmlAttrs: 'data-alive-grain="off" data-lettering="/world/lettering/lib/letter.mjs"', bodyClass: bench ? "parts-body bench-body" : "parts-body",
     extraHead: '<link rel="stylesheet" href="/world/ui/shell/organic/parts.css">\n<link rel="stylesheet" href="/world/site/pages.css">' + (bench || after ? '\n<link rel="stylesheet" href="/world/site/surfaces/bench.css">' : "") }));
 }
 // The element table is the front bench of the design studio: every part is a surface from world/site/surfaces/registry.mjs.
@@ -102,7 +102,7 @@ function accession() {
 <h2>Use it</h2><p><a href="/system/fonts/accession/accession.css">accession.css</a> declares every face with paths relative to its folder; <a href="/system/fonts/accession/OFL.txt">OFL.txt</a> is the licence, and <a href="/system/fonts/accession/MANIFEST.json">MANIFEST.json</a> lists every file with its size, coverage and SHA-256.</p>
 ${surface("lettering motion well", "type ink paper", "Type as a material", "On the element table, type is a material like ink and paper. Here the three are blended: the studio letters their names in the blend's technique and colour, draws the timing the blend moves on, and runs them together in a well you can stir.")}
 </article>`;
-  return write("accession.html", page({ path: "accession.html", title: "Accession", description: "Accession, a type family drawn in code, under the SIL Open Font License 1.1: Text, Display, Mono, Super and the technique cuts.", body, bodyClass: "reading bench-body",
+  return write("accession.html", page({ path: "accession.html", title: "Accession", description: "Accession, a type family drawn in code, under the SIL Open Font License 1.1: Text, Display, Mono, Super and the technique cuts.", body,
     // the specimen loads letter subsets of each face (system/fonts/accession/specimen/, about 225 KB against 1.5 MB);
     // the full faces stay one link away in accession.css
     extraHead: '<link rel="stylesheet" href="/system/fonts/accession/specimen/specimen.css">\n<link rel="stylesheet" href="/world/site/pages.css">' }));

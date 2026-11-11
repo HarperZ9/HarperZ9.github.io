@@ -1,12 +1,14 @@
-/* bench.css: the front bench and every surface the registry mounts. One calm ground, no panels: parts are set apart
-   by space and a hairline. Words stay light on the deep water in day, night and plain view; the wash below holds
-   them at AA contrast over the brightest part of the field (tests/surfaces-bench.cjs measures it). Any page that
-   mounts a surface takes the same wash through body.bench-body, so no surface needs a panel of its own. */
+/* bench.css: the front bench and every surface the registry mounts. Parts are set apart by space and a hairline.
+   The page's sky stays in view: only the reading areas carry a scrim, a wash of the field's deep water with no
+   edge, feathered on every side (--b-scrim). It holds light words at AA contrast even over a white pixel of the
+   field; tests/surfaces-bench.cjs works that out in day, night and plain view. */
 .bn, [data-surface] {
   --b-ground: #0c1620; --b-ink: #f4efe6; --b-soft: #d9d3c6; --b-line: rgba(244, 239, 230, .3); --b-faint: rgba(244, 239, 230, .12);
   --b1: clamp(13px, .36vw + 9.5px, 22px); --b2: clamp(15px, .44vw + 10.5px, 26px); --b3: clamp(19px, .8vw + 12px, 40px);
   color: var(--b-ink); font: 400 var(--b2)/1.5 var(--face-text); }
-body.bench-body .gw-backdrop::after { background: rgba(7, 16, 26, .88); }
+.bn-main, .bn-side, .parts-lead, .parts-surface { --b-scrim: rgba(7, 16, 26, .74); --b-feather: clamp(18px, 2.2vw, 44px);
+  background: var(--b-scrim); box-shadow: 0 0 var(--b-feather) var(--b-feather) var(--b-scrim); }
+.parts-lead, .parts-surface { color: #f4efe6; }
 body.parts-body.bench-body:has(.bn) main { max-width: min(2800px, 96vw); }
 .bn :is(button, select, input), [data-surface] :is(button, select, input) { font: inherit; color: inherit; }
 .bn button, [data-surface] button, .tk-load { background: none; border: 0; border-bottom: 1px solid var(--b-line); padding: .4em .1em; min-height: 44px; cursor: pointer; text-align: left; }
@@ -106,6 +108,12 @@ body.parts-body.bench-body:has(.bn) main { max-width: min(2800px, 96vw); }
 .cmp-row.on { font-weight: 700; background: linear-gradient(90deg, var(--b-faint), transparent 60%); }
 .cmp-none { max-width: none; margin-top: 1.2em; font-size: var(--b1); color: var(--b-soft); } .bn .cmp-un, [data-surface] .cmp-un { min-height: 0; padding: .2em 0; margin-right: .9em; border-bottom-style: dashed; font-style: italic; }
 
+.tm { position: relative; cursor: help; border-bottom: 1px dotted var(--b-soft); }
+.tm-tip { position: absolute; left: 0; top: calc(100% + 6px); z-index: 5; width: min(34em, 78vw); padding: .7em .9em; background: #0c1620; color: #f4efe6; box-shadow: 0 0 0 1px var(--b-line), 0 10px 30px rgba(0, 0, 0, .5);
+  font: 400 var(--b1)/1.45 var(--face-text); white-space: normal; visibility: hidden; opacity: 0; }
+.tm:hover .tm-tip, .tm:focus .tm-tip, .tm:focus-within .tm-tip { visibility: visible; opacity: 1; }
+.gl-list { margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 24em), 1fr)); gap: .9em 2.4em; } .gl-list dt { font-weight: 700; } .gl-list dd { margin: 0; color: var(--b-soft); font-size: var(--b1); }
+.bl th small { display: block; } .cmp-what { max-width: 70ch; font-size: var(--b1); color: var(--b-soft); }
 /* the blend table */
 .bl-scroll { overflow-x: auto; }
 .bl { border-collapse: collapse; width: 100%; font-size: var(--b1); }
@@ -121,7 +129,8 @@ body.parts-body.bench-body:has(.bn) main { max-width: min(2800px, 96vw); }
 .bn-lanes { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 17em), 1fr)); gap: 0 clamp(20px, 2.4vw, 64px); margin-top: 1em; }
 .mo { width: 100%; height: auto; display: block; } .mo polyline { fill: none; stroke: var(--b-ink); stroke-width: 1.6; vector-effect: non-scaling-stroke; } .mo-axis { fill: none; stroke: var(--b-line); stroke-width: 1; vector-effect: non-scaling-stroke; }
 .bn p.lt-word, [data-surface] p.lt-word { font: 800 clamp(30px, 3.2vw, 96px)/1.05 var(--face-display); letter-spacing: -.02em; margin: .2em 0 .4em; overflow-wrap: anywhere; }
-.pl { width: 100%; height: auto; display: block; } .pl-pick { display: flex; gap: .6em; align-items: center; font-size: var(--b1); }
+.pl { width: 100%; height: auto; display: block; } .bn-why { color: var(--b-soft); font-size: var(--b1); }
+.pl-pick { display: flex; gap: .6em; align-items: center; font-size: var(--b1); }
 .tk-load { display: inline-flex; align-items: center; } .bn-toolbox { margin-top: 2em; }
 
 /* a surface on another page: the same parts, a little smaller, with the way to the bench under them */
@@ -132,6 +141,7 @@ body.parts-body.bench-body:has(.bn) main { max-width: min(2800px, 96vw); }
 @media (max-width: 900px) {
   .bn { grid-template-columns: minmax(0, 1fr); gap: 14px; }
   .bn-side { display: contents; }
+  .bn-now, .bn-mode, .bn-jump { background: var(--b-ground); box-shadow: 0 0 0 10px var(--b-ground); }
   .bn-side > [data-part="well"] { order: -4; position: sticky; top: 0; z-index: 3; background: var(--b-ground); margin: 0 -4vw; padding: 0 4vw 6px; box-shadow: 0 14px 18px -12px var(--b-ground); }
   .bn-now { order: -3; } .bn-mode { order: -2; } .bn-jump { order: -1; }
   .sf-water { aspect-ratio: 2 / 1; } .bn-side .sf-how { display: none; }
@@ -141,6 +151,6 @@ body.parts-body.bench-body:has(.bn) main { max-width: min(2800px, 96vw); }
 .bn [hidden], [data-surface] [hidden] { display: none !important; }
 html.plain .sf-water, html.plain .pl, html.plain .pl-pick, html.plain .sf-how, html.plain .sf-acts { display: none !important; }
 html.plain .sf-well .sf-still { display: grid !important; }
-.parts-lead { max-width: 60ch; font-size: clamp(15px, .44vw + 10.5px, 26px); line-height: 1.5; margin: 0 0 clamp(20px, 2.4vw, 56px); }
+.parts-lead { width: fit-content; max-width: 60ch; font-size: clamp(15px, .44vw + 10.5px, 26px); line-height: 1.5; margin: 0 0 clamp(20px, 2.4vw, 56px); }
 .parts-surface { margin-top: clamp(48px, 6vw, 140px); } .parts-surface > p { max-width: 64ch; }
 @media (prefers-reduced-motion: reduce) { .bn * { scroll-behavior: auto; } }

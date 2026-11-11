@@ -51,7 +51,10 @@ export function refsHTML(el, assets) {
 export function madeHTML(registry, el, uses) {
   const tools = registry.toolsFor(el), pages = registry.pagesFor(el.id, uses);
   const name = (id) => registry.TOOLS.find((t) => t.id === id)?.name || id;
-  return `<ul class="bn-made">${tools.map((t) => `<li><b>${esc(name(t.tool))}</b> <span>through ${esc(registry.SURFACES[t.surface].name.toLowerCase())}: ${esc(t.why)}</span></li>`).join('')}</ul>` +
+  // one row per tool, with every surface that reaches it
+  const by = new Map(); for (const t of tools) { if (!by.has(t.tool)) by.set(t.tool, []); by.get(t.tool).push(registry.SURFACES[t.surface].name.toLowerCase()); }
+  const why = [...new Set(tools.map((t) => t.why))];
+  return `<ul class="bn-made">${[...by].map(([tool, via]) => `<li><b>${esc(name(tool))}</b> <span>through ${esc([...new Set(via)].join(', '))}</span></li>`).join('')}</ul><p class="bn-why">${esc(why.map(cap).join('. '))}.</p>` +
     `<p class="bn-pages">${pages.length ? `Pages that use ${esc(el.name)}: ${pages.map((p) => `<a href="/${esc(p.path)}">${esc(p.title)}</a>`).join(', ')}.` : `No other page uses ${esc(el.name)} yet.`}</p>`;
 }
 
