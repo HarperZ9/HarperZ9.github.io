@@ -71,17 +71,22 @@ body.parts-body.bench-body:has(.bn) main { max-width: min(2800px, 96vw); }
 /* the well */
 .sf-water { position: relative; aspect-ratio: 4 / 3; background: var(--b-ground); touch-action: none; cursor: grab; } .sf-water:active { cursor: grabbing; }
 .sf-water canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-.sf-how { font-size: var(--b1); color: var(--b-soft); margin: .5em 0 0; }
+.sf-how { font-size: var(--b1); color: var(--b-soft); margin: .5em 0 0; min-height: 4.5em; }   /* three lines held, so the row under it stays put when the tool changes */
+/* the bench as a place: the well and its one line are the stage; the line is the well's own edge, in the well's own ground */
+.sf-stage { position: relative; } .sf-water[data-ground] + .sf-line { border-top: 1px solid var(--b-line); }
+.bn p.sf-line, [data-surface] p.sf-line { margin: 0; max-width: none; padding: .3em .5em; background: var(--b-ground); font-size: var(--b1); line-height: 1.35; height: calc(2.7em + .6em); box-sizing: border-box; overflow: hidden; }
+.bn-take-home { display: flex; flex-wrap: wrap; gap: 0 1.1em; align-items: center; font-size: var(--b1); margin: 0; } .bn-take-home span { color: var(--b-soft); } .bn-take-home a { padding: .5em 0; }
 .sf-acts, .sf-slots, .tk-acts { display: flex; flex-wrap: wrap; gap: 0 1.2em; align-items: center; font-size: var(--b1); }
 .sf-slots button { display: inline-flex; align-items: center; gap: .4em; } .sf-slots [aria-checked="true"], .sf-ground [aria-checked="true"] { font-weight: 700; border-bottom: 3px solid var(--b-ink); }
-.sf-ground { display: inline-flex; gap: .5em; align-items: center; } .bn p.sf-why, [data-surface] p.sf-why { font-size: var(--b1); margin: .3em 0 0; } .sf-why small { display: block; } .sf-water[data-ground="paper"] { background: #e8e4d8; }
+.sf-ground { display: inline-flex; gap: .5em; align-items: center; } .bn select[disabled], [data-surface] select[disabled], .bn select[disabled] option, [data-surface] select[disabled] option { color: var(--b-soft); } .bn p.sf-why, [data-surface] p.sf-why { font-size: var(--b1); margin: .3em 0 0; } .sf-why small { display: block; } .sf-water[data-ground="paper"] { background: #e8e4d8; }
 /* the ground, its state and what can be done to it sit over the well, so they are in view with it */
-@media (min-width: 901px) { .bn-side .sf-water { position: sticky; top: 0; z-index: 2; }   /* the well stays in view while its controls scroll under it */
+@media (min-width: 901px) { .bn-side .sf-stage { position: sticky; top: 0; z-index: 2; }   /* the well and its line stay in view while its controls scroll under them */
   /* a line that has scrolled half way under the well fades into a short shadow below it, so it does not read as cut off */
-  .bn-side .sf-water::after { content: ""; position: absolute; left: 0; right: 0; top: 100%; height: 1.5em; pointer-events: none; background: linear-gradient(rgba(12, 22, 32, .92), rgba(12, 22, 32, 0)); }
-  .bn-side .sf-water + .sf-how { margin-top: 1.6em; } }
-.sf-bar { display: flex; flex-wrap: wrap; gap: 0 1.2em; align-items: center; font-size: var(--b1); margin-bottom: .3em; } .sf-ops { display: inline-flex; flex-wrap: wrap; gap: 0 1.1em; }
-.sf-acts [aria-pressed="true"], .sf-living-picks [aria-pressed="true"], .sf-chains [aria-current="step"] { font-weight: 700; border-bottom: 3px solid var(--b-ink); }
+  .bn-side .sf-stage::after { content: ""; position: absolute; left: 0; right: 0; top: 100%; height: 1.5em; pointer-events: none; background: linear-gradient(rgba(12, 22, 32, .92), rgba(12, 22, 32, 0)); }
+  .bn-side .sf-stage + .sf-how { margin-top: 1.6em; } }
+.sf-bar { display: flex; flex-wrap: wrap; gap: 0 1em; align-items: center; font-size: var(--b1); margin-bottom: .3em; } .sf-ops { display: inline-flex; flex-wrap: wrap; gap: 0 1.1em; }
+.sf-acts [aria-pressed="true"] { border-bottom: 3px solid var(--b-ink); }   /* pressed is shown by the line alone, so the button keeps its width */
+.sf-living-picks [aria-pressed="true"], .sf-chains [aria-current="step"] { font-weight: 700; border-bottom: 3px solid var(--b-ink); }
 .bn p.sf-did, [data-surface] p.sf-did { font-size: var(--b1); margin: .3em 0 0; } .sf-did:empty, .sf-fade:empty { display: none; }
 .sf-cursor { position: absolute; width: 18px; height: 18px; margin: -9px 0 0 -9px; border: 2px solid #f4efe6; border-radius: 50%; box-shadow: 0 0 0 1px #0c1620; pointer-events: none; z-index: 1; }
 .sf-chains { list-style: none; margin: .4em 0 0; padding: 0; font-size: var(--b1); display: grid; gap: .1em; } .sf-chains > li { display: flex; flex-wrap: wrap; gap: 0 .8em; align-items: baseline; }
@@ -170,10 +175,10 @@ html.plain .bl-glazes canvas { display: none; } html.plain .bl-glazes figcaption
 
   /* the water alone stays in view while the page moves; nothing sits behind it and its controls scroll with the page */
   .bn-side > [data-part="well"] { display: contents; }
-  .bn-side .sf-water { order: -5; position: sticky; top: 0; z-index: 3; }
+  .bn-side .sf-stage { order: -5; position: sticky; top: 0; z-index: 3; }
   .bn-side .sf-acts, .bn-side .sf-why, .bn-side .sf-did, .bn-side .sf-chains { order: -4; }   /* the state and the chains sit right under the well */
   body.bench-body .parts-page h1 { margin-top: 56px; }   /* clear of the site's hand, which lies across the top on a phone */
-  .bn-now { order: -3; } .bn-mode { order: -2; } .bn-jump { order: -1; }
+  .bn-now { order: -3; } .bn-mode { order: -2; } .bn-jump { order: -1; } .bn-take-home { order: -5; }   /* the take-away's home sits right under the well, where nothing above it changes */
   .sf-water { aspect-ratio: 2 / 1; } .bn-side .sf-how { display: none; }
   .pc-row { grid-template-columns: minmax(0, 1fr); } .pc-name small { display: inline; margin-left: .6em; }
   .cmp-axis { margin: 0; } .bn .cmp-row, [data-surface] .cmp-row { grid-template-columns: 7.5em minmax(0, 1fr) 4.2em; gap: .6em; min-height: 44px; } .cmp-val small { display: none; }

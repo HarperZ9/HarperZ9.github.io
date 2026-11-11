@@ -59,9 +59,9 @@ export function madeHTML(registry, el, uses) {
 }
 
 export function toolsHTML(registry) {
-  const on = registry.TOOLS.filter((t) => t.mounted), off = [...registry.TOOLS.filter((t) => !t.mounted), ...(registry.LOOSE || [])];
+  const on = [...registry.TOOLS.filter((t) => t.mounted), ...(registry.LOOSE || []).filter((t) => t.mounted)], off = [...registry.TOOLS.filter((t) => !t.mounted), ...(registry.LOOSE || []).filter((t) => !t.mounted)];
   const li = (t) => `<li><b>${esc(t.name)}</b> <span>${esc(t.offers.join(', '))}${t.mounted ? `; on the bench as ${esc(t.mounted)}` : '; not mounted yet'}${t.note ? `. ${esc(cap(t.note))}` : ''}${t.overlap ? `. The bench has its own version of part of this (${esc(t.overlap)}); the two are not yet one` : ''}</span></li>`;
-  return `<p>The bench is one way into the site's tools. ${on.length} of ${registry.TOOLS.length} tool folders are reachable from here; the rest are listed so the gap stays visible.</p>
+  return `<p>The bench is one way into the site's tools. ${on.length} of ${registry.TOOLS.length + (registry.LOOSE || []).length} tools (folders and single files) are reachable from here; the rest are listed so the gap stays visible.</p>
     <ul class="bn-tools">${on.map(li).join('')}</ul><details><summary>${off.length} tools not mounted yet</summary><ul class="bn-tools">${off.map(li).join('')}</ul>
     ${registry.EMPTY.length ? `<p>No tool on the site serves these yet: ${esc(registry.EMPTY.join(', '))}.</p>` : ''}</details>`;
 }

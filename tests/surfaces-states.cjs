@@ -91,7 +91,7 @@ async function operate(page, op) {
     out.restored = { againstFresh: again, againstSaved: await page.evaluate((b) => window.diff(b, window.pic()), meltPic) }; assert.ok(again < FLOOR, `the restored well is a fresh start on melt (${again} of 255 from Start again)`);
     await setGround(page, 'paper');
     const idle = await page.evaluate(() => [...document.querySelectorAll('[data-op]')].map((b) => [b.dataset.op, b.disabled, b.title]));
-    assert.ok(idle.length === 3 && idle.every(([, off, why]) => off && /no row in the state table/.test(why)), 'a ground the table has no row for says why nothing can be done to it');
+    assert.ok(idle.length === 6 && idle.every(([, off, why]) => off && /no row in the state table/.test(why)), 'a ground the table has no row for says why nothing can be done to it');
 
     // 5: the fibre chain, walked
     out.fibre = { steps: [] };

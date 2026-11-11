@@ -57,7 +57,7 @@ export function mount(host, input, ctx) {
     const x = s.getContext('2d', { willReadFrequently: true }); x.drawImage(c, 0, 0, s.width, s.height); return { data: x.getImageData(0, 0, s.width, s.height).data, w: s.width, h: s.height }; };
   async function file(kind) {
     const made = build(), px = kind === 'palette-gpl' ? null : pixels(); if (kind !== 'palette-gpl' && !px) { say('There is no picture in plain view. The palette and the recipe still save.'); return null; }
-    try { const { makeFile } = await import('./take-files.mjs'), f = makeFile(kind, px, made.palette.colours, stem()); save(`${stem()}.${f.ext}`, new Blob([f.body], { type: f.mime })); last = { kind, facts: f.facts, bytes: typeof f.body === 'string' ? f.body.length : f.body.byteLength };
+    try { const { makeFile } = await import('./take-files.mjs'), r = made.recipe, about = { recipe: `${r.elements.map((e) => `${e.name} ${e.weight}`).join(', ')}${r.ground ? `, on ${r.ground}` : ''}`, graph: r.graph }, f = makeFile(kind, px, made.palette.colours, stem(), about); save(`${stem()}.${f.ext}`, new Blob([f.body], { type: f.mime })); last = { kind, facts: f.facts, bytes: typeof f.body === 'string' ? f.body.length : f.body.byteLength };
       say(`${f.label} saved${f.facts.lines ? `: ${f.facts.lines} pen lines` : f.facts.triangles ? `: ${f.facts.triangles} triangles` : ''}.`); return last; }
     catch (e) { console.info('take-away: the file could not be made:', e.message); say('That file could not be made here.'); return null; }
   }

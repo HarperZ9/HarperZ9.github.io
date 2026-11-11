@@ -7,8 +7,13 @@
 //   palette, GPL           system/exporters-disciplines.js: toGplPalette writes the palette file paint programs open
 //
 //   FILES                              what is offered: kind, label, ext, mime, and one plain line saying what it is
-//   makeFile(kind, pixels, palette)    { name part, mime, body (a string or an ArrayBuffer), facts } from
-//                                      pixels { data: RGBA bytes, w, h } and palette [{ name, hex }]
+//   makeFile(kind, pixels, palette, name, about)   { name part, mime, body (a string or an ArrayBuffer), facts } from
+//                                      pixels { data: RGBA bytes, w, h } and palette [{ name, hex }]; about is the recipe in
+//                                      words ({ recipe, graph }), written into the plot and G-code files' own header
+//   headerLines(kind, about)           that header: what made the file, from which recipe, and its units
+//
+// THE HEADER. The shared plot writer stamps its own comment lines, written for another tool, naming that tool. The bench
+// leaves the writer as it is for its other callers and puts its own header in place of those lines: plain and true.
 //
 // Nothing here sends anything anywhere: a file is made in the page and handed to the browser to save.
 import { hatchFromLuma, orderPaths, toPlotterSVG, toGcode, PLOT_DETAIL } from '../../../system/plotter.js';
@@ -30,12 +35,20 @@ export function lumaGrid({ data, w, h }, gw, gh) {
     for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) s += luma(data, (y * w + x) * 4); out[j * gw + i] = s / ((x1 - x0) * (y1 - y0)); }
   return out;
 }
-export function makeFile(kind, pixels, palette = [], name = 'bench') {
+export function headerLines(kind, about = {}) {
+  const what = kind === 'plot-gcode' ? `units: millimetres (G21), absolute moves (G90), ${PLOT_MM} mm wide; the pen is lifted with M3 S40 and lowered with M3 S90` : 'units: pixels of the picture, scaled to fit; single strokes, no fills';
+  return [`made by the element bench (harperz9.github.io/elements.html) from the picture in its well`, `recipe: ${about.recipe || 'not given'}${about.graph ? `, graph ${about.graph}` : ''}`,
+    'pen lines by hatching, darker parts closer together (system/plotter.js, hatchFromLuma)', what].map((l) => l.replace(/-{2,}/g, '-'));
+}
+function neutral(kind, body, about) { const h = headerLines(kind, about);
+  if (kind === 'plot-gcode') return [...h.map((l) => `; ${l}`), ...body.split('\n').filter((l) => !/^; telos/i.test(l))].join('\n');
+  return body.replace(/<!--[\s\S]*?-->\n?/, `<!-- ${h.join('. ')}. -->\n`); }
+export function makeFile(kind, pixels, palette = [], name = 'bench', about = {}) {
   const f = FILES.find((x) => x.kind === kind); if (!f) throw new Error(`take-files: no such file kind ${kind}`);
   if (kind === 'palette-gpl') { const n = palette.length || 1; return { ...f, body: toGplPalette({ dominantSwatches: palette.map((p) => ({ hex: p.hex, frac: 1 / n })) }, name), facts: { colours: palette.length } }; }
   if (!pixels?.data || !(pixels.w >= 2 && pixels.h >= 2)) throw new Error('take-files: there is no picture');
   if (kind === 'relief-stl') { const heights = lumaGrid(pixels, RELIEF.w, RELIEF.h);
     return { ...f, body: heightmapToSTL(heights, RELIEF.w, RELIEF.h, { widthMM: RELIEF.widthMM, minMM: RELIEF.minMM, maxMM: RELIEF.maxMM }), facts: { triangles: stlTriangleCount(RELIEF.w, RELIEF.h), widthMM: RELIEF.widthMM } }; }
   const opts = { ...PLOT_DETAIL.fine, style: 'hatch', seed: name }, lines = orderPaths(hatchFromLuma(pixels.data, pixels.w, pixels.h, 4, opts)), facts = { lines: lines.length, points: lines.reduce((s, l) => s + l.length, 0) };
-  return { ...f, facts, body: kind === 'plot-svg' ? toPlotterSVG(lines, pixels.w, pixels.h, opts) : toGcode(lines, pixels.w, pixels.h, { ...opts, widthMm: PLOT_MM }) };
+  return { ...f, facts, body: neutral(kind, kind === 'plot-svg' ? toPlotterSVG(lines, pixels.w, pixels.h, opts) : toGcode(lines, pixels.w, pixels.h, { ...opts, widthMm: PLOT_MM }), about) };
 }
