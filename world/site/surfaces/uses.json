@@ -1,0 +1,214 @@
+{
+ "format": "surfaces.uses/1",
+ "from": "scripts/surface-census.mjs",
+ "pages": [
+  {
+   "path": "accession.html",
+   "title": "Accession",
+   "surfaces": [
+    "lettering",
+    "motion",
+    "well"
+   ],
+   "elements": [
+    "type",
+    "ink",
+    "paper"
+   ]
+  },
+  {
+   "path": "swatches.html",
+   "title": "The swatch library",
+   "surfaces": [
+    "chart",
+    "well"
+   ],
+   "elements": [
+    "pigment",
+    "ink",
+    "paper"
+   ]
+  }
+ ],
+ "benches": [
+  "elements.html"
+ ],
+ "tools": {
+  "system/discovery": {
+   "direct": 0,
+   "reach": 229
+  },
+  "system/engine": {
+   "direct": 0,
+   "reach": 230
+  },
+  "system/explainer": {
+   "direct": 3,
+   "reach": 4
+  },
+  "system/fonts": {
+   "direct": 0,
+   "reach": 0
+  },
+  "system/graph": {
+   "direct": 0,
+   "reach": 2
+  },
+  "system/instruments": {
+   "direct": 0,
+   "reach": 231
+  },
+  "system/kit": {
+   "direct": 0,
+   "reach": 0
+  },
+  "system/lessons": {
+   "direct": 1,
+   "reach": 1
+  },
+  "system/lib": {
+   "direct": 2,
+   "reach": 229
+  },
+  "system/media": {
+   "direct": 0,
+   "reach": 230
+  },
+  "system/media-engine": {
+   "direct": 1,
+   "reach": 231
+  },
+  "system/school": {
+   "direct": 32,
+   "reach": 32
+  },
+  "system/showcase": {
+   "direct": 0,
+   "reach": 229
+  },
+  "system/type-forge": {
+   "direct": 1,
+   "reach": 229
+  },
+  "system/vendor": {
+   "direct": 0,
+   "reach": 4
+  },
+  "world/alive": {
+   "direct": 124,
+   "reach": 125
+  },
+  "world/creation": {
+   "direct": 0,
+   "reach": 1
+  },
+  "world/dataviz": {
+   "direct": 0,
+   "reach": 0
+  },
+  "world/exhibit": {
+   "direct": 0,
+   "reach": 0
+  },
+  "world/feed-22": {
+   "direct": 0,
+   "reach": 2
+  },
+  "world/feed-23": {
+   "direct": 0,
+   "reach": 4
+  },
+  "world/feed-24": {
+   "direct": 0,
+   "reach": 2
+  },
+  "world/feed-25": {
+   "direct": 0,
+   "reach": 2
+  },
+  "world/feed-28": {
+   "direct": 0,
+   "reach": 0
+  },
+  "world/feed-29": {
+   "direct": 0,
+   "reach": 0
+  },
+  "world/feed-30": {
+   "direct": 0,
+   "reach": 2
+  },
+  "world/feed-32": {
+   "direct": 0,
+   "reach": 0
+  },
+  "world/glass": {
+   "direct": 0,
+   "reach": 5
+  },
+  "world/homage": {
+   "direct": 0,
+   "reach": 0
+  },
+  "world/lettering": {
+   "direct": 0,
+   "reach": 9
+  },
+  "world/library": {
+   "direct": 0,
+   "reach": 0
+  },
+  "world/name-art": {
+   "direct": 0,
+   "reach": 0
+  },
+  "world/playbook": {
+   "direct": 0,
+   "reach": 125
+  },
+  "world/site": {
+   "direct": 11,
+   "reach": 11
+  },
+  "world/sound": {
+   "direct": 0,
+   "reach": 5
+  },
+  "world/studio": {
+   "direct": 0,
+   "reach": 6
+  },
+  "world/substrate": {
+   "direct": 0,
+   "reach": 15
+  },
+  "world/superframe": {
+   "direct": 0,
+   "reach": 7
+  },
+  "world/techniques": {
+   "direct": 0,
+   "reach": 13
+  },
+  "world/typeengine": {
+   "direct": 0,
+   "reach": 0
+  },
+  "world/typeface": {
+   "direct": 3,
+   "reach": 4
+  },
+  "world/ui": {
+   "direct": 165,
+   "reach": 165
+  },
+  "world/universe": {
+   "direct": 0,
+   "reach": 1
+  },
+  "world/visualizer": {
+   "direct": 0,
+   "reach": 0
+  }
+ }
+}

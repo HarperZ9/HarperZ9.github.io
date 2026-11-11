@@ -28,8 +28,9 @@
 <script type="module" src="/world/ui/shell/shell.js?v=world-efe34ecaf7"></script>
 <script type="module" src="/world/site/hand-scroll.js?v=world-efe34ecaf7"></script>
 <link rel="stylesheet" href="/world/ui/shell/organic/parts.css?v=world-efe34ecaf7">
-<link rel="stylesheet" href="/world/site/pages.css?v=world-efe34ecaf7"></head>
-<body class="parts-body">
+<link rel="stylesheet" href="/world/site/pages.css?v=world-efe34ecaf7">
+<link rel="stylesheet" href="/world/site/surfaces/bench.css"></head>
+<body class="parts-body bench-body">
 <div class="gw-backdrop" aria-hidden="true">
   <picture>
     <source data-s="night" data-m="(orientation: portrait)" media="(orientation: portrait) and (prefers-color-scheme: dark)" type="image/avif" srcset="/media/world/glass-water/field-night-portrait-828.avif 828w, /media/world/glass-water/field-night-portrait-1242.avif 1242w" sizes="100vw">
@@ -72,11 +73,12 @@ new MutationObserver(s).observe(r,{attributes:true,attributeFilter:["data-theme"
   <p class="o-menu-foot"><a href="/floor.html">Plain index</a> <a href="/world/universe/proto/index.html">The map</a> <button type="button" class="o-close" onclick="this.closest('dialog').close()">Close (Esc)</button></p>
 </dialog>
 <main id="main" tabindex="-1">
-<article class="parts-page"><h1>Elements</h1><h2 class="sr-only">The element table</h2><div class="parts" id="parts"></div></article>
-<script type="module">import { mountElements } from "/world/ui/shell/organic/elements.js";
-const data = await (await fetch("/world/ui/shell/organic/data/elements.json")).json();
-mountElements(document.getElementById("parts"), data, { assets: "/world/ui/shell/organic/" });</script>
-<script type="module" src="/world/alive/alive.js?v=world-efe34ecaf7"></script>
+<article class="parts-page"><h1>Elements</h1><h2 class="sr-only">The element table</h2><p class="parts-lead">The front bench of the design studio. Choose an element and it runs in the well from its own measurements. Stir it, move its properties, blend it with others, and take what you made with you.</p><div class="parts" id="parts"></div></article>
+<script type="module">import registry from "/world/site/surfaces/registry.mjs";
+const asked = (new URLSearchParams(location.search).get("e") || "").split(",").filter(Boolean);
+window.__bench = await registry.mount(document.getElementById("parts"), "bench", { elements: asked });
+window.__surfaces = registry;</script>
+<script type="module" src="/world/alive/alive.js"></script>
 </main>
 </body>
 </html>

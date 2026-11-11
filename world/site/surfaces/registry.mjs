@@ -1,0 +1,154 @@
+// registry.mjs: one way for any page to mount the site's tools.
+//
+// THE CONTRACT
+//   A surface is a small adapter around a tool that already exists. It declares
+//     id        its name, e.g. 'well'
+//     tools     the tool folders it loads, e.g. ['world/studio']
+//     offers    what it is for, from CAPABILITIES
+//     takes     what it accepts, from MEDIA (elements, blend, material, palette, ...)
+//     gives     what it hands on, from MEDIA; export formats (png, json, svg) are outputs like any other
+//     load()    imports the adapter module, only when a page asks for it
+//   and its adapter exports
+//     mount(host, input, ctx) -> { update(input), value(), destroy() }
+//   input is { elements: [ids], weights, settings }; ctx is { ix, reduced, plain, registry }.
+//
+//   mount(host, 'well', { elements: ['water', 'ink'] })   mount one surface by element ids
+//   mountAll(root)                                        mount every [data-surface] under root (see embed.mjs)
+//   chain('elements', 'png')                              the surfaces that carry one medium to another, in order
+//                                                         (the bench itself is left out unless skip: [] is passed)
+//   toolsFor(elementId), pagesFor(elementId, uses)        what implements an element, and which pages use it
+//   unmount(handle), unmountAll()                         tear down: every listener, frame and GL context goes
+//
+// Reduced motion and plain view are read once here and passed to every adapter: reduced means a settled still,
+// plain means no drawn surface at all (the adapter leaves the words and numbers and mounts nothing that moves).
+// A bench is the surface 'bench': the design studio's front bench, which other pages open with their own elements.
+
+// What a tool can be for. Wide on purpose: from the shader up to the studio and back down.
+export const CAPABILITIES = Object.freeze(['well', 'chart', 'blend', 'field', 'render', 'geometry', 'simulation', 'physics', 'math', 'paint', 'write',
+  'type', 'lettering', 'print', 'plot', 'fabricate', 'weave', 'poster', 'sound', 'motion', 'export']);
+// What moves between tools.
+export const MEDIA = Object.freeze(['elements', 'settings', 'blend', 'material', 'palette', 'field', 'image', 'motion', 'type', 'score', 'graph', 'text', 'numbers',
+  'png', 'json', 'svg', 'wav', 'font', 'gcode']);
+
+const row = (id, name, offers, takes, gives, mounted, note) => Object.freeze({ id, name, offers, takes, gives, mounted, note });
+// Every tool folder on the site, mounted or not. `mounted` names the surface that loads it on the bench, 'frame'
+// for the folders every page already shares, or null: not mounted yet.
+export const TOOLS = Object.freeze([
+  row('world/studio', 'Studio: materials, blend, fluid, lanes', ['blend', 'simulation', 'paint', 'motion', 'type', 'sound'], ['elements', 'material', 'text', 'numbers'], ['material', 'palette', 'image', 'motion', 'type', 'score'], 'well, blend, motion, lettering', 'the bench is built on it'),
+  row('system/graph', 'Node graph runtime', ['math', 'export'], ['graph'], ['graph', 'json'], 'recipe', 'runs the recipe as a graph and gives it a stable hash'),
+  row('world/lettering', 'Lettering techniques', ['lettering', 'type', 'paint'], ['text', 'type', 'material'], ['image', 'svg'], 'lettering', 'draws the blend’s name in the blend’s technique'),
+  row('system/instruments', 'Drawing instruments, wave 8', ['plot', 'poster', 'geometry'], ['palette'], ['image', 'png'], 'plot', 'a pen study in the blend’s inks'),
+  row('world/techniques', 'Techniques: noise, timing, rope, burin', ['math', 'paint', 'motion'], ['numbers'], ['field', 'motion'], 'well (through the studio)', 'the fluid and motion lanes read it'),
+  row('world/substrate', 'Substrate: measured motion curves, thin film', ['motion', 'physics', 'math'], ['numbers'], ['motion', 'field'], 'motion (through the studio)', 'the motion lane reads its measured curves'),
+  row('world/feed-25', 'Compositor: layers, blend modes, grain', ['render', 'paint', 'poster'], ['material', 'field'], ['image'], null, 'the studio’s image lane stacks plates on it'),
+  row('world/sound', 'Sound engine and voices', ['sound'], ['score'], ['wav'], null, 'waits for the sound layer; nothing plays on its own'),
+  row('world/dataviz', 'Data as sound', ['sound', 'chart'], ['numbers'], ['score'], null, 'a chart row could be heard; waits for the sound layer'),
+  row('world/typeengine', 'Living type engine', ['type', 'render', 'motion'], ['text', 'material'], ['image'], null, 'could set an element’s name as living type'),
+  row('world/visualizer', 'Sound visualizer', ['render', 'sound', 'field'], ['score'], ['image'], null, 'could draw the well from a score'),
+  row('world/glass', 'Glass, liquid and CRT pieces', ['render', 'physics', 'field'], ['image', 'field'], ['image'], null, 'could show the well through glass'),
+  row('world/superframe', 'Superframe: the rendering engine', ['render', 'simulation', 'field', 'export'], ['graph', 'material', 'text'], ['image', 'score'], null, 'its water medium is the page field; its nodes are not on the bench yet'),
+  row('world/name-art', 'Name art generators', ['geometry', 'paint', 'poster'], ['text', 'palette'], ['image'], null, ''),
+  row('world/creation', 'Creation engine', ['paint', 'math'], ['numbers'], ['image'], null, ''),
+  row('world/homage', 'Homage portraits by technique', ['paint', 'lettering'], ['text'], ['image'], null, ''),
+  row('world/universe', 'The map and the road', ['geometry', 'field'], ['elements'], ['image'], null, 'a place on the map could open the bench with its own elements'),
+  row('world/exhibit', 'Exhibit media runner', ['render', 'field'], ['image'], ['image'], null, ''),
+  row('world/playbook', 'Playbook builds and cadence', ['motion', 'render'], ['numbers'], ['motion', 'image'], null, ''),
+  row('world/feed-22', 'Chladni plate and sand letters', ['physics', 'simulation', 'lettering'], ['text', 'numbers'], ['image'], null, ''),
+  row('world/feed-23', 'Display-P3 canvas studies', ['render', 'paint'], ['numbers'], ['image'], null, ''),
+  row('world/feed-24', 'Bit mosaics and letter tilings', ['geometry', 'lettering'], ['text'], ['image'], null, 'a tiling is the nearest thing to a weave draft on the site'),
+  row('world/feed-28', 'Bistable rotation study', ['geometry', 'math'], ['numbers'], ['image'], null, ''),
+  row('world/feed-29', 'Capsule lettering', ['lettering'], ['text'], ['image'], null, ''),
+  row('world/feed-30', 'Inflated display letters', ['lettering', 'geometry'], ['text'], ['image'], null, ''),
+  row('world/feed-32', 'Sequencer written as functions', ['sound', 'math', 'chart'], ['numbers'], ['score', 'image'], null, 'waits for the sound layer'),
+  row('system/discovery', 'Discovery lab: laws from data', ['math', 'physics', 'simulation'], ['numbers'], ['numbers', 'json'], null, ''),
+  row('system/engine', 'Scalable engine: tiers, workers, particles', ['simulation', 'render'], ['numbers'], ['field'], null, ''),
+  row('system/showcase', 'Showcase: orbits and first integrals', ['physics', 'math', 'render'], ['numbers'], ['image', 'json'], null, ''),
+  row('system/media', 'Media adapters to one format', ['export'], ['image', 'score', 'text'], ['json'], null, ''),
+  row('system/vendor', 'Tutor practice functions', ['write'], ['text'], ['json'], null, ''),
+  row('system/kit', 'Kit for standalone tool pages', ['type'], [], [], null, ''),
+  row('system/media-engine', 'Media engine: plotter, poster, voxels, fractal', ['plot', 'poster', 'render', 'geometry', 'sound'], ['numbers', 'palette'], ['image', 'svg', 'png'], null, 'its plotter and poster plugins are the next way out to print'),
+  row('system/type-forge', 'Type forge: mint a face', ['type'], ['text', 'numbers'], ['font'], null, 'a minted font file is the nearest thing to a made object on the site'),
+  row('world/typeface', 'Accession, the type family', ['type'], ['text'], ['font'], null, ''),
+  row('system/lessons', 'Lessons on a page', ['write', 'chart'], ['numbers'], ['text'], null, ''),
+  row('system/lib', 'Shared system library', ['math'], ['numbers'], ['numbers'], null, ''),
+  row('system/explainer', 'Live explainer stage', ['render', 'write'], ['numbers'], ['image'], null, ''),
+  row('system/school', 'Night school labs', ['write', 'chart', 'simulation'], ['numbers'], ['image', 'text'], null, ''),
+  row('world/site', 'The site’s own parts, this registry among them', ['well', 'chart', 'blend', 'field', 'export'], ['elements', 'settings'], ['blend', 'palette', 'png', 'json'], 'bench', ''),
+  row('world/alive', 'The alive layer', ['field', 'motion'], [], ['image'], 'frame', 'on most pages already'),
+  row('world/ui', 'The shell, the hand and the old well', ['field', 'type'], ['elements'], ['image'], 'frame', 'on most pages already'),
+]);
+// Disciplines the vocabulary holds a place for and no tool on the site serves yet.
+export const EMPTY = Object.freeze(CAPABILITIES.filter((c) => !TOOLS.some((t) => t.offers.includes(c))));
+
+const S = (id, name, tools, offers, takes, gives, file) => Object.freeze({ id, name, tools, offers, takes, gives, load: () => import(file) });
+export const SURFACES = Object.freeze({
+  bench: S('bench', 'The front bench', ['world/site', 'world/studio', 'system/graph'], ['well', 'chart', 'blend', 'export'], ['elements', 'settings'], ['blend', 'palette', 'png', 'json'], './bench.mjs'),
+  well: S('well', 'The well', ['world/studio', 'world/techniques'], ['well', 'simulation', 'field', 'paint'], ['elements', 'settings', 'blend'], ['image', 'png'], './surface-well.mjs'),
+  chart: S('chart', 'Property charts', ['world/studio'], ['chart'], ['elements', 'settings'], ['numbers'], './surface-chart.mjs'),
+  blend: S('blend', 'The blend table', ['world/studio'], ['blend', 'chart'], ['elements'], ['blend', 'material', 'palette'], './surface-blend.mjs'),
+  motion: S('motion', 'Motion curve', ['world/studio', 'world/substrate', 'world/techniques'], ['motion', 'chart'], ['blend', 'material'], ['motion'], './surface-lanes.mjs'),
+  lettering: S('lettering', 'Lettering', ['world/studio', 'world/lettering'], ['lettering', 'type'], ['blend', 'material', 'text'], ['type', 'image'], './surface-lanes.mjs'),
+  plot: S('plot', 'Pen study', ['system/instruments'], ['plot', 'poster', 'geometry'], ['palette'], ['image', 'png'], './surface-lanes.mjs'),
+  recipe: S('recipe', 'Recipe', ['system/graph', 'world/studio'], ['export', 'math'], ['elements', 'settings', 'blend'], ['graph', 'json'], './recipe.mjs'),
+  // A named place for the sound layer. Nothing is mounted behind it in this version and nothing plays.
+  sound: Object.freeze({ id: 'sound', name: 'Sound layer (not built yet)', tools: ['world/sound', 'world/dataviz'], offers: ['sound'], takes: ['blend', 'score'], gives: ['wav'], load: null }),
+});
+
+const live = new Set();
+let shared = null;
+export const prefs = () => ({
+  reduced: typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches,
+  plain: typeof document !== 'undefined' && document.documentElement.classList.contains('plain'),
+});
+// The element table is fetched once and shared by every surface on the page.
+export async function elements(url = '/world/ui/shell/organic/data/elements.json') {
+  if (!shared) shared = (async () => { const { indexElements } = await import('./elements-data.mjs'); return indexElements(await (await fetch(url)).json()); })();
+  return shared;
+}
+
+export async function mount(host, id, input = {}, ctx = {}) {
+  const s = SURFACES[id];
+  if (!s) throw new Error(`surfaces: no surface named "${id}" (there are ${Object.keys(SURFACES).join(', ')})`);
+  if (!s.load) throw new Error(`surfaces: "${id}" has a place in the registry and nothing behind it yet`);
+  const ix = ctx.ix || await elements(), mod = await s.load();
+  const fn = mod[`mount_${id}`] || mod.mount;
+  const inner = await fn(host, { elements: [], weights: null, settings: {}, ...input }, { ...prefs(), ...ctx, ix, registry: api });
+  const handle = { id, host, update: (next) => inner.update?.(next), value: () => inner.value?.(), destroy() { if (!live.delete(handle)) return; inner.destroy?.(); host.removeAttribute('data-surface-live'); } };
+  host.setAttribute('data-surface-live', id); live.add(handle);
+  return handle;
+}
+export const unmount = (h) => h?.destroy();
+export function unmountAll() { for (const h of [...live]) h.destroy(); }
+export const mounted = () => [...live].map((h) => h.id);
+
+// The surfaces that carry `from` to `to`, shortest first: the bench's settings down to a picture, or back.
+export function chain(from, to, { skip = ['bench'] } = {}) {
+  const queue = [[from, []]], seen = new Set([from]);
+  while (queue.length) {
+    const [m, path] = queue.shift();
+    for (const s of Object.values(SURFACES)) {
+      if (!s.load || skip.includes(s.id) || !s.takes.includes(m) || path.includes(s.id)) continue;
+      if (s.gives.includes(to)) return [...path, s.id];
+      for (const g of s.gives) if (!seen.has(g)) { seen.add(g); queue.push([g, [...path, s.id]]); }
+    }
+  }
+  return null;
+}
+
+// What implements an element: every surface can draw any element of the table, so the honest answer is which
+// tools the element's own data reaches. Measured properties reach the well and the charts; a measured colour
+// reaches the palette, lettering and the pen study; links reach the blend table.
+export function toolsFor(el) {
+  const out = [];
+  const add = (surface, why) => { for (const t of SURFACES[surface].tools) if (!out.some((o) => o.tool === t && o.surface === surface)) out.push({ tool: t, surface, why }); };
+  if ((el.properties || []).length) { add('well', 'its measured properties drive the well'); add('chart', 'its measured properties are charted'); }
+  else add('well', 'only its colour reaches the well; nothing else is measured');
+  if (el.colour?.hex) { add('lettering', 'its colour inks the lettering'); add('plot', 'its colour is one of the pens'); }
+  if ((el.links || []).length) add('blend', 'its measured links fill the blend table');
+  return out;
+}
+// Which pages use an element: read from the census (scripts/surface-census.mjs writes uses.json).
+export const pagesFor = (id, uses) => (uses?.pages || []).filter((p) => (p.elements || []).includes(id)).map((p) => ({ path: p.path, title: p.title, surfaces: p.surfaces }));
+
+const api = { CAPABILITIES, MEDIA, TOOLS, EMPTY, SURFACES, mount, unmount, unmountAll, mounted, chain, toolsFor, pagesFor, elements, prefs };
+export default api;
