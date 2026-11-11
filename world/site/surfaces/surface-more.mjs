@@ -86,8 +86,16 @@ export function mount_glass(host, input, ctx) {
     // something legible behind the glass: a ruled grid and the blend's name, so the bending can be read
     const c = document.createElement('canvas'); put(c, p.rgba, W, H); const x = c.getContext('2d', { willReadFrequently: true });
     x.strokeStyle = 'rgba(244,239,230,.55)'; x.lineWidth = 1; x.beginPath(); for (let i = 20; i < W; i += 20) { x.moveTo(i + .5, 0); x.lineTo(i + .5, H); } for (let j = 20; j < H; j += 20) { x.moveTo(0, j + .5); x.lineTo(W, j + .5); } x.stroke();
-    x.fillStyle = '#f4efe6'; x.textAlign = 'center'; x.textBaseline = 'middle'; let size = 46; do { x.font = `800 ${size}px "Hanken Grotesk", system-ui, sans-serif`; size -= 2; } while (x.measureText(word).width > W * 0.9 && size > 14);
-    x.fillText(word, W / 2, H / 2);
+    // the name is set whole: on as many lines as it needs (broken at the plus signs), at the largest size that fits the plate
+    const face = (px) => `800 ${px}px "Hanken Grotesk", system-ui, sans-serif`, names = p.sb.parts.map((e, i) => (i ? '+ ' : '') + e.name);
+    try { await document.fonts?.load(face(30), word); } catch (e) { console.info('glass: the name is set in the fallback face:', e.message); }
+    x.fillStyle = '#f4efe6'; x.textAlign = 'center'; x.textBaseline = 'middle';
+    let size = 46, lines = [word];
+    for (; size >= 13; size -= 2) { x.font = face(size); lines = [];
+      for (const n of names) { const last = lines[lines.length - 1]; if (last && x.measureText(`${last} ${n}`).width <= W * 0.86) lines[lines.length - 1] = `${last} ${n}`; else lines.push(n); }
+      if (lines.every((l) => x.measureText(l).width <= W * 0.86) && lines.length * size * 1.15 <= H * 0.8 && (lines.length === 1 || size <= 34)) break; }
+    lines.forEach((l, i) => x.fillText(l, W / 2, H / 2 + (i - (lines.length - 1) / 2) * size * 1.15));
+    canvas.dataset.nameLines = String(lines.length); canvas.dataset.nameWidest = String(Math.round(Math.max(...lines.map((l) => x.measureText(l).width))));
     const mask = new Float32Array(W * H);
     for (let yy = 0; yy < H; yy++) for (let xx = 0; xx < W; xx++) mask[yy * W + xx] = Math.hypot((xx - W * 0.62) / 1.25, yy - H * 0.5) < H * 0.34 ? 1 : 0;
     const out = g.renderGlass(r.fromSRGB8(W, H, x.getImageData(0, 0, W, H).data), g.fromMask(mask, W, H, { radius: 60, thickness: 46 }), { glass: 'crown', gap: 36 });
