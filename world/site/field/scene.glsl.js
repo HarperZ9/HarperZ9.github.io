@@ -25,7 +25,7 @@ export const SCENE_FRAG = `#version 300 es
 precision highp float;
 ${ATMOS}
 uniform sampler2D uTrans, uSky, uW0, uW1, uW2, uGlyph;
-uniform vec2 uRes, uJitter; uniform vec3 uL, uCam, uIor, uAbs, uLightCol, uTiles;
+uniform float uSeq; uniform vec2 uRes, uJitter; uniform vec3 uL, uCam, uIor, uAbs, uLightCol, uTiles;
 uniform float uPitch, uYaw, uFocal, uT, uMoon, uMoonPhaseAngle, uExpo, uStars; uniform vec2 uSid;
 uniform float uGX, uGZ, uGH, uGW, uGT, uGR, uGBase, uGCap, uHasGlyph, uFoam;
 uniform float uCloud, uStorm, uRain, uRainbow, uHalo, uFlash, uHaze; uniform int uCloudSteps;
@@ -35,6 +35,10 @@ in vec2 v; out vec4 o;
 const float SUN_R = 0.004654;  // rad: the Sun's mean angular radius, 0.2666 deg
 const float MOON_R = 0.004521; // rad: the Moon's mean angular radius, 0.2590 deg
 float hash(vec2 p) { p = fract(p * vec2(443.897, 441.423)); p += dot(p, p.yx + 19.19); return fract((p.x + p.y) * p.x); }
+// sample jitter kernel (jitter.mjs holds the reference and its test): a 64 by 64 blue-noise mask per pixel, walked by
+// the golden ratio per frame or accumulated sample, so a still's samples spread evenly; dim separates uses
+uniform sampler2D uBlue;
+float jit(float dim) { return fract(texelFetch(uBlue, ivec2(gl_FragCoord.xy) & 63, 0).r + 0.61803399 * uSeq + 0.75487767 * dim); }
 float hgp(float c, float g) { return (1.0 - g * g) / (12.566370614 * pow(1.0 + g * g - 2.0 * g * c, 1.5)); }
 vec3 skyL(vec3 rd) {
   vec2 lh = normalize(uL.xz + 1e-6), rh = normalize(rd.xz + 1e-6);
@@ -81,6 +85,33 @@ vec3 lightDisk(vec3 rd) {
   col += uLightCol * T * (uMoon > 0.5 ? 2.0e-6 : 6.0e-6) / (th * th);
   return col;
 }
+// star kernel (stars.mjs holds the reference and its test). A procedural catalogue on a cube-face grid, so cells keep
+// their size at the pole. Four layers hold about 170 stars to magnitude 3, 1500 to 5, 7500 to 6.5 (near the naked-eye
+// counts) and 35000 more to magnitude 8, the faint ground a camera exposure adds. Inside a layer the magnitude m follows the count law N(<m) ~ 10^(0.5 m), flux follows Pogson's
+// 10^(-0.4 m) with the exponent halved (a screen holds about 100:1 at night, the sky 1600:1), and colour follows a B-V index through Ballesteros' temperature formula (2012, EPL 97, 34008).
+vec3 starTint(float bv) {
+  float T = 4600.0 * (1.0 / (0.92 * bv + 1.7) + 1.0 / (0.92 * bv + 0.62)), m = 1.0e6 / T;
+  // blackbody colour is close to linear in reciprocal temperature: 33 (30000 K), 172 (5800 K), 286 (3500 K)
+  return m < 172.0 ? mix(vec3(0.62, 0.74, 1.0), vec3(1.0, 0.96, 0.9), clamp((m - 33.0) / 139.0, 0.0, 1.0))
+                   : mix(vec3(1.0, 0.96, 0.9), vec3(1.0, 0.64, 0.36), clamp((m - 172.0) / 114.0, 0.0, 1.0));
+}
+vec3 starLayer(vec3 e, float N, float m0, float m1, float occ, float px, float id) {
+  vec3 a = abs(e); float face; vec2 uv; float s;
+  if (a.x >= a.y && a.x >= a.z) { s = sign(e.x); face = 0.0; uv = e.yz / a.x; }
+  else if (a.y >= a.z) { s = sign(e.y); face = 2.0; uv = e.zx / a.y; }
+  else { s = sign(e.z); face = 4.0; uv = e.xy / a.z; }
+  face += s > 0.0 ? 0.0 : 1.0;
+  vec2 g = (uv * 0.5 + 0.5) * N, cell = min(floor(g), N - 1.0), key = cell + vec2(face * 61.0 + id * 17.0, id * 29.0 + face * 13.0);
+  float h = hash(key + 0.37);
+  if (h > occ) return vec3(0.0);
+  vec2 su = ((cell + 0.5 + (vec2(hash(key + 7.1), hash(key + 3.3)) - 0.5) * 0.84) / N) * 2.0 - 1.0;
+  vec3 sd = face < 2.0 ? vec3(s, su) : face < 4.0 ? vec3(su.y, s, su.x) : vec3(su, s);
+  float d = length(e - normalize(sd));
+  float m = m0 + 2.0 * log(1.0 + (h / occ) * (pow(10.0, 0.5 * (m1 - m0)) - 1.0)) / 2.302585;
+  // a bright star spreads over a wider spot, as it does in the eye and on film
+  float r = max(px * 0.75, 0.00035) * (1.0 + 0.45 * max(0.0, 3.0 - m));
+  return starTint(-0.25 + 1.75 * pow(hash(key + 11.9), 1.6)) * 4.0 * pow(10.0, -0.4 * 0.5 * (m - 2.0)) * exp(-0.5 * d * d / (r * r));
+}
 vec3 stars(vec3 rd) {
   if (uStars <= 0.0 || rd.y < 0.0) return vec3(0.0);
   // with a real sky the star grid is fixed to the celestial sphere: the view ray (x east, y up, z north) becomes hour
@@ -90,10 +121,9 @@ vec3 stars(vec3 rd) {
     float sl = sin(uSid.x), cl = cos(uSid.x), sd = rd.y * sl + rd.z * cl, ch = rd.y * cl - rd.z * sl, ra = uSid.y - atan(-rd.x, ch);
     e = vec3(cos(ra) * length(vec2(-rd.x, ch)), sd, sin(ra) * length(vec2(-rd.x, ch)));
   }
-  vec2 g = vec2(atan(e.z, e.x), asin(clamp(e.y, -1.0, 1.0))) * 260.0, cell = floor(g), f = fract(g) - 0.5;
-  float h = hash(cell); vec2 off = (vec2(hash(cell + 7.1), hash(cell + 3.3)) - 0.5) * 0.6;
-  float st = step(0.997, h) * exp(-dot(f - off, f - off) * 90.0) * pow(fract(h * 37.0), 3.0);
-  return vec3(0.9, 0.93, 1.0) * st * uStars * texture(uTrans, transUV(0.002, rd.y)).rgb;
+  // extinction toward the horizon, and the size of one pixel on the sky so a star covers about a pixel and a half
+  vec3 ext = texture(uTrans, transUV(0.002, rd.y)).rgb; float px = length(fwidth(rd));
+  return (starLayer(e, 8.0, -1.5, 3.0, 0.44, px, 1.0) + starLayer(e, 24.0, 3.0, 5.0, 0.43, px, 2.0) + starLayer(e, 56.0, 5.0, 6.5, 0.40, px, 3.0) + starLayer(e, 120.0, 6.5, 8.0, 0.40, px, 4.0)) * uStars * ext;
 }
 // clouds: a layer from 1.2 km up, 2 km deep (5 km in a storm), ray-marched. Density is value-noise fbm cut by the
 // cover; extinction 40 per km at full density (cumulus, about 0.04 per m). Light from the Sun or Moon is marched in four
@@ -113,15 +143,25 @@ float n3(vec3 p) {
 // towers reach 9 km (cumulonimbus tops sit near the tropopause, 9 to 12 km at mid latitudes)
 float cloudBase() { return mix(1.2, 0.7, uStorm); }
 float cloudTop() { return mix(3.2, 9.0, uStorm); }
-float cloudD(vec3 p) {
+float cloudD(vec3 p, float lod) {
   // cells about 8 km across decide where the towers stand and how high they reach; inside, the noise is isotropic
   // (about 1 km features), so a tower reads as a mass, not a smear
   vec2 drift = vec2(uT * 0.004, uT * 0.002);
   float cell = n3(vec3((p.xz + drift) * 0.12, 0.3)), tower = mix(0.35, 1.0, smoothstep(0.35, 0.8, cell) * uStorm + (1.0 - uStorm) * 0.4);
   vec3 q = vec3(p.x + drift.x, p.y * 0.9, p.z + drift.y) * 0.9;
-  float f = 0.5 * n3(q) + 0.27 * n3(q * 2.03 + 1.7) + 0.14 * n3(q * 4.1 + 3.1) + 0.09 * n3(q * 8.3 + 5.3);
+  // the base octave keeps its axes (it sets where the clouds stand); each finer octave is turned off the axes of
+  // the one before, since value noise keeps its lattice planes and stacked level planes seen edge-on draw stripes.
+  // Two erosion octaves (64 m and 31 m) cut the edges; they fade where the march step is too long to sample them
+  const mat3 R = mat3(0.36, 0.48, -0.8, -0.8, 0.6, 0.0, 0.48, 0.64, 0.6);
+  vec3 q2 = R * q * 2.03 + 1.7, q3 = R * (R * q) * 4.1 + 3.1, q4 = R * (R * (R * q)) * 8.3 + 5.3;
+  // an octave fades to its mean where the march step is longer than its wavelength (0.27 km and 0.13 km): sampled
+  // there it would alias into streaks along the horizon
+  float w3 = 1.0 - smoothstep(0.4, 1.0, lod), w4 = 1.0 - smoothstep(0.2, 0.5, lod);
+  float f = 0.5 * n3(q) + 0.27 * n3(q2) + 0.14 * mix(0.5, n3(q3), w3) + 0.09 * mix(0.5, n3(q4), w4);
+  float we = 1.0 - smoothstep(0.06, 0.2, lod);
+  if (we > 0.0) f -= we * (0.05 * (n3(R * q4 * 2.1 + 7.9) - 0.5) + 0.03 * (n3(q4.zxy * 4.3 + 2.2) - 0.5));
   float b = cloudBase(), top = b + (cloudTop() - b) * tower, h = (p.y - b) / max(top - b, 0.1);
-  float prof = smoothstep(0.0, 0.08, h) * smoothstep(1.0, 0.6, h) * (h < 1.0 ? 1.0 : 0.0);
+  float prof = smoothstep(0.0, 0.14, h) * smoothstep(1.0, 0.6, h) * (h < 1.0 ? 1.0 : 0.0);
   float cover = uCloud * (0.75 + 0.5 * cell);
   float d = clamp((f - (1.0 - cover) * 0.85) * 2.6, 0.0, 1.0) * prof * (1.0 + 1.5 * uStorm * (1.0 - clamp(h, 0.0, 1.0)));
   // the shelf cloud: a low, flat wedge under the leading edge of the storm, a few hundred metres under the base
@@ -136,19 +176,37 @@ vec4 clouds(vec3 rd) {
   if (uCloudSteps <= 0 || rd.y <= 0.004) return vec4(0.0, 0.0, 0.0, 1.0);
   // with rain shafts the march starts at the sea; otherwise at the cloud base
   float camKm = uCam.y * 0.001, lo = uRain > 0.0 && uStorm > 0.0 ? 0.0 : cloudBase(), t0 = max(0.0, (lo - camKm) / rd.y), t1 = min((cloudTop() - camKm) / rd.y, t0 + 45.0);
-  float dt = (t1 - t0) / float(uCloudSteps), T = 1.0, c = dot(rd, uL);
-  vec3 S = vec3(0.0), sunC = uLightCol * texture(uTrans, transUV(2.0, max(uL.y, 0.02))).rgb, amb = skyL(vec3(0.0, 1.0, 0.0)) * uLightCol * PI * (1.0 - 0.6 * uStorm);
-  for (int i = 0; i < 64; i++) {
-    if (i >= uCloudSteps || T < 0.01) break;
-    vec3 p = vec3(0.0, camKm, 0.0) + rd * (t0 + (float(i) + hash(gl_FragCoord.xy + float(i))) * dt);
-    float d = cloudD(p);
+  // density is sampled at three times the light-march rate: a step longer than a cloud is wide either hits or misses
+  // it, which shows as grain. Light toward the Sun takes three taps at every dense sample, the same for all of them: reusing a value
+  // between samples made neighbouring rays switch between a fresh and a reused one, which drew hard-edged slivers.
+  int NS = uCloudSteps * 3; float dt = (t1 - t0) / float(NS), T = 1.0, c = dot(rd, uL), tau = 0.0; vec3 S = vec3(0.0);
+  // uLightCol is the light's irradiance E, so every term below is a source radiance in the sky's own units
+  vec3 E = uLightCol * texture(uTrans, transUV(2.0, max(uL.y, 0.02))).rgb;
+  vec3 skyUp = skyL(vec3(0.0, 1.0, 0.0)) * uLightCol, skyHz = skyL(normalize(vec3(rd.x, 0.12, rd.z))) * uLightCol;
+  float mu0 = mix(0.3, 1.0, clamp(uL.y, 0.0, 1.0)), cb = cloudBase(), ct = cloudTop();
+  // one offset per ray, shared by every step: an offset per step biases where the first sample lands behind a
+  // cloud face by its position inside the step, which draws level bands across the cloud
+  float rj = jit(0.0), lj = jit(0.31);
+  for (int i = 0; i < 192; i++) {
+    if (i >= NS || T < 0.01) break;
+    vec3 p = vec3(0.0, camKm, 0.0) + rd * (t0 + (float(i) + rj) * dt);
+    float d = cloudD(p, dt);
     if (d <= 0.0) continue;
-    float tau = 0.0;
-    for (int j = 1; j <= 4; j++) tau += cloudD(p + uL * 0.25 * float(j)) * 0.25 * 40.0;
-    float sig = d * 40.0, ms = 0.0, a = 1.0, b = 1.0, e = 1.0;
+    // three taps toward the light, each segment 2.4 times the last (0.1, 0.24 and 0.58 km): the near one resolves the
+    // cloud's own edge, which two even 0.5 km taps stepped over and drew as terraces
+    tau = 0.0; float ls = 0.1, lo2 = 0.0; for (int j = 0; j < 3; j++) { tau += cloudD(p + uL * (lo2 + ls * lj), 0.1 + 0.15 * float(j)) * ls * 40.0; lo2 += ls; ls *= 2.4; }
+    float sig = d * 40.0, ms = 0.0, a = 1.0, b = 1.0, e = 1.0, hr = clamp((p.y - cb) / (ct - cb), 0.0, 1.0);
+    // the direct beam and its first few scatterings (Wrenninge's octaves): the silver lining and the lit faces
     for (int o = 0; o < 3; o++) { ms += a * mix(hg(c, 0.8 * e), hg(c, -0.3 * e), 0.3) * exp(-b * tau); a *= 0.5; b *= 0.5; e *= 0.5; }
+    // light scattered many times: a thick cloud passes sunlight on as diffuse light, by the two-stream result
+    // T = 1 / (1 + 0.75 (1 - g) tau) with g 0.85 for cloud droplets. The light march reaches 1 km, and the cloud
+    // above and beside it shades too, so tau counts 2.5 times: a base under thick cloud keeps about a tenth of the
+    // top's light and reads grey. The sky lights the cloud from above and the sides, and the sea
+    // returns about 6 percent of what reaches it
+    vec3 diff = E * (mu0 / PI) * 0.9 / (1.0 + 0.28 * tau) * (1.0 - 0.7 * uStorm * (1.0 - hr));
+    vec3 amb = (skyUp * (0.1 + 0.5 * hr) + skyHz * 0.25 + E * max(uL.y, 0.0) * 0.06 / PI * vec3(0.5, 0.7, 1.0)) * (1.0 - 0.5 * uStorm);
     // lightning lights the cloud from inside: light from the channel falls off with distance through the cloud
-    vec3 Li = sunC * ms * 4.0 * PI * (1.0 - exp(-2.0 * sig * dt)) + amb * 0.08
+    vec3 Li = E * ms + diff + amb
             + vec3(0.72, 0.78, 1.0) * uFlash * 0.6 * exp(-length(p - uBolt) / 0.8) * exp(-0.6 * d * 40.0 * 0.05);
     float st = exp(-sig * dt);
     S += T * (1.0 - st) * Li; T *= st;
@@ -191,8 +249,11 @@ vec3 rainbow(vec3 rd) {
 vec3 halo(vec3 rd) {
   if (uHalo <= 0.0) return vec3(0.0);
   float a = degrees(acos(clamp(dot(rd, uL), -1.0, 1.0)));
-  vec3 r = exp(-pow((a - vec3(21.8, 22.3, 22.8)) / 0.5, vec3(2.0))) * smoothstep(21.0, 22.0, a) + 0.25 * exp(-pow((a - 23.5) / 2.0, 2.0));
-  return r * uHalo * 0.03 * lightT() * uLightCol;
+  // minimum deviation for a 60 degree ice prism is 21.5 (red) to 22.4 (blue) degrees; crystal wobble and the Sun's own
+  // width smear that to about a degree, so only the inner edge keeps a red tint and the rest reads white, with a long
+  // tail outward where crystals away from minimum deviation send their light
+  vec3 hd = (a - vec3(21.9, 22.2, 22.5)) / 0.9, r = exp(-hd * hd) * smoothstep(20.6, 22.0, a) + 0.3 * exp(-pow(max(a - 22.5, 0.0) / 3.0, 2.0)) * step(22.5, a);
+  return r * uHalo * 0.012 * lightT() * uLightCol;
 }
 vec3 sky(vec3 rd) {
   vec3 col = skyL(rd) * uLightCol + lightDisk(rd) + stars(rd);
@@ -329,7 +390,7 @@ vec4 sprayVol(vec3 ro, vec3 rd, float tMax) {
   float ph = hgp(dot(rd, uL), 0.6) * 4.0 * PI;
   for (int i = 0; i < 24; i++) {
     if (i >= uSprayN) break;
-    float u = (float(i) + hash(gl_FragCoord.xy + float(i) * 3.1)) / float(uSprayN), t = 0.5 + t1 * u * u, dt = t1 * (2.0 * u + 0.1) / float(uSprayN);
+    float u = (float(i) + jit(float(i) + 0.5)) / float(uSprayN), t = 0.5 + t1 * u * u, dt = t1 * (2.0 * u + 0.1) / float(uSprayN);
     vec3 q = ro + rd * t; float h = swellH(q.xz), above = q.y - h;
     if (above < -0.2 || above > 7.0) continue;
     float brk = smoothstep(uBreakH, uBreakH + 0.7 * uSig, h);
@@ -397,7 +458,7 @@ vec3 sea0(vec3 ro, vec3 rd) {
   if (uRain > 0.0 && t < 70.0) {
     vec2 cell = floor(p.xz / 0.6), c = (cell + 0.2 + 0.6 * vec2(hash(cell), hash(cell + 3.7))) * 0.6;
     float ph = fract(uT * (0.4 + 0.15 * min(uRain, 10.0) / 10.0) + hash(cell + 9.1)), r = ph * 0.3, dd = length(p.xz - c);
-    float ring = exp(-pow((dd - r) / 0.025, 2.0)) * (1.0 - ph) * smoothstep(70.0, 20.0, t) * min(1.0, uRain / 4.0);
+    float ring = exp(-(dd - r) * (dd - r) / 0.000625) * (1.0 - ph) * smoothstep(70.0, 20.0, t) * min(1.0, uRain / 4.0);
     s += (p.xz - c) / max(dd, 1e-3) * ring * 0.8;
     crown = smoothstep(0.12, 0.0, ph) * smoothstep(0.06, 0.0, dd) * smoothstep(40.0, 5.0, t) * min(1.0, uRain / 4.0);
   }
@@ -450,7 +511,7 @@ vec3 sea1(vec3 ro, vec3 rd, float t) {
   if (uRain > 0.0 && t < 70.0) {
     vec2 cell = floor(p.xz / 0.6), c = (cell + 0.2 + 0.6 * vec2(hash(cell), hash(cell + 3.7))) * 0.6;
     float ph = fract(uT * (0.4 + 0.15 * min(uRain, 10.0) / 10.0) + hash(cell + 9.1)), r = ph * 0.3, dd = length(p.xz - c);
-    float ring = exp(-pow((dd - r) / 0.025, 2.0)) * (1.0 - ph) * smoothstep(70.0, 20.0, t) * min(1.0, uRain / 4.0);
+    float ring = exp(-(dd - r) * (dd - r) / 0.000625) * (1.0 - ph) * smoothstep(70.0, 20.0, t) * min(1.0, uRain / 4.0);
     s += (p.xz - c) / max(dd, 1e-3) * ring * 0.8;
     crown = smoothstep(0.12, 0.0, ph) * smoothstep(0.06, 0.0, dd) * smoothstep(40.0, 5.0, t) * min(1.0, uRain / 4.0);
   }
@@ -540,12 +601,19 @@ void main() {
 // display: ACES filmic fit (Narkowicz 2015), the sRGB transfer function (IEC 61966-2-1), triangular dither
 export const POST_FRAG = `#version 300 es
 precision highp float;
-uniform sampler2D uImg; uniform float uFrame, uNight, uLensRain, uT; uniform vec2 uRes;
+uniform sampler2D uImg; uniform float uSeq, uFrame, uNight, uLensRain, uT; uniform vec2 uRes;
 uniform vec2 uSunUV; uniform float uSunOn, uRays, uGhost, uBloom, uHalation, uQuality, uRainP, uTilt;
 float lum(vec3 c) { return dot(c, vec3(0.2126, 0.7152, 0.0722)); }
-vec3 hdrAt(vec2 p) { return texture(uImg, clamp(p, vec2(0.001), vec2(0.999))).rgb; }
+vec3 hdrAt(vec2 p) { return textureLod(uImg, clamp(p, vec2(0.001), vec2(0.999)), 0.0).rgb; }
+// the image averaged over about 2^lod pixels (field.js builds the mip chain before this pass)
+vec3 hdrWide(vec2 p, float lod) { return textureLod(uImg, clamp(p, vec2(0.001), vec2(0.999)), lod).rgb; }
 in vec2 v; out vec4 o;
 float hash(vec2 p) { p = fract(p * vec2(443.897, 441.423)); p += dot(p, p.yx + 19.19); return fract((p.x + p.y) * p.x); }
+// sample jitter kernel (jitter.mjs holds the reference and its test): interleaved gradient noise per pixel (Jimenez 2014),
+// shifted by the golden ratio per accumulated sample and by the plastic number per march step, so a still's samples
+// spread evenly through each step and neighbouring steps do not share an offset
+uniform sampler2D uBlue;
+float jit(float dim) { return fract(texelFetch(uBlue, ivec2(gl_FragCoord.xy) & 63, 0).r + 0.61803399 * uSeq + 0.75487767 * dim); }
 vec3 aces(vec3 x) { return clamp((x * (2.51 * x + 0.03)) / (x * (2.43 * x + 0.59) + 0.14), 0.0, 1.0); }
 vec3 srgb(vec3 c) { return mix(c * 12.92, 1.055 * pow(c, vec3(1.0 / 2.4)) - 0.055, step(0.0031308, c)); }
 void main() {
@@ -560,13 +628,13 @@ void main() {
     float k = 1.0 - dot(d, d) / (r * r);
     if (on > 0.0 && k > 0.0) { dropK = k; dropD = d / r; dropUV = d / 9.0 / vec2(uRes.x / uRes.y, 1.0); }
   }
-  vec3 hdr = texture(uImg, uv).rgb;
+  vec3 hdr = textureLod(uImg, uv, 0.0).rgb;
   // a drop on the lens is a small water lens: it shows the scene behind it upside down and shrunk (a wide view through
   // its centre), out of focus because it sits on the glass; its edge is soft, with a thin dark meniscus and a highlight
   // on the side toward the light
   if (dropK > 0.0) {
     vec2 cen = v - dropUV, look = cen - dropUV * 6.0; vec3 seen = vec3(0.0);
-    for (int i = 0; i < 6; i++) { float an = float(i) * 1.0472; seen += texture(uImg, clamp(look + vec2(cos(an), sin(an)) * 0.006, vec2(0.001), vec2(0.999))).rgb; }
+    for (int i = 0; i < 6; i++) { float an = float(i) * 1.0472; seen += hdrAt(look + vec2(cos(an), sin(an)) * 0.006); }
     seen /= 6.0;
     float a = smoothstep(0.0, 0.18, dropK), edge = smoothstep(0.22, 0.04, dropK) * smoothstep(0.0, 0.04, dropK);
     float hi = smoothstep(0.35, 0.95, dot(normalize(dropD + 1e-4), vec2(-0.55, 0.83))) * smoothstep(0.5, 0.15, dropK) * smoothstep(0.0, 0.08, dropK);
@@ -574,13 +642,16 @@ void main() {
   }
   vec2 asp = vec2(uRes.y / uRes.x, 1.0);
   // bloom and halation: light scattered in the lens, and at night in the film's base, which glows red round bright
-  // points; mist and rain scatter it wider. A golden-angle disk of 16 taps (8 on a phone) over what exceeds white
+  // points; mist and rain scatter it wider. A golden-angle disk of 16 taps (12 on a phone) over what exceeds white.
+  // Each tap reads the mip level whose texel covers the tap's share of the disk, so a source smaller than the tap
+  // spacing (the Sun) spreads evenly; read at full resolution a tap either hit it or missed, which drew a stippled halo.
+  // Taps weigh less toward the rim, so the glow fades out with no edge
   if (uBloom + uHalation > 0.0) {
-    int N = uQuality > 0.5 ? 16 : 12; vec3 acc = vec3(0.0);
+    int N = uQuality > 0.5 ? 16 : 12; vec3 acc = vec3(0.0); float R = 0.02 + 0.03 * uBloom, wsum = 0.0, lod = max(0.0, log2(R * uRes.y * sqrt(3.14159265 / float(N))));
     for (int i = 0; i < 16; i++) { if (i >= N) break;
-      float r = sqrt((float(i) + hash(gl_FragCoord.xy + float(i))) / float(N)) * (0.02 + 0.03 * uBloom), an = float(i) * 2.39996 + 6.2832 * hash(gl_FragCoord.yx);
-      vec3 c = hdrAt(uv + vec2(cos(an), sin(an)) * r * asp); float l = lum(c); acc += c * max(l - 1.0, 0.0) / max(l, 1e-4); }
-    acc /= float(N);
+      float k = (float(i) + jit(float(i))) / float(N), r = sqrt(k) * R, w = (1.0 - k) * (1.0 - k), an = float(i) * 2.39996 + 6.2832 * jit(0.37);
+      vec3 c = hdrWide(uv + vec2(cos(an), sin(an)) * r * asp, lod); float l = lum(c); acc += w * c * max(l - 1.0, 0.0) / max(l, 1e-4); wsum += w; }
+    acc /= wsum;
     hdr += acc * uBloom * 0.8 + lum(acc) * vec3(1.0, 0.32, 0.16) * uHalation * 0.9;
   }
   // rain falling between the eye and the scene: four layers at increasing depth (two on a phone); nearer drops are
@@ -620,7 +691,8 @@ void main() {
   // at night the eye shifts to rods: colour drains and what is left leans blue (Jensen et al. 2000, "A
   // Physically-Based Night Sky Model", SIGGRAPH, after Khan and Pattanaik's scotopic blue shift)
   float Y = dot(hdr, vec3(0.2126, 0.7152, 0.0722));
-  hdr = mix(hdr, Y * vec3(0.55, 0.72, 1.12), 0.75 * uNight);
+  // rods take over only in the dark: a star or the Moon is bright enough for the cones, so it keeps its colour
+  hdr = mix(hdr, Y * vec3(0.55, 0.72, 1.12), 0.75 * uNight * (1.0 - smoothstep(0.05, 0.4, Y)));
   vec3 c = srgb(aces(hdr));
   vec2 p = gl_FragCoord.xy + uFrame;
   c += (hash(p) + hash(p + 17.3) - 1.0) / 255.0;

@@ -20,7 +20,8 @@ if (host) {
     canvas.setAttribute("aria-label", `${SPACES[id].label}: ${SAY[id]} The glass letters read "${SPACES[id].word}".`);
   };
   // each space's rendered plate shows first (and stays where the live render cannot run)
-  const plate = (id) => { host.style.setProperty("--gw-plate", `url("/media/world/glass-water/${id}-${innerWidth > 960 ? 1920 : 960}.webp")`); };
+  // the plate is chosen by device pixels, so a 2x or 4K screen gets the 3840 px plate instead of an upscaled 1920
+  const plate = (id) => { const px = innerWidth * (devicePixelRatio || 1); host.style.setProperty("--gw-plate", `url("/media/world/glass-water/${id}-${px > 1920 ? 3840 : px > 960 ? 1920 : 960}.webp")`); };
   let field = null, cur = start;
   const make = () => {
     try { field = createField(canvas, { space: cur, reduced, dprCap: Math.min(3, Number(params.get("dpr")) || 1.5) }); host.classList.add("gw-live-on"); }

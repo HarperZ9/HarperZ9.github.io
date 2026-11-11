@@ -1,0 +1,8 @@
+{
+  "date": "2026-11-11",
+  "note": "Main (media rounds 3 and 4, media showcase, cloud march, narrator default) merged into the element bench branch. index.html and studio.html carry both sides' changes; the ?v= world asset revision was regenerated to world-192fb9d6e0. The author approved merging on 2026-11-11.",
+  "paths": {
+    "index.html": "74db45a8e649662a9bfae3d006ec0fecc60593dfcef5879ff6f25dc6b9b63346",
+    "studio.html": "f2b8defc28b07bff7d6d1cf4a2801b53ff60a745133707802d9f75011f59124a"
+  }
+}

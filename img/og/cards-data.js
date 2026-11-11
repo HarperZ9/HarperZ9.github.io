@@ -149,10 +149,10 @@ window.CARD_DATA = {
     "glyph": "layers"
   },
   "portfolio-home": {
-    "role": "ZAIN DANA HARPER / PRODUCT OVERVIEW",
+    "role": "PRODUCT OVERVIEW",
     "headline": "Public tools, four recorded workflows, and evidence you can inspect.",
     "pipeline": "MAP / ROUTE / VERIFY / REMEMBER / IMPROVE",
-    "word": "ZAIN DANA HARPER",
+    "word": "THE WORK",
     "glyph": "aperture"
   },
   "profile": {
