@@ -4,18 +4,22 @@
 //   music.stop()                    fade out and release the audio device
 //   music.setLevel(0.6)             0 to 1, remembered for this visitor
 //   music.setMood('night-school')   change piece by id, or by any id in the `moods` map (a topic or an element id)
-//   music.on((state) => ...)        { playing, mood, title, level, bar, chords } whenever something changes
+//   music.on((state) => ...)        { playing, mood, title, level, bar, chords, render } whenever something changes;
+//                                   render is "full", "lite" or "half": how much the renderer has stepped down for the device
 // Nothing plays until start() is called. The music is generated in the visitor's browser by a worker (worker.js); no
 // audio file is downloaded. Two bars are rendered at a time and laid end to end about ten seconds ahead of the playhead.
 import { Engine } from '../../world/sound/sound/engine.js';
 import { PIECES, PIECE_IDS } from './pieces.js';
 
-export const DEFAULT_MOODS = { water: 'low-tide', 'ink-and-water': 'low-tide', sea: 'low-tide', learn: 'night-school', school: 'night-school', light: 'glass-hour', glass: 'glass-hour', sky: 'glass-hour' };
+export const DEFAULT_MOODS = { water: 'low-tide', 'ink-and-water': 'low-tide', sea: 'low-tide', learn: 'night-school', school: 'night-school', light: 'glass-hour', glass: 'glass-hour', sky: 'glass-hour', engine: 'deep-current', type: 'clear-line', lettering: 'clear-line' };
+// A device the site already treats as weak (world/site/budget.js marks <html class="weak">: under 4 GB of memory, four or
+// fewer cores, or Save-Data) starts on the lighter render; the worker steps down further by its own measurement.
+const weak = () => { try { const n = navigator; return document.documentElement.classList.contains('weak') || (n.deviceMemory && n.deviceMemory < 4) || (n.hardwareConcurrency && n.hardwareConcurrency <= 4) || n.connection?.saveData === true; } catch { return false; } };
 const store = { get(k, d) { try { const v = localStorage.getItem(k); return v === null ? d : v; } catch { return d; } }, set(k, v) { try { localStorage.setItem(k, String(v)); } catch { /* private mode: the choice lasts for this visit only */ } } };
 
-export function createSiteMusic({ moods = {}, ahead = 10, seed = null, workerUrl = new URL('./worker.js', import.meta.url) } = {}) {
+export function createSiteMusic({ moods = {}, ahead = 10, seed = null, level = null, workerUrl = new URL('./worker.js', import.meta.url) } = {}) {
   const map = { ...DEFAULT_MOODS, ...moods }, listeners = new Set(), resolve = (id) => (PIECES[id] ? id : map[id] && PIECES[map[id]] ? map[id] : null);
-  const s = { playing: false, mood: resolve(store.get('site-music-mood', 'low-tide')) || 'low-tide', level: Math.min(1, Math.max(0, +store.get('site-music-level', 0.7))), bar: 0, chords: [] };
+  const s = { playing: false, mood: resolve(store.get('site-music-mood', 'low-tide')) || 'low-tide', level: Math.min(1, Math.max(0, +store.get('site-music-level', 0.7))), bar: 0, chords: [], render: 'full' };
   let engine = null, ownEngine = false, worker = null, bus = null, next = 0, timer = null, run = 0, calls = 0, pending = false, sources = [];
   const waits = new Map(), state = () => ({ ...s, title: PIECES[s.mood].title }), emit = () => { for (const fn of listeners) fn(state()); };
   const ask = (msg) => new Promise((ok, fail) => { const call = ++calls; waits.set(call, { ok, fail }); worker.postMessage({ ...msg, call }); });
@@ -26,7 +30,7 @@ export function createSiteMusic({ moods = {}, ahead = 10, seed = null, workerUrl
     if (next < ctx.currentTime + 0.05) next = ctx.currentTime + 0.12;   // first chunk, or the renderer fell behind: start a moment from now
     const src = ctx.createBufferSource(); src.buffer = buf; src.connect(bus); src.start(Math.max(ctx.currentTime, next - c.pre / c.sr));
     sources.push(src); src.onended = () => { sources = sources.filter((x) => x !== src); };
-    const at = next; c.bars.forEach((b, i) => setTimeout(() => { if (mine === run) { s.bar = b.index + 1; s.chords = b.chords; emit(); } }, Math.max(0, (at + i * c.n / c.bars.length / c.sr - ctx.currentTime) * 1000)));
+    const at = next; c.bars.forEach((b, i) => setTimeout(() => { if (mine === run) { s.bar = b.index + 1; s.chords = b.chords; s.render = c.level; emit(); } }, Math.max(0, (at + i * c.n / c.bars.length / c.sr - ctx.currentTime) * 1000)));
     next += c.n / c.sr;
   }
   async function fill(mine) {
@@ -42,7 +46,7 @@ export function createSiteMusic({ moods = {}, ahead = 10, seed = null, workerUrl
     worker.onerror = (err) => console.error('site music: the render worker failed', err.message);
     bus = ctx.createGain(); bus.gain.value = 1; bus.connect(engine.out); next = 0; pending = false;
     clearInterval(timer); timer = null;
-    ask({ cmd: 'start', piece: s.mood, seed: seed ?? (Date.now() % 100000) + 1, sr: ctx.sampleRate }).then(() => { if (mine !== run) return; fill(mine); timer = setInterval(() => fill(mine), 1000); }).catch((err) => console.error('site music: could not start the piece', err));
+    ask({ cmd: 'start', piece: s.mood, seed: seed ?? (Date.now() % 100000) + 1, sr: ctx.sampleRate, level: level ?? (weak() ? 1 : 0) }).then(() => { if (mine !== run) return; fill(mine); timer = setInterval(() => fill(mine), 1000); }).catch((err) => console.error('site music: could not start the piece', err));
   }
   function quiet(fade = 0.6) {
     run++; clearInterval(timer); timer = null; worker?.terminate(); worker = null;

@@ -11,8 +11,7 @@
 // reports the sum over pairs divided by the sum of amplitudes, so the number does not rise just because the sound is louder.
 // That normalisation is ours; the pair curve is the published one. It is a model of roughness, not of musical taste: a
 // dominant seventh is rougher than a triad and still belongs in the music.
-import { mono } from './spectrum.js';
-import { partialFrames } from './pitch.js';
+import { framesOf, narrow } from './pitch.js';
 
 export function pairRoughness(f1, f2, a1 = 1, a2 = 1) {
   const lo = Math.min(f1, f2), df = Math.abs(f2 - f1), s = 0.24 / (0.021 * lo + 19);
@@ -27,7 +26,7 @@ export function frameRoughness(parts) {
 
 // Roughness over time. spans (bars) are optional; without them the series is per frame only.
 export function roughness(channels, sr, spans = null) {
-  const pf = partialFrames(mono(channels), sr, { fmin: 60, fmax: 5000, max: 16 });
+  const pf = narrow(framesOf(channels, sr), { fmin: 60, fmax: 5000, max: 16 });
   const series = pf.frames.map((p, i) => ({ t: i * pf.hopSec + pf.winSec / 2, r: frameRoughness(p), a: p.reduce((s, q) => s + q.a, 0) }));
   const loud = series.filter((s) => s.a > 1e-4), v = loud.map((s) => s.r).sort((a, b) => a - b), q = (f) => (v.length ? v[Math.min(v.length - 1, Math.floor(f * v.length))] : 0);
   const out = { mean: v.reduce((a, b) => a + b, 0) / Math.max(1, v.length), p95: q(0.95), max: v[v.length - 1] ?? 0, series };
@@ -39,7 +38,7 @@ export function roughness(channels, sr, spans = null) {
 // sevenths inside a single chord voicing do not count. Layers that agree on the harmony read low; a layer in the wrong key
 // rubs against the others and reads high. layers: channel arrays of equal length.
 export function crossRoughness(layers, sr) {
-  const pfs = layers.map((ch) => partialFrames(mono(ch), sr, { fmin: 38, fmax: 4000, max: 10 })), n = Math.min(...pfs.map((p) => p.frames.length)), vals = [];
+  const pfs = layers.map((ch) => narrow(framesOf(ch, sr), { fmin: 38, fmax: 4000, max: 10 })), n = Math.min(...pfs.map((p) => p.frames.length)), vals = [];
   for (let f = 0; f < n; f++) { let sum = 0, amp = 0, sounding = 0;
     for (let a = 0; a < pfs.length; a++) { const A = pfs[a].frames[f], sa = A.reduce((s, q) => s + q.a, 0); amp += sa; if (sa > 1e-3) sounding++;
       for (let b = a + 1; b < pfs.length; b++) for (const p of A) for (const q of pfs[b].frames[f]) sum += pairRoughness(p.f, q.f, p.a, q.a); }

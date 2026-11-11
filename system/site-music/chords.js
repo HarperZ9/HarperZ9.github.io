@@ -6,6 +6,7 @@ export const TYPES = {
   maj9: { pcs: [0, 4, 7, 11, 2], voice: [4, 7, 11, 14] }, '6/9': { pcs: [0, 4, 7, 9, 2], voice: [4, 9, 14, 19] }, 'maj9#11': { pcs: [0, 4, 7, 11, 2, 6], voice: [4, 6, 11, 14] },
   m9: { pcs: [0, 3, 7, 10, 2], voice: [3, 7, 10, 14] }, m11: { pcs: [0, 3, 7, 10, 2, 5], voice: [3, 10, 14, 17] }, m7b5: { pcs: [0, 3, 6, 10], voice: [3, 6, 10, 12] },
   '13': { pcs: [0, 4, 7, 10, 2, 9], voice: [4, 10, 14, 21] }, '9': { pcs: [0, 4, 7, 10, 2], voice: [4, 7, 10, 14] }, sus13: { pcs: [0, 5, 7, 10, 2, 9], voice: [5, 10, 14, 21] },
+  add9: { pcs: [0, 4, 7, 2], voice: [4, 7, 14, 16] }, '7#11': { pcs: [0, 4, 7, 10, 2, 6], voice: [4, 6, 10, 14] },
   '7alt': { pcs: [0, 4, 10, 1, 8, 3, 6], voice: [4, 10, 13, 20] },   // altered: both ninths and both fifths moved, so the lead may use any of them
 };
 

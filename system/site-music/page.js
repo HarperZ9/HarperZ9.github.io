@@ -22,5 +22,5 @@ for (const b of document.querySelectorAll('[data-play]')) b.addEventListener('cl
 
 music.on((s) => {
   for (const li of document.querySelectorAll('[data-piece]')) { const mine = s.playing && li.dataset.piece === s.mood, b = li.querySelector('button'); li.toggleAttribute('data-on', mine); b.setAttribute('aria-pressed', String(mine)); b.textContent = `${mine ? 'Stop' : 'Play'} ${li.querySelector('h2').textContent}`; }
-  readout.textContent = !s.playing ? 'Music is off.' : s.bar ? `${s.title}, bar ${s.bar}: ${s.chords.join(', ')}` : `${s.title} is starting. The sea comes in first.`;
+  readout.textContent = !s.playing ? 'Music is off.' : s.bar ? `${s.title}, bar ${s.bar}: ${s.chords.join(', ')}${s.render === 'full' ? '' : ' (lighter render for this device)'}` : `${s.title} is starting. The sea comes in first.`;
 });

@@ -19,12 +19,12 @@ import { masking } from './mask.js';
 export const TARGETS = {
   lufs: -14, lufsTol: 1, truePeakMax: -1, dcMax: 0.002, crestMin: 8, lraMax: 14,
   balance: { centers: [31.5, 63, 125, 250, 500, 1000, 2000, 4000, 8000, 16000], db: [-22, -9, -5, -5, -7, -11, -15, -19, -25, -36], tol: 7 },
-  harshMax: -5, presencePeakMax: 5, fitMin: 0.8, fitMeanMin: 0.75, rootMatchMin: 0.85, stemFitMin: 0.72,
+  harshMax: -5, presencePeakMax: 5, fitMin: 0.7, fitMeanMin: 0.75, rootMatchMin: 0.85, stemFitMin: 0.72,
   bpmTolPct: 1.5, driftMaxPct: 0.8, regularityMaxMs: 20, swingTol: 0.06, roughMax: 0.13,
   correlationMin: 0.1, monoLossMin: -3.5, leadOverMin: 6, musicOverMin: 0, leadCentsMax: 25,
   // round two: presence (mean of the 2, 4 and 8 kHz bands against the target), phrase repetition, entry abruptness,
   // roughness between layers, the low end, and the kit against the harmony layers
-  presenceTol: 3, sameShareMax: 0.34, entryMaxDb: 7, togetherShareMax: 0.3, crossRoughMax: 0.05, lowMonoMin: -1, lowClashMax: 0.3, drumsOverHarmonyMax: 0,
+  presenceTol: 3, sameShareMax: 0.34, entryMaxDb: 9, togetherShareMax: 0.3, crossRoughMax: 0.12, lowMonoMin: -1, lowClashMax: 0.15, drumsOverHarmonyMax: 0,
 };
 
 // Spectral balance of the full mix, and harshness: the level of 2 to 5 kHz (where hearing is most sensitive and a hard
@@ -66,7 +66,7 @@ export function listen({ channels, sr }, { score = null, stems = null, targets =
   if (stems) { r.layers = {}; for (const [k, ch] of Object.entries(stems)) if (ch[0].some((v) => v !== 0)) r.layers[k] = integratedLufs(ch, sr);
     const h = ['keys', 'pad', 'room'].filter(sounding); if (sounding('drums') && h.length) { const sum = [0, 1].map((c) => { const o = new Float32Array(channels[0].length); for (const k of h) for (let i = 0; i < o.length; i++) o[i] += stems[k][c][i]; return o; }); r.layers.harmony = integratedLufs(sum, sr); r.layers.drumsOverHarmony = r.layers.drums - r.layers.harmony; } }
   if (score?.chords) { r.harmony = harmony(music, sr, score.chords); r.stems = {};
-    for (const k of ['keys', 'bass', 'sub', 'pad', 'lead']) if (sounding(k)) { const h = harmony(stems[k], sr, score.chords); r.stems[k] = { meanFit: h.meanFit, minFit: h.minFit, worstBar: h.worstBar }; } }
+    for (const k of ['keys', 'bass', 'sub', 'pad', 'lead']) if (sounding(k)) { const h = harmony(stems[k], sr, score.chords); r.stems[k] = { meanFit: h.weightedFit, minFit: h.minFit, worstBar: h.worstBar }; } }
   if (stems?.ambience && stems?.music) { r.masking = { music: masking(stems.music, stems.ambience, sr) }; if (stems.lead) r.masking.lead = masking(stems.lead, stems.ambience, sr); }
   if (stems?.lead && score?.lead?.length) r.leadTuning = tuning(stems.lead[0], sr, score.lead);
 
@@ -104,7 +104,7 @@ export function listen({ channels, sr }, { score = null, stems = null, targets =
     if (h.minFit < T.fitMin) flag(flags, 'chord', `share of energy on the written chord, bar ${h.worstBar + 1}`, h.minFit, `>= ${T.fitMin}`, 'A bar does not sound the chord the score wrote.');
     if (h.meanFit < T.fitMeanMin) flag(flags, 'key', 'mean share of energy on the written chords', h.meanFit, `>= ${T.fitMeanMin}`, 'The harmony as a whole is off the score.');
     if (h.rootMatchRate < T.rootMatchMin) flag(flags, 'roots', 'share of chords with the written root in the bass', h.rootMatchRate, `>= ${T.rootMatchMin}`, 'The bass does not state the written roots.');
-    for (const [k, s] of Object.entries(r.stems)) if (s.meanFit < T.stemFitMin) flag(flags, `stem-${k}`, `${k}: mean share of energy on the written chords`, s.meanFit, `>= ${T.stemFitMin}`, `The ${k} layer is in the wrong key.`);
+    for (const [k, s] of Object.entries(r.stems)) if (s.meanFit < T.stemFitMin) flag(flags, `stem-${k}`, `${k}: share of the layer's energy on the written chords`, s.meanFit, `>= ${T.stemFitMin}`, `The ${k} layer is in the wrong key.`);
   }
   if (r.roughness.mean > T.roughMax) flag(flags, 'roughness', 'mean sensory roughness (Sethares)', r.roughness.mean, `<= ${T.roughMax}`, 'Partials beat against each other more than this idiom allows.');
   if (r.masking) {

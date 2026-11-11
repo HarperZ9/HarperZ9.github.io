@@ -5,8 +5,9 @@
 //   cents         hundredths of a semitone; a partial's distance from the nearest tempered pitch is the tuning error
 //   chord estimate  the root and chord type whose pitch classes best match the chroma, with the bass deciding close calls.
 //                   The root is judged only where a bass sounds: a rootless piano voicing alone does not state its root.
-//                   It counts as stated when the written root holds at least 30 percent of the bass energy, which allows a
-//                   line that alternates root and fifth and still fails a bass in the wrong key.
+//                   It counts as stated when the written root is the strongest bass pitch class or holds at least 30
+//                   percent of the bass energy, which allows a line that alternates root and fifth, or a busy bass guitar
+//                   line, and still fails a bass in the wrong key.
 import { mono, decimate, powerFrames, peaks, ftom } from './spectrum.js';
 
 export const NOTE_NAMES = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
@@ -23,6 +24,12 @@ export function partialFrames(x, sr, { fmin = 38, fmax = 5000, max = 24 } = {}) 
   const factor = Math.max(1, Math.floor(sr / 11000)), y = decimate(x, factor), r = sr / factor, st = powerFrames(y, r, { n: 4096, hop: 1024 });
   return { frames: st.frames.map((p) => peaks(p, st.binHz, { max, fmin, fmax: Math.min(fmax, r * 0.45), floorDb: -50 })), hopSec: st.hopSec, winSec: st.winSec };
 }
+
+// One analysis per signal: harmony, roughness and the comparison between layers all read the same frames.
+const KEEP = new WeakMap();
+export function framesOf(channels, sr) { const key = channels[0]; if (!KEEP.has(key)) KEEP.set(key, partialFrames(mono(channels), sr)); return KEEP.get(key); }
+// The same frames narrowed to a frequency range and a number of partials.
+export const narrow = (pf, { fmin = 0, fmax = Infinity, max = 24 } = {}) => ({ ...pf, frames: pf.frames.map((fr) => fr.filter((p) => p.f >= fmin && p.f <= fmax).slice(0, max)) });
 
 // Chroma, bass chroma and tuning for each time span [{ t0, t1 }] in seconds.
 export function chromaSpans(pf, spans, { bassMax = 135, tuneMin = 200, tuneMax = 2500 } = {}) {
@@ -58,12 +65,13 @@ export const chordFit = (chroma, pcs) => pcs.reduce((s, pc) => s + chroma[((pc %
 
 // Compare what sounds with what the score wrote. chords: [{ t0, t1, bar, sym, root, pcs }] with root and pcs as pitch classes.
 export function harmony(channels, sr, chords) {
-  const pf = partialFrames(mono(channels), sr), spans = chromaSpans(pf, chords);
+  const pf = framesOf(channels, sr), spans = chromaSpans(pf, chords);
   const rows = spans.map((s, i) => { const w = chords[i], est = estimateChord(s.chroma, s.bass), bassRoot = s.bass.indexOf(Math.max(...s.bass));
-    return { bar: w.bar, t0: w.t0, written: w.sym, heard: est.name, fit: chordFit(s.chroma, w.pcs), rootHeard: s.bassEnergy > 0.02 * s.energy ? NOTE_NAMES[bassRoot] : null, hasBass: s.bassEnergy > 0.02 * s.energy, rootShare: s.bass[w.root], rootMatch: s.bass[w.root] >= 0.3,
-      silent: s.energy < 1e-9, centsAbs: s.centsAbs, cents: s.cents, chroma: s.chroma }; });
+    return { bar: w.bar, t0: w.t0, written: w.sym, heard: est.name, fit: chordFit(s.chroma, w.pcs), rootHeard: s.bassEnergy > 0.02 * s.energy ? NOTE_NAMES[bassRoot] : null, hasBass: s.bassEnergy > 0.02 * s.energy, rootShare: s.bass[w.root], rootMatch: s.bass[w.root] >= 0.3 || bassRoot === w.root,
+      silent: s.energy < 1e-9, energy: s.energy, centsAbs: s.centsAbs, cents: s.cents, chroma: s.chroma }; });
   const live = rows.filter((r) => !r.silent), based = live.filter((r) => r.hasBass), fits = live.map((r) => r.fit).sort((a, b) => a - b), worst = live.reduce((m, r) => (!m || r.fit < m.fit ? r : m), null);
-  return { rows, meanFit: fits.reduce((a, b) => a + b, 0) / Math.max(1, fits.length), minFit: fits[0] ?? 1, worstBar: worst ? worst.bar : null,
+  const energy = live.reduce((a, r) => a + r.energy, 0);   // weightedFit counts each chord by how much sounds in it, so a sparse layer is judged on its notes and not on the tails between them
+  return { rows, weightedFit: energy ? live.reduce((a, r) => a + r.fit * r.energy, 0) / energy : 1, meanFit: fits.reduce((a, b) => a + b, 0) / Math.max(1, fits.length), minFit: fits[0] ?? 1, worstBar: worst ? worst.bar : null,
     rootMatchRate: based.length ? based.filter((r) => r.rootMatch).length / based.length : 1, rootMisses: based.filter((r) => !r.rootMatch).map((r) => r.bar), chordsWithBass: based.length,
     centsAbsMean: live.reduce((s, r) => s + r.centsAbs, 0) / Math.max(1, live.length), centsAbsMax: Math.max(0, ...live.map((r) => r.centsAbs)) };
 }

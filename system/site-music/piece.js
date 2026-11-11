@@ -34,10 +34,12 @@ export function master(L, R, sr, { target = -14, ceilingDb = -1.8, gainDb = null
 }
 
 // Render a piece. Returns the mastered mix, the layers at the same gain (for the ear), and the score in seconds.
-export function renderPiece(id, { seed = 1, bars = 48, sr = 48000, defects = {}, masterOpts = {}, ambienceDb = 0 } = {}) {
-  const piece = PIECES[id], score = compose(id, { seed, bars }), r = renderBars(score.bars, piece, { sr, seed, origin: LEAD_IN, defects }), lead = Math.round(LEAD_IN * sr) - r.pre, total = lead + r.length;
+export function renderPiece(id, { seed = 1, bars = 48, sr = 48000, defects = {}, masterOpts = {}, ambienceDb = 0, responsive = true } = {}) {
+  const P0 = PIECES[id], piece = defects.mix ? { ...P0, mix: { ...P0.mix, ...Object.fromEntries(Object.entries(defects.mix).map(([k, v]) => [k, P0.mix[k] + v])) } } : P0, score = compose(id, { seed, bars, staged: defects.staged !== false, loop: !!defects.loop }), r = renderBars(score.bars, piece, { sr, seed, origin: LEAD_IN, defects }), lead = Math.round(LEAD_IN * sr) - r.pre, total = lead + r.length;
   const place = (x) => { const L = new Float32Array(total), R = new Float32Array(total); L.set(x.L, lead); R.set(x.R, lead); return [L, R]; };
-  const amb = createAmbience({ seed, sr, ...piece.ambience }).render(total), ag = Math.pow(10, (piece.mix.ambience + ambienceDb) / 20), fin = Math.round(2.5 * sr), fout = Math.round(5 * sr);
+  const tl = timeline(score.bars, piece, { t0: LEAD_IN, drift: defects.drift || 0, sr }), sea = createAmbience({ seed, sr, ...piece.ambience, responsive });
+  sea.cue({ rests: tl.rests, lead: tl.lead.map((n) => [n.t0 - 0.09, n.t1]) });
+  const amb = sea.render(total), ag = Math.pow(10, (piece.mix.ambience + ambienceDb) / 20), fin = Math.round(2.5 * sr), fout = Math.round(5 * sr);
   for (let i = 0; i < total; i++) { const g = ag * Math.min(1, i / fin); amb.L[i] *= g; amb.R[i] *= g; }
   const stems = { music: place(mixStems(r.stems, piece)), ambience: [amb.L, amb.R] };
   for (const k of STEMS) stems[k] = place(mixStems(r.stems, piece, { only: [k] }));
@@ -45,6 +47,5 @@ export function renderPiece(id, { seed = 1, bars = 48, sr = 48000, defects = {},
   Object.values(stems).forEach(fade);
   const L = new Float32Array(total), R = new Float32Array(total); for (let i = 0; i < total; i++) { L[i] = stems.music[0][i] + stems.ambience[0][i]; R[i] = stems.music[1][i] + stems.ambience[1][i]; }
   const m = master(L, R, sr, masterOpts), k = Math.pow(10, m.gainDb / 20); for (const ch of Object.values(stems)) for (const c of ch) for (let i = 0; i < total; i++) c[i] *= k;
-  const tl = timeline(score.bars, piece, { t0: LEAD_IN, drift: defects.drift || 0, sr });
-  return { id, piece, seed, sr, channels: [L, R], stems, score: tl, bars: score.bars, master: m, seconds: total / sr };
+  return { id, piece, seed, sr, channels: [L, R], stems, score: tl, bars: score.bars, shape: score.shape, kinds: score.kinds, breaks: sea.breaks, master: m, seconds: total / sr };
 }
