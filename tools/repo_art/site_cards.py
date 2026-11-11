@@ -76,9 +76,16 @@ def _meta(src: str, key: str) -> str:
     return html.unescape(m.group(1)) if m else ""
 
 
+# A page titled with the author's name alone (the home) gets its card title from what the site does: the name stays
+# a byline on the card and is never the picture (the author, 2026-11-09).
+NAME_TITLE = "Tools that check AI work against its sources, and an engine that renders one idea in every medium"
+
+
 def clean_title(title: str) -> str:
     """The page title as a card shows it: no site suffix, no author prefix, no dashes."""
     title = SUFFIX.sub("", title).strip()
+    if title == "Zain Dana Harper":
+        return NAME_TITLE
     title = re.sub(r"^Zain Dana Harper\s*[|:]\s*", "", title)
     seps = chr(0x2014) + chr(0x2013) + chr(0xB7)  # em dash, en dash, middle dot
     title = re.sub(r"\s+[" + seps + r"]\s+", ", ", title).replace(chr(0x2014), ", ")  # none on a card
@@ -117,6 +124,38 @@ ART_RULES = [  # (pattern on the slug, kind, art key); the first match wins
 ]
 
 
+# Pages that show a render of their own work carry it on their card (the author, 2026-11-09: the site media
+# should show the creative work, never the name as the picture). (slug pattern, render, alt); first match wins.
+WORK_RULES = [
+    (r"^(index|home)$", "media/world/glass-water/low-sun-3840.webp",
+     "Glass letters spelling Low Water stand in the sea at a low sun, the light running across the water toward them.", "whole"),
+    (r"^glass-water$|^world--glass--", "media/world/glass-water/close-3840.webp",
+     "Glass letters rendered at the water line, close enough that the horizon runs through them."),
+    (r"^superframe$|^world--superframe--", "media/world/superframe/paint-3840.webp",
+     "A superframe render in paint: rust coral ridges, an ink pool, a contour lens drawn in fine lines and an ochre stroke."),
+    (r"^(accession|typeface|fonts|type-forge)$|^world--typeengine--", "media/world/lettering/deco-arc-poster.webp",
+     "Accession set in gold on a stepped deco sunburst, over a green dial of fine rings.", "whole"),
+    (r"^cmmns$|^daylight-commons", "media/world/lettering/mosaic-smalti-poster.webp",
+     "The Commons laid in gold glass smalti with a red border, on a ground of blue tiles.", "whole"),
+    (r"^(flywheel|demo-flywheel|flywheel-pilot|no-receipt-no-accept)$", "media/world/lettering/intaglio-lines-3840.webp",
+     "No receipt no accept engraved in intaglio lines on laid paper, beside an embossed guilloche seal with FW in gold foil.", "whole"),
+    (r"^(elements|swatches)$", "media/world/crossover/overprint-day-3840.webp",
+     "Five inks of an Olivetti print laid down as sheets of tinted glass crossing on warm paper."),
+]
+FILM_POSTERS = [(r"^night-school-(\w+)$", "media/school/{0}/narrated-poster.jpg")]  # a lesson page's own film
+
+
+def work_for(slug: str):
+    for pat, path, alt, *fit in WORK_RULES:
+        if re.search(pat, slug) and (ROOT / path).exists():
+            return path, alt, (fit or ["cover"])[0]
+    for pat, tmpl in FILM_POSTERS:
+        m = re.search(pat, slug)
+        if m and (ROOT / tmpl.format(*m.groups())).exists():
+            return tmpl.format(*m.groups()), f"A still from the {m.group(1)} lesson film, drawn by the raw-native engine.", "cover"
+    return None
+
+
 def classify(info: dict) -> dict:
     slug = info["slug"]
     base = re.sub(r"^(demo-|systems--)|(-sample|-graph)$", "", slug)
@@ -125,6 +164,9 @@ def classify(info: dict) -> dict:
     rule = next(((k, a) for pat, k, a in ART_RULES if re.search(pat, slug)), None)
     article = info.get("og_type") == "article"
     kind = rule[0] if rule else ("Essay" if article else "Page")
+    work = work_for(slug)
+    if work:
+        return {"kind": kind, "work": work[0], "work_alt": work[1], "fit": work[2]}
     if (ROOT / "art" / "aperture" / f"cover-{slug}-dark.svg").exists():
         return {"kind": kind, "cover": f"cover-{slug}"}
     if rule:
@@ -141,7 +183,7 @@ def plan() -> list[dict]:
             continue
         info = page_info(rel)
         c = {"slug": info["slug"], "rel": rel, "title": info["title"], "dek": info["dek"], **classify(info)}
-        c["alt"] = repos[c["tool"]]["figure_alt"] if "tool" in c else alts[c["cover"]]
+        c["alt"] = c.pop("work_alt") if "work" in c else repos[c["tool"]]["figure_alt"] if "tool" in c else alts[c["cover"]]
         cards.append(c)
     return cards
 
@@ -153,7 +195,7 @@ def card_alt(rel_or_url: str, title: str, og_type: str = "article") -> str:
     c = classify({"slug": slug_for(rel), "og_type": og_type})
     alts = json.loads((ROOT / "art" / "aperture" / "covers.json").read_text("utf-8"))["alt"]
     repos = json.loads((Path(__file__).parent / "repos.json").read_text("utf-8"))["repos"]
-    alt = repos[c["tool"]]["figure_alt"] if "tool" in c else alts[c["cover"]]
+    alt = c["work_alt"] if "work" in c else repos[c["tool"]]["figure_alt"] if "tool" in c else alts[c["cover"]]
     return f"{clean_title(title)}, by Zain Dana Harper. {alt}"
 
 
@@ -183,7 +225,8 @@ TAGS = re.compile(r'\s*<meta (?:property|name)="(?:og:image(?::[a-z]+)?|twitter:
 
 
 # Built pages whose head comes from a source file: stamp the source as well.
-SOURCES = {"workshop.html": "home/index.html"}  # the React build deploys to workshop.html since 2026-10-26
+SOURCES = {"workshop.html": "home/index.html",  # the React build deploys to workshop.html since 2026-10-26
+           "repo-explainers.html": "tools/repo_explainers/pages/hub.src.html"}  # build.py --publish copies the hub
 
 
 def stamp(card: dict, path: Path | None = None) -> bool:
@@ -242,9 +285,12 @@ def main(argv: list[str]) -> int:
         for c in cards:
             print(f'{c["slug"]:<58} {c["kind"]:<13} {c.get("tool") or c["cover"]:<36} {c["title"][:60]}')
         print(len(cards), "pages")
-    elif cmd == "render":
+    elif cmd == "render":  # render [--only slug,slug] [--masters DIR]; held pages keep the card their head pins
         from tools.repo_art.render import render_cards
-        render_cards(cards, OUT)
+        only = argv[argv.index("--only") + 1].split(",") if "--only" in argv else None
+        masters = Path(argv[argv.index("--masters") + 1]) if "--masters" in argv else None
+        cards = [c for c in cards if not HELD.search(c["rel"]) and (only is None or c["slug"] in only)]
+        render_cards(cards, OUT, masters)
     elif cmd == "stamp":
         cards = [c for c in cards if not HELD.search(c["rel"])]
         print(sum(stamp(c) for c in cards), "of", len(cards), "pages changed")
