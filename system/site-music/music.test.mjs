@@ -8,7 +8,9 @@ import { PIECES, PIECE_IDS } from './pieces.js';
 import { compose, composer } from './score.js';
 import { renderBars, mixStems, swung, timeline, TAIL } from './render.js';
 import { createAmbience } from './ambience.js';
-import { limit } from './piece.js';
+import { limit, renderPiece } from './piece.js';
+import { begin, chunk } from './worker.js';
+import { integratedLufs } from '../../world/studio/lib/loudness.mjs';
 import { spectrum, pitch } from '../ear/index.js';
 import * as engineKeys from '../../world/sound/sound/v3/instruments/keys.js';
 
@@ -95,4 +97,12 @@ test('the limiter holds every sample under its ceiling and leaves quiet audio al
   const n = 48000, L = Float32Array.from({ length: n }, (_, i) => 0.3 * Math.sin(i / 20) + (i % 9000 === 4000 ? 1.5 : 0)), R = L.slice(), q = L.slice(0, 3000), info = limit(L, R, SR, { ceilingDb: -2 });
   let pk = 0; for (const v of L) pk = Math.max(pk, Math.abs(v)); assert.ok(pk <= Math.pow(10, -2 / 20) + 1e-6, `peak ${pk}`); assert.ok(info.maxReductionDb > 5);
   for (let i = 0; i < 3000; i++) assert.equal(L[i], q[i]);
+});
+
+test('the live renderer continues bar by bar, and the fixed gain of each piece lands near the house loudness', () => {
+  begin({ piece: 'night-school', seed: 5, sr: 24000 }); const a = chunk({ bars: 1 }), b = chunk({ bars: 2 }), c = chunk({ bars: 2 });
+  assert.deepEqual([a.firstBar, b.firstBar, c.firstBar], [0, 1, 3]); assert.equal(b.n, 2 * a.n); assert.equal(b.bars.length, 2);
+  for (const x of [a, b, c]) { let pk = 0, e = 0; for (let i = 0; i < x.L.length; i++) { assert.ok(Number.isFinite(x.L[i]) && Number.isFinite(x.R[i])); pk = Math.max(pk, Math.abs(x.L[i])); } for (let i = x.pre; i < x.pre + x.n; i++) e += x.L[i] * x.L[i]; assert.ok(pk < 1.5, `peak ${pk}`); assert.ok(e / x.n > 1e-7, 'a chunk is never silent: the ambience runs through it'); }
+  assert.throws(() => begin({ piece: 'nope' }));
+  for (const id of PIECE_IDS) { const p = renderPiece(id, { bars: 24, sr: 24000, masterOpts: { gainDb: PIECES[id].masterDb, ceilingDb: 6 } }), l = integratedLufs(p.channels, p.sr); assert.ok(Math.abs(l + 14) < 1.5, `${id}: ${l} LUFS at its fixed gain`); }
 });

@@ -1,0 +1,12 @@
+/* Layout for the meditations page. Tokens, type and the sound bar come from /world/sound/base.css. */
+.top { padding: 1rem clamp(1rem, 4vw, 3rem); }
+.med { max-width: 46rem; padding: 1rem clamp(1rem, 4vw, 3rem) 9rem; }
+.med h1 { font-size: clamp(2.4rem, 8vw, 4.5rem); font-weight: 300; line-height: 1; margin: 1rem 0 1.5rem; letter-spacing: -0.02em; }
+.med h2 { font-size: 1.35rem; font-weight: 600; margin: 2.5rem 0 0.25rem; }
+.med .lede { font-size: 1.2rem; }
+.med .note, .med .meta { color: var(--muted); }
+.pieces { list-style: none; padding: 0; margin: 0; }
+.pieces li { padding: 0 0 0.5rem; }
+.pieces li p { margin: 0.25rem 0 0.75rem; }
+.pieces li[data-on] h2 { color: var(--hot); }
+.readout { margin: 2.5rem 0 0; min-height: 1.6em; color: var(--muted); }
