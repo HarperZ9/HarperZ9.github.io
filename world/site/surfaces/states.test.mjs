@@ -131,3 +131,25 @@ test('a silent signal pours pigment by the proposed mapping: notes to hues, loud
   const src = readFileSync(new URL('./signal.mjs', import.meta.url), 'utf8'); assert.ok(!/AudioContext|new Audio|createOscillator|\.play\(/.test(src), 'the signal file has no way to make sound');
   const s = createSim({ reduced: true }); s.set(chord.parts); s.seed(); s.clear(); for (const p of chord.pours) s.pour(p.slot, p.x, p.y, p.amount); for (let i = 0; i < 30; i++) s.step(STEP, false); assert.ok(s.error() <= TOLERANCE && s.amounts().slice(0, 3).every((a) => a > 0));
 });
+
+test('the site brush engine paints into the well: pigment is laid, kept, replayed dab for dab, and saved in the recipe', async () => {
+  const { BRUSHES, beginStroke, replay, cleanStrokes, fieldSurface, LOAD } = await import('./brush-field.mjs'), { PRESET_NAMES } = await import('../../feed-23/build/brush/presets.js');
+  assert.deepEqual(BRUSHES, PRESET_NAMES, 'the brushes offered are the engine presets, as they are'); assert.ok(BRUSHES.length >= 5);
+  const fresh = () => { const s = createSim(); s.set([{ weight: 1, drive: still, links: [0, 0] }, { weight: 1, drive: still, links: [0, 0] }]); s.seed(); s.clear(); return s; };
+  const path = Array.from({ length: 24 }, (_, i) => [0.2 + 0.6 * i / 23, 0.5 + 0.2 * Math.sin(i / 4)]), laid = {};
+  for (const name of BRUSHES) { const s = fresh(), st = beginStroke(s, 1, name, 3); path.forEach(([x, y], i) => st.add(x, y, null, i * 0.02)); laid[name] = +s.amounts()[1].toFixed(5);
+    assert.ok(st.surface.dabs > 0, `${name} places dabs`); assert.equal(s.amounts()[0], 0, `${name} lays only the chosen pigment`); assert.ok(s.error() <= TOLERANCE, `${name}: what is laid is what is owed`);
+    for (let i = 0; i < 40; i++) s.step(STEP, false); assert.ok(s.error() <= TOLERANCE, `${name}: and it is kept once the water runs`); }
+  const painting = Object.values(laid).filter((a) => a > 0).length; assert.ok(painting >= BRUSHES.length - 3, `most brushes lay pigment (${JSON.stringify(laid)})`);
+  assert.ok(new Set(Object.values(laid)).size >= 4, 'different brushes lay different amounts: the engine presets shape the mark');
+  // a stroke lies along its path: pigment near the path, none far from it
+  const s = fresh(), st = beginStroke(s, 0, BRUSHES.find((b) => laid[b] > 0 && /ink|line|pen|wisp|net/.test(b)) || BRUSHES.find((b) => laid[b] > 0), 1); path.forEach(([x, y], i) => st.add(x, y, null, i * 0.02));
+  const F = s.dye[0], at = (x, y) => F[Math.floor(y * NY) * NX + Math.floor(x * NX)]; assert.ok(at(0.5, 0.5 + 0.2 * Math.sin(11.5 / 4)) > 0 && at(0.5, 0.05) === 0 && at(0.05, 0.95) === 0, 'the mark follows the path');
+  // replay: the record lays the same field again, cell for cell
+  const rec = st.done(), again = fresh(); assert.equal(replay(again, [rec], 2), st.surface.dabs); assert.deepEqual(Array.from(again.dye[0]), Array.from(F), 'a replayed stroke is the same stroke');
+  assert.equal(replay(fresh(), [{ ...rec, slot: 3 }], 2), 0, 'a stroke for a pigment that is not there is left out');
+  // an erasing dab lifts pigment and what is owed follows
+  const surf = fieldSurface(s, 0), before = s.amounts()[0]; surf.dab({ sample: () => 1 }, 48, 36, { radius: 6, alpha: 1, mode: 'erase' }); assert.ok(s.amounts()[0] < before && s.error() <= TOLERANCE); assert.ok(LOAD > 0);
+  const r = makeRecipe(ix, ['water', 'ink'], [1, 1], {}, null, { strokes: [rec, { brush: 'no-such-brush', slot: 0, pts: [[0, 0]] }] }); assert.equal(r.strokes.length, 1);
+  assert.deepEqual(readRecipe(ix, JSON.parse(JSON.stringify(r))).strokes, cleanStrokes([rec]), 'the recipe keeps the strokes and gives them back'); assert.deepEqual(readRecipe(ix, makeRecipe(ix, ['water'], [1], {})).strokes, []);
+});

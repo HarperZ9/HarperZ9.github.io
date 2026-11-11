@@ -13,6 +13,7 @@ import { byId as studioMaterial, CODE_MATERIAL } from '../../studio/lib/material
 import { GROUNDS } from './grounds.mjs';
 import { MATERIALS, LIVING, replay } from './states.mjs';
 import { validChain } from './well-ops.mjs';
+import { cleanStrokes } from './brush-field.mjs';
 
 export const GROUND_RANK = { grounded: 0, partial: 1, thought: 2 };
 export const GROUND_WORD = {
@@ -217,11 +218,12 @@ export function materialFor(ix, el, settings = {}) {
 // The take-away recipe: which elements, at what weight, with which settings. Small, readable, and loadable again.
 export const RECIPE_FORMAT = 'bench.recipe/1';
 // more: what else the well holds. chain is how the ground was reached ({ from, ops, of }, states.mjs), kept only when it
-// ends on the ground saved; living are the proposed pigments from living things; written says the names are lettered.
+// ends on the ground saved; living are the proposed pigments from living things; written says the names are lettered;
+// strokes are the brush strokes painted into the well (brush-field.mjs), each a brush, a pigment slot and its points.
 const endsOn = (chain, ground) => validChain(chain) && MATERIALS[replay(chain.from, chain.ops).at(-1)].ground === ground;
 export function makeRecipe(ix, ids, weights, settings, ground = null, more = {}) {
   return { format: RECIPE_FORMAT, ...(ground && GROUNDS[ground] ? { ground, ...(endsOn(more.chain, ground) ? { chain: { from: more.chain.from, ops: [...more.chain.ops], of: more.chain.of ?? null } } : {}) } : {}),
-    ...(more.living?.length ? { living: more.living.filter((id) => LIVING[id]).map((id) => ({ id, label: LIVING[id].label })) } : {}), ...(more.written ? { written: true } : {}), elements: ids.map((id, i) => ({ id, name: ix.byId.get(id)?.name ?? id, weight: +(+(weights?.[i] ?? 1)).toFixed(3), settings: { ...(settings?.[id] ?? {}) } })) };
+    ...(more.living?.length ? { living: more.living.filter((id) => LIVING[id]).map((id) => ({ id, label: LIVING[id].label })) } : {}), ...(more.written ? { written: true } : {}), ...(cleanStrokes(more.strokes).length ? { strokes: cleanStrokes(more.strokes) } : {}), elements: ids.map((id, i) => ({ id, name: ix.byId.get(id)?.name ?? id, weight: +(+(weights?.[i] ?? 1)).toFixed(3), settings: { ...(settings?.[id] ?? {}) } })) };
 }
 export function readRecipe(ix, doc) {
   if (!doc || doc.format !== RECIPE_FORMAT || !Array.isArray(doc.elements)) throw new Error(`recipe: not a ${RECIPE_FORMAT} file`);
@@ -231,5 +233,5 @@ export function readRecipe(ix, doc) {
   for (const p of parts) { settings[p.id] = {}; for (const [k, v] of Object.entries(p.settings || {})) if (k in DRIVES && Number.isFinite(v)) settings[p.id][k] = v; }
   const ground = GROUNDS[doc.ground] ? doc.ground : null;
   return { ground, chain: ground && endsOn(doc.chain, ground) ? { from: doc.chain.from, ops: [...doc.chain.ops], of: parts.some((p) => p.id === doc.chain.of) ? doc.chain.of : null } : null,
-    living: (Array.isArray(doc.living) ? doc.living : []).map((l) => l?.id).filter((id) => LIVING[id]).slice(0, 3), written: doc.written === true, ids: parts.map((p) => p.id), weights: parts.map((p) => (Number.isFinite(p.weight) && p.weight >= 0 ? p.weight : 1)), settings };
+    living: (Array.isArray(doc.living) ? doc.living : []).map((l) => l?.id).filter((id) => LIVING[id]).slice(0, 3), written: doc.written === true, strokes: cleanStrokes(doc.strokes), ids: parts.map((p) => p.id), weights: parts.map((p) => (Number.isFinite(p.weight) && p.weight >= 0 ? p.weight : 1)), settings };
 }

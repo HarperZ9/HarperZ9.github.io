@@ -119,6 +119,7 @@ export function createWell(canvas, { reduced = false, ground = 'paper' } = {}) {
     pour(slot, x, y, amount = 0.5) { sim.pour(slot, x, y, amount); wake(); return api; },
     stir(x, y, vx, vy) { sim.stir(x, y, vx, vy); wake(); return api; },
     tilt(tx, ty) { tl = [clamp(tx, -1, 1), clamp(ty, -1, 1)]; sim.tilt(tx, ty); wake(); return api; },
+    touch() { wake(); return api; },   // something outside changed the field (a brush): draw it and let the water run
     reset() { sim.seed(); sim.settle(); if (reduced) draw(); else wake(); return api; },
     // the ground the pigment lies on: an id from grounds.mjs
     ground(id) { if (id === undefined) return ground; if (GROUNDS[id]) { ground = id; next = null; sim.setMedium(behaviour(id)); } draw(); return api; },

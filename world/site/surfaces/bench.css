@@ -80,6 +80,7 @@ body.parts-body.bench-body:has(.bn) main { max-width: min(2800px, 96vw); }
 .sf-bar { display: flex; flex-wrap: wrap; gap: 0 1.2em; align-items: center; font-size: var(--b1); margin-bottom: .3em; } .sf-ops { display: inline-flex; flex-wrap: wrap; gap: 0 1.1em; }
 .sf-acts [aria-pressed="true"], .sf-living-picks [aria-pressed="true"], .sf-chains [aria-current="step"] { font-weight: 700; border-bottom: 3px solid var(--b-ink); }
 .bn p.sf-did, [data-surface] p.sf-did { font-size: var(--b1); margin: .3em 0 0; } .sf-did:empty, .sf-fade:empty { display: none; }
+.sf-cursor { position: absolute; width: 18px; height: 18px; margin: -9px 0 0 -9px; border: 2px solid #f4efe6; border-radius: 50%; box-shadow: 0 0 0 1px #0c1620; pointer-events: none; z-index: 1; }
 .sf-chains { list-style: none; margin: .4em 0 0; padding: 0; font-size: var(--b1); display: grid; gap: .1em; } .sf-chains > li { display: flex; flex-wrap: wrap; gap: 0 .8em; align-items: baseline; }
 .sf-chain-name { color: var(--b-soft); min-width: 5.5em; } .sf-chains ol { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0 .5em; align-items: baseline; } .sf-chains ol li { display: inline-flex; gap: .5em; align-items: baseline; }
 .sf-chains ol i { font-style: italic; color: var(--b-soft); } .sf-chains ol i::after { content: " \2192"; font-style: normal; }

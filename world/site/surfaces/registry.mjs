@@ -54,7 +54,7 @@ export const TOOLS = Object.freeze([
   row('world/exhibit', 'Exhibit media runner', ['render', 'field'], ['image'], ['image'], null, ''),
   row('world/playbook', 'Playbook builds and cadence', ['motion', 'render'], ['numbers'], ['motion', 'image'], null, ''),
   row('world/feed-22', 'Chladni plate and sand letters', ['physics', 'simulation', 'lettering'], ['text', 'numbers'], ['image'], null, ''),
-  row('world/feed-23', 'Display-P3 canvas studies', ['render', 'paint'], ['numbers'], ['image'], null, ''),
+  row('world/feed-23', 'Brush engine and Display-P3 canvas studies', ['render', 'paint'], ['numbers'], ['image'], 'well', 'its brush engine (build/brush) paints the chosen pigment into the well through brush-field.mjs'),
   row('world/feed-24', 'Bit mosaics and letter tilings', ['geometry', 'lettering'], ['text'], ['image'], null, 'a tiling is the nearest thing to a weave draft on the site'),
   row('world/feed-28', 'Bistable rotation study', ['geometry', 'math'], ['numbers'], ['image'], null, ''),
   row('world/feed-29', 'Capsule lettering', ['lettering'], ['text'], ['image'], null, ''),
@@ -78,12 +78,25 @@ export const TOOLS = Object.freeze([
   row('world/ui', 'The shell, the hand and the old well', ['field', 'type'], ['elements'], ['image'], 'frame', 'on most pages already'),
 ]);
 // Disciplines the vocabulary holds a place for and no tool on the site serves yet.
-export const EMPTY = Object.freeze(CAPABILITIES.filter((c) => !TOOLS.some((t) => t.offers.includes(c))));
+// Tools that are single files, or live outside world/ and system/ folders, so the folder walk above cannot see them.
+// None is mounted on the bench. What each offers is read from its own header; `overlap` names bench code that does
+// part of the same job, so the duplication stays visible until it is consolidated.
+const loose = (id, name, offers, note, overlap = null) => Object.freeze({ id, name, offers, takes: [], gives: [], mounted: null, note, overlap });
+export const LOOSE = Object.freeze([
+  loose('system/weave-render.js', 'Cloth and draft chart renderer', ['weave', 'render'], 'thread-level cloth; the base for a textile ground'),
+  loose('system/loom-studio.js', 'The loom: an image to threading, tie-up and treadling', ['weave'], 'runs on the loom page and inside the Studio'),
+  loose('system/exporters-disciplines.js', 'Exports by discipline: plotter, knitting chart, palette, relief', ['plot', 'fabricate', 'export'], 'the way out for plot and relief files'),
+  loose('system/relief-stl.js', 'Watertight STL from a height map', ['fabricate'], 'a well could leave as a relief'),
+  loose('system/voxel-forge.js', 'Voxel scenes and files', ['fabricate', 'render'], ''),
+  loose('media/raw-native/post-0.8.0/web/shaders/paint', 'Painterly shaders: oil, gouache, watercolour', ['paint', 'render'], 'pigments.mjs mixes four base pigments by Kubelka-Munk over 31 wavelengths, through a latent', 'world/site/surfaces/km.mjs: Kubelka-Munk layers from one measured colour and an opacity per element'),
+  loose('media/raw-native/tree-ada041f/web/shaders/fibre', 'Watercolour on a random fibre network', ['paint', 'simulation'], 'capillary flow along fibres with a tensor per cell', 'the fibre sheet ground in grounds.mjs and well-sim.mjs: one fibre direction, two spreading rates'),
+]);
+export const EMPTY = Object.freeze(CAPABILITIES.filter((c) => ![...TOOLS, ...LOOSE].some((t) => t.offers.includes(c))));
 
 const S = (id, name, tools, offers, takes, gives, file) => Object.freeze({ id, name, tools, offers, takes, gives, load: () => import(file) });
 export const SURFACES = Object.freeze({
   bench: S('bench', 'The front bench', ['world/site', 'world/studio', 'system/graph'], ['well', 'chart', 'blend', 'export'], ['elements', 'settings'], ['blend', 'palette', 'png', 'json'], './bench.mjs'),
-  well: S('well', 'The well', ['world/studio', 'world/techniques'], ['well', 'simulation', 'field', 'paint'], ['elements', 'settings', 'blend'], ['image', 'png'], './surface-well.mjs'),
+  well: S('well', 'The well', ['world/studio', 'world/techniques', 'world/feed-23'], ['well', 'simulation', 'field', 'paint'], ['elements', 'settings', 'blend'], ['image', 'png'], './surface-well.mjs'),
   chart: S('chart', 'Property charts', ['world/studio'], ['chart'], ['elements', 'settings'], ['numbers'], './surface-chart.mjs'),
   blend: S('blend', 'The blend table', ['world/studio'], ['blend', 'chart'], ['elements'], ['blend', 'material', 'palette'], './surface-blend.mjs'),
   motion: S('motion', 'Motion curve', ['world/studio', 'world/substrate', 'world/techniques'], ['motion', 'chart'], ['blend', 'material'], ['motion'], './surface-lanes.mjs'),
@@ -159,5 +172,5 @@ export function toolsFor(el) {
 // Which pages use an element: read from the census (scripts/surface-census.mjs writes uses.json).
 export const pagesFor = (id, uses) => (uses?.pages || []).filter((p) => (p.elements || []).includes(id)).map((p) => ({ path: p.path, title: p.title, surfaces: p.surfaces }));
 
-const api = { CAPABILITIES, MEDIA, TOOLS, EMPTY, SURFACES, mount, unmount, unmountAll, mounted, chain, toolsFor, pagesFor, elements, prefs };
+const api = { CAPABILITIES, MEDIA, TOOLS, LOOSE, EMPTY, SURFACES, mount, unmount, unmountAll, mounted, chain, toolsFor, pagesFor, elements, prefs };
 export default api;

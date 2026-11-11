@@ -165,6 +165,8 @@ export function createSim({ reduced = false, conserve = true } = {}) {
       for (const p of parts) { sp += p.weight * p.drive.speed; cu += p.weight * p.drive.curl; co += p.weight * p.drive.coherence; w += p.weight; }
       flow = w ? { speed: sp / w, curl: cu / w, coherence: co / w } : flow; return api; },
     seed, step, react,
+    // a brush lays pigment in one cell (amount above 0), or lifts that share of it (below 0); what is owed follows. Returns the change.
+    lay(slot, i, amount) { if (slot >= parts.length || !(i >= 0 && i < n)) return 0; const F = dye[slot], was = F[i]; F[i] = amount >= 0 ? Math.min(1.4, was + amount) : was * Math.max(0, 1 + amount); put[slot] += F[i] - was; calm = 0; return F[i] - was; },
     // an empty well: no pigment, and nothing owed
     clear() { for (const F of dye) F.fill(0); put.fill(0); return api; },
     // Reduced motion never sees the drift, so a fresh well is carried a fixed way along its own measured flow first,

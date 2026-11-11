@@ -13,6 +13,7 @@
 //   5. The fibre chain can be walked step by step; the sheet's fibres run one way; writing lays ink on it.
 //   6. Living pigments can be chosen, are marked proposed with what would settle each, and fade only as a stated guess.
 //   7. A silent, generated signal pours pigment into the well by the proposed mapping. Nothing makes an audio context.
+//   8. The site's brush engine paints into the well by pointer and by keyboard, and a recipe lays the strokes again.
 const assert = require('node:assert/strict');
 const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
 const base = process.env.SITE_BASE_URL || 'http://127.0.0.1:8811';
@@ -120,6 +121,25 @@ async function operate(page, op) {
     const fresh = await page.evaluate(() => window.pic()); await page.check('[data-light]'); await page.waitForTimeout(80);
     const faded = await page.evaluate((b) => ({ change: window.diff(b, window.pic()), words: document.querySelector('.sf-fade').textContent, error: window.W().value().well.conservation().error }), fresh);
     out.living.fade = faded.change; assert.ok(faded.change >= FLOOR, `left in the light it fades (${faded.change})`); assert.match(faded.words, /dandelion 100%.*the speed here is ours.*Not measured\./); assert.ok(faded.error <= TOLERANCE, 'fading changes the colour, not the amount');
+    // 8: the site's brush engine paints into the well, by pointer and by keyboard; the recipe replays the painting
+    await page.evaluate(() => window.__bench.update({ elements: ['water', 'fire-heat'], ground: 'paper', chain: null, living: [], written: false })); await page.waitForTimeout(80);
+    const brushes = await page.evaluate(() => [...document.querySelectorAll('[data-brush] option')].map((o) => o.value).filter(Boolean)); assert.ok(brushes.length >= 5, 'the engine presets are offered as brushes');
+    const unpainted = await page.evaluate(() => window.pic()), box = await (await page.$('.sf-water canvas')).boundingBox(), pt = (x, y) => [box.x + box.width * x, box.y + box.height * y];
+    await page.selectOption('[data-brush]', brushes.includes('billow') ? 'billow' : brushes[0]);
+    await page.mouse.move(...pt(0.15, 0.2)); await page.mouse.down(); for (let i = 1; i <= 12; i++) await page.mouse.move(...pt(0.15 + 0.06 * i, 0.2 + 0.05 * i)); await page.mouse.up(); await page.waitForTimeout(80);
+    const p1 = await page.evaluate((b) => ({ change: window.diff(b, window.pic()), strokes: window.W().value().strokes.length, error: window.W().value().well.conservation().error, how: document.querySelector('.sf-how').textContent }), unpainted);
+    out.brush = { pointer: p1.change }; assert.ok(p1.change >= FLOOR, `a brush stroke by pointer shows (${p1.change})`); assert.equal(p1.strokes, 1); assert.ok(p1.error <= TOLERANCE, 'brushed pigment is kept like any other'); assert.match(p1.how, /Drag to paint/);
+    const beforeKeys = await page.evaluate(() => window.pic()); await page.focus('.sf-water'); for (const k of ['ArrowRight', 'ArrowRight', 'ArrowDown', ' ']) await page.keyboard.press(k); await page.waitForTimeout(80);
+    const p2 = await page.evaluate((b) => ({ change: window.diff(b, window.pic()), strokes: window.W().value().strokes.length, cursor: !document.querySelector('.sf-cursor').hidden }), beforeKeys);
+    out.brush.keyboard = p2.change; assert.ok(p2.change >= 0.3, `the keyboard paints too (${p2.change})`); assert.equal(p2.strokes, 5); assert.ok(p2.cursor, 'and the brush has a visible place');
+    const painted = await page.evaluate(() => window.pic()), kept = await page.evaluate(() => window.__bench.value().surfaces.recipe.value().recipe); assert.equal(kept.strokes.length, 5, 'the recipe records the strokes');
+    await page.evaluate(() => window.__bench.update({ elements: ['ink'], strokes: [] })); await page.waitForTimeout(60);
+    const replayed = await page.evaluate(async (doc) => { const { readRecipe } = await import('/world/site/surfaces/elements-data.mjs'), r = readRecipe(await window.__surfaces.elements(), doc);
+      window.__bench.update({ elements: r.ids, weights: r.weights, settings: r.settings, ground: r.ground, chain: r.chain, living: r.living, written: r.written, strokes: r.strokes }); await new Promise((f) => setTimeout(f, 100));
+      const withStrokes = window.pic(); document.querySelector('[data-act="again"]').click(); await new Promise((f) => setTimeout(f, 60)); return { withStrokes, bare: window.pic(), left: window.W().value().strokes.length }; }, kept);
+    out.brush.replayAgainstBare = await page.evaluate(([a, b]) => window.diff(a, b), [replayed.withStrokes, replayed.bare]); assert.ok(out.brush.replayAgainstBare >= FLOOR, `a recipe lays its strokes again on a fresh well (${out.brush.replayAgainstBare} from the same well without them)`);
+    out.brush.replayAgainstPainted = await page.evaluate(([a, b]) => window.diff(a, b), [replayed.withStrokes, painted]); assert.equal(replayed.left, 0, 'Start again clears the painting');
+    await page.selectOption('[data-brush]', '');
     // 7: a picture from a silent signal
     const quiet = await page.evaluate(() => window.pic()); await page.click('[data-signal="chord"]'); await page.waitForTimeout(80);
     const sg = await page.evaluate((b) => ({ change: window.diff(b, window.pic()), signal: window.W().value().signal, words: document.querySelector('.sf-signal').textContent, amounts: window.W().value().well.amounts(), error: window.W().value().well.conservation().error }), quiet);

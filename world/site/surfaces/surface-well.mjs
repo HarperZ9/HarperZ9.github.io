@@ -16,21 +16,23 @@ import { MATERIALS, CHAINS, LIVING, materialOf } from './states.mjs';
 import { SECONDS, FADE_SECONDS, validChain, advance, jump, opsHTML, chainsHTML, stateWords, didWords, livingHTML, livingPart, letterMask, signalHTML } from './well-ops.mjs';
 import { SIGNALS, toWell as signalToWell } from './signal.mjs';
 import { okToLinear, linToHex } from './km.mjs';
+import { BRUSHES, brushName, beginStroke, replay, cleanStrokes } from './brush-field.mjs';
 import { hexToOk } from '../../studio/lib/blend.mjs';
 
 let wells = 0;
 const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const GROUPS = [...new Set(Object.values(GROUNDS).map((g) => g.group))];
-const clean = (s) => ({ ...s, ground: s.ground ?? null, chain: validChain(s.chain) ? s.chain : null, living: (s.living || []).filter((id) => LIVING[id]).slice(0, 3), written: !!s.written });
+const clean = (s) => ({ ...s, ground: s.ground ?? null, chain: validChain(s.chain) ? s.chain : null, living: (s.living || []).filter((id) => LIVING[id]).slice(0, 3), written: !!s.written, strokes: cleanStrokes(s.strokes) });
 
 export function mount(host, input, ctx) {
   const { ix } = ctx;
-  let state = clean(input), sig = null, slot = 0, well = null, down = null, on = null, key = '', did = '', light = false, timer = 0, glyph = null;
+  let state = clean(input), sig = null, brush = '', stroke = null, kx = 0.5, ky = 0.5, slot = 0, well = null, down = null, on = null, key = '', did = '', light = false, timer = 0, glyph = null;
   const how = `sf-well-how-${++wells}`, fades = {}, like = driveFor(ix, { id: '', properties: [] }).shader;
   host.classList.add('sf-well');
   host.innerHTML = `<div class="sf-bar"><label class="sf-ground">Ground <select data-ground><option value="">follow the blend</option>${GROUPS.map((gr) => `<optgroup label="${esc(gr)}">${Object.entries(GROUNDS).filter(([, g]) => g.group === gr).map(([id, g]) => `<option value="${esc(id)}">${esc(g.name)}</option>`).join('')}</optgroup>`).join('')}</select></label>
-    <span class="sf-ops" role="group" aria-label="Change the ground's state"></span></div>
-    <div class="sf-water" tabindex="0" role="application" aria-roledescription="well" aria-describedby="${how}"><canvas></canvas></div>
+    <span class="sf-ops" role="group" aria-label="Change the ground's state"></span>
+    <label class="sf-ground">Brush <select data-brush><option value="">hand: stir and pour</option>${BRUSHES.map((b) => `<option value="${esc(b)}">${esc(brushName(b))}</option>`).join('')}</select></label></div>
+    <div class="sf-water" tabindex="0" role="application" aria-roledescription="well" aria-describedby="${how}"><canvas></canvas><i class="sf-cursor" hidden></i></div>
     <p class="sf-how" id="${how}">Drag to stir. Press to pour. Arrow keys tilt the well, Space pours, 0 levels it.</p>
     <div class="sf-acts"><span class="sf-slots" role="radiogroup" aria-label="Which pigment pours"></span>
     <button type="button" data-act="level">Level</button><button type="button" data-act="again">Start again</button><button type="button" data-act="write" aria-pressed="false">Write on it</button></div>
@@ -84,9 +86,16 @@ export function mount(host, input, ctx) {
     if (well && well.ground() !== on.id && well.changing()?.to !== on.id) well.ground(on.id);
     fill($('.sf-sig'), signalHTML(sig?.id, sig?.got));
     well?.set(toWell(), { reseed: reseed || moved }); writing();
+    if (!sig && well && (reseed || moved) && state.strokes.length) { replay(well.sim, state.strokes, P.length); well.touch(); }   // a painting is its strokes, laid again
     if (sig && well && (reseed || moved)) { well.sim.clear(); for (const p of sig.got.pours) well.sim.pour(p.slot, p.x, p.y, p.amount); well.tilt(0, 0); }   // the signal's pours, left to right
   }
-  const tellPage = () => { ctx.onGround?.(state.ground); ctx.onWell?.({ chain: state.chain, living: state.living, written: state.written }); };
+  const tellPage = () => { ctx.onGround?.(state.ground); ctx.onWell?.({ chain: state.chain, living: state.living, written: state.written, strokes: state.strokes }); };
+  // the brush engine (world/feed-23) paints the chosen pigment into the well's field; each stroke is kept so the painting can be laid again
+  const HOW = { hand: 'Drag to stir. Press to pour. Arrow keys tilt the well, Space pours, 0 levels it.', brush: 'Drag to paint with the chosen pigment. Arrow keys move the brush and paint, Space lays one dab, 1 to 4 choose the pigment.' };
+  const cursor = () => { const c = $('.sf-cursor'); c.hidden = !brush; c.style.left = `${kx * 100}%`; c.style.top = `${ky * 100}%`; };
+  const begin = () => beginStroke(well.sim, slot, brush, state.strokes.length + 1);
+  const keep = (st) => { const s = st.done(); if (s.pts.length) { state.strokes = cleanStrokes([...state.strokes, s]); tellPage(); } };
+  const keyStroke = (x, y) => { const st = begin(); if (!st) return; for (let i = 0; i <= 4; i++) st.add(kx + (x - kx) * i / 4, ky + (y - ky) * i / 4, 0.8, i * 0.03); kx = x; ky = y; keep(st); well.touch(); cursor(); };
   // one operation: the table says where it leads; the well shows the change crossing; the page says what happened
   function act(op) {
     if (well?.changing()) return;
@@ -108,15 +117,19 @@ export function mount(host, input, ctx) {
     if (ctx.reduced || !well) tick(1e6); else timer = setInterval(() => tick(0.5), 500);
   }
   const at = (ev) => { const r = canvas.getBoundingClientRect(); return [(ev.clientX - r.left) / r.width, (ev.clientY - r.top) / r.height]; };
-  const onDown = (ev) => { if (!well) return; const [x, y] = at(ev); down = { x, y, t: ev.timeStamp }; water.setPointerCapture?.(ev.pointerId); well.pour(slot, x, y, 0.35); };
+  const pen = (ev) => (ev.pointerType === 'pen' && ev.pressure > 0 ? ev.pressure : null);
+  const onDown = (ev) => { if (!well) return; const [x, y] = at(ev); down = { x, y, t: ev.timeStamp }; water.setPointerCapture?.(ev.pointerId);
+    if (brush && !sig) { stroke = begin(); stroke?.add(x, y, pen(ev), 0); kx = x; ky = y; cursor(); well.touch(); } else well.pour(slot, x, y, 0.35); };
   const onMove = (ev) => { if (!well || !down) return; const [x, y] = at(ev), dt = Math.max(8, ev.timeStamp - down.t) / 1000;
+    if (stroke) { stroke.add(x, y, pen(ev), (ev.timeStamp - down.t) / 1000); kx = x; ky = y; cursor(); well.touch(); return; }
     well.stir(x, y, (x - down.x) / dt * 0.9, (y - down.y) / dt * 0.9); down = { x, y, t: ev.timeStamp }; };
-  const onUp = () => { down = null; };
+  const onUp = () => { if (stroke) { keep(stroke); stroke = null; } down = null; };
   let tx = 0, ty = 0;
   const onKey = (ev) => {
     if (!well) return;
     const k = ev.key, d = { ArrowLeft: [-0.5, 0], ArrowRight: [0.5, 0], ArrowUp: [0, -0.5], ArrowDown: [0, 0.5] }[k];
-    if (d) { tx = Math.max(-1, Math.min(1, tx + d[0])); ty = Math.max(-1, Math.min(1, ty + d[1])); well.tilt(tx, ty); }
+    if (brush && !sig && (d || k === ' ' || k === 'Enter')) keyStroke(Math.max(0.02, Math.min(0.98, kx + (d ? d[0] * 0.12 : 0))), Math.max(0.02, Math.min(0.98, ky + (d ? d[1] * 0.12 : 0))));
+    else if (d) { tx = Math.max(-1, Math.min(1, tx + d[0])); ty = Math.max(-1, Math.min(1, ty + d[1])); well.tilt(tx, ty); }
     else if (k === ' ' || k === 'Enter') well.pour(slot, 0.5, 0.5, 0.5);
     else if (k === '0' || k === 'Escape') { tx = ty = 0; well.tilt(0, 0); }
     else if (/^[1-4]$/.test(k) && +k <= parts().length) { slot = +k - 1; paint(false); }
@@ -131,12 +144,13 @@ export function mount(host, input, ctx) {
     else if (c) step(c.dataset.chain, +c.dataset.step);
     else if (l) { const id = l.dataset.living; state.living = state.living.includes(id) ? state.living.filter((x) => x !== id) : [...state.living, id]; delete fades[id]; paint(false); tellPage(); }
     else if (a?.dataset.act === 'level') { tx = ty = 0; well?.tilt(0, 0); }
-    else if (a?.dataset.act === 'again') { tx = ty = 0; well?.tilt(0, 0); for (const id of Object.keys(fades)) delete fades[id]; well?.reset(); paint(false); fadeOn(); }
+    else if (a?.dataset.act === 'again') { tx = ty = 0; well?.tilt(0, 0); for (const id of Object.keys(fades)) delete fades[id]; state.strokes = []; well?.reset(); paint(false); fadeOn(); tellPage(); }
     else if (a?.dataset.act === 'write') { state.written = !state.written; writing(); tellPage(); }
   };
   const onPick = (ev) => {
     if (ev.target === pick) { state.ground = pick.value || null; const m = state.ground && materialOf(state.ground); state.chain = m ? { from: m, ops: [], of: null } : null; did = ''; paint(false); tellPage(); }
     else if (ev.target.matches('[data-light]')) { light = ev.target.checked; fadeOn(); }
+    else if (ev.target.matches('[data-brush]')) { brush = ev.target.value; $('.sf-how').textContent = brush ? HOW.brush : HOW.hand; water.style.cursor = brush ? 'crosshair' : ''; cursor(); }
   };
   // the page turning from day to night moves a ground that follows the page
   const mo = typeof MutationObserver === 'function' ? new MutationObserver(() => { if (!state.ground) paint(false); }) : null;
@@ -146,11 +160,14 @@ export function mount(host, input, ctx) {
   water.addEventListener('keydown', onKey); host.addEventListener('click', onClick); host.addEventListener('change', onPick);
   paint(true);
 
+  // paint one stroke through the engine, as the pointer does: points are [x, y] fractions of the well
+  const paintStroke = (name, pts, s = slot) => { if (!well) return 0; const was = [brush, slot]; brush = name; slot = s; const st = begin(); brush = was[0]; slot = was[1]; if (!st) return 0; pts.forEach(([x, y], i) => st.add(x, y, null, i * 0.02)); keep(st); well.touch(); return st.surface.dabs; };
   return {
     // same elements in the same order: only how they are drawn changes, and the well keeps what the visitor did
     update(next) { const same = next.elements && next.elements.join() === state.elements.join() && (next.weights || []).join() === (state.weights || []).join() && (next.linkScale ?? state.linkScale) === state.linkScale;
-      state = clean({ ...state, ...next }); paint(!same); },
-    value: () => ({ canvas: well ? well.still() : null, well, ground: on.id, auto: on.auto, why: on.why, pigments: on.pigments, state: GROUNDS[on.id].state, chain: state.chain, living: state.living, written: state.written, did, fades: { ...fades }, signal: sig ? { id: sig.id, classes: sig.got.classes, pours: sig.got.pours.length } : null }),
+      const redo = next.strokes !== undefined && JSON.stringify(cleanStrokes(next.strokes)) !== JSON.stringify(state.strokes);   // a recipe brought a painting: lay it on a fresh well
+      state = clean({ ...state, ...next }); paint(!same || redo); },
+    value: () => ({ canvas: well ? well.still() : null, well, ground: on.id, auto: on.auto, why: on.why, pigments: on.pigments, state: GROUNDS[on.id].state, chain: state.chain, living: state.living, written: state.written, strokes: state.strokes, brush, paint: paintStroke, did, fades: { ...fades }, signal: sig ? { id: sig.id, classes: sig.got.classes, pours: sig.got.pours.length } : null }),
     act, step,
     destroy() { clearInterval(timer); mo?.disconnect(); water.removeEventListener('pointerdown', onDown); water.removeEventListener('pointermove', onMove); water.removeEventListener('pointerup', onUp);
       water.removeEventListener('pointercancel', onUp); water.removeEventListener('keydown', onKey); host.removeEventListener('click', onClick); host.removeEventListener('change', onPick);

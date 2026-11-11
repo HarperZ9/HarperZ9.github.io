@@ -9,7 +9,7 @@ import { runRecipe, recipeGraph } from './recipe.mjs';
 import { studioBlend } from './surface-blend.mjs';
 import { contrast } from '../../studio/lib/blend.mjs';
 import { validate } from '../../studio/lib/schema.mjs';
-import registry, { TOOLS, SURFACES, CAPABILITIES, MEDIA, EMPTY, chain, toolsFor, pagesFor } from './registry.mjs';
+import registry, { TOOLS, LOOSE, SURFACES, CAPABILITIES, MEDIA, EMPTY, chain, toolsFor, pagesFor } from './registry.mjs';
 
 const root = new URL('../../../', import.meta.url);
 const data = JSON.parse(readFileSync(new URL('world/ui/shell/organic/data/elements.json', root), 'utf8'));
@@ -121,7 +121,9 @@ test('the registry: every tool folder has a row, every surface keeps the contrac
     for (const t of s.tools) assert.ok(rows.has(t), `${s.id} names ${t}`); }
   assert.equal(SURFACES.sound.load, null, 'the sound layer has a place and nothing behind it');
   for (const t of TOOLS.filter((x) => typeof x.mounted === 'string' && x.mounted !== 'frame')) assert.ok(Object.values(SURFACES).some((s) => s.load && s.tools.includes(t.id)), `${t.id} says mounted, and a surface loads it`);
-  assert.deepEqual([...EMPTY].sort(), ['fabricate', 'print', 'weave']);
+  assert.deepEqual([...EMPTY].sort(), ['print'], 'weave and fabricate have tools on the site (single files, listed as LOOSE); print still has none');
+  for (const t of LOOSE) { assert.ok(existsSync(new URL(t.id, root)), t.id); assert.ok(t.offers.every((c) => CAPABILITIES.includes(c)) && t.mounted === null); }
+  assert.equal(TOOLS.find((t) => t.id === 'world/feed-23').mounted, 'well'); assert.equal(LOOSE.filter((t) => t.overlap).length, 2, 'two overlaps with bench code are named');
   assert.deepEqual(chain('elements', 'png'), ['well']); assert.deepEqual(chain('elements', 'type'), ['blend', 'lettering']); assert.deepEqual(chain('elements', 'palette'), ['blend']);
   assert.deepEqual(chain('settings', 'json'), ['recipe']); assert.deepEqual(chain('elements', 'motion'), ['blend', 'motion']); assert.equal(chain('elements', 'wav'), null, 'nothing reaches sound yet');
   assert.equal(chain('elements', 'gcode'), null); assert.deepEqual(chain('palette', 'png'), ['plot']);
