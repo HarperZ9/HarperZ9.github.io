@@ -14,7 +14,7 @@ import { encodeWav } from '../../../world/sound/sound/wav.js';
 const arg = (k, d) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
 export const wavBytes = (channels, sr) => Buffer.from(encodeWav({ numberOfChannels: channels.length, length: channels[0].length, sampleRate: sr, getChannelData: (c) => channels[c] }));
 // bars for a piece of about `seconds` at its tempo
-export const barsFor = (id, seconds = 188) => (PIECES[id].intro ?? 4) + 4 + 8 * Math.round((seconds / (240 / PIECES[id].bpm) - (PIECES[id].intro ?? 4) - 4) / 8);   // introduction, whole sections, a four-bar ending
+export const barsFor = (id, seconds = 188) => { const P = PIECES[id], intro = P.intro ?? 4; return P.form ? intro + 8 * P.form.length + 4 : intro + 4 + 8 * Math.round((seconds / (240 / P.bpm) - intro - 4) / 8); };   // introduction, whole sections, a four-bar ending
 // the report without its long series, for a file a person can read
 export const slim = (r) => JSON.parse(JSON.stringify(r, (k, v) => (['momentary', 'shortTerm', 'onsets', 'series', 'driftWindows', 'chroma', 'rows'].includes(k) ? undefined : typeof v === 'number' && !Number.isFinite(v) ? String(v) : v)));
 

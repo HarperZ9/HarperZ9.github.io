@@ -46,6 +46,7 @@ lead }`, each a pair of channels the same length as the mix.
 | | entries: the largest rise in 3 second loudness, and layers that first sound together | loudness curve; first sounding time per layer |
 | Low end | level change under 120 Hz when summed to mono; two bass layers in the same band | low-pass, then sums; band energy per frame |
 | Presence | mean of the 2, 4 and 8 kHz bands against the target, flagged as dull or bright past 3 dB | the same octave bands |
+| Notes | attack time and its spread, spectral flux inside a note, brightness against level, likeness of repeated notes, inharmonicity | per note of a lead or bass layer, from the score's note list (`note.js`) |
 | Pictures | log-frequency spectrogram, chromagram, loudness curve | our own PNG writer in `png.js` |
 
 The targets are in `TARGETS` in `index.js`. Loudness (-14 LUFS integrated) and true peak (at most -1 dBTP) are the
@@ -67,12 +68,12 @@ bass out of phase between the channels is caught when the whole mix still sums w
 clash and an octave apart they do not; a 168 BPM syncopated break reads 168 with the score and 168 or 84 without it.
 
 **Planted defects** (`system/site-music/controls.test.mjs`): clean excerpts of two pieces (the slow ballad and the drum
-and bass piece) raise no flag. The same excerpt with one defect planted must raise the flag that names it. Seventeen
+and bass piece) raise no flag. The same excerpt with one defect planted must raise the flag that names it. Eighteen
 are planted: clipping, the bass a semitone high, the electric piano a semitone high, a wrong chord in one bar, tempo
 drift, an 8 dB peak at 3 kHz, an 8 dB loudness error, an inverted channel, a 60 ms dropout, a DC offset, ambience
 raised over the lead, one lead note 45 cents sharp, the first statement repeated as a loop, the band starting all at
-once, the top of the mix turned down 6 dB, the right channel inverted below 200 Hz only, and a bass guitar moved into
-the sub's band. The controls found two holes while the ear was being built (a wrong chord passed a loose limit, and a 3 kHz
+once, the top of the mix turned down 6 dB, the right channel inverted below 200 Hz only, a bass guitar moved into
+the sub's band, and (round three, the eighteenth) a lead whose every note is the same wave. The controls found two holes while the ear was being built (a wrong chord passed a loose limit, and a 3 kHz
 peak passed an absolute harshness measure on a dark mix); both are closed and the controls keep them closed.
 
 ## Limits
@@ -84,6 +85,12 @@ peak passed an absolute harshness measure on a dark mix); both are closed and th
   The separation is 8 and 15 percent, too small to set a limit on. The chord fit of each layer catches the defect
   (0.03 and 0.21 against a limit of 0.72). Roughness stays in the report as a description of the harmony, with flags
   only for gross readings.
+- The note measures say whether a line is stamped out, and they are weaker at saying whether an instrument convinces.
+  Likeness of repeated notes is the firm one: copies read 1.00 and a played line reads well under 0.9. Brightness
+  against level is firm only on a designed ladder (one pitch, one length, several strengths); inside a piece it is
+  mixed up with note length and register and is reported without a limit. The targets used for the saxophone and bass
+  guitar (brightness rising about 0.15 to 0.25 octave per 10 dB, a string inharmonicity near 1e-4, a reed attack of
+  some tens of milliseconds) are from memory of the acoustics literature, not checked against a source in this work.
 - Tempo has an octave: without the score a 168 BPM break reads as 168 or as 84, and both are right ways to feel it.
 - Entry abruptness by level alone is weak: a staged entry and a sudden one read 6 to 8 dB against each other in these
   pieces. The count of layers that first sound together is the measure that separates them, and it needs the layers.

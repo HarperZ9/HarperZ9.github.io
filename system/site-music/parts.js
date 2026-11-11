@@ -37,7 +37,8 @@ export function writeKeys(c) {
 export function writeBass(c) {
   const { P, r, out, lay } = c, guitar = P.band.bass === 'guitar', simple = lay.bass === 'simple';
   c.chords.forEach((ch, i) => {
-    const n = bassNote(ch.root), fifth = n - 5 >= 31 ? n - 5 : n + 7, nxt = c.chords[i + 1]?.root ?? c.nextRoot, toward = nxt === undefined ? n : bassNote(nxt), b0 = ch.beat, base = 0.6;
+    const n = bassNote(ch.root), has5 = ch.pcs.includes((ch.root + 7) % 12), fifth = !has5 ? n : n - 5 >= 31 ? n - 5 : n + 7,   // an altered or half-diminished chord has no plain fifth: the bass stays on the root
+       nxt = c.chords[i + 1]?.root ?? c.nextRoot, toward = nxt === undefined ? n : bassNote(nxt), b0 = ch.beat, base = 0.6;
     const add = (beat, m, beats, dv = 0, extra = {}) => out.bass.push({ beat: b0 + beat, m, beats: beats * 0.9, vel: vary(c, base + dv), j: jit(c, HUMAN.bassMs), ...extra });
     const tone = () => { const iv = ((ch.pcs[r() < 0.5 ? 1 : 3] - ch.root) + 12) % 12; return n + iv <= 50 ? n + iv : n + iv - 12; };
     if (lay.final) return add(0, n, 4, 0, guitar ? { style: 'finger' } : {});
@@ -47,8 +48,8 @@ export function writeBass(c) {
       if (ch.beats < 4) { add(0, n, 0.7, 0, first); add(0.75, n, 0.2, -0.2, { style: 'ghost' }); add(1.5, n + 12, 0.3, -0.04, { style: 'pop' }); return; }
       const T = [   // sixteenth-note lines: [beat, note, length, velocity change, style]
         [[0, n, 0.7], [0.75, n, 0.2, -0.2, 'ghost'], [1.5, n + 12, 0.3, -0.04, 'pop'], [2, n, 0.5], [2.75, n, 0.2, -0.2, 'ghost'], [3, tone(), 0.5, -0.04], [3.5, toward - 1, 0.45, -0.06]],
-        [[0, n, 0.5], [0.5, n, 0.2, -0.2, 'ghost'], [0.75, n, 0.7], [1.75, tone(), 0.25, -0.04, 'pop'], [2.5, n, 0.5], [3.25, n, 0.2, -0.2, 'ghost'], [3.5, toward + 1, 0.45, -0.06]],
-        [[0, n, 1], [1.5, n + 12, 0.25, -0.02, 'pop'], [1.75, n, 0.2, -0.2, 'ghost'], [2, fifth, 0.5, -0.04], [2.5, n, 0.2, -0.2, 'ghost'], [2.75, tone(), 0.5, -0.03], [3.5, n, 0.25, -0.05], [3.75, n, 0.2, -0.2, 'ghost']],
+        [[0, n, 0.5], [0.5, n, 0.2, -0.2, 'ghost'], [0.75, n, 0.7], [1.75, tone(), 0.25, -0.04, 'pop'], [2.5, n, 0.25], [2.75, tone(), 0.4, -0.08, 'hammer'], [3.25, n, 0.2, -0.2, 'ghost'], [3.5, toward + 1, 0.45, -0.06]],
+        [[0, n, 1], [1.5, n + 12, 0.25, -0.02, 'pop'], [1.75, n, 0.2, -0.2, 'ghost'], [2, fifth, 0.5, -0.04], [2.5, n, 0.2, -0.2, 'ghost'], [2.75, tone(), 0.5, -0.08, 'hammer'], [3.5, n, 0.25, -0.05], [3.75, n, 0.2, -0.2, 'ghost']],
         [[0, n, 1.5], [1.75, n, 0.2, -0.2, 'ghost'], [2, fifth, 0.75, -0.04], [3, n + 12, 0.25, 0, 'pop'], [3.5, toward - 1, 0.45, -0.06]],
       ][Math.floor(r() * 4)];
       T.forEach(([beat, m, len, dv = 0, style = 'finger'], k) => { if (style === 'ghost' && r() < 0.25) return; add(beat, m, len, dv, { style, ...(k === 0 ? first : {}) }); });
@@ -61,8 +62,8 @@ export function writeBass(c) {
     if (P.feel === 'bossa') {
       add(0, n, 1.5, 0, guitar ? { style: 'finger', ...(c.st.slide !== undefined ? { slideFrom: c.st.slide } : {}) } : {}); c.st.slide = undefined;
       if (guitar && r() < 0.5) add(1.25, n, 0.2, -0.22, { style: 'ghost' });
-      add(1.5, fifth, 0.5, -0.1); add(2, fifth, 1.4, -0.04);
-      if (guitar && (lay.fill || r() < 0.22)) { add(3, n + 12, 0.3, -0.02, { style: 'pop' }); add(3.5, toward - 1, 0.45, -0.08); c.st.slide = toward - 1; } else add(3.5, n, 0.5, -0.1);
+      add(1.5, fifth, 0.5, -0.1); add(2, fifth, guitar ? 0.9 : 1.4, -0.04);
+      if (guitar && (lay.fill || r() < 0.14)) { add(3, n + 12, 0.3, -0.02, { style: 'pop' }); add(3.5, toward - 1, 0.45, -0.08); c.st.slide = toward - 1; } else add(3.5, n, 0.5, -0.1);
     } else if (P.feel === 'modal') { add(0, n, 3); if (r() < 0.6) add(r() < 0.5 ? 3 : 3.5, r() < 0.5 ? fifth : n + 12, 0.8, -0.1); }
     else { add(0, n, 2); add(2, r() < 0.55 ? n : fifth, 1.5, -0.05); if (r() < 0.35) add(3.5, toward + (r() < 0.5 ? -1 : 1), 0.5, -0.14); }
   });
@@ -74,11 +75,16 @@ const subNote = (pc) => (pc >= 7 ? 24 + pc : 36 + pc);   // G1 (49 Hz) to F-shar
 export function writeSub(c) {
   const { P, r, out, lay } = c;
   for (const ch of c.chords) {
-    const n = subNote(ch.root), fifth = n + 7 <= 42 ? n + 7 : n - 5, add = (beat, m, beats, dv = 0, extra = {}) => out.sub.push({ beat: ch.beat + beat, m, beats, vel: vary(c, 0.62 + dv), ...extra });
+    const n = subNote(ch.root), fifth = !ch.pcs.includes((ch.root + 7) % 12) ? n : n + 7 <= 42 ? n + 7 : n - 5, add = (beat, m, beats, dv = 0, extra = {}) => out.sub.push({ beat: ch.beat + beat, m, beats, vel: vary(c, 0.62 + dv), ...extra });
     if (lay.final) { add(0, n, 4); continue; }
     if (lay.bass === 'simple') { add(0, n, 3.8); continue; }
     const cell = Math.floor(r() * (ch.held ? 4 : 3));
     if (cell === 0) add(0, n, 3.6); else if (cell === 1) { add(0, n, 2.6); add(2.75, n, 1.1, -0.05); } else if (cell === 2) { add(0, n, 2.3); add(2.5, fifth, 1.4, -0.05, { slideFrom: n }); } else { add(0.75, n, 1.6, -0.04); add(2.5, n, 1.4); }
+  }
+  // the bass guitar's body sits between the sub and the piano: the root an octave and more above the sub, played off the beat
+  if (P.band.fills === 'guitar' && lay.kit === 'full' && !lay.final && c.pos !== 3 && c.pos !== 7) for (const ch of c.chords) {
+    const g = 50 + ((ch.root - 50) % 12 + 12) % 12, put = (beat, m, beats, dv, style = 'finger') => out.bass.push({ beat: ch.beat + beat, m, beats, vel: vary(c, 0.52 + dv), j: jit(c, HUMAN.bassMs), style, voice: 'guitar' });
+    put(0, g, 1.3, 0); if (r() < 0.5) put(1.5, g, 0.2, -0.2, 'ghost'); put(r() < 0.5 ? 2.5 : 2.75, r() < 0.6 || !ch.pcs.includes((ch.root + 7) % 12) ? g : g + 7, 0.9, -0.05); if (r() < 0.3) put(3.5, g + 12, 0.3, -0.06, 'pop');
   }
   if (P.band.fills === 'guitar' && lay.kit === 'full' && (c.pos === 3 || c.pos === 7) && !lay.final) {
     const ch = c.chords[c.chords.length - 1], top = [ch.pcs[0], ch.pcs[2] ?? ch.pcs[1], ch.pcs[1], ch.pcs[3]].map((pc) => 50 + ((pc - 50) % 12 + 12) % 12).sort((a, b) => a - b), at = [1.5, 2, 2.75, 3.5];
@@ -117,8 +123,9 @@ export function writeDrums(c) {
   // the break: each half bar is one of a few cells (kick and snare placements in sixteenths), chosen so the snare keeps
   // the backbeat while the kicks and ghost notes move. s: snare, k: kick, g: ghost snare.
   const CELLS = [[[0, 'k'], [4, 's']], [[2, 'k'], [4, 's'], [7, 'g']], [[0, 'k'], [3, 'k'], [4, 's'], [6, 'g']], [[1, 'g'], [2, 'k'], [4, 's']], [[0, 'k'], [4, 's'], [5, 'g'], [7, 'g']], [[4, 's'], [6, 'k'], [7, 'g']]];
-  for (let k = 0; k < 8; k++) d(k / 2, index % 16 >= 8 && full ? 'fk:ride' : 'fk:hat', k % 2 ? 0.3 : 0.42); if (light) for (let s = 1; s < 16; s += 2) if (r() < 0.22) d(s / 4, 'fk:hat', 0.18);
+  for (let k = 0; k < 8; k++) d(k / 2, index % 16 >= 8 && full ? 'fk:ride' : 'fk:hat', k % 2 ? 0.3 : 0.42); if (light) for (let s = 1; s < 16; s += 2) if (r() < 0.3) d(s / 4, 'fk:hat', 0.2);
+  if (full) for (const s of [3, 7, 9, 11, 14]) if (r() < 0.28) d(s / 4, 'fk:snare', 0.14);   // more ghost notes: the break leans forward
   if (light) for (let h = 0; h < 2; h++) { const cell = h === 0 ? CELLS[[0, 0, 2, 3][Math.floor(r() * 4)]] : CELLS[1 + Math.floor(r() * 5)];
     for (const [s, what] of cell) { if (what === 'k' && !full && s !== 0) continue; d(h * 2 + s / 4, what === 'k' ? 'fk:kick' : 'fk:snare', what === 'k' ? (s === 0 ? 0.5 : 0.4) : what === 's' ? (full ? 0.46 : 0.34) : 0.13); } }
-  if (lay.fill && light) { for (let k = 0; k < 4; k++) d(3 + k / 4, 'fk:snare', 0.14 + 0.07 * k); d(3.875, 'fk:snare', 0.3); }   // a roll into the next section
+  if (lay.fill && light) { for (let k = 0; k < 4; k++) d(3 + k / 4, 'fk:snare', 0.16 + 0.08 * k); for (const s of [3.125, 3.625, 3.875]) d(s, 'fk:snare', 0.2 + 0.1 * (s - 3)); }   // a roll into the next section
 }

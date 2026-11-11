@@ -32,6 +32,7 @@ export const DEFECTS = [
   { id: 'dull', planted: 'everything above 1.5 kHz turned down 6 dB on the mix', expect: ['dull'], post: (p) => each(p, (c) => { const lp = new Biquad('lp', 1500, 0.7, p.sr); for (let i = 0; i < c.length; i++) { const lo = lp.tick(c[i]); c[i] = lo + 0.5 * (c[i] - lo); } }) },
   { id: 'low-phase', planted: 'right channel upside down below about 200 Hz only', expect: ['low-mono'], post: (p) => { const c = p.channels[1], lo = lowpass(c, p.sr, 220); for (let i = 0; i < c.length; i++) c[i] -= 2 * lo[i]; return p; } },
   { id: 'low-clash', on: 'deep-current', planted: 'the bass guitar plays an octave down, 14 dB louder, inside the band of the sub', expect: ['low-clash'], render: { transpose: { bass: -12 }, mix: { bass: 14 } } },
+  { id: 'static-lead', planted: 'every lead note the same wave: no breath, no vibrato, no scoop, one strength', expect: ['static-lead'], render: { staticLead: true } },
 ];
 export const EXCERPTS = { 'low-tide': { bars: 36 }, 'deep-current': { bars: 44 } };
 

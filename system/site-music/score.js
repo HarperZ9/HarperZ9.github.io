@@ -17,13 +17,13 @@ import { writeKeys, writeBass, writeSub, writeDrums, HUMAN } from './parts.js';
 import { newLead, phrase } from './lead.js';
 
 const hash = (id, seed) => { let h = 2166136261 ^ seed; for (const ch of id) h = Math.imul(h ^ ch.charCodeAt(0), 16777619); return (h >>> 0) || 1; };
-const DYN = { intro: 0.88, statement: 1, middle: 0.9, return: 1.05, ending: 0.92 };
+const DYN = { intro: 0.88, statement: 1, middle: 0.94, return: 1.03, ending: 0.92, breakdown: 0.85, build: 0.9, variation: 1.04, lift: 1.08 };
 
 // The roles of a piece `total` bars long: [{ role, bars }]. Infinity gives the endless form (a generator of sections).
 export function shapeOf(P, total) {
   const intro = P.intro ?? 4; if (!Number.isFinite(total)) return null;
   const sections = Math.max(1, Math.floor((total - intro - 4) / 8)), ending = total - intro - sections * 8, out = [{ role: 'intro', bars: intro }];
-  for (let i = 0; i < sections; i++) out.push({ role: i < 2 ? 'statement' : i === sections - 1 || (i - 2) % 2 === 1 ? 'return' : 'middle', bars: 8 });
+  for (let i = 0; i < sections; i++) out.push({ role: P.form ? P.form[i % P.form.length] : i < 2 ? 'statement' : i === sections - 1 || (i - 2) % 2 === 1 ? 'return' : 'middle', bars: 8 });
   out.push({ role: 'ending', bars: ending }); return out;
 }
 
@@ -51,27 +51,30 @@ export function composer(id, { seed = 1, total = Infinity, staged = true, loop =
   // after a section is cut, a held bar at the front becomes a fresh chord and every chord's span is counted again
   function respan(bars) { if (bars[0]) bars[0].chords[0].held = false; bars.forEach((b, i) => { const c = b.chords[b.chords.length - 1]; c.span = 1; for (let k = i + 1; k < bars.length && bars[k].chords[0].held; k++) c.span++; }); return bars; }
   function pickSection(role) {
-    if (role === 'middle') return P.middle; if (role === 'return' || role === 'intro' || role === 'ending' || !st.section || st.statements === 0) return 'A';
+    if (role === 'middle' || role === 'breakdown') return P.middle; if (role === 'lift') return P.lift || 'B'; if (role === 'build' || role === 'variation') return 'B'; if (role === 'return' || role === 'intro' || role === 'ending' || !st.section || st.statements === 0) return 'A';
     const nx = P.next[st.section] || { A: 1 }; let u = r(); for (const [k, w] of Object.entries(nx)) if ((u -= w) <= 0) return k; return 'A';
   }
   function extend() {
-    const no = st.sectionNo++, sec = plan ? plan[no] : no === 0 ? { role: 'intro', bars: P.intro ?? 4 } : { role: no <= 2 ? 'statement' : ['middle', 'return', 'statement'][(no - 3) % 3], bars: 8 };
+    const no = st.sectionNo++, sec = plan ? plan[no] : no === 0 ? { role: 'intro', bars: P.intro ?? 4 } : { role: P.form ? P.form[(no - 1) % P.form.length] : no <= 2 ? 'statement' : ['middle', 'return', 'statement'][(no - 3) % 3], bars: 8 };
     if (!sec) throw new Error('the piece has ended');
     const name = pickSection(sec.role); let bars = harmony(name);
     if (sec.role === 'intro') bars = respan(bars.slice(8 - sec.bars));
     if (sec.role === 'ending') { const fill = harmony('A').slice(0, Math.max(0, sec.bars - 3)); bars = [...fill, ...P.cadence.map((sym) => ({ chords: [{ sym, beat: 0, beats: 4, held: false, span: 1 }] })), { chords: [{ sym: P.tonic, beat: 0, beats: 4, held: false, span: 1 }] }].slice(-sec.bars); bars = respan(bars); }
-    if (sec.role === 'statement') st.statements++; st.section = name === P.middle ? st.section : name;
+    if (sec.role === 'statement') st.statements++; st.section = name === P.middle || name === P.lift ? st.section : name;
     bars.forEach((b, pos) => st.queue.push({ ...b, section: name, role: sec.role, pos, len: bars.length, first: sec.role === 'statement' && st.statements === 1, last: sec.role === 'ending' && pos === bars.length - 1 }));
   }
   const chordAt = (abs, cur) => { const k = Math.floor(abs / 4) - cur.index, b = k <= 0 ? cur : st.queue[k - 1], base = (cur.index + Math.max(0, k)) * 4, beat = abs - base; if (!b) return null; let c = b.chords[0]; for (const q of b.chords) if (q.beat <= beat + 1e-9) c = q; return { ...parse(c.sym), end: base + c.beat + c.beats }; };
 
   // how much of the band plays in this bar
   function layers(b, left) {
-    const p = b.pos, dyn = DYN[b.role], lay = { keys: true, bass: 'full', kit: 'full', lead: true, fill: p === b.len - 1 && b.role !== 'intro' && b.role !== 'ending', final: b.last, intro: b.role === 'intro', dyn };
+    const p = b.pos, dyn = DYN[b.role], lay = { keys: true, bass: 'full', kit: 'full', lead: true, fill: (p === b.len - 1 || (P.band.kit === 'break' && p === 3)) && b.role !== 'intro' && b.role !== 'ending', final: b.last, intro: b.role === 'intro', dyn };
     if (b.role === 'intro') Object.assign(lay, { keys: p >= Math.min(1, b.len - 1) && !(P.feel === 'dnb' && p < 2), bass: 'none', kit: p === b.len - 1 || (P.feel === 'dnb' && p >= 4) ? 'whisper' : 'none', lead: false });
     else if (b.first && staged) Object.assign(lay, { bass: p < 2 ? 'simple' : 'full', kit: p < 1 ? 'none' : p < 2 ? 'whisper' : p < 4 ? 'light' : 'full', lead: p >= 5, dyn: p < 2 ? 0.8 : p < 4 ? 0.9 : dyn });   // each layer also comes in quietly
-    else if (b.role === 'middle') Object.assign(lay, { bass: p < 5 ? 'simple' : 'full', kit: p < 6 ? 'light' : 'full', lead: p >= 1, dyn: dyn + 0.03 * Math.max(0, p - 4) });   // the last bars build toward the return
+    else if (b.role === 'middle') Object.assign(lay, { bass: p < 3 ? 'simple' : 'full', kit: p < 5 ? 'light' : 'full', lead: p >= 1, dyn: dyn + 0.03 * Math.max(0, p - 3) });   // the last bars build toward the return
     else if (b.role === 'ending') Object.assign(lay, { kit: left > 3 ? 'light' : left > 1 ? 'whisper' : 'none', bass: left > 3 ? 'full' : 'simple', lead: left > 6 });
+    // the breakdown: the kit drops out and the pad, the piano and the sea carry; the build brings the kit back a layer at a time
+    else if (b.role === 'breakdown') Object.assign(lay, { kit: 'none', bass: 'simple', lead: p >= 2, fill: false });
+    else if (b.role === 'build') Object.assign(lay, { kit: p < 2 ? 'whisper' : p < 5 ? 'light' : 'full', bass: p < 4 ? 'simple' : 'full', lead: false, fill: p >= 6, dyn: 0.85 + 0.03 * p });
     return lay;
   }
 
@@ -87,15 +90,19 @@ export function composer(id, { seed = 1, total = Infinity, staged = true, loop =
     if (lay.keys) writeKeys(c);
     if (lay.bass !== 'none') { if (P.band.bass === 'sub') writeSub(c); else writeBass(c); }
     writeDrums(c);
+    let fresh = false;
     // the close: the opening of the theme once more, timed so that its last long note lands on the first beat of the final bar
     if (Number.isFinite(total) && !st.closed && closeAt >= index * 4 && closeAt < index * 4 + 4) {
-      st.closed = true; L.queue = L.queue.filter((e) => e.abs + e.beats < closeAt - 0.5);
+      st.closed = true; fresh = true;
       L.queue.push(...phrase(L, P, r, 'ending', closeAt, (abs) => chordAt(abs, cur), { dyn: lay.dyn, tonic }).map((e) => ({ ...e, j: 0.008 * (P.human ?? 1) }))); out.restAt = L.restAt - index * 4;
-    } else if (lay.lead && !L.queue.length && index * 4 >= L.free && !(st.closed)) {
+    } else if (lay.lead && !L.queue.length && index * 4 >= L.free && !st.closed && index * 4 + 12 * (P.lead.stretch || 1) < closeAt) {   // no phrase may run into the close
+      fresh = true;
       const late = HUMAN.leadLateMs, lag = () => (late[0] + (late[1] - late[0]) * r()) * (P.human ?? 1) / 1000;
       L.queue = phrase(L, P, r, b.role, index * 4 + [0.5, 1, 1.5, 2, 2.5][Math.floor(r() * 5)], (abs) => chordAt(abs, cur), { dyn: lay.dyn, tonic }).map((e) => ({ ...e, j: lag() }));
       out.restAt = L.restAt - index * 4;   // beats from this bar's start to where the lead falls silent again: the sea listens for it
     }
+    // the whole phrase rides on the bar where it starts, so a voice that plays a phrase on one breath can render it in one piece
+    if (fresh) out.phrase = L.current.map((e) => ({ beat: e.abs - index * 4, m: e.m, beats: e.beats, vel: e.vel, slur: e.slur, j: L.queue.find((q) => q.abs === e.abs)?.j ?? 0 }));
     out.lead = L.queue.filter((e) => e.abs < index * 4 + 4).map((e) => ({ beat: e.abs - index * 4, m: e.m, beats: e.beats, vel: e.vel, j: e.j, kind: e.kind })); L.queue = L.queue.filter((e) => e.abs >= index * 4 + 4);
     if (loop && b.first) { st.copy.push(out); if (st.copy.length === 8) { st.looped = st.copy; st.loopStart = index + 1; } }
     return out;

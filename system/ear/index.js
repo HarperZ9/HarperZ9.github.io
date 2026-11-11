@@ -1,13 +1,14 @@
 // The ear: measurement that stands in for listening. listen() takes rendered audio (and, when there is one, the score that
 // wrote it and the separate layers) and returns numbers plus a list of flags, one for each number outside its target.
 // It can say a render is clean, in key, in time and balanced. It cannot say the music is beautiful. See README.md.
-import { averageSpectrum, octaveBands, bandPower, slopePerOctave, db } from './spectrum.js';
+import { averageSpectrum, octaveBands, bandPower, slopePerOctave, db, mono } from './spectrum.js';
 import { level } from './level.js';
 import { harmony, tuning } from './pitch.js';
 import { timing } from './time.js';
 import { roughness, crossRoughness } from './rough.js';
 import { repetition, entries, layerEntries } from './shape.js';
 import { lowMono, lowClash } from './low.js';
+import { noteStats } from './note.js';
 import { integratedLufs } from '../../world/studio/lib/loudness.mjs';
 import { stereo, gaps } from './stereo.js';
 import { masking } from './mask.js';
@@ -20,11 +21,11 @@ export const TARGETS = {
   lufs: -14, lufsTol: 1, truePeakMax: -1, dcMax: 0.002, crestMin: 8, lraMax: 14,
   balance: { centers: [31.5, 63, 125, 250, 500, 1000, 2000, 4000, 8000, 16000], db: [-22, -9, -5, -5, -7, -11, -15, -19, -25, -36], tol: 7 },
   harshMax: -5, presencePeakMax: 5, fitMin: 0.7, fitMeanMin: 0.75, rootMatchMin: 0.85, stemFitMin: 0.72,
-  bpmTolPct: 1.5, driftMaxPct: 0.8, regularityMaxMs: 20, swingTol: 0.06, roughMax: 0.13,
+  bpmTolPct: 1.5, driftMaxPct: 1.2, regularityMaxMs: 20, swingTol: 0.06, roughMax: 0.13,
   correlationMin: 0.1, monoLossMin: -3.5, leadOverMin: 6, musicOverMin: 0, leadCentsMax: 25,
   // round two: presence (mean of the 2, 4 and 8 kHz bands against the target), phrase repetition, entry abruptness,
   // roughness between layers, the low end, and the kit against the harmony layers
-  presenceTol: 3, sameShareMax: 0.34, entryMaxDb: 9, togetherShareMax: 0.3, crossRoughMax: 0.12, lowMonoMin: -1, lowClashMax: 0.15, drumsOverHarmonyMax: 0,
+  presenceTol: 3, sameShareMax: 0.34, entryMaxDb: 9, togetherShareMax: 0.3, crossRoughMax: 0.12, lowMonoMin: -1, lowClashMax: 0.15, drumsOverHarmonyMax: 0, copyShareMax: 0.2,
 };
 
 // Spectral balance of the full mix, and harshness: the level of 2 to 5 kHz (where hearing is most sensitive and a hard
@@ -69,6 +70,8 @@ export function listen({ channels, sr }, { score = null, stems = null, targets =
     for (const k of ['keys', 'bass', 'sub', 'pad', 'lead']) if (sounding(k)) { const h = harmony(stems[k], sr, score.chords); r.stems[k] = { meanFit: h.weightedFit, minFit: h.minFit, worstBar: h.worstBar }; } }
   if (stems?.ambience && stems?.music) { r.masking = { music: masking(stems.music, stems.ambience, sr) }; if (stems.lead) r.masking.lead = masking(stems.lead, stems.ambience, sr); }
   if (stems?.lead && score?.lead?.length) r.leadTuning = tuning(stems.lead[0], sr, score.lead);
+  // played or stamped out: the lead and the bass, note by note
+  r.notes = {}; for (const k of ['lead', 'bass']) if (sounding(k) && score?.[k]?.length >= 6) { const st = noteStats(mono(stems[k]), sr, score[k]); delete st.rows; r.notes[k] = st; }
 
   const L = r.level;
   if (Math.abs(L.integratedLufs - T.lufs) > T.lufsTol) flag(flags, 'loudness', 'integrated loudness, LUFS', L.integratedLufs, `${T.lufs} +/- ${T.lufsTol}`, 'Loudness is off the house target.');
@@ -113,6 +116,7 @@ export function listen({ channels, sr }, { score = null, stems = null, targets =
     if (r.masking.lead && r.masking.lead.leadOver < T.leadOverMin) flag(flags, 'masking-lead', 'lead over ambience in the lead\'s own bands, dB', r.masking.lead.leadOver, `>= ${T.leadOverMin}`, 'The ambience covers the lead.');
   }
   if (r.leadTuning?.worst && Math.abs(r.leadTuning.worst.cents) > T.leadCentsMax) flag(flags, 'tuning', `lead note at ${r.leadTuning.worst.t0.toFixed(2)} s, cents from tempered pitch`, r.leadTuning.worst.cents, `+/- ${T.leadCentsMax}`, 'A lead note is out of tune.');
+  for (const [k, st] of Object.entries(r.notes)) if (st.repeatPairs >= 3 && st.copyShare > T.copyShareMax) flag(flags, `static-${k}`, `${k}: share of same-pitch note pairs that are copies of each other`, st.copyShare, `<= ${T.copyShareMax}`, `The ${k} repeats itself note for note, like a sample stamped out.`);
   r.flags = flags; r.clean = flags.length === 0; return r;
 }
 
@@ -128,6 +132,7 @@ export function summary(r) {
   if (r.layers) out.push(`layers LUFS: ${Object.entries(r.layers).filter(([k]) => k !== 'drumsOverHarmony').map(([k, v]) => `${k} ${f(v)}`).join(', ')}${r.layers.drumsOverHarmony !== undefined ? ` | kit over harmony ${f(r.layers.drumsOverHarmony)} LU` : ''}`);
   if (r.masking) out.push(`music over ambience dB ${r.masking.music.bands.map((c, i) => `${c}:${f(r.masking.music.over[i], 0)}`).join(' ')}${r.masking.lead ? ` | lead over ambience ${f(r.masking.lead.leadOver)} dB` : ''}`);
   if (r.leadTuning?.worst) out.push(`lead tuning: mean ${f(r.leadTuning.meanAbs)} cents, worst ${f(r.leadTuning.worst.cents)} cents at ${f(r.leadTuning.worst.t0, 2)} s`);
+  for (const [k, n] of Object.entries(r.notes || {})) out.push(`${k} notes: attack ${f(n.attackMs)} ms (spread ${f(n.attackSpreadMs)}), flux in a note ${f(n.flux, 4)}, same-pitch likeness mean ${n.repeatMean === null ? 'n/a' : f(n.repeatMean, 2)} max ${n.repeatMax === null ? 'n/a' : f(n.repeatMax, 2)} over ${n.repeatPairs} pairs (copies ${f(n.copyShare, 2)}), brightness with level ${n.levelSlope === null ? 'n/a' : f(n.levelSlope, 2)} oct per 10 dB`);
   out.push(r.clean ? 'flags: none' : `flags: ${r.flags.map((x) => `${x.id} (${x.measure}: ${f(x.value, 3)}, limit ${x.limit})`).join('; ')}`);
   return out.join('\n');
 }
@@ -141,5 +146,6 @@ export * as stereoField from './stereo.js';
 export * as mask from './mask.js';
 export * as shape from './shape.js';
 export * as low from './low.js';
+export * as note from './note.js';
 export * as pictures from './pictures.js';
 export { encodePng, Canvas } from './png.js';

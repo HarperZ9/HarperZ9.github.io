@@ -10,9 +10,10 @@
 // notes may pass through the key's scale. Between phrases the lead rests for several beats.
 const RHYTHMS = [[1, 0.5, 0.5, 2.5], [0.5, 0.5, 1, 3], [1.5, 0.5, 3], [0.5, 1, 0.5, 1, 3], [1, 1, 0.5, 0.5, 3], [0.5, 0.5, 0.5, 0.5, 2.5], [1.5, 0.5, 1, 3]];
 const STEPS = [-2, -1, -1, 1, 1, 1, 2];
-const PLAN = { statement: ['theme', 'answer', 'varied', 'theme'], middle: ['sequence', 'inversion', 'augmented'], return: ['reprise', 'answer', 'reprise'], ending: ['close'], intro: ['theme'] };
+const PLAN = { statement: ['theme', 'answer', 'varied', 'theme'], middle: ['sequence', 'inversion', 'augmented'], return: ['reprise', 'answer', 'reprise'], ending: ['close'], intro: ['theme'],
+  breakdown: ['augmented', 'inversion'], variation: ['varied', 'reprise'], lift: ['second', 'second-answer', 'second'] };   // the lift brings a second idea
 
-export function newLead(P, r) { const pick = (a) => a[Math.floor(r() * a.length)], rhythm = pick(RHYTHMS); return { theme: { rhythm, steps: rhythm.map((_, i) => (i === 0 ? 0 : pick(STEPS))) }, home: (P.lead.range[0] + P.lead.range[1]) >> 1, last: null, count: {}, queue: [], free: 0, kinds: [] }; }
+export function newLead(P, r) { const pick = (a) => a[Math.floor(r() * a.length)], rhythm = pick(RHYTHMS); const r2 = pick(RHYTHMS.filter((x) => x !== rhythm)); return { theme: { rhythm, steps: rhythm.map((_, i) => (i === 0 ? 0 : pick(STEPS))) }, theme2: { rhythm: r2, steps: r2.map((_, i) => (i === 0 ? 0 : pick([1, 1, 2, -1]))) }, home: (P.lead.range[0] + P.lead.range[1]) >> 1, last: null, count: {}, queue: [], free: 0, kinds: [] }; }
 
 function shape(kind, theme, r, stretch) {
   const pick = (a) => a[Math.floor(r() * a.length)]; let rhythm = theme.rhythm.slice(), steps = theme.steps.slice(), lift = 0;
@@ -28,11 +29,11 @@ function shape(kind, theme, r, stretch) {
 // Write the next phrase starting at absolute beat `start`. chordAt(beat) returns { pcs, end } for the chord sounding then.
 // Returns [{ abs, m, beats, vel }] and updates the lead state (where the line is, when the lead is free again).
 export function phrase(L, P, r, role, start, chordAt, { dyn = 1, tonic = null } = {}) {
-  const list = PLAN[role] || PLAN.statement, n = L.count[role] = (L.count[role] || 0) + 1, kind = list[(n - 1) % list.length], k = P.lead.stretch || 1, sh = shape(kind, L.theme, r, k), [lo, hi] = P.lead.range;
+  const list = PLAN[role] || PLAN.statement, n = L.count[role] = (L.count[role] || 0) + 1, kind = list[(n - 1) % list.length], k = P.lead.stretch || 1, sh = shape(kind.startsWith('second') ? kind.replace('second-', '').replace('second', 'theme') : kind, kind.startsWith('second') ? L.theme2 : L.theme, r, k), [lo, hi] = P.lead.range;
   const ladder = (ch, short) => { const ok = new Set(ch.pcs); if (short) for (const pc of P.scale) if (!ch.pcs.includes((pc + 11) % 12)) ok.add(pc); const out = []; for (let m = lo; m <= hi; m++) if (ok.has(m % 12)) out.push(m); return out; };
   const nearest = (list2, m) => list2.reduce((b, x, i) => (Math.abs(x - m) < Math.abs(list2[b] - m) ? i : b), 0);
   // the theme and its reprise start from the same place, so the return is heard as a return
-  let beat = start, m = kind === 'theme' || kind === 'reprise' || L.last === null ? L.home : Math.max(lo + 3, Math.min(hi - 3, (kind === 'answer' ? L.last : L.home) + sh.lift)); const out = [];
+  let beat = start, m = kind === 'theme' || kind === 'reprise' || L.last === null ? L.home : Math.max(lo + 3, Math.min(hi - 3, (kind === 'answer' ? L.last : L.home) + sh.lift + (kind.startsWith('second') ? 5 : 0))); const out = [];
   sh.rhythm.forEach((d, i) => {
     const last = i === sh.rhythm.length - 1, len = d * k, ch = chordAt(beat); if (!ch) return;
     let lad = ladder(ch, len <= 0.75 && !last);   // only a note under three quarters of a beat may pass through a tone outside the chord
@@ -41,6 +42,8 @@ export function phrase(L, P, r, role, start, chordAt, { dyn = 1, tonic = null } 
     let beats = len; if (beat + len > ch.end + 1e-9) { const nx = chordAt(ch.end); if (!nx || !nx.pcs.includes(m % 12)) beats = Math.max(0.5, ch.end - beat); }
     out.push({ abs: beat, m, beats: beats * (last ? 0.96 : 0.9), vel: Math.min(0.85, (0.5 + 0.1 * r() - (last ? 0.04 : 0) + (i === 0 ? 0.04 : 0)) * dyn), kind }); beat += len;
   });
-  L.last = m; L.kinds.push(kind); L.restAt = beat; L.free = beat + P.lead.rest[0] + Math.floor(r() * (P.lead.rest[1] - P.lead.rest[0] + 1));
+  // played like a phrase: it swells toward the middle and falls away, and notes that move by step are slurred on one breath
+  out.forEach((e, i) => { e.vel = Math.max(0.2, Math.min(0.9, e.vel * (0.9 + 0.2 * Math.sin(Math.PI * (i + 0.5) / out.length)))); e.slur = i > 0 && e.m !== out[i - 1].m && Math.abs(e.m - out[i - 1].m) <= 4 && r() < 0.7; });
+  L.current = out; L.last = m; L.kinds.push(kind); L.restAt = beat; L.free = beat + P.lead.rest[0] + Math.floor(r() * (P.lead.rest[1] - P.lead.rest[0] + 1));
   return out;
 }

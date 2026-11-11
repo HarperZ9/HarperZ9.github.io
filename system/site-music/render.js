@@ -7,12 +7,12 @@ import * as pads from '../../world/sound/sound/v3/instruments/pads.js';
 import * as funkkit from '../../world/sound/sound/v3/instruments/funkkit.js';
 import { room } from '../../world/sound/sound/v3/instruments/space.js';
 import { tine, softBass, brush, TINE } from './voices.js';
-import { sax } from './sax.js';
+import { sax, saxPhrase } from './sax.js';
 import { bassGuitar, sub } from './bassguitar.js';
 
 export const STEMS = ['keys', 'bass', 'sub', 'drums', 'lead', 'pad', 'room'];
-export const TAIL = 8;    // seconds a chunk rings past its last bar: note decays, then the room
-export const PRE = 0.03;  // seconds of room before a chunk's first beat, so a note played a few milliseconds early still fits
+export const TAIL = 12;   // seconds a chunk rings past its last bar: a lead phrase that starts in the last bar, note decays, then the room
+export const PRE = 0.35;  // seconds of room before a chunk's first beat: an early note, or the lead's breath before a phrase
 const PAD = { voices: 4, detune: 8, cutoff: 1900, motion: 0.45, reso: 1.1, attack: 1.4, release: 2.6, chorus: 0.5, air: 0.1 };
 const ROOM = { rt60: 1.9, damp: 3800, predelay: 0.024, size: 1.2, width: 0.9 };
 const SEND = { keys: 0.3, lead: 0.55, drums: 0.22, pad: 0.15 };
@@ -40,11 +40,12 @@ export function barTimes(bars, piece, { t0 = 0, drift = 0, sr = 48000 } = {}) {
 // What the ear and the sea need from the score, in seconds: the written chords, the lead notes, the bars, and the
 // moments the lead falls silent.
 export function timeline(bars, piece, opts = {}) {
-  const bt = barTimes(bars, piece, opts), chords = [], lead = [], rests = [], at = (i, beat) => bt[i].t0 + swung(beat, piece.swing) * bt[i].beatSec;
+  const bt = barTimes(bars, piece, opts), chords = [], lead = [], bass = [], rests = [], at = (i, beat) => bt[i].t0 + swung(beat, piece.swing) * bt[i].beatSec;
   bars.forEach((b, i) => { for (const c of b.chords) chords.push({ t0: at(i, c.beat), t1: at(i, c.beat + c.beats), bar: b.index, sym: c.sym, root: c.root, pcs: c.pcs });
     for (const n of b.lead) lead.push({ t0: at(i, n.beat) + 0.09, t1: at(i, n.beat) + Math.max(0.2, n.beats * bt[i].beatSec - 0.05), m: n.m, bar: b.index, kind: n.kind });
+    for (const e of b.bass) if (e.style !== 'ghost') bass.push({ t0: at(i, e.beat), t1: at(i, e.beat) + Math.max(0.12, e.beats * bt[i].beatSec), m: e.m, bar: b.index });
     if (b.restAt !== undefined) rests.push(bt[i].t0 + b.restAt * bt[i].beatSec); });
-  return { bpm: piece.bpm, swing: piece.swing === 0.5 ? null : piece.swing, chords, lead, rests, bars: bt, phraseBars: 8, phraseOffset: piece.intro ?? 4, end: bt.length ? bt[bt.length - 1].t1 : 0 };
+  return { bpm: piece.bpm, swing: piece.swing === 0.5 ? null : piece.swing, chords, lead, bass, rests, bars: bt, phraseBars: 8, phraseOffset: piece.intro ?? 4, end: bt.length ? bt[bt.length - 1].t1 : 0 };
 }
 
 // A slow stereo chorus for the electric piano: each side hears itself again a few milliseconds late, the delay drifting.
@@ -68,16 +69,22 @@ export function renderBars(bars, piece, { sr = 48000, seed = 1, origin = 0, defe
     const T = bt[i], at = (beat, j = 0) => pre + T.s0 + Math.round((swung(beat, piece.swing) * T.beatSec + j) * sr), shift = b.index === sh.bar ? sh.semis : 0;
     for (const e of b.keys) e.notes.forEach((m0, k) => { const m = m0 + (tr.keys || 0) + shift, dur = q(e.beats * T.beatSec, 8), vel = q(e.vel - 0.02 * k);
       panInto(stems.keys.L, stems.keys.R, memo(`k:${m}:${vel}:${dur}`, () => tine(m, vel, dur, tp, sr, 1)), at(e.beat, e.j + k * e.roll), (k / Math.max(1, e.notes.length - 1) - 0.5) * 0.9, 1); });
-    for (const e of b.bass) { const m = e.m + (tr.bass || 0) + shift, dur = q(e.beats * T.beatSec, 8), vel = q(e.vel), g = (e.voice || B.bass) === 'guitar', from = e.slideFrom === undefined ? null : e.slideFrom + (tr.bass || 0) + shift;
-      panInto(stems.bass.L, stems.bass.R, memo(`b:${g}:${m}:${vel}:${dur}:${e.style}:${from}`, () => (g ? bassGuitar(m, vel, dur, { style: e.style || 'finger', slideFrom: from }, sr, 1) : softBass(m, vel, dur, sr, 1))), at(e.beat, e.j), 0, 1); }
+    for (const e of b.bass) { const m = e.m + (tr.bass || 0) + shift, dur = q(e.beats * T.beatSec, 8), vel = q(e.vel), g = (e.voice || B.bass) === 'guitar', vb = defects.staticBass ? 0 : (b.index * 7 + Math.round(e.beat * 4)) % 11, from = e.slideFrom === undefined ? null : e.slideFrom + (tr.bass || 0) + shift;
+      panInto(stems.bass.L, stems.bass.R, memo(`b:${g}:${m}:${vel}:${dur}:${e.style}:${from}:${vb}`, () => (g ? bassGuitar(m, vel, dur, { style: e.style || 'finger', slideFrom: from }, sr, 1 + vb) : softBass(m, vel, dur, sr, 1 + vb))), at(e.beat, e.j), 0, 1); }
     for (const e of b.sub) { const m = e.m + (tr.sub || 0) + shift, dur = q(e.beats * T.beatSec, 8), vel = q(e.vel), from = e.slideFrom === undefined ? null : e.slideFrom + (tr.sub || 0) + shift;
       panInto(stems.sub.L, stems.sub.R, memo(`s:${m}:${vel}:${dur}:${from}`, () => sub(m, vel, dur, { slideFrom: from }, sr)), at(e.beat), 0, 1); }
     for (const e of b.drums) { const vel = q(e.vel, 12), dur = e.dur ? q(e.dur * T.beatSec, 4) : 0, v = (b.index + Math.round(e.beat * 4)) % 3, fk = e.piece.startsWith('fk:');
       panInto(stems.drums.L, stems.drums.R, memo(`d:${e.piece}:${vel}:${dur}:${v}`, () => (fk ? funkkit.hit(e.piece.slice(3), vel, kit, sr, 11 + v) : e.piece === 'sweep' ? brush.sweep(dur, vel, sr, v + 1) : e.piece === 'kick' ? brush.kick(vel, sr) : brush[e.piece](vel, sr, v + 1))), at(e.beat, e.j), PAN[e.piece] ?? 0, 1); }
     for (const e of b.pad) { const p = pads.chord(e.notes.map((m) => m + (tr.pad || 0) + shift), e.vel, e.beats * T.beatSec, { ...PAD, ...piece.pad, voices: Q.padVoices, chorus: Q.padChorus }, sr, seed * 131 + b.index * 7 + Math.round(e.beat)), a = at(e.beat);
       for (let s = 0; s < p.L.length && a + s < len; s++) { stems.pad.L[a + s] += p.L[s]; stems.pad.R[a + s] += p.R[s]; } }
-    for (const e of b.lead) { const k = leadCount++, m = e.m + (tr.lead || 0) + (defects.detune && defects.detune.note === k ? defects.detune.cents / 100 : 0), dur = e.beats * T.beatSec, sd = seed * 17 + b.index * 5 + Math.round(e.beat * 2);
-      panInto(stems.lead.L, stems.lead.R, B.lead === 'sax' ? sax(m, e.vel, dur, piece.lead.preset, sr, sd) : centre(reed.note(m, e.vel, dur, piece.lead.preset, sr, sd), sr), at(e.beat, e.j || 0), -0.12, 1); }
+    // The saxophone plays a phrase on one breath: the whole phrase is rendered where it starts. The engine's reed and flute
+    // play note by note. (staticLead is a planted defect: every note the same wave, no breath, no vibrato, no scoop.)
+    if (B.lead === 'sax' && !defects.staticLead) { if (b.phrase) { const ph = b.phrase, first = ph[0], sec = (beat) => swung(beat, piece.swing) * T.beatSec, notes = ph.map((e) => { const k = leadCount++; return { t: sec(e.beat) - sec(first.beat), dur: e.beats * T.beatSec, m: e.m + (tr.lead || 0) + (defects.detune && defects.detune.note === k ? defects.detune.cents / 100 : 0), vel: e.vel, slur: e.slur }; });
+        const r = saxPhrase(notes, piece.lead.preset, sr, seed * 17 + b.index * 5 + Math.round(first.beat * 2)); panInto(stems.lead.L, stems.lead.R, r.x, at(first.beat, first.j || 0) - r.pre, -0.12, 1); } }
+    // (the engine's reed gives the same wave for the same pitch, which the ear's note measure reads as copies; each note
+    // here is blown a little differently: breath, vibrato rate and onset, scoop, and up to 3 cents of pitch)
+    else for (const e of b.lead) { const wob = rng(seed * 31 + b.index * 97 + Math.round(e.beat * 8) + 5), k = leadCount++, m = e.m + (tr.lead || 0) + (defects.detune && defects.detune.note === k ? defects.detune.cents / 100 : 0), dur = e.beats * T.beatSec, sd = seed * 17 + b.index * 5 + Math.round(e.beat * 2);
+      panInto(stems.lead.L, stems.lead.R, defects.staticLead ? memo(`L:${m}:${Math.round(dur * 8)}`, () => sax(m, 0.6, dur, { ...piece.lead.preset, noise: 0, vibrato: 0, scoop: 0, drift: 0, keys: 0 }, sr, 3)) : B.lead === 'sax' ? sax(m, e.vel, dur, piece.lead.preset, sr, sd) : centre(reed.note(m + (wob() - 0.5) * 0.06, e.vel, dur, { ...piece.lead.preset, breath: piece.lead.preset.breath * (0.94 + 0.12 * wob()), vibRate: piece.lead.preset.vibRate * (0.92 + 0.16 * wob()), vibDelay: piece.lead.preset.vibDelay * (0.7 + 0.6 * wob()), scoop: piece.lead.preset.scoop * (0.6 + 0.8 * wob()) }, sr, sd), sr), at(e.beat, e.j || 0), -0.12, 1); }
   });
   // the electric piano's stereo movement, on the absolute clock so chunks agree: a tremolo that pans, or a slow chorus
   const o0 = Math.round(origin * sr) - pre;

@@ -37,7 +37,7 @@ export function tine(m, vel, dur, p = TINE, sr = 48000, seed = 1) {
 
 export function softBass(m, vel, dur, sr = 48000, seed = 1) {
   const V = velocity(vel, { curve: 1.3 }), f0 = mtof(m), len = Math.floor((dur + 0.25) * sr), x = new Float32Array(len), r = rng(seed * 104729 + Math.round(m * 17));
-  const H = [], pluck = 0.21; for (let h = 1; h <= 8 && h * f0 < 2400; h++) H.push({ h, a: Math.abs(Math.sin(Math.PI * h * pluck)) / Math.pow(h, 1.25) * (h > 1 ? 0.5 + 0.5 * V.bright : 1), tau: 1.9 / (1 + 0.45 * Math.pow(h - 1, 1.2)), ph: 0 });
+  const H = [], pluck = 0.21 * (0.85 + 0.3 * r()); for (let h = 1; h <= 8 && h * f0 < 2400; h++) H.push({ h, a: Math.abs(Math.sin(Math.PI * h * pluck)) / Math.pow(h, 1.25) * (h > 1 ? 0.5 + 0.5 * V.bright : 1) * Math.pow(10, (r() - 0.5) * 3 / 20), tau: 1.9 / (1 + 0.45 * Math.pow(h - 1, 1.2)), ph: (r() - 0.5) * 0.9 });   // no two plucks land in the same place
   const lp = new Biquad('lp', 900 + 1300 * V.bright, 0.7, sr), fn = new Biquad('bp', 700, 1.2, sr);
   for (let i = 0; i < len; i++) {
     const t = i / sr, f = f0 * Math.pow(2, -0.25 * expDecay(t, 0.025) / 12), env = Math.min(1, t / 0.006) * (t < dur ? 1 : expDecay(t - dur, 0.06)); let y = 0;

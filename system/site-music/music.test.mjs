@@ -29,7 +29,7 @@ test('shape: every piece has an introduction, statements, a contrasting middle, 
     const P = PIECES[id], n = barsFor(id), s = compose(id, { seed: 2, bars: n }), roles = s.shape.map((x) => x.role);
     assert.equal(s.bars.length, n); assert.equal(s.shape.reduce((a, x) => a + x.bars, 0), n); assert.deepEqual(roles.slice(0, 3), ['intro', 'statement', 'statement']); assert.ok(roles.includes('middle') && roles[roles.length - 2] === 'return' && roles[roles.length - 1] === 'ending', `${id}: ${roles}`);
     const mid = s.bars.find((b) => b.role === 'middle'), ret = s.bars.find((b) => b.role === 'return'), first = s.bars.find((b) => b.role === 'statement');
-    assert.equal(mid.section, P.middle); assert.equal(ret.section, 'A'); assert.equal(first.section, 'A'); assert.notEqual(mid.chords[0].sym, first.chords[0].sym, 'the middle starts somewhere else');
+    assert.equal(mid.section, P.middle); assert.equal(ret.section, 'A'); assert.equal(first.section, 'A'); const roots = (role) => s.bars.filter((b) => b.role === role).slice(0, 8).map((b) => b.chords[0].root).join(' '); assert.notEqual(roots('middle'), roots('statement'), 'the middle goes somewhere else');
     assert.deepEqual(s.bars.slice(-3).map((b) => parse(b.chords[0].sym).root), [...P.cadence.map((c) => parse(c).root), parse(P.tonic).root], `${id}: the ending is ii, V, home`);
     const last = s.bars[n - 1]; assert.equal(last.drums.length, 0); assert.ok(last.keys.length === 1 && last.keys[0].beats > 3 && last.bass.length + last.sub.length === 1, 'the home chord is held');
   }
@@ -51,7 +51,7 @@ test('no two eight-bar sections are played the same, each ends with a fill, and 
     const P = PIECES[id], s = compose(id, { seed: 3, bars: barsFor(id) }), body = s.bars.slice(P.intro, s.bars.length - s.shape[s.shape.length - 1].bars), secs = []; for (let k = 0; k + 8 <= body.length; k += 8) secs.push(body.slice(k, k + 8));
     const sig = (sec) => JSON.stringify(sec.map((b) => [b.keys.map((e) => [e.beat, e.notes]), b.bass.map((e) => [e.beat, e.m]), b.sub.map((e) => [e.beat, e.m]), b.drums.map((e) => [e.beat, e.piece])]));
     assert.equal(new Set(secs.map(sig)).size, secs.length, `${id}: ${secs.length} sections, all different`);
-    for (const sec of secs.slice(1)) assert.ok(sec[7].drums.length > sec[5].drums.length || sec[7].keys.length > sec[5].keys.length || sec[7].bass.length > sec[5].bass.length, `${id}: the last bar of a section carries a fill`);
+    for (const sec of secs.slice(1)) if (sec[0].role !== 'breakdown') assert.ok(sec[7].drums.length > sec[5].drums.length || sec[7].keys.length > sec[5].keys.length || sec[7].bass.length > sec[5].bass.length, `${id}: the last bar of a section carries a fill`);
     const lp = compose(id, { seed: 3, bars: 44, loop: true }), a = lp.bars.slice(P.intro, P.intro + 8), b = lp.bars.slice(P.intro + 8, P.intro + 16); assert.equal(sig(a), sig(b), 'the loop defect repeats the statement');
   }
 });
@@ -83,7 +83,9 @@ test('humanised playing stays inside its stated bounds, and the same seed gives 
 
 test('the bands: sub under the break, bass guitar with ghost notes and pops, the kick locked to the bass', () => {
   const d = compose('deep-current', { seed: 1, bars: 76 }), subs = d.bars.flatMap((b) => b.sub), fills = d.bars.flatMap((b) => b.bass);
-  assert.ok(subs.length > 60 && subs.every((e) => e.m >= 31 && e.m <= 42), 'the sub stays between G1 and F-sharp 2'); assert.ok(fills.length > 6 && fills.every((e) => e.m >= 50 && e.voice === 'guitar'), 'the bass guitar figures sit an octave and more above it');
+  assert.ok(subs.length > 60 && subs.every((e) => e.m >= 31 && e.m <= 42), 'the sub stays between G1 and F-sharp 2'); assert.ok(fills.length > 6 && fills.every((e) => e.m >= 50 && e.voice === 'guitar'), 'the bass guitar sits an octave and more above it');
+  const roles = d.bars.map((b) => b.role), bd = d.bars.filter((b) => b.role === 'breakdown'); assert.ok(roles.includes('breakdown') && roles.includes('build') && roles.includes('variation') && bd.every((b) => b.drums.length === 0 && b.pad.length + b.keys.length + b.sub.length > 0), 'a breakdown: the kit drops out and the pad, piano and sub carry');
+  const whole = compose('deep-current', { seed: 1, bars: barsFor('deep-current') }), third = whole.bars.slice(Math.floor(whole.bars.length * 0.62)); assert.ok(third.some((b) => b.role === 'lift' && b.section === 'D') && !whole.bars.slice(0, 60).some((b) => b.role === 'lift'), 'a new idea arrives in the last third'); assert.ok(whole.kinds.includes('second'), 'with a second theme for the lead');
   assert.ok(d.bars.filter((b) => b.chords[0].held).every((b) => b.pad.length === 0), 'a held chord is not struck again'); assert.ok(d.bars.some((b) => b.drums.some((e) => e.piece === 'fk:snare' && e.vel < 0.2)), 'ghost notes in the break');
   const f = compose('clear-line', { seed: 1, bars: 60 }), bass = f.bars.flatMap((b) => b.bass), styles = new Set(bass.map((e) => e.style));
   assert.ok(styles.has('ghost') && styles.has('pop') && bass.some((e) => e.slideFrom !== undefined), `bass guitar styles ${[...styles]}`);
@@ -95,8 +97,8 @@ test('the bands: sub under the break, bass guitar with ghost notes and pops, the
 
 test('swing places the off-beat eighth, and the timeline gives the ear the written chords in seconds', () => {
   assert.equal(swung(1.5, 0.62), 1.62); assert.equal(swung(2, 0.62), 2); assert.equal(swung(0.25, 0.6), 0.3);
-  const s = compose('low-tide', { seed: 1, bars: 20 }), tl = timeline(s.bars, s.piece, { t0: 3 }), beat = 60 / 66;
-  assert.equal(tl.chords[0].t0, 3); assert.ok(Math.abs(tl.chords[1].t0 - (3 + 4 * beat)) < 2e-5, 'bars start on whole samples'); assert.equal(tl.bpm, 66); assert.equal(tl.phraseOffset, 4); assert.ok(tl.rests.length >= 1 && tl.lead.length >= 3);
+  const s = compose('low-tide', { seed: 1, bars: 20 }), tl = timeline(s.bars, s.piece, { t0: 3 }), beat = 60 / s.piece.bpm;
+  assert.equal(tl.chords[0].t0, 3); assert.ok(Math.abs(tl.chords[1].t0 - (3 + 4 * beat)) < 2e-5, 'bars start on whole samples'); assert.equal(tl.bpm, 72); assert.ok(tl.bass.length > 10, 'the bass notes are listed for the ear'); assert.equal(tl.phraseOffset, 4); assert.ok(tl.rests.length >= 1 && tl.lead.length >= 3);
 });
 
 test('a piece rendered in two chunks and overlapped is the same sound as one render', () => {
@@ -148,7 +150,7 @@ test('the live renderer: continues bar by bar, steps down inside a measured budg
   const cost = {}; for (let level = 0; level < LEVELS.length; level++) { begin({ piece: 'deep-current', seed: 1, sr: 48000, level }); chunk({ bars: 8 }); let ms = 0, sec = 0; for (let k = 0; k < 4; k++) { const x = chunk({ bars: 4 }); ms += x.renderMs; sec += x.audioSec; assert.equal(x.level, LEVELS[level].name); assert.equal(x.sr, Math.round(48000 * LEVELS[level].rate)); } cost[LEVELS[level].name] = ms / 1000 / sec; }
   t.diagnostic(`render seconds per second of audio (budget ${BUDGET}): ${Object.entries(cost).map(([k, v]) => `${k} ${v.toFixed(3)}`).join(', ')}`);
   assert.ok(cost.full < BUDGET, `full render takes ${cost.full} of real time here`); assert.ok(cost.half < 0.75 * cost.full, `half ${cost.half} against full ${cost.full}`);
-  begin({ piece: 'low-tide', seed: 1, sr: 48000 }); chunk({ bars: 2 }); assert.equal(setLevel(2), 'half'); const h = chunk({ bars: 2 }); assert.equal(h.sr, 24000); assert.equal(h.firstBar, 2); assert.ok(Math.abs(h.audioSec - 2 * 240 / 66) < 0.01, 'after a step down the music carries on from the next bar');
+  begin({ piece: 'low-tide', seed: 1, sr: 48000 }); chunk({ bars: 2 }); assert.equal(setLevel(2), 'half'); const h = chunk({ bars: 2 }); assert.equal(h.sr, 24000); assert.equal(h.firstBar, 2); assert.ok(Math.abs(h.audioSec - 2 * 240 / 72) < 0.01, 'after a step down the music carries on from the next bar');
   // a device that cannot keep up: with an impossible budget the renderer waits out two warm-up chunks, then steps down twice and stops there
   begin({ piece: 'glass-hour', seed: 1, sr: 24000, budget: 1e-6 }); const seen = []; for (let k = 0; k < 9; k++) { const x = chunk({ bars: 1 }); seen.push(x.level + (x.stepped ? '!' : '')); }
   assert.deepEqual(seen, ['full', 'full', 'full', 'full!', 'lite', 'lite!', 'half', 'half', 'half'], `levels over nine chunks: ${seen}`);
