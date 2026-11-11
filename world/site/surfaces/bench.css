@@ -26,7 +26,7 @@ body.parts-body.bench-body:has(.bn) main { max-width: min(2800px, 96vw); }
 
 /* layout: the table and everything about the chosen element run down the left; the well stays in view on the right */
 .bn { display: grid; grid-template-columns: minmax(0, 1fr) clamp(300px, 31vw, 900px); gap: clamp(24px, 3.2vw, 96px); align-items: start; }
-.bn-side { position: sticky; top: clamp(72px, 8vh, 120px); display: grid; gap: .6em; }
+.bn-side { position: sticky; top: clamp(72px, 8vh, 120px); display: grid; gap: .6em; max-height: calc(100vh - clamp(72px, 8vh, 120px) - 8px); overflow-y: auto; scrollbar-width: thin; padding: 3px 5px 3px 3px; margin: -3px; }
 .bn-detail > section { margin-top: clamp(40px, 5vw, 120px); scroll-margin-top: 16px; }
 .bn-now { margin: 0; font-size: var(--b3); line-height: 1.15; } .bn-now span { display: block; font-size: var(--b1); color: var(--b-soft); }
 .bn-bigsym { font: 800 1.5em/1 var(--face-display); letter-spacing: -.02em; margin-right: .15em; }
@@ -75,6 +75,16 @@ body.parts-body.bench-body:has(.bn) main { max-width: min(2800px, 96vw); }
 .sf-acts, .sf-slots, .tk-acts { display: flex; flex-wrap: wrap; gap: 0 1.2em; align-items: center; font-size: var(--b1); }
 .sf-slots button { display: inline-flex; align-items: center; gap: .4em; } .sf-slots [aria-checked="true"], .sf-ground [aria-checked="true"] { font-weight: 700; border-bottom: 3px solid var(--b-ink); }
 .sf-ground { display: inline-flex; gap: .5em; align-items: center; } .bn p.sf-why, [data-surface] p.sf-why { font-size: var(--b1); margin: .3em 0 0; } .sf-why small { display: block; } .sf-water[data-ground="paper"] { background: #e8e4d8; }
+/* the ground, its state and what can be done to it sit over the well, so they are in view with it */
+.sf-bar { display: flex; flex-wrap: wrap; gap: 0 1.2em; align-items: center; font-size: var(--b1); margin-bottom: .3em; } .sf-ops { display: inline-flex; flex-wrap: wrap; gap: 0 1.1em; }
+.sf-acts [aria-pressed="true"], .sf-living-picks [aria-pressed="true"], .sf-chains [aria-current="step"] { font-weight: 700; border-bottom: 3px solid var(--b-ink); }
+.bn p.sf-did, [data-surface] p.sf-did { font-size: var(--b1); margin: .3em 0 0; } .sf-did:empty, .sf-fade:empty { display: none; }
+.sf-chains { list-style: none; margin: .4em 0 0; padding: 0; font-size: var(--b1); display: grid; gap: .1em; } .sf-chains > li { display: flex; flex-wrap: wrap; gap: 0 .8em; align-items: baseline; }
+.sf-chain-name { color: var(--b-soft); min-width: 5.5em; } .sf-chains ol { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0 .5em; align-items: baseline; } .sf-chains ol li { display: inline-flex; gap: .5em; align-items: baseline; }
+.sf-chains ol i { font-style: italic; color: var(--b-soft); } .sf-chains ol i::after { content: " 92"; font-style: normal; }
+.sf-living, .sf-sig { font-size: var(--b1); } .bn p.sf-signal, [data-surface] p.sf-signal { margin: .3em 0 0; } .bn p.sf-living-h, [data-surface] p.sf-living-h { margin: .5em 0 0; } .sf-living-h small { color: var(--b-soft); margin-left: .5em; }
+.sf-living-picks { display: flex; flex-wrap: wrap; gap: 0 1.2em; } .sf-living-picks button { display: inline-flex; align-items: center; gap: .4em; } .sf-living-picks i { display: inline-block; width: 1.3em; height: 1.3em; box-shadow: 0 0 0 1px var(--b-line); flex: none; }
+.sf-living-notes { list-style: none; margin: .3em 0; padding: 0; display: grid; gap: .4em; } .sf-light { display: inline-flex; gap: .5em; align-items: center; min-height: 44px; } .sf-light input { width: 1.2em; height: 1.2em; }
 .sf-still { display: grid; gap: .4em; } .sf-still li { display: flex; gap: .6em; align-items: center; } .sf-still span { font-family: var(--face-utility, monospace); color: var(--b-soft); }
 
 /* charts: a row is a name, a track and a reading */
@@ -148,6 +158,7 @@ html.plain .bl-glazes canvas { display: none; } html.plain .bl-glazes figcaption
 @media (max-width: 900px) {
   .bn { grid-template-columns: minmax(0, 1fr); gap: 14px; }
   .bn-side { display: contents; }
+  .bn-side .sf-bar { order: -4; }
 
   /* the water alone stays in view while the page moves; nothing sits behind it and its controls scroll with the page */
   .bn-side > [data-part="well"] { display: contents; }
@@ -160,7 +171,7 @@ html.plain .bl-glazes canvas { display: none; } html.plain .bl-glazes figcaption
   .cmp-axis { margin: 0; } .bn .cmp-row, [data-surface] .cmp-row { grid-template-columns: 7.5em minmax(0, 1fr) 4.2em; gap: .6em; min-height: 44px; } .cmp-val small { display: none; }
 }
 .bn [hidden], [data-surface] [hidden] { display: none !important; }
-html.plain .sf-water, html.plain .pl, html.plain .pl-pick, html.plain .sf-how, html.plain .sf-acts, html.plain .sf-why { display: none !important; }
+html.plain .sf-water, html.plain .pl, html.plain .pl-pick, html.plain .sf-how, html.plain .sf-acts, html.plain .sf-why, html.plain .sf-light { display: none !important; }
 html.plain .sf-well .sf-still { display: grid !important; }
 .parts-lead { width: fit-content; max-width: 60ch; font-size: clamp(15px, .44vw + 10.5px, 26px); line-height: 1.5; margin: 0 0 clamp(20px, 2.4vw, 56px); }
 .parts-surface { margin-top: clamp(48px, 6vw, 140px); } .parts-surface > p { max-width: 64ch; }

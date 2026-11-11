@@ -133,7 +133,7 @@ jobs:
       - name: Surfaces registry and the element bench
         if: ${{ !cancelled() }}
         run: |
-          node --test world/site/surfaces/surfaces.test.mjs
+          node --test world/site/surfaces/surfaces.test.mjs world/site/surfaces/states.test.mjs
           export PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
           npm install --no-save playwright@1.62.1
           python tests/lib/serve.py 8811 . &
@@ -141,6 +141,7 @@ jobs:
           trap "kill $server_pid" EXIT
           sleep 2
           SITE_BASE_URL=http://127.0.0.1:8811 BROWSER_CHANNEL=chrome node tests/surfaces-bench.cjs
+          SITE_BASE_URL=http://127.0.0.1:8811 BROWSER_CHANNEL=chrome node tests/surfaces-states.cjs
       # The 64 seeded plates and 95 instruments against tests/fixtures/plate-baselines.json (3 October
       # 2026): every plate on screen, drawn, backed at its layout size; each instrument repeats exactly.
       # The pixel hashes belong to the fixture's reference machine and are compared only there.

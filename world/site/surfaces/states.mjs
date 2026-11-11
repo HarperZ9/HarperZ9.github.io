@@ -1,6 +1,6 @@
-// states.mjs: materials have a state, operations change it, and made things come from chains. DATA ONLY in this
-// version: nothing on the bench reads this file yet, no control heats or cools anything, and no number in it is
-// measured. It is the shape the well's grounds (grounds.mjs) are to follow next.
+// states.mjs: materials have a state, operations change it, and made things come from chains. The well reads this
+// table: its heat, cool and grind controls and the fibre chain (well-ops.mjs) move the ground along it, and each
+// material names the ground in grounds.mjs that shows it. No number in this file is measured.
 //
 //   STATES        solid, liquid, gas, powder (a ground-up solid), and how each holds pigment, by the rule the well has
 //   OPERATIONS    heat, cool, grind, dissolve, press, dry
@@ -10,12 +10,15 @@
 //   SENSES        a two-way rule between the well's picture and sound: PROPOSED, data only, nothing plays
 //   apply(id, op) the material an operation leads to, or null
 //   chainOf(id)   the chain that ends in a material, or null
+//   materialOf(ground)   the material a ground shows, or null
+//   replay(from, ops)    the materials passed through from a start by a list of operations, or null if one is not allowed
+//   tell(from, ops)      the same path in plain words: "stone, ground to sand, heated to melt"
 // Pure: no page, runs in node and the browser.
 export const STATES = Object.freeze({
-  solid: { holds: 'pigment sits on its surface or in its tooth', rule: 'layers', grounds: ['paper', 'stone-sand', 'metal-plate', 'glass'] },
-  liquid: { holds: 'carries pigment and lets it spread', rule: 'geometric', grounds: ['water'] },
+  solid: { holds: 'holds pigment on its surface or in its tooth', rule: 'layers', grounds: ['paper', 'stone-sand', 'metal-plate', 'glass', 'ice', 'wood', 'wet-sheet', 'fibre-sheet'] },
+  liquid: { holds: 'carries pigment and lets it spread', rule: 'geometric', grounds: ['water', 'melt', 'pulp'] },
   gas: { holds: 'scatters pigment through its volume, like smoke', rule: 'volume', grounds: ['air', 'cloud-mist'] },
-  powder: { holds: 'a field of grains that pigment stains, or that is itself the pigment', rule: 'partitive', grounds: [] },
+  powder: { holds: 'is a field of grains that pigment stains, or that is itself the pigment', rule: 'partitive', grounds: ['sand', 'snow', 'wood-chips'] },
 });
 export const OPERATIONS = Object.freeze(['heat', 'cool', 'grind', 'dissolve', 'press', 'dry']);
 
@@ -23,22 +26,29 @@ const M = (name, state, to = {}, ground = null) => Object.freeze({ name, state, 
 // `ground` names the ground in grounds.mjs that shows this material today, where one exists.
 export const MATERIALS = Object.freeze({
   stone: M('stone', 'solid', { grind: 'sand' }, 'stone-sand'),
-  sand: M('sand', 'powder', { heat: 'melt', grind: 'stone-powder' }),
+  sand: M('sand', 'powder', { heat: 'melt', grind: 'stone-powder' }, 'sand'),
   'stone-powder': M('stone powder', 'powder', { dissolve: 'slurry' }),
   slurry: M('slurry', 'liquid', { dry: 'stone-powder' }),
-  melt: M('melt', 'liquid', { cool: 'glass' }),
+  melt: M('melt', 'liquid', { cool: 'glass' }, 'melt'),
   glass: M('glass', 'solid', { heat: 'melt', grind: 'sand' }, 'glass'),
   water: M('water', 'liquid', { heat: 'vapour', cool: 'ice' }, 'water'),
   vapour: M('vapour', 'gas', { cool: 'water' }, 'cloud-mist'),
-  ice: M('ice', 'solid', { heat: 'water', grind: 'snow' }),
-  snow: M('snow', 'powder', { heat: 'water', press: 'ice' }),
-  wood: M('wood', 'solid', { grind: 'wood-chips' }),
-  'wood-chips': M('wood chips', 'powder', { dissolve: 'pulp' }),
-  pulp: M('pulp', 'liquid', { press: 'wet-sheet' }),
-  'wet-sheet': M('wet fibre sheet', 'solid', { dry: 'fibre-sheet' }),
-  'fibre-sheet': M('fibre sheet', 'solid', { dissolve: 'pulp' }, 'paper'),
+  ice: M('ice', 'solid', { heat: 'water', grind: 'snow' }, 'ice'),
+  snow: M('snow', 'powder', { heat: 'water', press: 'ice' }, 'snow'),
+  wood: M('wood', 'solid', { grind: 'wood-chips' }, 'wood'),
+  'wood-chips': M('wood chips', 'powder', { dissolve: 'pulp' }, 'wood-chips'),
+  pulp: M('pulp', 'liquid', { press: 'wet-sheet' }, 'pulp'),
+  'wet-sheet': M('wet fibre sheet', 'solid', { dry: 'fibre-sheet' }, 'wet-sheet'),
+  'fibre-sheet': M('fibre sheet', 'solid', { dissolve: 'pulp' }, 'fibre-sheet'),
 });
 export const apply = (id, op) => MATERIALS[id]?.to[op] ?? null;
+export const materialOf = (ground) => Object.keys(MATERIALS).find((id) => MATERIALS[id].ground === ground) ?? null;
+// What each operation is called once it is done, and the rule it follows, in plain words.
+export const DONE = Object.freeze({ heat: 'heated', cool: 'cooled', grind: 'ground', dissolve: 'soaked in water', press: 'pressed', dry: 'dried' });
+export const OP_RULE = Object.freeze({ heat: 'heat loosens what holds a material together', cool: 'cooling lets a material set', grind: 'grinding breaks a solid into grains',
+  dissolve: 'water takes the grains apart into loose fibres', press: 'pressing drives the water out and mats the fibres together', dry: 'drying takes the last water away and the fibres lock' });
+export function replay(from, ops = []) { const path = [from]; if (!MATERIALS[from]) return null; for (const op of ops) { const next = apply(path[path.length - 1], op); if (!next) return null; path.push(next); } return path; }
+export function tell(from, ops = []) { const path = replay(from, ops); return path ? path.map((id, i) => (i ? `${DONE[ops[i - 1]]} to ${MATERIALS[id].name}` : MATERIALS[id].name)).join(', ') : ''; }
 
 // A chain is a start and the operations that lead to the made thing. Each step must be a move the table allows.
 export const CHAINS = Object.freeze({
@@ -47,7 +57,7 @@ export const CHAINS = Object.freeze({
   ice: { from: 'water', steps: ['cool'], says: 'water, cooled' },
 });
 export const chainOf = (id) => CHAINS[id] ?? null;
-export function walk(chain) { const path = [chain.from]; for (const op of chain.steps) { const next = apply(path[path.length - 1], op); if (!next) return null; path.push(next); } return path; }
+export const walk = (chain) => replay(chain.from, chain.steps);
 
 // Pigments from living sources, as the author named them. PROPOSED: the colour, the strength, the transparency and
 // the fade are the lead's guesses, entered so the shape exists. None is measured. `settle` names the public

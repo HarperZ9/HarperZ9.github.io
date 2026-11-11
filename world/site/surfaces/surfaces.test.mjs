@@ -205,8 +205,10 @@ test('the ground follows the blend: the first material with a ground, else the p
   assert.deepEqual([g(['water']).id, g(['water']).pigments, g(['water'], null, true).id], ['paper', ['water'], 'water'], 'one element alone is the pigment; the ground follows the page');
   assert.equal(g(['fire-heat', 'ink']).id, 'paper'); assert.equal(g(['fire-heat', 'ink'], null, true).id, 'water'); assert.match(g(['fire-heat', 'ink']).why, /no ground of its own yet/);
   const mine = g(['water', 'ink'], 'glass'); assert.deepEqual([mine.id, mine.auto, mine.pigments, mine.why], ['glass', false, ['water', 'ink'], 'your choice']);
-  for (const id of [...Object.keys(GROUNDS), ...NOT_BUILT]) assert.equal(ix.byId.get(id)?.sheet, 'material', `${id} is on the material sheet`);
-  assert.equal(Object.keys(GROUNDS).length + NOT_BUILT.length, data.elements.filter((e) => e.sheet === 'material').length, 'every material is either a ground or named as not built');
+  const onTable = Object.keys(GROUNDS).filter((id) => !GROUNDS[id].made);   // the rest are made: reached by an operation or a chain
+  for (const id of [...onTable, ...NOT_BUILT]) assert.equal(ix.byId.get(id)?.sheet, 'material', `${id} is on the material sheet`);
+  for (const id of Object.keys(GROUNDS)) if (GROUNDS[id].made) assert.ok(!ix.byId.has(id), `${id} is made, and is not an element on the table`);
+  assert.equal(onTable.length + NOT_BUILT.length, data.elements.filter((e) => e.sheet === 'material').length, 'every material is either a ground or named as not built');
   assert.ok(new Set(Object.values(GROUNDS).map((x) => x.group.split(',')[0])).size >= 5, 'five kinds of ground');
   const r = makeRecipe(ix, ['water', 'ink'], [1, 1], {}, 'glass'); assert.equal(r.ground, 'glass'); assert.equal(readRecipe(ix, r).ground, 'glass');
   assert.equal(readRecipe(ix, makeRecipe(ix, ['water', 'ink'], [1, 1], {})).ground, null); assert.equal(readRecipe(ix, { ...r, ground: 'not-a-ground' }).ground, null);

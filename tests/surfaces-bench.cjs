@@ -249,7 +249,7 @@ async function brightestGround(page) {
       for (const id of Object.keys(GROUNDS)) { b.update({ ground: id }); const px = rd(), want = mixOn(id, P).map((c) => Math.round(km.linToSrgb(Math.min(1, Math.max(0, c))) * 255)), got = well().optics([1, 1, 0, 0]);
         o[id] = { rule: GROUNDS[id].rule, moved: df(base, px), nearestOther: Math.min(99, ...seen.map((s) => df(s, px))), shaderAgainstRule: Math.max(...got.map((x, i) => Math.abs(x - want[i]))) }; seen.push(px); }
       b.update({ ground: 'paper' }); return o; });
-    out.grounds = grounds; assert.equal(Object.keys(grounds).length, 10);
+    out.grounds = grounds; assert.equal(Object.keys(grounds).length, 19);
     for (const [id, g] of Object.entries(grounds)) { if (id !== 'paper') assert.ok(g.moved >= FLOOR, `${id} changes the picture (${g.moved})`); assert.ok(g.nearestOther >= FLOOR, `${id} is its own picture (${g.nearestOther} from the nearest other ground)`);
       assert.ok(g.shaderAgainstRule <= 2, `${id}: the shader keeps the ${g.rule} rule (${g.shaderAgainstRule} of 255)`); }
     // the glaze swatches in the blend table: painted, and their overlap is the colour the table names
