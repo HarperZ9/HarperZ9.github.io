@@ -10,6 +10,7 @@
 // A value read from a study is "measured". A value this file works out from measured parts is "computed", and
 // every place that shows one says so.
 import { byId as studioMaterial, CODE_MATERIAL } from '../../studio/lib/materials.mjs';
+import { GROUNDS } from './grounds.mjs';
 
 export const GROUND_RANK = { grounded: 0, partial: 1, thought: 2 };
 export const GROUND_WORD = {
@@ -71,7 +72,8 @@ export const WORDS = Object.freeze([
   ['Kubelka-Munk', 'The standard model of how a layer of paint handles light, named for the two people who published it in 1931. Each pigment has two numbers per colour: absorption, the light it takes away, and scattering, the light it turns back. From them a layer gets a reflectance (the light it sends back) and a transmittance (the light it lets through), and layers stack by a formula in which the order matters whenever a pigment scatters. On paper, the well and the glaze swatches are both painted this way. Computed.'],
   ['Glaze', 'One thin, see-through wash of pigment laid over another, so the overlap shows both and has a hue of its own.'],
   ['Opacity', 'Computed. How much of its own colour a pigment keeps over black. Here it is the element\'s measured ink coverage, used as it is; an element with no measured coverage takes the table\'s median. The absorption and scattering of each pigment are worked out from its measured colour and this opacity.'],
-  ['Paper and tooth', 'The well\'s light ground is a sheet of paper. Its tooth is the fine up and down of the surface. The other ground is dark water, the well\'s earlier look, where pigments mix by the geometric mean of the light they send back.'],
+  ['Ground', 'Computed. What the pigment lies on. A ground is one of the table\'s materials, and each has its own rule for how colours combine. Paper, stone and metal plate: paint layers (see Kubelka-Munk); on stone and metal the pigment sits on top, beads and pools. Glass: light comes through, each wash is a filter, and the filters multiply. Water: pigments mix by the geometric mean of the light they send back. Air and cloud mist: pigment hangs like smoke and the eye gets the plain average. Light and screen pixel: colours add, so red and green go toward yellow. Data: each pigment is a separate mark in a lattice and the eye averages the marks. If the blend holds a material that has a ground, the first one is the ground and the rest lie on it; if not, the ground follows the page, paper by day and water by night. You can choose another, and the recipe keeps your choice.'],
+  ['Paper and tooth', 'Paper is the absorbent ground. Its tooth is the fine up and down of the surface.'],
   ['Granulation', 'Computed. Pigment settling into the low points of the paper\'s tooth, which shows as fine grain. It is stronger for an element with a low roughness slope, by its rank in the table.'],
   ['Dried edge', 'Computed. As a wash dries, pigment is carried to its edge and leaves a darker rim. The rim appears a few seconds after the water is left alone, is stronger for an element with hard measured edges, and is absent where the wash met another wet wash.'],
   ['Wet into wet', 'Computed. Where a wash meets another that is still wet, its edge is wider and softer and its pigment spreads faster. The spread follows the element\'s edge softness and flow speed.'],
@@ -212,8 +214,8 @@ export function materialFor(ix, el, settings = {}) {
 
 // The take-away recipe: which elements, at what weight, with which settings. Small, readable, and loadable again.
 export const RECIPE_FORMAT = 'bench.recipe/1';
-export function makeRecipe(ix, ids, weights, settings) {
-  return { format: RECIPE_FORMAT, elements: ids.map((id, i) => ({ id, name: ix.byId.get(id)?.name ?? id, weight: +(+(weights?.[i] ?? 1)).toFixed(3), settings: { ...(settings?.[id] ?? {}) } })) };
+export function makeRecipe(ix, ids, weights, settings, ground = null) {
+  return { format: RECIPE_FORMAT, ...(ground && GROUNDS[ground] ? { ground } : {}), elements: ids.map((id, i) => ({ id, name: ix.byId.get(id)?.name ?? id, weight: +(+(weights?.[i] ?? 1)).toFixed(3), settings: { ...(settings?.[id] ?? {}) } })) };
 }
 export function readRecipe(ix, doc) {
   if (!doc || doc.format !== RECIPE_FORMAT || !Array.isArray(doc.elements)) throw new Error(`recipe: not a ${RECIPE_FORMAT} file`);
@@ -221,5 +223,5 @@ export function readRecipe(ix, doc) {
   if (!parts.length) throw new Error('recipe: none of its elements are in this table');
   const settings = {};
   for (const p of parts) { settings[p.id] = {}; for (const [k, v] of Object.entries(p.settings || {})) if (k in DRIVES && Number.isFinite(v)) settings[p.id][k] = v; }
-  return { ids: parts.map((p) => p.id), weights: parts.map((p) => (Number.isFinite(p.weight) && p.weight >= 0 ? p.weight : 1)), settings };
+  return { ground: GROUNDS[doc.ground] ? doc.ground : null, ids: parts.map((p) => p.id), weights: parts.map((p) => (Number.isFinite(p.weight) && p.weight >= 0 ? p.weight : 1)), settings };
 }

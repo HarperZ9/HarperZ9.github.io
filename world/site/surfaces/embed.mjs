@@ -16,11 +16,12 @@ export async function mountHost(host) {
   const names = (host.dataset.surface || '').split(/\s+/).filter((n) => registry.SURFACES[n]?.load && n !== 'bench');
   const ix = await registry.elements(), ids = (host.dataset.elements || '').split(/[\s,]+/).filter((id) => ix.byId.has(id)).slice(0, 4);
   if (!names.length || !ids.length) { console.info('surfaces: nothing to mount on', host); return []; }
-  const state = { elements: ids, weights: null, settings: {}, focus: ids[0] }, handles = {};
+  const state = { elements: ids, weights: null, settings: {}, focus: ids[0], ground: host.dataset.ground || null }, handles = {};
   const others = (skip) => { for (const [n, h] of Object.entries(handles)) if (n !== skip) h.update({ ...state }); };
   const ctx = { ix,
     onSet(id, key, value) { if (key === null) delete state.settings[id]; else state.settings[id] = { ...(state.settings[id] || {}), [key]: value }; others('chart'); },
     onWeights(w) { state.weights = w; others('blend'); },
+    onGround(g) { state.ground = g; others('well'); },
     onPick(id) { state.focus = id; handles.chart?.update({ ...state }); },
     picture: () => handles.well?.value()?.canvas || null };
   host.innerHTML = names.map((n) => `<div data-part="${n}"${WIDE.has(n) ? ' class="sf-wide"' : ''}><h4>${esc(registry.SURFACES[n].name)}</h4><div></div></div>`).join('') +

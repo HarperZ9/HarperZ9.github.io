@@ -14,7 +14,7 @@ const SECTIONS = [['about', 'About'], ['properties', 'Properties'], ['blend', 'B
 export async function mount(host, input, ctx) {
   const { ix, registry } = ctx, assets = ctx.assets ?? '/world/ui/shell/organic/';
   const first = ix.data.elements.find((e) => e.id === 'water') ? 'water' : ix.data.elements[0].id;
-  const state = { elements: (input.elements || []).filter((id) => ix.byId.has(id)).slice(0, 4), weights: input.weights || null, settings: { ...(input.settings || {}) }, focus: null, blending: false };
+  const state = { elements: (input.elements || []).filter((id) => ix.byId.has(id)).slice(0, 4), weights: input.weights || null, settings: { ...(input.settings || {}) }, ground: input.ground ?? null, focus: null, blending: false };
   if (!state.elements.length) state.elements = [first];
   state.focus = state.elements[state.elements.length - 1]; state.blending = state.elements.length > 1;
   let uses = null;
@@ -32,7 +32,7 @@ export async function mount(host, input, ctx) {
   $('.bn-properties').innerHTML = '<div data-part="chart"></div>'; $('.bn-compare').innerHTML = '<div data-part="compare"></div>';
   $('.bn-take').innerHTML = `<p>Save what is in the well as a picture, its colours as a palette, or the whole setting as a recipe: a small file naming the elements, their shares and your settings, which this bench opens again. The files hold only what the bench made.</p><div data-part="recipe"></div><div class="bn-toolbox"><h4>The tools behind the bench</h4>${toolsHTML(registry)}</div>`;
 
-  const shared = () => ({ elements: state.elements, weights: state.weights, settings: state.settings, focus: state.focus });
+  const shared = () => ({ elements: state.elements, weights: state.weights, settings: state.settings, focus: state.focus, ground: state.ground });
   const part = (n) => $(`[data-part="${n}"]`);
   const hooks = {
     onSet(id, key, value) { if (key === null) delete state.settings[id]; else state.settings[id] = { ...(state.settings[id] || {}), [key]: value };
@@ -40,8 +40,9 @@ export async function mount(host, input, ctx) {
     onPick(id) { choose(id, { scroll: false }); },
     onWeights(w, { live }) { state.weights = w; S.well.update(shared()); S.recipe.update(shared()); if (!live) for (const k of ['motion', 'lettering', 'plot', 'plate', 'glass', 'living']) S[k].update(shared()); },
     onRemove(id) { drop(id); },
+    onGround(g) { state.ground = g; for (const k of ['blend', 'plate', 'glass', 'recipe']) S[k].update(shared()); },   // the visitor chose a ground, or went back to following the blend
     picture: () => S.well.value()?.canvas || null,
-    onLoad(r) { state.elements = r.ids; state.weights = r.weights; state.settings = r.settings; state.focus = r.ids[r.ids.length - 1]; state.blending = r.ids.length > 1; sync(); },
+    onLoad(r) { state.elements = r.ids; state.weights = r.weights; state.settings = r.settings; state.ground = r.ground ?? null; state.focus = r.ids[r.ids.length - 1]; state.blending = r.ids.length > 1; sync(); },
   };
   const c = { ...ctx, ...hooks }, S = {};
   S.well = await registry.mount(part('well'), 'well', shared(), c);
@@ -113,7 +114,7 @@ export async function mount(host, input, ctx) {
 
   return {
     update(next) { if (next.elements) { state.elements = next.elements.filter((id) => ix.byId.has(id)).slice(0, 4); state.focus = state.elements[state.elements.length - 1]; state.blending = state.elements.length > 1; }
-      if (next.weights) state.weights = next.weights; if (next.settings) state.settings = { ...next.settings }; sync(); },
+      if (next.weights) state.weights = next.weights; if ('ground' in next) state.ground = next.ground; if (next.settings) state.settings = { ...next.settings }; sync(); },
     value: () => ({ ...shared(), surfaces: S }),
     destroy() { host.removeEventListener('click', onClick); host.removeEventListener('keydown', onKey); for (const h of Object.values(S)) h.destroy(); host.innerHTML = ''; host.classList.remove('bn'); },
   };

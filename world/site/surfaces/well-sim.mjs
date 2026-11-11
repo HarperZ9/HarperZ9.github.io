@@ -25,7 +25,7 @@ export { STEP };
 export const NX = 96, NY = 72, SLOTS = 4, RS = 3, RX = NX * RS, RY = NY * RS, TOLERANCE = 1e-4, DIFFUSE = 0.03;
 const clamp = (x, a, b) => (x < a ? a : x > b ? b : x);
 // Where each slot starts: one element fills the well; more share it as soft-edged bodies that meet in the middle.
-const HOMES = { 1: [[0.5, 0.5, 0.62]], 2: [[0.3, 0.5, 0.42], [0.7, 0.5, 0.42]], 3: [[0.28, 0.36, 0.36], [0.72, 0.36, 0.36], [0.5, 0.72, 0.36]],
+const HOMES = { 1: [[0.5, 0.5, 0.44]], 2: [[0.3, 0.5, 0.42], [0.7, 0.5, 0.42]], 3: [[0.28, 0.36, 0.36], [0.72, 0.36, 0.36], [0.5, 0.72, 0.36]],
   4: [[0.28, 0.3, 0.32], [0.72, 0.3, 0.32], [0.28, 0.72, 0.32], [0.72, 0.72, 0.32]] };
 const mixed = (x, y) => { let h = (Math.imul(x, 374761393) + Math.imul(y, 668265263)) | 0; h = Math.imul(h ^ (h >>> 13), 1274126177); return (h ^ (h >>> 16)) >>> 0; };
 const total = (F) => { let s = 0; for (let i = 0; i < F.length; i++) s += F[i]; return s; };

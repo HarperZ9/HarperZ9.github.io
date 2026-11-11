@@ -98,7 +98,10 @@ async function brightestGround(page) {
       assert.ok(c.brightest <= c.ceiling + 0.01, `${mode}: no pixel of the field is brighter than the ceiling (${c.brightest} against ${c.ceiling})`);
       assert.ok(c.worst.ratio >= 4.5, `${mode}: worst text contrast ${c.worst.ratio} (${c.worst.text})`);
       assert.ok(await page.evaluate(() => ['.bn-main', '.bn-side', '.parts-lead'].every((q) => { const cs = getComputedStyle(document.querySelector(q)); return /rgba\(0, 0, 0, 0\)|transparent/.test(cs.backgroundColor) && cs.boxShadow === 'none'; })), `${mode}: no reading area has a panel behind it`);
-      if (mode === 'plain') assert.equal(await page.evaluate(() => getComputedStyle(document.querySelector('.sf-water')).display), 'none', 'plain view shows no well canvas');
+      if (mode === 'plain') { assert.equal(await page.evaluate(() => getComputedStyle(document.querySelector('.sf-water')).display), 'none', 'plain view shows no well canvas');
+        await page.evaluate(() => window.__bench.update({ ground: 'paper' }));
+        const pl = await page.evaluate(() => [...document.querySelectorAll('.bl-glazes figure')].map((f) => ({ canvas: getComputedStyle(f.querySelector('canvas')).display, chip: getComputedStyle(f.querySelector('figcaption i')).display, colour: f.querySelector('figcaption i').style.background, text: f.querySelector('figcaption').textContent })));
+        out.plainSwatches = pl; assert.equal(pl.length, 2); for (const f of pl) { assert.equal(f.canvas, 'none'); assert.notEqual(f.chip, 'none'); assert.ok(f.colour && /over .* on /.test(f.text), 'plain view names each glaze, its ground and its colour as a chip'); } }
       await ctx.close();
     }
     // 4 to 8 on one page, under reduced motion so the well is a still that can be compared
@@ -170,7 +173,8 @@ async function brightestGround(page) {
     assert.ok(min.d >= FLOOR, `two elements with different data look alike: ${JSON.stringify(min)}`);
 
     // 4: the blend table's numbers
-    await page.evaluate(() => window.__bench.update({ elements: ['water', 'ink', 'light'], weights: [2, 1, 1], settings: {} }));
+    // from here the ground is chosen (paper), so every element stays a pigment; the choice holds until it is given back
+    await page.evaluate(() => window.__bench.update({ elements: ['water', 'ink', 'light'], weights: [2, 1, 1], settings: {}, ground: 'paper' }));
     const bl = await page.evaluate(async () => { const ix = await window.__surfaces.elements(), { mixValue } = await import('/world/site/surfaces/elements-data.mjs'), ids = ['water', 'ink', 'light'], w = [0.5, 0.25, 0.25], bad = [];
       for (const tr of document.querySelectorAll('.bl tbody tr')) { const name = tr.dataset.prop, vs = [], ws = [];
         ids.forEach((id, i) => { const p = ix.byId.get(id).properties.find((x) => x.name === name); if (p) { vs.push(p.value); ws.push(w[i]); } });
@@ -230,18 +234,30 @@ async function brightestGround(page) {
     assert.ok(paint.orderGapScattering >= 20, `with scattering, the order changes the overlap (${paint.orderGapScattering} of 255)`); assert.ok(paint.orderGapNoScattering <= 1, `with no scattering it does not (${paint.orderGapNoScattering} of 255)`);
     for (const k of ['tooth', 'granulation', 'rim']) assert.ok(paint.effects[k] >= PAINT_FLOOR, `${k} changes the picture (${paint.effects[k]}, floor ${PAINT_FLOOR})`);
     assert.ok(paint.restored < 0.01); assert.ok(paint.conservation.error <= 1e-4, `pigment is kept (${paint.conservation.error})`);
-    // the ground control, by keyboard: paper is the default, dark water is the other
-    const before = await read(); assert.equal(await page.getAttribute('.sf-water', 'data-ground'), 'paper');
-    await page.locator('[data-ground="water"]').focus(); await page.keyboard.press('Enter');
-    out.paint.ground = +diff(before, await read()).toFixed(2); assert.ok(out.paint.ground >= FLOOR, `the ground control changes the picture (${out.paint.ground})`);
-    assert.equal(await page.getAttribute('[data-ground="water"]', 'aria-checked'), 'true');
-    await page.locator('[data-ground="paper"]').focus(); await page.keyboard.press('Enter'); assert.ok(diff(before, await read()) < 0.01, 'and paper comes back as it was');
+    // the ground control: a chosen ground stands and says so; given back, the ground follows the blend and says why
+    const before = await read(); assert.equal(await page.getAttribute('.sf-water', 'data-ground'), 'paper'); assert.match(await page.textContent('.sf-why'), /your choice/);
+    await page.selectOption('select[data-ground]', 'glass'); out.paint.ground = +diff(before, await read()).toFixed(2); assert.ok(out.paint.ground >= FLOOR, `the ground control changes the picture (${out.paint.ground})`);
+    assert.equal(await page.evaluate(() => window.__bench.value().ground), 'glass', 'the bench knows the choice');
+    await page.selectOption('select[data-ground]', ''); const auto = await page.evaluate(() => { const v = window.__bench.value().surfaces.well.value(); return { ground: v.ground, auto: v.auto, why: v.why, pigments: v.pigments, said: document.querySelector('.sf-why').textContent }; });
+    out.paint.follow = auto; assert.deepEqual([auto.ground, auto.auto, auto.pigments], ['water', true, ['fire-heat']], 'water is the first material, so fire heat lies on it'); assert.match(auto.said, /first material/);
+    await page.selectOption('select[data-ground]', 'paper'); assert.ok(diff(before, await read()) < 0.01, 'and paper comes back as it was');
+    // every ground: it changes the picture, and the shader keeps the ground's stated rule on two flat layers
+    const grounds = await page.evaluate(async () => { const { GROUNDS, mixOn } = await import('/world/site/surfaces/grounds.mjs'), gz = await import('/world/site/surfaces/glaze.mjs'), km = await import('/world/site/surfaces/km.mjs');
+      const b = window.__bench, ix = await window.__surfaces.elements(), well = () => b.value().surfaces.well.value().well, P = ['water', 'fire-heat'].map((id) => gz.paintOf(ix, ix.byId.get(id))), o = {};
+      const rd = () => Array.from(well().read()), df = (a, c) => { let s = 0; for (let i = 0; i < a.length; i += 4) s += Math.abs(a[i] - c[i]) + Math.abs(a[i + 1] - c[i + 1]) + Math.abs(a[i + 2] - c[i + 2]); return +(s / (a.length / 4 * 3)).toFixed(2); };
+      const base = rd(), seen = [];
+      for (const id of Object.keys(GROUNDS)) { b.update({ ground: id }); const px = rd(), want = mixOn(id, P).map((c) => Math.round(km.linToSrgb(Math.min(1, Math.max(0, c))) * 255)), got = well().optics([1, 1, 0, 0]);
+        o[id] = { rule: GROUNDS[id].rule, moved: df(base, px), nearestOther: Math.min(99, ...seen.map((s) => df(s, px))), shaderAgainstRule: Math.max(...got.map((x, i) => Math.abs(x - want[i]))) }; seen.push(px); }
+      b.update({ ground: 'paper' }); return o; });
+    out.grounds = grounds; assert.equal(Object.keys(grounds).length, 10);
+    for (const [id, g] of Object.entries(grounds)) { if (id !== 'paper') assert.ok(g.moved >= FLOOR, `${id} changes the picture (${g.moved})`); assert.ok(g.nearestOther >= FLOOR, `${id} is its own picture (${g.nearestOther} from the nearest other ground)`);
+      assert.ok(g.shaderAgainstRule <= 2, `${id}: the shader keeps the ${g.rule} rule (${g.shaderAgainstRule} of 255)`); }
     // the glaze swatches in the blend table: painted, and their overlap is the colour the table names
     await page.waitForFunction(() => { const c = [...document.querySelectorAll('.bl-glazes canvas')]; return c.length === 2 && c.every((x) => x.dataset.painted); }, null, { timeout: 15000 });
     const sw = await page.evaluate(async () => { const km = await import('/world/site/surfaces/km.mjs'), well = window.__bench.value().surfaces.well.value().well;
       return { gap: +document.querySelector('.bl-glazes li').dataset.gap, said: document.querySelector('.bl-gap').textContent.slice(0, 60), swatches: [...document.querySelectorAll('.bl-glazes canvas')].map((c) => { const hex = c.dataset.hex, want = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
         const d = c.getContext('2d').getImageData(Math.round(c.width * 0.42), Math.round(c.height * 0.4), Math.round(c.width * 0.16), Math.round(c.height * 0.2)).data, m = [0, 0, 0]; for (let i = 0; i < d.length; i += 4) for (let k = 0; k < 3; k++) m[k] += d[i + k] / (d.length / 4);
-        const first = c.dataset.under === 'water', shader = well.optics(first ? [1, 1, 0, 0] : [0, 0, 0, 0]);   // the well holds water then fire heat: its probe is fire heat over water
+        const first = c.dataset.under === 'water' && c.dataset.on === 'paper', shader = well.optics(first ? [1, 1, 0, 0] : [0, 0, 0, 0]);   // the well holds water then fire heat: its probe is fire heat over water
         return { top: c.dataset.top, under: c.dataset.under, hex, painted: Math.max(...m.map((x, k) => Math.abs(x - want[k]))), shader: first ? Math.max(...shader.map((x, k) => Math.abs(x - want[k]))) : null }; }) }; });
     out.paint.swatches = sw; assert.equal(sw.swatches.length, 2); assert.notEqual(sw.swatches[0].hex, sw.swatches[1].hex, 'the two orders are two colours');
     for (const w of sw.swatches) assert.ok(w.painted <= 16, `${w.top} over ${w.under}: the painted overlap is the named colour, within the paper's grain (${w.painted.toFixed(1)} of 255)`);
@@ -253,12 +269,12 @@ async function brightestGround(page) {
     const png = await grab('[data-save="png"]'), pal = await grab('[data-save="palette"]'), rec = await grab('[data-save="recipe"]');
     assert.equal(png.bytes.subarray(1, 4).toString(), 'PNG'); assert.ok(png.bytes.length > 2000, 'the picture has content');
     const recipe = JSON.parse(rec.bytes.toString()), palette = JSON.parse(pal.bytes.toString());
-    assert.equal(recipe.format, 'bench.recipe/1'); assert.deepEqual(recipe.elements.map((e) => e.id), ['water', 'ink', 'light']); assert.match(recipe.graph, /^[0-9a-f]{8}$/);
+    assert.equal(recipe.format, 'bench.recipe/1'); assert.equal(recipe.ground, 'paper', 'the chosen ground is in the recipe'); assert.deepEqual(recipe.elements.map((e) => e.id), ['water', 'ink', 'light']); assert.match(recipe.graph, /^[0-9a-f]{8}$/);
     assert.equal(palette.colours.length, 4); assert.ok(/computed/.test(palette.colours[3].role));
     assert.ok(!/thumb|https?:|\.jpg|\.webp|\.png/.test(rec.bytes.toString() + pal.bytes.toString()), 'no reference image or link is in a saved file');
-    await page.evaluate(() => window.__bench.update({ elements: ['glass'], settings: {} }));
+    await page.evaluate(() => window.__bench.update({ elements: ['glass'], settings: {}, ground: null }));
     await page.setInputFiles('.tk-load input', { name: 'r.recipe.json', mimeType: 'application/json', buffer: rec.bytes });
-    await page.waitForFunction(() => window.__bench.value().elements.join() === 'water,ink,light');
+    await page.waitForFunction(() => window.__bench.value().elements.join() === 'water,ink,light'); assert.equal(await page.evaluate(() => window.__bench.value().ground), 'paper', 'and opening the recipe brings the ground back');
     out.takeaway = { png: png.bytes.length, recipe: rec.name, palette: pal.name, graph: recipe.graph };
 
     // 8: mount and teardown
@@ -270,9 +286,10 @@ async function brightestGround(page) {
 
     // 10b: frame time with motion on, a linked pair growing its reaction, on paper and on dark water (reported; loose bound)
     { const o = await open(browser, '/elements.html?e=light,city-architecture', { w: 1280, h: 720 });
+      await o.page.evaluate(() => window.__bench.update({ ground: 'paper' }));
       const tm = async () => { await o.page.evaluate(() => { const w = window.__bench.value().surfaces.well.value().well; w.stir(0.5, 0.5, 0.4, 0.2); w.timing(); }); await o.page.waitForTimeout(4000);
         return o.page.evaluate(() => { const w = window.__bench.value().surfaces.well.value().well, t = w.timing(); return { frames: t.frames, simMs: +t.sim.toFixed(2), frameMs: +t.frame.toFixed(2), product: +w.product().toFixed(4), kept: w.conservation().error }; }); };
-      const paper = await tm(); await o.page.click('[data-ground="water"]'); const water = await tm();
+      const paper = await tm(); await o.page.selectOption('select[data-ground]', 'water'); const water = await tm();
       out.frame = { note: 'software GL in this browser; sim is the JavaScript step, frame the time between frames', grid: await o.page.evaluate(() => window.__bench.value().surfaces.well.value().well.reactionGrid), paper, water };
       assert.ok(paper.frames > 20 && paper.simMs < 14, `the simulation step fits the frame (${paper.simMs} ms)`); assert.ok(paper.kept <= 1e-4 && water.kept <= 1e-4, 'pigment is kept with motion on'); assert.deepEqual(o.errors, []);
       await o.ctx.close(); }

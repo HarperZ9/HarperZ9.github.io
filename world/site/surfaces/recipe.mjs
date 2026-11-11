@@ -42,7 +42,7 @@ export function mount(host, input, ctx) {
   const note = host.querySelector('.tk-note'), say = (t) => { note.textContent = t; };
   const stem = () => state.elements.join('-') || 'bench';
   const build = () => {
-    const recipe = makeRecipe(ix, state.elements, state.weights, state.settings), run = runRecipe(ix, recipe);
+    const recipe = makeRecipe(ix, state.elements, state.weights, state.settings, state.ground), run = runRecipe(ix, recipe);
     const palette = { format: 'bench.palette/1', colours: [...state.elements.map((id) => ({ name: ix.byId.get(id).name, hex: ix.byId.get(id).colour?.hex, role: 'element, measured colour' })),
       ...(run.material && state.elements.length > 1 ? [{ name: 'mix', hex: run.material.palette.ink, role: 'computed: OKLab mean by share' }] : [])] };
     return { recipe: { ...recipe, graph: run.hash, palette: palette.colours }, palette, run };

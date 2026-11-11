@@ -193,3 +193,35 @@ test('a link grows a product at the scale the pair sets; no link grows none', ()
   const width = (s) => { let n = 0, on = 0; for (let y = 40; y < 180; y += 4) for (let x = 1; x < 288; x++) { const a = s.RV[y * 288 + x] > 0.15; if (a) on++; if (a !== (s.RV[y * 288 + x - 1] > 0.15)) n++; } return 2 * on / n; };
   assert.ok(width(broad) > width(fine) * 1.15, `the broad pattern's strokes are wider (${width(broad).toFixed(1)} cells against ${width(fine).toFixed(1)})`);
 });
+
+// Grounds: which one a blend lies on, and the rule each keeps (grounds.mjs).
+const { GROUNDS, RULES, NOT_BUILT, groundFor, mixOn } = await import('./grounds.mjs');
+
+test('the ground follows the blend: the first material with a ground, else the page; a choice stands', () => {
+  const g = (ids, choice, night) => groundFor(ix, ids, choice, night);
+  assert.deepEqual([g(['water', 'ink']).id, g(['water', 'ink']).pigments], ['water', ['ink']], 'ink on water');
+  assert.deepEqual([g(['ink', 'paper']).id, g(['ink', 'paper']).pigments], ['paper', ['ink']], 'ink on paper: ink has no ground of its own, paper has');
+  assert.deepEqual([g(['light', 'glass', 'fire-heat']).id, g(['light', 'glass', 'fire-heat']).pigments], ['light', ['glass', 'fire-heat']]);
+  assert.deepEqual([g(['water']).id, g(['water']).pigments, g(['water'], null, true).id], ['paper', ['water'], 'water'], 'one element alone is the pigment; the ground follows the page');
+  assert.equal(g(['fire-heat', 'ink']).id, 'paper'); assert.equal(g(['fire-heat', 'ink'], null, true).id, 'water'); assert.match(g(['fire-heat', 'ink']).why, /no ground of its own yet/);
+  const mine = g(['water', 'ink'], 'glass'); assert.deepEqual([mine.id, mine.auto, mine.pigments, mine.why], ['glass', false, ['water', 'ink'], 'your choice']);
+  for (const id of [...Object.keys(GROUNDS), ...NOT_BUILT]) assert.equal(ix.byId.get(id)?.sheet, 'material', `${id} is on the material sheet`);
+  assert.equal(Object.keys(GROUNDS).length + NOT_BUILT.length, data.elements.filter((e) => e.sheet === 'material').length, 'every material is either a ground or named as not built');
+  assert.ok(new Set(Object.values(GROUNDS).map((x) => x.group.split(',')[0])).size >= 5, 'five kinds of ground');
+  const r = makeRecipe(ix, ['water', 'ink'], [1, 1], {}, 'glass'); assert.equal(r.ground, 'glass'); assert.equal(readRecipe(ix, r).ground, 'glass');
+  assert.equal(readRecipe(ix, makeRecipe(ix, ['water', 'ink'], [1, 1], {})).ground, null); assert.equal(readRecipe(ix, { ...r, ground: 'not-a-ground' }).ground, null);
+});
+
+test('each ground keeps its stated rule on red and green', () => {
+  const red = [0.6, 0.04, 0.03], green = [0.04, 0.45, 0.05], P = [red, green].map((lin) => ({ lin, pig: pigment(lin, 0.4) })), Y = (c) => 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
+  const both = (id) => mixOn(id, P), one = (id, i) => mixOn(id, [P[i]]), swap = (id) => mixOn(id, [P[1], P[0]]);
+  for (const [id, g] of Object.entries(GROUNDS)) { const m = both(id), gap = apart(m, swap(id));
+    if (!RULES[g.rule].ordered) assert.ok(gap < 0.01, `${id}: the order does not matter (${gap})`);
+    if (g.rule === 'layers') { assert.ok(Y(m) < Y(one(id, 1)) && Y(swap(id)) < Y(one(id, 0)), `${id}: a wash over another is darker than the same wash alone on the ground`); assert.ok(gap > 5, `${id}: and the order shows (${gap.toFixed(1)} of 255)`); }
+    if (g.rule === 'transmit') { assert.ok(Y(m) < Math.min(Y(one(id, 0)), Y(one(id, 1))), `${id}: two filters are darker than either`); m.forEach((x, c) => assert.ok(Math.abs(x - one(id, 0)[c] * one(id, 1)[c] / g.base[c]) < 1e-9, 'filters multiply')); }
+    if (g.rule === 'additive') { assert.ok(Y(m) > Math.max(Y(one(id, 0)), Y(one(id, 1))), `${id}: two lights are brighter than either`); assert.ok(m[0] > 0.4 && m[1] > 0.3 && m[2] < 0.1, `${id}: red and green go toward yellow (${m.map((x) => x.toFixed(2))})`); }
+    if (g.rule === 'volume') m.forEach((x, c) => assert.ok(x >= Math.min(red[c], green[c], g.base[c]) - 1e-9 && x <= Math.max(red[c], green[c], g.base[c]) + 1e-9, `${id}: an average lies between its parts`));
+    if (g.rule === 'geometric') assert.ok(Y(m) < Y(mixOn('air', P)), 'the geometric mean in water is darker than the plain average in air');
+    if (g.rule === 'partitive') m.forEach((x, c) => assert.ok(Math.abs(x - (0.18 * red[c] + 0.18 * green[c] + 0.64 * g.base[c])) < 1e-9, 'marks average by area')); }
+  const paperBoth = both('paper'); assert.ok(paperBoth[0] < 0.2 && paperBoth[1] < 0.2 && paperBoth[2] < 0.1, `on paper red and green go toward a dark brown (${paperBoth.map((x) => x.toFixed(2))})`);
+});

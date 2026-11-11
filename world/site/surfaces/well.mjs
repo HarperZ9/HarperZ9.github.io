@@ -2,23 +2,24 @@
 // a pigment drawn from its own measured numbers, and that answers the visitor: drag stirs it, a press pours, the
 // arrow keys tilt it.
 //
-//   const well = createWell(canvas, { reduced, paper: true });
+//   const well = createWell(canvas, { reduced, ground: 'paper' });   (a ground id from grounds.mjs)
 //   (each part may carry links: [0..1 to every other part], the measured link strengths that open the reaction)
 //   well.set([{ ok: [L, a, b], weight, drive: { wavelength, orientation, peak, beta, softness, coverage, density,
 //               saturation, rows, speed, curl, coherence, opacity, granulation, rim, bleed, scale } }]);
-//   well.pour(slot, x, y); well.stir(x, y, vx, vy); well.tilt(dx, dy); well.reset(); well.ground(paper); well.destroy();
+//   well.pour(slot, x, y); well.stir(x, y, vx, vy); well.tilt(dx, dy); well.reset(); well.ground(id); well.destroy();
 //
 // What happens in the well is well-sim.mjs (the water, the pigment it carries and conserves, the reaction). How
-// it looks is well-shader.mjs (washes on paper by Kubelka-Munk layers, or the earlier dark water). The optics
+// it looks is well-shader.mjs (a ground for each medium, each with its own rule for combining colour). The optics
 // are km.mjs, the same module that paints the glaze swatches in the blend table. Coordinates are fractions of the
 // well, x right, y down. Reduced motion: no drift; each act settles at once into a still, shown dry.
 import { createSim, STEP, NX, NY, RX, RY } from './well-sim.mjs';
 import { VERT, FRAG } from './well-shader.mjs';
-import { pigment, okToLinear, productOk, PAPER, PRODUCT_OPACITY } from './km.mjs';
+import { pigment, okToLinear, productOk, PRODUCT_OPACITY } from './km.mjs';
+import { GROUNDS } from './grounds.mjs';
 
 const clamp = (x, a, b) => (x < a ? a : x > b ? b : x);
 
-export function createWell(canvas, { reduced = false, ground = [0.2, -0.01, -0.03], paper = true } = {}) {
+export function createWell(canvas, { reduced = false, ground = 'paper' } = {}) {
   const gl = canvas.getContext('webgl', { alpha: false, antialias: false, preserveDrawingBuffer: true, powerPreference: 'low-power' });
   if (!gl) return null;
   const sh = (src, type) => { const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s);
@@ -60,7 +61,6 @@ export function createWell(canvas, { reduced = false, ground = [0.2, -0.01, -0.0
     O.set(pl, 12); K.set(pp.K, 12); S.set(pp.S, 12); soft = w ? clamp(0.03 + 0.2 * sf / w, 0.03, 0.26) : 0.1; strength = w ? w / pairs : 0;
     gl.uniform4fv(U('uA'), A); gl.uniform4fv(U('uB'), B); gl.uniform4fv(U('uC'), C); gl.uniform4fv(U('uD'), D);
     gl.uniform3fv(U('uLin'), O); gl.uniform3fv(U('uK'), K); gl.uniform3fv(U('uS'), S);
-    gl.uniform3fv(U('uGround'), new Float32Array(okToLinear(ground))); gl.uniform3fv(U('uPaper'), new Float32Array(PAPER));
   }
   function draw() {
     const { dye, dx, dy, RV } = sim;
@@ -73,7 +73,7 @@ export function createWell(canvas, { reduced = false, ground = [0.2, -0.01, -0.0
     gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, tDisp); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, NX, NY, 0, gl.RGBA, gl.UNSIGNED_BYTE, bDisp);
     gl.activeTexture(gl.TEXTURE2); gl.bindTexture(gl.TEXTURE_2D, tProd); gl.texImage2D(gl.TEXTURE_2D, 0, gl.LUMINANCE, RX, RY, 0, gl.LUMINANCE, gl.UNSIGNED_BYTE, bProd);
     gl.viewport(0, 0, canvas.width, canvas.height); gl.uniform1f(U('uAspect'), canvas.width / canvas.height);
-    gl.uniform4f(U('uFx'), paper ? 1 : 0, sim.dry, soft, strength); gl.uniform4fv(U('uGain'), gain);
+    const g = GROUNDS[ground] || GROUNDS.paper; gl.uniform3fv(U('uBase'), new Float32Array(g.base)); gl.uniform4f(U('uFx'), g.med, sim.dry, soft, strength); gl.uniform4fv(U('uGain'), gain);
     gl.uniform1f(U('uFlatOn'), flat ? 1 : 0); gl.uniform4fv(U('uFlat'), flat || [0, 0, 0, 0]);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
   }
@@ -111,8 +111,8 @@ export function createWell(canvas, { reduced = false, ground = [0.2, -0.01, -0.0
     stir(x, y, vx, vy) { sim.stir(x, y, vx, vy); wake(); return api; },
     tilt(tx, ty) { sim.tilt(tx, ty); wake(); return api; },
     reset() { sim.seed(); sim.settle(); if (reduced) draw(); else wake(); return api; },
-    // paper (true) or dark water (false)
-    ground(p) { if (p === undefined) return paper; paper = !!p; draw(); return api; },
+    // the ground the pigment lies on: an id from grounds.mjs
+    ground(id) { if (id === undefined) return ground; if (GROUNDS[id]) ground = id; draw(); return api; },
     // for checks: each of granulation, rim, tooth and product can be switched off (0) to see what it adds
     gain(g = {}) { ['granulation', 'rim', 'tooth', 'product'].forEach((k, i) => { if (typeof g[k] === 'number') gain[i] = g[k]; }); draw(); return api; },
     // for checks: the shader's answer for flat layers of these thicknesses on untextured paper, as [r, g, b] on 0 to 255
