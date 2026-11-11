@@ -76,12 +76,13 @@ body.parts-body.bench-body:has(.bn) main { max-width: min(2800px, 96vw); }
 .sf-slots button { display: inline-flex; align-items: center; gap: .4em; } .sf-slots [aria-checked="true"], .sf-ground [aria-checked="true"] { font-weight: 700; border-bottom: 3px solid var(--b-ink); }
 .sf-ground { display: inline-flex; gap: .5em; align-items: center; } .bn p.sf-why, [data-surface] p.sf-why { font-size: var(--b1); margin: .3em 0 0; } .sf-why small { display: block; } .sf-water[data-ground="paper"] { background: #e8e4d8; }
 /* the ground, its state and what can be done to it sit over the well, so they are in view with it */
+@media (min-width: 901px) { .bn-side .sf-water { position: sticky; top: 0; z-index: 2; } }   /* the well stays in view while its controls scroll under it */
 .sf-bar { display: flex; flex-wrap: wrap; gap: 0 1.2em; align-items: center; font-size: var(--b1); margin-bottom: .3em; } .sf-ops { display: inline-flex; flex-wrap: wrap; gap: 0 1.1em; }
 .sf-acts [aria-pressed="true"], .sf-living-picks [aria-pressed="true"], .sf-chains [aria-current="step"] { font-weight: 700; border-bottom: 3px solid var(--b-ink); }
 .bn p.sf-did, [data-surface] p.sf-did { font-size: var(--b1); margin: .3em 0 0; } .sf-did:empty, .sf-fade:empty { display: none; }
 .sf-chains { list-style: none; margin: .4em 0 0; padding: 0; font-size: var(--b1); display: grid; gap: .1em; } .sf-chains > li { display: flex; flex-wrap: wrap; gap: 0 .8em; align-items: baseline; }
 .sf-chain-name { color: var(--b-soft); min-width: 5.5em; } .sf-chains ol { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0 .5em; align-items: baseline; } .sf-chains ol li { display: inline-flex; gap: .5em; align-items: baseline; }
-.sf-chains ol i { font-style: italic; color: var(--b-soft); } .sf-chains ol i::after { content: " 92"; font-style: normal; }
+.sf-chains ol i { font-style: italic; color: var(--b-soft); } .sf-chains ol i::after { content: " \2192"; font-style: normal; }
 .sf-living, .sf-sig { font-size: var(--b1); } .bn p.sf-signal, [data-surface] p.sf-signal { margin: .3em 0 0; } .bn p.sf-living-h, [data-surface] p.sf-living-h { margin: .5em 0 0; } .sf-living-h small { color: var(--b-soft); margin-left: .5em; }
 .sf-living-picks { display: flex; flex-wrap: wrap; gap: 0 1.2em; } .sf-living-picks button { display: inline-flex; align-items: center; gap: .4em; } .sf-living-picks i { display: inline-block; width: 1.3em; height: 1.3em; box-shadow: 0 0 0 1px var(--b-line); flex: none; }
 .sf-living-notes { list-style: none; margin: .3em 0; padding: 0; display: grid; gap: .4em; } .sf-light { display: inline-flex; gap: .5em; align-items: center; min-height: 44px; } .sf-light input { width: 1.2em; height: 1.2em; }
