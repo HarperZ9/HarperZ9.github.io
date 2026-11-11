@@ -1,0 +1,7 @@
+{
+  "date": "2026-11-11",
+  "note": "After merging main into the wave 1 branch the publication pages were rebuilt from publications/data/records with tools/build_publications.py, so publications/build.json lists the merged pages' hashes. Page card links were set to the hash of the card file in the tree. The author approved merging on 2026-11-11.",
+  "paths": {
+    "publications/build.json": "9b0b5f4dbe2a45c9e3826568040efde0725f0e343a5dcb7b65c46dcd009fd1e6"
+  }
+}

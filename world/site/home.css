@@ -23,7 +23,8 @@ html.plain .crossing, html.plain .uncover { display: none; }
 .place-in { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(20px, 4vw, 64px); align-items: center; max-width: 1360px; margin: 0 auto; width: 100%; }
 .place:nth-child(even) .place-in { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
 .place:nth-child(even) .lead-box { order: 2; }
-.lead-box { position: relative; margin: 0; }
+.lead-box { position: relative; margin: 0; -webkit-mask-image: radial-gradient(ellipse closest-side at 50% 50%, #000 70%, rgba(0,0,0,.6) 88%, transparent 100%); mask-image: radial-gradient(ellipse closest-side at 50% 50%, #000 70%, rgba(0,0,0,.6) 88%, transparent 100%); } /* no frame: each piece dissolves into the water from its centre out (the site is fluid, no boxes) */ html.plain .lead-box { -webkit-mask-image: none; mask-image: none; }
+/* pieces drawn on black give their ground to the night water: screen keeps the light of the work and drops the black */ :root[data-theme="dark"] :is(#p-type, #p-water) .lead-box { mix-blend-mode: screen; } @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) :is(#p-type, #p-water) .lead-box { mix-blend-mode: screen; } } html.plain .lead-box { mix-blend-mode: normal; }
 .lead-box .lead, .lead-box .lead img { display: block; width: 100%; height: auto; max-height: 78vh; object-fit: contain; }
 .lead-box video.lead { aspect-ratio: 16 / 9; object-fit: cover; background: var(--wall); }
 .lead-box .uncover { position: absolute; inset: 0; width: 100%; height: 100%; image-rendering: pixelated; transition: opacity .4s ease; }

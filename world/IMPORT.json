@@ -7084,18 +7084,18 @@
    "sourceSha256": "f83dbc05fb91c2cf9eff2d772f10f995f23d30bcc27df40838e3ef82bf9c1eda"
   },
   {
-   "path": "world/typeengine/living/baked/name-tiles-code.png",
-   "source": "2026-10-23-typeengine/living/baked/name-tiles-code.png",
+   "path": "world/typeengine/living/baked/flywheel-tiles-code.png",
+   "source": "2026-10-23-typeengine/living/baked/flywheel-tiles-code.png",
    "folder": "2026-10-23-typeengine",
-   "bytes": 1451127,
-   "sourceSha256": "7595740723b572189a098551436b867de985d7a955645de78297aedce40e8f81"
+   "bytes": 1421853,
+   "sourceSha256": "be7249f395a0b134e74e380b3834e89e9247d99674518996bcbf16d8a577b1a6"
   },
   {
    "path": "world/typeengine/living/bakes.mjs",
    "source": "2026-10-23-typeengine/living/bakes.mjs",
    "folder": "2026-10-23-typeengine",
-   "bytes": 254,
-   "sourceSha256": "dead18e3ffc69e5a99084636b87dfb85f4a3c6fea85889cd8171f24219f724a7"
+   "bytes": 250,
+   "sourceSha256": "eee1ddba776ae5fbe7ca7bd8ad664a31fecbcdd3c2fb46667187a997ee6b3cef"
   },
   {
    "path": "world/typeengine/living/index.html",
@@ -7123,7 +7123,7 @@
    "source": "2026-10-23-typeengine/living/passages.mjs",
    "folder": "2026-10-23-typeengine",
    "bytes": 1187,
-   "sourceSha256": "ddd533b13a6d18b79ad943bc8813a60026de04c3674301f39df7053a371be764"
+   "sourceSha256": "9e054bac0741d1e14985b30ab770388ff056e70c56a8b9c428f3b027b8c037ee"
   },
   {
    "path": "world/typeengine/room/exports.mjs",
@@ -7724,15 +7724,15 @@
    "path": "world/ui/assets/goya-nobody-1600.webp",
    "source": "2026-10-23-ui-direction/assets/goya-nobody-1600.webp",
    "folder": "2026-10-23-ui-direction",
-   "bytes": 108002,
-   "sourceSha256": "c6b43d4dc58f233ece975849b68e8768a6690d54499b32df31fcdd45fa8017c4"
+   "bytes": 1122640,
+   "sourceSha256": "42f29ff74af44a65b39f183703b6130576046d5101551061a37ac218c78b9fa7"
   },
   {
    "path": "world/ui/assets/goya-nobody-720.webp",
    "source": "2026-10-23-ui-direction/assets/goya-nobody-720.webp",
    "folder": "2026-10-23-ui-direction",
-   "bytes": 70778,
-   "sourceSha256": "69f7599fe309a2c6dbcabdfff42dc9b734348b1ae8cbf1cb81c883de9e97fdd7"
+   "bytes": 307772,
+   "sourceSha256": "42b6c01b3aad178ccb945334f211600fa56ee493bd52bbe0a6123b584910c0ca"
   },
   {
    "path": "world/ui/assets/hmso-store-1950-1600.webp",
@@ -7752,29 +7752,29 @@
    "path": "world/ui/assets/munchausen-dore-1600.webp",
    "source": "2026-10-23-ui-direction/assets/munchausen-dore-1600.webp",
    "folder": "2026-10-23-ui-direction",
-   "bytes": 254982,
-   "sourceSha256": "4fb1eed5960e59e2eaf4c89db4067740927e5740c9dbe382053c33713da72edc"
+   "bytes": 916908,
+   "sourceSha256": "c817825450ab9d67bb5205a0586223054aed5d2ae77e7d667e074f41174b174b"
   },
   {
    "path": "world/ui/assets/munchausen-dore-720.webp",
    "source": "2026-10-23-ui-direction/assets/munchausen-dore-720.webp",
    "folder": "2026-10-23-ui-direction",
-   "bytes": 197502,
-   "sourceSha256": "0dac3ba107e42ac7680e7ceeeacd43bf9b9e0196816960d875533048509753ef"
+   "bytes": 252048,
+   "sourceSha256": "297542b615c331f08f74fce12e5102dbb65c1ada88409be1ee71a19083e60a2f"
   },
   {
    "path": "world/ui/assets/muybridge-758-1600.webp",
    "source": "2026-10-23-ui-direction/assets/muybridge-758-1600.webp",
    "folder": "2026-10-23-ui-direction",
-   "bytes": 30760,
-   "sourceSha256": "0050f6f655c57ac9a366bd0ae06034d7d2740ac56ee9ab74e694c1c011c80ecd"
+   "bytes": 228330,
+   "sourceSha256": "8a0d8baa35ab23404053717dce52919e133c58c0a83ae7be0340dbb78e02a43e"
   },
   {
    "path": "world/ui/assets/muybridge-758-720.webp",
    "source": "2026-10-23-ui-direction/assets/muybridge-758-720.webp",
    "folder": "2026-10-23-ui-direction",
-   "bytes": 22430,
-   "sourceSha256": "5bf4df1454048d23945a7fd885ace70db0a04fbc5608b84dee4bdfd34079259b"
+   "bytes": 45064,
+   "sourceSha256": "a316ef92f5487bf5fdc1eeffd06648123a800d11c1f1672f14ebaaec8f7e259f"
   },
   {
    "path": "world/ui/directions/c-exhibit/exhibit.css",
@@ -10237,15 +10237,15 @@
    "path": "world/name-art/superframe/mosaic-node.mjs",
    "source": "2026-10-24-name-art/superframe/mosaic-node.mjs",
    "folder": "2026-10-24-name-art",
-   "bytes": 2985,
-   "sourceSha256": "4a7610a8cbd77f26655ae073b0a16e7dca6859f84f80cb940135450f8a6303ae"
+   "bytes": 3015,
+   "sourceSha256": "13cc68977b48dc0d5c1485a758988769d7732eeab4399ecf725e1b234a75b042"
   },
   {
    "path": "world/name-art/superframe/nameart.mjs",
    "source": "2026-10-24-name-art/superframe/nameart.mjs",
    "folder": "2026-10-24-name-art",
-   "bytes": 5512,
-   "sourceSha256": "8744fc8da6e3159f1724618aaa9eca3fdfc3302f7f9416a2f8d01630194418c9"
+   "bytes": 5568,
+   "sourceSha256": "604befa8232719603e0dfc5565d01e0cadd1e0bdce430e694537d376d7394c88"
   },
   {
    "path": "world/visualizer/lib/draw.mjs",
@@ -10542,7 +10542,7 @@
    "sourceSha256": "096ffb594b7dc75a2017aad71ff4d54d1455f0656d71a2225a299f454198eb0b"
   }
  ],
- "assetRevision": "world-c130e04c79",
+ "assetRevision": "world-e2c207b3f8",
  "assetRevisionScope": [
   "world/",
   "studies/",

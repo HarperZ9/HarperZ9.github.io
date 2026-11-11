@@ -61,7 +61,9 @@ function uncover(img) {
   img.complete && img.naturalWidth ? ready() : img.addEventListener("load", ready, { once: true });
   return () => {
     if (!src) return;
-    const r = box.getBoundingClientRect(), a = Math.min(1, Math.max(0, (innerHeight - r.top) / (innerHeight * 0.75)));
+    // at the foot of the page the last place cannot scroll any higher, so a still that is on screen there settles whole
+    const r = box.getBoundingClientRect(), atEnd = scrollY + innerHeight >= root.scrollHeight - 2 && r.top < innerHeight;
+    const a = atEnd ? 1 : Math.min(1, Math.max(0, (innerHeight - r.top) / (innerHeight * 0.75)));
     const g = grammar(a, { steps: 6 });
     if (g.approach === shown) return; shown = g.approach;
     window.SiteHum.onGrid(() => {
