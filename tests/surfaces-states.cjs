@@ -176,12 +176,12 @@ async function operate(page, op) {
     assert.equal((await info(m.page)).ground, 'water'); await m.page.waitForTimeout(600);
     const start = await m.page.evaluate(() => window.pic()); await m.page.click('[data-op="heat"]');
     assert.equal(await m.page.evaluate(() => [...document.querySelectorAll('[data-op]')].every((b) => b.disabled)), true, 'the controls wait while the change crosses');
-    await m.page.waitForFunction(() => (window.W().value().well.changing()?.f ?? 1) >= 0.5, null, { timeout: 30000, polling: 50 });
+    await m.page.waitForFunction(() => (window.W().value().well.changing()?.f ?? 1) >= 0.5, null, { timeout: 240000, polling: 50 });   // the front moves at most a quarter second of its nine per drawn frame, so a runner that draws in software needs minutes, not seconds
     const half = await m.page.evaluate((a) => { const b = window.pic(), band = (y0, y1) => { let s = 0, n = 0; for (let y = y0; y < y1; y++) for (let x = 0; x < 96; x++) for (let c = 0; c < 3; c++) { s += Math.abs(a[(y * 96 + x) * 4 + c] - b[(y * 96 + x) * 4 + c]); n++; } return +(s / n).toFixed(2); };
       return { f: window.W().value().well.changing()?.f ?? 1, top: band(0, 18), bottom: band(54, 72) }; }, start);
     out.front = half; assert.ok(half.f < 0.9, `the picture was read part way through (${half.f})`);
     assert.ok(half.bottom > half.top + STATE_FLOOR, `heat rises from the bottom: half way, the bottom has changed by ${half.bottom} and the top by ${half.top}`);
-    await m.page.waitForFunction(() => !window.W().value().well.changing(), null, { timeout: 30000 }); await m.page.waitForTimeout(100);
+    await m.page.waitForFunction(() => !window.W().value().well.changing(), null, { timeout: 240000 }); await m.page.waitForTimeout(100);
     const end = await info(m.page); assert.equal(end.ground, 'cloud-mist'); assert.equal(end.chain.of, 'water', 'water stays the ground through its change; ink stays the pigment'); assert.ok(end.error <= TOLERANCE, `the pigment is kept across the front (${end.error})`);
     assert.equal(await m.page.evaluate(() => window.W().value().pigments.join()), 'ink'); assert.equal(await m.page.evaluate(() => document.querySelector('[data-op="cool"]').disabled), false, 'and the controls come back');
     assert.equal(await m.page.evaluate(() => window.__audio), 0); assert.deepEqual(own(m.errors), []);
