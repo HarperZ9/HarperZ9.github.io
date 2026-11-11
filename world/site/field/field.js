@@ -5,6 +5,7 @@ import { TRANS_FRAG, MS_FRAG, SKY_FRAG } from "./atmosphere.glsl.js";
 import { WAVE_FRAG, SCENE_FRAG, POST_FRAG, VERT } from "./scene.glsl.js";
 import { cascadeWaves, glyphField, sellmeier, N_BK7, swellWaves, swellHeight } from "./ocean.js";
 import { effectiveFetch } from "../sky/weather.mjs";
+import { blueMask, MASK_N } from "./jitter.mjs";
 
 const D = Math.PI / 180;
 // light: elevation and azimuth in degrees; moon: phase angle in degrees (0 full); wind U10 in m/s; camera height m,
@@ -40,7 +41,7 @@ function target(gl, w, h, { mip = false, filter = true } = {}) {
   gl.texStorage2D(gl.TEXTURE_2D, mip ? Math.floor(Math.log2(Math.max(w, h))) + 1 : 1, gl.RGBA16F, w, h);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, mip ? gl.LINEAR_MIPMAP_LINEAR : filter ? gl.LINEAR : gl.NEAREST);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, filter ? gl.LINEAR : gl.NEAREST);
-  const wrap = mip ? gl.REPEAT : gl.CLAMP_TO_EDGE; gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, wrap); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, wrap);
+  const wrap = mip === true ? gl.REPEAT : gl.CLAMP_TO_EDGE; gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, wrap); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, wrap);
   const f = gl.createFramebuffer(); gl.bindFramebuffer(gl.FRAMEBUFFER, f); gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, t, 0);
   return { t, f, w, h };
 }
@@ -98,6 +99,10 @@ export function createField(canvas, { space = "close", dprCap = 1.5, reduced = f
     CASCADES.forEach((c, i) => { const w = cascadeWaves({ ...c, kmin: i === 0 ? Math.min(Math.max(c.kmin, 2.5 * swell.kp), 0.9 * c.kmax) : c.kmin, n: 96, U10, fetch: effectiveFetch(U10), windAngle: angle, seed: 11 + i * 7 });
       gl.bindTexture(gl.TEXTURE_2D, waveTex[i]); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA32F, 96, 1, 0, gl.RGBA, gl.FLOAT, w); });
   }
+  // the sample-jitter mask (jitter.mjs): 64 by 64 ranks, read by texelFetch
+  const blueTex = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, blueTex);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.R32F, MASK_N, MASK_N, 0, gl.RED, gl.FLOAT, blueMask());
   const glyphTex = gl.createTexture(); let glyphNow = null, glyphMeta = null;
   function setWord(word) {
     if (word === glyphNow) return; glyphNow = word; glyphMeta = glyphField(word || " ");
@@ -110,11 +115,11 @@ export function createField(canvas, { space = "close", dprCap = 1.5, reduced = f
   let from = SPACES[space], to = from, word = to.word, t0 = 0, dur = 1, hdr = null, clock = 0;
   const progress = () => (reduced ? 1 : ease(Math.min(1, (performance.now() - t0) / dur)));
   const state = () => mixSpace(from, to, progress());
-  function size(w, h) { if (!hdr || hdr.w !== w || hdr.h !== h) hdr = target(gl, w, h); }
+  function size(w, h) { if (!hdr || hdr.w !== w || hdr.h !== h) hdr = target(gl, w, h, { mip: "clamp" }); }
 
   // one frame: the sea cascades at time t, the sky for this light, the scene (blended into the running mean when
   // accumulating), then the display pass
-  function frame({ t = clock, jitter = [0, 0], blendWeight = 1 } = {}) {
+  function frame({ t = clock, jitter = [0, 0], blendWeight = 1, seq = 0 } = {}) {
     const s = state();
     // the word re-forms halfway along the path, while the camera is between framings
     setWind(s.wind, s.windAngle, !!to.near); setWord(progress() < 0.5 ? word : to.word); if (progress() >= 1) word = to.word;
@@ -141,8 +146,8 @@ export function createField(canvas, { space = "close", dprCap = 1.5, reduced = f
     draw(P.sky, T.sky, (u) => { bind(0, T.trans.t, u.uTrans); bind(1, T.ms.t, u.uMS); gl.uniform3fv(u.uL, L); gl.uniform1f(u.uViewH, Math.max(0.0005, s.cam.h / 1000)); });
     gl.enable(gl.BLEND); gl.blendFunc(gl.CONSTANT_ALPHA, gl.ONE_MINUS_CONSTANT_ALPHA); gl.blendColor(0, 0, 0, blendWeight);
     draw(P.scene, hdr, (u) => {
-      bind(0, T.trans.t, u.uTrans); bind(1, T.sky.t, u.uSky); T.waves.forEach((w, i) => bind(2 + i, w.t, u[`uW${i}`])); bind(5, glyphTex, u.uGlyph);
-      gl.uniform2f(u.uRes, hdr.w, hdr.h); gl.uniform2fv(u.uJitter, jitter); gl.uniform3fv(u.uL, L); gl.uniform3f(u.uCam, 0, camY, 0);
+      bind(0, T.trans.t, u.uTrans); bind(1, T.sky.t, u.uSky); T.waves.forEach((w, i) => bind(2 + i, w.t, u[`uW${i}`])); bind(5, glyphTex, u.uGlyph); bind(6, blueTex, u.uBlue);
+      gl.uniform2f(u.uRes, hdr.w, hdr.h); gl.uniform2fv(u.uJitter, jitter); gl.uniform1f(u.uSeq, seq); gl.uniform3fv(u.uL, L); gl.uniform3f(u.uCam, 0, camY, 0);
       gl.uniform3fv(u.uIor, IOR); gl.uniform3fv(u.uAbs, ABS); gl.uniform3f(u.uLightCol, lightCol, lightCol, lightCol); gl.uniform3f(u.uTiles, ...CASCADES.map((c) => c.tile));
       gl.uniform1f(u.uPitch, (s.cam.pitch + dPitch) * D); gl.uniform1f(u.uRoll, roll); gl.uniform1f(u.uYaw, s.cam.yaw * D); gl.uniform1f(u.uFocal, s.cam.focal); gl.uniform1f(u.uT, t);
       gl.uniform1f(u.uMoon, night ? 1 : 0); gl.uniform1f(u.uMoonPhaseAngle, phase); gl.uniform1f(u.uExpo, s.expo); gl.uniform1f(u.uStars, night ? 0.004 : 0);
@@ -164,12 +169,14 @@ export function createField(canvas, { space = "close", dprCap = 1.5, reduced = f
     const asp = canvas.width / canvas.height, zf = dot(L, f), sc = Math.max(1, 1.25 / asp) / s.cam.focal;
     const sun = zf > 0.05 ? [0.5 + dot(L, rt) / zf / (asp * sc), 0.5 + dot(L, up) / zf / sc] : [-9, -9];
     const onScreen = zf > 0.05 && sun[0] > -0.1 && sun[0] < 1.1 && sun[1] > -0.1 && sun[1] < 1.1 && L[1] > -0.01;
-    draw(P.post, null, (u) => { bind(0, hdr.t, u.uImg);
+    // the display pass reads wide averages of the image for bloom, so the mip chain is rebuilt from this frame
+    gl.bindTexture(gl.TEXTURE_2D, hdr.t); gl.generateMipmap(gl.TEXTURE_2D);
+    draw(P.post, null, (u) => { bind(0, hdr.t, u.uImg); bind(6, blueTex, u.uBlue);
       gl.uniform2f(u.uSunUV, sun[0], sun[1]); gl.uniform1f(u.uSunOn, onScreen ? 1 : 0); gl.uniform1f(u.uQuality, ladder);
       // rays need broken cloud and a low light; ghosts a clear line to it; mist blooms in haze; night halates
       gl.uniform1f(u.uRays, night ? 0.3 * s.wx.cloud : Math.min(1, s.wx.cloud * 1.6) * (1 - s.wx.storm) * Math.max(0.3, 1 - s.light.el / 40));
       gl.uniform1f(u.uGhost, night ? 0.3 : (1 - s.wx.cloud) * 0.8); gl.uniform1f(u.uBloom, 0.12 + Math.min(1, s.wx.haze / 3)); gl.uniform1f(u.uHalation, night ? 1 : 0);
-      gl.uniform1f(u.uRainP, s.wx.rain); gl.uniform1f(u.uTilt, -0.25 * Math.min(1, s.wind / 20)); gl.uniform1f(u.uFrame, (t * 60) % 97); gl.uniform1f(u.uNight, s.night); gl.uniform1f(u.uLensRain, Math.min(1, Math.max(0, s.wx.rain - 3) / 8)); gl.uniform1f(u.uT, t); gl.uniform2f(u.uRes, canvas.width, canvas.height); });
+      gl.uniform1f(u.uRainP, s.wx.rain); gl.uniform1f(u.uTilt, -0.25 * Math.min(1, s.wind / 20)); gl.uniform1f(u.uFrame, (t * 60) % 97); gl.uniform1f(u.uSeq, seq); gl.uniform1f(u.uNight, s.night); gl.uniform1f(u.uLensRain, Math.min(1, Math.max(0, s.wx.rain - 3) / 8)); gl.uniform1f(u.uT, t); gl.uniform2f(u.uRes, canvas.width, canvas.height); });
   }
 
   // lightning: a flash the scene adds to its light for a few frames; sky.js fires it and schedules the thunder
@@ -177,14 +184,14 @@ export function createField(canvas, { space = "close", dprCap = 1.5, reduced = f
   // "The Lightning Discharge", 1987); hold keeps one stroke lit, for a still
   let flash = 0, strokes = [], held = 0, bolt = [3, 0.5, 6];
   const flashAt = (now) => held || strokes.reduce((m, k) => (now >= k.t ? Math.max(m, k.s * Math.exp(-(now - k.t) / 45)) : m), 0);
-  let running = false, last = 0, visible = true;
+  let running = false, last = 0, visible = true, tick = 0;
   function loop(ts) {
     if (!running) return;
     const dt = Math.min(0.05, (ts - last) / 1000); last = ts; clock += dt;
     const dpr = Math.min(devicePixelRatio || 1, dprCap), r = canvas.getBoundingClientRect(), w = Math.max(2, Math.round(r.width * dpr)), h = Math.max(2, Math.round(r.height * dpr));
     if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; }
     flash = flashAt(performance.now()); strokes = strokes.filter((k) => performance.now() - k.t < 400);
-    size(w, h); frame({ t: clock });
+    size(w, h); frame({ t: clock, seq: (tick = (tick + 1) % 64) });
     if (visible) requestAnimationFrame(loop);
   }
   const api = {
@@ -211,7 +218,7 @@ export function createField(canvas, { space = "close", dprCap = 1.5, reduced = f
     // one settled still: n jittered frames averaged at a fixed time (subpixel antialiasing for the glass edges)
     still({ n = 16, w = canvas.width, h = canvas.height, t = 7.0 } = {}) {
       canvas.width = w; canvas.height = h; size(w, h); t0 = 0;
-      for (let i = 0; i < n; i++) frame({ t, jitter: [((i * 0.618034) % 1) - 0.5, ((i * 0.754878) % 1) - 0.5], blendWeight: 1 / (i + 1) });
+      for (let i = 0; i < n; i++) frame({ t, jitter: [((i * 0.618034) % 1) - 0.5, ((i * 0.754878) % 1) - 0.5], blendWeight: 1 / (i + 1), seq: i });
     },
   };
   return api;
