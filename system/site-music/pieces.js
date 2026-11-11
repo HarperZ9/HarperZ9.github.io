@@ -7,11 +7,12 @@
 //   swing        how late the off-beat eighth note falls: 0.50 is even, 0.667 is a triplet
 //   break        a drum pattern cut into pieces and put back in a new order, the rhythm of drum and bass
 // band: bass is "upright" (plucked), "guitar" (electric bass guitar) or "sub"; kit is "brush", "tight" or "break";
-// lead is "sax", "reed" (the engine's clarinet-like waveguide) or "flute". human scales the timing and velocity spread
+// lead is "sax", "reed" (a clarinet) or "flute", each over a tone measured from that instrument. human scales the timing and velocity spread
 // (1 is a relaxed player, 0.5 a tight one). mix values are stem levels in dB before mastering; masterDb is the fixed
 // gain that brings the mix to the house loudness (-14 LUFS), measured by the ear on the offline render.
-const REED = { model: 'reed', breath: 0.7, noise: 0.07, vibrato: 0.008, vibRate: 5.3, vibDelay: 0.35, reedStiff: 0.27, tone: 4200, scoop: 0.5 };
-const FLUTE = { model: 'flute', breath: 0.74, noise: 0.18, vibrato: 0.01, vibRate: 5.1, vibDelay: 0.4, reedStiff: 0.3, tone: 5600, scoop: 0.3 };
+// lead presets: noise 0.1 plays the breath noise as measured on the instrument; tone, when set, darkens the measured tone
+const REED = { breath: 0.7, noise: 0.1, vibrato: 0.006, vibRate: 5.3, vibDelay: 0.35, scoop: 0.4 };
+const FLUTE = { breath: 0.74, noise: 0.1, vibrato: 0.01, vibRate: 5.1, vibDelay: 0.4, scoop: 0.3 };
 
 export const PIECES = {
   'low-tide': {

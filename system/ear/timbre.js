@@ -70,11 +70,13 @@ export function analyse(x0, sr0, { m = null, span = 1.2 } = {}) {
   // the fundamental, refined from the first six harmonics of the averaged spectrum; then the string's stiffness
   { let num = 0, den = 0; for (let k = 1; k <= 6; k++) { const c = Math.round(k * f0 / bin), w = Math.max(2, Math.round(0.03 * k * f0 / bin)); let bi = 0, bv = 0; for (let b = Math.max(2, c - w); b <= c + w && b < avg.length - 1; b++) if (avg[b] > bv) { bv = avg[b]; bi = b; }
       if (!bi) continue; const A = Math.log(avg[bi - 1] + 1e-30), C = Math.log(bv + 1e-30), D = Math.log(avg[bi + 1] + 1e-30), d = A - 2 * C + D, f = (bi + (d ? 0.5 * (A - D) / d : 0)) * bin; num += Math.sqrt(bv) * f / k; den += Math.sqrt(bv); } if (den) f0 = num / den; }
+  if (!Number.isFinite(f0) || f0 <= 0) return null;
   const Braw = inharmonicity(x.subarray(Math.min(x.length - 4096, on + Math.round(0.03 * sr))), sr, f0, { partials: 12 }), B = Braw === null || !Number.isFinite(Braw) ? 0 : clamp(Braw, 0, 2e-3);
   const K = Math.max(1, Math.min(100, Math.floor(Math.min(8000, 0.45 * sr) / f0))), win = [];
   for (let k = 1; k <= K; k++) { const fk = k * f0 * Math.sqrt(1 + B * k * k), hw = Math.min(Math.max(3 * bin, 0.03 * fk), 0.45 * f0); win.push([Math.max(1, Math.round((fk - hw) / bin)), Math.min(avg.length - 1, Math.round((fk + hw) / bin))]); }
   const tracks = st.frames.map((p) => { const h = new Float32Array(K); win.forEach(([a, b], k) => { let s = 0; for (let i = a; i <= b; i++) s += p[i]; h[k] = s; }); return h; });
   const H = new Float64Array(K); for (let j = bodyA; j < J; j++) for (let k = 0; k < K; k++) H[k] += tracks[j][k] / (J - bodyA);
+  if (!(H.reduce((s, v) => s + v, 0) > 1e-16)) return null;   // nothing sounds at the harmonics of this pitch: not a note the features can describe
   const total = H.reduce((s, v) => s + v, 0) || 1e-20, harmDb = Array.from(H, (v) => Math.max(-90, dB(v / total)));
   // noise: what the averaged spectrum holds between the harmonic windows, up to the fortieth harmonic, and by band
   const Kn = Math.min(K, 40), top = Math.min(avg.length - 1, Math.round((Kn + 0.5) * f0 / bin)), inWin = new Uint8Array(avg.length); for (const [a, b] of win) for (let i = a; i <= b; i++) inWin[i] = 1;

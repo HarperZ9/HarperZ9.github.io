@@ -11,6 +11,7 @@ import { judge, scoreAs } from '../../ear/identity.js';
 import { tone, shift, readNote, loadIndex } from '../../ear/tools/identity.mjs';
 import { melgram, distance as mdist } from '../../ear/likeness.js';
 import { PIECES } from '../pieces.js';
+import { PLAN } from './fit.mjs';
 
 const SR = 48000, HERE = path.dirname(new URL(import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1')), arg = (k, d) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
 const pad = (y) => { const x = new Float32Array(y.length + 9600); x.set(y, 4800); return x; }, range = (a, b, step = 3) => { const o = []; for (let m = a; m <= b; m += step) o.push(m); return o; };
@@ -47,19 +48,20 @@ export const lineOf = (r) => { const f = (x) => (x === null || !Number.isFinite(
 // played at that note's pitch and strength; beside it the yardstick (two real recordings of the instrument against each
 // other: another source when there is one, the neighbouring note of the same source when there is not) and a sawtooth.
 // All in dB of mel-spectrogram distance; smaller is closer. Medians over up to `cap` reference notes.
-export function likenessOf(v, dir, index, { cap = 24 } = {}) {
-  const med = (a) => { const q = a.filter((z) => z !== null).sort((x, y) => x - y); return q.length ? q[Math.floor(q.length / 2)] : null; }, all = index.filter((r) => r.class === v.claims && !r.hold), step = Math.max(1, Math.ceil(all.length / cap)), ours = [], real = [], saw = []; let other = false;
+export function likenessOf(v, dir, index, { cap = 24, fitted = [] } = {}) {
+  const med = (a) => { const q = a.filter((z) => z !== null).sort((x, y) => x - y); return q.length ? q[Math.floor(q.length / 2)] : null; }, all = index.filter((r) => r.class === v.claims && !r.hold), step = Math.max(1, Math.ceil(all.length / cap)), ours = [], real = [], saw = [], fit = [], held = []; let other = false;
   all.forEach((r, i) => { if (i % step) return; const A = readNote(dir, r), a = melgram(A, r.sr); if (!a) return;
-    const y = melgram(pad(v.play(r.m, r.vel, v.dur || 1.5, i)), SR), s = melgram(tone('saw', r.m), SR); if (y) ours.push(mdist(y, a)); if (s) saw.push(mdist(s, a));
+    const y = melgram(pad(v.play(r.m, r.vel, v.dur || 1.5, i)), SR), s = melgram(tone('saw', r.m), SR); if (y) { const d = mdist(y, a); ours.push(d); (fitted.includes(r.source) ? fit : held).push(d); } if (s) saw.push(mdist(s, a));
     const cross = all.filter((q) => q.source !== r.source && Math.abs(q.m - r.m) <= 1.6 && Math.abs(q.vel - r.vel) <= 0.3), same = all.filter((q) => q !== r && q.source === r.source && Math.abs(q.m - r.m) <= 3.6 && q.vel === r.vel), peers = cross.length ? cross : same; if (cross.length) other = true;
     for (const q of peers.slice(0, 3)) { const b = melgram(shift(readNote(dir, q), r.m - q.m), q.sr); if (b) real.push(mdist(b, a)); } });
-  return { ours: med(ours), real: med(real), sawtooth: med(saw), yardstick: other ? 'another source' : 'the neighbouring note of the same source', notes: ours.length };
+  return { ours: med(ours), toFitted: med(fit), toHeld: med(held), heldNotes: held.length, real: med(real), sawtooth: med(saw), yardstick: other ? 'another source' : 'the neighbouring note of the same source', notes: ours.length };
 }
 
 if (process.argv[1] && process.argv[1].replace(/\\/g, '/').endsWith('tools/voicejudge.mjs')) {
   const book = JSON.parse(readFileSync(arg('--book', path.join(HERE, '..', '..', 'ear', 'identity-refs.json')), 'utf8')), hold = (arg('--hold', '') || '').split(',').filter(Boolean), all = [];
   const notes = arg('--notes', null), index = notes ? loadIndex(notes) : null, f = (x) => (x === null ? 'n/a' : x.toFixed(1)), seen = new Set(), only = arg('--only', null);
   for (const v of await voices()) { if (only && !v.voice.startsWith(only)) continue; if (!book.limits[v.claims]) { console.log(`${v.voice} in ${v.piece}: no reference notes for ${v.claims} in this book`); continue; } const r = judgeVoice(v, book, { hold }); all.push(r); console.log(lineOf(r));
-    if (index && !seen.has(v.voice)) { seen.add(v.voice); r.likeness = likenessOf(v, notes, index); console.log(`    moment by moment, ${r.likeness.notes} notes: ours to a real one ${f(r.likeness.ours)} dB | a real one to ${r.likeness.yardstick} ${f(r.likeness.real)} dB | a sawtooth to a real one ${f(r.likeness.sawtooth)} dB`); } }
+    if (index && !seen.has(v.voice)) { seen.add(v.voice); const plan = Object.values(PLAN).find((q) => q.cls === v.claims); r.likeness = likenessOf(v, notes, index, { fitted: plan ? plan.source : [] }); r.pass = r.likeness.toHeld !== null && r.likeness.real !== null && r.likeness.yardstick === 'another source' && r.likeness.toHeld <= r.likeness.real;
+      console.log(`    moment by moment: ours to the source it was fitted to ${f(r.likeness.toFitted)} dB | ours to sources held back from the fit ${f(r.likeness.toHeld)} dB (${r.likeness.heldNotes} notes) | a real one to ${r.likeness.yardstick} ${f(r.likeness.real)} dB | a sawtooth to a real one ${f(r.likeness.sawtooth)} dB`); } }
   const out = arg('--json', null); if (out) writeFileSync(out, JSON.stringify(all.map(({ rows, ...r }) => ({ ...r, rows: rows.map(({ values, ...q }) => q) })), null, 1));
 }

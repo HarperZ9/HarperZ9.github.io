@@ -2,12 +2,12 @@
 // against the score. A chunk of bars renders to buffers that run past the chunk's end by the length of the decays; laying
 // the next chunk over that tail gives the same samples as one long render, which is how the live form plays without a seam.
 import { panInto, rng } from '../../world/sound/sound/v3/instruments/core.js';
-import * as reed from '../../world/sound/sound/v3/instruments/reed.js';
 import * as pads from '../../world/sound/sound/v3/instruments/pads.js';
 import * as funkkit from '../../world/sound/sound/v3/instruments/funkkit.js';
 import { room } from '../../world/sound/sound/v3/instruments/space.js';
 import { tine, softBass, brush, TINE } from './voices.js';
-import { sax, saxPhrase } from './sax.js';
+import { blownPhrase, blown } from './blown.js';
+import { TABLES } from './measured.js';
 import { bassGuitar, sub } from './bassguitar.js';
 
 export const STEMS = ['keys', 'bass', 'sub', 'drums', 'lead', 'pad', 'room'];
@@ -21,10 +21,11 @@ const PAN = { ride: 0.45, sweep: -0.3, tap: -0.15, kick: 0, pedal: 0.5, 'fk:kick
 // can also halve the sample rate on top of it. The offline render always uses "full".
 export const QUALITY = { full: { padVoices: 4, padChorus: 0.5 }, lite: { padVoices: 2, padChorus: 0 } };
 
-// The engine's waveguide reed leaves its notes sitting off zero (the ear measured a DC offset of 0.002 to 0.005 on the lead
-// layer). The fix belongs in the engine's own source, upstream of the copy this site imports; until an import brings it
-// here, a one-pole high-pass at 30 Hz per note takes the offset out, and the note's own fades keep the ends at zero.
-function centre(x, sr) { const k = Math.exp(-2 * Math.PI * 30 / sr); let x1 = 0, y = 0; for (let i = 0; i < x.length; i++) { const v = x[i]; y = v - x1 + k * y; x1 = v; x[i] = y; } return x; }
+// The lead voices: each is the blown voice (blown.js) over the table measured from that instrument. `base` holds what
+// differs in the playing: a flute has no reed to tongue against, so its notes start more slowly, and its keys are quieter.
+export const LEADS = { sax: { table: TABLES.sax, base: {} }, flute: { table: TABLES.flute, base: { attack: 0.022, keys: 0.4, gain: 0.44 } }, reed: { table: TABLES.clarinet, base: { attack: 0.045, over: 0, move: 0.5, gain: 0.55 } } };
+// One note of a lead voice on its own, for benches and tests.
+export const leadNote = (kind, m, vel, dur, preset = {}, sr = 48000, seed = 3) => blown(m, vel, dur, (LEADS[kind] || LEADS.sax).table, { ...(LEADS[kind] || LEADS.sax).base, ...preset }, sr, seed);
 
 // Swing: an off-beat eighth at x.5 moves to x + swing. Positions between are stretched to match.
 export const swung = (beat, swing) => { const b = Math.floor(beat), f = beat - b; return b + (f < 0.5 ? f * 2 * swing : swing + (f - 0.5) * 2 * (1 - swing)); };
@@ -77,14 +78,13 @@ export function renderBars(bars, piece, { sr = 48000, seed = 1, origin = 0, defe
       panInto(stems.drums.L, stems.drums.R, memo(`d:${e.piece}:${vel}:${dur}:${v}`, () => (fk ? funkkit.hit(e.piece.slice(3), vel, kit, sr, 11 + v) : e.piece === 'sweep' ? brush.sweep(dur, vel, sr, v + 1) : e.piece === 'kick' ? brush.kick(vel, sr) : brush[e.piece](vel, sr, v + 1))), at(e.beat, e.j), PAN[e.piece] ?? 0, 1); }
     for (const e of b.pad) { const p = pads.chord(e.notes.map((m) => m + (tr.pad || 0) + shift), e.vel, e.beats * T.beatSec, { ...PAD, ...piece.pad, voices: Q.padVoices, chorus: Q.padChorus }, sr, seed * 131 + b.index * 7 + Math.round(e.beat)), a = at(e.beat);
       for (let s = 0; s < p.L.length && a + s < len; s++) { stems.pad.L[a + s] += p.L[s]; stems.pad.R[a + s] += p.R[s]; } }
-    // The saxophone plays a phrase on one breath: the whole phrase is rendered where it starts. The engine's reed and flute
-    // play note by note. (staticLead is a planted defect: every note the same wave, no breath, no vibrato, no scoop.)
-    if (B.lead === 'sax' && !defects.staticLead) { if (b.phrase) { const ph = b.phrase, first = ph[0], sec = (beat) => swung(beat, piece.swing) * T.beatSec, notes = ph.map((e) => { const k = leadCount++; return { t: sec(e.beat) - sec(first.beat), dur: e.beats * T.beatSec, m: e.m + (tr.lead || 0) + (defects.detune && defects.detune.note === k ? defects.detune.cents / 100 : 0), vel: e.vel, slur: e.slur }; });
-        const r = saxPhrase(notes, piece.lead.preset, sr, seed * 17 + b.index * 5 + Math.round(first.beat * 2)); panInto(stems.lead.L, stems.lead.R, r.x, at(first.beat, first.j || 0) - r.pre, -0.12, 1); } }
-    // (the engine's reed gives the same wave for the same pitch, which the ear's note measure reads as copies; each note
-    // here is blown a little differently: breath, vibrato rate and onset, scoop, and up to 3 cents of pitch)
-    else for (const e of b.lead) { const wob = rng(seed * 31 + b.index * 97 + Math.round(e.beat * 8) + 5), k = leadCount++, m = e.m + (tr.lead || 0) + (defects.detune && defects.detune.note === k ? defects.detune.cents / 100 : 0), dur = e.beats * T.beatSec, sd = seed * 17 + b.index * 5 + Math.round(e.beat * 2);
-      panInto(stems.lead.L, stems.lead.R, defects.staticLead ? memo(`L:${m}:${Math.round(dur * 8)}`, () => sax(m, 0.6, dur, { ...piece.lead.preset, noise: 0, vibrato: 0, scoop: 0, drift: 0, keys: 0 }, sr, 3)) : B.lead === 'sax' ? sax(m, e.vel, dur, piece.lead.preset, sr, sd) : centre(reed.note(m + (wob() - 0.5) * 0.06, e.vel, dur, { ...piece.lead.preset, breath: piece.lead.preset.breath * (0.94 + 0.12 * wob()), vibRate: piece.lead.preset.vibRate * (0.92 + 0.16 * wob()), vibDelay: piece.lead.preset.vibDelay * (0.7 + 0.6 * wob()), scoop: piece.lead.preset.scoop * (0.6 + 0.8 * wob()) }, sr, sd), sr), at(e.beat, e.j || 0), -0.12, 1); }
+    // Every lead plays a phrase on one breath: the whole phrase is rendered where it starts.
+    // (staticLead is a planted defect: every note the same wave, no breath, no vibrato, no scoop.)
+    const LK = LEADS[B.lead] || LEADS.sax, preset = { ...LK.base, ...piece.lead.preset };
+    if (!defects.staticLead) { if (b.phrase) { const ph = b.phrase, first = ph[0], sec = (beat) => swung(beat, piece.swing) * T.beatSec, notes = ph.map((e) => { const k = leadCount++; return { t: sec(e.beat) - sec(first.beat), dur: e.beats * T.beatSec, m: e.m + (tr.lead || 0) + (defects.detune && defects.detune.note === k ? defects.detune.cents / 100 : 0), vel: e.vel, slur: e.slur }; });
+        const r = blownPhrase(notes, LK.table, preset, sr, seed * 17 + b.index * 5 + Math.round(first.beat * 2)); panInto(stems.lead.L, stems.lead.R, r.x, at(first.beat, first.j || 0) - r.pre, -0.12, 1); } }
+    else for (const e of b.lead) { const k = leadCount++, m = e.m + (tr.lead || 0) + (defects.detune && defects.detune.note === k ? defects.detune.cents / 100 : 0), dur = e.beats * T.beatSec;
+      panInto(stems.lead.L, stems.lead.R, memo(`L:${m}:${Math.round(dur * 8)}`, () => blown(m, 0.6, dur, LK.table, { ...preset, noise: 0, vibrato: 0, scoop: 0, drift: 0, keys: 0 }, sr, 3)), at(e.beat, e.j || 0), -0.12, 1); }
   });
   // the electric piano's stereo movement, on the absolute clock so chunks agree: a tremolo that pans, or a slow chorus
   const o0 = Math.round(origin * sr) - pre;

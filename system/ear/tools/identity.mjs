@@ -17,6 +17,7 @@ export const SOURCES = {
   'bbb-babyblue': { name: 'Karoryfer Samples, Black And Blue Basses', url: 'https://github.com/sfzinstruments/karoryfer.black-and-blue-basses', licence: 'CC0 1.0' },
   weresax: { name: 'Karoryfer Samples, Weresax', url: 'https://github.com/sfzinstruments/karoryfer.weresax', licence: 'CC0 1.0' },
   meatbass: { name: 'Karoryfer Samples, Meatbass', url: 'https://github.com/sfzinstruments/karoryfer.meatbass', licence: 'CC0 1.0' },
+  'gm-rhodes': { name: 'Discord SFZ GM Bank, Electric Piano 1 (a 1977 Rhodes Mark I, recorded by Jeff Learman)', url: 'https://github.com/sfzinstruments/Discord-SFZ-GM-Bank', licence: 'CC0 (stated in the instrument file by its author)' },
   vcsl: { name: 'Versilian Community Sample Library, Tenor Saxophone', url: 'https://github.com/sgossner/VCSL', licence: 'CC0 1.0' },
 };
 export const readNote = (dir, r) => { const b = readFileSync(path.join(dir, r.file)); return new Float32Array(b.buffer, b.byteOffset, b.byteLength / 4); };

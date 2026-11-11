@@ -47,6 +47,8 @@ lead }`, each a pair of channels the same length as the mix.
 | Low end | level change under 120 Hz when summed to mono; two bass layers in the same band | low-pass, then sums; band energy per frame |
 | Presence | mean of the 2, 4 and 8 kHz bands against the target, flagged as dull or bright past 3 dB | the same octave bands |
 | Notes | attack time and its spread, spectral flux inside a note, brightness against level, likeness of repeated notes, inharmonicity | per note of a lead or bass layer, from the score's note list (`note.js`) |
+| Identity | which instrument a single note is nearest to, among real instruments | 25 timbre features per note (`timbre.js`), nearest class over a book of notes recorded from real instruments (`identity.js`, `identity-refs.json`) |
+| | how far a note is from a real note of the same pitch, moment by moment | mel-spectrogram distance in dB (`likeness.js`) |
 | Pictures | log-frequency spectrogram, chromagram, loudness curve | our own PNG writer in `png.js` |
 
 The targets are in `TARGETS` in `index.js`. Loudness (-14 LUFS integrated) and true peak (at most -1 dBTP) are the
@@ -75,6 +77,41 @@ raised over the lead, one lead note 45 cents sharp, the first statement repeated
 once, the top of the mix turned down 6 dB, the right channel inverted below 200 Hz only, a bass guitar moved into
 the sub's band, and (round three, the eighteenth) a lead whose every note is the same wave. The controls found two holes while the ear was being built (a wrong chord passed a loose limit, and a 3 kHz
 peak passed an absolute harshness measure on a dark mix); both are closed and the controls keep them closed.
+
+## Instrument identity (round four)
+
+The measures above say a render is clean. None of them says whether a voice labelled saxophone resembles a saxophone.
+Round four gives the ear ground truth: 332 single notes recorded from real instruments, from six public sets whose
+licences allow this use (University of Iowa Musical Instrument Samples, free for any project without restrictions;
+Karoryfer Black And Blue Basses, Weresax and Meatbass, CC0; Versilian Community Sample Library tenor saxophone, CC0;
+Discord SFZ GM Bank electric piano, CC0). The recordings stay outside the repository. `identity-refs.json` holds numbers
+measured from them, with each source named.
+
+Two measures, and what each is for:
+
+- **The judge** (`identity.js`) names the nearest instrument class for one note, or "none". It is tested on its own book
+  first (`identity.test.mjs`): with each note held out in turn, 286 of 332 are named as their own instrument (86 percent);
+  saxophone and clarinet are confused in 3 of 68 and 3 of 34 notes; bass guitar and upright bass never; 16 of 16 sines
+  and sawtooths are rejected as every instrument; a reference moved 2 or 3 semitones keeps its class in 237 of 267 cases.
+- **Likeness** (`likeness.js`) is the stricter one: the distance in dB between our note and a real note of the same pitch,
+  beside the distance between two real recordings of that instrument from different sources. A voice passes only when
+  it is nearer to real notes from sources held back from its fitting than real sources are to each other.
+
+What the judge cannot do, stated from its own failed controls:
+
+- It does not stand for "convincing". It named the round three saxophone a saxophone in 90 to 100 percent of notes, and
+  a listener did not find that voice convincing. The listener's ear overrides the judge.
+- It knows sources as much as instruments. With a whole source held back, 93 of 144 notes are still named correctly
+  (65 percent; saxophone 82 percent, bass guitar 28 percent). Notes cut from a played saxophone phrase of a source it had
+  never seen were named saxophone in 1 of 10 cases. It reads isolated single notes, and reads them best from rooms and
+  microphones like the ones in its book.
+- A sawtooth sits close to a saxophone on the averaged features. It is rejected only by the range test on noise and
+  movement, which a synthetic voice can satisfy by adding noise and movement.
+- The electric piano has one instrument behind it, flute and clarinet one source each, so those three have no
+  held-out source and get no pass or fail from likeness.
+
+Build and report: `node system/ear/tools/identity.mjs build NOTES_DIR`, then `report NOTES_DIR`. Judge our voices:
+`node system/site-music/tools/voicejudge.mjs --notes NOTES_DIR`.
 
 ## Limits
 
