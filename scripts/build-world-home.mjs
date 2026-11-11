@@ -72,7 +72,7 @@ function lead(pl) {
       ${sources(L.src)}</video>`;
   if (L.kind === "hum") return `<div class="lead hum"><canvas class="hum-wave" aria-hidden="true"></canvas><button type="button" class="hum-press" data-hum aria-pressed="false" aria-describedby="hum-what">Hum v4</button><span id="hum-what" class="sr-only">${esc(L.alt)}</span></div>`;
   if (L.kind === "living") return `<div class="lead" data-alive="livestill"><img src="${L.src}" width="${L.w}" height="${L.h}" alt="${esc(L.alt)}" loading="lazy" decoding="async"></div>`;
-  return `<img class="lead" src="${L.src}" width="${L.w}" height="${L.h}" alt="${esc(L.alt)}" loading="lazy" decoding="async" data-uncover>`;
+  return `<img class="lead" src="${L.src}"${L.srcset ? ` srcset="${L.srcset}" sizes="(max-width: 860px) 100vw, 60vw"` : ""} width="${L.w}" height="${L.h}" alt="${esc(L.alt)}" loading="lazy" decoding="async" data-uncover>`;
 }
 function bazaar(rules) {
   return PLACES.map((pl, i) => `
