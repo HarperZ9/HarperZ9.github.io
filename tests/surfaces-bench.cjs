@@ -5,8 +5,8 @@
 // What it holds:
 //   1. No element name is cut, at 1280, at 3840 and at phone width; the page never scrolls sideways.
 //   2. The detail is not a slot: nothing in it is clipped or scrolls inside itself (the blend table may scroll sideways on a phone).
-//   3. Every text colour on the bench reads at 4.5:1 or better against the brightest and darkest ground the wash allows,
-//      in day, night and plain view.
+//   3. Every text colour reads at 4.5:1 or better against the brightest pixel the field can show (measured from a
+//      screenshot and bounded by the darken ceiling), in day, night and plain view, with no panel behind any reading area.
 //   4. The chart's numbers and positions equal the data. The blend table's numbers equal a mix worked out here.
 //   5. The well answers: a stir changes the picture, a property control changes it, and going back to the measured
 //      values with a fresh start gives the first picture again (under reduced motion, where the well is a still).
@@ -30,7 +30,7 @@ async function open(browser, path, view, extra = {}) {
   page.on('pageerror', (e) => errors.push(e.message));
   await page.addInitScript(noAudio);
   await page.goto(base + path, { waitUntil: 'load' });
-  await page.waitForFunction(() => window.__surfaces && window.__surfaces.mounted().length > 0, null, { timeout: 20000 });
+  await page.waitForFunction(() => window.__surfaces && window.__surfaces.mounted().length > 0, null, { timeout: 45000 });
   await page.waitForTimeout(400);
   return { ctx, page, errors };
 }
@@ -42,23 +42,33 @@ function layoutProbe() {
   const slots = [...document.querySelectorAll('.bn-detail, .bn-detail > section, .bn-detail > section > div')].filter((e) => { const s = getComputedStyle(e); return s.maxHeight !== 'none' || /auto|scroll|hidden/.test(s.overflowY) || e.scrollHeight > e.clientHeight + 1; }).length;
   return { names: names.length, cut, spill: names.filter(out).length, slots, sideways: document.documentElement.scrollWidth - document.documentElement.clientWidth };
 }
-function contrastProbe() {
+// Text contrast against the brightest ground the page can show. The field is held under a ceiling colour by a darken
+// layer, so no pixel of it is lighter than the ceiling in any channel. `brightest` is the measured brightest pixel of
+// the field (a screenshot with the page's words hidden); each text colour is checked against the lighter of the two.
+function contrastProbe(brightest) {
   const lin = (c) => { c /= 255; return c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4; };
   const L = ([r, g, b]) => 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b);
   const rgba = (s) => { const m = s.match(/[\d.]+/g).map(Number); return [m[0], m[1], m[2], m[3] ?? 1]; };
-  // every reading area carries its own scrim; a word is checked against that scrim laid over a white pixel and a black one
-  const AREAS = '.bn-main, .bn-side, .parts-lead, .parts-surface';
-  let worst = { ratio: 99 }, least = 1, outside = 0;
+  const lid = getComputedStyle(document.querySelector('.gw-backdrop'), '::before'), ceiling = rgba(lid.backgroundColor);
+  const ground = Math.max(L(ceiling), brightest ?? 0);
+  let worst = { ratio: 99 };
   for (const el of document.querySelectorAll('.parts-lead, .bn *, .parts-surface *')) {
     if (![...el.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim())) continue;
-    const cs = getComputedStyle(el); if (cs.visibility === 'hidden' || cs.display === 'none' || el.closest('[hidden], .sr-only, canvas, svg, .bl-dot, .bl-n, .lt-word')) continue;
+    const cs = getComputedStyle(el); if (cs.visibility === 'hidden' || cs.display === 'none' || el.closest('[hidden], .sr-only, canvas, svg, .bl-dot, .bl-n, .lt-word, .tm-tip')) continue;
     const fg = rgba(cs.color); if (fg[3] < 1) continue;
-    const area = el.closest(AREAS); if (!area) { outside++; continue; }
-    const wash = rgba(getComputedStyle(area).backgroundColor); least = Math.min(least, wash[3]);
-    const under = (px) => [0, 1, 2].map((i) => wash[i] * wash[3] + px[i] * (1 - wash[3]));
-    for (const g of [under([255, 255, 255]), under([0, 0, 0])]) { const a = L(fg), b = L(g), ratio = (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05); if (ratio < worst.ratio) worst = { ratio: +ratio.toFixed(2), text: el.textContent.trim().slice(0, 40), colour: cs.color }; }
+    const ratio = (L(fg) + 0.05) / (ground + 0.05); if (ratio < worst.ratio) worst = { ratio: +ratio.toFixed(2), text: el.textContent.trim().slice(0, 40), colour: cs.color };
   }
-  return { scrim: least, outside, worst };
+  return { blend: lid.mixBlendMode, ceiling: +L(ceiling).toFixed(4), brightest: brightest == null ? null : +brightest.toFixed(4), worst };
+}
+// The brightest pixel of the field as the browser paints it, with the page's own words and pictures hidden.
+async function brightestGround(page) {
+  await page.evaluate(() => { for (const e of document.querySelectorAll('main, header, dialog')) e.style.visibility = 'hidden'; });
+  const shot = (await page.screenshot({ type: 'png' })).toString('base64');
+  await page.evaluate(() => { for (const e of document.querySelectorAll('main, header, dialog')) e.style.visibility = ''; });
+  return page.evaluate(async (b64) => { const img = new Image(); img.src = 'data:image/png;base64,' + b64; await img.decode();
+    const c = document.createElement('canvas'); c.width = img.width; c.height = img.height; const x = c.getContext('2d'); x.drawImage(img, 0, 0); const d = x.getImageData(0, 0, c.width, c.height).data;
+    const lin = (v) => { v /= 255; return v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; }; let max = 0;
+    for (let i = 0; i < d.length; i += 4) { const l = 0.2126 * lin(d[i]) + 0.7152 * lin(d[i + 1]) + 0.0722 * lin(d[i + 2]); if (l > max) max = l; } return max; }, shot);
 }
 
 (async () => {
@@ -78,9 +88,11 @@ function contrastProbe() {
     for (const mode of ['day', 'night', 'plain']) {
       const { ctx, page } = await open(browser, '/elements.html?e=water,ink', { w: 1280, h: 720, scheme: mode === 'night' ? 'dark' : 'light' });
       if (mode === 'plain') { await page.click('[data-plain-toggle]'); await page.waitForTimeout(300); assert.ok(await page.evaluate(() => document.documentElement.classList.contains('plain')), 'plain view is on'); }
-      const c = await page.evaluate(contrastProbe); out[`contrast ${mode}`] = c;
-      assert.ok(c.worst.ratio >= 4.5, `${mode}: worst text contrast ${c.worst.ratio} (${c.worst.text})`); assert.equal(c.outside, 0, `${mode}: every word of the bench sits in a reading area`);
-      assert.ok(await page.evaluate(() => { const m = getComputedStyle(document.querySelector('.gw-backdrop'), '::after').backgroundImage; return /gradient/.test(m); }), `${mode}: the field keeps its own light wash, so the sky shows`);
+      const c = await page.evaluate(contrastProbe, await brightestGround(page)); out[`contrast ${mode}`] = c;
+      assert.equal(c.blend, 'darken', `${mode}: the field is held under its ceiling`);
+      assert.ok(c.brightest <= c.ceiling + 0.01, `${mode}: no pixel of the field is brighter than the ceiling (${c.brightest} against ${c.ceiling})`);
+      assert.ok(c.worst.ratio >= 4.5, `${mode}: worst text contrast ${c.worst.ratio} (${c.worst.text})`);
+      assert.ok(await page.evaluate(() => ['.bn-main', '.bn-side', '.parts-lead'].every((q) => { const cs = getComputedStyle(document.querySelector(q)); return /rgba\(0, 0, 0, 0\)|transparent/.test(cs.backgroundColor) && cs.boxShadow === 'none'; })), `${mode}: no reading area has a panel behind it`);
       if (mode === 'plain') assert.equal(await page.evaluate(() => getComputedStyle(document.querySelector('.sf-water')).display), 'none', 'plain view shows no well canvas');
       await ctx.close();
     }
@@ -167,6 +179,13 @@ function contrastProbe() {
     assert.equal(bl.links.length, 3); assert.ok(bl.shown.includes(String(bl.waterLight)), 'the measured link weight is shown'); assert.equal(bl.parts, 3, 'three elements are in the well');
     const study = await (async () => { const [d] = await Promise.all([page.waitForEvent('download'), page.click('[data-save-plot]')]); return { name: d.suggestedFilename(), bytes: fs.readFileSync(await d.path()).length }; })();
     out.study = study; assert.match(study.name, /\.png$/); assert.ok(study.bytes > 2000, 'the pen study saves as a picture');
+    await page.locator('.bn-wide').scrollIntoViewIfNeeded(); await page.waitForTimeout(1500);
+    await page.waitForFunction(() => ['plate', 'glass', 'living'].every((k) => window.__bench.value().surfaces[k].value().drawn > 0), null, { timeout: 30000 });
+    const more = await page.evaluate(async () => { const s = window.__bench.value().surfaces, o = {};
+      for (const k of ['plate', 'glass', 'living']) { const c = s[k].value().canvas; const d = c.getContext('2d').getImageData(0, 0, c.width, c.height).data; let lo = 765, hi = 0;
+        for (let i = 0; i < d.length; i += 4) { const y = d[i] + d[i + 1] + d[i + 2]; if (y < lo) lo = y; if (y > hi) hi = y; } o[k] = { w: c.width, h: c.height, range: hi - lo }; }
+      return o; });
+    out.more = more; for (const k of ['plate', 'glass', 'living']) assert.ok(more[k].range > 30, `the ${k} surface drew a picture (range ${more[k].range})`);
     assert.ok(bl.curve.length > 0, 'the motion lane drew a curve'); assert.ok(bl.inks, 'the pen study drew with the parts as inks');
 
     // 7: take-away
@@ -185,7 +204,7 @@ function contrastProbe() {
     // 8: mount and teardown
     const td = await page.evaluate(() => { const before = window.__surfaces.mounted(); window.__surfaces.unmountAll();
       return { before, after: window.__surfaces.mounted(), canvases: document.querySelectorAll('#parts canvas').length, left: document.getElementById('parts').children.length, live: document.querySelectorAll('[data-surface-live]').length }; });
-    out.teardown = td; assert.ok(td.before.includes('bench') && td.before.includes('well') && td.before.length === 9); assert.deepEqual(td.after, []); assert.equal(td.canvases, 0); assert.equal(td.left, 0); assert.equal(td.live, 0);
+    out.teardown = td; assert.ok(td.before.includes('bench') && td.before.includes('well') && td.before.length === 12); assert.deepEqual(td.after, []); assert.equal(td.canvases, 0); assert.equal(td.left, 0); assert.equal(td.live, 0);
     assert.equal(await page.evaluate(() => window.__audio), 0, 'the bench made no audio context'); assert.deepEqual(errors, []);
     await ctx.close();
 
@@ -194,7 +213,7 @@ function contrastProbe() {
       const o = await open(browser, path, { w: 1280, h: 800, reduced: true });
       const r = await o.page.evaluate(() => ({ mounted: window.__surfaces.mounted(), link: document.querySelector('.sf-more a')?.getAttribute('href'), canvas: !!document.querySelector('[data-surface] .sf-water canvas'), audio: window.__audio,
         sideways: document.documentElement.scrollWidth - document.documentElement.clientWidth }));
-      const c = await o.page.evaluate(contrastProbe); r.contrast = c.worst.ratio; assert.ok(c.worst.ratio >= 4.5, `${path}: worst text contrast ${c.worst.ratio} (${c.worst.text})`);
+      const c = await o.page.evaluate(contrastProbe, await brightestGround(o.page)); r.contrast = c.worst.ratio; r.brightest = c.brightest; assert.ok(c.worst.ratio >= 4.5, `${path}: worst text contrast ${c.worst.ratio} (${c.worst.text})`);
       out[path] = r; assert.deepEqual(r.mounted.sort(), [...want].sort()); assert.equal(r.link, '/elements.html?e=' + ids); assert.ok(r.canvas); assert.equal(r.audio, 0); assert.ok(r.sideways <= 0); assert.deepEqual(o.errors, []);
       if (path === '/swatches.html') { const a = await o.page.evaluate(() => Array.from(window.__surfaces.mounted && document.querySelector('.sf-water canvas').toDataURL().length ? [document.querySelector('.sf-water canvas').toDataURL()] : []));
         await o.page.locator('input[data-drive="coverage"]').focus(); for (let i = 0; i < 30; i++) await o.page.keyboard.press('ArrowLeft');

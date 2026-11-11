@@ -40,12 +40,12 @@ export const TOOLS = Object.freeze([
   row('system/instruments', 'Drawing instruments, wave 8', ['plot', 'poster', 'geometry'], ['palette'], ['image', 'png'], 'plot', 'a pen study in the blend’s inks'),
   row('world/techniques', 'Techniques: noise, timing, rope, burin', ['math', 'paint', 'motion'], ['numbers'], ['field', 'motion'], 'well (through the studio)', 'the fluid and motion lanes read it'),
   row('world/substrate', 'Substrate: measured motion curves, thin film', ['motion', 'physics', 'math'], ['numbers'], ['motion', 'field'], 'motion (through the studio)', 'the motion lane reads its measured curves'),
-  row('world/feed-25', 'Compositor: layers, blend modes, grain', ['render', 'paint', 'poster'], ['material', 'field'], ['image'], null, 'the studio’s image lane stacks plates on it'),
+  row('world/feed-25', 'Compositor: layers, blend modes, grain', ['render', 'paint', 'poster'], ['material', 'field'], ['image'], 'plate (through the studio)', 'the studio’s image lane stacks the blend’s plates on it'),
   row('world/sound', 'Sound engine and voices', ['sound'], ['score'], ['wav'], null, 'waits for the sound layer; nothing plays on its own'),
   row('world/dataviz', 'Data as sound', ['sound', 'chart'], ['numbers'], ['score'], null, 'a chart row could be heard; waits for the sound layer'),
-  row('world/typeengine', 'Living type engine', ['type', 'render', 'motion'], ['text', 'material'], ['image'], null, 'could set an element’s name as living type'),
-  row('world/visualizer', 'Sound visualizer', ['render', 'sound', 'field'], ['score'], ['image'], null, 'could draw the well from a score'),
-  row('world/glass', 'Glass, liquid and CRT pieces', ['render', 'physics', 'field'], ['image', 'field'], ['image'], null, 'could show the well through glass'),
+  row('world/typeengine', 'Living type engine', ['type', 'render', 'motion'], ['text', 'numbers'], ['image', 'png'], 'living', 'sets the blend’s name in a family bent by the leading element’s measurements'),
+  row('world/visualizer', 'Sound visualizer', ['render', 'sound', 'field'], ['score'], ['image'], null, 'it draws from a score, and nothing on the bench gives a score until the sound layer exists'),
+  row('world/glass', 'Glass, liquid and CRT pieces', ['render', 'physics', 'field'], ['image', 'field'], ['image', 'png'], 'glass', 'shows the blend’s plate through a piece of glass'),
   row('world/superframe', 'Superframe: the rendering engine', ['render', 'simulation', 'field', 'export'], ['graph', 'material', 'text'], ['image', 'score'], null, 'its water medium is the page field; its nodes are not on the bench yet'),
   row('world/name-art', 'Name art generators', ['geometry', 'paint', 'poster'], ['text', 'palette'], ['image'], null, ''),
   row('world/creation', 'Creation engine', ['paint', 'math'], ['numbers'], ['image'], null, ''),
@@ -89,6 +89,9 @@ export const SURFACES = Object.freeze({
   motion: S('motion', 'Motion curve', ['world/studio', 'world/substrate', 'world/techniques'], ['motion', 'chart'], ['blend', 'material'], ['motion'], './surface-lanes.mjs'),
   lettering: S('lettering', 'Lettering', ['world/studio', 'world/lettering'], ['lettering', 'type'], ['blend', 'material', 'text'], ['type', 'image'], './surface-lanes.mjs'),
   plot: S('plot', 'Pen study', ['system/instruments'], ['plot', 'poster', 'geometry'], ['palette'], ['image', 'png'], './surface-lanes.mjs'),
+  plate: S('plate', 'Plate', ['world/studio', 'world/feed-25', 'world/techniques'], ['render', 'paint', 'poster'], ['blend', 'material'], ['image', 'png'], './surface-more.mjs'),
+  glass: S('glass', 'Through glass', ['world/glass', 'world/studio'], ['render', 'physics'], ['blend', 'image'], ['image', 'png'], './surface-more.mjs'),
+  living: S('living', 'Living type', ['world/typeengine'], ['type', 'render'], ['elements', 'text', 'numbers'], ['image', 'png'], './surface-more.mjs'),
   recipe: S('recipe', 'Recipe', ['system/graph', 'world/studio'], ['export', 'math'], ['elements', 'settings', 'blend'], ['graph', 'json'], './recipe.mjs'),
   // A named place for the sound layer. Nothing is mounted behind it in this version and nothing plays.
   sound: Object.freeze({ id: 'sound', name: 'Sound layer (not built yet)', tools: ['world/sound', 'world/dataviz'], offers: ['sound'], takes: ['blend', 'score'], gives: ['wav'], load: null }),
@@ -143,7 +146,8 @@ export function toolsFor(el) {
   const add = (surface, why) => { for (const t of SURFACES[surface].tools) if (!out.some((o) => o.tool === t && o.surface === surface)) out.push({ tool: t, surface, why }); };
   if ((el.properties || []).length) { add('well', 'its measured properties drive the well'); add('chart', 'its measured properties are charted'); }
   else add('well', 'only its colour reaches the well; nothing else is measured');
-  if (el.colour?.hex) { add('lettering', 'its colour inks the lettering'); add('plot', 'its colour is one of the pens'); }
+  if (el.colour?.hex) { add('lettering', 'its colour inks the lettering'); add('plot', 'its colour is one of the pens'); add('plate', 'its colour tints the plate'); add('glass', 'the plate is seen through glass'); }
+  if ((el.properties || []).length >= 3) add('living', 'its measured properties bend the living type');
   if ((el.links || []).length) add('blend', 'its measured links fill the blend table');
   return out;
 }

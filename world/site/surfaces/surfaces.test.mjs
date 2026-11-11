@@ -4,7 +4,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { mixValue, mixRule, indexElements, orderCells, blendTable, driveFor, materialFor, makeRecipe, readRecipe, quantile, DRIVES, GROUND_RANK } from './elements-data.mjs';
-import { propertyChart, compareChart, pos, valueAt, sheetInk, GROUND } from './charts.mjs';
+import { propertyChart, compareChart, pos, valueAt, sheetInk, span, GROUND } from './charts.mjs';
 import { runRecipe, recipeGraph } from './recipe.mjs';
 import { studioBlend } from './surface-blend.mjs';
 import { contrast } from '../../studio/lib/blend.mjs';
@@ -81,6 +81,14 @@ test('the mix rule follows the kind of quantity: angles wrap, ratios multiply', 
   assert.equal(mixValue(ang, [0, 90], [1, 1]), 0, 'opposite directions have no mean; the first part stands');
   assert.ok(near(mixValue('frame/aspect', [2, 0.5], [1, 1]), 1), '2:1 and 1:2 mix to square');
   assert.ok(near(mixValue('marks/ink coverage', [0.2, 0.6], [3, 1]), 0.3));
+});
+
+test('an orientation property has a circular spread, so the chart is right if the data ever wraps', () => {
+  const s = ix.spread.get('spatial/wave orientation'); assert.equal(s.circular, true); assert.equal(s.lo, 0); assert.equal(s.hi, 180);
+  const wrapped = indexElements({ sheets: data.sheets, elements: [2, 4, 176, 178, 179].map((v, i) => ({ id: 'e' + i, sheet: 'material', links: [], properties: [{ name: 'spatial/wave orientation', value: v, iqr: [170, 10], n: 1, instrument: 'test' }] })) }).spread.get('spatial/wave orientation');
+  assert.ok(wrapped.median > 175 || wrapped.median < 5, `the middle of 2, 4, 176, 178, 179 is near 0, not 90 (got ${wrapped.median})`);
+  assert.equal(span(wrapped, 170, 10, 'x').match(/<i /g).length, 2, 'an interval that passes 180 is drawn in two pieces');
+  assert.equal(span(wrapped, 30, 60, 'x').match(/<i /g).length, 1);
 });
 
 test('every element becomes a valid studio material, and the studio blends them', () => {

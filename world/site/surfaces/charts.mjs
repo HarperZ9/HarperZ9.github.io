@@ -53,9 +53,15 @@ export function glossary(ix) {
 const sheetColour = (ix, id) => ix.sheets.find((s) => s.id === id)?.colour || '#888888';
 const driveOf = (name) => Object.entries(DRIVES).find(([, d]) => d.prop === name) || null;
 
+// A bar from a to b. On a circular axis a span may pass the end and come back at the start: it is drawn in two pieces.
+export function span(s, a, b, cls) {
+  const A = pos(s, s.circular ? ((a % 180) + 180) % 180 : a), B = pos(s, s.circular ? ((b % 180) + 180) % 180 : b);
+  if (s.circular && B < A) return `<i class="${cls}" style="left:${A}%;width:${(100 - A).toFixed(2)}%"></i><i class="${cls}" style="left:0%;width:${B.toFixed(2)}%"></i>`;
+  return `<i class="${cls}" style="left:${A}%;width:${(B - A).toFixed(2)}%"></i>`;
+}
 function track(s, inner) {
   const ticks = s.members.map((m) => `<i class="pc-tick" style="left:${pos(s, m.value)}%"></i>`).join('');
-  return `<span class="pc-track"><i class="pc-mid" style="left:${pos(s, s.q1)}%;width:${(pos(s, s.q3) - pos(s, s.q1)).toFixed(2)}%"></i>${ticks}${inner}</span>`;
+  return `<span class="pc-track">${span(s, s.q1, s.q3, 'pc-mid')}${ticks}${inner}</span>`;
 }
 
 // One element: a row for every property it has, then the drivable ones it lacks, shown as unmeasured.
@@ -66,7 +72,7 @@ export function propertyChart(ix, el, { settings = {} } = {}) {
     const s = ix.spread.get(name), p = propOf(el, name), dv = driveOf(name), key = dv?.[0], set = key != null && typeof settings[key] === 'number' ? settings[key] : null;
     const ring = set != null ? `<i class="pc-set" style="left:${pos(s, set)}%" title="your setting ${fmt(set)}"></i>` : '';
     const body = p
-      ? track(s, `${p.iqr ? `<i class="pc-iqr" style="left:${pos(s, p.iqr[0])}%;width:${(pos(s, p.iqr[1]) - pos(s, p.iqr[0])).toFixed(2)}%"></i>` : ''}<i class="pc-at" style="left:${pos(s, p.value)}%">${mark(el.sheet, colour)}</i>${ring}`)
+      ? track(s, `${p.iqr ? span(s, p.iqr[0], p.iqr[1], 'pc-iqr') : ''}<i class="pc-at" style="left:${pos(s, p.value)}%">${mark(el.sheet, colour)}</i>${ring}`)
       : track(s, `<i class="pc-at pc-none" style="left:${pos(s, s.median)}%"></i>${ring}`);
     const read = p
       ? `<span class="pc-val" data-value="${p.value}">${fmt(p.value)}</span><span class="pc-meta">${p.iqr ? `${fmt(p.iqr[0])} to ${fmt(p.iqr[1])}` : 'no interval'}, n ${p.n ?? 'not recorded'}, ${esc(p.instrument || 'instrument not recorded')}</span>`
@@ -74,7 +80,7 @@ export function propertyChart(ix, el, { settings = {} } = {}) {
     const ctl = dv ? `<label class="pc-ctl"><span class="sr-only">${esc(dv[1].label)} for ${esc(el.name)}: ${esc(dv[1].does)}</span>` +
       `<input type="range" min="0" max="100" step="0.5" data-drive="${key}" value="${pos(s, set ?? p?.value ?? s.median)}" aria-valuetext="${fmt(set ?? p?.value ?? s.median)}"></label>` : '';
     return `<li class="pc-row${p ? '' : ' is-un'}${dv ? ' is-live' : ''}" data-prop="${esc(name)}"><span class="pc-name">${term(name)}<small>${esc(name)}${dv ? `. The control ${esc(dv[1].does)}.` : ''}</small></span>` +
-      `<span class="pc-plot">${body}${ctl}<span class="pc-ends"><span>${fmt(s.lo)}</span><span>${s.log ? 'log scale' : ''}</span><span>${fmt(s.hi)}</span></span></span><span class="pc-read">${read}</span></li>`;
+      `<span class="pc-plot">${body}${ctl}<span class="pc-ends"><span>${fmt(s.lo)}</span><span>${s.log ? 'log scale' : s.circular ? 'degrees, going round' : ''}</span><span>${fmt(s.hi)}</span></span></span><span class="pc-read">${read}</span></li>`;
   }).join('');
   return `<ol class="pc" aria-label="Measured properties of ${esc(el.name)}">${rows}</ol>`;
 }
@@ -86,7 +92,7 @@ export function compareChart(ix, name, { selected = [] } = {}) {
   const on = new Set(selected);
   const rows = s.members.map((m) => { const e = ix.byId.get(m.id);
     return `<li><button type="button" class="cmp-row${on.has(m.id) ? ' on' : ''}" data-id="${esc(m.id)}" data-value="${m.value}"><span class="cmp-name">${mark(e.sheet, sheetColour(ix, e.sheet))}${esc(e.name)}</span>` +
-      `<span class="pc-track">${m.iqr ? `<i class="pc-iqr" style="left:${pos(s, m.iqr[0])}%;width:${(pos(s, m.iqr[1]) - pos(s, m.iqr[0])).toFixed(2)}%"></i>` : ''}<i class="pc-at" style="left:${pos(s, m.value)}%">${mark(e.sheet, sheetColour(ix, e.sheet))}</i></span>` +
+      `<span class="pc-track">${m.iqr ? span(s, m.iqr[0], m.iqr[1], 'pc-iqr') : ''}<i class="pc-at" style="left:${pos(s, m.value)}%">${mark(e.sheet, sheetColour(ix, e.sheet))}</i></span>` +
       `<span class="cmp-val">${fmt(m.value)}<small>n ${m.n ?? '?'}</small></span></button></li>`; }).join('');
   const have = new Set(s.members.map((m) => m.id)), none = ix.data.elements.filter((e) => !have.has(e.id));
   return `<div class="cmp" data-prop="${esc(name)}"><p class="cmp-what">${term(name)}: ${esc(TERMS[name]?.[1] || '')}</p><p class="cmp-axis"><span>${fmt(s.lo)}</span><span>${esc(name)}${s.log ? ', log scale' : ''}, measured with ${esc(s.instrument || 'an unrecorded instrument')}</span><span>${fmt(s.hi)}</span></p>` +

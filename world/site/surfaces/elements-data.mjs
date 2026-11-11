@@ -94,6 +94,12 @@ export function indexElements(data) {
     // the axis holds every member's interval as well as its value
     s.lo = Math.min(s.min, ...s.members.map((m) => m.iqr?.[0] ?? m.value)); s.hi = Math.max(s.max, ...s.members.map((m) => m.iqr?.[1] ?? m.value));
     if (s.log && s.lo <= 0) s.log = false;
+    // An orientation goes round: its middle and its quartiles are taken around the circular mean, on a fixed 0 to 180 axis.
+    if (mixRule(s.name) === 'circular') {
+      const m = mixValue(s.name, v, v.map(() => 1)), near = v.map((x) => { let d = ((x - m) % 180 + 180) % 180; if (d > 90) d -= 180; return d; }).sort((a, b) => a - b);
+      const back = (d) => +(((m + d) % 180 + 180) % 180).toFixed(6);
+      Object.assign(s, { circular: true, log: false, lo: 0, hi: 180, median: back(quantile(near, 0.5)), q1: back(quantile(near, 0.25)), q3: back(quantile(near, 0.75)) });
+    }
   }
   return { data, byId, sheets, spread, propNames: [...spread.values()].sort((a, b) => b.count - a.count).map((s) => s.name) };
 }

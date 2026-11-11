@@ -27,7 +27,7 @@ export async function mount(host, input, ctx) {
       <p class="bn-mode"><button type="button" class="bn-blendmode" aria-pressed="false">Blend elements</button><span class="bn-modehint"></span></p>
       <nav class="bn-jump" aria-label="On this bench">${SECTIONS.map(([id, t]) => `<a href="#bn-${id}">${t}</a>`).join('')}</nav></aside>`;
   const $ = (s) => host.querySelector(s), cells = [...host.querySelectorAll('.bn-cell')];
-  $('.bn-blend').innerHTML = `<div class="bn-beside-wrap"></div><div data-part="blend"></div><div class="bn-lanes"><div><h4>Timing</h4><div data-part="motion"></div></div><div><h4>Lettering</h4><div data-part="lettering"></div></div><div><h4>Pen study</h4><div data-part="plot"></div></div></div>`;
+  $('.bn-blend').innerHTML = `<div class="bn-beside-wrap"></div><div data-part="blend"></div><div class="bn-lanes"><div><h4>Timing</h4><div data-part="motion"></div></div><div><h4>Lettering</h4><div data-part="lettering"></div></div><div><h4>Pen study</h4><div data-part="plot"></div></div><div><h4>Plate</h4><div data-part="plate"></div></div><div><h4>Through glass</h4><div data-part="glass"></div></div><div class="bn-wide"><h4>Living type</h4><div data-part="living"></div></div></div>`;
   $('.bn-words').innerHTML = glossary(ix);
   $('.bn-properties').innerHTML = '<div data-part="chart"></div>'; $('.bn-compare').innerHTML = '<div data-part="compare"></div>';
   $('.bn-take').innerHTML = `<p>Save what is in the well as a picture, its colours as a palette, or the whole setting as a recipe: a small file naming the elements, their shares and your settings, which this bench opens again. The files hold only what the bench made.</p><div data-part="recipe"></div><div class="bn-toolbox"><h4>The tools behind the bench</h4>${toolsHTML(registry)}</div>`;
@@ -36,9 +36,9 @@ export async function mount(host, input, ctx) {
   const part = (n) => $(`[data-part="${n}"]`);
   const hooks = {
     onSet(id, key, value) { if (key === null) delete state.settings[id]; else state.settings[id] = { ...(state.settings[id] || {}), [key]: value };
-      for (const k of ['well', 'blend', 'motion', 'lettering', 'plot', 'recipe']) S[k].update(shared()); },
+      for (const k of ['well', 'blend', 'motion', 'lettering', 'plot', 'plate', 'glass', 'living', 'recipe']) S[k].update(shared()); },
     onPick(id) { choose(id, { scroll: false }); },
-    onWeights(w, { live }) { state.weights = w; S.well.update(shared()); S.recipe.update(shared()); if (!live) for (const k of ['motion', 'lettering', 'plot']) S[k].update(shared()); },
+    onWeights(w, { live }) { state.weights = w; S.well.update(shared()); S.recipe.update(shared()); if (!live) for (const k of ['motion', 'lettering', 'plot', 'plate', 'glass', 'living']) S[k].update(shared()); },
     onRemove(id) { drop(id); },
     picture: () => S.well.value()?.canvas || null,
     onLoad(r) { state.elements = r.ids; state.weights = r.weights; state.settings = r.settings; state.focus = r.ids[r.ids.length - 1]; state.blending = r.ids.length > 1; sync(); },
@@ -51,6 +51,9 @@ export async function mount(host, input, ctx) {
   S.motion = await registry.mount(part('motion'), 'motion', shared(), c);
   S.lettering = await registry.mount(part('lettering'), 'lettering', shared(), c);
   S.plot = await registry.mount(part('plot'), 'plot', shared(), c);
+  S.plate = await registry.mount(part('plate'), 'plate', shared(), c);
+  S.glass = await registry.mount(part('glass'), 'glass', shared(), c);
+  S.living = await registry.mount(part('living'), 'living', shared(), c);
   S.recipe = await registry.mount(part('recipe'), 'recipe', shared(), c);
 
   function words() {

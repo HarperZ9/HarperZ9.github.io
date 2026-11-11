@@ -1,13 +1,13 @@
 /* bench.css: the front bench and every surface the registry mounts. Parts are set apart by space and a hairline.
-   The page's sky stays in view: only the reading areas carry a scrim, a wash of the field's deep water with no
-   edge, feathered on every side (--b-scrim). It holds light words at AA contrast even over a white pixel of the
-   field; tests/surfaces-bench.cjs works that out in day, night and plain view. */
+   There is no panel behind the words. The field itself is held under a ceiling: one layer over the whole field
+   with the darken blend, which leaves every pixel darker than the ceiling as it is and brings every brighter pixel
+   down to it. The ceiling follows the picture and not the page, so it has no edge of its own. Light words then
+   read at AA contrast anywhere on the field; tests/surfaces-bench.cjs measures the brightest pixel left. */
 .bn, [data-surface] {
   --b-ground: #0c1620; --b-ink: #f4efe6; --b-soft: #d9d3c6; --b-line: rgba(244, 239, 230, .3); --b-faint: rgba(244, 239, 230, .12);
   --b1: clamp(13px, .36vw + 9.5px, 22px); --b2: clamp(15px, .44vw + 10.5px, 26px); --b3: clamp(19px, .8vw + 12px, 40px);
   color: var(--b-ink); font: 400 var(--b2)/1.5 var(--face-text); }
-.bn-main, .bn-side, .parts-lead, .parts-surface { --b-scrim: rgba(7, 16, 26, .74); --b-feather: clamp(18px, 2.2vw, 44px);
-  background: var(--b-scrim); box-shadow: 0 0 var(--b-feather) var(--b-feather) var(--b-scrim); }
+body.bench-body .gw-backdrop::before { content: ""; position: absolute; inset: 0; z-index: 1; background: rgb(66, 88, 120); mix-blend-mode: darken; }
 .parts-lead, .parts-surface { color: #f4efe6; }
 body.parts-body.bench-body:has(.bn) main { max-width: min(2800px, 96vw); }
 .bn :is(button, select, input), [data-surface] :is(button, select, input) { font: inherit; color: inherit; }
@@ -126,6 +126,7 @@ body.parts-body.bench-body:has(.bn) main { max-width: min(2800px, 96vw); }
 .bl-mix { border-left: 1px dashed var(--b-line); padding-left: 1em !important; }
 .bl-links li { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16em), 1fr)); gap: 0 2em; padding: .35em 0; border-bottom: 1px solid var(--b-faint); }
 .bl-pal { display: flex; flex-wrap: wrap; gap: .6em 2em; } .bl-pal li { display: flex; gap: .5em; align-items: center; } .bl-note, .ln-note, .tk-note { font-size: var(--b1); color: var(--b-soft); }
+.bn-wide { grid-column: 1 / -1; } .sf-living .pl { max-width: 46em; }
 .bn-lanes { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 17em), 1fr)); gap: 0 clamp(20px, 2.4vw, 64px); margin-top: 1em; }
 .mo { width: 100%; height: auto; display: block; } .mo polyline { fill: none; stroke: var(--b-ink); stroke-width: 1.6; vector-effect: non-scaling-stroke; } .mo-axis { fill: none; stroke: var(--b-line); stroke-width: 1; vector-effect: non-scaling-stroke; }
 .bn p.lt-word, [data-surface] p.lt-word { font: 800 clamp(30px, 3.2vw, 96px)/1.05 var(--face-display); letter-spacing: -.02em; margin: .2em 0 .4em; overflow-wrap: anywhere; }
@@ -141,7 +142,7 @@ body.parts-body.bench-body:has(.bn) main { max-width: min(2800px, 96vw); }
 @media (max-width: 900px) {
   .bn { grid-template-columns: minmax(0, 1fr); gap: 14px; }
   .bn-side { display: contents; }
-  .bn-now, .bn-mode, .bn-jump { background: var(--b-ground); box-shadow: 0 0 0 10px var(--b-ground); }
+
   .bn-side > [data-part="well"] { order: -4; position: sticky; top: 0; z-index: 3; background: var(--b-ground); margin: 0 -4vw; padding: 0 4vw 6px; box-shadow: 0 14px 18px -12px var(--b-ground); }
   .bn-now { order: -3; } .bn-mode { order: -2; } .bn-jump { order: -1; }
   .sf-water { aspect-ratio: 2 / 1; } .bn-side .sf-how { display: none; }
