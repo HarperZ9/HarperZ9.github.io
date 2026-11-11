@@ -3,7 +3,7 @@
 //
 //   node scripts/import-media.mjs [--src WORKSHOP]   (or MISSION_CONTROL=WORKSHOP) [--force]
 //
-// Name-art finals: 1920 and 960 px WebP and AVIF from the 1920 master. Loops: the WebM (AV1) as delivered,
+// Lettering finals: 3840, 1920 and 960 px WebP and AVIF from the 3840 master. Loops: the WebM (AV1) as delivered,
 // an H.264 MP4 re-encoded at 1280 px for Safari, and a WebP poster. The theme: Hum v4 and its calm loop as the
 // sound folder's own Opus streams, plus AAC in MP4 for browsers without Opus. Each output is skipped when it is
 // newer than its source, so a re-run only redoes what changed; --force redoes everything.
@@ -41,26 +41,33 @@ function copy(src, dst) {
   return dst;
 }
 
-const NAME_ART = ["intaglio-lines", "glass-tubes", "deco-arc", "pearls", "mosaic-smalti", "monogram-orb"];
-const LOOPS = ["glass-tubes", "deco-arc", "pearls", "mosaic-smalti", "monogram-orb"];
+// Lettering finals and loops: the name-art techniques set on our own words (the author, 2026-11-09: "All of the
+// site media says my name; all of the tooling demos and such. I would prefer they showcase our creative work in
+// other ways."). The words and the render commands live in the workshop's 2026-11-09-site-media/render-site.mjs.
+// stills the page shows as images (the loop pieces show their loops, with a poster from the loop itself)
+const LETTERING = ["intaglio-lines"];
+const LOOPS = ["deco-arc", "pearls", "mosaic-smalti"];
 
-function nameArt(made) {
-  const dir = path.join(SRC, "2026-10-24-name-art/out");
-  for (const n of NAME_ART) {
-    const still = path.join(dir, "finals", `${n}-1920.png`);
-    for (const w of [1920, 960]) {
-      made.push(ff(still, path.join(OUT, "name-art", `${n}-${w}.webp`), ["-vf", `scale=${w}:-2:flags=lanczos`, "-c:v", "libwebp", "-quality", "86"]));
-      made.push(ff(still, path.join(OUT, "name-art", `${n}-${w}.avif`), ["-vf", `scale=${w}:-2:flags=lanczos`, "-c:v", "libaom-av1", "-still-picture", "1", "-crf", "28", "-cpu-used", "6"]));
+function lettering(made) {
+  const dir = path.join(SRC, "2026-11-09-site-media/out"), to = (f) => path.join(OUT, "lettering", f);
+  for (const n of LETTERING) {
+    const still = path.join(dir, "finals", n, `${n}.png`);
+    // 3840 px masters: 960 for phones, 1920 for 1x desktops, 3840 for 2x and 4K screens
+    for (const w of [3840, 1920, 960]) {
+      made.push(ff(still, to(`${n}-${w}.webp`), ["-vf", `scale=${w}:-2:flags=lanczos`, "-c:v", "libwebp", "-quality", "88", "-preset", "picture"]));
+      made.push(ff(still, to(`${n}-${w}.avif`), ["-vf", `scale=${w}:-2:flags=lanczos`, "-c:v", "libaom-av1", "-still-picture", "1", "-crf", "28", "-cpu-used", "6"]));
     }
   }
   for (const n of LOOPS) {
-    made.push(copy(path.join(dir, "loops", `${n}.webm`), path.join(OUT, "name-art", `${n}.webm`)));
-    made.push(ff(path.join(dir, "loops", `${n}.mp4`), path.join(OUT, "name-art", `${n}.mp4`), ["-vf", "scale=1280:-2:flags=lanczos", "-c:v", "libx264", "-crf", "26", "-preset", "slow", "-pix_fmt", "yuv420p", "-movflags", "+faststart", "-an"]));
-    made.push(ff(path.join(dir, "loops", `${n}-poster.png`), path.join(OUT, "name-art", `${n}-poster.webp`), ["-vf", "scale=1280:-2:flags=lanczos", "-c:v", "libwebp", "-quality", "82"]));
+    made.push(copy(path.join(dir, "loops", `${n}.webm`), to(`${n}.webm`)));
+    made.push(ff(path.join(dir, "loops", `${n}.mp4`), to(`${n}.mp4`), ["-vf", "scale=1280:-2:flags=lanczos", "-c:v", "libx264", "-crf", "26", "-preset", "slow", "-pix_fmt", "yuv420p", "-movflags", "+faststart", "-an"]));
+    made.push(ff(path.join(dir, "loops", `${n}-poster.png`), to(`${n}-poster.webp`), ["-vf", "scale=1920:-2:flags=lanczos", "-c:v", "libwebp", "-quality", "86"]));
     // phones: a 640 px loop and poster, so the first screen does not wait on the 1080p file
-    made.push(ff(path.join(dir, "loops", `${n}.webm`), path.join(OUT, "name-art", `${n}-640.webm`), ["-vf", "scale=640:-2:flags=lanczos", "-c:v", "libaom-av1", "-crf", "40", "-b:v", "0", "-cpu-used", "6", "-row-mt", "1", "-an"]));
-    made.push(ff(path.join(dir, "loops", `${n}.mp4`), path.join(OUT, "name-art", `${n}-640.mp4`), ["-vf", "scale=640:-2:flags=lanczos", "-c:v", "libx264", "-crf", "28", "-preset", "slow", "-pix_fmt", "yuv420p", "-movflags", "+faststart", "-an"]));
-    made.push(ff(path.join(dir, "loops", `${n}-poster.png`), path.join(OUT, "name-art", `${n}-poster-640.webp`), ["-vf", "scale=640:-2:flags=lanczos", "-c:v", "libwebp", "-quality", "80"]));
+    // the 640 px WebM comes from the H.264 master, not from the held-size WebM, so it does not re-encode film grain;
+    // keyframe filtering off keeps the first frame like the rest, so the loop does not flick where it wraps
+    made.push(ff(path.join(dir, "loops", `${n}.mp4`), to(`${n}-640.webm`), ["-vf", "scale=640:-2:flags=lanczos", "-c:v", "libaom-av1", "-crf", "43", "-b:v", "0", "-cpu-used", "6", "-row-mt", "1", "-denoise-noise-level", "8", "-aom-params", "enable-keyframe-filtering=0", "-an"]));
+    made.push(ff(path.join(dir, "loops", `${n}.mp4`), to(`${n}-640.mp4`), ["-vf", "scale=640:-2:flags=lanczos", "-c:v", "libx264", "-crf", "28", "-preset", "slow", "-pix_fmt", "yuv420p", "-movflags", "+faststart", "-an"]));
+    made.push(ff(path.join(dir, "loops", `${n}-poster.png`), to(`${n}-poster-640.webp`), ["-vf", "scale=640:-2:flags=lanczos", "-c:v", "libwebp", "-quality", "80"]));
   }
 }
 
@@ -78,7 +85,7 @@ function library(made) {
 }
 
 const made = [];
-nameArt(made); theme(made); library(made);
+lettering(made); theme(made); library(made);
 const list = made.filter(Boolean).map((p) => ({ path: path.relative(site, p).split(path.sep).join("/"), bytes: statSync(p).size }));
 writeFileSync(path.join(OUT, "MEDIA.json"), JSON.stringify({ encodedAt: new Date().toISOString(), files: list }, null, 1) + "\n");
 console.log(`media: ${list.length} files, ${(list.reduce((a, f) => a + f.bytes, 0) / 1e6).toFixed(1)} MB in media/world`);

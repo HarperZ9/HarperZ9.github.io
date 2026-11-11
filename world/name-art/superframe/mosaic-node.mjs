@@ -17,7 +17,7 @@ export const NODES = [
     inputs: { text: { type: 'text', optional: true, doc: 'the word; replaces the text parameter' }, glyphs: { type: 'glyphs', optional: true, doc: 'its real text is used' }, time: { type: 'time', optional: true, doc: 'loop phase = t / duration (moves the light)' } },
     outputs: { raster: 'raster' },
     params: {
-      text: { type: 'string', default: 'Zain Dana Harper', doc: 'the word or name, up to 40 characters' },
+      text: { type: 'string', default: 'Low Water', doc: 'the word or name, up to 40 characters' },
       style: { type: 'enum', options: Object.keys(STYLES), default: 'echo' },
       tile: { type: 'number', min: 0, max: 0.15, default: 0, unit: 'share of cap height', doc: '0 keeps the style default' },
       halo: { type: 'number', min: -1, max: 4, default: -1, unit: 'courses', doc: 'outline courses; -1 keeps the style default' },
@@ -26,7 +26,7 @@ export const NODES = [
     },
     cost: p => (p?.style === 'code' ? 500 : 300),
     render: async ({ inputs, params, w, h }) => {
-      const text = (inputs.text?.text ?? inputs.glyphs?.text ?? params.text).trim().slice(0, 40) || 'Zain Dana Harper';
+      const text = (inputs.text?.text ?? inputs.glyphs?.text ?? params.text).trim().slice(0, 40) || 'Low Water';
       const t = inputs.time ? ((inputs.time.t / (inputs.time.duration || 1)) % 1 + 1) % 1 : params.phase;
       const { image } = mosaic(w, h, { text, style: params.style, t, seed: params.seed, tile: params.tile > 0 ? params.tile : null, halo: params.halo >= 0 ? params.halo : null });
       const R = make.raster(w, h);

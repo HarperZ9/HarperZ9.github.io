@@ -1,6 +1,7 @@
-"""Set text in the two canon faces and return it as outlined SVG paths.
+"""Set text in the site's faces and return it as outlined SVG paths.
 
-Only Hanken Grotesk and Conso are allowed. Glyphs become path data, so a README,
+Hanken Grotesk and Conso come from the font folder; Accession Display (OFL 1.1, the face of the
+site's first screen) comes from system/fonts/accession in this repository. Glyphs become path data, so a README,
 a link card or a favicon never depends on the viewer having either font. Pair
 kerning comes from the font's GPOS 'kern' lookups (formats 1 and 2).
 """
@@ -24,7 +25,10 @@ FACES = {
     "grotesk-semibold": "hanken-grotesk-semibold.ttf",
     "mono-regular": "conso-regular.ttf",
     "mono-medium": "conso-medium.ttf",
+    "display-semibold": "system/fonts/accession/static/AccessionDisplay-Semibold.ttf",
+    "display-bold": "system/fonts/accession/static/AccessionDisplay-Bold.ttf",
 }
+REPO = Path(__file__).resolve().parents[2]  # a face named with a path ships in this repository
 
 
 def font_dir() -> Path:
@@ -36,8 +40,8 @@ def font_dir() -> Path:
 
 def font_path(face: str) -> Path:
     if face not in FACES:
-        raise ValueError(f"face {face!r} is not one of the two canon families")
-    p = font_dir() / FACES[face]
+        raise ValueError(f"face {face!r} is not one of the site's faces")
+    p = REPO / FACES[face] if "/" in FACES[face] else font_dir() / FACES[face]
     if not p.exists():
         raise FileNotFoundError(f"{p} missing; set REPO_ART_FONTS to the folder holding {FACES[face]}")
     return p

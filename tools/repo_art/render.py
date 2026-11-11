@@ -143,28 +143,45 @@ def render(out: Path, names: list[str], cards: bool) -> dict:
     return books
 
 
-def render_cards(cards: list, out: Path) -> None:
-    """Site link cards: one JPEG per page plus one receipts.json for the folder."""
+def render_cards(cards: list, out: Path, masters: Path | None = None) -> None:
+    """Site link cards: one JPEG per page plus one receipts.json for the folder.
+
+    Each card is drawn at 2x (2400 x 1260) and downsampled with Lanczos to the 1200 x 630 the link-card contract
+    ships, so type and fine line work are supersampled. The 2x drawing is kept in `masters` when given (outside
+    the site: no page tag can carry it, since og:image and twitter:image must agree at 1200 x 630). Receipts for
+    cards not drawn this run are kept."""
     repos = json.loads((HERE / "repos.json").read_text("utf-8"))["repos"]
     fonts = font_receipts(FACES)
     out.mkdir(parents=True, exist_ok=True)
-    book = {"schema": "harperz9.repo-art.receipts/1", "receipts": {}}
+    book_path = out / "receipts.json"
+    book = json.loads(book_path.read_text("utf-8")) if book_path.exists() else {"schema": "harperz9.repo-art.receipts/1", "receipts": {}}
+    if masters:
+        masters.mkdir(parents=True, exist_ok=True)
     with sync_playwright() as pw, tempfile.TemporaryDirectory() as tmp:
         browser = pw.chromium.launch(channel="chrome", args=CHROME_ARGS)
-        backend = f"chrome-{browser.version}-skia"
-        page = browser.new_page(device_scale_factor=1)
+        backend = f"chrome-{browser.version}-skia-2x-lanczos"
+        page = browser.new_page(device_scale_factor=2)
         for card in cards:
             svg, scene = card_svg(card, repos)
             scene["fonts"] = fonts
-            svg_path = Path(tmp) / f"{card['slug']}.svg"  # the SVG embeds its cover; only its hash ships
+            scene["supersample"] = 2
+            svg_path = Path(tmp) / f"{card['slug']}.svg"  # the SVG embeds its cover or render; only its hash ships
             svg_path.write_bytes(svg.encode("utf-8"))
-            jpg = to_jpeg(raster(page, svg_path, None, False))
+            big = Image.open(io.BytesIO(raster(page, svg_path, None, False))).convert("RGB")
+            buf = io.BytesIO()
+            big.resize((big.width // 2, big.height // 2), Image.LANCZOS).save(buf, "PNG")
+            jpg = to_jpeg(buf.getvalue())
             name = f"{card['slug']}.jpg"
             (out / name).write_bytes(jpg)
             outs = {svg_path.name: sha(svg.encode("utf-8")), name: sha(jpg)}
+            if masters:
+                m = io.BytesIO()
+                big.save(m, "JPEG", quality=92, subsampling=0, optimize=True)
+                (masters / f"{card['slug']}@2x.jpg").write_bytes(m.getvalue())
+                outs[f"{card['slug']}@2x.jpg"] = sha(m.getvalue())
             book["receipts"][name] = receipt(scene, jpg, outs, backend)
         browser.close()
-    (out / "receipts.json").write_text(json.dumps(book, indent=1, sort_keys=True) + "\n", "utf-8", newline="\n")
+    book_path.write_text(json.dumps(book, indent=1, sort_keys=True) + "\n", "utf-8", newline="\n")
 
 
 def tree_hashes(root: Path) -> dict:
