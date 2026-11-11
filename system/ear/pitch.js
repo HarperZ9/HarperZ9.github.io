@@ -1,0 +1,76 @@
+// pitch.js: what notes are sounding. The signal is reduced to about 12 kHz, cut into 340 ms frames, and each frame's
+// partials are assigned to the nearest equal-tempered semitone.
+//   chroma        twelve numbers, one per pitch class (C, C sharp, ... B): the share of energy on each, octaves folded together
+//   bass chroma   the same below 135 Hz, where the bass line states the chord's root
+//   cents         hundredths of a semitone; a partial's distance from the nearest tempered pitch is the tuning error
+//   chord estimate  the root and chord type whose pitch classes best match the chroma, with the bass deciding close calls.
+//                   The root is judged only where a bass sounds: a rootless piano voicing alone does not state its root.
+//                   It counts as stated when the written root holds at least 30 percent of the bass energy, which allows a
+//                   line that alternates root and fifth and still fails a bass in the wrong key.
+import { mono, decimate, powerFrames, peaks, ftom } from './spectrum.js';
+
+export const NOTE_NAMES = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
+// Chord types the ear can name: intervals in semitones above the root. family is the third and seventh that define it.
+export const QUALITIES = {
+  maj7: { pcs: [0, 4, 7, 11], family: 'major' }, maj9: { pcs: [0, 4, 7, 11, 2], family: 'major' }, '6/9': { pcs: [0, 4, 7, 9, 2], family: 'major' },
+  m7: { pcs: [0, 3, 7, 10], family: 'minor' }, m9: { pcs: [0, 3, 7, 10, 2], family: 'minor' }, m11: { pcs: [0, 3, 7, 10, 2, 5], family: 'minor' },
+  '7': { pcs: [0, 4, 7, 10], family: 'dominant' }, '9': { pcs: [0, 4, 7, 10, 2], family: 'dominant' }, '13': { pcs: [0, 4, 7, 10, 2, 9], family: 'dominant' },
+  '7alt': { pcs: [0, 4, 10, 1, 8], family: 'dominant' }, sus13: { pcs: [0, 5, 7, 10, 2, 9], family: 'suspended' }, m7b5: { pcs: [0, 3, 6, 10], family: 'half-diminished' },
+};
+
+// Partials per frame of the reduced signal: { frames: [[{ f, a }]], hopSec, winSec }. Shared by chroma, tuning and roughness.
+export function partialFrames(x, sr, { fmin = 38, fmax = 5000, max = 24 } = {}) {
+  const factor = Math.max(1, Math.floor(sr / 11000)), y = decimate(x, factor), r = sr / factor, st = powerFrames(y, r, { n: 4096, hop: 1024 });
+  return { frames: st.frames.map((p) => peaks(p, st.binHz, { max, fmin, fmax: Math.min(fmax, r * 0.45), floorDb: -50 })), hopSec: st.hopSec, winSec: st.winSec };
+}
+
+// Chroma, bass chroma and tuning for each time span [{ t0, t1 }] in seconds.
+export function chromaSpans(pf, spans, { bassMax = 135, tuneMin = 200, tuneMax = 2500 } = {}) {
+  return spans.map(({ t0, t1 }) => {
+    const c = new Float64Array(12), bass = new Float64Array(12); let dev = 0, devW = 0, signed = 0, frames = 0;
+    const a = Math.max(0, Math.ceil((t0 - pf.winSec * 0.25) / pf.hopSec)), b = Math.floor((t1 - pf.winSec * 0.75) / pf.hopSec);
+    for (let i = a; i <= Math.max(a, b) && i < pf.frames.length; i++) {
+      frames++;
+      for (const pk of pf.frames[i]) { const m = ftom(pk.f), near = Math.round(m), pc = ((near % 12) + 12) % 12, e = pk.a * pk.a;
+        c[pc] += e; if (pk.f < bassMax) bass[pc] += e;
+        if (pk.f >= tuneMin && pk.f <= tuneMax) { dev += Math.abs(m - near) * 100 * e; signed += (m - near) * 100 * e; devW += e; } }
+    }
+    const norm = (v) => { const s = v.reduce((p, q) => p + q, 0); return Array.from(v, (q) => (s ? q / s : 0)); };
+    return { t0, t1, frames, chroma: norm(c), bass: norm(bass), energy: c.reduce((p, q) => p + q, 0), bassEnergy: bass.reduce((p, q) => p + q, 0), centsAbs: devW ? dev / devW : 0, cents: devW ? signed / devW : 0 };
+  });
+}
+
+// The best root and chord type for one chroma. Score: the cosine between the chroma and the chord's pitch classes
+// (root, third and seventh weighted 1, the rest 0.6), plus half the bass energy on the root.
+export function estimateChord(chroma, bass) {
+  let best = null; const cn = Math.hypot(...chroma) || 1;
+  for (let root = 0; root < 12; root++) for (const [name, q] of Object.entries(QUALITIES)) {
+    let dot = 0, tn = 0;
+    q.pcs.forEach((iv, k) => { const w = k === 0 || k === 1 || k === 3 ? 1 : 0.6; dot += w * chroma[(root + iv) % 12]; tn += w * w; });
+    const score = dot / (cn * Math.sqrt(tn)) + 0.5 * bass[root];
+    if (!best || score > best.score) best = { root, quality: name, family: q.family, score, name: NOTE_NAMES[root] + name };
+  }
+  return best;
+}
+
+// Share of chroma energy that lands on a written chord's pitch classes (0 to 1).
+export const chordFit = (chroma, pcs) => pcs.reduce((s, pc) => s + chroma[((pc % 12) + 12) % 12], 0);
+
+// Compare what sounds with what the score wrote. chords: [{ t0, t1, bar, sym, root, pcs }] with root and pcs as pitch classes.
+export function harmony(channels, sr, chords) {
+  const pf = partialFrames(mono(channels), sr), spans = chromaSpans(pf, chords);
+  const rows = spans.map((s, i) => { const w = chords[i], est = estimateChord(s.chroma, s.bass), bassRoot = s.bass.indexOf(Math.max(...s.bass));
+    return { bar: w.bar, t0: w.t0, written: w.sym, heard: est.name, fit: chordFit(s.chroma, w.pcs), rootHeard: s.bassEnergy > 0.02 * s.energy ? NOTE_NAMES[bassRoot] : null, hasBass: s.bassEnergy > 0.02 * s.energy, rootShare: s.bass[w.root], rootMatch: s.bass[w.root] >= 0.3,
+      silent: s.energy < 1e-9, centsAbs: s.centsAbs, cents: s.cents, chroma: s.chroma }; });
+  const live = rows.filter((r) => !r.silent), based = live.filter((r) => r.hasBass), fits = live.map((r) => r.fit).sort((a, b) => a - b), worst = live.reduce((m, r) => (!m || r.fit < m.fit ? r : m), null);
+  return { rows, meanFit: fits.reduce((a, b) => a + b, 0) / Math.max(1, fits.length), minFit: fits[0] ?? 1, worstBar: worst ? worst.bar : null,
+    rootMatchRate: based.length ? based.filter((r) => r.rootMatch).length / based.length : 1, rootMisses: based.filter((r) => !r.rootMatch).map((r) => r.bar), chordsWithBass: based.length,
+    centsAbsMean: live.reduce((s, r) => s + r.centsAbs, 0) / Math.max(1, live.length), centsAbsMax: Math.max(0, ...live.map((r) => r.centsAbs)) };
+}
+
+// Tuning of a single line (the lead stem): each note span's energy-weighted distance from tempered pitch, in cents.
+export function tuning(x, sr, notes) {
+  const pf = partialFrames(x, sr, { fmin: 120, fmax: 3000, max: 6 }), rows = chromaSpans(pf, notes, { tuneMin: 120, tuneMax: 3000 }).map((s, i) => ({ ...notes[i], cents: s.cents, centsAbs: s.centsAbs, silent: s.energy < 1e-9 }));
+  const live = rows.filter((r) => !r.silent);
+  return { rows, worst: live.reduce((m, r) => (!m || Math.abs(r.cents) > Math.abs(m.cents) ? r : m), null), meanAbs: live.reduce((s, r) => s + Math.abs(r.cents), 0) / Math.max(1, live.length) };
+}
