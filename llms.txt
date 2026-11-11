@@ -63,7 +63,7 @@ what it does not do.
 - [Flywheel](https://harperz9.github.io/flywheel.html) 1.9.0: run AI tasks on any
   hosted or local model, check answers against the source that decides them,
   and keep a record of every step. `python -m pip install flywheel-verify`
-- [Articulate](https://harperz9.github.io/articulate.html) 0.17.1: a prose checker
+- [Articulate](https://harperz9.github.io/articulate.html) 0.18.0: a prose checker
   that runs on your computer and names each writing pattern and the line it is
   on. `python -m pip install articulate-writing`
 - [CMMNS](https://harperz9.github.io/cmmns.html) 3.9.1 (formerly Daylight Commons): a
@@ -72,7 +72,7 @@ what it does not do.
 - [EMET](https://harperz9.github.io/emet.html) 1.3.1: checks whether a file still
   matches the SHA-256 you recorded and answers MATCH, DRIFT or UNVERIFIABLE.
   `python -m pip install emet`
-- [BuildLang](https://harperz9.github.io/buildlang.html) 1.10.0: a compiled
+- [BuildLang](https://harperz9.github.io/buildlang.html) 1.14.0: a compiled
   language whose function types list side effects such as file, network and C
   access. `cargo install buildlang`
 - [raw-native](https://harperz9.github.io/raw.html) 0.8.0: a C++23 renderer that
