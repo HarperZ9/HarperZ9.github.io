@@ -225,3 +225,16 @@ test('each ground keeps its stated rule on red and green', () => {
     if (g.rule === 'partitive') m.forEach((x, c) => assert.ok(Math.abs(x - (0.18 * red[c] + 0.18 * green[c] + 0.64 * g.base[c])) < 1e-9, 'marks average by area')); }
   const paperBoth = both('paper'); assert.ok(paperBoth[0] < 0.2 && paperBoth[1] < 0.2 && paperBoth[2] < 0.1, `on paper red and green go toward a dark brown (${paperBoth.map((x) => x.toFixed(2))})`);
 });
+
+// States, operations and chains (states.mjs): data only, checked for being consistent with itself and the grounds.
+test('the state table is consistent: every move lands on a material, every chain can be walked, proposals are labelled', async () => {
+  const { STATES, OPERATIONS, MATERIALS, CHAINS, LIVING, SENSES, apply, walk } = await import('./states.mjs');
+  for (const [id, m] of Object.entries(MATERIALS)) { assert.ok(STATES[m.state], `${id} has a state`); if (m.ground) assert.ok(GROUNDS[m.ground], `${id} shows on a ground that exists`);
+    for (const [op, to] of Object.entries(m.to)) { assert.ok(OPERATIONS.includes(op), `${id}: ${op}`); assert.ok(MATERIALS[to], `${id} ${op} leads to ${to}`); } }
+  for (const s of Object.values(STATES)) { assert.ok(RULES[s.rule]); for (const g of s.grounds) assert.ok(GROUNDS[g], `${g} is a ground`); }
+  assert.deepEqual(walk(CHAINS['fibre-sheet']), ['wood', 'wood-chips', 'pulp', 'wet-sheet', 'fibre-sheet']); assert.deepEqual(walk(CHAINS.glass), ['stone', 'sand', 'melt', 'glass']);
+  for (const [id, c] of Object.entries(CHAINS)) assert.equal(walk(c)?.at(-1), id, `the chain for ${id} ends in ${id}`);
+  assert.equal(apply('water', 'heat'), 'vapour'); assert.equal(apply('vapour', 'cool'), 'water'); assert.equal(apply('melt', 'cool'), 'glass'); assert.equal(apply('glass', 'press'), null);
+  for (const p of Object.values(LIVING)) { assert.equal(p.label, 'proposed, not measured'); assert.match(p.hex, /^#[0-9a-f]{6}$/); assert.ok(p.settle.length > 20 && p.made.split('. ').length === 1, 'one line on how it is made, and what would settle the guess'); }
+  assert.equal(SENSES.label, 'proposed, data only'); assert.equal(SENSES.seeToHear.length, SENSES.hearToSee.length);
+});
