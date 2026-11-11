@@ -14,6 +14,8 @@
 //   6. Living pigments can be chosen, are marked proposed with what would settle each, and fade only as a stated guess.
 //   7. A silent, generated signal pours pigment into the well by the proposed mapping. Nothing makes an audio context.
 //   8. The site's brush engine paints into the well by pointer and by keyboard, and a recipe lays the strokes again.
+//      Brushed paint lies in a layer ten times finer than the solver: a bristle stroke shows hairs the solver's cells
+//      cannot hold, a nearly dry brush breaks up over the paper's tooth, and a liquid ground takes the paint into its field.
 const assert = require('node:assert/strict');
 const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
 const base = process.env.SITE_BASE_URL || 'http://127.0.0.1:8811';
@@ -139,6 +141,20 @@ async function operate(page, op) {
       const withStrokes = window.pic(); document.querySelector('[data-act="again"]').click(); await new Promise((f) => setTimeout(f, 60)); return { withStrokes, bare: window.pic(), left: window.W().value().strokes.length }; }, kept);
     out.brush.replayAgainstBare = await page.evaluate(([a, b]) => window.diff(a, b), [replayed.withStrokes, replayed.bare]); assert.ok(out.brush.replayAgainstBare >= FLOOR, `a recipe lays its strokes again on a fresh well (${out.brush.replayAgainstBare} from the same well without them)`);
     out.brush.replayAgainstPainted = await page.evaluate(([a, b]) => window.diff(a, b), [replayed.withStrokes, painted]); assert.equal(replayed.left, 0, 'Start again clears the painting');
+    // 8, the layer: hairs, tooth, and a liquid taking the paint. rough(dir) is the mean change in brightness from one pixel to the next inside the stroke's band, across (y) or along (x) the stroke
+    await page.evaluate(() => { window.band = (dir) => { const w = 480, h = 360, p = window.pic(w, h), Y = (x, y) => (p[(y * w + x) * 4] + p[(y * w + x) * 4 + 1] + p[(y * w + x) * 4 + 2]) / 3; let s = 0, n = 0;
+      for (let y = Math.round(0.42 * h); y < 0.58 * h; y++) for (let x = Math.round(0.25 * w); x < 0.75 * w; x++) { s += Math.abs(Y(x + (dir === 'x'), y + (dir === 'y')) - Y(x, y)); n++; } return +(s / n).toFixed(2); };
+      window.line = Array.from({ length: 30 }, (_, i) => [0.1 + 0.8 * i / 29, 0.5]); window.empty = () => { const w = window.W().value().well; w.reset(); w.sim.clear(); w.touch(); }; });
+    const hairs = await page.evaluate(async () => { const BF = await import('/world/site/surfaces/brush-field.mjs'), well = window.W().value().well; window.empty(); const bare = window.band('y');
+      const dabs = window.W().value().paint('bristle', window.line, 0), held = well.brushed()[0], layer = window.band('y'); BF.dissolve(well.brush(), well.sim, 1, 2); const field = window.band('y'); return { bare, dabs, held, layer, field, left: well.brushed()[0] }; });
+    out.brush.hairs = hairs; assert.ok(hairs.dabs > 20 && hairs.held > 0, 'the bristle brush paints into the layer'); assert.equal(hairs.left, 0);
+    assert.ok(hairs.layer >= 1.6 * hairs.field && hairs.layer >= hairs.bare + 3, `a bristle stroke shows its hairs: across the stroke the picture changes ${hairs.layer} per pixel in the layer, ${hairs.field} once the same paint is in the solver's cells, ${hairs.bare} on bare paper`);
+    const dry = await page.evaluate(() => { const well = window.W().value().well; window.empty(); window.W().value().paint('dry-brush', window.line, 1); const toothed = window.band('x'); well.gain({ tooth: 0 }); const smooth = window.band('x'); well.gain({ tooth: 1 }); return { toothed, smooth }; });
+    out.brush.dry = dry; assert.ok(dry.toothed >= 1.5 * dry.smooth && dry.toothed >= 2, `a nearly dry brush breaks up over the paper's tooth: along the stroke the picture changes ${dry.toothed} per pixel, and ${dry.smooth} with the tooth switched off`);
+    await setGround(page, 'water'); await page.waitForTimeout(80);
+    const wet = await page.evaluate(() => { const well = window.W().value().well; window.empty(); const before = well.amounts()[0]; window.W().value().paint('bristle', window.line, 0); return { before, after: well.amounts()[0], left: well.brushed()[0], error: well.conservation().error }; });
+    out.brush.water = wet; assert.ok(wet.after > wet.before + 0.01 && wet.left === 0 && wet.error <= TOLERANCE, `water takes brushed paint into its own field, where it is kept (${JSON.stringify(wet)})`);
+    await setGround(page, 'paper'); await page.evaluate(() => { document.querySelector('[data-act="again"]').click(); }); await page.waitForTimeout(60);
     await page.selectOption('[data-brush]', '');
     // 7: a picture from a silent signal
     const quiet = await page.evaluate(() => window.pic()); await page.click('[data-signal="chord"]'); await page.waitForTimeout(80);

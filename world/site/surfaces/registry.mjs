@@ -54,7 +54,7 @@ export const TOOLS = Object.freeze([
   row('world/exhibit', 'Exhibit media runner', ['render', 'field'], ['image'], ['image'], null, ''),
   row('world/playbook', 'Playbook builds and cadence', ['motion', 'render'], ['numbers'], ['motion', 'image'], null, ''),
   row('world/feed-22', 'Chladni plate and sand letters', ['physics', 'simulation', 'lettering'], ['text', 'numbers'], ['image'], null, ''),
-  row('world/feed-23', 'Brush engine and Display-P3 canvas studies', ['render', 'paint'], ['numbers'], ['image'], 'well', 'its brush engine (build/brush) paints the chosen pigment into the well through brush-field.mjs'),
+  row('world/feed-23', 'Brush engine and Display-P3 canvas studies', ['render', 'paint'], ['numbers'], ['image'], 'well', 'its brush engine (build/brush) paints the chosen pigment in the well, in its own Surface at its own resolution, through brush-field.mjs'),
   row('world/feed-24', 'Bit mosaics and letter tilings', ['geometry', 'lettering'], ['text'], ['image'], null, 'a tiling is the nearest thing to a weave draft on the site'),
   row('world/feed-28', 'Bistable rotation study', ['geometry', 'math'], ['numbers'], ['image'], null, ''),
   row('world/feed-29', 'Capsule lettering', ['lettering'], ['text'], ['image'], null, ''),

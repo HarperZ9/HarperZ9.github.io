@@ -9,6 +9,7 @@
 //   well.pour(slot, x, y); well.stir(x, y, vx, vy); well.tilt(dx, dy); well.reset(); well.ground(id); well.destroy();
 //   well.transform(id, op, seconds)   the ground changes state to another ground behind a front (heat, cool, grind, ...)
 //   well.write(mask, w, h)            letters as a coverage mask, laid as ink on a layered ground; write(null) lifts them
+//   well.brush()                      the layer the site's brush engine paints in (brush-field.mjs), made when first asked for
 //   well.fade(slot, share)            a pigment loses its colour by this share, as a fugitive dye does in light
 //
 // What happens in the well is well-sim.mjs (the water, the pigment it carries and conserves, the reaction). How
@@ -19,6 +20,7 @@ import { createSim, STEP, NX, NY, RX, RY } from './well-sim.mjs';
 import { VERT, FRAG } from './well-shader.mjs';
 import { pigment, okToLinear, productOk, PRODUCT_OPACITY } from './km.mjs';
 import { GROUNDS, behaviour } from './grounds.mjs';
+import { createLayer, clearLayer, coverage, dissolve, held, FX, FY } from './brush-field.mjs';
 
 const OPS = { heat: 1, cool: 2, dry: 2, grind: 3, dissolve: 4, press: 5 }, INK = pigment([0.035, 0.035, 0.06], 0.6), PALE = [0.8, 0.78, 0.7];
 
@@ -39,13 +41,22 @@ export function createWell(canvas, { reduced = false, ground = 'paper' } = {}) {
   const tex = (unit) => { const t = gl.createTexture(); gl.activeTexture(gl.TEXTURE0 + unit); gl.bindTexture(gl.TEXTURE_2D, t);
     for (const [k, val] of [[gl.TEXTURE_MIN_FILTER, gl.LINEAR], [gl.TEXTURE_MAG_FILTER, gl.LINEAR], [gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE], [gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE]]) gl.texParameteri(gl.TEXTURE_2D, k, val);
     return t; };
-  const tDye = tex(0), tDisp = tex(1), tProd = tex(2), tWrite = tex(3);
+  const tDye = tex(0), tDisp = tex(1), tProd = tex(2), tBrush = tex(4), tWrite = tex(3);
   gl.texImage2D(gl.TEXTURE_2D, 0, gl.LUMINANCE, 1, 1, 0, gl.LUMINANCE, gl.UNSIGNED_BYTE, new Uint8Array(1));
-  gl.uniform1i(U('uDye'), 0); gl.uniform1i(U('uDisp'), 1); gl.uniform1i(U('uProd'), 2); gl.uniform1i(U('uWrite'), 3); gl.pixelStorei(gl.UNPACK_ALIGNMENT, 1);
+  gl.uniform1i(U('uDye'), 0); gl.uniform1i(U('uDisp'), 1); gl.uniform1i(U('uProd'), 2); gl.uniform1i(U('uWrite'), 3); gl.uniform1i(U('uBrush'), 4); gl.pixelStorei(gl.UNPACK_ALIGNMENT, 1);
 
   const sim = createSim({ reduced }), n = NX * NY, bDye = new Uint8Array(n * 4), bDisp = new Uint8Array(n * 4), bProd = new Uint8Array(RX * RY);
   const gain = [1, 1, 1, 1], time = { sim: 0, gap: 0, frames: 0 };
-  let raf = 0, last = 0, dead = false, idleAt = 0, soft = 0.1, strength = 0, flat = null, next = null, written = false, tl = [0, 0], done = null;
+  let raf = 0, last = 0, dead = false, idleAt = 0, soft = 0.1, strength = 0, flat = null, next = null, written = false, tl = [0, 0], done = null, layer = null, tick = 0;
+  // How fast a ground takes brushed paint off the mark and into the carried field, per step: a solid leaves it where it
+  // was laid, a liquid and a gas carry it off, grains and the data lattice take it whole. Our numbers, none measured.
+  const TAKES = { liquid: 0.03, gas: 0.05, powder: 1 }, takes = () => { const g = GROUNDS[ground] || GROUNDS.paper; return g.rule === 'partitive' ? 1 : TAKES[g.state] || 0; };
+  function brushUp(share = 0) {
+    if (!layer) return;
+    if (share > 0 && layer.box) dissolve(layer, sim, share, sim.parts.length);
+    const d = layer.surface.takeDirty(); if (!d) return;
+    gl.activeTexture(gl.TEXTURE4); gl.bindTexture(gl.TEXTURE_2D, tBrush); gl.texSubImage2D(gl.TEXTURE_2D, 0, d.x0, d.y0, d.x1 - d.x0 + 1, d.y1 - d.y0 + 1, gl.RGBA, gl.UNSIGNED_BYTE, coverage(layer, d));
+  }
   sim.setMedium(behaviour(ground));
 
   function uniforms() {
@@ -70,7 +81,7 @@ export function createWell(canvas, { reduced = false, ground = 'paper' } = {}) {
     gl.uniform3fv(U('uLin'), O); gl.uniform3fv(U('uK'), K); gl.uniform3fv(U('uS'), S);
   }
   function draw() {
-    const { dye, dx, dy, RV, phase } = sim;
+    const { dye, dx, dy, RV, phase } = sim; brushUp();
     if (next && !sim.changing) { ground = next.id; next = null; const fn = done; if (fn) setTimeout(() => fn(ground), 0); }   // the front has crossed: the new ground stands
     for (let i = 0; i < n; i++) {
       for (let c = 0; c < 4; c++) bDye[i * 4 + c] = clamp(dye[c][i], 0, 1) * 255;
@@ -82,7 +93,7 @@ export function createWell(canvas, { reduced = false, ground = 'paper' } = {}) {
     gl.activeTexture(gl.TEXTURE2); gl.bindTexture(gl.TEXTURE_2D, tProd); gl.texImage2D(gl.TEXTURE_2D, 0, gl.LUMINANCE, RX, RY, 0, gl.LUMINANCE, gl.UNSIGNED_BYTE, bProd);
     gl.viewport(0, 0, canvas.width, canvas.height); gl.uniform1f(U('uAspect'), canvas.width / canvas.height);
     const g = GROUNDS[ground] || GROUNDS.paper, g2 = next ? GROUNDS[next.id] : g; gl.uniform3fv(U('uBase'), new Float32Array(g.base)); gl.uniform3fv(U('uBase2'), new Float32Array(g2.base));
-    gl.uniform4f(U('uFx'), g.med, sim.dry, soft, strength); gl.uniform4fv(U('uGain'), gain); gl.uniform4f(U('uEnv'), g.v, tl[0], tl[1], 0); gl.uniform4f(U('uTo'), g2.med, g2.v, next ? OPS[next.op] || 1 : 0, next ? 1 : 0); gl.uniform4f(U('uInk'), 0, 0, 0, written ? 1 : 0);
+    gl.uniform4f(U('uFx'), g.med, sim.dry, soft, strength); gl.uniform4fv(U('uGain'), gain); gl.uniform4f(U('uEnv'), g.v, tl[0], tl[1], 0); gl.uniform4f(U('uTo'), g2.med, g2.v, next ? OPS[next.op] || 1 : 0, next ? 1 : 0); gl.uniform4f(U('uInk'), 0, 0, 0, written ? 1 : 0); gl.uniform4f(U('uBr'), layer?.box ? 1 : 0, 0, 0, 0);
     gl.uniform1f(U('uFlatOn'), flat ? 1 : 0); gl.uniform4fv(U('uFlat'), flat || [0, 0, 0, 0]);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
   }
@@ -94,14 +105,14 @@ export function createWell(canvas, { reduced = false, ground = 'paper' } = {}) {
     raf = 0; if (dead) return;
     const dt = Math.min(0.05, (now - (last || now)) / 1000), last0 = last;
     if (last) { time.gap += now - last; time.frames++; } last = now;
-    if (dt > 0) { const t = performance.now(); sim.step(STEP, true, 1, Math.min(0.25, (now - (last0 || now)) / 1000)); time.sim += performance.now() - t; } draw();
+    if (dt > 0) { const t = performance.now(); if (layer?.box && takes() && !(tick++ & 3)) brushUp(Math.min(1, takes() * 4)); sim.step(STEP, true, 1, Math.min(0.25, (now - (last0 || now)) / 1000)); time.sim += performance.now() - t; } draw();
     if (now > idleAt || document.hidden) { last = 0; return; }    // the water has had its time: hold the still
     raf = requestAnimationFrame(frame);
   }
   // an act wakes the water for a while; under reduced motion it settles at once and holds a still
   function wake(ms = 45000) {
     if (dead) return;
-    if (reduced) { for (let i = 0; i < 24; i++) sim.step(STEP, false); draw(); return; }
+    if (reduced) { if (takes()) brushUp(1); for (let i = 0; i < 24; i++) sim.step(STEP, false); draw(); return; }
     idleAt = performance.now() + ms; if (!raf) raf = requestAnimationFrame(frame);
   }
   const ro = typeof ResizeObserver === 'function' ? new ResizeObserver(() => { size(); draw(); }) : null;
@@ -115,12 +126,12 @@ export function createWell(canvas, { reduced = false, ground = 'paper' } = {}) {
     // parts: up to four. reseed false keeps the water as it is and only changes how the elements are drawn.
     // Under reduced motion the flow drives can only show in the still, so a change to one of them starts the still again.
     set(next, { reseed = true } = {}) { const was = JSON.stringify(sim.flow); sim.set(next); uniforms();
-      if (reseed || (reduced && was !== JSON.stringify(sim.flow))) { sim.seed(); sim.settle(); } if (reduced) draw(); else wake(); return api; },
+      if (reseed || (reduced && was !== JSON.stringify(sim.flow))) { sim.seed(); sim.settle(); if (reseed && layer) clearLayer(layer); } if (reduced) draw(); else wake(); return api; },
     pour(slot, x, y, amount = 0.5) { sim.pour(slot, x, y, amount); wake(); return api; },
     stir(x, y, vx, vy) { sim.stir(x, y, vx, vy); wake(); return api; },
     tilt(tx, ty) { tl = [clamp(tx, -1, 1), clamp(ty, -1, 1)]; sim.tilt(tx, ty); wake(); return api; },
     touch() { wake(); return api; },   // something outside changed the field (a brush): draw it and let the water run
-    reset() { sim.seed(); sim.settle(); if (reduced) draw(); else wake(); return api; },
+    reset() { sim.seed(); sim.settle(); if (layer) clearLayer(layer); if (reduced) draw(); else wake(); return api; },
     // the ground the pigment lies on: an id from grounds.mjs
     ground(id) { if (id === undefined) return ground; if (GROUNDS[id]) { ground = id; next = null; sim.setMedium(behaviour(id)); } draw(); return api; },
     // the ground changes state: a front crosses the well over `seconds`, and the solver's medium changes behind it.
@@ -129,6 +140,8 @@ export function createWell(canvas, { reduced = false, ground = 'paper' } = {}) {
     changing: () => (next ? { to: next.id, op: next.op, f: sim.changing?.f ?? 1 } : null),
     write(mask, w, h) { written = !!mask; gl.activeTexture(gl.TEXTURE3); gl.bindTexture(gl.TEXTURE_2D, tWrite); const b = mask ? Uint8Array.from(mask, (x) => clamp(x, 0, 1) * 255) : new Uint8Array(1);
       gl.texImage2D(gl.TEXTURE_2D, 0, gl.LUMINANCE, mask ? w : 1, mask ? h : 1, 0, gl.LUMINANCE, gl.UNSIGNED_BYTE, b); draw(); return api; },
+    brush() { if (!layer) { layer = createLayer(); gl.activeTexture(gl.TEXTURE4); gl.bindTexture(gl.TEXTURE_2D, tBrush); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, FX, FY, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array(FX * FY * 4)); } return layer; },
+    brushed: () => (layer ? held(layer) : [0, 0, 0, 0]),   // the brushed paint still in the layer, per pigment, in the unit of amounts()
     fade(slot, share) { if (sim.parts[slot]) { sim.parts[slot].fade = share; uniforms(); draw(); } return api; },
     // for checks: each of granulation, rim, tooth and product can be switched off (0) to see what it adds
     gain(g = {}) { ['granulation', 'rim', 'tooth', 'product'].forEach((k, i) => { if (typeof g[k] === 'number') gain[i] = g[k]; }); draw(); return api; },

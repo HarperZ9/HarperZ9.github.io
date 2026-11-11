@@ -21,14 +21,17 @@
 // arrives in the blue channel of uDisp; uTo.z is the operation, which colours the front's line.
 // WRITING (uInk.a = 1): a mask of letters in uWrite is laid as one more paint layer on a layered ground. On a fibre
 // sheet it feathers along the fibres and lies thicker in the hollows.
+// BRUSHED PAINT (uBr.x = 1): uBrush holds, per pigment, how much paint the site's brush engine left at each point
+// (brush-field.mjs), ten times finer than the solver's field. Each amount is one more layer by the ground's rule. On a
+// ground with a tooth, thin paint catches on the high points only, so a nearly dry brush breaks up over the tooth.
 // uFlatOn = 1 is a probe for tests: flat layers of the thicknesses in uFlat on the bare ground, by the ground's rule.
 export const VERT = `attribute vec2 p; varying vec2 v; void main(){ v = p * .5 + .5; gl_Position = vec4(p, 0., 1.); }`;
 export const FRAG = `precision highp float;
 varying vec2 v;
-uniform sampler2D uDye, uDisp, uProd, uWrite;
+uniform sampler2D uDye, uDisp, uProd, uWrite, uBrush;
 uniform vec3 uBase, uBase2, uLin[5], uK[6], uS[6];   // slot 4 is the reaction's product, slot 5 the written ink
 uniform vec4 uA[4], uB[4], uC[4], uD[4];   // A: feature frequency, cos, sin, stretch. B: octave gain, gradient width, coverage, vein strength. C: rows, slot seed, on, unused. D: granulation, rim, bleed, unused
-uniform vec4 uFx, uGain, uFlat, uTo, uEnv, uInk;   // Fx: ground, dry, product softness, mean link strength. Gain: granulation, rim, tooth, product (1 each; tests set one to 0)
+uniform vec4 uFx, uGain, uFlat, uTo, uEnv, uInk, uBr;   // Fx: ground, dry, product softness, mean link strength. Gain: granulation, rim, tooth, product (1 each; tests set one to 0)
 // To: the next ground, its variant, the operation (1 heat, 2 cool or dry, 3 grind, 4 soak, 5 press), on. Env: this ground's variant, tilt x, tilt y. Ink: unused rgb, on
 uniform float uAspect, uFlatOn;
 float h(vec2 q){ q = fract(q * vec2(.1031, .1030)); q += dot(q, q.yx + 33.33); return fract((q.x + q.y) * q.x); }
@@ -92,6 +95,7 @@ vec3 shade(float med, float var, vec3 B, vec2 uv, vec4 dye, vec2 q){
   vec2 cells = powder ? (var > 1.5 ? vec2(34. * uAspect, 72.) : vec2(66. * uAspect, 66.)) : vec2(44. * uAspect, 44.);
   vec2 guv = powder ? vec2(uv.x + .5 * mod(floor(uv.y * cells.y), 2.) / cells.x, uv.y) : uv, cell = (floor(guv * cells) + .5) / cells, in01 = fract(guv * cells);
   vec4 dyeC = texture2D(uDye, cell);
+  vec4 br = uBr.x > .5 && med < 7.5 ? texture2D(uBrush, uv) : vec4(0.);
   float gr2 = h(floor(guv * cells) + 91.3); vec3 grain = B * (.62 + .76 * gr2); bool taken = false;
   if (powder){ q = cell - (texture2D(uDisp, cell).xy - .5) * .6; q.x *= uAspect; }   // a grain takes its colour whole, so the pigment's pattern is read at the grain's middle
   for (int i = 0; i < 4; i++){
@@ -120,10 +124,14 @@ vec3 shade(float med, float var, vec3 B, vec2 uv, vec4 dye, vec2 q){
       d += uGain.y * uFx.y * uD[i].y * rim * (.8 + 1.3 * uB[i].z);
       if (med < 1.5) d *= max(0., 1. + uGain.x * (fibre ? max(uD[i].x, .7) * 2.6 : uD[i].x * 1.9) * (.5 - th));   // granulation: more pigment in the low points of paper and stone, and between a sheet's fibres
       if (glass) R *= thru(uK[i], uS[i], d); else R = lay(R, uK[i], uS[i], d);
+      float b = part(br, i);
+      if (b > .004){ float bt = glass ? 1. : smoothstep(.07, .34, b + uGain.z * (stone ? 1.1 : fibre ? .9 : .6) * (th - .5)), bd = b * bt * 1.7 * (.3 + uB[i].z); seen += b * bt;   // brushed paint, caught by the tooth
+        if (glass) R *= thru(uK[i], uS[i], bd); else R = lay(R, uK[i], uS[i], bd); }
     } else {
       float d = c * (.25 + 1.25 * uB[i].z) * (.3 + .9 * body) * (1. - uB[i].w * vein);
       if (med > 4.5 && med < 5.5) d = c * (.3 + 1.1 * uB[i].z) * (.25 + 1.9 * n * n);   // smoke: soft, no veins
       if (med > 5.5 && med < 7.5) d = c * c * (.3 + 1.5 * uB[i].z) * (.04 + 2.3 * body * body * body) * (1. - .6 * uB[i].w * vein);   // light: bright where the pigment is thick, dark between
+      d += 1.3 * part(br, i) * (.3 + uB[i].z);   // brushed paint not yet carried off
       logmix += d * log(max(uLin[i], vec3(.004))); acc += d * uLin[i]; tot += d;
     }
   }

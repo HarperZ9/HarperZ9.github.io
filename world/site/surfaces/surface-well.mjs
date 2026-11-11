@@ -86,14 +86,14 @@ export function mount(host, input, ctx) {
     if (well && well.ground() !== on.id && well.changing()?.to !== on.id) well.ground(on.id);
     fill($('.sf-sig'), signalHTML(sig?.id, sig?.got));
     well?.set(toWell(), { reseed: reseed || moved }); writing();
-    if (!sig && well && (reseed || moved) && state.strokes.length) { replay(well.sim, state.strokes, P.length); well.touch(); }   // a painting is its strokes, laid again
+    if (!sig && well && (reseed || moved) && state.strokes.length) { replay(well.brush(), state.strokes, P.length); well.touch(); }   // a painting is its strokes, laid again
     if (sig && well && (reseed || moved)) { well.sim.clear(); for (const p of sig.got.pours) well.sim.pour(p.slot, p.x, p.y, p.amount); well.tilt(0, 0); }   // the signal's pours, left to right
   }
   const tellPage = () => { ctx.onGround?.(state.ground); ctx.onWell?.({ chain: state.chain, living: state.living, written: state.written, strokes: state.strokes }); };
   // the brush engine (world/feed-23) paints the chosen pigment into the well's field; each stroke is kept so the painting can be laid again
   const HOW = { hand: 'Drag to stir. Press to pour. Arrow keys tilt the well, Space pours, 0 levels it.', brush: 'Drag to paint with the chosen pigment. Arrow keys move the brush and paint, Space lays one dab, 1 to 4 choose the pigment.' };
   const cursor = () => { const c = $('.sf-cursor'); c.hidden = !brush; c.style.left = `${kx * 100}%`; c.style.top = `${ky * 100}%`; };
-  const begin = () => beginStroke(well.sim, slot, brush, state.strokes.length + 1);
+  const begin = () => (slot < parts().length ? beginStroke(well.brush(), slot, brush, state.strokes.length + 1) : null);
   const keep = (st) => { const s = st.done(); if (s.pts.length) { state.strokes = cleanStrokes([...state.strokes, s]); tellPage(); } };
   const keyStroke = (x, y) => { const st = begin(); if (!st) return; for (let i = 0; i <= 4; i++) st.add(kx + (x - kx) * i / 4, ky + (y - ky) * i / 4, 0.8, i * 0.03); kx = x; ky = y; keep(st); well.touch(); cursor(); };
   // one operation: the table says where it leads; the well shows the change crossing; the page says what happened
@@ -161,7 +161,7 @@ export function mount(host, input, ctx) {
   paint(true);
 
   // paint one stroke through the engine, as the pointer does: points are [x, y] fractions of the well
-  const paintStroke = (name, pts, s = slot) => { if (!well) return 0; const was = [brush, slot]; brush = name; slot = s; const st = begin(); brush = was[0]; slot = was[1]; if (!st) return 0; pts.forEach(([x, y], i) => st.add(x, y, null, i * 0.02)); keep(st); well.touch(); return st.surface.dabs; };
+  const paintStroke = (name, pts, s = slot) => { if (!well) return 0; const was = [brush, slot]; brush = name; slot = s; const st = begin(); brush = was[0]; slot = was[1]; if (!st) return 0; pts.forEach(([x, y], i) => st.add(x, y, null, i * 0.02)); keep(st); well.touch(); return st.dabs; };
   return {
     // same elements in the same order: only how they are drawn changes, and the well keeps what the visitor did
     update(next) { const same = next.elements && next.elements.join() === state.elements.join() && (next.weights || []).join() === (state.weights || []).join() && (next.linkScale ?? state.linkScale) === state.linkScale;

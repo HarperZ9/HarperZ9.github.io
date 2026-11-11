@@ -284,14 +284,17 @@ async function brightestGround(page) {
     assert.equal(await page.evaluate(() => window.__audio), 0, 'the bench made no audio context'); assert.deepEqual(errors, []);
     await ctx.close();
 
-    // 10b: frame time with motion on, a linked pair growing its reaction, on paper and on dark water (reported; loose bound)
+    // 10b: frame time with motion on, a linked pair growing its reaction, on paper and on dark water (reported; the bound on the step is loose, and the frame time is not asserted because it depends on the machine)
     { const o = await open(browser, '/elements.html?e=light,city-architecture', { w: 1280, h: 720 });
       await o.page.evaluate(() => window.__bench.update({ ground: 'paper' }));
-      const tm = async () => { await o.page.evaluate(() => { const w = window.__bench.value().surfaces.well.value().well; w.stir(0.5, 0.5, 0.4, 0.2); w.timing(); }); await o.page.waitForTimeout(4000);
-        return o.page.evaluate(() => { const w = window.__bench.value().surfaces.well.value().well, t = w.timing(); return { frames: t.frames, simMs: +t.sim.toFixed(2), frameMs: +t.frame.toFixed(2), product: +w.product().toFixed(4), kept: w.conservation().error }; }); };
+      const tm = async () => { await o.page.evaluate(() => { const w = window.__bench.value().surfaces.well.value().well; w.stir(0.5, 0.5, 0.4, 0.2); w.timing(); window.__tm = { frames: 0, sim: 0, frame: 0 }; });
+        // The count is by frames, not by the clock: a shared runner with software GL draws a frame several times slower than a desk machine
+        // (the first form of this check asked for 20 frames in 4 seconds and failed there on the frame count alone).
+        for (let i = 0; i < 30; i++) { await o.page.waitForTimeout(2000); const n = await o.page.evaluate(() => { const w = window.__bench.value().surfaces.well.value().well, t = w.timing(), a = window.__tm; w.touch(); a.sim += t.sim * t.frames; a.frame += t.frame * t.frames; a.frames += t.frames; return a.frames; }); if (n >= 24) break; }
+        return o.page.evaluate(() => { const w = window.__bench.value().surfaces.well.value().well, a = window.__tm, t = { frames: a.frames, sim: a.frames ? a.sim / a.frames : 0, frame: a.frames ? a.frame / a.frames : 0 }; return { frames: t.frames, simMs: +t.sim.toFixed(2), frameMs: +t.frame.toFixed(2), product: +w.product().toFixed(4), kept: w.conservation().error }; }); };
       const paper = await tm(); await o.page.selectOption('select[data-ground]', 'water'); const water = await tm();
       out.frame = { note: 'software GL in this browser; sim is the JavaScript step, frame the time between frames', grid: await o.page.evaluate(() => window.__bench.value().surfaces.well.value().well.reactionGrid), paper, water };
-      assert.ok(paper.frames > 20 && paper.simMs < 14, `the simulation step fits the frame (${paper.simMs} ms)`); assert.ok(paper.kept <= 1e-4 && water.kept <= 1e-4, 'pigment is kept with motion on'); assert.deepEqual(o.errors, []);
+      assert.ok(paper.frames >= 24 && water.frames >= 24, `the well keeps drawing with motion on (${paper.frames} and ${water.frames} frames)`); assert.ok(paper.simMs < 33, `the simulation step stays under two frames at 60 a second, whatever the machine (${paper.simMs} ms; 3.7 on a desk machine, 12.6 on the shared runner)`); assert.ok(paper.kept <= 1e-4 && water.kept <= 1e-4, 'pigment is kept with motion on'); assert.deepEqual(o.errors, []);
       await o.ctx.close(); }
 
     // 9: two other pages mount through the registry

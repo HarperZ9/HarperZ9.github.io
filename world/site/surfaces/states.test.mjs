@@ -132,24 +132,38 @@ test('a silent signal pours pigment by the proposed mapping: notes to hues, loud
   const s = createSim({ reduced: true }); s.set(chord.parts); s.seed(); s.clear(); for (const p of chord.pours) s.pour(p.slot, p.x, p.y, p.amount); for (let i = 0; i < 30; i++) s.step(STEP, false); assert.ok(s.error() <= TOLERANCE && s.amounts().slice(0, 3).every((a) => a > 0));
 });
 
-test('the site brush engine paints into the well: pigment is laid, kept, replayed dab for dab, and saved in the recipe', async () => {
-  const { BRUSHES, beginStroke, replay, cleanStrokes, fieldSurface, LOAD } = await import('./brush-field.mjs'), { PRESET_NAMES } = await import('../../feed-23/build/brush/presets.js');
-  assert.deepEqual(BRUSHES, PRESET_NAMES, 'the brushes offered are the engine presets, as they are'); assert.ok(BRUSHES.length >= 5);
-  const fresh = () => { const s = createSim(); s.set([{ weight: 1, drive: still, links: [0, 0] }, { weight: 1, drive: still, links: [0, 0] }]); s.seed(); s.clear(); return s; };
-  const path = Array.from({ length: 24 }, (_, i) => [0.2 + 0.6 * i / 23, 0.5 + 0.2 * Math.sin(i / 4)]), laid = {};
-  for (const name of BRUSHES) { const s = fresh(), st = beginStroke(s, 1, name, 3); path.forEach(([x, y], i) => st.add(x, y, null, i * 0.02)); laid[name] = +s.amounts()[1].toFixed(5);
-    assert.ok(st.surface.dabs > 0, `${name} places dabs`); assert.equal(s.amounts()[0], 0, `${name} lays only the chosen pigment`); assert.ok(s.error() <= TOLERANCE, `${name}: what is laid is what is owed`);
-    for (let i = 0; i < 40; i++) s.step(STEP, false); assert.ok(s.error() <= TOLERANCE, `${name}: and it is kept once the water runs`); }
-  const painting = Object.values(laid).filter((a) => a > 0).length; assert.ok(painting >= BRUSHES.length - 3, `most brushes lay pigment (${JSON.stringify(laid)})`);
-  assert.ok(new Set(Object.values(laid)).size >= 4, 'different brushes lay different amounts: the engine presets shape the mark');
-  // a stroke lies along its path: pigment near the path, none far from it
-  const s = fresh(), st = beginStroke(s, 0, BRUSHES.find((b) => laid[b] > 0 && /ink|line|pen|wisp|net/.test(b)) || BRUSHES.find((b) => laid[b] > 0), 1); path.forEach(([x, y], i) => st.add(x, y, null, i * 0.02));
-  const F = s.dye[0], at = (x, y) => F[Math.floor(y * NY) * NX + Math.floor(x * NX)]; assert.ok(at(0.5, 0.5 + 0.2 * Math.sin(11.5 / 4)) > 0 && at(0.5, 0.05) === 0 && at(0.05, 0.95) === 0, 'the mark follows the path');
-  // replay: the record lays the same field again, cell for cell
-  const rec = st.done(), again = fresh(); assert.equal(replay(again, [rec], 2), st.surface.dabs); assert.deepEqual(Array.from(again.dye[0]), Array.from(F), 'a replayed stroke is the same stroke');
-  assert.equal(replay(fresh(), [{ ...rec, slot: 3 }], 2), 0, 'a stroke for a pigment that is not there is left out');
-  // an erasing dab lifts pigment and what is owed follows
-  const surf = fieldSurface(s, 0), before = s.amounts()[0]; surf.dab({ sample: () => 1 }, 48, 36, { radius: 6, alpha: 1, mode: 'erase' }); assert.ok(s.amounts()[0] < before && s.error() <= TOLERANCE); assert.ok(LOAD > 0);
+test('the site brush engine paints in the well at its own resolution: bristles show, strokes replay, a fluid takes the paint', async () => {
+  const B = await import('./brush-field.mjs'), { BRUSHES, OWN, FX, FY, FS, createLayer, beginStroke, replay, cleanStrokes, coverage, dissolve, held } = B;
+  const { PRESET_NAMES, PRESETS } = await import('../../feed-23/build/brush/presets.js'), { Surface } = await import('../../feed-23/build/brush/surface.js'), { liveStroke } = await import('../../feed-23/build/brush/stroke.js');
+  const { INK_BRUSH } = await import('../../studio/lib/plates-matter.mjs');
+  assert.deepEqual(BRUSHES.slice(2), PRESET_NAMES, 'the engine presets are offered as they are'); assert.deepEqual(Object.keys(OWN), ['bristle', 'dry-brush']); assert.equal(FX, NX * FS); assert.ok(FS >= 8, 'the layer is far finer than the solver');
+  for (const k of ['tip', 'spacing', 'angle', 'aspect', 'pressure', 'taper']) for (const b of Object.values(OWN)) assert.deepEqual(b[k], INK_BRUSH[k], `the bench brushes are the studio ink brush (${k})`);
+  const path = Array.from({ length: 24 }, (_, i) => [0.15 + 0.7 * i / 23, 0.5]), stroke = (L, name, slot = 0, seed = 3) => { const st = beginStroke(L, slot, name, seed); path.forEach(([x, y], i) => st.add(x, y, 0.9, i * 0.02)); return st; };
+  // every brush leaves a mark through the engine, and only for the chosen pigment
+  const laid = {}; for (const name of BRUSHES) { const L = createLayer(), st = stroke(L, name, 1); assert.ok(st.dabs > 0, `${name} places dabs`); const h = held(L); laid[name] = +h[1].toFixed(6); if (!/smear|blend/.test(name)) assert.ok(h[1] > 0 && h[0] + h[2] + h[3] < 1e-9, `${name} lays only the chosen pigment (${h})`); }
+  assert.ok(new Set(Object.values(laid)).size >= 6, `different brushes lay different amounts (${JSON.stringify(laid)})`);
+  // the layer is the engine's own Surface painted by the engine's own stroke: the same stroke on a bare engine Surface gives the same alpha, pixel for pixel
+  const L = createLayer(), st = stroke(L, 'bristle'), E = createLayer(), own = new Surface(FX, FY), ls = liveStroke(own, PRESETS.billow, { unit: FX, seed: 3, color: '#ff0000' }); stroke(E, 'billow'); path.forEach(([x, y], i) => ls.add({ x: +(x.toFixed(4)) * FX, y: y * FY, t: +(i * 0.02).toFixed(4), p: 0.9 }));
+  let worst = 0; for (let i = 3; i < own.px.length; i += 4) worst = Math.max(worst, Math.abs(own.px[i] - E.surface.px[i])); assert.ok(held(E)[0] > 0); assert.equal(worst, 0, 'the bench layer and the engine painting alone agree exactly');
+  // bristles: across the stroke, at its middle, the paint rises and falls hair by hair. Count the peaks at the layer's
+  // resolution and at the solver's (the same column averaged into cells of FS): the hairs are there only in the first.
+  const col = (layer, x) => { const c = coverage(layer), out = []; for (let y = 0; y < FY; y++) out.push(c[(y * FX + x) * 4] / 255); return out; };
+  const peaks = (a, floor = 0.04) => { let n = 0; for (let i = 1; i < a.length - 1; i++) if (a[i] > a[i - 1] && a[i] >= a[i + 1] && a[i] - Math.min(...a.slice(Math.max(0, i - 4), i + 5)) > floor) n++; return n; };
+  const cells = (a) => Array.from({ length: NY }, (_, j) => a.slice(j * FS, j * FS + FS).reduce((s, v) => s + v, 0) / FS);
+  const fine = col(L, FX >> 1), hairs = peaks(fine), coarse = peaks(cells(fine)), H = createLayer(); stroke(H, 'haze'); const soft = peaks(col(H, FX >> 1));
+  assert.ok(hairs >= 5, `a bristle stroke shows separate hairs across it (${hairs} peaks)`); assert.ok(coarse * 2 <= hairs, `which the solver cells, ten times coarser, cannot hold (${coarse} peaks against ${hairs})`); assert.ok(soft <= 1, `and a soft round brush has none (${soft})`);
+  // a nearly dry brush lays far less paint than a loaded one
+  const D = createLayer(); stroke(D, 'dry-brush'); assert.ok(held(D)[0] < 0.6 * held(L)[0] && held(D)[0] > 0, `the dry brush is thin (${held(D)[0]} against ${held(L)[0]})`);
+  // paint over paint: a second pigment across the first covers it where they cross, and the four amounts never exceed one coat
+  const X = createLayer(); stroke(X, 'bristle', 0); const before = held(X)[0]; const up = beginStroke(X, 1, 'billow', 5); for (let i = 0; i < 24; i++) up.add(0.5, 0.2 + 0.6 * i / 23, 0.9, i * 0.02);
+  assert.ok(held(X)[0] < before && held(X)[1] > 0, 'the upper stroke covers part of the lower'); const cx = coverage(X); let most = 0; for (let i = 0; i < cx.length; i += 4) most = Math.max(most, cx[i] + cx[i + 1] + cx[i + 2] + cx[i + 3]); assert.ok(most <= 256, 'one coat at most at any point');
+  // replay: the record lays the same layer again, value for value
+  const rec = st.done(), again = createLayer(); assert.equal(replay(again, [rec], 2), st.dabs); assert.deepEqual(Array.from(again.surface.px.subarray(0, 400000)), Array.from(L.surface.px.subarray(0, 400000))); let same = true; for (let i = 0; i < L.surface.px.length; i++) if (again.surface.px[i] !== L.surface.px[i]) { same = false; break; } assert.ok(same, 'a replayed stroke is the same stroke');
+  assert.equal(replay(createLayer(), [{ ...rec, slot: 3 }], 2), 0, 'a stroke for a pigment that is not there is left out'); assert.equal(beginStroke(L, 0, 'no-such-brush'), null);
+  // a fluid ground takes the paint: what leaves the layer enters the solver's field, where it is kept like any other pigment
+  const s = createSim(); s.set([{ weight: 1, drive: still, links: [0, 0] }, { weight: 1, drive: still, links: [0, 0] }]); s.seed(); s.clear();
+  const had = held(L)[0], moved = dissolve(L, s, 0.25, 2) / (NX * NY); assert.ok(Math.abs(moved - 0.25 * had) < 1e-6 * had + 1e-9, `a quarter leaves the layer (${moved} of ${had})`); assert.ok(Math.abs(held(L)[0] - 0.75 * had) < 1e-5 * had); assert.ok(Math.abs(s.amounts()[0] - moved) < 1e-9 && s.error() <= TOLERANCE);
+  dissolve(L, s, 1, 2); assert.equal(L.box, null, 'and all of it, in the end'); assert.ok(Math.abs(s.amounts()[0] - had) < 1e-5 * had, 'nothing is lost on the way'); for (let i = 0; i < 40; i++) s.step(STEP, false); assert.ok(s.error() <= TOLERANCE);
   const r = makeRecipe(ix, ['water', 'ink'], [1, 1], {}, null, { strokes: [rec, { brush: 'no-such-brush', slot: 0, pts: [[0, 0]] }] }); assert.equal(r.strokes.length, 1);
   assert.deepEqual(readRecipe(ix, JSON.parse(JSON.stringify(r))).strokes, cleanStrokes([rec]), 'the recipe keeps the strokes and gives them back'); assert.deepEqual(readRecipe(ix, makeRecipe(ix, ['water'], [1], {})).strokes, []);
 });
