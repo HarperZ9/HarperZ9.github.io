@@ -11,8 +11,16 @@
 //   over(top, under)             two layers as one
 //   onGround(layers, ground)     reflectance of layers (first is lowest) on a ground
 //   glazeHex(top, under, paper)  the overlap of two unit washes on paper, as a hex colour
+//   mixture(lins, d)             pigments truly mixed (wet into wet, in a liquid): the site's spectral pigment model,
+//                                world/superframe/lib/medium/spectral.mjs. Each colour is lifted to a smooth 16-band
+//                                spectrum, the absorption-to-scattering ratios add band by band by amount
+//                                (single-constant Kubelka-Munk), and the result is seen through the CIE observer.
+//   ksOf(lin), BAND_RGB          the same model's numbers for the well's shader: a colour's 16 ratios, and each band's
+//                                colour (from world/superframe/lib/medium/gpu/pigment.js)
 //
 // Everything this file returns is computed. The inputs are the element's measured colour and measured ink coverage.
+import { BANDS, upsample, ks, fromKS, spectrumRGB } from '../../superframe/lib/medium/spectral.mjs';
+import { bandMatrices } from '../../superframe/lib/medium/gpu/pigment.js';
 export const FLOOR = 1e-4;                                  // K and S never go below this, here and in the shader
 export const PAPER = Object.freeze([0.80, 0.765, 0.67]);    // the paper ground in linear light (a warm off-white)
 export const OPACITY_DEFAULT = 0.39;                        // the table's median ink coverage, used when none is measured
@@ -70,4 +78,17 @@ export function productOk(a, b, link = 1) {
   const L = Math.min(0.86, (a[0] + b[0]) / 2 + 0.07), ma = (a[1] + b[1]) / 2, mb = (a[2] + b[2]) / 2;
   const C = Math.max(Math.hypot(a[1], a[2]), Math.hypot(b[1], b[2]), 0.05), h = Math.atan2(mb, ma) + TURN * clamp(link, 0, 1) * Math.PI / 180;
   return [L, C * Math.cos(h), C * Math.sin(h)];
+}
+
+// Wet mixing, by the site's spectral pigment model. Nothing of the model is rewritten here: upsample, ks, fromKS and
+// spectrumRGB are spectral.mjs's own, and BAND_RGB is pigment.js's projection matrix.
+export { BANDS };
+export const BAND_RGB = bandMatrices().PM;
+const SPEC = new Map();
+export function ksOf(lin) { const key = lin.map((x) => Math.round(clamp(x, 0, 1) * 4095)).join(); let v = SPEC.get(key);
+  if (!v) { if (SPEC.size > 600) SPEC.clear(); v = ks(upsample(lin.map((x) => clamp(x, 0, 1)))); SPEC.set(key, v); } return v; }
+export function mixture(lins, d = lins.map(() => 1)) {
+  const tot = d.reduce((a, b) => a + b, 0), K = new Array(BANDS).fill(0); if (tot <= 0) return [0, 0, 0];
+  lins.forEach((lin, i) => { const q = ksOf(lin); for (let b = 0; b < BANDS; b++) K[b] += q[b] * d[i] / tot; });
+  return spectrumRGB(fromKS(K)).map((x) => clamp(x, 0, 1));
 }

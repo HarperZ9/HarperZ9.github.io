@@ -176,6 +176,18 @@
   ],
   "patches": [
     {
+      "file": "2026-10-23-lettering/lib/letter.mjs",
+      "find": "async rebuild() { if (!this.host) return;",
+      "replace": "async rebuild() { if (!this.host || this._gone || !this.host.isConnected) return;",
+      "why": "a word could be rebuilt after it was destroyed: the resize timer (160 ms) outlived destroy(), rebuild() ran on a host no longer in the page, getComputedStyle gave an empty font size there, the padding became NaN, and the raked technique's getImageData threw on a NaN size"
+    },
+    {
+      "file": "2026-10-23-lettering/lib/letter.mjs",
+      "find": "destroy() { live.delete(this);",
+      "replace": "destroy() { this._gone = true; live.delete(this);",
+      "why": "a word could be rebuilt after it was destroyed: the resize timer (160 ms) outlived destroy(), rebuild() ran on a host no longer in the page, getComputedStyle gave an empty font size there, the padding became NaN, and the raked technique's getImageData threw on a NaN size"
+    },
+    {
       "file": "2026-10-23-typeengine/living/index.html",
       "find": "<main id=\"main\"></main>",
       "replace": "<main id=\"main\"><h1 class=\"sr-only\">Living type</h1></main>",

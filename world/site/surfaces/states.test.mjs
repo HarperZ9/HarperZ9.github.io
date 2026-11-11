@@ -28,7 +28,7 @@ function spot(ground, steps = 240, stir = false) {
 
 test('every material that has a ground shows on a ground of its own state, and the required moves land where the table says', () => {
   for (const [id, m] of Object.entries(MATERIALS)) if (m.ground) { assert.equal(GROUNDS[m.ground].state, m.state, `${id} is a ${m.state} and so is its ground`); assert.ok(STATES[m.state].grounds.includes(m.ground), `${m.ground} is listed under ${m.state}`); }
-  const want = [['stone', 'grind', 'sand', 'sand', 'partitive', 'powder'], ['sand', 'heat', 'melt', 'melt', 'geometric', 'liquid'], ['melt', 'cool', 'glass', 'glass', 'transmit', 'solid'],
+  const want = [['stone', 'grind', 'sand', 'sand', 'partitive', 'powder'], ['sand', 'heat', 'melt', 'melt', 'mixture', 'liquid'], ['melt', 'cool', 'glass', 'glass', 'transmit', 'solid'],
     ['water', 'heat', 'vapour', 'cloud-mist', 'volume', 'gas'], ['water', 'cool', 'ice', 'ice', 'transmit', 'solid']];
   for (const [from, op, to, ground, rule, state] of want) { const g = MATERIALS[from].ground, nx = advance(g, null, op);
     assert.deepEqual([nx.to, nx.ground, GROUNDS[nx.ground].rule, GROUNDS[nx.ground].state], [to, ground, rule, state], `${from}, ${op}`); assert.equal(apply(from, op), to); assert.ok(RULES[rule]); }

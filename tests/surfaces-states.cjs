@@ -24,10 +24,10 @@ const STATE_FLOOR = 6;   // a change of state: mean absolute difference per chan
 const FLOOR = 1.5;       // any other act that must show
 const TOLERANCE = 1e-4;  // the solver's own (well-sim.mjs)
 const out = {};
-// One error is known and is not the bench's: the lettering library (world/lettering, the raked technique) can rebuild a word
-// after its host was replaced, when the blend changes twice within its 160 ms resize timer. It is counted and reported, not hidden.
-const KNOWN = /Failed to execute 'getImageData' on 'CanvasRenderingContext2D': Value is not of type 'long'/;
-const own = (errors) => { const k = errors.filter((e) => KNOWN.test(e)).length; if (k) out.letteringRebuildErrors = (out.letteringRebuildErrors || 0) + k; return errors.filter((e) => !KNOWN.test(e)); };
+// The lettering library (world/lettering) could rebuild a word after it was destroyed: its 160 ms resize timer outlived destroy(), and the raked
+// technique then threw from getImageData on a NaN size. This run changes the blend inside that window, and saw the error once per run before
+// the fix (two patches in scripts/import-mission-control.config.json). It is no longer allowed: any page error fails the run.
+const own = (errors) => errors;
 
 const noAudio = () => { window.__audio = 0; for (const k of ['AudioContext', 'webkitAudioContext']) { const C = window[k]; if (C) window[k] = function (...a) { window.__audio++; return new C(...a); }; } };
 async function open(browser, path, view = {}) {

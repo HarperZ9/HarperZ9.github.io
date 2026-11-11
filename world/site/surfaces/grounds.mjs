@@ -9,12 +9,12 @@
 //
 // Every colour this file returns is computed. The well's shader (well-shader.mjs) carries the same rules; a browser
 // test holds the two together.
-import { layer, onGround, PAPER } from './km.mjs';
+import { layer, onGround, mixture, PAPER } from './km.mjs';
 
 export const RULES = Object.freeze({
   layers: { ordered: true, word: 'paint layers: each wash takes light away and turns some back (Kubelka-Munk), so two together are darker and the order can matter' },
   transmit: { ordered: false, word: 'light through colour: each wash is a filter and the filters multiply, so two together are darker and the order does not matter' },
-  geometric: { ordered: false, word: 'pigment mixed in water: the geometric mean of the light each sends back, by amount, so the order does not matter' },
+  mixture: { ordered: false, word: 'pigment mixed in a liquid: each colour is taken as a spectrum of 16 bands, and what each pigment absorbs and scatters is added band by band, by amount (Kubelka-Munk mixing), so the order does not matter' },
   volume: { ordered: false, word: 'a scattering volume: pigment hangs like smoke and the eye gets the plain average of what is there, by amount, so the order does not matter' },
   additive: { ordered: false, word: 'light added to light: colours sum, so two together are brighter (red and green go toward yellow) and the order does not matter' },
   partitive: { ordered: false, word: 'marks side by side: each pigment is a separate mark and the eye averages them by the area each covers, so the order does not matter' },
@@ -34,9 +34,9 @@ export const GROUNDS = Object.freeze({
   'metal-plate': G('metal plate', 'hard', 'layers', 2, [0.52, 0.54, 0.57], 'solid'),
   glass: G('glass', 'hard, clear', 'transmit', 3, [0.86, 0.9, 0.88], 'solid'),
   ice: G('ice', 'hard, clear', 'transmit', 3, [0.7, 0.84, 0.93], 'solid', { v: 1 , made: true }),
-  water: G('water', 'fluid', 'geometric', 4, [0.0037, 0.008, 0.0144], 'liquid'),
-  melt: G('melt', 'fluid', 'geometric', 4, [0.86, 0.2, 0.02], 'liquid', { v: 1 , made: true }),
-  pulp: G('pulp', 'fluid', 'geometric', 4, [0.5, 0.44, 0.31], 'liquid', { v: 2 , made: true }),
+  water: G('water', 'fluid', 'mixture', 4, [0.0037, 0.008, 0.0144], 'liquid'),
+  melt: G('melt', 'fluid', 'mixture', 4, [0.86, 0.2, 0.02], 'liquid', { v: 1 , made: true }),
+  pulp: G('pulp', 'fluid', 'mixture', 4, [0.5, 0.44, 0.31], 'liquid', { v: 2 , made: true }),
   air: G('air', 'fluid, a volume', 'volume', 5, [0.42, 0.52, 0.64], 'gas'),
   'cloud-mist': G('cloud mist', 'fluid, a volume', 'volume', 5, [0.7, 0.72, 0.74], 'gas'),
   sand: G('sand', 'granular', 'partitive', 9, [0.5, 0.4, 0.25], 'powder', { made: true }),
@@ -77,6 +77,6 @@ export function mixOn(id, parts, d = parts.map(() => 1)) {
   if (g.rule === 'partitive') { const a = d.map((x) => DOT * Math.min(1, x)), free = 1 - a.reduce((s, x) => s + x, 0); return sum((p, i, c) => a[i] * p.lin[c]).map((x, c) => x + free * g.base[c]); }
   if (tot <= 0) return [...g.base];
   const k = 1 - Math.exp(-(g.rule === 'volume' ? 1.6 : 2.4) * tot);
-  const body = g.rule === 'volume' ? sum((p, i, c) => d[i] * p.lin[c] / tot) : sum((p, i, c) => d[i] * Math.log(Math.max(p.lin[c], 0.004)) / tot).map(Math.exp);
+  const body = g.rule === 'volume' ? sum((p, i, c) => d[i] * p.lin[c] / tot) : mixture(parts.map((p) => p.lin), d);
   return body.map((x, c) => g.base[c] + (x - g.base[c]) * k);
 }

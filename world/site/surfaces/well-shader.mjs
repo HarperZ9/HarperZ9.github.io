@@ -8,7 +8,9 @@
 //   1 stone         hard, coarse grain: the same layers, but pigment sits on top, beads to hard edges and pools.
 //   2 metal plate   hard, brushed: the same layers on a bright ground with a sheen where it is bare.
 //   3 glass         clear: light comes through from behind, each wash is a filter, the filters multiply.
-//   4 water         fluid: pigment mixed in dark water by the geometric mean of reflectances (the earlier look).
+//   4 water         fluid: pigment mixed in dark water band by band over 16 bands of the spectrum (km.mjs mixture(),
+//                   which is world/superframe/lib/medium/spectral.mjs): uKS holds each pigment's 16 ratios of
+//                   absorption to scattering, uPM each band's colour.
 //   5 air, mist     a scattering volume: pigment as smoke, the plain average by amount over the air's own colour.
 //   6 light         emissive: colours add on black.
 //   7 screen pixel  emissive: the same sum, shown through a grid of red, green and blue cells.
@@ -31,6 +33,7 @@ varying vec2 v;
 uniform sampler2D uDye, uDisp, uProd, uWrite, uBrush;
 uniform vec3 uBase, uBase2, uLin[5], uK[6], uS[6];   // slot 4 is the reaction's product, slot 5 the written ink
 uniform vec4 uA[4], uB[4], uC[4], uD[4];   // A: feature frequency, cos, sin, stretch. B: octave gain, gradient width, coverage, vein strength. C: rows, slot seed, on, unused. D: granulation, rim, bleed, unused
+uniform vec4 uKS[16]; uniform vec3 uPM[16];   // KS: pigment i's 16 bands are uKS[4 i] to uKS[4 i + 3]. PM: each band's colour
 uniform vec4 uFx, uGain, uFlat, uTo, uEnv, uInk, uBr;   // Fx: ground, dry, product softness, mean link strength. Gain: granulation, rim, tooth, product (1 each; tests set one to 0)
 // To: the next ground, its variant, the operation (1 heat, 2 cool or dry, 3 grind, 4 soak, 5 press), on. Env: this ground's variant, tilt x, tilt y. Ink: unused rgb, on
 uniform float uAspect, uFlatOn;
@@ -45,9 +48,12 @@ void km(vec3 K, vec3 S, float d, out vec3 R, out vec3 T){
 vec3 lay(vec3 under, vec3 K, vec3 S, float d){ vec3 R, T; km(K, S, d, R, T); return R + T * T * under / (1. - R * under); }
 vec3 thru(vec3 K, vec3 S, float d){ vec3 R, T; km(K, S, d, R, T); return T; }
 vec3 enc(vec3 lin){ lin = clamp(lin, 0., 1.); return mix(12.92 * lin, 1.055 * pow(lin, vec3(1. / 2.4)) - .055, step(.0031308, lin)); }
-// the rules that are sums: geometric (water), volume (air), additive (light, screen), partitive (data)
-vec3 blendBy(float med, vec3 B, vec3 acc, vec3 logmix, float tot, float area){
-  if (med < 4.5) return tot > .0002 ? mix(B, exp(logmix / tot), 1. - exp(-tot * 2.4)) : B;
+// the rules that are sums: mixture (water), volume (air), additive (light, screen), partitive (data)
+vec3 wetmix(mat4 kq, float tot){ vec3 o = vec3(0.);
+  for (int j = 0; j < 4; j++){ vec4 q = kq[j] / tot, r = 1. + q - sqrt(q * q + 2. * q); for (int c = 0; c < 4; c++) o += uPM[j * 4 + c] * r[c]; }
+  return clamp(o, 0., 1.); }
+vec3 blendBy(float med, vec3 B, vec3 acc, mat4 kq, float tot, float area){
+  if (med < 4.5) return tot > .0002 ? mix(B, wetmix(kq, tot), 1. - exp(-tot * 2.4)) : B;
   if (med < 5.5) return tot > .0002 ? mix(B, acc / tot, 1. - exp(-tot * 1.6)) : B;
   if (med < 7.5) return min(vec3(1.), .9 * acc);
   return acc + (1. - area) * B; }
@@ -55,11 +61,11 @@ float part(vec4 d, int i){ return i == 0 ? d.r : i == 1 ? d.g : i == 2 ? d.b : d
 vec3 shade(float med, float var, vec3 B, vec2 uv, vec4 dye, vec2 q);
 void main(){
   float med = uFx.x; bool layered = med < 2.5, glass = med > 2.5 && med < 3.5, hard = med > .5 && med < 3.5, stone = med > .5 && med < 1.5, metal = med > 1.5 && med < 2.5;
-  if (uFlatOn > .5){ vec3 R = uBase, acc = vec3(0.), lg = vec3(0.); float tot = 0., area = 0.;
+  if (uFlatOn > .5){ vec3 R = uBase, acc = vec3(0.); mat4 lg = mat4(0.); float tot = 0., area = 0.;
     for (int i = 0; i < 4; i++){ float d = i == 0 ? uFlat.x : i == 1 ? uFlat.y : i == 2 ? uFlat.z : uFlat.w;
       if (layered) R = lay(R, uK[i], uS[i], d); else if (glass) R *= thru(uK[i], uS[i], d);
       else if (med > 7.5){ float a = .18 * min(1., d); acc += a * uLin[i]; area += a; }
-      else { acc += d * uLin[i]; lg += d * log(max(uLin[i], vec3(.004))); tot += d; } }
+      else { acc += d * uLin[i]; for (int j = 0; j < 4; j++) lg[j] += d * uKS[i * 4 + j]; tot += d; } }
     gl_FragColor = vec4(enc(med < 3.5 ? R : blendBy(med, uBase, acc, lg, tot, area)), 1.); return; }
   vec2 uv = vec2(v.x, 1. - v.y);
   vec4 dye = texture2D(uDye, uv), dsp = texture2D(uDisp, uv);
@@ -86,7 +92,7 @@ vec3 shade(float med, float var, vec3 B, vec2 uv, vec4 dye, vec2 q){
   float th = .5 * vn(pq) + .3 * vn(pq * 2.1 + 9.) + .2 * vn(pq * 4.3 + 31.), strand = 0.;
   if (fibre){ vec2 fq = vec2(at.x * 5., at.y * 150. + 5. * vn(at * vec2(3., 2.) + 5.)); strand = smoothstep(.74, .95, vn(fq)) + .6 * smoothstep(.8, .97, vn(fq * vec2(1.7, .6) + 40.)); th = clamp(th + .45 * strand, 0., 1.); }
   if (wood){ float ring = .5 + .5 * sin(46. * (uv.y + .16 * vn(at * vec2(1.4, 5.)) + .03 * vn(at * vec2(30., 6.)))); th = .65 * ring + .35 * vn(at * vec2(8., 160.)); }
-  vec3 R = B * (1. + uGain.z * (stone ? .5 : fibre ? .3 : .16) * (th - .5)), logmix = vec3(0.), acc = vec3(0.); float tot = 0., seen = 0., area = 0.;
+  vec3 R = B * (1. + uGain.z * (stone ? .5 : fibre ? .3 : .16) * (th - .5)), acc = vec3(0.); mat4 logmix = mat4(0.); float tot = 0., seen = 0., area = 0.;
   if (fibre) R *= 1. + .16 * strand * (var > 1.5 ? .4 : 1.);
   if (glass) R = B * (.9 + .1 * vn(uv * 3.));
   if (melt) B *= .5 + 1.1 * fbm(q * 3.2 + 2., .55);
@@ -132,7 +138,8 @@ vec3 shade(float med, float var, vec3 B, vec2 uv, vec4 dye, vec2 q){
       if (med > 4.5 && med < 5.5) d = c * (.3 + 1.1 * uB[i].z) * (.25 + 1.9 * n * n);   // smoke: soft, no veins
       if (med > 5.5 && med < 7.5) d = c * c * (.3 + 1.5 * uB[i].z) * (.04 + 2.3 * body * body * body) * (1. - .6 * uB[i].w * vein);   // light: bright where the pigment is thick, dark between
       d += 1.3 * part(br, i) * (.3 + uB[i].z);   // brushed paint not yet carried off
-      logmix += d * log(max(uLin[i], vec3(.004))); acc += d * uLin[i]; tot += d;
+      if (wet) for (int j = 0; j < 4; j++) logmix[j] += d * uKS[i * 4 + j];
+      acc += d * uLin[i]; tot += d;
     }
   }
   // the reaction's product, where linked elements have met: a pigment of its own, with its own pattern, laid where the pigments themselves show

@@ -18,7 +18,7 @@
 // well, x right, y down. Reduced motion: no drift; each act settles at once into a still, shown dry.
 import { createSim, STEP, NX, NY, RX, RY } from './well-sim.mjs';
 import { VERT, FRAG } from './well-shader.mjs';
-import { pigment, okToLinear, productOk, PRODUCT_OPACITY } from './km.mjs';
+import { pigment, okToLinear, productOk, PRODUCT_OPACITY, ksOf, BAND_RGB } from './km.mjs';
 import { GROUNDS, behaviour } from './grounds.mjs';
 import { createLayer, clearLayer, coverage, dissolve, held, FX, FY } from './brush-field.mjs';
 
@@ -43,7 +43,7 @@ export function createWell(canvas, { reduced = false, ground = 'paper' } = {}) {
     return t; };
   const tDye = tex(0), tDisp = tex(1), tProd = tex(2), tBrush = tex(4), tWrite = tex(3);
   gl.texImage2D(gl.TEXTURE_2D, 0, gl.LUMINANCE, 1, 1, 0, gl.LUMINANCE, gl.UNSIGNED_BYTE, new Uint8Array(1));
-  gl.uniform1i(U('uDye'), 0); gl.uniform1i(U('uDisp'), 1); gl.uniform1i(U('uProd'), 2); gl.uniform1i(U('uWrite'), 3); gl.uniform1i(U('uBrush'), 4); gl.pixelStorei(gl.UNPACK_ALIGNMENT, 1);
+  gl.uniform1i(U('uDye'), 0); gl.uniform1i(U('uDisp'), 1); gl.uniform1i(U('uProd'), 2); gl.uniform1i(U('uWrite'), 3); gl.uniform1i(U('uBrush'), 4); gl.uniform3fv(U('uPM'), BAND_RGB); gl.pixelStorei(gl.UNPACK_ALIGNMENT, 1);
 
   const sim = createSim({ reduced }), n = NX * NY, bDye = new Uint8Array(n * 4), bDisp = new Uint8Array(n * 4), bProd = new Uint8Array(RX * RY);
   const gain = [1, 1, 1, 1], time = { sim: 0, gap: 0, frames: 0 };
@@ -60,7 +60,7 @@ export function createWell(canvas, { reduced = false, ground = 'paper' } = {}) {
   sim.setMedium(behaviour(ground));
 
   function uniforms() {
-    const parts = sim.parts, A = new Float32Array(16), B = new Float32Array(16), C = new Float32Array(16), D = new Float32Array(16), O = new Float32Array(15), K = new Float32Array(18), S = new Float32Array(18);
+    const parts = sim.parts, A = new Float32Array(16), B = new Float32Array(16), C = new Float32Array(16), D = new Float32Array(16), O = new Float32Array(15), K = new Float32Array(18), S = new Float32Array(18), Q = new Float32Array(64);
     parts.forEach((p, i) => {
       const d = p.drive, th = (d.orientation ?? 90) * Math.PI / 180, f = 0.85 * clamp(p.fade ?? 0, 0, 1), lin = okToLinear(p.ok, d.saturation).map((x, c) => x + (PALE[c] - x) * f), pg = pigment(lin, d.opacity);
       // dominant wavelength sets the feature size; the angle turns the grain; wave strength draws it out into bands
@@ -69,7 +69,7 @@ export function createWell(canvas, { reduced = false, ground = 'paper' } = {}) {
       B.set([clamp(Math.pow(2, -(d.beta - 1.1)), 0.18, 0.8), clamp(d.softness * 0.035, 0.03, 0.5), clamp(d.coverage, 0, 1), clamp(d.density * 8, 0, 0.95)], i * 4);
       C.set([d.rows, 11.3 * (i + 1), 1, 0], i * 4);
       D.set([clamp(d.granulation ?? 0.5, 0, 1), clamp(d.rim ?? 0.5, 0, 1), clamp(d.bleed ?? 0.5, 0, 1.2), 0], i * 4);
-      O.set(lin, i * 3); K.set(pg.K, i * 3); S.set(pg.S, i * 3);
+      O.set(lin, i * 3); K.set(pg.K, i * 3); S.set(pg.S, i * 3); Q.set(ksOf(lin), i * 16);   // Q: the pigment's spectrum, for wet mixing
     });
     // the product: one pigment, computed from the linked pairs by the strength of their links
     let ok = [0, 0, 0], w = 0, sf = 0, pairs = 0;
@@ -78,7 +78,7 @@ export function createWell(canvas, { reduced = false, ground = 'paper' } = {}) {
     const pl = okToLinear(w ? ok.map((x) => x / w) : [0.7, 0, 0]), pp = pigment(pl, PRODUCT_OPACITY);
     O.set(pl, 12); K.set(pp.K, 12); S.set(pp.S, 12); K.set(INK.K, 15); S.set(INK.S, 15); soft = w ? clamp(0.03 + 0.2 * sf / w, 0.03, 0.26) : 0.1; strength = w ? w / pairs : 0;
     gl.uniform4fv(U('uA'), A); gl.uniform4fv(U('uB'), B); gl.uniform4fv(U('uC'), C); gl.uniform4fv(U('uD'), D);
-    gl.uniform3fv(U('uLin'), O); gl.uniform3fv(U('uK'), K); gl.uniform3fv(U('uS'), S);
+    gl.uniform4fv(U('uKS'), Q); gl.uniform3fv(U('uLin'), O); gl.uniform3fv(U('uK'), K); gl.uniform3fv(U('uS'), S);
   }
   function draw() {
     const { dye, dx, dy, RV, phase } = sim; brushUp();

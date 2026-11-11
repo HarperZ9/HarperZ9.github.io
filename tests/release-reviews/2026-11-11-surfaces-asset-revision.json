@@ -2,6 +2,6 @@
   "date": "2026-11-11",
   "note": "Asset revision regenerated for the surfaces registry and the element bench (world/site/surfaces). On index.html only the ?v= revision on world assets changed from world-efe34ecaf7; no content changed. This record was written by the same change it covers and has not been reviewed by anyone else; it needs the author's confirmation at the joint review. Opened as a pull request and not merged.",
   "paths": {
-    "index.html": "b173d1215627ad7f0aeef4aadbe104a1352e0ec58ec0e31438e55d8d49b63972"
+    "index.html": "80e213cfc276580a3ed45e358779ed3a54c1a16e5a8eb8005382ed81ebaa7b4a"
   }
 }

@@ -139,7 +139,7 @@ test('an element says which tools draw it and which pages use it', () => {
 });
 
 // Paint optics, conservation and the reaction (km.mjs, glaze.mjs, well-sim.mjs).
-const { pigment, layer, onGround, glaze, apart, PAPER } = await import('./km.mjs');
+const { pigment, layer, onGround, glaze, apart, PAPER, mixture, srgbToLin, linToHex, BAND_RGB } = await import('./km.mjs'), SP = await import('../../superframe/lib/medium/spectral.mjs');
 const { paintOf, glazeOf, orderGap } = await import('./glaze.mjs');
 const { createSim, STEP, TOLERANCE } = await import('./well-sim.mjs');
 
@@ -225,8 +225,14 @@ test('each ground keeps its stated rule on red and green', () => {
     if (g.rule === 'transmit') { assert.ok(Y(m) < Math.min(Y(one(id, 0)), Y(one(id, 1))), `${id}: two filters are darker than either`); m.forEach((x, c) => assert.ok(Math.abs(x - one(id, 0)[c] * one(id, 1)[c] / g.base[c]) < 1e-9, 'filters multiply')); }
     if (g.rule === 'additive') { assert.ok(Y(m) > Math.max(Y(one(id, 0)), Y(one(id, 1))), `${id}: two lights are brighter than either`); assert.ok(m[0] > 0.4 && m[1] > 0.3 && m[2] < 0.1, `${id}: red and green go toward yellow (${m.map((x) => x.toFixed(2))})`); }
     if (g.rule === 'volume') m.forEach((x, c) => assert.ok(x >= Math.min(red[c], green[c], g.base[c]) - 1e-9 && x <= Math.max(red[c], green[c], g.base[c]) + 1e-9, `${id}: an average lies between its parts`));
-    if (g.rule === 'geometric') assert.ok(Y(m) < Y(mixOn('air', P)), 'the geometric mean in water is darker than the plain average in air');
+    if (g.rule === 'mixture') assert.ok(Y(m) < Y(mixOn('air', P)), 'a true mixture in water is darker than the plain average in air');
     if (g.rule === 'partitive') m.forEach((x, c) => assert.ok(Math.abs(x - (0.18 * red[c] + 0.18 * green[c] + 0.64 * g.base[c])) < 1e-9, 'marks average by area')); }
+  // wet mixing is the site's spectral model (world/superframe/lib/medium/spectral.mjs), called and not copied: the same numbers as its own mixKM,
+  // one pigment alone keeps its colour, and blue and yellow go to a green, which a mean of red, green and blue values cannot give
+  const lin = (h) => [1, 3, 5].map((i) => srgbToLin(parseInt(h.slice(i, i + 2), 16) / 255)), blue = lin('#2a4fb0'), yellow = lin('#f2d21b'), mixed = mixture([blue, yellow]);
+  assert.deepEqual(mixture([blue, yellow], [1, 3]), SP.spectrumRGB(SP.mixKM([{ R: SP.upsample(blue), c: 1 }, { R: SP.upsample(yellow), c: 3 }])).map((x) => Math.min(1, Math.max(0, x))));
+  assert.ok(apart(mixture([blue]), blue) < 1.5, 'one pigment alone keeps its colour through the spectrum and back'); assert.ok(mixed[1] > 1.5 * mixed[0] && mixed[1] > mixed[2], `blue and yellow mix to a green (${linToHex(mixed)})`);
+  const geo = blue.map((b, c) => Math.sqrt(b * yellow[c])); assert.ok(apart(mixed, geo) > 20, 'which is not what the earlier rule (a geometric mean per channel) gave'); assert.equal(BAND_RGB.length, 48);
   const paperBoth = both('paper'); assert.ok(paperBoth[0] < 0.2 && paperBoth[1] < 0.2 && paperBoth[2] < 0.1, `on paper red and green go toward a dark brown (${paperBoth.map((x) => x.toFixed(2))})`);
 });
 

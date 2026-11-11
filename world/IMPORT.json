@@ -1067,7 +1067,7 @@
    "path": "world/lettering/lib/letter.mjs",
    "source": "2026-10-23-lettering/lib/letter.mjs",
    "folder": "2026-10-23-lettering",
-   "bytes": 13474,
+   "bytes": 13533,
    "sourceSha256": "b2cfdee7570a4ef32472ea9fbf715e13f4751e469f55696c0f4eb6312617b5c4"
   },
   {
@@ -10542,7 +10542,7 @@
    "sourceSha256": "096ffb594b7dc75a2017aad71ff4d54d1455f0656d71a2225a299f454198eb0b"
   }
  ],
- "assetRevision": "world-dfc40c1d36",
+ "assetRevision": "world-150b10e10f",
  "assetRevisionScope": [
   "world/",
   "studies/",

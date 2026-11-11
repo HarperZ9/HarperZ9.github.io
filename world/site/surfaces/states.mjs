@@ -16,7 +16,7 @@
 // Pure: no page, runs in node and the browser.
 export const STATES = Object.freeze({
   solid: { holds: 'holds pigment on its surface or in its tooth', rule: 'layers', grounds: ['paper', 'stone-sand', 'metal-plate', 'glass', 'ice', 'wood', 'wet-sheet', 'fibre-sheet'] },
-  liquid: { holds: 'carries pigment and lets it spread', rule: 'geometric', grounds: ['water', 'melt', 'pulp'] },
+  liquid: { holds: 'carries pigment and lets it spread', rule: 'mixture', grounds: ['water', 'melt', 'pulp'] },
   gas: { holds: 'scatters pigment through its volume, like smoke', rule: 'volume', grounds: ['air', 'cloud-mist'] },
   powder: { holds: 'is a field of grains that pigment stains, or that is itself the pigment', rule: 'partitive', grounds: ['sand', 'snow', 'wood-chips'] },
 });
