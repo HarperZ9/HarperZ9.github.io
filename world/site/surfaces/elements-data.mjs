@@ -67,6 +67,7 @@ export const WORDS = Object.freeze([
   ['Log scale', 'An axis where each step multiplies the value instead of adding to it, so very small and very large values both fit.'],
   ['Link', 'How many studies found two elements together.'],
   ['Ground', 'How much is measured about an element: grounded (a law has a measured weight), partial (properties are measured), thought (nothing measured yet).'],
+  ['Reaction', 'Computed. Where two elements with a measured link have mixed in the well, a third body grows between them with a pattern of its own, drawn as a paler tone of their mix. It follows a reaction and diffusion rule (Gray-Scott): one substance feeds, another grows on it and decays. The stronger the link, the more the pattern grows; with no link there is only mixing.'],
   ['Subtractive mixing', 'How paints mix: each pigment takes light away, so two together are darker and shift in hue. The well mixes pigments this way.'],
   ['OKLab', 'A way of writing colours as numbers so that equal steps in the numbers look like equal steps to the eye.'],
 ]);

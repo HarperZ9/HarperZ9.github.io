@@ -2,6 +2,7 @@
 // measured numbers, and that answers the visitor: drag stirs it, a press pours, the arrow keys tilt it.
 //
 //   const well = createWell(canvas, { reduced });
+//   (each part may carry links: [0..1 to every other part], the measured link strengths that open the reaction)
 //   well.set([{ ok: [L, a, b], weight, drive: { wavelength, orientation, peak, beta, softness, coverage,
 //                                               density, saturation, rows, speed, curl, coherence } }]);
 //   well.pour(slot, x, y); well.stir(x, y, vx, vy); well.tilt(dx, dy); well.reset(); well.destroy();
@@ -28,8 +29,8 @@ float vn(vec2 q){ vec2 i = floor(q), f = fract(q); f = f * f * (3. - 2. * f);
 float fbm(vec2 q, float gain){ float a = 1., s = 0., t = 0.; for (int k = 0; k < 5; k++){ s += a * vn(q); t += a; q = q * 2.03 + 17.; a *= gain; } return s / t; }
 void main(){
   vec2 uv = vec2(v.x, 1. - v.y);
-  vec4 dye = texture2D(uDye, uv);
-  vec2 q = uv - (texture2D(uDisp, uv).xy - .5) * .6; q.x *= uAspect;
+  vec4 dye = texture2D(uDye, uv), dsp = texture2D(uDisp, uv);
+  vec2 q = uv - (dsp.xy - .5) * .6; q.x *= uAspect;
   vec3 logmix = vec3(0.); float tot = 0.;
   for (int i = 0; i < 4; i++){
     if (uC[i].z < .5) continue;
@@ -47,6 +48,8 @@ void main(){
   // Where pigments meet they mix subtractively: the geometric mean of their reflectances in linear light, by amount.
   vec3 lin = uGround;
   if (tot > .0002) lin = mix(uGround, exp(logmix / tot), 1. - exp(-tot * 2.4));
+  // the reaction's product, where linked elements have met: a paler body of their mix, growing its own pattern
+  lin = mix(lin, sqrt(clamp(lin, 0., 1.)) * 1.04, .85 * smoothstep(.08, .4, dsp.z));
   lin = clamp(lin, 0., 1.);
   gl_FragColor = vec4(mix(12.92 * lin, 1.055 * pow(lin, vec3(1. / 2.4)) - .055, step(.0031308, lin)), 1.);
 }`;
@@ -83,6 +86,7 @@ export function createWell(canvas, { reduced = false, ground = [0.2, -0.01, -0.0
   const n = NX * NY, fluid = new Fluid(NX, NY, { seed: 7, iters: 16, dissipation: 1 });
   const dye = Array.from({ length: SLOTS }, () => new Float32Array(n)), dx = new Float32Array(n), dy = new Float32Array(n);
   const bDye = new Uint8Array(n * 4), bDisp = new Uint8Array(n * 4);
+  const RU = new Float32Array(n).fill(1), RV = new Float32Array(n), RA = new Float32Array(n), RB = new Float32Array(n), zone = new Float32Array(n);
   let parts = [], raf = 0, last = 0, dead = false, clock = 0, tiltX = 0, tiltY = 0, idleAt = 0, flow = { speed: 0.3, curl: 0.3, coherence: 0.4 };
 
   function splat(F, x, y, r, amount) {
@@ -94,6 +98,7 @@ export function createWell(canvas, { reduced = false, ground = [0.2, -0.01, -0.0
       }
   }
   function seed() {
+    RU.fill(1); RV.fill(0);
     for (const F of dye) F.fill(0); dx.fill(0); dy.fill(0); fluid.u.fill(0); fluid.v.fill(0); clock = 0; tiltX = tiltY = 0;
     const homes = HOMES[Math.max(1, Math.min(SLOTS, parts.length))] || [];
     const sum = parts.reduce((s, p) => s + p.weight, 0) || 1;
@@ -135,15 +140,40 @@ export function createWell(canvas, { reduced = false, ground = [0.2, -0.01, -0.0
     // pigment also spreads on its own, slowly: where two bodies touch, a mixing zone grows between them
     for (const F of dye.slice(0, Math.max(1, parts.length))) { const T = fluid.t0; T.set(F);
       for (let y = 1; y < NY - 1; y++) for (let x = 1, i = y * NX + 1; x < NX - 1; x++, i++) F[i] = T[i] + DIFFUSE * (T[i - 1] + T[i + 1] + T[i - NX] + T[i + NX] - 4 * T[i]); }
+    fluid._advect(RV, fluid.t0, dt); RV.set(fluid.t0);
+    react(reduced ? 14 : 3);
     for (let i = 0; i < n; i++) {
       fluid.u[i] *= 0.985; fluid.v[i] *= 0.985;                        // the water comes to rest
       dx[i] = (dx[i] + fluid.u[i] * dt / NX) * 0.997; dy[i] = (dy[i] + fluid.v[i] * dt / NY) * 0.997;   // and the pattern eases back
     }
   }
+  // Where two elements with a measured link have mixed, a reaction runs between them (Gray-Scott reaction and
+  // diffusion: one substance feeds, the other grows on it and decays). The link's strength sets how far the feed
+  // is open and how many turns the reaction takes each step, so a strong link grows a pattern and no link grows none.
+  function react(turns) {
+    let any = 0;
+    for (let i = 0; i < n; i++) { let z = 0;
+      for (let a = 0; a < parts.length; a++) for (let b = a + 1; b < parts.length; b++) { const l = parts[a].links?.[b] ?? 0; if (l > 0) z = Math.max(z, l * 2.4 * Math.sqrt(Math.min(1, dye[a][i]) * Math.min(1, dye[b][i]))); }
+      zone[i] = Math.min(1, z); any = Math.max(any, zone[i]); }
+    if (any < 0.05) { if (RV.some((v) => v > 0.001)) for (let i = 0; i < n; i++) { RV[i] *= 0.9; RU[i] += (1 - RU[i]) * 0.1; } return; }
+    // the reaction needs a start: a few small patches, chosen by the cell's own number so the same blend starts the same way
+    for (let y = 2; y < NY - 2; y++) for (let x = 2, i = y * NX + 2; x < NX - 2; x++, i++) if (zone[i] > 0.3 && RV[i] < 0.02 && ((i * 2654435761) >>> 0) % 251 < 4)
+      for (let dy = -1; dy <= 1; dy++) for (let dx2 = -1; dx2 <= 1; dx2++) { RV[i + dy * NX + dx2] = 0.5; RU[i + dy * NX + dx2] = 0.35; }
+    for (let t = 0; t < Math.max(1, Math.round(turns * any)); t++) {
+      for (let y = 1; y < NY - 1; y++) for (let x = 1, i = y * NX + 1; x < NX - 1; x++, i++) {
+        const z = zone[i], u = RU[i], v = RV[i];
+        if (z < 0.06) { RA[i] = u + (1 - u) * 0.05; RB[i] = v * 0.95; continue; }
+        const lu = RU[i - 1] + RU[i + 1] + RU[i - NX] + RU[i + NX] - 4 * u, lv = RV[i - 1] + RV[i + 1] + RV[i - NX] + RV[i + NX] - 4 * v;
+        const f = 0.024 + 0.014 * z, uvv = u * v * v;
+        RA[i] = u + 0.16 * lu - uvv + f * (1 - u); RB[i] = v + 0.08 * lv + uvv - (f + 0.061) * v;
+      }
+      RU.set(RA); RV.set(RB);
+    }
+  }
   function draw() {
     for (let i = 0; i < n; i++) {
       for (let c = 0; c < 4; c++) bDye[i * 4 + c] = clamp(dye[c][i], 0, 1) * 255;
-      bDisp[i * 4] = clamp(dx[i] + 0.5, 0, 1) * 255; bDisp[i * 4 + 1] = clamp(dy[i] + 0.5, 0, 1) * 255; bDisp[i * 4 + 3] = 255;
+      bDisp[i * 4] = clamp(dx[i] + 0.5, 0, 1) * 255; bDisp[i * 4 + 1] = clamp(dy[i] + 0.5, 0, 1) * 255; bDisp[i * 4 + 2] = clamp(RV[i] * 2.4, 0, 1) * 255; bDisp[i * 4 + 3] = 255;
     }
     gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, tDye); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, NX, NY, 0, gl.RGBA, gl.UNSIGNED_BYTE, bDye);
     gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, tDisp); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, NX, NY, 0, gl.RGBA, gl.UNSIGNED_BYTE, bDisp);
@@ -190,6 +220,7 @@ export function createWell(canvas, { reduced = false, ground = [0.2, -0.01, -0.0
     still() { draw(); return canvas; },
     read(w = 48, h = 36) { draw(); const c = document.createElement('canvas'); c.width = w; c.height = h; const x = c.getContext('2d'); x.drawImage(canvas, 0, 0, w, h); return x.getImageData(0, 0, w, h).data; },
     energy: () => fluid.energy(),
+    product: () => { let s = 0; for (let i = 0; i < n; i++) s += RV[i]; return s / n; },
     amounts: () => dye.map((F) => { let s = 0; for (let i = 0; i < n; i++) s += F[i]; return s / n; }),
     destroy() { dead = true; cancelAnimationFrame(raf); ro?.disconnect(); document.removeEventListener('visibilitychange', onVis); gl.getExtension('WEBGL_lose_context')?.loseContext(); },
   };

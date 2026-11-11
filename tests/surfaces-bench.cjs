@@ -30,8 +30,9 @@ async function open(browser, path, view, extra = {}) {
   page.on('pageerror', (e) => errors.push(e.message));
   await page.addInitScript(noAudio);
   await page.goto(base + path, { waitUntil: 'load' });
-  await page.waitForFunction(() => window.__surfaces && window.__surfaces.mounted().length > 0, null, { timeout: 45000 });
-  await page.waitForTimeout(400);
+  // the pages' own ready signals: the bench host is marked live when its mount has finished; a page of embedded
+  // surfaces marks <html> when every host has
+  await page.waitForSelector('#parts[data-surface-live="bench"], html[data-surfaces-ready]', { state: 'attached', timeout: 45000 });
   return { ctx, page, errors };
 }
 
@@ -185,8 +186,26 @@ async function brightestGround(page) {
       for (const k of ['plate', 'glass', 'living']) { const c = s[k].value().canvas; const d = c.getContext('2d').getImageData(0, 0, c.width, c.height).data; let lo = 765, hi = 0;
         for (let i = 0; i < d.length; i += 4) { const y = d[i] + d[i + 1] + d[i + 2]; if (y < lo) lo = y; if (y > hi) hi = y; } o[k] = { w: c.width, h: c.height, range: hi - lo }; }
       return o; });
-    out.more = more; for (const k of ['plate', 'glass', 'living']) assert.ok(more[k].range > 30, `the ${k} surface drew a picture (range ${more[k].range})`);
+    out.more = more; for (const k of ['plate', 'glass']) assert.ok(more[k].range > 30, `the ${k} surface drew a picture (range ${more[k].range})`);
+    const lit = await page.evaluate(async () => { const { TARGET } = await import('/world/site/surfaces/surface-more.mjs'), c = document.querySelector('.sf-plate canvas'), l = document.querySelector('.sf-living canvas');
+      const d = l.getContext('2d').getImageData(0, 0, l.width, l.height).data; let ink = 0, clear = 0; for (let i = 3; i < d.length; i += 4) { if (d[i] > 200) ink++; else if (d[i] < 8) clear++; }
+      return { target: TARGET, raw: { mean: +c.dataset.rawMean, range: +c.dataset.rawRange }, plate: { mean: +c.dataset.mean, range: +c.dataset.range }, living: { ink: +(ink / (d.length / 4)).toFixed(3), clear: +(clear / (d.length / 4)).toFixed(3), background: getComputedStyle(l).backgroundColor } }; });
+    out.light = lit; assert.ok(Math.abs(lit.plate.mean - lit.target.mean) < 0.08, `the plate is exposed to its target (${lit.plate.mean})`); assert.ok(lit.plate.range >= lit.target.range - 0.06, `the plate has its range (${lit.plate.range})`);
+    assert.ok(lit.living.clear > 0.6 && lit.living.ink > 0.01 && /rgba\(0, 0, 0, 0\)|transparent/.test(lit.living.background), `the living type has no ground of its own (${JSON.stringify(lit.living)})`);
     assert.ok(bl.curve.length > 0, 'the motion lane drew a curve'); assert.ok(bl.inks, 'the pen study drew with the parts as inks');
+
+    // 3b: a measured link grows a reaction; switching the link off leaves only mixing
+    const rx = await page.evaluate(async () => { const b = window.__bench, w = () => b.value().surfaces.well, rd = () => Array.from(w().value().well.read());
+      const df = (a, c) => { let s = 0; for (let i = 0; i < a.length; i += 4) s += Math.abs(a[i] - c[i]) + Math.abs(a[i + 1] - c[i + 1]) + Math.abs(a[i + 2] - c[i + 2]); return +(s / (a.length / 4 * 3)).toFixed(2); };
+      const ix = await window.__surfaces.elements(), o = {};
+      for (const [name, ids] of [['linked', ['light', 'city-architecture']], ['unlinked', ['water', 'ink']]]) {
+        b.update({ elements: ids, settings: {} }); const L = ix.byId.get(ids[0]).links.find((l) => l.to === ids[1])?.weight ?? 0;
+        w().update({ elements: ids, linkScale: 1 }); const on = rd(), grown = w().value().well.product();
+        w().update({ elements: ids, linkScale: 0 }); const off = rd(), none = w().value().well.product();
+        w().update({ elements: ids, linkScale: 1 }); o[name] = { link: L, moved: df(on, off), product: +grown.toFixed(4), productOff: +none.toFixed(4) }; }
+      b.update({ elements: ['water', 'ink', 'light'], weights: [2, 1, 1], settings: {} }); return o; });
+    out.reaction = rx; assert.ok(rx.linked.link >= 50 && rx.linked.moved >= FLOOR, `a strong link changes the picture (${JSON.stringify(rx.linked)})`);
+    assert.equal(rx.unlinked.link, 0); assert.ok(rx.unlinked.moved < 0.01 && rx.unlinked.product === 0, 'with no measured link there is only mixing');
 
     // 7: take-away
     const grab = async (sel) => { const [d] = await Promise.all([page.waitForEvent('download'), page.click(sel)]); const p = await d.path(); return { name: d.suggestedFilename(), bytes: fs.readFileSync(p) }; };
@@ -209,7 +228,7 @@ async function brightestGround(page) {
     await ctx.close();
 
     // 9: two other pages mount through the registry
-    for (const [path, want, ids] of [['/swatches.html', ['well', 'chart'], 'pigment,ink,paper'], ['/accession.html', ['lettering', 'motion', 'well'], 'type,ink,paper']]) {
+    for (const [path, want, ids] of [['/swatches.html', ['well', 'plate', 'chart'], 'pigment,ink,paper'], ['/accession.html', ['living', 'lettering', 'motion', 'well'], 'type,ink,paper']]) {
       const o = await open(browser, path, { w: 1280, h: 800, reduced: true });
       const r = await o.page.evaluate(() => ({ mounted: window.__surfaces.mounted(), link: document.querySelector('.sf-more a')?.getAttribute('href'), canvas: !!document.querySelector('[data-surface] .sf-water canvas'), audio: window.__audio,
         sideways: document.documentElement.scrollWidth - document.documentElement.clientWidth }));

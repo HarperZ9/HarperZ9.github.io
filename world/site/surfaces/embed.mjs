@@ -9,7 +9,7 @@
 // registry) tears every one down.
 import registry from './registry.mjs';
 
-const WIDE = new Set(['blend', 'chart']);
+const WIDE = new Set(['blend', 'chart', 'living']);
 const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
 export async function mountHost(host) {
@@ -36,4 +36,5 @@ export async function mountAll(root = document) {
   }
   return out;
 }
-if (typeof document !== 'undefined') { window.__surfaces = registry; mountAll(); }
+// data-surfaces-ready on <html> is the ready signal: every host on the page has finished mounting
+if (typeof document !== 'undefined') { window.__surfaces = registry; mountAll().then(() => document.documentElement.setAttribute('data-surfaces-ready', '')); }

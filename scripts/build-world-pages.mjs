@@ -100,7 +100,7 @@ function accession() {
 <p>A family of type drawn in code, released under the SIL Open Font License 1.1. On this site it is one material among many: living type draws on it, and Hanken Grotesk and Conso stay as the still faces.</p>
 <h2>The families</h2><ul class="acc-list">${fams.map((f) => `<li style="font-family:'${esc(f)}'">${esc(f)}</li>`).join("")}</ul>
 <h2>Use it</h2><p><a href="/system/fonts/accession/accession.css">accession.css</a> declares every face with paths relative to its folder; <a href="/system/fonts/accession/OFL.txt">OFL.txt</a> is the licence, and <a href="/system/fonts/accession/MANIFEST.json">MANIFEST.json</a> lists every file with its size, coverage and SHA-256.</p>
-${surface("lettering motion well", "type ink paper", "Type as a material", "On the element table, type is a material like ink and paper. Here the three are blended: the studio letters their names in the blend's technique and colour, draws the timing the blend moves on, and runs them together in a well you can stir.")}
+${surface("living lettering motion well", "type ink paper", "Type as a material", "On the element table, type is a material like ink and paper. Here the three are blended: the type engine sets their names in letters bent by type's own measurements, the studio letters them in the blend's technique and colour, draws the timing the blend moves on, and runs them together in a well you can stir.")}
 </article>`;
   return write("accession.html", page({ path: "accession.html", title: "Accession", description: "Accession, a type family drawn in code, under the SIL Open Font License 1.1: Text, Display, Mono, Super and the technique cuts.", body, bodyClass: "reading bench-body",
     // the specimen loads letter subsets of each face (system/fonts/accession/specimen/, about 225 KB against 1.5 MB);
@@ -125,6 +125,6 @@ const made = [floor(),
   mountPage("elements.html", "The element table", "The world's concepts as an element table: each element runs live in its own medium, with its measured colour, bridges and references.", "Elements", ELEMENTS,
     { bench: true, lead: "The front bench of the design studio. Choose an element and it runs in the well from its own measurements. Stir it, move its properties, blend it with others, and take what you made with you." }),
   mountPage("swatches.html", "The swatch library", "The measured colours behind the work: palettes from studied works, overprint pairs with their measured gap, and the seven sheets.", "Colour", SWATCHES,
-    { after: surface("well chart", "pigment ink paper", "The colours at work", "Three elements from the element table, pigment, ink and paper, share one well. Each is drawn from its own measured properties. Drag to stir them together; move a control on the chart and the well follows.") }),
+    { after: surface("well plate chart", "pigment ink paper", "The colours at work", "Three elements from the element table, pigment, ink and paper, share one well. Each is drawn from its own measured properties. Drag to stir them together; move a control on the chart and the well follows. The plate prints the well's colours through the studio's image lane.") }),
   accession(), credits()];
 console.log(`world pages: ${made.join(", ")}`);

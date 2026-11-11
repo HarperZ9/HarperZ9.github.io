@@ -94,7 +94,12 @@ export const SURFACES = Object.freeze({
   living: S('living', 'Living type', ['world/typeengine'], ['type', 'render'], ['elements', 'text', 'numbers'], ['image', 'png'], './surface-more.mjs'),
   recipe: S('recipe', 'Recipe', ['system/graph', 'world/studio'], ['export', 'math'], ['elements', 'settings', 'blend'], ['graph', 'json'], './recipe.mjs'),
   // A named place for the sound layer. Nothing is mounted behind it in this version and nothing plays.
-  sound: Object.freeze({ id: 'sound', name: 'Sound layer (not built yet)', tools: ['world/sound', 'world/dataviz'], offers: ['sound'], takes: ['blend', 'score'], gives: ['wav'], load: null }),
+  // It is shaped to the site music interface being built apart from this work: an object with start(), stop(),
+  // setLevel(0..1) and setMood(id), where setMood also takes an element id through a map of moods. When that
+  // lands, the adapter here calls setMood with the leading element's id (moods.json is the map, a proposal for
+  // the author to edit), never calls start() itself, and hands the music's score on to world/visualizer.
+  sound: Object.freeze({ id: 'sound', name: 'Sound layer (not built yet)', tools: ['world/sound', 'world/dataviz', 'world/visualizer'], offers: ['sound'], takes: ['elements', 'blend', 'score'], gives: ['score', 'wav'], load: null,
+    wants: Object.freeze(['start', 'stop', 'setLevel', 'setMood']), moods: './moods.json' }),
 });
 
 const live = new Set();
@@ -117,7 +122,7 @@ export async function mount(host, id, input = {}, ctx = {}) {
   const fn = mod[`mount_${id}`] || mod.mount;
   const inner = await fn(host, { elements: [], weights: null, settings: {}, ...input }, { ...prefs(), ...ctx, ix, registry: api });
   const handle = { id, host, update: (next) => inner.update?.(next), value: () => inner.value?.(), destroy() { if (!live.delete(handle)) return; inner.destroy?.(); host.removeAttribute('data-surface-live'); } };
-  host.setAttribute('data-surface-live', id); live.add(handle);
+  host.setAttribute('data-surface-live', id); live.add(handle);   // the ready signal: the attribute appears only when the surface has finished mounting
   return handle;
 }
 export const unmount = (h) => h?.destroy();

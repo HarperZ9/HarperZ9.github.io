@@ -16,7 +16,7 @@ const W = 420, H = 280;
 
 // One drawing surface: a canvas, a note, a save button. draw(canvas, state) may be slow; it runs when the host is
 // near the viewport and 500 ms after the last change.
-function slow(host, cls, input, ctx, what, draw) {
+function slow(host, cls, input, ctx, what, draw, { ground = null } = {}) {
   let state = { ...input }, timer = 0, seen = false, dead = false, run = 0;
   host.classList.add(cls);
   const paint = async () => {
@@ -31,56 +31,96 @@ function slow(host, cls, input, ctx, what, draw) {
   const io = typeof IntersectionObserver === 'function' ? new IntersectionObserver((en) => { if (en.some((e) => e.isIntersecting)) { seen = true; io.disconnect(); later(); } }, { rootMargin: '300px' }) : null;
   if (io) io.observe(host); else { seen = true; later(); }
   const onClick = (ev) => { if (!ev.target.closest('[data-save-more]')) return;
-    host.querySelector('canvas')?.toBlob((blob) => { if (!blob) return; const a = document.createElement('a'), url = URL.createObjectURL(blob); a.href = url; a.download = `${ids(ctx.ix, state).join('-')}.${cls.slice(3)}.png`;
+    let c = host.querySelector('canvas'); if (!c) return;
+    if (ground) { const o = document.createElement('canvas'); o.width = c.width; o.height = c.height; const x = o.getContext('2d'); x.fillStyle = ground; x.fillRect(0, 0, o.width, o.height); x.drawImage(c, 0, 0); c = o; }
+    c.toBlob((blob) => { if (!blob) return; const a = document.createElement('a'), url = URL.createObjectURL(blob); a.href = url; a.download = `${ids(ctx.ix, state).join('-')}.${cls.slice(3)}.png`;
       document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 2000); }, 'image/png'); };
   host.addEventListener('click', onClick);
   return { update(next) { state = { ...state, ...next }; later(); }, value: () => ({ canvas: host.querySelector('canvas'), drawn: +(host.dataset.drawn || 0) }), now: () => { seen = true; return paint(); },
     destroy() { dead = true; clearTimeout(timer); io?.disconnect(); host.removeEventListener('click', onClick); host.innerHTML = ''; host.classList.remove(cls); delete host.dataset.drawn; } };
 }
 
-// The blend as the studio's plate: sRGB bytes, w by h.
-async function plate(ix, state, w, h) {
+// Exposure. A plate is lifted to a stated target: mean luma 0.42 (on a 0 to 1 scale of the screen's own values) and
+// at least 0.38 between its 5th and 95th percentile. measure() reads both; expose() applies one gain and offset.
+export const TARGET = Object.freeze({ mean: 0.42, range: 0.38 });
+export function measure(rgba) {
+  const n = rgba.length / 4, y = new Float32Array(n); let m = 0;
+  for (let i = 0; i < n; i++) { y[i] = (0.2126 * rgba[i * 4] + 0.7152 * rgba[i * 4 + 1] + 0.0722 * rgba[i * 4 + 2]) / 255; m += y[i]; }
+  const s = Float32Array.from(y).sort(); return { mean: +(m / n).toFixed(3), range: +(s[Math.floor(n * 0.95)] - s[Math.floor(n * 0.05)]).toFixed(3) };
+}
+function expose(rgba) {
+  const b = measure(rgba), gain = Math.max(1, TARGET.range / Math.max(0.02, b.range)), off = TARGET.mean - b.mean * gain;
+  for (let i = 0; i < rgba.length; i += 4) for (let c = 0; c < 3; c++) rgba[i + c] = Math.min(255, Math.max(0, rgba[i + c] * gain + off * 255));
+  return b;
+}
+// The blend as a plate. Its colour is the well's own pigment field (so the plate, the glass and the well agree); its
+// surface is the studio's image lane, read as light and shade. Without a well (plain view) the blended colour stands in.
+async function plate(ix, state, w, h, picture) {
   const lane = await import('../../studio/lib/lanes/image.mjs'), sb = studioBlend(ix, ids(ix, state), state.weights, state.settings);
-  return { rgba: lane.toRGBA(lane.renderImage(sb.material, { w, h, seed: 3, marks: false }), sb.material), sb };
+  const relief = lane.toRGBA(lane.renderImage(sb.material, { w, h, seed: 3, marks: false }), sb.material), raw = measure(relief);
+  const c = document.createElement('canvas'); c.width = w; c.height = h; const x = c.getContext('2d', { willReadFrequently: true });
+  const src = picture?.();
+  if (src) x.drawImage(src, 0, 0, w, h); else { x.fillStyle = sb.palette.mix; x.fillRect(0, 0, w, h); }
+  const rgba = x.getImageData(0, 0, w, h).data, lo = raw.mean - raw.range, span = Math.max(0.05, raw.range * 2);
+  for (let i = 0; i < rgba.length; i += 4) { const y = (0.2126 * relief[i] + 0.7152 * relief[i + 1] + 0.0722 * relief[i + 2]) / 255, k = 0.62 + 0.7 * Math.min(1, Math.max(0, (y - lo) / span));
+    for (let ch = 0; ch < 3; ch++) rgba[i + ch] = Math.min(255, rgba[i + ch] * k); }
+  expose(rgba);
+  return { rgba, sb, raw, after: measure(rgba) };
 }
 const put = (canvas, rgba, w, h) => { canvas.width = w; canvas.height = h; canvas.getContext('2d').putImageData(new ImageData(new Uint8ClampedArray(rgba.buffer, rgba.byteOffset, w * h * 4), w, h), 0, 0); };
+const stamp = (canvas, p) => { canvas.dataset.rawMean = p.raw.mean; canvas.dataset.rawRange = p.raw.range; canvas.dataset.mean = p.after.mean; canvas.dataset.range = p.after.range; };
 
 export function mount_plate(host, input, ctx) {
   return slow(host, 'sf-plate', input, ctx, 'The plate', async (canvas, state) => {
-    const { rgba, sb } = await plate(ctx.ix, state, W, H); put(canvas, rgba, W, H);
-    const kinds = sb.material.hints.image.plates.map((p) => p.kind);
-    canvas.setAttribute('aria-label', `A plate of ${sb.parts.map((p) => p.name).join(', ')}: ${kinds.join(' over ')}`);
-    return `The studio's image lane: ${kinds.join(', ')}, stacked in linear light. Each part brings the plates of its nearest studio material, in its own measured colour.`;
+    const p = await plate(ctx.ix, state, W, H, ctx.picture); put(canvas, p.rgba, W, H); stamp(canvas, p);
+    const kinds = p.sb.material.hints.image.plates.map((k) => k.kind);
+    canvas.setAttribute('aria-label', `A plate of ${p.sb.parts.map((e) => e.name).join(', ')}: ${kinds.join(' over ')}`);
+    return `The well's own colours, printed through the studio's image lane (${kinds.join(', ')}) as light and shade, and exposed to a middle brightness.`;
   });
 }
 
 export function mount_glass(host, input, ctx) {
   return slow(host, 'sf-glass', input, ctx, 'The glass', async (canvas, state) => {
     const [g, r] = await Promise.all([import('../../glass/glass.js'), import('../../glass/lib/raster.js')]);
-    const { rgba, sb } = await plate(ctx.ix, state, W, H), mask = new Float32Array(W * H);
-    // one rounded body in the middle of the plate, large enough that its edge bends what lies behind it
-    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) mask[y * W + x] = Math.hypot((x - W / 2) / 1.35, y - H / 2) < H * 0.36 ? 1 : 0;
-    const out = g.renderGlass(r.fromSRGB8(W, H, rgba), g.fromMask(mask, W, H, { radius: 46, thickness: 70 }), { glass: 'crown', gap: 70 });
-    put(canvas, r.toSRGB8(out, 1), W, H);
-    canvas.setAttribute('aria-label', `The plate of ${sb.parts.map((p) => p.name).join(', ')} seen through a rounded piece of crown glass`);
-    return 'The same plate behind a rounded piece of crown glass: the site\'s glass renderer bends each colour by its own amount, so the edge fringes.';
+    const p = await plate(ctx.ix, state, W, H, ctx.picture), word = p.sb.parts.map((e) => e.name).join(' + ');
+    // something legible behind the glass: a ruled grid and the blend's name, so the bending can be read
+    const c = document.createElement('canvas'); put(c, p.rgba, W, H); const x = c.getContext('2d', { willReadFrequently: true });
+    x.strokeStyle = 'rgba(244,239,230,.55)'; x.lineWidth = 1; x.beginPath(); for (let i = 20; i < W; i += 20) { x.moveTo(i + .5, 0); x.lineTo(i + .5, H); } for (let j = 20; j < H; j += 20) { x.moveTo(0, j + .5); x.lineTo(W, j + .5); } x.stroke();
+    x.fillStyle = '#f4efe6'; x.textAlign = 'center'; x.textBaseline = 'middle'; let size = 46; do { x.font = `800 ${size}px "Hanken Grotesk", system-ui, sans-serif`; size -= 2; } while (x.measureText(word).width > W * 0.9 && size > 14);
+    x.fillText(word, W / 2, H / 2);
+    const mask = new Float32Array(W * H);
+    for (let yy = 0; yy < H; yy++) for (let xx = 0; xx < W; xx++) mask[yy * W + xx] = Math.hypot((xx - W * 0.62) / 1.25, yy - H * 0.5) < H * 0.34 ? 1 : 0;
+    const out = g.renderGlass(r.fromSRGB8(W, H, x.getImageData(0, 0, W, H).data), g.fromMask(mask, W, H, { radius: 60, thickness: 46 }), { glass: 'crown', gap: 36 });
+    put(canvas, r.toSRGB8(out, 1), W, H); stamp(canvas, p);
+    canvas.setAttribute('aria-label', `The plate of ${word}, ruled and named, with a rounded piece of crown glass over its right half`);
+    return 'The plate with a ruled grid and the blend\'s name, and a rounded piece of crown glass over part of it. The site\'s glass renderer bends each colour by its own amount: follow the lines and letters through it.';
   });
 }
 
+// The type engine draws on its own paper. Here the paper is taken away: how far each pixel stands from the paper
+// becomes how much light ink is laid on the page's own ground. A saved picture keeps a ground of its own.
 export function mount_living(host, input, ctx) {
-  let family = null;
-  return slow(host, 'sf-living', input, ctx, 'The living type', async (canvas, state) => {
+  let family = null, timer = 0;
+  const h = slow(host, 'sf-living', input, ctx, 'The living type', async (canvas, state) => {
     const eng = await import('../../typeengine/lib/render.mjs');
     family = family || await (await fetch(new URL('../../typeengine/families/current-1.json', import.meta.url))).json();
     const { ix } = ctx, els = ids(ix, state).map((id) => ix.byId.get(id)), lead = els[0];
-    // the family reads a series of numbers; here, the leading element's measured properties, each as its place on the table's range
     const series = (lead.properties || []).map((p) => +(pos(ix.spread.get(p.name), p.value) / 12.5).toFixed(2));
-    const word = els.map((e) => e.name).join(' + '), opt = { seed: 2, ...(series.length >= 3 ? { inputs: { 'data.series': { values: series, label: `${lead.name}, measured properties`, unit: 'place on the table\'s range' } } } : {}) };
-    const out = await eng.renderWord(family, word, W * 2, H, opt), d = out.raster.data, px = new Uint8ClampedArray(W * 2 * H * 4);
-    for (let i = 0; i < d.length; i += 4) { for (let c = 0; c < 3; c++) { const v = Math.min(1, Math.max(0, d[i + c])); px[i + c] = 255 * (v <= 0.0031308 ? 12.92 * v : 1.055 * Math.pow(v, 1 / 2.4) - 0.055); } px[i + 3] = 255; }
-    put(canvas, px, W * 2, H);
+    const word = els.map((e) => e.name).join(' + '), inputs = series.length >= 3 ? { inputs: { 'data.series': { values: series, label: `${lead.name}, measured properties`, unit: 'place on the table\'s range' } } } : {};
+    const w = W * 2, hh = Math.round(H * 0.7);
+    const frame = async (t) => {
+      const out = await eng.renderWord(family, word, w, hh, { seed: 2, t, ...inputs }), d = out.raster.data, px = new Uint8ClampedArray(w * hh * 4), g = [d[0], d[1], d[2]];
+      for (let i = 0; i < d.length; i += 4) { const a = Math.min(1, (Math.abs(d[i] - g[0]) + Math.abs(d[i + 1] - g[1]) + Math.abs(d[i + 2] - g[2])) / (g[0] + g[1] + g[2]) * 1.15);
+        px[i] = 244; px[i + 1] = 239; px[i + 2] = 230; px[i + 3] = 255 * a; }
+      put(canvas, px, w, hh);
+    };
+    clearTimeout(timer); canvas.classList.add('lv');
+    // the engine's own clock: a short, slow run of frames, then it rests. Reduced motion shows the resting frame only.
+    if (ctx.reduced) await frame(0); else { let k = 0; const step = async () => { await frame(k * 0.35); if (++k < 8 && canvas.isConnected) timer = setTimeout(step, 420); }; await step(); }
     canvas.setAttribute('aria-label', `The words ${word}, set by the type engine`);
     return series.length >= 3 ? `The words “${word}” in the type engine's family ${family.name}. Its letters are bent by a series of numbers: here the ${series.length} measured properties of ${lead.name}.`
       : `The words “${word}” in the type engine's family ${family.name}, on its own series: ${lead.name} has too few measured properties to give it one.`;
-  });
+  }, { ground: '#0c1620' });
+  const destroy = h.destroy; h.destroy = () => { clearTimeout(timer); destroy(); };
+  return h;
 }

@@ -22,7 +22,9 @@ export function mount(host, input, ctx) {
     <ul class="sf-still" hidden></ul>`;
   const water = host.querySelector('.sf-water'), canvas = host.querySelector('canvas'), slots = host.querySelector('.sf-slots'), still = host.querySelector('.sf-still');
   const parts = () => state.elements.map((id) => ix.byId.get(id)).filter(Boolean).slice(0, 4);
-  const toWell = () => parts().map((e, i) => ({ ok: hexToOk(e.colour?.hex || '#8a8a8a'), weight: Math.max(0.02, +(state.weights?.[i] ?? 1) || 0), drive: driveFor(ix, e, state.settings?.[e.id]).shader }));
+  // measured links, either way, as a strength from 0 to 1 between every two parts; linkScale lets a check switch them off
+  const link = (a, b) => Math.min(1, Math.max(a.links.find((l) => l.to === b.id)?.weight ?? 0, b.links.find((l) => l.to === a.id)?.weight ?? 0) / 100) * (state.linkScale ?? 1);
+  const toWell = () => parts().map((e, i, P) => ({ links: P.map((o) => (o === e ? 0 : link(e, o))), ok: hexToOk(e.colour?.hex || '#8a8a8a'), weight: Math.max(0.02, +(state.weights?.[i] ?? 1) || 0), drive: driveFor(ix, e, state.settings?.[e.id]).shader }));
 
   if (!ctx.plain) { try { well = createWell(canvas, { reduced: ctx.reduced, ground: hexToOk(GROUND) }); } catch (e) { console.info('well: no drawing surface here, the samples stand in:', e.message); } }
   if (!well) { water.hidden = true; host.querySelector('.sf-how').hidden = true; host.querySelector('.sf-acts').hidden = true; still.hidden = false; }
@@ -65,7 +67,7 @@ export function mount(host, input, ctx) {
 
   return {
     // same elements in the same order: only how they are drawn changes, and the water keeps what the visitor did
-    update(next) { const same = next.elements && next.elements.join() === state.elements.join() && (next.weights || []).join() === (state.weights || []).join();
+    update(next) { const same = next.elements && next.elements.join() === state.elements.join() && (next.weights || []).join() === (state.weights || []).join() && (next.linkScale ?? state.linkScale) === state.linkScale;
       state = { ...state, ...next }; paint(!same); },
     value: () => ({ canvas: well ? well.still() : null, well }),
     destroy() { water.removeEventListener('pointerdown', onDown); water.removeEventListener('pointermove', onMove); water.removeEventListener('pointerup', onUp);

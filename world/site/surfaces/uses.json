@@ -7,6 +7,7 @@
    "title": "Accession",
    "surfaces": [
     "lettering",
+    "living",
     "motion",
     "well"
    ],
@@ -21,6 +22,7 @@
    "title": "The swatch library",
    "surfaces": [
     "chart",
+    "plate",
     "well"
    ],
    "elements": [
@@ -112,19 +114,19 @@
   },
   "world/feed-22": {
    "direct": 0,
-   "reach": 3
+   "reach": 5
   },
   "world/feed-23": {
    "direct": 0,
-   "reach": 5
+   "reach": 7
   },
   "world/feed-24": {
    "direct": 0,
-   "reach": 3
+   "reach": 5
   },
   "world/feed-25": {
    "direct": 0,
-   "reach": 3
+   "reach": 5
   },
   "world/feed-28": {
    "direct": 0,
@@ -136,7 +138,7 @@
   },
   "world/feed-30": {
    "direct": 0,
-   "reach": 3
+   "reach": 5
   },
   "world/feed-32": {
    "direct": 0,
@@ -144,7 +146,7 @@
   },
   "world/glass": {
    "direct": 0,
-   "reach": 6
+   "reach": 8
   },
   "world/homage": {
    "direct": 0,
@@ -152,7 +154,7 @@
   },
   "world/lettering": {
    "direct": 0,
-   "reach": 9
+   "reach": 10
   },
   "world/library": {
    "direct": 0,
@@ -172,7 +174,7 @@
   },
   "world/sound": {
    "direct": 0,
-   "reach": 6
+   "reach": 8
   },
   "world/studio": {
    "direct": 0,
@@ -180,11 +182,11 @@
   },
   "world/substrate": {
    "direct": 0,
-   "reach": 15
+   "reach": 16
   },
   "world/superframe": {
    "direct": 0,
-   "reach": 8
+   "reach": 10
   },
   "world/techniques": {
    "direct": 0,
@@ -192,11 +194,11 @@
   },
   "world/typeengine": {
    "direct": 0,
-   "reach": 1
+   "reach": 3
   },
   "world/typeface": {
    "direct": 3,
-   "reach": 5
+   "reach": 7
   },
   "world/ui": {
    "direct": 165,
