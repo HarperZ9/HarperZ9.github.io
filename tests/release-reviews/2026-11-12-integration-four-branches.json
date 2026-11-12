@@ -1,0 +1,11 @@
+{
+  "date": "2026-11-12",
+  "note": "Element bench ninth pass, site music, wave 1 and the findings pages merged over main; world pages, route registry, site index, sitemap and publication receipt rebuilt over the merged tree.",
+  "paths": {
+    "index.html": "cd53b7f171a137a9f3f13c96ad4beaa884907f915470f2955d710f85d3a744c9",
+    "publications/build.json": "f3361fb6945720b55225e8298c86c0579b4b1b63a913e95af11a4fea2a950fe6",
+    "site-index.html": "bb74c8fd06bec1da2a09814bfab502ff9f25c70035ac67ee9218767e92163383",
+    "sitemap.xml": "8bccebd6856e066df8093fdddf2aaab9185474a3f9381a001fe48395c5ba7e87",
+    "system/routes.js": "e94d091c2bdaa093e853cb372212dba8d72f2eda7e61f860c88e0e92f8ba5253"
+  }
+}
