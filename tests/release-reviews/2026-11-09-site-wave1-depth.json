@@ -1,0 +1,7 @@
+{
+  "date": "2026-11-09",
+  "note": "One depth model and palette for lettering (world/site/depth.css): platform hues from the colour tokens, a lit face, rim and stepped extrusion for headings and the frieze, a fine one-pixel depth and colour for defined terms and figures; plain view drops both.",
+  "paths": {
+    "index.html": "6797faf3a1f4c54d84f66455e54b09f9d76326d7cc96ff3113fc8039b05e0085"
+  }
+}

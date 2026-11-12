@@ -1,236 +1,203 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-type="stock">
 <head>
 <meta charset="utf-8">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>BuildLang: a typed-effects language</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<title>BuildLang | Zain Dana Harper</title>
 <meta name="description" content="BuildLang is a systems programming language in which a program declares what it is allowed to touch. The compiler checks those declarations and its memory rules, then emits native code through C. It ships with a CLI, editor support, two-way C integration and experimental shader output.">
 <link rel="canonical" href="https://harperz9.github.io/buildlang.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zain Dana Harper">
-<meta property="og:title" content="BuildLang: a typed-effects language">
+<meta property="og:title" content="BuildLang | Zain Dana Harper">
 <meta property="og:description" content="BuildLang is a systems programming language in which a program declares what it is allowed to touch. The compiler checks those declarations and its memory rules, then emits native code through C. It ships with a CLI, editor support, two-way C integration and experimental shader output.">
 <meta property="og:url" content="https://harperz9.github.io/buildlang.html">
 <meta property="og:image" content="https://harperz9.github.io/img/og/p/buildlang.jpg?v=e05ae222febc">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="BuildLang: a typed-effects language, by Zain Dana Harper. A square chip at the center with its pins fanned out on all four sides as thin routed traces, each ending in a small pad, and a bright core inside the chip.">
+<meta property="og:image:alt" content="BuildLang, by Zain Dana Harper. A square chip at the center with its pins fanned out on all four sides as thin routed traces, each ending in a small pad, and a bright core inside the chip.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/p/buildlang.jpg?v=e05ae222febc">
-<meta name="twitter:image:alt" content="BuildLang: a typed-effects language, by Zain Dana Harper. A square chip at the center with its pins fanned out on all four sides as thin routed traces, each ending in a small pad, and a bright core inside the chip.">
-<meta name="twitter:title" content="BuildLang: a typed-effects language">
+<meta name="twitter:image:alt" content="BuildLang, by Zain Dana Harper. A square chip at the center with its pins fanned out on all four sides as thin routed traces, each ending in a small pad, and a bright core inside the chip.">
+<meta name="twitter:title" content="BuildLang | Zain Dana Harper">
 <meta name="twitter:description" content="BuildLang is a systems programming language in which a program declares what it is allowed to touch. The compiler checks those declarations and its memory rules, then emits native code through C. It ships with a CLI, editor support, two-way C integration and experimental shader output.">
-<meta name="color-scheme" content="dark">
-<link rel="stylesheet" href="system/system.css?v=20260927-copy-pass">
+<link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-e2c207b3f8">
+<link rel="stylesheet" href="/studies/studies.css?v=world-e2c207b3f8">
+<link rel="stylesheet" href="/world/site/depth.css?v=world-e2c207b3f8">
+<script type="module" src="/world/ui/shell/shell.js?v=world-e2c207b3f8"></script>
+<script type="module" src="/world/site/hand-scroll.js?v=world-e2c207b3f8"></script>
+<link rel="stylesheet" href="/world/site/landmark.css?v=world-e2c207b3f8">
+<script type="module" src="/world/site/home-field.js?v=world-e2c207b3f8"></script>
+<script type="module" src="/world/site/sound.js?v=world-e2c207b3f8"></script>
+<script type="module" src="/world/site/explore/effects.js?v=world-e2c207b3f8"></script>
+<script type="module" src="/world/site/explore/registry.js?v=world-e2c207b3f8"></script>
 <!-- structured-data:begin (tools/structured_data.py) -->
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareSourceCode","@id":"https://harperz9.github.io/buildlang.html#software","name":"BuildLang","description":"BuildLang is a systems programming language in which a program declares what it is allowed to touch. The compiler checks those declarations and its memory rules, then emits native code through C. It ships with a CLI, editor support, two-way C integration and experimental shader output.","url":"https://harperz9.github.io/buildlang.html","codeRepository":"https://github.com/HarperZ9/buildlang","author":{"@id":"https://harperz9.github.io/#person","@type":"Person","name":"Zain Dana Harper"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://harperz9.github.io/"},{"@type":"ListItem","position":2,"name":"Catalog","item":"https://harperz9.github.io/catalog.html"},{"@type":"ListItem","position":3,"name":"BuildLang","item":"https://harperz9.github.io/buildlang.html"}]},{"@type":"SoftwareApplication","@id":"https://harperz9.github.io/buildlang.html#application","name":"BuildLang","url":"https://harperz9.github.io/buildlang.html","softwareVersion":"1.14.0","applicationCategory":"DeveloperApplication","operatingSystem":"Windows, macOS, Linux","downloadUrl":"https://crates.io/crates/buildlang","license":"https://spdx.org/licenses/AGPL-3.0-only.html","author":{"@id":"https://harperz9.github.io/#person","@type":"Person","name":"Zain Dana Harper"},"isAccessibleForFree":true,"sameAs":"https://github.com/HarperZ9/buildlang","installUrl":"https://crates.io/crates/buildlang"}]}</script>
 <!-- structured-data:end -->
 </head>
-<body class="inner-clean">
-<a class="skip-link" href="#main">Skip to content</a>
-
-<div id="site-nav" class="site-nav"></div>
-<noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="cv.html">About</a></nav></noscript>
-<script type="module" src="system/nav.js?v=20260909-pillar-navigation"></script>
-
-<div class="frame">
-  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><span translate="no">BuildLang</span> &middot; the effects language</span></div>
-  <div class="mid">
-    <h1>What a function may do belongs <span class="g">in its type.</span></h1>
-    <p class="lede" data-canonical-purpose="buildlang">BuildLang is a systems programming language in which a program declares what it is allowed to touch. The compiler checks those declarations and its memory rules, then emits native code through C. It ships with a CLI, editor support, two-way C integration and experimental shader output.</p>
-    <p class="close">It is for systems programmers who want the compiler, not a comment, to say what each function is allowed to do.</p>
-  </div>
-  <div class="seal"><span translate="no">buildc</span> &middot; buildlang 1.2.0 on crates.io &middot; effects and lifetimes, in the type</div>
+<body class="reading landmark">
+<div class="gw-backdrop" aria-hidden="true">
+  <picture>
+    <source data-s="night" data-m="(orientation: portrait)" media="(orientation: portrait) and (prefers-color-scheme: dark)" type="image/avif" srcset="/media/world/glass-water/field-night-portrait-828.avif 828w, /media/world/glass-water/field-night-portrait-1242.avif 1242w" sizes="100vw">
+    <source data-s="night" data-m="(orientation: portrait)" media="(orientation: portrait) and (prefers-color-scheme: dark)" type="image/webp" srcset="/media/world/glass-water/field-night-portrait-828.webp 828w, /media/world/glass-water/field-night-portrait-1242.webp 1242w" sizes="100vw">
+    <source data-s="night" data-m="" media="(prefers-color-scheme: dark)" type="image/avif" srcset="/media/world/glass-water/field-night-1280.avif 1280w, /media/world/glass-water/field-night-1920.avif 1920w, /media/world/glass-water/field-night-2560.avif 2560w, /media/world/glass-water/field-night-3840.avif 3840w" sizes="100vw">
+    <source data-s="night" data-m="" media="(prefers-color-scheme: dark)" type="image/webp" srcset="/media/world/glass-water/field-night-1280.webp 1280w, /media/world/glass-water/field-night-1920.webp 1920w, /media/world/glass-water/field-night-2560.webp 2560w, /media/world/glass-water/field-night-3840.webp 3840w" sizes="100vw">
+    <source data-s="day" data-m="(orientation: portrait)" media="(orientation: portrait) and (prefers-color-scheme: light)" type="image/avif" srcset="/media/world/glass-water/field-day-portrait-828.avif 828w, /media/world/glass-water/field-day-portrait-1242.avif 1242w" sizes="100vw">
+    <source data-s="day" data-m="(orientation: portrait)" media="(orientation: portrait) and (prefers-color-scheme: light)" type="image/webp" srcset="/media/world/glass-water/field-day-portrait-828.webp 828w, /media/world/glass-water/field-day-portrait-1242.webp 1242w" sizes="100vw">
+    <source data-s="day" data-m="" media="(prefers-color-scheme: light)" type="image/avif" srcset="/media/world/glass-water/field-day-1280.avif 1280w, /media/world/glass-water/field-day-1920.avif 1920w, /media/world/glass-water/field-day-2560.avif 2560w, /media/world/glass-water/field-day-3840.avif 3840w" sizes="100vw">
+    <source data-s="day" data-m="" media="(prefers-color-scheme: light)" type="image/webp" srcset="/media/world/glass-water/field-day-1280.webp 1280w, /media/world/glass-water/field-day-1920.webp 1920w, /media/world/glass-water/field-day-2560.webp 2560w, /media/world/glass-water/field-day-3840.webp 3840w" sizes="100vw">
+    <img src="/media/world/glass-water/field-day-1920.webp" width="1920" height="1080" alt="" decoding="async" fetchpriority="low">
+  </picture>
+  <canvas class="gw-live"></canvas>
+  <i class="gw-dither"></i>
 </div>
-
-<main id="main">
-
-<!-- what it is -->
-<section class="mv" id="what" aria-labelledby="what-h">
-  <h2 id="what-h" class="reveal">What it does</h2>
-  <p class="body-text reveal">In most languages a function can open a file or call the network and nothing in its signature says so. In <span translate="no">BuildLang</span> each function lists the effects it may perform. If it performs one it did not list, the program does not compile, and the error points at the line. Memory lifetimes are part of the type too, so a function cannot hand back memory that may be freed sooner than promised.</p>
-  <em class="close reveal">The signature says what a function may touch and whose memory it returns, and the compiler checks both.</em>
+<script>(function(){var r=document.documentElement,q=matchMedia("(prefers-color-scheme: dark)");
+function s(){var t=r.dataset.theme;if(!t)return;var d=t==="dark",p=document.querySelector(".gw-backdrop picture");if(!p)return;
+p.querySelectorAll("source[data-s]").forEach(function(x){var on=x.dataset.s===(d?"night":"day");x.media=x.dataset.m+(x.dataset.m?" and ":"")+(on?"all":"not all");});}
+new MutationObserver(s).observe(r,{attributes:true,attributeFilter:["data-theme"]});s();})();</script>
+<header class="o-hand o-said" aria-label="Site">
+  <a class="skip" href="#main">Skip to the page</a>
+  <a class="o-home" href="/">Zain Dana Harper</a>
+  <a data-o="band" href="/world/universe/proto/index.html"><span class="o-name">Map</span></a>
+  <button type="button" data-o="fold" aria-controls="o-menu" aria-keyshortcuts="m" aria-expanded="false" hidden><span class="o-name">Places</span><i></i><i></i><i></i></button>
+  <button type="button" data-o="lamp" data-theme-toggle aria-pressed="true"><span class="o-name">Day</span></button>
+  <span class="o-cell"><button type="button" data-o="peel" data-plain-toggle aria-pressed="false"><span class="o-name">Plain</span></button><span class="o-under" aria-hidden="true">Plain</span></span>
+</header>
+<dialog id="o-menu" data-o="menu" data-material="chladni" aria-label="Places">
+  <nav aria-label="Places">
+    <ul class="o-places">
+      <li><a href="/buildlang.html" aria-current="page"><span class="o-word" data-display-on-open="glyphcell">BuildLang</span></a></li>
+      <li><a href="/world/ui/directions/cs-max/flywheel.html"><span class="o-word" data-display-on-open="light">Flywheel</span></a></li>
+      <li><a href="/raw.html"><span class="o-word" data-display-on-open="nightlights">Engine</span></a></li>
+      <li><a href="/low-water.html"><span class="o-word" data-display-on-open="chladni">Game</span></a></li>
+      <li><a href="/#site"><span class="o-word" data-display-on-open="swarm">Site</span></a></li>
+      <li><a href="/floor.html"><span class="o-word" data-display-on-open="rope">Everything</span></a></li>
+      <li><a href="/world/universe/proto/index.html"><span class="o-word" data-display-on-open="rope">Map</span></a></li>
+      <li><a href="/publications.html"><span class="o-word" data-display-on-open="swarm">Writing</span></a></li>
+      <li><a href="/explainers.html"><span class="o-word" data-display-on-open="sound">Films</span></a></li>
+      <li><a href="/hire.html"><span class="o-word" data-display-on-open="rope">Work</span></a></li>
+      <li><a href="/cv.html"><span class="o-word" data-display-on-open="rope">CV</span></a></li>
+    </ul>
+  </nav>
+  <p class="o-menu-foot"><a href="/elements.html">Elements</a> <a href="/swatches.html">Swatches</a> <a href="/studies/">Studies</a> <a href="/floor.html">Plain index</a> <button type="button" class="o-close" onclick="this.closest('dialog').close()">Close (Esc)</button></p>
+</dialog>
+<main id="main" tabindex="-1">
+<article class="lp" data-landmark="buildlang" data-hue="bldlng">
+<header class="lp-head">
+<h1><span class="d-3d">BuildLang</span> <span class="pf-mark">BLDLNG</span></h1>
+<p class="lp-lede lp-lede-1">A function's type lists what it may touch. The compiler checks it, proves your laws and builds native code through C.</p>
+<p class="lp-purpose" data-canonical-purpose="buildlang">BuildLang is a systems programming language in which a program declares what it is allowed to touch. The compiler checks those declarations and its memory rules, then emits native code through C. It ships with a CLI, editor support, two-way C integration and experimental shader output.</p>
+<p class="lp-run"><code>cargo install buildlang --version 1.14.0 --locked</code></p>
+<p class="lp-rel">Release <a href="https://github.com/HarperZ9/buildlang/releases/tag/v1.14.0">1.14.0</a>, 10 November 2026. Each figure below opens to the pull request it was read from, and says whether that work is in the release, on main after it, or still in review.</p>
+<nav class="lp-ways" aria-label="On this page"><a href="#registry">The registry</a><a href="#laws">Laws and contracts</a><a href="#tv">Translation validation</a><a href="#parallel">Parallel by default</a><a href="#cabi">Into C, and out of it</a><a href="#builddb">BuildDB moves in</a><a href="#first">The first step</a></nav>
+</header>
+<section class="lp-sec" id="registry" aria-labelledby="h-registry">
+<h2 id="h-registry"><span class="d-3d">The registry</span></h2>
+<p class="lp-status">In 1.14.0 (#156, #137, #160).</p>
+<p class="lp-lede">Our own tools, rewritten in BuildLang and checked byte for byte against the originals they replace.</p>
+<p class="lp-run"><code>buildc pkg build</code></p><div class="rgy" data-toy="registry"><ul class="rgy-field" aria-label="Packages in the registry"><li><button type="button" class="rgy-mark" aria-pressed="true" data-check="Published with the package manager in 1.11.0, pure BuildLang." data-origin="from Flywheel">
+<svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="13"/></svg><span class="ident" translate="no">sha256</span> <span class="lp-v">1.0.0</span></button></li><li><button type="button" class="rgy-mark" aria-pressed="false" data-check="Matches Flywheel's RFC 6962 tree on every root and proof for 0 to 40 leaves." data-origin="from Flywheel">
+<svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="13"/></svg><span class="ident" translate="no">merkle</span> <span class="lp-v">1.0.0</span></button></li><li><button type="button" class="rgy-mark" aria-pressed="false" data-check="190 of 190 cases byte-identical with Flywheel's RFC 8785 original." data-origin="from Flywheel">
+<svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="13"/></svg><span class="ident" translate="no">canonical-record</span> <span class="lp-v">1.0.0</span></button></li><li><button type="button" class="rgy-mark" aria-pressed="false" data-check="9 of 9 cases and 400 random texts identical with Flywheel's linter." data-origin="from Flywheel">
+<svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="13"/></svg><span class="ident" translate="no">readability</span> <span class="lp-v">1.0.0</span></button></li><li><button type="button" class="rgy-mark" aria-pressed="false" data-check="34 Sharma CIEDE2000 pairs exact; 608 random pairs within 2.84e-14." data-origin="from build-color">
+<svg viewBox="0 0 40 40" aria-hidden="true"><rect x="8" y="8" width="24" height="24"/></svg><span class="ident" translate="no">color</span> <span class="lp-v">1.0.0</span></button></li><li><button type="button" class="rgy-mark" aria-pressed="false" data-check="The 3 committed artworks and 7 stress artworks byte-identical." data-origin="from this site's tools">
+<svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 6 L34 32 L6 32 Z"/></svg><span class="ident" translate="no">repo-art</span> <span class="lp-v">1.0.0</span></button></li><li><button type="button" class="rgy-mark" aria-pressed="false" data-check="10 of 10 cases byte-identical, with equal exit codes." data-origin="from this site's tools">
+<svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 6 L34 32 L6 32 Z"/></svg><span class="ident" translate="no">art-receipts</span> <span class="lp-v">1.0.0</span></button></li><li><button type="button" class="rgy-mark" aria-pressed="false" data-check="Carries a SHA-256 per version since 1.11.0." data-origin="the standard library">
+<svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 5 L35 20 L20 35 L5 20 Z"/></svg><span class="ident" translate="no">shader-utils</span> <span class="lp-v">1.0.0</span></button></li><li><button type="button" class="rgy-mark" aria-pressed="false" data-check="Carries a SHA-256 per version since 1.11.0." data-origin="the standard library">
+<svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 5 L35 20 L20 35 L5 20 Z"/></svg><span class="ident" translate="no">std-math</span> <span class="lp-v">1.0.0</span></button></li><li><button type="button" class="rgy-mark" aria-pressed="false" data-check="Carries a SHA-256 per version since 1.11.0." data-origin="the standard library">
+<svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 5 L35 20 L20 35 L5 20 Z"/></svg><span class="ident" translate="no">std-collections</span> <span class="lp-v">0.1.0</span></button></li><li><button type="button" class="rgy-mark" aria-pressed="false" data-check="611 of 611 Low Water world states: payload text and hash identical." data-origin="from Low Water, AGPL-3.0-only">
+<svg viewBox="0 0 40 40" aria-hidden="true"><path d="M12 7 L28 7 L36 20 L28 33 L12 33 L4 20 Z"/></svg><span class="ident" translate="no">lw-hash</span> <span class="lp-v">0.1.0</span></button></li><li><button type="button" class="rgy-mark" aria-pressed="false" data-check="40 of 40 combat traces round-trip byte for byte." data-origin="from Low Water, AGPL-3.0-only">
+<svg viewBox="0 0 40 40" aria-hidden="true"><path d="M12 7 L28 7 L36 20 L28 33 L12 33 L4 20 Z"/></svg><span class="ident" translate="no">lw-codec</span> <span class="lp-v">0.1.0</span></button></li><li><button type="button" class="rgy-mark" aria-pressed="false" data-check="The 40 run records identical to the first line of each trace." data-origin="from Low Water, AGPL-3.0-only">
+<svg viewBox="0 0 40 40" aria-hidden="true"><path d="M12 7 L28 7 L36 20 L28 33 L12 33 L4 20 Z"/></svg><span class="ident" translate="no">lw-cbegin</span> <span class="lp-v">0.1.0</span></button></li><li><button type="button" class="rgy-mark" aria-pressed="false" data-check="168,234 bytes identical to the game's expanded move table." data-origin="from Low Water, AGPL-3.0-only">
+<svg viewBox="0 0 40 40" aria-hidden="true"><path d="M12 7 L28 7 L36 20 L28 33 L12 33 L4 20 Z"/></svg><span class="ident" translate="no">lw-moves</span> <span class="lp-v">0.1.0</span></button></li></ul>
+<p class="rgy-check" aria-live="polite"><b class="ident">sha256</b>, from Flywheel: Published with the package manager in 1.11.0, pure BuildLang.</p>
+<ul class="rgy-key" aria-label="What each shape means"><li><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="13"/></svg> from Flywheel</li><li><svg viewBox="0 0 40 40" aria-hidden="true"><rect x="8" y="8" width="24" height="24"/></svg> from build-color</li><li><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 6 L34 32 L6 32 Z"/></svg> from this site's tools</li><li><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 5 L35 20 L20 35 L5 20 Z"/></svg> the standard library</li><li><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M12 7 L28 7 L36 20 L28 33 L12 33 L4 20 Z"/></svg> from Low Water, AGPL-3.0-only</li></ul></div>
+<p class="lp-source">The index, with a SHA-256 for every version: <a href="https://github.com/HarperZ9/buildlang/blob/main/registry/index.json">registry/index.json</a>.</p><ul class="figs"><li class="fig"><details><summary><b class="fig-n d-fine">190 of 190</b> cases of canonical-record are byte-identical with Flywheel's RFC 8785 original</summary>
+<p class="fig-src">Also 75 of 75 published vector fields and 8,000 random documents. <a href="https://github.com/HarperZ9/buildlang/pull/156">buildlang #156, merged 9 November 2026 (b1a4df2), in 1.14.0</a>.</p></details></li>
+<li class="fig"><details><summary><b class="fig-n d-fine">34 of 34</b> Sharma CIEDE2000 pairs from color match build-color exactly</summary>
+<p class="fig-src">608 random pairs agree within 2.84e-14. JzAzBz, ICtCp, HSV and the wide-gamut matrices are left for a later wave. <a href="https://github.com/HarperZ9/buildlang/pull/156">buildlang #156, merged 9 November 2026 (b1a4df2), in 1.14.0</a>.</p></details></li>
+<li class="fig"><details><summary><b class="fig-n d-fine">0 to 40 leaves</b> merkle matches Flywheel's RFC 6962 tree byte for byte on every root, inclusion and consistency proof</summary>
+<p class="fig-src">Published with the package manager: publish, resolve, lock and build offline, with a SHA-256 content hash per version. <a href="https://github.com/HarperZ9/buildlang/pull/137">buildlang #137, merged 8 November 2026 (585ed28), in 1.14.0</a>.</p></details></li>
+<li class="fig"><details><summary><b class="fig-n d-fine">BL0702</b> is the error a tampered package gets; two clean copies build the same C from one lock</summary>
+<p class="fig-src">compiler/tests/pkg_flow.rs also plants an unmeetable range (BL0701), a stale lock (BL0703) and a republish (BL0707). <a href="https://github.com/HarperZ9/buildlang/pull/137">buildlang #137, merged 8 November 2026 (585ed28), in 1.14.0</a>.</p></details></li>
+<li class="fig"><details><summary><b class="fig-n d-fine">4</b> Low Water kernels joined the public registry under AGPL-3.0-only</summary>
+<p class="fig-src">lw-hash, lw-codec, lw-cbegin and lw-moves, each checked against the game's own files; the registry now holds 14 versions, each matching its index. <a href="https://github.com/HarperZ9/buildlang/pull/160">buildlang #160, merged 9 November 2026 (217224f), in 1.14.0</a>.</p></details></li></ul>
 </section>
-
-<!-- the proof -->
-<section class="proof" id="proof" aria-labelledby="proof-h">
-  <div class="proof-head">
-    <h2 id="proof-h" class="reveal">Examples with real compiler output</h2>
-    <p class="body-text reveal">Each of these is a real file checked by the real binary: <span translate="no">buildc</span>, the release binary. The output is verbatim.</p>
-  </div>
-
-  <div class="exhibit reveal">
-    <div class="exhibit-tag"><span class="ord">Exhibit I</span> <span class="what"><span translate="no">BuildLang</span> &middot; effects are part of the signature</span></div>
-    <pre class="artifact" translate="no"><span class="kw">fn</span> load_config() {
-    read_file(<span class="lt">"ops.toml"</span>);        <span class="cmt">// reaches the filesystem</span>
+<section class="lp-sec" id="laws" aria-labelledby="h-laws">
+<h2 id="h-laws"><span class="d-3d">Laws and contracts</span></h2>
+<p class="lp-status">In 1.14.0 (#138).</p>
+<p class="lp-lede">A <dfn class="term">law</dfn> is a property you state beside the code, such as a function never returning less than its input. The compiler proves it, refutes it with a counterexample, or says why it cannot tell; it does not test by sampling alone.</p>
+<p class="lp-run"><code>buildc verify laws.bld</code></p><ul class="figs"><li class="fig"><details><summary><b class="fig-n d-fine">10 of 10</b> false laws with rare counterexamples stay unproved</summary>
+<p class="fig-src">A planted mutant prover, one that treats 0 &gt;= 0 as a contradiction, fails that set. The prover is sound and incomplete: every step only weakens what it knows. <a href="https://github.com/HarperZ9/buildlang/pull/138">buildlang #138, merged 9 November 2026 (25d1171), in 1.14.0</a>.</p></details></li>
+<li class="fig"><details><summary><b class="fig-n d-fine">12 proved, 4 refuted</b> on our own laws: the DETMATH integer rules, the trace codec and conservation laws</summary>
+<p class="fig-src">All four refutations are planted. <a href="https://github.com/HarperZ9/buildlang/pull/138">buildlang #138, merged 9 November 2026 (25d1171), in 1.14.0</a>.</p></details></li>
+<li class="fig"><details><summary><b class="fig-n d-fine">12 of 13</b> of Bend 2's laws, ported, are proved</summary>
+<p class="fig-src">The unknown one, add_comm over a recursive add on all of u32, needs induction the prover does not do. No comparison with Bend or any other verifier on a shared benchmark is claimed. <a href="https://github.com/HarperZ9/buildlang/pull/138">buildlang #138, merged 9 November 2026 (25d1171), in 1.14.0</a>.</p></details></li></ul><p class="lp-source">The whole account: <a href="https://github.com/HarperZ9/buildlang/blob/main/docs/VERIFY.md">docs/VERIFY.md</a> on main.</p>
+</section>
+<section class="lp-sec" id="tv" aria-labelledby="h-tv">
+<h2 id="h-tv"><span class="d-3d">Translation validation</span></h2>
+<p class="lp-status">In 1.14.0 (#161, #162).</p>
+<p class="lp-lede"><dfn class="term">Translation validation</dfn> means proving, function by function, that the C we emit does what its source says: the same traps, the same results. It checks each compiled program, not the compiler for every program.</p>
+<p class="lp-run"><code>buildc tv program.bld</code></p><ul class="figs"><li class="fig"><details><summary><b class="fig-n d-fine">31 of 38</b> functions inside the checked subset are certified in tests/programs, and 22 of 26 in the standard library</summary>
+<p class="fig-src">The subset is integers up to 64 bits and bool, with branches, loops and calls. Most functions fall outside it because they print or use strings, floats or structs. <a href="https://github.com/HarperZ9/buildlang/pull/161">buildlang #161, merged 9 November 2026 (6c90a98), in 1.14.0</a>.</p></details></li>
+<li class="fig"><details><summary><b class="fig-n d-fine">3 of 3</b> adding functions lose their certificate when a planted switch turns + into - in the C backend</summary>
+<p class="fig-src">The other six stay certified. A wrong variable map, a wrong loop head and tampered C are each refused. <a href="https://github.com/HarperZ9/buildlang/pull/161">buildlang #161, merged 9 November 2026 (6c90a98), in 1.14.0</a>.</p></details></li>
+<li class="fig"><details><summary><b class="fig-n d-fine">1 bug</b> found by the checker in the compiler, and fixed: an unannotated integer compared with an i64 was emitted as 32 bits</summary>
+<p class="fig-src">The program passed buildc check and aborted at 2^31; the checker refused the function. The fix types the binding from what the checker inferred. <a href="https://github.com/HarperZ9/buildlang/pull/162">buildlang #162, merged 9 November 2026 (5bb8fad), in 1.14.0</a>.</p></details></li></ul>
+</section>
+<section class="lp-sec" id="parallel" aria-labelledby="h-parallel">
+<h2 id="h-parallel"><span class="d-3d">Parallel by default</span></h2>
+<p class="lp-status">In 1.14.0 (#136).</p>
+<p class="lp-lede">par_for and par_map run on every core, and the checker proves from the source that the body is safe, so the result matches the serial loop byte for byte.</p>
+<p class="lp-limit">The parallel call is written out: BuildLang checks its safety, and does not find parallelism on its own.</p><p class="lp-run"><code>BUILD_PAR_THREADS=8 buildc run program.bld</code></p><ul class="figs"><li class="fig"><details><summary><b class="fig-n d-fine">5.34x</b> n-body kernel speed-up at 8 threads, 95% interval 5.07 to 5.63</summary>
+<p class="fig-src">Per-pixel shading 5.87x [5.57, 6.05]; the Low Water 40-fight corpus 5.09x [4.94, 5.37]. Measured on an i7-13700KF shared with GPU training, 10 rounds. The whole n-body process runs 3.20x faster, because its output loop is serial. <a href="https://github.com/HarperZ9/buildlang/pull/136">buildlang #136, merged 8 November 2026 (bbcf9dd), in 1.14.0</a>.</p></details></li>
+<li class="fig"><details><summary><b class="fig-n d-fine">90 of 90</b> parallel runs printed the same bytes as the serial run</summary>
+<p class="fig-src">Before the fix to the runtime's shared formatting buffers, a control corrupted 2 strings in 1 of 5 runs at 3 threads. <a href="https://github.com/HarperZ9/buildlang/pull/136">buildlang #136, merged 8 November 2026 (bbcf9dd), in 1.14.0</a>.</p></details></li></ul><p class="lp-source">The whole account: <a href="https://github.com/HarperZ9/buildlang/blob/main/docs/PARALLEL.md">docs/PARALLEL.md</a> on main.</p>
+</section>
+<section class="lp-sec" id="cabi" aria-labelledby="h-cabi">
+<h2 id="h-cabi"><span class="d-3d">Into C, and out of it</span></h2>
+<p class="lp-status">In 1.14.0 (#135).</p>
+<p class="lp-lede">Low Water's rules are written in BuildLang and linked into raw-native's C++ host through a plain C header.</p>
+<ul class="figs"><li class="fig"><details><summary><b class="fig-n d-fine">16 of 16</b> checks of raw-native's own C++ test pass against the BuildLang library, as they do against the C++ module</summary>
+<p class="fig-src">A planted threshold fails 1. The story expression language is not ported: a record that needs it makes lw_rules_create refuse it with an error naming the record. <a href="https://github.com/HarperZ9/buildlang/pull/158">buildlang #158, merged 9 November 2026 (3c7cc54), in 1.14.0</a>.</p></details></li>
+<li class="fig"><details><summary><b class="fig-n d-fine">12 of 12</b> DETMATH goldens hold (<dfn class="term">DETMATH</dfn>: BuildLang's deterministic maths, the same bits on every machine, with fast-math shortcuts off), and 40 of 40 combat traces match the game's own corpus</summary>
+<p class="fig-src">The moves file builds to 168,234 bytes, identical to the golden. Both planted trace faults are caught. <a href="https://github.com/HarperZ9/buildlang/pull/158">buildlang #158, merged 9 November 2026 (3c7cc54), in 1.14.0</a>.</p></details></li>
+<li class="fig"><details><summary><b class="fig-n d-fine">34 of 34</b> held-out tasks pass in each of two samples, Wilson 95% 0.90 to 1.00</summary>
+<p class="fig-src">The tasks were sealed before any generator saw them. Both samples are two draws of one model with one prompt, and the task writer also wrote the compiler changes, so the tasks may sit closer to the docs than an outside writer's would. <a href="https://github.com/HarperZ9/buildlang/pull/158">buildlang #158, merged 9 November 2026 (3c7cc54), in 1.14.0</a>.</p></details></li></ul><p class="lp-source">The whole account: <a href="https://github.com/HarperZ9/buildlang/blob/main/docs/LANGUAGE-COMPLETE.md">docs/LANGUAGE-COMPLETE.md</a> on main.</p>
+</section>
+<section class="lp-sec" id="builddb" aria-labelledby="h-builddb">
+<h2 id="h-builddb"><span class="d-3d">BuildDB moves in</span></h2>
+<p class="lp-status">In 1.14.0 (#118, #119).</p>
+<p class="lp-lede">BuildDB is the database written in BuildLang. The compiler already writes a program into it as tables you can query; the database itself is moving into the language's repository.</p>
+<p class="lp-limit">The move is not on GitHub yet, so nothing here links to it.</p><p class="lp-run"><code>buildc bql query prog.bld &quot;SELECT DISTINCT function FROM effects WHERE effect = 'Network'&quot;</code></p><ul class="figs"><li class="fig"><details><summary><b class="fig-n d-fine">4 tables</b> from one program: functions, calls, effects and items, built from the compiler's own analysis</summary>
+<p class="fig-src">bql export writes them in BuildDB's file format, so its full SQL dialect runs over a program; bql query runs a subset in process and names BuildDB for the rest. <a href="https://github.com/HarperZ9/buildlang/pull/118">buildlang #118, merged 4 November 2026 (0caed2d), in 1.14.0</a>.</p></details></li>
+<li class="fig"><details><summary><b class="fig-n d-fine">35 of 35</b> sampled renames agree with a full rebuild, and 1 is refused</summary>
+<p class="fig-src">bql verify rebuilds the store and compares it table by table. No incremental view ships without sampled agreement against a rebuild, and two planted faults are caught. <a href="https://github.com/HarperZ9/buildlang/pull/119">buildlang #119, merged 5 November 2026 (0246f5b), in 1.14.0</a>.</p></details></li></ul>
+</section>
+<section class="lp-sec" id="first" aria-labelledby="h-first">
+<h2 id="h-first"><span class="d-3d">The first step</span></h2>
+<p class="lp-lede">Choose what the function may touch and watch it build or fail.</p>
+<div class="toy" data-toy="effects"><p class="lp-limit">With scripts on, this is a function you can change: choose what it declares and see whether it builds.</p></div>
+<p class="lp-limit">The function above follows BuildLang's rule in the page itself: read_file needs FileSystem, println! needs Console, and effects join with +. The messages copy the wording of the captured run below. The rule is written down in <a href="https://github.com/HarperZ9/buildlang/blob/main/docs/EFFECTS_GUIDE.md">docs/EFFECTS_GUIDE.md</a>.</p>
+<p class="lp-status">Captured from buildc check</p>
+<pre class="lp-code"><code>fn load_config() {
+    read_file(&quot;ops.toml&quot;);   // reaches the filesystem
 }
 
-<span class="pr">$ buildc check missing_effect.bld</span>
-<span class="bad">function `load_config` performs effect `FileSystem` but does not declare it</span>
-  help: add <span class="kw">~ FileSystem</span> to the signature
-  note: capability `FileSystem` was triggered by ambient call(s): read_file
+$ buildc check missing_effect.bld
+function `load_config` performs effect `FileSystem` but does not declare it
+help: add ~ FileSystem to the signature
 
-<span class="cmt"># declare the effect, and the same check passes, then writes a receipt</span>
-<span class="kw">fn</span> load_config() <span class="kw">~ FileSystem</span> { read_file(<span class="lt">"ops.toml"</span>); }
+fn load_config() ~ FileSystem { read_file(&quot;ops.toml&quot;); }
 
-<span class="pr">$ buildc check load_config.bld --receipt receipt.json</span>
-Type checking... <span class="ok">OK</span>
-  <span class="kw">"declared_effects"</span>:      { "load_config": ["FileSystem"] }
-  <span class="kw">"observed_capabilities"</span>: { "load_config": { "FileSystem": ["read_file"] } }</pre>
-    <p class="artifact-cap">Reading a file without declaring it fails to build, with the error on that line. <b>Declare</b> it and the check passes, and <span translate="no">--receipt</span> writes the declared effects next to the observed ones.</p>
-    <p class="artifact-note">Captured from <b translate="no">buildc check</b> (Rust toolchain, release build).</p>
-  </div>
-
-  <div class="exhibit reveal">
-    <div class="exhibit-tag"><span class="ord">Exhibit II</span> <span class="what"><span translate="no">BuildLang</span> &middot; memory has an owner, and the type tracks it</span></div>
-    <pre class="artifact" translate="no"><span class="kw">fn</span> pick&lt;<span class="lt">'a</span>, <span class="lt">'b</span>&gt;(x: &amp;<span class="lt">'a</span> i32, y: &amp;<span class="lt">'b</span> i32) -&gt; &amp;<span class="lt">'a</span> i32 {
-    y          <span class="cmt">// returns 'b where the signature promised 'a</span>
-}
-
-<span class="pr">$ buildc check pick.bld</span>
-Lexing... <span class="ok">OK</span> (28 tokens)
-Parsing... <span class="ok">OK</span> (1 items)
-<span class="bad">Type errors found:</span>
-  <span class="bad">function returns `&amp;'b i32` but expected `&amp;'a i32`</span></pre>
-    <p class="artifact-cap">The function promised to return memory with lifetime <span translate="no">'a</span> and returned memory with lifetime <span translate="no">'b</span>, which may end sooner. The compiler rejects it.</p>
-    <p class="artifact-note">Diagnostic from <b translate="no">compiler/src/types/error.rs</b>, through the lifetime matching in <b translate="no">unify.rs</b>. Lifetimes are tracked across function calls; checking at every call site is not finished yet.</p>
-  </div>
-
-  <div class="exhibit reveal">
-    <div class="exhibit-tag"><span class="ord">Exhibit III</span> <span class="what"><span translate="no">BuildLang</span> &middot; checked, then compiled to native</span></div>
-    <pre class="artifact" translate="no"><span class="cmt"># an algebraic effect with a handler: parsed, effect-checked,</span>
-<span class="cmt"># lowered to C, compiled, and run:</span>
-<span class="pr">$ buildc run examples/quickstart/effects_greeting.bld</span>
-<span class="ok">Hello, teammate!</span></pre>
-    <p class="artifact-cap">The program is parsed, effect-checked, lowered to C, compiled and run.</p>
-    <p class="artifact-note">C is the production backend. LLVM, WASM, SPIR-V, x86-64, ARM64 and Rust output are experimental.</p>
-  </div>
-
-  <div class="exhibit reveal">
-    <div class="exhibit-tag"><span class="ord">Exhibit IV</span> <span class="what"><span translate="no">BuildLang</span> &middot; it speaks C, both ways</span></div>
-    <pre class="artifact" translate="no"><span class="cmt"># name a C library by its header and link flag, then call straight in:</span>
-<span class="kw">extern</span> <span class="lt">"C"</span> <span class="kw">link</span> <span class="lt">"sqlite3"</span> <span class="kw">header</span> <span class="lt">"&lt;sqlite3.h&gt;"</span> {
-    <span class="kw">fn</span> sqlite3_libversion() -&gt; &amp;str;      <span class="cmt">// the header stays authoritative</span>
-}
-<span class="kw">fn</span> main() <span class="kw">~ Foreign</span> { <span class="kw">let</span> v = sqlite3_libversion(); }
-
-<span class="pr">$ buildc build examples/ffi --emit c</span>
-[4/4] Code generation (c)... <span class="ok">OK</span> (53517 bytes)
-
-<span class="cmt"># in the emitted C, verbatim:</span>
-#include <span class="lt">&lt;sqlite3.h&gt;</span>          <span class="cmt">// your header, included as-is</span>
-// buildc-link: sqlite3       <span class="cmt">// recorded, so `buildc build` links it</span>
-_1 = sqlite3_libversion();    <span class="cmt">// the real call into the C library</span>
-
-<span class="cmt"># the reverse is `extern "C" fn` (C calls BuildLang). and a live run</span>
-<span class="cmt"># straight through a C variadic:</span>
-<span class="pr">$ buildc run examples/variadic/main.bld</span>
-<span class="ok">the answer is 1 and 2</span></pre>
-    <p class="artifact-cap">Name a C library by its header and link flag, and <span translate="no">BuildLang</span> includes the header, records the link, and calls straight in. <b><span translate="no">extern "C" fn</span></b> goes the other way, so C can call back. A foreign call is still an effect: <b>main declares <span translate="no">~ Foreign</span></b>, so reaching into C sits behind the same check as touching a file.</p>
-    <p class="artifact-note">Captured from <b translate="no">buildc build --emit c</b> and <b translate="no">buildc run</b> (release build). The final native link against <span translate="no">sqlite3</span> uses your own C toolchain.</p>
-  </div>
+$ buildc check load_config.bld --receipt receipt.json
+Type checking... OK</code></pre>
+<p class="lp-source">The language guide goes on from here: <a href="/buildlang/">the guide</a>, <a href="https://github.com/HarperZ9/buildlang">the source</a>.</p>
 </section>
-
-<!-- accountable scientific compute -->
-<section class="proof" id="science" aria-labelledby="science-h">
-  <div class="proof-head">
-    <h2 id="science-h" class="reveal">Numeric kernels with checked invariants</h2>
-    <p class="body-text reveal">For numeric code, <b translate="no">buildc run --emit-receipt</b> runs a <span translate="no">.bld</span> kernel, captures its output series, checks a stated <em>invariant</em> (a rule the numbers must obey) and writes a JSON receipt. <b translate="no">buildc receipt verify</b> runs the program again and recomputes the verdict, so a changed number, an edited receipt or a changed source each fail with their own error. <b translate="no">buildc receipt export</b> verifies and then sends the measurements to Crucible.</p>
-    <p class="body-text reveal">The verdict covers the output series of the compiled program, and each receipt is labelled <b translate="no">NOT_A_NEW_PHYSICAL_LAW</b>.</p>
-  </div>
-
-  <div class="exhibit reveal">
-    <div class="exhibit-tag"><span class="ord">Exhibit V</span> <span class="what"><span translate="no">BuildLang</span> &middot; run a kernel, seal a receipt, re-derive the verdict</span></div>
-    <pre class="artifact" translate="no"><span class="cmt"># a heat-diffusion kernel: its energy should never climb. run it,</span>
-<span class="cmt"># check the invariant, seal a receipt:</span>
-<span class="pr">$ buildc run heat.bld --emit-receipt heat.json --invariant energy-monotone</span>
-Running... <span class="ok">OK</span> (240 steps captured)
-Invariant energy-monotone... <span class="ok">HELD</span>
-  <span class="kw">"label"</span>:     <span class="lt">"NOT_A_NEW_PHYSICAL_LAW"</span>
-  <span class="kw">"verdict"</span>:   <span class="lt">"HELD"</span>   <span class="cmt">// witnesses the OUTPUT SERIES, not the PDE</span>
-
-<span class="cmt"># re-run from scratch and re-derive the verdict. change a number and it fails:</span>
-<span class="pr">$ buildc receipt verify heat.json</span>
-Re-running program... <span class="ok">OK</span>
-Re-deriving verdict... <span class="ok">MATCH</span>       <span class="cmt"># drift / tamper / source-change each fail typed</span></pre>
-    <p class="artifact-cap"><b>Verify re-runs the program</b> and computes the verdict again, so a changed number, an edited receipt or a changed source each produce their own named failure.</p>
-    <p class="artifact-note">Captured from <b translate="no">buildc run --emit-receipt</b> and <b translate="no">buildc receipt verify</b> (release build).</p>
-  </div>
-
-  <div class="exhibit reveal">
-    <div class="exhibit-tag"><span class="ord">Exhibit VI</span> <span class="what"><span translate="no">BuildLang</span> &middot; eight invariants, each with a kernel built to pass and one built to fail</span></div>
-    <pre class="artifact" translate="no"><span class="cmt"># every invariant ships paired: a kernel that should HOLD and one that</span>
-<span class="cmt"># should VIOLATE, so a verdict of HELD actually means something.</span>
-energy-monotone    <span class="cmt"># the series never climbs past tolerance</span>
-conservation       <span class="cmt"># stays within roundoff of its starting value</span>
-bounded            <span class="cmt"># never exceeds the initial value (a discrete maximum principle)</span>
-energy-identity    <span class="cmt"># per-step energy balance holds to roundoff</span>
-                   <span class="cmt">// the FTCS analogue of d/dt &#8747;u&#178; = -2a &#8747;u_x&#178;</span>
-relation --columns <span class="lt">N</span>  <span class="cmt"># N reported columns must agree, so a run can't hide a divergence</span>
-conserved-band     <span class="cmt"># approximate conservation inside a fixed error budget</span>
-non-negative       <span class="cmt"># an absolute floor: no value drops below zero</span>
-cross-backend      <span class="cmt"># C and Rust backends run the same kernel and must agree</span>
-
-<span class="cmt"># conserved-band grounds symplectic integration, and it shows the point:</span>
-<span class="pr">$ buildc run leapfrog.bld --emit-receipt lf.json --invariant conserved-band</span>
-Invariant conserved-band... <span class="ok">HELD</span>    <span class="cmt"># energy stays in an O(dt&#178;) band</span>
-<span class="pr">$ buildc run euler.bld    --emit-receipt eu.json --invariant conserved-band</span>
-Invariant conserved-band... <span class="bad">VIOLATED</span> <span class="cmt"># explicit Euler drifts out and fails, as it should</span></pre>
-    <p class="artifact-cap"><b>Each invariant has a matched pair:</b> a kernel meant to hold and one meant to break, at a fixed tolerance, so the check is shown failing as well as passing.</p>
-    <p class="artifact-note">Eight invariants: energy-monotone, conservation, bounded, energy-identity, <b translate="no">relation --columns</b>, conserved-band, non-negative and cross-backend. Each has a passing and a failing kernel except cross-backend, which has one kernel run on two backends. The leapfrog and Euler runs show <b>conserved-band</b> telling a stable integrator from a drifting one.</p>
-  </div>
-
-  <div class="exhibit reveal">
-    <div class="exhibit-tag"><span class="ord">Exhibit VII</span> <span class="what"><span translate="no">BuildLang</span> &middot; export witnessed measurements to Crucible</span></div>
-    <pre class="artifact" translate="no"><span class="cmt"># re-verify, then hand witnessed measurements to Crucible (the Telos bridge):</span>
-<span class="pr">$ buildc receipt export heat.json --to crucible</span>
-Re-verifying... <span class="ok">OK</span>
-Emitting witnessed measurements... <span class="ok">OK</span>
-  <span class="kw">"witnessed"</span>: <span class="ok">true</span>   <span class="cmt">// re-derived here, not trusted from the file</span>
-  <span class="kw">"label"</span>:     <span class="lt">"NOT_A_NEW_PHYSICAL_LAW"</span></pre>
-    <p class="artifact-cap"><b>Export verifies first,</b> then sends the measurements to Crucible with the same label.</p>
-    <p class="artifact-note">C is the production backend; HLSL and GLSL cover shaders; SPIR-V, LLVM, WASM, Rust, x86-64 and ARM64 are experimental. The eighth invariant and the receipt chain landed after the crates.io release, so build from source to try them.</p>
-  </div>
-</section>
-
-<!-- maturity -->
-<section class="mv" id="maturity" aria-labelledby="maturity-h">
-  <h2 id="maturity-h" class="reveal">Tests and current state</h2>
-  <p class="body-text reveal">Built in Rust. <b translate="no">cargo test</b> in <span translate="no">compiler/</span> passes 1,605 tests, with 0 failed and 11 ignored. The scientific-runtime receipt corpus passes 27 of 27, and the runnable C-backend corpus passes 8 of 8.</p>
-  <p class="pull reveal">Recent additions: two-way C interop, opt-in linear types and a first step toward automatic memory cleanup.</p>
-  <p class="body-text reveal"><span translate="no">BuildLang</span> calls C libraries by header and link flag and exposes functions as <b translate="no">extern &quot;C&quot;</b> so C can call back, all through <b translate="no">buildc build</b>. Linear types, an opt-in no-cloning rule, are experimental. Automatic memory cleanup is opt-in and narrow. Concurrency is parsed and type-checked, but its runtime is not in compiled programs yet, and the self-hosting compiler does not run yet.</p>
-</section>
-
-<!-- run it -->
-<section class="mv" id="run" aria-labelledby="run-h">
-  <h2 id="run-h" class="reveal">Install and run</h2>
-  <p class="body-text reveal">Install with <b translate="no">cargo install buildlang</b> from <a href="https://crates.io/crates/buildlang" translate="no">crates.io</a>, with a C compiler on your PATH, or build from source. <b translate="no">buildc doctor</b> checks that the C path is ready. Then run the examples, or write a function that touches a file without declaring it and watch the build fail.</p>
-  <pre class="artifact" translate="no"><span class="pr">$ cargo install buildlang</span>            <span class="cmt"># from crates.io; installs the buildc binary</span>
-<span class="cmt"># or from source:</span>
-<span class="pr">$ git clone https://github.com/HarperZ9/buildlang &amp;&amp; cd buildlang/compiler</span>
-<span class="pr">$ cargo build --release</span>
-
-<span class="pr">$ buildc doctor</span>                       <span class="cmt"># toolchain + C-backend readiness</span>
-C backend: <span class="ok">ready</span>
-
-<span class="pr">$ buildc run examples/quickstart/effects_greeting.bld</span>
-<span class="ok">Hello, teammate!</span></pre>
-  <div class="channels reveal">
-    <span class="g">GitHub</span>: <a href="https://github.com/HarperZ9/buildlang" translate="no">HarperZ9/buildlang</a>
-    &nbsp;&middot;&nbsp;
-    <span class="g">Email</span>: <a href="mailto:zaindharper@gmail.com">zaindharper@gmail.com</a>
-    &nbsp;&middot;&nbsp;
-    <a href="overview.html">&larr; the map</a> &nbsp;&middot;&nbsp; <a href="catalog.html">the index</a>
-  </div>
-</section>
-
+<p class="lp-verified"><b>Verified</b> 12 November 2026: the release and its date from GitHub, and crates.io lists 1.14.0; the merge state of every linked pull request from GitHub on the same day; each figure read from the body of the pull request it links.</p>
+</article>
 </main>
-
-<footer class="footer-seal" role="contentinfo">
-  <p class="seal">Effects and lifetimes in the type, checked down to native code.</p>
-</footer>
-
-<script src="system/reveal.js?v=20260902-creative-chassis" defer></script>
 </body>
 </html>

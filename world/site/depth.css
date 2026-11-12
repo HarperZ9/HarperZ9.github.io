@@ -1,0 +1,65 @@
+/* depth.css: one depth model and one palette for lettering across the site (the author, 2026-11-09: "add the 3D and
+   letter coloring to our typography and text bodies").
+
+   Palette: each platform's hue from the shared colour tokens (world/site/crossover/colour-tokens.json, OKLCH hue),
+   chosen on an element by data-hue. Chroma stays at or under the colour system's cap of .105, and every stop sits
+   inside sRGB: where a hue's gamut is narrow at that lightness (violet, blue, pink) the face sits a step lower
+   (--lift) and keeps its chroma. Faces are light (OKLCH L .80 to .94), which holds WCAG AA on the field's dark ground.
+
+   Depth model, lit by the field's light at the upper right. Every part is a hard edge, no blur, printed in order
+   like a reduction linocut, lightest ink last:
+     - the key line: two steps in near black, which separates the solid from the ground behind it;
+     - the side: ten steps toward the lower left in one darker tone of the hue, so the letter reads as a solid cut
+       from plate, with the same side colour all the way down;
+     - the lit edge: one step up and to the right, near white;
+     - the face: the hue as enamel.
+   The face has one switch, --d-lit-face. At 0 the face is one flat colour. At 1 it is lit from above: lighter at
+   the head, the flat colour at 38 percent, a little toward the side tone at the foot. Set it once on :root for the
+   whole site, or on one element. Geometry, light direction and hue do not change with it.
+   The step is a fraction of the letter's own size (--d-s), so depth scales with the lettering from a caption to a wall.
+   Body text (.term, .d-fine) takes the fine version: the face colour and a one-pixel side.
+   A sign may set the colours itself (inline --d-face, --d-lit, --d-side, --d-key), and may print the first three
+   steps of the side in a second ink (--d-band), which reads as a band between the face and the solid.
+   Reading pages give their first heading the fine model (body.reading h1).
+   Plain view, print and forced colours drop depth and colour; nothing moves, so reduced motion has nothing to hold.
+   The words stay single text nodes, so assistive technology reads plain text. */
+:root { --d-bldlng: 288; --d-theflywheel: 65; --d-theplygrnd: 186; --d-thecmmns: 118; --d-artiql8: 250; --d-rsrch: 349; --d-brass: 75; --d-lit-face: 0; }
+[data-hue="bldlng"] { --hue: var(--d-bldlng); --chroma: .1; --lift: -.06; }
+[data-hue="theflywheel"] { --hue: var(--d-theflywheel); --chroma: .095; }
+[data-hue="theplygrnd"] { --hue: var(--d-theplygrnd); --chroma: .1; }
+[data-hue="game"] { --hue: var(--d-theplygrnd); --chroma: .1; --lift: -.06; }
+[data-hue="thecmmns"] { --hue: var(--d-thecmmns); --chroma: .105; }
+[data-hue="artiql8"] { --hue: var(--d-artiql8); --chroma: .1; --lift: -.06; }
+[data-hue="rsrch"] { --hue: var(--d-rsrch); --chroma: .1; --lift: -.03; }
+[data-hue="brass"] { --hue: var(--d-brass); --chroma: .03; --lift: .08; }
+
+/* large lettering: the full model. The face is a clipped background so it can be flat or lit; the solid is a chain
+   of hard drop shadows (1 + 2 + 4 + 3 steps of side, then 2 of key), which leaves the face untouched. */
+.d-3d { --d-s: .0058em;
+  --d-face: oklch(calc(.86 + var(--lift, 0)) var(--chroma, .09) var(--hue, 75));
+  --d-lit: oklch(.97 calc(var(--chroma, .09) * .12) var(--hue, 75));
+  --d-side: oklch(calc(.44 + var(--lift, 0) * .5) calc(var(--chroma, .09) * .7) var(--hue, 75));
+  --d-key: oklch(.13 .02 var(--hue, 75));
+  color: var(--d-face); -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(180deg, color-mix(in oklab, var(--d-face), var(--d-lit) calc(var(--d-lit-face) * 55%)) 0%, var(--d-face) 38%, color-mix(in oklab, var(--d-face), var(--d-side) calc(var(--d-lit-face) * 16%)) 100%);
+  -webkit-background-clip: text; background-clip: text;
+  text-shadow: none !important;
+  filter: drop-shadow(calc(var(--d-s) * 1.2) calc(var(--d-s) * -1.2) 0 var(--d-lit))
+          drop-shadow(calc(var(--d-s) * -1) var(--d-s) 0 var(--d-band, var(--d-side)))
+          drop-shadow(calc(var(--d-s) * -2) calc(var(--d-s) * 2) 0 var(--d-band, var(--d-side)))
+          drop-shadow(calc(var(--d-s) * -4) calc(var(--d-s) * 4) 0 var(--d-side))
+          drop-shadow(calc(var(--d-s) * -3) calc(var(--d-s) * 3) 0 var(--d-side))
+          drop-shadow(calc(var(--d-s) * -1) var(--d-s) 0 var(--d-key))
+          drop-shadow(calc(var(--d-s) * -1) var(--d-s) 0 var(--d-key)); }
+.d-3d::selection { -webkit-text-fill-color: HighlightText; color: HighlightText; background: Highlight; }
+
+/* body text: the fine model, crisp at 16 px */
+.term, dfn.term { font-style: normal; font-weight: 700;
+  color: oklch(calc(.86 + var(--lift, 0)) var(--chroma, .09) var(--hue, 75)); text-shadow: -1px 1px 0 oklch(.3 calc(var(--chroma, .09) * .6) var(--hue, 75)), 0 0 6px rgba(7, 16, 26, .9); }
+.d-fine { color: oklch(calc(.86 + var(--lift, 0)) var(--chroma, .09) var(--hue, var(--d-brass))); text-shadow: -1px 1px 0 oklch(.3 calc(var(--chroma, .09) * .6) var(--hue, var(--d-brass))), 0 0 6px rgba(7, 16, 26, .9); }
+
+body.reading main h1:not(.d-3d) { text-shadow: -1px 1px 0 oklch(.3 .03 var(--d-brass)), -2px 2px 0 oklch(.13 .02 var(--d-brass)); }
+
+html.plain body.reading main h1, html.plain .d-3d, html.plain .term, html.plain .d-fine { color: inherit; -webkit-text-fill-color: currentColor; background: none; filter: none; text-shadow: none !important; font-weight: inherit; }
+@media print { body.reading main h1, .d-3d, .term, .d-fine { color: #000; -webkit-text-fill-color: currentColor; background: none; filter: none; text-shadow: none !important; } }
+@media (forced-colors: active) { body.reading main h1, .d-3d, .term, .d-fine { color: CanvasText; -webkit-text-fill-color: currentColor; background: none; filter: none; text-shadow: none !important; } }

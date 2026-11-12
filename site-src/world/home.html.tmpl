@@ -29,6 +29,11 @@
 <link rel="stylesheet" href="/world/site/field.css">
 <link rel="stylesheet" href="/world/site/home.css">
 <link rel="stylesheet" href="/world/site/work.css">
+<link rel="stylesheet" href="/world/site/supergraphic.css">
+<link rel="stylesheet" href="/world/site/hand-icons.css">
+<link rel="stylesheet" href="/world/site/depth.css">
+<link rel="preload" href="/world/site/supergraphic/AccessionSuper-signs.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/world/site/supergraphic/AccessionDisplay-name.woff2" as="font" type="font/woff2" crossorigin>
 <script type="module" src="/world/ui/shell/shell.js"></script>
 <script type="module" src="/world/site/budget.js"></script>
 <script type="module" src="/world/site/hum.js"></script>
@@ -44,17 +49,15 @@
 <canvas id="crossing" class="crossing" data-art aria-hidden="true"></canvas>
 <main id="main">
   <section class="arrival" aria-labelledby="h-name">
-    <h1 id="h-name">Zain Dana Harper</h1>
+    {{SUPER}}
+    <h1 id="h-name" class="d-3d" data-hue="brass">Zain Dana Harper</h1>
     <p class="arrival-lede">I build tools that check AI work against its sources, and an engine that renders one idea in every medium.</p>
     <nav class="arrival-ways" aria-label="Ways in">
-      <a href="#work">The work</a><a href="/world/universe/proto/path.html">The road</a><a href="#p-light">The places</a><a href="/floor.html">Everything</a>
+      {{WAYS}}
     </nav>
   </section>
-  {{PLATFORMS}}
 {{WORK}}
-  <div class="bazaar" aria-label="Places">
-{{BAZAAR}}
-  </div>
+  {{LANDMARKS}}
   <footer class="colophon">
     <nav aria-label="More">
       <a href="/floor.html">Everything</a><a href="/world/universe/proto/index.html">The map</a><a href="/elements.html">Elements</a><a href="/swatches.html">Swatches</a><a href="/studies/">Studies</a><a href="/workshop.html">The workshop</a><a href="/credits.html">Credits</a>

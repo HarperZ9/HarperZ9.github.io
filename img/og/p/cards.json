@@ -88,7 +88,7 @@
   "image": "https://harperz9.github.io/img/og/p/build-color.jpg?v=5e95149c11a6"
  },
  "buildlang.html": {
-  "alt": "BuildLang: a typed-effects language, by Zain Dana Harper. A square chip at the center with its pins fanned out on all four sides as thin routed traces, each ending in a small pad, and a bright core inside the chip.",
+  "alt": "BuildLang, by Zain Dana Harper. A square chip at the center with its pins fanned out on all four sides as thin routed traces, each ending in a small pad, and a bright core inside the chip.",
   "image": "https://harperz9.github.io/img/og/p/buildlang.jpg?v=e05ae222febc"
  },
  "bulletin.html": {
@@ -338,6 +338,10 @@
  "loom.html": {
   "alt": "The Loom, by Zain Dana Harper. A bright core inside a ring that breaks into offset slices, like a glitching signal.",
   "image": "https://harperz9.github.io/img/og/p/loom.jpg?v=7c39aec4e450"
+ },
+ "low-water.html": {
+  "alt": "Low Water, by Zain Dana Harper. Two flat discs overlap, and the overlap takes the colour the two inks print together.",
+  "image": "https://harperz9.github.io/img/og/p/low-water.jpg?v=fb011ada363c"
  },
  "ltj-bukem-the-man-behind-the-atmosphere.html": {
   "alt": "LTJ Bukem: The Man Behind the Atmosphere, by Zain Dana Harper. A soft glowing orb hangs over a field of short woven strokes, like sound drawn as texture.",

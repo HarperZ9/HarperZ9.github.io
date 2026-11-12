@@ -1,0 +1,4 @@
+{
+ "about": "Music for the site. The composition track adds a piece here as {name, src, loop, title, credit}; sound.js plays a piece only after the reader turns sound on.",
+ "tracks": []
+}

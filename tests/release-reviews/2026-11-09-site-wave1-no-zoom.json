@@ -1,0 +1,7 @@
+{
+  "date": "2026-11-09",
+  "note": "The 4K page zoom is withdrawn: zooming the root also doubles viewport units, which pushed the arrival below the first screen at 3840.",
+  "paths": {
+    "index.html": "99c564f6da67647b997f8401d1fa8bad18f04de432c552874b0eb857547a3d66"
+  }
+}

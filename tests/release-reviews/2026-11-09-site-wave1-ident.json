@@ -1,0 +1,7 @@
+{
+  "date": "2026-11-09",
+  "note": "The dial's package link stays an inline box so the name keeps the .ident rule on narrow screens; asset revision restamped.",
+  "paths": {
+    "index.html": "d8dada1109609d4f56d6f8e22d852eb01d7034760e728e89117d69590205f406"
+  }
+}

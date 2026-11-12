@@ -18,6 +18,9 @@ rule ~ dynamic is."), with Hanken Grotesk and Conso as the still faces.
   `credits.html`; third-party media is never copied into our outputs. Accession and its families ship under the
   SIL Open Font License 1.1 with `OFL.txt` beside them.
 - The non-extractive end: nothing that pays out for staying, no autoplaying sound, no dark patterns or false urgency.
+- Landmarks keep their place. The field may move; the places a reader returns to do not. Anything a person
+  navigates by keeps its position and name across visits, and Back returns to the last meaningful state. (Author,
+  2026-11-09: "Yes".)
 
 ## Where the rendering lives
 

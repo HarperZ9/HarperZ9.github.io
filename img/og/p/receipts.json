@@ -3246,6 +3246,42 @@
     "t": 0
    }
   },
+  "low-water.jpg": {
+   "backend": "chrome-156.0.8078.75-skia",
+   "content_sha256": "7eff70e1a78c1f7a41244fc674bed3fc937a95ff9386bca7fa5712d6b4e9f287",
+   "does_not_prove": [
+    "It does not show the figure's numbers come from a real run, except where the alt text quotes a README result.",
+    "It does not show the PNG bytes are the same under another Chrome build; the SVG and the scene are the portable record.",
+    "It does not show the artwork meets the brand rules; that is a human review against ART-DIRECTION.md."
+   ],
+   "media": {
+    "format": "rgb8",
+    "height": 630,
+    "kind": "image",
+    "transfer": "srgb",
+    "width": 1200
+   },
+   "outputs": {
+    "low-water.jpg": "fb011ada363ccbbea00a5450b0751f5a303f0d7c6a1d048435fa322cffea1194",
+    "low-water.svg": "22e85a5052cda9ca4d1fef4212c45c9fdf8f7ffb14f43d822f1728ea5f3208d2"
+   },
+   "producer": {
+    "name": "harperz9.repo-art",
+    "version": "0.1.0"
+   },
+   "receipt_sha256": "2124fef3be74e75899a6a9e1c8c00d69f9189b8888d9546a314604143719e506",
+   "reconcile": null,
+   "scene_sha256": "e176961ffa2792f6b1af27d26e56e8ef0da6036dbf194ca5caf390dd5ae8cda3",
+   "schema": "superstack.receipt/1",
+   "seed": "low-water",
+   "seed_rule": "xmur3-mulberry32/1",
+   "seed_u32": 1496472807,
+   "time": {
+    "base": "flicks",
+    "per_second": 705600000,
+    "t": 0
+   }
+  },
   "ltj-bukem-the-man-behind-the-atmosphere.jpg": {
    "backend": "chrome-156.0.8078.75-skia-2x-lanczos",
    "content_sha256": "139c654e9c8ef1e7b17c2a64a3264c24334a57e1aa9d2a2573abd21d0d5b1540",
