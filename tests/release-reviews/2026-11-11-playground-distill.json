@@ -1,0 +1,11 @@
+{
+  "date": "2026-11-11",
+  "note": "The Playground front page and Distill are added: two pages in the sitemap, route registry and site index, with their cards; the world asset revision is restamped because Distill's modules join the world assets.",
+  "paths": {
+    "index.html": "47ed9726d8c656b8573e9986fb290c4fe542a512d695f2238d8ad1d41b1fa53f",
+    "publications/build.json": "7ab07ecbd662dbe022fb2a10b1ab1416299e3b98c7338d964a7576907781b56e",
+    "site-index.html": "efd82cc3ac3b3f2017a00cb808831d8eed73eef792ed4d51c0018917586b60af",
+    "sitemap.xml": "344910c5709db7a72a048f8868ff05b9b4907f58fd591be044622ab53ac2a5fd",
+    "system/routes.js": "e9e67b639b1eee3047f39d9430195d4bf9e4cda947529972496d6f2e26c0b406"
+  }
+}

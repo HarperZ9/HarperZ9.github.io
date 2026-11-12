@@ -1,0 +1,38 @@
+/* Distill: the page is the report. Words, one strip per file, and tables; no panels. */
+.ds-body main { max-width: min(1100px, 100%); }
+.ds h1 { margin: 0 0 .2em; font: 800 clamp(34px, 6vw, 76px)/1 var(--face-display, inherit); letter-spacing: -.02em; }
+.ds-lede { max-width: 62ch; font-size: clamp(17px, 1.4vw, 20px); line-height: 1.5; }
+.ds-drop { margin: 28px 0 8px; padding: clamp(20px, 4vw, 44px) 0; border-block: 1px solid var(--line); display: grid; gap: 14px; }
+.ds-drop[data-over] { border-block-color: var(--ink); border-block-width: 3px; }
+.ds-drop p { margin: 0; max-width: 62ch; }
+.ds-pick { display: flex; flex-wrap: wrap; gap: 12px 28px; }
+.ds-pick label { cursor: pointer; font-weight: 700; text-decoration: underline; text-underline-offset: 4px; }
+.ds-pick input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.ds-pick label:focus-within { outline: 2px solid var(--ink); outline-offset: 4px; }
+.ds-status { min-height: 1.5em; font-weight: 700; max-width: 80ch; overflow-wrap: anywhere; }
+.ds-file { margin: 22px 0; padding-top: 14px; border-top: 1px solid var(--line); }
+.ds-file > summary { cursor: pointer; font-size: 18px; overflow-wrap: anywhere; }
+.ds-file > summary span { color: var(--soft); }
+.ds-file .ds-file { margin-left: clamp(8px, 2vw, 28px); }
+.ds-say { max-width: 80ch; overflow-wrap: anywhere; }
+.ds-map { display: block; width: 100%; height: 76px; margin: 10px 0 14px; }
+.ds-facts { display: grid; grid-template-columns: max-content 1fr; gap: 4px 20px; margin: 0 0 12px; font-variant-numeric: tabular-nums; }
+.ds-facts dt { color: var(--soft); }
+.ds-facts dd { margin: 0; overflow-wrap: anywhere; }
+.ds-note { color: var(--soft); max-width: 80ch; overflow-wrap: anywhere; }
+.ds-scroll { overflow-x: auto; }
+.ds-parts { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
+.ds-parts th, .ds-parts td { text-align: left; padding: 5px 18px 5px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+.ds-parts td:first-child { overflow-wrap: anywhere; min-width: 14ch; }
+.ds-parts td:nth-child(n+3), .ds-parts th:nth-child(n+3) { text-align: right; white-space: nowrap; }
+.ds-sw { display: inline-block; width: 10px; height: 10px; margin-right: 8px; }
+.ds-root { font-variant-numeric: tabular-nums; overflow-wrap: anywhere; color: var(--soft); }
+.ds-mix { display: flex; flex-wrap: wrap; gap: 4px 24px; padding: 0; list-style: none; }
+.ds-save { display: inline-block; margin: 18px 0; font-weight: 700; }
+.ds-key { display: flex; flex-wrap: wrap; gap: 6px 22px; padding: 0; margin: 12px 0; list-style: none; color: var(--soft); }
+.ds-key canvas { width: 34px; height: 14px; vertical-align: -2px; margin-right: 6px; }
+.ds-how { max-width: 70ch; }
+.ds-how h2, .ds h2 { font-size: 22px; margin: 36px 0 8px; }
+.pg-list { padding: 0; list-style: none; display: grid; gap: 18px; max-width: 70ch; }
+.pg-list a { font-weight: 800; font-size: 20px; }
+.pg-list p { margin: 2px 0 0; }
