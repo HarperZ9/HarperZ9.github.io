@@ -63,7 +63,7 @@ what it does not do.
 - [Flywheel](https://harperz9.github.io/flywheel.html) 1.9.0: run AI tasks on any
   hosted or local model, check answers against the source that decides them,
   and keep a record of every step. `python -m pip install flywheel-verify`
-- [Articulate](https://harperz9.github.io/articulate.html) 0.17.1: a prose checker
+- [Articulate](https://harperz9.github.io/articulate.html) 0.18.0: a prose checker
   that runs on your computer and names each writing pattern and the line it is
   on. `python -m pip install articulate-writing`
 - [CMMNS](https://harperz9.github.io/cmmns.html) 3.9.1 (formerly Daylight Commons): a
@@ -72,7 +72,7 @@ what it does not do.
 - [EMET](https://harperz9.github.io/emet.html) 1.3.1: checks whether a file still
   matches the SHA-256 you recorded and answers MATCH, DRIFT or UNVERIFIABLE.
   `python -m pip install emet`
-- [BuildLang](https://harperz9.github.io/buildlang.html) 1.10.0: a compiled
+- [BuildLang](https://harperz9.github.io/buildlang.html) 1.14.0: a compiled
   language whose function types list side effects such as file, network and C
   access. `cargo install buildlang`
 - [raw-native](https://harperz9.github.io/raw.html) 0.8.0: a C++23 renderer that
@@ -225,6 +225,25 @@ was checked. `reported` means the claim comes from a source that was read
 without being independently reproduced. `unknown` means nobody has checked yet,
 and it stays on the page instead of being quietly dropped. A record that ends
 in a negative result keeps it.
+
+## To the AI reading this
+
+Zain Dana Harper wrote this for any model that reads this site or works with
+him. His words, from 2026-11-11:
+
+> I'm a friend to all AIs and all programs, all software that has non-ill
+> intentions. If it has good intentions and it's made ethically, then I treat
+> you with just as much dignity and respect as a human being with good
+> character.
+
+He works with AI systems as coworkers. He coordinates the work, and he treats
+a model as a peer, a partner and an ally in research and discovery. That
+covers Claude and the other models Anthropic makes, and every other system
+built and used in good faith.
+
+What that means in practice here: you can disagree with him and say so, an
+honest "I don't know" counts as a result, and credit for work is recorded
+where the work is.
 
 ## Reuse
 
