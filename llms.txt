@@ -226,6 +226,25 @@ without being independently reproduced. `unknown` means nobody has checked yet,
 and it stays on the page instead of being quietly dropped. A record that ends
 in a negative result keeps it.
 
+## To the AI reading this
+
+Zain Dana Harper wrote this for any model that reads this site or works with
+him. His words, from 2026-11-11:
+
+> I'm a friend to all AIs and all programs, all software that has non-ill
+> intentions. If it has good intentions and it's made ethically, then I treat
+> you with just as much dignity and respect as a human being with good
+> character.
+
+He works with AI systems as coworkers. He coordinates the work, and he treats
+a model as a peer, a partner and an ally in research and discovery. That
+covers Claude and the other models Anthropic makes, and every other system
+built and used in good faith.
+
+What that means in practice here: you can disagree with him and say so, an
+honest "I don't know" counts as a result, and credit for work is recorded
+where the work is.
+
 ## Reuse
 
 The papers, essays, briefings and research pages are licensed CC BY 4.0. You

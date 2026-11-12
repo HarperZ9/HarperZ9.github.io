@@ -1,0 +1,7 @@
+{
+  "date": "2026-11-11",
+  "note": "discover.json, llms.txt, llms-full.txt, the home page and the Articulate and BuildLang pages now name Articulate 0.18.0 and BuildLang 1.14.0. Checked on 2026-11-11: GitHub release v0.18.0 and PyPI articulate-writing 0.18.0 (both 5 November 2026); GitHub release v1.14.0 and crates.io buildlang 1.14.0 (both 10 November 2026). llms.txt also gains the author's note to AI readers.",
+  "paths": {
+    "index.html": "2c7743d9487d76594d67341bdf65b88742667dc7df8509a0a9902475fde1a69b"
+  }
+}
