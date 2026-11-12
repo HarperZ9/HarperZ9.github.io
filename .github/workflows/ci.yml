@@ -66,6 +66,11 @@ jobs:
         run: >-
           node --test system/media-engine/sound.test.mjs system/media-engine/sound-retro.test.mjs system/audio.test.mjs system/midi-writer.test.mjs
           system/studio-sound.test.mjs system/scope-voice.test.mjs system/ans-voice.test.mjs
+      # The ear (known signals with known answers), the site music's voices, composer and renderer, and the
+      # planted-defect controls: clean renders raise no flag and each of eighteen defects raises its own.
+      - name: The ear and the site music
+        if: ${{ !cancelled() }}
+        run: node --test system/ear/ear.test.mjs system/ear/shape.test.mjs system/ear/note.test.mjs system/ear/identity.test.mjs system/site-music/voices.test.mjs system/site-music/music.test.mjs system/site-music/controls.test.mjs
       # The Python twins and the recorded-gate checks need numpy and scipy. Four tests need data
       # the repository does not carry (audit frames, the decoded image set, a Telos MCP checkout);
       # they skip with the reason printed. tests/telos-track-a/README.md has the full local run.
