@@ -2044,14 +2044,13 @@
    },
    "outputs": {
     "floor.jpg": "235c266e8046ad94d306d4bc57f5950e3cb187200eade2c403c781725072e51c",
-    "floor.svg": "7d2e71d785db05e71b63c293994c77105bda9eb7844601dab8e1350ada9f2652",
-    "floor@2x.jpg": "e99b9821020fc78249d64285bce08d1086e510f2a099767f506140bd40c07e20"
+    "floor.svg": "7d2e71d785db05e71b63c293994c77105bda9eb7844601dab8e1350ada9f2652"
    },
    "producer": {
     "name": "harperz9.repo-art",
     "version": "0.1.0"
    },
-   "receipt_sha256": "cc833b68eca8bdb9118c9f937693f96d6366864e98e62ed39452d23723a665af",
+   "receipt_sha256": "32a398e9075d0208ca383a60614542d94d3df24473c56a037cb603aeff5b5f96",
    "reconcile": null,
    "scene_sha256": "326bfdcf45d3018be61eacf6ed240f161c1d639c001b301a61a2003892a12042",
    "schema": "superstack.receipt/1",
