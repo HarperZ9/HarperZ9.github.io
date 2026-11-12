@@ -1,0 +1,7 @@
+{
+  "date": "2026-11-11",
+  "note": "Bench branch merged with main after Distill; the registry gains the Bulletin row, so the bench count line and the asset revision changed. No visual change beyond that count.",
+  "paths": {
+    "index.html": "f077ce37f5e7a99694078bf5aa6d7174b1482b306296843efa5ca491b7115af1"
+  }
+}
