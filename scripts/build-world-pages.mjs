@@ -105,7 +105,7 @@ ${surface("living lettering motion well", "type ink paper", "Type as a material"
   return write("accession.html", page({ path: "accession.html", title: "Accession", description: "Accession, a type family drawn in code, under the SIL Open Font License 1.1: Text, Display, Mono, Super and the technique cuts.", body, bodyClass: "reading bench-body",
     // the specimen loads letter subsets of each face (system/fonts/accession/specimen/, about 225 KB against 1.5 MB);
     // the full faces stay one link away in accession.css
-    extraHead: '<link rel="stylesheet" href="/system/fonts/accession/specimen/specimen.css">\n<link rel="stylesheet" href="/world/site/pages.css">' }));
+    extraHead: '<link rel="stylesheet" href="/system/fonts/accession/specimen/specimen.css">\n<link rel="stylesheet" href="/world/site/pages.css">\n<link rel="stylesheet" href="/world/site/surfaces/bench.css">' }));
 }
 
 function credits() {
