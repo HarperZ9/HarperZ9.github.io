@@ -134,9 +134,8 @@ body.reading .gw-backdrop::after { background: radial-gradient(ellipse 70% 120% 
 /* magnetic links (world/site/magnet.js): the held link leans toward the pointer and its underline takes full weight */
 :is(.wi-links, .wi-jump, .floor-list) a { display: inline-block; } /* the hand's links are flex items already */
 a[data-held] { text-decoration-thickness: 2px; text-underline-offset: .2em; }
-/* the drawn platform marks (scripts/crossover-marks.mjs): glass lit from behind, its light carried as alpha */
-.xo-mark, .xo-mark img { display: block; width: 112px; height: 112px; }
-.xo-mark { margin: 0 0 4px -10px; }
+/* the drawn platform marks (scripts/marks/): flat inks with computed overlaps, key ink light for the water field */
+.xo-mark { display: block; width: 104px; height: 104px; margin: 0 0 8px -4px; }
 /* the hand says what each control does: a word under each form, which is also its accessible name
    (scripts/hand-labels.mjs). The forms stay; nothing is boxed. */
 .o-hand.o-said { padding-bottom: 22px; gap: 14px; }

@@ -4801,6 +4801,78 @@
     "t": 0
    }
   },
+  "playground--distill.jpg": {
+   "backend": "chrome-156.0.8078.75-skia",
+   "content_sha256": "04be45ed27a9279024eef7c7ab9d176b7f617dcefefb52d7cc16a862cbc805dc",
+   "does_not_prove": [
+    "It does not show the figure's numbers come from a real run, except where the alt text quotes a README result.",
+    "It does not show the PNG bytes are the same under another Chrome build; the SVG and the scene are the portable record.",
+    "It does not show the artwork meets the brand rules; that is a human review against ART-DIRECTION.md."
+   ],
+   "media": {
+    "format": "rgb8",
+    "height": 630,
+    "kind": "image",
+    "transfer": "srgb",
+    "width": 1200
+   },
+   "outputs": {
+    "playground--distill.jpg": "ed6e6b2f727b660ab63968f225bfe8900b1314695d05968b26305f614dfe8408",
+    "playground--distill.svg": "88b36a3b5a02c39a07b5139c2a200d6167115f8d2e74631ce600f75f1eb9a07e"
+   },
+   "producer": {
+    "name": "harperz9.repo-art",
+    "version": "0.1.0"
+   },
+   "receipt_sha256": "95d532058336b6b488ca86cd7bfed5b257f5f457be2bec05039fd647b6f1da15",
+   "reconcile": null,
+   "scene_sha256": "0bd40366c6bab30a258f33fde0ffc6ac15dcab29e0a5219b575e76edf748ba0b",
+   "schema": "superstack.receipt/1",
+   "seed": "playground--distill",
+   "seed_rule": "xmur3-mulberry32/1",
+   "seed_u32": 2462893817,
+   "time": {
+    "base": "flicks",
+    "per_second": 705600000,
+    "t": 0
+   }
+  },
+  "playground.jpg": {
+   "backend": "chrome-156.0.8078.75-skia",
+   "content_sha256": "80b6942626cb17f48f381a37152c1f4d09cbad7211ead553d2b1a8f5cee105ba",
+   "does_not_prove": [
+    "It does not show the figure's numbers come from a real run, except where the alt text quotes a README result.",
+    "It does not show the PNG bytes are the same under another Chrome build; the SVG and the scene are the portable record.",
+    "It does not show the artwork meets the brand rules; that is a human review against ART-DIRECTION.md."
+   ],
+   "media": {
+    "format": "rgb8",
+    "height": 630,
+    "kind": "image",
+    "transfer": "srgb",
+    "width": 1200
+   },
+   "outputs": {
+    "playground.jpg": "fcc16aca71eaa1d471ccf42fdc0d080728265b4983dae6a9d7a38945fa17fcd2",
+    "playground.svg": "95db7355c25d3da387d8e70c8a38f601f4d88dde3e99cd323ff6a334908bb03f"
+   },
+   "producer": {
+    "name": "harperz9.repo-art",
+    "version": "0.1.0"
+   },
+   "receipt_sha256": "1b6497868a5250084f48f1aaac4334a1dc9ab1ce9dc00d4566bcd034d98ca732",
+   "reconcile": null,
+   "scene_sha256": "252544e56001d57fee1c87768ac58e694b4a1f49ca9cf06c78f9243c647df0ac",
+   "schema": "superstack.receipt/1",
+   "seed": "playground",
+   "seed_rule": "xmur3-mulberry32/1",
+   "seed_u32": 747911200,
+   "time": {
+    "base": "flicks",
+    "per_second": 705600000,
+    "t": 0
+   }
+  },
   "portfolio.jpg": {
    "backend": "chrome-154.0.8037.95-skia",
    "content_sha256": "3f7efb40e02250ac2a2c2cf90fc5216571f13f73f5217fdc6a0a04794ea89115",
