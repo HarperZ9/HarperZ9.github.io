@@ -1,0 +1,522 @@
+{
+ "schema": "research-record/1",
+ "built": "2026-11-09 by scripts/record-findings.mjs from paper.txt, the register row and the findings ledger",
+ "document": {
+  "id": "F281",
+  "kind": "finding",
+  "title": "A home rerun of the GRB 090510 light-speed test, and sound waves that keep their own limit",
+  "standfirst": "Using public Fermi photons from one gamma-ray burst, we bound any energy-dependent change in light speed to under 7.6 parts in a quintillion at 30 GeV, about 24 times weaker than the published limit from the same burst. In a simulated fluid, sound obeys its own speed limit at long wavelengths and leaves it at short ones by a known law.",
+  "date_found": "2026-10-31",
+  "fields": [
+   "physics",
+   "physics-other"
+  ],
+  "tier": "D",
+  "tier_reason": "Rung: killed in tested band. Locked with planted checks, self-graded, simulation or public data, largely reproducing or testing published results.",
+  "rung": "hypothesis",
+  "rung_reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
+  "outcome": "null",
+  "bound": "Rules out a linear energy-dependent change in light speed larger than 7.6e-18 of c at 29.9 GeV, an energy scale below 0.32 Planck energies; the published bound from the same burst is about 24 times stronger.",
+  "objection": "The bound holds only in the tested band, about 0.1 to 30 GeV, and only for a delay linear in energy. The quadratic form, other energies and other carriers were not tested.",
+  "objection_source": "the paper's first stated limitation; no reviewer attack is on file",
+  "would_change": "Outside reader; primary full text for hand-typed rows; own instrument or data where simulated.",
+  "sections": [
+   {
+    "id": "reader",
+    "title": "What this means for a reader",
+    "role": "lead",
+    "paragraphs": [
+     "Ask whether some waves can beat the speed of light, and the answer depends on which speed you mean. For light in empty space, the highest-energy photons from a burst 7 billion years away arrived with the low-energy ones, and even our plain reanalysis puts a tight lid on any energy-dependent speed. In a medium, waves have their own limits that bend at short wavelengths by an ordinary, known law. Neither result needs new physics, and the bound from our rerun is weaker than the published one, so quote the published one."
+    ]
+   },
+   {
+    "id": "abstract",
+    "title": "Abstract",
+    "role": "argument",
+    "paragraphs": [
+     "Some ideas about quantum gravity predict that light in vacuum travels at a speed that depends slightly on photon energy. A short, distant gamma-ray burst tests this well, because high-energy and low-energy photons leave together and travel for billions of years. We reran the test on the public Fermi Large Area Telescope photons from GRB 090510 with a simple method, fixed in advance. {c1}Our rerun bounds any linear energy-dependent change in light speed to less than 7.6e-18 of c at 29.9 GeV, a linear energy scale above 0.32 Planck energies, about 24 times weaker than the published limit of 7.6 Planck energies from the same burst.{/c1} The value of the rerun is as a reproduction of the method, and the published limits stand. {c2}Planted delays from 1 to 10 times our bound were recovered within 0.9 percent, and the fitted slope of zero sat inside the range that shuffled photon energies gave.{/c2} In the same study we simulated sound, which has a speed limit of its own. {c3}Sound in a uniform flow moved at the flow speed plus or minus the sound speed to within 1e-6, and in a simulated condensate the wave frequencies followed the Bogoliubov law within 2 percent, with a short-wavelength packet moving at 2.89 times the sound speed.{/c3} {c4}Twelve of the 15 preregistered rules passed; the three that failed were two forecasts of our own bound's strength and one test of a packet near a simulated horizon.{/c4}"
+    ]
+   },
+   {
+    "id": "intro",
+    "title": "Introduction",
+    "role": "argument",
+    "paragraphs": [
+     "Special relativity says every observer measures the same speed of light. Several approaches to quantum gravity allow a small {g:liv}Lorentz invariance violation{/g} in which that speed depends on photon energy. The size of such an effect is usually stated as a {g:eqg}linear energy scale (E_QG,1){/g}, and the natural reference is the {g:planck-energy}Planck energy{/g}. A photon of 30 GeV is about 1e-18 of the Planck energy, so the expected effect on its speed is tiny, and only a very long flight can make it visible.",
+     "Gamma-ray bursts give that flight. Jacob and Piran {cite:r5} derived how an energy-dependent speed turns into an arrival-time delay over a path through an expanding universe; that relation is the one used here. GRB 090510 is a short burst at redshift 0.903, measured from the spectrum of its host galaxy {cite:r6}. Abdo and colleagues {cite:r2} used the Fermi observation of this burst, with emission up to about 31 GeV, and set a lower limit of 1.2 Planck energies on the linear scale under conservative assumptions about when the photons were emitted. Vasileiou and colleagues {cite:r3} analysed four bright Fermi bursts with three complementary methods; their strongest limit, from GRB 090510, is above 7.6 Planck energies at 95 percent confidence for the case where higher energies travel slower. The LHAASO collaboration {cite:r4} used the TeV photons of GRB 221009A and reported a linear limit above 10 Planck energies.",
+     "We had a narrower aim. A published limit rests on a pipeline most readers cannot run. We asked how close a short, plain analysis of the public photon file comes, with its forecasts and kill rules fixed before the run. The same study asked the companion question for sound: sound in a fluid has its own speed limit, and that limit is known to bend at short wavelength. Trachenko and colleagues {cite:r7} proposed an upper bound on the speed of sound in condensed matter, about 36 km per second, built from fundamental constants; it entered our study as one table check.",
+     "![fig:plate width=0.5 alt=A white-on-black 1889 engraving of the Sun at lower left with straight force lines radiating outward across orbit rings and labelled planets](plate-traxler-frontispiece.png) Robert P. Traxler, frontispiece, printed without caption or figure number: a quarter view of the solar system with the Sun at lower left, from The Principles of Mechanics as Applied to the Solar System (San Francisco, 1889) {cite:r8}. The straight lines leaving the Sun are Traxler's force lines. He drew his plates to argue for a repelling force from the Sun, his own theory in 1889, which physics did not adopt. The picture of straight paths leaving one source is the geometry a time-of-flight test depends on. Public domain; scan from the Internet Archive, University of California Libraries."
+    ]
+   },
+   {
+    "id": "prereg",
+    "title": "Preregistration and design",
+    "role": "argument",
+    "paragraphs": [
+     "The {g:preregistration}preregistration{/g} and three forecast files were written and hash-locked on 31 October 2026, each before any run or data opening for its item. The hypothesis under test was that some sound and light waves travel faster or slower than c and follow different laws. The decision it informed: if the vacuum form fails, the published limits are quoted and our rerun is used only as a reproduction of method.",
+     "The lock records a debug run made before it. That run showed 84 photons in the analysis window and a bootstrap limit weaker than our forecast, so two forecast rows were known to fail. The rows were kept unchanged and are reported as failures. A one-photon bound was added after the debug run, and it is labelled as added wherever it appears. Two simulation settings were retuned in debug: the horizon packet was moved to start near the horizon, and the grid for the frame test was doubled.",
+     "Kill conditions, fixed in advance:",
+     "- Vacuum form: killed in the tested band if the arrival-time slope against energy is consistent with zero and the implied speed change at the highest tested energy is below 1e-15 of c. It survives outside the tested band.",
+     "- Medium form: phase and group speeds above c are already known; the form is killed as new physics if every case keeps its signal front at or below c under the ordinary wave equation.",
+     "- Sound form: killed at long wavelength if sound in a moving fluid follows the flow speed plus or minus the sound speed within 1 percent.",
+     "Each {g:kill-condition}kill condition{/g} and forecast became a rule set whose pass or fail is a {g:verdict}verdict{/g} read off by code."
+    ]
+   },
+   {
+    "id": "data",
+    "title": "Data and provenance",
+    "role": "argument",
+    "paragraphs": [
+     "The photons are from the Fermi Large Area Telescope public archive at the NASA High Energy Astrophysics Science Archive Research Center {cite:r1}: the weekly photon file for mission week 49 (processing P305, Source event class), which holds 1,214,533 photons, together with the trigger folder for bn090510016, all fetched on 31 October 2026. Fermi data are public with no restriction on use. The trigger time was read from the trigger file header. The burst position and the redshift of 0.903 were entered from memory before the run; the trigger header gives the same position to one decimal place, and the redshift matches the published value {cite:r6}.",
+     "Photons were kept if they arrived between 1 s before and 3 s after the trigger, had energy above 100 MeV and zenith angle below 105 degrees, and fell within an energy-dependent radius of the burst, up to 12 degrees at low energy. That radius was set from memory of the telescope's point-spread function; the published response tables were not used. This gave 119 photons. The analysis window, 0.5 to 1.45 s after the trigger, holds 84 of them, with energies from 0.1 to 29.9 GeV. The highest-energy photon carried 29.9 GeV and arrived 0.828 s after the trigger.",
+     "The sound part uses no external data. The sound-speed table for the Trachenko check lists 14 materials with values entered from memory."
+    ]
+   },
+   {
+    "id": "methods",
+    "title": "Methods",
+    "role": "argument",
+    "paragraphs": [
+     "## The delay model",
+     "If the speed of light changes in proportion to photon energy, a photon of energy {m:E} arrives later or earlier than a low-energy photon emitted with it by a time proportional to {m:E}:",
+     "$$ t = t_0 + \\tau E {eq:delay}",
+     "where {m:\\tau} is the delay per GeV. This is {g:dispersion}dispersion{/g} in vacuum. Following Jacob and Piran {cite:r5}, the slope sets the linear energy scale through a cosmological distance factor {m:K}:",
+     "$$ K = \\frac{1}{H_0} \\int \\frac{1 + x}{\\sqrt{M (1 + x)^3 + 1 - M}} dx {eq:k}",
+     "with the integral taken from 0 to the redshift 0.903, {m:H_0} = 67.4 km/s/Mpc and matter density {m:M} = 0.315. The factor came out at 4.58e17 s. A bound {m:\\tau_{lim}} on the slope gives",
+     "$$ E_{QG} = \\frac{K}{\\tau_{lim}} {eq:eqg}",
+     "and the fractional speed change at the top energy {m:E_{top}} is",
+     "$$ \\delta = \\frac{E_{top} \\tau_{lim}}{K} {eq:dv}",
+     "## Fitting the slope",
+     "For a trial slope {m:\\tau}, each photon's time is shifted back to {m:x_i = t_i - \\tau E_i}. If the trial slope is right, the shifted times bunch most tightly. The fit maximises a sharpness score",
+     "$$ S = \\sum \\sum G(x_i - x_j) {eq:sharp}",
+     "over all photon pairs, where {m:G} is a Gaussian of width 30 ms. The slope was searched on a grid from -250 to +250 ms per GeV in steps of 2 ms per GeV. This is a simple version of the methods in the published analyses, without the instrument response and without a model of the burst's own spectral lag.",
+     "## The bound",
+     "The 84 photons were resampled with replacement 300 times, a {g:bootstrap}bootstrap{/g}, and the slope refitted each time. The {g:interval-95}95% interval{/g} of the refitted slopes runs from its 2.5th to its 97.5th percentile, and {m:\\tau_{lim}} is the larger of its two ends in size. The added one-photon bound assumes the top photon was emitted no earlier than the trigger, so its delay cannot exceed its arrival time:",
+     "$$ \\tau_{1} = \\frac{t_{top}}{E_{top}} {eq:one}",
+     "This form follows the conservative argument of Abdo and colleagues {cite:r2} in outline only.",
+     "## Sound",
+     "Three simulations solved the linear wave equation for sound in a moving fluid, in units where the sound speed {m:c_s} is 1. In a uniform flow of speed {m:u} = 0.5, rays should move at",
+     "$$ v = u \\pm c_s {eq:rays}",
+     "A frame test checked that a solution transforms between frames under the sound speed and fails under a wrong one. A horizon flow {m:u(x) = -1 + 0.5 tanh(2 \\lambda x)}, with {m:\\lambda} = 0.4, makes an {g:acoustic-horizon}acoustic horizon{/g} at {m:x} = 0 with {g:surface-gravity}surface gravity{/g} {m:\\lambda}; a wave packet was released near it and its position and wavenumber compared with ray predictions.",
+     "The fourth simulation solved the one-dimensional Gross-Pitaevskii equation for a uniform condensate and measured the frequency of small plane waves at six wavenumbers. The known answer is the {g:bogoliubov}Bogoliubov dispersion{/g}",
+     "$$ \\omega = c_s k \\sqrt{1 + \\frac{k^2 h^2}{2}} {eq:bog}",
+     "where {m:h} is the {g:healing-length}healing length{/g}. Its slope, the {g:group-velocity}group velocity{/g}, rises above {m:c_s} once {m:k h} nears 1."
+    ]
+   },
+   {
+    "id": "controls",
+    "title": "Controls and planted checks",
+    "role": "argument",
+    "paragraphs": [
+     "Two checks were run on the photon fit.",
+     "The first {g:control}control{/g} shuffled the photon energies among the 84 photons, which breaks any link between energy and arrival time, and refitted the slope 300 times. The shuffled slopes ran from -44 to +76 ms per GeV (2.5th to 97.5th percentile). The real fitted slope, 0, sits inside that range, as forecast.",
+     "The {g:planted-check}planted check{/g} added a known delay, {m:\\tau E}, to every photon at 1, 3, 5 and 10 times our bound, with both signs, and refitted. Table {ref:tab:plants} gives the result: every planted delay came back within 0.9 percent, so the fit sees a delay of the size of our bound when one is there.",
+     "::table tab:plants cols=0.28,0.28,0.24,0.2 Planted delays and their recovery, ms per GeV. Error is relative to the planted value.\nPlanted, times our bound ¦ Planted delay ¦ Recovered ¦ Error\n1 ¦ 117 ¦ 116 ¦ 0.90 percent\n3 ¦ 351 ¦ 354 ¦ 0.81 percent\n5 ¦ 585 ¦ 590 ¦ 0.81 percent\n10 ¦ 1,170 ¦ 1,160 ¦ 0.90 percent\n::end",
+     "For sound, the frame test is its own control: under the true sound speed the residual was 4.5e-4, and under a wrong speed 0.78."
+    ]
+   },
+   {
+    "id": "results",
+    "title": "Results",
+    "role": "argument",
+    "paragraphs": [
+     "## Vacuum",
+     "Table {ref:tab:vacuum} gives the photon results. The fitted slope is 0, on a 2 ms per GeV grid. The bootstrap interval runs from -117 to +46 ms per GeV, so the bound is 117 ms per GeV. Through eq. {ref:eq:eqg} that is a linear energy scale of 3.9e18 GeV, or 0.32 Planck energies. {c1}Our rerun bounds any linear energy-dependent change in light speed to less than 7.6e-18 of c at 29.9 GeV, a linear energy scale above 0.32 Planck energies, about 24 times weaker than the published limit of 7.6 Planck energies from the same burst.{/c1} The speed change is below the preregistered 1e-15, so the vacuum form of the hypothesis is killed in the band tested, 0.1 to 30 GeV.",
+     "::table tab:vacuum cols=0.52,0.48 Photon results from the rerun. Times are after the trigger.\nQuantity ¦ Value\nPhotons above 100 MeV near the burst, 1 s before to 3 s after ¦ 119\nPhotons in the analysis window, 0.5 to 1.45 s ¦ 84\nTop energy and its arrival time ¦ 29.9 GeV at 0.828 s\nFitted slope ¦ 0 ms per GeV\nBootstrap 95% interval, 300 resamples ¦ -117 to +46 ms per GeV\nBound on the slope ¦ 117 ms per GeV\nLinear energy scale from the bound ¦ above 0.32 Planck energies\nFractional speed change at 29.9 GeV ¦ below 7.6e-18\nOne-photon bound (added after the debug run) ¦ 27.7 ms per GeV, above 1.36 Planck energies\nShuffled-energy slopes, 300 draws ¦ -44 to +76 ms per GeV\n::end",
+     "Figure {ref:fig:limits} sets our two bounds beside the published ones. The bootstrap bound is weak because resampling often leaves out the single 29.9 GeV photon, which sets most of the fit. The one-photon bound uses that photon directly and reaches 1.36 Planck energies, still a factor of about 5.6 below the published 7.6.",
+     "![fig:limits width=0.98 alt=Four horizontal bars on a log scale, our two bounds short and the two published limits long](fig-limits.png) Lower limits on the linear energy scale: our rerun's bootstrap and one-photon bounds against the published GRB 090510 and GRB 221009A limits. Drawn from the run's result file, which lists the published values as quoted from their abstracts.",
+     "## Sound",
+     "Table {ref:tab:sound} gives the simulation results. {c3}Sound in a uniform flow moved at the flow speed plus or minus the sound speed to within 1e-6, and in a simulated condensate the wave frequencies followed the Bogoliubov law within 2 percent, with a short-wavelength packet moving at 2.89 times the sound speed.{/c3} Figure {ref:fig:bog} shows the measured frequencies leaving the sound line as the wavelength nears the healing length.",
+     "::table tab:sound cols=0.5,0.25,0.25 Sound simulations, in units where the sound speed is 1. Limits are the preregistered rules.\nQuantity ¦ Value ¦ Rule\nUniform flow, error in ray speed ¦ 9.6e-7 ¦ below 0.01\nFrame test, residual with true sound speed ¦ 4.5e-4 ¦ below 0.001\nFrame test, residual with wrong speed ¦ 0.78 ¦ above 0.1\nHorizon, packet trapped inside, position at end ¦ -24.8 ¦ below 0\nHorizon, packet lag behind the ray, scaled ¦ 0.16 ¦ below 0.01\nHorizon, wavenumber error against the ray ¦ 3.3 percent ¦ below 20 percent\nBogoliubov law, worst frequency error ¦ 1.95 percent ¦ below 2 percent\nGroup velocity at kh = 1, from the law ¦ 1.63 ¦ above 1.1\nPacket group velocity, kh = 2 ¦ 2.89 ¦ above 2\n::end",
+     "![fig:bog width=0.98 alt=Measured frequency points rising above a straight sound line and lying on a curved Bogoliubov line](fig-bogoliubov.png) Wave frequency against wavenumber in the simulated condensate. The six measured points lie on the Bogoliubov law and leave the straight sound line at short wavelength. Drawn from the run's result file.",
+     "The horizon packet stayed trapped, and its wavenumber followed the ray prediction within 3.3 percent. Its position lagged the ray by 0.16 in scaled units against a limit of 0.01, which failed. The packet is about as wide as the distance it travels, so a ray, which has no width, is a poor description of it; we did not refine the test after the run.",
+     "The Trachenko value computed from constants was 36.10 km per second, inside the forecast band of 36.0 to 36.2, and none of the 14 materials in our remembered table exceeded it; the fastest was diamond at 18 km per second.",
+     "## Forecasts",
+     "Table {ref:tab:forecast} sets the forecasts written before the run against the outcomes.",
+     "::table tab:forecast cols=0.46,0.27,0.27 Forecasts fixed before the run against what it gave.\nQuantity ¦ Forecast ¦ Outcome\nPhotons in the window ¦ about 150, band 50 to 300 ¦ 84\nSlope bound ¦ below 30 ms per GeV ¦ 117 ms per GeV\nLinear energy scale ¦ 0.5 to 10 Planck energies ¦ 0.32\nPlanted delay at 5 times the bound ¦ within 20 percent ¦ 0.81 percent\nShuffled range contains the real slope ¦ yes ¦ yes\nRays in a uniform flow ¦ within 1 percent ¦ 9.6e-7\nFrame test with the sound speed ¦ to 1e-3 ¦ 4.5e-4\nGroup velocity at kh = 1 ¦ more than 10 percent above sound ¦ 1.63 times\nGroup velocity at kh above 2 ¦ about twice sound or more ¦ 2.89 times\nTrachenko bound ¦ 36.1 km/s ¦ 36.10 km/s\n::end",
+     "{c4}Twelve of the 15 preregistered rules passed; the three that failed were two forecasts of our own bound's strength and one test of a packet near a simulated horizon.{/c4} Appendix A lists every rule."
+    ]
+   },
+   {
+    "id": "discussion",
+    "title": "Discussion",
+    "role": "argument",
+    "paragraphs": [
+     "The rerun did what a reproduction of method should do. On the same burst, with a plain fit, it finds no energy-dependent delay, and its controls behave: shuffled energies give a range that holds the real slope, and planted delays of the bound's size come back almost exactly. The number it produces is weaker than the published limits, by a factor of about 24 for the bootstrap bound and about 5.6 for the one-photon bound.",
+     "The gap has visible causes. Our bootstrap is dominated by whether the single 29.9 GeV photon is drawn, which makes the interval wide. The published analyses used the instrument response, careful event selection and several estimators, and they modelled or bounded the burst's own spectral lag {cite:r3}. We did none of that. The top energy also differs: the published abstract reports emission up to about 31 GeV {cite:r2}, and our selection's top photon has 29.9 GeV in the weekly file's reconstruction; we did not trace the difference.",
+     "So the vacuum result is a check that the method can be run from public data and lands in the right place. It sets no new limit. The published limits of 7.6 Planck energies from this burst {cite:r3} and 10 from GRB 221009A {cite:r4} are the numbers to quote.",
+     "The sound results confirm known theory. Sound in a moving fluid obeys its own cone, flow speed plus or minus sound speed, at long wavelength, and it leaves that cone at short wavelength by the Bogoliubov law. A wave can then move faster than the sound speed of its medium by an ordinary mechanism, and it remains far below c. The hypothesis that some waves follow different laws holds only in that ordinary sense."
+    ]
+   },
+   {
+    "id": "limits",
+    "title": "Limitations",
+    "role": "argument",
+    "paragraphs": [
+     "- The bound holds only in the tested band, about 0.1 to 30 GeV, and only for a delay linear in energy. The quadratic form, other energies and other carriers were not tested.",
+     "- No instrument response and no intrinsic spectral lag were modelled. The selection radius was set from memory of the point-spread function, and the burst position and redshift were entered from memory, though both match published values.",
+     "- The bootstrap is unstable when one photon sets most of the fit, which is part of why our bound is weak.",
+     "- The one-photon bound was added after the debug run, and its assumption about emission time is not tested.",
+     "- A later review of our ledger noted that the rerun does not reproduce the published number. We agree, and the paper is framed as a reproduction of method for that reason.",
+     "- The sound simulations test known theory and add no new law. The Trachenko table values were entered from memory.",
+     "- Scoring was by our own code and was not blind. Settings tuned in the debug run before the lock are listed in the preregistration."
+    ]
+   },
+   {
+    "id": "appendix",
+    "title": "Appendix A. The preregistered verdicts",
+    "role": "evidence",
+    "paragraphs": [
+     "Each verdict is a set of rules written before the run. A verdict passes only when every rule holds. Values are read from the run's result file.",
+     "::table tab:verdicts cols=0.26,0.4,0.2,0.14 Preregistered verdicts and the rule that decided each one.\nVerdict ¦ Deciding rule ¦ Value ¦ Holds\nPhoton count ¦ 50 to 300 photons in the window ¦ 84 ¦ yes\nSlope bound ¦ below 30 ms per GeV ¦ 117 ¦ no\nEnergy scale band ¦ 0.5 to 10 Planck energies ¦ 0.32 ¦ no\nOne-photon form (added) ¦ 0.5 to 10 Planck energies ¦ 1.36 ¦ yes\nVacuum form killed ¦ speed change below 1e-15 ¦ 7.6e-18 ¦ yes\nPlanted delay ¦ error at 5 times the bound below 0.2 ¦ 0.0081 ¦ yes\nSlope inside null ¦ real slope inside shuffled range ¦ inside ¦ yes\nUniform flow ¦ ray speed error below 0.01 ¦ 9.6e-7 ¦ yes\nFrame test ¦ true speed below 0.001; wrong speed above 0.1 ¦ 4.5e-4; 0.78 ¦ yes\nHorizon ray ¦ scaled lag below 0.01; trapped inside, free outside ¦ 0.16; -24.8, 24.8 ¦ no\nSurface gravity ¦ wavenumber error below 0.2 ¦ 0.033 ¦ yes\nBogoliubov ¦ worst frequency error below 0.02 ¦ 0.0195 ¦ yes\nAbove sound speed ¦ group velocity at kh = 1 above 1.1; packet above 2 ¦ 1.63; 2.89 ¦ yes\nTrachenko value ¦ 36.0 to 36.2 km/s ¦ 36.10 ¦ yes\nTrachenko table ¦ no material above the bound ¦ 0 ¦ yes\n::end"
+    ]
+   }
+  ]
+ },
+ "claims": [
+  {
+   "id": "c1",
+   "text": "Our rerun bounds any linear energy-dependent change in light speed to less than 7.6e-18 of c at 29.9 GeV, a linear energy scale above 0.32 Planck energies, about 24 times weaker than the published limit of 7.6 Planck energies from the same burst.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e1"
+   ]
+  },
+  {
+   "id": "c2",
+   "text": "Planted delays from 1 to 10 times our bound were recovered within 0.9 percent, and the fitted slope of zero sat inside the range that shuffled photon energies gave.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e2"
+   ]
+  },
+  {
+   "id": "c3",
+   "text": "Sound in a uniform flow moved at the flow speed plus or minus the sound speed to within 1e-6, and in a simulated condensate the wave frequencies followed the Bogoliubov law within 2 percent, with a short-wavelength packet moving at 2.89 times the sound speed.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e3"
+   ]
+  },
+  {
+   "id": "c4",
+   "text": "Twelve of the 15 preregistered rules passed; the three that failed were two forecasts of our own bound's strength and one test of a packet near a simulated horizon.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e4"
+   ]
+  }
+ ],
+ "evidence": [
+  {
+   "id": "e1",
+   "kind": "number",
+   "label": "The numbers in claim 1",
+   "value": "7.6e-18; 29.9; 0.32; 24; 7.6",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e2",
+   "kind": "number",
+   "label": "The numbers in claim 2",
+   "value": "1; 10; 0.9",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e3",
+   "kind": "number",
+   "label": "The numbers in claim 3",
+   "value": "1e-6; 2; 2.89",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e4",
+   "kind": "number",
+   "label": "The numbers in claim 4",
+   "value": "15",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e5",
+   "kind": "number",
+   "label": "Sample",
+   "value": "see RESULTS.md",
+   "check": {
+    "by": "the register's evidence fields",
+    "result": "not_checked",
+    "note": "as recorded in the publication register"
+   }
+  },
+  {
+   "id": "e6",
+   "kind": "number",
+   "label": "Main estimate and interval",
+   "value": "in RESULTS.md where one applies",
+   "check": {
+    "by": "the register's evidence fields",
+    "result": "not_checked",
+    "note": "as recorded in the publication register"
+   }
+  },
+  {
+   "id": "e7",
+   "kind": "number",
+   "label": "Forecast against outcome",
+   "value": "in RESULTS.md",
+   "check": {
+    "by": "the register's evidence fields",
+    "result": "not_checked",
+    "note": "as recorded in the publication register"
+   }
+  },
+  {
+   "id": "e8",
+   "kind": "control",
+   "label": "Known-answer check",
+   "value": "listed in each PREREG",
+   "check": {
+    "by": "the register's evidence fields",
+    "result": "not_checked",
+    "note": "as recorded in the publication register"
+   }
+  }
+ ],
+ "references": [
+  {
+   "id": "r1",
+   "key": "Fermi Science Support Center",
+   "kind": "dataset",
+   "title": "Fermi Science Support Center. Fermi LAT weekly photon files and trigger data for bn090510016. NASA High Energy Astrophysics Science Archive Research Center. Retrieved 31 October 2026. https://heasarc.gsfc.nasa.gov/FTP/fermi/data/lat/",
+   "access": "run",
+   "target": "https://heasarc.gsfc.nasa.gov/FTP/fermi/data/lat/",
+   "licence": "see INTAKE"
+  },
+  {
+   "id": "r2",
+   "key": "Abdo 2009",
+   "kind": "paper",
+   "title": "Abdo, A. A., Ackermann, M., Ajello, M. and others, Fermi LAT and GBM Collaborations (2009). A limit on the variation of the speed of light arising from quantum gravity effects. Nature 462, 331-334. doi:10.1038/nature08574",
+   "access": "snippet",
+   "target": "https://doi.org/10.1038/nature08574",
+   "access_note": "abstracts, publisher pages and search summaries; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r3",
+   "key": "Vasileiou 2013",
+   "kind": "paper",
+   "title": "Vasileiou, V., Jacholkowska, A., Piron, F., Bolmont, J., Couturier, C., Granot, J., Stecker, F. W., Cohen-Tanugi, J. and Longo, F. (2013). Constraints on Lorentz invariance violation from Fermi-Large Area Telescope observations of gamma-ray bursts. Physical Review D 87, 122001. doi:10.1103/PhysRevD.87.122001. arXiv:1305.3463",
+   "access": "snippet",
+   "target": "https://doi.org/10.1103/PhysRevD.87.122001",
+   "access_note": "abstracts, publisher pages and search summaries; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r4",
+   "key": "Cao 2024",
+   "kind": "paper",
+   "title": "Cao, Z. and others, LHAASO Collaboration (2024). Stringent tests of Lorentz invariance violation from LHAASO observations of GRB 221009A. Physical Review Letters 133, 071501. doi:10.1103/PhysRevLett.133.071501. arXiv:2402.06009",
+   "access": "snippet",
+   "target": "https://doi.org/10.1103/PhysRevLett.133.071501",
+   "access_note": "abstracts, publisher pages and search summaries; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r5",
+   "key": "Jacob 2008",
+   "kind": "paper",
+   "title": "Jacob, U. and Piran, T. (2008). Lorentz-violation-induced arrival delays of cosmological particles. Journal of Cosmology and Astroparticle Physics 0801, 031. doi:10.1088/1475-7516/2008/01/031. arXiv:0712.2170",
+   "access": "snippet",
+   "target": "https://doi.org/10.1088/1475-7516/2008/01/031",
+   "access_note": "abstracts, publisher pages and search summaries; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r6",
+   "key": "Rau 2009",
+   "kind": "dataset",
+   "title": "Rau, A., McBreen, S., Kruehler, T. and Greiner, J. (2009). GRB 090510: VLT/FORS2 spectroscopic redshift. GCN Circular 9353.",
+   "access": "run",
+   "licence": "see INTAKE"
+  },
+  {
+   "id": "r7",
+   "key": "Trachenko 2020",
+   "kind": "paper",
+   "title": "Trachenko, K., Monserrat, B., Pickard, C. J. and Brazhkin, V. V. (2020). Speed of sound from fundamental physical constants. Science Advances 6, eabc8662. doi:10.1126/sciadv.abc8662",
+   "access": "snippet",
+   "target": "https://doi.org/10.1126/sciadv.abc8662",
+   "access_note": "abstracts, publisher pages and search summaries; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r8",
+   "key": "Traxler 1889",
+   "kind": "record",
+   "title": "Traxler, R. P. (1889). The Principles of Mechanics as Applied to the Solar System. San Francisco: C. A. Murdock and Co. Internet Archive item principlesofmech00traxiala.",
+   "access": "read",
+   "access_note": "the scan, read in full on the Internet Archive"
+  }
+ ],
+ "relations": [
+  {
+   "from": "F422",
+   "to": "F281",
+   "type": "narrowed",
+   "scope": "headline bound",
+   "date": "2026-10-31",
+   "note": "The correction pass coded one error: the rerun bound is far below the published limit, so the headline was narrowed to a reproduction of method.",
+   "record": "findings ledger, F422 correction pass"
+  }
+ ],
+ "corrections": [
+  {
+   "id": "x1",
+   "date": "2026-10-31",
+   "target": "document",
+   "type": "scope",
+   "after": "The headline was narrowed to a reproduction of method, as here.",
+   "reason": "A review of our ledger noted that the rerun limit, 0.32 Planck energies by bootstrap and 1.36 by one photon, is far below the published 7.6 and 10, so the rerun does not reproduce the published limit.",
+   "found_by": "a review of our findings ledger"
+  }
+ ],
+ "versions": [
+  {
+   "n": 1,
+   "date": "2026-10-31",
+   "what": "entered in the findings ledger"
+  },
+  {
+   "n": 2,
+   "date": "2026-11-09",
+   "what": "paper version 1.0, first published",
+   "hash": "b65b8b8f28322f0b262c71e8fa27a093eee4f9f15dd8801f0b34dab0a2a88c71"
+  }
+ ],
+ "grade": {
+  "lowers": [
+   {
+    "domain": "blinding",
+    "text": "Not blind: the analyst saw the data's shape before the lock.",
+    "from": "register scorer.blind"
+   },
+   {
+    "domain": "scoring",
+    "text": "Graded by the same agent that ran it.",
+    "from": "register scorer.self_graded"
+   },
+   {
+    "domain": "imprecision",
+    "text": "Rules out a linear energy-dependent change in light speed larger than 7.6e-18 of c at 29.9 GeV, an energy scale below 0.32 Planck energies; the published bound from the same burst is about 24 times stronger.",
+    "from": "the bound"
+   },
+   {
+    "domain": "single source",
+    "text": "The cited literature was read at the level of abstracts, publisher pages and search summaries; full texts were not read.",
+    "from": "paper Verified"
+   }
+  ],
+  "holds": [
+   {
+    "domain": "preregistration",
+    "text": "Preregistered and hash-locked before the run (sha256 21d88e4c).",
+    "from": "paper Reproduction"
+   },
+   {
+    "domain": "control",
+    "text": "Controls: plants, shuffles, null simulations.",
+    "from": "register evidence.controls"
+   }
+  ]
+ },
+ "reproduce": {
+  "data": [
+   {
+    "name": "Fermi Science Support Center",
+    "licence": "see INTAKE",
+    "url": "https://heasarc.gsfc.nasa.gov/FTP/fermi/data/lat/"
+   },
+   {
+    "name": "Rau 2009",
+    "licence": "see INTAKE",
+    "url": ""
+   }
+  ],
+  "prereg": {
+   "hash": "21d88e4c1e21947ade3dbf27f640ddcef60e8c4e3df62ca52aa9b9610aaf595f",
+   "plan": "acdcc05f486faa9c825953e7cd25544719c1053d0dd865f851012eb98255770a"
+  },
+  "cost": "the analysis took about 127 s and the shuffle control about 8 s on one desktop CPU.",
+  "steps": [
+   "Data: download the Fermi LAT weekly photon file for mission week 49 and the trigger folder bn090510016 from the HEASARC Fermi archive.",
+   "Select photons from 1 s before to 3 s after the trigger, above 100 MeV, zenith angle below 105 degrees, within an energy-dependent radius of the burst; keep the 0.5 to 1.45 s window.",
+   "Fit the slope of eq. {ref:eq:delay} by maximising eq. {ref:eq:sharp} on a 2 ms per GeV grid; bootstrap 300 times; convert the larger end with eqs. {ref:eq:k}, {ref:eq:eqg} and {ref:eq:dv}.",
+   "Shuffle energies 300 times for the null, and plant delays at 1, 3, 5 and 10 times the bound.",
+   "For sound, solve the linear wave equation in uniform and horizon flows and the Gross-Pitaevskii equation for a uniform condensate, and compare with eqs. {ref:eq:rays} and {ref:eq:bog}.",
+   "Preregistration SHA-256: 21d88e4c1e21947ade3dbf27f640ddcef60e8c4e3df62ca52aa9b9610aaf595f. Plan SHA-256: acdcc05f486faa9c825953e7cd25544719c1053d0dd865f851012eb98255770a. Run 20261031T213610Z."
+  ],
+  "not_rerun": "The study was not re-run for this paper."
+ },
+ "verified": {
+  "date": "2026-11-09",
+  "checks": [
+   {
+    "what": "On 9 November 2026 the photon counts (1,214,533 in the file, 119 near the burst, 84 in the window), the top energy and its arrival time, the fitted slope, the bootstrap ends, the bound, the distance factor, both energy scales, the speed change, the shuffled range, the four planted recoveries, every sound value in Table {ref:tab:sound}, the Trachenko value and the 15 verdicts were re-read from the run's result file.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   },
+   {
+    "what": "They match the {g:findings-ledger}findings ledger{/g}, including its later line that our bound is about 24 times weaker than the published limit.",
+    "by": "the paper's Verified pass",
+    "result": "match"
+   },
+   {
+    "what": "The preregistration's SHA-256 matches the hash recorded in the result file and in the lock file.",
+    "by": "the paper's Verified pass",
+    "result": "match"
+   },
+   {
+    "what": "Both figures were drawn by a script that reads only that result file.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   },
+   {
+    "what": "The published limits in Figure {ref:fig:limits} are as quoted from those abstracts.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   }
+  ],
+  "not_checked": [
+   "The study was not re-run for this paper.",
+   "The literature was found by searches run on 9 November 2026 and read at the level of abstracts, publisher pages and search summaries; the full texts were not read."
+  ]
+ }
+}

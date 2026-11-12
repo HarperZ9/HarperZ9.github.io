@@ -1,0 +1,349 @@
+{
+ "study": "frame-shannon",
+ "run_id": "20261101T081322Z",
+ "date": "2026-11-01",
+ "prereg": {
+  "path": "PREREG-shannon.txt",
+  "sha256": "551f636e8364984be905e2266229c4b94f031c3f6f7a4262c9934f377e2e3344",
+  "anchors": [
+   "sidecar",
+   "lock"
+  ],
+  "plan_sha256": "0da1855b4a3831bcf4cca09a1493645a2c81601f2d3a83a4a4722b752bdd3a97",
+  "locked_at": "2026-11-01T08:13:21+00:00"
+ },
+ "hashes": {
+  "s_shannon.py": "76786d336be20d414a8a4e3a6dae015aa467c75f8db92fba615a9761e178a643"
+ },
+ "analysis": {
+  "F0_old": 4.754887502163468,
+  "F1_old": 4.085157363800939,
+  "F2_old": 3.345033070829723,
+  "F3_old": 2.7122463672683335,
+  "word_bits_old": 9.736226912902506,
+  "Fword_old": 1.8007641656412132,
+  "wordlen_old": 5.40671960197278,
+  "F0_mid": 4.754887502163468,
+  "F1_mid": 4.06680895488788,
+  "F2_mid": 3.3237478763311694,
+  "F3_mid": 2.6977297720192057,
+  "word_bits_mid": 9.569029137566305,
+  "Fword_mid": 1.8528357027907427,
+  "wordlen_mid": 5.164531924311166,
+  "F0_new": 4.754887502163468,
+  "F1_new": 4.112855608945797,
+  "F2_new": 3.4396740384993505,
+  "F3_new": 2.871751912909171,
+  "word_bits_new": 10.343595444564578,
+  "Fword_new": 1.7474330534631364,
+  "wordlen_new": 5.919308567538656,
+  "gap_F1_old": 0.05515736380093905,
+  "gap_F2_old": 0.02503307082972306,
+  "gap_F3_old": 0.38775363273166663,
+  "gap_Fword_old": 0.3392358343587869,
+  "gap_F1_new": 0.08285560894579636,
+  "gap_F2_new": 0.11967403849935065,
+  "gap_F3_new": 0.228248087090829,
+  "gap_Fword_new": 0.39256694653686375,
+  "plant_gap": 0.004107140485943184,
+  "plant_h": 2.672535980430529,
+  "ll_old_on_old": 2.1296402220268225,
+  "up_old_on_old": 2.3503443882961945,
+  "low_old_on_old": 1.3382995975004202,
+  "first_old_on_old": 0.58255,
+  "ll_old_on_mid": 2.3869875226329236,
+  "up_old_on_mid": 2.505069479680921,
+  "low_old_on_mid": 1.4644697476381283,
+  "first_old_on_mid": 0.5569,
+  "ll_old_on_new": 3.46395003825572,
+  "up_old_on_new": 3.0250640487927285,
+  "low_old_on_new": 1.9274651618251144,
+  "first_old_on_new": 0.45295,
+  "ll_mid_on_old": 2.3544233366502527,
+  "up_mid_on_old": 2.4662680411804985,
+  "low_mid_on_old": 1.4312770543831457,
+  "first_mid_on_old": 0.562375,
+  "ll_mid_on_mid": 2.2866339386040626,
+  "up_mid_on_mid": 2.448276079934877,
+  "low_mid_on_mid": 1.4189759763168466,
+  "first_mid_on_mid": 0.565475,
+  "ll_mid_on_new": 3.4835135772930057,
+  "up_mid_on_new": 3.0340056780873343,
+  "low_mid_on_new": 1.931925497294274,
+  "first_mid_on_new": 0.452875,
+  "ll_new_on_old": 2.213750466854114,
+  "up_new_on_old": 2.403992328155274,
+  "low_new_on_old": 1.3838588578153164,
+  "first_new_on_old": 0.569825,
+  "ll_new_on_mid": 2.826323382683973,
+  "up_new_on_mid": 2.788786733722899,
+  "low_new_on_mid": 1.715571598341065,
+  "first_new_on_mid": 0.493525,
+  "ll_new_on_new": 2.7285282222203793,
+  "up_new_on_new": 2.6944736519827783,
+  "low_new_on_new": 1.6184963796079832,
+  "first_new_on_new": 0.5264,
+  "base_ll": 2.1296402220268225,
+  "neg_ll": -2.7285282222203793,
+  "era_penalty_old_to_new": 0.7354218160353407,
+  "era_penalty_new_to_old": 0.08411024482729168,
+  "new_vs_old_self": 0.5988880001935568,
+  "genre_penalty_fiction_to_federalist": 0.661176490734297,
+  "word_shuffled_ll_new": 3.2268057688305585,
+  "order_info_new": 0.4982775466101792,
+  "ll_quarter_train_new": 3.1787906330349864,
+  "train_gain_new": 0.45026241081460716
+ },
+ "controls": {
+  "shuf": {
+   "n": 20,
+   "usable": true,
+   "mean": -8.50973990460864,
+   "q95": -8.4445729946853,
+   "q05": -8.56489347443565,
+   "p_ge": 0.047619047619047616,
+   "compare": "analysis.neg_ll",
+   "description": "held-out characters shuffled"
+  }
+ },
+ "timing_s": {
+  "analysis": 29.702808699999878,
+  "shuf": 1.8532784999988507
+ },
+ "verdicts": {
+  "KILL_known": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.plant_gap <= 0.1",
+     "left": 0.004107140485943184,
+     "right": 0.1,
+     "holds": true
+    }
+   ]
+  },
+  "BASE_table_old": {
+   "verdict": "FAIL",
+   "rules": [
+    {
+     "rule": "analysis.gap_F1_old < 0.15",
+     "left": 0.05515736380093905,
+     "right": 0.15,
+     "holds": true
+    },
+    {
+     "rule": "analysis.gap_F2_old < 0.2",
+     "left": 0.02503307082972306,
+     "right": 0.2,
+     "holds": true
+    },
+    {
+     "rule": "analysis.gap_F3_old < 0.3",
+     "left": 0.38775363273166663,
+     "right": 0.3,
+     "holds": false
+    }
+   ]
+  },
+  "SHIFT_table_new": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.gap_F1_new < 0.15",
+     "left": 0.08285560894579636,
+     "right": 0.15,
+     "holds": true
+    },
+    {
+     "rule": "analysis.gap_F2_new < 0.2",
+     "left": 0.11967403849935065,
+     "right": 0.2,
+     "holds": true
+    },
+    {
+     "rule": "analysis.gap_F3_new < 0.3",
+     "left": 0.228248087090829,
+     "right": 0.3,
+     "holds": true
+    }
+   ]
+  },
+  "BASE_reader_13": {
+   "verdict": "FAIL",
+   "rules": [
+    {
+     "rule": "analysis.ll_old_on_old <= 1.3",
+     "left": 2.1296402220268225,
+     "right": 1.3,
+     "holds": false
+    }
+   ]
+  },
+  "F_ll": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.ll_old_on_old >= 1.85",
+     "left": 2.1296402220268225,
+     "right": 1.85,
+     "holds": true
+    },
+    {
+     "rule": "analysis.ll_old_on_old <= 2.35",
+     "left": 2.1296402220268225,
+     "right": 2.35,
+     "holds": true
+    }
+   ]
+  },
+  "F_up": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.up_old_on_old >= 1.9",
+     "left": 2.3503443882961945,
+     "right": 1.9,
+     "holds": true
+    },
+    {
+     "rule": "analysis.up_old_on_old <= 2.5",
+     "left": 2.3503443882961945,
+     "right": 2.5,
+     "holds": true
+    }
+   ]
+  },
+  "F_word": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.gap_Fword_new >= 0.1",
+     "left": 0.39256694653686375,
+     "right": 0.1,
+     "holds": true
+    },
+    {
+     "rule": "analysis.gap_Fword_new <= 0.5",
+     "left": 0.39256694653686375,
+     "right": 0.5,
+     "holds": true
+    }
+   ]
+  },
+  "F_era": {
+   "verdict": "FAIL",
+   "rules": [
+    {
+     "rule": "analysis.era_penalty_old_to_new >= 0.1",
+     "left": 0.7354218160353407,
+     "right": 0.1,
+     "holds": true
+    },
+    {
+     "rule": "analysis.era_penalty_old_to_new <= 0.5",
+     "left": 0.7354218160353407,
+     "right": 0.5,
+     "holds": false
+    }
+   ]
+  },
+  "F_era2": {
+   "verdict": "FAIL",
+   "rules": [
+    {
+     "rule": "analysis.era_penalty_new_to_old >= 0.1",
+     "left": 0.08411024482729168,
+     "right": 0.1,
+     "holds": false
+    },
+    {
+     "rule": "analysis.era_penalty_new_to_old <= 0.6",
+     "left": 0.08411024482729168,
+     "right": 0.6,
+     "holds": true
+    }
+   ]
+  },
+  "F_genre": {
+   "verdict": "FAIL",
+   "rules": [
+    {
+     "rule": "analysis.genre_penalty_fiction_to_federalist >= 0.1",
+     "left": 0.661176490734297,
+     "right": 0.1,
+     "holds": true
+    },
+    {
+     "rule": "analysis.genre_penalty_fiction_to_federalist <= 0.45",
+     "left": 0.661176490734297,
+     "right": 0.45,
+     "holds": false
+    }
+   ]
+  },
+  "F_self": {
+   "verdict": "FAIL",
+   "rules": [
+    {
+     "rule": "analysis.new_vs_old_self >= -0.1",
+     "left": 0.5988880001935568,
+     "right": -0.1,
+     "holds": true
+    },
+    {
+     "rule": "analysis.new_vs_old_self <= 0.25",
+     "left": 0.5988880001935568,
+     "right": 0.25,
+     "holds": false
+    }
+   ]
+  },
+  "F_order": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.order_info_new >= 0.4",
+     "left": 0.4982775466101792,
+     "right": 0.4,
+     "holds": true
+    },
+    {
+     "rule": "analysis.order_info_new <= 1.2",
+     "left": 0.4982775466101792,
+     "right": 1.2,
+     "holds": true
+    }
+   ]
+  },
+  "F_train": {
+   "verdict": "FAIL",
+   "rules": [
+    {
+     "rule": "analysis.train_gain_new >= 0.1",
+     "left": 0.45026241081460716,
+     "right": 0.1,
+     "holds": true
+    },
+    {
+     "rule": "analysis.train_gain_new <= 0.4",
+     "left": 0.45026241081460716,
+     "right": 0.4,
+     "holds": false
+    }
+   ]
+  },
+  "H_ctl": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.neg_ll > controls.shuf.q95",
+     "left": -2.7285282222203793,
+     "right": -8.4445729946853,
+     "holds": true
+    }
+   ]
+  }
+ },
+ "reproduce": null,
+ "status": "scored"
+}

@@ -1,0 +1,245 @@
+{
+ "about": "Each PDF as built (its build receipt's hash) and as the site carries it, with author metadata fields blanked to the same length (scripts/findings-metadata.mjs). Blank the same fields in a rebuild to compare.",
+ "pdfs": {
+  "F114": {
+   "built_sha256": "d00805eade920732d487165305965b563e3e561ff0bdd71bd22dafc5b7c8fa58",
+   "site_sha256": "2cc7c6474cd15f3a87c393d6f8b84e390ccc84a8d8a2393dc4a0b8ee5fe6299e",
+   "blanked": [
+    "/Author",
+    "/Creator"
+   ]
+  },
+  "F132": {
+   "built_sha256": "ce8fd604b0fb8a13d08f5d72d1c5a64015212b34ade4731ec9f0e4fc6e6229fc",
+   "site_sha256": "8986668ec309d705556a6bad295d7125e5b7b737ab9a24844ccf8888c5d84c0c",
+   "blanked": [
+    "/Author",
+    "/Creator"
+   ]
+  },
+  "F14": {
+   "built_sha256": "577f0a6b199c39a908aabf9e79ef01f6d52ff96ae581e9da48c9b03d9d9f3dec",
+   "site_sha256": "3f8d02e58126b897d19d0d8b42c4869e07cf20bfa7c96620e4da795b9d0bb4c9",
+   "blanked": [
+    "/Author",
+    "/Creator"
+   ]
+  },
+  "F147": {
+   "built_sha256": "91f5daaa7942c3c11dbfeb4470651949d65b89fe2e259fcec7cbe5e86cb57e3c",
+   "site_sha256": "a72a7b95289a20ea95e7eb3bacfb67fdc64e47617b65a04dc3dd331716312a92",
+   "blanked": [
+    "/Author",
+    "/Creator"
+   ]
+  },
+  "F149": {
+   "built_sha256": "44c892b8578ac367027e8d551a621c04eea3dafa93b02c03c1c1e6b24b531420",
+   "site_sha256": "f241f0696f49c863a62c37ee42934f5dee8059fe0632881291859cae5d8b68ae",
+   "blanked": [
+    "/Author",
+    "/Creator"
+   ]
+  },
+  "F152": {
+   "built_sha256": "e9660d3b34f12f9b01b9062f25a9c5de0b2af0a36d80706e78d6ba2127bd07e9",
+   "site_sha256": "1a8034be762870800cb5af1023f5a4604693b75fc80c78975df2d3b6e3d95577",
+   "blanked": [
+    "/Author",
+    "/Creator"
+   ]
+  },
+  "F166": {
+   "built_sha256": "a8abb68c9d3c67064cf86dd13ec8c5e2afbe2aa2dcfbd30482e2dd7a63357ceb",
+   "site_sha256": "f402c4bf1a5d01cef5535741d54210afa50796e8fcf93c1ef455a88fcfaf3d05",
+   "blanked": [
+    "/Author",
+    "/Creator"
+   ]
+  },
+  "F172": {
+   "built_sha256": "eeb1c60eee68fe44c9946b084e9aad2c7018322a064bcdb86c46546541a3d386",
+   "site_sha256": "096af9aedd0d097b7ddb08779168fb80adc6325a3cbebb35207a9ddcb5a96346",
+   "blanked": [
+    "/Author",
+    "/Creator"
+   ]
+  },
+  "F183": {
+   "built_sha256": "2c1d02484bcb2dd14a712b5e2a9a09976f4ea93b31dc3bfecfce9262893add76",
+   "site_sha256": "c650b7c8fee9872faee394715d1c924f8fe373418e42f83b5cb82b690a527913",
+   "blanked": [
+    "/Author",
+    "/Creator"
+   ]
+  },
+  "F190": {
+   "built_sha256": "f7c998c6f2d486003a0291a2273c0bd36ed6bd07c339e834ce02e4e257de0d2e",
+   "site_sha256": "c2f96178a50be27db323c68c778dcd59f7cb9c969890c629aaa1df2e5ef99be0",
+   "blanked": [
+    "/Author",
+    "/Creator"
+   ]
+  },
+  "F23": {
+   "built_sha256": "6753ef0471c19baa8b44c5a0f380a3ff820035b2d701ef3ba6550fef12a6e884",
+   "site_sha256": "b145808b9fc0f7201fa6a12906e1951121416679b2de4dda761a03b5221c68f8",
+   "blanked": [
+    "/Author",
+    "/Creator"
+   ]
+  },
+  "F27": {
+   "built_sha256": "d09dea91f6a8d1b4f450329ef61092a8f35f5d7f050f7218c5201e42b47baaa3",
+   "site_sha256": "68f8fc2fdbf328871019715eb1a964dff4dec253272a306892988cc609906c74",
+   "blanked": [
+    "/Author",
+    "/Creator"
+   ]
+  },
+  "F281": {
+   "built_sha256": "b65b8b8f28322f0b262c71e8fa27a093eee4f9f15dd8801f0b34dab0a2a88c71",
+   "site_sha256": "abfc27d4fd7fa8889fa4f0b022ce36a389ac815b6910a6d1b0b3bd04fddbc85f",
+   "blanked": [
+    "/Author",
+    "/Creator"
+   ]
+  },
+  "F308": {
+   "built_sha256": "1cd38685d693529320972bf3a0f6524b357be204faf6e77f3e047138ddfbc674",
+   "site_sha256": "9ce00d5d435faa9f63a15f2886684eb5d0a7cfb850534b53078b76ac9e894dc4",
+   "blanked": [
+    "/Author",
+    "/Creator"
+   ]
+  },
+  "F310": {
+   "built_sha256": "ecfdc95d5bfb55aea39aa2b9465e8f8f493e3db406f6d61620613dacc620f28c",
+   "site_sha256": "2c97ef9042ae1a351e156e1c490b2a1fc9a7f13d130a6ca600397807b13149f0",
+   "blanked": [
+    "/Author",
+    "/Creator"
+   ]
+  },
+  "F32": {
+   "built_sha256": "097c91b8868a3fe7a73b2175348126d625fb6163cea0f7368796c46edc4382dc",
+   "site_sha256": "0f3c470bdf19def267e1908d60e38fb4ed898134b9916f9e334c3d87d86449e3",
+   "blanked": [
+    "/Author",
+    "/Creator"
+   ]
+  },
+  "F320": {
+   "built_sha256": "d26e7ed246f323258e6dfe6adddf93518a9e07ea6214fbfa27d1eb02276608cb",
+   "site_sha256": "c8a2e1bccf255e88677c6710d7bdcc46911e55d3ea32b457584a6e4016f7618f",
+   "blanked": [
+    "/Author",
+    "/Creator"
+   ]
+  },
+  "F329": {
+   "built_sha256": "3610edab4bbafad786865e9dcf0a55ad96368668b4ded75ac823e95915c4c49c",
+   "site_sha256": "87f030d48925cde3b19699e3af6595380785c96e16722e9eb7ffc4ac5ab80fc2",
+   "blanked": [
+    "/Author",
+    "/Creator"
+   ]
+  },
+  "F344": {
+   "built_sha256": "9e8df4ecb6223e1239be80ca991b3d4cd1f2d0911cebaebd7300b2002f8e7154",
+   "site_sha256": "5a9e290cc3dd1c7a468e4270e06f9bd011c5067fbd9ea10f80927e2a0f6caa92",
+   "blanked": [
+    "/Author",
+    "/Creator"
+   ]
+  },
+  "F362": {
+   "built_sha256": "712109ae8ebf3f4880d3f9bf072f252166c78f3f3df5ab976e0a80f159d5e3fc",
+   "site_sha256": "4a4c3f9b075468fdfee65c074b7428bc3e2cad22252238cf6d0c3ca1ccf780ba",
+   "blanked": [
+    "/Author",
+    "/Creator"
+   ]
+  },
+  "F39": {
+   "built_sha256": "ba17e291945c97d425d0fbffd57907c9c17aa903d5992d47fc3c691a53dcf880",
+   "site_sha256": "eea996a0d740ab572298cb84b8bd9ac020ef53363589ae11f9a3a3ff0f381d4b",
+   "blanked": [
+    "/Author",
+    "/Creator"
+   ]
+  },
+  "F47": {
+   "built_sha256": "633238f22619b8d3257370dd072adebab46ee65dabac013541fabaa29109ee8e",
+   "site_sha256": "e5fbcdce3485774c084bfee830e7a4bc3b21471bbdef3a478df8d061bdee7072",
+   "blanked": [
+    "/Author",
+    "/Creator"
+   ]
+  },
+  "F50": {
+   "built_sha256": "656e5d6d455e965caddd8d0522e85ea32fd3805f2c2c9049ec70ae0434e9da3a",
+   "site_sha256": "38abe646387c4bba4a598adffcfeb18915a679fc6e2bf4b1615647d55a53be6d",
+   "blanked": [
+    "/Author",
+    "/Creator"
+   ]
+  },
+  "F508": {
+   "built_sha256": "63a28ee325a02899f7cbad4e24e273beabe79989f01848471f6a92cf43350fc7",
+   "site_sha256": "7bab5fbd4d61beb16b381799a3e4bd421d015647b339741eb8cd13f0cc65456b",
+   "blanked": [
+    "/Author",
+    "/Creator"
+   ]
+  },
+  "F515": {
+   "built_sha256": "2551ac61b645b010f8ccf52bf3a32b0f644017bc0dc754fef8dfc561792beb46",
+   "site_sha256": "a7002933794e9309102bcfea55deced09c8410cbbcaeedb5d56b6a196e5d1478",
+   "blanked": [
+    "/Author",
+    "/Creator"
+   ]
+  },
+  "F63": {
+   "built_sha256": "0d2acf8b4815746b102fb6ea83c828e3ec40528f132990c3ec45b7fee13a432f",
+   "site_sha256": "7a6e2e2806c504131e90f6e117319507bf8435dab91813b8adafbfea6d79d886",
+   "blanked": [
+    "/Author",
+    "/Creator"
+   ]
+  },
+  "F675": {
+   "built_sha256": "34e06fece9f50b48b68f18d89c329618bcc8beff3229699771d8d63bd8fe5b3b",
+   "site_sha256": "7165a38943c2e0d4c85f2a0bd80f4a81e2ae2da296e946ba4cf8164bd097e92e",
+   "blanked": [
+    "/Author",
+    "/Creator"
+   ]
+  },
+  "F76": {
+   "built_sha256": "03bf9be3b777617402e4219cc832a1f1b284ba4e80c3ca80671bed1a6ece48b5",
+   "site_sha256": "baf22d439f5c53bf0c37a913b368cb3db33f946018bd080844f43765d0eb1b24",
+   "blanked": [
+    "/Author",
+    "/Creator"
+   ]
+  },
+  "F81": {
+   "built_sha256": "43d4098cd03bf7bb5e2b3f9eb37d6e4e0163f323188575bc11a298064fc41935",
+   "site_sha256": "d86c79598bdf35c1bab5875ec0956659d37c815f7e253928cf53a479ef9af5ba",
+   "blanked": [
+    "/Author",
+    "/Creator"
+   ]
+  },
+  "F97": {
+   "built_sha256": "30581875f101f4353f402e2223a509e0c5fa5f46d5ac72094e9d3885020a6fa2",
+   "site_sha256": "918a337bc505c5bf7588dd20e2561bf6853888f1a3edbee18ebdd90c0f12de07",
+   "blanked": [
+    "/Author",
+    "/Creator"
+   ]
+  }
+ }
+}

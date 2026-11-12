@@ -1,0 +1,9 @@
+{
+  "date": "2026-11-09",
+  "note": "Review fixes on the findings pages: no standing mark for an untreated finding (so the site index drops those flags), the new world asset revision on index.html, and the route registry refreshed from the rebuilt pages. Not merged until the author reviews the renders.",
+  "paths": {
+    "index.html": "60a5831f4557be48425c7983a9ee0999445b12532e8429a0b2aca4c91fa2d24b",
+    "site-index.html": "061a594abfac545a43a23749e54e5d92dbac4d9ab63f289a2ce6068cf0e4e3d5",
+    "system/routes.js": "10e0a03d437795fbfde93e64d861867ce90357b63cb149dc38e405e7323150fe"
+  }
+}

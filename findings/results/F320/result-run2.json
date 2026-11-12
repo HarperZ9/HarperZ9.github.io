@@ -1,0 +1,133 @@
+{
+ "study": "bm-a2-wesad",
+ "run_id": "20261031T223929Z",
+ "date": "2026-10-31",
+ "prereg": {
+  "path": "PREREG.txt",
+  "sha256": "5f1b6cda094184677b55ab08c84f05613e04f30f8c3a5484ec725a2b18b545c2",
+  "anchors": [
+   "sidecar",
+   "lock"
+  ],
+  "plan_sha256": "5b45f5620a043beb623d96d6427e3b2e3024aeacef4ceb867f96e2164e9d6fa1",
+  "locked_at": "2026-10-31T22:39:28+00:00"
+ },
+ "hashes": {
+  "features.npz": "59de3f792f9036db10631e4b8bd6f4a411b82cd7ce7daa0bcba1e042929e23ca",
+  "units.py": "89a00480db20507a5686dd866521b96928139120ef305bd8d06e309fc58035ce",
+  "units.py (2)": "bbcfce9180011dfc94ddd165542d0ee6731b998248e993fa3f31d86e68344e44"
+ },
+ "analysis": {
+  "plant": [
+   {
+    "d": 2.0,
+    "ceiling": 0.912222848613385,
+    "random": 0.9999957599810048,
+    "loso_rf": 0.6919870001017605,
+    "loso_lr": 0.6466982972083715
+   },
+   {
+    "d": 3.0,
+    "ceiling": 0.978915901451422,
+    "random": 0.9999257996675825,
+    "loso_rf": 0.9869693616227401,
+    "loso_lr": 0.8909562514840067
+   },
+   {
+    "d": 4.0,
+    "ceiling": 0.9966271253570845,
+    "random": 1.0,
+    "loso_rf": 0.9939388928462399,
+    "loso_lr": 0.9967012652216682
+   }
+  ],
+  "plant_d4_rf": 0.9939388928462399,
+  "plant_d2_ceiling": 0.912222848613385,
+  "zero_random": 1.0,
+  "zero_loso": 0.3908364709473898,
+  "random_rf": 0.9994116973644042,
+  "loso_rf": 0.9662695888877583,
+  "loso_lr": 0.8956117923408297,
+  "gap_rf": 0.03314210847664589,
+  "loso_within_mean": 0.9786077887410861,
+  "loso_within_ci": [
+   0.9613771298554094,
+   0.9935541309729531
+  ]
+ },
+ "controls": {
+  "blockshuffle": {
+   "n": 40,
+   "usable": true,
+   "mean": 0.4718245329729471,
+   "q95": 0.5942877693689759,
+   "q05": 0.33192446338477544,
+   "p_ge": 0.024390243902439025,
+   "compare": "analysis.loso_lr",
+   "description": "stress label reassigned to a random condition block per person"
+  }
+ },
+ "timing_s": {
+  "analysis": 23.12765910000053,
+  "blockshuffle": 8.2881897999996
+ },
+ "verdicts": {
+  "PLANT_D4": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.plant_d4_rf >= 0.9",
+     "left": 0.9939388928462399,
+     "right": 0.9,
+     "holds": true
+    }
+   ]
+  },
+  "ZERO_RANDOM": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.zero_random >= 0.8",
+     "left": 1.0,
+     "right": 0.8,
+     "holds": true
+    }
+   ]
+  },
+  "ZERO_LOSO": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.zero_loso <= 0.6",
+     "left": 0.3908364709473898,
+     "right": 0.6,
+     "holds": true
+    }
+   ]
+  },
+  "LEAK": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.gap_rf >= 0.02",
+     "left": 0.03314210847664589,
+     "right": 0.02,
+     "holds": true
+    }
+   ]
+  },
+  "CTRL": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.loso_lr > controls.blockshuffle.q95",
+     "left": 0.8956117923408297,
+     "right": 0.5942877693689759,
+     "holds": true
+    }
+   ]
+  }
+ },
+ "reproduce": null,
+ "status": "scored"
+}

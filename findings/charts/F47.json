@@ -1,0 +1,2967 @@
+{
+ "finding": "F47",
+ "sources": [
+  {
+   "id": "result",
+   "name": "result.json (second run)",
+   "sha256_original": "647459dee912cbd1b40821fdfef1870481369fd248e04d953b6b0d1163cb49e5",
+   "sha256_copy": "af03b038e44458e40cf59ffd2388813fa6c9132d66a6a20092333a4c0b03ac5a",
+   "href": "/findings/results/F47/result.json",
+   "run": "20261029T175624Z"
+  }
+ ],
+ "charts": [
+  {
+   "key": "curves",
+   "form": "line",
+   "at": "results",
+   "claims": [
+    "c1",
+    "c2"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "Held-out skill as variables are added, target by target.",
+   "takeaway": "Skill rose with added variables in all 8 targets and the full model beat its shuffled-target control in 8 of 8. Forecaster accuracy flattened at R2 0.131 with all 1,349 variables.",
+   "units": "held-out skill above chance, in each target's own unit; higher is better. Held-out skill: how well the model predicts cases it was not fitted on. It is R2 (share of variance explained) for numeric targets, AUC (the chance a random positive case ranks above a random negative one) for tree death and image preference, and accuracy for triplets. Chance is 0 for R2, 0.5 for AUC and one in three for triplets",
+   "n": "Similarity triplets 150,000 cases; Mood at the next beep 8,141 cases; Music valence 1,744 cases; Music arousal 1,744 cases; Forecaster accuracy 2,120 cases; Tree growth 73,553 cases; Tree death 90,427 cases; Image preference 2,625 cases",
+   "interval": null,
+   "no_interval": "The curves are one informed order and the mean of 8 random orders, with no interval for each point in this chart. The spread of the plateau over the 8 orders is in the result file.",
+   "baseline": "Shuffled target: the training targets were permuted, the model refitted and scored on the real held-out targets. It should stay at chance",
+   "threshold": "The full model had to beat the 95th percentile of 20 shuffled-target refits in every target",
+   "x": {
+    "label": "number of variables in the model",
+    "log": true,
+    "min": 1,
+    "max": 2000
+   },
+   "y": {
+    "label": "held-out skill above chance (higher is better)",
+    "min": -0.1,
+    "max": 0.6,
+    "refs": [
+     {
+      "value": 0,
+      "label": "chance"
+     }
+    ]
+   },
+   "panels": [
+    {
+     "title": "Similarity triplets (accuracy), chance 0.33",
+     "series": [
+      {
+       "name": "Variables added in informed order",
+       "points": [
+        [
+         1,
+         0.11647333333333337,
+         "Similarity triplets, informed order, 1 variables: accuracy 0.450"
+        ],
+        [
+         2,
+         0.18718666666666667,
+         "Similarity triplets, informed order, 2 variables: accuracy 0.521"
+        ],
+        [
+         3,
+         0.21438000000000007,
+         "Similarity triplets, informed order, 3 variables: accuracy 0.548"
+        ],
+        [
+         4,
+         0.23581333333333337,
+         "Similarity triplets, informed order, 4 variables: accuracy 0.569"
+        ],
+        [
+         5,
+         0.24018,
+         "Similarity triplets, informed order, 5 variables: accuracy 0.574"
+        ],
+        [
+         7,
+         0.24996000000000002,
+         "Similarity triplets, informed order, 7 variables: accuracy 0.583"
+        ],
+        [
+         10,
+         0.2647,
+         "Similarity triplets, informed order, 10 variables: accuracy 0.598"
+        ],
+        [
+         13,
+         0.2767133333333333,
+         "Similarity triplets, informed order, 13 variables: accuracy 0.610"
+        ],
+        [
+         18,
+         0.28875333333333336,
+         "Similarity triplets, informed order, 18 variables: accuracy 0.622"
+        ],
+        [
+         25,
+         0.2962266666666667,
+         "Similarity triplets, informed order, 25 variables: accuracy 0.630"
+        ],
+        [
+         35,
+         0.30217333333333335,
+         "Similarity triplets, informed order, 35 variables: accuracy 0.636"
+        ],
+        [
+         48,
+         0.30639333333333335,
+         "Similarity triplets, informed order, 48 variables: accuracy 0.640"
+        ],
+        [
+         66,
+         0.30863999999999997,
+         "Similarity triplets, informed order, 66 variables: accuracy 0.642"
+        ]
+       ]
+      },
+      {
+       "name": "Random order, mean of 8",
+       "points": [
+        [
+         1,
+         0.01872250000000003,
+         "Similarity triplets, random order, 1 variables: accuracy 0.352"
+        ],
+        [
+         2,
+         0.032718333333333405,
+         "Similarity triplets, random order, 2 variables: accuracy 0.366"
+        ],
+        [
+         3,
+         0.046365833333333384,
+         "Similarity triplets, random order, 3 variables: accuracy 0.380"
+        ],
+        [
+         4,
+         0.06913249999999999,
+         "Similarity triplets, random order, 4 variables: accuracy 0.402"
+        ],
+        [
+         5,
+         0.07393833333333333,
+         "Similarity triplets, random order, 5 variables: accuracy 0.407"
+        ],
+        [
+         7,
+         0.08829500000000001,
+         "Similarity triplets, random order, 7 variables: accuracy 0.422"
+        ],
+        [
+         10,
+         0.10941666666666666,
+         "Similarity triplets, random order, 10 variables: accuracy 0.443"
+        ],
+        [
+         13,
+         0.12267166666666668,
+         "Similarity triplets, random order, 13 variables: accuracy 0.456"
+        ],
+        [
+         18,
+         0.15489999999999998,
+         "Similarity triplets, random order, 18 variables: accuracy 0.488"
+        ],
+        [
+         25,
+         0.18280500000000005,
+         "Similarity triplets, random order, 25 variables: accuracy 0.516"
+        ],
+        [
+         35,
+         0.2159775,
+         "Similarity triplets, random order, 35 variables: accuracy 0.549"
+        ],
+        [
+         48,
+         0.26679666666666674,
+         "Similarity triplets, random order, 48 variables: accuracy 0.600"
+        ],
+        [
+         66,
+         0.3086400000000001,
+         "Similarity triplets, random order, 66 variables: accuracy 0.642"
+        ]
+       ]
+      },
+      {
+       "name": "Shuffled target (control)",
+       "dashed": true,
+       "points": [
+        [
+         1,
+         -0.013279999999999959,
+         "Similarity triplets, shuffled target, 1 variables: accuracy 0.320"
+        ],
+        [
+         2,
+         -0.003899999999999959,
+         "Similarity triplets, shuffled target, 2 variables: accuracy 0.329"
+        ],
+        [
+         3,
+         0.002453333333333363,
+         "Similarity triplets, shuffled target, 3 variables: accuracy 0.336"
+        ],
+        [
+         4,
+         0.01696000000000003,
+         "Similarity triplets, shuffled target, 4 variables: accuracy 0.350"
+        ],
+        [
+         5,
+         0.019653333333333356,
+         "Similarity triplets, shuffled target, 5 variables: accuracy 0.353"
+        ],
+        [
+         7,
+         0.03228000000000003,
+         "Similarity triplets, shuffled target, 7 variables: accuracy 0.366"
+        ],
+        [
+         10,
+         0.0393,
+         "Similarity triplets, shuffled target, 10 variables: accuracy 0.373"
+        ],
+        [
+         13,
+         0.04295333333333334,
+         "Similarity triplets, shuffled target, 13 variables: accuracy 0.376"
+        ],
+        [
+         18,
+         0.04486000000000001,
+         "Similarity triplets, shuffled target, 18 variables: accuracy 0.378"
+        ],
+        [
+         25,
+         0.02406666666666668,
+         "Similarity triplets, shuffled target, 25 variables: accuracy 0.357"
+        ],
+        [
+         35,
+         0.02098666666666671,
+         "Similarity triplets, shuffled target, 35 variables: accuracy 0.354"
+        ],
+        [
+         48,
+         0.026513333333333333,
+         "Similarity triplets, shuffled target, 48 variables: accuracy 0.360"
+        ],
+        [
+         66,
+         0.014880000000000004,
+         "Similarity triplets, shuffled target, 66 variables: accuracy 0.348"
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Mood at the next beep (R2), chance 0.00",
+     "series": [
+      {
+       "name": "Variables added in informed order",
+       "points": [
+        [
+         1,
+         0.5007636254015762,
+         "Mood at the next beep, informed order, 1 variables: R2 0.501"
+        ],
+        [
+         2,
+         0.5118960820996963,
+         "Mood at the next beep, informed order, 2 variables: R2 0.512"
+        ],
+        [
+         3,
+         0.5155990061888962,
+         "Mood at the next beep, informed order, 3 variables: R2 0.516"
+        ],
+        [
+         4,
+         0.5166978217504659,
+         "Mood at the next beep, informed order, 4 variables: R2 0.517"
+        ],
+        [
+         5,
+         0.5163405853972489,
+         "Mood at the next beep, informed order, 5 variables: R2 0.516"
+        ],
+        [
+         6,
+         0.5196008004313997,
+         "Mood at the next beep, informed order, 6 variables: R2 0.520"
+        ],
+        [
+         8,
+         0.5201341349735329,
+         "Mood at the next beep, informed order, 8 variables: R2 0.520"
+        ],
+        [
+         11,
+         0.5223262997250918,
+         "Mood at the next beep, informed order, 11 variables: R2 0.522"
+        ],
+        [
+         14,
+         0.5212175339623739,
+         "Mood at the next beep, informed order, 14 variables: R2 0.521"
+        ],
+        [
+         18,
+         0.5213963209469564,
+         "Mood at the next beep, informed order, 18 variables: R2 0.521"
+        ],
+        [
+         24,
+         0.5209304657210707,
+         "Mood at the next beep, informed order, 24 variables: R2 0.521"
+        ],
+        [
+         31,
+         0.5209986968950222,
+         "Mood at the next beep, informed order, 31 variables: R2 0.521"
+        ]
+       ]
+      },
+      {
+       "name": "Random order, mean of 8",
+       "points": [
+        [
+         1,
+         0.022593894544541998,
+         "Mood at the next beep, random order, 1 variables: R2 0.023"
+        ],
+        [
+         2,
+         0.14053570589850722,
+         "Mood at the next beep, random order, 2 variables: R2 0.141"
+        ],
+        [
+         3,
+         0.23669476301092607,
+         "Mood at the next beep, random order, 3 variables: R2 0.237"
+        ],
+        [
+         4,
+         0.2896928655026356,
+         "Mood at the next beep, random order, 4 variables: R2 0.290"
+        ],
+        [
+         5,
+         0.33118232025123384,
+         "Mood at the next beep, random order, 5 variables: R2 0.331"
+        ],
+        [
+         6,
+         0.33315100982038864,
+         "Mood at the next beep, random order, 6 variables: R2 0.333"
+        ],
+        [
+         8,
+         0.40557879158939014,
+         "Mood at the next beep, random order, 8 variables: R2 0.406"
+        ],
+        [
+         11,
+         0.46464570864701704,
+         "Mood at the next beep, random order, 11 variables: R2 0.465"
+        ],
+        [
+         14,
+         0.4680712298485891,
+         "Mood at the next beep, random order, 14 variables: R2 0.468"
+        ],
+        [
+         18,
+         0.48308642642159516,
+         "Mood at the next beep, random order, 18 variables: R2 0.483"
+        ],
+        [
+         24,
+         0.5109913923057803,
+         "Mood at the next beep, random order, 24 variables: R2 0.511"
+        ],
+        [
+         31,
+         0.5209986968950221,
+         "Mood at the next beep, random order, 31 variables: R2 0.521"
+        ]
+       ]
+      },
+      {
+       "name": "Shuffled target (control)",
+       "dashed": true,
+       "points": [
+        [
+         1,
+         -0.002809978992887041,
+         "Mood at the next beep, shuffled target, 1 variables: R2 −0.003"
+        ],
+        [
+         2,
+         -0.00304714396166883,
+         "Mood at the next beep, shuffled target, 2 variables: R2 −0.003"
+        ],
+        [
+         3,
+         -0.0030450909521875236,
+         "Mood at the next beep, shuffled target, 3 variables: R2 −0.003"
+        ],
+        [
+         4,
+         -0.012097184449132437,
+         "Mood at the next beep, shuffled target, 4 variables: R2 −0.012"
+        ],
+        [
+         5,
+         -0.0071920097278066475,
+         "Mood at the next beep, shuffled target, 5 variables: R2 −0.007"
+        ],
+        [
+         6,
+         -0.008306503054806846,
+         "Mood at the next beep, shuffled target, 6 variables: R2 −0.008"
+        ],
+        [
+         8,
+         -0.008576863351463127,
+         "Mood at the next beep, shuffled target, 8 variables: R2 −0.009"
+        ],
+        [
+         11,
+         -0.005318582499063362,
+         "Mood at the next beep, shuffled target, 11 variables: R2 −0.005"
+        ],
+        [
+         14,
+         -0.005201230417076097,
+         "Mood at the next beep, shuffled target, 14 variables: R2 −0.005"
+        ],
+        [
+         18,
+         -0.01016653668743639,
+         "Mood at the next beep, shuffled target, 18 variables: R2 −0.010"
+        ],
+        [
+         24,
+         -0.011031678851542548,
+         "Mood at the next beep, shuffled target, 24 variables: R2 −0.011"
+        ],
+        [
+         31,
+         -0.00896546887356231,
+         "Mood at the next beep, shuffled target, 31 variables: R2 −0.009"
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Music valence (R2), chance 0.00",
+     "series": [
+      {
+       "name": "Variables added in informed order",
+       "points": [
+        [
+         1,
+         0.24136882863707199,
+         "Music valence, informed order, 1 variables: R2 0.241"
+        ],
+        [
+         2,
+         0.31536808947157857,
+         "Music valence, informed order, 2 variables: R2 0.315"
+        ],
+        [
+         3,
+         0.34794315358509975,
+         "Music valence, informed order, 3 variables: R2 0.348"
+        ],
+        [
+         4,
+         0.4024984674108756,
+         "Music valence, informed order, 4 variables: R2 0.402"
+        ],
+        [
+         5,
+         0.38876050207057666,
+         "Music valence, informed order, 5 variables: R2 0.389"
+        ],
+        [
+         7,
+         0.3951558116696743,
+         "Music valence, informed order, 7 variables: R2 0.395"
+        ],
+        [
+         8,
+         0.395884326078192,
+         "Music valence, informed order, 8 variables: R2 0.396"
+        ],
+        [
+         11,
+         0.4196837640093555,
+         "Music valence, informed order, 11 variables: R2 0.420"
+        ],
+        [
+         14,
+         0.41893946687683137,
+         "Music valence, informed order, 14 variables: R2 0.419"
+        ],
+        [
+         17,
+         0.41980390507314036,
+         "Music valence, informed order, 17 variables: R2 0.420"
+        ],
+        [
+         22,
+         0.4446245476676194,
+         "Music valence, informed order, 22 variables: R2 0.445"
+        ]
+       ]
+      },
+      {
+       "name": "Random order, mean of 8",
+       "points": [
+        [
+         1,
+         0.02773102222913862,
+         "Music valence, random order, 1 variables: R2 0.028"
+        ],
+        [
+         2,
+         0.08187408044100122,
+         "Music valence, random order, 2 variables: R2 0.082"
+        ],
+        [
+         3,
+         0.11578261297953835,
+         "Music valence, random order, 3 variables: R2 0.116"
+        ],
+        [
+         4,
+         0.1286276612013801,
+         "Music valence, random order, 4 variables: R2 0.129"
+        ],
+        [
+         5,
+         0.13572945702610778,
+         "Music valence, random order, 5 variables: R2 0.136"
+        ],
+        [
+         7,
+         0.2429826122191659,
+         "Music valence, random order, 7 variables: R2 0.243"
+        ],
+        [
+         8,
+         0.2511545252621131,
+         "Music valence, random order, 8 variables: R2 0.251"
+        ],
+        [
+         11,
+         0.30197180721652733,
+         "Music valence, random order, 11 variables: R2 0.302"
+        ],
+        [
+         14,
+         0.3736394018311372,
+         "Music valence, random order, 14 variables: R2 0.374"
+        ],
+        [
+         17,
+         0.39398583202368515,
+         "Music valence, random order, 17 variables: R2 0.394"
+        ],
+        [
+         22,
+         0.44462454766761916,
+         "Music valence, random order, 22 variables: R2 0.445"
+        ]
+       ]
+      },
+      {
+       "name": "Shuffled target (control)",
+       "dashed": true,
+       "points": [
+        [
+         1,
+         -0.03128568134312215,
+         "Music valence, shuffled target, 1 variables: R2 −0.031"
+        ],
+        [
+         2,
+         -0.03560354107928987,
+         "Music valence, shuffled target, 2 variables: R2 −0.036"
+        ],
+        [
+         3,
+         -0.06874112399040078,
+         "Music valence, shuffled target, 3 variables: R2 −0.069"
+        ],
+        [
+         4,
+         -0.046731557920096645,
+         "Music valence, shuffled target, 4 variables: R2 −0.047"
+        ],
+        [
+         5,
+         -0.05214977162690637,
+         "Music valence, shuffled target, 5 variables: R2 −0.052"
+        ],
+        [
+         7,
+         -0.047132016066987914,
+         "Music valence, shuffled target, 7 variables: R2 −0.047"
+        ],
+        [
+         8,
+         -0.04687615952487878,
+         "Music valence, shuffled target, 8 variables: R2 −0.047"
+        ],
+        [
+         11,
+         -0.05875221147313758,
+         "Music valence, shuffled target, 11 variables: R2 −0.059"
+        ],
+        [
+         14,
+         -0.03225354263957958,
+         "Music valence, shuffled target, 14 variables: R2 −0.032"
+        ],
+        [
+         17,
+         -0.03280190194953159,
+         "Music valence, shuffled target, 17 variables: R2 −0.033"
+        ],
+        [
+         22,
+         -0.02190042881558618,
+         "Music valence, shuffled target, 22 variables: R2 −0.022"
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Music arousal (R2), chance 0.00",
+     "series": [
+      {
+       "name": "Variables added in informed order",
+       "points": [
+        [
+         1,
+         0.21053117329874937,
+         "Music arousal, informed order, 1 variables: R2 0.211"
+        ],
+        [
+         2,
+         0.2804406520129953,
+         "Music arousal, informed order, 2 variables: R2 0.280"
+        ],
+        [
+         3,
+         0.2542637919055295,
+         "Music arousal, informed order, 3 variables: R2 0.254"
+        ],
+        [
+         4,
+         0.3244331954623165,
+         "Music arousal, informed order, 4 variables: R2 0.324"
+        ],
+        [
+         5,
+         0.3240155329658788,
+         "Music arousal, informed order, 5 variables: R2 0.324"
+        ],
+        [
+         7,
+         0.3205593047169809,
+         "Music arousal, informed order, 7 variables: R2 0.321"
+        ],
+        [
+         8,
+         0.3204502128799782,
+         "Music arousal, informed order, 8 variables: R2 0.320"
+        ],
+        [
+         11,
+         0.33555419326396674,
+         "Music arousal, informed order, 11 variables: R2 0.336"
+        ],
+        [
+         14,
+         0.34012145394403315,
+         "Music arousal, informed order, 14 variables: R2 0.340"
+        ],
+        [
+         17,
+         0.35671585932422445,
+         "Music arousal, informed order, 17 variables: R2 0.357"
+        ],
+        [
+         22,
+         0.3927955575230483,
+         "Music arousal, informed order, 22 variables: R2 0.393"
+        ]
+       ]
+      },
+      {
+       "name": "Random order, mean of 8",
+       "points": [
+        [
+         1,
+         0.007224846891412576,
+         "Music arousal, random order, 1 variables: R2 0.007"
+        ],
+        [
+         2,
+         0.02052338329630972,
+         "Music arousal, random order, 2 variables: R2 0.021"
+        ],
+        [
+         3,
+         0.06242215862180518,
+         "Music arousal, random order, 3 variables: R2 0.062"
+        ],
+        [
+         4,
+         0.1100846830958523,
+         "Music arousal, random order, 4 variables: R2 0.110"
+        ],
+        [
+         5,
+         0.15111763408207438,
+         "Music arousal, random order, 5 variables: R2 0.151"
+        ],
+        [
+         7,
+         0.20744530979400994,
+         "Music arousal, random order, 7 variables: R2 0.207"
+        ],
+        [
+         8,
+         0.2126537632884356,
+         "Music arousal, random order, 8 variables: R2 0.213"
+        ],
+        [
+         11,
+         0.30169185466023907,
+         "Music arousal, random order, 11 variables: R2 0.302"
+        ],
+        [
+         14,
+         0.3239980101045325,
+         "Music arousal, random order, 14 variables: R2 0.324"
+        ],
+        [
+         17,
+         0.3664289866556471,
+         "Music arousal, random order, 17 variables: R2 0.366"
+        ],
+        [
+         22,
+         0.39279555752304873,
+         "Music arousal, random order, 22 variables: R2 0.393"
+        ]
+       ]
+      },
+      {
+       "name": "Shuffled target (control)",
+       "dashed": true,
+       "points": [
+        [
+         1,
+         -0.0004193926247395563,
+         "Music arousal, shuffled target, 1 variables: R2 −0.000"
+        ],
+        [
+         2,
+         -0.00042529192283025097,
+         "Music arousal, shuffled target, 2 variables: R2 −0.000"
+        ],
+        [
+         3,
+         -0.0005366559856634368,
+         "Music arousal, shuffled target, 3 variables: R2 −0.001"
+        ],
+        [
+         4,
+         -0.0005138933324442263,
+         "Music arousal, shuffled target, 4 variables: R2 −0.001"
+        ],
+        [
+         5,
+         -0.00044644792617454243,
+         "Music arousal, shuffled target, 5 variables: R2 −0.000"
+        ],
+        [
+         7,
+         -0.00028444336732502684,
+         "Music arousal, shuffled target, 7 variables: R2 −0.000"
+        ],
+        [
+         8,
+         0.0008214053146966549,
+         "Music arousal, shuffled target, 8 variables: R2 0.001"
+        ],
+        [
+         11,
+         0.0001500475506954757,
+         "Music arousal, shuffled target, 11 variables: R2 0.000"
+        ],
+        [
+         14,
+         -0.00019549737107782406,
+         "Music arousal, shuffled target, 14 variables: R2 −0.000"
+        ],
+        [
+         17,
+         0.004806104201388051,
+         "Music arousal, shuffled target, 17 variables: R2 0.005"
+        ],
+        [
+         22,
+         0.0035417530955451637,
+         "Music arousal, shuffled target, 22 variables: R2 0.004"
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Forecaster accuracy (R2), chance 0.00",
+     "series": [
+      {
+       "name": "Variables added in informed order",
+       "points": [
+        [
+         1,
+         0.040030822853749704,
+         "Forecaster accuracy, informed order, 1 variables: R2 0.040"
+        ],
+        [
+         2,
+         0.06911311410916354,
+         "Forecaster accuracy, informed order, 2 variables: R2 0.069"
+        ],
+        [
+         3,
+         0.06620833739793386,
+         "Forecaster accuracy, informed order, 3 variables: R2 0.066"
+        ],
+        [
+         5,
+         0.073484716249966,
+         "Forecaster accuracy, informed order, 5 variables: R2 0.073"
+        ],
+        [
+         9,
+         0.08107670362016994,
+         "Forecaster accuracy, informed order, 9 variables: R2 0.081"
+        ],
+        [
+         16,
+         0.08810828159564377,
+         "Forecaster accuracy, informed order, 16 variables: R2 0.088"
+        ],
+        [
+         28,
+         0.09736273427040365,
+         "Forecaster accuracy, informed order, 28 variables: R2 0.097"
+        ],
+        [
+         48,
+         0.10515009114685303,
+         "Forecaster accuracy, informed order, 48 variables: R2 0.105"
+        ],
+        [
+         84,
+         0.09887900661529947,
+         "Forecaster accuracy, informed order, 84 variables: R2 0.099"
+        ],
+        [
+         147,
+         0.11794294856404652,
+         "Forecaster accuracy, informed order, 147 variables: R2 0.118"
+        ],
+        [
+         256,
+         0.12457278104635094,
+         "Forecaster accuracy, informed order, 256 variables: R2 0.125"
+        ],
+        [
+         445,
+         0.13154697461743425,
+         "Forecaster accuracy, informed order, 445 variables: R2 0.132"
+        ],
+        [
+         775,
+         0.13745821116974466,
+         "Forecaster accuracy, informed order, 775 variables: R2 0.137"
+        ],
+        [
+         1349,
+         0.13108191002444292,
+         "Forecaster accuracy, informed order, 1349 variables: R2 0.131"
+        ]
+       ]
+      },
+      {
+       "name": "Random order, mean of 8",
+       "points": [
+        [
+         1,
+         0.0042466084939003085,
+         "Forecaster accuracy, random order, 1 variables: R2 0.004"
+        ],
+        [
+         2,
+         0.00581828239326114,
+         "Forecaster accuracy, random order, 2 variables: R2 0.006"
+        ],
+        [
+         3,
+         0.007878851612460686,
+         "Forecaster accuracy, random order, 3 variables: R2 0.008"
+        ],
+        [
+         5,
+         0.011232292208199907,
+         "Forecaster accuracy, random order, 5 variables: R2 0.011"
+        ],
+        [
+         9,
+         0.021173419675184796,
+         "Forecaster accuracy, random order, 9 variables: R2 0.021"
+        ],
+        [
+         16,
+         0.03164754635627179,
+         "Forecaster accuracy, random order, 16 variables: R2 0.032"
+        ],
+        [
+         28,
+         0.03645582111916683,
+         "Forecaster accuracy, random order, 28 variables: R2 0.036"
+        ],
+        [
+         48,
+         0.057429260906100524,
+         "Forecaster accuracy, random order, 48 variables: R2 0.057"
+        ],
+        [
+         84,
+         0.08117087174944218,
+         "Forecaster accuracy, random order, 84 variables: R2 0.081"
+        ],
+        [
+         147,
+         0.10323671414457004,
+         "Forecaster accuracy, random order, 147 variables: R2 0.103"
+        ],
+        [
+         256,
+         0.10841596986130685,
+         "Forecaster accuracy, random order, 256 variables: R2 0.108"
+        ],
+        [
+         445,
+         0.11772416164987583,
+         "Forecaster accuracy, random order, 445 variables: R2 0.118"
+        ],
+        [
+         775,
+         0.1274020098975493,
+         "Forecaster accuracy, random order, 775 variables: R2 0.127"
+        ],
+        [
+         1349,
+         0.13108191002444317,
+         "Forecaster accuracy, random order, 1349 variables: R2 0.131"
+        ]
+       ]
+      },
+      {
+       "name": "Shuffled target (control)",
+       "dashed": true,
+       "points": [
+        [
+         1,
+         -0.0026322850160869216,
+         "Forecaster accuracy, shuffled target, 1 variables: R2 −0.003"
+        ],
+        [
+         2,
+         -0.00264006388726834,
+         "Forecaster accuracy, shuffled target, 2 variables: R2 −0.003"
+        ],
+        [
+         3,
+         -0.0008275717445347386,
+         "Forecaster accuracy, shuffled target, 3 variables: R2 −0.001"
+        ],
+        [
+         5,
+         -0.00019818240551305877,
+         "Forecaster accuracy, shuffled target, 5 variables: R2 −0.000"
+        ],
+        [
+         9,
+         -0.00085811446361439,
+         "Forecaster accuracy, shuffled target, 9 variables: R2 −0.001"
+        ],
+        [
+         16,
+         1.865739223227969e-06,
+         "Forecaster accuracy, shuffled target, 16 variables: R2 0.000"
+        ],
+        [
+         28,
+         -0.00017096884427192371,
+         "Forecaster accuracy, shuffled target, 28 variables: R2 −0.000"
+        ],
+        [
+         48,
+         -0.0004851490351909238,
+         "Forecaster accuracy, shuffled target, 48 variables: R2 −0.000"
+        ],
+        [
+         84,
+         -0.001579366457849618,
+         "Forecaster accuracy, shuffled target, 84 variables: R2 −0.002"
+        ],
+        [
+         147,
+         -0.0005371885046916436,
+         "Forecaster accuracy, shuffled target, 147 variables: R2 −0.001"
+        ],
+        [
+         256,
+         -0.0015395448318022975,
+         "Forecaster accuracy, shuffled target, 256 variables: R2 −0.002"
+        ],
+        [
+         445,
+         -0.0020815905028963577,
+         "Forecaster accuracy, shuffled target, 445 variables: R2 −0.002"
+        ],
+        [
+         775,
+         -0.003001325673325894,
+         "Forecaster accuracy, shuffled target, 775 variables: R2 −0.003"
+        ],
+        [
+         1349,
+         -0.004141441715180383,
+         "Forecaster accuracy, shuffled target, 1349 variables: R2 −0.004"
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Tree growth (R2), chance 0.00",
+     "series": [
+      {
+       "name": "Variables added in informed order",
+       "points": [
+        [
+         1,
+         0.12194566756310721,
+         "Tree growth, informed order, 1 variables: R2 0.122"
+        ],
+        [
+         2,
+         0.25342541339530744,
+         "Tree growth, informed order, 2 variables: R2 0.253"
+        ],
+        [
+         3,
+         0.25889755319197627,
+         "Tree growth, informed order, 3 variables: R2 0.259"
+        ],
+        [
+         4,
+         0.2895129464895164,
+         "Tree growth, informed order, 4 variables: R2 0.290"
+        ],
+        [
+         6,
+         0.3167459379883236,
+         "Tree growth, informed order, 6 variables: R2 0.317"
+        ],
+        [
+         7,
+         0.32580328186292484,
+         "Tree growth, informed order, 7 variables: R2 0.326"
+        ],
+        [
+         10,
+         0.337856849992902,
+         "Tree growth, informed order, 10 variables: R2 0.338"
+        ],
+        [
+         13,
+         0.34359904034736544,
+         "Tree growth, informed order, 13 variables: R2 0.344"
+        ],
+        [
+         18,
+         0.356830631052119,
+         "Tree growth, informed order, 18 variables: R2 0.357"
+        ],
+        [
+         24,
+         0.3833636574948901,
+         "Tree growth, informed order, 24 variables: R2 0.383"
+        ],
+        [
+         32,
+         0.3910699604703728,
+         "Tree growth, informed order, 32 variables: R2 0.391"
+        ],
+        [
+         42,
+         0.3956138618365218,
+         "Tree growth, informed order, 42 variables: R2 0.396"
+        ]
+       ]
+      },
+      {
+       "name": "Random order, mean of 8",
+       "points": [
+        [
+         1,
+         0.00867951785005383,
+         "Tree growth, random order, 1 variables: R2 0.009"
+        ],
+        [
+         2,
+         0.03999942483733912,
+         "Tree growth, random order, 2 variables: R2 0.040"
+        ],
+        [
+         3,
+         0.05020588183626777,
+         "Tree growth, random order, 3 variables: R2 0.050"
+        ],
+        [
+         4,
+         0.06438590747512965,
+         "Tree growth, random order, 4 variables: R2 0.064"
+        ],
+        [
+         6,
+         0.08975483274544352,
+         "Tree growth, random order, 6 variables: R2 0.090"
+        ],
+        [
+         7,
+         0.10393330029551837,
+         "Tree growth, random order, 7 variables: R2 0.104"
+        ],
+        [
+         10,
+         0.12204364864169709,
+         "Tree growth, random order, 10 variables: R2 0.122"
+        ],
+        [
+         13,
+         0.17082841428741766,
+         "Tree growth, random order, 13 variables: R2 0.171"
+        ],
+        [
+         18,
+         0.25583387998099466,
+         "Tree growth, random order, 18 variables: R2 0.256"
+        ],
+        [
+         24,
+         0.30873872063192215,
+         "Tree growth, random order, 24 variables: R2 0.309"
+        ],
+        [
+         32,
+         0.3531844854014604,
+         "Tree growth, random order, 32 variables: R2 0.353"
+        ],
+        [
+         42,
+         0.3956138618365217,
+         "Tree growth, random order, 42 variables: R2 0.396"
+        ]
+       ]
+      },
+      {
+       "name": "Shuffled target (control)",
+       "dashed": true,
+       "points": [
+        [
+         1,
+         0.00012163907066309321,
+         "Tree growth, shuffled target, 1 variables: R2 0.000"
+        ],
+        [
+         2,
+         0.00018490005803251108,
+         "Tree growth, shuffled target, 2 variables: R2 0.000"
+        ],
+        [
+         3,
+         0.0001772044963439523,
+         "Tree growth, shuffled target, 3 variables: R2 0.000"
+        ],
+        [
+         4,
+         -1.6953768626093435e-05,
+         "Tree growth, shuffled target, 4 variables: R2 −0.000"
+        ],
+        [
+         6,
+         -8.134861503239499e-05,
+         "Tree growth, shuffled target, 6 variables: R2 −0.000"
+        ],
+        [
+         7,
+         0.00029577123669199956,
+         "Tree growth, shuffled target, 7 variables: R2 0.000"
+        ],
+        [
+         10,
+         0.0007101831338716114,
+         "Tree growth, shuffled target, 10 variables: R2 0.001"
+        ],
+        [
+         13,
+         0.0007766277037308811,
+         "Tree growth, shuffled target, 13 variables: R2 0.001"
+        ],
+        [
+         18,
+         0.0008910182897756691,
+         "Tree growth, shuffled target, 18 variables: R2 0.001"
+        ],
+        [
+         24,
+         0.0016077111248045117,
+         "Tree growth, shuffled target, 24 variables: R2 0.002"
+        ],
+        [
+         32,
+         0.003998853223204146,
+         "Tree growth, shuffled target, 32 variables: R2 0.004"
+        ],
+        [
+         42,
+         0.005799537656262399,
+         "Tree growth, shuffled target, 42 variables: R2 0.006"
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Tree death (AUC), chance 0.50",
+     "series": [
+      {
+       "name": "Variables added in informed order",
+       "points": [
+        [
+         1,
+         0.12413195937251575,
+         "Tree death, informed order, 1 variables: AUC 0.624"
+        ],
+        [
+         2,
+         0.14842757995005373,
+         "Tree death, informed order, 2 variables: AUC 0.648"
+        ],
+        [
+         3,
+         0.1486361373985664,
+         "Tree death, informed order, 3 variables: AUC 0.649"
+        ],
+        [
+         4,
+         0.1567878869677728,
+         "Tree death, informed order, 4 variables: AUC 0.657"
+        ],
+        [
+         6,
+         0.16136256083665057,
+         "Tree death, informed order, 6 variables: AUC 0.661"
+        ],
+        [
+         7,
+         0.16482763329845096,
+         "Tree death, informed order, 7 variables: AUC 0.665"
+        ],
+        [
+         10,
+         0.17249649646025578,
+         "Tree death, informed order, 10 variables: AUC 0.672"
+        ],
+        [
+         13,
+         0.17919623700353804,
+         "Tree death, informed order, 13 variables: AUC 0.679"
+        ],
+        [
+         18,
+         0.18331112701861174,
+         "Tree death, informed order, 18 variables: AUC 0.683"
+        ],
+        [
+         24,
+         0.18413020948829473,
+         "Tree death, informed order, 24 variables: AUC 0.684"
+        ],
+        [
+         32,
+         0.1872958139344204,
+         "Tree death, informed order, 32 variables: AUC 0.687"
+        ],
+        [
+         42,
+         0.18639811090592273,
+         "Tree death, informed order, 42 variables: AUC 0.686"
+        ]
+       ]
+      },
+      {
+       "name": "Random order, mean of 8",
+       "points": [
+        [
+         1,
+         0.04138082248019115,
+         "Tree death, random order, 1 variables: AUC 0.541"
+        ],
+        [
+         2,
+         0.057645101184925496,
+         "Tree death, random order, 2 variables: AUC 0.558"
+        ],
+        [
+         3,
+         0.0641211058975446,
+         "Tree death, random order, 3 variables: AUC 0.564"
+        ],
+        [
+         4,
+         0.08964740054787701,
+         "Tree death, random order, 4 variables: AUC 0.590"
+        ],
+        [
+         6,
+         0.10196002228883971,
+         "Tree death, random order, 6 variables: AUC 0.602"
+        ],
+        [
+         7,
+         0.10864437536454075,
+         "Tree death, random order, 7 variables: AUC 0.609"
+        ],
+        [
+         10,
+         0.1186843782325051,
+         "Tree death, random order, 10 variables: AUC 0.619"
+        ],
+        [
+         13,
+         0.13415547665843452,
+         "Tree death, random order, 13 variables: AUC 0.634"
+        ],
+        [
+         18,
+         0.1423008843393082,
+         "Tree death, random order, 18 variables: AUC 0.642"
+        ],
+        [
+         24,
+         0.15161457766251496,
+         "Tree death, random order, 24 variables: AUC 0.652"
+        ],
+        [
+         32,
+         0.17187156229166323,
+         "Tree death, random order, 32 variables: AUC 0.672"
+        ],
+        [
+         42,
+         0.18639811090592273,
+         "Tree death, random order, 42 variables: AUC 0.686"
+        ]
+       ]
+      },
+      {
+       "name": "Shuffled target (control)",
+       "dashed": true,
+       "points": [
+        [
+         1,
+         -0.02709031967065967,
+         "Tree death, shuffled target, 1 variables: AUC 0.473"
+        ],
+        [
+         2,
+         0.04603817604917859,
+         "Tree death, shuffled target, 2 variables: AUC 0.546"
+        ],
+        [
+         3,
+         0.031295849606502335,
+         "Tree death, shuffled target, 3 variables: AUC 0.531"
+        ],
+        [
+         4,
+         0.033120312437745825,
+         "Tree death, shuffled target, 4 variables: AUC 0.533"
+        ],
+        [
+         6,
+         0.03884006013851593,
+         "Tree death, shuffled target, 6 variables: AUC 0.539"
+        ],
+        [
+         7,
+         0.04224790198021755,
+         "Tree death, shuffled target, 7 variables: AUC 0.542"
+        ],
+        [
+         10,
+         0.04275242235177168,
+         "Tree death, shuffled target, 10 variables: AUC 0.543"
+        ],
+        [
+         13,
+         0.046205923571055796,
+         "Tree death, shuffled target, 13 variables: AUC 0.546"
+        ],
+        [
+         18,
+         0.04415529796526263,
+         "Tree death, shuffled target, 18 variables: AUC 0.544"
+        ],
+        [
+         24,
+         0.017907744542104975,
+         "Tree death, shuffled target, 24 variables: AUC 0.518"
+        ],
+        [
+         32,
+         0.0015699398641462192,
+         "Tree death, shuffled target, 32 variables: AUC 0.502"
+        ],
+        [
+         42,
+         -0.01722611938239027,
+         "Tree death, shuffled target, 42 variables: AUC 0.483"
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Image preference (AUC), chance 0.50",
+     "series": [
+      {
+       "name": "Variables added in informed order",
+       "points": [
+        [
+         1,
+         0.052496241543472766,
+         "Image preference, informed order, 1 variables: AUC 0.552"
+        ],
+        [
+         2,
+         0.04744111751440738,
+         "Image preference, informed order, 2 variables: AUC 0.547"
+        ],
+        [
+         3,
+         0.047572663492858935,
+         "Image preference, informed order, 3 variables: AUC 0.548"
+        ],
+        [
+         4,
+         0.05921135053871218,
+         "Image preference, informed order, 4 variables: AUC 0.559"
+        ],
+        [
+         6,
+         0.07892445502380352,
+         "Image preference, informed order, 6 variables: AUC 0.579"
+        ],
+        [
+         7,
+         0.09672074668003006,
+         "Image preference, informed order, 7 variables: AUC 0.597"
+        ],
+        [
+         10,
+         0.1075764219493861,
+         "Image preference, informed order, 10 variables: AUC 0.608"
+        ],
+        [
+         13,
+         0.10999436231520932,
+         "Image preference, informed order, 13 variables: AUC 0.610"
+        ],
+        [
+         18,
+         0.11555061388123278,
+         "Image preference, informed order, 18 variables: AUC 0.616"
+        ],
+        [
+         24,
+         0.11900212979203206,
+         "Image preference, informed order, 24 variables: AUC 0.619"
+        ],
+        [
+         32,
+         0.13018353796041082,
+         "Image preference, informed order, 32 variables: AUC 0.630"
+        ],
+        [
+         42,
+         0.19909483838636932,
+         "Image preference, informed order, 42 variables: AUC 0.699"
+        ]
+       ]
+      },
+      {
+       "name": "Random order, mean of 8",
+       "points": [
+        [
+         1,
+         0.0034961475820596277,
+         "Image preference, random order, 1 variables: AUC 0.503"
+        ],
+        [
+         2,
+         0.026989632924079188,
+         "Image preference, random order, 2 variables: AUC 0.527"
+        ],
+        [
+         3,
+         0.0487992514407416,
+         "Image preference, random order, 3 variables: AUC 0.549"
+        ],
+        [
+         4,
+         0.05902107867702333,
+         "Image preference, random order, 4 variables: AUC 0.559"
+        ],
+        [
+         6,
+         0.06763107617138564,
+         "Image preference, random order, 6 variables: AUC 0.568"
+        ],
+        [
+         7,
+         0.07146078677023293,
+         "Image preference, random order, 7 variables: AUC 0.571"
+        ],
+        [
+         10,
+         0.09531758957654723,
+         "Image preference, random order, 10 variables: AUC 0.595"
+        ],
+        [
+         13,
+         0.11405819343522927,
+         "Image preference, random order, 13 variables: AUC 0.614"
+        ],
+        [
+         18,
+         0.14097344024054126,
+         "Image preference, random order, 18 variables: AUC 0.641"
+        ],
+        [
+         24,
+         0.13345261212728643,
+         "Image preference, random order, 24 variables: AUC 0.633"
+        ],
+        [
+         32,
+         0.15103122650964673,
+         "Image preference, random order, 32 variables: AUC 0.651"
+        ],
+        [
+         42,
+         0.19906508393886246,
+         "Image preference, random order, 42 variables: AUC 0.699"
+        ]
+       ]
+      },
+      {
+       "name": "Shuffled target (control)",
+       "dashed": true,
+       "points": [
+        [
+         1,
+         -0.05776121272863943,
+         "Image preference, shuffled target, 1 variables: AUC 0.442"
+        ],
+        [
+         2,
+         -0.06092771235279382,
+         "Image preference, shuffled target, 2 variables: AUC 0.439"
+        ],
+        [
+         3,
+         -0.06136619894763218,
+         "Image preference, shuffled target, 3 variables: AUC 0.439"
+        ],
+        [
+         4,
+         -0.06500563768479073,
+         "Image preference, shuffled target, 4 variables: AUC 0.435"
+        ],
+        [
+         6,
+         -0.034499498872463064,
+         "Image preference, shuffled target, 6 variables: AUC 0.466"
+        ],
+        [
+         7,
+         -0.03164933600601355,
+         "Image preference, shuffled target, 7 variables: AUC 0.468"
+        ],
+        [
+         10,
+         -0.046294788273615606,
+         "Image preference, shuffled target, 10 variables: AUC 0.454"
+        ],
+        [
+         13,
+         -0.056198321222751146,
+         "Image preference, shuffled target, 13 variables: AUC 0.444"
+        ],
+        [
+         18,
+         -0.04305625156602355,
+         "Image preference, shuffled target, 18 variables: AUC 0.457"
+        ],
+        [
+         24,
+         -0.060877599599098,
+         "Image preference, shuffled target, 24 variables: AUC 0.439"
+        ],
+        [
+         32,
+         -0.07864257078426456,
+         "Image preference, shuffled target, 32 variables: AUC 0.421"
+        ],
+        [
+         42,
+         -0.048343147080932125,
+         "Image preference, shuffled target, 42 variables: AUC 0.452"
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "columns": [
+    "Target",
+    "Variables",
+    "Informed order",
+    "Random order, mean of 8",
+    "Shuffled target",
+    "Chance"
+   ],
+   "table": [
+    [
+     "Similarity triplets (accuracy)",
+     "1",
+     "0.450",
+     "0.352",
+     "0.320",
+     "0.333"
+    ],
+    [
+     "Similarity triplets (accuracy)",
+     "2",
+     "0.521",
+     "0.366",
+     "0.329",
+     "0.333"
+    ],
+    [
+     "Similarity triplets (accuracy)",
+     "3",
+     "0.548",
+     "0.380",
+     "0.336",
+     "0.333"
+    ],
+    [
+     "Similarity triplets (accuracy)",
+     "4",
+     "0.569",
+     "0.402",
+     "0.350",
+     "0.333"
+    ],
+    [
+     "Similarity triplets (accuracy)",
+     "5",
+     "0.574",
+     "0.407",
+     "0.353",
+     "0.333"
+    ],
+    [
+     "Similarity triplets (accuracy)",
+     "7",
+     "0.583",
+     "0.422",
+     "0.366",
+     "0.333"
+    ],
+    [
+     "Similarity triplets (accuracy)",
+     "10",
+     "0.598",
+     "0.443",
+     "0.373",
+     "0.333"
+    ],
+    [
+     "Similarity triplets (accuracy)",
+     "13",
+     "0.610",
+     "0.456",
+     "0.376",
+     "0.333"
+    ],
+    [
+     "Similarity triplets (accuracy)",
+     "18",
+     "0.622",
+     "0.488",
+     "0.378",
+     "0.333"
+    ],
+    [
+     "Similarity triplets (accuracy)",
+     "25",
+     "0.630",
+     "0.516",
+     "0.357",
+     "0.333"
+    ],
+    [
+     "Similarity triplets (accuracy)",
+     "35",
+     "0.636",
+     "0.549",
+     "0.354",
+     "0.333"
+    ],
+    [
+     "Similarity triplets (accuracy)",
+     "48",
+     "0.640",
+     "0.600",
+     "0.360",
+     "0.333"
+    ],
+    [
+     "Similarity triplets (accuracy)",
+     "66",
+     "0.642",
+     "0.642",
+     "0.348",
+     "0.333"
+    ],
+    [
+     "Mood at the next beep (R2)",
+     "1",
+     "0.501",
+     "0.023",
+     "−0.003",
+     "0.000"
+    ],
+    [
+     "Mood at the next beep (R2)",
+     "2",
+     "0.512",
+     "0.141",
+     "−0.003",
+     "0.000"
+    ],
+    [
+     "Mood at the next beep (R2)",
+     "3",
+     "0.516",
+     "0.237",
+     "−0.003",
+     "0.000"
+    ],
+    [
+     "Mood at the next beep (R2)",
+     "4",
+     "0.517",
+     "0.290",
+     "−0.012",
+     "0.000"
+    ],
+    [
+     "Mood at the next beep (R2)",
+     "5",
+     "0.516",
+     "0.331",
+     "−0.007",
+     "0.000"
+    ],
+    [
+     "Mood at the next beep (R2)",
+     "6",
+     "0.520",
+     "0.333",
+     "−0.008",
+     "0.000"
+    ],
+    [
+     "Mood at the next beep (R2)",
+     "8",
+     "0.520",
+     "0.406",
+     "−0.009",
+     "0.000"
+    ],
+    [
+     "Mood at the next beep (R2)",
+     "11",
+     "0.522",
+     "0.465",
+     "−0.005",
+     "0.000"
+    ],
+    [
+     "Mood at the next beep (R2)",
+     "14",
+     "0.521",
+     "0.468",
+     "−0.005",
+     "0.000"
+    ],
+    [
+     "Mood at the next beep (R2)",
+     "18",
+     "0.521",
+     "0.483",
+     "−0.010",
+     "0.000"
+    ],
+    [
+     "Mood at the next beep (R2)",
+     "24",
+     "0.521",
+     "0.511",
+     "−0.011",
+     "0.000"
+    ],
+    [
+     "Mood at the next beep (R2)",
+     "31",
+     "0.521",
+     "0.521",
+     "−0.009",
+     "0.000"
+    ],
+    [
+     "Music valence (R2)",
+     "1",
+     "0.241",
+     "0.028",
+     "−0.031",
+     "0.000"
+    ],
+    [
+     "Music valence (R2)",
+     "2",
+     "0.315",
+     "0.082",
+     "−0.036",
+     "0.000"
+    ],
+    [
+     "Music valence (R2)",
+     "3",
+     "0.348",
+     "0.116",
+     "−0.069",
+     "0.000"
+    ],
+    [
+     "Music valence (R2)",
+     "4",
+     "0.402",
+     "0.129",
+     "−0.047",
+     "0.000"
+    ],
+    [
+     "Music valence (R2)",
+     "5",
+     "0.389",
+     "0.136",
+     "−0.052",
+     "0.000"
+    ],
+    [
+     "Music valence (R2)",
+     "7",
+     "0.395",
+     "0.243",
+     "−0.047",
+     "0.000"
+    ],
+    [
+     "Music valence (R2)",
+     "8",
+     "0.396",
+     "0.251",
+     "−0.047",
+     "0.000"
+    ],
+    [
+     "Music valence (R2)",
+     "11",
+     "0.420",
+     "0.302",
+     "−0.059",
+     "0.000"
+    ],
+    [
+     "Music valence (R2)",
+     "14",
+     "0.419",
+     "0.374",
+     "−0.032",
+     "0.000"
+    ],
+    [
+     "Music valence (R2)",
+     "17",
+     "0.420",
+     "0.394",
+     "−0.033",
+     "0.000"
+    ],
+    [
+     "Music valence (R2)",
+     "22",
+     "0.445",
+     "0.445",
+     "−0.022",
+     "0.000"
+    ],
+    [
+     "Music arousal (R2)",
+     "1",
+     "0.211",
+     "0.007",
+     "−0.000",
+     "0.000"
+    ],
+    [
+     "Music arousal (R2)",
+     "2",
+     "0.280",
+     "0.021",
+     "−0.000",
+     "0.000"
+    ],
+    [
+     "Music arousal (R2)",
+     "3",
+     "0.254",
+     "0.062",
+     "−0.001",
+     "0.000"
+    ],
+    [
+     "Music arousal (R2)",
+     "4",
+     "0.324",
+     "0.110",
+     "−0.001",
+     "0.000"
+    ],
+    [
+     "Music arousal (R2)",
+     "5",
+     "0.324",
+     "0.151",
+     "−0.000",
+     "0.000"
+    ],
+    [
+     "Music arousal (R2)",
+     "7",
+     "0.321",
+     "0.207",
+     "−0.000",
+     "0.000"
+    ],
+    [
+     "Music arousal (R2)",
+     "8",
+     "0.320",
+     "0.213",
+     "0.001",
+     "0.000"
+    ],
+    [
+     "Music arousal (R2)",
+     "11",
+     "0.336",
+     "0.302",
+     "0.000",
+     "0.000"
+    ],
+    [
+     "Music arousal (R2)",
+     "14",
+     "0.340",
+     "0.324",
+     "−0.000",
+     "0.000"
+    ],
+    [
+     "Music arousal (R2)",
+     "17",
+     "0.357",
+     "0.366",
+     "0.005",
+     "0.000"
+    ],
+    [
+     "Music arousal (R2)",
+     "22",
+     "0.393",
+     "0.393",
+     "0.004",
+     "0.000"
+    ],
+    [
+     "Forecaster accuracy (R2)",
+     "1",
+     "0.040",
+     "0.004",
+     "−0.003",
+     "0.000"
+    ],
+    [
+     "Forecaster accuracy (R2)",
+     "2",
+     "0.069",
+     "0.006",
+     "−0.003",
+     "0.000"
+    ],
+    [
+     "Forecaster accuracy (R2)",
+     "3",
+     "0.066",
+     "0.008",
+     "−0.001",
+     "0.000"
+    ],
+    [
+     "Forecaster accuracy (R2)",
+     "5",
+     "0.073",
+     "0.011",
+     "−0.000",
+     "0.000"
+    ],
+    [
+     "Forecaster accuracy (R2)",
+     "9",
+     "0.081",
+     "0.021",
+     "−0.001",
+     "0.000"
+    ],
+    [
+     "Forecaster accuracy (R2)",
+     "16",
+     "0.088",
+     "0.032",
+     "0.000",
+     "0.000"
+    ],
+    [
+     "Forecaster accuracy (R2)",
+     "28",
+     "0.097",
+     "0.036",
+     "−0.000",
+     "0.000"
+    ],
+    [
+     "Forecaster accuracy (R2)",
+     "48",
+     "0.105",
+     "0.057",
+     "−0.000",
+     "0.000"
+    ],
+    [
+     "Forecaster accuracy (R2)",
+     "84",
+     "0.099",
+     "0.081",
+     "−0.002",
+     "0.000"
+    ],
+    [
+     "Forecaster accuracy (R2)",
+     "147",
+     "0.118",
+     "0.103",
+     "−0.001",
+     "0.000"
+    ],
+    [
+     "Forecaster accuracy (R2)",
+     "256",
+     "0.125",
+     "0.108",
+     "−0.002",
+     "0.000"
+    ],
+    [
+     "Forecaster accuracy (R2)",
+     "445",
+     "0.132",
+     "0.118",
+     "−0.002",
+     "0.000"
+    ],
+    [
+     "Forecaster accuracy (R2)",
+     "775",
+     "0.137",
+     "0.127",
+     "−0.003",
+     "0.000"
+    ],
+    [
+     "Forecaster accuracy (R2)",
+     "1349",
+     "0.131",
+     "0.131",
+     "−0.004",
+     "0.000"
+    ],
+    [
+     "Tree growth (R2)",
+     "1",
+     "0.122",
+     "0.009",
+     "0.000",
+     "0.000"
+    ],
+    [
+     "Tree growth (R2)",
+     "2",
+     "0.253",
+     "0.040",
+     "0.000",
+     "0.000"
+    ],
+    [
+     "Tree growth (R2)",
+     "3",
+     "0.259",
+     "0.050",
+     "0.000",
+     "0.000"
+    ],
+    [
+     "Tree growth (R2)",
+     "4",
+     "0.290",
+     "0.064",
+     "−0.000",
+     "0.000"
+    ],
+    [
+     "Tree growth (R2)",
+     "6",
+     "0.317",
+     "0.090",
+     "−0.000",
+     "0.000"
+    ],
+    [
+     "Tree growth (R2)",
+     "7",
+     "0.326",
+     "0.104",
+     "0.000",
+     "0.000"
+    ],
+    [
+     "Tree growth (R2)",
+     "10",
+     "0.338",
+     "0.122",
+     "0.001",
+     "0.000"
+    ],
+    [
+     "Tree growth (R2)",
+     "13",
+     "0.344",
+     "0.171",
+     "0.001",
+     "0.000"
+    ],
+    [
+     "Tree growth (R2)",
+     "18",
+     "0.357",
+     "0.256",
+     "0.001",
+     "0.000"
+    ],
+    [
+     "Tree growth (R2)",
+     "24",
+     "0.383",
+     "0.309",
+     "0.002",
+     "0.000"
+    ],
+    [
+     "Tree growth (R2)",
+     "32",
+     "0.391",
+     "0.353",
+     "0.004",
+     "0.000"
+    ],
+    [
+     "Tree growth (R2)",
+     "42",
+     "0.396",
+     "0.396",
+     "0.006",
+     "0.000"
+    ],
+    [
+     "Tree death (AUC)",
+     "1",
+     "0.624",
+     "0.541",
+     "0.473",
+     "0.500"
+    ],
+    [
+     "Tree death (AUC)",
+     "2",
+     "0.648",
+     "0.558",
+     "0.546",
+     "0.500"
+    ],
+    [
+     "Tree death (AUC)",
+     "3",
+     "0.649",
+     "0.564",
+     "0.531",
+     "0.500"
+    ],
+    [
+     "Tree death (AUC)",
+     "4",
+     "0.657",
+     "0.590",
+     "0.533",
+     "0.500"
+    ],
+    [
+     "Tree death (AUC)",
+     "6",
+     "0.661",
+     "0.602",
+     "0.539",
+     "0.500"
+    ],
+    [
+     "Tree death (AUC)",
+     "7",
+     "0.665",
+     "0.609",
+     "0.542",
+     "0.500"
+    ],
+    [
+     "Tree death (AUC)",
+     "10",
+     "0.672",
+     "0.619",
+     "0.543",
+     "0.500"
+    ],
+    [
+     "Tree death (AUC)",
+     "13",
+     "0.679",
+     "0.634",
+     "0.546",
+     "0.500"
+    ],
+    [
+     "Tree death (AUC)",
+     "18",
+     "0.683",
+     "0.642",
+     "0.544",
+     "0.500"
+    ],
+    [
+     "Tree death (AUC)",
+     "24",
+     "0.684",
+     "0.652",
+     "0.518",
+     "0.500"
+    ],
+    [
+     "Tree death (AUC)",
+     "32",
+     "0.687",
+     "0.672",
+     "0.502",
+     "0.500"
+    ],
+    [
+     "Tree death (AUC)",
+     "42",
+     "0.686",
+     "0.686",
+     "0.483",
+     "0.500"
+    ],
+    [
+     "Image preference (AUC)",
+     "1",
+     "0.552",
+     "0.503",
+     "0.442",
+     "0.500"
+    ],
+    [
+     "Image preference (AUC)",
+     "2",
+     "0.547",
+     "0.527",
+     "0.439",
+     "0.500"
+    ],
+    [
+     "Image preference (AUC)",
+     "3",
+     "0.548",
+     "0.549",
+     "0.439",
+     "0.500"
+    ],
+    [
+     "Image preference (AUC)",
+     "4",
+     "0.559",
+     "0.559",
+     "0.435",
+     "0.500"
+    ],
+    [
+     "Image preference (AUC)",
+     "6",
+     "0.579",
+     "0.568",
+     "0.466",
+     "0.500"
+    ],
+    [
+     "Image preference (AUC)",
+     "7",
+     "0.597",
+     "0.571",
+     "0.468",
+     "0.500"
+    ],
+    [
+     "Image preference (AUC)",
+     "10",
+     "0.608",
+     "0.595",
+     "0.454",
+     "0.500"
+    ],
+    [
+     "Image preference (AUC)",
+     "13",
+     "0.610",
+     "0.614",
+     "0.444",
+     "0.500"
+    ],
+    [
+     "Image preference (AUC)",
+     "18",
+     "0.616",
+     "0.641",
+     "0.457",
+     "0.500"
+    ],
+    [
+     "Image preference (AUC)",
+     "24",
+     "0.619",
+     "0.633",
+     "0.439",
+     "0.500"
+    ],
+    [
+     "Image preference (AUC)",
+     "32",
+     "0.630",
+     "0.651",
+     "0.421",
+     "0.500"
+    ],
+    [
+     "Image preference (AUC)",
+     "42",
+     "0.699",
+     "0.699",
+     "0.452",
+     "0.500"
+    ]
+   ]
+  },
+  {
+   "key": "ceiling",
+   "form": "bars",
+   "at": "results",
+   "claims": [
+    "c2",
+    "c4"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "How much of each target's ceiling the full model reached.",
+   "takeaway": "1 of 6 targets reached 0.8 of its ceiling, where the forecast was at least 4: similarity triplets at 0.985. Mood stopped at 0.65 and forecaster accuracy at 0.18.",
+   "units": "share of ceiling: skill above chance divided by the ceiling above chance, where the ceiling is the best score the target's own measurement noise allows, estimated from repeats of the target. 1 means the model predicts as well as the noise permits",
+   "n": "Similarity triplets 150,000 cases; Mood at the next beep 8,141 cases; Music valence 1,744 cases; Music arousal 1,744 cases; Forecaster accuracy 2,120 cases; Tree growth 73,553 cases",
+   "interval": null,
+   "no_interval": "The result file gives one share for each target, with no interval. The music ceilings assume 10 raters for each clip.",
+   "baseline": "A share of 0 is chance and a share of 1 is the noise ceiling",
+   "threshold": "A target counts as at its ceiling at a share of 0.8 or more; the forecast was at least 4 of 6 targets",
+   "ruled_out": "The forecast that most targets sit near their ceiling: 5 of 6 fell short of 0.8. The tree growth ceiling came out at −3.96, outside the possible range, so that share has no meaning",
+   "axis": {
+    "label": "share of ceiling reached (higher is closer to the noise limit)",
+    "min": -0.2,
+    "max": 1.1,
+    "refs": [
+     {
+      "value": 0.8,
+      "label": "at ceiling, 0.8"
+     },
+     {
+      "value": 0,
+      "label": "chance"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "label": "Similarity triplets",
+     "value": 0.9852384026043275,
+     "series": 0,
+     "note": "0.985; skill 0.655 of ceiling 0.660"
+    },
+    {
+     "label": "Mood at the next beep",
+     "value": 0.6532882819428335,
+     "series": 0,
+     "note": "0.653; skill 0.521 of ceiling 0.798"
+    },
+    {
+     "label": "Music valence",
+     "value": 0.5415400808287533,
+     "series": 0,
+     "note": "0.542; skill 0.445 of ceiling 0.821"
+    },
+    {
+     "label": "Music arousal",
+     "value": 0.4554662139995939,
+     "series": 0,
+     "note": "0.455; skill 0.393 of ceiling 0.862"
+    },
+    {
+     "label": "Forecaster accuracy",
+     "value": 0.1834927971287756,
+     "series": 0,
+     "note": "0.183; skill 0.131 of ceiling 0.714"
+    },
+    {
+     "label": "Tree growth",
+     "value": -0.09978837172271735,
+     "series": 0,
+     "note": "−0.10; ceiling estimator failed (ceiling −3.96)"
+    }
+   ],
+   "columns": [
+    "Target",
+    "Variables",
+    "Held-out skill",
+    "Ceiling",
+    "Share of ceiling",
+    "At ceiling"
+   ],
+   "table": [
+    [
+     "Similarity triplets (accuracy)",
+     "66",
+     "0.655",
+     "0.660",
+     "+0.985",
+     "yes"
+    ],
+    [
+     "Mood at the next beep (R2)",
+     "31",
+     "0.521",
+     "0.798",
+     "+0.653",
+     "no"
+    ],
+    [
+     "Music valence (R2)",
+     "22",
+     "0.445",
+     "0.821",
+     "+0.542",
+     "no"
+    ],
+    [
+     "Music arousal (R2)",
+     "22",
+     "0.393",
+     "0.862",
+     "+0.455",
+     "no"
+    ],
+    [
+     "Forecaster accuracy (R2)",
+     "1,349",
+     "0.131",
+     "0.714",
+     "+0.183",
+     "no"
+    ],
+    [
+     "Tree growth (R2)",
+     "42",
+     "0.396",
+     "−3.965",
+     "−0.100",
+     "no"
+    ]
+   ]
+  },
+  {
+   "key": "jumps",
+   "form": "dumbbell",
+   "at": "results",
+   "claims": [
+    "c3",
+    "c4"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "What one variable of a different kind adds to the full model.",
+   "takeaway": "Past accuracy lifted forecaster skill from 0.131 to 0.360 and prior growth lifted tree growth from 0.396 to 0.639. 1 of 7 plateaus moved by the rule, where the forecast was at least 3.",
+   "units": "held-out skill in each target's own unit (R2 or AUC, named in the row); higher is better. Held-out skill: how well the model predicts cases it was not fitted on. It is R2 (share of variance explained) for numeric targets, AUC (the chance a random positive case ranks above a random negative one) for tree death and image preference, and accuracy for triplets",
+   "n": "Tree growth 73,553 cases; Forecaster accuracy 2,120 cases; Image preference 2,625 cases; Music arousal 1,744 cases; Music valence 1,744 cases; Mood at the next beep 8,141 cases; Tree death 90,427 cases",
+   "interval": null,
+   "no_interval": "Each end of a row is one held-out score, with no interval in the result file. The rule compares the new score with the plateau's interval over the 8 random orders.",
+   "baseline": "The full model with every ordinary variable",
+   "threshold": "A plateau counts as moved when the new score is above the upper end of the plateau's interval; the forecast was at least 3 of 7 targets",
+   "ruled_out": "The forecast that a new kind of variable moves most plateaus by the rule: 6 of 7 did not. Tree growth gained 0.243 but its plateau interval ran to the fit bound of 2.0, so the rule could not pass",
+   "a_name": "all ordinary variables",
+   "b_name": "plus one variable of a different kind",
+   "axis": {
+    "label": "held-out skill, R2 or AUC as the row says (higher is better)",
+    "min": 0,
+    "max": 1
+   },
+   "rows": [
+    {
+     "label": "Tree growth (R2)",
+     "a": 0.3956138618365218,
+     "b": 0.6387867846532329,
+     "note": "0.396 to 0.639 (+0.243) with prior diameter growth (t0 to t1); not moved by the rule"
+    },
+    {
+     "label": "Forecaster accuracy (R2)",
+     "a": 0.13108191002444317,
+     "b": 0.3602540393699408,
+     "note": "0.131 to 0.360 (+0.229) with accuracy on the other half of the questions; moved"
+    },
+    {
+     "label": "Image preference (AUC)",
+     "a": 0.6990650839388625,
+     "b": 0.8440898271109998,
+     "note": "0.699 to 0.844 (+0.145) with 64 principal components of the SigLIP image embedding; not moved by the rule"
+    },
+    {
+     "label": "Music arousal (R2)",
+     "a": 0.39279555752304873,
+     "b": 0.48433338898112377,
+     "note": "0.393 to 0.484 (+0.092) with rated valence (human); not moved by the rule"
+    },
+    {
+     "label": "Music valence (R2)",
+     "a": 0.44462454766761916,
+     "b": 0.5268205987650766,
+     "note": "0.445 to 0.527 (+0.082) with rated arousal (human); not moved by the rule"
+    },
+    {
+     "label": "Mood at the next beep (R2)",
+     "a": 0.5209986968950221,
+     "b": 0.5528357554368593,
+     "note": "0.521 to 0.553 (+0.032) with person's mean happiness in the training weeks; not moved by the rule"
+    },
+    {
+     "label": "Tree death (AUC)",
+     "a": 0.6863981109059227,
+     "b": 0.7015099096067667,
+     "note": "0.686 to 0.702 (+0.015) with prior diameter growth (t0 to t1); not moved by the rule"
+    }
+   ],
+   "columns": [
+    "Target",
+    "Added variable",
+    "All ordinary variables",
+    "With the added variable",
+    "Gain",
+    "Added variable alone",
+    "Plateau interval, upper end",
+    "Moved by the rule"
+   ],
+   "table": [
+    [
+     "Tree growth (R2)",
+     "prior diameter growth (t0 to t1)",
+     "0.396",
+     "0.639",
+     "+0.243",
+     "0.606",
+     "2.000",
+     "no"
+    ],
+    [
+     "Forecaster accuracy (R2)",
+     "accuracy on the other half of the questions",
+     "0.131",
+     "0.360",
+     "+0.229",
+     "0.513",
+     "0.155",
+     "yes"
+    ],
+    [
+     "Image preference (AUC)",
+     "64 principal components of the SigLIP image embedding",
+     "0.699",
+     "0.844",
+     "+0.145",
+     "0.836",
+     "2.213",
+     "no"
+    ],
+    [
+     "Music arousal (R2)",
+     "rated valence (human)",
+     "0.393",
+     "0.484",
+     "+0.092",
+     "0.386",
+     "2.000",
+     "no"
+    ],
+    [
+     "Music valence (R2)",
+     "rated arousal (human)",
+     "0.445",
+     "0.527",
+     "+0.082",
+     "0.378",
+     "2.000",
+     "no"
+    ],
+    [
+     "Mood at the next beep (R2)",
+     "person's mean happiness in the training weeks",
+     "0.521",
+     "0.553",
+     "+0.032",
+     "0.414",
+     "1.167",
+     "no"
+    ],
+    [
+     "Tree death (AUC)",
+     "prior diameter growth (t0 to t1)",
+     "0.686",
+     "0.702",
+     "+0.015",
+     "0.658",
+     "0.789",
+     "no"
+    ]
+   ]
+  },
+  {
+   "key": "lorenz",
+   "form": "line",
+   "at": "results",
+   "claims": [
+    "c5"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "Lorenz toy: how far ahead a forecast holds as the starting measurement gets more precise.",
+   "takeaway": "Each tenfold gain in precision bought 2.51 more time units of forecast, against 2.54 from theory. Twelve decades of precision moved the horizon from 1.2 to 28.7 time units.",
+   "units": "forecast horizon: the model time until a run started from a slightly wrong state drifts away from the true run, median over starting states, in Lorenz time units; higher is a longer usable forecast",
+   "n": "100 starting states at each of 12 precisions; 0 runs never diverged",
+   "interval": null,
+   "no_interval": "The result file gives the median horizon at each precision, with no interval for each point.",
+   "baseline": "Theory line: slope 2.543 time units per tenfold gain, set by how fast nearby runs separate in the Lorenz system. The line is drawn through the first measured point",
+   "threshold": "Straight-line fit with R2 of 0.98 or more, and a slope between 0.75 and 1.25 of the theory slope",
+   "planted": "The known law was recovered: measured slope over theory slope 0.988, straight-line R2 0.99994",
+   "x": {
+    "label": "precision of the starting state (decimal digits; each step is ten times more precise)",
+    "min": 0,
+    "max": 13
+   },
+   "y": {
+    "label": "median forecast horizon (time units; higher is longer)",
+    "min": 0
+   },
+   "series": [
+    {
+     "name": "Measured median horizon",
+     "points": [
+      [
+       1.0,
+       1.169000000000001,
+       "1 digits: horizon 1.17 time units"
+      ],
+      [
+       2.0,
+       3.564999999999829,
+       "2 digits: horizon 3.56 time units"
+      ],
+      [
+       3.0,
+       6.1569999999995435,
+       "3 digits: horizon 6.16 time units"
+      ],
+      [
+       4.0,
+       8.541999999999522,
+       "4 digits: horizon 8.54 time units"
+      ],
+      [
+       5.0,
+       11.251000000000428,
+       "5 digits: horizon 11.25 time units"
+      ],
+      [
+       6.0,
+       13.615000000001217,
+       "6 digits: horizon 13.62 time units"
+      ],
+      [
+       7.0,
+       16.211000000001896,
+       "7 digits: horizon 16.21 time units"
+      ],
+      [
+       8.0,
+       18.550000000000598,
+       "8 digits: horizon 18.55 time units"
+      ],
+      [
+       9.0,
+       21.227999999999113,
+       "9 digits: horizon 21.23 time units"
+      ],
+      [
+       10.0,
+       23.72599999999773,
+       "10 digits: horizon 23.73 time units"
+      ],
+      [
+       11.0,
+       26.256999999996324,
+       "11 digits: horizon 26.26 time units"
+      ],
+      [
+       12.0,
+       28.711999999994966,
+       "12 digits: horizon 28.71 time units"
+      ]
+     ]
+    },
+    {
+     "name": "Theory slope, through the first point",
+     "dashed": true,
+     "markers": false,
+     "points": [
+      [
+       1.0,
+       1.169000000000001
+      ],
+      [
+       2.0,
+       3.711607213995193
+      ],
+      [
+       3.0,
+       6.2542144279903855
+      ],
+      [
+       4.0,
+       8.796821641985577
+      ],
+      [
+       5.0,
+       11.339428855980769
+      ],
+      [
+       6.0,
+       13.88203606997596
+      ],
+      [
+       7.0,
+       16.424643283971154
+      ],
+      [
+       8.0,
+       18.967250497966344
+      ],
+      [
+       9.0,
+       21.509857711961537
+      ],
+      [
+       10.0,
+       24.05246492595673
+      ],
+      [
+       11.0,
+       26.59507213995192
+      ],
+      [
+       12.0,
+       29.137679353947114
+      ]
+     ]
+    }
+   ],
+   "columns": [
+    "Precision (decimal digits)",
+    "Median horizon (time units)",
+    "Theory line through the first point"
+   ],
+   "table": [
+    [
+     "1",
+     "1.17",
+     "1.17"
+    ],
+    [
+     "2",
+     "3.56",
+     "3.71"
+    ],
+    [
+     "3",
+     "6.16",
+     "6.25"
+    ],
+    [
+     "4",
+     "8.54",
+     "8.80"
+    ],
+    [
+     "5",
+     "11.25",
+     "11.34"
+    ],
+    [
+     "6",
+     "13.62",
+     "13.88"
+    ],
+    [
+     "7",
+     "16.21",
+     "16.42"
+    ],
+    [
+     "8",
+     "18.55",
+     "18.97"
+    ],
+    [
+     "9",
+     "21.23",
+     "21.51"
+    ],
+    [
+     "10",
+     "23.73",
+     "24.05"
+    ],
+    [
+     "11",
+     "26.26",
+     "26.60"
+    ],
+    [
+     "12",
+     "28.71",
+     "29.14"
+    ]
+   ]
+  }
+ ]
+}

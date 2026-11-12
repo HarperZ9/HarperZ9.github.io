@@ -1,0 +1,65 @@
+{
+ "schema": "buildlang.buildtex-receipt/v0",
+ "source": {
+  "path": "F281.bld",
+  "sha256": "7aa7bbbb46ff94008597dc660be5b3f5fba65d2bb8302552e0a2acf0e79269dd"
+ },
+ "ir_sha256": "974b2e82bce583ed0d7985eb763930eddffc6505992d81f601fb881a476bd18e",
+ "theme": "paper",
+ "overrides": [],
+ "outputs": {
+  "F281.pdf": "b65b8b8f28322f0b262c71e8fa27a093eee4f9f15dd8801f0b34dab0a2a88c71"
+ },
+ "pdf_metadata": {
+  "pdfa": false,
+  "creation_date": "D:20261109000000Z"
+ },
+ "facts": {
+  "pages": 10,
+  "pages_layout": 10,
+  "overfull": [],
+  "underfull": 0,
+  "missing_glyphs": [],
+  "glyph_fallbacks": [],
+  "math_errors": [],
+  "fonts": [
+   {
+    "name": "DBHFCA+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "EAEIED+AccessionDisplay-Master",
+    "embedded": true
+   },
+   {
+    "name": "GFBLPH+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "HDHJKD+NotoSansMath-Regular",
+    "embedded": true
+   },
+   {
+    "name": "KPIKNH+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "MCCFON+HankenGrotesk-Regular",
+    "embedded": true
+   }
+  ],
+  "images": 4,
+  "blind_text_runs": 0,
+  "reading_order": true,
+  "blocks_missing_from_text": [],
+  "pdf_bytes": 3055976
+ },
+ "failed": [],
+ "notes": [
+  "buildc run F281.bld -> F281.doc.tsv",
+  "press: relief 1275x475 px at 150 dpi; 0 blind line(s); foil colour source: fallback constant"
+ ],
+ "external_programs": [
+  "buildc"
+ ]
+}

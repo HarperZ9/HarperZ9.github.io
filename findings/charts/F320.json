@@ -1,0 +1,594 @@
+{
+ "finding": "F320",
+ "sources": [
+  {
+   "id": "run1",
+   "name": "result.json (first run)",
+   "sha256_original": "65165c7a7ae8e10e608678e849959846e47f195c143fcb9db6665e22021d8296",
+   "sha256_copy": "ac1b2ae3a1ecd20a3442fab03f9d3671d196cc51cfc170c758ac5995f73106b6",
+   "href": "/findings/results/F320/result-run1.json",
+   "run": "20261031T223719Z"
+  },
+  {
+   "id": "run2",
+   "name": "result.json (second run)",
+   "sha256_original": "142aab473f4fbe40d2680a617c33962bf7ff717915b811b45f3b9cbdc5db6aae",
+   "sha256_copy": "1c2d67ec3cc4a9b772cd1f3a662b086040d7194d806a5d8338810cbc3fcf0a73",
+   "href": "/findings/results/F320/result-run2.json",
+   "run": "20261031T223929Z"
+  }
+ ],
+ "charts": [
+  {
+   "key": "design",
+   "form": "flow",
+   "at": "controls",
+   "claims": [
+    "c1"
+   ],
+   "source": [
+    "run1"
+   ],
+   "title": "Two ways to hold data out, and a planted data set with nothing to learn that tells them apart.",
+   "takeaway": "With nothing to learn, a random split over windows still reads 1.000 and a held-out-person split reads 0.469: the random split scores memory of each person.",
+   "n": "2,122 windows from 15 people",
+   "steps": [
+    {
+     "kind": "data",
+     "label": "2,122 windows, 15 people",
+     "detail": "WESAD chest and wrist recordings cut into windows. 30 percent are stress windows."
+    },
+    {
+     "kind": "measure",
+     "label": "Random split over windows",
+     "detail": "Windows from one person land in both the training and the test set."
+    },
+    {
+     "kind": "measure",
+     "label": "Held-out-person split",
+     "detail": "Each person is tested by a model trained only on the other people."
+    },
+    {
+     "kind": "planted",
+     "label": "Planted: nothing to learn",
+     "detail": "Each block gets its own offset and the label carries no shared signal. Random split 1.000, held-out person 0.469."
+    },
+    {
+     "kind": "control",
+     "label": "Control: block shuffle",
+     "detail": "The stress label moves to a random condition block in each person, 100 draws. 95th percentile 0.656."
+    },
+    {
+     "kind": "rule",
+     "label": "Rule: gap of at least 0.02",
+     "detail": "The random split must read at least 0.02 above the held-out-person split for the forest. Set before any label was compared."
+    },
+    {
+     "kind": "verdict",
+     "holds": true,
+     "label": "Gap 0.033",
+     "yes": "leak shown",
+     "detail": "Real data, random forest: 1.000 random, 0.966 held-out person."
+    }
+   ]
+  },
+  {
+   "key": "splits",
+   "form": "dumbbell",
+   "at": "results",
+   "claims": [
+    "c1",
+    "c2",
+    "c3"
+   ],
+   "source": [
+    "run1"
+   ],
+   "title": "The same model scored two ways: random split over windows against a held-out person.",
+   "takeaway": "The random split reads higher every time: by 0.033 for the forest, 0.086 for logistic regression, and 0.531 on planted data that holds nothing to learn.",
+   "units": "AUC (area under the ROC curve: the chance a stress window scores above a calm one; 0.5 is chance, 1 is perfect), pooled over all held-out windows; higher is better",
+   "n": "2,122 windows from 15 people; second run on a new seed gave the forest 0.999 and 0.966",
+   "interval": null,
+   "no_interval": "The result file holds one pooled AUC per model and split. The within-person interval for the forest is in the next chart.",
+   "baseline": "Chance is 0.5. Block-shuffle control for logistic regression on held-out people: mean 0.487, 95th percentile 0.656",
+   "threshold": "Gap of at least 0.02 for the forest (held, 0.033); planted data at least 0.8 under the random split and at most 0.6 for a held-out person (both held)",
+   "planted": "Nothing to learn: 1.000 random split, 0.469 held-out person",
+   "a_name": "random split over windows",
+   "b_name": "held-out person",
+   "axis": {
+    "label": "AUC (0.5 is chance, 1 is perfect)",
+    "min": 0.4,
+    "max": 1,
+    "refs": [
+     {
+      "value": 0.5,
+      "label": "chance, 0.5"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "label": "Forest on planted data with nothing to learn",
+     "a": 0.999993639971507,
+     "b": 0.46851891896475695,
+     "note": "random 1.000; held-out 0.469; gap 0.531"
+    },
+    {
+     "label": "Random forest, real recordings",
+     "a": 0.9996046182286896,
+     "b": 0.9662685288830094,
+     "note": "random 1.000; held-out 0.966; gap 0.033"
+    },
+    {
+     "label": "Logistic regression, real recordings",
+     "a": 0.9818760388046538,
+     "b": 0.8956117923408297,
+     "note": "random 0.982; held-out 0.896; gap 0.086"
+    }
+   ],
+   "columns": [
+    "Model and data",
+    "Random split",
+    "Held-out person",
+    "Gap"
+   ],
+   "table": [
+    [
+     "Forest on planted data with nothing to learn",
+     "1.000",
+     "0.469",
+     "0.531"
+    ],
+    [
+     "Random forest, real recordings",
+     "1.000",
+     "0.966",
+     "0.033"
+    ],
+    [
+     "Logistic regression, real recordings",
+     "0.982",
+     "0.896",
+     "0.086"
+    ],
+    [
+     "Random forest, time blocks within a person",
+     "0.982",
+     "",
+     ""
+    ],
+    [
+     "Logistic regression, time blocks within a person",
+     "0.965",
+     "",
+     ""
+    ],
+    [
+     "Random forest, held-out person scaled to own baseline",
+     "",
+     "0.964",
+     ""
+    ],
+    [
+     "Logistic regression, held-out person scaled to own baseline",
+     "",
+     "0.971",
+     ""
+    ]
+   ]
+  },
+  {
+   "key": "people",
+   "form": "scatter",
+   "at": "results",
+   "claims": [
+    "c2"
+   ],
+   "source": [
+    "run1",
+    "run2"
+   ],
+   "title": "Each held-out person's own AUC under both models.",
+   "takeaway": "The forest holds for every person (lowest 0.912, S2; mean 0.979), while logistic regression drops to 0.646 for S15.",
+   "units": "AUC within one held-out person (0.5 is chance, 1 is perfect); higher is better",
+   "n": "15 people, each tested by a model trained on the other 14",
+   "interval": "Not drawn. Mean within-person AUC for the forest is 0.979, 95 percent interval 0.961 to 0.994 by bootstrap over people (second run's file).",
+   "baseline": "Points on the dashed diagonal score the same under both models; points above it score higher under the forest",
+   "diagonal": "equal under both models",
+   "x": {
+    "label": "logistic regression, AUC for this person",
+    "min": 0.6,
+    "max": 1
+   },
+   "y": {
+    "label": "random forest, AUC for this person",
+    "min": 0.6,
+    "max": 1
+   },
+   "series": [
+    {
+     "name": "one held-out person",
+     "points": [
+      [
+       0.906784188034188,
+       0.9123931623931624,
+       "S2: logistic 0.907, forest 0.912"
+      ],
+      [
+       0.8860950465174755,
+       0.9962283127985919,
+       "S3: logistic 0.886, forest 0.996"
+      ],
+      [
+       0.9984693877551021,
+       0.9933673469387755,
+       "S4: logistic 0.998, forest 0.993"
+      ],
+      [
+       1.0,
+       1.0,
+       "S5: logistic 1.000, forest 1.000"
+      ],
+      [
+       1.0,
+       1.0,
+       "S6: logistic 1.000, forest 1.000"
+      ],
+      [
+       1.0,
+       1.0,
+       "S7: logistic 1.000, forest 1.000"
+      ],
+      [
+       0.9821470519144938,
+       1.0,
+       "S8: logistic 0.982, forest 1.000"
+      ],
+      [
+       0.9407317073170731,
+       0.916829268292683,
+       "S9: logistic 0.941, forest 0.917"
+      ],
+      [
+       0.943695652173913,
+       0.9228260869565217,
+       "S10: logistic 0.944, forest 0.923"
+      ],
+      [
+       1.0,
+       0.9995301855766971,
+       "S11: logistic 1.000, forest 1.000"
+      ],
+      [
+       0.9861904761904762,
+       0.99,
+       "S13: logistic 0.986, forest 0.990"
+      ],
+      [
+       1.0,
+       1.0,
+       "S14: logistic 1.000, forest 1.000"
+      ],
+      [
+       0.6464646464646465,
+       0.98989898989899,
+       "S15: logistic 0.646, forest 0.990"
+      ],
+      [
+       0.9992952783650458,
+       1.0,
+       "S16: logistic 0.999, forest 1.000"
+      ],
+      [
+       0.9939130434782608,
+       0.9580434782608696,
+       "S17: logistic 0.994, forest 0.958"
+      ]
+     ]
+    }
+   ],
+   "columns": [
+    "Person",
+    "Random forest",
+    "Logistic regression"
+   ],
+   "table": [
+    [
+     "S2",
+     "0.912",
+     "0.907"
+    ],
+    [
+     "S3",
+     "0.996",
+     "0.886"
+    ],
+    [
+     "S4",
+     "0.993",
+     "0.998"
+    ],
+    [
+     "S5",
+     "1.000",
+     "1.000"
+    ],
+    [
+     "S6",
+     "1.000",
+     "1.000"
+    ],
+    [
+     "S7",
+     "1.000",
+     "1.000"
+    ],
+    [
+     "S8",
+     "1.000",
+     "0.982"
+    ],
+    [
+     "S9",
+     "0.917",
+     "0.941"
+    ],
+    [
+     "S10",
+     "0.923",
+     "0.944"
+    ],
+    [
+     "S11",
+     "1.000",
+     "1.000"
+    ],
+    [
+     "S13",
+     "0.990",
+     "0.986"
+    ],
+    [
+     "S14",
+     "1.000",
+     "1.000"
+    ],
+    [
+     "S15",
+     "0.990",
+     "0.646"
+    ],
+    [
+     "S16",
+     "1.000",
+     "0.999"
+    ],
+    [
+     "S17",
+     "0.958",
+     "0.994"
+    ],
+    [
+     "Mean over people",
+     "0.979",
+     "0.952"
+    ]
+   ]
+  },
+  {
+   "key": "sensors",
+   "form": "bars",
+   "at": "results",
+   "claims": [
+    "c4"
+   ],
+   "source": [
+    "run1"
+   ],
+   "title": "Which sensors carry stress to a person the model has not seen.",
+   "takeaway": "Physiology without motion or breath reaches 0.97 for a held-out person; motion alone (acceleration with EMG) reaches 0.79.",
+   "units": "AUC within a held-out person, mean over people, random forest (0.5 is chance, 1 is perfect); higher is better",
+   "n": "2,122 windows from 15 people; 100 block permutations per sensor group for the q values",
+   "interval": null,
+   "no_interval": "The result file holds one mean AUC per sensor group and a corrected q value from the logistic permutation test, with no interval.",
+   "baseline": "Chance is 0.5",
+   "threshold": "Physiology above motion, set in advance: held, 0.97 against 0.79",
+   "series_names": [
+    "one sensor group",
+    "physiology without motion or breath",
+    "motion only"
+   ],
+   "axis": {
+    "label": "AUC for a held-out person (0.5 is chance)",
+    "min": 0,
+    "max": 1,
+    "refs": [
+     {
+      "value": 0.5,
+      "label": "chance, 0.5"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "label": "ECG (heart's electrical signal)",
+     "group": "One sensor group",
+     "value": 0.9198825566788122,
+     "series": 0,
+     "note": "0.92; q 0.012"
+    },
+    {
+     "label": "EDA (skin conductance)",
+     "group": "One sensor group",
+     "value": 0.8870792440388264,
+     "series": 0,
+     "note": "0.89; q 0.012"
+    },
+    {
+     "label": "Respiration",
+     "group": "One sensor group",
+     "value": 0.8457405397231691,
+     "series": 0,
+     "note": "0.85; q 0.012"
+    },
+    {
+     "label": "Acceleration",
+     "group": "One sensor group",
+     "value": 0.8150116168991882,
+     "series": 0,
+     "note": "0.82; q 0.012"
+    },
+    {
+     "label": "Skin temperature",
+     "group": "One sensor group",
+     "value": 0.6032188404029531,
+     "series": 0,
+     "note": "0.60; q 0.012"
+    },
+    {
+     "label": "EMG (muscle activity)",
+     "group": "One sensor group",
+     "value": 0.45117759066402346,
+     "series": 0,
+     "note": "0.45; q 0.33"
+    },
+    {
+     "label": "ECG, EDA and skin temperature",
+     "group": "Combined groups",
+     "value": 0.9698449913799777,
+     "series": 1,
+     "note": "0.97"
+    },
+    {
+     "label": "Acceleration and EMG",
+     "group": "Combined groups",
+     "value": 0.7856472207382187,
+     "series": 2,
+     "note": "0.79"
+    }
+   ],
+   "columns": [
+    "Sensor group",
+    "Forest AUC, held-out person",
+    "Logistic AUC, held-out person",
+    "q, logistic permutation test"
+   ],
+   "table": [
+    [
+     "ECG (heart's electrical signal)",
+     "0.920",
+     "0.938",
+     "0.012"
+    ],
+    [
+     "EDA (skin conductance)",
+     "0.887",
+     "0.811",
+     "0.012"
+    ],
+    [
+     "Respiration",
+     "0.846",
+     "0.892",
+     "0.012"
+    ],
+    [
+     "Acceleration",
+     "0.815",
+     "0.905",
+     "0.012"
+    ],
+    [
+     "Skin temperature",
+     "0.603",
+     "0.816",
+     "0.012"
+    ],
+    [
+     "EMG (muscle activity)",
+     "0.451",
+     "0.550",
+     "0.33"
+    ],
+    [
+     "ECG, EDA and skin temperature",
+     "0.970",
+     "",
+     ""
+    ],
+    [
+     "Acceleration and EMG",
+     "0.786",
+     "",
+     ""
+    ]
+   ]
+  },
+  {
+   "key": "anxiety",
+   "form": "bars",
+   "at": "results",
+   "claims": [
+    "c5"
+   ],
+   "source": [
+    "run1"
+   ],
+   "title": "Did people who reported a larger rise in anxiety also change more in the body?",
+   "takeaway": "No link shows: rank correlation 0.03 with EDA, 0.02 with heart rate and −0.45 with breathing rate (p 0.090).",
+   "units": "Spearman rho (a rank correlation from −1 to 1; 0 is no relation) between the rise in reported anxiety and the bodily change, across people",
+   "n": "15 people; reported anxiety (six-item STAI) rose by 7.7 points on average",
+   "interval": null,
+   "no_interval": "The result file holds rho and its p value for each signal, with no interval. With 15 people an interval on rho is wide.",
+   "baseline": "No relation: rho of 0",
+   "ruled_out": "Only a strong positive relation. The largest rho is 0.03, and 15 people cannot rule out a moderate one.",
+   "axis": {
+    "label": "Spearman rho (0 is no relation)",
+    "min": -1,
+    "max": 1
+   },
+   "rows": [
+    {
+     "label": "EDA (skin conductance)",
+     "value": 0.025272240331772354,
+     "series": 0,
+     "note": "rho 0.03; p 0.93"
+    },
+    {
+     "label": "Heart rate",
+     "value": 0.023467080308074328,
+     "series": 0,
+     "note": "rho 0.02; p 0.93"
+    },
+    {
+     "label": "Breathing rate",
+     "value": -0.4530951659482043,
+     "series": 0,
+     "note": "rho −0.45; p 0.090"
+    }
+   ],
+   "columns": [
+    "Bodily signal",
+    "Spearman rho",
+    "p"
+   ],
+   "table": [
+    [
+     "EDA (skin conductance)",
+     "0.025",
+     "0.93"
+    ],
+    [
+     "Heart rate",
+     "0.023",
+     "0.93"
+    ],
+    [
+     "Breathing rate",
+     "−0.453",
+     "0.090"
+    ]
+   ]
+  }
+ ]
+}

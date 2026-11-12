@@ -1,0 +1,423 @@
+{
+ "schema": "research-record/1",
+ "built": "2026-11-09 by scripts/record-findings.mjs from paper.txt, the register row and the findings ledger",
+ "document": {
+  "id": "F183",
+  "kind": "finding",
+  "title": "After we fixed our own bug, plain optimisers beat nature-inspired ones on shifted tests",
+  "standfirst": "Our first benchmark said optimisers named after slime moulds, wolves, bees and ants beat the standard methods. The win came partly from a bug in our own CMA-ES code. Fixed, CMA-ES ranked first, and two popular nature-inspired methods turned out to work well only when the answer sits at the centre of the search box.",
+  "date_found": "2026-10-31",
+  "fields": [
+   "cs-systems",
+   "method"
+  ],
+  "tier": "D",
+  "tier_reason": "Refutes the bio-labelled edge after my own bug fix; default parameters only.",
+  "rung": "thesis",
+  "rung_reason": "Survives Bio-labelled optimisers as better search. Decisive observation: Shifted known optima: CMA-ES rank 2.0 against best bio 3.14, and SMA and GWO lose 12 and 13.6 decades.",
+  "outcome": "mixed",
+  "bound": "The group contest between plain and biologically labelled optimisers sat inside the label-permutation range (p 0.45); the method-level ranks hold.",
+  "objection": "Seven functions, 10 dimensions, one budget of 20,000 evaluations and 15 repeats. Other functions, dimensions or budgets could reorder the methods.",
+  "objection_source": "the paper's first stated limitation; no reviewer attack is on file",
+  "would_change": "No condition for raising or overturning the call is on file in the register.",
+  "sections": [
+   {
+    "id": "reader",
+    "title": "What this means for a reader",
+    "role": "lead",
+    "paragraphs": [
+     "When a benchmark says a new nature-inspired optimiser wins, check two things: whether the test functions have their best point at the centre of the search box, and whether the standard methods it beat were run correctly. Our own first run failed the second check, and the result looked like a win for the nature-inspired group. Two popular methods in that group did well only when the answer sat at the centre. A good result on centred test functions can come from a method that guesses the centre."
+    ]
+   },
+   {
+    "id": "abstract",
+    "title": "Abstract",
+    "role": "argument",
+    "paragraphs": [
+     "Optimisers named after slime moulds, wolves, bees and ants are often reported to beat standard methods. Our first preregistered benchmark seemed to agree: the biologically labelled group had the better mean rank, 5.04 against 6.20. Tracing a poor CMA-ES score showed a bug in our own code, and several other methods had a related fault. We kept that run, fixed the box handling for every method, wrote a new preregistration and ran again on seven test functions in 10 dimensions. {c1}After the fix, CMA-ES ranked first on the shifted functions with a mean rank of 2.00, and the best method with a biological label, ACOR, ranked second at 3.14.{/c1} {c2}Moving the optimum away from the centre cost the slime mould method 12.1 and the grey wolf method 13.6 decades of median error, while ACOR, IWO and PSO lost 0.0006, 0.07 and 0.42 decades.{/c2} {c3}Without random search the plain group's mean rank was 3.98 against 5.54 for the biologically labelled group; with random search counted as plain the groups were 5.45 and 5.54, a gap that sat inside the label-permutation range (p 0.45).{/c3} The group contest does not settle much in either direction. The method-level results do."
+    ]
+   },
+   {
+    "id": "intro",
+    "title": "Introduction",
+    "role": "argument",
+    "paragraphs": [
+     "A {g:metaheuristic}metaheuristic{/g} is a general recipe for searching a function for its minimum by sampling and updating candidate points. Sörensen {cite:r1} described a flood of \"novel\" metaheuristics built on metaphors of natural or man-made processes and argued that the trend threatens to lead the field away from scientific rigour. Camacho-Villalón, Dorigo and Stützle {cite:r2} took six widely used metaphor-based methods for continuous problems apart into components, the grey wolf optimiser among them, and reported that none of them proposes a new idea; one section of their paper is titled \"The grey wolf optimizer is PSO\".",
+     "Kudela {cite:r3} pointed to a defect in how such methods are tested. Several common {g:benchmark-function}test functions{/g} have their minimum at the centre of the feasible set, and a method whose update rule has a {g:centre-bias}centre bias{/g} solves those functions easily. Comparisons between such a method and one without the bias on centred functions say little.",
+     "The {g:no-free-lunch}no free lunch{/g} theorems of Wolpert and Macready {cite:r4} give the background for any optimiser comparison: averaged over all possible functions, no method beats another, so an advantage on one class is paid for on another.",
+     "This study tested {g:bio-label}biologically labelled methods{/g} against plain ones with the optimum moved off the centre. It became a study of our own error as well. The first run's headline came from a bug in our {g:cma-es}CMA-ES{/g} code. CMA-ES, the covariance matrix adaptation evolution strategy, samples candidates from a normal distribution and adapts the distribution's centre, shape and step size. Auger and Hansen {cite:r5} described a version that restarts with a doubled population each time, known as IPOP. Ours restarts with the same population size."
+    ]
+   },
+   {
+    "id": "prereg",
+    "title": "Preregistration and design",
+    "role": "argument",
+    "paragraphs": [
+     "The study ran twice, each time under its own {g:preregistration}preregistration{/g}. The first (here, the first run) was hash-locked on 31 October 2026 before any result of the run was seen; only smoke runs in 3 dimensions with small budgets had been made, to fix crashes, and no rankings were read from them. It named the methods, the functions, the measures, two {g:control}controls{/g}, the forecasts and the {g:kill-condition}kill conditions{/g}. The decision it informs was written in it: no slime or plant-labelled optimiser becomes a default search method in our tools unless it beats differential evolution and CMA-ES on the shifted functions.",
+     "The second (the rerun) was hash-locked on 31 October 2026 after the first run had been read in full. It records what went wrong, the fix, and new forecasts. Its own kill condition reads: if CMA-ES fails to bring the median error on the shifted ellipsoid below 1, it is still broken and the study stops. It also commits to reporting any biologically labelled method that beats the best plain one, whatever we expected.",
+     "Both preregistrations' SHA-256 hashes are in the reproduction section."
+    ]
+   },
+   {
+    "id": "data",
+    "title": "Data and provenance",
+    "role": "argument",
+    "paragraphs": [
+     "No external data were used. All results come from our own implementations of ten optimisers and seven standard test functions, run on one desktop computer. The method update rules were written from their published descriptions with default settings and no tuning. Every number in this paper is read from the two runs' result files."
+    ]
+   },
+   {
+    "id": "methods",
+    "title": "Methods",
+    "role": "argument",
+    "paragraphs": [
+     "## Methods compared",
+     "The plain group is random search, L-BFGS-B with restarts and a numeric gradient, differential evolution (rand/1/bin) and CMA-ES with restarts. The biologically labelled group is the slime mould algorithm (SMA), the grey wolf optimiser (GWO), particle swarm optimisation (PSO), artificial bee colony (ABC), ant colony optimisation for continuous domains (ACOR) and invasive weed optimisation (IWO). Every method gets the same budget of 20,000 function evaluations; a numeric gradient spends evaluations from that budget.",
+     "## Functions and arms",
+     "The seven functions are the sphere, an ellipsoid with a condition number of one million, Rosenbrock, Rastrigin, Ackley, Griewank and Schaffer F7, each in 10 dimensions with a minimum value of 0. The {g:search-box}search box{/g} allows every coordinate from -100 to 100. On the {g:shifted-arm}shifted arm{/g} each base function {m:g} is evaluated as",
+     "$$ f(x) = g(R(x - s)) {eq:shift}",
+     "where {m:s} is a random shift with every coordinate drawn from -70 to 70 and {m:R} a random rotation. Every method sees the same {m:s} and {m:R} within one repeat. On the unshifted arm {m:s} is zero and {m:R} is the identity, so the minimum sits at the centre of the box. Each method ran 15 repeats on each function on each arm.",
+     "## Measures",
+     "For method {m:m} on function {m:f}, let {m:M_{fm}} be the median best error over the 15 repeats on the shifted arm and {m:U_{fm}} the same on the unshifted arm, each floored at {m:10^{-12}}. Methods are ranked on each function by the base-10 logarithm of {m:M_{fm}} rounded to two decimals, with ties sharing their average rank. Call that rank {m:\\rho_{fm}}. The {g:mean-rank}mean rank{/g} is",
+     "$$ r_m = \\frac{1}{7} \\sum_f \\rho_{fm} {eq:rank}",
+     "The change in error from moving the minimum, in {g:decade}decades{/g}, is",
+     "$$ \\delta_{fm} = \\log_{10} M_{fm} - \\log_{10} U_{fm} {eq:delta}",
+     "and a method's {g:shift-penalty}shift penalty{/g} {m:D_m} is the median of {m:\\delta_{fm}} over the seven functions. The group gap is",
+     "$$ G = r_{bio} - r_{plain} {eq:gap}",
+     "where {m:r_{bio}} and {m:r_{plain}} are the averages of {m:r_m} over each group, so a positive gap means the plain group did better.",
+     "## The bug and the fix",
+     "In the first run CMA-ES scored a median error of 14 million on the ellipsoid. Tracing it showed that the distribution's centre had left the box (its norm reached 498 against a box half-width of 100). Every sample was clipped to the same corner, the step size fell to about {m:10^{-8}}, and the method never restarted. Differential evolution, ABC, ACOR and IWO also kept candidates outside the box in their internal state. These were errors in our code.",
+     "For the rerun every method keeps its candidates inside the box. CMA-ES adds a quadratic penalty for any part of a sample outside the box,",
+     "$$ F = f + 10000 (1 + a) \\sum_i e_i e_i {eq:pen}",
+     "where {m:a} is the absolute value of {m:f} and {m:e_i} is how far coordinate {m:i} lies outside the box, zero inside. It restarts from a random point when its step size falls below {m:10^{-11}}. No method's parameters were tuned."
+    ]
+   },
+   {
+    "id": "controls",
+    "title": "Controls and planted checks",
+    "role": "argument",
+    "paragraphs": [
+     "Two {g:planted-check}planted checks{/g} guard the instrument. CMA-ES must bring the shifted sphere below {m:10^{-8}}. A {g:centre-cheat}centre cheat{/g}, a dummy method that samples only points next to the centre, must solve the unshifted sphere (error below 0.001) and fail the shifted one (base-10 logarithm of its error above 3). The cheat shows that the unshifted arm can be won by guessing the centre and that the shifted arm cannot.",
+     "The {g:label-permutation}label permutation{/g} control shuffles method names within each function's ranks 2,000 times and records the group gap each time. A real gap must clear the 95th percentile of that {g:null-distribution}null distribution{/g}.",
+     "The no-free-lunch check runs every method on a test function in which each integer cell of the box gets an independent random value, with a budget of 5,000 evaluations and 30 repeats. No method can exploit such a function, so the methods should tie. Ties are tested with the {g:kruskal-wallis}Kruskal-Wallis test{/g}, with L-BFGS left out because it can stall on a flat cell, on the best value found and, in the rerun, on the best of the first 500 distinct cells visited.",
+     "In the rerun CMA-ES reached a median error of 1.6e-15 on the shifted sphere, written in the e-notation used in the tables. The centre cheat reached 7.2e-7 on the unshifted sphere and an error whose base-10 logarithm is 4.27 on the shifted sphere. Both planted checks held."
+    ]
+   },
+   {
+    "id": "results",
+    "title": "Results",
+    "role": "argument",
+    "paragraphs": [
+     "Table {ref:tab:ranks} gives every method's mean rank in both runs and its shift penalty in the rerun, and Figure {ref:fig:ranks} draws the ranks. {c1}After the fix, CMA-ES ranked first on the shifted functions with a mean rank of 2.00, and the best method with a biological label, ACOR, ranked second at 3.14.{/c1} The fix moved CMA-ES from 4.86 to 2.00 and PSO, the first run's leader, from 2.79 to 4.57.",
+     "::table tab:ranks cols=0.26,0.12,0.14,0.14,0.16,0.18 Mean rank over seven functions in 10 dimensions, 15 repeats each (1 is best), and the shift penalty in decades. The first run carries the bug.\nMethod ¦ Group ¦ First run, shifted ¦ Rerun, shifted ¦ Rerun, centred ¦ Shift penalty\nCMA-ES ¦ plain ¦ 4.86 ¦ 2.00 ¦ 3.57 ¦ 0\nACOR (ant colony) ¦ labelled ¦ 4.14 ¦ 3.14 ¦ 4.36 ¦ 0.0006\nIWO (invasive weed) ¦ labelled ¦ 6.29 ¦ 4.43 ¦ 7.86 ¦ 0.07\nL-BFGS ¦ plain ¦ 3.64 ¦ 4.57 ¦ 5.93 ¦ 0.05\nPSO (particle swarm) ¦ labelled ¦ 2.79 ¦ 4.57 ¦ 5.50 ¦ 0.42\nDifferential evolution ¦ plain ¦ 6.43 ¦ 5.36 ¦ 7.71 ¦ 0.08\nABC (bee colony) ¦ labelled ¦ 4.93 ¦ 5.86 ¦ 5.86 ¦ 0.70\nSMA (slime mould) ¦ labelled ¦ 4.86 ¦ 6.36 ¦ 2.07 ¦ 12.06\nGWO (grey wolf) ¦ labelled ¦ 7.21 ¦ 8.86 ¦ 2.43 ¦ 13.56\nRandom search ¦ plain ¦ 9.86 ¦ 9.86 ¦ 9.71 ¦ 0.02\n::end",
+     "![fig:ranks width=0.85 alt=Dot plot of ten methods with circles for the first run, diamonds for the rerun and crosses for the centred arm; CMA-ES moves from about 4.9 to 2](fig-ranks.png) Mean rank on the shifted arm in the first run (circles) and the rerun (diamonds), with the rerun's rank when the optimum sits at the centre (crosses). Plain methods carry an asterisk. Drawn from the two runs' result files.",
+     "With the minimum at the centre, SMA ranked first (2.07) and GWO second (2.43). Figure {ref:fig:penalty} shows what moving the minimum did to each method. {c2}Moving the optimum away from the centre cost the slime mould method 12.1 and the grey wolf method 13.6 decades of median error, while ACOR, IWO and PSO lost 0.0006, 0.07 and 0.42 decades.{/c2} The centre bias described by Kudela {cite:r3} shows in two of the six labelled methods and not in the other four.",
+     "![fig:penalty width=0.8 alt=Horizontal bars of shift penalty per method; grey wolf and slime mould near 13 and 12 decades, all others below one](fig-penalty.png) Shift penalty per method in the rerun: the median over seven functions of the growth in median error, in decades, when the minimum leaves the centre for a random shifted and rotated position.",
+     "Table {ref:tab:groups} gives the group contest. {c3}Without random search the plain group's mean rank was 3.98 against 5.54 for the biologically labelled group; with random search counted as plain the groups were 5.45 and 5.54, a gap that sat inside the label-permutation range (p 0.45).{/c3} The preregistered label-permutation control was computed only for the gap with random search included. The gap of 1.56 without it has no control of its own.",
+     "::table tab:groups cols=0.3,0.14,0.14,0.12,0.3 Group mean ranks on the shifted arm and the label-permutation control, 2,000 draws per run. The interval is the 5th to 95th percentile of the permuted gaps.\nComparison ¦ Plain ¦ Labelled ¦ Gap ¦ Permuted interval, p\nFirst run, random counted as plain ¦ 6.20 ¦ 5.04 ¦ -1.16 ¦ -1.19 to 1.19, p 0.95\nRerun, random counted as plain ¦ 5.45 ¦ 5.54 ¦ 0.09 ¦ -1.22 to 1.16, p 0.45\nRerun, random left out ¦ 3.98 ¦ 5.54 ¦ 1.56 ¦ not computed\n::end",
+     "{c4}In the first run the labelled group's lead of 1.16 ranks came partly from our bug and partly from counting random search as plain, and it sat inside its own label-permutation range.{/c4} The first run's preregistration had a kill condition we did not apply when we first read it: if the no-free-lunch check fails to tie, the ranking is void. That check failed (p 0.0015), so by its own rule the first run's ranking was {g:void}void{/g}. In the rerun the methods tied on that function, at p 0.13 on the best value and p 0.74 on the best of the first 500 distinct cells. The rerun's preregistration traced the first run's failure to converged methods revisiting the same cells, which the theorem does not count; in the rerun IWO visited a median of 2,870 distinct cells in 5,000 evaluations, against 5,000 for random search and ACOR.",
+     "Table {ref:tab:forecast} sets the rerun's forecasts against its outcomes.",
+     "::table tab:forecast cols=0.52,0.24,0.24 Forecasts in the rerun's preregistration against what the rerun gave.\nQuantity ¦ Forecast ¦ Outcome\nCMA-ES mean rank ¦ at most 3 ¦ 2.00\nPSO among the top three ¦ yes ¦ no, 4.57\nPlain mean rank, random left out ¦ 3.8 ¦ 3.98\nLabelled mean rank ¦ 5.0 ¦ 5.54\nBest plain ahead of best labelled ¦ at least 0.3 ranks ¦ 1.14 ranks\nSMA and GWO shift penalty ¦ above 3 decades ¦ 12.06 and 13.56\nNo-free-lunch tie on distinct cells ¦ p above 0.01 ¦ p 0.74\nL-BFGS in the top two on smooth functions ¦ yes ¦ not scored\n::end"
+    ]
+   },
+   {
+    "id": "discussion",
+    "title": "Discussion",
+    "role": "argument",
+    "paragraphs": [
+     "The first run is a record of how a benchmark goes wrong in the direction of a popular story. CMA-ES was the strongest plain method we had, and our implementation of it was broken in a way that did not crash: it returned numbers, just bad ones. The labelled group won that run, and the error showed only because one score, 14 million on the ellipsoid, looked wrong. The rerun's preregistration was written after reading the first run, so the rerun is not blind to it; what keeps it honest is that its forecasts and kill condition were fixed before it ran.",
+     "The method-level results are the ones that hold up. CMA-ES ranked first once it was run correctly. SMA and GWO ranked first and second on centred functions and near the bottom on shifted ones, which is the pattern Kudela {cite:r3} describes for methods with a centre-biased update step. ACOR, IWO and PSO lost almost nothing when the minimum moved, so the centre-bias charge does not reach every method with a biological label. Camacho-Villalón and colleagues {cite:r2} argue from the structure of the update rules that GWO is a form of PSO. In our runs the two behave differently once the minimum moves: GWO loses 13.6 decades and PSO 0.42. A component that pulls candidates toward the centre would explain the gap, and we did not test which component it is.",
+     "The group result is weak. With random search counted as plain, the two groups' mean ranks differ by 0.09, well inside the label-permutation range. Leaving random search out gives a gap of 1.56, but that comparison had no control. Ranking methods by group label says less than ranking them one at a time."
+    ]
+   },
+   {
+    "id": "limits",
+    "title": "Limitations",
+    "role": "argument",
+    "paragraphs": [
+     "- Seven functions, 10 dimensions, one budget of 20,000 evaluations and 15 repeats. Other functions, dimensions or budgets could reorder the methods.",
+     "- Every method used default parameters. Tuning could change the ranking.",
+     "- The shifted arm moves and rotates the function at once, so the shift penalty mixes the two effects. A rotation-only arm was not run.",
+     "- Errors are floored at {m:10^{-12}} before ranking, so methods that reach that level tie, and a shift penalty measured from a centred error of 0 counts from {m:10^{-12}}. The 12 and 13.6 decades for SMA and GWO are bounded by that floor.",
+     "- The methods were written from published descriptions by us, and the first run shows how such code can be wrong without crashing. Other bugs may remain.",
+     "- PSO's biological label is thin: it is a velocity rule with a metaphor, and it predates the recent flood of such methods.",
+     "- Scoring was done by our own code and checked by the same analyst who wrote it."
+    ]
+   },
+   {
+    "id": "appendix",
+    "title": "Appendix A. The preregistered verdicts",
+    "role": "evidence",
+    "paragraphs": [
+     "Each verdict is a set of rules written before the run. A verdict passes only when every rule holds. Values are read from the result files.",
+     "::table tab:verdicts cols=0.28,0.44,0.14,0.14 Preregistered verdicts of the rerun and the rule that decided each one.\nVerdict ¦ Deciding rule ¦ Value ¦ Holds\nCMA-ES solves the sphere ¦ shifted sphere error below 1e-8 ¦ 1.6e-15 ¦ yes\nCMA-ES solves the ellipsoid ¦ shifted ellipsoid median error below 1 ¦ 2.4e-15 ¦ yes\nCheat caught ¦ unshifted below 0.001 and shifted log10 above 3 ¦ 7.2e-7; 4.27 ¦ yes\nNo free lunch, raw ¦ Kruskal-Wallis p above 0.01 ¦ 0.13 ¦ yes\nNo free lunch, distinct ¦ Kruskal-Wallis p above 0.01 ¦ 0.74 ¦ yes\nPlain beats labelled ¦ gap with random left out above 0 ¦ 1.56 ¦ yes\nBest plain beats best labelled ¦ best labelled rank minus best plain rank above 0 ¦ 1.14 ¦ yes\nNo labelled method dominates ¦ wins over every plain method on at most 2 of 7 functions ¦ 1 ¦ yes\nSMA centre bias ¦ shift penalty above 3 decades ¦ 12.06 ¦ yes\nGWO centre bias ¦ shift penalty above 3 decades ¦ 13.56 ¦ yes\nPlain methods unbiased ¦ CMA-ES and differential evolution penalty below 0.5 ¦ 0; 0.08 ¦ yes\n::end",
+     "::table tab:verdicts1 cols=0.28,0.44,0.14,0.14 Preregistered verdicts of the first run, with the bug.\nVerdict ¦ Deciding rule ¦ Value ¦ Holds\nCMA-ES solves the sphere ¦ shifted sphere error below 1e-8 ¦ 3.9e-15 ¦ yes\nCheat caught ¦ unshifted below 0.001 and shifted log10 above 3 ¦ 6.2e-7; 4.18 ¦ yes\nNo free lunch ¦ Kruskal-Wallis p above 0.01 ¦ 0.0015 ¦ no\nPlain beats labelled ¦ gap with random counted as plain above 0 ¦ -1.16 ¦ no\nBest plain beats best labelled ¦ best labelled rank minus best plain rank above 0 ¦ -0.86 ¦ no\nNo labelled method dominates ¦ wins over every plain method on at most 2 of 7 functions ¦ 2 ¦ yes\nSMA centre bias ¦ shift penalty above 3 decades ¦ 12.06 ¦ yes\nGWO centre bias ¦ shift penalty above 3 decades ¦ 13.49 ¦ yes\nPlain methods unbiased ¦ CMA-ES and differential evolution penalty below 0.5 ¦ 0.45; 0.26 ¦ yes\n::end"
+    ]
+   }
+  ]
+ },
+ "claims": [
+  {
+   "id": "c1",
+   "text": "After the fix, CMA-ES ranked first on the shifted functions with a mean rank of 2.00, and the best method with a biological label, ACOR, ranked second at 3.14.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e1"
+   ]
+  },
+  {
+   "id": "c2",
+   "text": "Moving the optimum away from the centre cost the slime mould method 12.1 and the grey wolf method 13.6 decades of median error, while ACOR, IWO and PSO lost 0.0006, 0.07 and 0.42 decades.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e2"
+   ]
+  },
+  {
+   "id": "c3",
+   "text": "Without random search the plain group's mean rank was 3.98 against 5.54 for the biologically labelled group; with random search counted as plain the groups were 5.45 and 5.54, a gap that sat inside the label-permutation range (p 0.45).",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e3"
+   ]
+  },
+  {
+   "id": "c4",
+   "text": "In the first run the labelled group's lead of 1.16 ranks came partly from our bug and partly from counting random search as plain, and it sat inside its own label-permutation range.",
+   "section": "results",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e4"
+   ]
+  }
+ ],
+ "evidence": [
+  {
+   "id": "e1",
+   "kind": "number",
+   "label": "The numbers in claim 1",
+   "value": "2.00; 3.14",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e2",
+   "kind": "number",
+   "label": "The numbers in claim 2",
+   "value": "12.1; 13.6; 0.0006; 0.07; 0.42",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e3",
+   "kind": "number",
+   "label": "The numbers in claim 3",
+   "value": "3.98; 5.54; 5.45; 0.45",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e4",
+   "kind": "number",
+   "label": "The numbers in claim 4",
+   "value": "1.16",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  }
+ ],
+ "references": [
+  {
+   "id": "r1",
+   "key": "Sörensen 2015",
+   "kind": "paper",
+   "title": "Sörensen, K. (2015). Metaheuristics: the metaphor exposed. International Transactions in Operational Research 22(1), 3-18. doi:10.1111/itor.12001",
+   "access": "snippet",
+   "target": "https://doi.org/10.1111/itor.12001",
+   "access_note": "abstracts and publisher pages; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r2",
+   "key": "Camacho-Villalón 2023",
+   "kind": "paper",
+   "title": "Camacho-Villalón, C. L., Dorigo, M. and Stützle, T. (2023). Exposing the grey wolf, moth-flame, whale, firefly, bat, and antlion algorithms: six misleading optimization techniques inspired by bestial metaphors. International Transactions in Operational Research 30(6), 2945-2971. doi:10.1111/itor.13176",
+   "access": "snippet",
+   "target": "https://doi.org/10.1111/itor.13176",
+   "access_note": "abstracts and publisher pages; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r3",
+   "key": "Kudela 2022",
+   "kind": "paper",
+   "title": "Kudela, J. (2022). A critical problem in benchmarking and analysis of evolutionary computation methods. Nature Machine Intelligence 4, 1238-1245. doi:10.1038/s42256-022-00579-0",
+   "access": "snippet",
+   "target": "https://doi.org/10.1038/s42256-022-00579-0",
+   "access_note": "abstracts and publisher pages; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r4",
+   "key": "Wolpert 1997",
+   "kind": "paper",
+   "title": "Wolpert, D. H. and Macready, W. G. (1997). No free lunch theorems for optimization. IEEE Transactions on Evolutionary Computation 1(1), 67-82. doi:10.1109/4235.585893",
+   "access": "snippet",
+   "target": "https://doi.org/10.1109/4235.585893",
+   "access_note": "abstracts and publisher pages; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r5",
+   "key": "Auger 2005",
+   "kind": "paper",
+   "title": "Auger, A. and Hansen, N. (2005). A restart CMA evolution strategy with increasing population size. Proceedings of the IEEE Congress on Evolutionary Computation 2005, 1769-1776. doi:10.1109/CEC.2005.1554902",
+   "access": "snippet",
+   "target": "https://doi.org/10.1109/CEC.2005.1554902",
+   "access_note": "abstracts and publisher pages; full text not read",
+   "accessed": "2026-11-09"
+  }
+ ],
+ "relations": [],
+ "corrections": [
+  {
+   "id": "x1",
+   "date": "2026-10-31",
+   "target": "document",
+   "type": "wording",
+   "after": "The run is kept as it ran, and the rerun replaces its ranking.",
+   "reason": "The first run's headline, that the labelled group beat the plain group, came partly from a bug in our CMA-ES code and in the box handling of four other methods.",
+   "found_by": "the study itself, before publication"
+  },
+  {
+   "id": "x2",
+   "date": "2026-11-09",
+   "target": "document",
+   "type": "wording",
+   "after": "Our ledger entry did not say so; this paper does.",
+   "reason": "The first run's preregistration voids its ranking when the no-free-lunch check fails to tie, and it failed.",
+   "found_by": "the publication pass"
+  },
+  {
+   "id": "x3",
+   "date": "2026-11-09",
+   "target": "document",
+   "type": "wording",
+   "after": "This paper reports both.",
+   "reason": "Our ledger and write-up did not report that the group gap with random search sat inside the label-permutation range in both runs, nor that the rerun's forecast of PSO in the top three failed.",
+   "found_by": "the publication pass"
+  }
+ ],
+ "versions": [
+  {
+   "n": 1,
+   "date": "2026-10-31",
+   "what": "entered in the findings ledger"
+  },
+  {
+   "n": 2,
+   "date": "2026-11-09",
+   "what": "paper version 1.0, first published",
+   "hash": "2c1d02484bcb2dd14a712b5e2a9a09976f4ea93b31dc3bfecfce9262893add76"
+  }
+ ],
+ "grade": {
+  "lowers": [
+   {
+    "domain": "scoring",
+    "text": "Scored by code and by the agent that ran it; self-graded.",
+    "from": "register scorer"
+   },
+   {
+    "domain": "single source",
+    "text": "The cited literature was read at the level of abstracts and publisher pages; full texts were not read.",
+    "from": "paper Verified"
+   }
+  ],
+  "holds": [
+   {
+    "domain": "preregistration",
+    "text": "Preregistered and hash-locked before the run (sha256 dbf3b210).",
+    "from": "paper Reproduction"
+   }
+  ]
+ },
+ "reproduce": {
+  "data": [],
+  "prereg": {
+   "hash": "dbf3b21010c50808e984aa422ad15639f3fd93af28409e44eb4ca34c8cc53a54",
+   "plan": "234b69bfb9702c86b356344553e6e8de24169a843d994fdac870bbc0575bef39"
+  },
+  "cost": "the rerun's timing record gives 1,179 seconds for the analysis on one desktop CPU.",
+  "steps": [
+   "Implement the ten methods with default parameters and keep every candidate inside the box from -100 to 100. Give CMA-ES the penalty of eq. {ref:eq:pen} and a restart when its step size falls below {m:10^{-11}}.",
+   "Run each method on the seven functions in 10 dimensions with 20,000 evaluations and 15 repeats, once with the minimum at the centre and once shifted and rotated as in eq. {ref:eq:shift}, the same shift and rotation for every method within a repeat.",
+   "Rank methods per function by the median best error, floored at {m:10^{-12}} and taken as a base-10 logarithm rounded to two decimals, and average the ranks, eq. {ref:eq:rank}. Compute eqs. {ref:eq:delta} and {ref:eq:gap}.",
+   "Permute method labels within each function 2,000 times for the null distribution of the gap.",
+   "Rerun preregistration SHA-256: dbf3b21010c50808e984aa422ad15639f3fd93af28409e44eb4ca34c8cc53a54. Plan SHA-256: 234b69bfb9702c86b356344553e6e8de24169a843d994fdac870bbc0575bef39. Run 20261031T085324Z, seed 20261054.",
+   "First run preregistration SHA-256: 43edb85abe56495fcd70d726ef7b6f224917033ac10fefbd56fa9d1f2aa559c0. Plan SHA-256: e6fab72152c93c516de1f03d02999c1bcd691360bbef5123781902484f1059ba. Run 20261031T083319Z, seed 20261041."
+  ],
+  "not_rerun": "The study was not re-run for this paper."
+ },
+ "verified": {
+  "date": "2026-11-09",
+  "checks": [
+   {
+    "what": "On 9 November 2026 every mean rank, group mean, gap, shift penalty, planted-check value, label-permutation mean, percentile and p value, and both no-free-lunch p values in this paper were re-read from the two runs' result files.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   },
+   {
+    "what": "The rerun's values match the findings ledger.",
+    "by": "the paper's Verified pass",
+    "result": "match"
+   },
+   {
+    "what": "The function count, dimension, budget, repeats, box, shift range and rank rules were read from the study's code and build files.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   },
+   {
+    "what": "Both preregistrations' SHA-256 hashes were recomputed from the locked files and match the hashes recorded in the result files.",
+    "by": "the paper's Verified pass",
+    "result": "match"
+   },
+   {
+    "what": "The first run left two result files with identical analysis values; this paper cites the later one.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   },
+   {
+    "what": "Both figures were drawn by a script that reads only the two result files.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   }
+  ],
+  "not_checked": [
+   "The study was not re-run for this paper.",
+   "The literature in the introduction was found by searches run on 9 November 2026 and read at the level of abstracts and publisher pages; the full texts of the cited papers were not read."
+  ]
+ }
+}

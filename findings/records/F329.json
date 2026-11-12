@@ -1,0 +1,438 @@
+{
+ "schema": "research-record/1",
+ "built": "2026-11-09 by scripts/record-findings.mjs from paper.txt, the register row and the findings ledger",
+ "document": {
+  "id": "F329",
+  "kind": "finding",
+  "title": "In 27,039 private die rolls, about 45 percent report honestly, and the reports cannot tell us why",
+  "standfirst": "Payoff maximisation says everyone in a private die-roll task should claim the top number. Across 58 published studies with 27,039 subjects, the held-out reports look like about 45 percent honest, 26 percent claiming the maximum and 29 percent shading upward partway. Six competing theories of why people hold back fit those reports almost equally well.",
+  "date_found": "2026-10-31",
+  "fields": [
+   "psychology",
+   "economy",
+   "human-studies"
+  ],
+  "tier": "B",
+  "tier_reason": "Real data, clean held-out design, useful negative; a reproduction with a limit on identifiability.",
+  "rung": "hypothesis",
+  "rung_reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
+  "outcome": "held",
+  "objection": "The planted check failed, so the near-tie says nothing about which model is true, and the model ranking in Table {ref:tab:loss} is not a result.",
+  "objection_source": "the paper's first stated limitation; no reviewer attack is on file",
+  "would_change": "No condition for raising or overturning the call is on file in the register.",
+  "sections": [
+   {
+    "id": "reader",
+    "title": "What this means for a reader",
+    "role": "lead",
+    "paragraphs": [
+     "Most people given a free, safe chance to lie for money do not take all of it. Close to half report what they saw, about a quarter claim the top number and the rest shade upward partway. A model in which lying has a fixed cost, one in which people care about looking honest, one in which they follow what others do, and a plain payoff model with enough noise all reproduce those reports almost equally well. To learn which motive is at work, you need experiments designed to pull the motives apart. The distribution of reports alone is not enough."
+    ]
+   },
+   {
+    "id": "abstract",
+    "title": "Abstract",
+    "role": "argument",
+    "paragraphs": [
+     "In a private die or coin task a person sees a random outcome alone and is paid by the number they report, so a lie pays and cannot be caught. Payoff maximisation says everyone should claim the top outcome. We used the open meta-study data of Abeler, Nosenzo and Raymond: 252 first-round treatments from 58 papers with 27,039 subjects, split by paper so that 19 papers with 9,960 subjects were held out. {c1}On held-out tasks with three or more outcomes, reports read as 45 percent honest, 26 percent maximal and 29 percent partial.{/c1} Six preference models were fitted on the other papers and scored on the held-out ones. {c2}All six sit within 0.005 nats per report of each other, and no contrast against the fixed-cost model passes the false-discovery correction.{/c2} {c3}The planted check failed: on data simulated from the reputation model, the reputation model lost to the fixed-cost model by 0.0003 nats per report.{/c3} By the preregistered rule, no ranking among the models counts. {c4}Our subset's mean standardised report was 0.287 against the 0.234 published for the full data, outside the preregistered tolerance of 0.03.{/c4} The departure from strict self-interest is large; the mechanism behind it is not identified by report distributions."
+    ]
+   },
+   {
+    "id": "intro",
+    "title": "Introduction",
+    "role": "argument",
+    "paragraphs": [
+     "Fischbacher and Föllmi-Heusi {cite:r3} made the {g:reporting-task}private reporting task{/g} a standard tool. Subjects rolled a die under a cup, reported the number, and were paid by it. No single lie could be detected, and the honest distribution is known, so lying shows in the reports as a whole. They found many fully honest subjects, a smaller group who lied to the maximum, and a large group of partial liars who lied but did not claim the top payoff, which they read as a wish to keep a favourable self-image.",
+     "Gächter and Schulz {cite:r4} ran the die task in 23 countries and related intrinsic honesty to a national index of the prevalence of rule violations built from corruption, tax evasion and political fraud. They found more honest reporting in subject pools from countries with fewer violations.",
+     "Abeler, Nosenzo and Raymond {cite:r1} combined data from 90 studies across economics, psychology and sociology and found that people lie surprisingly little. They derived predictions that separate the leading models, tested them with new experiments, and concluded that a preference for being honest together with a preference for being seen as honest best explains the behaviour. They published their data {cite:r2}.",
+     "This paper asks a narrower question of that public data. Without the designed treatments that Abeler and colleagues used to separate the models, can the plain report distributions of ordinary first-round tasks tell the models apart on papers the models have not seen? And what share of reports look honest, maximal or partial?"
+    ]
+   },
+   {
+    "id": "prereg",
+    "title": "Preregistration and design",
+    "role": "argument",
+    "paragraphs": [
+     "The design was written as a {g:preregistration}preregistration{/g} and hash-locked on 31 October 2026 at 22:02 UTC, before any model was fitted. Two things were seen first, and both are stated in the locked file. The publishers' site gives a mean standardised report of 0.234. Our parsing step printed pooled report distributions over all 252 treatments, held-out ones included, and printed a mean standardised report of 0.287. The forecasts of report shares are therefore not blind to the pooled shape.",
+     "The locked file names the data and its filters, the six models and two baselines, the score, the paper-level tests, the three-part reading, the {g:planted-check}planted check{/g}, a reproduction check, a {g:control}control{/g}, the forecasts and the {g:kill-condition}kill conditions{/g}. Its assumptions are listed in it: true outcomes are uniform; upward lies come from preference only and downward lies only from mistakes; one population spans countries and subject pools; only first rounds are used; and the norm model has no measured norm input. Nothing was added after the run.",
+     "Kill conditions, without discretion:",
+     "- If the planted check fails, no model comparison counts.",
+     "- If the best theory's gain over everyone-honest is not above the shuffle control's 95th percentile, the theories carry nothing beyond chance.",
+     "Reproduction check: the mean standardised report over the by-treatment set must lie within 0.03 of 0.234."
+    ]
+   },
+   {
+    "id": "data",
+    "title": "Data and provenance",
+    "role": "argument",
+    "paragraphs": [
+     "The data are the merged meta-study file and the data-and-programs archive published by Abeler, Nosenzo and Raymond {cite:r2} on their resources page and on figshare (files 16211150 and 16211414), downloaded on 31 October 2026. The site states that all its data are released under the CC BY licence, with credit and a link back. The files were read as data; no program in the archive was run. The publishers' site describes the full set as 429 treatments from 90 papers with over 44,000 participants in 47 countries.",
+     "A parsing step kept first-round reports from tasks with uniform true outcomes and 2, 3, 6 or 10 possible outcomes. It removed treatments coded in the data as internal lying or as having a victim, treatments that asked subjects about the report distribution, and treatments that told subjects what others reported. That left 252 treatments from 58 papers with 27,039 subjects. Papers were split by a hash of the citation, with 30 percent held out: the {g:held-out-papers}held-out papers{/g} were 19 papers with 9,960 subjects, and fitting used 17,079 subjects.",
+     "As a check on the parsing, the baseline treatment of Fischbacher and Föllmi-Heusi in our file has counts of 38, 44, 64, 76, 171 and 219 from the lowest to the top payoff. Our results summary records the top report at 36 percent, where honest reporting gives 17."
+    ]
+   },
+   {
+    "id": "methods",
+    "title": "Methods",
+    "role": "argument",
+    "paragraphs": [
+     "## Models",
+     "Let a task have {m:K} outcomes, ranked by payoff, with {m:\\pi_r} the rank of report {m:r} scaled from 0 for the lowest to 1 for the highest. A person who saw outcome {m:s} and reports {m:r} receives the scaled payoff times a stakes factor",
+     "$$ S = (G / 5)^{1 - \\epsilon} {eq:stakes}",
+     "where {m:G} is the money at stake in the treatment in purchasing-power dollars and {m:\\epsilon} is the {g:stakes-elasticity}stakes elasticity{/g}. Each person also carries a lying cost {m:c}, drawn from a lognormal distribution, {m:\\ln c = \\mu + \\sigma z} with {m:z} standard normal, evaluated on a grid of 25 quantiles. Each person picks the report with the highest utility",
+     "$$ U = S \\pi_r - c a_r - c (d_r)^{\\gamma} + \\rho c R_r {eq:util}",
+     "where {m:a_r} is 1 when {m:r} differs from {m:s} and 0 otherwise, {m:d_r} is the payoff distance {m:|\\pi_r - \\pi_s|}, and {m:R_r} is the chance that a person making report {m:r} is honest. Each model keeps some of these terms:",
+     "- Fixed cost: the first cost term only. A person either reports honestly or claims the top.",
+     "- Size cost: the second cost term only, so the cost grows with the size of the lie.",
+     "- Reputation: the fixed cost plus the value {m:\\rho} on looking honest. Because {m:R_r} depends on everyone's reports, it is solved as a {g:fixed-point}fixed point{/g} by 25 damped updates from honest reporting.",
+     "- Norm: the fixed cost scaled by {m:1 - \\lambda L}, where {m:L} is the share of others who lie, iterated from no lying, which finds the low-lying equilibrium.",
+     "- Full: reputation plus the size cost.",
+     "A {g:tremble}tremble{/g} {m:\\tau} mixes in uniform reports, so a model's prediction for report {m:r} is {m:q_r = (1 - \\tau) m_r + \\tau / K}, with {m:m_r} the share of the cost grid choosing {m:r}. The payoff model has no cost and no tremble. It is a logit choice on money alone with one scale parameter {m:\\beta}:",
+     "$$ q_r = \\frac{e^{\\beta G \\pi_r}}{\\sum_{j} e^{\\beta G \\pi_j}} {eq:logit}",
+     "Two baselines frame the models: everyone honest, which predicts uniform reports, and the {g:climatology}training-average baseline{/g}. Every model was fitted by {g:maximum-likelihood}maximum likelihood{/g} on the training papers.",
+     "## Score",
+     "Models are scored by {g:log-loss}log loss{/g} over the {m:N} held-out subjects, with {m:n_{tr}} the count of report {m:r} in treatment {m:t}:",
+     "$$ \\ell = - \\frac{1}{N} \\sum_{t} \\sum_{r} n_{tr} \\ln q_{tr} {eq:loss}",
+     "A model's gain is the everyone-honest loss minus its own. Each theory model is compared with the fixed-cost model by a {g:sign-permutation-paper}paper-level sign permutation test{/g}, the p values adjusted together by the {g:benjamini-hochberg}Benjamini-Hochberg correction{/g}. The reputation and full models' differences from fixed cost also get a {g:interval-95}95% interval{/g} from a {g:paper-bootstrap}paper bootstrap{/g}.",
+     "## Shares of honest, maximal and partial reports",
+     "For each task size of 3, 6 or 10, reports are pooled and given a {g:three-part-reading}three-part reading{/g}. With {m:q_1} the share reporting the lowest outcome and {m:q_K} the share reporting the top,",
+     "$$ h = K q_1 {eq:honest}",
+     "$$ m = q_K - \\frac{h}{K} {eq:max}",
+     "with {m:h} capped at 1, and the partial share is {m:1 - h - m}. The three task sizes are combined weighted by subjects. Two-outcome tasks are left out, since they have no partial lie.",
+     "## Standardised report",
+     "For the reproduction check each report is mapped to {m:x_r = -1 + 2(r - 1)/(K - 1)}, and the {g:standardised-report}standardised report{/g} is averaged over the {m:T} treatments without weights:",
+     "$$ M = \\frac{1}{T} \\sum_{t} \\sum_{r} \\frac{n_{tr}}{n_t} x_r {eq:std}"
+    ]
+   },
+   {
+    "id": "controls",
+    "title": "Controls and planted checks",
+    "role": "argument",
+    "paragraphs": [
+     "The planted check simulated report counts from the reputation model at known parameters on the same treatments, kept the same split by paper, fitted the fixed-cost, size-cost and reputation models to the simulated training papers and scored them on the simulated held-out papers. The reputation model had to beat both. {c3}The planted check failed: on data simulated from the reputation model, the reputation model lost to the fixed-cost model by 0.0003 nats per report.{/c3} It beat the size-cost model by 0.0005. The fitted reputation parameters also missed the planted ones: the log of the value on looking honest, {m:\\rho}, was planted at 0.2 and fitted at -0.56. The method cannot recover a known model at this sample size, so by the kill condition no ranking of the real models counts.",
+     "The shuffle control permuted report labels within each held-out treatment, and the best model's gain over everyone-honest was recomputed 300 times to give a {g:null-distribution}null distribution{/g}. Its 95th percentile was -0.086 (mean -0.112). The real best gain of 0.072 lies far above it ({g:p-value-draws}p from draws{/g} 0.003). The theories carry information beyond chance, and this kill condition did not fire.",
+     "The reproduction check failed. {c4}Our subset's mean standardised report was 0.287 against the 0.234 published for the full data, outside the preregistered tolerance of 0.03.{/c4} The two numbers come from different sets: ours uses first rounds only and drops several designs. Our filtered subset does not reproduce the publishers' headline figure, and the 0.287 was printed before the lock, so the outcome of this check was knowable when the plan was written."
+    ]
+   },
+   {
+    "id": "results",
+    "title": "Results",
+    "role": "argument",
+    "paragraphs": [
+     "Table {ref:tab:loss} and Figure {ref:fig:loss} give the held-out losses. Every model beats everyone-honest by about 0.07 nats per report. {c2}All six sit within 0.005 nats per report of each other, and no contrast against the fixed-cost model passes the false-discovery correction.{/c2} The reputation model's edge over fixed cost was 0.003 (95% interval -0.001 to 0.008, p 0.40), and the full model's 0.002 (-0.008 to 0.012, p 0.75). The training-average baseline, which has no theory in it, scored the same as the norm model to four places.",
+     "::table tab:loss cols=0.4,0.2,0.2,0.2 Held-out log loss in nats per report on 9,960 subjects in 19 papers, and gain over everyone honest. The p value is the paper-level sign permutation test against the fixed-cost model, 5,000 flips; none passes the Benjamini-Hochberg correction.\nModel ¦ Loss ¦ Gain ¦ p against fixed cost\nReputation plus fixed cost ¦ 1.2484 ¦ 0.0718 ¦ 0.40\nPayoff logit ¦ 1.2488 ¦ 0.0714 ¦ 0.83\nSize-of-lie cost ¦ 1.2491 ¦ 0.0711 ¦ 0.83\nFull ¦ 1.2493 ¦ 0.0709 ¦ 0.75\nFixed lying cost ¦ 1.2515 ¦ 0.0687 ¦ reference\nNorm ¦ 1.2519 ¦ 0.0683 ¦ 0.81\nTraining average ¦ 1.2519 ¦ 0.0683 ¦ 0.96\nEveryone honest ¦ 1.3202 ¦ 0 ¦ not tested\n::end",
+     "![fig:loss width=0.92 alt=Seven bars of nearly equal length for the models and the training average, and a shuffle-control range far to the left of zero](fig-loss.png) Held-out gain over everyone honest for each model (navy) and the training-average baseline (grey), against the shuffle control's 5th to 95th percentile range and mean (ochre). Drawn from the run's result file.",
+     "The payoff model was forecast to do worse than honest reporting. With its logit noise it did better, by 0.071 nats per report, and finished second. A model with no lying cost at all fits these reports almost as well as the cost models.",
+     "The fitted stakes elasticities were 0.89 to 0.96 across the five cost models, so the size of the payment hardly moved reports in these data.",
+     "{c1}On held-out tasks with three or more outcomes, reports read as 45 percent honest, 26 percent maximal and 29 percent partial.{/c1} The training papers gave 42, 24 and 34 percent. Table {ref:tab:shares} and Figure {ref:fig:shares} set those against the shares each fitted model predicts for the held-out tasks.",
+     "::table tab:shares cols=0.4,0.14,0.14,0.14,0.18 Three-part reading of held-out tasks with 3, 6 or 10 outcomes, observed and as predicted by each model. The error is each model's mean absolute error over the three shares, by treatment, weighted by subjects.\nSource ¦ Honest ¦ Maximal ¦ Partial ¦ Error\nObserved, held-out papers ¦ 0.45 ¦ 0.26 ¦ 0.29 ¦ none\nObserved, training papers ¦ 0.42 ¦ 0.24 ¦ 0.34 ¦ none\nNorm ¦ 0.46 ¦ 0.29 ¦ 0.25 ¦ 0.109\nReputation plus fixed cost ¦ 0.45 ¦ 0.30 ¦ 0.24 ¦ 0.110\nFixed lying cost ¦ 0.49 ¦ 0.29 ¦ 0.22 ¦ 0.116\nSize-of-lie cost ¦ 0.36 ¦ 0.32 ¦ 0.32 ¦ 0.124\nFull ¦ 0.59 ¦ 0.27 ¦ 0.14 ¦ 0.147\nPayoff logit ¦ 0.61 ¦ 0.16 ¦ 0.23 ¦ 0.160\n::end",
+     "![fig:shares width=0.8 alt=Stacked bars of honest, maximal and partial shares for observed data and six models](fig-shares.png) Honest, maximal and partial shares read from report distributions: observed on held-out and training papers, and predicted by each fitted model for the held-out tasks.",
+     "One held-out paper carries the full model's small edge. In Effron and colleagues' 2015 study (2,151 subjects), the full model beat fixed cost by 0.021 nats per report; without that paper, the full model's edge over fixed cost becomes -0.003. Across the 23 subject pools of Gächter and Schulz {cite:r4} in the data, the mean standardised report ranged from 0.18 to 0.58 (standard deviation 0.10).",
+     "Two sensitivity refits, scored on matching held-out subsets, are in Table {ref:tab:sens}. The fixed-cost model scored best of the three theories refitted in both. Among students the training average beat every theory; in the general population it lost to all three. The refit without hand-coded treatments was not run, because too few treatments remained.",
+     "::table tab:sens cols=0.28,0.12,0.12,0.12,0.12,0.12,0.12 Held-out log loss after refitting on students only and on the general population only.\nSubset ¦ Subjects ¦ Fixed cost ¦ Reputation ¦ Full ¦ Training average ¦ Everyone honest\nStudents ¦ 7,109 ¦ 1.4285 ¦ 1.4301 ¦ 1.4338 ¦ 1.4241 ¦ 1.5188\nGeneral population ¦ 2,851 ¦ 0.8067 ¦ 0.8107 ¦ 0.8067 ¦ 0.8262 ¦ 0.8249\n::end",
+     "Table {ref:tab:forecast} sets the forecasts written before the run against the outcomes.",
+     "::table tab:forecast cols=0.42,0.29,0.29 Forecasts fixed in the preregistration against what the run gave.\nQuantity ¦ Forecast ¦ Outcome\nBest theory model ¦ full ¦ reputation, within noise\nOrder ¦ full, reputation, size, fixed, norm, payoff ¦ reputation, payoff, size, full, fixed, norm\nPayoff worse than everyone honest ¦ yes ¦ no, better by 0.071\nFull over fixed cost ¦ 0.02 ¦ 0.002\nTraining average over best model ¦ 0.005 ¦ -0.004\nStakes elasticity ¦ 0.9 ¦ 0.89 to 0.96\nHonest, maximal, partial ¦ 0.42, 0.25, 0.33 ¦ 0.45, 0.26, 0.29\nReputation share error ¦ 0.10 ¦ 0.110\nFixed-cost share error ¦ 0.20 ¦ 0.116\n::end"
+    ]
+   },
+   {
+    "id": "discussion",
+    "title": "Discussion",
+    "role": "argument",
+    "paragraphs": [
+     "The departure from strict payoffs is the part that holds. Payoff maximisation predicts that every report is the top one; held-out reports show a top share of about a quarter beyond the honest share and a large honest share, consistent with what Fischbacher and Föllmi-Heusi {cite:r3} and Abeler and colleagues {cite:r1} report. The reading of those shares rests on the uniform-truth assumption and on there being no deliberate downward lies.",
+     "The mechanism is not identified here. Six models built on different motives, and a training average with no motive at all, predict held-out reports to within 0.005 nats per report. The planted check places part of the problem in the design: when the reputation model was true, the method still could not pick it out. Report distributions from ordinary tasks constrain the shape of reporting and leave the motive open.",
+     "This does not contradict Abeler and colleagues {cite:r1}. Their conclusion rests on designed treatments that change what a report signals about the reporter, which this study did not refit. Our result says that the distributions alone are not enough, which is the reason such treatments are needed.",
+     "The payoff logit's second place deserves care. A logit with a single scale parameter puts most weight on high reports and spreads the rest, and on these data that shape matches the reports about as well as a cost model. Its predicted shares are the furthest from the observed ones (Table {ref:tab:shares}), so a fit on log loss and a fit on shares can disagree."
+    ]
+   },
+   {
+    "id": "limits",
+    "title": "Limitations",
+    "role": "argument",
+    "paragraphs": [
+     "- The planted check failed, so the near-tie says nothing about which model is true, and the model ranking in Table {ref:tab:loss} is not a result.",
+     "- The preregistered reproduction check failed: our subset gives 0.287 against the publishers' 0.234, and that value was printed before the lock.",
+     "- One held-out paper, Effron and colleagues (2015), carries the full model's edge; without it the sign flips.",
+     "- The shares are read from distributions, not observed lies. They assume uniform true outcomes and upward lies from preference only.",
+     "- The pooled report shapes were seen before the lock, so the share forecasts were not blind.",
+     "- All tasks are laboratory or online die and coin tasks with 2, 3, 6 or 10 outcomes, first rounds only.",
+     "- The designed treatments that separate the models were removed by our filters and not refitted.",
+     "- Scoring was done by our own code and was not blind."
+    ]
+   },
+   {
+    "id": "appendix",
+    "title": "Appendix A. The preregistered verdicts",
+    "role": "evidence",
+    "paragraphs": [
+     "Each {g:verdict}verdict{/g} is a set of rules written before the run, and it passes only when every rule holds. Values are read from the run's result file. Because the planted check failed, the two model contrasts that pass are {g:void}void{/g} as rankings, and neither passes the correction for multiple tests.",
+     "::table tab:verdicts cols=0.26,0.44,0.18,0.12 Preregistered verdicts and the rules that decided each one. The reproduction check was preregistered as a rule and not coded as a verdict in the run; its value is the result file's mean standardised report.\nVerdict ¦ Deciding rule ¦ Value ¦ Holds\nPlanted check ¦ reputation beats fixed cost and size cost on simulated reputation data ¦ -0.0003; 0.0005 ¦ no\nBeats shuffle ¦ best gain above shuffle 95th percentile (-0.086) ¦ 0.072 ¦ yes\nPayoff below honest ¦ payoff gain over everyone honest below 0 ¦ 0.071 ¦ no\nReputation over fixed cost ¦ difference above 0 ¦ 0.003 ¦ yes\nFull over fixed cost ¦ difference above 0 ¦ 0.002 ¦ yes\nTraining average above best ¦ training average's loss lower than the best model's ¦ -0.004 ¦ no\nReproduction ¦ mean standardised report within 0.03 of 0.234 ¦ 0.287 ¦ no\n::end"
+    ]
+   }
+  ]
+ },
+ "claims": [
+  {
+   "id": "c1",
+   "text": "On held-out tasks with three or more outcomes, reports read as 45 percent honest, 26 percent maximal and 29 percent partial.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e1"
+   ]
+  },
+  {
+   "id": "c2",
+   "text": "All six sit within 0.005 nats per report of each other, and no contrast against the fixed-cost model passes the false-discovery correction.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e2"
+   ]
+  },
+  {
+   "id": "c3",
+   "text": "The planted check failed: on data simulated from the reputation model, the reputation model lost to the fixed-cost model by 0.0003 nats per report.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e3"
+   ]
+  },
+  {
+   "id": "c4",
+   "text": "Our subset's mean standardised report was 0.287 against the 0.234 published for the full data, outside the preregistered tolerance of 0.03.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e4"
+   ]
+  }
+ ],
+ "evidence": [
+  {
+   "id": "e1",
+   "kind": "number",
+   "label": "The numbers in claim 1",
+   "value": "45; 26; 29",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e2",
+   "kind": "number",
+   "label": "The numbers in claim 2",
+   "value": "0.005",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e3",
+   "kind": "number",
+   "label": "The numbers in claim 3",
+   "value": "0.0003",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e4",
+   "kind": "number",
+   "label": "The numbers in claim 4",
+   "value": "0.287; 0.234; 0.03",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  }
+ ],
+ "references": [
+  {
+   "id": "r1",
+   "key": "Abeler 2019",
+   "kind": "paper",
+   "title": "Abeler, J., Nosenzo, D. and Raymond, C. (2019). Preferences for truth-telling. Econometrica 87(4), 1115-1153. doi:10.3982/ECTA14673",
+   "access": "snippet",
+   "target": "https://doi.org/10.3982/ECTA14673",
+   "access_note": "abstracts, publisher pages and search summaries; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r2",
+   "key": "Abeler, J., Nosenzo, D",
+   "kind": "dataset",
+   "title": "Abeler, J., Nosenzo, D. and Raymond, C. Preferences for truth-telling: data and programs. Resources page of www.preferencesfortruthtelling.com; figshare files 16211150 and 16211414. CC BY. Downloaded 31 October 2026.",
+   "access": "run",
+   "licence": "as stated in the paper's data section"
+  },
+  {
+   "id": "r3",
+   "key": "Fischbacher 2013",
+   "kind": "paper",
+   "title": "Fischbacher, U. and Föllmi-Heusi, F. (2013). Lies in disguise: an experimental study on cheating. Journal of the European Economic Association 11(3), 525-547. doi:10.1111/jeea.12014",
+   "access": "snippet",
+   "target": "https://doi.org/10.1111/jeea.12014",
+   "access_note": "abstracts, publisher pages and search summaries; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r4",
+   "key": "Gächter 2016",
+   "kind": "paper",
+   "title": "Gächter, S. and Schulz, J. F. (2016). Intrinsic honesty and the prevalence of rule violations across societies. Nature 531, 496-499. doi:10.1038/nature17160",
+   "access": "snippet",
+   "target": "https://doi.org/10.1038/nature17160",
+   "access_note": "abstracts, publisher pages and search summaries; full text not read",
+   "accessed": "2026-11-09"
+  }
+ ],
+ "relations": [
+  {
+   "from": "F422",
+   "to": "F329",
+   "type": "narrowed",
+   "scope": "reproduction check",
+   "date": "2026-10-31",
+   "note": "The correction pass coded a failed plant, an error and a post hoc rescue; on 2026-11-09 the ledger added that the preregistered reproduction check failed at 0.287 against 0.234 within 0.03.",
+   "record": "findings ledger, F422 correction pass and Publication pass corrections 2026-11-09"
+  }
+ ],
+ "corrections": [
+  {
+   "id": "x1",
+   "date": "2026-11-09",
+   "target": "document",
+   "type": "scope",
+   "after": "The original ledger entry did not state it. The claim stands narrowed, and this paper states the failed check in the abstract, the controls and the limitations.",
+   "reason": "A dated correction in our {g:findings-ledger}findings ledger{/g} records that the preregistered reproduction check failed at 0.287 against 0.234 within 0.03.",
+   "found_by": "the publication pass"
+  }
+ ],
+ "versions": [
+  {
+   "n": 1,
+   "date": "2026-10-31",
+   "what": "entered in the findings ledger"
+  },
+  {
+   "n": 2,
+   "date": "2026-11-09",
+   "what": "paper version 1.0, first published",
+   "hash": "3610edab4bbafad786865e9dcf0a55ad96368668b4ded75ac823e95915c4c49c"
+  }
+ ],
+ "grade": {
+  "lowers": [
+   {
+    "domain": "scoring",
+    "text": "Scored by code and by the agent that ran it; self-graded.",
+    "from": "register scorer"
+   },
+   {
+    "domain": "blinding",
+    "text": "Not blind, as the paper's limitations state.",
+    "from": "paper Limitations"
+   },
+   {
+    "domain": "single source",
+    "text": "The cited literature was read at the level of abstracts, publisher pages and search summaries; full texts were not read.",
+    "from": "paper Verified"
+   }
+  ],
+  "holds": [
+   {
+    "domain": "preregistration",
+    "text": "Preregistered and hash-locked before the run (sha256 bff18a49).",
+    "from": "paper Reproduction"
+   }
+  ]
+ },
+ "reproduce": {
+  "data": [
+   {
+    "name": "Abeler, J., Nosenzo, D",
+    "licence": "as stated in the paper's data section",
+    "url": ""
+   }
+  ],
+  "prereg": {
+   "hash": "bff18a49df2fb811b8d8039a83d150a5a9d202a5e355ed8a4b79d5738c10f705",
+   "plan": "76393962abab4576b991da0082fd66316b78ddcd9620080a11c4fc247ae73763"
+  },
+  "cost": "the analysis took about six minutes and the shuffle control under one second on one desktop computer, as timed in the result file.",
+  "steps": [
+   "Data: download the merged meta-study file from the resources page of Abeler, Nosenzo and Raymond (figshare file 16211150), CC BY.",
+   "Keep first-round reports from uniform tasks with 2, 3, 6 or 10 outcomes; drop internal-lying, victim, asked-distribution and information treatments; split papers 70 to 30 by a hash of the citation.",
+   "Fit the six models of eqs. {ref:eq:util} and {ref:eq:logit} by maximum likelihood on the training papers and score held-out loss with eq. {ref:eq:loss}.",
+   "Read the three shares with eqs. {ref:eq:honest} and {ref:eq:max}, and the standardised report with eq. {ref:eq:std}.",
+   "Preregistration SHA-256: bff18a49df2fb811b8d8039a83d150a5a9d202a5e355ed8a4b79d5738c10f705. Plan SHA-256: 76393962abab4576b991da0082fd66316b78ddcd9620080a11c4fc247ae73763. Run 20261031T220208Z."
+  ],
+  "not_rerun": "The study was not re-run for this paper."
+ },
+ "verified": {
+  "date": "2026-11-09",
+  "checks": [
+   {
+    "what": "On 9 November 2026 the subject and paper counts of the split, the eight held-out losses and gains, the permutation p values and their correction, the two bootstrap intervals, the shuffle control's draws and percentiles, the planted check's values and fitted parameters, the observed and predicted shares and the share errors, the stakes elasticities, the Effron sensitivity, the Gächter and Schulz range, the baseline counts, the sensitivity refits, the mean standardised report of 0.287 and all six verdicts were re-read from the run's result file.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   },
+   {
+    "what": "The 252 treatments, 58 papers and 27,039 subjects, the filters, the forecasts and the 0.234 comparison value were read from the preregistration; the publishers' full-set figures were read from our results summary of 31 October 2026.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   },
+   {
+    "what": "The results match the findings ledger and its dated correction of 9 November 2026.",
+    "by": "the paper's Verified pass",
+    "result": "match"
+   },
+   {
+    "what": "The preregistration's SHA-256 was recomputed on that date and matches the hash in the result file.",
+    "by": "the paper's Verified pass",
+    "result": "match"
+   },
+   {
+    "what": "The data source and licence were read from our download record.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   },
+   {
+    "what": "Both figures were drawn by a script that reads only the result file.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   },
+   {
+    "what": "The model forms in the methods were read from the study's code.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   },
+   {
+    "what": "The 36 percent top share was read from our results summary.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   }
+  ],
+  "not_checked": [
+   "The study was not re-run for this paper.",
+   "The literature was found by searches run on 9 November 2026 and read at the level of abstracts, publisher pages and search summaries; the full texts were not read."
+  ]
+ }
+}

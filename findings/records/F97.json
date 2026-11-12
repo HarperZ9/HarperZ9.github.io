@@ -1,0 +1,509 @@
+{
+ "schema": "research-record/1",
+ "built": "2026-11-09 by scripts/record-findings.mjs from paper.txt, the register row and the findings ledger",
+ "document": {
+  "id": "F97",
+  "kind": "finding",
+  "title": "Tree rings record the broad drought pattern and almost none of the local one",
+  "standfirst": "Across 664 western North American tree-ring sites, the trees pass almost none of the summer drought signal at scales below about 55 km and most of it above about 460 km. A tree-ring record that looks like a weak, flat climate recorder site by site is acting as a spatial filter.",
+  "date_found": "2026-10-29",
+  "fields": [
+   "ecology-climate",
+   "biology-plant-forest-pathology"
+  ],
+  "tier": "B*",
+  "tier_reason": "Real data, locked prereg, passing instrument and a forecast H4. The climate grid is itself smooth, so the filter may belong to CRU rather than the trees; the next step must separate them.",
+  "rung": "hypothesis",
+  "rung_reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
+  "outcome": "held",
+  "objection": "CRU interpolates precipitation with a 450 km decay distance, right where the lens opens, so low fine-scale coherence may be reference smoothing. Site clustering and noise fill the finest band.",
+  "objection_source": "the register's reviewer attack",
+  "would_change": "Repeat with station or denser gridded data as reference, another region, a held-out fine-scale network.",
+  "sections": [
+   {
+    "id": "reader",
+    "title": "What this means for a reader",
+    "role": "lead",
+    "paragraphs": [
+     "A tree-ring site that matches its local drought record only weakly is not a weak drought recorder in every sense. In the American West the trees carry most of the broad, regional pattern of summer drought and almost none of the local detail. When a proxy is scored site by site, ask how much of its lost skill is lost in space rather than in time."
+    ]
+   },
+   {
+    "id": "abstract",
+    "title": "Abstract",
+    "role": "argument",
+    "paragraphs": [
+     "Tree-ring records are often judged one site at a time, by comparing a site's yearly growth with the climate at that spot. We split that comparison by spatial scale as well as by time scale. The data are June to August drought from a gridded index, 399 one-degree cells in western North America from 1903 to 2025, and 664 tree-ring chronologies in the same box, complete from 1903 to 1980. In each of 30 cells of a grid of six spatial bands and five time bands we measured the share of the drought signal that the trees pass. {c1}The preregistered contrast between broad, slow scales and fine, fast scales was 0.64 (95% interval 0.62 to 0.68), against 95th percentiles of 0.22 for phase-randomised trees and 0.30 for trees moved to shuffled sites, with an adjusted p of 0.035.{/c1} {c2}Below 55 km the trees pass at most 0.004 of the drought signal in every time band, and above 460 km they pass 0.27 to 0.91.{/c2} Three tests on the drought field came back null. {c3}The drought field's covariance did not depart from a space part times a time part{/c3}, {c4}no travel speed could be claimed{/c4}, and {c5}broad and fine patterns lose their memory at the same rate, with a dispersion exponent of 0.02 (-0.12 to 0.17){/c5}. The trees act as a spatial filter."
+    ]
+   },
+   {
+    "id": "intro",
+    "title": "Introduction",
+    "role": "argument",
+    "paragraphs": [
+     "Tree rings are the main yearly record of drought before instruments. Cook, Meko, Stahle and Cleaveland {cite:r1} built a grid of summer drought reconstructions for the United States from a dense network of chronologies. Their method fits each grid point from the chronologies within a search radius, and they reported that a radius of 450 km worked best. The method is local by design. The reconstructed maps still kept the spatial features of drought, which the authors noted although the method was not built to be spatial.",
+     "The drought index in this study is the {g:scpdsi}self-calibrating Palmer Drought Severity Index{/g}, the scPDSI. Wells, Goddard and Hayes {cite:r2} built it so that the index's constants are fitted to each location and values compare across places. We use the gridded scPDSI distributed with CRU TS 4.10 {cite:r3} {cite:r4}.",
+     "Averaging trees over larger areas raises the shared climate signal. Duchesne and colleagues {cite:r6} showed with forest inventory cores in Quebec that averaging at the stand level removes tree-level noise, that covariance among tree-ring signals falls with distance, and that reliable climate signals can be drawn at scales from 37 to 583,000 square km.",
+     "These studies treat space and time one at a time. A field that varies in both can hold structure neither view shows: a front that moves, patterns that fade faster at fine scales than at broad ones, or a filter that passes some combinations of scale and period and not others. This paper asks four questions at once. Does the drought field's covariance split into a space part times a time part? Do its anomalies travel? Do broad and fine patterns fade at different rates? And which combinations of spatial scale and period do the tree rings pass?"
+    ]
+   },
+   {
+    "id": "prereg",
+    "title": "Preregistration and design",
+    "role": "argument",
+    "paragraphs": [
+     "The design was written and hash-locked on 30 October 2026 at 04:20 UTC as a {g:preregistration}preregistration{/g}, before any outcome on the real data was computed. The real data had been built and only their counts printed: 399 cells by 123 years and 664 sites by 78 years. Development before the lock used synthetic fields only, and the preregistration lists every change made during that development.",
+     "The locked file names the data, the band edges, the four statistics, the synthetic fields, each {g:control}control{/g}, the forecasts and the pass rules. No unit, constant or rule changed after the lock. Each test passes only when the real statistic beats the 95th percentile of every scoring control, its adjusted p value is 0.05 or less, and, where named, its bootstrap interval sits above 0. A test that misses any rule fails, which makes each rule a {g:kill-condition}kill condition{/g}.",
+     "Forecasts, written before the run: the covariance would be non-separable in both fields; travel would most likely be null or slow, under 100 km per year; the dispersion exponent would lie between 0 and 2, closer to the diffusion reading than the wave reading; and the tree filter test would pass."
+    ]
+   },
+   {
+    "id": "data",
+    "title": "Data and provenance",
+    "role": "argument",
+    "paragraphs": [
+     "Drought: the June to August mean of the scPDSI from CRU TS 4.10 {cite:r4}, 0.5 degree, 1903 to 2025, released under the Open Database License 1.0. The 0.5 degree cells between 125 and 100 W and 30 and 50 N were averaged to one-degree cells, keeping only one-degree cells with all four parts present in every year. This gave 399 cells and 123 years.",
+     "Trees: standard ring-width {g:chronology}chronologies{/g} from the International Tree-Ring Data Bank {cite:r5}, held by NOAA's National Centers for Environmental Information as public data, with a request to cite the contributors. Every site in the same box with a gap-free index from 1903 to 1980 entered, which gave 664 sites and 78 years. Each site was paired with the June to August scPDSI of its nearest 0.5 degree cell with data in every year.",
+     "Every series had its linear trend removed and was scaled to unit variance. Positions were projected about 112.5 W and 40 N, in km. The input files and code were hashed into the run record before the run."
+    ]
+   },
+   {
+    "id": "methods",
+    "title": "Methods",
+    "role": "argument",
+    "paragraphs": [
+     "## Bands in space and time",
+     "Let {m:K_b} be the matrix that smooths values on the sites with a normalised Gaussian of width {m:\\sigma_b}, where {m:\\sigma_1} to {m:\\sigma_5} are 55, 95, 160, 270 and 460 km. Set {m:K_0} to the identity and {m:K_6} to zero. The {g:space-band}space band{/g} {m:b} of a field {m:x} is",
+     "$$ x_b = (K_b - K_{b+1}) x {eq:bands}",
+     "for {m:b} from 0 to 5, so band 0 holds what varies below about 55 km and band 5 what varies above about 460 km, and the six bands add back to {m:x}. Each band is then split into five {g:time-band}time bands{/g} by masks on the Fourier transform in time with edges at 1/32, 1/16, 1/8 and 1/4 cycles per year: periods over 32 years, 16 to 32, 8 to 16, 4 to 8 and 2 to 4 years. Each masked series is kept as a complex analytic signal.",
+     "## The tree filter",
+     "For space band {m:b} and time band {m:w}, let {m:a_x} and {m:a_y} be the analytic signals of drought at the tree sites and of the trees. Summing over sites and years, with {m:S_{xy}} the sum of {m:a_x^* a_y} and {m:S_{xx}}, {m:S_{yy}} the sums of squared magnitudes, the passed share is the {g:squared-coherence}squared coherence{/g}",
+     "$$ \\gamma^2_{bw} = \\frac{|S_{xy}|^2}{S_{xx} S_{yy}} {eq:coh}",
+     "The preregistered contrast {m:C} is the mean of {m:\\gamma^2} over the four broad, slow cells (space bands 4 and 5, periods over 16 years) minus its mean over the four fine, fast cells (space bands 0 and 1, periods under 8 years):",
+     "$$ C = \\frac{1}{4} \\sum_{L} \\gamma^2_{bw} - \\frac{1}{4} \\sum_{F} \\gamma^2_{bw} {eq:contrast}",
+     "where {m:L} and {m:F} name those two sets of cells.",
+     "## Separability",
+     "Let {m:\\rho(h, u)} be the correlation between sites at distance {m:h} and time lag {m:u}, pooled over pairs in 100 km bins to 800 km and lags of 1, 2 and 3 years. A {g:separable}separable covariance{/g} has {m:\\rho(h, u) = g_u \\rho(h, 0)}. With {m:g_u} fitted by least squares, the statistic is the sum of squared departures",
+     "$$ D = \\sum_{h} \\sum_{u} (\\rho(h, u) - g_u \\rho(h, 0))^2 {eq:sep}",
+     "## Travel",
+     "For site pairs within 1,200 km, the lag-one cross-correlation {m:s_{ij}} between site {m:i} in one year and site {m:j} in the next is pooled in 40 km offset cells and fitted as",
+     "$$ s_{ij} = c \\rho_0(|d_{ij} - v|) {eq:vel}",
+     "where {m:d_{ij}} is the offset between the sites, {m:\\rho_0} the lag-zero correlation profile by distance, {m:c} a scale and {m:v} a velocity in km per year.",
+     "## Dispersion",
+     "The decay rate of a pattern with wavenumber {m:k} is modelled as {m:a k^\\beta}, with power per log wavenumber proportional to {m:k^{-q}} and white site noise. Each interior space band's autocovariance at lags 0 to 8 is predicted from the measured transfer of plane waves through that band on these exact sites and from the bias that linear detrending adds, and the four parameters are fitted to bands 1 to 4. The {g:dispersion-exponent}dispersion exponent{/g} {m:\\beta} is the result. Beside it, each band's e-folding time is reported.",
+     "## p values, intervals and multiplicity",
+     "Each control was drawn 200 times, or 300 times for the separable surrogate. A test's p value is the larger of its scoring controls' {g:p-value-draws}p values from draws{/g},",
+     "$$ p = \\frac{k + 1}{n + 1} {eq:p}",
+     "with {m:k} the draws at or above the real value and {m:n} the draws. The seven real-data tests were adjusted together with the {g:benjamini-hochberg}Benjamini-Hochberg correction{/g} at q 0.05. Every {g:interval-95}95% interval{/g} comes from a {g:block-bootstrap}moving-block bootstrap{/g} in time with blocks of 10 years."
+    ]
+   },
+   {
+    "id": "controls",
+    "title": "Controls and planted checks",
+    "role": "argument",
+    "paragraphs": [
+     "A {g:planted-check}planted check{/g} ran in the same job before the real data were scored. Synthetic fields were built on the drought cell positions with 123 years, from 800 random plane waves plus white noise: a separable field, a wave field carried at 120 km per year toward 30 degrees, a diffusing field and pure noise. Five realisations of each were scored, and the instrument passed every rule. {c6}The separable field read as separable (median p 0.37 against a rule of at least 0.05), the planted wave's speed came back within 2.2 percent and its direction within 0.66 degrees, and the diffusion exponent read 1.88 against a rule of 1.7 to 2.3.{/c6} On the separable field the exponent read -0.01 and on the wave 0.81. Those are the readings a real exponent is compared against. The same checks on the tree positions with 78 years were reported and not scored; there the diffusion exponent read 1.64, below the scoring range.",
+     "The real statistics faced these controls, each drawn many times to give a {g:null-distribution}null distribution{/g}. Separability: a fitted separable field with the same lag-zero spatial covariance and pooled time autocovariance, and shuffled site coordinates. Travel: the lag-one matrix with its symmetric part kept and its antisymmetric part permuted across pairs in 100 km distance bins, and shuffled coordinates. Dispersion: shuffled coordinates and {g:phase-randomisation}phase randomisation{/g} of each site. The tree filter: phase-randomised trees, and tree series reassigned to shuffled sites. The last control keeps every tree's own spectrum and breaks only the link to its place."
+    ]
+   },
+   {
+    "id": "results",
+    "title": "Results",
+    "role": "argument",
+    "paragraphs": [
+     "## The tree filter",
+     "{c1}The preregistered contrast between broad, slow scales and fine, fast scales was 0.64 (95% interval 0.62 to 0.68), against 95th percentiles of 0.22 for phase-randomised trees and 0.30 for trees moved to shuffled sites, with an adjusted p of 0.035.{/c1} Figure {ref:fig:contrast} sets the contrast against both controls.",
+     "![fig:contrast width=0.85 alt=A diamond at 0.64 with its interval, well to the right of two grey bars for the controls](fig-contrast.png) The lens contrast (diamond, with its bootstrap interval) against the 5th to 95th percentile range (bars) and mean (ticks) of each control, 200 draws each. Drawn from the run's result file.",
+     "Figure {ref:fig:lens} gives the passed share in all 30 cells. The share rises with spatial scale in every time band. {c2}Below 55 km the trees pass at most 0.004 of the drought signal in every time band, and above 460 km they pass 0.27 to 0.91.{/c2} Between 95 and 160 km they pass 0.07 to 0.11, and between 270 and 460 km 0.13 to 0.53. Time scale matters most at the broad end: above 460 km the share is 0.91 at periods over 32 years and 0.27 at 2 to 4 years. The phase-randomised control's mean share is at most 0.18, in that broadest and slowest cell.",
+     "The trees' own variance sits where their filter is closed. Figure {ref:fig:variance} shows that 0.61 of the tree variance lies in the finest space band, against 0.12 for the drought index at the same sites.",
+     "![fig:lens width=0.85 alt=A grid of 30 cells shaded from pale at fine scales to dark at broad scales](fig-lens.png) Passed share (squared coherence) between June to August drought at the tree sites and the 664 tree-ring chronologies, 1903 to 1980, per space band and time band. Small figures give the 95% bootstrap interval. Drawn from the run's result file.",
+     "![fig:variance width=0.9 alt=Paired bars per space band, tree rings tall in the finest band and the drought index tall in the broadest](fig-variance.png) Share of variance in each space band, summed over time bands, for the tree-ring chronologies and for the drought index at the same sites, 1903 to 1980. Drawn from the published space-time panel file.",
+     "## The drought field",
+     "Table {ref:tab:tests} gives all seven real-data tests. {c3}The drought field's covariance did not depart from a space part times a time part{/c3}: its departure {m:D} was 0.0011 against a separable-surrogate 95th percentile of 0.0085 (p 0.72). The trees came back the same way (p 0.35). Both fields beat shuffled coordinates, which only shows that nearby sites are alike.",
+     "The drought fit for travel pointed 34.5 degrees north of east at 64.5 km per year and beat the antisymmetric shuffle (95th percentile 32 km per year). It did not beat shuffled coordinates, whose 95th percentile was 467 km per year, and {c4}no travel speed could be claimed{/c4}: the bootstrap interval of the speed along the fitted direction ran from -41 to 242 km per year and the adjusted p was 0.66.",
+     "{c5}Broad and fine patterns lose their memory at the same rate, with a dispersion exponent of 0.02 (-0.12 to 0.17){/c5}. The e-folding times of the four interior bands were 0.76 to 0.83 years. Neither 1 nor 2 lies inside the interval, and the reading sits at the instrument's separable value, not at its wave or diffusion value. The trees' dispersion fit stopped at its lower bound of -1 and says nothing.",
+     "::table tab:tests cols=0.25,0.21,0.27,0.12,0.15 The seven real-data tests. Controls are the 95th percentiles of the scoring controls. Adjusted p is after Benjamini-Hochberg over all seven.\nTest ¦ Estimate (95% interval) ¦ Controls, 95th percentile ¦ Adjusted p ¦ Verdict\nSeparability, drought ¦ D 0.0011 (0.0004 to 0.0125) ¦ separable 0.0085; shuffled 0.00008 ¦ 0.91 ¦ fail\nSeparability, trees ¦ D 0.0017 (0.0012 to 0.0063) ¦ separable 0.0042; shuffled 0.00013 ¦ 0.80 ¦ fail\nTravel, drought ¦ 64.5 km per year; along direction -41 to 242 ¦ antisymmetric 32; shuffled 467 ¦ 0.66 ¦ fail\nTravel, trees ¦ 8.3 km per year; along direction -185 to 401 ¦ antisymmetric 14.6; shuffled 462 ¦ 0.91 ¦ fail\nDispersion, drought ¦ beta 0.02 (-0.12 to 0.17) ¦ shuffled 0.14; phase 0.14 ¦ 0.80 ¦ fail\nDispersion, trees ¦ beta -1, at its bound (-1 to 0.91) ¦ shuffled 3.5; phase 3.0 ¦ 1.0 ¦ fail\nTree filter contrast ¦ 0.64 (0.62 to 0.68) ¦ phase 0.22; shuffled sites 0.30 ¦ 0.035 ¦ pass\n::end",
+     "Table {ref:tab:forecast} sets the forecasts against the outcomes.",
+     "::table tab:forecast cols=0.3,0.36,0.34 Forecasts fixed in the preregistration against what the run gave.\nQuestion ¦ Forecast ¦ Outcome\nSeparability ¦ non-separable in both fields ¦ separable in both; forecast failed\nTravel ¦ most likely null or slow, under 100 km per year ¦ null; held\nDispersion ¦ beta between 0 and 2, nearer diffusion ¦ 0.02, at the separable reading; partly held\nTree filter ¦ pass ¦ pass; held\n::end"
+    ]
+   },
+   {
+    "id": "discussion",
+    "title": "Discussion",
+    "role": "argument",
+    "paragraphs": [
+     "The tree-ring network behaves as a spatial filter. It passes most of the drought signal at scales of several hundred km and above and almost none below 55 km. A site-by-site comparison of rings and local drought averages over that whole range and reports one number, so it reads as a weak recorder. In our {g:findings-ledger}findings ledger{/g}, a site-by-site comparison in time only, run after the preregistered test as exploration, gave pooled coherence of 0.24, 0.18, 0.19, 0.20 and 0.07 across the five time bands: weak and nearly flat in period. The space-time view places the weakness in space.",
+     "The result agrees with two lines of earlier work. Cook and colleagues {cite:r1} found that chronologies within a radius of about 450 km predict a drought grid point best, which is the scale at which our filter opens. Duchesne and colleagues {cite:r6} found that averaging over stands removes tree-level noise and that the shared signal falls with distance. Our grid puts both on one map of scale and period, with a number and an interval in each cell.",
+     "The three nulls on the drought field matter in their own right. If the field had a travelling front or patterns that faded at scale-dependent rates, separate views in space and in time would miss them. Here they did not: at one-degree cells and yearly steps, the separate views lose nothing a coupled view could find. The coupling that matters lies in the tree filter. Each null is an {g:honest-null}honest null{/g} from a working instrument, since the planted wave and the planted diffusion were each recovered.",
+     "Part of the filter may belong to the reference grid. Harris and colleagues {cite:r3} report that CRU interpolates precipitation with a correlation decay distance of about 450 km, close to where the filter opens, so a smooth reference would itself pass little fine-scale signal to agree with. The next study needs station data or a denser grid as the reference."
+    ]
+   },
+   {
+    "id": "limits",
+    "title": "Limitations",
+    "role": "argument",
+    "paragraphs": [
+     "- The drought grid is smooth by construction, so part of the low fine-scale coherence may come from the reference and not from the trees.",
+     "- Tree sites cluster, so the finest band partly reads site noise and how dense the network is.",
+     "- The nulls on travel and dispersion hold for summer scPDSI at one degree, yearly steps, a box about 2,000 km across and 1903 to 2025. Monthly data, a larger domain or another index could show more.",
+     "- The scPDSI is a model built from temperature and precipitation, not a measurement of soil water.",
+     "- The trees' dispersion fit stopped at its bound and tells us nothing. On the tree positions the planted diffusion read 1.64, below the scoring range; that check was reported, not scored.",
+     "- The site-by-site comparison in the discussion was exploratory and not preregistered.",
+     "- Scoring was done by our own code and was not blind."
+    ]
+   },
+   {
+    "id": "appendix",
+    "title": "Appendix A. The preregistered verdicts",
+    "role": "evidence",
+    "paragraphs": [
+     "Each {g:verdict}verdict{/g} is a set of rules written before the run, and it passes only when every rule holds. Values are read from the run's result file.",
+     "::table tab:verdicts cols=0.22,0.48,0.18,0.12 Preregistered verdicts and the rules that decided them.\nVerdict ¦ Deciding rule ¦ Value ¦ Holds\nInstrument, separable ¦ median p of a planted separable field at least 0.05 ¦ 0.37 ¦ yes\nInstrument, wave ¦ median speed error at most 10 percent and direction error at most 10 degrees ¦ 2.2 percent; 0.66 degrees ¦ yes\nInstrument, diffusion ¦ median beta of a planted diffusing field from 1.7 to 2.3 ¦ 1.88 ¦ yes\nSeparability, drought ¦ D above both controls' 95th percentiles and adjusted p at most 0.05 ¦ 0.0011 against 0.0085 ¦ no\nSeparability, trees ¦ the same rules for the tree field ¦ 0.0017 against 0.0042 ¦ no\nTravel, drought ¦ speed above both controls, adjusted p at most 0.05, interval along the direction above 0 ¦ 64.5 against 467; -41 to 242 ¦ no\nTravel, trees ¦ the same rules for the tree field ¦ 8.3 against 14.6 ¦ no\nDispersion, drought ¦ beta above both controls, adjusted p at most 0.05, interval above 0 ¦ 0.02 against 0.14 ¦ no\nDispersion, trees ¦ the same rules for the tree field ¦ -1 against 3.5 ¦ no\nTree filter ¦ contrast above both controls, adjusted p at most 0.05, interval above 0 ¦ 0.64 against 0.30; p 0.035; 0.62 to 0.68 ¦ yes\n::end"
+    ]
+   }
+  ]
+ },
+ "claims": [
+  {
+   "id": "c1",
+   "text": "The preregistered contrast between broad, slow scales and fine, fast scales was 0.64 (95% interval 0.62 to 0.68), against 95th percentiles of 0.22 for phase-randomised trees and 0.30 for trees moved to shuffled sites, with an adjusted p of 0.035.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e1"
+   ]
+  },
+  {
+   "id": "c2",
+   "text": "Below 55 km the trees pass at most 0.004 of the drought signal in every time band, and above 460 km they pass 0.27 to 0.91.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e2"
+   ]
+  },
+  {
+   "id": "c3",
+   "text": "The drought field's covariance did not depart from a space part times a time part",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": []
+  },
+  {
+   "id": "c4",
+   "text": "no travel speed could be claimed",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": []
+  },
+  {
+   "id": "c5",
+   "text": "broad and fine patterns lose their memory at the same rate, with a dispersion exponent of 0.02 (-0.12 to 0.17)",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e3"
+   ]
+  },
+  {
+   "id": "c6",
+   "text": "The separable field read as separable (median p 0.37 against a rule of at least 0.05), the planted wave's speed came back within 2.2 percent and its direction within 0.66 degrees, and the diffusion exponent read 1.88 against a rule of 1.7 to 2.3.",
+   "section": "controls",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e4"
+   ]
+  }
+ ],
+ "evidence": [
+  {
+   "id": "e1",
+   "kind": "number",
+   "label": "The numbers in claim 1",
+   "value": "0.64; 95; 0.62; 0.68; 0.22; 0.30; 0.035",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e2",
+   "kind": "number",
+   "label": "The numbers in claim 2",
+   "value": "55; 0.004; 460; 0.27; 0.91",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e3",
+   "kind": "number",
+   "label": "The numbers in claim 5",
+   "value": "0.02; -0.12; 0.17",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e4",
+   "kind": "number",
+   "label": "The numbers in claim 6",
+   "value": "0.37; 0.05; 2.2; 0.66; 1.88; 1.7; 2.3",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e5",
+   "kind": "number",
+   "label": "Sample",
+   "value": "664 chronologies, 399 cells, 1903 to 1980 and 2025",
+   "check": {
+    "by": "the register's evidence fields",
+    "result": "not_checked",
+    "note": "as recorded in the publication register"
+   }
+  },
+  {
+   "id": "e6",
+   "kind": "number",
+   "label": "Main estimate and interval",
+   "value": "contrast 0.64 (0.62 to 0.68); passed share 0.003 below 55 km, up to 0.91 above 460 km",
+   "check": {
+    "by": "the register's evidence fields",
+    "result": "not_checked",
+    "note": "as recorded in the publication register"
+   }
+  },
+  {
+   "id": "e7",
+   "kind": "number",
+   "label": "Forecast against outcome",
+   "value": "H4 pass forecast held; H1 pass forecast failed",
+   "check": {
+    "by": "the register's evidence fields",
+    "result": "not_checked",
+    "note": "as recorded in the publication register"
+   }
+  },
+  {
+   "id": "e8",
+   "kind": "control",
+   "label": "Known-answer check",
+   "value": "synthetic wave speed within 2.2%, direction 0.7 deg",
+   "check": {
+    "by": "the register's evidence fields",
+    "result": "not_checked",
+    "note": "as recorded in the publication register"
+   }
+  }
+ ],
+ "references": [
+  {
+   "id": "r1",
+   "key": "Cook 1999",
+   "kind": "paper",
+   "title": "Cook, E. R., Meko, D. M., Stahle, D. W. and Cleaveland, M. K. (1999). Drought reconstructions for the continental United States. Journal of Climate 12, 1145-1162. doi:10.1175/1520-0442(1999)012<1145:DRFTCU>2.0.CO;2",
+   "access": "snippet",
+   "target": "https://doi.org/10.1175/1520-0442(1999)012<1145:DRFTCU>2.0.CO;2",
+   "access_note": "abstracts, publisher pages and search summaries; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r2",
+   "key": "Wells 2004",
+   "kind": "paper",
+   "title": "Wells, N., Goddard, S. and Hayes, M. J. (2004). A self-calibrating Palmer Drought Severity Index. Journal of Climate 17, 2335-2351. doi:10.1175/1520-0442(2004)017<2335:ASPDSI>2.0.CO;2",
+   "access": "snippet",
+   "target": "https://doi.org/10.1175/1520-0442(2004)017<2335:ASPDSI>2.0.CO;2",
+   "access_note": "abstracts, publisher pages and search summaries; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r3",
+   "key": "Harris 2020",
+   "kind": "paper",
+   "title": "Harris, I., Osborn, T. J., Jones, P. and Lister, D. (2020). Version 4 of the CRU TS monthly high-resolution gridded multivariate climate dataset. Scientific Data 7, 109. doi:10.1038/s41597-020-0453-3",
+   "access": "snippet",
+   "target": "https://doi.org/10.1038/s41597-020-0453-3",
+   "access_note": "abstracts, publisher pages and search summaries; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r4",
+   "key": "cruts",
+   "kind": "dataset",
+   "title": "Climatic Research Unit, University of East Anglia. CRU TS 4.10 gridded climate data, including the self-calibrating PDSI. Open Database License 1.0. https://crudata.uea.ac.uk/cru/data/hrg/",
+   "access": "run",
+   "target": "https://crudata.uea.ac.uk/cru/data/hrg/",
+   "licence": "CRU TS 4.10 ODbL; ITRDB public, cite contributors"
+  },
+  {
+   "id": "r5",
+   "key": "International Tree-Ring Data Bank",
+   "kind": "dataset",
+   "title": "International Tree-Ring Data Bank. NOAA National Centers for Environmental Information, World Data Service for Paleoclimatology. Standard chronologies, North America. https://www.ncei.noaa.gov/pub/data/paleo/treering/chronologies/",
+   "access": "run",
+   "target": "https://www.ncei.noaa.gov/pub/data/paleo/treering/chronologies/",
+   "licence": "CRU TS 4.10 ODbL; ITRDB public, cite contributors"
+  },
+  {
+   "id": "r6",
+   "key": "Duchesne 2017",
+   "kind": "paper",
+   "title": "Duchesne, L., D'Orangeville, L., Ouimet, R., Houle, D. and Kneeshaw, D. (2017). Extracting coherent tree-ring climatic signals across spatial scales from extensive forest inventory data. PLoS ONE 12, e0189444. doi:10.1371/journal.pone.0189444",
+   "access": "snippet",
+   "target": "https://doi.org/10.1371/journal.pone.0189444",
+   "access_note": "abstracts, publisher pages and search summaries; full text not read",
+   "accessed": "2026-11-09"
+  }
+ ],
+ "relations": [],
+ "corrections": [
+  {
+   "id": "x1",
+   "date": "2026-11-09",
+   "target": "document",
+   "type": "number",
+   "after": "The draft summary called the fitted travel direction east-northeast; the result file gives 34.5 degrees north of east, which this paper uses.",
+   "reason": "Dated in the paper's Corrections section; found by the publication pass.",
+   "found_by": "the publication pass"
+  }
+ ],
+ "versions": [
+  {
+   "n": 1,
+   "date": "2026-10-29",
+   "what": "entered in the findings ledger"
+  },
+  {
+   "n": 2,
+   "date": "2026-11-09",
+   "what": "paper version 1.0, first published",
+   "hash": "30581875f101f4353f402e2223a509e0c5fa5f46d5ac72094e9d3885020a6fa2"
+  }
+ ],
+ "grade": {
+  "lowers": [
+   {
+    "domain": "blinding",
+    "text": "Not blind. Per-site comparison post hoc and exploratory. Trees' H3 fit hit its bound, uninformative.",
+    "from": "register scorer.blind"
+   },
+   {
+    "domain": "novelty",
+    "text": "Nearby work exists; novelty is not shown.",
+    "from": "register literature.verdict"
+   },
+   {
+    "domain": "single source",
+    "text": "The cited literature was read at the level of abstracts, publisher pages and search summaries; full texts were not read.",
+    "from": "paper Verified"
+   }
+  ],
+  "holds": [
+   {
+    "domain": "scoring",
+    "text": "Scored by code against rules fixed in advance.",
+    "from": "register scorer.who"
+   },
+   {
+    "domain": "preregistration",
+    "text": "Preregistered and hash-locked before the run (sha256 6d8b274a).",
+    "from": "paper Reproduction"
+   },
+   {
+    "domain": "control",
+    "text": "Controls: phase q95 0.22, shuffle q95 0.30 working; synthetic separable, wave, diffusion working.",
+    "from": "register evidence.controls"
+   },
+   {
+    "domain": "open data",
+    "text": "Public data.",
+    "from": "register data_licence"
+   }
+  ]
+ },
+ "reproduce": {
+  "data": [
+   {
+    "name": "cruts",
+    "licence": "CRU TS 4.10 ODbL; ITRDB public, cite contributors",
+    "url": "https://crudata.uea.ac.uk/cru/data/hrg/"
+   },
+   {
+    "name": "International Tree-Ring Data Bank",
+    "licence": "CRU TS 4.10 ODbL; ITRDB public, cite contributors",
+    "url": "https://www.ncei.noaa.gov/pub/data/paleo/treering/chronologies/"
+   }
+  ],
+  "prereg": {
+   "hash": "6d8b274a6784ca81aa2050dfe6fa7005402d05301405d59fb376e0b70a97d2eb",
+   "plan": "2641370a2fb740f53e0472b2a3039c4cb0b537533daa6c27edb0f39d49bae1ff"
+  },
+  "cost": "the analysis took about 27 minutes on one desktop CPU. The shared machine drew at most 63 Wh over the run.",
+  "steps": [
+   "Data: download the CRU TS 4.10 scPDSI grid and the ITRDB standard chronologies for 125 to 100 W and 30 to 50 N. Average June to August drought into complete one-degree cells; keep chronologies gap-free from 1903 to 1980 and pair each with its nearest 0.5 degree cell.",
+   "Remove each series' linear trend and scale it to unit variance.",
+   "Build space bands with eq. {ref:eq:bands} and time bands with the edges above. Compute eq. {ref:eq:coh} in every cell and the contrast, eq. {ref:eq:contrast}.",
+   "Compute eqs. {ref:eq:sep} and {ref:eq:vel} and the dispersion fit; score each against its controls with eq. {ref:eq:p} and adjust the seven tests together.",
+   "Preregistration SHA-256: 6d8b274a6784ca81aa2050dfe6fa7005402d05301405d59fb376e0b70a97d2eb. Plan SHA-256: 2641370a2fb740f53e0472b2a3039c4cb0b537533daa6c27edb0f39d49bae1ff. Run 20261030T042024Z, seed 2026102941. Result file SHA-256: 6d1917adb4c50b78125146ee5dcaa42c6081a05edc4bcb1920e72fbc3b60cf0d."
+  ],
+  "not_rerun": "The study was not re-run for this paper."
+ },
+ "verified": {
+  "date": "2026-11-09",
+  "checks": [
+   {
+    "what": "On 9 November 2026 the contrast and its interval, both control percentiles, every p value and adjusted p value, the passed share and interval in all 30 cells, the travel and dispersion estimates with their intervals, the e-folding times and the synthetic instrument readings were re-read from the run's result file.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   },
+   {
+    "what": "They match the findings ledger.",
+    "by": "the paper's Verified pass",
+    "result": "match"
+   },
+   {
+    "what": "The 0.61 and 0.12 variance shares were summed by the figure script from the published space-time panel file.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   },
+   {
+    "what": "The site-by-site coherence values in the discussion were read from the findings ledger, not from a result file.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   },
+   {
+    "what": "The SHA-256 of the preregistration and of the result file match the hashes in the run record.",
+    "by": "the paper's Verified pass",
+    "result": "match"
+   },
+   {
+    "what": "All three figures were drawn by a script that reads only the result file and the panel file.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   }
+  ],
+  "not_checked": [
+   "The study was not re-run for this paper.",
+   "The literature was found by searches run on 9 November 2026 and read at the level of abstracts, publisher pages and search summaries; the full texts were not read.",
+   "The 450 km decay distance for CRU precipitation is taken from our earlier record of Harris and colleagues and was not re-read on that date."
+  ]
+ }
+}

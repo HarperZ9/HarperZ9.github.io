@@ -1,0 +1,721 @@
+{
+ "finding": "F132",
+ "sources": [
+  {
+   "id": "result",
+   "name": "result.json",
+   "sha256_original": "420dc9e020273a5680c67fd7186e08b5de6e7862da2d7859ed5adf3de5843ef7",
+   "sha256_copy": "68d452b4829ac951d1a91e9f0a692ec249095e6d088b6c428344b625dd0ae7e9",
+   "href": "/findings/results/F132/result.json",
+   "run": "20261031T051913Z"
+  }
+ ],
+ "charts": [
+  {
+   "key": "design",
+   "form": "flow",
+   "at": "controls",
+   "claims": [
+    "c1"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "The design: a direction test on a pair of series where the true direction is known.",
+   "takeaway": "The estimator saw planted coupling at 97.8 percent of sites and placed its direction at only 0.60 accuracy against the 0.8 required. On real data the reverse rate was 11.9 percent against a 10 percent limit.",
+   "n": "135 ring-width sites, median 78 years each; 20 far-site re-pairings; each synthetic arm drawn once per site",
+   "steps": [
+    {
+     "kind": "data",
+     "label": "Tree rings and summer temperature",
+     "detail": "135 ring-width chronologies with June to August temperature. Warmth shapes that year's ring. The ring does not shape next summer."
+    },
+    {
+     "kind": "measure",
+     "label": "Transfer entropy, both directions",
+     "detail": "Climate to ring is the true direction, ring to climate the false one. Lags 0 to 3 as written, and a variant without lag 0."
+    },
+    {
+     "kind": "control",
+     "label": "Controls in the same run",
+     "detail": "Rings paired with the climate of a far site, both series read backwards in time, uncoupled copies, a shared trend, and a common driver."
+    },
+    {
+     "kind": "planted",
+     "label": "Planted coupling with a known direction",
+     "detail": "Synthetic rings built from a scrambled copy of each ring series plus the site's own climate, at the real strength and at a strong one."
+    },
+    {
+     "kind": "rule",
+     "label": "Rules set in advance",
+     "detail": "Real data: forward rate above the far-site 95th percentile and reverse rate at most 0.10. Planted strong arm: forward rate above 0.8 and direction accuracy above 0.8."
+    },
+    {
+     "kind": "verdict",
+     "holds": false,
+     "label": "Planted check",
+     "no": "failed",
+     "detail": "Detected at 97.8 percent forward and 91.9 percent reverse. Direction accuracy 0.600."
+    },
+    {
+     "kind": "verdict",
+     "holds": false,
+     "label": "Real data, as written",
+     "no": "failed",
+     "detail": "Forward 15.6 percent beat the far-site bar of 8.2. Reverse 11.9 percent broke the limit."
+    },
+    {
+     "kind": "verdict",
+     "holds": false,
+     "label": "Variant without lag 0",
+     "no": "not credited",
+     "detail": "Passed on real data, then detected the strong planted link at 2.2 percent of sites."
+    }
+   ]
+  },
+  {
+   "key": "rates",
+   "form": "interval",
+   "at": "results",
+   "claims": [
+    "c1"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "Share of sites where the estimator detected a link, in each direction, on real data and four controls.",
+   "takeaway": "On real data it detected climate to ring at 15.6 percent of sites and the false direction, ring to climate, at 11.9 percent, above the 10 percent limit. Read backwards in time the rates were 19.3 and 22.2 percent, and a shared trend alone gave 12.6 and 17.0.",
+   "units": "detection rate: share of sites, 0 to 1. Transfer entropy scores how much the past of one series improves a forecast of the other. A site counts as detected when its score beats its own surrogates.",
+   "n": "135 ring-width sites, median 78 years each; intervals from 57 blocks of sites",
+   "interval": "95% block-bootstrap interval over sites",
+   "series_names": [
+    "climate to ring (true direction)",
+    "ring to climate (false direction)"
+   ],
+   "baseline": "Rings paired with the climate of a site at least 1,000 km away, 20 re-pairings: mean 0.056, 95th percentile 0.082 for climate to ring. The two planted arms are in the next figures.",
+   "threshold": "Forward rate above the far-site 95th percentile (0.082) and reverse rate at most 0.10. The reverse rule failed at 0.119.",
+   "planted": "With strong planted coupling the rates were 0.978 forward and 0.919 reverse: the coupling is seen, its direction is not.",
+   "axis": {
+    "label": "share of sites with a detected link",
+    "min": 0,
+    "max": 0.35,
+    "refs": [
+     {
+      "value": 0.1,
+      "label": "limit set in advance for the false direction, 0.10"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "group": "Real data",
+     "label": "climate to ring",
+     "value": 0.15555555555555556,
+     "lo": 0.08770752384316495,
+     "hi": 0.26231665228645373,
+     "series": 0,
+     "note": "0.156 (0.088 to 0.262)"
+    },
+    {
+     "group": "Real data",
+     "label": "ring to climate",
+     "value": 0.11851851851851852,
+     "lo": 0.048542218299499854,
+     "hi": 0.22486139986139983,
+     "series": 1,
+     "note": "0.119 (0.049 to 0.225)"
+    },
+    {
+     "group": "Real data, read backwards in time",
+     "label": "climate to ring",
+     "value": 0.1925925925925926,
+     "lo": 0.12781954887218044,
+     "hi": 0.2795721705850191,
+     "series": 0,
+     "note": "0.193 (0.128 to 0.280)"
+    },
+    {
+     "group": "Real data, read backwards in time",
+     "label": "ring to climate",
+     "value": 0.2222222222222222,
+     "lo": 0.15383771929824563,
+     "hi": 0.32710705182667793,
+     "series": 1,
+     "note": "0.222 (0.154 to 0.327)"
+    },
+    {
+     "group": "No coupling",
+     "label": "climate to ring",
+     "value": 0.07407407407407407,
+     "lo": 0.03361344537815126,
+     "hi": 0.11458499203821655,
+     "series": 0,
+     "note": "0.074 (0.034 to 0.115)"
+    },
+    {
+     "group": "No coupling",
+     "label": "ring to climate",
+     "value": 0.037037037037037035,
+     "lo": 0.010416666666666666,
+     "hi": 0.06470694033008886,
+     "series": 1,
+     "note": "0.037 (0.010 to 0.065)"
+    },
+    {
+     "group": "Shared trend",
+     "label": "climate to ring",
+     "value": 0.1259259259259259,
+     "lo": 0.07207027027027027,
+     "hi": 0.1913134057971014,
+     "series": 0,
+     "note": "0.126 (0.072 to 0.191)"
+    },
+    {
+     "group": "Shared trend",
+     "label": "ring to climate",
+     "value": 0.17037037037037037,
+     "lo": 0.10937286543715848,
+     "hi": 0.25,
+     "series": 1,
+     "note": "0.170 (0.109 to 0.250)"
+    },
+    {
+     "group": "Common driver",
+     "label": "climate to ring",
+     "value": 0.05925925925925926,
+     "lo": 0.02272406266050334,
+     "hi": 0.11226896418944923,
+     "series": 0,
+     "note": "0.059 (0.023 to 0.112)"
+    },
+    {
+     "group": "Common driver",
+     "label": "ring to climate",
+     "value": 0.0962962962962963,
+     "lo": 0.04928289247681209,
+     "hi": 0.15384615384615385,
+     "series": 1,
+     "note": "0.096 (0.049 to 0.154)"
+    }
+   ],
+   "columns": [
+    "Arm",
+    "Climate to ring",
+    "Low",
+    "High",
+    "Ring to climate",
+    "Low",
+    "High"
+   ],
+   "table": [
+    [
+     "Real data",
+     "0.156",
+     "0.088",
+     "0.262",
+     "0.119",
+     "0.049",
+     "0.225"
+    ],
+    [
+     "Real data, read backwards in time",
+     "0.193",
+     "0.128",
+     "0.280",
+     "0.222",
+     "0.154",
+     "0.327"
+    ],
+    [
+     "No coupling",
+     "0.074",
+     "0.034",
+     "0.115",
+     "0.037",
+     "0.010",
+     "0.065"
+    ],
+    [
+     "Shared trend",
+     "0.126",
+     "0.072",
+     "0.191",
+     "0.170",
+     "0.109",
+     "0.250"
+    ],
+    [
+     "Common driver",
+     "0.059",
+     "0.023",
+     "0.112",
+     "0.096",
+     "0.049",
+     "0.154"
+    ],
+    [
+     "Planted, real strength",
+     "0.193",
+     "0.104",
+     "0.315",
+     "0.185",
+     "0.108",
+     "0.292"
+    ],
+    [
+     "Planted, strong coupling",
+     "0.978",
+     "0.954",
+     "1.000",
+     "0.919",
+     "0.857",
+     "0.963"
+    ]
+   ]
+  },
+  {
+   "key": "accuracy",
+   "form": "interval",
+   "at": "results",
+   "claims": [
+    "c2"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "Direction accuracy: the share of sites where the true direction scored above the false one.",
+   "takeaway": "With strong planted coupling the true direction won at 0.600 of sites against the 0.8 required, so the false direction ranked at or above it at 40.0 percent. At the real coupling strength that share was 52.6 percent. No reading clears a coin by much.",
+   "units": "direction accuracy, 0 to 1. A coin scores 0.5.",
+   "n": "135 ring-width sites, median 78 years each; one value per arm",
+   "interval": null,
+   "no_interval": "The result file stores one accuracy per arm and no interval. With 135 sites, one site moves the value by 0.007.",
+   "series_names": [
+    "direction accuracy"
+   ],
+   "baseline": "A coin, 0.5",
+   "threshold": "Direction accuracy above 0.8 in the planted strong arm. It was 0.600 as written and 0.630 for the variant.",
+   "axis": {
+    "label": "share of sites where the true direction scored higher",
+    "min": 0.2,
+    "max": 0.9,
+    "refs": [
+     {
+      "value": 0.5,
+      "label": "a coin, 0.5"
+     },
+     {
+      "value": 0.8,
+      "label": "required on the planted strong arm, 0.8"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "group": "Transfer entropy as written",
+     "label": "Real data",
+     "value": 0.5185185185185185,
+     "series": 0,
+     "note": "0.519"
+    },
+    {
+     "group": "Transfer entropy as written",
+     "label": "Real data, read backwards in time",
+     "value": 0.5111111111111111,
+     "series": 0,
+     "note": "0.511"
+    },
+    {
+     "group": "Transfer entropy as written",
+     "label": "No coupling",
+     "value": 0.5777777777777777,
+     "series": 0,
+     "note": "0.578"
+    },
+    {
+     "group": "Transfer entropy as written",
+     "label": "Shared trend",
+     "value": 0.4888888888888889,
+     "series": 0,
+     "note": "0.489"
+    },
+    {
+     "group": "Transfer entropy as written",
+     "label": "Common driver",
+     "value": 0.5407407407407407,
+     "series": 0,
+     "note": "0.541"
+    },
+    {
+     "group": "Transfer entropy as written",
+     "label": "Planted, real strength",
+     "value": 0.4740740740740741,
+     "series": 0,
+     "note": "0.474"
+    },
+    {
+     "group": "Transfer entropy as written",
+     "label": "Planted, strong coupling",
+     "value": 0.6,
+     "series": 0,
+     "note": "0.600"
+    },
+    {
+     "group": "Variant without lag 0",
+     "label": "Real data",
+     "value": 0.5333333333333333,
+     "series": 0,
+     "note": "0.533"
+    },
+    {
+     "group": "Variant without lag 0",
+     "label": "Planted, real strength",
+     "value": 0.45925925925925926,
+     "series": 0,
+     "note": "0.459"
+    },
+    {
+     "group": "Variant without lag 0",
+     "label": "Planted, strong coupling",
+     "value": 0.6296296296296297,
+     "series": 0,
+     "note": "0.630"
+    },
+    {
+     "group": "Convergent cross mapping, a second direction method",
+     "label": "Real data",
+     "value": 0.31851851851851853,
+     "series": 0,
+     "note": "0.319"
+    },
+    {
+     "group": "Convergent cross mapping, a second direction method",
+     "label": "Planted, strong coupling",
+     "value": 0.37777777777777777,
+     "series": 0,
+     "note": "0.378"
+    }
+   ],
+   "columns": [
+    "Arm",
+    "As written",
+    "False direction at or above the true one",
+    "Variant without lag 0",
+    "Cross mapping"
+   ],
+   "table": [
+    [
+     "Real data",
+     "0.519",
+     "0.481",
+     "0.533",
+     "0.319"
+    ],
+    [
+     "Real data, read backwards in time",
+     "0.511",
+     "0.489",
+     "0.511",
+     "not run"
+    ],
+    [
+     "No coupling",
+     "0.578",
+     "0.422",
+     "0.548",
+     "not run"
+    ],
+    [
+     "Shared trend",
+     "0.489",
+     "0.511",
+     "0.481",
+     "not run"
+    ],
+    [
+     "Common driver",
+     "0.541",
+     "0.459",
+     "0.519",
+     "not run"
+    ],
+    [
+     "Planted, real strength",
+     "0.474",
+     "0.526",
+     "0.459",
+     "not run"
+    ],
+    [
+     "Planted, strong coupling",
+     "0.600",
+     "0.400",
+     "0.630",
+     "0.378"
+    ]
+   ]
+  },
+  {
+   "key": "variant",
+   "form": "interval",
+   "at": "results",
+   "claims": [
+    "c4"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "The variant without lag 0: clean on real data, blind to a planted link.",
+   "takeaway": "Dropping the same-year term cut the real-data rates to 8.9 percent forward and 3.7 percent reverse, inside the limit. On the strong planted link, which the estimator as written detected at 97.8 percent of sites, the variant detected 2.2 percent.",
+   "units": "detection rate: share of sites, 0 to 1",
+   "n": "135 ring-width sites, median 78 years each",
+   "interval": "95% block-bootstrap interval over sites",
+   "series_names": [
+    "climate to ring (true direction)",
+    "ring to climate (false direction)"
+   ],
+   "baseline": "The estimator as written, lags 0 to 3. Far-site 95th percentile for the variant's forward rate: 0.060.",
+   "threshold": "Planted strong arm: forward rate above 0.8. The variant reached 0.022, so its pass on real data cannot be credited.",
+   "axis": {
+    "label": "share of sites with a detected link",
+    "min": 0,
+    "max": 1,
+    "refs": [
+     {
+      "value": 0.1,
+      "label": "limit for the false direction, 0.10"
+     },
+     {
+      "value": 0.8,
+      "label": "required forward rate on the planted strong arm, 0.8"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "group": "Real data",
+     "label": "As written, climate to ring",
+     "value": 0.15555555555555556,
+     "lo": 0.08770752384316495,
+     "hi": 0.26231665228645373,
+     "series": 0,
+     "note": "0.156 (0.088 to 0.262)"
+    },
+    {
+     "group": "Real data",
+     "label": "As written, ring to climate",
+     "value": 0.11851851851851852,
+     "lo": 0.048542218299499854,
+     "hi": 0.22486139986139983,
+     "series": 1,
+     "note": "0.119 (0.049 to 0.225)"
+    },
+    {
+     "group": "Real data",
+     "label": "Variant, climate to ring",
+     "value": 0.08888888888888889,
+     "lo": 0.04493962770417575,
+     "hi": 0.1538617886178861,
+     "series": 0,
+     "note": "0.089 (0.045 to 0.154)"
+    },
+    {
+     "group": "Real data",
+     "label": "Variant, ring to climate",
+     "value": 0.037037037037037035,
+     "lo": 0.00819672131147541,
+     "hi": 0.06429147465437784,
+     "series": 1,
+     "note": "0.037 (0.008 to 0.064)"
+    },
+    {
+     "group": "Planted, strong coupling",
+     "label": "As written, climate to ring",
+     "value": 0.9777777777777777,
+     "lo": 0.9537567111677947,
+     "hi": 1.0,
+     "series": 0,
+     "note": "0.978 (0.954 to 1.000)"
+    },
+    {
+     "group": "Planted, strong coupling",
+     "label": "As written, ring to climate",
+     "value": 0.9185185185185185,
+     "lo": 0.8571428571428571,
+     "hi": 0.9625046641791045,
+     "series": 1,
+     "note": "0.919 (0.857 to 0.963)"
+    },
+    {
+     "group": "Planted, strong coupling",
+     "label": "Variant, climate to ring",
+     "value": 0.022222222222222223,
+     "lo": 0.0,
+     "hi": 0.050863035892322946,
+     "series": 0,
+     "note": "0.022 (0.000 to 0.051)"
+    },
+    {
+     "group": "Planted, strong coupling",
+     "label": "Variant, ring to climate",
+     "value": 0.007407407407407408,
+     "lo": 0.0,
+     "hi": 0.01744186046511628,
+     "series": 1,
+     "note": "0.007 (0.000 to 0.017)"
+    }
+   ],
+   "columns": [
+    "Arm",
+    "Version",
+    "Climate to ring",
+    "Low",
+    "High",
+    "Ring to climate",
+    "Low",
+    "High"
+   ],
+   "table": [
+    [
+     "Real data",
+     "as written",
+     "0.156",
+     "0.088",
+     "0.262",
+     "0.119",
+     "0.049",
+     "0.225"
+    ],
+    [
+     "Real data",
+     "variant without lag 0",
+     "0.089",
+     "0.045",
+     "0.154",
+     "0.037",
+     "0.008",
+     "0.064"
+    ],
+    [
+     "Real data, read backwards in time",
+     "as written",
+     "0.193",
+     "0.128",
+     "0.280",
+     "0.222",
+     "0.154",
+     "0.327"
+    ],
+    [
+     "Real data, read backwards in time",
+     "variant without lag 0",
+     "0.037",
+     "0.009",
+     "0.067",
+     "0.089",
+     "0.048",
+     "0.133"
+    ],
+    [
+     "No coupling",
+     "as written",
+     "0.074",
+     "0.034",
+     "0.115",
+     "0.037",
+     "0.010",
+     "0.065"
+    ],
+    [
+     "No coupling",
+     "variant without lag 0",
+     "0.067",
+     "0.030",
+     "0.101",
+     "0.074",
+     "0.033",
+     "0.113"
+    ],
+    [
+     "Shared trend",
+     "as written",
+     "0.126",
+     "0.072",
+     "0.191",
+     "0.170",
+     "0.109",
+     "0.250"
+    ],
+    [
+     "Shared trend",
+     "variant without lag 0",
+     "0.104",
+     "0.054",
+     "0.167",
+     "0.104",
+     "0.056",
+     "0.168"
+    ],
+    [
+     "Common driver",
+     "as written",
+     "0.059",
+     "0.023",
+     "0.112",
+     "0.096",
+     "0.049",
+     "0.154"
+    ],
+    [
+     "Common driver",
+     "variant without lag 0",
+     "0.037",
+     "0.007",
+     "0.088",
+     "0.052",
+     "0.021",
+     "0.097"
+    ],
+    [
+     "Planted, real strength",
+     "as written",
+     "0.193",
+     "0.104",
+     "0.315",
+     "0.185",
+     "0.108",
+     "0.292"
+    ],
+    [
+     "Planted, real strength",
+     "variant without lag 0",
+     "0.030",
+     "0.006",
+     "0.062",
+     "0.074",
+     "0.034",
+     "0.122"
+    ],
+    [
+     "Planted, strong coupling",
+     "as written",
+     "0.978",
+     "0.954",
+     "1.000",
+     "0.919",
+     "0.857",
+     "0.963"
+    ],
+    [
+     "Planted, strong coupling",
+     "variant without lag 0",
+     "0.022",
+     "0.000",
+     "0.051",
+     "0.007",
+     "0.000",
+     "0.017"
+    ]
+   ]
+  }
+ ]
+}

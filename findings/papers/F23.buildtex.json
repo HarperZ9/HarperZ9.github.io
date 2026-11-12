@@ -1,0 +1,65 @@
+{
+ "schema": "buildlang.buildtex-receipt/v0",
+ "source": {
+  "path": "F23.bld",
+  "sha256": "f5ae5ed82b692860a0add462f063dbdd79f06f4b7d7acbe9eb076b07029786ad"
+ },
+ "ir_sha256": "d62d1a6c620cb66ee7a47f0076798bb9e890268ed349dfc9cdef63fbc1024b03",
+ "theme": "paper",
+ "overrides": [],
+ "outputs": {
+  "F23.pdf": "6753ef0471c19baa8b44c5a0f380a3ff820035b2d701ef3ba6550fef12a6e884"
+ },
+ "pdf_metadata": {
+  "pdfa": false,
+  "creation_date": "D:20261109000000Z"
+ },
+ "facts": {
+  "pages": 13,
+  "pages_layout": 13,
+  "overfull": [],
+  "underfull": 0,
+  "missing_glyphs": [],
+  "glyph_fallbacks": [],
+  "math_errors": [],
+  "fonts": [
+   {
+    "name": "ADFEKH+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "BLHHJL+NotoSansMath-Regular",
+    "embedded": true
+   },
+   {
+    "name": "BNFAAO+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "CDPGEC+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "HEOLAK+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "NIFDAJ+AccessionDisplay-Master",
+    "embedded": true
+   }
+  ],
+  "images": 4,
+  "blind_text_runs": 0,
+  "reading_order": true,
+  "blocks_missing_from_text": [],
+  "pdf_bytes": 642677
+ },
+ "failed": [],
+ "notes": [
+  "buildc run F23.bld -> F23.doc.tsv",
+  "press: relief 1275x541 px at 150 dpi; 0 blind line(s); foil colour source: fallback constant"
+ ],
+ "external_programs": [
+  "buildc"
+ ]
+}

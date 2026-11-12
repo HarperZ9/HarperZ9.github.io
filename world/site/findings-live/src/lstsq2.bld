@@ -1,0 +1,229 @@
+// lstsq2.bld: the least-squares solve numpy.linalg.lstsq performs for a two-column system, in the same operation
+// order as LAPACK dgelsd on OpenBLAS 0.3.31 (Haswell kernels): Householder QR of the m-by-2 matrix, the 2-by-2
+// singular value step (dlasv2), then the back substitution. Each helper names the routine it follows.
+// The page's lstsq2.js mirrors this file function for function. Needs fpx.bld in the same unit.
+struct Sv { ssmin: f64, ssmax: f64, snr: f64, csr: f64, snl: f64, csl: f64 }
+struct W2 { w0: f64, w1: f64 }
+
+fn sign(a: f64, b: f64) -> f64 {
+    if b < 0.0 { return -a.abs(); }
+    return a.abs();
+}
+
+// dgemv 'T' for one column: sum of a[i]*x[i], four running sums over whole blocks of four, fused tail.
+fn dot_t(a: &mut [f64; 8], ao: i32, x: &mut [f64; 8], xo: i32, m: i32) -> f64 {
+    let m3: i32 = m % 4;
+    let m4: i32 = m - m3;
+    let mut l0: f64 = 0.0;
+    let mut h0: f64 = 0.0;
+    let mut l1: f64 = 0.0;
+    let mut h1: f64 = 0.0;
+    let mut i: i32 = 0;
+    while i < m4 {
+        l0 = l0 + a[ao + i] * x[xo + i];
+        h0 = h0 + a[ao + i + 1] * x[xo + i + 1];
+        l1 = l1 + a[ao + i + 2] * x[xo + i + 2];
+        h1 = h1 + a[ao + i + 3] * x[xo + i + 3];
+        i = i + 4;
+    }
+    let y: f64 = 0.0 + ((l0 + l1) + (h0 + h1));
+    let p: i32 = ao + m4;
+    let q: i32 = xo + m4;
+    if m3 == 1 { return fma_exact(a[p], x[q], y); }
+    if m3 == 2 { return y + fma_exact(a[p], x[q], a[p + 1] * x[q + 1]); }
+    if m3 == 3 { return y + fma_exact(a[p + 2], x[q + 2], fma_exact(a[p], x[q], a[p + 1] * x[q + 1])); }
+    return y;
+}
+
+fn lapy2(x: f64, y: f64) -> f64 {
+    let xa: f64 = x.abs();
+    let ya: f64 = y.abs();
+    let w: f64 = xa.max(ya);
+    let z: f64 = xa.min(ya);
+    if z == 0.0 { return w; }
+    let t: f64 = z / w;
+    return w * sqrt(1.0 + t * t);
+}
+
+// dlarfg on a[off .. off+m): leaves beta at a[off] and the reflector tail below it, returns tau.
+fn larfg(a: &mut [f64; 8], off: i32, m: i32) -> f64 {
+    if m <= 1 { return 0.0; }
+    let alpha: f64 = a[off];
+    let xn: f64 = nrm2(a, off + 1, m - 1);
+    if xn == 0.0 { return 0.0; }
+    let beta: f64 = -sign(lapy2(alpha, xn), alpha);
+    let sc: f64 = 1.0 / (alpha - beta);
+    let mut i: i32 = 1;
+    while i < m {
+        a[off + i] = a[off + i] * sc;
+        i = i + 1;
+    }
+    a[off] = beta;
+    return (beta - alpha) / beta;
+}
+
+// dlarf from the left on one column c[co .. co+m), reflector v[vo .. vo+m) with v[vo] read as 1.
+fn larf(v: &mut [f64; 8], vo: i32, m: i32, tau: f64, c: &mut [f64; 8], co: i32) {
+    if tau == 0.0 { return; }
+    let keep: f64 = v[vo];
+    v[vo] = 1.0;
+    let mut lastv: i32 = m;
+    while lastv > 0 && v[vo + lastv - 1] == 0.0 { lastv = lastv - 1; }
+    let mut any: bool = false;
+    let mut i: i32 = 0;
+    while i < lastv {
+        if c[co + i] != 0.0 { any = true; }
+        i = i + 1;
+    }
+    if any {
+        let t: f64 = -tau * dot_t(c, co, v, vo, lastv);
+        i = 0;
+        while i < lastv {
+            c[co + i] = c[co + i] + t * v[vo + i];
+            i = i + 1;
+        }
+    }
+    v[vo] = keep;
+}
+
+// The branch of dlasv2 where the off-diagonal g is not negligible beside the larger diagonal entry.
+// Returns clt, crt, slt, srt in csl, csr, snl, snr.
+fn lasv2_main(ft: f64, gt: f64, ht: f64, fa: f64, ha: f64) -> Sv {
+    let d: f64 = fa - ha;
+    let m: f64 = gt / ft;
+    let mm: f64 = m * m;
+    let mut l: f64 = d / fa;
+    if d == fa { l = 1.0; }
+    let mut tt: f64 = 2.0 - l;
+    let s: f64 = sqrt(tt * tt + mm);
+    let mut r: f64 = sqrt(l * l + mm);
+    if l == 0.0 { r = m.abs(); }
+    let a: f64 = 0.5 * (s + r);
+    if mm == 0.0 {
+        if l == 0.0 { tt = sign(2.0, ft) * sign(1.0, gt); } else { tt = gt / sign(d, ft) + m / tt; }
+    } else {
+        tt = (m / (s + tt) + m / (r + l)) * (1.0 + a);
+    }
+    l = sqrt(tt * tt + 4.0);
+    let crt: f64 = 2.0 / l;
+    let srt: f64 = tt / l;
+    return Sv { ssmin: ha / a, ssmax: fa * a, snr: srt, csr: crt, snl: (ht / ft) * srt / a, csl: (crt + srt * m) / a };
+}
+
+// dlasv2: singular values and rotations of the upper triangular [[f, g], [0, h]].
+fn lasv2(f: f64, g: f64, h: f64) -> Sv {
+    let eps: f64 = 2.220446049250313e-16;
+    let mut ft: f64 = f;
+    let mut fa: f64 = f.abs();
+    let mut ht: f64 = h;
+    let mut ha: f64 = h.abs();
+    let mut pmax: i32 = 1;
+    let swap: bool = ha > fa;
+    if swap {
+        pmax = 3;
+        let t1: f64 = ft; ft = ht; ht = t1;
+        let t2: f64 = fa; fa = ha; ha = t2;
+    }
+    let ga: f64 = g.abs();
+    // r holds ssmin, ssmax and the rotations before the swap: clt in csl, crt in csr, slt in snl, srt in snr
+    let mut r: Sv = Sv { ssmin: ha, ssmax: fa, snr: 0.0, csr: 1.0, snl: 0.0, csl: 1.0 };
+    if ga != 0.0 {
+        let mut gasmal: bool = true;
+        if ga > fa {
+            pmax = 2;
+            if fa / ga < eps / 2.0 {
+                gasmal = false;
+                let mut smin: f64 = (fa / ga) * ha;
+                if ha > 1.0 { smin = fa / (ga / ha); }
+                r = Sv { ssmin: smin, ssmax: ga, snr: 1.0, csr: ft / g, snl: ht / g, csl: 1.0 };
+            }
+        }
+        if gasmal { r = lasv2_main(ft, g, ht, fa, ha); }
+    }
+    let mut csl: f64 = r.csl;
+    let mut snl: f64 = r.snl;
+    let mut csr: f64 = r.csr;
+    let mut snr: f64 = r.snr;
+    if swap { csl = r.snr; snl = r.csr; csr = r.snl; snr = r.csl; }
+    let mut ts: f64 = sign(1.0, snr) * sign(1.0, snl) * sign(1.0, h);
+    if pmax == 1 { ts = sign(1.0, csr) * sign(1.0, csl) * sign(1.0, f); }
+    if pmax == 2 { ts = sign(1.0, snr) * sign(1.0, csl) * sign(1.0, g); }
+    return Sv { ssmin: sign(r.ssmin, ts * sign(1.0, f) * sign(1.0, h)), ssmax: sign(r.ssmax, ts), snr: snr, csr: csr, snl: snl, csl: csl };
+}
+
+// dlalsd for the 2-by-2 upper bidiagonal [[d1, e], [0, d2]] and right side (b1, b2).
+// 98.70149282610436 is eps^(-1/8) with eps = 2^-53; 2.2250738585072014e-308 is the safe minimum.
+fn bidiag_solve(d1in: f64, d2in: f64, ein: f64, b1in: f64, b2in: f64, rcond: f64) -> W2 {
+    let eps: f64 = 2.220446049250313e-16;
+    let orgnrm: f64 = d1in.abs().max(d2in.abs()).max(ein.abs());
+    let mul: f64 = 1.0 / orgnrm;
+    let mut d1: f64 = d1in * mul;
+    let mut d2: f64 = d2in * mul;
+    let e: f64 = ein * mul;
+    let mut b1: f64 = b1in;
+    let mut b2: f64 = b2in;
+    let mut smin: f64 = d1.abs();
+    if smin != 0.0 { smin = smin.min(d2.abs() * (smin / (smin + e.abs()))); }
+    let floor6: f64 = 6.0 * (2.0 * (2.0 * 2.2250738585072014e-308));
+    let thresh: f64 = (98.70149282610436 * (eps / 2.0) * (smin / sqrt(2.0))).max(floor6);
+    let mut v00: f64 = 1.0;
+    let mut v01: f64 = 0.0;
+    let mut v10: f64 = 0.0;
+    let mut v11: f64 = 1.0;
+    if e.abs() > thresh {
+        let s: Sv = lasv2(d1, e, d2);
+        d1 = s.ssmax; d2 = s.ssmin; v00 = s.csr; v01 = s.snr; v10 = -s.snr; v11 = s.csr;
+        let t: f64 = fma_exact(s.csl, b1, s.snl * b2);
+        b2 = fma_exact(s.csl, b2, -(s.snl * b1));
+        b1 = t;
+    }
+    if d1 < 0.0 { d1 = -d1; v00 = -v00; v01 = -v01; }
+    if d2 < 0.0 { d2 = -d2; v10 = -v10; v11 = -v11; }
+    if d2 > d1 {
+        let t1: f64 = d1; d1 = d2; d2 = t1;
+        let t2: f64 = b1; b1 = b2; b2 = t2;
+        let t3: f64 = v00; v00 = v10; v10 = t3;
+        let t4: f64 = v01; v01 = v11; v11 = t4;
+    }
+    let tol: f64 = rcond * d1;
+    if d1 <= tol { b1 = 0.0; } else { b1 = b1 * (1.0 / d1); }
+    if d2 <= tol { b2 = 0.0; } else { b2 = b2 * (1.0 / d2); }
+    return W2 { w0: fma_exact(v00, b1, v10 * b2) * mul, w1: fma_exact(v01, b1, v11 * b2) * mul };
+}
+
+// lstsq([c1 c2], y). The three arrays are overwritten. rcond as numpy passes it: the row count times 2^-52.
+fn lstsq2(c1: &mut [f64; 8], c2: &mut [f64; 8], y: &mut [f64; 8], m: i32, rcond: f64) -> W2 {
+    let tau1: f64 = larfg(c1, 0, m);
+    larf(c1, 0, m, tau1, c2, 0);
+    let tau2: f64 = larfg(c2, 1, m - 1);
+    larf(c1, 0, m, tau1, y, 0);
+    larf(c2, 1, m - 1, tau2, y, 1);
+    return bidiag_solve(c1[0], c2[1], c2[0], y[0], y[1], rcond);
+}
+
+// numpy.polyfit(x, y, 1): columns [x, 1] scaled to unit length, the solve, then the scale divided back out.
+// Returns the slope in w0 and the intercept in w1.
+fn polyfit1(x: &mut [f64; 8], y: &mut [f64; 8], m: i32) -> W2 {
+    let mut w1: [f64; 8] = [0.0; 8];
+    let mut w2: [f64; 8] = [0.0; 8];
+    let mut w3: [f64; 8] = [0.0; 8];
+    let mut s1: f64 = 0.0;
+    let mut s2: f64 = 0.0;
+    let mut i: i32 = 0;
+    while i < m {
+        s1 = s1 + x[i] * x[i];
+        s2 = s2 + 1.0;
+        i = i + 1;
+    }
+    s1 = sqrt(s1);
+    s2 = sqrt(s2);
+    i = 0;
+    while i < m {
+        w1[i] = x[i] / s1;
+        w2[i] = 1.0 / s2;
+        w3[i] = y[i];
+        i = i + 1;
+    }
+    let c: W2 = lstsq2(&mut w1, &mut w2, &mut w3, m, (m as f64) * 2.220446049250313e-16);
+    return W2 { w0: c.w0 / s1, w1: c.w1 / s2 };
+}

@@ -1,0 +1,88 @@
+{
+ "terms": {
+  "metaheuristic": {
+   "term": "metaheuristic",
+   "field": "optimisation",
+   "definition": "a general recipe for searching for the minimum of a function by sampling and updating a set of candidate points, used when the function gives no gradient or has many local minima",
+   "excludes": "exact methods that come with a proof of finding the minimum"
+  },
+  "bio-label": {
+   "term": "biologically labelled method",
+   "field": "our usage for this study",
+   "definition": "an optimiser whose published description is framed by an animal, plant or other organism, here slime mould, grey wolf, particle swarm, bee colony, ant colony and invasive weed",
+   "excludes": "any claim that the method works the way the organism does"
+  },
+  "benchmark-function": {
+   "term": "test function",
+   "field": "optimisation benchmarking",
+   "definition": "a formula with a known minimum, chosen to be easy or hard in a known way, on which optimisers are compared by how close they get",
+   "excludes": "real engineering problems, whose minimum is unknown"
+  },
+  "cma-es": {
+   "term": "CMA-ES",
+   "field": "evolutionary computation, after Hansen and colleagues",
+   "definition": "covariance matrix adaptation evolution strategy: it samples candidates from a multivariate normal distribution and adapts the distribution's centre, shape and step size from the best samples",
+   "excludes": "the larger-population restart schedule known as IPOP, which our version did not use"
+  },
+  "search-box": {
+   "term": "search box",
+   "field": "optimisation",
+   "definition": "the allowed region, here every coordinate between -100 and 100; a method may only propose and keep points inside it",
+   "excludes": "constraints other than simple bounds on each coordinate"
+  },
+  "centre-bias": {
+   "term": "centre bias",
+   "field": "evolutionary computation benchmarking, after Kudela",
+   "definition": "a tendency of a method's update rule to pull candidates toward the centre of the search box, which helps on any function whose minimum happens to sit there",
+   "excludes": "good performance that survives when the minimum is moved"
+  },
+  "shifted-arm": {
+   "term": "shifted arm",
+   "field": "our usage for this study",
+   "definition": "the version of each test function whose minimum is moved to a random point with every coordinate between -70 and 70 and whose axes are turned by a random rotation, the same for every method within one repeat",
+   "excludes": "the unshifted arm, with the minimum at the centre and the axes aligned"
+  },
+  "mean-rank": {
+   "term": "mean rank",
+   "field": "benchmarking statistics",
+   "definition": "each method's rank on each function by median final error, averaged over the seven functions; 1 is best and 10 is worst",
+   "excludes": "how large the differences in error are"
+  },
+  "decade": {
+   "term": "decade",
+   "field": "measurement",
+   "definition": "a factor of ten; a change of one decade in error is a change of one in its base-10 logarithm",
+   "excludes": "a difference on a linear scale"
+  },
+  "shift-penalty": {
+   "term": "shift penalty",
+   "field": "our usage for this study",
+   "definition": "for one method, the median over the seven functions of how many decades its median error grows when the function moves from the unshifted arm to the shifted arm",
+   "excludes": "effects of the rotation alone, which the design does not separate from the shift"
+  },
+  "label-permutation": {
+   "term": "label permutation",
+   "field": "statistics (permutation test)",
+   "definition": "shuffling which method name goes with which rank within each function, 2,000 times, to see how large a gap between the two groups' mean ranks arises by chance",
+   "excludes": "uncertainty from the random repeats of each run"
+  },
+  "no-free-lunch": {
+   "term": "no free lunch",
+   "field": "optimisation theory, after Wolpert and Macready",
+   "definition": "the result that, averaged over all possible functions, every search method that never revisits a point does equally well, so any advantage on one class of functions is paid for on another",
+   "excludes": "claims about any one class of functions, such as the test functions here"
+  },
+  "kruskal-wallis": {
+   "term": "Kruskal-Wallis test",
+   "field": "statistics",
+   "definition": "a rank-based test of whether several groups of numbers come from the same distribution",
+   "excludes": "a test of which group is better"
+  },
+  "centre-cheat": {
+   "term": "centre cheat",
+   "field": "our usage for this study",
+   "definition": "a dummy method that only samples points within a tiny distance of the centre of the box, so it solves any function whose minimum sits there and nothing else",
+   "excludes": "any real optimiser"
+  }
+ }
+}

@@ -1,0 +1,542 @@
+{
+ "finding": "F114",
+ "sources": [
+  {
+   "id": "alps",
+   "name": "alps-result.json",
+   "sha256_original": "65d480942aad29a6838af7468aecf78184d00689b20182ec52689b79c53a1e63",
+   "sha256_copy": "6c2dc1522416b198ece9e97d7a2ec689bb0f98a9b3a4acf23b394fa344eeb586",
+   "href": "/findings/results/F114/alps-result.json",
+   "run": "20261030T123853Z"
+  },
+  {
+   "id": "alps2",
+   "name": "alps-second-path-result.json",
+   "sha256_original": "5f6ba9957994f12b3cf511994e22a87bb6b3c32b06628e05b2b4963325a6b565",
+   "sha256_copy": "fb088c9c81631751fca6aca5235e1220c4fde95550982f82abe4a4e4dadd0212",
+   "href": "/findings/results/F114/alps-second-path-result.json",
+   "run": "20261030T124501Z"
+  },
+  {
+   "id": "fenno",
+   "name": "fennoscandia-result.json",
+   "sha256_original": "d7e616aecfae261d49be8e9b33625a9e4469d55f702af4bd8464119269bb4cc0",
+   "sha256_copy": "73e1c1f36809bb4dfd9b4cea5f2374fbe9e10336410f723c6df73eec44be7dbb",
+   "href": "/findings/results/F114/fennoscandia-result.json",
+   "run": "20261030T123301Z"
+  }
+ ],
+ "charts": [
+  {
+   "key": "planted",
+   "form": "bars",
+   "at": "controls",
+   "claims": [
+    "c6"
+   ],
+   "source": [
+    "alps"
+   ],
+   "title": "Planted check: a synthetic channel that carries a known number of bits, read by the three estimators.",
+   "takeaway": "A planted 0.322 bits read 0.331 by the Gaussian value, 0.308 by the nearest-neighbour estimate (KSG) and 0.269 on held-out years. The held-out reading sits below the truth, as a lower bound should.",
+   "units": "bits per year",
+   "n": "four synthetic sites per real site, on the series lengths of the 51 Alpine sites",
+   "interval": null,
+   "no_interval": "The result file stores one network mean per estimator for the planted check and no spread.",
+   "baseline": "The planted truth, 0.322 bits",
+   "threshold": "Gaussian error at most 0.04 (was 0.009), KSG error at most 0.03 (was 0.014), held-out reading between 12 percent below and 2 percent above the truth as a share of it (was −5.3 percent).",
+   "planted": "A planted white-noise channel read −0.050 held-out bits, at or below zero as required.",
+   "axis": {
+    "label": "bits per year about the planted target",
+    "min": 0,
+    "max": 0.4,
+    "refs": [
+     {
+      "value": 0.32192809488736235,
+      "label": "planted truth, 0.322 bits"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "label": "Gaussian value",
+     "value": 0.33091764649949973,
+     "series": 0,
+     "note": "0.331"
+    },
+    {
+     "label": "KSG estimate",
+     "value": 0.30813309947494805,
+     "series": 0,
+     "note": "0.308"
+    },
+    {
+     "label": "Held-out years",
+     "value": 0.2687628515569347,
+     "series": 0,
+     "note": "0.269"
+    }
+   ],
+   "columns": [
+    "Estimator",
+    "Bits read",
+    "Planted truth",
+    "Read minus truth"
+   ],
+   "table": [
+    [
+     "Gaussian value",
+     "0.331",
+     "0.322",
+     "0.009"
+    ],
+    [
+     "KSG estimate",
+     "0.308",
+     "0.322",
+     "−0.014"
+    ],
+    [
+     "Held-out years",
+     "0.269",
+     "0.322",
+     "−0.053"
+    ]
+   ]
+  },
+  {
+   "key": "channels",
+   "form": "bars",
+   "at": "results",
+   "claims": [
+    "c1"
+   ],
+   "source": [
+    "alps"
+   ],
+   "title": "Held-out bits per year about summer warmth, one ring channel at a time, in the Alps.",
+   "takeaway": "Maximum latewood density kept 0.090 bits per year of summer warmth and ring width 0.028. The highest control 95th percentile was −0.014. Longer bars mean the channel tells more about the summer.",
+   "units": "held-out bits per year, network mean. A bit halves the uncertainty about a summer. Held-out bits are scored on years the fit never saw, so they are a lower bound.",
+   "n": "51 Alpine sites, 74 to 82 years each",
+   "interval": null,
+   "no_interval": "The result file stores a network mean and a p-value per channel, and a site bootstrap interval only for the density minus width difference (next figures).",
+   "baseline": "Three controls, 1,000 draws each, scored as the best of all 15 channel and target tests: phase-randomised −0.014, shuffled years −0.017, white noise −0.017 at the 95th percentile.",
+   "threshold": "The best real test must beat every control's 95th percentile. It scored 0.095 bits.",
+   "planted": "A planted 0.322 bits read 0.331 by the Gaussian value, 0.308 by the nearest-neighbour estimate (KSG) and 0.269 on held-out years.",
+   "axis": {
+    "label": "held-out bits per year about summer warmth",
+    "min": -0.04,
+    "max": 0.12,
+    "refs": [
+     {
+      "value": -0.014187922132026869,
+      "label": "highest control 95th percentile, −0.014"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "label": "Ring width",
+     "value": 0.028096299307794812,
+     "series": 0,
+     "note": "0.028"
+    },
+    {
+     "label": "Earlywood width",
+     "value": 0.008579684275605076,
+     "series": 0,
+     "note": "0.009"
+    },
+    {
+     "label": "Latewood width",
+     "value": 0.035232630273391845,
+     "series": 0,
+     "note": "0.035"
+    },
+    {
+     "label": "Minimum density",
+     "value": -0.016425813288382,
+     "series": 0,
+     "note": "−0.016"
+    },
+    {
+     "label": "Maximum latewood density",
+     "value": 0.08967292271613439,
+     "series": 0,
+     "note": "0.090"
+    }
+   ],
+   "columns": [
+    "Channel",
+    "Warmth",
+    "Rain",
+    "Sunshine",
+    "KSG, warmth"
+   ],
+   "table": [
+    [
+     "Ring width",
+     "0.028",
+     "−0.012",
+     "−0.026",
+     "0.038"
+    ],
+    [
+     "Earlywood width",
+     "0.009",
+     "−0.021",
+     "−0.043",
+     "0.037"
+    ],
+    [
+     "Latewood width",
+     "0.035",
+     "0.016",
+     "0.024",
+     "0.063"
+    ],
+    [
+     "Minimum density",
+     "−0.016",
+     "−0.010",
+     "−0.051",
+     "0.006"
+    ],
+    [
+     "Maximum latewood density",
+     "0.090",
+     "0.080",
+     "0.095",
+     "0.105"
+    ]
+   ]
+  },
+  {
+   "key": "subsets",
+   "form": "line",
+   "at": "results",
+   "claims": [
+    "c5"
+   ],
+   "source": [
+    "alps"
+   ],
+   "title": "Held-out bits about summer warmth against the number of ring channels used together, in the Alps.",
+   "takeaway": "The mean over all subsets kept rising, from 0.029 bits with one channel to 0.080 with three and 0.092 with five. The gain after three was 0.25 of the gain up to three, above the forecast bound of 0.10, so the forecast failed.",
+   "units": "held-out bits per year, network mean",
+   "n": "51 Alpine sites, 74 to 82 years each; every subset of the five channels",
+   "interval": null,
+   "no_interval": "The result file stores one network mean per subset size and no spread.",
+   "baseline": "The best subset of each size, which was not set in advance and is shown for context only",
+   "threshold": "Saturation ratio (gain from three to five channels over gain from one to three) at most 0.10. It was 0.253.",
+   "x": {
+    "label": "number of channels",
+    "min": 0.8,
+    "max": 5.2
+   },
+   "y": {
+    "label": "held-out bits per year about summer warmth",
+    "min": 0,
+    "max": 0.125
+   },
+   "series": [
+    {
+     "name": "mean over all subsets of that size (set in advance)",
+     "points": [
+      [
+       1,
+       0.029031144656908824,
+       "1 channels, mean over subsets: 0.029 bits"
+      ],
+      [
+       2,
+       0.060245380481955914,
+       "2 channels, mean over subsets: 0.060 bits"
+      ],
+      [
+       3,
+       0.07961391161099225,
+       "3 channels, mean over subsets: 0.080 bits"
+      ],
+      [
+       4,
+       0.08835422371191602,
+       "4 channels, mean over subsets: 0.088 bits"
+      ],
+      [
+       5,
+       0.09240894296255335,
+       "5 channels, mean over subsets: 0.092 bits"
+      ]
+     ]
+    },
+    {
+     "name": "best subset of that size (not set in advance)",
+     "dashed": true,
+     "points": [
+      [
+       1,
+       0.08967292271613439,
+       "1 channels, best subset (maximum latewood density): 0.090 bits"
+      ],
+      [
+       2,
+       0.1124798321539259,
+       "2 channels, best subset (earlywood width, maximum latewood density): 0.112 bits"
+      ],
+      [
+       3,
+       0.11714199295188285,
+       "3 channels, best subset (ring width, latewood width, maximum latewood density): 0.117 bits"
+      ],
+      [
+       4,
+       0.10577635465920185,
+       "4 channels, best subset (ring width, latewood width, minimum density, maximum latewood density): 0.106 bits"
+      ],
+      [
+       5,
+       0.09240894296255335,
+       "5 channels, best subset (ring width, earlywood width, latewood width, minimum density, maximum latewood density): 0.092 bits"
+      ]
+     ]
+    }
+   ],
+   "columns": [
+    "Channels",
+    "Mean over subsets",
+    "Best subset",
+    "Channels in the best subset"
+   ],
+   "table": [
+    [
+     "1",
+     "0.029",
+     "0.090",
+     "maximum latewood density"
+    ],
+    [
+     "2",
+     "0.060",
+     "0.112",
+     "earlywood width, maximum latewood density"
+    ],
+    [
+     "3",
+     "0.080",
+     "0.117",
+     "ring width, latewood width, maximum latewood density"
+    ],
+    [
+     "4",
+     "0.088",
+     "0.106",
+     "ring width, latewood width, minimum density, maximum latewood density"
+    ],
+    [
+     "5",
+     "0.092",
+     "0.092",
+     "ring width, earlywood width, latewood width, minimum density, maximum latewood density"
+    ]
+   ]
+  },
+  {
+   "key": "tree",
+   "form": "interval",
+   "at": "results",
+   "claims": [
+    "c3"
+   ],
+   "source": [
+    "alps",
+    "alps2",
+    "fenno"
+   ],
+   "title": "One more channel against one more tree: the difference in held-out bits, in both regions.",
+   "takeaway": "In the Alps an added channel gained 0.014 bits and an added tree 0.004. The difference, 0.011 bits (−0.003 to 0.025), includes zero, as it does in all three runs. Right of zero favours the channel.",
+   "units": "difference in held-out bits per year: gain from an added channel minus gain from an added tree",
+   "n": "Alps, first code path: 43 sites; Alps, second code path: 42 sites; Fennoscandia, second code path: 23 sites. Sites are those with enough trees to pass the signal-strength mark (expressed population signal 0.85) and add one more.",
+   "interval": "95% site bootstrap interval",
+   "series_names": [
+    "channel gain minus tree gain"
+   ],
+   "baseline": "Zero: an added channel and an added tree gain the same",
+   "threshold": "The interval's lower end above zero. It was below zero in every run, so the forecast failed.",
+   "ruled_out": "Nothing firm. The Alpine interval is 0.028 bits wide, wider than either gain, so the null is inconclusive: a channel advantage above 0.025 bits is the only thing it bounds.",
+   "axis": {
+    "label": "channel gain minus tree gain, bits per year",
+    "min": -0.02,
+    "max": 0.03,
+    "refs": [
+     {
+      "value": 0,
+      "label": "no difference"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "label": "Alps, first code path",
+     "value": 0.010770928341434729,
+     "lo": -0.00281811571442267,
+     "hi": 0.025095233304225764,
+     "series": 0,
+     "note": "0.011 (−0.003 to 0.025)"
+    },
+    {
+     "label": "Alps, second code path",
+     "value": 0.006881677745894049,
+     "lo": -0.004538509027129026,
+     "hi": 0.019862351627236985,
+     "series": 0,
+     "note": "0.007 (−0.005 to 0.020)"
+    },
+    {
+     "label": "Fennoscandia, second code path",
+     "value": 0.0030327051193667063,
+     "lo": -0.015535426877223577,
+     "hi": 0.024355135894725162,
+     "series": 0,
+     "note": "0.003 (−0.016 to 0.024)"
+    }
+   ],
+   "columns": [
+    "Run",
+    "Sites",
+    "Channel gain",
+    "Tree gain",
+    "Difference",
+    "Low",
+    "High"
+   ],
+   "table": [
+    [
+     "Alps, first code path",
+     "43",
+     "0.014",
+     "0.004",
+     "0.011",
+     "−0.003",
+     "0.025"
+    ],
+    [
+     "Alps, second code path",
+     "42",
+     "0.010",
+     "0.003",
+     "0.007",
+     "−0.005",
+     "0.020"
+    ],
+    [
+     "Fennoscandia, second code path",
+     "23",
+     "0.018",
+     "0.015",
+     "0.003",
+     "−0.016",
+     "0.024"
+    ]
+   ]
+  },
+  {
+   "key": "compare",
+   "form": "interval",
+   "at": "results",
+   "claims": [
+    "c2"
+   ],
+   "source": [
+    "alps",
+    "alps2",
+    "fenno"
+   ],
+   "title": "Density minus width: how many more held-out bits about summer warmth density keeps, in two regions and two code paths.",
+   "takeaway": "In Fennoscandia maximum latewood density beat ring width by 0.28 bits per year (0.23 to 0.33), against 0.062 (0.034 to 0.089) in the Alps. Every interval is right of zero: density keeps more.",
+   "units": "difference in held-out bits per year: maximum latewood density minus ring width",
+   "n": "Alps, first code path: 51 sites; Alps, second code path: 51 sites; Fennoscandia, second code path: 24 sites",
+   "interval": "95% site bootstrap interval",
+   "series_names": [
+    "density minus width"
+   ],
+   "baseline": "Zero: density and width keep the same number of bits. The second code path is a second implementation of the analysis, run on the same Alpine data.",
+   "threshold": "The interval's lower end above zero. It held in all three runs.",
+   "axis": {
+    "label": "density minus width, held-out bits per year",
+    "min": 0,
+    "max": 0.35,
+    "refs": [
+     {
+      "value": 0,
+      "label": "no difference"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "label": "Alps, first code path",
+     "value": 0.06157662340833956,
+     "lo": 0.03396674919905269,
+     "hi": 0.08907082281934997,
+     "series": 0,
+     "note": "0.062 (0.034 to 0.089)"
+    },
+    {
+     "label": "Alps, second code path",
+     "value": 0.06211093635687659,
+     "lo": 0.03526630073082161,
+     "hi": 0.08864314260551155,
+     "series": 0,
+     "note": "0.062 (0.035 to 0.089)"
+    },
+    {
+     "label": "Fennoscandia, second code path",
+     "value": 0.2800112170872498,
+     "lo": 0.2291977901937634,
+     "hi": 0.33010212958019125,
+     "series": 0,
+     "note": "0.280 (0.229 to 0.330)"
+    }
+   ],
+   "columns": [
+    "Run",
+    "Sites",
+    "Density minus width",
+    "Low",
+    "High",
+    "Same difference by KSG",
+    "Saturation ratio"
+   ],
+   "table": [
+    [
+     "Alps, first code path",
+     "51",
+     "0.062",
+     "0.034",
+     "0.089",
+     "0.067",
+     "0.25"
+    ],
+    [
+     "Alps, second code path",
+     "51",
+     "0.062",
+     "0.035",
+     "0.089",
+     "0.084",
+     "0.23"
+    ],
+    [
+     "Fennoscandia, second code path",
+     "24",
+     "0.280",
+     "0.229",
+     "0.330",
+     "0.186",
+     "0.54"
+    ]
+   ]
+  }
+ ]
+}

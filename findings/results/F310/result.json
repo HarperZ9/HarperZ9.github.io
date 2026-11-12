@@ -1,0 +1,222 @@
+{
+ "study": "titius-bode-exoplanets",
+ "run_id": "20261031T220149Z",
+ "date": "2026-10-31",
+ "prereg": {
+  "path": "PREREG.txt",
+  "sha256": "c11616a0373890eb2c65e76375f2a8cd122223f4cd04a624a105d7f29f721b62",
+  "anchors": [
+   "sidecar",
+   "lock"
+  ],
+  "plan_sha256": "45f201bb0197a18dae140e101293b335e179b1bf0ecac6ae48a602712088fdb0",
+  "locked_at": "2026-10-31T22:00:35+00:00"
+ },
+ "hashes": {
+  "units.py": "4cdeeda8f0bdd9d741969b4b4f6865e81657469d1c756a2dc5cdb441a79270a9"
+ },
+ "analysis": {
+  "n": 122,
+  "reg_plain": -0.15734693080996476,
+  "reg_blagg": -0.1410551846588566,
+  "reg_gapped": -0.07911078577711288,
+  "loo_err": 0.13112217102472257,
+  "loo_neigh": 0.10676286691669912,
+  "loo_ratio": 1.2281627012417118,
+  "plant_reg": -0.050195516755194375,
+  "solar_r_plain": 0.3223748240972966,
+  "solar_r_gapped": 0.16911669442640168,
+  "n_planets": 543
+ },
+ "controls": {
+  "C_order": {
+   "n": 2000,
+   "usable": true,
+   "mean": -0.15284451200192675,
+   "q95": -0.14494302303828743,
+   "q05": -0.16091088848652146,
+   "p_ge": 0.8530734632683659,
+   "compare": "analysis.reg_plain",
+   "description": "gap order shuffled"
+  },
+  "C_pool": {
+   "n": 2000,
+   "usable": true,
+   "mean": -0.21294905456090876,
+   "q95": -0.1903577240103617,
+   "q05": -0.23588646337734412,
+   "p_ge": 0.0004997501249375312,
+   "compare": "analysis.reg_plain",
+   "description": "gaps from the pool"
+  },
+  "C_order_blagg": {
+   "n": 200,
+   "usable": true,
+   "mean": -0.12534887431429848,
+   "q95": -0.11598037538499734,
+   "q05": -0.13368053649803804,
+   "p_ge": 0.9950248756218906,
+   "compare": "analysis.reg_blagg",
+   "description": "gap order shuffled"
+  },
+  "C_order_gapped": {
+   "n": 200,
+   "usable": true,
+   "mean": -0.07779652823001111,
+   "q95": -0.07387763089221984,
+   "q05": -0.08071054864485629,
+   "p_ge": 0.6766169154228856,
+   "compare": "analysis.reg_gapped",
+   "description": "gap order shuffled"
+  }
+ },
+ "timing_s": {
+  "analysis": 0.30887369999982184,
+  "C_order": 16.810980700000073,
+  "C_pool": 20.484033899998394,
+  "C_order_blagg": 24.258804700000837,
+  "C_order_gapped": 17.65619820000029
+ },
+ "verdicts": {
+  "K0_INSTRUMENT": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.plant_reg > controls.C_pool.q95",
+     "left": -0.050195516755194375,
+     "right": -0.1903577240103617,
+     "holds": true
+    },
+    {
+     "rule": "analysis.n >= 60",
+     "left": 122,
+     "right": 60,
+     "holds": true
+    }
+   ]
+  },
+  "BEATS_POOL": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.plant_reg > controls.C_pool.q95",
+     "left": -0.050195516755194375,
+     "right": -0.1903577240103617,
+     "holds": true
+    },
+    {
+     "rule": "analysis.n >= 60",
+     "left": 122,
+     "right": 60,
+     "holds": true
+    },
+    {
+     "rule": "analysis.reg_plain > controls.C_pool.q95",
+     "left": -0.15734693080996476,
+     "right": -0.1903577240103617,
+     "holds": true
+    }
+   ]
+  },
+  "BEATS_ORDER": {
+   "verdict": "FAIL",
+   "rules": [
+    {
+     "rule": "analysis.plant_reg > controls.C_pool.q95",
+     "left": -0.050195516755194375,
+     "right": -0.1903577240103617,
+     "holds": true
+    },
+    {
+     "rule": "analysis.n >= 60",
+     "left": 122,
+     "right": 60,
+     "holds": true
+    },
+    {
+     "rule": "analysis.reg_plain > controls.C_order.q95",
+     "left": -0.15734693080996476,
+     "right": -0.14494302303828743,
+     "holds": false
+    }
+   ]
+  },
+  "BLAGG_BEATS_ORDER": {
+   "verdict": "FAIL",
+   "rules": [
+    {
+     "rule": "analysis.plant_reg > controls.C_pool.q95",
+     "left": -0.050195516755194375,
+     "right": -0.1903577240103617,
+     "holds": true
+    },
+    {
+     "rule": "analysis.n >= 60",
+     "left": 122,
+     "right": 60,
+     "holds": true
+    },
+    {
+     "rule": "analysis.reg_blagg > controls.C_order_blagg.q95",
+     "left": -0.1410551846588566,
+     "right": -0.11598037538499734,
+     "holds": false
+    }
+   ]
+  },
+  "GAPPED_BEATS_ORDER": {
+   "verdict": "FAIL",
+   "rules": [
+    {
+     "rule": "analysis.plant_reg > controls.C_pool.q95",
+     "left": -0.050195516755194375,
+     "right": -0.1903577240103617,
+     "holds": true
+    },
+    {
+     "rule": "analysis.n >= 60",
+     "left": 122,
+     "right": 60,
+     "holds": true
+    },
+    {
+     "rule": "analysis.reg_gapped > controls.C_order_gapped.q95",
+     "left": -0.07911078577711288,
+     "right": -0.07387763089221984,
+     "holds": false
+    }
+   ]
+  },
+  "LAW_LIKE": {
+   "verdict": "FAIL",
+   "rules": [
+    {
+     "rule": "analysis.plant_reg > controls.C_pool.q95",
+     "left": -0.050195516755194375,
+     "right": -0.1903577240103617,
+     "holds": true
+    },
+    {
+     "rule": "analysis.n >= 60",
+     "left": 122,
+     "right": 60,
+     "holds": true
+    },
+    {
+     "rule": "analysis.reg_plain > controls.C_order.q95",
+     "left": -0.15734693080996476,
+     "right": -0.14494302303828743,
+     "holds": false
+    },
+    {
+     "rule": "analysis.loo_ratio < 1.0",
+     "left": 1.2281627012417118,
+     "right": 1.0,
+     "holds": false
+    }
+   ]
+  }
+ },
+ "reproduce": null,
+ "status": "scored"
+}

@@ -1,0 +1,65 @@
+{
+ "schema": "buildlang.buildtex-receipt/v0",
+ "source": {
+  "path": "F344.bld",
+  "sha256": "cda3c9f370d3b7cda020b6f5b6b089580a33076105854c8f7ef7176323e1f3a8"
+ },
+ "ir_sha256": "7111bcdd16a88da5575022c17298a1d3c26725b1614a4211e6550cae95697499",
+ "theme": "paper",
+ "overrides": [],
+ "outputs": {
+  "F344.pdf": "9e8df4ecb6223e1239be80ca991b3d4cd1f2d0911cebaebd7300b2002f8e7154"
+ },
+ "pdf_metadata": {
+  "pdfa": false,
+  "creation_date": "D:20261109000000Z"
+ },
+ "facts": {
+  "pages": 8,
+  "pages_layout": 8,
+  "overfull": [],
+  "underfull": 0,
+  "missing_glyphs": [],
+  "glyph_fallbacks": [],
+  "math_errors": [],
+  "fonts": [
+   {
+    "name": "BCJLLK+AccessionDisplay-Master",
+    "embedded": true
+   },
+   {
+    "name": "DMODPL+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "EKJNFF+NotoSansMath-Regular",
+    "embedded": true
+   },
+   {
+    "name": "FGNCMO+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "IEFBIK+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "MBPILP+HankenGrotesk-Regular",
+    "embedded": true
+   }
+  ],
+  "images": 4,
+  "blind_text_runs": 0,
+  "reading_order": true,
+  "blocks_missing_from_text": [],
+  "pdf_bytes": 3608523
+ },
+ "failed": [],
+ "notes": [
+  "buildc run F344.bld -> F344.doc.tsv",
+  "press: relief 1275x475 px at 150 dpi; 0 blind line(s); foil colour source: fallback constant"
+ ],
+ "external_programs": [
+  "buildc"
+ ]
+}

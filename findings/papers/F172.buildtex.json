@@ -1,0 +1,65 @@
+{
+ "schema": "buildlang.buildtex-receipt/v0",
+ "source": {
+  "path": "F172.bld",
+  "sha256": "fb340ab869f461f8325d3673fbd98438f6db60718e9d0902aab573e89b0bf713"
+ },
+ "ir_sha256": "030e7a106c6270ab55831b82a7abd8014bd959dd17eb0caf788bd4ed7b67e2f0",
+ "theme": "paper",
+ "overrides": [],
+ "outputs": {
+  "F172.pdf": "eeb1c60eee68fe44c9946b084e9aad2c7018322a064bcdb86c46546541a3d386"
+ },
+ "pdf_metadata": {
+  "pdfa": false,
+  "creation_date": "D:20261109000000Z"
+ },
+ "facts": {
+  "pages": 10,
+  "pages_layout": 10,
+  "overfull": [],
+  "underfull": 0,
+  "missing_glyphs": [],
+  "glyph_fallbacks": [],
+  "math_errors": [],
+  "fonts": [
+   {
+    "name": "CFMPBE+AccessionDisplay-Master",
+    "embedded": true
+   },
+   {
+    "name": "DBILAF+NotoSansMath-Regular",
+    "embedded": true
+   },
+   {
+    "name": "DOELBO+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "LEOFOC+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "OLMPJF+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "PIBDAB+HankenGrotesk-Regular",
+    "embedded": true
+   }
+  ],
+  "images": 4,
+  "blind_text_runs": 0,
+  "reading_order": true,
+  "blocks_missing_from_text": [],
+  "pdf_bytes": 600842
+ },
+ "failed": [],
+ "notes": [
+  "buildc run F172.bld -> F172.doc.tsv",
+  "press: relief 1275x495 px at 150 dpi; 0 blind line(s); foil colour source: fallback constant"
+ ],
+ "external_programs": [
+  "buildc"
+ ]
+}

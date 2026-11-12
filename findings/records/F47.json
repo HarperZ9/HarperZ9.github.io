@@ -1,0 +1,581 @@
+{
+ "schema": "research-record/1",
+ "built": "2026-11-09 by scripts/record-findings.mjs from paper.txt, the register row and the findings ledger",
+ "document": {
+  "id": "F47",
+  "kind": "finding",
+  "title": "More variables raise prediction skill, yet most targets stall far below their noise ceiling",
+  "standfirst": "Across trees, mood, music ratings, forecasters and a similarity task, held-out skill grew as we added measured variables and always beat a shuffled baseline. In five of six targets with a measurable ceiling it stopped between 0.18 and 0.65 of the way there, and the gap closed mainly when a different kind of variable arrived.",
+  "date_found": "2026-10-29",
+  "fields": [
+   "forecasting-prediction",
+   "method",
+   "psychology"
+  ],
+  "tier": "B*",
+  "tier_reason": "Real data across domains with working nulls, and an unusual side-by-side view. The second run is not blind, one ceiling failed, the core forecasts failed, and linear models cannot rule out nonlinear signal. The past-performance finding is known.",
+  "rung": "hypothesis",
+  "rung_reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
+  "outcome": "held",
+  "objection": "Ridge and logit may leave signal that a nonlinear model finds, so a stall may be the model class; datasets are a convenience sample; DEAM rater count is assumed and the ceilings are bounds.",
+  "objection_source": "the register's reviewer attack",
+  "would_change": "Rerun with nonlinear learners and a preregistered tree ceiling on fresh splits; drop the saves; add a domain outside this machine",
+  "sections": [
+   {
+    "id": "reader",
+    "title": "What this means for a reader",
+    "role": "lead",
+    "paragraphs": [
+     "Adding more of the same kind of measurement helps, then stops helping long before the data's own noise would stop it. The gap closes when something different arrives, most often a record of how the same thing behaved before. If a team says it can predict an outcome once it measures enough, ask how close its current model sits to the outcome's measurement noise, and what kind of variable it has not yet measured."
+    ]
+   },
+   {
+    "id": "abstract",
+    "title": "Abstract",
+    "role": "argument",
+    "paragraphs": [
+     "A common hope says that measuring enough things about a system lets you predict it. We tested that hope on public data against the best score each target's own measurement noise allows. Variables were added in random orders and the model refitted and scored on held-out cases, for six targets with a measurable ceiling: tree growth, next-beep mood, music valence and arousal ratings, forecaster accuracy and a similarity task. {c1}Held-out skill rose with added variables in every target and beat a shuffled-target control in every target.{/c1} {c2}Only the similarity task, whose variables were learned from the same task, reached its ceiling (0.985 of the way); mood, valence, arousal and forecaster accuracy stopped at 0.65, 0.54, 0.46 and 0.18, and the tree ceiling estimator failed.{/c2} {c3}The largest gains came from a different kind of variable: past accuracy lifted forecasters from 0.131 to 0.360 and prior growth lifted trees from 0.396 to 0.639.{/c3} Both preregistered forecasts for the claim failed. Two toys with every variable known set hard limits: chaos returns forecast time only logarithmically in precision, and a published forecast that people react to can defeat itself."
+    ]
+   },
+   {
+    "id": "intro",
+    "title": "Introduction and motivation",
+    "role": "argument",
+    "paragraphs": [
+     "How predictable an outcome is, and how much of that predictability a model captures, are two separate questions. Salganik and colleagues {cite:r1} gave 160 teams a rich birth-cohort dataset and asked them to predict six life outcomes; the best predictions were only slightly better than a simple benchmark, and error depended more on which family was predicted than on the method. That study measured how far models got. It did not set the result against a ceiling from the outcome's own noise.",
+     "In neuroscience the {g:noise-ceiling}noise ceiling{/g} is routine: the best held-out score any model could reach on a target, given how far repeated measurements of that same target disagree. Lage-Castellanos and colleagues {cite:r2} compare ways to estimate it for brain responses. Hebart and colleagues {cite:r3} reported that their similarity model explained most of the explainable variance in human odd-one-out choices, against a ceiling set by repeated triplets.",
+     "For forecasters, Himmelstein, Atanasov and Budescu {cite:r5} found that psychometric traits predict future accuracy when little track record exists and that past accuracy takes over as it accumulates. That points to one kind of variable that may close a gap others leave open.",
+     "We asked whether held-out skill reaches the noise ceiling when enough measured variables are added, across unrelated domains in one design. Searches run on 9 November 2026 found the work above, and a preprint on the PISA 2022 school assessment {cite:r10} that reads predictive R2 against a ceiling set by measurement noise inside one domain. A search for a cross-domain comparison of skill curves against noise ceilings returned nothing closer; that is what the search returned, and it does not show that no such study exists. The decision this informs is where effort goes when a prediction stalls: more of the same variables, a different kind of variable, or acceptance of a hard limit."
+    ]
+   },
+   {
+    "id": "prereg",
+    "title": "Preregistration and design",
+    "role": "argument",
+    "paragraphs": [
+     "The {g:preregistration}preregistration{/g}, a dated plan hash-locked before any result is seen, was written on 29 October 2026 before any model in the study was fitted to real data. Data caches were built first and printed row counts only. Several of the datasets had been used in earlier studies of ours, which the plan states so that it is not mistaken for blindness.",
+     "The plan fixed the targets, variables, splits, models, ceilings and the rule for each {g:verdict}verdict{/g}, the pass or fail of one preregistered rule set read off by code. The predictions were:",
+     "- P1, ceiling reached: a target is at ceiling when its all-variable held-out skill above chance is at least 0.8 of its ceiling above chance. Pass if at least 4 of the 6 targets with a ceiling are at ceiling.",
+     "- P2, unmeasured variables: a target's plateau moves when its named strong variable adds at least 0.02 skill over all base variables and the result exceeds the upper 97.5th percentile of the fitted plateau. Pass if at least 3 of 7 targets move.",
+     "- P3, chaos: in the Lorenz-63 toy, the forecast horizon is linear in the log of precision (linear R2 at least 0.98), its slope is within 25 percent of theory, and the last three decades gain no more than the first three.",
+     "- P4, reflexivity: five rules on a toy crowd, listed in Appendix A.",
+     "- P5, overfitting control: every target beats its shuffled-target control, and a deliberately overfitted fit behaves as expected (Appendix A).",
+     "The plan also held an identification test on a private image collection. That test, and the seventh P2 target built on the same collection, are left out of this paper; the P2 count below includes that target because the verdict was computed over seven.",
+     "## The corrected rerun",
+     "The first run, on 29 October 2026, gave forecaster accuracy a held-out R2 of -1.686. The cause was a pipeline fault: 84 of the 1,349 forecaster variables were nearly constant among the training forecasters, so their scaled values in held-out forecasters became enormous. A second preregistration file, hashed after the first run had been read, made one change: every scaled variable is clipped to the range -5 to 5. Domains, splits, seed, models and verdict rules stayed the same. The second run is the primary result. It is a corrected rerun and not a blind one. Outside forecasters, the two runs agree within 0.01."
+    ]
+   },
+   {
+    "id": "data",
+    "title": "Data and provenance",
+    "role": "argument",
+    "paragraphs": [
+     "Five public sources supply six targets with a ceiling and one without:",
+     "- Tree growth and tree death: the USDA Forest Service Forest Inventory and Analysis {cite:r8}, remeasured trees in Washington and Oregon, a US government dataset. Growth is annual diameter growth of survivors from the second to the third measurement (73,553 trees); death is death between them (90,427 trees, 18.6 percent died). 42 variables measured at the second visit cover size, crown, damage, site, stand, location and species.",
+     "- Mood: openESM dataset 0062 {cite:r9}, experience sampling with repeated short questionnaires (beeps) during the day, licensed CC BY 4.0. Target: rated happiness at the next beep of the same day, from 31 items at the current beep (8,141 cases).",
+     "- Music valence and arousal: DEAM static ratings {cite:r6}, 1,744 clips, licensed CC BY-NC (non-commercial use with attribution); this paper reports statistics only. 22 variables: sound measures, genre flags and set flags.",
+     "- Forecaster accuracy: Good Judgment Project data {cite:r7}, licensed CC0. Target: each forecaster's mean per-question z-scored {g:brier}Brier score{/g}, the mean squared gap between a probability forecast and the 0 or 1 outcome, on the even half of their questions (2,120 forecasters with at least 10 scored questions in each half). 1,349 individual-difference variables.",
+     "- Similarity triplets: THINGS odd-one-out choices with the 66 published object dimensions {cite:r4}, used under the publisher's terms. In each triplet a person picks the image least like the other two; chance is one in three."
+    ]
+   },
+   {
+    "id": "methods",
+    "title": "Methods",
+    "role": "argument",
+    "paragraphs": [
+     "## Curves",
+     "For each target the variables were added in 8 random orders and one informed order (by absolute training-set correlation with the target), at about 14 counts from one variable to all of them. At each count the model was refitted on training cases and scored on held-out cases. {g:held-out-skill}Held-out skill{/g} is R2 for numeric targets, {g:auc}AUC{/g} (the chance a random positive case is ranked above a random negative one) for tree death, and accuracy for triplets.",
+     "Models were {g:ridge}ridge regression{/g} with a leave-one-out penalty for numeric targets, L2 logistic regression for tree death and a conditional logit for triplets. Medians, scaling and clipping came from the training cases only. Held-out cases were whole plots for trees, each person's last 30 percent of beeps for mood, 30 percent of artists for music, 30 percent of forecasters, and between-subject repeated triplets for the similarity task.",
+     "## Ceilings and shares",
+     "Each ceiling comes from the target's own repeats:",
+     "- Mood, by {g:parallel-forms}parallel forms{/g}: the correlation of happy with cheerful at the same beep, over 11,472 beeps. If the two items differ in what they measure, this is a lower bound, which makes the ceiling easier to reach.",
+     "- Forecasters, by {g:split-half}split-half reliability{/g}: the correlation of accuracy on odd and even questions.",
+     "- Similarity: leave-one-out majority agreement on 1,000 repeated triplets (36,401 trials).",
+     "- Music, from rater spread, with {m:sd} the rater standard deviation of a clip, {m:n} the number of raters and {m:m} the clip's mean rating over clips:",
+     "$$ c = 1 - \\frac{mean(sd^2 / n)}{var(m)} {eq:ceilmusic}",
+     "The number of raters was not stated in the files we had; {m:n} = 10 was assumed, with {m:n} = 5 reported beside it.",
+     "- Tree growth: the error variance of a remeasured increment was estimated from the shrinking increments of survivors, on the assumption that true growth is never negative.",
+     "The {g:share-of-ceiling}share of ceiling{/g} puts targets on one scale, with {m:s} the held-out skill, {m:s_0} its chance level and {m:c} the ceiling:",
+     "$$ q = \\frac{s - s_0}{c - s_0} {eq:share}",
+     "For the four numeric targets with a valid ceiling, one minus R2 splits into measurement noise, {m:1 - c}, and reliable variance the variables do not reach, {m:c - s}.",
+     "## Plateau fit",
+     "A {g:saturating-fit}saturating curve{/g} was fitted to skill above chance against the number of variables {m:k}:",
+     "$$ s(k) - s_0 = \\frac{a k}{k + h} {eq:sat}",
+     "It was fitted to the mean random-order curve, and to each of the 8 orders separately; the spread of {m:a} over the orders gives the plateau's interval. The fit bound was 2.0, and for curves that had not flattened the upper end of the interval reached it.",
+     "## Strong variables",
+     "Each target had a {g:strong-variable}strong variable{/g} named before the run, of a different kind from the base set: prior diameter growth for trees, the person's mean training happiness for mood, the other dimension's human rating for music, and accuracy on the other half of the questions for forecasters.",
+     "## Toys with known answers",
+     "The Lorenz-63 system was run with an exact model from 100 states on its attractor, with the starting state measured with error {m:\\delta} per coordinate from {m:10^{-1}} to {m:10^{-12}}. The {g:lorenz-horizon}forecast horizon{/g} is the first time the error norm exceeds 1. Theory gives the slope per tenfold gain in precision as",
+     "$$ \\frac{\\ln 10}{\\lambda} \\approx 2.54 {eq:lorenz}",
+     "with {m:\\lambda} = 0.906 the largest Lyapunov exponent.",
+     "The crowd toy tests a {g:reflexive}reflexive forecast{/g}, one that the forecast population reads and reacts to. Each of {m:N} members attends when {m:u_i + \\beta (c - F) > 0}, where {m:u_i} is the member's own taste, {m:c} a fixed threshold and {m:F} the published forecast of the attending share; {m:\\beta} sets how strongly members react. The forecaster measures {m:k} members' tastes exactly. An unpublished forecast is never seen; a naive one is the unpublished forecast published anyway; a fixed-point forecast solves for the share that would attend given the forecast itself."
+    ]
+   },
+   {
+    "id": "controls",
+    "title": "Controls and planted checks",
+    "role": "argument",
+    "paragraphs": [
+     "Every target was refitted on shuffled training labels 20 times and scored on the real held-out labels. This {g:control}control{/g} removes the link between variables and target. The 95th percentile of those 20 draws, the top of the {g:null-distribution}null distribution{/g}, is the bar each real score must clear. The similarity control starts its weights at 1, so a fit that stops early keeps the raw embedding similarity, and its bar sits above chance for that reason.",
+     "The Lorenz toy is a {g:planted-check}planted check{/g} for the chaos limit, since its answer is known from theory. A deliberate overfit forms a second check: 150 forecasters fitted by plain least squares with up to all 1,349 variables, which should fit the training data almost perfectly and fail held out.",
+     "The tree-growth ceiling estimator failed. It returned -3.96, because a few gross shrinkages dominate the mean of squared negative increments. It is kept as preregistered, and the tree target counts as not at ceiling."
+    ]
+   },
+   {
+    "id": "results",
+    "title": "Results",
+    "role": "argument",
+    "paragraphs": [
+     "{c1}Held-out skill rose with added variables in every target and beat a shuffled-target control in every target.{/c1} The highest control bar among the numeric targets was 0.013 R2; tree death's was 0.531 AUC against 0.686, and the similarity task's was 0.439 accuracy against 0.642 on its validation triplets.",
+     "Table {ref:tab:main} and Figure {ref:fig:curves} give the curves against their ceilings. Shares follow eq. {ref:eq:share}; the music ceilings assume 10 raters; the last column is the shuffled control's 95th percentile. {c2}Only the similarity task, whose variables were learned from the same task, reached its ceiling (0.985 of the way); mood, valence, arousal and forecaster accuracy stopped at 0.65, 0.54, 0.46 and 0.18, and the tree ceiling estimator failed.{/c2}",
+     "::table tab:main cols=0.3,0.11,0.1,0.1,0.1,0.14,0.15 Held-out skill with all variables against each target's ceiling, second run.\nTarget ¦ Variables ¦ Skill ¦ Ceiling ¦ Share ¦ With strong ¦ Shuffled 95th\nSimilarity triplets (accuracy) ¦ 66 ¦ 0.655 ¦ 0.660 ¦ 0.985 ¦ none named ¦ 0.439\nMood at next beep (R2) ¦ 31 ¦ 0.521 ¦ 0.798 ¦ 0.653 ¦ 0.553 ¦ 0.005\nMusic valence (R2) ¦ 22 ¦ 0.445 ¦ 0.821 ¦ 0.542 ¦ 0.527 ¦ 0.005\nMusic arousal (R2) ¦ 22 ¦ 0.393 ¦ 0.862 ¦ 0.455 ¦ 0.484 ¦ 0.013\nForecaster accuracy (R2) ¦ 1,349 ¦ 0.131 ¦ 0.714 ¦ 0.183 ¦ 0.360 ¦ 0.004\nTree growth (R2) ¦ 42 ¦ 0.396 ¦ failed ¦ none ¦ 0.639 ¦ 0.005\nTree death (AUC) ¦ 42 ¦ 0.686 ¦ none ¦ none ¦ 0.702 ¦ 0.531\n::end",
+     "![fig:curves width=0.88 alt=Five rising lines of share of ceiling against number of variables on a log scale; only the similarity line crosses the dashed 0.8 line; the forecaster line stays below 0.2 out to 1,349 variables](fig-curves.png) Share of the noise ceiling reached, mean of 8 random orders, against the number of variables. The similarity curve is scored on validation triplets (0.95 at all 66), while its headline share of 0.985 is scored on the repeated test triplets. Drawn from the result file.",
+     "For mood, the first informed variable, current happiness, gives 0.501 of the 0.521. For forecasters the curve has flattened: the plateau fit gives 0.137 with interval 0.118 to 0.155, far below the ceiling of 0.714. With 5 raters assumed instead of 10, the music ceilings fall to 0.642 for valence and 0.725 for arousal, so the music shares depend on a count we do not have.",
+     "Figure {ref:fig:variance} shows where the variance left after the full model sits. Outside the similarity task, the larger part is reliable signal that the measured variables do not reach, not noise.",
+     "![fig:variance width=0.8 alt=Four stacked bars dividing outcome variance into explained, reliable but unexplained and noise; the reliable but unexplained part is largest for arousal and forecasters](fig-variance.png) Held-out outcome variance split into the part the variables explain, reliable variance they do not reach and measurement noise, for the four numeric targets with a valid ceiling. Drawn from the result file.",
+     "{c3}The largest gains came from a different kind of variable: past accuracy lifted forecasters from 0.131 to 0.360 and prior growth lifted trees from 0.396 to 0.639.{/c3} The other dimension's rating added 0.082 to valence and 0.092 to arousal; mood's training mean added 0.032 and tree death's prior growth 0.015 AUC. Only forecasters moved by the P2 rule. For trees the gain was 0.243, but the plateau interval for tree growth ran to the fit bound of 2.0, so the rule could not pass; the preregistration's addendum records that defect and keeps the rule.",
+     "{c4}One of six targets reached 0.8 of its ceiling, against a forecast of at least four, and one of seven plateaus moved, against a forecast of at least three.{/c4} Both are {g:honest-null}honest nulls{/g} of the claim's forecasts, reported with the same weight as the passes.",
+     "## The toys",
+     "{c5}In the Lorenz toy the forecast horizon grew 2.51 time units per tenfold gain in precision, against 2.54 from theory, with linear R2 0.99994; twelve decades of precision bought 1.2 to 28.7 time units.{/c5} The gain per decade over the last three decades was 1.02 times that over the first three. Figure {ref:fig:lorenz} shows the line.",
+     "![fig:lorenz width=0.8 alt=Median horizon rising in a straight line with precision, lying on the dashed theory line](fig-lorenz.png) Lorenz-63 forecast horizon against starting precision, median over 100 attractor states, with the slope from the Lyapunov exponent. Drawn from the result file.",
+     "In the crowd toy with steep reaction ({m:\\beta} = 20) and 1,000 members, an unpublished forecast with every member measured scored R2 1.00, the same forecast published naively scored -1.55, and a fixed-point forecast that solves for the reaction scored 0.9999. Measuring 100 of the 1,000 members cut the fixed-point forecast to 0.40 while the unpublished one scored 0.98. With identical members there is no fixed point, and the best published forecast scored -0.02.",
+     "In the overfitting check, plain least squares with 150 variables on 150 forecasters fitted the training data at R2 0.96 and scored -135,817 held out. Ridge on shuffled targets stayed at or below -0.005 at every count, and ridge on real targets reached 0.067 with all variables. P5 failed on its own wording, because it asked for a training R2 of at least 0.99 at 150 variables and got 0.96; every other rule in it held."
+    ]
+   },
+   {
+    "id": "discussion",
+    "title": "Discussion",
+    "role": "argument",
+    "paragraphs": [
+     "The direction of the hope holds: skill grows with measured variables in every target and always beats the shuffled control. The strong form fails. In four of the five targets with a valid ceiling, the model stops between 0.18 and 0.65 of the way there, and the remainder is mostly reliable signal, not noise.",
+     "The exception teaches the most. The similarity variables were learned from the same triplet corpus, so they were built for the target, and they reach the ceiling. Our 0.660 sits close to the ceiling near 0.67 that Hebart and colleagues reported for an earlier version of the task {cite:r3}, which we read at the level of abstracts. Variables chosen because they were available, not because they were fitted to the target, stall.",
+     "The gaps closed most when a different kind of variable arrived. For forecasters this agrees with Himmelstein, Atanasov and Budescu {cite:r5}: past accuracy beats the trait battery. For trees, prior growth beats size, site and stand. A target's own history carries signal its present description misses.",
+     "Salganik and colleagues {cite:r1} found that many methods on rich data barely beat a simple benchmark. Our ceilings add a reading of that kind of result: a stall well below the noise ceiling says the missing information is in the world and not in the measurement error, so a different measurement can still help.",
+     "The toys bound the hope from the other side. With an exact model, chaos turns each tenfold gain in precision into a fixed slice of forecast time. A published forecast that people react to can be right only when the forecaster can solve for the reaction, and that solution degrades fast when most of the crowd is unmeasured.",
+     "The {g:tier}tier{/g} B* places this as a strong signal worth expanding. A rerun with non-linear learners and a preregistered tree ceiling on fresh splits would raise it."
+    ]
+   },
+   {
+    "id": "limits",
+    "title": "Limitations",
+    "role": "argument",
+    "paragraphs": [
+     "- Ridge and logistic models may leave signal that a non-linear model would find. A stall may belong to the model class.",
+     "- The datasets are a convenience sample of what was at hand, and only variables available in them were tried.",
+     "- The mood ceiling is a lower bound, the music rater count is assumed, and the tree ceiling estimator failed. A post hoc estimate in our ledger, outside the verdict and not in the result file, puts the tree ceiling at 0.74 to 0.82.",
+     "- The second run was not blind. Its one change, clipping, was fixed in a file hashed after the first run had been read.",
+     "- Several plateau intervals reached the fit bound, so they carry little information, and the P2 rule could not pass for those targets.",
+     "- The similarity task's shuffled control sits above chance by construction.",
+     "- The toys model their stated mechanisms only and say nothing direct about weather or markets.",
+     "- Scoring was done by our own code and was not blind."
+    ]
+   },
+   {
+    "id": "appendix",
+    "title": "Appendix A. The preregistered verdicts",
+    "role": "evidence",
+    "paragraphs": [
+     "Each verdict is a set of rules written before the first run. A verdict passes only when every rule holds. Values are read from the second run's result file. P6, the identification test on a private image collection, is omitted.",
+     "::table tab:verdicts cols=0.1,0.52,0.24,0.14 Preregistered verdicts and the rules that decided each one.\nVerdict ¦ Deciding rules ¦ Value ¦ Holds\nP1 ¦ at least 4 of 6 targets at 0.8 of ceiling or more ¦ 1 of 6 ¦ no\nP2 ¦ at least 3 of 7 plateaus moved by the strong variable ¦ 1 of 7 ¦ no\nP3 ¦ linear R2 at least 0.98; slope within 0.75 to 1.25 of theory; late to early decade gain within 0.75 to 1.33 ¦ 0.99994; 0.988; 1.015 ¦ yes\nP4 ¦ unpublished R2 at least 0.99; naive published R2 below 0.5; fixed point R2 at least 0.95; 100 of 1,000 measured costs at least 0.2; identical members below 0.5 ¦ 1.00; -1.55; 0.9999; 0.58; -0.02 ¦ yes\nP5 ¦ every target above its shuffled 95th percentile; least squares at 150 variables below 0 held out and at least 0.99 in training; shuffled ridge at most 0.02; real ridge above 0 ¦ all above; -135,817 and 0.96; -0.005; 0.067 ¦ no\n::end"
+    ]
+   }
+  ]
+ },
+ "claims": [
+  {
+   "id": "c1",
+   "text": "Held-out skill rose with added variables in every target and beat a shuffled-target control in every target.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": []
+  },
+  {
+   "id": "c2",
+   "text": "Only the similarity task, whose variables were learned from the same task, reached its ceiling (0.985 of the way); mood, valence, arousal and forecaster accuracy stopped at 0.65, 0.54, 0.46 and 0.18, and the tree ceiling estimator failed.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e1"
+   ]
+  },
+  {
+   "id": "c3",
+   "text": "The largest gains came from a different kind of variable: past accuracy lifted forecasters from 0.131 to 0.360 and prior growth lifted trees from 0.396 to 0.639.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e2"
+   ]
+  },
+  {
+   "id": "c4",
+   "text": "One of six targets reached 0.8 of its ceiling, against a forecast of at least four, and one of seven plateaus moved, against a forecast of at least three.",
+   "section": "results",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e3"
+   ]
+  },
+  {
+   "id": "c5",
+   "text": "In the Lorenz toy the forecast horizon grew 2.51 time units per tenfold gain in precision, against 2.54 from theory, with linear R2 0.99994; twelve decades of precision bought 1.2 to 28.7 time units.",
+   "section": "results",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e4"
+   ]
+  }
+ ],
+ "evidence": [
+  {
+   "id": "e1",
+   "kind": "number",
+   "label": "The numbers in claim 2",
+   "value": "0.985; 0.65; 0.54; 0.46; 0.18",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e2",
+   "kind": "number",
+   "label": "The numbers in claim 3",
+   "value": "0.131; 0.360; 0.396; 0.639",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e3",
+   "kind": "number",
+   "label": "The numbers in claim 4",
+   "value": "0.8",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e4",
+   "kind": "number",
+   "label": "The numbers in claim 5",
+   "value": "2.51; 2.54; 2; 0.99994; 1.2; 28.7",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e5",
+   "kind": "number",
+   "label": "Sample",
+   "value": "8 datasets; n 1744 to 150000; 22 to 1349 variables",
+   "check": {
+    "by": "the register's evidence fields",
+    "result": "not_checked",
+    "note": "as recorded in the publication register"
+   }
+  },
+  {
+   "id": "e6",
+   "kind": "number",
+   "label": "Main estimate and interval",
+   "value": "GJP asymptote 0.137 [0.118,0.155]; other asymptote intervals often hit the fit bound (up to 2.0)",
+   "check": {
+    "by": "the register's evidence fields",
+    "result": "not_checked",
+    "note": "as recorded in the publication register"
+   }
+  },
+  {
+   "id": "e7",
+   "kind": "number",
+   "label": "Forecast against outcome",
+   "value": "P1 1 of 6 at ceiling vs >= 4; P2 1 moved vs >= 3; P3, P4 toys pass; P6 gap -0.221",
+   "check": {
+    "by": "the register's evidence fields",
+    "result": "not_checked",
+    "note": "as recorded in the publication register"
+   }
+  },
+  {
+   "id": "e8",
+   "kind": "control",
+   "label": "Known-answer check",
+   "value": "Lorenz horizon 2.51 vs theory 2.54 per decade; overfitting demo",
+   "check": {
+    "by": "the register's evidence fields",
+    "result": "not_checked",
+    "note": "as recorded in the publication register"
+   }
+  }
+ ],
+ "references": [
+  {
+   "id": "r1",
+   "key": "Salganik 2020",
+   "kind": "paper",
+   "title": "Salganik, M. J., Lundberg, I., Kindel, A. T. and others (2020). Measuring the predictability of life outcomes with a scientific mass collaboration. Proceedings of the National Academy of Sciences 117(15), 8398-8403. doi:10.1073/pnas.1915006117",
+   "access": "snippet",
+   "target": "https://doi.org/10.1073/pnas.1915006117",
+   "access_note": "abstracts, repository records and publisher pages; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r2",
+   "key": "Lage-Castellanos 2019",
+   "kind": "paper",
+   "title": "Lage-Castellanos, A., Valente, G., Formisano, E. and De Martino, F. (2019). Methods for computing the maximum performance of computational models of fMRI responses. PLOS Computational Biology 15, e1006397. doi:10.1371/journal.pcbi.1006397",
+   "access": "snippet",
+   "target": "https://doi.org/10.1371/journal.pcbi.1006397",
+   "access_note": "abstracts, repository records and publisher pages; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r3",
+   "key": "Hebart 2020",
+   "kind": "paper",
+   "title": "Hebart, M. N., Zheng, C. Y., Pereira, F. and Baker, C. I. (2020). Revealing the multidimensional mental representations of natural objects underlying human similarity judgements. Nature Human Behaviour 4(11), 1173-1185. doi:10.1038/s41562-020-00951-3",
+   "access": "snippet",
+   "target": "https://doi.org/10.1038/s41562-020-00951-3",
+   "access_note": "abstracts, repository records and publisher pages; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r4",
+   "key": "Hebart 2023",
+   "kind": "dataset",
+   "title": "Hebart, M. N., Contier, O., Teichmann, L. and others (2023). THINGS-data, a multimodal collection of large-scale datasets for investigating object representations in human brain and behavior. eLife 12, e82580. doi:10.7554/eLife.82580",
+   "access": "run",
+   "target": "https://doi.org/10.7554/eLife.82580",
+   "licence": "mixed: DEAM CC BY-NC; GJP, FIA, THINGS each own terms; author saves private and should be dropped"
+  },
+  {
+   "id": "r5",
+   "key": "Himmelstein 2021",
+   "kind": "paper",
+   "title": "Himmelstein, M., Atanasov, P. and Budescu, D. V. (2021). Forecasting forecaster accuracy: contributions of past performance and individual differences. Judgment and Decision Making 16(2), 323-362. doi:10.1017/S1930297500008597",
+   "access": "snippet",
+   "target": "https://doi.org/10.1017/S1930297500008597",
+   "access_note": "abstracts, repository records and publisher pages; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r6",
+   "key": "Aljanaki 2017",
+   "kind": "dataset",
+   "title": "Aljanaki, A., Yang, Y.-H. and Soleymani, M. (2017). Developing a benchmark for emotional analysis of music. PLoS ONE 12(3), e0173392. doi:10.1371/journal.pone.0173392",
+   "access": "run",
+   "target": "https://doi.org/10.1371/journal.pone.0173392",
+   "licence": "mixed: DEAM CC BY-NC; GJP, FIA, THINGS each own terms; author saves private and should be dropped"
+  },
+  {
+   "id": "r7",
+   "key": "Good Judgment Project",
+   "kind": "dataset",
+   "title": "Good Judgment Project. GJP data. Harvard Dataverse, CC0 1.0. doi:10.7910/DVN/BPCDH5",
+   "access": "run",
+   "target": "https://doi.org/10.7910/DVN/BPCDH5",
+   "licence": "mixed: DEAM CC BY-NC; GJP, FIA, THINGS each own terms; author saves private and should be dropped"
+  },
+  {
+   "id": "r8",
+   "key": "USDA Forest Service",
+   "kind": "dataset",
+   "title": "USDA Forest Service. Forest Inventory and Analysis database, Washington and Oregon. FIA DataMart.",
+   "access": "run",
+   "licence": "mixed: DEAM CC BY-NC; GJP, FIA, THINGS each own terms; author saves private and should be dropped"
+  },
+  {
+   "id": "r9",
+   "key": "openESM",
+   "kind": "dataset",
+   "title": "openESM. Experience sampling dataset 0062 (Neubauer). CC BY 4.0.",
+   "access": "run",
+   "licence": "mixed: DEAM CC BY-NC; GJP, FIA, THINGS each own terms; author saves private and should be dropped"
+  },
+  {
+   "id": "r10",
+   "key": "pisa",
+   "kind": "paper",
+   "title": "Measurement-bounded predictive inference in international large-scale assessment: how the plausible-value ceiling governs attainable accuracy and the stability of predictor rankings in PISA 2022. Research Square preprint rs-10732065 (authors and date not read; seen as a search summary).",
+   "access": "snippet",
+   "access_note": "abstracts, repository records and publisher pages; full text not read",
+   "accessed": "2026-11-09"
+  }
+ ],
+ "relations": [],
+ "corrections": [
+  {
+   "id": "x1",
+   "date": "2026-10-29",
+   "target": "document",
+   "type": "wording",
+   "after": "A disclosed addendum clipped scaled values at 5 in either direction and nothing else; the second run is primary and not blind.",
+   "reason": "The first run's forecaster R2 of -1.686 came from unclipped scaling of nearly constant variables.",
+   "found_by": "the study itself, before publication"
+  },
+  {
+   "id": "x2",
+   "date": "2026-10-29",
+   "target": "document",
+   "type": "wording",
+   "after": "The addendum recorded three defects left in place on purpose: the failed tree ceiling estimator, the P2 rule that cannot pass for an unflattened curve, and the similarity control's above-chance start.",
+   "reason": "Dated in the paper's Corrections section; found by the study itself, before publication.",
+   "found_by": "the study itself, before publication"
+  },
+  {
+   "id": "x3",
+   "date": "2026-11-09",
+   "target": "document",
+   "type": "scope",
+   "after": "The identification test and the target built on a private image collection are left out.",
+   "reason": "Dated in the paper's Corrections section; found by the publication pass.",
+   "found_by": "the publication pass"
+  }
+ ],
+ "versions": [
+  {
+   "n": 1,
+   "date": "2026-10-29",
+   "what": "entered in the findings ledger"
+  },
+  {
+   "n": 2,
+   "date": "2026-11-09",
+   "what": "paper version 1.0, first published",
+   "hash": "633238f22619b8d3257370dd072adebab46ee65dabac013541fabaa29109ee8e"
+  }
+ ],
+ "grade": {
+  "lowers": [
+   {
+    "domain": "blinding",
+    "text": "Not blind. second run corrects a clipping fault after reading run 1",
+    "from": "register scorer.blind"
+   },
+   {
+    "domain": "missing control",
+    "text": "Controls: working: shuffled-target nulls beaten by all eight; failed: tree ceiling estimator (-3.97); P5 rule mis-specified.",
+    "from": "register evidence.controls"
+   },
+   {
+    "domain": "novelty",
+    "text": "Nearby work exists; novelty is not shown.",
+    "from": "register literature.verdict"
+   },
+   {
+    "domain": "single source",
+    "text": "The cited literature was read at the level of abstracts, repository records and publisher pages; full texts were not read.",
+    "from": "paper Verified"
+   }
+  ],
+  "holds": [
+   {
+    "domain": "scoring",
+    "text": "Scored by code against rules fixed in advance.",
+    "from": "register scorer.who"
+   },
+   {
+    "domain": "preregistration",
+    "text": "Preregistered and hash-locked before the run (sha256 ee38c3bd).",
+    "from": "paper Reproduction"
+   },
+   {
+    "domain": "open data",
+    "text": "Public data.",
+    "from": "register data_licence"
+   }
+  ]
+ },
+ "reproduce": {
+  "data": [
+   {
+    "name": "Hebart 2023",
+    "licence": "mixed: DEAM CC BY-NC; GJP, FIA, THINGS each own terms; author saves private and should be dropped",
+    "url": "https://doi.org/10.7554/eLife.82580"
+   },
+   {
+    "name": "Aljanaki 2017",
+    "licence": "mixed: DEAM CC BY-NC; GJP, FIA, THINGS each own terms; author saves private and should be dropped",
+    "url": "https://doi.org/10.1371/journal.pone.0173392"
+   },
+   {
+    "name": "Good Judgment Project",
+    "licence": "mixed: DEAM CC BY-NC; GJP, FIA, THINGS each own terms; author saves private and should be dropped",
+    "url": "https://doi.org/10.7910/DVN/BPCDH5"
+   },
+   {
+    "name": "USDA Forest Service",
+    "licence": "mixed: DEAM CC BY-NC; GJP, FIA, THINGS each own terms; author saves private and should be dropped",
+    "url": ""
+   },
+   {
+    "name": "openESM",
+    "licence": "mixed: DEAM CC BY-NC; GJP, FIA, THINGS each own terms; author saves private and should be dropped",
+    "url": ""
+   }
+  ],
+  "prereg": {
+   "hash": "ee38c3bd5b2a255fe65bbe3c94c895bde618261da9a2c638e16fce87f2f7b602",
+   "plan": "7ae9de2b411eaa112e2644a19075028358534a613be6439c97d6fd040b9b33d9"
+  },
+  "cost": "the second run took about 16 minutes on one desktop computer, most of it in the forecaster and similarity targets.",
+  "steps": [
+   "Data: Forest Inventory and Analysis for Washington and Oregon {cite:r8}; openESM dataset 0062 {cite:r9}; DEAM static ratings {cite:r6}; Good Judgment Project data {cite:r7}; THINGS odd-one-out triplets and the 66 object dimensions {cite:r4}.",
+   "Hold out by plot, by each person's last 30 percent of beeps, by artist, by forecaster and by between-subject repeated triplets. Add variables in 8 random orders and correlation order at about 14 counts; refit and score held out at each count. Clip scaled values at 5 in either direction.",
+   "Compute each ceiling from the data's own repeats and the share with eq. {ref:eq:share}. Fit eq. {ref:eq:sat} to the curves. Refit each target on shuffled training labels 20 times.",
+   "For the toys, integrate Lorenz-63 from perturbed states until the error norm exceeds 1, and simulate the crowd with the attendance rule in the methods.",
+   "Preregistration SHA-256: ee38c3bd5b2a255fe65bbe3c94c895bde618261da9a2c638e16fce87f2f7b602. Addendum SHA-256: e722f68052046c926fe562f66bfb368fef7b6c3120dc28de781b861e727e4d54. Plan SHA-256: 7ae9de2b411eaa112e2644a19075028358534a613be6439c97d6fd040b9b33d9. Runs 20261029T172001Z and 20261029T175624Z (primary)."
+  ],
+  "not_rerun": "The study was not re-run for this paper."
+ },
+ "verified": {
+  "date": "2026-11-09",
+  "checks": [
+   {
+    "what": "On 9 November 2026 every skill, ceiling, share, strong-variable value, variance split, plateau fit, control bar, case count, toy value, overfitting value and verdict in this paper was re-read from the second run's result file, and the first run's forecaster R2 of -1.686 from the first run's result file.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   },
+   {
+    "what": "These match the findings ledger to rounding; the tree ceiling reads -3.9645 in the file and -3.97 in the ledger.",
+    "by": "the paper's Verified pass",
+    "result": "match"
+   },
+   {
+    "what": "Both preregistration files' SHA-256 values match their hash files and the hashes recorded in the two result files.",
+    "by": "the paper's Verified pass",
+    "result": "match"
+   },
+   {
+    "what": "The post hoc tree ceiling of 0.74 to 0.82 was read from the ledger only.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   },
+   {
+    "what": "All three figures were drawn by a script that reads only the second run's result file.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   }
+  ],
+  "not_checked": [
+   "The study was not re-run for this paper.",
+   "The literature was found by searches run on 9 November 2026 and read at the level of abstracts, repository records and publisher pages; the full texts were not read."
+  ]
+ }
+}

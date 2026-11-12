@@ -1,0 +1,822 @@
+{
+ "study": "mood-reverb-release",
+ "run_id": "20261029T130553Z",
+ "date": "2026-10-29",
+ "prereg": {
+  "path": "PREREG.txt",
+  "sha256": "c26b85b57ec1c6495ee297009a4f7fa1e47184cfa1ee10b4aba77cef4280ce81",
+  "anchors": [
+   "sidecar",
+   "lock"
+  ],
+  "plan_sha256": "86d93b056d781b181f3873196c9a1ac049d019b151c230a16de2693e0ff51201",
+  "locked_at": "2026-10-29T13:05:44+00:00"
+ },
+ "hashes": {
+  "0018_bailon_ts.tsv": "a9f6296cea7b747577f3a5b959348237a5486c42a55b47ad529557916779fd6f",
+  "0062_neubauer_ts.tsv": "1c27ae6f25d972f870c836791a9906493cab4ce395c2d70754329750c4019293",
+  "0008_westhoff_ts.tsv": "b47dac880030d62bb9f25acddba4c76a8acaff9909a5f5bc5c28e6067cfecb56",
+  "0076_bayer_ts.tsv": "5923ffffa062b749dd1b0ec84b624d6c7c242b31627b07ed5b9a1efad98ae4e4",
+  "mood_units.py": "6a2fb72965baaf46ea36f6703eede06abd4a6819c8604c5106365a57c620a149",
+  "mood_stats.py": "71b2d9999ade28ee4861ae2211f27b1c06f6689fa86e5956017d2f77636c2889",
+  "mood_data.py": "4e6b47b91b983501aa4b6180e5e2356544b25c5277031c270655cf0812ab0de4"
+ },
+ "analysis": {
+  "d0018": {
+   "label": "valence slider 0-100",
+   "n_ids": 999,
+   "n_eligible": 71,
+   "prompts_per_eligible_person": {
+    "q10": 75.0,
+    "median": 176.0,
+    "q90": 362.0,
+    "mean": 205.77464788732394
+   },
+   "status": "tested",
+   "inertia": {
+    "q10": 0.006667815322941628,
+    "median": 0.2205838943736771,
+    "q90": 0.44643349560314793,
+    "mean": 0.2359285095177319
+   },
+   "recovery": {
+    "q10": 0.2827225130890052,
+    "median": 0.6719426608929371,
+    "q90": 1.0109689213893966,
+    "mean": 0.6642266467313682
+   },
+   "mean_inertia": 0.2359285095177319,
+   "r": -0.4390894947016585,
+   "abs_r": 0.4390894947016585,
+   "r_ci95": [
+    -0.6278388515508694,
+    -0.190925993032492
+   ],
+   "spearman": -0.35519785378940305,
+   "secondary": {
+    "inertia_all_pairs": {
+     "r": -0.811678613022053,
+     "abs_r": 0.811678613022053,
+     "r_ci95": [
+      -0.8700736989854518,
+      -0.7226412245175579
+     ],
+     "spearman": -0.7666331321260899,
+     "n_persons": 71
+    },
+    "inertia_kendall_corrected": {
+     "r": -0.42655286607541215,
+     "abs_r": 0.42655286607541215,
+     "r_ci95": [
+      -0.6293381353401057,
+      -0.17837091100511923
+     ],
+     "spearman": -0.34349429912810187,
+     "n_persons": 71
+    },
+    "spike_threshold_1.0sd": {
+     "r": -0.3692989025546233,
+     "abs_r": 0.3692989025546233,
+     "r_ci95": [
+      -0.5822418404127888,
+      -0.09987955372423216
+     ],
+     "spearman": -0.2488087196292401,
+     "n_persons": 79
+    }
+   },
+   "r_inertia_vs_prompts": 0.19718736380454036,
+   "by_prompt_tertile": {
+    "low": {
+     "n": 24,
+     "r": -0.13731316128064613,
+     "mean_inertia": 0.19618684694094668
+    },
+    "mid": {
+     "n": 23,
+     "r": -0.4498679943603808,
+     "mean_inertia": 0.22136951419881062
+    },
+    "high": {
+     "n": 24,
+     "r": -0.7839430493015053,
+     "mean_inertia": 0.28962254260848336
+    }
+   },
+   "cfa": {
+    "n_persons": 53,
+    "chi2_one": 0.055504494939828675,
+    "df_one": 2,
+    "chi2_two": 0.00036531344279921996,
+    "df_two": 1,
+    "delta_chi2": 0.055139181497029455,
+    "delta_chi2_p": 0.8143505113755738,
+    "bic_one": 31.817839803356804,
+    "bic_two": 35.732992535411896,
+    "delta_bic_two_minus_one": 3.9151527320550947,
+    "factor_corr": 0.9468289690690568,
+    "split_half_r_inertia": 0.3826932246817876,
+    "split_half_r_recovery": 0.3287120003796307
+   }
+  },
+  "d0062": {
+   "label": "mean(happy, cheerful, relaxed, balanced) minus mean(sad, afraid, angry, worried), 1-7 items",
+   "n_ids": 321,
+   "n_eligible": 49,
+   "prompts_per_eligible_person": {
+    "q10": 51.8,
+    "median": 59.0,
+    "q90": 66.0,
+    "mean": 58.42857142857143
+   },
+   "status": "tested",
+   "inertia": {
+    "q10": 0.13684858726081864,
+    "median": 0.39770100670212066,
+    "q90": 0.6847097797900141,
+    "mean": 0.4035010589636258
+   },
+   "recovery": {
+    "q10": 0.12618082554388294,
+    "median": 0.48962655601659755,
+    "q90": 0.8622059422059424,
+    "mean": 0.486874474482404
+   },
+   "mean_inertia": 0.4035010589636258,
+   "r": -0.4137997901818102,
+   "abs_r": 0.4137997901818102,
+   "r_ci95": [
+    -0.682116998729061,
+    -0.08714140113796479
+   ],
+   "spearman": -0.40514338408742623,
+   "secondary": {
+    "inertia_all_pairs": {
+     "r": -0.7450357043761606,
+     "abs_r": 0.7450357043761606,
+     "r_ci95": [
+      -0.8640310523781947,
+      -0.5941077141226044
+     ],
+     "spearman": -0.7189509171022462,
+     "n_persons": 49
+    },
+    "inertia_kendall_corrected": {
+     "r": -0.4171138247120971,
+     "abs_r": 0.4171138247120971,
+     "r_ci95": [
+      -0.7009090750364834,
+      -0.0709061003704513
+     ],
+     "spearman": -0.4230023493809526,
+     "n_persons": 49
+    },
+    "spike_threshold_1.0sd": {
+     "r": -0.3232348833607554,
+     "abs_r": 0.3232348833607554,
+     "r_ci95": [
+      -0.4838450205260671,
+      -0.15857140294270766
+     ],
+     "spearman": -0.3089166376362021,
+     "n_persons": 138
+    }
+   },
+   "r_inertia_vs_prompts": 0.16727500843628862,
+   "by_prompt_tertile": {
+    "low": {
+     "n": 19,
+     "r": -0.3089191894886959,
+     "mean_inertia": 0.40691803736836074
+    },
+    "mid": {
+     "n": 17,
+     "r": -0.7795864840893758,
+     "mean_inertia": 0.35389920155163984
+    },
+    "high": {
+     "n": 13,
+     "r": 0.2501497529959805,
+     "mean_inertia": 0.46337098098776414
+    }
+   },
+   "cfa_status": "untestable: 5 persons with both halves, fewer than 30"
+  },
+  "d0008": {
+   "label": "affect_valence 0-100",
+   "n_ids": 114,
+   "n_eligible": 99,
+   "prompts_per_eligible_person": {
+    "q10": 88.0,
+    "median": 99.0,
+    "q90": 104.0,
+    "mean": 97.45454545454545
+   },
+   "status": "tested",
+   "inertia": {
+    "q10": 0.04913339453411926,
+    "median": 0.2421193027933094,
+    "q90": 0.5086041997485456,
+    "mean": 0.26951394588471916
+   },
+   "recovery": {
+    "q10": 0.26888365865239644,
+    "median": 0.6320481107818433,
+    "q90": 0.9647088375600634,
+    "mean": 0.6233714773935973
+   },
+   "mean_inertia": 0.26951394588471916,
+   "r": -0.2792119143950174,
+   "abs_r": 0.2792119143950174,
+   "r_ci95": [
+    -0.446642496385569,
+    -0.09370987940635832
+   ],
+   "spearman": -0.3304761904761904,
+   "secondary": {
+    "inertia_all_pairs": {
+     "r": -0.674584653451193,
+     "abs_r": 0.674584653451193,
+     "r_ci95": [
+      -0.7830145079282662,
+      -0.5267838615916909
+     ],
+     "spearman": -0.6595670995670995,
+     "n_persons": 99
+    },
+    "inertia_kendall_corrected": {
+     "r": -0.2767834764179661,
+     "abs_r": 0.2767834764179661,
+     "r_ci95": [
+      -0.455285567739248,
+      -0.11345094741508424
+     ],
+     "spearman": -0.3314038342609771,
+     "n_persons": 99
+    },
+    "spike_threshold_1.0sd": {
+     "r": -0.27469045581975365,
+     "abs_r": 0.27469045581975365,
+     "r_ci95": [
+      -0.4274855992897707,
+      -0.11393927747908267
+     ],
+     "spearman": -0.24907745925445043,
+     "n_persons": 112
+    }
+   },
+   "r_inertia_vs_prompts": -0.020682841203642787,
+   "by_prompt_tertile": {
+    "low": {
+     "n": 34,
+     "r": -0.1850729947549147,
+     "mean_inertia": 0.2977996203023773
+    },
+    "mid": {
+     "n": 37,
+     "r": -0.26554385199475095,
+     "mean_inertia": 0.2232251504437668
+    },
+    "high": {
+     "n": 28,
+     "r": -0.39906398242854524,
+     "mean_inertia": 0.2963343923531071
+    }
+   },
+   "cfa": {
+    "n_persons": 60,
+    "chi2_one": 1.0354802514185666,
+    "df_one": 2,
+    "chi2_two": 1.0341061424781648,
+    "df_two": 1,
+    "delta_chi2": 0.001374108940401797,
+    "delta_chi2_p": 0.9704300090290265,
+    "bic_one": 33.79023674919537,
+    "bic_two": 37.88320720247707,
+    "delta_bic_two_minus_one": 4.092970453281694,
+    "factor_corr": 0.9788598341978304,
+    "split_half_r_inertia": 0.4668207851902433,
+    "split_half_r_recovery": 0.11255935187769671
+   }
+  },
+  "d0076": {
+   "label": "pa (positive affect) 1-5",
+   "n_ids": 519,
+   "n_eligible": 259,
+   "prompts_per_eligible_person": {
+    "q10": 57.0,
+    "median": 74.0,
+    "q90": 80.0,
+    "mean": 71.01158301158301
+   },
+   "status": "tested",
+   "inertia": {
+    "q10": -0.06358215642808357,
+    "median": 0.16614175164561318,
+    "q90": 0.38624783766804577,
+    "mean": 0.16204946543500573
+   },
+   "recovery": {
+    "q10": 0.3267478260869565,
+    "median": 0.7530864197530864,
+    "q90": 1.1823360600589088,
+    "mean": 0.7682070390062673
+   },
+   "mean_inertia": 0.16204946543500573,
+   "r": -0.289420955833984,
+   "abs_r": 0.289420955833984,
+   "r_ci95": [
+    -0.40596402293443934,
+    -0.15455316618788253
+   ],
+   "spearman": -0.31509629855030746,
+   "secondary": {
+    "inertia_all_pairs": {
+     "r": -0.6927794595065603,
+     "abs_r": 0.6927794595065603,
+     "r_ci95": [
+      -0.7551967195554273,
+      -0.6195544594055571
+     ],
+     "spearman": -0.6839775802249961,
+     "n_persons": 259
+    },
+    "inertia_kendall_corrected": {
+     "r": -0.2933814887222542,
+     "abs_r": 0.2933814887222542,
+     "r_ci95": [
+      -0.4156231188354497,
+      -0.15568568556365467
+     ],
+     "spearman": -0.31865108437437806,
+     "n_persons": 259
+    },
+    "spike_threshold_1.0sd": {
+     "r": -0.15953283633566542,
+     "abs_r": 0.15953283633566542,
+     "r_ci95": [
+      -0.2869404886953174,
+      -0.028657684408997384
+     ],
+     "spearman": -0.1810595618904772,
+     "n_persons": 272
+    }
+   },
+   "r_inertia_vs_prompts": -0.10164531640228863,
+   "by_prompt_tertile": {
+    "low": {
+     "n": 89,
+     "r": -0.25149049206084556,
+     "mean_inertia": 0.18585177359189195
+    },
+    "mid": {
+     "n": 85,
+     "r": -0.24398773785016256,
+     "mean_inertia": 0.16064954016866026
+    },
+    "high": {
+     "n": 85,
+     "r": -0.3700617709661354,
+     "mean_inertia": 0.13852697392531743
+    }
+   },
+   "cfa": {
+    "n_persons": 152,
+    "chi2_one": 5.272048255104901,
+    "df_one": 2,
+    "chi2_two": 5.272049534915773,
+    "df_two": 1,
+    "delta_chi2": 0.0,
+    "delta_chi2_p": 1.0,
+    "bic_one": 45.46309242187511,
+    "bic_two": 50.48697422253226,
+    "delta_bic_two_minus_one": 5.023881800657151,
+    "factor_corr": -0.9999997815622854,
+    "split_half_r_inertia": 0.025311548960156957,
+    "split_half_r_recovery": 0.1728472665016742
+   }
+  },
+  "summary_line": "0018: n 71, r -0.44 [-0.63, -0.19]; 0062: n 49, r -0.41 [-0.68, -0.09]; 0008: n 99, r -0.28 [-0.45, -0.09]; 0076: n 259, r -0.29 [-0.41, -0.15]"
+ },
+ "controls": {
+  "C1_0018": {
+   "n": 200,
+   "usable": true,
+   "mean": -0.006789494055108314,
+   "q95": 0.013411252298185976,
+   "q05": -0.02768648692881972,
+   "p_ge": 0.004975124378109453,
+   "compare": "analysis.d0018.mean_inertia",
+   "description": "0018: affect permuted inside each person; null of mean primary inertia"
+  },
+  "C2_0018": {
+   "n": 200,
+   "usable": true,
+   "mean": 0.5733565713692478,
+   "q95": 0.6984341362712428,
+   "q05": 0.43991867612958463,
+   "p_ge": 0.9502487562189055,
+   "compare": "analysis.d0018.abs_r",
+   "description": "0018: one-parameter AR(1) people on the real schedules; null of |r|",
+   "meta": {
+    "phi_source": "Kendall-corrected all-pairs inertia, shrunk toward the mean, clipped to [-0.5, 0.95]",
+    "shrink_factor": 0.8720188631527711
+   }
+  },
+  "C3_0018": {
+   "n": 0,
+   "usable": false,
+   "why_unusable": "0 null values, fewer than 20",
+   "compare": "analysis.d0018.abs_r",
+   "description": "0018: each person cut to a random 40-prompt block; distribution of |r|",
+   "meta": {
+    "block_prompts": 40,
+    "eligible_persons_median": 15.0
+   }
+  },
+  "C1_0062": {
+   "n": 200,
+   "usable": true,
+   "mean": -0.018700654824692724,
+   "q95": 0.011041544037823708,
+   "q05": -0.048613843208141445,
+   "p_ge": 0.004975124378109453,
+   "compare": "analysis.d0062.mean_inertia",
+   "description": "0062: affect permuted inside each person; null of mean primary inertia"
+  },
+  "C2_0062": {
+   "n": 156,
+   "usable": true,
+   "mean": 0.5115657270608622,
+   "q95": 0.6823667084364513,
+   "q05": 0.21548385990601862,
+   "p_ge": 0.802547770700637,
+   "compare": "analysis.d0062.abs_r",
+   "description": "0062: one-parameter AR(1) people on the real schedules; null of |r|",
+   "meta": {
+    "phi_source": "Kendall-corrected all-pairs inertia, shrunk toward the mean, clipped to [-0.5, 0.95]",
+    "shrink_factor": 0.8267833297488965
+   }
+  },
+  "C3_0062": {
+   "n": 0,
+   "usable": false,
+   "why_unusable": "0 null values, fewer than 20",
+   "compare": "analysis.d0062.abs_r",
+   "description": "0062: each person cut to a random 40-prompt block; distribution of |r|",
+   "meta": {
+    "block_prompts": 40,
+    "eligible_persons_median": 14.0
+   }
+  },
+  "C1_0008": {
+   "n": 200,
+   "usable": true,
+   "mean": -0.010787423876602819,
+   "q95": 0.012802026471078002,
+   "q05": -0.02776797380754642,
+   "p_ge": 0.004975124378109453,
+   "compare": "analysis.d0008.mean_inertia",
+   "description": "0008: affect permuted inside each person; null of mean primary inertia"
+  },
+  "C2_0008": {
+   "n": 200,
+   "usable": true,
+   "mean": 0.4754406636018066,
+   "q95": 0.5947829877997318,
+   "q05": 0.36700826851838947,
+   "p_ge": 0.9900497512437811,
+   "compare": "analysis.d0008.abs_r",
+   "description": "0008: one-parameter AR(1) people on the real schedules; null of |r|",
+   "meta": {
+    "phi_source": "Kendall-corrected all-pairs inertia, shrunk toward the mean, clipped to [-0.5, 0.95]",
+    "shrink_factor": 0.8214821960781498
+   }
+  },
+  "C3_0008": {
+   "n": 1,
+   "usable": false,
+   "mean": 0.19630435701304896,
+   "q95": 0.19630435701304896,
+   "q05": 0.19630435701304896,
+   "p_ge": 0.5,
+   "why_unusable": "1 null values, fewer than 20",
+   "compare": "analysis.d0008.abs_r",
+   "description": "0008: each person cut to a random 40-prompt block; distribution of |r|",
+   "meta": {
+    "block_prompts": 40,
+    "eligible_persons_median": 22.0
+   }
+  },
+  "C1_0076": {
+   "n": 200,
+   "usable": true,
+   "mean": -0.01370011722671602,
+   "q95": -2.067999810118964e-05,
+   "q05": -0.026867653977928257,
+   "p_ge": 0.004975124378109453,
+   "compare": "analysis.d0076.mean_inertia",
+   "description": "0076: affect permuted inside each person; null of mean primary inertia"
+  },
+  "C2_0076": {
+   "n": 200,
+   "usable": true,
+   "mean": 0.28252584412520987,
+   "q95": 0.39335323656804805,
+   "q05": 0.16803704909834358,
+   "p_ge": 0.4626865671641791,
+   "compare": "analysis.d0076.abs_r",
+   "description": "0076: one-parameter AR(1) people on the real schedules; null of |r|",
+   "meta": {
+    "phi_source": "Kendall-corrected all-pairs inertia, shrunk toward the mean, clipped to [-0.5, 0.95]",
+    "shrink_factor": 0.7920903550703116
+   }
+  },
+  "C3_0076": {
+   "n": 200,
+   "usable": true,
+   "mean": 0.23524980890414401,
+   "q95": 0.3698981607904476,
+   "q05": 0.10398079777252993,
+   "p_ge": 0.21393034825870647,
+   "compare": "analysis.d0076.abs_r",
+   "description": "0076: each person cut to a random 40-prompt block; distribution of |r|",
+   "meta": {
+    "block_prompts": 40,
+    "eligible_persons_median": 98.0
+   }
+  }
+ },
+ "timing_s": {
+  "analysis": 5.843407899985323,
+  "C1_0018": 1.2242775999766309,
+  "C2_0018": 10.33265900000697,
+  "C3_0018": 3.051700999989407,
+  "C1_0062": 0.918688799982192,
+  "C2_0062": 3.2247404000081588,
+  "C3_0062": 1.3816695999994408,
+  "C1_0008": 0.8027897999854758,
+  "C2_0008": 6.519006399990758,
+  "C3_0008": 3.1217385999916587,
+  "C1_0076": 2.5465487000183202,
+  "C2_0076": 16.325964500021655,
+  "C3_0076": 7.523270500008948
+ },
+ "verdicts": {
+  "P0_0018": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.d0018.mean_inertia > controls.C1_0018.q95",
+     "left": 0.2359285095177319,
+     "right": 0.013411252298185976,
+     "holds": true
+    }
+   ]
+  },
+  "P1_0018": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.d0018.r_ci95.0 > -0.7",
+     "left": -0.6278388515508694,
+     "right": -0.7,
+     "holds": true
+    },
+    {
+     "rule": "analysis.d0018.r_ci95.1 < 0.7",
+     "left": -0.190925993032492,
+     "right": 0.7,
+     "holds": true
+    },
+    {
+     "rule": "analysis.d0018.abs_r < controls.C2_0018.q05",
+     "left": 0.4390894947016585,
+     "right": 0.43991867612958463,
+     "holds": true
+    }
+   ]
+  },
+  "P2_0018": {
+   "verdict": "FAIL",
+   "rules": [
+    {
+     "rule": "analysis.d0018.cfa.delta_chi2_p < 0.05",
+     "left": 0.8143505113755738,
+     "right": 0.05,
+     "holds": false
+    },
+    {
+     "rule": "analysis.d0018.cfa.delta_bic_two_minus_one < 0",
+     "left": 3.9151527320550947,
+     "right": 0,
+     "holds": false
+    }
+   ]
+  },
+  "S_0018": {
+   "verdict": "UNTESTABLE",
+   "rules": [
+    {
+     "rule": "controls.C3_0018.mean < 0.7",
+     "left": null,
+     "right": 0.7,
+     "holds": null,
+     "why": "control C3_0018 unusable"
+    }
+   ]
+  },
+  "P0_0062": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.d0062.mean_inertia > controls.C1_0062.q95",
+     "left": 0.4035010589636258,
+     "right": 0.011041544037823708,
+     "holds": true
+    }
+   ]
+  },
+  "P1_0062": {
+   "verdict": "FAIL",
+   "rules": [
+    {
+     "rule": "analysis.d0062.r_ci95.0 > -0.7",
+     "left": -0.682116998729061,
+     "right": -0.7,
+     "holds": true
+    },
+    {
+     "rule": "analysis.d0062.r_ci95.1 < 0.7",
+     "left": -0.08714140113796479,
+     "right": 0.7,
+     "holds": true
+    },
+    {
+     "rule": "analysis.d0062.abs_r < controls.C2_0062.q05",
+     "left": 0.4137997901818102,
+     "right": 0.21548385990601862,
+     "holds": false
+    }
+   ]
+  },
+  "P2_0062": {
+   "verdict": "UNTESTABLE",
+   "rules": [
+    {
+     "rule": "analysis.d0062.cfa.delta_chi2_p < 0.05",
+     "left": null,
+     "right": 0.05,
+     "holds": null,
+     "why": "missing analysis.d0062.cfa.delta_chi2_p"
+    },
+    {
+     "rule": "analysis.d0062.cfa.delta_bic_two_minus_one < 0",
+     "left": null,
+     "right": 0,
+     "holds": null,
+     "why": "missing analysis.d0062.cfa.delta_bic_two_minus_one"
+    }
+   ]
+  },
+  "S_0062": {
+   "verdict": "UNTESTABLE",
+   "rules": [
+    {
+     "rule": "controls.C3_0062.mean < 0.7",
+     "left": null,
+     "right": 0.7,
+     "holds": null,
+     "why": "control C3_0062 unusable"
+    }
+   ]
+  },
+  "P0_0008": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.d0008.mean_inertia > controls.C1_0008.q95",
+     "left": 0.26951394588471916,
+     "right": 0.012802026471078002,
+     "holds": true
+    }
+   ]
+  },
+  "P1_0008": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.d0008.r_ci95.0 > -0.7",
+     "left": -0.446642496385569,
+     "right": -0.7,
+     "holds": true
+    },
+    {
+     "rule": "analysis.d0008.r_ci95.1 < 0.7",
+     "left": -0.09370987940635832,
+     "right": 0.7,
+     "holds": true
+    },
+    {
+     "rule": "analysis.d0008.abs_r < controls.C2_0008.q05",
+     "left": 0.2792119143950174,
+     "right": 0.36700826851838947,
+     "holds": true
+    }
+   ]
+  },
+  "P2_0008": {
+   "verdict": "FAIL",
+   "rules": [
+    {
+     "rule": "analysis.d0008.cfa.delta_chi2_p < 0.05",
+     "left": 0.9704300090290265,
+     "right": 0.05,
+     "holds": false
+    },
+    {
+     "rule": "analysis.d0008.cfa.delta_bic_two_minus_one < 0",
+     "left": 4.092970453281694,
+     "right": 0,
+     "holds": false
+    }
+   ]
+  },
+  "S_0008": {
+   "verdict": "UNTESTABLE",
+   "rules": [
+    {
+     "rule": "controls.C3_0008.mean < 0.7",
+     "left": null,
+     "right": 0.7,
+     "holds": null,
+     "why": "control C3_0008 unusable"
+    }
+   ]
+  },
+  "P0_0076": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.d0076.mean_inertia > controls.C1_0076.q95",
+     "left": 0.16204946543500573,
+     "right": -2.067999810118964e-05,
+     "holds": true
+    }
+   ]
+  },
+  "P1_0076": {
+   "verdict": "FAIL",
+   "rules": [
+    {
+     "rule": "analysis.d0076.r_ci95.0 > -0.7",
+     "left": -0.40596402293443934,
+     "right": -0.7,
+     "holds": true
+    },
+    {
+     "rule": "analysis.d0076.r_ci95.1 < 0.7",
+     "left": -0.15455316618788253,
+     "right": 0.7,
+     "holds": true
+    },
+    {
+     "rule": "analysis.d0076.abs_r < controls.C2_0076.q05",
+     "left": 0.289420955833984,
+     "right": 0.16803704909834358,
+     "holds": false
+    }
+   ]
+  },
+  "P2_0076": {
+   "verdict": "FAIL",
+   "rules": [
+    {
+     "rule": "analysis.d0076.cfa.delta_chi2_p < 0.05",
+     "left": 1.0,
+     "right": 0.05,
+     "holds": false
+    },
+    {
+     "rule": "analysis.d0076.cfa.delta_bic_two_minus_one < 0",
+     "left": 5.023881800657151,
+     "right": 0,
+     "holds": false
+    }
+   ]
+  },
+  "S_0076": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "controls.C3_0076.mean < 0.7",
+     "left": 0.23524980890414401,
+     "right": 0.7,
+     "holds": true
+    }
+   ]
+  }
+ },
+ "reproduce": null,
+ "status": "scored"
+}

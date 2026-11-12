@@ -1,0 +1,32 @@
+{
+ "_about": "Field terms for F308, same shape as papers/glossary.json.",
+ "terms": {
+  "oeis": {"term": "OEIS", "field": "mathematics (reference databases)",
+   "definition": "the On-Line Encyclopedia of Integer Sequences, a public database of number sequences in which each entry carries the first terms, formulas, comments and links contributed by many people",
+   "excludes": "a peer-reviewed journal; a line in an entry is a contribution, and a conjecture line in it carries no proof"},
+  "b-file": {"term": "b-file", "field": "the OEIS",
+   "definition": "a text file stored beside an OEIS entry that lists the sequence's index and term pairs much further than the entry's own data section, often to thousands of terms",
+   "excludes": "the entry's data section, which holds only the first few dozen terms"},
+  "conjecture-line": {"term": "conjecture line", "field": "the OEIS, our usage",
+   "definition": "a comment or formula line in an OEIS entry that states an equation for the sequence and labels it a conjecture; most were found by fitting the terms then known",
+   "excludes": "a line marked as proved, and a statement with no equation"},
+  "linear-recurrence": {"term": "linear recurrence", "field": "mathematics (combinatorics)",
+   "definition": "an equation that gives each term of a sequence as a fixed weighted sum of a set number of earlier terms, possibly with terms in n; here with integer coefficients",
+   "excludes": "an equation with a product of earlier terms, and an equation with coefficients that are not integers"},
+  "counterexample": {"term": "counterexample", "field": "mathematics (logic)",
+   "definition": "a single case where a general statement is false; one is enough to refute a conjecture",
+   "excludes": "a term that disagrees because the data are wrong"},
+  "ast-whitelist": {"term": "parser whitelist", "field": "computer science (parsing)",
+   "definition": "a rule that turns each line into a syntax tree and accepts it only if every part is on a fixed list: integers, n, the terms a(n-k), addition, subtraction, multiplication and powers",
+   "excludes": "any line that needs division, sums, named functions or words to state"},
+  "sampling-frame": {"term": "sampling frame", "field": "survey statistics",
+   "definition": "the list from which a sample is drawn; a result describes the frame, so a change of frame changes what the result is about",
+   "excludes": "the sample itself"},
+  "deviation": {"term": "deviation", "field": "research method (metascience)",
+   "definition": "a dated, recorded change from the preregistered plan, stated with its reason and with what had been seen when it was made",
+   "excludes": "a change made silently, and a change made after seeing the outcome it would affect without saying so"},
+  "wilson": {"term": "Wilson interval", "field": "statistics",
+   "definition": "a 95 percent interval for a proportion, found by inverting the score test; it stays inside 0 to 1 and behaves well when the count is small or near zero",
+   "excludes": "the simple interval of the proportion plus or minus 1.96 standard errors, which fails near zero"}
+ }
+}

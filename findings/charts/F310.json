@@ -1,0 +1,421 @@
+{
+ "finding": "F310",
+ "sources": [
+  {
+   "id": "result",
+   "name": "result.json",
+   "sha256_original": "43000bace9a1e11ebc0bda2e2fd94f746f7624811710465d0839ec4e4e84f466",
+   "sha256_copy": "b765461d342cc250e1fe62efabe7256c4d7afe751dd9103ccc1d726bb7a25af6",
+   "href": "/findings/results/F310/result.json",
+   "run": "20261031T220149Z"
+  }
+ ],
+ "charts": [
+  {
+   "key": "design",
+   "form": "flow",
+   "at": "controls",
+   "claims": [
+    "c3",
+    "c1"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "How the test was built: one score, a planted check and two controls read in order.",
+   "takeaway": "The score had to see planted regularity first; then the real systems met two controls, and only the second is about sequence.",
+   "n": "122 systems with four or more planets (543 planets)",
+   "steps": [
+    {
+     "kind": "data",
+     "label": "122 systems, 543 planets",
+     "detail": "NASA Exoplanet Archive, systems with four or more planets, sorted by period."
+    },
+    {
+     "kind": "measure",
+     "label": "Fit three forms, score each",
+     "detail": "Plain, Blagg-Richardson style and gapped. Score S is minus the median residual over mean gap."
+    },
+    {
+     "kind": "planted",
+     "label": "Planted systems score −0.050",
+     "detail": "Exactly log-linear periods with 5 percent jitter. Bar to clear: −0.190."
+    },
+    {
+     "kind": "control",
+     "label": "Control 1: pooled gaps",
+     "detail": "Rebuild each system from gaps drawn from all systems, 2,000 times. Asks whether a system's gaps resemble each other."
+    },
+    {
+     "kind": "control",
+     "label": "Control 2: order shuffled",
+     "detail": "Keep each system's gaps, shuffle their order, 2,000 times. Asks whether the order is regular."
+    },
+    {
+     "kind": "rule",
+     "label": "Rule: real score above the control's 95th percentile",
+     "detail": "Fixed before the data were read, with at least 60 systems."
+    },
+    {
+     "kind": "verdict",
+     "holds": false,
+     "label": "Sequence claim",
+     "no": "not supported",
+     "detail": "Control 1 beaten (p 0.0005). Control 2 not beaten by any form."
+    }
+   ]
+  },
+  {
+   "key": "planted",
+   "form": "band",
+   "at": "controls",
+   "claims": [
+    "c3"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "Planted check: does the score see regularity that was put there?",
+   "takeaway": "Planted systems score −0.050, far above the pooled-gap control's 95th percentile of −0.190.",
+   "units": "regularity score S: minus the median over systems of fit residual divided by mean gap, both in ln period; higher is more regular",
+   "n": "122 planted systems with the real systems' planet counts; 2,000 control draws",
+   "interval": "5th to 95th percentile of the control draws",
+   "baseline": "Pooled-gap control: each system rebuilt from gaps drawn from all systems",
+   "threshold": "Planted score above the control's 95th percentile (−0.190)",
+   "planted": "Held: −0.050 against −0.190",
+   "value_name": "planted score",
+   "band_name": "pooled-gap control, 5th to 95th percentile",
+   "axis": {
+    "label": "regularity score S (higher is more regular)",
+    "max": 0
+   },
+   "rows": [
+    {
+     "label": "Planted systems, pooled gaps",
+     "value": -0.050195516755194375,
+     "lo": -0.23588646337734412,
+     "hi": -0.1903577240103617,
+     "mean": -0.21294905456090876,
+     "series": 2,
+     "note": "planted −0.050; control −0.236 to −0.190, mean −0.213"
+    }
+   ],
+   "columns": [
+    "Quantity",
+    "Value"
+   ],
+   "table": [
+    [
+     "Planted score",
+     "−0.050"
+    ],
+    [
+     "Control mean",
+     "−0.213"
+    ],
+    [
+     "Control 5th percentile",
+     "−0.236"
+    ],
+    [
+     "Control 95th percentile",
+     "−0.190"
+    ],
+    [
+     "Control draws",
+     "2,000"
+    ]
+   ]
+  },
+  {
+   "key": "regularity",
+   "form": "band",
+   "at": "results",
+   "claims": [
+    "c1",
+    "c4"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "Real regularity scores against each control's range.",
+   "takeaway": "The real systems clear the pooled-gap control and sit inside or below every order-shuffle range.",
+   "units": "regularity score S: minus the median over systems of fit residual divided by mean gap, both in ln period; higher is more regular",
+   "n": "122 systems with four or more planets (543 planets); 2,000 draws for the plain form's controls, 200 for the other two forms",
+   "interval": "5th to 95th percentile of the control draws",
+   "baseline": "Two controls: gaps drawn from all systems, and each system's own gaps in a shuffled order",
+   "threshold": "Real score above the control's 95th percentile, fixed before the data were read",
+   "planted": "Held: planted systems scored −0.050 against a bar of −0.190",
+   "ruled_out": "A regular order of gaps beyond each system's own set of gaps: the real plain score −0.157 is below the order-shuffle 95th percentile −0.145 (p 0.85)",
+   "value_name": "real score",
+   "band_name": "control draws, 5th to 95th percentile",
+   "axis": {
+    "label": "regularity score S (higher is more regular)"
+   },
+   "rows": [
+    {
+     "label": "Plain form, pooled gaps",
+     "group": "Gaps drawn from every system",
+     "value": -0.15734693080996476,
+     "lo": -0.23588646337734412,
+     "hi": -0.1903577240103617,
+     "mean": -0.21294905456090876,
+     "series": 0,
+     "note": "real −0.157; control −0.236 to −0.190, mean −0.213; p 0.0005 from 2,000 draws"
+    },
+    {
+     "label": "Plain form, order shuffled",
+     "group": "Each system's own gaps in a new order",
+     "value": -0.15734693080996476,
+     "lo": -0.16091088848652146,
+     "hi": -0.14494302303828743,
+     "mean": -0.15284451200192675,
+     "series": 0,
+     "note": "real −0.157; control −0.161 to −0.145, mean −0.153; p 0.85 from 2,000 draws"
+    },
+    {
+     "label": "Blagg-Richardson style, order shuffled",
+     "group": "Each system's own gaps in a new order",
+     "value": -0.1410551846588566,
+     "lo": -0.13368053649803804,
+     "hi": -0.11598037538499734,
+     "mean": -0.12534887431429848,
+     "series": 0,
+     "note": "real −0.141; control −0.134 to −0.116, mean −0.125; p 1.00 from 200 draws"
+    },
+    {
+     "label": "Gapped form, order shuffled",
+     "group": "Each system's own gaps in a new order",
+     "value": -0.07911078577711288,
+     "lo": -0.08071054864485629,
+     "hi": -0.07387763089221984,
+     "mean": -0.07779652823001111,
+     "series": 0,
+     "note": "real −0.079; control −0.081 to −0.074, mean −0.078; p 0.68 from 200 draws"
+    }
+   ],
+   "columns": [
+    "Form and control",
+    "Real score",
+    "Control mean",
+    "Control 5th pct",
+    "Control 95th pct",
+    "p",
+    "Draws"
+   ],
+   "table": [
+    [
+     "Plain form, pooled gaps",
+     "−0.157",
+     "−0.213",
+     "−0.236",
+     "−0.190",
+     "0.0005",
+     "2,000"
+    ],
+    [
+     "Plain form, order shuffled",
+     "−0.157",
+     "−0.153",
+     "−0.161",
+     "−0.145",
+     "0.85",
+     "2,000"
+    ],
+    [
+     "Blagg-Richardson style, order shuffled",
+     "−0.141",
+     "−0.125",
+     "−0.134",
+     "−0.116",
+     "1.00",
+     "200"
+    ],
+    [
+     "Gapped form, order shuffled",
+     "−0.079",
+     "−0.078",
+     "−0.081",
+     "−0.074",
+     "0.68",
+     "200"
+    ]
+   ],
+   "live": {
+    "kind": "f310",
+    "data": "/findings/results/F310/systems.json"
+   }
+  },
+  {
+   "key": "loo",
+   "form": "bars",
+   "at": "results",
+   "claims": [
+    "c2"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "Predicting a dropped interior planet: the rule against its two neighbours.",
+   "takeaway": "The neighbours' geometric mean misses by 0.107 and the fitted rule by 0.131, a ratio of 1.23.",
+   "units": "median absolute error in ln period; lower is better",
+   "n": "122 systems with four or more planets (543 planets), interior planets only",
+   "interval": null,
+   "no_interval": "The result file holds the two medians and their ratio, with no interval on either.",
+   "baseline": "Geometric mean of the two neighbouring planets' periods",
+   "threshold": "Ratio of the rule's error to the neighbours' error below 1.0",
+   "ruled_out": "The rule predicting better than the neighbours: the ratio is 1.23, above 1.0",
+   "series_names": [
+    "Plain form fitted to the other planets",
+    "Geometric mean of the two neighbours"
+   ],
+   "axis": {
+    "label": "median error in ln period (lower is better)"
+   },
+   "rows": [
+    {
+     "label": "Plain form fitted to the other planets",
+     "value": 0.13112217102472257,
+     "series": 0,
+     "note": "0.131"
+    },
+    {
+     "label": "Geometric mean of the two neighbours",
+     "value": 0.10676286691669912,
+     "series": 1,
+     "note": "0.107"
+    }
+   ],
+   "columns": [
+    "Predictor",
+    "Median error in ln period"
+   ],
+   "table": [
+    [
+     "Plain form fitted to the other planets",
+     "0.131"
+    ],
+    [
+     "Geometric mean of the two neighbours",
+     "0.107"
+    ],
+    [
+     "Ratio, rule over neighbours",
+     "1.228"
+    ]
+   ]
+  },
+  {
+   "key": "rules",
+   "form": "rules",
+   "at": "results",
+   "claims": [
+    "c2",
+    "c1"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "Every rule fixed in advance, the value it tested and the bar it had to clear.",
+   "takeaway": "3 of 7 rules held: the instrument checks and the pooled-gap comparison. Every sequence rule failed.",
+   "units": "score S, counts and a ratio, as each rule states",
+   "n": "122 systems with four or more planets (543 planets)",
+   "interval": null,
+   "no_interval": "Each rule compares one value with one bar; the bars are control percentiles shown in the charts above.",
+   "rows": [
+    {
+     "label": "Planted score above the pooled-gap 95th percentile",
+     "left": "−0.050",
+     "right": "−0.190",
+     "holds": true
+    },
+    {
+     "label": "At least 60 systems",
+     "left": "122",
+     "right": "60",
+     "holds": true
+    },
+    {
+     "label": "Plain form above the pooled-gap 95th percentile",
+     "left": "−0.157",
+     "right": "−0.190",
+     "holds": true
+    },
+    {
+     "label": "Plain form above the order-shuffle 95th percentile",
+     "left": "−0.157",
+     "right": "−0.145",
+     "holds": false
+    },
+    {
+     "label": "Blagg-Richardson style above its order-shuffle 95th percentile",
+     "left": "−0.141",
+     "right": "−0.116",
+     "holds": false
+    },
+    {
+     "label": "Gapped form above its order-shuffle 95th percentile",
+     "left": "−0.079",
+     "right": "−0.074",
+     "holds": false
+    },
+    {
+     "label": "Leave-one-out ratio below 1.0",
+     "left": "1.228",
+     "right": "1.000",
+     "holds": false
+    }
+   ],
+   "columns": [
+    "Rule set in advance",
+    "Value",
+    "Bar",
+    "Result"
+   ],
+   "table": [
+    [
+     "Planted score above the pooled-gap 95th percentile",
+     "−0.050",
+     "−0.190",
+     "held"
+    ],
+    [
+     "At least 60 systems",
+     "122",
+     "60",
+     "held"
+    ],
+    [
+     "Plain form above the pooled-gap 95th percentile",
+     "−0.157",
+     "−0.190",
+     "held"
+    ],
+    [
+     "Plain form above the order-shuffle 95th percentile",
+     "−0.157",
+     "−0.145",
+     "failed"
+    ],
+    [
+     "Blagg-Richardson style above its order-shuffle 95th percentile",
+     "−0.141",
+     "−0.116",
+     "failed"
+    ],
+    [
+     "Gapped form above its order-shuffle 95th percentile",
+     "−0.079",
+     "−0.074",
+     "failed"
+    ],
+    [
+     "Leave-one-out ratio below 1.0",
+     "1.228",
+     "1.000",
+     "failed"
+    ]
+   ]
+  }
+ ]
+}

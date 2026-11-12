@@ -1,0 +1,32 @@
+{
+ "_about": "Field terms for F14, same shape as papers/glossary.json.",
+ "terms": {
+  "newtons-rings": {"term": "Newton's rings", "field": "optics",
+   "definition": "the bright and dark circles seen where a curved lens rests on flat glass, made by light reflected from the two faces of the thin air gap between them, whose thickness grows with distance from the point of contact",
+   "excludes": "rings made by diffraction at an edge or an aperture"},
+  "obliquity": {"term": "obliquity", "field": "optics, in Newton's usage",
+   "definition": "the angle between the light's path and the perpendicular to the glass; Newton's table gives it twice, once inside the glass and once in the air gap",
+   "excludes": "the tilt of the glass itself, which stays fixed"},
+  "secant-law": {"term": "secant law", "field": "thin-film optics",
+   "definition": "the statement that the air thickness at which a given ring appears grows as one over the cosine of the light's angle in the air gap, scaled here so that perpendicular light gives 10",
+   "excludes": "any rule built from the angle in the glass"},
+  "means-rule": {"term": "106-means rule", "field": "history of optics; Newton's own rule in Opticks, Book II",
+   "definition": "Newton's statement that the thickness goes as the secant of an angle whose sine is the first of 106 arithmetical means between the sines of incidence and refraction, counted from the bigger sine",
+   "excludes": "the secant law, which uses the air angle alone"},
+  "airy-reflectance": {"term": "Airy reflectance", "field": "optics; named after George Airy",
+   "definition": "the share of light power a thin layer reflects when every reflected and re-reflected beam inside it is summed, rather than only the first two",
+   "excludes": "the two-beam approximation, and absorption in the glass"},
+  "polarisation": {"term": "s and p polarisation", "field": "optics",
+   "definition": "the two directions of the light's electric field relative to the plane that holds the ray and the perpendicular to the surface: s across that plane and p within it; unpolarised light is their average",
+   "excludes": "circular polarisation, which this study does not model"},
+  "half-wave-flip": {"term": "half-wave flip", "field": "optics",
+   "definition": "the change of sign of the reflected wave at one face of the air gap and not the other, which makes the centre of the rings dark in reflected light",
+   "excludes": "the phase delay from the path across the gap"},
+  "d65": {"term": "CIE D65", "field": "colour science (International Commission on Illumination)",
+   "definition": "a standard table of the power in average midday daylight at each wavelength, used as the white light in this study",
+   "excludes": "the measured spectrum of any one day's sunlight, and Newton's own light"},
+  "luminance-y": {"term": "luminance", "field": "colour science",
+   "definition": "the brightness of light as the standard eye weighs it, computed by weighting power at each wavelength with the CIE 1931 2 degree observer's brightness curve",
+   "excludes": "hue and saturation, which the study does not score"}
+ }
+}

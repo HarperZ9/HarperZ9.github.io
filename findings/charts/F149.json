@@ -1,0 +1,1024 @@
+{
+ "finding": "F149",
+ "sources": [
+  {
+   "id": "result",
+   "name": "result.json",
+   "sha256_original": "85c71a54d2d135758e9bba36dcee72af5c1955b93d8c1c4751194942edb34902",
+   "sha256_copy": "5602861be65526e2ef1007c9ea2222a446b3326a50a38e39871ae98065636384",
+   "href": "/findings/results/F149/result.json",
+   "run": "20261031T060723Z"
+  }
+ ],
+ "charts": [
+  {
+   "key": "design",
+   "form": "flow",
+   "at": "controls",
+   "claims": [
+    "c1"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "The design: three models of the same rise, a shuffle control and a planted doubling.",
+   "takeaway": "The authors' model gave ratios of 2.19 and 2.84. Weighted by citations they were 1.77 and 1.54, with intervals that include 1. A planted doubling cleared 1 only 0.425 of the time.",
+   "n": "268 study-year rates from 11 function and 7 structure focal studies; 1000 year shuffles; 120 planted simulations per truth",
+   "steps": [
+    {
+     "kind": "data",
+     "label": "The deposited rate table",
+     "detail": "268 rates of unsupported citations, one per focal study and citing year, for 11 function and 7 structure focal studies."
+    },
+    {
+     "kind": "measure",
+     "label": "Rebuilt denominators",
+     "detail": "The table holds rates only. Citation counts were rebuilt from the paper's printed numerators. 143 of 169 nonzero rates gave a whole number."
+    },
+    {
+     "kind": "measure",
+     "label": "Three models",
+     "detail": "The authors' count model with every study-year weighted equally, a within-study model with one level per focal study, and a share model weighted by citations."
+    },
+    {
+     "kind": "control",
+     "label": "Years shuffled inside each study",
+     "detail": "1000 shuffles. A real ratio or slope has to beat the 95th percentile of the shuffled ones."
+    },
+    {
+     "kind": "planted",
+     "label": "Planted truth of 1 and of 2",
+     "detail": "New counts drawn on the real studies, years and denominators, 120 simulations per truth."
+    },
+    {
+     "kind": "verdict",
+     "holds": true,
+     "label": "Planted check",
+     "yes": "held",
+     "detail": "A flat truth was called a rise 0.092 of the time, limit 0.15. A doubling came back as 2.11 and was covered 0.89 of the time."
+    },
+    {
+     "kind": "verdict",
+     "holds": false,
+     "label": "Doubling, authors' model, function",
+     "no": "failed",
+     "detail": "Ratio 2.19. The interval starts at 0.86, below 1."
+    },
+    {
+     "kind": "verdict",
+     "holds": true,
+     "label": "Doubling, authors' model, structure",
+     "yes": "held",
+     "detail": "Ratio 2.84. The interval starts at 1.18."
+    },
+    {
+     "kind": "verdict",
+     "holds": true,
+     "label": "Rise inside studies, both groups",
+     "yes": "held",
+     "detail": "Slopes 0.044 and 0.054 per year, above the shuffle cuts."
+    },
+    {
+     "kind": "verdict",
+     "holds": false,
+     "label": "Doubling, citation-weighted, both groups",
+     "no": "failed",
+     "detail": "Intervals start at 0.52 and 0.85, below 1."
+    }
+   ]
+  },
+  {
+   "key": "ratios",
+   "form": "interval",
+   "at": "results",
+   "claims": [
+    "c1"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "How much unsupported citations rose, on three models.",
+   "takeaway": "The authors' model gives 2.19 for function and 2.84 for structure, and only structure's interval stays above 1. Weighted by citations the ratios drop to 1.77 and 1.54 and both intervals include 1. Inside single studies the rate rose 3.0 and 3.5 times.",
+   "units": "ratio of the fitted rate of unsupported citations in the last year of a group's span to the rate in its first year. 1 is no change, 2 is a doubling.",
+   "n": "268 study-year rates from 11 function and 7 structure focal studies",
+   "interval": "95% interval from resampling focal studies. The within-study model has none in the run.",
+   "series_names": [
+    "network function",
+    "network structure"
+   ],
+   "baseline": "Years shuffled inside each study, 1000 times, authors' model: 95th percentile 1.31 for function and 2.09 for structure. Both real ratios are above it, p 0.002 and 0.013.",
+   "threshold": "A doubling is confirmed when the interval starts above 1, reaches 2, and the ratio beats the shuffle. Function failed on the authors' model, structure passed, and both failed when weighted by citations.",
+   "planted": "A planted doubling came back with a median ratio of 2.11, and a share of 0.425 of the 120 simulations gave an interval above 1.",
+   "axis": {
+    "label": "ratio of end rate to start rate",
+    "log": true,
+    "refs": [
+     {
+      "value": 1,
+      "label": "no change, 1"
+     },
+     {
+      "value": 2,
+      "label": "a doubling, 2"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "group": "Authors' count model",
+     "label": "Network function",
+     "value": 2.19464874842739,
+     "series": 0,
+     "lo": 0.8611080544508539,
+     "hi": 4.139907272376027,
+     "note": "2.19 (0.86 to 4.14)"
+    },
+    {
+     "group": "Authors' count model",
+     "label": "Network structure",
+     "value": 2.838101168924809,
+     "series": 1,
+     "lo": 1.1813668237869823,
+     "hi": 6.619759333564247,
+     "note": "2.84 (1.18 to 6.62)"
+    },
+    {
+     "group": "Citation-weighted share model",
+     "label": "Network function",
+     "value": 1.7733923403160166,
+     "series": 0,
+     "lo": 0.5208479924202011,
+     "hi": 2.9892183778022257,
+     "note": "1.77 (0.52 to 2.99)"
+    },
+    {
+     "group": "Citation-weighted share model",
+     "label": "Network structure",
+     "value": 1.5403544498178652,
+     "series": 1,
+     "lo": 0.8547496758957709,
+     "hi": 5.814382138633396,
+     "note": "1.54 (0.85 to 5.81)"
+    },
+    {
+     "group": "Within-study model",
+     "label": "Network function",
+     "value": 3.0193796343812753,
+     "series": 0,
+     "note": "3.02, no interval in the run"
+    },
+    {
+     "group": "Within-study model",
+     "label": "Network structure",
+     "value": 3.4616899973576913,
+     "series": 1,
+     "note": "3.46, no interval in the run"
+    }
+   ],
+   "columns": [
+    "Group",
+    "Authors' model",
+    "Low",
+    "High",
+    "Without 2022",
+    "Citation-weighted",
+    "Low",
+    "High",
+    "Within study"
+   ],
+   "table": [
+    [
+     "Network function",
+     "2.19",
+     "0.86",
+     "4.14",
+     "2.26",
+     "1.77",
+     "0.52",
+     "2.99",
+     "3.02"
+    ],
+    [
+     "Network structure",
+     "2.84",
+     "1.18",
+     "6.62",
+     "2.43",
+     "1.54",
+     "0.85",
+     "5.81",
+     "3.46"
+    ]
+   ]
+  },
+  {
+   "key": "within",
+   "form": "band",
+   "at": "results",
+   "claims": [
+    "c3"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "The rise inside single focal studies, against the same data with years shuffled.",
+   "takeaway": "With each focal study given its own level, the yearly slope is 0.044 for function and 0.054 for structure. Shuffling the years inside each study gives slopes near 0 and 95th percentiles of 0.022 and 0.036, so the rise is not an effect of which studies were cited when.",
+   "units": "slope per year of the log rate of unsupported citations, within focal study. Over the span it gives the within-study ratio.",
+   "n": "268 study-year rates from 11 function and 7 structure focal studies; 1000 shuffles per group",
+   "value_name": "real slope",
+   "band_name": "shuffled years, 5th to 95th percentile",
+   "interval": "Band: 5th to 95th percentile of the shuffled slopes. The real slope has no interval in the run.",
+   "baseline": "Rates permuted across years inside each focal study, 1000 times. Shuffled means: 0.0003 and 0.0001.",
+   "threshold": "Slope above 0 and above the shuffled 95th percentile. Both groups passed, p 0.001 and 0.009; the smallest p that 1000 shuffles can give is 1 in 1001.",
+   "axis": {
+    "label": "within-study slope per year",
+    "min": -0.06,
+    "max": 0.06,
+    "refs": [
+     {
+      "value": 0,
+      "label": "no trend, 0"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "label": "Network function",
+     "value": 0.04420205564825366,
+     "lo": -0.019705282210672692,
+     "hi": 0.021534151352375887,
+     "mean": 0.00026724874725832134,
+     "series": 0,
+     "note": "0.044 per year; shuffled 5th to 95th percentile −0.020 to 0.022; p 0.001"
+    },
+    {
+     "label": "Network structure",
+     "value": 0.05398943079848008,
+     "lo": -0.04158293886230659,
+     "hi": 0.03606703855000846,
+     "mean": 9.772259514840321e-05,
+     "series": 1,
+     "note": "0.054 per year; shuffled 5th to 95th percentile −0.042 to 0.036; p 0.009"
+    }
+   ],
+   "columns": [
+    "Group",
+    "Real slope per year",
+    "Ratio over the span",
+    "Span, years",
+    "Shuffled mean",
+    "Shuffled 5th",
+    "Shuffled 95th",
+    "p"
+   ],
+   "table": [
+    [
+     "Network function",
+     "0.044",
+     "3.02",
+     "25",
+     "0.0003",
+     "−0.020",
+     "0.022",
+     "0.001"
+    ],
+    [
+     "Network structure",
+     "0.054",
+     "3.46",
+     "23",
+     "0.0001",
+     "−0.042",
+     "0.036",
+     "0.009"
+    ]
+   ]
+  },
+  {
+   "key": "years",
+   "form": "line",
+   "at": "results",
+   "claims": [
+    "c2"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "Share of citations that were unsupported, by citing year, pooled over focal studies.",
+   "takeaway": "Counting citations, function's share went from 21.5 percent in its first ten years to 34.9 percent in 2012 to 2021. Structure's went from 13.6 to 14.7 percent. Structure's first five years hold about 3.1 citations each and none unsupported, which is what lifts its ratio on the authors' model.",
+   "units": "x: citing year. y: unsupported citations as a percentage of all reviewed citations that year, from the rebuilt yearly totals",
+   "n": "11 function and 7 structure focal studies; 26 years for function, 24 for structure; the last year, 2022, is incomplete",
+   "interval": null,
+   "no_interval": "One pooled share per year. The run reports no interval on a yearly share. The data table gives each year's citation count, which is small in the early years.",
+   "baseline": "Each group's own first ten years: 21.5 percent for function, 13.6 percent for structure.",
+   "x": {
+    "label": "citing year",
+    "min": 1996,
+    "max": 2023
+   },
+   "y": {
+    "label": "unsupported share, percent",
+    "min": 0,
+    "max": 60
+   },
+   "series": [
+    {
+     "name": "network function",
+     "line": true,
+     "markers": true,
+     "points": [
+      [
+       1997,
+       0.0,
+       "Network function, 1997: 0 of 12.3 citations, 0.0 percent"
+      ],
+      [
+       1998,
+       25.0,
+       "Network function, 1998: 3 of 12.0 citations, 25.0 percent"
+      ],
+      [
+       1999,
+       46.42857142857143,
+       "Network function, 1999: 13 of 28.0 citations, 46.4 percent"
+      ],
+      [
+       2000,
+       25.0,
+       "Network function, 2000: 5 of 20.0 citations, 25.0 percent"
+      ],
+      [
+       2001,
+       30.0,
+       "Network function, 2001: 6 of 20.0 citations, 30.0 percent"
+      ],
+      [
+       2002,
+       5.0,
+       "Network function, 2002: 1 of 20.0 citations, 5.0 percent"
+      ],
+      [
+       2003,
+       23.52941176470588,
+       "Network function, 2003: 4 of 17.0 citations, 23.5 percent"
+      ],
+      [
+       2004,
+       5.491990846681921,
+       "Network function, 2004: 1 of 18.2 citations, 5.5 percent"
+      ],
+      [
+       2005,
+       10.344827586206895,
+       "Network function, 2005: 2 of 19.3 citations, 10.3 percent"
+      ],
+      [
+       2006,
+       25.0,
+       "Network function, 2006: 6 of 24.0 citations, 25.0 percent"
+      ],
+      [
+       2007,
+       31.818181818181817,
+       "Network function, 2007: 7 of 22.0 citations, 31.8 percent"
+      ],
+      [
+       2008,
+       11.135168574079803,
+       "Network function, 2008: 3 of 26.9 citations, 11.1 percent"
+      ],
+      [
+       2009,
+       32.846715328467155,
+       "Network function, 2009: 15 of 45.7 citations, 32.8 percent"
+      ],
+      [
+       2010,
+       24.80916030534351,
+       "Network function, 2010: 13 of 52.4 citations, 24.8 percent"
+      ],
+      [
+       2011,
+       22.10453603499885,
+       "Network function, 2011: 8 of 36.2 citations, 22.1 percent"
+      ],
+      [
+       2012,
+       41.91343963553531,
+       "Network function, 2012: 23 of 54.9 citations, 41.9 percent"
+      ],
+      [
+       2013,
+       37.10144927536232,
+       "Network function, 2013: 16 of 43.1 citations, 37.1 percent"
+      ],
+      [
+       2014,
+       10.872848082150407,
+       "Network function, 2014: 3 of 27.6 citations, 10.9 percent"
+      ],
+      [
+       2015,
+       37.470725995316165,
+       "Network function, 2015: 20 of 53.4 citations, 37.5 percent"
+      ],
+      [
+       2016,
+       50.877192982456144,
+       "Network function, 2016: 29 of 57.0 citations, 50.9 percent"
+      ],
+      [
+       2017,
+       26.309378806333743,
+       "Network function, 2017: 18 of 68.4 citations, 26.3 percent"
+      ],
+      [
+       2018,
+       28.921722728701667,
+       "Network function, 2018: 23 of 79.5 citations, 28.9 percent"
+      ],
+      [
+       2019,
+       28.527763627101372,
+       "Network function, 2019: 28 of 98.2 citations, 28.5 percent"
+      ],
+      [
+       2020,
+       27.100271002710024,
+       "Network function, 2020: 25 of 92.2 citations, 27.1 percent"
+      ],
+      [
+       2021,
+       50.30181086519114,
+       "Network function, 2021: 50 of 99.4 citations, 50.3 percent"
+      ],
+      [
+       2022,
+       22.716516800757216,
+       "Network function, 2022: 8 of 35.2 citations, 22.7 percent"
+      ]
+     ]
+    },
+    {
+     "name": "network structure",
+     "line": true,
+     "markers": true,
+     "points": [
+      [
+       1999,
+       0.0,
+       "Network structure, 1999: 0 of 3.1 citations, 0.0 percent"
+      ],
+      [
+       2000,
+       0.0,
+       "Network structure, 2000: 0 of 3.1 citations, 0.0 percent"
+      ],
+      [
+       2001,
+       0.0,
+       "Network structure, 2001: 0 of 3.1 citations, 0.0 percent"
+      ],
+      [
+       2002,
+       0.0,
+       "Network structure, 2002: 0 of 3.1 citations, 0.0 percent"
+      ],
+      [
+       2003,
+       0.0,
+       "Network structure, 2003: 0 of 3.1 citations, 0.0 percent"
+      ],
+      [
+       2004,
+       14.0625,
+       "Network structure, 2004: 1 of 7.1 citations, 14.1 percent"
+      ],
+      [
+       2005,
+       12.5,
+       "Network structure, 2005: 3 of 24.0 citations, 12.5 percent"
+      ],
+      [
+       2006,
+       20.588235294117645,
+       "Network structure, 2006: 7 of 34.0 citations, 20.6 percent"
+      ],
+      [
+       2007,
+       11.702127659574469,
+       "Network structure, 2007: 3 of 25.6 citations, 11.7 percent"
+      ],
+      [
+       2008,
+       15.07996953541508,
+       "Network structure, 2008: 4 of 26.5 citations, 15.1 percent"
+      ],
+      [
+       2009,
+       31.153846153846153,
+       "Network structure, 2009: 9 of 28.9 citations, 31.2 percent"
+      ],
+      [
+       2010,
+       7.931209442678987,
+       "Network structure, 2010: 3 of 37.8 citations, 7.9 percent"
+      ],
+      [
+       2011,
+       15.214384508990317,
+       "Network structure, 2011: 6 of 39.4 citations, 15.2 percent"
+      ],
+      [
+       2012,
+       17.14625034020338,
+       "Network structure, 2012: 7 of 40.8 citations, 17.1 percent"
+      ],
+      [
+       2013,
+       0.0,
+       "Network structure, 2013: 0 of 31.2 citations, 0.0 percent"
+      ],
+      [
+       2014,
+       13.536795471326604,
+       "Network structure, 2014: 5 of 36.9 citations, 13.5 percent"
+      ],
+      [
+       2015,
+       11.922826793843486,
+       "Network structure, 2015: 5 of 41.9 citations, 11.9 percent"
+      ],
+      [
+       2016,
+       13.504296821716,
+       "Network structure, 2016: 5 of 37.0 citations, 13.5 percent"
+      ],
+      [
+       2017,
+       10.913500404203718,
+       "Network structure, 2017: 3 of 27.5 citations, 10.9 percent"
+      ],
+      [
+       2018,
+       19.5392900442665,
+       "Network structure, 2018: 7 of 35.8 citations, 19.5 percent"
+      ],
+      [
+       2019,
+       23.690687816217697,
+       "Network structure, 2019: 7 of 29.5 citations, 23.7 percent"
+      ],
+      [
+       2020,
+       15.91981132075472,
+       "Network structure, 2020: 6 of 37.7 citations, 15.9 percent"
+      ],
+      [
+       2021,
+       21.118498240125145,
+       "Network structure, 2021: 6 of 28.4 citations, 21.1 percent"
+      ],
+      [
+       2022,
+       14.084507042253522,
+       "Network structure, 2022: 1 of 7.1 citations, 14.1 percent"
+      ]
+     ]
+    }
+   ],
+   "columns": [
+    "Group",
+    "Year",
+    "Citations, rebuilt",
+    "Unsupported",
+    "Share, percent"
+   ],
+   "table": [
+    [
+     "Network function",
+     "1997",
+     "12.3",
+     "0",
+     "0.0"
+    ],
+    [
+     "Network function",
+     "1998",
+     "12.0",
+     "3",
+     "25.0"
+    ],
+    [
+     "Network function",
+     "1999",
+     "28.0",
+     "13",
+     "46.4"
+    ],
+    [
+     "Network function",
+     "2000",
+     "20.0",
+     "5",
+     "25.0"
+    ],
+    [
+     "Network function",
+     "2001",
+     "20.0",
+     "6",
+     "30.0"
+    ],
+    [
+     "Network function",
+     "2002",
+     "20.0",
+     "1",
+     "5.0"
+    ],
+    [
+     "Network function",
+     "2003",
+     "17.0",
+     "4",
+     "23.5"
+    ],
+    [
+     "Network function",
+     "2004",
+     "18.2",
+     "1",
+     "5.5"
+    ],
+    [
+     "Network function",
+     "2005",
+     "19.3",
+     "2",
+     "10.3"
+    ],
+    [
+     "Network function",
+     "2006",
+     "24.0",
+     "6",
+     "25.0"
+    ],
+    [
+     "Network function",
+     "2007",
+     "22.0",
+     "7",
+     "31.8"
+    ],
+    [
+     "Network function",
+     "2008",
+     "26.9",
+     "3",
+     "11.1"
+    ],
+    [
+     "Network function",
+     "2009",
+     "45.7",
+     "15",
+     "32.8"
+    ],
+    [
+     "Network function",
+     "2010",
+     "52.4",
+     "13",
+     "24.8"
+    ],
+    [
+     "Network function",
+     "2011",
+     "36.2",
+     "8",
+     "22.1"
+    ],
+    [
+     "Network function",
+     "2012",
+     "54.9",
+     "23",
+     "41.9"
+    ],
+    [
+     "Network function",
+     "2013",
+     "43.1",
+     "16",
+     "37.1"
+    ],
+    [
+     "Network function",
+     "2014",
+     "27.6",
+     "3",
+     "10.9"
+    ],
+    [
+     "Network function",
+     "2015",
+     "53.4",
+     "20",
+     "37.5"
+    ],
+    [
+     "Network function",
+     "2016",
+     "57.0",
+     "29",
+     "50.9"
+    ],
+    [
+     "Network function",
+     "2017",
+     "68.4",
+     "18",
+     "26.3"
+    ],
+    [
+     "Network function",
+     "2018",
+     "79.5",
+     "23",
+     "28.9"
+    ],
+    [
+     "Network function",
+     "2019",
+     "98.2",
+     "28",
+     "28.5"
+    ],
+    [
+     "Network function",
+     "2020",
+     "92.2",
+     "25",
+     "27.1"
+    ],
+    [
+     "Network function",
+     "2021",
+     "99.4",
+     "50",
+     "50.3"
+    ],
+    [
+     "Network function",
+     "2022",
+     "35.2",
+     "8",
+     "22.7"
+    ],
+    [
+     "Network structure",
+     "1999",
+     "3.1",
+     "0",
+     "0.0"
+    ],
+    [
+     "Network structure",
+     "2000",
+     "3.1",
+     "0",
+     "0.0"
+    ],
+    [
+     "Network structure",
+     "2001",
+     "3.1",
+     "0",
+     "0.0"
+    ],
+    [
+     "Network structure",
+     "2002",
+     "3.1",
+     "0",
+     "0.0"
+    ],
+    [
+     "Network structure",
+     "2003",
+     "3.1",
+     "0",
+     "0.0"
+    ],
+    [
+     "Network structure",
+     "2004",
+     "7.1",
+     "1",
+     "14.1"
+    ],
+    [
+     "Network structure",
+     "2005",
+     "24.0",
+     "3",
+     "12.5"
+    ],
+    [
+     "Network structure",
+     "2006",
+     "34.0",
+     "7",
+     "20.6"
+    ],
+    [
+     "Network structure",
+     "2007",
+     "25.6",
+     "3",
+     "11.7"
+    ],
+    [
+     "Network structure",
+     "2008",
+     "26.5",
+     "4",
+     "15.1"
+    ],
+    [
+     "Network structure",
+     "2009",
+     "28.9",
+     "9",
+     "31.2"
+    ],
+    [
+     "Network structure",
+     "2010",
+     "37.8",
+     "3",
+     "7.9"
+    ],
+    [
+     "Network structure",
+     "2011",
+     "39.4",
+     "6",
+     "15.2"
+    ],
+    [
+     "Network structure",
+     "2012",
+     "40.8",
+     "7",
+     "17.1"
+    ],
+    [
+     "Network structure",
+     "2013",
+     "31.2",
+     "0",
+     "0.0"
+    ],
+    [
+     "Network structure",
+     "2014",
+     "36.9",
+     "5",
+     "13.5"
+    ],
+    [
+     "Network structure",
+     "2015",
+     "41.9",
+     "5",
+     "11.9"
+    ],
+    [
+     "Network structure",
+     "2016",
+     "37.0",
+     "5",
+     "13.5"
+    ],
+    [
+     "Network structure",
+     "2017",
+     "27.5",
+     "3",
+     "10.9"
+    ],
+    [
+     "Network structure",
+     "2018",
+     "35.8",
+     "7",
+     "19.5"
+    ],
+    [
+     "Network structure",
+     "2019",
+     "29.5",
+     "7",
+     "23.7"
+    ],
+    [
+     "Network structure",
+     "2020",
+     "37.7",
+     "6",
+     "15.9"
+    ],
+    [
+     "Network structure",
+     "2021",
+     "28.4",
+     "6",
+     "21.1"
+    ],
+    [
+     "Network structure",
+     "2022",
+     "7.1",
+     "1",
+     "14.1"
+    ]
+   ]
+  },
+  {
+   "key": "power",
+   "form": "bars",
+   "at": "results",
+   "claims": [
+    "c4"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "How often the method calls a rise when the truth is planted.",
+   "takeaway": "With a true doubling planted in data of this size, a share of 0.425 of the 120 simulations gave an interval above 1. With no rise planted the share was 0.092. An interval that includes 1 is therefore the more likely outcome even when the rate did double.",
+   "units": "share of simulations whose 95% interval for the ratio lies above 1. For a true doubling this share is the statistical power: the chance the method detects a rise that is there.",
+   "n": "120 simulations per planted truth, on the real studies, years and rebuilt denominators",
+   "interval": null,
+   "no_interval": "One share per planted truth. With 120 simulations, one simulation moves a share by 0.008.",
+   "series_names": [
+    "share of simulations called a rise"
+   ],
+   "threshold": "A flat truth called a rise at most 0.15 of the time, and a doubling covered by its interval at least 0.8 of the time. Both held: 0.092 and 0.89.",
+   "planted": "Truth 1 came back with a median ratio of 1.13, truth 2 with 2.11.",
+   "axis": {
+    "label": "share of simulations called a rise",
+    "min": 0,
+    "max": 1,
+    "refs": [
+     {
+      "value": 0.15,
+      "label": "limit for a flat truth, 0.15"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "label": "No rise planted, true ratio 1",
+     "value": 0.09166666666666666,
+     "series": 0,
+     "note": "0.092"
+    },
+    {
+     "label": "Doubling planted, true ratio 2",
+     "value": 0.425,
+     "series": 0,
+     "note": "0.425"
+    }
+   ],
+   "columns": [
+    "Planted ratio",
+    "Simulations",
+    "Called a rise",
+    "Median ratio, authors' model",
+    "Median ratio, citation-weighted",
+    "Interval covered the truth"
+   ],
+   "table": [
+    [
+     "1",
+     "120",
+     "0.092",
+     "1.13",
+     "1.16",
+     "0.87"
+    ],
+    [
+     "2",
+     "120",
+     "0.425",
+     "2.11",
+     "2.14",
+     "0.89"
+    ]
+   ]
+  }
+ ]
+}

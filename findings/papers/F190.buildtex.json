@@ -1,0 +1,65 @@
+{
+ "schema": "buildlang.buildtex-receipt/v0",
+ "source": {
+  "path": "F190.bld",
+  "sha256": "ea3f602e90eb3a464eeec5aec83de81f696e7ea97f96111780300da7d443221a"
+ },
+ "ir_sha256": "7538f584b798464565959eef31e81854b846deda7264d31fea7eabf85b644789",
+ "theme": "paper",
+ "overrides": [],
+ "outputs": {
+  "F190.pdf": "f7c998c6f2d486003a0291a2273c0bd36ed6bd07c339e834ce02e4e257de0d2e"
+ },
+ "pdf_metadata": {
+  "pdfa": false,
+  "creation_date": "D:20261109000000Z"
+ },
+ "facts": {
+  "pages": 8,
+  "pages_layout": 8,
+  "overfull": [],
+  "underfull": 0,
+  "missing_glyphs": [],
+  "glyph_fallbacks": [],
+  "math_errors": [],
+  "fonts": [
+   {
+    "name": "AGDJMB+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "JAFCCB+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "MGOMLJ+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "NDMGEM+NotoSansMath-Regular",
+    "embedded": true
+   },
+   {
+    "name": "NJBGPA+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "OMDGLK+AccessionDisplay-Master",
+    "embedded": true
+   }
+  ],
+  "images": 3,
+  "blind_text_runs": 0,
+  "reading_order": true,
+  "blocks_missing_from_text": [],
+  "pdf_bytes": 476527
+ },
+ "failed": [],
+ "notes": [
+  "buildc run F190.bld -> F190.doc.tsv",
+  "press: relief 1275x393 px at 150 dpi; 0 blind line(s); foil colour source: fallback constant"
+ ],
+ "external_programs": [
+  "buildc"
+ ]
+}

@@ -1,0 +1,610 @@
+{
+ "finding": "F183",
+ "sources": [
+  {
+   "id": "first",
+   "name": "first-run-result.json",
+   "sha256_original": "70697cc139e507a3862a240a57328966afb0a3e6ecd7adf8c6233a59f12900a0",
+   "sha256_copy": "568117f6dc4edd3f8c8cdcfaa3c8533f28873ad022a5af86e3049700fe373561",
+   "href": "/findings/results/F183/first-run-result.json",
+   "run": "20261031T083319Z"
+  },
+  {
+   "id": "rerun",
+   "name": "rerun-result.json",
+   "sha256_original": "eb614f8e94aa639cfe8c33b3130a31ae036d6bb72a8280be175486a1301f7f59",
+   "sha256_copy": "855cee724aff05f768731f5fc6809bf4a2380f72f25c11aa6b953926843f5c8d",
+   "href": "/findings/results/F183/rerun-result.json",
+   "run": "20261031T085324Z"
+  }
+ ],
+ "charts": [
+  {
+   "key": "design",
+   "form": "flow",
+   "at": "controls",
+   "claims": [
+    "c4"
+   ],
+   "source": [
+    "first",
+    "rerun"
+   ],
+   "title": "How the first run was thrown out and what the rerun had to pass.",
+   "takeaway": "The first run's tie check failed at p 0.0015, and CMA-ES scored a median error of 14 million on the shifted ellipsoid because of a bug in our code. After the fix that error was 2.4e−15 and the tie check held at p 0.13.",
+   "n": "10 methods on 7 test functions in 10 dimensions, 15 repeats each, 20,000 function evaluations per repeat. Tie check: 30 repeats of 5,000 evaluations. Label control: 2,000 draws per run.",
+   "steps": [
+    {
+     "kind": "data",
+     "label": "10 optimisers, 7 test functions",
+     "detail": "4 plain methods and 6 named after organisms. Each runs on every function with the minimum at the centre and with it shifted and rotated."
+    },
+    {
+     "kind": "planted",
+     "label": "Centre cheat",
+     "detail": "A dummy method that samples only next to the centre. Rerun: error 7.2e−7 on the centred sphere, and a base-10 logarithm of 4.27 on the shifted one.",
+     "holds": true
+    },
+    {
+     "kind": "control",
+     "label": "Tie check, first run",
+     "detail": "On a function of independent random values no method can do better than another, so the methods must tie. Kruskal-Wallis p had to be above 0.01. It was 0.0015, so the first run's ranking is void by its own rule.",
+     "holds": false
+    },
+    {
+     "kind": "measure",
+     "label": "Bug traced",
+     "detail": "CMA-ES median error on the shifted ellipsoid in the first run: 13,988,073. Its search centre had left the box. Four other methods also kept points outside the box."
+    },
+    {
+     "kind": "rule",
+     "label": "Fix and new preregistration",
+     "detail": "Every method keeps its points inside the box. Stop rule for the rerun: CMA-ES median error on the shifted ellipsoid below 1. It was 2.4e−15.",
+     "holds": true
+    },
+    {
+     "kind": "control",
+     "label": "Tie check, rerun",
+     "detail": "p 0.13 on the best value found and 0.74 on the best of the first 500 distinct cells visited. Both above 0.01.",
+     "holds": true
+    },
+    {
+     "kind": "control",
+     "label": "Label permutation",
+     "detail": "Method names shuffled within each function's ranks 2,000 times. Rerun group gap 0.09 against a shuffled range of −1.22 to 1.16, p 0.45."
+    },
+    {
+     "kind": "verdict",
+     "label": "Method ranks",
+     "detail": "CMA-ES ranks first at 2.00 and ACOR (ant colony) second at 3.14.",
+     "holds": true,
+     "yes": "stand"
+    },
+    {
+     "kind": "verdict",
+     "label": "Group contest",
+     "detail": "The gap between the plain and the labelled group is inside its shuffled range in both runs.",
+     "holds": false,
+     "no": "no difference shown"
+    }
+   ],
+   "columns": [
+    "Check",
+    "First run",
+    "Rerun",
+    "Rule"
+   ],
+   "table": [
+    [
+     "CMA-ES error, shifted sphere",
+     "3.9e−15",
+     "1.6e−15",
+     "below 1e−8"
+    ],
+    [
+     "CMA-ES median error, shifted ellipsoid",
+     "13,988,073",
+     "2.4e−15",
+     "below 1 (rerun only)"
+    ],
+    [
+     "Centre cheat, centred sphere",
+     "6.2e−7",
+     "7.2e−7",
+     "below 0.001"
+    ],
+    [
+     "Centre cheat, shifted sphere, log10 error",
+     "4.18",
+     "4.27",
+     "above 3"
+    ],
+    [
+     "Tie check p, best value",
+     "0.0015",
+     "0.13",
+     "above 0.01"
+    ],
+    [
+     "Tie check p, distinct cells",
+     "not run",
+     "0.74",
+     "above 0.01"
+    ]
+   ]
+  },
+  {
+   "key": "ranks",
+   "form": "dumbbell",
+   "at": "results",
+   "claims": [
+    "c1"
+   ],
+   "source": [
+    "first",
+    "rerun"
+   ],
+   "title": "Mean rank of each method on the shifted functions, first run against rerun.",
+   "takeaway": "After the fix CMA-ES ranked first at 2.00, up from 4.86 in the run with the bug. The best labelled method, ACOR (ant colony), ranked second at 3.14. PSO (particle swarm), the first run's leader at 2.79, fell to 4.57.",
+   "units": "mean rank: each method is ranked on every function by its median best error over 15 repeats, and the ranks are averaged over the 7 functions. 1 is best. Shifted means the function's minimum is moved to a random point away from the centre of the search box and the function is rotated.",
+   "n": "10 methods on 7 test functions in 10 dimensions, 15 repeats each, 20,000 function evaluations per repeat",
+   "interval": null,
+   "no_interval": "Each rank is an average over seven functions. Neither run stores a spread on it.",
+   "a_name": "first run, with the bug",
+   "b_name": "rerun, after the fix",
+   "baseline": "Random search, the method with no strategy: 9.86 in both runs.",
+   "threshold": "Best plain method ahead of the best labelled one. Rerun: ahead by 1.14 ranks. First run: behind by 0.86.",
+   "axis": {
+    "label": "mean rank on the shifted functions, 1 is best",
+    "min": 1,
+    "max": 10
+   },
+   "rows": [
+    {
+     "label": "CMA-ES",
+     "group": "Plain methods",
+     "a": 4.857142857142857,
+     "b": 2.0,
+     "note": "4.86 in the first run, 2.00 in the rerun"
+    },
+    {
+     "label": "L-BFGS",
+     "group": "Plain methods",
+     "a": 3.642857142857143,
+     "b": 4.571428571428571,
+     "note": "3.64 in the first run, 4.57 in the rerun"
+    },
+    {
+     "label": "Differential evolution",
+     "group": "Plain methods",
+     "a": 6.428571428571429,
+     "b": 5.357142857142857,
+     "note": "6.43 in the first run, 5.36 in the rerun"
+    },
+    {
+     "label": "Random search",
+     "group": "Plain methods",
+     "a": 9.857142857142858,
+     "b": 9.857142857142858,
+     "note": "9.86 in the first run, 9.86 in the rerun"
+    },
+    {
+     "label": "ACOR (ant colony)",
+     "group": "Biologically labelled methods",
+     "a": 4.142857142857143,
+     "b": 3.142857142857143,
+     "note": "4.14 in the first run, 3.14 in the rerun"
+    },
+    {
+     "label": "IWO (invasive weed)",
+     "group": "Biologically labelled methods",
+     "a": 6.285714285714286,
+     "b": 4.428571428571429,
+     "note": "6.29 in the first run, 4.43 in the rerun"
+    },
+    {
+     "label": "PSO (particle swarm)",
+     "group": "Biologically labelled methods",
+     "a": 2.7857142857142856,
+     "b": 4.571428571428571,
+     "note": "2.79 in the first run, 4.57 in the rerun"
+    },
+    {
+     "label": "ABC (bee colony)",
+     "group": "Biologically labelled methods",
+     "a": 4.928571428571429,
+     "b": 5.857142857142857,
+     "note": "4.93 in the first run, 5.86 in the rerun"
+    },
+    {
+     "label": "SMA (slime mould)",
+     "group": "Biologically labelled methods",
+     "a": 4.857142857142857,
+     "b": 6.357142857142857,
+     "note": "4.86 in the first run, 6.36 in the rerun"
+    },
+    {
+     "label": "GWO (grey wolf)",
+     "group": "Biologically labelled methods",
+     "a": 7.214285714285714,
+     "b": 8.857142857142858,
+     "note": "7.21 in the first run, 8.86 in the rerun"
+    }
+   ],
+   "columns": [
+    "Method",
+    "Group",
+    "First run, shifted",
+    "Rerun, shifted",
+    "Rerun, centred"
+   ],
+   "table": [
+    [
+     "CMA-ES",
+     "plain",
+     "4.86",
+     "2.00",
+     "3.57"
+    ],
+    [
+     "ACOR (ant colony)",
+     "labelled",
+     "4.14",
+     "3.14",
+     "4.36"
+    ],
+    [
+     "IWO (invasive weed)",
+     "labelled",
+     "6.29",
+     "4.43",
+     "7.86"
+    ],
+    [
+     "L-BFGS",
+     "plain",
+     "3.64",
+     "4.57",
+     "5.93"
+    ],
+    [
+     "PSO (particle swarm)",
+     "labelled",
+     "2.79",
+     "4.57",
+     "5.50"
+    ],
+    [
+     "Differential evolution",
+     "plain",
+     "6.43",
+     "5.36",
+     "7.71"
+    ],
+    [
+     "ABC (bee colony)",
+     "labelled",
+     "4.93",
+     "5.86",
+     "5.86"
+    ],
+    [
+     "SMA (slime mould)",
+     "labelled",
+     "4.86",
+     "6.36",
+     "2.07"
+    ],
+    [
+     "GWO (grey wolf)",
+     "labelled",
+     "7.21",
+     "8.86",
+     "2.43"
+    ],
+    [
+     "Random search",
+     "plain",
+     "9.86",
+     "9.86",
+     "9.71"
+    ]
+   ]
+  },
+  {
+   "key": "penalty",
+   "form": "bars",
+   "at": "results",
+   "claims": [
+    "c2"
+   ],
+   "source": [
+    "rerun"
+   ],
+   "title": "What moving the minimum off the centre cost each method in the rerun.",
+   "takeaway": "The slime mould method lost 12.1 decades of median error and the grey wolf method 13.6 when the minimum left the centre. ACOR, IWO and PSO lost 0.0006, 0.07 and 0.42. With the minimum at the centre those two methods ranked first and second, 2.07 and 2.43.",
+   "units": "shift penalty in decades: the base-10 logarithm of a method's median error on the shifted function minus the same on the centred function, then the median over the 7 functions. One decade is a factor of ten. Errors are floored at 1e−12, which caps the largest penalties.",
+   "n": "10 methods on 7 test functions in 10 dimensions, 15 repeats each, 20,000 function evaluations per repeat",
+   "interval": null,
+   "no_interval": "One median over seven functions per method. The run stores no spread on it.",
+   "series_names": [
+    "first run, not drawn in this figure",
+    "rerun"
+   ],
+   "baseline": "CMA-ES and differential evolution, the plain reference methods: 0.00 and 0.08 decades, each under the 0.5 limit written for them.",
+   "threshold": "A penalty above 3 decades counts as a centre bias: a method that does well by guessing the centre. SMA and GWO are above it; the other eight methods are below 1.",
+   "planted": "The centre cheat, a dummy that samples only next to the centre, solved the centred sphere (error 7.2e−7) and failed the shifted one (log10 error 4.27), so the shifted arm cannot be won by guessing the centre.",
+   "axis": {
+    "label": "shift penalty, decades of median error",
+    "min": 0,
+    "max": 14,
+    "refs": [
+     {
+      "value": 3,
+      "label": "centre-bias limit, 3 decades"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "label": "Differential evolution",
+     "group": "Plain methods",
+     "value": 0.08424046573825084,
+     "series": 1,
+     "note": "0.08 decades; rank 7.71 centred, 5.36 shifted"
+    },
+    {
+     "label": "L-BFGS",
+     "group": "Plain methods",
+     "value": 0.054357132931109,
+     "series": 1,
+     "note": "0.05 decades; rank 5.93 centred, 4.57 shifted"
+    },
+    {
+     "label": "Random search",
+     "group": "Plain methods",
+     "value": 0.022878485893261136,
+     "series": 1,
+     "note": "0.02 decades; rank 9.71 centred, 9.86 shifted"
+    },
+    {
+     "label": "CMA-ES",
+     "group": "Plain methods",
+     "value": 0.0,
+     "series": 1,
+     "note": "0.00 decades; rank 3.57 centred, 2.00 shifted"
+    },
+    {
+     "label": "GWO (grey wolf)",
+     "group": "Biologically labelled methods",
+     "value": 13.56360483708509,
+     "series": 1,
+     "note": "13.56 decades; rank 2.43 centred, 8.86 shifted"
+    },
+    {
+     "label": "SMA (slime mould)",
+     "group": "Biologically labelled methods",
+     "value": 12.06268269852723,
+     "series": 1,
+     "note": "12.06 decades; rank 2.07 centred, 6.36 shifted"
+    },
+    {
+     "label": "ABC (bee colony)",
+     "group": "Biologically labelled methods",
+     "value": 0.6962897477933606,
+     "series": 1,
+     "note": "0.70 decades; rank 5.86 centred, 5.86 shifted"
+    },
+    {
+     "label": "PSO (particle swarm)",
+     "group": "Biologically labelled methods",
+     "value": 0.4225905072530054,
+     "series": 1,
+     "note": "0.42 decades; rank 5.50 centred, 4.57 shifted"
+    },
+    {
+     "label": "IWO (invasive weed)",
+     "group": "Biologically labelled methods",
+     "value": 0.0658530730686522,
+     "series": 1,
+     "note": "0.07 decades; rank 7.86 centred, 4.43 shifted"
+    },
+    {
+     "label": "ACOR (ant colony)",
+     "group": "Biologically labelled methods",
+     "value": 0.0005781972175127326,
+     "series": 1,
+     "note": "0.0006 decades; rank 4.36 centred, 3.14 shifted"
+    }
+   ],
+   "columns": [
+    "Method",
+    "Group",
+    "Shift penalty, rerun",
+    "Shift penalty, first run",
+    "Rank centred, rerun",
+    "Rank shifted, rerun"
+   ],
+   "table": [
+    [
+     "GWO (grey wolf)",
+     "labelled",
+     "13.56",
+     "13.49",
+     "2.43",
+     "8.86"
+    ],
+    [
+     "SMA (slime mould)",
+     "labelled",
+     "12.06",
+     "12.06",
+     "2.07",
+     "6.36"
+    ],
+    [
+     "ABC (bee colony)",
+     "labelled",
+     "0.70",
+     "0.46",
+     "5.86",
+     "5.86"
+    ],
+    [
+     "PSO (particle swarm)",
+     "labelled",
+     "0.42",
+     "0.30",
+     "5.50",
+     "4.57"
+    ],
+    [
+     "Differential evolution",
+     "plain",
+     "0.08",
+     "0.26",
+     "7.71",
+     "5.36"
+    ],
+    [
+     "IWO (invasive weed)",
+     "labelled",
+     "0.07",
+     "0.41",
+     "7.86",
+     "4.43"
+    ],
+    [
+     "L-BFGS",
+     "plain",
+     "0.05",
+     "0.05",
+     "5.93",
+     "4.57"
+    ],
+    [
+     "Random search",
+     "plain",
+     "0.02",
+     "0.00",
+     "9.71",
+     "9.86"
+    ],
+    [
+     "ACOR (ant colony)",
+     "labelled",
+     "0.0006",
+     "0.0000",
+     "4.36",
+     "3.14"
+    ],
+    [
+     "CMA-ES",
+     "plain",
+     "0.00",
+     "0.45",
+     "3.57",
+     "2.00"
+    ]
+   ]
+  },
+  {
+   "key": "groups",
+   "form": "band",
+   "at": "results",
+   "claims": [
+    "c3",
+    "c4"
+   ],
+   "source": [
+    "first",
+    "rerun"
+   ],
+   "title": "The gap between the two groups against the range that shuffled labels give.",
+   "takeaway": "With random search counted as plain, the labelled group led by 1.16 ranks in the first run and the plain group led by 0.09 in the rerun. Both sit inside the range from shuffled method names (p 0.95 and 0.45). Leaving random search out gives the plain group a lead of 1.56, a comparison with no control.",
+   "units": "group gap in ranks: the labelled group's average mean rank minus the plain group's, on the shifted functions. Above 0 the plain group did better; below 0 the labelled group did.",
+   "n": "10 methods on 7 test functions in 10 dimensions, 15 repeats each, 20,000 function evaluations per repeat; 2,000 label shuffles per run",
+   "value_name": "group gap: diamond for the first run, square for the rerun",
+   "band_name": "shuffled labels, 5th to 95th percentile",
+   "series_names": [
+    "first run",
+    "rerun"
+   ],
+   "interval": "Band: 5th to 95th percentile of the gap over 2,000 shuffles of method names within each function's ranks, with the shuffle mean as a tick. The gap itself has no interval in either run.",
+   "baseline": "Shuffled labels gave a mean gap of −0.001 in the first run and −0.020 in the rerun.",
+   "threshold": "A real gap had to clear the 95th percentile of the shuffled gaps: 1.19 in the first run, 1.16 in the rerun. Neither did.",
+   "ruled_out": "A group gap outside the shuffled range, −1.22 to 1.16 ranks in the rerun, with random search counted as plain. Group means: plain 5.45, labelled 5.54 in the rerun. The shuffle control was run only for that comparison.",
+   "axis": {
+    "label": "labelled minus plain mean rank",
+    "min": -2,
+    "max": 2,
+    "refs": [
+     {
+      "value": 0,
+      "label": "no difference, 0"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "label": "First run, random search counted as plain",
+     "value": -1.1607142857142865,
+     "lo": -1.1904761904761907,
+     "hi": 1.1904761904761907,
+     "mean": -0.0012351190476190361,
+     "series": 0,
+     "note": "gap −1.16; shuffled range −1.19 to 1.19; p 0.95"
+    },
+    {
+     "label": "Rerun, random search counted as plain",
+     "value": 0.08928571428571441,
+     "lo": -1.22172619047619,
+     "hi": 1.1607142857142856,
+     "mean": -0.01992559523809525,
+     "series": 1,
+     "note": "gap 0.09; shuffled range −1.22 to 1.16; p 0.45"
+    },
+    {
+     "label": "Rerun, random search left out",
+     "value": 1.5595238095238098,
+     "series": 1,
+     "note": "gap 1.56; plain group 3.98, labelled 5.54; no shuffle control was run for this comparison"
+    }
+   ],
+   "columns": [
+    "Comparison",
+    "Plain mean rank",
+    "Labelled mean rank",
+    "Gap",
+    "Shuffled 5th to 95th percentile",
+    "p"
+   ],
+   "table": [
+    [
+     "First run, random search counted as plain",
+     "6.20",
+     "5.04",
+     "−1.16",
+     "−1.19 to 1.19",
+     "0.95"
+    ],
+    [
+     "Rerun, random search counted as plain",
+     "5.45",
+     "5.54",
+     "0.09",
+     "−1.22 to 1.16",
+     "0.45"
+    ],
+    [
+     "Rerun, random search left out",
+     "3.98",
+     "5.54",
+     "1.56",
+     "not computed",
+     "not computed"
+    ]
+   ]
+  }
+ ]
+}

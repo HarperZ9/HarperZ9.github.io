@@ -1,0 +1,88 @@
+{
+ "terms": {
+  "emotional-inertia": {
+   "term": "emotional inertia",
+   "field": "affective science",
+   "definition": "how far a person's mood at one prompt predicts their mood at the next, measured as the lag-one correlation of their own mood series",
+   "excludes": "average mood, how much mood varies, and any claim about what causes the carryover"
+  },
+  "esm": {
+   "term": "experience sampling",
+   "field": "psychology (methods)",
+   "definition": "a study design in which people answer short questions on a phone several times a day, so that mood is recorded close to the moment it is felt",
+   "excludes": "one-off questionnaires and recall of past weeks"
+  },
+  "lag-pair": {
+   "term": "lag pair",
+   "field": "time-series analysis",
+   "definition": "two adjacent prompts on the same study day, the earlier one called the lead; a missed prompt or a night breaks the pair",
+   "excludes": "pairs that cross a night or skip a prompt"
+  },
+  "spike": {
+   "term": "spike",
+   "field": "our usage",
+   "definition": "a lead prompt whose mood sits at least 1.5 of the person's own standard deviations from the person's own mean",
+   "excludes": "deviations judged against other people or against a population norm"
+  },
+  "recovery": {
+   "term": "recovery",
+   "field": "affective science (our operational form)",
+   "definition": "the median, over a person's spikes, of the share of each spike's distance from the person's mean that has gone by the next prompt, with 1 meaning back at the mean and 0 meaning no change",
+   "excludes": "recovery measured in clock time, and recovery after events that did not produce a spike"
+  },
+  "ar1": {
+   "term": "AR(1) process",
+   "field": "time-series statistics",
+   "definition": "a series in which each value is the mean plus a fixed fraction of the previous value's distance from the mean, plus fresh random noise; the fraction is the single parameter",
+   "excludes": "models with separate rates for small and large deviations, and models with measurement noise on top"
+  },
+  "pearson-r": {
+   "term": "Pearson r",
+   "field": "statistics",
+   "definition": "the correlation coefficient between two quantities measured on the same units, from -1 through 0 for no linear relation to 1",
+   "excludes": "non-linear relations and any statement about cause"
+  },
+  "person-bootstrap": {
+   "term": "person bootstrap",
+   "field": "statistics (resampling)",
+   "definition": "an interval found by drawing people with replacement many times, recomputing the statistic each time, and taking the middle of the resulting spread",
+   "excludes": "resampling of single prompts, which would treat one person's prompts as independent"
+  },
+  "split-half": {
+   "term": "split-half reliability",
+   "field": "psychometrics",
+   "definition": "the correlation across people between a measure computed on one half of each person's data and the same measure on the other half; here the halves are odd and even study days",
+   "excludes": "test-retest reliability over months, and the validity of the measure"
+  },
+  "factor-model": {
+   "term": "factor model",
+   "field": "psychometrics (confirmatory factor analysis)",
+   "definition": "a model that explains the correlations among several measured indicators by a smaller number of unseen common factors, fitted by maximum likelihood",
+   "excludes": "exploratory searches for the number of factors, and models of change over time"
+  },
+  "bic": {
+   "term": "BIC",
+   "field": "statistics (model selection)",
+   "definition": "the Bayesian information criterion, a fit score that charges each extra parameter a penalty growing with sample size; the lower value is preferred",
+   "excludes": "a test of whether either model is true"
+  },
+  "kendall-bias": {
+   "term": "Kendall bias",
+   "field": "time-series statistics",
+   "definition": "the downward bias of a lag-one correlation estimated from a short series, about (1 + 3 phi)/n for a series of n values with true value phi (Kendall 1954)",
+   "excludes": "bias from measurement noise, which is a separate attenuation"
+  },
+  "attenuation": {
+   "term": "attenuation",
+   "field": "psychometrics",
+   "definition": "the shrinking of an observed correlation toward zero when the measures that enter it are noisy",
+   "excludes": "a true weak relation between the underlying quantities"
+  },
+  "chi2-diff": {
+   "term": "chi-square difference test",
+   "field": "statistics (model comparison)",
+   "definition": "a test of whether a model with more free parameters fits nested data better than a simpler model, using the drop in the chi-square fit statistic against its degrees of freedom",
+   "excludes": "comparisons of models that are not nested"
+  }
+ }
+}

@@ -1,0 +1,100 @@
+{
+ "terms": {
+  "lbd": {
+   "term": "literature-based discovery",
+   "field": "information science, after Swanson",
+   "definition": "the search for connections that no single document states but that follow from linking what separate documents say",
+   "excludes": "finding links that some document already states, which is ordinary retrieval"
+  },
+  "link-prediction": {
+   "term": "link prediction",
+   "field": "network science",
+   "definition": "ranking pairs of nodes that are not yet joined in a network by how likely they are to become joined later",
+   "excludes": "recovering links that exist but were hidden at random from the same snapshot"
+  },
+  "concept-link": {
+   "term": "link",
+   "field": "our usage for this study",
+   "definition": "two concepts appearing in the same document; a concept here is a question tag on the Stack Exchange sites and a word or word pair on the research notes",
+   "excludes": "any judgement that the two concepts are related in fact"
+  },
+  "target-pair": {
+   "term": "target",
+   "field": "our usage for this study",
+   "definition": "a pair of concepts never linked in the training slices that appears together in at least two documents of the next slice",
+   "excludes": "pairs that appear together only once in the test slice, and any check that the later pairing is true"
+  },
+  "time-slice": {
+   "term": "time slice",
+   "field": "forecast evaluation",
+   "definition": "one of five blocks of equal document count cut from a corpus ordered by date; a fold trains on the early slices and tests on the next one",
+   "excludes": "random splits, which let later documents inform the training graph"
+  },
+  "degree": {
+   "term": "degree",
+   "field": "network science",
+   "definition": "the number of other concepts a concept is linked to in the training graph, our measure of how popular it is",
+   "excludes": "how many documents mention the concept"
+  },
+  "abc-model": {
+   "term": "A-B-C ranking",
+   "field": "literature-based discovery, after Swanson",
+   "definition": "scoring an unlinked pair A and C by the intermediate concepts B that each is linked to; here a cosine over shared neighbours with each edge weighted down when both of its ends are popular",
+   "excludes": "methods trained on known outcomes, and the expert reading that Swanson applied to each candidate"
+  },
+  "preferential-attachment": {
+   "term": "preferential attachment",
+   "field": "network science",
+   "definition": "a ranking of unlinked pairs by the product of the two concepts' degrees, so the most popular pairs come first",
+   "excludes": "any use of which neighbours the two concepts share"
+  },
+  "adamic-adar": {
+   "term": "Adamic-Adar index",
+   "field": "network science",
+   "definition": "a count of the neighbours two nodes share in which each shared neighbour is weighted by one over the logarithm of its own degree",
+   "excludes": "the popularity discount on edges that the A-B-C score uses"
+  },
+  "precision-at-k": {
+   "term": "precision in the top 200",
+   "field": "information retrieval",
+   "definition": "the share of a ranker's 200 highest-scored unlinked pairs that turn out to be targets",
+   "excludes": "how the ranker orders pairs below the top 200"
+  },
+  "base-rate": {
+   "term": "base rate",
+   "field": "statistics",
+   "definition": "the share of all unlinked candidate pairs that are targets, the precision a random ranking would reach on average",
+   "excludes": "the precision of any particular ranker"
+  },
+  "document-bootstrap": {
+   "term": "document bootstrap",
+   "field": "statistics (resampling)",
+   "definition": "redrawing the test slice's documents with replacement, recomputing which pairs are targets, and rescoring the fixed top-200 lists each time, so the interval shows how much the result depends on which documents happened to arrive",
+   "excludes": "uncertainty from the training graph, which is held fixed"
+  },
+  "roc-auc": {
+   "term": "area under the ROC curve",
+   "field": "statistics and machine learning",
+   "definition": "the chance that a randomly chosen target scores above a randomly chosen non-target; 0.5 is chance and 1 is perfect",
+   "excludes": "how the top of the list performs, which precision in the top 200 measures"
+  },
+  "stratified-auc": {
+   "term": "within-decile AUC",
+   "field": "our usage for this study",
+   "definition": "the area under the ROC curve computed separately inside each tenth of the candidate pairs ranked by degree product, then averaged with weights equal to each tenth's number of targets",
+   "excludes": "any advantage that comes from ranking popular pairs above unpopular ones"
+  },
+  "degree-preserving-rewiring": {
+   "term": "degree-preserving rewiring",
+   "field": "network science, after Maslov and Sneppen",
+   "definition": "repeatedly swapping the ends of two randomly chosen edges, so every concept keeps its degree while who is linked to whom is scrambled",
+   "excludes": "changes to any concept's popularity"
+  },
+  "node-permutation": {
+   "term": "node-label permutation",
+   "field": "statistics (permutation test)",
+   "definition": "shuffling which concept sits at which node of the training graph, so the graph's shape stays and its link to the real concepts is broken",
+   "excludes": "any change to the shape of the graph"
+  }
+ }
+}

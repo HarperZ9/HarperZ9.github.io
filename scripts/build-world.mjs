@@ -9,7 +9,8 @@
 // Steps, in order (each is its own script and can run alone):
 //   1. import-mission-control.mjs   copy the pieces into world/ (and Accession into system/fonts/accession)
 //   2. import-media.mjs             encode the name art, the loops and the theme into media/world/
-//   3. build-studies.mjs, build-cmmns.mjs
+//   3. build-studies.mjs, build-cmmns.mjs, build-experiments.mjs, record-findings.mjs and build-findings.mjs (from
+//      findings/src/ and findings/data/, which scripts/import-findings.mjs fills from the workshop's papers)
 //   4. fetch-releases.mjs (the versions behind every Verified line on the home), build-world-home.mjs,
 //      build-product-pages.mjs (buildlang.html, low-water.html), build-world-pages.mjs, world-asset-revision.mjs, world-discovery.mjs
 //      render-route-registry.mjs, render-site-index.mjs (the World family and pillar)
@@ -31,7 +32,7 @@ import sys
 sys.path.insert(0, ".")
 from tools.repo_art.site_cards import plan, stamp, write_manifest, SOURCES, ROOT
 own = ("index.html", "workshop.html", "floor.html", "elements.html", "swatches.html", "accession.html", "credits.html", "cmmns.html", "experiments/index.html", "glass-water.html", "playground/index.html", "playground/distill.html", "buildlang.html", "low-water.html")
-cards = [c for c in plan() if c["rel"].startswith(("world/", "studies/")) or c["rel"] in own]
+cards = [c for c in plan() if c["rel"].startswith(("world/", "studies/", "findings/")) or c["rel"] in own]
 print(sum(stamp(c) for c in cards), "of", len(cards), "world pages stamped")
 for c in cards:
     if c["rel"] in SOURCES: stamp(c, ROOT / SOURCES[c["rel"]])
@@ -48,6 +49,8 @@ node("fetch-releases.mjs", args.includes("--offline") ? ["--offline"] : []);
 node("sync-field-css.mjs");
 node("build-cmmns.mjs");
 node("build-experiments.mjs");
+node("record-findings.mjs");
+node("build-findings.mjs");
 node("build-glass-water.mjs");
 node("build-distill.mjs");
 node("build-world-home.mjs");
@@ -57,6 +60,7 @@ node("world-asset-revision.mjs");
 node("world-discovery.mjs");
 node("render-route-registry.mjs");
 node("render-site-index.mjs");
+node("finding-flags.mjs");  // after every page that can link to a finding is written
 run(py, ["-m", "tools.repo_art.render_missing"]);
 run(py, ["-c", WORLD_STAMP]);
 run(py, ["tools/structured_data.py"]);

@@ -1,0 +1,76 @@
+{
+ "terms": {
+  "noise-ceiling": {
+   "term": "noise ceiling",
+   "field": "measurement theory and computational neuroscience",
+   "definition": "the best held-out score any model could reach on a target, given how far repeated measurements of that same target disagree; it is estimated from the data's own repeats",
+   "excludes": "the best score reached so far by any model, and a bound set by missing variables"
+  },
+  "held-out-skill": {
+   "term": "held-out skill",
+   "field": "statistics and machine learning",
+   "definition": "a model's score on cases kept apart from fitting: R2 for numbers, the area under the ROC curve for yes-or-no outcomes, and accuracy for triplet choices",
+   "excludes": "the score on the data used to fit the model"
+  },
+  "auc": {
+   "term": "AUC",
+   "field": "statistics (signal detection)",
+   "definition": "the area under the ROC curve: the chance that a randomly chosen positive case is ranked above a randomly chosen negative one, with 0.5 for guessing",
+   "excludes": "accuracy at any one threshold"
+  },
+  "ridge": {
+   "term": "ridge regression",
+   "field": "statistics",
+   "definition": "least squares with a penalty on the size of the coefficients, chosen by leave-one-out error, so that many variables can be fitted without chasing noise",
+   "excludes": "non-linear models such as boosted trees or neural networks"
+  },
+  "share-of-ceiling": {
+   "term": "share of ceiling",
+   "field": "our usage",
+   "definition": "held-out skill above chance divided by the noise ceiling above chance; 1 means the model scores as well as the measurements allow",
+   "excludes": "the raw skill, which is not comparable across targets"
+  },
+  "saturating-fit": {
+   "term": "saturating curve",
+   "field": "curve fitting",
+   "definition": "the curve s(k) = a k / (k + h) fitted to skill above chance against the number of variables k, where a is the level it approaches",
+   "excludes": "a forecast of skill with variables not in the dataset"
+  },
+  "brier": {
+   "term": "Brier score",
+   "field": "forecast verification (meteorology)",
+   "definition": "the mean squared difference between a probability forecast and the outcome coded 0 or 1; lower is better",
+   "excludes": "measures that score only whether the most likely outcome happened"
+  },
+  "split-half": {
+   "term": "split-half reliability",
+   "field": "psychometrics",
+   "definition": "the correlation between scores computed on two halves of the same items, here a forecaster's accuracy on the odd and the even questions",
+   "excludes": "agreement between different people or different occasions"
+  },
+  "parallel-forms": {
+   "term": "parallel forms",
+   "field": "psychometrics",
+   "definition": "two items meant to measure the same thing, answered at the same time; their correlation estimates reliability, here happy and cheerful at the same beep",
+   "excludes": "the same item repeated later, which also picks up real change"
+  },
+  "strong-variable": {
+   "term": "strong variable",
+   "field": "our usage in this study",
+   "definition": "a variable of a different kind from the base set, named for each target before the run: past behaviour of the same unit, or a human rating of a related quantity",
+   "excludes": "one more variable of the kind already in the base set"
+  },
+  "lorenz-horizon": {
+   "term": "forecast horizon",
+   "field": "dynamical systems (chaos)",
+   "definition": "the time until a forecast from a slightly wrong starting state differs from the truth by more than a set tolerance; in a chaotic system it grows with the logarithm of the starting precision",
+   "excludes": "errors from a wrong model, which the toy does not have"
+  },
+  "reflexive": {
+   "term": "reflexive forecast",
+   "field": "economics and social science",
+   "definition": "a published forecast that the forecast population reads and reacts to, so that publishing it changes the outcome it predicts",
+   "excludes": "a forecast kept private from the people it describes"
+  }
+ }
+}
