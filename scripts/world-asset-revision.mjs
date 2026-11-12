@@ -12,7 +12,7 @@ import { fileURLToPath } from "node:url";
 
 const site = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const rel = (p) => path.relative(site, p).split(path.sep).join("/");
-const OWN = ["index.html", "floor.html", "elements.html", "swatches.html", "accession.html", "credits.html", "cmmns.html", "superframe.html", "experiments/index.html", "glass-water.html"];
+const OWN = ["index.html", "floor.html", "elements.html", "swatches.html", "accession.html", "credits.html", "cmmns.html", "superframe.html", "experiments/index.html", "glass-water.html", "playground/index.html", "playground/distill.html"];
 // asset folders governed by the world revision (the test reads the same list from IMPORT.json)
 const SCOPE = ["world/", "studies/", "system/fonts/accession/"];
 
