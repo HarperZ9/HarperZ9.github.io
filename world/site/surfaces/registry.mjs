@@ -72,6 +72,8 @@ export const TOOLS = Object.freeze([
   row('system/lessons', 'Lessons on a page', ['write', 'chart'], ['numbers'], ['text'], null, ''),
   row('system/lib', 'Shared system library', ['math'], ['numbers'], ['numbers'], null, ''),
   row('system/bulletin', 'Bulletin: compose and sign a post', ['write', 'export'], ['text'], ['text', 'json'], null, ''),
+  row('system/ear', 'The ear: measures of a sound', ['sound', 'math'], ['numbers'], ['numbers', 'json'], null, 'checks what the site music plays; nothing on the bench reaches sound yet'),
+  row('system/site-music', 'Site music: voices and five meditations', ['sound'], ['score', 'numbers'], ['numbers'], null, ''),
   row('system/explainer', 'Live explainer stage', ['render', 'write'], ['numbers'], ['image'], null, ''),
   row('system/school', 'Night school labs', ['write', 'chart', 'simulation'], ['numbers'], ['image', 'text'], null, ''),
   row('world/site', 'The site’s own parts, this registry among them', ['well', 'chart', 'blend', 'field', 'export'], ['elements', 'settings'], ['blend', 'palette', 'png', 'json'], 'bench', ''),
