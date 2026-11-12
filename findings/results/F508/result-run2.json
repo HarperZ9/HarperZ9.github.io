@@ -1,0 +1,188 @@
+{
+ "study": "frame-shannon2",
+ "run_id": "20261101T082050Z",
+ "date": "2026-11-01",
+ "prereg": {
+  "path": "PREREG-shannon2.txt",
+  "sha256": "70d161373422827c33dd0682d33e31a36f9ee03ec974b228dd0c7d41afdb90f8",
+  "anchors": [
+   "sidecar",
+   "lock"
+  ],
+  "plan_sha256": "41242bb227893e5d7b39c5cd863bc0d4729d132a335f15a58fcd3f9514ff5903",
+  "locked_at": "2026-11-01T08:20:49+00:00"
+ },
+ "hashes": {
+  "s_shannon2.py": "8c05f3c6580aa3c3be3b6940b92d5c021abab1e40c61666f072839307cb40c5b",
+  "s_shannon.py": "76786d336be20d414a8a4e3a6dae015aa467c75f8db92fba615a9761e178a643"
+ },
+ "analysis": {
+  "sizes": {
+   "fic_old": [
+    600000,
+    100000
+   ],
+   "fic_mid": [
+    600000,
+    100000
+   ],
+   "non_old": [
+    600000,
+    100000
+   ],
+   "non_new": [
+    588712,
+    100000
+   ]
+  },
+  "ll_fic_old_on_fic_old": 1.9313678542541342,
+  "ll_fic_old_on_fic_mid": 2.2502609836607474,
+  "ll_fic_old_on_non_old": 2.076469841164063,
+  "ll_fic_old_on_non_new": 3.305079844149717,
+  "ll_fic_mid_on_fic_old": 2.1839379746290573,
+  "ll_fic_mid_on_fic_mid": 2.1500461260749786,
+  "ll_fic_mid_on_non_old": 2.2569945808619303,
+  "ll_fic_mid_on_non_new": 3.32880683752558,
+  "ll_non_old_on_fic_old": 2.9979112817549476,
+  "ll_non_old_on_fic_mid": 3.254597754901603,
+  "ll_non_old_on_non_old": 1.632132579540908,
+  "ll_non_old_on_non_new": 3.776920141328096,
+  "ll_non_new_on_fic_old": 2.6254916705651246,
+  "ll_non_new_on_fic_mid": 2.744679005357217,
+  "ll_non_new_on_non_old": 2.1526736773903212,
+  "ll_non_new_on_non_new": 2.411727618333086,
+  "era_fic_o2m": 0.10021485758576887,
+  "era_fic_m2o": 0.2525701203749231,
+  "cross_non": 1.36519252299501,
+  "genre_fic2non_old": 0.4443372616231551,
+  "genre_fic2non_new": 0.9170792191924941,
+  "neg_ll": -1.9313678542541342
+ },
+ "controls": {
+  "shuf": {
+   "n": 20,
+   "usable": true,
+   "mean": -9.26361604933078,
+   "q95": -9.198522927406001,
+   "q05": -9.353890959413675,
+   "p_ge": 0.047619047619047616,
+   "compare": "analysis.neg_ll",
+   "description": "held-out characters shuffled"
+  }
+ },
+ "timing_s": {
+  "analysis": 20.899983499999507,
+  "shuf": 1.5449426999985008
+ },
+ "verdicts": {
+  "CLAIM_era_over_genre": {
+   "verdict": "FAIL",
+   "rules": [
+    {
+     "rule": "analysis.era_fic_o2m > analysis.genre_fic2non_old",
+     "left": 0.10021485758576887,
+     "right": 0.4443372616231551,
+     "holds": false
+    }
+   ]
+  },
+  "F_self": {
+   "verdict": "FAIL",
+   "rules": [
+    {
+     "rule": "analysis.ll_fic_old_on_fic_old >= 2",
+     "left": 1.9313678542541342,
+     "right": 2,
+     "holds": false
+    },
+    {
+     "rule": "analysis.ll_fic_old_on_fic_old <= 2.5",
+     "left": 1.9313678542541342,
+     "right": 2.5,
+     "holds": true
+    }
+   ]
+  },
+  "F_o2m": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.era_fic_o2m >= 0.02",
+     "left": 0.10021485758576887,
+     "right": 0.02,
+     "holds": true
+    },
+    {
+     "rule": "analysis.era_fic_o2m <= 0.3",
+     "left": 0.10021485758576887,
+     "right": 0.3,
+     "holds": true
+    }
+   ]
+  },
+  "F_m2o": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.era_fic_m2o >= 0.02",
+     "left": 0.2525701203749231,
+     "right": 0.02,
+     "holds": true
+    },
+    {
+     "rule": "analysis.era_fic_m2o <= 0.3",
+     "left": 0.2525701203749231,
+     "right": 0.3,
+     "holds": true
+    }
+   ]
+  },
+  "F_genre": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.genre_fic2non_old >= 0.2",
+     "left": 0.4443372616231551,
+     "right": 0.2,
+     "holds": true
+    },
+    {
+     "rule": "analysis.genre_fic2non_old <= 0.9",
+     "left": 0.4443372616231551,
+     "right": 0.9,
+     "holds": true
+    }
+   ]
+  },
+  "F_cross": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.cross_non >= 0.4",
+     "left": 1.36519252299501,
+     "right": 0.4,
+     "holds": true
+    },
+    {
+     "rule": "analysis.cross_non <= 1.6",
+     "left": 1.36519252299501,
+     "right": 1.6,
+     "holds": true
+    }
+   ]
+  },
+  "H_ctl": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.neg_ll > controls.shuf.q95",
+     "left": -1.9313678542541342,
+     "right": -9.198522927406001,
+     "holds": true
+    }
+   ]
+  }
+ },
+ "reproduce": null,
+ "status": "scored"
+}

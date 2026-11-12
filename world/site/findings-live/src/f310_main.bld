@@ -1,0 +1,80 @@
+// f310_main.bld: the whole F310 re-run for seed 20261036, printed one value per line with doubles as 64-bit
+// patterns, so the output can be compared with the study's numbers and with the page's run bit for bit.
+// Unit: zig_tables.bld, npgen.bld, fpx.bld, lstsq2.bld, f310.bld, f310_controls.bld, f310_data.bld, then this file.
+fn show(name: &str, x: f64) ~ Console {
+    println!("{} {:016x}", name, x.to_bits());
+}
+
+fn show_summary(key: &str, s: Summary) ~ Console {
+    println!("c {} n {}", key, s.n);
+    println!("c {} mean {:016x}", key, s.mean.to_bits());
+    println!("c {} q95 {:016x}", key, s.q95.to_bits());
+    println!("c {} q05 {:016x}", key, s.q05.to_bits());
+    println!("c {} p_ge {:016x}", key, s.p_ge.to_bits());
+}
+
+// one control: n draws, each printed, then the summary against the real value
+fn control(g: &mut Gen, lp: &Vec<f64>, off: &Vec<i32>, nsys: i32, key: &str, n: i32, pooled: bool, pool: &Vec<f64>, kind: i32, real: f64) ~ Console {
+    let mut nulls: Vec<f64> = Vec::new();
+    let mut i: i32 = 0;
+    while i < n {
+        let v: f64 = control_draw(g, lp, off, nsys, pooled, pool, kind);
+        if kind >= 0 { println!("null {} {:016x}", key, v.to_bits()); }
+        nulls.push(v);
+        i = i + 1;
+    }
+    if kind >= 0 { show_summary(key, summarise(real, &nulls, n)); }
+}
+
+fn show_systems(lp: &Vec<f64>, off: &Vec<i32>, nsys: i32) ~ Console {
+    let mut x: [f64; 8] = [0.0; 8];
+    let mut i: i32 = 0;
+    while i < off[nsys] { show("lp", lp[i]); i = i + 1; }
+    let mut s: i32 = 0;
+    while s < nsys {
+        let n: i32 = take(lp, off, s, &mut x);
+        show("r_plain", r_plain(&mut x, n));
+        show("r_gapped", r_gapped(&mut x, n));
+        s = s + 1;
+    }
+}
+
+fn show_solar() ~ Console {
+    let mut sol: [f64; 8] = [87.97, 224.7, 365.26, 686.98, 4332.6, 10759.0, 30687.0, 60190.0];
+    let mut i: i32 = 0;
+    while i < 8 { sol[i] = logdd(sol[i]); i = i + 1; }
+    show("a solar_r_plain", r_plain(&mut sol, 8));
+    show("a solar_r_gapped", r_gapped(&mut sol, 8));
+}
+
+fn main() ~ Console + Foreign {
+    let mut off: Vec<i32> = Vec::new();
+    let mut periods: Vec<f64> = Vec::new();
+    let mut lp: Vec<f64> = Vec::new();
+    let mut pool: Vec<f64> = Vec::new();
+    load_offsets(&mut off);
+    load_periods_a(&mut periods);
+    load_periods_b(&mut periods);
+    let nsys: i32 = (off.len() as i32) - 1;
+    prepare(&periods, &off, nsys, &mut lp);
+    gap_pool(&lp, &off, nsys, &mut pool);
+    show_systems(&lp, &off, nsys);
+    let mut g: Gen = gen_new(20261036);
+    let l: Loo = loo(&lp, &off, nsys);
+    let planted_reg: f64 = plant_reg(&mut g, &lp, &off, nsys);
+    let reg_plain: f64 = reg(&lp, &off, nsys, 0);
+    let reg_gapped: f64 = reg(&lp, &off, nsys, 1);
+    println!("a n {}", nsys);
+    show("a reg_plain", reg_plain);
+    show("a reg_gapped", reg_gapped);
+    show("a loo_err", l.err);
+    show("a loo_neigh", l.neigh);
+    show("a loo_ratio", l.err / l.neigh);
+    show("a plant_reg", planted_reg);
+    show_solar();
+    println!("a n_planets {}", off[nsys]);
+    control(&mut g, &lp, &off, nsys, "C_order", 2000, false, &pool, 0, reg_plain);
+    control(&mut g, &lp, &off, nsys, "C_pool", 2000, true, &pool, 0, reg_plain);
+    control(&mut g, &lp, &off, nsys, "C_order_blagg", 200, false, &pool, -1, 0.0);
+    control(&mut g, &lp, &off, nsys, "C_order_gapped", 200, false, &pool, 1, reg_gapped);
+}

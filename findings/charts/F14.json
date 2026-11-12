@@ -1,0 +1,711 @@
+{
+ "finding": "F14",
+ "sources": [
+  {
+   "id": "result",
+   "name": "result.json (ring model run)",
+   "sha256_original": "73ca6632eaf61fc7ab0dec7f10ef8a76f3fb757d5d15583310e1549c5a7d4766",
+   "sha256_copy": "73ca6632eaf61fc7ab0dec7f10ef8a76f3fb757d5d15583310e1549c5a7d4766",
+   "href": "/findings/results/F14/result.json"
+  }
+ ],
+ "charts": [
+  {
+   "key": "table",
+   "form": "line",
+   "at": "results",
+   "claims": [
+    "c1",
+    "c2"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "Newton's table of ring thickness by viewing angle, beside the secant law and his own rule.",
+   "takeaway": "To 60 degrees the table follows the secant law within 0.41 percent; from 65 degrees it follows his rule, and at 85 degrees it reads 84.1 where the secant gives 114.7.",
+   "units": "thickness of the air gap at one ring, on Newton's scale where perpendicular light is 10; higher means the ring sits where the gap is thicker",
+   "n": "13 rows of Newton's table, air angles 0 to 90 degrees; the secant has no finite value at 90",
+   "interval": null,
+   "no_interval": "The table is a set of printed values and the two laws are exact formulas, so there is no sampling interval.",
+   "baseline": "Secant law: thickness grows as 1 over the cosine of the angle in the air gap, the result of modern optics. The 106-means rule is Newton's own fitted formula.",
+   "threshold": "Table within 1 percent of the secant from 0 to 60 degrees; table within 1.5 percent of his rule at every row",
+   "x": {
+    "label": "angle of the light in the air gap (degrees from perpendicular)",
+    "min": 0,
+    "max": 94
+   },
+   "y": {
+    "label": "air thickness at the ring (perpendicular light = 10)",
+    "log": true
+   },
+   "series": [
+    {
+     "name": "Secant law",
+     "markers": false,
+     "points": [
+      [
+       0,
+       10
+      ],
+      [
+       10,
+       10.15426611885745
+      ],
+      [
+       20,
+       10.641777724759121
+      ],
+      [
+       30,
+       11.547005383792515
+      ],
+      [
+       40,
+       13.054072893322786
+      ],
+      [
+       50,
+       15.557238268604122
+      ],
+      [
+       60,
+       19.999999999999996
+      ],
+      [
+       65,
+       23.662015831524986
+      ],
+      [
+       70,
+       29.238044001630865
+      ],
+      [
+       75,
+       38.63703305156273
+      ],
+      [
+       80,
+       57.58770483143631
+      ],
+      [
+       85,
+       114.7371324566986
+      ]
+     ]
+    },
+    {
+     "name": "Newton's 106-means rule",
+     "markers": false,
+     "dashed": true,
+     "points": [
+      [
+       0,
+       10
+      ],
+      [
+       10,
+       10.153221319056698
+      ],
+      [
+       20,
+       10.637114927129188
+      ],
+      [
+       30,
+       11.534280523869668
+      ],
+      [
+       40,
+       13.023747930996494
+      ],
+      [
+       50,
+       15.484589986766712
+      ],
+      [
+       60,
+       19.804256525566895
+      ],
+      [
+       65,
+       23.30977398190085
+      ],
+      [
+       70,
+       28.533568251744807
+      ],
+      [
+       75,
+       36.96992976645234
+      ],
+      [
+       80,
+       52.288907793827924
+      ],
+      [
+       85,
+       84.01932265701727
+      ],
+      [
+       90,
+       122.90430141086092
+      ]
+     ]
+    },
+    {
+     "name": "Newton's table",
+     "line": false,
+     "points": [
+      [
+       0,
+       10,
+       "Table at 0 degrees: 10; rule 10; secant 10"
+      ],
+      [
+       10,
+       10.153846153846153,
+       "Table at 10 degrees: 10.15; rule 10.15; secant 10.15"
+      ],
+      [
+       20,
+       10.666666666666666,
+       "Table at 20 degrees: 10.67; rule 10.64; secant 10.64"
+      ],
+      [
+       30,
+       11.5,
+       "Table at 30 degrees: 11.50; rule 11.53; secant 11.55"
+      ],
+      [
+       40,
+       13,
+       "Table at 40 degrees: 13; rule 13.02; secant 13.05"
+      ],
+      [
+       50,
+       15.5,
+       "Table at 50 degrees: 15.50; rule 15.48; secant 15.56"
+      ],
+      [
+       60,
+       20,
+       "Table at 60 degrees: 20; rule 19.80; secant 20.00"
+      ],
+      [
+       65,
+       23.25,
+       "Table at 65 degrees: 23.25; rule 23.31; secant 23.66"
+      ],
+      [
+       70,
+       28.25,
+       "Table at 70 degrees: 28.25; rule 28.53; secant 29.24"
+      ],
+      [
+       75,
+       37,
+       "Table at 75 degrees: 37; rule 36.97; secant 38.64"
+      ],
+      [
+       80,
+       52.25,
+       "Table at 80 degrees: 52.25; rule 52.29; secant 57.59"
+      ],
+      [
+       85,
+       84.08333333333333,
+       "Table at 85 degrees: 84.08; rule 84.02; secant 114.74"
+      ],
+      [
+       90,
+       122.5,
+       "Table at 90 degrees: 122.50; rule 122.90; secant none"
+      ]
+     ]
+    }
+   ],
+   "columns": [
+    "Air angle (degrees)",
+    "His table",
+    "His rule",
+    "Secant law"
+   ],
+   "table": [
+    [
+     "0",
+     "10",
+     "10",
+     "10"
+    ],
+    [
+     "10",
+     "10.15",
+     "10.15",
+     "10.15"
+    ],
+    [
+     "20",
+     "10.67",
+     "10.64",
+     "10.64"
+    ],
+    [
+     "30",
+     "11.50",
+     "11.53",
+     "11.55"
+    ],
+    [
+     "40",
+     "13",
+     "13.02",
+     "13.05"
+    ],
+    [
+     "50",
+     "15.50",
+     "15.48",
+     "15.56"
+    ],
+    [
+     "60",
+     "20",
+     "19.80",
+     "20.00"
+    ],
+    [
+     "65",
+     "23.25",
+     "23.31",
+     "23.66"
+    ],
+    [
+     "70",
+     "28.25",
+     "28.53",
+     "29.24"
+    ],
+    [
+     "75",
+     "37",
+     "36.97",
+     "38.64"
+    ],
+    [
+     "80",
+     "52.25",
+     "52.29",
+     "57.59"
+    ],
+    [
+     "85",
+     "84.08",
+     "84.02",
+     "114.74"
+    ],
+    [
+     "90",
+     "122.50",
+     "122.90",
+     "no finite value"
+    ]
+   ]
+  },
+  {
+   "key": "deviation",
+   "form": "dumbbell",
+   "at": "results",
+   "claims": [
+    "c2",
+    "c1"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "How far each row of the table sits from the secant law and from his rule.",
+   "takeaway": "Up to 60 degrees both gaps stay under 1 percent. From 65 degrees the gap to the secant grows to 26.7 percent at 85 degrees, and the gap to his rule stays under 0.99 percent.",
+   "units": "size of the gap between Newton's tabled thickness and each law, as a percent of the law's value; lower is a closer match",
+   "n": "13 rows of Newton's table, air angles 0 to 90 degrees; the secant has no finite value at 90",
+   "interval": null,
+   "no_interval": "Each gap is one printed value against one formula, so there is no sampling interval.",
+   "baseline": "Thickness column shuffled across rows 200 times: his rule then missed the 1.5 percent bound at 7 or more rows in every shuffle (median 12)",
+   "threshold": "Within 1 percent of the secant from 0 to 60 degrees; within 1.5 percent of his rule at every row",
+   "a_name": "gap to the secant law",
+   "b_name": "gap to Newton's 106-means rule",
+   "axis": {
+    "label": "gap in percent of the law's value (lower is closer; a gap of 0 sits at the left edge)",
+    "log": true,
+    "min": 0.001,
+    "max": 100,
+    "refs": [
+     {
+      "value": 1,
+      "label": "1 percent"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "label": "0 degrees",
+     "group": "0 to 60 degrees",
+     "b": 0,
+     "note": "secant 0.00%; rule 0.00%",
+     "a": 0
+    },
+    {
+     "label": "10 degrees",
+     "group": "0 to 60 degrees",
+     "b": 0.006154054657340719,
+     "note": "secant 0.00%; rule 0.01%",
+     "a": 0.004135847991187482
+    },
+    {
+     "label": "20 degrees",
+     "group": "0 to 60 degrees",
+     "b": 0.27781724405466807,
+     "note": "secant 0.23%; rule 0.28%",
+     "a": 0.23387955049688855
+    },
+    {
+     "label": "30 degrees",
+     "group": "0 to 60 degrees",
+     "b": 0.29720556734099207,
+     "note": "secant 0.41%; rule 0.30%",
+     "a": 0.4070785647895499
+    },
+    {
+     "label": "40 degrees",
+     "group": "0 to 60 degrees",
+     "b": 0.18234329412944392,
+     "note": "secant 0.41%; rule 0.18%",
+     "a": 0.4142223945328557
+    },
+    {
+     "label": "50 degrees",
+     "group": "0 to 60 degrees",
+     "b": 0.09951838083189193,
+     "note": "secant 0.37%; rule 0.10%",
+     "a": 0.3679204985863964
+    },
+    {
+     "label": "60 degrees",
+     "group": "0 to 60 degrees",
+     "b": 0.9883909258618404,
+     "note": "secant 0.00%; rule 0.99%",
+     "a": 1.7763568394002508e-14
+    },
+    {
+     "label": "65 degrees",
+     "group": "65 to 90 degrees",
+     "b": 0.2564331252086034,
+     "note": "secant 1.74%; rule 0.26%",
+     "a": 1.7412541452873846
+    },
+    {
+     "label": "70 degrees",
+     "group": "65 to 90 degrees",
+     "b": 0.9938057842711875,
+     "note": "secant 3.38%; rule 0.99%",
+     "a": 3.3793095104985573
+    },
+    {
+     "label": "75 degrees",
+     "group": "65 to 90 degrees",
+     "b": 0.0813370047972018,
+     "note": "secant 4.24%; rule 0.08%",
+     "a": 4.236953312067318
+    },
+    {
+     "label": "80 degrees",
+     "group": "65 to 90 degrees",
+     "b": 0.07440926856100236,
+     "note": "secant 9.27%; rule 0.07%",
+     "a": 9.268827169028857
+    },
+    {
+     "label": "85 degrees",
+     "group": "65 to 90 degrees",
+     "b": 0.07618566097868046,
+     "note": "secant 26.72%; rule 0.08%",
+     "a": 26.716546306344124
+    },
+    {
+     "label": "90 degrees",
+     "group": "65 to 90 degrees",
+     "b": 0.3289562742880507,
+     "note": "secant has no value; rule 0.33%"
+    }
+   ],
+   "columns": [
+    "Air angle (degrees)",
+    "Gap to secant (%)",
+    "Gap to his rule (%)"
+   ],
+   "table": [
+    [
+     "0",
+     "0.00",
+     "0.00"
+    ],
+    [
+     "10",
+     "0.00",
+     "0.01"
+    ],
+    [
+     "20",
+     "0.23",
+     "0.28"
+    ],
+    [
+     "30",
+     "0.41",
+     "0.30"
+    ],
+    [
+     "40",
+     "0.41",
+     "0.18"
+    ],
+    [
+     "50",
+     "0.37",
+     "0.10"
+    ],
+    [
+     "60",
+     "0.00",
+     "0.99"
+    ],
+    [
+     "65",
+     "1.74",
+     "0.26"
+    ],
+    [
+     "70",
+     "3.38",
+     "0.99"
+    ],
+    [
+     "75",
+     "4.24",
+     "0.08"
+    ],
+    [
+     "80",
+     "9.27",
+     "0.07"
+    ],
+    [
+     "85",
+     "26.72",
+     "0.08"
+    ],
+    [
+     "90",
+     "no finite value",
+     "0.33"
+    ]
+   ]
+  },
+  {
+   "key": "first-ring",
+   "form": "bars",
+   "at": "results",
+   "claims": [
+    "c3",
+    "c4"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "Air thickness at the first dark ring in white light: the model with and without the half-wave flip, against Newton's value.",
+   "takeaway": "With the half-wave flip the model puts the first dark ring at 275.7 nm, 3.4 percent below Newton's 285.4 nm. Without it the first minimum falls at 137.7 nm, 52 percent away.",
+   "units": "thickness of the air gap in nanometres at the first dark ring, under daylight weighted by the eye's sensitivity",
+   "n": "one model run for each bar; Newton's value is 1/89000 inch",
+   "interval": null,
+   "no_interval": "The model is deterministic, so each bar is one computed value.",
+   "baseline": "Control: the same model with the half-wave flip removed. The half-wave flip is the half-wavelength shift light takes when it reflects off the denser glass, which makes the centre dark.",
+   "threshold": "First dark ring within 5 percent of Newton's value; the control had to miss by more than 5 percent",
+   "axis": {
+    "label": "air thickness at the first dark ring (nm)",
+    "refs": [
+     {
+      "value": 285.39325842696627,
+      "label": "Newton's value, 285.4 nm"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "label": "Model with the half-wave flip",
+     "value": 275.7,
+     "series": 0,
+     "note": "275.7 nm, 3.4% below Newton; centre dark"
+    },
+    {
+     "label": "Control: flip removed",
+     "value": 137.70000000000002,
+     "series": 1,
+     "note": "137.7 nm, 52% from Newton; centre bright"
+    }
+   ],
+   "columns": [
+    "Case",
+    "First dark ring (nm)",
+    "Gap to Newton's value (%)",
+    "Brightness at the centre"
+   ],
+   "table": [
+    [
+     "Newton, 1/89000 inch",
+     "285.4",
+     "0",
+     "dark"
+    ],
+    [
+     "Model with the half-wave flip",
+     "275.7",
+     "3.4",
+     "0"
+    ],
+    [
+     "Control: flip removed",
+     "137.7",
+     "51.8",
+     "0.156"
+    ]
+   ]
+  },
+  {
+   "key": "rules",
+   "form": "rules",
+   "at": "results",
+   "claims": [
+    "c1",
+    "c2",
+    "c3",
+    "c4"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "The five predictions and two controls, each against its bound.",
+   "takeaway": "All 7 of 7 checks came out as the plan said: five predictions inside their bounds and two controls that had to fail and did. The largest gap to his rule is 0.99 percent.",
+   "units": "largest gap in percent for each prediction; rows failing for the shuffle control",
+   "n": "13 rows of Newton's table, air angles 0 to 90 degrees; the secant has no finite value at 90; 200 shuffles",
+   "interval": null,
+   "no_interval": "Each check compares one computed value with one bound.",
+   "threshold": "Bounds written in the dated plan before the model ran",
+   "rows": [
+    {
+     "label": "A: first dark ring within 5% of Newton's 285.4 nm",
+     "left": "3.4%",
+     "right": "5%",
+     "holds": true,
+     "yes": "as planned",
+     "no": "not as planned"
+    },
+    {
+     "label": "B: bright rings stand as 1 : 3 : 5 : 7 within 3%",
+     "left": "1.0%",
+     "right": "3%",
+     "holds": true,
+     "yes": "as planned",
+     "no": "not as planned"
+    },
+    {
+     "label": "C: model follows the secant to 85 degrees within 0.1%",
+     "left": "0.0075%",
+     "right": "0.1%",
+     "holds": true,
+     "yes": "as planned",
+     "no": "not as planned"
+    },
+    {
+     "label": "D: table within 1% of the secant, 0 to 60 degrees",
+     "left": "0.41%",
+     "right": "1%",
+     "holds": true,
+     "yes": "as planned",
+     "no": "not as planned"
+    },
+    {
+     "label": "E: table within 1.5% of his rule at all 13 rows",
+     "left": "0.99%",
+     "right": "1.5%",
+     "holds": true,
+     "yes": "as planned",
+     "no": "not as planned"
+    },
+    {
+     "label": "Control, flip removed: must miss Newton's value by over 5%",
+     "left": "51.8%",
+     "right": "over 5%",
+     "holds": true,
+     "yes": "as planned",
+     "no": "not as planned"
+    },
+    {
+     "label": "Control, shuffled rows: rule must fail in every shuffle",
+     "left": "7 rows or more",
+     "right": "1 row or more",
+     "holds": true,
+     "yes": "as planned",
+     "no": "not as planned"
+    }
+   ],
+   "columns": [
+    "Check",
+    "Measured",
+    "Bound",
+    "Result"
+   ],
+   "table": [
+    [
+     "A: first dark ring within 5% of Newton's 285.4 nm",
+     "3.4%",
+     "5%",
+     "as planned"
+    ],
+    [
+     "B: bright rings stand as 1 : 3 : 5 : 7 within 3%",
+     "1.0%",
+     "3%",
+     "as planned"
+    ],
+    [
+     "C: model follows the secant to 85 degrees within 0.1%",
+     "0.0075%",
+     "0.1%",
+     "as planned"
+    ],
+    [
+     "D: table within 1% of the secant, 0 to 60 degrees",
+     "0.41%",
+     "1%",
+     "as planned"
+    ],
+    [
+     "E: table within 1.5% of his rule at all 13 rows",
+     "0.99%",
+     "1.5%",
+     "as planned"
+    ],
+    [
+     "Control, flip removed: must miss Newton's value by over 5%",
+     "51.8%",
+     "over 5%",
+     "as planned"
+    ],
+    [
+     "Control, shuffled rows: rule must fail in every shuffle",
+     "7 rows or more",
+     "1 row or more",
+     "as planned"
+    ]
+   ]
+  }
+ ]
+}

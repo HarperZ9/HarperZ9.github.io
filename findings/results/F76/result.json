@@ -1,0 +1,390 @@
+{
+ "study": "flatness-main",
+ "run_id": "20261030T003557Z",
+ "date": "2026-10-30",
+ "prereg": {
+  "path": "PREREG.txt",
+  "sha256": "fe8ddb061ffc02c3f22d89222fb6b5e20baf402e128c930a85242f161207dae7",
+  "anchors": [
+   "sidecar",
+   "lock"
+  ],
+  "plan_sha256": "4b0268f175706e5803a21cd91d320ebb96e62f3fe97a67639030c3a7bd2c3d26",
+  "locked_at": "2026-10-30T00:35:53+00:00"
+ },
+ "hashes": {
+  "power-snapshot.csv": "1afe9cd946cd1e2a0d41d2a2784f85fe3c961cc9f3a26b43fd9e9bf7a8e5b48f",
+  "sites.json": "efcbee35d7b266126c599e96628f2dcc6f9a30b75862eefdd2bb73657a75d334",
+  "0008_westhoff_ts.tsv": "b47dac880030d62bb9f25acddba4c76a8acaff9909a5f5bc5c28e6067cfecb56",
+  "0018_bailon_ts.tsv": "a9f6296cea7b747577f3a5b959348237a5486c42a55b47ad529557916779fd6f",
+  "0062_neubauer_ts.tsv": "1c27ae6f25d972f870c836791a9906493cab4ce395c2d70754329750c4019293",
+  "0076_bayer_ts.tsv": "5923ffffa062b749dd1b0ec84b624d6c7c242b31627b07ed5b9a1efad98ae4e4",
+  "adapter.py": "529203c2e0235fea9d32ace92c55ea72cda91b6cf71b15317c37992457250802",
+  "fc_core.py": "ac2c2b430b04890d19d231ab7c0a49bbceb22577c5feaa1894062da6a5a279d6",
+  "fc_analysis.py": "bd4141729f9dab1b6ba9b45e65c0788d57f81bd919ccc7c2c627c3ab3b01f9a1",
+  "fc_data.py": "4894710b888e6d8aae4b661f7a840430b584d16f576f9e0bdf2815717483337f",
+  "smoke.py": "ae5ba485bc35933b61f76e2cd0dfbc8f1a64b7fb3d01a81dc84cfd376c6c4365",
+  "make_spec.py": "2fc12dda58fb2caea939cd3e41753dfb9a720b2c1ee1fad700542d8b53b853b2",
+  "ls_spectra.py": "76ac5fecd57ddb4842a7a5d0ab9f8e6f744572aa8a664691edd0496c740fe080",
+  "ls_series.py": "9cd8cb76a33e6f2ec31ce4adc5bee47fd94d001a02a5cd92e7edebd6190c8744",
+  "ls_common.py": "a82b3a9980908932f9e21538775c0e3d4ad776535026558f45400b3385b80b9b"
+ },
+ "analysis": {
+  "n_series": 1236,
+  "n_dropped_constant": 0,
+  "rho_all": 0.41367800217581424,
+  "rho_all_ci": [
+   0.36089855058395104,
+   0.4611369716848636
+  ],
+  "ar_viol": {
+   "n": 1236,
+   "count": 80,
+   "rate": 0.06472491909385113,
+   "wilson95": [
+    0.05231183900434118,
+    0.07983536431582487
+   ],
+   "raw_exceed_rate": 0.3640776699029126,
+   "median_excess": -0.06333657430168577,
+   "binom_p_above_5pct": 0.012702814926004903
+  },
+  "knn_viol": {
+   "n": 1236,
+   "count": 79,
+   "rate": 0.063915857605178,
+   "wilson95": [
+    0.051584630668618944,
+    0.07894946336403812
+   ],
+   "raw_exceed_rate": 0.2564724919093851,
+   "median_excess": -0.11469570134276807,
+   "binom_p_above_5pct": 0.01723610965949123
+  },
+  "knn_minus_ar_median": -0.04411208771463365,
+  "bound_median": 0.20337518916237585,
+  "ar_median": 0.12929442023828674,
+  "surr_viol_rate_mean": 0.05128205128205128,
+  "phase_rho_median": 0.5925574212841815,
+  "groups": {
+   "esm_mood": {
+    "n": 106,
+    "rho": 0.03528226314331057,
+    "bound_median": 0.02375879483346821,
+    "ar_median": -0.07153177977920644,
+    "knn_median": -0.16263638925122803,
+    "ar_viol_rate": 0.08490566037735849,
+    "knn_viol_rate": 0.04716981132075472,
+    "ar_order_median": 1.0,
+    "len_median": 113
+   },
+   "power": {
+    "n": 2,
+    "rho": NaN,
+    "bound_median": 0.6377229081015183,
+    "ar_median": 0.8382889285297499,
+    "knn_median": 0.24035841360490917,
+    "ar_viol_rate": 1.0,
+    "knn_viol_rate": 0.0,
+    "ar_order_median": 19.0,
+    "len_median": 20145
+   },
+   "tree_rings": {
+    "n": 1128,
+    "rho": 0.3958858500403691,
+    "bound_median": 0.2129172048649538,
+    "ar_median": 0.14596371698997385,
+    "knn_median": 0.09805868861781475,
+    "ar_viol_rate": 0.061170212765957445,
+    "knn_viol_rate": 0.06560283687943262,
+    "ar_order_median": 2.0,
+    "len_median": 398
+   }
+  },
+  "synth_ar": {
+   "n": 300,
+   "rho_est_skill": 0.9247867198524428,
+   "rho_true_skill": 0.9752988366537405,
+   "rho_est_true": 0.9456220624673608,
+   "bound_bias_mean": -0.01983755661338621,
+   "bound_mae": 0.07724868751965866,
+   "skill_minus_true_bound_median": -0.020140807986917586,
+   "skill_exceeds_true_bound_rate": 0.3,
+   "viol_rate": 0.043333333333333335,
+   "viol_wilson95": [
+    0.025496203603204263,
+    0.07271812912806098
+   ],
+   "raw_exceed_rate": 0.45666666666666667,
+   "knn_viol_rate": 0.06333333333333334
+  },
+  "synth_logistic": {
+   "n": 50,
+   "bound_median": 0.08371978470749519,
+   "ar_median": 0.0432852642057881,
+   "knn_median": 0.9874065345678261,
+   "ar_viol_rate": 0.06,
+   "knn_viol_rate": 1.0
+  },
+  "main_p": {
+   "rho_all": {
+    "p": 0.009900990099009901,
+    "bh_q05": 1
+   },
+   "rho_tree": {
+    "p": 0.009900990099009901,
+    "bh_q05": 1
+   },
+   "rho_mood": {
+    "p": 0.18811881188118812,
+    "bh_q05": 0
+   },
+   "ar_viol_above_chance": {
+    "p": 0.012702814926004903,
+    "bh_q05": 1
+   },
+   "knn_beats": {
+    "p": 0.01723610965949123,
+    "bh_q05": 1
+   }
+  },
+  "bh_series_violations": {
+   "ar": 0,
+   "knn": 0
+  },
+  "secondary": {
+   "rho_beta_skill": 0.39365266862314335,
+   "rho_beta_bound": 0.6968048920200453,
+   "rho_beta_skill_abs": 0.39365266862314335,
+   "beta_median": 0.7929135856434311,
+   "rho_welch_fc": 0.3990287862128226,
+   "rho_welch_f74": 0.44070640466440375,
+   "rho_linear_detrend": 0.42295821832224745,
+   "welch_fc_bound_median": 0.09884990089482126,
+   "pairing_perm_p": 0.0004997501249375312
+  },
+  "shuffled_q95": {
+   "all": -0.022717091047471515,
+   "esm_mood": 0.0980970854220722,
+   "power": NaN,
+   "tree_rings": -0.030101873179795454
+  },
+  "stage_seconds": {
+   "load": 0.7,
+   "real": 131.6,
+   "shuffled": 103.4,
+   "synth_ar": 27.9,
+   "synth_logistic": 4.1,
+   "secondary": 2.1
+  }
+ },
+ "controls": {
+  "series_shuffle": {
+   "n": 100,
+   "usable": true,
+   "mean": -0.07073779652237679,
+   "q95": -0.022717091047471515,
+   "q05": -0.12564558917160465,
+   "p_ge": 0.009900990099009901,
+   "compare": "analysis.rho_all",
+   "description": "each series permuted in time; pooled Spearman of bound and AR skill",
+   "meta": {
+    "what": "each series permuted in time; pooled Spearman"
+   }
+  },
+  "phase_surrogate": {
+   "n": 39,
+   "usable": true,
+   "mean": 0.5948124196403435,
+   "q95": 0.6279109701311866,
+   "q05": 0.5678308246413618,
+   "p_ge": 1.0,
+   "compare": "analysis.rho_all",
+   "description": "pooled Spearman on each phase-randomised surrogate set (spectrum kept)",
+   "meta": {
+    "what": "pooled Spearman on each of 39 phase-randomised surrogate sets (spectrum kept)"
+   }
+  }
+ },
+ "timing_s": {
+  "analysis": 271.50530660001095,
+  "series_shuffle": 0.0004230999911669642,
+  "phase_surrogate": 0.00024399999529123306
+ },
+ "verdicts": {
+  "V0_planted_ar": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.synth_ar.rho_est_skill >= 0.7",
+     "left": 0.9247867198524428,
+     "right": 0.7,
+     "holds": true
+    },
+    {
+     "rule": "analysis.synth_ar.rho_est_true >= 0.8",
+     "left": 0.9456220624673608,
+     "right": 0.8,
+     "holds": true
+    },
+    {
+     "rule": "analysis.synth_ar.viol_rate <= 0.1",
+     "left": 0.043333333333333335,
+     "right": 0.1,
+     "holds": true
+    }
+   ]
+  },
+  "V0b_planted_nonlinear": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.synth_logistic.knn_viol_rate >= 0.5",
+     "left": 1.0,
+     "right": 0.5,
+     "holds": true
+    },
+    {
+     "rule": "analysis.synth_logistic.ar_viol_rate <= 0.1",
+     "left": 0.06,
+     "right": 0.1,
+     "holds": true
+    }
+   ]
+  },
+  "P1_flatness_tracks_skill": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.rho_all > controls.series_shuffle.q95",
+     "left": 0.41367800217581424,
+     "right": -0.022717091047471515,
+     "holds": true
+    },
+    {
+     "rule": "analysis.main_p.rho_all.bh_q05 > 0.5",
+     "left": 1,
+     "right": 0.5,
+     "holds": true
+    },
+    {
+     "rule": "analysis.rho_all_ci.0 > 0",
+     "left": 0.36089855058395104,
+     "right": 0,
+     "holds": true
+    }
+   ]
+  },
+  "P2_bound_holds": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.ar_viol.rate <= 0.1",
+     "left": 0.06472491909385113,
+     "right": 0.1,
+     "holds": true
+    }
+   ]
+  },
+  "C_phase_keeps_bound": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "controls.phase_surrogate.q05 > controls.series_shuffle.q95",
+     "left": 0.5678308246413618,
+     "right": -0.022717091047471515,
+     "holds": true
+    },
+    {
+     "rule": "analysis.surr_viol_rate_mean <= 0.1",
+     "left": 0.05128205128205128,
+     "right": 0.1,
+     "holds": true
+    }
+   ]
+  },
+  "D_promote_flatness_unit": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.synth_ar.rho_est_skill >= 0.7",
+     "left": 0.9247867198524428,
+     "right": 0.7,
+     "holds": true
+    },
+    {
+     "rule": "analysis.synth_ar.rho_est_true >= 0.8",
+     "left": 0.9456220624673608,
+     "right": 0.8,
+     "holds": true
+    },
+    {
+     "rule": "analysis.synth_ar.viol_rate <= 0.1",
+     "left": 0.043333333333333335,
+     "right": 0.1,
+     "holds": true
+    },
+    {
+     "rule": "analysis.rho_all > controls.series_shuffle.q95",
+     "left": 0.41367800217581424,
+     "right": -0.022717091047471515,
+     "holds": true
+    },
+    {
+     "rule": "analysis.main_p.rho_all.bh_q05 > 0.5",
+     "left": 1,
+     "right": 0.5,
+     "holds": true
+    },
+    {
+     "rule": "analysis.rho_all_ci.0 > 0",
+     "left": 0.36089855058395104,
+     "right": 0,
+     "holds": true
+    },
+    {
+     "rule": "analysis.ar_viol.rate <= 0.1",
+     "left": 0.06472491909385113,
+     "right": 0.1,
+     "holds": true
+    }
+   ]
+  },
+  "S1_nonlinear_beats_linear_bound": {
+   "verdict": "FAIL",
+   "rules": [
+    {
+     "rule": "analysis.knn_viol.rate > 0.1",
+     "left": 0.063915857605178,
+     "right": 0.1,
+     "holds": false
+    },
+    {
+     "rule": "analysis.knn_viol.rate > analysis.synth_ar.knn_viol_rate",
+     "left": 0.063915857605178,
+     "right": 0.06333333333333334,
+     "holds": true
+    },
+    {
+     "rule": "analysis.main_p.knn_beats.bh_q05 > 0.5",
+     "left": 1,
+     "right": 0.5,
+     "holds": true
+    }
+   ]
+  },
+  "S2_beta_alone": {
+   "verdict": "FAIL",
+   "rules": [
+    {
+     "rule": "analysis.secondary.rho_beta_skill_abs >= analysis.rho_all",
+     "left": 0.39365266862314335,
+     "right": 0.41367800217581424,
+     "holds": false
+    }
+   ]
+  }
+ },
+ "reproduce": null,
+ "status": "scored"
+}

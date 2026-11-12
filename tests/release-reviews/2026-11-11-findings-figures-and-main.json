@@ -1,0 +1,7 @@
+{
+  "date": "2026-11-11",
+  "note": "The findings figures (merged into this branch) and current main are both in; index.html carries the findings entries, the figures and main's changes.",
+  "paths": {
+    "index.html": "d5b5608991b905f235025ff7118cd8cd2801fd8b57289b2347759cb7b57c168b"
+  }
+}

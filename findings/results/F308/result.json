@@ -1,0 +1,145 @@
+{
+ "study": "oeis-recurrence-conjectures",
+ "run_id": "20261031T223144Z",
+ "date": "2026-10-31",
+ "prereg": {
+  "path": "PREREG.txt",
+  "sha256": "9736ef8a01a18ddaa94949f06de0b127eb9bdc9085bf9265fbb1d33a061f9d37",
+  "anchors": [
+   "sidecar",
+   "lock"
+  ],
+  "plan_sha256": "f8fbd127e431e832302cdd548c974029630a778f7c14125e20711b5a5ffb045f",
+  "locked_at": "2026-10-31T22:00:36+00:00"
+ },
+ "hashes": {
+  "units.py": "4592c1369c0e142a0ef205ce03ac7fa49fc7f9e12234da913bdd6c8a879f9661"
+ },
+ "analysis": {
+  "n_entries": 500,
+  "n_lines": 531,
+  "n_parsed": 512,
+  "n_tested": 213,
+  "n_fail": 1,
+  "fail_rate": 0.004694835680751174,
+  "fail_ci": [
+   0.0008292137381074073,
+   0.026110266509225207
+  ],
+  "pass_rate": 0.9953051643192489,
+  "plant_caught": 1.0,
+  "plant_n": 212,
+  "median_terms_beyond_data": 967.0,
+  "fails": [
+   {
+    "A": 31740,
+    "line": "Conjecture: a(n) = n*(961*n+1). a(n) = 3*a(n-1)-3*a(n-2)+a(n-3). G.f.: 2*x*(481+480*x)/(1-x)^3. - _Colin Barker_, Sep 30 2012",
+    "first_fail_n": 65,
+    "held_for": 64,
+    "b_len": 10000,
+    "data_len": 32
+   }
+  ]
+ },
+ "controls": {
+  "C_cross": {
+   "n": 200,
+   "usable": true,
+   "mean": 0.004833333333333334,
+   "q95": 0.03333333333333333,
+   "q05": 0.0,
+   "p_ge": 0.004975124378109453,
+   "compare": "analysis.pass_rate",
+   "description": "each equation applied to another entry"
+  }
+ },
+ "timing_s": {
+  "analysis": 6.086730699998952,
+  "C_cross": 0.7803280999996787
+ },
+ "verdicts": {
+  "K0_INSTRUMENT": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.plant_caught >= 0.99",
+     "left": 1.0,
+     "right": 0.99,
+     "holds": true
+    },
+    {
+     "rule": "analysis.n_tested >= 100",
+     "left": 213,
+     "right": 100,
+     "holds": true
+    },
+    {
+     "rule": "analysis.pass_rate > controls.C_cross.q95",
+     "left": 0.9953051643192489,
+     "right": 0.03333333333333333,
+     "holds": true
+    }
+   ]
+  },
+  "ANY_FAIL": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.plant_caught >= 0.99",
+     "left": 1.0,
+     "right": 0.99,
+     "holds": true
+    },
+    {
+     "rule": "analysis.n_tested >= 100",
+     "left": 213,
+     "right": 100,
+     "holds": true
+    },
+    {
+     "rule": "analysis.pass_rate > controls.C_cross.q95",
+     "left": 0.9953051643192489,
+     "right": 0.03333333333333333,
+     "holds": true
+    },
+    {
+     "rule": "analysis.n_fail >= 1",
+     "left": 1,
+     "right": 1,
+     "holds": true
+    }
+   ]
+  },
+  "FAIL_RATE_ABOVE_1PCT": {
+   "verdict": "FAIL",
+   "rules": [
+    {
+     "rule": "analysis.plant_caught >= 0.99",
+     "left": 1.0,
+     "right": 0.99,
+     "holds": true
+    },
+    {
+     "rule": "analysis.n_tested >= 100",
+     "left": 213,
+     "right": 100,
+     "holds": true
+    },
+    {
+     "rule": "analysis.pass_rate > controls.C_cross.q95",
+     "left": 0.9953051643192489,
+     "right": 0.03333333333333333,
+     "holds": true
+    },
+    {
+     "rule": "analysis.fail_rate > 0.01",
+     "left": 0.004694835680751174,
+     "right": 0.01,
+     "holds": false
+    }
+   ]
+  }
+ },
+ "reproduce": null,
+ "status": "scored"
+}

@@ -73,3 +73,5 @@ media/school/receipts/** -text
 vendor/cmmns/** -text
 # BuildTeX sources are hashed by their build receipts (findings/papers/*.buildtex.json), so keep their LF bytes.
 *.bld text eol=lf
+# Published result copies are hashed under each figure, so Git must store the exact bytes.
+findings/results/** -text

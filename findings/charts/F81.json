@@ -1,0 +1,876 @@
+{
+ "finding": "F81",
+ "sources": [
+  {
+   "id": "result",
+   "name": "result.json (first study)",
+   "sha256_original": "23d4243438f4910141a40aefcc8a78484472b4c6bc01d4248661e07b81264b3e",
+   "sha256_copy": "b0ec33628766e90a692c073202f2c2c6777f276ea2e6203bb595e118ba03da38",
+   "href": "/findings/results/F81/result.json",
+   "run": "20261030T012757Z"
+  },
+  {
+   "id": "replication",
+   "name": "result.json (replication)",
+   "sha256_original": "1d3200a0492db001538247dccfc319bd258c4ade68ac0e3b88c165dcec7c3bad",
+   "sha256_copy": "0841d2fd88a47e36509fef92964e268ed64742d076c1c4d98caf6fc57f0f75e6",
+   "href": "/findings/results/F81/replication-result.json",
+   "run": "20261030T024058Z"
+  }
+ ],
+ "charts": [
+  {
+   "key": "design",
+   "form": "flow",
+   "at": "controls",
+   "claims": [
+    "c1",
+    "c3"
+   ],
+   "source": [
+    "result",
+    "replication"
+   ],
+   "title": "How the separation ratio was measured and checked.",
+   "takeaway": "All 16 of 16 ratios exceeded the 95th percentile of 500 label shuffles, and the instrument check failed under both noise models, so only the direction is claimed.",
+   "n": "728 surface spectra in set 1 (221 flowers, 507 backgrounds) and 553 in set 2; counts of pairs are in each row",
+   "steps": [
+    {
+     "kind": "data",
+     "label": "728 and 553 measured surface spectra",
+     "detail": "Set 1 has 221 flowers and 507 rocks, barks and leaves. Set 2 is a second collection of flowers with soil and leaf litter."
+    },
+    {
+     "kind": "measure",
+     "label": "Receptor models for four observers",
+     "detail": "Each spectrum becomes receptor signals for a human, a dog, a honeybee and a blue tit. The distance between two surfaces is counted in just-noticeable differences."
+    },
+    {
+     "kind": "measure",
+     "label": "Keep the pairs the first observer cannot separate",
+     "detail": "Pairs under one just-noticeable difference for the human, or for the dog."
+    },
+    {
+     "kind": "measure",
+     "label": "Separation ratio",
+     "detail": "Share of flower-background pairs the bee or blue tit separates, divided by the share of background-background pairs it separates."
+    },
+    {
+     "kind": "control",
+     "label": "Label shuffle",
+     "detail": "Flower and background labels permuted over the same surfaces, 500 times. The shuffled ratio has a mean of 1.00."
+    },
+    {
+     "kind": "control",
+     "label": "Instrument check against behaviour",
+     "detail": "The smallest wavelength step each model resolves must fall in the range measured in behaviour for humans and bees."
+    },
+    {
+     "kind": "rule",
+     "label": "Rule: ratio above the shuffle's 95th percentile",
+     "detail": "Set before the run, with the p values corrected over all tests in each study."
+    },
+    {
+     "kind": "verdict",
+     "holds": true,
+     "label": "16 of 16 ratios passed",
+     "yes": "direction holds",
+     "no": "not all passed",
+     "detail": "Instrument check: failed with Weber noise, failed with photon noise added. The sizes are not claimed."
+    }
+   ]
+  },
+  {
+   "key": "shares",
+   "form": "dumbbell",
+   "at": "results",
+   "claims": [
+    "c1"
+   ],
+   "source": [
+    "result",
+    "replication"
+   ],
+   "title": "Share of human-blind pairs that the bee and the blue tit separate.",
+   "takeaway": "With Weber noise on set 1 the bee separated 0.98 of 1,108 flower-background pairs and 0.48 of 3,892 background pairs. The flower-background share was the higher one in all 8 rows.",
+   "units": "share of pairs the second observer separates (at least one just-noticeable difference apart), from 0 to 1. A pair is blind for an observer when the model puts the two surfaces less than one just-noticeable difference apart for that observer. The models turn each surface's reflectance spectrum into receptor signals for a human, a dog, a honeybee and a blue tit",
+   "n": "728 surface spectra in set 1 (221 flowers, 507 backgrounds) and 553 in set 2; counts of pairs are in each row",
+   "interval": null,
+   "no_interval": "The result files give one share for each kind of pair, with no interval. The label shuffle in the next figure is the check on the ratio of the two.",
+   "baseline": "Background-background pairs that the human model cannot separate",
+   "threshold": "The ratio of the two shares had to exceed the 95th percentile of the label shuffle",
+   "a_name": "background-background pairs",
+   "b_name": "flower-background pairs",
+   "axis": {
+    "label": "share of human-blind pairs separated (higher: more pairs told apart)",
+    "min": 0,
+    "max": 1
+   },
+   "rows": [
+    {
+     "label": "Bee",
+     "group": "Set 1, Weber noise",
+     "a": 0.48252826310380265,
+     "b": 0.983754512635379,
+     "note": "0.48 of 3,892 background pairs; 0.98 of 1,108 flower-background pairs"
+    },
+    {
+     "label": "Blue tit",
+     "group": "Set 1, Weber noise",
+     "a": 0.4460431654676259,
+     "b": 0.9918772563176895,
+     "note": "0.45 of 3,892 background pairs; 0.99 of 1,108 flower-background pairs"
+    },
+    {
+     "label": "Bee",
+     "group": "Set 1, photon noise added",
+     "a": 0.5765922700054437,
+     "b": 0.9622898682417084,
+     "note": "0.58 of 9,185 background pairs; 0.96 of 2,201 flower-background pairs"
+    },
+    {
+     "label": "Blue tit",
+     "group": "Set 1, photon noise added",
+     "a": 0.6611867174741426,
+     "b": 0.9909132212630622,
+     "note": "0.66 of 9,185 background pairs; 0.99 of 2,201 flower-background pairs"
+    },
+    {
+     "label": "Bee",
+     "group": "Set 2, Weber noise",
+     "a": 0.0031645569620253164,
+     "b": 0.9893992932862191,
+     "note": "0.003 of 316 background pairs; 0.99 of 566 flower-background pairs"
+    },
+    {
+     "label": "Blue tit",
+     "group": "Set 2, Weber noise",
+     "a": 0.0189873417721519,
+     "b": 0.9929328621908127,
+     "note": "0.019 of 316 background pairs; 0.99 of 566 flower-background pairs"
+    },
+    {
+     "label": "Bee",
+     "group": "Set 2, photon noise added",
+     "a": 0.021505376344086023,
+     "b": 0.9796215429403202,
+     "note": "0.022 of 465 background pairs; 0.98 of 1,374 flower-background pairs"
+    },
+    {
+     "label": "Blue tit",
+     "group": "Set 2, photon noise added",
+     "a": 0.25806451612903225,
+     "b": 0.9934497816593887,
+     "note": "0.26 of 465 background pairs; 0.99 of 1,374 flower-background pairs"
+    }
+   ],
+   "columns": [
+    "Condition",
+    "Observers",
+    "Flower-background pairs",
+    "Share separated",
+    "Background pairs",
+    "Share separated"
+   ],
+   "table": [
+    [
+     "Set 1, Weber noise",
+     "Bee, among human-blind pairs",
+     "1,108",
+     "0.984",
+     "3,892",
+     "0.483"
+    ],
+    [
+     "Set 1, Weber noise",
+     "Blue tit, among human-blind pairs",
+     "1,108",
+     "0.992",
+     "3,892",
+     "0.446"
+    ],
+    [
+     "Set 1, Weber noise",
+     "Bee, among dog-blind pairs",
+     "14,166",
+     "0.950",
+     "21,257",
+     "0.657"
+    ],
+    [
+     "Set 1, Weber noise",
+     "Blue tit, among dog-blind pairs",
+     "14,166",
+     "0.998",
+     "21,257",
+     "0.858"
+    ],
+    [
+     "Set 1, photon noise added",
+     "Bee, among human-blind pairs",
+     "2,201",
+     "0.962",
+     "9,185",
+     "0.577"
+    ],
+    [
+     "Set 1, photon noise added",
+     "Blue tit, among human-blind pairs",
+     "2,201",
+     "0.991",
+     "9,185",
+     "0.661"
+    ],
+    [
+     "Set 1, photon noise added",
+     "Bee, among dog-blind pairs",
+     "16,557",
+     "0.946",
+     "26,035",
+     "0.684"
+    ],
+    [
+     "Set 1, photon noise added",
+     "Blue tit, among dog-blind pairs",
+     "16,557",
+     "0.998",
+     "26,035",
+     "0.876"
+    ],
+    [
+     "Set 2, Weber noise",
+     "Bee, among human-blind pairs",
+     "566",
+     "0.989",
+     "316",
+     "0.003"
+    ],
+    [
+     "Set 2, Weber noise",
+     "Blue tit, among human-blind pairs",
+     "566",
+     "0.993",
+     "316",
+     "0.019"
+    ],
+    [
+     "Set 2, Weber noise",
+     "Bee, among dog-blind pairs",
+     "2,750",
+     "0.973",
+     "570",
+     "0.065"
+    ],
+    [
+     "Set 2, Weber noise",
+     "Blue tit, among dog-blind pairs",
+     "2,750",
+     "0.996",
+     "570",
+     "0.416"
+    ],
+    [
+     "Set 2, photon noise added",
+     "Bee, among human-blind pairs",
+     "1,374",
+     "0.980",
+     "465",
+     "0.022"
+    ],
+    [
+     "Set 2, photon noise added",
+     "Blue tit, among human-blind pairs",
+     "1,374",
+     "0.993",
+     "465",
+     "0.258"
+    ],
+    [
+     "Set 2, photon noise added",
+     "Bee, among dog-blind pairs",
+     "3,071",
+     "0.972",
+     "595",
+     "0.099"
+    ],
+    [
+     "Set 2, photon noise added",
+     "Blue tit, among dog-blind pairs",
+     "3,071",
+     "0.996",
+     "595",
+     "0.420"
+    ]
+   ]
+  },
+  {
+   "key": "ratios",
+   "form": "band",
+   "at": "results",
+   "claims": [
+    "c2",
+    "c1"
+   ],
+   "source": [
+    "result",
+    "replication"
+   ],
+   "title": "Separation ratios against their label-shuffle ranges, on a log scale.",
+   "takeaway": "The bee's ratio among human-blind pairs was 2.04 with Weber noise and 1.67 with photon noise added on set 1, and 45.6 on set 2. All 16 of 16 ratios sat above their shuffle range, and their sizes ran from 1.14 to 313.",
+   "units": "Separation ratio: the share of flower-background pairs the second observer separates, divided by the share of background-background pairs it separates. 1 means flowers are separated no more often than backgrounds; higher means flowers stand out more. A pair is blind for an observer when the model puts the two surfaces less than one just-noticeable difference apart for that observer. The models turn each surface's reflectance spectrum into receptor signals for a human, a dog, a honeybee and a blue tit",
+   "n": "728 surface spectra in set 1 (221 flowers, 507 backgrounds) and 553 in set 2; counts of pairs are in each row; 500 label shuffles for each ratio",
+   "interval": "bands are the 5th to 95th percentile of the label shuffle for each ratio; the tick is the shuffle mean",
+   "baseline": "Label shuffle: flower and background labels permuted over the same surfaces, 500 draws. Its ratio has a mean near 1",
+   "threshold": "A ratio counts only above the 95th percentile of its own shuffle, with p corrected over 7 tests in the first study and 14 in the replication",
+   "ruled_out": "A stable size for the effect. The same test gave 2.04 on set 1 and 45.6 on set 2, where the bee separated only 0.022 of 465 background pairs because the backgrounds are alike. No surface set with a planted flower effect was run",
+   "value_name": "measured ratio",
+   "band_name": "label shuffle, 5th to 95th percentile",
+   "axis": {
+    "label": "separation ratio (higher: flowers stand out more)",
+    "log": true,
+    "min": 0.8,
+    "max": 500,
+    "refs": [
+     {
+      "value": 1,
+      "label": "no difference"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "label": "Bee, among human-blind pairs",
+     "group": "Set 1, Weber noise",
+     "value": 2.0387500336405195,
+     "lo": 0.9349349161872397,
+     "hi": 1.0803280071993315,
+     "mean": 1.0015323646347811,
+     "note": "ratio 2.04; shuffle 0.93 to 1.08; p 0.002"
+    },
+    {
+     "label": "Blue tit, among human-blind pairs",
+     "group": "Set 1, Weber noise",
+     "value": 2.223724816583207,
+     "lo": 0.9227186794820963,
+     "hi": 1.0906779085731622,
+     "mean": 1.0015761834312484,
+     "note": "ratio 2.22; shuffle 0.92 to 1.09; p 0.002"
+    },
+    {
+     "label": "Bee, among dog-blind pairs",
+     "group": "Set 1, Weber noise",
+     "value": 1.4451632297427486,
+     "lo": 0.9708473068922653,
+     "hi": 1.0331401245153367,
+     "mean": 0.99966293285083,
+     "note": "ratio 1.45; shuffle 0.97 to 1.03; p 0.002"
+    },
+    {
+     "label": "Blue tit, among dog-blind pairs",
+     "group": "Set 1, Weber noise",
+     "value": 1.163468236809885,
+     "lo": 0.9866288130675925,
+     "hi": 1.0166733130281773,
+     "mean": 1.0006238308532862,
+     "note": "ratio 1.16; shuffle 0.99 to 1.02; p 0.002"
+    },
+    {
+     "label": "Bee, among human-blind pairs",
+     "group": "Set 1, photon noise added",
+     "value": 1.6689260649169357,
+     "lo": 0.9437843868298186,
+     "hi": 1.0640138905266123,
+     "mean": 1.0009712944797537,
+     "note": "ratio 1.67; shuffle 0.94 to 1.06; p 0.002"
+    },
+    {
+     "label": "Blue tit, among human-blind pairs",
+     "group": "Set 1, photon noise added",
+     "value": 1.4986889407708262,
+     "lo": 0.9593394633148248,
+     "hi": 1.044961185785849,
+     "mean": 0.9989508228063871,
+     "note": "ratio 1.50; shuffle 0.96 to 1.04; p 0.002"
+    },
+    {
+     "label": "Bee, among dog-blind pairs",
+     "group": "Set 1, photon noise added",
+     "value": 1.3837177694096574,
+     "lo": 0.9755887405174191,
+     "hi": 1.0296004491913648,
+     "mean": 1.0012488051435,
+     "note": "ratio 1.38; shuffle 0.98 to 1.03; p 0.002"
+    },
+    {
+     "label": "Blue tit, among dog-blind pairs",
+     "group": "Set 1, photon noise added",
+     "value": 1.1404619124558204,
+     "lo": 0.9864337483900739,
+     "hi": 1.0121005221527997,
+     "mean": 0.9998047352425696,
+     "note": "ratio 1.14; shuffle 0.99 to 1.01; p 0.002"
+    },
+    {
+     "label": "Bee, among human-blind pairs",
+     "group": "Set 2, Weber noise",
+     "value": 312.65017667844523,
+     "lo": 0.8473921334140312,
+     "hi": 1.31498279930675,
+     "mean": 1.012632959601076,
+     "note": "ratio 313; shuffle 0.85 to 1.31; p 0.004"
+    },
+    {
+     "label": "Blue tit, among human-blind pairs",
+     "group": "Set 2, Weber noise",
+     "value": 52.2944640753828,
+     "lo": 0.8685601677111522,
+     "hi": 1.2576906807236756,
+     "mean": 1.0189005870640253,
+     "note": "ratio 52.3; shuffle 0.87 to 1.26; p 0.004"
+    },
+    {
+     "label": "Bee, among dog-blind pairs",
+     "group": "Set 2, Weber noise",
+     "value": 14.996461916461918,
+     "lo": 0.9481382428285221,
+     "hi": 1.0754970369456454,
+     "mean": 1.0001691520852072,
+     "note": "ratio 15.0; shuffle 0.95 to 1.08; p 0.002"
+    },
+    {
+     "label": "Blue tit, among dog-blind pairs",
+     "group": "Set 2, Weber noise",
+     "value": 2.3954430379746836,
+     "lo": 0.9632131884387191,
+     "hi": 1.049304085119933,
+     "mean": 0.9993043162834991,
+     "note": "ratio 2.40; shuffle 0.96 to 1.05; p 0.002"
+    },
+    {
+     "label": "Bee, among human-blind pairs",
+     "group": "Set 2, photon noise added",
+     "value": 45.55240174672489,
+     "lo": 0.882712360741775,
+     "hi": 1.2357661557234711,
+     "mean": 1.018043280901014,
+     "note": "ratio 45.6; shuffle 0.88 to 1.24; p 0.002"
+    },
+    {
+     "label": "Blue tit, among human-blind pairs",
+     "group": "Set 2, photon noise added",
+     "value": 3.8496179039301315,
+     "lo": 0.9080318088179536,
+     "hi": 1.2071648778259878,
+     "mean": 1.0173963130319843,
+     "note": "ratio 3.85; shuffle 0.91 to 1.21; p 0.002"
+    },
+    {
+     "label": "Bee, among dog-blind pairs",
+     "group": "Set 2, photon noise added",
+     "value": 9.799049611179488,
+     "lo": 0.9499996861067626,
+     "hi": 1.0641566211930171,
+     "mean": 0.9999804178467018,
+     "note": "ratio 9.80; shuffle 0.95 to 1.06; p 0.002"
+    },
+    {
+     "label": "Blue tit, among dog-blind pairs",
+     "group": "Set 2, photon noise added",
+     "value": 2.3699251058287203,
+     "lo": 0.9661306626753929,
+     "hi": 1.0496677807100565,
+     "mean": 1.0013538060017564,
+     "note": "ratio 2.37; shuffle 0.97 to 1.05; p 0.002"
+    }
+   ],
+   "columns": [
+    "Condition",
+    "Observers",
+    "Flower-background pairs",
+    "Background pairs",
+    "Ratio",
+    "Shuffle mean",
+    "Shuffle 95th percentile",
+    "p",
+    "Verdict"
+   ],
+   "table": [
+    [
+     "Set 1, Weber noise",
+     "Bee, among human-blind pairs",
+     "1,108",
+     "3,892",
+     "2.04",
+     "1.002",
+     "1.080",
+     "0.002",
+     "pass"
+    ],
+    [
+     "Set 1, Weber noise",
+     "Blue tit, among human-blind pairs",
+     "1,108",
+     "3,892",
+     "2.22",
+     "1.002",
+     "1.091",
+     "0.002",
+     "pass"
+    ],
+    [
+     "Set 1, Weber noise",
+     "Bee, among dog-blind pairs",
+     "14,166",
+     "21,257",
+     "1.45",
+     "1.000",
+     "1.033",
+     "0.002",
+     "pass"
+    ],
+    [
+     "Set 1, Weber noise",
+     "Blue tit, among dog-blind pairs",
+     "14,166",
+     "21,257",
+     "1.16",
+     "1.001",
+     "1.017",
+     "0.002",
+     "pass"
+    ],
+    [
+     "Set 1, photon noise added",
+     "Bee, among human-blind pairs",
+     "2,201",
+     "9,185",
+     "1.67",
+     "1.001",
+     "1.064",
+     "0.002",
+     "pass"
+    ],
+    [
+     "Set 1, photon noise added",
+     "Blue tit, among human-blind pairs",
+     "2,201",
+     "9,185",
+     "1.50",
+     "0.999",
+     "1.045",
+     "0.002",
+     "pass"
+    ],
+    [
+     "Set 1, photon noise added",
+     "Bee, among dog-blind pairs",
+     "16,557",
+     "26,035",
+     "1.38",
+     "1.001",
+     "1.030",
+     "0.002",
+     "pass"
+    ],
+    [
+     "Set 1, photon noise added",
+     "Blue tit, among dog-blind pairs",
+     "16,557",
+     "26,035",
+     "1.14",
+     "1.000",
+     "1.012",
+     "0.002",
+     "pass"
+    ],
+    [
+     "Set 2, Weber noise",
+     "Bee, among human-blind pairs",
+     "566",
+     "316",
+     "313",
+     "1.013",
+     "1.315",
+     "0.004",
+     "pass"
+    ],
+    [
+     "Set 2, Weber noise",
+     "Blue tit, among human-blind pairs",
+     "566",
+     "316",
+     "52.3",
+     "1.019",
+     "1.258",
+     "0.004",
+     "pass"
+    ],
+    [
+     "Set 2, Weber noise",
+     "Bee, among dog-blind pairs",
+     "2,750",
+     "570",
+     "15.0",
+     "1.000",
+     "1.075",
+     "0.002",
+     "pass"
+    ],
+    [
+     "Set 2, Weber noise",
+     "Blue tit, among dog-blind pairs",
+     "2,750",
+     "570",
+     "2.40",
+     "0.999",
+     "1.049",
+     "0.002",
+     "pass"
+    ],
+    [
+     "Set 2, photon noise added",
+     "Bee, among human-blind pairs",
+     "1,374",
+     "465",
+     "45.6",
+     "1.018",
+     "1.236",
+     "0.002",
+     "pass"
+    ],
+    [
+     "Set 2, photon noise added",
+     "Blue tit, among human-blind pairs",
+     "1,374",
+     "465",
+     "3.85",
+     "1.017",
+     "1.207",
+     "0.002",
+     "pass"
+    ],
+    [
+     "Set 2, photon noise added",
+     "Bee, among dog-blind pairs",
+     "3,071",
+     "595",
+     "9.80",
+     "1.000",
+     "1.064",
+     "0.002",
+     "pass"
+    ],
+    [
+     "Set 2, photon noise added",
+     "Blue tit, among dog-blind pairs",
+     "3,071",
+     "595",
+     "2.37",
+     "1.001",
+     "1.050",
+     "0.002",
+     "pass"
+    ]
+   ]
+  },
+  {
+   "key": "instrument",
+   "form": "rules",
+   "at": "results",
+   "claims": [
+    "c3"
+   ],
+   "source": [
+    "result",
+    "replication"
+   ],
+   "title": "The instrument check: the model's finest wavelength step against the range seen in behaviour.",
+   "takeaway": "5 of 12 checks fell out of range and the check failed under both noise models. The bee model's smallest step was 0.3 nm with Weber noise and 0.7 nm with photon noise added, finer than bees show in behaviour.",
+   "units": "wavelength step in nanometres: the smallest change in the wavelength of a single-wavelength light that the model reports as one just-noticeable difference. A smaller step means finer colour discrimination",
+   "n": "one model curve for each observer and noise model, sampled across the visible range",
+   "interval": null,
+   "no_interval": "Each row compares one model value with a range set in advance from published behaviour.",
+   "baseline": "The ranges come from published wavelength-discrimination behaviour in humans and honeybees and were written down before each run",
+   "threshold": "Every row must be in range for the instrument check to pass",
+   "ruled_out": "A claim about the size of any separation share or ratio. The model is finer than the animal, so only the direction of the effect is claimed",
+   "rows": [
+    {
+     "label": "Weber noise: Human, smallest step",
+     "left": "0.4 nm",
+     "right": "0.5 to 5 nm",
+     "holds": false,
+     "yes": "in range",
+     "no": "out of range"
+    },
+    {
+     "label": "Weber noise: Human, wavelength of the smallest step",
+     "left": "615 nm",
+     "right": "470 to 620 nm",
+     "holds": true,
+     "yes": "in range",
+     "no": "out of range"
+    },
+    {
+     "label": "Weber noise: Bee, smallest step",
+     "left": "0.3 nm",
+     "right": "1.5 to 12 nm",
+     "holds": false,
+     "yes": "in range",
+     "no": "out of range"
+    },
+    {
+     "label": "Weber noise: Mantis shrimp, median step",
+     "left": "17.4 nm",
+     "right": "at least 8 nm",
+     "holds": true,
+     "yes": "in range",
+     "no": "out of range"
+    },
+    {
+     "label": "Photon noise added: Human, smallest step",
+     "left": "0.8 nm",
+     "right": "0.5 to 2 nm",
+     "holds": true,
+     "yes": "in range",
+     "no": "out of range"
+    },
+    {
+     "label": "Photon noise added: Human, step at 500 nm",
+     "left": "0.8 nm",
+     "right": "0.5 to 2 nm",
+     "holds": true,
+     "yes": "in range",
+     "no": "out of range"
+    },
+    {
+     "label": "Photon noise added: Human, step at 600 nm",
+     "left": "1.5 nm",
+     "right": "0.5 to 2 nm",
+     "holds": true,
+     "yes": "in range",
+     "no": "out of range"
+    },
+    {
+     "label": "Photon noise added: Human, step at 640 nm",
+     "left": "2.2 nm",
+     "right": "3 to 12 nm",
+     "holds": false,
+     "yes": "in range",
+     "no": "out of range"
+    },
+    {
+     "label": "Photon noise added: Human, smallest step in the required place",
+     "left": "yes",
+     "right": "yes",
+     "holds": true,
+     "yes": "in range",
+     "no": "out of range"
+    },
+    {
+     "label": "Photon noise added: Bee, smallest step",
+     "left": "0.7 nm",
+     "right": "2.25 to 9 nm",
+     "holds": false,
+     "yes": "in range",
+     "no": "out of range"
+    },
+    {
+     "label": "Photon noise added: Bee, smallest step in the required place",
+     "left": "no",
+     "right": "yes",
+     "holds": false,
+     "yes": "in range",
+     "no": "out of range"
+    },
+    {
+     "label": "Photon noise added: Mantis shrimp, median step",
+     "left": "17.4 nm",
+     "right": "at least 8 nm",
+     "holds": true,
+     "yes": "in range",
+     "no": "out of range"
+    }
+   ],
+   "columns": [
+    "Check",
+    "Model value",
+    "Required",
+    "Result"
+   ],
+   "table": [
+    [
+     "Weber noise: Human, smallest step",
+     "0.4 nm",
+     "0.5 to 5 nm",
+     "out of range"
+    ],
+    [
+     "Weber noise: Human, wavelength of the smallest step",
+     "615 nm",
+     "470 to 620 nm",
+     "in range"
+    ],
+    [
+     "Weber noise: Bee, smallest step",
+     "0.3 nm",
+     "1.5 to 12 nm",
+     "out of range"
+    ],
+    [
+     "Weber noise: Mantis shrimp, median step",
+     "17.4 nm",
+     "at least 8 nm",
+     "in range"
+    ],
+    [
+     "Photon noise added: Human, smallest step",
+     "0.8 nm",
+     "0.5 to 2 nm",
+     "in range"
+    ],
+    [
+     "Photon noise added: Human, step at 500 nm",
+     "0.8 nm",
+     "0.5 to 2 nm",
+     "in range"
+    ],
+    [
+     "Photon noise added: Human, step at 600 nm",
+     "1.5 nm",
+     "0.5 to 2 nm",
+     "in range"
+    ],
+    [
+     "Photon noise added: Human, step at 640 nm",
+     "2.2 nm",
+     "3 to 12 nm",
+     "out of range"
+    ],
+    [
+     "Photon noise added: Human, smallest step in the required place",
+     "yes",
+     "yes",
+     "in range"
+    ],
+    [
+     "Photon noise added: Bee, smallest step",
+     "0.7 nm",
+     "2.25 to 9 nm",
+     "out of range"
+    ],
+    [
+     "Photon noise added: Bee, smallest step in the required place",
+     "no",
+     "yes",
+     "out of range"
+    ],
+    [
+     "Photon noise added: Mantis shrimp, median step",
+     "17.4 nm",
+     "at least 8 nm",
+     "in range"
+    ]
+   ]
+  }
+ ]
+}

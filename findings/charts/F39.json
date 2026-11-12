@@ -1,0 +1,651 @@
+{
+ "finding": "F39",
+ "sources": [
+  {
+   "id": "result",
+   "name": "result.json (confirmatory run)",
+   "sha256_original": "f17c7c5c9bc2211612e56197e0f3e5429414ff659d08e8e124ea3c07c923dbee",
+   "sha256_copy": "b8dfb3f6e0023961dd9c74fc855b76c86c676210791f4ba540e7863158cf72cd",
+   "href": "/findings/results/F39/result.json",
+   "run": "20261029T162517Z"
+  },
+  {
+   "id": "posthoc",
+   "name": "posthoc.json (checks run after the verdicts)",
+   "sha256_original": "6707855c36a75a5fda9a7f21030621d2276a3db759094d2aa194527a9243215f",
+   "sha256_copy": "6707855c36a75a5fda9a7f21030621d2276a3db759094d2aa194527a9243215f",
+   "href": "/findings/results/F39/posthoc.json"
+  },
+  {
+   "id": "instrument",
+   "name": "instrument.json (planted check on synthetic music)",
+   "sha256_original": "7d9c9fbf384aee2f4ed1dfc22354c9628295d040598af13c11e6333af77fe621",
+   "sha256_copy": "7d9c9fbf384aee2f4ed1dfc22354c9628295d040598af13c11e6333af77fe621",
+   "href": "/findings/results/F39/instrument.json"
+  }
+ ],
+ "charts": [
+  {
+   "key": "partials",
+   "form": "interval",
+   "at": "results",
+   "claims": [
+    "c1",
+    "c3"
+   ],
+   "source": [
+    "result",
+    "posthoc"
+   ],
+   "title": "Calmer-sounding clips are rated less energetic, and also less pleasant.",
+   "takeaway": "The calm index correlates −0.394 with rated arousal and −0.375 with rated valence, where the forecast was above 0. Both sit far outside the shuffle range of −0.076 to +0.074.",
+   "units": "partial correlation: the correlation left after loudness, genre and year are held fixed, −1 to 1; below 0 means a higher score goes with a lower rating. Calm index: one score per clip that rises with a longer tail (how long sound rings on after each note) and a darker spectrum (less energy in high frequencies)",
+   "n": "502 held-out clips by 270 artists, from 1,744 rated clips",
+   "interval": "95% bootstrap interval over artists",
+   "baseline": "Calm index shuffled across the test clips 1,000 times: 5th to 95th percentile −0.076 to +0.074 for arousal, −0.078 to +0.077 for valence",
+   "threshold": "Arousal: below 0, interval below 0, and below the shuffle's 5th percentile. Valence: above 0, interval above 0, and above the shuffle's 95th percentile",
+   "ruled_out": "A calm index that goes with more pleasant ratings: the valence interval ends at −0.280, and −0.123 with arousal held",
+   "series_names": [
+    "Against rated arousal",
+    "Against rated valence"
+   ],
+   "axis": {
+    "label": "partial correlation (below 0: higher score, lower rating)",
+    "min": -0.6,
+    "max": 0.6,
+    "refs": [
+     {
+      "value": 0,
+      "label": "no relation"
+     }
+    ],
+    "regions": [
+     {
+      "from": -0.07629479335515686,
+      "to": 0.07380283290310367,
+      "label": "shuffled calm index, 5th to 95th percentile"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "label": "Calm index",
+     "group": "Rated arousal (how energetic a clip feels)",
+     "value": -0.39376119949865424,
+     "lo": -0.47626813746896784,
+     "hi": -0.30438883180030113,
+     "series": 0,
+     "note": "−0.394 (−0.476 to −0.304); planned test"
+    },
+    {
+     "label": "Tail alone",
+     "group": "Rated arousal (how energetic a clip feels)",
+     "value": -0.3006329343467157,
+     "lo": -0.38620575960790715,
+     "hi": -0.19980232269418455,
+     "series": 0,
+     "note": "−0.301 (−0.386 to −0.200); planned test"
+    },
+    {
+     "label": "Spectral slope alone (higher is brighter)",
+     "group": "Rated arousal (how energetic a clip feels)",
+     "value": 0.32393497345981165,
+     "lo": 0.21679205231029866,
+     "hi": 0.42550984078227105,
+     "series": 0,
+     "note": "+0.324 (+0.217 to +0.426); planned test"
+    },
+    {
+     "label": "Calm index, tempo and entropy also held",
+     "group": "Rated arousal (how energetic a clip feels)",
+     "value": -0.3429247389554381,
+     "lo": -0.427505768651662,
+     "hi": -0.24589989675664223,
+     "series": 0,
+     "note": "−0.343 (−0.428 to −0.246); planned test"
+    },
+    {
+     "label": "Calm index, note rate also held",
+     "group": "Rated arousal (how energetic a clip feels)",
+     "value": -0.3696132850688979,
+     "lo": -0.44432499610941467,
+     "hi": -0.28383669154190644,
+     "series": 0,
+     "note": "−0.370 (−0.444 to −0.284); post hoc"
+    },
+    {
+     "label": "Calm index",
+     "group": "Rated valence (how pleasant a clip feels)",
+     "value": -0.37519664892684207,
+     "lo": -0.45491826146101516,
+     "hi": -0.28036046746141835,
+     "series": 1,
+     "note": "−0.375 (−0.455 to −0.280); planned test, forecast above 0"
+    },
+    {
+     "label": "Calm index, arousal also held",
+     "group": "Rated valence (how pleasant a clip feels)",
+     "value": -0.22654201672521468,
+     "lo": -0.31222736424886327,
+     "hi": -0.12323275619613995,
+     "series": 1,
+     "note": "−0.227 (−0.312 to −0.123); post hoc"
+    }
+   ],
+   "columns": [
+    "Rating",
+    "Measure",
+    "Partial correlation",
+    "95% low",
+    "95% high",
+    "Kind"
+   ],
+   "table": [
+    [
+     "Rated arousal",
+     "Calm index",
+     "−0.394",
+     "−0.476",
+     "−0.304",
+     "planned test"
+    ],
+    [
+     "Rated arousal",
+     "Tail alone",
+     "−0.301",
+     "−0.386",
+     "−0.200",
+     "planned test"
+    ],
+    [
+     "Rated arousal",
+     "Spectral slope alone (higher is brighter)",
+     "+0.324",
+     "+0.217",
+     "+0.426",
+     "planned test"
+    ],
+    [
+     "Rated arousal",
+     "Calm index, tempo and entropy also held",
+     "−0.343",
+     "−0.428",
+     "−0.246",
+     "planned test"
+    ],
+    [
+     "Rated arousal",
+     "Calm index, note rate also held",
+     "−0.370",
+     "−0.444",
+     "−0.284",
+     "post hoc"
+    ],
+    [
+     "Rated valence",
+     "Calm index",
+     "−0.375",
+     "−0.455",
+     "−0.280",
+     "planned test, forecast above 0"
+    ],
+    [
+     "Rated valence",
+     "Calm index, arousal also held",
+     "−0.227",
+     "−0.312",
+     "−0.123",
+     "post hoc"
+    ],
+    [
+     "Shuffle control, arousal",
+     "Calm index shuffled",
+     "−0.000",
+     "−0.076",
+     "+0.074",
+     "5th to 95th percentile of 1,000 shuffles"
+    ],
+    [
+     "Shuffle control, valence",
+     "Calm index shuffled",
+     "−0.002",
+     "−0.078",
+     "+0.077",
+     "5th to 95th percentile of 1,000 shuffles"
+    ]
+   ]
+  },
+  {
+   "key": "gain",
+   "form": "interval",
+   "at": "results",
+   "claims": [
+    "c2"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "What the tail and the spectral slope add to predicting arousal on clips the model had not seen.",
+   "takeaway": "Adding the two measures raised held-out explained variance by 0.110 (0.034 to 0.182), on top of 0.160 from loudness, genre and year. Shuffled measures added −0.001 on average.",
+   "units": "gain in held-out explained variance (R2): the share of the spread in arousal ratings on test clips that the model accounts for, with the two measures minus without; higher is a larger gain",
+   "n": "model fitted on 1,242 clips, scored on 502 held-out clips by 270 artists; 1,000 shuffles",
+   "interval": "95% bootstrap interval over artists for the real measures; 5th to 95th percentile of the shuffles for the control",
+   "baseline": "Tail and slope rows shuffled within the training set and within the test set, and the whole fit repeated 1,000 times (95th percentile +0.003, p 0.0010)",
+   "threshold": "Gain above 0, interval above 0, and above the shuffle's 95th percentile",
+   "series_names": [
+    "Real tail and slope added",
+    "Shuffled tail and slope added (control)"
+   ],
+   "axis": {
+    "label": "gain in held-out explained variance (higher is a larger gain)",
+    "min": -0.02,
+    "max": 0.2,
+    "refs": [
+     {
+      "value": 0,
+      "label": "no gain"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "label": "Real tail and slope",
+     "value": 0.11014024733173455,
+     "lo": 0.034022740964171815,
+     "hi": 0.18197520454102012,
+     "series": 0,
+     "note": "0.110 (0.034 to 0.182)"
+    },
+    {
+     "label": "Shuffled tail and slope",
+     "value": -0.0014824555564257982,
+     "lo": -0.00809722899303315,
+     "hi": 0.0031743428772580792,
+     "series": 1,
+     "note": "mean −0.001 (−0.008 to +0.003)"
+    }
+   ],
+   "columns": [
+    "Model",
+    "Value",
+    "Low",
+    "High",
+    "Range is"
+   ],
+   "table": [
+    [
+     "Loudness, genre and year alone: explained variance",
+     "0.160",
+     "",
+     "",
+     "no interval in the result file"
+    ],
+    [
+     "Gain from real tail and slope",
+     "0.110",
+     "0.034",
+     "0.182",
+     "95% bootstrap interval over artists"
+    ],
+    [
+     "Gain from shuffled tail and slope",
+     "−0.001",
+     "−0.008",
+     "+0.003",
+     "5th to 95th percentile of 1,000 shuffles"
+    ]
+   ]
+  },
+  {
+   "key": "genres",
+   "form": "bars",
+   "at": "results",
+   "claims": [
+    "c5"
+   ],
+   "source": [
+    "posthoc"
+   ],
+   "title": "The same link inside each genre (post hoc, run after the verdicts).",
+   "takeaway": "Inside every one of 11 genres the calm index goes with lower rated arousal, from −0.25 in hip-hop to −0.62 in international music.",
+   "units": "partial correlation of the calm index with rated arousal inside one genre, loudness and year held fixed; further below 0 is a stronger link",
+   "n": "1,743 clips in 11 genres, from 87 to 216 clips each; all clips, training and test together",
+   "interval": null,
+   "no_interval": "The post hoc file gives one value for each genre, with no interval. Genres with about 100 clips are the least certain.",
+   "baseline": "The same correlation on all clips with genre held fixed, −0.414",
+   "series_names": [
+    "Calm index against rated arousal"
+   ],
+   "axis": {
+    "label": "partial correlation inside the genre (below 0: calmer sound, lower arousal)",
+    "min": -0.7,
+    "max": 0,
+    "refs": [
+     {
+      "value": -0.4142062954027042,
+      "label": "all clips, −0.414"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "label": "International",
+     "value": -0.6171635725934111,
+     "series": 0,
+     "note": "−0.62; n 100"
+    },
+    {
+     "label": "Soul and R&B",
+     "value": -0.5605269259104784,
+     "series": 0,
+     "note": "−0.56; n 87"
+    },
+    {
+     "label": "Pop",
+     "value": -0.48269213042582126,
+     "series": 0,
+     "note": "−0.48; n 178"
+    },
+    {
+     "label": "Country",
+     "value": -0.43138545102457293,
+     "series": 0,
+     "note": "−0.43; n 205"
+    },
+    {
+     "label": "Electronic",
+     "value": -0.4286261653331747,
+     "series": 0,
+     "note": "−0.43; n 192"
+    },
+    {
+     "label": "Blues",
+     "value": -0.420590803962347,
+     "series": 0,
+     "note": "−0.42; n 113"
+    },
+    {
+     "label": "Classical",
+     "value": -0.4113797512700902,
+     "series": 0,
+     "note": "−0.41; n 216"
+    },
+    {
+     "label": "Jazz",
+     "value": -0.3624134629214118,
+     "series": 0,
+     "note": "−0.36; n 205"
+    },
+    {
+     "label": "Folk",
+     "value": -0.31544916183570154,
+     "series": 0,
+     "note": "−0.32; n 170"
+    },
+    {
+     "label": "Rock",
+     "value": -0.2896281628907602,
+     "series": 0,
+     "note": "−0.29; n 177"
+    },
+    {
+     "label": "Hip-hop",
+     "value": -0.2518070072911973,
+     "series": 0,
+     "note": "−0.25; n 100"
+    }
+   ],
+   "columns": [
+    "Genre",
+    "Clips",
+    "Partial correlation with arousal"
+   ],
+   "table": [
+    [
+     "International",
+     "100",
+     "−0.617"
+    ],
+    [
+     "Soul and R&B",
+     "87",
+     "−0.561"
+    ],
+    [
+     "Pop",
+     "178",
+     "−0.483"
+    ],
+    [
+     "Country",
+     "205",
+     "−0.431"
+    ],
+    [
+     "Electronic",
+     "192",
+     "−0.429"
+    ],
+    [
+     "Blues",
+     "113",
+     "−0.421"
+    ],
+    [
+     "Classical",
+     "216",
+     "−0.411"
+    ],
+    [
+     "Jazz",
+     "205",
+     "−0.362"
+    ],
+    [
+     "Folk",
+     "170",
+     "−0.315"
+    ],
+    [
+     "Rock",
+     "177",
+     "−0.290"
+    ],
+    [
+     "Hip-hop",
+     "100",
+     "−0.252"
+    ]
+   ]
+  },
+  {
+   "key": "instrument",
+   "form": "bars",
+   "at": "controls",
+   "claims": [
+    "c4"
+   ],
+   "source": [
+    "instrument"
+   ],
+   "title": "How well each sound measure recovers values planted in synthetic music.",
+   "takeaway": "The tail recovered the planted decay with an error ratio of 0.12 and the spectral slope recovered the planted tilt with 0.21, both under the bar of 0.5. Reverb size scored 0.81 and the constant estimator 1.00. Lower is better.",
+   "units": "error ratio: a measure's median error against the planted value, divided by its median error against shuffled planted values. 0 is exact recovery, 1 is no better than shuffled targets",
+   "n": "40 synthetic clips of 30 seconds with planted room decay, note decay, attack, tempo and tilt; attack time used 32 after 8 dropped",
+   "interval": null,
+   "no_interval": "The instrument file gives one error ratio for each measure, with no interval.",
+   "baseline": "The same measure scored against shuffled planted values (ratio 1). A constant estimator runs as a false-success check and has to fail",
+   "threshold": "Strong: error ratio of 0.5 or less, and median error below the 5th percentile of the shuffled-target errors",
+   "planted": "Planted values recovered by the two measures the verdicts use: tail (ratio 0.12, rank correlation +0.95) and slope (0.21, +0.99). The constant estimator failed at 1.00",
+   "series_names": [
+    "Counts as strong",
+    "Not strong"
+   ],
+   "axis": {
+    "label": "error ratio (lower is better recovery)",
+    "min": 0,
+    "max": 1.5,
+    "refs": [
+     {
+      "value": 0.5,
+      "label": "bar for strong, 0.5"
+     },
+     {
+      "value": 1,
+      "label": "shuffled targets, 1"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "label": "Tail against the slower of note and room decay",
+     "group": "Measures used in the verdicts",
+     "value": 0.12143728124872323,
+     "series": 0,
+     "note": "0.12; rank correlation +0.95; strong"
+    },
+    {
+     "label": "Spectral slope against the planted tilt",
+     "group": "Measures used in the verdicts",
+     "value": 0.20888567584807483,
+     "series": 0,
+     "note": "0.21; rank correlation +0.99; strong"
+    },
+    {
+     "label": "Rise time against the planted attack",
+     "group": "Measures left out of the verdicts",
+     "value": 0.545319209162835,
+     "series": 1,
+     "note": "0.55; rank correlation +0.57; not strong"
+    },
+    {
+     "label": "Attack time against the planted attack",
+     "group": "Measures left out of the verdicts",
+     "value": 0.5545200158966874,
+     "series": 1,
+     "note": "0.55; rank correlation +0.22; not strong"
+    },
+    {
+     "label": "Tail against room decay alone",
+     "group": "Measures left out of the verdicts",
+     "value": 0.8035997997268767,
+     "series": 1,
+     "note": "0.80; rank correlation +0.02; not strong"
+    },
+    {
+     "label": "Reverb size against room decay",
+     "group": "Measures left out of the verdicts",
+     "value": 0.8083888270272597,
+     "series": 1,
+     "note": "0.81; rank correlation +0.19; not strong"
+    },
+    {
+     "label": "Note decay time against the planted note decay",
+     "group": "Measures left out of the verdicts",
+     "value": 1.386296795175292,
+     "series": 1,
+     "note": "1.39; rank correlation −0.72; not strong"
+    },
+    {
+     "label": "Constant estimator (false-success check)",
+     "group": "Control that has to fail",
+     "value": 1.0,
+     "series": 1,
+     "note": "1.00; rank correlation none; not strong"
+    }
+   ],
+   "columns": [
+    "Measure against planted value",
+    "Error ratio",
+    "Median error",
+    "Shuffled 5th pct",
+    "Shuffled median",
+    "Rank correlation",
+    "Clips",
+    "Strong"
+   ],
+   "table": [
+    [
+     "Tail against the slower of note and room decay",
+     "0.12",
+     "0.070",
+     "0.424",
+     "0.577",
+     "+0.95",
+     "40",
+     "yes"
+    ],
+    [
+     "Spectral slope against the planted tilt",
+     "0.21",
+     "0.226",
+     "0.782",
+     "1.080",
+     "+0.99",
+     "40",
+     "yes"
+    ],
+    [
+     "Rise time against the planted attack",
+     "0.55",
+     "0.641",
+     "0.904",
+     "1.175",
+     "+0.57",
+     "40",
+     "no"
+    ],
+    [
+     "Attack time against the planted attack",
+     "0.55",
+     "0.685",
+     "0.897",
+     "1.235",
+     "+0.22",
+     "32",
+     "no"
+    ],
+    [
+     "Tail against room decay alone",
+     "0.80",
+     "0.706",
+     "0.684",
+     "0.879",
+     "+0.02",
+     "40",
+     "no"
+    ],
+    [
+     "Reverb size against room decay",
+     "0.81",
+     "0.616",
+     "0.589",
+     "0.762",
+     "+0.19",
+     "40",
+     "no"
+    ],
+    [
+     "Note decay time against the planted note decay",
+     "1.39",
+     "1.251",
+     "0.692",
+     "0.902",
+     "−0.72",
+     "40",
+     "no"
+    ],
+    [
+     "Constant estimator (false-success check)",
+     "1.00",
+     "0.520",
+     "0.520",
+     "0.520",
+     "none",
+     "40",
+     "no"
+    ]
+   ]
+  }
+ ]
+}

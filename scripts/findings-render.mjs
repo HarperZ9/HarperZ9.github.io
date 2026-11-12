@@ -126,7 +126,7 @@ export function sectionBody(sec, ctx, { keep = false } = {}) {
   const out = [];
   let list = [];
   const flush = () => { if (list.length) { out.push(`<ul>${list.join("")}</ul>`); list = []; } };
-  for (const p of sec.paragraphs) for (const b of blocks(p)) {
+  sec.paragraphs.forEach((p, pi) => { for (const b of blocks(p)) {
     if (b.kind !== "li") flush();
     if (b.kind === "p") { const before = ctx.traces.length; ctx.body = true; const html = prose(b.text, ctx); ctx.body = false; out.push(`<div class="para"><p>${html}</p></div>${traces(ctx, before)}`); }
     else if (b.kind === "li") { const before = ctx.traces.length; ctx.body = true; const li = prose(b.text, ctx); ctx.body = false; list.push(`<li>${li}${traces(ctx, before)}</li>`); }
@@ -136,6 +136,8 @@ export function sectionBody(sec, ctx, { keep = false } = {}) {
     else if (b.kind === "table") { if (keep) out.push(table(b, ctx)); else ctx.tables.push(table(b, ctx)); }
     else throw new Error(`render: block ${b.kind}`);
   }
+  // charts that support a claim stated in this paragraph sit straight after it (scripts/findings-charts.mjs)
+  const charts = ctx.charts ? ctx.charts.after(sec.id, pi) : ""; if (charts) { flush(); out.push(charts); } });
   flush();
   return out.join("\n");
 }
@@ -146,6 +148,7 @@ function traces(ctx, from) {
     const ev = (c.evidence || []).map((eid) => ctx.rec.evidence.find((e) => e.id === eid));
     const rows = ev.map((e) => `<dt>${esc(e.label)}</dt><dd><span class="num">${esc(e.value)}</span> <span class="chk r-${e.check.result}">${e.check.result === "match" ? "matches the result file" : esc(e.check.result.replace("_", " "))}, ${esc(e.check.date || "")}</span></dd>`);
     for (const rid of c.refs || []) rows.push(`<dt>Rests on</dt><dd><a href="#ref-${rid}">${esc(ctx.refs[rid].key)}</a></dd>`);
+    for (const f of ctx.charts ? ctx.charts.forClaim(c.id) : []) rows.push(`<dt>Chart ${f.n}</dt><dd><a href="#ch-${f.key}">${esc(f.title)}</a></dd>`);
     rows.push(`<dt>Basis</dt><dd>${c.basis === "observed" ? "observed: measured in this study, with a result file" : "inferred: argued on this page from the observed results"}</dd>`);
     if (!ev.length) rows.push(`<dt>Numbers</dt><dd>None in the sentence; it reads the numbers stated beside it.</dd>`);
     return `<details class="trace b-${c.basis}" id="t-${c.id}"><summary><span class="tid">${c.id}</span> ${mark("basis", c.basis)} ${c.basis}<span class="sr-only">, evidence for claim ${c.id.slice(1)}</span></summary><dl>${rows.join("")}</dl></details>`;

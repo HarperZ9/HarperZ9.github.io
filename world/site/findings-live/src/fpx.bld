@@ -1,0 +1,112 @@
+// fpx.bld: exact floating-point helpers the least-squares port needs to match the study's numpy bit for bit.
+// fma_exact: a fused multiply-add built from error-free transforms and rounding to odd (Boldo and Melquiond, 2008).
+// nrm2: the Euclidean norm in the order OpenBLAS sums it on x86-64. logdd: the natural log evaluated in
+// double-double. The page's fpx.js mirrors this file function for function (fma_exact is fma there).
+// Build the C output with contraction off, so no multiply-add here is fused by the compiler.
+struct DD { hi: f64, lo: f64 }
+
+fn two_sum(a: f64, b: f64) -> DD {
+    let s: f64 = a + b;
+    let bb: f64 = s - a;
+    return DD { hi: s, lo: (a - (s - bb)) + (b - bb) };
+}
+
+fn two_prod(a: f64, b: f64) -> DD {
+    let p: f64 = a * b;
+    let ca: f64 = 134217729.0 * a;
+    let cb: f64 = 134217729.0 * b;
+    let ah: f64 = ca - (ca - a);
+    let al: f64 = a - ah;
+    let bh: f64 = cb - (cb - b);
+    let bl: f64 = b - bh;
+    return DD { hi: p, lo: ((ah * bh - p) + ah * bl + al * bh) + al * bl };
+}
+
+fn fma_exact(a: f64, b: f64, c: f64) -> f64 {
+    let p: DD = two_prod(a, b);
+    let t: DD = two_sum(c, p.lo);
+    let v: DD = two_sum(p.hi, t.hi);
+    let z: DD = two_sum(t.lo, v.lo);
+    let mut zz: f64 = z.hi;
+    if z.lo != 0.0 {
+        let bits: u64 = zz.to_bits();
+        if (bits & 1) == 0 {
+            // step one representable double: away from zero when the lost part has the sign of zz
+            if (z.lo > 0.0) == (zz > 0.0) { zz = f64::from_bits(bits + 1); } else { zz = f64::from_bits(bits - 1); }
+        }
+    }
+    return v.hi + zz;
+}
+
+// dnrm2 of x[off .. off+n) as the OpenBLAS x86-64 kernel computes it under the Windows default of 53-bit x87
+// precision: plain double sums of squares, four running sums over whole blocks of eight, then one square root.
+fn nrm2(x: &mut [f64; 8], off: i32, n: i32) -> f64 {
+    let n8: i32 = n - (n % 8);
+    let mut a0: f64 = 0.0;
+    let mut a1: f64 = 0.0;
+    let mut a2: f64 = 0.0;
+    let mut a3: f64 = 0.0;
+    let mut i: i32 = 0;
+    while i < n8 {
+        a0 = a0 + x[off + i] * x[off + i];
+        a1 = a1 + x[off + i + 1] * x[off + i + 1];
+        a2 = a2 + x[off + i + 2] * x[off + i + 2];
+        a3 = a3 + x[off + i + 3] * x[off + i + 3];
+        i = i + 4;
+    }
+    i = n8;
+    while i < n {
+        a0 = a0 + x[off + i] * x[off + i];
+        i = i + 1;
+    }
+    return sqrt(((a0 + a2) + a1) + a3);
+}
+
+fn dd_mul(ah: f64, al: f64, bh: f64, bl: f64) -> DD {
+    let p: DD = two_prod(ah, bh);
+    let e: f64 = p.lo + (ah * bl + al * bh);
+    let h: f64 = p.hi + e;
+    return DD { hi: h, lo: e - (h - p.hi) };
+}
+
+fn dd_add(ah: f64, al: f64, bh: f64, bl: f64) -> DD {
+    let s: DD = two_sum(ah, bh);
+    let e: f64 = s.lo + (al + bl);
+    let h: f64 = s.hi + e;
+    return DD { hi: h, lo: e - (h - s.hi) };
+}
+
+// double a over double-double b
+fn dd_div(a: f64, bh: f64, bl: f64) -> DD {
+    let q1: f64 = a / bh;
+    let p: DD = two_prod(q1, bh);
+    let q2: f64 = (((a - p.hi) - p.lo) - q1 * bl) / bh;
+    let h: f64 = q1 + q2;
+    return DD { hi: h, lo: q2 - (h - q1) };
+}
+
+// log(x) for a positive, normal double: 2 atanh((m-1)/(m+1)) + k ln 2, all in double-double, then rounded once.
+fn logdd(x: f64) -> f64 {
+    let bits: u64 = x.to_bits();
+    let mut k: f64 = (((bits >> 52) & 0x7ff) as f64) - 1023.0;
+    let mut m: f64 = f64::from_bits((bits & 0x000fffffffffffff) | 0x3ff0000000000000);
+    if m > 1.4142135623730951 {
+        m = m * 0.5;
+        k = k + 1.0;
+    }
+    let d: DD = two_sum(m, 1.0);
+    let f: DD = dd_div(m - 1.0, d.hi, d.lo);
+    let z: DD = dd_mul(f.hi, f.lo, f.hi, f.lo);
+    let mut s: DD = DD { hi: 0.0, lo: 0.0 };
+    let mut j: i32 = 24;
+    while j >= 0 {
+        let t: DD = dd_mul(s.hi, s.lo, z.hi, z.lo);
+        let c: DD = dd_div(1.0, (2 * j + 1) as f64, 0.0);
+        s = dd_add(t.hi, t.lo, c.hi, c.lo);
+        j = j - 1;
+    }
+    let l: DD = dd_mul(s.hi, s.lo, 2.0 * f.hi, 2.0 * f.lo);
+    let kp: DD = two_prod(k, 0.6931471805599453);
+    let r: DD = dd_add(kp.hi, kp.lo + k * 2.3190468138462996e-17, l.hi, l.lo);
+    return r.hi;
+}

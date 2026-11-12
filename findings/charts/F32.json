@@ -1,0 +1,826 @@
+{
+ "finding": "F32",
+ "sources": [
+  {
+   "id": "result",
+   "name": "result.json (round 2 run)",
+   "sha256_original": "7ef5c7a311de888a31ef904f8355a32eb01dd07b2fb9940ab0e88381a129a2e9",
+   "sha256_copy": "e0357998d9de055202383f630253f0993cb93bc82bbd707c246e1dbe2d85c393",
+   "href": "/findings/results/F32/result.json",
+   "run": "20261029T145914Z"
+  }
+ ],
+ "charts": [
+  {
+   "key": "risk-coverage",
+   "form": "line",
+   "at": "results",
+   "claims": [
+    "c1"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "Error of the forecasts a filter keeps, as it keeps fewer of them.",
+   "takeaway": "Filtering on the stated probability gave an area of 0.171; filtering on self-rated expertise gave 0.259, close to random order at 0.277. Lower is better.",
+   "units": "mean Brier score of kept forecasts (squared error of a probability, 0 to 2 scale; lower is more accurate)",
+   "n": "410,451 binary forecasts with a self-rating, tournament years 1 to 3; each curve has 19 coverages from 10 to 100 percent",
+   "interval": null,
+   "no_interval": "The result file holds the curve points with no interval for each point. Intervals for the area gains are in the next chart and the table on this page.",
+   "baseline": "Random order: every share of forecasts kept has the same expected Brier score, 0.277",
+   "threshold": "Adding the self-rating had to lower the area by 0.005 or more",
+   "x": {
+    "label": "share of forecasts kept (percent); the filter withholds more toward the left",
+    "min": 0,
+    "max": 104
+   },
+   "y": {
+    "label": "mean Brier score of kept forecasts (lower is more accurate)",
+    "min": 0,
+    "refs": [
+     {
+      "value": 0.2773513100272627,
+      "label": "random order, 0.277"
+     }
+    ]
+   },
+   "series": [
+    {
+     "name": "Filter on the stated probability",
+     "points": [
+      [
+       10.0,
+       0.10920702139064689,
+       "Stated probability, 10% kept: Brier 0.109"
+      ],
+      [
+       15.0,
+       0.1074933959199918,
+       "Stated probability, 15% kept: Brier 0.107"
+      ],
+      [
+       20.0,
+       0.10582043953664157,
+       "Stated probability, 20% kept: Brier 0.106"
+      ],
+      [
+       25.0,
+       0.10486450354242849,
+       "Stated probability, 25% kept: Brier 0.105"
+      ],
+      [
+       30.0,
+       0.1043600307951847,
+       "Stated probability, 30% kept: Brier 0.104"
+      ],
+      [
+       35.0,
+       0.11619123858048384,
+       "Stated probability, 35% kept: Brier 0.116"
+      ],
+      [
+       40.0,
+       0.12741709912839733,
+       "Stated probability, 40% kept: Brier 0.127"
+      ],
+      [
+       45.0,
+       0.13543724656342682,
+       "Stated probability, 45% kept: Brier 0.135"
+      ],
+      [
+       50.0,
+       0.1478442163859009,
+       "Stated probability, 50% kept: Brier 0.148"
+      ],
+      [
+       55.0,
+       0.16378293747491315,
+       "Stated probability, 55% kept: Brier 0.164"
+      ],
+      [
+       60.0,
+       0.17607772312628853,
+       "Stated probability, 60% kept: Brier 0.176"
+      ],
+      [
+       65.0,
+       0.18625180983096312,
+       "Stated probability, 65% kept: Brier 0.186"
+      ],
+      [
+       70.0,
+       0.19781454061741463,
+       "Stated probability, 70% kept: Brier 0.198"
+      ],
+      [
+       75.0,
+       0.20626691404281763,
+       "Stated probability, 75% kept: Brier 0.206"
+      ],
+      [
+       80.0,
+       0.22081168881814456,
+       "Stated probability, 80% kept: Brier 0.221"
+      ],
+      [
+       85.0,
+       0.23681257825535196,
+       "Stated probability, 85% kept: Brier 0.237"
+      ],
+      [
+       90.0,
+       0.25127289365116007,
+       "Stated probability, 90% kept: Brier 0.251"
+      ],
+      [
+       95.0,
+       0.26517171985690685,
+       "Stated probability, 95% kept: Brier 0.265"
+      ],
+      [
+       100.0,
+       0.27735131002731933,
+       "Stated probability, 100% kept: Brier 0.277"
+      ]
+     ]
+    },
+    {
+     "name": "Filter on self-rated expertise",
+     "points": [
+      [
+       10.0,
+       0.22653877118357357,
+       "Self-rated expertise, 10% kept: Brier 0.227"
+      ],
+      [
+       15.0,
+       0.23366533267282819,
+       "Self-rated expertise, 15% kept: Brier 0.234"
+      ],
+      [
+       20.0,
+       0.24384104228235956,
+       "Self-rated expertise, 20% kept: Brier 0.244"
+      ],
+      [
+       25.0,
+       0.250769257326089,
+       "Self-rated expertise, 25% kept: Brier 0.251"
+      ],
+      [
+       30.0,
+       0.2539899168561787,
+       "Self-rated expertise, 30% kept: Brier 0.254"
+      ],
+      [
+       35.0,
+       0.25580119312533317,
+       "Self-rated expertise, 35% kept: Brier 0.256"
+      ],
+      [
+       40.0,
+       0.2568313815361959,
+       "Self-rated expertise, 40% kept: Brier 0.257"
+      ],
+      [
+       45.0,
+       0.2580238872784388,
+       "Self-rated expertise, 45% kept: Brier 0.258"
+      ],
+      [
+       50.0,
+       0.2595396728581435,
+       "Self-rated expertise, 50% kept: Brier 0.260"
+      ],
+      [
+       55.0,
+       0.2611739414215844,
+       "Self-rated expertise, 55% kept: Brier 0.261"
+      ],
+      [
+       60.0,
+       0.262818268906927,
+       "Self-rated expertise, 60% kept: Brier 0.263"
+      ],
+      [
+       65.0,
+       0.2643695581683878,
+       "Self-rated expertise, 65% kept: Brier 0.264"
+      ],
+      [
+       70.0,
+       0.2655166524035423,
+       "Self-rated expertise, 70% kept: Brier 0.266"
+      ],
+      [
+       75.0,
+       0.2663087890162553,
+       "Self-rated expertise, 75% kept: Brier 0.266"
+      ],
+      [
+       80.0,
+       0.2680085451742845,
+       "Self-rated expertise, 80% kept: Brier 0.268"
+      ],
+      [
+       85.0,
+       0.27097040134248856,
+       "Self-rated expertise, 85% kept: Brier 0.271"
+      ],
+      [
+       90.0,
+       0.273825946795592,
+       "Self-rated expertise, 90% kept: Brier 0.274"
+      ],
+      [
+       95.0,
+       0.2757162296263467,
+       "Self-rated expertise, 95% kept: Brier 0.276"
+      ],
+      [
+       100.0,
+       0.2773513100271911,
+       "Self-rated expertise, 100% kept: Brier 0.277"
+      ]
+     ]
+    },
+    {
+     "name": "Filter on both together",
+     "points": [
+      [
+       10.0,
+       0.09939267650928924,
+       "Both, 10% kept: Brier 0.099"
+      ],
+      [
+       15.0,
+       0.09695921339010437,
+       "Both, 15% kept: Brier 0.097"
+      ],
+      [
+       20.0,
+       0.09471375303021859,
+       "Both, 20% kept: Brier 0.095"
+      ],
+      [
+       25.0,
+       0.0976937902800028,
+       "Both, 25% kept: Brier 0.098"
+      ],
+      [
+       30.0,
+       0.10364505020463945,
+       "Both, 30% kept: Brier 0.104"
+      ],
+      [
+       35.0,
+       0.11475737203636606,
+       "Both, 35% kept: Brier 0.115"
+      ],
+      [
+       40.0,
+       0.12395012791982747,
+       "Both, 40% kept: Brier 0.124"
+      ],
+      [
+       45.0,
+       0.13388974056734193,
+       "Both, 45% kept: Brier 0.134"
+      ],
+      [
+       50.0,
+       0.14762964220916036,
+       "Both, 50% kept: Brier 0.148"
+      ],
+      [
+       55.0,
+       0.16330506603363773,
+       "Both, 55% kept: Brier 0.163"
+      ],
+      [
+       60.0,
+       0.17564497952268668,
+       "Both, 60% kept: Brier 0.176"
+      ],
+      [
+       65.0,
+       0.1866177678359847,
+       "Both, 65% kept: Brier 0.187"
+      ],
+      [
+       70.0,
+       0.19608205652325697,
+       "Both, 70% kept: Brier 0.196"
+      ],
+      [
+       75.0,
+       0.2049781403656801,
+       "Both, 75% kept: Brier 0.205"
+      ],
+      [
+       80.0,
+       0.22075148312990348,
+       "Both, 80% kept: Brier 0.221"
+      ],
+      [
+       85.0,
+       0.23654710893031994,
+       "Both, 85% kept: Brier 0.237"
+      ],
+      [
+       90.0,
+       0.2520278543176659,
+       "Both, 90% kept: Brier 0.252"
+      ],
+      [
+       95.0,
+       0.26518350661807855,
+       "Both, 95% kept: Brier 0.265"
+      ],
+      [
+       100.0,
+       0.2773513100273291,
+       "Both, 100% kept: Brier 0.277"
+      ]
+     ]
+    }
+   ],
+   "columns": [
+    "Share kept",
+    "Stated probability",
+    "Self-rated expertise",
+    "Both",
+    "Random order"
+   ],
+   "table": [
+    [
+     "10%",
+     "0.109",
+     "0.227",
+     "0.099",
+     "0.277"
+    ],
+    [
+     "15%",
+     "0.107",
+     "0.234",
+     "0.097",
+     "0.277"
+    ],
+    [
+     "20%",
+     "0.106",
+     "0.244",
+     "0.095",
+     "0.277"
+    ],
+    [
+     "25%",
+     "0.105",
+     "0.251",
+     "0.098",
+     "0.277"
+    ],
+    [
+     "30%",
+     "0.104",
+     "0.254",
+     "0.104",
+     "0.277"
+    ],
+    [
+     "35%",
+     "0.116",
+     "0.256",
+     "0.115",
+     "0.277"
+    ],
+    [
+     "40%",
+     "0.127",
+     "0.257",
+     "0.124",
+     "0.277"
+    ],
+    [
+     "45%",
+     "0.135",
+     "0.258",
+     "0.134",
+     "0.277"
+    ],
+    [
+     "50%",
+     "0.148",
+     "0.260",
+     "0.148",
+     "0.277"
+    ],
+    [
+     "55%",
+     "0.164",
+     "0.261",
+     "0.163",
+     "0.277"
+    ],
+    [
+     "60%",
+     "0.176",
+     "0.263",
+     "0.176",
+     "0.277"
+    ],
+    [
+     "65%",
+     "0.186",
+     "0.264",
+     "0.187",
+     "0.277"
+    ],
+    [
+     "70%",
+     "0.198",
+     "0.266",
+     "0.196",
+     "0.277"
+    ],
+    [
+     "75%",
+     "0.206",
+     "0.266",
+     "0.205",
+     "0.277"
+    ],
+    [
+     "80%",
+     "0.221",
+     "0.268",
+     "0.221",
+     "0.277"
+    ],
+    [
+     "85%",
+     "0.237",
+     "0.271",
+     "0.237",
+     "0.277"
+    ],
+    [
+     "90%",
+     "0.251",
+     "0.274",
+     "0.252",
+     "0.277"
+    ],
+    [
+     "95%",
+     "0.265",
+     "0.276",
+     "0.265",
+     "0.277"
+    ],
+    [
+     "100%",
+     "0.277",
+     "0.277",
+     "0.277",
+     "0.277"
+    ],
+    [
+     "Area (mean of the rows)",
+     "0.171",
+     "0.259",
+     "0.168",
+     "0.277"
+    ]
+   ]
+  },
+  {
+   "key": "gain",
+   "form": "interval",
+   "at": "results",
+   "claims": [
+    "c2"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "What the self-rating adds to the probability filter, against a shuffled rating and the bar.",
+   "takeaway": "The real rating lowered the area by 0.0026, under the bar of 0.005, and a shuffled rating lowered it by 0.0024 on average. Higher is a larger gain.",
+   "units": "drop in the area under the risk-coverage curve when the rating joins the probability filter (Brier units; higher is a larger gain)",
+   "n": "410,451 binary forecasts with a self-rating, tournament years 1 to 3; 300 shuffles",
+   "interval": "95% bootstrap interval over questions for the real rating; 5th to 95th percentile of the shuffles for the control",
+   "baseline": "The rating shuffled within each forecaster-year and the filter refitted, 300 times (mean 0.0024, 95th percentile 0.0030)",
+   "threshold": "Gain of 0.005 or more, interval above 0, and above the shuffle's 95th percentile",
+   "ruled_out": "A gain from the self-rating of 0.005 or more: the 95% interval ends at 0.0046, and the gain is inside the shuffled range (p 0.31)",
+   "series_names": [
+    "Real self-rating added",
+    "Shuffled rating added (control)"
+   ],
+   "axis": {
+    "label": "drop in area when the rating is added (higher is a larger gain)",
+    "min": 0,
+    "max": 0.006,
+    "refs": [
+     {
+      "value": 0.005,
+      "label": "bar set in advance, 0.005"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "label": "Real self-rating",
+     "value": 0.0025857193733099526,
+     "lo": 0.0006742176009234699,
+     "hi": 0.004563917029141345,
+     "series": 0,
+     "note": "0.0026 (0.0007 to 0.0046)"
+    },
+    {
+     "label": "Rating shuffled within forecaster-year",
+     "value": 0.0024111223150304717,
+     "lo": 0.0019508921913300975,
+     "hi": 0.0029725891466506407,
+     "series": 1,
+     "note": "mean 0.0024 (0.0020 to 0.0030); p 0.31"
+    }
+   ],
+   "columns": [
+    "Rating added",
+    "Gain",
+    "Low",
+    "High",
+    "Range is"
+   ],
+   "table": [
+    [
+     "Real self-rating",
+     "0.0026",
+     "0.0007",
+     "0.0046",
+     "95% bootstrap interval"
+    ],
+    [
+     "Shuffled within forecaster-year",
+     "0.0024",
+     "0.0020",
+     "0.0030",
+     "5th to 95th percentile of 300 shuffles"
+    ],
+    [
+     "Self-rating filter over random order",
+     "0.018",
+     "0.009",
+     "0.027",
+     "95% bootstrap interval"
+    ],
+    [
+     "Probability filter over random order",
+     "0.107",
+     "0.097",
+     "0.115",
+     "95% bootstrap interval"
+    ]
+   ]
+  },
+  {
+   "key": "skip",
+   "form": "interval",
+   "at": "results",
+   "claims": [
+    "c3",
+    "c4"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "Skipping and accuracy: across forecasters, and within the same person over time.",
+   "takeaway": "Forecasters who skip more score better (rho +0.286, and +0.195 with timing matched), but one person skipping more from year to year shows +0.041, with an interval that includes 0.",
+   "units": "Spearman rank correlation (rho) between skip rate and relative Brier score, signed so that above 0 means more skipping goes with better accuracy",
+   "n": "9,204 forecaster-years across forecasters; 1,578 same-person year pairs",
+   "interval": "95% bootstrap interval",
+   "baseline": "Skip rate shuffled within matched strata, 1,000 times for each row; the 95th percentile of each shuffle is printed beside its row",
+   "threshold": "Correlation of 0.05 or more across forecasters, above 0 within a person; interval above 0 and above the shuffle's 95th percentile in both",
+   "ruled_out": "A within-person link larger than +0.095 (upper end of the 95% interval); the estimate +0.041 is below its shuffle's 95th percentile, 0.041",
+   "series_names": [
+    "Correlation between skipping and accuracy"
+   ],
+   "axis": {
+    "label": "rank correlation, rho (above 0: more skipping goes with better accuracy)",
+    "refs": [
+     {
+      "value": 0,
+      "label": "no relation"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "label": "Skip rate and accuracy, first forecasts",
+     "group": "Across forecasters, one point per forecaster-year",
+     "value": 0.28584329270062236,
+     "lo": 0.264409254050997,
+     "hi": 0.3026278279083246,
+     "series": 0,
+     "note": "+0.286 (+0.264 to +0.303); shuffle 95th pct 0.018; n 9,204"
+    },
+    {
+     "label": "Same, with timing matched",
+     "group": "Across forecasters, one point per forecaster-year",
+     "value": 0.19492127437862522,
+     "lo": 0.1741896019688743,
+     "hi": 0.21246908458393257,
+     "series": 0,
+     "note": "+0.195 (+0.174 to +0.212); shuffle 95th pct 0.018; n 9,204"
+    },
+    {
+     "label": "Change in skip rate and change in accuracy",
+     "group": "Within one person, change between consecutive years",
+     "value": 0.040539217273652575,
+     "lo": -0.007064738183004559,
+     "hi": 0.09541854220279672,
+     "series": 0,
+     "note": "+0.041 (−0.007 to +0.095); shuffle 95th pct 0.041; n 1,578"
+    }
+   ],
+   "columns": [
+    "Comparison",
+    "rho",
+    "95% low",
+    "95% high",
+    "Shuffle 95th pct",
+    "Shuffle p",
+    "n"
+   ],
+   "table": [
+    [
+     "Across forecasters, one point per forecaster-year: Skip rate and accuracy, first forecasts",
+     "+0.286",
+     "+0.264",
+     "+0.303",
+     "0.018",
+     "0.0010",
+     "9,204 forecaster-years"
+    ],
+    [
+     "Across forecasters, one point per forecaster-year: Same, with timing matched",
+     "+0.195",
+     "+0.174",
+     "+0.212",
+     "0.018",
+     "0.0010",
+     "9,204 forecaster-years"
+    ],
+    [
+     "Within one person, change between consecutive years: Change in skip rate and change in accuracy",
+     "+0.041",
+     "−0.007",
+     "+0.095",
+     "0.041",
+     "0.055",
+     "1,578 year pairs"
+    ]
+   ]
+  },
+  {
+   "key": "extremise",
+   "form": "interval",
+   "at": "results",
+   "claims": [
+    "c5"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "Best extremising factor by self-rated expertise.",
+   "takeaway": "Forecasts rated expertise 1 had a best factor of 0.92 (0.79 to 1.06), an interval that includes 1, so their pull toward 50 percent is about the right size.",
+   "units": "best extremising factor: the multiplier on a forecast's log-odds that gives the lowest Brier score. 1 leaves the forecast as stated, above 1 means it sat too near 50 percent, below 1 means it was too extreme",
+   "n": "77,572 forecasts rated 1 and 165,914 rated 2 to 5 in 1,826 forecaster-years; by level, 410,451 forecasts",
+   "interval": "95% bootstrap interval over questions",
+   "baseline": "A factor of 1, the forecast as stated",
+   "threshold": "Hedging counts as right-sized when the interval for expertise 1 includes 1 and the held-out gain from extremising is under 0.002",
+   "ruled_out": "A low-rated forecast that is far too timid or far too bold: factors outside 0.79 to 1.06. Held-out gain from extremising was +0.0002",
+   "series_names": [
+    "Best extremising factor"
+   ],
+   "axis": {
+    "label": "best extremising factor (1 is right-sized; below 1 is too extreme)",
+    "refs": [
+     {
+      "value": 1,
+      "label": "1, right-sized as stated"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "label": "Rated expertise 1",
+     "group": "Within-person sample (the tested comparison)",
+     "value": 0.92,
+     "lo": 0.79,
+     "hi": 1.06025,
+     "series": 0,
+     "note": "0.92 (0.79 to 1.06); n 77,572"
+    },
+    {
+     "label": "Rated expertise 2 to 5",
+     "group": "Within-person sample (the tested comparison)",
+     "value": 0.93,
+     "lo": 0.81,
+     "hi": 1.04025,
+     "series": 0,
+     "note": "0.93 (0.81 to 1.04); n 165,914"
+    },
+    {
+     "label": "Rated 1",
+     "group": "All forecasts in years 1 to 3, by rating level",
+     "value": 0.93,
+     "lo": 0.7895000000000001,
+     "hi": 1.08,
+     "series": 0,
+     "note": "0.93 (0.79 to 1.08); n 89,920"
+    },
+    {
+     "label": "Rated 2",
+     "group": "All forecasts in years 1 to 3, by rating level",
+     "value": 1.02,
+     "lo": 0.9247500000000001,
+     "hi": 1.16,
+     "series": 0,
+     "note": "1.02 (0.92 to 1.16); n 122,652"
+    },
+    {
+     "label": "Rated 3",
+     "group": "All forecasts in years 1 to 3, by rating level",
+     "value": 0.95,
+     "lo": 0.84,
+     "hi": 1.08,
+     "series": 0,
+     "note": "0.95 (0.84 to 1.08); n 135,923"
+    },
+    {
+     "label": "Rated 4-5",
+     "group": "All forecasts in years 1 to 3, by rating level",
+     "value": 0.82,
+     "lo": 0.68475,
+     "hi": 0.9552499999999997,
+     "series": 0,
+     "note": "0.82 (0.68 to 0.96); n 61,956"
+    }
+   ],
+   "columns": [
+    "Forecasts",
+    "Best factor",
+    "95% low",
+    "95% high",
+    "Forecasts counted"
+   ],
+   "table": [
+    [
+     "Within-person sample (the tested comparison): Rated expertise 1",
+     "0.92",
+     "0.79",
+     "1.06",
+     "77,572"
+    ],
+    [
+     "Within-person sample (the tested comparison): Rated expertise 2 to 5",
+     "0.93",
+     "0.81",
+     "1.04",
+     "165,914"
+    ],
+    [
+     "All forecasts in years 1 to 3, by rating level: Rated 1",
+     "0.93",
+     "0.79",
+     "1.08",
+     "89,920"
+    ],
+    [
+     "All forecasts in years 1 to 3, by rating level: Rated 2",
+     "1.02",
+     "0.92",
+     "1.16",
+     "122,652"
+    ],
+    [
+     "All forecasts in years 1 to 3, by rating level: Rated 3",
+     "0.95",
+     "0.84",
+     "1.08",
+     "135,923"
+    ],
+    [
+     "All forecasts in years 1 to 3, by rating level: Rated 4-5",
+     "0.82",
+     "0.68",
+     "0.96",
+     "61,956"
+    ]
+   ]
+  }
+ ]
+}

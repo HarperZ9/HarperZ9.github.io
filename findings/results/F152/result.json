@@ -1,0 +1,329 @@
+{
+ "study": "gap-instruments-g1",
+ "run_id": "20261031T065109Z",
+ "date": "2026-10-31",
+ "prereg": {
+  "path": "PREREG.txt",
+  "sha256": "9ccb8658ff6af3c02a9e7d3e6185577c4ba835892b50ed43fd9f4c6baf263b92",
+  "anchors": [
+   "sidecar",
+   "lock"
+  ],
+  "plan_sha256": "bc0c19899c7bb9f51879f64bdd951f523953362060ecb0a2b5b84b39cc7d15c2",
+  "locked_at": "2026-10-31T06:50:55+00:00"
+ },
+ "hashes": {
+  "READINGS.jsonl": "d3fbfb864bb1f53b07c566e460f50acaa11899fc1cfa72da04a9e0bbbc7672db",
+  "FINDINGS.md": "fe40c0ed31939df26468db42c62d53dc879e8171479f8e040c6ef51dd133c829",
+  "SIGNATURES.json": "b3c60112ff388a505034cb1d7387bc705702b121115e9e63ecd369f637b852e2",
+  "CHECKS.json": "8cedbc7832ee9fb2636814f93d2d909b9b987dcfbd17be973cd9dcc7a37cd621",
+  "se_docs.jsonl": "afadc3df6811436a0dd95836aba7956c3cb7c6b2d153b4d34b8d90e073f2f124",
+  "common.py": "7bdbd600452900829a29ae610f916f98496302be914311717e9dd78094cfb7ad",
+  "links.py": "e072403a0c089968178ac6a4425eedcbbf81bd1a34b3e8db39c0a94361b52ac0",
+  "g1_gaps.py": "b68c30a01e990bbd517e419fb0d1b6d69d5bf6afcb39b8f330ca4ca100764b78"
+ },
+ "analysis": {
+  "own": {
+   "folds": [
+    {
+     "terms": 285,
+     "edges": 9629,
+     "targets": 2889,
+     "candidates": 30841,
+     "base_rate": 0.09367400538244544,
+     "p200_abc": 0.38,
+     "p200_pa": 0.75,
+     "p200_aa": 0.775,
+     "auc_abc": 0.819455,
+     "auc_pa": 0.892475,
+     "strat_auc_abc": 0.5375198511595708,
+     "strat_auc_aa": 0.5971750778816199,
+     "novel200_abc": 72,
+     "novel200_aa": 41
+    },
+    {
+     "terms": 1500,
+     "edges": 79531,
+     "targets": 1054,
+     "candidates": 966650,
+     "base_rate": 0.0010903636269590856,
+     "p200_abc": 0.0,
+     "p200_pa": 0.04,
+     "p200_aa": 0.03,
+     "auc_abc": 0.65762,
+     "auc_pa": 0.704745,
+     "strat_auc_abc": 0.5450448529411764,
+     "strat_auc_aa": 0.5485249051233397,
+     "novel200_abc": 0,
+     "novel200_aa": 0
+    },
+    {
+     "terms": 1500,
+     "edges": 99001,
+     "targets": 1378,
+     "candidates": 979245,
+     "base_rate": 0.0014072065724103774,
+     "p200_abc": 0.0,
+     "p200_pa": 0.015,
+     "p200_aa": 0.015,
+     "auc_abc": 0.739905,
+     "auc_pa": 0.74812,
+     "strat_auc_abc": 0.6242679970972423,
+     "strat_auc_aa": 0.6268803519593614,
+     "novel200_abc": 0,
+     "novel200_aa": 0
+    }
+   ],
+   "mean": {
+    "terms": 1095.0,
+    "edges": 62720.333333333336,
+    "targets": 1773.6666666666667,
+    "candidates": 658912.0,
+    "base_rate": 0.03205719186060497,
+    "p200_abc": 0.12666666666666668,
+    "p200_pa": 0.26833333333333337,
+    "p200_aa": 0.2733333333333334,
+    "auc_abc": 0.7389933333333335,
+    "auc_pa": 0.78178,
+    "strat_auc_abc": 0.5689442337326631,
+    "strat_auc_aa": 0.5908601116547737,
+    "novel200_abc": 24.0,
+    "novel200_aa": 13.666666666666666
+   },
+   "delta_p200_ci95": [
+    -0.18166666666666667,
+    -0.12495833333333335
+   ]
+  },
+  "biology": {
+   "folds": [
+    {
+     "terms": 378,
+     "edges": 4676,
+     "targets": 487,
+     "candidates": 66577,
+     "base_rate": 0.007314838457725641,
+     "p200_abc": 0.04,
+     "p200_pa": 0.15,
+     "p200_aa": 0.205,
+     "auc_abc": 0.7983,
+     "auc_pa": 0.7927,
+     "strat_auc_abc": 0.7462830082135524,
+     "strat_auc_aa": 0.7793401437371663,
+     "novel200_abc": 8,
+     "novel200_aa": 16
+    },
+    {
+     "terms": 540,
+     "edges": 9413,
+     "targets": 371,
+     "candidates": 136117,
+     "base_rate": 0.0027255963619533196,
+     "p200_abc": 0.01,
+     "p200_pa": 0.095,
+     "p200_aa": 0.125,
+     "auc_abc": 0.833755,
+     "auc_pa": 0.8339525,
+     "strat_auc_abc": 0.7838328167115902,
+     "strat_auc_aa": 0.8091793126684635,
+     "novel200_abc": 2,
+     "novel200_aa": 8
+    },
+    {
+     "terms": 609,
+     "edges": 12746,
+     "targets": 218,
+     "candidates": 172390,
+     "base_rate": 0.001264574511282557,
+     "p200_abc": 0.005,
+     "p200_pa": 0.02,
+     "p200_aa": 0.035,
+     "auc_abc": 0.798195,
+     "auc_pa": 0.818705,
+     "strat_auc_abc": 0.7415682339449542,
+     "strat_auc_aa": 0.7709275229357798,
+     "novel200_abc": 1,
+     "novel200_aa": 3
+    }
+   ],
+   "mean": {
+    "terms": 509.0,
+    "edges": 8945.0,
+    "targets": 358.6666666666667,
+    "candidates": 125028.0,
+    "base_rate": 0.0037683364436538395,
+    "p200_abc": 0.018333333333333333,
+    "p200_pa": 0.08833333333333333,
+    "p200_aa": 0.12166666666666666,
+    "auc_abc": 0.8100833333333334,
+    "auc_pa": 0.8151191666666667,
+    "strat_auc_abc": 0.7572280196233656,
+    "strat_auc_aa": 0.7864823264471367,
+    "novel200_abc": 3.6666666666666665,
+    "novel200_aa": 9.0
+   },
+   "delta_p200_ci95": [
+    -0.105,
+    -0.061666666666666675
+   ]
+  },
+  "skeptics": {
+   "folds": [
+    {
+     "terms": 252,
+     "edges": 1732,
+     "targets": 158,
+     "candidates": 29894,
+     "base_rate": 0.005285341540108383,
+     "p200_abc": 0.01,
+     "p200_pa": 0.065,
+     "p200_aa": 0.1,
+     "auc_abc": 0.71411,
+     "auc_pa": 0.8324475,
+     "strat_auc_abc": 0.6357197784810127,
+     "strat_auc_aa": 0.6840416139240506,
+     "novel200_abc": 2,
+     "novel200_aa": 9
+    },
+    {
+     "terms": 391,
+     "edges": 3715,
+     "targets": 101,
+     "candidates": 72530,
+     "base_rate": 0.001392527230111678,
+     "p200_abc": 0.01,
+     "p200_pa": 0.03,
+     "p200_aa": 0.03,
+     "auc_abc": 0.785665,
+     "auc_pa": 0.848615,
+     "strat_auc_abc": 0.7275433168316832,
+     "strat_auc_aa": 0.7421858910891089,
+     "novel200_abc": 2,
+     "novel200_aa": 0
+    },
+    {
+     "terms": 476,
+     "edges": 5497,
+     "targets": 123,
+     "candidates": 107553,
+     "base_rate": 0.0011436222141641796,
+     "p200_abc": 0.0,
+     "p200_pa": 0.035,
+     "p200_aa": 0.035,
+     "auc_abc": 0.786795,
+     "auc_pa": 0.82817,
+     "strat_auc_abc": 0.7233997967479674,
+     "strat_auc_aa": 0.7630329268292683,
+     "novel200_abc": 0,
+     "novel200_aa": 1
+    }
+   ],
+   "mean": {
+    "terms": 373.0,
+    "edges": 3648.0,
+    "targets": 127.33333333333333,
+    "candidates": 69992.33333333333,
+    "base_rate": 0.002607163661461414,
+    "p200_abc": 0.006666666666666667,
+    "p200_pa": 0.043333333333333335,
+    "p200_aa": 0.055,
+    "auc_abc": 0.76219,
+    "auc_pa": 0.8364108333333333,
+    "strat_auc_abc": 0.6955542973535543,
+    "strat_auc_aa": 0.7297534772808093,
+    "novel200_abc": 1.3333333333333333,
+    "novel200_aa": 3.3333333333333335
+   },
+   "delta_p200_ci95": [
+    -0.07670833333333334,
+    -0.041666666666666664
+   ]
+  },
+  "p200_abc": 0.12666666666666668,
+  "p200_pa": 0.26833333333333337,
+  "strat_auc_abc": 0.5689442337326631,
+  "delta_low": -0.18166666666666667,
+  "bio_delta_low": -0.105
+ },
+ "controls": {
+  "C_rewired": {
+   "n": 20,
+   "usable": true,
+   "mean": 0.14550000000000002,
+   "q95": 0.16375,
+   "q05": 0.12975,
+   "p_ge": 0.9523809523809523,
+   "compare": "analysis.p200_abc",
+   "description": "A-B-C on a degree-preserving rewired train graph"
+  },
+  "C_shuffled": {
+   "n": 20,
+   "usable": true,
+   "mean": 0.03233333333333334,
+   "q95": 0.04841666666666667,
+   "q05": 0.014916666666666667,
+   "p_ge": 0.047619047619047616,
+   "compare": "analysis.p200_abc",
+   "description": "A-B-C on node-permuted train graph"
+  }
+ },
+ "timing_s": {
+  "analysis": 28.873401099990588,
+  "C_rewired": 73.38503150001634,
+  "C_shuffled": 38.93893169995863
+ },
+ "verdicts": {
+  "BEAT_PA": {
+   "verdict": "FAIL",
+   "rules": [
+    {
+     "rule": "analysis.delta_low > 0",
+     "left": -0.18166666666666667,
+     "right": 0,
+     "holds": false
+    }
+   ]
+  },
+  "BEAT_CONTROLS": {
+   "verdict": "FAIL",
+   "rules": [
+    {
+     "rule": "analysis.p200_abc > controls.C_rewired.q95",
+     "left": 0.12666666666666668,
+     "right": 0.16375,
+     "holds": false
+    },
+    {
+     "rule": "analysis.p200_abc > controls.C_shuffled.q95",
+     "left": 0.12666666666666668,
+     "right": 0.04841666666666667,
+     "holds": true
+    }
+   ]
+  },
+  "POPULARITY_HELD": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.strat_auc_abc > 0.55",
+     "left": 0.5689442337326631,
+     "right": 0.55,
+     "holds": true
+    }
+   ]
+  },
+  "REPLICATES_BIOLOGY": {
+   "verdict": "FAIL",
+   "rules": [
+    {
+     "rule": "analysis.bio_delta_low > 0",
+     "left": -0.105,
+     "right": 0,
+     "holds": false
+    }
+   ]
+  }
+ },
+ "reproduce": null,
+ "status": "scored"
+}

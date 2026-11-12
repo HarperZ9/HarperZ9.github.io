@@ -1,0 +1,164 @@
+{
+ "study": "o11c-public",
+ "run_id": "20261031T085106Z",
+ "date": "2026-10-31",
+ "prereg": {
+  "path": "PREREG.txt",
+  "sha256": "40a9920161815ca8341b659c890d121cae7bb9668eb84f625054a5a44654177c",
+  "anchors": [
+   "sidecar",
+   "lock"
+  ],
+  "plan_sha256": "654439252dcf316de5ffa21bb074a7accf9e903f79e78ef58b47ef87c31c8203",
+  "locked_at": "2026-10-31T08:51:02+00:00"
+ },
+ "hashes": {
+  "units.py": "e2f2f492b128a16b5494713985410a80066ae20ae7604a07f718059d8eb35751"
+ },
+ "analysis": {
+  "others_only_curve": {
+   "2": 0.0,
+   "5": 0.0,
+   "9": 0.0,
+   "12": 0.0,
+   "16": 0.0,
+   "20": 0.0,
+   "30": 0.0,
+   "50": 0.0,
+   "100": 0.028279999999999993,
+   "200": 0.18526000000000004,
+   "400": 0.4827199999999999
+  },
+  "self_included_curve": {
+   "2": 0.0,
+   "5": 0.0,
+   "9": 0.7019599999999999,
+   "12": 1.0,
+   "16": 1.0,
+   "20": 1.0,
+   "30": 1.0,
+   "50": 1.0,
+   "100": 1.0,
+   "200": 1.0,
+   "400": 1.0
+  },
+  "shuffle_self": {
+   "2": 0.0,
+   "5": 0.0,
+   "9": 0.0,
+   "12": 0.0,
+   "16": 0.0,
+   "20": 0.37014,
+   "30": 1.0,
+   "50": 1.0,
+   "100": 1.0,
+   "200": 1.0,
+   "400": 1.0
+  },
+  "shuffle_others": {
+   "2": 0.0,
+   "5": 0.0,
+   "9": 0.0,
+   "12": 0.0,
+   "16": 0.0,
+   "20": 0.0,
+   "30": 0.0,
+   "50": 0.0,
+   "100": 0.0,
+   "200": 0.0,
+   "400": 0.0
+  },
+  "mixed": {
+   "2": 0.0,
+   "5": 0.0,
+   "9": 0.0,
+   "12": 0.0,
+   "16": 0.0,
+   "20": 0.0,
+   "30": 0.0,
+   "50": 0.0,
+   "100": 0.0,
+   "200": 0.00292,
+   "400": 0.03764
+  },
+  "others_threshold": 9999,
+  "top_others": 0.4827199999999999,
+  "top_mixed": 0.03764,
+  "top_shuffle_others": 0.0,
+  "top_shuffle_self": 1.0,
+  "self_threshold": 9,
+  "range_others": {
+   "1": 0.46785999999999994,
+   "2": 0.18208000000000002,
+   "3": 0.20983999999999997,
+   "5": 0.14823999999999998
+  },
+  "others_ever_persist": 0
+ },
+ "controls": {
+  "shuffled": {
+   "n": 20,
+   "usable": false,
+   "mean": 0.0,
+   "q95": 0.0,
+   "q05": 0.0,
+   "p_ge": 0.047619047619047616,
+   "why_unusable": "null has no spread",
+   "compare": "analysis.top_others",
+   "description": "positions shuffled each generation, others only"
+  }
+ },
+ "timing_s": {
+  "analysis": 129.65317260002485,
+  "shuffled": 1.8060028000036255
+ },
+ "verdicts": {
+  "SELF_ARTEFACT_SHOWN": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.top_shuffle_self > 0.5",
+     "left": 1.0,
+     "right": 0.5,
+     "holds": true
+    }
+   ]
+  },
+  "MIXED_COLLAPSES": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.top_mixed < 0.05",
+     "left": 0.03764,
+     "right": 0.05,
+     "holds": true
+    }
+   ]
+  },
+  "OTHERS_PERSIST_SOMEWHERE": {
+   "verdict": "FAIL",
+   "rules": [
+    {
+     "rule": "analysis.others_ever_persist >= 1",
+     "left": 0,
+     "right": 1,
+     "holds": false
+    }
+   ]
+  },
+  "SPACE_CREDITED": {
+   "verdict": "UNTESTABLE",
+   "rules": [
+    {
+     "rule": "analysis.top_others > controls.shuffled.q95",
+     "left": 0.4827199999999999,
+     "right": null,
+     "holds": null,
+     "why": "control shuffled unusable"
+    }
+   ]
+  }
+ },
+ "reproduce": null,
+ "status": "scored"
+}

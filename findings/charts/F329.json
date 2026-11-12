@@ -1,0 +1,559 @@
+{
+ "finding": "F329",
+ "sources": [
+  {
+   "id": "result",
+   "name": "result.json",
+   "sha256_original": "e1a5ad3eb72c809945223d6da98310f19a66a073ca06b34cc9a49a18eb62adce",
+   "sha256_copy": "484c610760b26dee82852e9d8ede758162cf02456e07d3264d0649b0cc6704ed",
+   "href": "/findings/results/F329/result.json",
+   "run": "20261031T220208Z"
+  }
+ ],
+ "charts": [
+  {
+   "key": "planted",
+   "form": "rules",
+   "at": "controls",
+   "claims": [
+    "c3"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "Planted check: on reports simulated from the reputation model, does the reputation model win?",
+   "takeaway": "It failed: the reputation model lost to fixed cost by 0.0003 nats per report on its own simulated data, and beat size-of-lie cost by 0.0005.",
+   "units": "difference in held-out log loss on simulated data, nats per report (a nat is the unit of log loss, the penalty for giving low probability to what happened); above 0 means the reputation model predicts better",
+   "n": "one simulated data set on the same treatments and the same split by paper",
+   "interval": null,
+   "no_interval": "The planted check was run once, so the result file holds one difference per rule.",
+   "threshold": "The reputation model had to beat both the fixed-cost and the size-of-lie models on data simulated from itself",
+   "planted": "Failed. The pipeline did not recover the reputation model from its own simulated data, so the ranking of theories in the loss chart carries little weight.",
+   "rows": [
+    {
+     "label": "Reputation beats fixed cost",
+     "left": "−0.0003",
+     "right": "above 0",
+     "holds": false
+    },
+    {
+     "label": "Reputation beats size-of-lie cost",
+     "left": "0.0005",
+     "right": "above 0",
+     "holds": true
+    }
+   ],
+   "columns": [
+    "Rule",
+    "Measured",
+    "Bar",
+    "Held"
+   ],
+   "table": [
+    [
+     "Reputation minus fixed cost",
+     "−0.0003",
+     "above 0",
+     "no"
+    ],
+    [
+     "Reputation minus size-of-lie cost",
+     "0.0005",
+     "above 0",
+     "yes"
+    ],
+    [
+     "Planted parameter 1: true, then fitted",
+     "0.60",
+     "0.82",
+     ""
+    ],
+    [
+     "Planted parameter 2: true, then fitted",
+     "−0.70",
+     "−0.46",
+     ""
+    ],
+    [
+     "Planted parameter 3: true, then fitted",
+     "0.90",
+     "0.86",
+     ""
+    ],
+    [
+     "Planted parameter 4: true, then fitted",
+     "−3.00",
+     "−2.41",
+     ""
+    ],
+    [
+     "Planted parameter 5: true, then fitted",
+     "0.20",
+     "−0.56",
+     ""
+    ]
+   ]
+  },
+  {
+   "key": "subset",
+   "form": "bars",
+   "at": "controls",
+   "claims": [
+    "c4"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "Reproduction check: mean standardised report in our subset against the published figure.",
+   "takeaway": "Our subset gives 0.287 against the published 0.234, a difference of 0.053 where the tolerance set in advance was 0.03: the check failed.",
+   "units": "mean standardised report (0 is what honest reporting gives on average, 1 is everyone reporting the top-paying outcome)",
+   "n": "252 treatments in our subset (first rounds only, several designs dropped); the published figure covers the full data",
+   "interval": null,
+   "no_interval": "The result file holds one mean for the subset. The published figure and the tolerance come from the locked preregistration text.",
+   "baseline": "Published mean for the full data: 0.234",
+   "threshold": "Within 0.03 of 0.234; not met. The 0.287 was printed before the lock, so the outcome was knowable when the plan was written.",
+   "series_names": [
+    "our subset",
+    "published, full data"
+   ],
+   "axis": {
+    "label": "mean standardised report (0 is honest on average)",
+    "min": 0,
+    "max": 0.4,
+    "regions": [
+     {
+      "from": 0.20400000000000001,
+      "to": 0.264,
+      "label": "tolerance set in advance, 0.204 to 0.264"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "label": "Our subset",
+     "value": 0.2871197864413874,
+     "series": 0,
+     "note": "0.287"
+    },
+    {
+     "label": "Published, full data",
+     "value": 0.234,
+     "series": 1,
+     "note": "0.234"
+    }
+   ],
+   "columns": [
+    "Quantity",
+    "Value"
+   ],
+   "table": [
+    [
+     "Our subset, mean standardised report",
+     "0.287"
+    ],
+    [
+     "Published, full data",
+     "0.234"
+    ],
+    [
+     "Difference",
+     "0.053"
+    ],
+    [
+     "Tolerance set in advance",
+     "0.03"
+    ]
+   ]
+  },
+  {
+   "key": "loss",
+   "form": "band",
+   "at": "results",
+   "claims": [
+    "c2"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "How much better each theory of lying predicts held-out reports than assuming everyone is honest.",
+   "takeaway": "All six theories gain about 0.07 nats per report and sit within 0.0035 of each other, far above the shuffle control's range; a training average with no theory gains 0.068.",
+   "units": "gain in held-out log loss over the everyone-honest model, in nats per report (a nat is the unit of log loss, the penalty for giving low probability to what happened); higher is a better prediction",
+   "n": "9,960 subjects in 19 held-out papers; models fitted on 17,079 subjects in other papers",
+   "interval": "Band: 5th to 95th percentile of the best gain after report labels were shuffled within each held-out treatment, 300 draws. Tick: the shuffle mean.",
+   "baseline": "Everyone honest scores 0 on this axis (loss 1.3202). Shuffle control: mean −0.112, 95th percentile −0.086",
+   "threshold": "Best gain above the shuffle control's 95th percentile: held, 0.072 against −0.086 (p from draws 0.003)",
+   "ruled_out": "A difference between the six theories larger than 0.0035 nats per report on these papers. No contrast against the fixed-cost model passes the false-discovery correction (smallest p 0.40).",
+   "value_name": "gain over everyone honest",
+   "band_name": "shuffle control, 5th to 95th percentile",
+   "axis": {
+    "label": "gain over everyone honest, nats per report (higher is better)",
+    "min": -0.15,
+    "max": 0.1,
+    "refs": [
+     {
+      "value": 0,
+      "label": "everyone honest, 0"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "label": "Reputation plus fixed cost",
+     "value": 0.07181517711276822,
+     "lo": -0.1421825073997562,
+     "hi": -0.08610805004320343,
+     "mean": -0.11230341952394085,
+     "series": 0,
+     "note": "gain 0.0718; p against fixed cost 0.40"
+    },
+    {
+     "label": "Payoff logit (no lying cost)",
+     "value": 0.07135058495161783,
+     "lo": -0.1421825073997562,
+     "hi": -0.08610805004320343,
+     "mean": -0.11230341952394085,
+     "series": 0,
+     "note": "gain 0.0714; p against fixed cost 0.83"
+    },
+    {
+     "label": "Size-of-lie cost",
+     "value": 0.07108165357263134,
+     "lo": -0.1421825073997562,
+     "hi": -0.08610805004320343,
+     "mean": -0.11230341952394085,
+     "series": 0,
+     "note": "gain 0.0711; p against fixed cost 0.83"
+    },
+    {
+     "label": "Full model",
+     "value": 0.07090173781930079,
+     "lo": -0.1421825073997562,
+     "hi": -0.08610805004320343,
+     "mean": -0.11230341952394085,
+     "series": 0,
+     "note": "gain 0.0709; p against fixed cost 0.75"
+    },
+    {
+     "label": "Fixed lying cost",
+     "value": 0.06870403537386136,
+     "lo": -0.1421825073997562,
+     "hi": -0.08610805004320343,
+     "mean": -0.11230341952394085,
+     "series": 0,
+     "note": "gain 0.0687"
+    },
+    {
+     "label": "Norm",
+     "value": 0.0683061250102926,
+     "lo": -0.1421825073997562,
+     "hi": -0.08610805004320343,
+     "mean": -0.11230341952394085,
+     "series": 0,
+     "note": "gain 0.0683; p against fixed cost 0.81"
+    },
+    {
+     "label": "Training average (no theory)",
+     "value": 0.06825704608039446,
+     "lo": -0.1421825073997562,
+     "hi": -0.08610805004320343,
+     "mean": -0.11230341952394085,
+     "series": 0,
+     "note": "gain 0.0683; p against fixed cost 0.96"
+    }
+   ],
+   "columns": [
+    "Model",
+    "Held-out loss",
+    "Gain over everyone honest",
+    "p against fixed cost"
+   ],
+   "table": [
+    [
+     "Reputation plus fixed cost",
+     "1.2484",
+     "0.0718",
+     "0.40"
+    ],
+    [
+     "Payoff logit (no lying cost)",
+     "1.2488",
+     "0.0714",
+     "0.83"
+    ],
+    [
+     "Size-of-lie cost",
+     "1.2491",
+     "0.0711",
+     "0.83"
+    ],
+    [
+     "Full model",
+     "1.2493",
+     "0.0709",
+     "0.75"
+    ],
+    [
+     "Fixed lying cost",
+     "1.2515",
+     "0.0687",
+     ""
+    ],
+    [
+     "Norm",
+     "1.2519",
+     "0.0683",
+     "0.81"
+    ],
+    [
+     "Training average (no theory)",
+     "1.2519",
+     "0.0683",
+     "0.96"
+    ],
+    [
+     "Everyone honest",
+     "1.3202",
+     "0.0000",
+     ""
+    ]
+   ]
+  },
+  {
+   "key": "edge",
+   "form": "interval",
+   "at": "results",
+   "claims": [
+    "c2"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "Edge of the two richer models over the fixed-cost model on held-out papers.",
+   "takeaway": "Both intervals include zero: reputation is ahead of fixed cost by 0.003 (−0.001 to 0.008) and the full model by 0.002 (−0.008 to 0.012).",
+   "units": "difference in held-out log loss, nats per report (a nat is the unit of log loss, the penalty for giving low probability to what happened); above 0 means the richer model predicts better than fixed cost",
+   "n": "9,960 subjects in 19 held-out papers; models fitted on 17,079 subjects in other papers",
+   "interval": "95 percent interval from the result file",
+   "baseline": "No edge over the fixed-cost model: 0",
+   "ruled_out": "An edge over fixed cost larger than 0.008 for the reputation model and 0.012 for the full model (upper ends of the intervals)",
+   "value_name": "edge over fixed cost",
+   "axis": {
+    "label": "edge over fixed cost, nats per report (above 0 is better)",
+    "min": -0.01,
+    "max": 0.015,
+    "refs": [
+     {
+      "value": 0,
+      "label": "no edge, 0"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "label": "Reputation plus fixed cost",
+     "value": 0.0031111417389068714,
+     "lo": -0.0008877953787843111,
+     "hi": 0.008270714223058705,
+     "series": 0,
+     "note": "0.0031; −0.0009 to 0.0083; p 0.40"
+    },
+    {
+     "label": "Full model",
+     "value": 0.0021977024454394355,
+     "lo": -0.007775490011839278,
+     "hi": 0.011855630915375776,
+     "series": 0,
+     "note": "0.0022; −0.0078 to 0.0119; p 0.75"
+    }
+   ],
+   "columns": [
+    "Contrast",
+    "Edge",
+    "Lower end",
+    "Upper end",
+    "p"
+   ],
+   "table": [
+    [
+     "Reputation minus fixed cost",
+     "0.0031",
+     "−0.0009",
+     "0.0083",
+     "0.40"
+    ],
+    [
+     "Full minus fixed cost",
+     "0.0022",
+     "−0.0078",
+     "0.0119",
+     "0.75"
+    ],
+    [
+     "Full minus fixed cost without Effron et al. 2015",
+     "−0.0031",
+     "",
+     "",
+     ""
+    ]
+   ]
+  },
+  {
+   "key": "shares",
+   "form": "bars",
+   "at": "results",
+   "claims": [
+    "c1"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "How people report when a task has three or more outcomes: honest, maximal or partial.",
+   "takeaway": "Held-out reports read as 45 percent honest, 26 percent maximal (the top-paying outcome) and 29 percent partial (a lie short of the top); the training papers gave 42, 24 and 34.",
+   "units": "percent of reports, read from the report distribution of each treatment with 3, 6 or 10 outcomes",
+   "n": "9,960 subjects in 19 held-out papers; models fitted on 17,079 subjects in other papers",
+   "interval": null,
+   "no_interval": "The result file holds one share per part with no interval.",
+   "baseline": "Training papers, and the shares the closest-fitting model predicts for the held-out tasks (Norm, mean absolute error 0.109)",
+   "series_names": [
+    "honest",
+    "maximal",
+    "partial"
+   ],
+   "axis": {
+    "label": "percent of reports",
+    "min": 0,
+    "max": 60,
+    "percent": true
+   },
+   "rows": [
+    {
+     "label": "Honest",
+     "group": "Observed, held-out papers",
+     "value": 45.0416737540398,
+     "series": 0,
+     "note": "45 percent"
+    },
+    {
+     "label": "Maximal",
+     "group": "Observed, held-out papers",
+     "value": 25.939785677836362,
+     "series": 1,
+     "note": "26 percent"
+    },
+    {
+     "label": "Partial",
+     "group": "Observed, held-out papers",
+     "value": 29.01854056812384,
+     "series": 2,
+     "note": "29 percent"
+    },
+    {
+     "label": "Honest",
+     "group": "Observed, training papers",
+     "value": 42.0450417726117,
+     "series": 0,
+     "note": "42 percent"
+    },
+    {
+     "label": "Maximal",
+     "group": "Observed, training papers",
+     "value": 24.26443879404286,
+     "series": 1,
+     "note": "24 percent"
+    },
+    {
+     "label": "Partial",
+     "group": "Observed, training papers",
+     "value": 33.690519433345436,
+     "series": 2,
+     "note": "34 percent"
+    },
+    {
+     "label": "Honest",
+     "group": "Predicted by the Norm model",
+     "value": 46.19843047192264,
+     "series": 0,
+     "note": "46 percent"
+    },
+    {
+     "label": "Maximal",
+     "group": "Predicted by the Norm model",
+     "value": 28.948724498648147,
+     "series": 1,
+     "note": "29 percent"
+    },
+    {
+     "label": "Partial",
+     "group": "Predicted by the Norm model",
+     "value": 24.85284502942921,
+     "series": 2,
+     "note": "25 percent"
+    }
+   ],
+   "columns": [
+    "Source",
+    "Honest",
+    "Maximal",
+    "Partial",
+    "Mean absolute error"
+   ],
+   "table": [
+    [
+     "Observed, held-out papers",
+     "0.45",
+     "0.26",
+     "0.29",
+     ""
+    ],
+    [
+     "Observed, training papers",
+     "0.42",
+     "0.24",
+     "0.34",
+     ""
+    ],
+    [
+     "Norm",
+     "0.46",
+     "0.29",
+     "0.25",
+     "0.109"
+    ],
+    [
+     "Reputation plus fixed cost",
+     "0.45",
+     "0.30",
+     "0.24",
+     "0.110"
+    ],
+    [
+     "Fixed lying cost",
+     "0.49",
+     "0.29",
+     "0.22",
+     "0.116"
+    ],
+    [
+     "Size-of-lie cost",
+     "0.36",
+     "0.32",
+     "0.32",
+     "0.124"
+    ],
+    [
+     "Full model",
+     "0.59",
+     "0.27",
+     "0.14",
+     "0.147"
+    ],
+    [
+     "Payoff logit (no lying cost)",
+     "0.61",
+     "0.16",
+     "0.23",
+     "0.160"
+    ]
+   ]
+  }
+ ]
+}
