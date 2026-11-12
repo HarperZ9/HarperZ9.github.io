@@ -112,7 +112,7 @@ export function createWell(canvas, { reduced = false, ground = 'paper' } = {}) {
     const dt = Math.min(0.05, (now - (last || now)) / 1000), last0 = last;
     if (last) { time.gap += now - last; time.frames++; } last = now;
     if (dt > 0) { const t = performance.now(); if (layer?.box && takes() && !(tick++ & 3)) brushUp(Math.min(1, takes() * 4)); sim.step(STEP, true, 1, Math.min(0.25, (now - (last0 || now)) / 1000)); time.sim += performance.now() - t; } draw();
-    if (now > idleAt || document.hidden) { last = 0; return; }    // the water has had its time: hold the still
+    if ((now > idleAt && !sim.changing) || document.hidden) { last = 0; return; }    // the water has had its time: hold the still. A change of state always finishes, however slowly the frames come
     raf = requestAnimationFrame(frame);
   }
   // an act wakes the water for a while; under reduced motion it settles at once and holds a still
@@ -123,7 +123,7 @@ export function createWell(canvas, { reduced = false, ground = 'paper' } = {}) {
   }
   const ro = typeof ResizeObserver === 'function' ? new ResizeObserver(() => { size(); draw(); }) : null;
   ro?.observe(canvas);
-  const onVis = () => { if (!document.hidden && !reduced && performance.now() < idleAt && !raf) raf = requestAnimationFrame(frame); };
+  const onVis = () => { if (!document.hidden && !reduced && (performance.now() < idleAt || sim.changing) && !raf) raf = requestAnimationFrame(frame); };
   document.addEventListener('visibilitychange', onVis);
   size();
 
