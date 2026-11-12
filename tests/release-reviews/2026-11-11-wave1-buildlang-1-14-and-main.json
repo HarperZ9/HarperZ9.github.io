@@ -1,0 +1,9 @@
+{
+  "date": "2026-11-11",
+  "note": "Main merged in; release record refetched (BuildLang 1.14.0, 10 November 2026, on GitHub and crates.io) and the home, BuildLang page, routes and site index rebuilt from it.",
+  "paths": {
+    "index.html": "579c8e437e88b8c8641079dfb66ea44740425ec7bbbc61cc55f3fb8243e500e1",
+    "site-index.html": "13dd63dbd95fa6b595253bbf2ba3c463c969d82400a844d093af42490972df7c",
+    "system/routes.js": "d9aee18f6fd4b37d2a462c2447e37f8be6a540ae160cf4457dfba0991baa1416"
+  }
+}
