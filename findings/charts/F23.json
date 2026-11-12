@@ -1,0 +1,705 @@
+{
+ "finding": "F23",
+ "sources": [
+  {
+   "id": "network",
+   "name": "study1_results.json (network study)",
+   "sha256_original": "00c954360fb49e648c5002630b6e1ce3e8552d1b8e9344524a6e7a7075791fab",
+   "sha256_copy": "00c954360fb49e648c5002630b6e1ce3e8552d1b8e9344524a6e7a7075791fab",
+   "href": "/findings/results/F23/study1_results.json"
+  },
+  {
+   "id": "cedar",
+   "name": "cedar.json (log decay study)",
+   "sha256_original": "8395c10ce46030180a70d534c37924486a4c1ce7efd271d2b2081af73328329d",
+   "sha256_copy": "8395c10ce46030180a70d534c37924486a4c1ce7efd271d2b2081af73328329d",
+   "href": "/findings/results/F23/cedar.json"
+  },
+  {
+   "id": "wind",
+   "name": "wind_results.json (wind study)",
+   "sha256_original": "e7622b4c1844402e06a0b1faa61d50b062632f3090ef8acbe50bbdf9ee775abb",
+   "sha256_copy": "e7622b4c1844402e06a0b1faa61d50b062632f3090ef8acbe50bbdf9ee775abb",
+   "href": "/findings/results/F23/wind_results.json"
+  }
+ ],
+ "charts": [
+  {
+   "key": "hubs",
+   "form": "band",
+   "at": "results",
+   "claims": [
+    "c1"
+   ],
+   "source": [
+    "network"
+   ],
+   "title": "Share of tree-to-tree links held by the best-connected tenth of trees, against shuffled networks.",
+   "takeaway": "In 6 of 6 plots the hub share (0.09 to 0.19) sat inside the range of 1,000 shuffled networks, so the hubs are what the link counts alone produce. Higher means links are more concentrated.",
+   "units": "share of all tree-to-tree links held by the top 10 percent of trees (0 to 1; higher means more concentrated in hubs)",
+   "n": "6 plots, 166 trees and 56 fungal genets; 1,000 shuffles for each plot",
+   "interval": "central 95% of the shuffled networks for that plot",
+   "baseline": "Degree-preserving shuffle: links are rewired at random while every tree and every genet keeps its own number of links. A genet is one genetically distinct fungal individual.",
+   "threshold": "Hub share inside the shuffled range in 4 or more of 6 plots",
+   "ruled_out": "Hub concentration beyond what the link counts produce, in any of the 6 plots. With sampling effort held fixed, the link between tree size and genet count fell to a partial rho of 0.20 (p 0.067)",
+   "value_name": "observed hub share",
+   "band_name": "central 95% of shuffles",
+   "axis": {
+    "label": "share of links held by the top 10% of trees (higher is more concentrated)"
+   },
+   "rows": [
+    {
+     "label": "Plot 1",
+     "group": "Dry sites (xeric)",
+     "value": 0.13793103448275862,
+     "lo": 0.13307984790874525,
+     "hi": 0.13878326996197718,
+     "mean": 0.1370027511208047,
+     "note": "0.138; shuffles 0.133 to 0.139; 27 trees"
+    },
+    {
+     "label": "Plot 2",
+     "group": "Dry sites (xeric)",
+     "value": 0.08695652173913043,
+     "lo": 0.08695652173913043,
+     "hi": 0.09375,
+     "mean": 0.08788963884992985,
+     "note": "0.087; shuffles 0.087 to 0.094; 13 trees"
+    },
+    {
+     "label": "Plot 3",
+     "group": "Dry sites (xeric)",
+     "value": 0.1431095406360424,
+     "lo": 0.13666296928327645,
+     "hi": 0.14696194356120826,
+     "mean": 0.14186320474344521,
+     "note": "0.143; shuffles 0.137 to 0.147; 31 trees"
+    },
+    {
+     "label": "Plot 4",
+     "group": "Moist sites (mesic)",
+     "value": 0.15690376569037656,
+     "lo": 0.1488095238095238,
+     "hi": 0.15938864628820962,
+     "mean": 0.15400969391593367,
+     "note": "0.157; shuffles 0.149 to 0.159; 27 trees"
+    },
+    {
+     "label": "Plot 5",
+     "group": "Moist sites (mesic)",
+     "value": 0.19491525423728814,
+     "lo": 0.17286990364264232,
+     "hi": 0.19672131147540983,
+     "mean": 0.18639146645352256,
+     "note": "0.195; shuffles 0.173 to 0.197; 27 trees"
+    },
+    {
+     "label": "Plot 6",
+     "group": "Moist sites (mesic)",
+     "value": 0.16359447004608296,
+     "lo": 0.15419287578044916,
+     "hi": 0.17087155963302753,
+     "mean": 0.1632308721587886,
+     "note": "0.164; shuffles 0.154 to 0.171; 41 trees"
+    }
+   ],
+   "columns": [
+    "Plot",
+    "Site type",
+    "Trees",
+    "Genets",
+    "Observed share",
+    "Shuffle 2.5%",
+    "Shuffle mean",
+    "Shuffle 97.5%",
+    "Inside"
+   ],
+   "table": [
+    [
+     "1",
+     "Dry sites (xeric)",
+     "27",
+     "6",
+     "0.138",
+     "0.133",
+     "0.137",
+     "0.139",
+     "yes"
+    ],
+    [
+     "2",
+     "Dry sites (xeric)",
+     "13",
+     "6",
+     "0.087",
+     "0.087",
+     "0.088",
+     "0.094",
+     "yes"
+    ],
+    [
+     "3",
+     "Dry sites (xeric)",
+     "31",
+     "9",
+     "0.143",
+     "0.137",
+     "0.142",
+     "0.147",
+     "yes"
+    ],
+    [
+     "4",
+     "Moist sites (mesic)",
+     "27",
+     "7",
+     "0.157",
+     "0.149",
+     "0.154",
+     "0.159",
+     "yes"
+    ],
+    [
+     "5",
+     "Moist sites (mesic)",
+     "27",
+     "11",
+     "0.195",
+     "0.173",
+     "0.186",
+     "0.197",
+     "yes"
+    ],
+    [
+     "6",
+     "Moist sites (mesic)",
+     "41",
+     "17",
+     "0.164",
+     "0.154",
+     "0.163",
+     "0.171",
+     "yes"
+    ]
+   ]
+  },
+  {
+   "key": "nestedness",
+   "form": "band",
+   "at": "results",
+   "claims": [
+    "c1"
+   ],
+   "source": [
+    "network"
+   ],
+   "title": "Nestedness of each plot's network, against shuffled networks.",
+   "takeaway": "Nestedness sat inside the shuffled range in 6 of 6 plots, with z scores from −0.87 to +0.74. Higher means more nested.",
+   "units": "NODF score, 0 to 100. Nestedness measures how far the partners of poorly linked trees are a subset of the partners of well linked trees; higher is more nested",
+   "n": "6 plots, 166 trees and 56 fungal genets; 1,000 shuffles for each plot",
+   "interval": "central 95% of the shuffled networks for that plot",
+   "baseline": "Degree-preserving shuffle: links are rewired at random while every tree and every genet keeps its own number of links. A genet is one genetically distinct fungal individual.",
+   "threshold": "z score between −2 and +2 in 4 or more of 6 plots (z is the distance from the shuffle mean in shuffle standard deviations)",
+   "ruled_out": "Nestedness beyond what the link counts produce: all 6 of 6 z scores are inside ±2",
+   "value_name": "observed nestedness",
+   "band_name": "central 95% of shuffles",
+   "axis": {
+    "label": "nestedness, NODF (higher is more nested)"
+   },
+   "rows": [
+    {
+     "label": "Plot 1",
+     "group": "Dry sites (xeric)",
+     "value": 27.07650273224044,
+     "lo": 23.060109289617486,
+     "hi": 30.846994535519126,
+     "mean": 28.901666666666667,
+     "note": "27.1; shuffles 23.1 to 30.8; z −0.87"
+    },
+    {
+     "label": "Plot 2",
+     "group": "Dry sites (xeric)",
+     "value": 66.30824372759857,
+     "lo": 62.00716845878136,
+     "hi": 67.74193548387098,
+     "mean": 65.93727598566308,
+     "note": "66.3; shuffles 62.0 to 67.7; z +0.22"
+    },
+    {
+     "label": "Plot 3",
+     "group": "Dry sites (xeric)",
+     "value": 42.92989113348394,
+     "lo": 39.49118247022439,
+     "hi": 44.312158649733504,
+     "mean": 42.71723183669291,
+     "note": "42.9; shuffles 39.5 to 44.3; z +0.18"
+    },
+    {
+     "label": "Plot 4",
+     "group": "Moist sites (mesic)",
+     "value": 49.98879928315413,
+     "lo": 47.20248095878136,
+     "hi": 50.756328405017925,
+     "mean": 49.502828181003586,
+     "note": "50.0; shuffles 47.2 to 50.8; z +0.52"
+    },
+    {
+     "label": "Plot 5",
+     "group": "Moist sites (mesic)",
+     "value": 35.05635169428273,
+     "lo": 32.03895170921033,
+     "hi": 36.787141737572775,
+     "mean": 34.85535565009703,
+     "note": "35.1; shuffles 32.0 to 36.8; z +0.16"
+    },
+    {
+     "label": "Plot 6",
+     "group": "Moist sites (mesic)",
+     "value": 35.58984193398419,
+     "lo": 32.68094573952313,
+     "hi": 36.54181609882447,
+     "mean": 34.85614448429302,
+     "note": "35.6; shuffles 32.7 to 36.5; z +0.74"
+    }
+   ],
+   "columns": [
+    "Plot",
+    "Site type",
+    "Observed NODF",
+    "Shuffle 2.5%",
+    "Shuffle mean",
+    "Shuffle 97.5%",
+    "z"
+   ],
+   "table": [
+    [
+     "1",
+     "Dry sites (xeric)",
+     "27.1",
+     "23.1",
+     "28.9",
+     "30.8",
+     "−0.87"
+    ],
+    [
+     "2",
+     "Dry sites (xeric)",
+     "66.3",
+     "62.0",
+     "65.9",
+     "67.7",
+     "+0.22"
+    ],
+    [
+     "3",
+     "Dry sites (xeric)",
+     "42.9",
+     "39.5",
+     "42.7",
+     "44.3",
+     "+0.18"
+    ],
+    [
+     "4",
+     "Moist sites (mesic)",
+     "50.0",
+     "47.2",
+     "49.5",
+     "50.8",
+     "+0.52"
+    ],
+    [
+     "5",
+     "Moist sites (mesic)",
+     "35.1",
+     "32.0",
+     "34.9",
+     "36.8",
+     "+0.16"
+    ],
+    [
+     "6",
+     "Moist sites (mesic)",
+     "35.6",
+     "32.7",
+     "34.9",
+     "36.5",
+     "+0.74"
+    ]
+   ]
+  },
+  {
+   "key": "decay",
+   "form": "interval",
+   "at": "results",
+   "claims": [
+    "c2"
+   ],
+   "source": [
+    "cedar"
+   ],
+   "title": "Yearly density loss of logs by species, for heartwood and for sapwood.",
+   "takeaway": "Cedar heartwood lost density at 0.0026 per year (0.0016 to 0.0038), the slowest of 4 species. Cedar sapwood lost 0.042 per year and ranked 3 of 4. Lower is slower decay.",
+   "units": "decay rate k per year: the yearly fractional loss of wood density in a single exponential fit (lower means slower decay)",
+   "n": "241 logs with heartwood samples and 240 with sapwood samples",
+   "interval": "95% bootstrap interval over logs",
+   "baseline": "The other three species laid on the same sites in the same year",
+   "threshold": "Cedar heartwood rate below each other species with the interval of every difference above 0; cedar sapwood not the slowest",
+   "series_names": [
+    "Western redcedar",
+    "Other species"
+   ],
+   "axis": {
+    "label": "density loss per year, k (lower is slower decay)",
+    "min": 0
+   },
+   "rows": [
+    {
+     "label": "Western redcedar",
+     "group": "Heartwood (inner wood)",
+     "value": 0.002601156593752234,
+     "lo": 0.001614010827492031,
+     "hi": 0.0037648407574998113,
+     "series": 0,
+     "note": "0.0026 (0.0016 to 0.0038); rank 1 of 4; 54 logs"
+    },
+    {
+     "label": "Douglas-fir",
+     "group": "Heartwood (inner wood)",
+     "value": 0.006682581115255362,
+     "lo": 0.00546221198067302,
+     "hi": 0.007920189940271292,
+     "series": 1,
+     "note": "0.0067 (0.0055 to 0.0079); rank 2 of 4; 67 logs"
+    },
+    {
+     "label": "Western hemlock",
+     "group": "Heartwood (inner wood)",
+     "value": 0.020138460973671803,
+     "lo": 0.016902375583766786,
+     "hi": 0.02327909645404894,
+     "series": 1,
+     "note": "0.0201 (0.0169 to 0.0233); rank 3 of 4; 66 logs"
+    },
+    {
+     "label": "Pacific silver fir",
+     "group": "Heartwood (inner wood)",
+     "value": 0.035842406284878704,
+     "lo": 0.031078476176562297,
+     "hi": 0.040786718415909855,
+     "series": 1,
+     "note": "0.0358 (0.0311 to 0.0408); rank 4 of 4; 54 logs"
+    },
+    {
+     "label": "Douglas-fir",
+     "group": "Sapwood (outer wood)",
+     "value": 0.032473754195618265,
+     "lo": 0.02807334562657144,
+     "hi": 0.03641704278007922,
+     "series": 1,
+     "note": "0.0325 (0.0281 to 0.0364); rank 1 of 4; 67 logs"
+    },
+    {
+     "label": "Western hemlock",
+     "group": "Sapwood (outer wood)",
+     "value": 0.0325430064453906,
+     "lo": 0.02789703139957231,
+     "hi": 0.03684473842448066,
+     "series": 1,
+     "note": "0.0325 (0.0279 to 0.0368); rank 2 of 4; 66 logs"
+    },
+    {
+     "label": "Western redcedar",
+     "group": "Sapwood (outer wood)",
+     "value": 0.041843531340090015,
+     "lo": 0.03617138391012493,
+     "hi": 0.0476452500511736,
+     "series": 0,
+     "note": "0.0418 (0.0362 to 0.0476); rank 3 of 4; 54 logs"
+    },
+    {
+     "label": "Pacific silver fir",
+     "group": "Sapwood (outer wood)",
+     "value": 0.056708374683459406,
+     "lo": 0.051675790989454906,
+     "hi": 0.06254388378911403,
+     "series": 1,
+     "note": "0.0567 (0.0517 to 0.0625); rank 4 of 4; 53 logs"
+    }
+   ],
+   "columns": [
+    "Tissue",
+    "Species",
+    "k per year",
+    "95% low",
+    "95% high",
+    "Rank, slowest first",
+    "Logs"
+   ],
+   "table": [
+    [
+     "Heartwood (inner wood)",
+     "Western redcedar",
+     "0.0026",
+     "0.0016",
+     "0.0038",
+     "1 of 4",
+     "54"
+    ],
+    [
+     "Heartwood (inner wood)",
+     "Douglas-fir",
+     "0.0067",
+     "0.0055",
+     "0.0079",
+     "2 of 4",
+     "67"
+    ],
+    [
+     "Heartwood (inner wood)",
+     "Western hemlock",
+     "0.0201",
+     "0.0169",
+     "0.0233",
+     "3 of 4",
+     "66"
+    ],
+    [
+     "Heartwood (inner wood)",
+     "Pacific silver fir",
+     "0.0358",
+     "0.0311",
+     "0.0408",
+     "4 of 4",
+     "54"
+    ],
+    [
+     "Sapwood (outer wood)",
+     "Douglas-fir",
+     "0.0325",
+     "0.0281",
+     "0.0364",
+     "1 of 4",
+     "67"
+    ],
+    [
+     "Sapwood (outer wood)",
+     "Western hemlock",
+     "0.0325",
+     "0.0279",
+     "0.0368",
+     "2 of 4",
+     "66"
+    ],
+    [
+     "Sapwood (outer wood)",
+     "Western redcedar",
+     "0.0418",
+     "0.0362",
+     "0.0476",
+     "3 of 4",
+     "54"
+    ],
+    [
+     "Sapwood (outer wood)",
+     "Pacific silver fir",
+     "0.0567",
+     "0.0517",
+     "0.0625",
+     "4 of 4",
+     "53"
+    ]
+   ]
+  },
+  {
+   "key": "wind-ranking",
+   "form": "interval",
+   "at": "results",
+   "claims": [
+    "c3"
+   ],
+   "source": [
+    "wind"
+   ],
+   "title": "How well each model ranks held-out trees by wind-damage risk.",
+   "takeaway": "The logistic model ranked risk with an AUC of 0.77 (0.73 to 0.82), above the 0.5 of a coin flip. Higher is better ranking.",
+   "units": "AUC: the chance that a damaged tree gets a higher risk score than an undamaged one (0.5 is a coin flip, 1 is perfect ranking)",
+   "n": "488,499 live trees, 506 with recorded wind damage (0.10 percent); scored on 146,893 held-out trees with 158 wind cases",
+   "interval": "95% bootstrap interval",
+   "baseline": "The base rate gives every tree the same probability, which ranks at an AUC of 0.5",
+   "threshold": "The model had to beat the base rate on held-out trees",
+   "series_names": [
+    "Logistic regression (the tested model)",
+    "Species alone",
+    "Gradient boosting"
+   ],
+   "axis": {
+    "label": "AUC on held-out trees (higher is better ranking)",
+    "min": 0.4,
+    "max": 1,
+    "refs": [
+     {
+      "value": 0.5,
+      "label": "coin flip, 0.5"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "label": "Logistic regression (the tested model)",
+     "value": 0.7745775450707013,
+     "lo": 0.725570362698817,
+     "hi": 0.8171124486706096,
+     "series": 0,
+     "note": "0.77 (0.73 to 0.82); top tenth by risk held 34% of cases"
+    },
+    {
+     "label": "Species alone",
+     "value": 0.6272415009750204,
+     "lo": 0.5492393175815237,
+     "hi": 0.6903395168294633,
+     "series": 1,
+     "note": "0.63 (0.55 to 0.69); top tenth by risk held 35% of cases"
+    },
+    {
+     "label": "Gradient boosting",
+     "value": 0.799758196662976,
+     "lo": 0.7244456709185926,
+     "hi": 0.8630148582202243,
+     "series": 2,
+     "note": "0.80 (0.72 to 0.86); top tenth by risk held 46% of cases"
+    }
+   ],
+   "columns": [
+    "Model",
+    "AUC",
+    "95% low",
+    "95% high",
+    "Share of wind cases in the top tenth by risk"
+   ],
+   "table": [
+    [
+     "Logistic regression (the tested model)",
+     "0.77",
+     "0.73",
+     "0.82",
+     "34%"
+    ],
+    [
+     "Species alone",
+     "0.63",
+     "0.55",
+     "0.69",
+     "35%"
+    ],
+    [
+     "Gradient boosting",
+     "0.80",
+     "0.72",
+     "0.86",
+     "46%"
+    ]
+   ]
+  },
+  {
+   "key": "wind-skill",
+   "form": "interval",
+   "at": "results",
+   "claims": [
+    "c3"
+   ],
+   "source": [
+    "wind"
+   ],
+   "title": "How much each model improves the stated probabilities over the base rate.",
+   "takeaway": "The logistic model gained a Brier skill of 0.0014 (0.00006 to 0.0028) over the base rate: damage is so rare (506 of 488,499 trees) that no tree's probability gets high. Higher is better.",
+   "units": "Brier skill: the share of the base rate's squared probability error that the model removes (0 is no gain, 1 is perfect, below 0 is worse than the base rate)",
+   "n": "488,499 live trees, 506 with recorded wind damage (0.10 percent); scored on 146,893 held-out trees with 158 wind cases",
+   "interval": "95% bootstrap interval",
+   "baseline": "Base rate: every tree gets the overall damage rate (Brier score 0.0010745)",
+   "threshold": "The model had to beat the base rate on held-out trees",
+   "series_names": [
+    "Logistic regression (the tested model)",
+    "Species alone",
+    "Gradient boosting"
+   ],
+   "axis": {
+    "label": "Brier skill over the base rate (higher is better; 1 would be perfect)",
+    "refs": [
+     {
+      "value": 0,
+      "label": "base rate, 0"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "label": "Logistic regression (the tested model)",
+     "value": 0.0013818561839211707,
+     "lo": 5.79981334161539e-05,
+     "hi": 0.0027884136738442005,
+     "series": 0,
+     "note": "+0.00138 (+0.00006 to +0.00279)"
+    },
+    {
+     "label": "Species alone",
+     "value": 0.00022182942134452155,
+     "lo": 2.5608083358719117e-05,
+     "hi": 0.00038246835791188867,
+     "series": 1,
+     "note": "+0.00022 (+0.00003 to +0.00038)"
+    },
+    {
+     "label": "Gradient boosting",
+     "value": -0.004832270880093414,
+     "lo": -0.015335867669258528,
+     "hi": 0.0019791094962636185,
+     "series": 2,
+     "note": "−0.00483 (−0.01534 to +0.00198)"
+    }
+   ],
+   "columns": [
+    "Model",
+    "Brier skill",
+    "95% low",
+    "95% high",
+    "Brier score",
+    "Log loss"
+   ],
+   "table": [
+    [
+     "Base rate",
+     "0",
+     "",
+     "",
+     "0.0010745",
+     "0.008428"
+    ],
+    [
+     "Logistic regression (the tested model)",
+     "+0.00138",
+     "+0.00006",
+     "+0.00279",
+     "0.0010730",
+     "0.007899"
+    ],
+    [
+     "Species alone",
+     "+0.00022",
+     "+0.00003",
+     "+0.00038",
+     "0.0010742",
+     "0.008321"
+    ],
+    [
+     "Gradient boosting",
+     "−0.00483",
+     "−0.01534",
+     "+0.00198",
+     "0.0010797",
+     "0.007798"
+    ]
+   ]
+  }
+ ]
+}

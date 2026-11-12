@@ -1,0 +1,999 @@
+{
+ "smollm": {
+  "size_bytes": 723674912,
+  "vocab": 49152,
+  "docs": {
+   "Chinese": {
+    "tokens": 5066,
+    "chars": 2988,
+    "bits": 12268.817974187767,
+    "bits_per_char": 4.106030111843295,
+    "decode_exact": true
+   },
+   "Japanese": {
+    "tokens": 7106,
+    "chars": 4182,
+    "bits": 14701.428290888101,
+    "bits_per_char": 3.515406095382138,
+    "decode_exact": true
+   },
+   "Korean": {
+    "tokens": 9644,
+    "chars": 4715,
+    "bits": 15194.069991155216,
+    "bits_per_char": 3.222496286565263,
+    "decode_exact": true
+   },
+   "Arabic": {
+    "tokens": 7130,
+    "chars": 7645,
+    "bits": 16432.144663920593,
+    "bits_per_char": 2.1493976015592664,
+    "decode_exact": true
+   },
+   "Hebrew": {
+    "tokens": 7939,
+    "chars": 7257,
+    "bits": 18126.19833129008,
+    "bits_per_char": 2.4977536628482957,
+    "decode_exact": true
+   },
+   "Hindi": {
+    "tokens": 12259,
+    "chars": 11463,
+    "bits": 20330.838627379606,
+    "bits_per_char": 1.7736053936473528,
+    "decode_exact": true
+   },
+   "Vietnamese": {
+    "tokens": 11508,
+    "chars": 13012,
+    "bits": 27575.536393282222,
+    "bits_per_char": 2.119238886664788,
+    "decode_exact": true
+   },
+   "Finnish": {
+    "tokens": 5622,
+    "chars": 12231,
+    "bits": 23868.363344471665,
+    "bits_per_char": 1.9514645854363228,
+    "decode_exact": true
+   },
+   "English": {
+    "tokens": 2081,
+    "chars": 10637,
+    "bits": 2848.9822233795385,
+    "bits_per_char": 0.2678370051123003,
+    "decode_exact": true
+   },
+   "Hawaiian": {
+    "tokens": 5468,
+    "chars": 11002,
+    "bits": 19941.832626867912,
+    "bits_per_char": 1.812564318021079,
+    "decode_exact": true
+   },
+   "alice": {
+    "tokens": 7918,
+    "chars": 30000,
+    "bits": 26671.58347276868,
+    "bits_per_char": 0.8890527824256227,
+    "decode_exact": true
+   }
+  },
+  "answers": {
+   "capital": [
+    {
+     "prompt": "The capital of Norway is",
+     "right_bits": 0.5143093018910051,
+     "wrong_bits": 16.677002181850174
+    },
+    {
+     "prompt": "The capital of France is",
+     "right_bits": 2.3031385177156167,
+     "wrong_bits": 16.59483575057396
+    },
+    {
+     "prompt": "The capital of Japan is",
+     "right_bits": 0.7046808537320178,
+     "wrong_bits": 16.653223172611277
+    },
+    {
+     "prompt": "The capital of Egypt is",
+     "right_bits": 0.8705907112015352,
+     "wrong_bits": 23.76773818388843
+    },
+    {
+     "prompt": "The capital of Italy is",
+     "right_bits": 1.3181671329221025,
+     "wrong_bits": 12.75828805096263
+    },
+    {
+     "prompt": "The capital of Spain is",
+     "right_bits": 2.0376272297646905,
+     "wrong_bits": 26.14641509349866
+    },
+    {
+     "prompt": "The capital of Canada is",
+     "right_bits": 1.5001902169336072,
+     "wrong_bits": 21.472499001309593
+    },
+    {
+     "prompt": "The capital of Germany is",
+     "right_bits": 0.6322668276599661,
+     "wrong_bits": 26.217560876507587
+    },
+    {
+     "prompt": "The capital of Russia is",
+     "right_bits": 1.544441353000608,
+     "wrong_bits": 13.086001680112316
+    },
+    {
+     "prompt": "The capital of Greece is",
+     "right_bits": 0.8703441740715234,
+     "wrong_bits": 14.553404436554834
+    },
+    {
+     "prompt": "The capital of Portugal is",
+     "right_bits": 2.3685452396652513,
+     "wrong_bits": 21.90084587085454
+    },
+    {
+     "prompt": "The capital of Austria is",
+     "right_bits": 0.7475945667145838,
+     "wrong_bits": 22.376749383016065
+    },
+    {
+     "prompt": "The capital of Kenya is",
+     "right_bits": 0.6652454898631521,
+     "wrong_bits": 24.340096445959855
+    },
+    {
+     "prompt": "The capital of Peru is",
+     "right_bits": 0.9839034585229817,
+     "wrong_bits": 16.109658933877906
+    },
+    {
+     "prompt": "The capital of Cuba is",
+     "right_bits": 0.48711725395007455,
+     "wrong_bits": 21.10187638870024
+    },
+    {
+     "prompt": "The capital of Poland is",
+     "right_bits": 0.49702354063109777,
+     "wrong_bits": 20.165013968806555
+    },
+    {
+     "prompt": "The capital of Sweden is",
+     "right_bits": 0.3088582467288472,
+     "wrong_bits": 22.321229255733932
+    },
+    {
+     "prompt": "The capital of Thailand is",
+     "right_bits": 0.2850348444681979,
+     "wrong_bits": 21.056065713955213
+    },
+    {
+     "prompt": "The capital of Ireland is",
+     "right_bits": 0.5145934172302304,
+     "wrong_bits": 15.18950772420326
+    },
+    {
+     "prompt": "The capital of Hungary is",
+     "right_bits": 0.4291487386545936,
+     "wrong_bits": 16.92997352679609
+    }
+   ],
+   "small_sum": [
+    {
+     "prompt": "5 + 6 =",
+     "right_bits": 3.5021439453430796,
+     "wrong_bits": 4.516538895968132
+    },
+    {
+     "prompt": "2 + 9 =",
+     "right_bits": 4.821364729975693,
+     "wrong_bits": 4.505775189781232
+    },
+    {
+     "prompt": "5 + 5 =",
+     "right_bits": 2.6309998799623933,
+     "wrong_bits": 4.1638637048722185
+    },
+    {
+     "prompt": "2 + 4 =",
+     "right_bits": 3.9040020470021353,
+     "wrong_bits": 3.9941704870576955
+    },
+    {
+     "prompt": "6 + 3 =",
+     "right_bits": 4.444151054254674,
+     "wrong_bits": 5.024013607313849
+    },
+    {
+     "prompt": "1 + 6 =",
+     "right_bits": 3.160215950099583,
+     "wrong_bits": 4.013331762120925
+    },
+    {
+     "prompt": "9 + 6 =",
+     "right_bits": 4.8868058484555,
+     "wrong_bits": 5.653237588927762
+    },
+    {
+     "prompt": "9 + 7 =",
+     "right_bits": 4.717562193290333,
+     "wrong_bits": 5.529078153790374
+    },
+    {
+     "prompt": "9 + 7 =",
+     "right_bits": 4.717562193290333,
+     "wrong_bits": 5.979920698033477
+    },
+    {
+     "prompt": "5 + 4 =",
+     "right_bits": 4.234525184736316,
+     "wrong_bits": 4.110450365063152
+    },
+    {
+     "prompt": "4 + 5 =",
+     "right_bits": 4.061033558094836,
+     "wrong_bits": 3.6922521917456215
+    },
+    {
+     "prompt": "9 + 6 =",
+     "right_bits": 4.8868058484555,
+     "wrong_bits": 5.450358598802752
+    },
+    {
+     "prompt": "5 + 4 =",
+     "right_bits": 4.234525184736316,
+     "wrong_bits": 4.899423871584003
+    },
+    {
+     "prompt": "9 + 9 =",
+     "right_bits": 1.826142055807854,
+     "wrong_bits": 5.637324034243426
+    },
+    {
+     "prompt": "5 + 5 =",
+     "right_bits": 2.6309998799623933,
+     "wrong_bits": 4.1638637048722185
+    },
+    {
+     "prompt": "6 + 5 =",
+     "right_bits": 4.3130648458711365,
+     "wrong_bits": 5.0118702563017274
+    },
+    {
+     "prompt": "7 + 9 =",
+     "right_bits": 3.7883289237889226,
+     "wrong_bits": 4.081376353969493
+    },
+    {
+     "prompt": "3 + 5 =",
+     "right_bits": 3.5922748931807518,
+     "wrong_bits": 4.8516312687704355
+    },
+    {
+     "prompt": "8 + 4 =",
+     "right_bits": 4.682506281634363,
+     "wrong_bits": 5.6292749022177455
+    },
+    {
+     "prompt": "1 + 5 =",
+     "right_bits": 3.3407684964548854,
+     "wrong_bits": 3.971947576843807
+    },
+    {
+     "prompt": "4 + 9 =",
+     "right_bits": 4.391220985694533,
+     "wrong_bits": 4.6391841958473234
+    },
+    {
+     "prompt": "8 + 4 =",
+     "right_bits": 4.682506281634363,
+     "wrong_bits": 5.471480132120515
+    },
+    {
+     "prompt": "2 + 9 =",
+     "right_bits": 4.821364729975693,
+     "wrong_bits": 4.505775189781232
+    },
+    {
+     "prompt": "6 + 7 =",
+     "right_bits": 4.249676856277329,
+     "wrong_bits": 4.339845296332889
+    },
+    {
+     "prompt": "3 + 2 =",
+     "right_bits": 3.1771906377397423,
+     "wrong_bits": 3.740743388086994
+    },
+    {
+     "prompt": "7 + 3 =",
+     "right_bits": 4.23614663716865,
+     "wrong_bits": 5.453420577918713
+    },
+    {
+     "prompt": "6 + 9 =",
+     "right_bits": 4.68711610460809,
+     "wrong_bits": 2.2300261130940737
+    },
+    {
+     "prompt": "2 + 3 =",
+     "right_bits": 2.8679181922941233,
+     "wrong_bits": 4.107734071075425
+    },
+    {
+     "prompt": "9 + 1 =",
+     "right_bits": 4.416171196785804,
+     "wrong_bits": 5.092434497202506
+    },
+    {
+     "prompt": "5 + 1 =",
+     "right_bits": 4.382765286682211,
+     "wrong_bits": 4.382765286682211
+    }
+   ],
+   "big_sum": [
+    {
+     "prompt": "422 + 509 =",
+     "right_bits": 7.510674295817216,
+     "wrong_bits": 14.774202643038542
+    },
+    {
+     "prompt": "222 + 987 =",
+     "right_bits": 12.50458612371585,
+     "wrong_bits": 11.641476743818172
+    },
+    {
+     "prompt": "338 + 478 =",
+     "right_bits": 9.727578132650457,
+     "wrong_bits": 11.642984687700936
+    },
+    {
+     "prompt": "324 + 508 =",
+     "right_bits": 6.213812287692673,
+     "wrong_bits": 14.113270564050355
+    },
+    {
+     "prompt": "668 + 554 =",
+     "right_bits": 10.764779358641125,
+     "wrong_bits": 14.783284702865306
+    },
+    {
+     "prompt": "829 + 806 =",
+     "right_bits": 6.891135001238689,
+     "wrong_bits": 12.947185539503097
+    },
+    {
+     "prompt": "816 + 366 =",
+     "right_bits": 11.964603251704045,
+     "wrong_bits": 16.526495348565906
+    },
+    {
+     "prompt": "555 + 253 =",
+     "right_bits": 11.510829091194335,
+     "wrong_bits": 11.401772828490417
+    },
+    {
+     "prompt": "511 + 823 =",
+     "right_bits": 7.2725402381265365,
+     "wrong_bits": 15.762593816853137
+    },
+    {
+     "prompt": "869 + 453 =",
+     "right_bits": 12.65099151474234,
+     "wrong_bits": 15.41301362554215
+    },
+    {
+     "prompt": "472 + 543 =",
+     "right_bits": 12.230079799159496,
+     "wrong_bits": 14.0334486002707
+    },
+    {
+     "prompt": "146 + 354 =",
+     "right_bits": 5.282531048784788,
+     "wrong_bits": 12.561370667447129
+    },
+    {
+     "prompt": "963 + 938 =",
+     "right_bits": 7.2802601953584665,
+     "wrong_bits": 10.520733225344387
+    },
+    {
+     "prompt": "691 + 613 =",
+     "right_bits": 7.280587650325709,
+     "wrong_bits": 12.807403544326634
+    },
+    {
+     "prompt": "846 + 956 =",
+     "right_bits": 7.550858386156613,
+     "wrong_bits": 13.935318051410796
+    },
+    {
+     "prompt": "617 + 418 =",
+     "right_bits": 8.127003018269436,
+     "wrong_bits": 10.947506109668636
+    },
+    {
+     "prompt": "198 + 650 =",
+     "right_bits": 8.42998347843324,
+     "wrong_bits": 13.382477756420487
+    },
+    {
+     "prompt": "155 + 846 =",
+     "right_bits": 5.223953069970312,
+     "wrong_bits": 11.458694270411783
+    },
+    {
+     "prompt": "670 + 892 =",
+     "right_bits": 6.657938909419583,
+     "wrong_bits": 12.925964256247834
+    },
+    {
+     "prompt": "519 + 469 =",
+     "right_bits": 6.181288992553309,
+     "wrong_bits": 12.634181242516407
+    },
+    {
+     "prompt": "768 + 907 =",
+     "right_bits": 6.941187456084594,
+     "wrong_bits": 15.464022303926853
+    },
+    {
+     "prompt": "419 + 292 =",
+     "right_bits": 9.700085674014133,
+     "wrong_bits": 14.584475510190313
+    },
+    {
+     "prompt": "928 + 347 =",
+     "right_bits": 10.781350918947663,
+     "wrong_bits": 14.224994621634456
+    },
+    {
+     "prompt": "584 + 451 =",
+     "right_bits": 8.664501084941575,
+     "wrong_bits": 14.550183545469475
+    },
+    {
+     "prompt": "103 + 401 =",
+     "right_bits": 4.147806372691762,
+     "wrong_bits": 15.482943147244177
+    },
+    {
+     "prompt": "710 + 640 =",
+     "right_bits": 8.105240333629256,
+     "wrong_bits": 12.963195060506616
+    },
+    {
+     "prompt": "731 + 688 =",
+     "right_bits": 10.456373189807902,
+     "wrong_bits": 11.403840059953788
+    },
+    {
+     "prompt": "211 + 441 =",
+     "right_bits": 6.737477445790615,
+     "wrong_bits": 15.529653635218516
+    },
+    {
+     "prompt": "119 + 652 =",
+     "right_bits": 7.597557867241297,
+     "wrong_bits": 8.914796379840066
+    },
+    {
+     "prompt": "715 + 534 =",
+     "right_bits": 10.832550842040124,
+     "wrong_bits": 12.906499947753785
+    }
+   ]
+  },
+  "roundtrip": {
+   "tokens": 120,
+   "exact": true,
+   "code_bits": 306,
+   "chars": 614,
+   "text_exact": true
+  }
+ },
+ "qwen": {
+  "size_bytes": 1503300328,
+  "vocab": 151936,
+  "docs": {
+   "Chinese": {
+    "tokens": 1820,
+    "chars": 2988,
+    "bits": 8592.811502891893,
+    "bits_per_char": 2.8757735953453456,
+    "decode_exact": true
+   },
+   "Japanese": {
+    "tokens": 2915,
+    "chars": 4182,
+    "bits": 11430.996452577821,
+    "bits_per_char": 2.7333803090812583,
+    "decode_exact": true
+   },
+   "Korean": {
+    "tokens": 2928,
+    "chars": 4715,
+    "bits": 11180.771304587102,
+    "bits_per_char": 2.371319470750181,
+    "decode_exact": true
+   },
+   "Arabic": {
+    "tokens": 2800,
+    "chars": 7645,
+    "bits": 13098.575743569641,
+    "bits_per_char": 1.7133519612255907,
+    "decode_exact": true
+   },
+   "Hebrew": {
+    "tokens": 2807,
+    "chars": 7257,
+    "bits": 17762.746467740653,
+    "bits_per_char": 2.447670727262044,
+    "decode_exact": true
+   },
+   "Hindi": {
+    "tokens": 10610,
+    "chars": 11463,
+    "bits": 19249.947118482003,
+    "bits_per_char": 1.679311447132688,
+    "decode_exact": false
+   },
+   "Vietnamese": {
+    "tokens": 3032,
+    "chars": 13012,
+    "bits": 10660.985645823928,
+    "bits_per_char": 0.819319523964335,
+    "decode_exact": false
+   },
+   "Finnish": {
+    "tokens": 4743,
+    "chars": 12231,
+    "bits": 19196.35576149482,
+    "bits_per_char": 1.5694837512464082,
+    "decode_exact": true
+   },
+   "English": {
+    "tokens": 2037,
+    "chars": 10637,
+    "bits": 6073.2149314938815,
+    "bits_per_char": 0.5709518596873067,
+    "decode_exact": true
+   },
+   "Hawaiian": {
+    "tokens": 5249,
+    "chars": 11002,
+    "bits": 23218.795452384922,
+    "bits_per_char": 2.110415874603247,
+    "decode_exact": true
+   },
+   "alice": {
+    "tokens": 7630,
+    "chars": 30000,
+    "bits": 34902.29420046678,
+    "bits_per_char": 1.163409806682226,
+    "decode_exact": true
+   }
+  },
+  "answers": {
+   "capital": [
+    {
+     "prompt": "The capital of Norway is",
+     "right_bits": 0.5422103913057803,
+     "wrong_bits": 14.946618690181525
+    },
+    {
+     "prompt": "The capital of France is",
+     "right_bits": 0.6118393733254224,
+     "wrong_bits": 12.82966360279311
+    },
+    {
+     "prompt": "The capital of Japan is",
+     "right_bits": 1.3161060928341626,
+     "wrong_bits": 14.937176154718554
+    },
+    {
+     "prompt": "The capital of Egypt is",
+     "right_bits": 0.2287183085255796,
+     "wrong_bits": 19.33315590036246
+    },
+    {
+     "prompt": "The capital of Italy is",
+     "right_bits": 0.3160153477401657,
+     "wrong_bits": 15.317788895551224
+    },
+    {
+     "prompt": "The capital of Spain is",
+     "right_bits": 0.9569546370460338,
+     "wrong_bits": 24.779739136013472
+    },
+    {
+     "prompt": "The capital of Canada is",
+     "right_bits": 0.39477013767338426,
+     "wrong_bits": 20.44034168250343
+    },
+    {
+     "prompt": "The capital of Germany is",
+     "right_bits": 1.0820099298117656,
+     "wrong_bits": 23.386019250645408
+    },
+    {
+     "prompt": "The capital of Russia is",
+     "right_bits": 1.0489300128228842,
+     "wrong_bits": 15.250459751530245
+    },
+    {
+     "prompt": "The capital of Greece is",
+     "right_bits": 0.5781619026161181,
+     "wrong_bits": 17.29877174744509
+    },
+    {
+     "prompt": "The capital of Portugal is",
+     "right_bits": 0.15256368129509312,
+     "wrong_bits": 24.18527078434712
+    },
+    {
+     "prompt": "The capital of Austria is",
+     "right_bits": 0.786749770845194,
+     "wrong_bits": 16.605676161023144
+    },
+    {
+     "prompt": "The capital of Kenya is",
+     "right_bits": 0.8216754916344606,
+     "wrong_bits": 23.761090022536678
+    },
+    {
+     "prompt": "The capital of Peru is",
+     "right_bits": 2.518987579455446,
+     "wrong_bits": 20.825998330520605
+    },
+    {
+     "prompt": "The capital of Cuba is",
+     "right_bits": 2.9906713252954056,
+     "wrong_bits": 13.748892985459133
+    },
+    {
+     "prompt": "The capital of Poland is",
+     "right_bits": 1.0886583491374946,
+     "wrong_bits": 18.451718673327633
+    },
+    {
+     "prompt": "The capital of Sweden is",
+     "right_bits": 1.240657991831252,
+     "wrong_bits": 20.257745638290576
+    },
+    {
+     "prompt": "The capital of Thailand is",
+     "right_bits": 0.3685256281473824,
+     "wrong_bits": 17.461080718162165
+    },
+    {
+     "prompt": "The capital of Ireland is",
+     "right_bits": 0.6018946485219313,
+     "wrong_bits": 13.591786145965353
+    },
+    {
+     "prompt": "The capital of Hungary is",
+     "right_bits": 1.3527315181619062,
+     "wrong_bits": 18.09588381697007
+    }
+   ],
+   "small_sum": [
+    {
+     "prompt": "5 + 6 =",
+     "right_bits": 1.6155549752538232,
+     "wrong_bits": 6.439566346243644
+    },
+    {
+     "prompt": "2 + 9 =",
+     "right_bits": 4.67963141964254,
+     "wrong_bits": 2.54940202332993
+    },
+    {
+     "prompt": "5 + 5 =",
+     "right_bits": 0.6672035983345506,
+     "wrong_bits": 7.553818551543264
+    },
+    {
+     "prompt": "2 + 4 =",
+     "right_bits": 1.1376172522978885,
+     "wrong_bits": 4.135717712162615
+    },
+    {
+     "prompt": "6 + 3 =",
+     "right_bits": 0.9469416351301503,
+     "wrong_bits": 7.6765735763537055
+    },
+    {
+     "prompt": "1 + 6 =",
+     "right_bits": 0.5930227514945224,
+     "wrong_bits": 7.250384745111786
+    },
+    {
+     "prompt": "9 + 6 =",
+     "right_bits": 0.7430586102894027,
+     "wrong_bits": 8.993470875373163
+    },
+    {
+     "prompt": "9 + 7 =",
+     "right_bits": 1.0187867855888106,
+     "wrong_bits": 7.15024062337558
+    },
+    {
+     "prompt": "9 + 7 =",
+     "right_bits": 1.0187867855888106,
+     "wrong_bits": 8.638019884292323
+    },
+    {
+     "prompt": "5 + 4 =",
+     "right_bits": 0.9030324005730649,
+     "wrong_bits": 5.468349359944209
+    },
+    {
+     "prompt": "4 + 5 =",
+     "right_bits": 1.0693949163796532,
+     "wrong_bits": 4.711132449905175
+    },
+    {
+     "prompt": "9 + 6 =",
+     "right_bits": 0.7430586102894027,
+     "wrong_bits": 8.13687069484534
+    },
+    {
+     "prompt": "5 + 4 =",
+     "right_bits": 0.9030324005730649,
+     "wrong_bits": 5.96427578024979
+    },
+    {
+     "prompt": "9 + 9 =",
+     "right_bits": 0.5477245850490691,
+     "wrong_bits": 8.614352319811188
+    },
+    {
+     "prompt": "5 + 5 =",
+     "right_bits": 0.6672035983345506,
+     "wrong_bits": 7.553818551543264
+    },
+    {
+     "prompt": "6 + 5 =",
+     "right_bits": 1.3625460520986943,
+     "wrong_bits": 7.403831105864602
+    },
+    {
+     "prompt": "7 + 9 =",
+     "right_bits": 3.36391942505283,
+     "wrong_bits": 6.226767396816867
+    },
+    {
+     "prompt": "3 + 5 =",
+     "right_bits": 0.5581698653578963,
+     "wrong_bits": 6.5813061919175295
+    },
+    {
+     "prompt": "8 + 4 =",
+     "right_bits": 0.8322135565834283,
+     "wrong_bits": 8.564157463330368
+    },
+    {
+     "prompt": "1 + 5 =",
+     "right_bits": 0.6220596143355956,
+     "wrong_bits": 5.491155291344522
+    },
+    {
+     "prompt": "4 + 9 =",
+     "right_bits": 0.9226702395618347,
+     "wrong_bits": 8.665885201315719
+    },
+    {
+     "prompt": "8 + 4 =",
+     "right_bits": 0.8322135565834283,
+     "wrong_bits": 7.177817697476129
+    },
+    {
+     "prompt": "2 + 9 =",
+     "right_bits": 4.67963141964254,
+     "wrong_bits": 2.54940202332993
+    },
+    {
+     "prompt": "6 + 7 =",
+     "right_bits": 3.645404461615894,
+     "wrong_bits": 6.654775804504914
+    },
+    {
+     "prompt": "3 + 2 =",
+     "right_bits": 0.6749734305352305,
+     "wrong_bits": 5.115769103271571
+    },
+    {
+     "prompt": "7 + 3 =",
+     "right_bits": 0.5640265625503784,
+     "wrong_bits": 7.7324177189500665
+    },
+    {
+     "prompt": "6 + 9 =",
+     "right_bits": 1.0891255400085635,
+     "wrong_bits": 6.454147723314397
+    },
+    {
+     "prompt": "2 + 3 =",
+     "right_bits": 1.4901942413001592,
+     "wrong_bits": 5.649213538862874
+    },
+    {
+     "prompt": "9 + 1 =",
+     "right_bits": 0.3393025725889189,
+     "wrong_bits": 6.69617753201242
+    },
+    {
+     "prompt": "5 + 1 =",
+     "right_bits": 0.5609654433476713,
+     "wrong_bits": 5.215911161215967
+    }
+   ],
+   "big_sum": [
+    {
+     "prompt": "422 + 509 =",
+     "right_bits": 11.99149996243778,
+     "wrong_bits": 13.128530925878877
+    },
+    {
+     "prompt": "222 + 987 =",
+     "right_bits": 11.344903669294913,
+     "wrong_bits": 11.580183502911874
+    },
+    {
+     "prompt": "338 + 478 =",
+     "right_bits": 12.174723399360982,
+     "wrong_bits": 10.533563819029355
+    },
+    {
+     "prompt": "324 + 508 =",
+     "right_bits": 10.420237571069816,
+     "wrong_bits": 14.184449367728247
+    },
+    {
+     "prompt": "668 + 554 =",
+     "right_bits": 10.95393963667211,
+     "wrong_bits": 16.11356637970551
+    },
+    {
+     "prompt": "829 + 806 =",
+     "right_bits": 6.059651167042872,
+     "wrong_bits": 13.150980853191905
+    },
+    {
+     "prompt": "816 + 366 =",
+     "right_bits": 9.727627663653907,
+     "wrong_bits": 14.511733728181378
+    },
+    {
+     "prompt": "555 + 253 =",
+     "right_bits": 11.573184496952361,
+     "wrong_bits": 14.233581371426734
+    },
+    {
+     "prompt": "511 + 823 =",
+     "right_bits": 7.4359079340423255,
+     "wrong_bits": 13.956557220861749
+    },
+    {
+     "prompt": "869 + 453 =",
+     "right_bits": 9.325764058550023,
+     "wrong_bits": 13.403227119281784
+    },
+    {
+     "prompt": "472 + 543 =",
+     "right_bits": 7.790596010083937,
+     "wrong_bits": 13.189432046341208
+    },
+    {
+     "prompt": "146 + 354 =",
+     "right_bits": 8.449485623110478,
+     "wrong_bits": 15.597535875444668
+    },
+    {
+     "prompt": "963 + 938 =",
+     "right_bits": 11.87386795683124,
+     "wrong_bits": 13.522258375735744
+    },
+    {
+     "prompt": "691 + 613 =",
+     "right_bits": 12.122775007771965,
+     "wrong_bits": 15.990491467164462
+    },
+    {
+     "prompt": "846 + 956 =",
+     "right_bits": 10.572136087964866,
+     "wrong_bits": 14.297578179604596
+    },
+    {
+     "prompt": "617 + 418 =",
+     "right_bits": 7.407782579250825,
+     "wrong_bits": 12.634607759490546
+    },
+    {
+     "prompt": "198 + 650 =",
+     "right_bits": 10.9950586247016,
+     "wrong_bits": 14.701126526756331
+    },
+    {
+     "prompt": "155 + 846 =",
+     "right_bits": 8.780223395192936,
+     "wrong_bits": 9.689175094643396
+    },
+    {
+     "prompt": "670 + 892 =",
+     "right_bits": 5.191066203507025,
+     "wrong_bits": 14.958645092991059
+    },
+    {
+     "prompt": "519 + 469 =",
+     "right_bits": 8.586126527151583,
+     "wrong_bits": 13.076846699641587
+    },
+    {
+     "prompt": "768 + 907 =",
+     "right_bits": 5.981186490343828,
+     "wrong_bits": 15.546411624718587
+    },
+    {
+     "prompt": "419 + 292 =",
+     "right_bits": 11.554013246895382,
+     "wrong_bits": 14.996695910529153
+    },
+    {
+     "prompt": "928 + 347 =",
+     "right_bits": 10.091399863314091,
+     "wrong_bits": 13.110829095590871
+    },
+    {
+     "prompt": "584 + 451 =",
+     "right_bits": 8.84365678820657,
+     "wrong_bits": 13.069949507411385
+    },
+    {
+     "prompt": "103 + 401 =",
+     "right_bits": 2.9276530984009534,
+     "wrong_bits": 15.990258946620497
+    },
+    {
+     "prompt": "710 + 640 =",
+     "right_bits": 7.723330155678475,
+     "wrong_bits": 15.898351417999411
+    },
+    {
+     "prompt": "731 + 688 =",
+     "right_bits": 5.040686981349697,
+     "wrong_bits": 13.622641209391348
+    },
+    {
+     "prompt": "211 + 441 =",
+     "right_bits": 8.19274441845765,
+     "wrong_bits": 14.051210968451812
+    },
+    {
+     "prompt": "119 + 652 =",
+     "right_bits": 12.973271867985968,
+     "wrong_bits": 13.614479600712002
+    },
+    {
+     "prompt": "715 + 534 =",
+     "right_bits": 7.30221894022063,
+     "wrong_bits": 12.625893054606026
+    }
+   ]
+  },
+  "roundtrip": {
+   "tokens": 120,
+   "exact": true,
+   "code_bits": 444,
+   "chars": 618,
+   "text_exact": true
+  }
+ },
+ "gpu_seconds": 425.7863118648529
+}

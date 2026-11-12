@@ -1,0 +1,206 @@
+// f310.bld: the F310 study units (Titius-Bode forms against gap-order and pooled-gap controls), written to give
+// the same doubles as the study's numpy code: same draw order, same summation order, same solver steps.
+// The page's f310-kernel.js mirrors this file function for function. The Blagg form is not computed here; its
+// control still takes its draws from the generator, so every later control sees the stream the study saw.
+// Needs npgen.bld, fpx.bld and lstsq2.bld in the same unit. A system has 3 to 8 planets and lives in a [f64; 8].
+// All systems together are one flat list of log periods (lp) with the start of each system in off.
+struct Summary { n: i32, mean: f64, q95: f64, q05: f64, p_ge: f64 }
+struct Loo { err: f64, neigh: f64 }
+
+// ascending insertion sort of the first n values
+fn sort8(a: &mut [f64; 8], n: i32) {
+    let mut i: i32 = 1;
+    while i < n {
+        let v: f64 = a[i];
+        let mut j: i32 = i - 1;
+        while j >= 0 && a[j] > v { a[j + 1] = a[j]; j = j - 1; }
+        a[j + 1] = v;
+        i = i + 1;
+    }
+}
+
+fn sort_vec(a: &mut Vec<f64>, n: i32) {
+    let mut i: i32 = 1;
+    while i < n {
+        let v: f64 = a[i];
+        let mut j: i32 = i - 1;
+        while j >= 0 && a[j] > v { a[j + 1] = a[j]; j = j - 1; }
+        a[j + 1] = v;
+        i = i + 1;
+    }
+}
+
+// numpy's mean of a short array: in order below eight values, eight running sums from eight up.
+fn np_mean(a: &mut [f64; 8], n: i32) -> f64 {
+    let mut s: f64 = 0.0;
+    if n < 8 {
+        let mut i: i32 = 0;
+        while i < n { s = s + a[i]; i = i + 1; }
+        return s / (n as f64);
+    }
+    s = ((a[0] + a[1]) + (a[2] + a[3])) + ((a[4] + a[5]) + (a[6] + a[7]));
+    return s / (n as f64);
+}
+
+// median of the first n values; sorts them in place
+fn median(v: &mut Vec<f64>, n: i32) -> f64 {
+    sort_vec(v, n);
+    let h: i32 = n / 2;
+    if n % 2 == 1 { return v[h]; }
+    return (v[h - 1] + v[h]) / 2.0;
+}
+
+fn mean_gap(x: &mut [f64; 8], n: i32) -> f64 {
+    let mut s: f64 = 0.0;
+    let mut i: i32 = 0;
+    while i + 1 < n { s = s + (x[i + 1] - x[i]); i = i + 1; }
+    return s / ((n - 1) as f64);
+}
+
+// _r_idx: root mean square residual of the straight-line fit of x against the positions in idx.
+fn r_idx(x: &mut [f64; 8], idx: &mut [f64; 8], n: i32) -> f64 {
+    let mut c1: [f64; 8] = [0.0; 8];
+    let mut c2: [f64; 8] = [0.0; 8];
+    let mut yb: [f64; 8] = [0.0; 8];
+    let mut i: i32 = 0;
+    while i < n { c1[i] = 1.0; c2[i] = idx[i]; yb[i] = x[i]; i = i + 1; }
+    let w: W2 = lstsq2(&mut c1, &mut c2, &mut yb, n, (n as f64) * 2.220446049250313e-16);
+    i = 0;
+    while i < n {
+        let r: f64 = x[i] - (w.w0 + idx[i] * w.w1);
+        yb[i] = r * r;
+        i = i + 1;
+    }
+    return sqrt(np_mean(&mut yb, n));
+}
+
+fn r_plain(x: &mut [f64; 8], n: i32) -> f64 {
+    let mut idx: [f64; 8] = [0.0; 8];
+    let mut i: i32 = 0;
+    while i < n { idx[i] = i as f64; i = i + 1; }
+    return r_idx(x, &mut idx, n) / mean_gap(x, n);
+}
+
+// positions 0..n-1 with one extra step after place a and one after place b (b below zero: none)
+fn gap_idx(idx: &mut [f64; 8], n: i32, a: i32, b: i32) {
+    idx[0] = 0.0;
+    let mut k: i32 = 0;
+    while k + 1 < n {
+        let mut step: f64 = 1.0;
+        if k == a { step = step + 1.0; }
+        if k == b { step = step + 1.0; }
+        idx[k + 1] = idx[k] + step;
+        k = k + 1;
+    }
+}
+
+fn r_gapped(x: &mut [f64; 8], n: i32) -> f64 {
+    let mut idx: [f64; 8] = [0.0; 8];
+    let mut best: f64 = 1.0e300;
+    let mut a: i32 = 0;
+    while a < n - 1 {
+        let mut b: i32 = a;
+        while b < n - 1 {
+            gap_idx(&mut idx, n, a, b);
+            let r: f64 = r_idx(x, &mut idx, n);
+            if r < best { best = r; }
+            b = b + 1;
+        }
+        a = a + 1;
+    }
+    a = 0;
+    while a < n - 1 {
+        gap_idx(&mut idx, n, a, -1);
+        let r: f64 = r_idx(x, &mut idx, n);
+        if r < best { best = r; }
+        a = a + 1;
+    }
+    gap_idx(&mut idx, n, -1, -1);
+    let r0: f64 = r_idx(x, &mut idx, n);
+    if r0 < best { best = r0; }
+    return best / mean_gap(x, n);
+}
+
+// kind 0: the plain form. kind 1: the form with up to two skipped places.
+fn score(x: &mut [f64; 8], n: i32, kind: i32) -> f64 {
+    if kind == 1 { return r_gapped(x, n); }
+    return r_plain(x, n);
+}
+
+// copy system s out of the flat list; returns its planet count
+fn take(lp: &Vec<f64>, off: &Vec<i32>, s: i32, x: &mut [f64; 8]) -> i32 {
+    let n: i32 = off[s + 1] - off[s];
+    let mut i: i32 = 0;
+    while i < n { x[i] = lp[off[s] + i]; i = i + 1; }
+    return n;
+}
+
+// the regularity score of a set of systems: minus the median of the per-system scores
+fn reg(lp: &Vec<f64>, off: &Vec<i32>, nsys: i32, kind: i32) -> f64 {
+    let mut rs: Vec<f64> = Vec::new();
+    let mut x: [f64; 8] = [0.0; 8];
+    let mut s: i32 = 0;
+    while s < nsys {
+        let n: i32 = take(lp, off, s, &mut x);
+        rs.push(score(&mut x, n, kind));
+        s = s + 1;
+    }
+    return -median(&mut rs, nsys);
+}
+
+// leave one interior planet out: the straight-line fit's miss and the two-neighbour midpoint's miss
+fn loo(lp: &Vec<f64>, off: &Vec<i32>, nsys: i32) -> Loo {
+    let mut e1: Vec<f64> = Vec::new();
+    let mut e2: Vec<f64> = Vec::new();
+    let mut x: [f64; 8] = [0.0; 8];
+    let mut xs: [f64; 8] = [0.0; 8];
+    let mut ys: [f64; 8] = [0.0; 8];
+    let mut count: i32 = 0;
+    let mut s: i32 = 0;
+    while s < nsys {
+        let n: i32 = take(lp, off, s, &mut x);
+        let mut i: i32 = 1;
+        while i < n - 1 {
+            let mut m: i32 = 0;
+            let mut k: i32 = 0;
+            while k < n {
+                if k != i { xs[m] = k as f64; ys[m] = x[k]; m = m + 1; }
+                k = k + 1;
+            }
+            let c: W2 = polyfit1(&mut xs, &mut ys, m);
+            let d1: f64 = (c.w0 * (i as f64) + c.w1) - x[i];
+            let d2: f64 = (x[i - 1] + x[i + 1]) / 2.0 - x[i];
+            e1.push(d1.abs());
+            e2.push(d2.abs());
+            count = count + 1;
+            i = i + 1;
+        }
+        s = s + 1;
+    }
+    return Loo { err: median(&mut e1, count), neigh: median(&mut e2, count) };
+}
+
+// evenly spaced log periods with small normal noise, sorted: a system that does follow the rule
+fn planted(g: &mut Gen, x: &mut [f64; 8], n: i32, p: &mut [f64; 8]) ~ Foreign {
+    let d: f64 = mean_gap(x, n);
+    p[0] = x[0];
+    let mut i: i32 = 1;
+    while i < n { p[i] = p[i - 1] + d; i = i + 1; }
+    i = 0;
+    while i < n { p[i] = p[i] + normal(g, 0.0, 0.05); i = i + 1; }
+    sort8(p, n);
+}
+
+fn plant_reg(g: &mut Gen, lp: &Vec<f64>, off: &Vec<i32>, nsys: i32) -> f64 ~ Foreign {
+    let mut rs: Vec<f64> = Vec::new();
+    let mut x: [f64; 8] = [0.0; 8];
+    let mut p: [f64; 8] = [0.0; 8];
+    let mut s: i32 = 0;
+    while s < nsys {
+        let n: i32 = take(lp, off, s, &mut x);
+        planted(g, &mut x, n, &mut p);
+        rs.push(r_plain(&mut p, n));
+        s = s + 1;
+    }
+    return -median(&mut rs, nsys);
+}

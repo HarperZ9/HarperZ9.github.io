@@ -1,0 +1,691 @@
+{
+ "finding": "F147",
+ "sources": [
+  {
+   "id": "result",
+   "name": "result.json",
+   "sha256_original": "108b6952f1807a99580fdddd641ba3ca9dd38a3319f747becab8a60f168ad03a",
+   "sha256_copy": "afa02962960df185b58f59d335e5b2a6bce1b86c2e40035f6a318ad430e6f3a5",
+   "href": "/findings/results/F147/result.json",
+   "run": "20261031T061248Z"
+  }
+ ],
+ "charts": [
+  {
+   "key": "design",
+   "form": "flow",
+   "at": "controls",
+   "claims": [
+    "c5"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "From a data sheet to a DQE, with a planted check on each block.",
+   "takeaway": "The DQE pipeline recovered a planted answer within 11.3 percent and the response-form block recovered planted forms 80 percent of the time. The variance block picked the planted law 70 percent of the time against the 80 required, so the variance result is description only.",
+   "n": "9 colour layers: 3 layers in each of 3 Kodak VISION3 stocks; shuffle control 25 draws; pairing control 200 draws",
+   "steps": [
+    {
+     "kind": "data",
+     "label": "Three curves per layer",
+     "detail": "Kodak prints a characteristic curve, a granularity curve and a spectral sensitivity curve for each colour layer."
+    },
+    {
+     "kind": "measure",
+     "label": "Photons, noise, DQE",
+     "detail": "Sensitivity gives the photons that arrive. Slope and granularity give the photons the image is worth. The ratio is the DQE."
+    },
+    {
+     "kind": "measure",
+     "label": "Grain variance and response form",
+     "detail": "Four laws for variance against density and eight forms for density against exposure, each scored on held-out points."
+    },
+    {
+     "kind": "verdict",
+     "holds": true,
+     "label": "Planted DQE",
+     "yes": "held",
+     "detail": "Synthetic grains with a known DQE came back within 0.113 of it. Limit 0.2."
+    },
+    {
+     "kind": "verdict",
+     "holds": true,
+     "label": "Planted response forms",
+     "yes": "held",
+     "detail": "Planted forms were recovered on held-out points at a rate of 0.80. Limit 0.5 or more."
+    },
+    {
+     "kind": "verdict",
+     "holds": false,
+     "label": "Planted variance law",
+     "no": "failed",
+     "detail": "The planted law was chosen at a rate of 0.70. Required 0.8 or more. The variance verdict is void."
+    }
+   ]
+  },
+  {
+   "key": "dqe",
+   "form": "bars",
+   "at": "results",
+   "claims": [
+    "c1"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "Peak DQE of each colour layer in three film stocks.",
+   "takeaway": "Film keeps a few percent of the information in the light: the median over 9 layers is 2.1 percent, from 0.57 to 4.92. Green layers of the two faster stocks are highest and every 50D layer is lowest in its colour.",
+   "units": "peak DQE in percent, an upper estimate. Detective quantum efficiency (DQE) is the share of the information in the arriving light that the film keeps.",
+   "n": "9 colour layers: 3 layers in each of 3 Kodak VISION3 stocks",
+   "interval": null,
+   "no_interval": "The run reports no interval on a DQE. Its only accuracy measure is the planted check, which came back within 11.3 percent.",
+   "series_names": [
+    "5219 (500T)",
+    "7213 (200T)",
+    "7203 (50D)"
+   ],
+   "planted": "Synthetic single-size grains with a known DQE were recovered within 11.3 percent, against a limit of 20.",
+   "threshold": "Median peak DQE above 1 percent and below 20 percent. It held.",
+   "axis": {
+    "label": "peak DQE, percent",
+    "min": 0,
+    "max": 6,
+    "refs": [
+     {
+      "value": 2.1220931167314636,
+      "label": "median of the 9 layers, 2.1 percent"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "group": "blue layer",
+     "label": "5219 (500T)",
+     "value": 2.1220931167314636,
+     "series": 0,
+     "note": "2.12"
+    },
+    {
+     "group": "blue layer",
+     "label": "7213 (200T)",
+     "value": 2.348431967426711,
+     "series": 1,
+     "note": "2.35"
+    },
+    {
+     "group": "blue layer",
+     "label": "7203 (50D)",
+     "value": 0.5661907016258532,
+     "series": 2,
+     "note": "0.57"
+    },
+    {
+     "group": "green layer",
+     "label": "5219 (500T)",
+     "value": 4.511179904524652,
+     "series": 0,
+     "note": "4.51"
+    },
+    {
+     "group": "green layer",
+     "label": "7213 (200T)",
+     "value": 4.91657228036519,
+     "series": 1,
+     "note": "4.92"
+    },
+    {
+     "group": "green layer",
+     "label": "7203 (50D)",
+     "value": 1.5156391587976188,
+     "series": 2,
+     "note": "1.52"
+    },
+    {
+     "group": "red layer",
+     "label": "5219 (500T)",
+     "value": 2.5068990781366085,
+     "series": 0,
+     "note": "2.51"
+    },
+    {
+     "group": "red layer",
+     "label": "7213 (200T)",
+     "value": 1.987853123520426,
+     "series": 1,
+     "note": "1.99"
+    },
+    {
+     "group": "red layer",
+     "label": "7203 (50D)",
+     "value": 0.9041164794209754,
+     "series": 2,
+     "note": "0.90"
+    }
+   ],
+   "columns": [
+    "Stock",
+    "Layer",
+    "Photons per square micrometre at net density 0.2",
+    "Peak DQE, percent",
+    "Net density at the peak",
+    "Gamma at the peak"
+   ],
+   "table": [
+    [
+     "5219 (500T)",
+     "blue layer",
+     "1.2",
+     "2.12",
+     "0.26",
+     "0.55"
+    ],
+    [
+     "5219 (500T)",
+     "green layer",
+     "4.2",
+     "4.51",
+     "0.31",
+     "0.64"
+    ],
+    [
+     "5219 (500T)",
+     "red layer",
+     "10.8",
+     "2.51",
+     "0.12",
+     "0.44"
+    ],
+    [
+     "7213 (200T)",
+     "blue layer",
+     "2.9",
+     "2.35",
+     "0.29",
+     "0.60"
+    ],
+    [
+     "7213 (200T)",
+     "green layer",
+     "8.7",
+     "4.92",
+     "0.24",
+     "0.65"
+    ],
+    [
+     "7213 (200T)",
+     "red layer",
+     "20.2",
+     "1.99",
+     "0.16",
+     "0.55"
+    ],
+    [
+     "7203 (50D)",
+     "blue layer",
+     "33.6",
+     "0.57",
+     "0.14",
+     "0.46"
+    ],
+    [
+     "7203 (50D)",
+     "green layer",
+     "65.8",
+     "1.52",
+     "0.06",
+     "0.37"
+    ],
+    [
+     "7203 (50D)",
+     "red layer",
+     "87.6",
+     "0.90",
+     "0.17",
+     "0.54"
+    ]
+   ]
+  },
+  {
+   "key": "speed",
+   "form": "scatter",
+   "at": "results",
+   "claims": [
+    "c2"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "Green layer: light needed against information kept.",
+   "takeaway": "500T and 200T keep 4.5 and 4.9 percent although 200T needs 2.1 times the photons. 50D needs 15.7 times the photons of 500T and keeps 1.5 percent.",
+   "units": "x: photons per square micrometre to reach net density 0.2, log scale. y: peak DQE in percent",
+   "n": "3 green layers, one per stock",
+   "interval": null,
+   "no_interval": "One derived value per layer. The run reports no interval on either axis.",
+   "threshold": "For the same efficiency at every speed: DQE spread at most 3 while photon counts spread by 5 or more. The DQE spread was 3.24, so the rule failed narrowly.",
+   "x": {
+    "label": "photons per square micrometre for net density 0.2",
+    "log": true,
+    "min": 2,
+    "max": 200
+   },
+   "y": {
+    "label": "peak DQE, percent",
+    "min": 0,
+    "max": 6
+   },
+   "series": [
+    {
+     "name": "5219 (500T)",
+     "line": false,
+     "markers": true,
+     "points": [
+      [
+       4.183079194466976,
+       4.511179904524652,
+       "5219 (500T): 4.2 photons, 4.5 percent"
+      ]
+     ]
+    },
+    {
+     "name": "7213 (200T)",
+     "line": false,
+     "markers": true,
+     "points": [
+      [
+       8.715858954423089,
+       4.91657228036519,
+       "7213 (200T): 8.7 photons, 4.9 percent"
+      ]
+     ]
+    },
+    {
+     "name": "7203 (50D)",
+     "line": false,
+     "markers": true,
+     "points": [
+      [
+       65.78407985342702,
+       1.5156391587976188,
+       "7203 (50D): 65.8 photons, 1.5 percent"
+      ]
+     ]
+    }
+   ],
+   "columns": [
+    "Stock",
+    "Photons per square micrometre",
+    "Peak DQE, percent"
+   ],
+   "table": [
+    [
+     "5219 (500T)",
+     "4.2",
+     "4.51"
+    ],
+    [
+     "7213 (200T)",
+     "8.7",
+     "4.92"
+    ],
+    [
+     "7203 (50D)",
+     "65.8",
+     "1.52"
+    ],
+    [
+     "Spread, highest over lowest",
+     "15.7",
+     "3.24"
+    ]
+   ]
+  },
+  {
+   "key": "forms",
+   "form": "band",
+   "at": "results",
+   "claims": [
+    "c4"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "Hold-out error of eight response forms over the nine layers.",
+   "takeaway": "A straight hinge in log exposure predicted the held-out top of the curve best in 9 of 9 layers, with a median error of 0.112 in net density. The best form that saturates, the lognormal, had a median error of 0.356.",
+   "units": "hold-out error in net density: each form is fitted on the lowest 70 percent of the exposure axis and scored on the top 30 percent. Lower is better.",
+   "n": "9 colour layers: 3 layers in each of 3 Kodak VISION3 stocks; 8 forms each",
+   "value_name": "median over the nine layers",
+   "band_name": "lowest to highest layer",
+   "interval": "Band: lowest to highest hold-out error over the nine layers. It is a range, not a confidence interval.",
+   "baseline": "Density shuffled against exposure 25 times: the top form's share of layers averaged 0.36, 95th percentile 0.44. The real share is 1.0, p 0.038, the smallest value 25 draws can give.",
+   "planted": "Five planted forms were recovered on held-out points at a mean rate of 0.80, against a limit of 0.5.",
+   "axis": {
+    "label": "hold-out error in net density",
+    "min": 0,
+    "max": 0.7
+   },
+   "rows": [
+    {
+     "label": "Hinge",
+     "value": 0.11166448741387261,
+     "lo": 0.047271531889275985,
+     "hi": 0.13739750365784933,
+     "series": 0,
+     "note": "0.112 (0.047 to 0.137)"
+    },
+    {
+     "label": "Soft hinge",
+     "value": 0.11804614635765623,
+     "lo": 0.055386363297711044,
+     "hi": 0.16635758107046944,
+     "series": 0,
+     "note": "0.118 (0.055 to 0.166)"
+    },
+    {
+     "label": "Lognormal",
+     "value": 0.3558790294568682,
+     "lo": 0.2721082172609098,
+     "hi": 0.4314828901346068,
+     "series": 0,
+     "note": "0.356 (0.272 to 0.431)"
+    },
+    {
+     "label": "Hill",
+     "value": 0.3849830780888324,
+     "lo": 0.3064125550389176,
+     "hi": 0.4577595760186895,
+     "series": 0,
+     "note": "0.385 (0.306 to 0.458)"
+    },
+    {
+     "label": "Naka-Rushton, n = 1",
+     "value": 0.45250664506352517,
+     "lo": 0.3840286028488748,
+     "hi": 0.4971372603096876,
+     "series": 0,
+     "note": "0.453 (0.384 to 0.497)"
+    },
+    {
+     "label": "Weibull",
+     "value": 0.49792673791657355,
+     "lo": 0.4177795343653531,
+     "hi": 0.5572232193402527,
+     "series": 0,
+     "note": "0.498 (0.418 to 0.557)"
+    },
+    {
+     "label": "Erlang, real n",
+     "value": 0.5315139938537079,
+     "lo": 0.4459584062775492,
+     "hi": 0.5863464312433538,
+     "series": 0,
+     "note": "0.532 (0.446 to 0.586)"
+    },
+    {
+     "label": "Single hit",
+     "value": 0.607354269421985,
+     "lo": 0.5247993322416468,
+     "hi": 0.6575837117148994,
+     "series": 0,
+     "note": "0.607 (0.525 to 0.658)"
+    }
+   ],
+   "columns": [
+    "Form",
+    "Median error",
+    "Lowest",
+    "Highest",
+    "Layers where it was best"
+   ],
+   "table": [
+    [
+     "Hinge",
+     "0.112",
+     "0.047",
+     "0.137",
+     "9"
+    ],
+    [
+     "Soft hinge",
+     "0.118",
+     "0.055",
+     "0.166",
+     "0"
+    ],
+    [
+     "Lognormal",
+     "0.356",
+     "0.272",
+     "0.431",
+     "0"
+    ],
+    [
+     "Hill",
+     "0.385",
+     "0.306",
+     "0.458",
+     "0"
+    ],
+    [
+     "Naka-Rushton, n = 1",
+     "0.453",
+     "0.384",
+     "0.497",
+     "0"
+    ],
+    [
+     "Weibull",
+     "0.498",
+     "0.418",
+     "0.557",
+     "0"
+    ],
+    [
+     "Erlang, real n",
+     "0.532",
+     "0.446",
+     "0.586",
+     "0"
+    ],
+    [
+     "Single hit",
+     "0.607",
+     "0.525",
+     "0.658",
+     "0"
+    ]
+   ]
+  },
+  {
+   "key": "variance",
+   "form": "bars",
+   "at": "results",
+   "claims": [
+    "c3"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "How grain variance changes with density in each layer.",
+   "takeaway": "Siedentopf's rule says grain variance grows in step with density, a slope of 1. The slope is negative in every layer, median −0.54, so variance falls as density rises. The planted check for this block failed, so read this as description.",
+   "units": "power slope b in variance = k times density to the power b. Siedentopf's rule is b = 1.",
+   "n": "9 colour layers: 3 layers in each of 3 Kodak VISION3 stocks; points with net density above 0.1",
+   "interval": null,
+   "no_interval": "One fitted slope per layer. The run reports no interval on a slope.",
+   "series_names": [
+    "5219 (500T)",
+    "7213 (200T)",
+    "7203 (50D)"
+   ],
+   "threshold": "Siedentopf's rule beaten on held-out points in a share of layers of 0.7 or more, and median slope below 0.7. Both held: 1.0 and −0.54. The verdict is void all the same.",
+   "planted": "A planted variance law was chosen at a rate of 0.70, below the 0.8 required. By the rule set before the run, a failed planted check voids its block.",
+   "axis": {
+    "label": "variance slope b",
+    "min": -1.2,
+    "max": 1.2,
+    "refs": [
+     {
+      "value": 1,
+      "label": "Siedentopf's rule, b = 1"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "group": "blue layer",
+     "label": "5219 (500T)",
+     "value": -0.6568250557910639,
+     "series": 0,
+     "note": "−0.66"
+    },
+    {
+     "group": "blue layer",
+     "label": "7213 (200T)",
+     "value": -0.32266039591883977,
+     "series": 1,
+     "note": "−0.32"
+    },
+    {
+     "group": "blue layer",
+     "label": "7203 (50D)",
+     "value": -0.5869605697734741,
+     "series": 2,
+     "note": "−0.59"
+    },
+    {
+     "group": "green layer",
+     "label": "5219 (500T)",
+     "value": -0.5407368522915038,
+     "series": 0,
+     "note": "−0.54"
+    },
+    {
+     "group": "green layer",
+     "label": "7213 (200T)",
+     "value": -0.4889238585691136,
+     "series": 1,
+     "note": "−0.49"
+    },
+    {
+     "group": "green layer",
+     "label": "7203 (50D)",
+     "value": -0.3646470267287784,
+     "series": 2,
+     "note": "−0.36"
+    },
+    {
+     "group": "red layer",
+     "label": "5219 (500T)",
+     "value": -0.5098445314182949,
+     "series": 0,
+     "note": "−0.51"
+    },
+    {
+     "group": "red layer",
+     "label": "7213 (200T)",
+     "value": -0.5622598012050481,
+     "series": 1,
+     "note": "−0.56"
+    },
+    {
+     "group": "red layer",
+     "label": "7203 (50D)",
+     "value": -0.707500426126408,
+     "series": 2,
+     "note": "−0.71"
+    }
+   ],
+   "columns": [
+    "Stock",
+    "Layer",
+    "Slope b",
+    "Held-out error, Siedentopf",
+    "Held-out error, constant",
+    "Held-out error, affine",
+    "Held-out error, quadratic"
+   ],
+   "table": [
+    [
+     "5219 (500T)",
+     "blue layer",
+     "−0.66",
+     "1.49",
+     "1.14",
+     "0.73",
+     "1.36"
+    ],
+    [
+     "5219 (500T)",
+     "green layer",
+     "−0.54",
+     "1.04",
+     "0.71",
+     "4.61",
+     "1.12"
+    ],
+    [
+     "5219 (500T)",
+     "red layer",
+     "−0.51",
+     "0.93",
+     "0.61",
+     "1.11",
+     "0.77"
+    ],
+    [
+     "7213 (200T)",
+     "blue layer",
+     "−0.32",
+     "0.90",
+     "0.44",
+     "0.20",
+     "0.90"
+    ],
+    [
+     "7213 (200T)",
+     "green layer",
+     "−0.49",
+     "1.09",
+     "0.69",
+     "0.38",
+     "0.84"
+    ],
+    [
+     "7213 (200T)",
+     "red layer",
+     "−0.56",
+     "0.96",
+     "0.63",
+     "6.86",
+     "0.94"
+    ],
+    [
+     "7203 (50D)",
+     "blue layer",
+     "−0.59",
+     "1.49",
+     "1.10",
+     "0.37",
+     "0.82"
+    ],
+    [
+     "7203 (50D)",
+     "green layer",
+     "−0.36",
+     "1.03",
+     "0.60",
+     "0.16",
+     "0.95"
+    ],
+    [
+     "7203 (50D)",
+     "red layer",
+     "−0.71",
+     "1.53",
+     "1.16",
+     "0.05",
+     "0.82"
+    ]
+   ]
+  }
+ ]
+}

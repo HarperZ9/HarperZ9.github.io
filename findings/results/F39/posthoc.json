@@ -1,0 +1,71 @@
+{
+ "event_rate_median_per_s": 4.911111111111111,
+ "r_ln_tail_event_rate_test": -0.17150930041170026,
+ "r_event_rate_arousal_test_partial": 0.2954945403672933,
+ "p1_ctrl+event_rate": -0.3696132850688979,
+ "p2a_ctrl+event_rate": -0.2847504400687356,
+ "p2b_ctrl+event_rate": 0.2990850349271298,
+ "p1_ctrl+event_rate+tempo+sent": -0.3235389839308986,
+ "p2a_ctrl+event_rate+tempo+sent": -0.2943856355460616,
+ "p2b_ctrl+event_rate+tempo+sent": 0.21607793077452372,
+ "p1_ctrl+event_rate_ci": [
+  -0.44432499610941467,
+  -0.28383669154190644
+ ],
+ "p2a_ctrl+event_rate_ci": [
+  -0.36612490951325705,
+  -0.18626853026670745
+ ],
+ "p3_ctrl+arousal": -0.22654201672521468,
+ "p3_ctrl+arousal_ci": [
+  -0.31222736424886327,
+  -0.12323275619613995
+ ],
+ "r_arousal_valence_test": 0.541190022212475,
+ "per_genre_full_sample": {
+  "Blues": {
+   "n": 113,
+   "partial_r": -0.420590803962347
+  },
+  "Classical": {
+   "n": 216,
+   "partial_r": -0.4113797512700902
+  },
+  "Country": {
+   "n": 205,
+   "partial_r": -0.43138545102457293
+  },
+  "Electronic": {
+   "n": 192,
+   "partial_r": -0.4286261653331747
+  },
+  "Folk": {
+   "n": 170,
+   "partial_r": -0.31544916183570154
+  },
+  "HipHop": {
+   "n": 100,
+   "partial_r": -0.2518070072911973
+  },
+  "International": {
+   "n": 100,
+   "partial_r": -0.6171635725934111
+  },
+  "Jazz": {
+   "n": 205,
+   "partial_r": -0.3624134629214118
+  },
+  "Pop": {
+   "n": 178,
+   "partial_r": -0.48269213042582126
+  },
+  "Rock": {
+   "n": 177,
+   "partial_r": -0.2896281628907602
+  },
+  "SoulRB": {
+   "n": 87,
+   "partial_r": -0.5605269259104784
+  }
+ }
+}

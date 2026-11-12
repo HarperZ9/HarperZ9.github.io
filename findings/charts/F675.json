@@ -1,0 +1,783 @@
+{
+ "finding": "F675",
+ "sources": [
+  {
+   "id": "result",
+   "name": "result.json",
+   "sha256_original": "61ea2ec9829044fa56dde1110302cd4f7714471194e57a90d4ea04f6dd2f3d93",
+   "sha256_copy": "e4cd84ba57bc0e04b6427cad7d8ebf1c87122af0f98ebd844eaa11c5bee56e65",
+   "href": "/findings/results/F675/result.json",
+   "run": "20261102T094346Z"
+  },
+  {
+   "id": "posthoc",
+   "name": "posthoc_sign.txt (exploratory, after the run)",
+   "sha256_original": "303afd198ab384a35705fe0124c345a8147707e1694f5c698f249f2e873c3085",
+   "sha256_copy": "6c7f7d2531c7bc98d479c1b2ae72eb2fe469b8c37d2beeaf92a71bdb3edb5977",
+   "href": "/findings/results/F675/posthoc_sign.txt"
+  }
+ ],
+ "charts": [
+  {
+   "key": "index",
+   "form": "interval",
+   "at": "results",
+   "claims": [
+    "c1",
+    "c2"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "Which way does prediction run between summer temperature and tree rings?",
+   "takeaway": "Temperature leads: the index is +1.21 (+0.87 to +1.59) on the high-pass data, against 0.213 for rings paired with far-away sites, and it flips to −0.89 when time is reversed.",
+   "units": "direction index (the mean over sites of how much better last summer's temperature predicts this year's ring than the ring predicts next summer's temperature, in z units; above 0 means temperature leads, below 0 means the ring leads)",
+   "n": "161 sites in 77 two-degree blocks; median series length 89 years; 199 far-site pairings",
+   "interval": "95% interval from a block bootstrap (resampling whole two-degree blocks of sites) over the 77 blocks",
+   "baseline": "Each ring paired with the summer temperature of a site at least 1,000 km away: 95th percentile 0.213 (high-pass) and 0.186 (first differences)",
+   "threshold": "Real index above the far-site pairing's 95th percentile with its interval above 0, set in advance: held on both filters (+1.21 and +1.11)",
+   "planted": "A planted ring-leads world reads below 0 on both filters and a planted temperature-leads world reads above 0, so the index can show either direction",
+   "series_names": [
+    "high-pass filtered",
+    "first differences"
+   ],
+   "axis": {
+    "label": "direction index (above 0: temperature leads; below 0: ring leads)",
+    "min": -1.75,
+    "max": 1.75,
+    "refs": [
+     {
+      "value": 0,
+      "label": "no direction, 0"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "label": "Real rings and temperature",
+     "group": "High-pass filtered (slow trends removed); far-site pairing 95th percentile 0.213",
+     "value": 1.2062484154736952,
+     "lo": 0.8710725217504983,
+     "hi": 1.5909473196762234,
+     "series": 0,
+     "note": "+1.21 (+0.87 to +1.59)"
+    },
+    {
+     "label": "Real data with time reversed",
+     "group": "High-pass filtered (slow trends removed); far-site pairing 95th percentile 0.213",
+     "value": -0.8940984773185219,
+     "lo": -1.32614328621384,
+     "hi": -0.5410520396199708,
+     "series": 0,
+     "note": "−0.89 (−1.33 to −0.54)"
+    },
+    {
+     "label": "Made-up world: no coupling",
+     "group": "High-pass filtered (slow trends removed); far-site pairing 95th percentile 0.213",
+     "value": -0.011369065361154493,
+     "lo": -0.0948860201830177,
+     "hi": 0.07316242674301256,
+     "series": 0,
+     "note": "−0.01 (−0.09 to +0.07)"
+    },
+    {
+     "label": "Made-up world: temperature leads, real strength",
+     "group": "High-pass filtered (slow trends removed); far-site pairing 95th percentile 0.213",
+     "value": 0.17989468761898664,
+     "lo": 0.07251221937771941,
+     "hi": 0.29621595173010484,
+     "series": 0,
+     "note": "+0.18 (+0.07 to +0.30)"
+    },
+    {
+     "label": "Made-up world: ring leads, real strength",
+     "group": "High-pass filtered (slow trends removed); far-site pairing 95th percentile 0.213",
+     "value": -0.42881304081431104,
+     "lo": -0.5557317011382827,
+     "hi": -0.3030847147837868,
+     "series": 0,
+     "note": "−0.43 (−0.56 to −0.30)"
+    },
+    {
+     "label": "Made-up world: shared trend only",
+     "group": "High-pass filtered (slow trends removed); far-site pairing 95th percentile 0.213",
+     "value": -0.316642468174161,
+     "lo": -0.4258371824862679,
+     "hi": -0.19876225412120344,
+     "series": 0,
+     "note": "−0.32 (−0.43 to −0.20)"
+    },
+    {
+     "label": "Real rings and temperature",
+     "group": "First differences (year-to-year changes); far-site pairing 95th percentile 0.186",
+     "value": 1.1069088548263881,
+     "lo": 0.7291715716920507,
+     "hi": 1.4963974391392711,
+     "series": 1,
+     "note": "+1.11 (+0.73 to +1.50)"
+    },
+    {
+     "label": "Real data with time reversed",
+     "group": "First differences (year-to-year changes); far-site pairing 95th percentile 0.186",
+     "value": -1.0916061605017353,
+     "lo": -1.5275068478283331,
+     "hi": -0.7201191832959178,
+     "series": 1,
+     "note": "−1.09 (−1.53 to −0.72)"
+    },
+    {
+     "label": "Made-up world: no coupling",
+     "group": "First differences (year-to-year changes); far-site pairing 95th percentile 0.186",
+     "value": -0.05469512116747467,
+     "lo": -0.16376525515533297,
+     "hi": 0.04848026953603111,
+     "series": 1,
+     "note": "−0.05 (−0.16 to +0.05)"
+    },
+    {
+     "label": "Made-up world: temperature leads, real strength",
+     "group": "First differences (year-to-year changes); far-site pairing 95th percentile 0.186",
+     "value": 0.15466232322328083,
+     "lo": 0.04476057346098061,
+     "hi": 0.28519631567475817,
+     "series": 1,
+     "note": "+0.15 (+0.04 to +0.29)"
+    },
+    {
+     "label": "Made-up world: ring leads, real strength",
+     "group": "First differences (year-to-year changes); far-site pairing 95th percentile 0.186",
+     "value": -0.15693427373943036,
+     "lo": -0.2794054668366264,
+     "hi": -0.042270183406282275,
+     "series": 1,
+     "note": "−0.16 (−0.28 to −0.04)"
+    },
+    {
+     "label": "Made-up world: shared trend only",
+     "group": "First differences (year-to-year changes); far-site pairing 95th percentile 0.186",
+     "value": -0.06957774788218506,
+     "lo": -0.17057007475376015,
+     "hi": 0.03798985668603488,
+     "series": 1,
+     "note": "−0.07 (−0.17 to +0.04)"
+    }
+   ],
+   "columns": [
+    "Filter",
+    "World",
+    "Index",
+    "Interval, low",
+    "Interval, high",
+    "Sites where temperature predicts ring, %",
+    "Sites where ring predicts temperature, %"
+   ],
+   "table": [
+    [
+     "High-pass filtered",
+     "Real rings and temperature",
+     "+1.206",
+     "+0.871",
+     "+1.591",
+     "39.8",
+     "6.8"
+    ],
+    [
+     "High-pass filtered",
+     "Real data with time reversed",
+     "−0.894",
+     "−1.326",
+     "−0.541",
+     "13.7",
+     "39.1"
+    ],
+    [
+     "High-pass filtered",
+     "Made-up world: no coupling",
+     "−0.011",
+     "−0.095",
+     "+0.073",
+     "5.5",
+     "7.8"
+    ],
+    [
+     "High-pass filtered",
+     "Made-up world: temperature leads, real strength",
+     "+0.180",
+     "+0.073",
+     "+0.296",
+     "10.4",
+     "5.2"
+    ],
+    [
+     "High-pass filtered",
+     "Made-up world: ring leads, real strength",
+     "−0.429",
+     "−0.556",
+     "−0.303",
+     "5.8",
+     "15.4"
+    ],
+    [
+     "High-pass filtered",
+     "Made-up world: shared trend only",
+     "−0.317",
+     "−0.426",
+     "−0.199",
+     "13.5",
+     "22.1"
+    ],
+    [
+     "First differences",
+     "Real rings and temperature",
+     "+1.107",
+     "+0.729",
+     "+1.496",
+     "36.0",
+     "6.2"
+    ],
+    [
+     "First differences",
+     "Real data with time reversed",
+     "−1.092",
+     "−1.528",
+     "−0.720",
+     "8.1",
+     "38.5"
+    ],
+    [
+     "First differences",
+     "Made-up world: no coupling",
+     "−0.055",
+     "−0.164",
+     "+0.048",
+     "6.6",
+     "7.2"
+    ],
+    [
+     "First differences",
+     "Made-up world: temperature leads, real strength",
+     "+0.155",
+     "+0.045",
+     "+0.285",
+     "12.3",
+     "9.6"
+    ],
+    [
+     "First differences",
+     "Made-up world: ring leads, real strength",
+     "−0.157",
+     "−0.279",
+     "−0.042",
+     "7.3",
+     "12.3"
+    ],
+    [
+     "First differences",
+     "Made-up world: shared trend only",
+     "−0.070",
+     "−0.171",
+     "+0.038",
+     "9.2",
+     "11.7"
+    ],
+    [
+     "High-pass filtered",
+     "Far-site pairing, 95th percentile",
+     "+0.213",
+     "",
+     "",
+     "",
+     ""
+    ],
+    [
+     "First differences",
+     "Far-site pairing, 95th percentile",
+     "+0.186",
+     "",
+     "",
+     "",
+     ""
+    ]
+   ]
+  },
+  {
+   "key": "gates",
+   "form": "rules",
+   "at": "results",
+   "claims": [
+    "c3"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "Did the method pass its own checks on made-up worlds with a known answer?",
+   "takeaway": "No: 2 of the 5 binding checks failed, both on first differences. A planted ring-leads world was read the right way at 58.4% of sites against a bar of 60%, and a shared trend alone made rings appear to predict temperature at 11.7% of sites against a limit of 10%.",
+   "units": "each row is one rule fixed before the data were read; rates are the share of sites with p at or below 0.05 in that direction",
+   "n": "161 sites per made-up world, five surrogate draws per site",
+   "interval": null,
+   "no_interval": "Each row is one measured value against a fixed bar. Rows named interval top use the upper end of the 95% block-bootstrap interval.",
+   "threshold": "Every binding check had to pass for the direction reading to get standing; any failure triggers the kill condition (the rule, fixed in advance, that withdraws the claim)",
+   "planted": "These rows are the planted checks: worlds built from surrogate series with a known direction, no coupling, or a shared trend only",
+   "rows": [
+    {
+     "label": "Ring-leads world, high-pass: interval top below 0",
+     "left": "−0.30",
+     "right": "below 0",
+     "holds": true
+    },
+    {
+     "label": "Ring-leads world, high-pass: direction right at over 60% of sites",
+     "left": "71.4%",
+     "right": "above 60%",
+     "holds": true
+    },
+    {
+     "label": "Ring-leads world, first differences: interval top below 0",
+     "left": "−0.04",
+     "right": "below 0",
+     "holds": true
+    },
+    {
+     "label": "Ring-leads world, first differences: direction right at over 60% of sites",
+     "left": "58.4%",
+     "right": "above 60%",
+     "holds": false
+    },
+    {
+     "label": "No-coupling world, high-pass: temperature-predicts-ring rate",
+     "left": "5.5%",
+     "right": "at most 10%",
+     "holds": true
+    },
+    {
+     "label": "No-coupling world, high-pass: ring-predicts-temperature rate",
+     "left": "7.8%",
+     "right": "at most 10%",
+     "holds": true
+    },
+    {
+     "label": "No-coupling world, first differences: temperature-predicts-ring rate",
+     "left": "6.6%",
+     "right": "at most 10%",
+     "holds": true
+    },
+    {
+     "label": "No-coupling world, first differences: ring-predicts-temperature rate",
+     "left": "7.2%",
+     "right": "at most 10%",
+     "holds": true
+    },
+    {
+     "label": "Shared-trend world, first differences: temperature-predicts-ring rate",
+     "left": "9.2%",
+     "right": "at most 10%",
+     "holds": true
+    },
+    {
+     "label": "Shared-trend world, first differences: ring-predicts-temperature rate",
+     "left": "11.7%",
+     "right": "at most 10%",
+     "holds": false
+    }
+   ],
+   "columns": [
+    "Check",
+    "Rule",
+    "Measured",
+    "Bar",
+    "Held"
+   ],
+   "table": [
+    [
+     "A_rev_hp",
+     "analysis.rev_m_hp.ci_d.1 < 0",
+     "−0.3031",
+     "0",
+     "yes"
+    ],
+    [
+     "A_rev_hp",
+     "analysis.rev_m_hp.accuracy > 0.6",
+     "0.7143",
+     "0.6",
+     "yes"
+    ],
+    [
+     "A_rev_diff",
+     "analysis.rev_m_diff.ci_d.1 < 0",
+     "−0.0423",
+     "0",
+     "yes"
+    ],
+    [
+     "A_rev_diff",
+     "analysis.rev_m_diff.accuracy > 0.6",
+     "0.5839",
+     "0.6",
+     "no"
+    ],
+    [
+     "A_null_hp",
+     "analysis.null_hp.fwd_rate <= 0.1",
+     "0.0547",
+     "0.1",
+     "yes"
+    ],
+    [
+     "A_null_hp",
+     "analysis.null_hp.rev_rate <= 0.1",
+     "0.0783",
+     "0.1",
+     "yes"
+    ],
+    [
+     "A_null_diff",
+     "analysis.null_diff.fwd_rate <= 0.1",
+     "0.0658",
+     "0.1",
+     "yes"
+    ],
+    [
+     "A_null_diff",
+     "analysis.null_diff.rev_rate <= 0.1",
+     "0.0720",
+     "0.1",
+     "yes"
+    ],
+    [
+     "A_trend_diff",
+     "analysis.trend_diff.fwd_rate <= 0.1",
+     "0.0919",
+     "0.1",
+     "yes"
+    ],
+    [
+     "A_trend_diff",
+     "analysis.trend_diff.rev_rate <= 0.1",
+     "0.1168",
+     "0.1",
+     "no"
+    ],
+    [
+     "A_true_s_hp",
+     "analysis.true_s_hp.ci_d.0 > 0",
+     "1.0792",
+     "0",
+     "yes"
+    ],
+    [
+     "A_true_s_hp",
+     "analysis.true_s_hp.accuracy > 0.55",
+     "0.8944",
+     "0.55",
+     "yes"
+    ],
+    [
+     "A_true_m_hp",
+     "analysis.true_m_hp.ci_d.0 > 0",
+     "0.0725",
+     "0",
+     "yes"
+    ],
+    [
+     "T_trend_hp",
+     "analysis.trend_hp.fwd_rate <= 0.1",
+     "0.1354",
+     "0.1",
+     "no"
+    ],
+    [
+     "T_trend_hp",
+     "analysis.trend_hp.rev_rate <= 0.1",
+     "0.2211",
+     "0.1",
+     "no"
+    ],
+    [
+     "Hc_common_hp",
+     "analysis.common_hp.ci_d.0 < 0",
+     "−0.1930",
+     "0",
+     "yes"
+    ],
+    [
+     "Hc_common_hp",
+     "analysis.common_hp.ci_d.1 > 0",
+     "0.0231",
+     "0",
+     "yes"
+    ],
+    [
+     "K_excl",
+     "analysis.real_hp.rev_rate <= 0.1",
+     "0.0683",
+     "0.1",
+     "yes"
+    ],
+    [
+     "K_excl",
+     "analysis.real_diff.rev_rate <= 0.1",
+     "0.0621",
+     "0.1",
+     "yes"
+    ],
+    [
+     "K_excl",
+     "analysis.real_hp.mean_d > analysis.rev_m_hp.ci_d.1",
+     "1.2062",
+     "-0.3030847147837868",
+     "yes"
+    ],
+    [
+     "K_excl",
+     "analysis.real_diff.mean_d > analysis.rev_m_diff.ci_d.1",
+     "1.1069",
+     "-0.042270183406282275",
+     "yes"
+    ],
+    [
+     "K_forward",
+     "analysis.real_hp.mean_d > controls.pair_hp.q95",
+     "1.2062",
+     "0.2129021274735547",
+     "yes"
+    ],
+    [
+     "K_forward",
+     "analysis.real_hp.ci_d.0 > 0",
+     "0.8711",
+     "0",
+     "yes"
+    ],
+    [
+     "K_forward_diff",
+     "analysis.real_diff.mean_d > controls.pair_diff.q95",
+     "1.1069",
+     "0.18644485412694106",
+     "yes"
+    ]
+   ]
+  },
+  {
+   "key": "next-summer",
+   "form": "bars",
+   "at": "results",
+   "claims": [
+    "c5"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "At how many sites does one series predict the other?",
+   "takeaway": "Last summer's temperature predicts this year's ring at 39.8% of sites. Rings predict next summer at 6.8%, no more than the 7.8% seen in a made-up world with no coupling at all.",
+   "units": "detection rate: percent of sites where the prediction test gives p at or below 0.05, high-pass data; a test with nothing to find gives about 5%",
+   "n": "161 sites; the no-coupling world uses five surrogate draws per site; 199 far-site pairings",
+   "interval": null,
+   "no_interval": "The result file holds one rate per row, plus the 95th percentile of the far-site pairing rate, given in that row's note.",
+   "baseline": "No-coupling world: 7.8% in the ring-predicts-temperature direction. Far-site pairing: mean 4.3%, 95th percentile 6.2%",
+   "threshold": "Ring-predicts-temperature rate on real data at most 10%, set in advance: held, 6.8% (high-pass) and 6.2% (first differences)",
+   "ruled_out": "Rings predicting next summer's temperature at more than a tenth of sites. The method's own failed checks on first differences limit how much weight this carries.",
+   "series_names": [
+    "temperature predicts ring",
+    "ring predicts next summer"
+   ],
+   "axis": {
+    "label": "percent of sites with p at or below 0.05",
+    "min": 0,
+    "max": 45,
+    "refs": [
+     {
+      "value": 10.0,
+      "label": "limit set in advance, 10%"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "label": "Real data: temperature predicts ring",
+     "value": 39.75155279503105,
+     "series": 0,
+     "note": "39.8%"
+    },
+    {
+     "label": "Real data: ring predicts next summer",
+     "value": 6.832298136645963,
+     "series": 1,
+     "note": "6.8%"
+    },
+    {
+     "label": "No-coupling world: temperature predicts ring",
+     "value": 5.465838509316771,
+     "series": 0,
+     "note": "5.5%"
+    },
+    {
+     "label": "No-coupling world: ring predicts next summer",
+     "value": 7.82608695652174,
+     "series": 1,
+     "note": "7.8%"
+    },
+    {
+     "label": "Far-site pairing: ring predicts next summer, mean",
+     "value": 4.325977714660258,
+     "series": 1,
+     "note": "4.3%; 95th percentile 6.2%"
+    }
+   ],
+   "columns": [
+    "World",
+    "Temperature predicts ring, %",
+    "Ring predicts next summer, %"
+   ],
+   "table": [
+    [
+     "Real rings and temperature, high-pass filtered",
+     "39.8",
+     "6.8"
+    ],
+    [
+     "Real data with time reversed, high-pass filtered",
+     "13.7",
+     "39.1"
+    ],
+    [
+     "Made-up world: no coupling, high-pass filtered",
+     "5.5",
+     "7.8"
+    ],
+    [
+     "Made-up world: temperature leads, real strength, high-pass filtered",
+     "10.4",
+     "5.2"
+    ],
+    [
+     "Made-up world: ring leads, real strength, high-pass filtered",
+     "5.8",
+     "15.4"
+    ],
+    [
+     "Made-up world: shared trend only, high-pass filtered",
+     "13.5",
+     "22.1"
+    ],
+    [
+     "Real rings and temperature, first differences",
+     "36.0",
+     "6.2"
+    ],
+    [
+     "Real data with time reversed, first differences",
+     "8.1",
+     "38.5"
+    ],
+    [
+     "Made-up world: no coupling, first differences",
+     "6.6",
+     "7.2"
+    ],
+    [
+     "Made-up world: temperature leads, real strength, first differences",
+     "12.3",
+     "9.6"
+    ],
+    [
+     "Made-up world: ring leads, real strength, first differences",
+     "7.3",
+     "12.3"
+    ],
+    [
+     "Made-up world: shared trend only, first differences",
+     "9.2",
+     "11.7"
+    ],
+    [
+     "Far-site pairing mean, high-pass filtered",
+     "",
+     "4.3"
+    ],
+    [
+     "Far-site pairing 95th percentile, high-pass filtered",
+     "",
+     "6.2"
+    ]
+   ]
+  },
+  {
+   "key": "prior",
+   "form": "bars",
+   "at": "discussion",
+   "claims": [
+    "c4"
+   ],
+   "source": [
+    "posthoc"
+   ],
+   "title": "A warm summer goes with a wider ring that year and a narrower ring the next.",
+   "takeaway": "The typical site's ring responds +0.17 to the same summer's temperature and −0.13 to the previous summer's; the previous-summer response is positive at only 21.7% of sites.",
+   "units": "median over sites of the regression coefficient of ring width on summer temperature, both in standard deviations, high-pass data; above 0 means a warmer summer goes with a wider ring",
+   "n": "161 sites",
+   "interval": null,
+   "no_interval": "The check's output file holds medians and shares of sites, with no interval.",
+   "baseline": "A coefficient of 0 means ring width does not move with that summer's temperature",
+   "threshold": "None. This check was run after the results were seen and was not in the locked plan, so it is exploratory.",
+   "axis": {
+    "label": "median coefficient (above 0: warmer summer, wider ring)",
+    "min": -0.25,
+    "max": 0.25,
+    "refs": [
+     {
+      "value": 0,
+      "label": "no response, 0"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "label": "Same summer's temperature",
+     "value": 0.17,
+     "series": 0,
+     "note": "+0.170; positive at 88.8% of sites"
+    },
+    {
+     "label": "Previous summer's temperature",
+     "value": -0.127,
+     "series": 0,
+     "note": "−0.127; positive at 21.7% of sites"
+    },
+    {
+     "label": "Previous summer's temperature, with the ring's own past in the model",
+     "value": -0.173,
+     "series": 0,
+     "note": "−0.173; positive at 10.6% of sites"
+    }
+   ],
+   "columns": [
+    "Predictor of ring width",
+    "Median coefficient",
+    "Sites with a positive coefficient, %"
+   ],
+   "table": [
+    [
+     "Same summer's temperature",
+     "+0.170",
+     "88.8"
+    ],
+    [
+     "Previous summer's temperature",
+     "−0.127",
+     "21.7"
+    ],
+    [
+     "Previous summer's temperature, with the ring's own past in the model",
+     "−0.173",
+     "10.6"
+    ],
+    [
+     "Ring's correlation with its own previous year, median",
+     "+0.321",
+     ""
+    ]
+   ]
+  }
+ ]
+}

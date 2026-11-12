@@ -1,0 +1,133 @@
+// f310_controls.bld: the F310 controls and their summary: the gap pool, one control draw, Python's math.fsum,
+// the quantile and the published summary line, and the step that turns the period table into log periods.
+// Split from f310.bld to keep each file short. Needs npgen.bld, fpx.bld, lstsq2.bld and f310.bld in the same unit.
+// the gaps of every system, in system order: the pool the pooled control draws from
+fn gap_pool(lp: &Vec<f64>, off: &Vec<i32>, nsys: i32, pool: &mut Vec<f64>) {
+    let mut s: i32 = 0;
+    while s < nsys {
+        let mut i: i32 = off[s];
+        while i + 1 < off[s + 1] { pool.push(lp[i + 1] - lp[i]); i = i + 1; }
+        s = s + 1;
+    }
+}
+
+// a system rebuilt from its first value and nd gaps (a running sum of the gaps)
+fn rebuild(x0: f64, d: &mut [f64; 8], nd: i32, out: &mut [f64; 8]) {
+    let mut c: f64 = 0.0;
+    out[0] = x0;
+    let mut i: i32 = 0;
+    while i < nd {
+        if i == 0 { c = d[0]; } else { c = c + d[i]; }
+        out[i + 1] = x0 + c;
+        i = i + 1;
+    }
+}
+
+// one control draw: every system rebuilt from shuffled gaps (pooled: gaps drawn from the pool), then scored.
+// kind below zero: draw and discard (the Blagg control), returns zero.
+fn control_draw(g: &mut Gen, lp: &Vec<f64>, off: &Vec<i32>, nsys: i32, pooled: bool, pool: &Vec<f64>, kind: i32) -> f64 {
+    let mut rs: Vec<f64> = Vec::new();
+    let mut x: [f64; 8] = [0.0; 8];
+    let mut d: [f64; 8] = [0.0; 8];
+    let mut y: [f64; 8] = [0.0; 8];
+    let mut s: i32 = 0;
+    while s < nsys {
+        let n: i32 = take(lp, off, s, &mut x);
+        if pooled {
+            choice(g, pool, n - 1, &mut d);
+        } else {
+            let mut i: i32 = 0;
+            while i + 1 < n { d[i] = x[i + 1] - x[i]; i = i + 1; }
+            permutation(g, &mut d, n - 1);
+        }
+        if kind >= 0 {
+            rebuild(x[0], &mut d, n - 1, &mut y);
+            rs.push(score(&mut y, n, kind));
+        }
+        s = s + 1;
+    }
+    if kind < 0 { return 0.0; }
+    return -median(&mut rs, nsys);
+}
+
+// Python's math.fsum: the exactly rounded sum (Shewchuk partials).
+fn fsum(v: &Vec<f64>, n: i32) -> f64 {
+    let mut p: Vec<f64> = Vec::new();
+    let mut i: i32 = 0;
+    while i <= n { p.push(0.0); i = i + 1; }
+    let mut np: i32 = 0;
+    i = 0;
+    while i < n {
+        let mut x: f64 = v[i];
+        let mut k: i32 = 0;
+        let mut j: i32 = 0;
+        while j < np {
+            let mut y: f64 = p[j];
+            if x.abs() < y.abs() { let t: f64 = x; x = y; y = t; }
+            let hi: f64 = x + y;
+            let lo: f64 = y - (hi - x);
+            if lo != 0.0 { p[k] = lo; k = k + 1; }
+            x = hi;
+            j = j + 1;
+        }
+        p[k] = x;
+        np = k + 1;
+        i = i + 1;
+    }
+    let mut hi: f64 = 0.0;
+    let mut lo: f64 = 0.0;
+    if np > 0 {
+        np = np - 1;
+        hi = p[np];
+        while np > 0 {
+            let x: f64 = hi;
+            np = np - 1;
+            let y: f64 = p[np];
+            hi = x + y;
+            lo = y - (hi - x);
+            if lo != 0.0 { break; }
+        }
+        if np > 0 && ((lo < 0.0 && p[np - 1] < 0.0) || (lo > 0.0 && p[np - 1] > 0.0)) {
+            let y: f64 = lo * 2.0;
+            let x: f64 = hi + y;
+            if y == x - hi { hi = x; }
+        }
+    }
+    return hi;
+}
+
+fn quantile(sorted: &Vec<f64>, n: i32, q: f64) -> f64 {
+    let pos: f64 = ((n - 1) as f64) * q;
+    let lo: f64 = pos.floor();
+    let hi: f64 = pos.ceil();
+    let a: f64 = sorted[lo as i32];
+    return a + (sorted[hi as i32] - a) * (pos - lo);
+}
+
+// the published summary of n control draws against the real value
+fn summarise(real: f64, nulls: &Vec<f64>, n: i32) -> Summary {
+    let mut s: Vec<f64> = Vec::new();
+    let mut ge: i32 = 0;
+    let mut i: i32 = 0;
+    while i < n {
+        s.push(nulls[i]);
+        if nulls[i] >= real { ge = ge + 1; }
+        i = i + 1;
+    }
+    sort_vec(&mut s, n);
+    return Summary { n: n, mean: fsum(nulls, n) / (n as f64), q95: quantile(&s, n, 0.95), q05: quantile(&s, n, 0.05), p_ge: ((ge + 1) as f64) / ((n + 1) as f64) };
+}
+
+// rows: periods in days, system after system, with the start of each system in off. Sorts each system and
+// writes its log periods to lp.
+fn prepare(periods: &Vec<f64>, off: &Vec<i32>, nsys: i32, lp: &mut Vec<f64>) {
+    let mut x: [f64; 8] = [0.0; 8];
+    let mut s: i32 = 0;
+    while s < nsys {
+        let n: i32 = take(periods, off, s, &mut x);
+        sort8(&mut x, n);
+        let mut i: i32 = 0;
+        while i < n { lp.push(logdd(x[i])); i = i + 1; }
+        s = s + 1;
+    }
+}

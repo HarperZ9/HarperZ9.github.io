@@ -1,0 +1,5 @@
+same-year coef median +0.170 share>0 0.888
+prior-summer coef (no ring past) median -0.127 share>0 0.217 mean |b1| 0.149
+prior-summer coef (with ring past) median -0.173 share>0 0.106
+ring hp lag-1 autocorrelation median 0.321
+ratio median |b1|/|b0| 0.76

@@ -1,0 +1,911 @@
+{
+ "finding": "F172",
+ "sources": [
+  {
+   "id": "result",
+   "name": "result.json",
+   "sha256_original": "8b1e7efec11d1d4a554de5e95028402756b0b5848cefe9cb014128686b4f2d1e",
+   "sha256_copy": "0c225e5cf3d1e641b3ef85b0272454a87559f43c272bce397a8e3a9ac61337ea",
+   "href": "/findings/results/F172/result.json",
+   "run": "20261031T082124Z"
+  }
+ ],
+ "charts": [
+  {
+   "key": "brier",
+   "form": "bars",
+   "at": "results",
+   "claims": [
+    "c1"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "Held-out Brier score of six forecasts of which effects replicate.",
+   "takeaway": "Modelling the significance filter cut the forecast error from 0.402 at face value to 0.260. That is level with the base rate, 0.256, which ignores every effect's own statistics, and behind a small logistic regression at 0.223.",
+   "units": "Brier score: the mean squared gap between a forecast chance and the outcome, 1 for a successful replication and 0 for a failed one. Lower is better; a constant forecast of 0.5 scores 0.25. The selection model treats published originals as the ones that passed a significance filter and shrinks them. Face value takes each original estimate as the true effect.",
+   "n": "1,222 significant originals with a replication, in 307 replication projects; each of 8 fields forecast with every parameter fitted on the other 7",
+   "interval": null,
+   "no_interval": "The run puts intervals on the differences between forecasts, drawn in the next figure, and none on a single score.",
+   "series_names": [
+    "held-out Brier score"
+   ],
+   "baseline": "The base rate gives every effect the success rate of the training fields. It scored 0.256, the dashed line.",
+   "threshold": "The selection model had to beat the base rate to count as picking which effects replicate. It did not.",
+   "axis": {
+    "label": "Brier score, lower is better",
+    "min": 0,
+    "max": 0.45,
+    "refs": [
+     {
+      "value": 0.2562908614547724,
+      "label": "base rate, 0.256"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "label": "Logistic regression on the original z value and both sample sizes",
+     "value": 0.22301592631580505,
+     "series": 0,
+     "note": "0.223"
+    },
+    {
+     "label": "Selection model with a transport term",
+     "value": 0.2319517885922895,
+     "series": 0,
+     "note": "0.232"
+    },
+    {
+     "label": "Base rate of the training fields",
+     "value": 0.2562908614547724,
+     "series": 0,
+     "note": "0.256"
+    },
+    {
+     "label": "Selection model",
+     "value": 0.26024659700367436,
+     "series": 0,
+     "note": "0.260"
+    },
+    {
+     "label": "Normal prior with no spike at zero",
+     "value": 0.3453365921191242,
+     "series": 0,
+     "note": "0.345"
+    },
+    {
+     "label": "Face value",
+     "value": 0.4021852937358604,
+     "series": 0,
+     "note": "0.402"
+    }
+   ],
+   "columns": [
+    "Forecast",
+    "Brier score",
+    "Brier score, each project weighted equally"
+   ],
+   "table": [
+    [
+     "Logistic regression on the original z value and both sample sizes",
+     "0.223",
+     "0.231"
+    ],
+    [
+     "Selection model with a transport term",
+     "0.232",
+     "0.234"
+    ],
+    [
+     "Base rate of the training fields",
+     "0.256",
+     "0.256"
+    ],
+    [
+     "Selection model",
+     "0.260",
+     "0.244"
+    ],
+    [
+     "Normal prior with no spike at zero",
+     "0.345",
+     "0.344"
+    ],
+    [
+     "Face value",
+     "0.402",
+     "0.426"
+    ]
+   ]
+  },
+  {
+   "key": "tests",
+   "form": "interval",
+   "at": "results",
+   "claims": [
+    "c2"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "The four comparisons set in advance: each competitor's Brier score minus the selection model's.",
+   "takeaway": "The selection model beat face value by 0.142 (0.108 to 0.186). Against the base rate the difference was −0.004 (−0.039 to 0.027), an interval that spans 0. The logistic regression beat it: −0.037 (−0.069 to −0.011).",
+   "units": "difference in Brier score, competitor minus selection model. Above 0 the selection model forecasts better; below 0 the competitor does.",
+   "n": "1,222 significant originals with a replication, in 307 replication projects; each of 8 fields forecast with every parameter fitted on the other 7",
+   "interval": "95% interval from a bootstrap that resamples whole replication projects",
+   "series_names": [
+    "competitor minus selection model"
+   ],
+   "baseline": "Skill over the base rate with replication outcomes shuffled across rows: 95th percentile −0.110 in 500 draws. With original statistics shuffled: −0.092 in 200 draws. The real value, −0.004, is above both.",
+   "threshold": "Lower end of the interval above 0. Held against face value (0.108); failed against the base rate (−0.039) and the logistic regression (−0.069).",
+   "planted": "On 15 simulated datasets with known settings the selection model beat face value in a share of 1.00.",
+   "axis": {
+    "label": "difference in Brier score",
+    "min": -0.1,
+    "max": 0.2,
+    "refs": [
+     {
+      "value": 0,
+      "label": "no difference, 0"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "label": "Face value",
+     "value": 0.1419386967321861,
+     "lo": 0.10786372532543337,
+     "hi": 0.18619962189171244,
+     "series": 0,
+     "note": "0.142 (0.108 to 0.186)"
+    },
+    {
+     "label": "Normal prior with no spike",
+     "value": 0.08508999511544986,
+     "lo": 0.05910894217825334,
+     "hi": 0.11803194832508178,
+     "series": 0,
+     "note": "0.085 (0.059 to 0.118)"
+    },
+    {
+     "label": "Base rate",
+     "value": -0.0039557355489019275,
+     "lo": -0.03921959329765326,
+     "hi": 0.027303045723987698,
+     "series": 0,
+     "note": "−0.004 (−0.039 to 0.027)"
+    },
+    {
+     "label": "Logistic regression",
+     "value": -0.03723067068786929,
+     "lo": -0.06927253025289065,
+     "hi": -0.010573454635569773,
+     "series": 0,
+     "note": "−0.037 (−0.069 to −0.011)"
+    }
+   ],
+   "columns": [
+    "Competitor",
+    "Difference",
+    "Low",
+    "High",
+    "p",
+    "q after correction"
+   ],
+   "table": [
+    [
+     "Face value",
+     "0.142",
+     "0.108",
+     "0.186",
+     "0.00025",
+     "0.0005"
+    ],
+    [
+     "Normal prior with no spike",
+     "0.085",
+     "0.059",
+     "0.118",
+     "0.00025",
+     "0.0005"
+    ],
+    [
+     "Base rate",
+     "−0.004",
+     "−0.039",
+     "0.027",
+     "0.81105",
+     "0.8110"
+    ],
+    [
+     "Logistic regression",
+     "−0.037",
+     "−0.069",
+     "−0.011",
+     "0.01050",
+     "0.0140"
+    ]
+   ]
+  },
+  {
+   "key": "fields",
+   "form": "interval",
+   "at": "results",
+   "claims": [
+    "c4"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "Replication rate by held-out field: observed, the selection model's forecast, and face value.",
+   "takeaway": "The model pulls every field's forecast down from face value and stops short of the observed rate in 7 of 8 fields. Reproducibility Project: 0.34 observed, 0.50 forecast, 0.83 at face value. Social psychology: 0.41, 0.65, 0.89.",
+   "units": "replication rate: share of a field's effects whose replication was significant in the original's direction, 0 to 1",
+   "n": "1,222 significant originals with a replication, in 307 replication projects; 8 fields, each forecast from the other 7",
+   "interval": null,
+   "no_interval": "One rate per field. The run stores no interval on a field's rate.",
+   "series_names": [
+    "selection model forecast",
+    "face value forecast",
+    "observed"
+   ],
+   "baseline": "Face value: each original estimate taken as the true effect.",
+   "threshold": "Reproducibility Project forecast within 0.05 of the observed rate. It missed by 0.16.",
+   "axis": {
+    "label": "share of effects that replicated",
+    "min": 0,
+    "max": 1
+   },
+   "rows": [
+    {
+     "group": "Reproducibility Project, 79 effects",
+     "label": "observed",
+     "value": 0.34177215189873417,
+     "series": 2,
+     "note": "0.34"
+    },
+    {
+     "group": "Reproducibility Project, 79 effects",
+     "label": "selection model",
+     "value": 0.5045476337353348,
+     "series": 0,
+     "note": "0.50"
+    },
+    {
+     "group": "Reproducibility Project, 79 effects",
+     "label": "face value",
+     "value": 0.834708001069692,
+     "series": 1,
+     "note": "0.83"
+    },
+    {
+     "group": "Social, 369 effects",
+     "label": "observed",
+     "value": 0.4065040650406504,
+     "series": 2,
+     "note": "0.41"
+    },
+    {
+     "group": "Social, 369 effects",
+     "label": "selection model",
+     "value": 0.6526136582962564,
+     "series": 0,
+     "note": "0.65"
+    },
+    {
+     "group": "Social, 369 effects",
+     "label": "face value",
+     "value": 0.8949773260335331,
+     "series": 1,
+     "note": "0.89"
+    },
+    {
+     "group": "Marketing, 84 effects",
+     "label": "observed",
+     "value": 0.36904761904761907,
+     "series": 2,
+     "note": "0.37"
+    },
+    {
+     "group": "Marketing, 84 effects",
+     "label": "selection model",
+     "value": 0.6638094055367199,
+     "series": 0,
+     "note": "0.66"
+    },
+    {
+     "group": "Marketing, 84 effects",
+     "label": "face value",
+     "value": 0.9801844517785228,
+     "series": 1,
+     "note": "0.98"
+    },
+    {
+     "group": "Cognitive, 200 effects",
+     "label": "observed",
+     "value": 0.5,
+     "series": 2,
+     "note": "0.50"
+    },
+    {
+     "group": "Cognitive, 200 effects",
+     "label": "selection model",
+     "value": 0.6313093183171032,
+     "series": 0,
+     "note": "0.63"
+    },
+    {
+     "group": "Cognitive, 200 effects",
+     "label": "face value",
+     "value": 0.8784031962726238,
+     "series": 1,
+     "note": "0.88"
+    },
+    {
+     "group": "Economics, 16 effects",
+     "label": "observed",
+     "value": 0.5,
+     "series": 2,
+     "note": "0.50"
+    },
+    {
+     "group": "Economics, 16 effects",
+     "label": "selection model",
+     "value": 0.4966063753879082,
+     "series": 0,
+     "note": "0.50"
+    },
+    {
+     "group": "Economics, 16 effects",
+     "label": "face value",
+     "value": 0.7881177765678431,
+     "series": 1,
+     "note": "0.79"
+    },
+    {
+     "group": "Other, 163 effects",
+     "label": "observed",
+     "value": 0.6196319018404908,
+     "series": 2,
+     "note": "0.62"
+    },
+    {
+     "group": "Other, 163 effects",
+     "label": "selection model",
+     "value": 0.6930224887367566,
+     "series": 0,
+     "note": "0.69"
+    },
+    {
+     "group": "Other, 163 effects",
+     "label": "face value",
+     "value": 0.8884146976209712,
+     "series": 1,
+     "note": "0.89"
+    },
+    {
+     "group": "Other psychology, 229 effects",
+     "label": "observed",
+     "value": 0.6200873362445415,
+     "series": 2,
+     "note": "0.62"
+    },
+    {
+     "group": "Other psychology, 229 effects",
+     "label": "selection model",
+     "value": 0.7229686699805116,
+     "series": 0,
+     "note": "0.72"
+    },
+    {
+     "group": "Other psychology, 229 effects",
+     "label": "face value",
+     "value": 0.9759360650820386,
+     "series": 1,
+     "note": "0.98"
+    },
+    {
+     "group": "Management, 82 effects",
+     "label": "observed",
+     "value": 0.7926829268292683,
+     "series": 2,
+     "note": "0.79"
+    },
+    {
+     "group": "Management, 82 effects",
+     "label": "selection model",
+     "value": 0.8383394182059795,
+     "series": 0,
+     "note": "0.84"
+    },
+    {
+     "group": "Management, 82 effects",
+     "label": "face value",
+     "value": 0.9607730850184172,
+     "series": 1,
+     "note": "0.96"
+    }
+   ],
+   "columns": [
+    "Field",
+    "Effects",
+    "Projects",
+    "Observed",
+    "Selection model",
+    "Face value",
+    "Skill over the base rate"
+   ],
+   "table": [
+    [
+     "Reproducibility Project",
+     "79",
+     "79",
+     "0.34",
+     "0.50",
+     "0.83",
+     "0.048"
+    ],
+    [
+     "Social",
+     "369",
+     "83",
+     "0.41",
+     "0.65",
+     "0.89",
+     "−0.050"
+    ],
+    [
+     "Marketing",
+     "84",
+     "6",
+     "0.37",
+     "0.66",
+     "0.98",
+     "−0.053"
+    ],
+    [
+     "Cognitive",
+     "200",
+     "50",
+     "0.50",
+     "0.63",
+     "0.88",
+     "0.020"
+    ],
+    [
+     "Economics",
+     "16",
+     "7",
+     "0.50",
+     "0.50",
+     "0.79",
+     "−0.006"
+    ],
+    [
+     "Other",
+     "163",
+     "43",
+     "0.62",
+     "0.69",
+     "0.89",
+     "−0.002"
+    ],
+    [
+     "Other psychology",
+     "229",
+     "70",
+     "0.62",
+     "0.72",
+     "0.98",
+     "0.016"
+    ],
+    [
+     "Management",
+     "82",
+     "4",
+     "0.79",
+     "0.84",
+     "0.96",
+     "0.088"
+    ]
+   ]
+  },
+  {
+   "key": "calibration",
+   "form": "line",
+   "at": "results",
+   "claims": [
+    "c4"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "Calibration of the selection model: the chance it gave against how often effects replicated.",
+   "takeaway": "The forecasts are overconfident at the top. Effects given a mean chance of 0.97 replicated at 0.57, and effects given 1.00 replicated at 0.83. The lowest two bands sit near the diagonal: 0.21 against 0.26 and 0.42 against 0.36.",
+   "units": "x: mean forecast chance in a band. y: share of that band's effects that replicated. Calibration means the two agree, so points on the diagonal are calibrated and points below it are overconfident.",
+   "n": "1,222 held-out forecasts in 5 bands of 244 or 245 effects",
+   "interval": null,
+   "no_interval": "One point per band. The run stores no interval on a band's rate.",
+   "baseline": "Perfect calibration, the dashed diagonal.",
+   "x": {
+    "label": "mean forecast chance of replication",
+    "min": 0,
+    "max": 1
+   },
+   "y": {
+    "label": "share that replicated",
+    "min": 0,
+    "max": 1
+   },
+   "series": [
+    {
+     "name": "selection model, one point per band",
+     "line": false,
+     "markers": true,
+     "points": [
+      [
+       0.20618920430757717,
+       0.2612244897959184,
+       "forecast 0.21, replicated 0.26, 245 effects"
+      ],
+      [
+       0.4204667148485678,
+       0.36065573770491804,
+       "forecast 0.42, replicated 0.36, 244 effects"
+      ],
+      [
+       0.7524422590391552,
+       0.5245901639344263,
+       "forecast 0.75, replicated 0.52, 244 effects"
+      ],
+      [
+       0.9681394585085652,
+       0.5737704918032787,
+       "forecast 0.97, replicated 0.57, 244 effects"
+      ],
+      [
+       0.9998996307493462,
+       0.8326530612244898,
+       "forecast 1.00, replicated 0.83, 245 effects"
+      ]
+     ]
+    },
+    {
+     "name": "perfect calibration",
+     "dashed": true,
+     "line": true,
+     "markers": false,
+     "points": [
+      [
+       0,
+       0,
+       ""
+      ],
+      [
+       1,
+       1,
+       ""
+      ]
+     ]
+    }
+   ],
+   "columns": [
+    "Band",
+    "Effects",
+    "Mean forecast",
+    "Share that replicated"
+   ],
+   "table": [
+    [
+     "1",
+     "245",
+     "0.206",
+     "0.261"
+    ],
+    [
+     "2",
+     "244",
+     "0.420",
+     "0.361"
+    ],
+    [
+     "3",
+     "244",
+     "0.752",
+     "0.525"
+    ],
+    [
+     "4",
+     "244",
+     "0.968",
+     "0.574"
+    ],
+    [
+     "5",
+     "245",
+     "1.000",
+     "0.833"
+    ]
+   ]
+  },
+  {
+   "key": "planted",
+   "form": "dumbbell",
+   "at": "controls",
+   "claims": [
+    "c3"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "The planted check: the fit run on simulated data where the answer is known.",
+   "takeaway": "Across 15 simulated datasets the fit recovered the planted weight on zero effects with a mean absolute error of 0.051 and beat face value in every one. It was weakest at the smallest planted weight, 0.05, where the two worst datasets gave 0.179 and 0.182.",
+   "units": "zero weight: the share of true effects the model sets to exactly zero, 0 to 1. Spread is the standard deviation of the non-zero effects on the Fisher z scale.",
+   "n": "15 simulated datasets, 5 at each of 3 settings, built on the real pairs of sample sizes",
+   "interval": null,
+   "no_interval": "Each row is one simulated dataset. The spread across the five rows of a setting is the uncertainty shown.",
+   "a_name": "planted zero weight",
+   "b_name": "recovered by the fit",
+   "threshold": "Mean absolute error of the zero weight below 0.1: 0.051. Error in the success rate below 0.03: 0.009. Selection model beats face value in at least 0.9 of datasets: 1.00.",
+   "planted": "All three rules held, so the fit can recover a known filter from data shaped like the real set.",
+   "axis": {
+    "label": "weight on zero effects",
+    "min": 0,
+    "max": 1
+   },
+   "rows": [
+    {
+     "group": "Planted zero weight 0.50, spread 0.25",
+     "label": "dataset 1",
+     "a": 0.5,
+     "b": 0.46293885628723164,
+     "note": "recovered 0.46; Brier 0.122 against 0.164 at face value"
+    },
+    {
+     "group": "Planted zero weight 0.50, spread 0.25",
+     "label": "dataset 2",
+     "a": 0.5,
+     "b": 0.4397512082963629,
+     "note": "recovered 0.44; Brier 0.122 against 0.165 at face value"
+    },
+    {
+     "group": "Planted zero weight 0.50, spread 0.25",
+     "label": "dataset 3",
+     "a": 0.5,
+     "b": 0.38439371277159096,
+     "note": "recovered 0.38; Brier 0.124 against 0.166 at face value"
+    },
+    {
+     "group": "Planted zero weight 0.50, spread 0.25",
+     "label": "dataset 4",
+     "a": 0.5,
+     "b": 0.40972906458146996,
+     "note": "recovered 0.41; Brier 0.130 against 0.179 at face value"
+    },
+    {
+     "group": "Planted zero weight 0.50, spread 0.25",
+     "label": "dataset 5",
+     "a": 0.5,
+     "b": 0.45623507466065494,
+     "note": "recovered 0.46; Brier 0.129 against 0.179 at face value"
+    },
+    {
+     "group": "Planted zero weight 0.05, spread 0.35",
+     "label": "dataset 1",
+     "a": 0.05,
+     "b": 0.17886928695835233,
+     "note": "recovered 0.18; Brier 0.086 against 0.094 at face value"
+    },
+    {
+     "group": "Planted zero weight 0.05, spread 0.35",
+     "label": "dataset 2",
+     "a": 0.05,
+     "b": 0.18168755994817787,
+     "note": "recovered 0.18; Brier 0.081 against 0.088 at face value"
+    },
+    {
+     "group": "Planted zero weight 0.05, spread 0.35",
+     "label": "dataset 3",
+     "a": 0.05,
+     "b": 0.023968419255282963,
+     "note": "recovered 0.02; Brier 0.089 against 0.101 at face value"
+    },
+    {
+     "group": "Planted zero weight 0.05, spread 0.35",
+     "label": "dataset 4",
+     "a": 0.05,
+     "b": 1.4307993450610502e-13,
+     "note": "recovered 0.00; Brier 0.082 against 0.092 at face value"
+    },
+    {
+     "group": "Planted zero weight 0.05, spread 0.35",
+     "label": "dataset 5",
+     "a": 0.05,
+     "b": 4.445426398265331e-14,
+     "note": "recovered 0.00; Brier 0.082 against 0.092 at face value"
+    },
+    {
+     "group": "Planted zero weight 0.80, spread 0.30",
+     "label": "dataset 1",
+     "a": 0.8,
+     "b": 0.8109276611747415,
+     "note": "recovered 0.81; Brier 0.133 against 0.249 at face value"
+    },
+    {
+     "group": "Planted zero weight 0.80, spread 0.30",
+     "label": "dataset 2",
+     "a": 0.8,
+     "b": 0.793256928037942,
+     "note": "recovered 0.79; Brier 0.133 against 0.261 at face value"
+    },
+    {
+     "group": "Planted zero weight 0.80, spread 0.30",
+     "label": "dataset 3",
+     "a": 0.8,
+     "b": 0.8021377111024898,
+     "note": "recovered 0.80; Brier 0.132 against 0.237 at face value"
+    },
+    {
+     "group": "Planted zero weight 0.80, spread 0.30",
+     "label": "dataset 4",
+     "a": 0.8,
+     "b": 0.7880881480120462,
+     "note": "recovered 0.79; Brier 0.141 against 0.265 at face value"
+    },
+    {
+     "group": "Planted zero weight 0.80, spread 0.30",
+     "label": "dataset 5",
+     "a": 0.8,
+     "b": 0.8002567772214932,
+     "note": "recovered 0.80; Brier 0.126 against 0.245 at face value"
+    }
+   ],
+   "columns": [
+    "Planted zero weight",
+    "Planted spread",
+    "Recovered zero weight",
+    "Recovered spread",
+    "Success rate error",
+    "Brier, selection model",
+    "Brier, face value"
+   ],
+   "table": [
+    [
+     "0.50",
+     "0.25",
+     "0.463",
+     "0.245",
+     "0.009",
+     "0.122",
+     "0.164"
+    ],
+    [
+     "0.50",
+     "0.25",
+     "0.440",
+     "0.253",
+     "0.008",
+     "0.122",
+     "0.165"
+    ],
+    [
+     "0.50",
+     "0.25",
+     "0.384",
+     "0.251",
+     "0.025",
+     "0.124",
+     "0.166"
+    ],
+    [
+     "0.50",
+     "0.25",
+     "0.410",
+     "0.237",
+     "0.015",
+     "0.130",
+     "0.179"
+    ],
+    [
+     "0.50",
+     "0.25",
+     "0.456",
+     "0.243",
+     "0.007",
+     "0.129",
+     "0.179"
+    ],
+    [
+     "0.05",
+     "0.35",
+     "0.179",
+     "0.345",
+     "0.014",
+     "0.086",
+     "0.094"
+    ],
+    [
+     "0.05",
+     "0.35",
+     "0.182",
+     "0.350",
+     "0.003",
+     "0.081",
+     "0.088"
+    ],
+    [
+     "0.05",
+     "0.35",
+     "0.024",
+     "0.345",
+     "0.008",
+     "0.089",
+     "0.101"
+    ],
+    [
+     "0.05",
+     "0.35",
+     "0.000",
+     "0.350",
+     "0.002",
+     "0.082",
+     "0.092"
+    ],
+    [
+     "0.05",
+     "0.35",
+     "0.000",
+     "0.351",
+     "0.000",
+     "0.082",
+     "0.092"
+    ],
+    [
+     "0.80",
+     "0.30",
+     "0.811",
+     "0.298",
+     "0.011",
+     "0.133",
+     "0.249"
+    ],
+    [
+     "0.80",
+     "0.30",
+     "0.793",
+     "0.301",
+     "0.006",
+     "0.133",
+     "0.261"
+    ],
+    [
+     "0.80",
+     "0.30",
+     "0.802",
+     "0.293",
+     "0.028",
+     "0.132",
+     "0.237"
+    ],
+    [
+     "0.80",
+     "0.30",
+     "0.788",
+     "0.281",
+     "0.002",
+     "0.141",
+     "0.265"
+    ],
+    [
+     "0.80",
+     "0.30",
+     "0.800",
+     "0.290",
+     "0.003",
+     "0.126",
+     "0.245"
+    ]
+   ]
+  }
+ ]
+}

@@ -1,0 +1,74 @@
+{
+"numpy": "2.4.5",
+"note": "F310 units at other seeds; see ref_seeds.py in the study notes",
+"seeds": {
+"7": {
+"plant_reg": "bfa42188d7247af7",
+"reg_plain": "bfc423f1b8fa3604",
+"reg_gapped": "bfb4409abdac6e8b",
+"controls": {
+"C_order": {
+"n": 2000,
+"first": [
+"bfc2f6e1050d8d4a",
+"bfc33acdf58541a8",
+"bfc3c9ac8af1cf00"
+],
+"sha256": "280d01aa198191d693424340d0a2cd015a2a93f0b6c6471d10ee16c523e4acbb"
+},
+"C_pool": {
+"n": 2000,
+"first": [
+"bfc8eee5ae395bec",
+"bfcad6cc637e383f",
+"bfcee5c6824ff270"
+],
+"sha256": "7998a4a2c5955fcdf0ea860dc8dbd21a85539699a95b076d284c6f56888bc93e"
+},
+"C_order_gapped": {
+"n": 200,
+"first": [
+"bfb41287255907e2",
+"bfb352ba8fa5c64e",
+"bfb3aaa5df0ef834"
+],
+"sha256": "7c97f256d158c8a40579bd391391443bb834b2576e53e946c15e4e9783fdc45d"
+}
+}
+},
+"1099511640121": {
+"plant_reg": "bfa4d66103e59eaf",
+"reg_plain": "bfc423f1b8fa3604",
+"reg_gapped": "bfb4409abdac6e8b",
+"controls": {
+"C_order": {
+"n": 2000,
+"first": [
+"bfc36b804071bff6",
+"bfc450b74ec9fa72",
+"bfc2d46c5f866fbb"
+],
+"sha256": "f56ee580cfcd45d2a6de00910958f0de4a191db5412b682aedfac812c0bc7503"
+},
+"C_pool": {
+"n": 2000,
+"first": [
+"bfcc6033c879dad1",
+"bfc95fe2625d7a28",
+"bfcb6273a49f85a3"
+],
+"sha256": "0fde9d48a1ee58593df1735c8960fbab6972e223827ecff13f9dcc555f4a221c"
+},
+"C_order_gapped": {
+"n": 200,
+"first": [
+"bfb41993a680d5bb",
+"bfb3e62551b1e4a4",
+"bfb3d9aaca5b4888"
+],
+"sha256": "d717a9d32476862c26da0672c8b1cf722c1ed3f017ee31060220cda5319cde66"
+}
+}
+}
+}
+}

@@ -18,11 +18,14 @@ import { cardTags } from "./analytics-cards.mjs";
 import { flagLinks, standings } from "./finding-flags.mjs";
 import { findingBody } from "./findings-page.mjs";
 import { glossaryBody, indexBody, items } from "./findings-index.mjs";
+import { chartsFor } from "./findings-charts.mjs";
 
 const site = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const DIR = path.join(site, "findings");
 const json = (p) => JSON.parse(readFileSync(p, "utf8"));
 const CSS = '<link rel="stylesheet" href="/world/site/experiments.css">\n<link rel="stylesheet" href="/world/site/findings.css">\n<link rel="stylesheet" href="/world/site/depth.css">\n<link rel="stylesheet" href="/world/site/research.css">\n<script type="module" src="/world/site/research.js"></script>\n';
+// pages that carry charts also load the chart styles and the live re-run loader
+const CHART_HEAD = '<link rel="stylesheet" href="/world/site/findings-figures.css">\n<script type="module" src="/world/site/findings-live.js"></script>\n';
 const AUTHOR = { "@type": "Person", name: "Zain Dana Harper", url: "https://harperz9.github.io/" };
 
 // the plate beside a physics finding: the site's own copy of the period plate, with the paper's caption and alt text
@@ -100,13 +103,14 @@ export function build({ records, glossary, ledger, meta, figures }) {
       const o = records.find((r) => r.document.id === old), w = ledger.relations.filter((x) => x.to === old).sort((a, b) => a.date.localeCompare(b.date)).pop();
       return { id: old, title: o.document.title, claim: o.document.standfirst, date: w.date, type: w.type, why: w.note };
     });
-    const { body, termUses } = findingBody(rec, { pages, glossary: glossaryFor(id, glossary), plate: plateFor(figures), relations: ledger.relations, replaced });
+    const chartFile = path.join(DIR, "charts", `${id}.json`), charts = existsSync(chartFile) ? chartsFor(rec, json(chartFile)) : null;
+    const { body, termUses } = findingBody(rec, { pages, glossary: glossaryFor(id, glossary), plate: plateFor(figures), relations: ledger.relations, replaced, charts });
     for (const u of termUses) uses.push({ ...u, page: id });
     const jsonld = { "@context": "https://schema.org", "@type": "ScholarlyArticle", headline: d.title, abstract: d.standfirst, identifier: id, dateCreated: d.date_found,
       datePublished: rec.versions[rec.versions.length - 1].date, author: AUTHOR, about: d.fields, encoding: { "@type": "MediaObject", encodingFormat: "application/pdf", contentUrl: `https://harperz9.github.io/findings/papers/${id}.pdf` },
       isPartOf: { "@type": "CollectionPage", name: "Findings", url: "https://harperz9.github.io/findings/" } };
     const rel = pages[id].slice(1);
-    outputs.push([path.basename(rel), page({ path: rel, title: `${id}: ${d.title}`, description: d.standfirst, body, extraHead: CSS + `<meta name="citation_pdf_url" content="https://harperz9.github.io/findings/papers/${id}.pdf">\n`, jsonld })]);
+    outputs.push([path.basename(rel), page({ path: rel, title: `${id}: ${d.title}`, description: d.standfirst, body, extraHead: CSS + (charts ? CHART_HEAD : "") + `<meta name="citation_pdf_url" content="https://harperz9.github.io/findings/papers/${id}.pdf">\n`, jsonld })]);
   }
   for (const [id, v] of Object.entries(redirects)) outputs.push([path.basename(pages[id]), redirectStub(v.href, `Finding ${id} was ${st[id].word}.`)]);
   const list = items(records, pages).map((it) => ({ ...it, standing: st[it.id], redirect: redirects[it.id] }));

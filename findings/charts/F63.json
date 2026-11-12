@@ -1,0 +1,480 @@
+{
+ "finding": "F63",
+ "sources": [
+  {
+   "id": "main",
+   "name": "main-result.json (main run, Test A is the tree-ring test)",
+   "sha256_original": "0ef775ca981f2cdaca7b4df602b1c6514daba73ccb3035def7f36ef15d3c6828",
+   "sha256_copy": "3f45948cc5e37aa74d4159f7fa6056759136bb601246732f7d3302b3e1ae01d6",
+   "href": "/findings/results/F63/main-result.json",
+   "run": "20261029T225453Z"
+  },
+  {
+   "id": "rerun",
+   "name": "rerun-result.json (rerun, MT2 is the gridded-drought rerun)",
+   "sha256_original": "fbfc39401773f4e60332c386f7672bf077eb41b0438317cfc61aa9dd028ce53f",
+   "sha256_copy": "455055ab3ace69835e4e4e1ebea51c9fc258acea7ea29b73d05f1a385e9b67f9",
+   "href": "/findings/results/F63/rerun-result.json",
+   "run": "20261030T033057Z"
+  }
+ ],
+ "charts": [
+  {
+   "key": "design",
+   "form": "flow",
+   "at": "controls",
+   "claims": [
+    "c1",
+    "c4"
+   ],
+   "source": [
+    "main",
+    "rerun"
+   ],
+   "title": "How the steeling test was built: one model, a placebo window and two nulls.",
+   "takeaway": "The moderate-drought coefficient had to clear both nulls; it reached +0.039 against a time-shift bar of 0.065.",
+   "n": "3,780 site-drought events at 1,175 sites, 65 species",
+   "steps": [
+    {
+     "kind": "data",
+     "label": "1,175 sites, 3,780 events",
+     "detail": "Tree-ring sites in the contiguous United States, 65 species, 177 climate divisions. An event is a severe drought year with rings three years either side."
+    },
+    {
+     "kind": "measure",
+     "label": "Group each event by earlier drought",
+     "detail": "Lowest summer drought index four to eleven years before: none (986), moderate (941), severe (1,853)."
+    },
+    {
+     "kind": "measure",
+     "label": "Fit log resilience",
+     "detail": "Resilience is growth after the drought over growth before it. The model has site and year effects; the tested term is the moderate group."
+    },
+    {
+     "kind": "control",
+     "label": "Placebo window",
+     "detail": "Group by drought five to twelve years after the event. It gave +0.006 (p 0.86)."
+    },
+    {
+     "kind": "control",
+     "label": "Time-shift null",
+     "detail": "Move each division's drought record by 20 or more years and rebuild every event, 200 times. 95th percentile 0.065."
+    },
+    {
+     "kind": "control",
+     "label": "Label-permutation null",
+     "detail": "Shuffle the prior-drought labels among each site's own events, 500 times. 95th percentile 0.020."
+    },
+    {
+     "kind": "rule",
+     "label": "Rule: above 0, adjusted q below 0.05, above both nulls",
+     "detail": "Written and hash-locked before the run."
+    },
+    {
+     "kind": "verdict",
+     "holds": false,
+     "label": "Steeling by moderate drought",
+     "no": "not shown",
+     "detail": "Estimate +0.039, adjusted q 0.166, time-shift p 0.18."
+    }
+   ]
+  },
+  {
+   "key": "estimates",
+   "form": "interval",
+   "at": "results",
+   "claims": [
+    "c1",
+    "c2",
+    "c4"
+   ],
+   "source": [
+    "main",
+    "rerun"
+   ],
+   "title": "Effect of an earlier drought on resilience and on its two parts, with 95% intervals.",
+   "takeaway": "Every resilience interval reaches 0 (moderate +0.039); after a severe prior drought resistance fell by 0.087 and recovery rose by 0.096, which cancel.",
+   "units": "change in the natural log of a Lloret index (growth ratio around a severe drought) against events with no prior drought; above 0 means a higher index",
+   "n": "3,780 site-drought events at 1,175 sites, 65 species; placebo window 3,976 events; rerun 2,549 events at 1,097 sites",
+   "interval": "95% interval, standard errors clustered by climate division",
+   "baseline": "Events with no drought in the window four to eleven years earlier (the line at 0)",
+   "threshold": "Moderate-drought coefficient above 0 with adjusted q below 0.05 and above both nulls' 95th percentile; placebo p at or above 0.05",
+   "ruled_out": "A steeling effect larger than +0.090 on log resilience (upper end of the 95% interval, main run); +0.059 in the rerun",
+   "series_names": [
+    "Resilience: growth after over growth before",
+    "Resistance: drought-year growth over growth before",
+    "Recovery: growth after over drought-year growth"
+   ],
+   "axis": {
+    "label": "change in log Lloret index against no prior drought (above 0 is a higher index)",
+    "refs": [
+     {
+      "value": 0,
+      "label": "no difference from events with no prior drought"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "label": "Moderate prior drought (the tested term)",
+     "group": "Resilience, main run (site and year effects)",
+     "value": 0.03930952109012188,
+     "lo": -0.011304266766321923,
+     "hi": 0.0899233089465657,
+     "series": 0,
+     "note": "+0.039 (−0.011 to +0.090), p 0.13"
+    },
+    {
+     "label": "Severe prior drought",
+     "group": "Resilience, main run (site and year effects)",
+     "value": 0.00911626163421251,
+     "lo": -0.03889014743015514,
+     "hi": 0.05712267069858016,
+     "series": 0,
+     "note": "+0.009 (−0.039 to +0.057), p 0.71"
+    },
+    {
+     "label": "Drought after the event, moderate",
+     "group": "Placebo window, main run",
+     "value": 0.005716740179483072,
+     "lo": -0.05895443791027622,
+     "hi": 0.07038791826924237,
+     "series": 0,
+     "note": "+0.006 (−0.059 to +0.070), p 0.86"
+    },
+    {
+     "label": "Resistance: growth in the drought year",
+     "group": "Components after a severe prior drought, main run",
+     "value": -0.08719995130508347,
+     "lo": -0.14903824816102795,
+     "hi": -0.025361654449138973,
+     "series": 1,
+     "note": "−0.087 (−0.149 to −0.025), p 0.006"
+    },
+    {
+     "label": "Recovery: growth after over drought year",
+     "group": "Components after a severe prior drought, main run",
+     "value": 0.09631621293929608,
+     "lo": 0.03478685914176606,
+     "hi": 0.1578455667368261,
+     "series": 2,
+     "note": "+0.096 (+0.035 to +0.158), p 0.002"
+    },
+    {
+     "label": "Moderate prior drought",
+     "group": "Rerun on gridded drought (species and year effects)",
+     "value": 0.025052768099937704,
+     "lo": -0.009031910539617601,
+     "hi": 0.059137446739493005,
+     "series": 0,
+     "note": "+0.025 (−0.009 to +0.059), p 0.15"
+    }
+   ],
+   "columns": [
+    "Estimate",
+    "Coefficient",
+    "95% low",
+    "95% high",
+    "p",
+    "Events"
+   ],
+   "table": [
+    [
+     "Resilience, main run (site and year effects): Moderate prior drought (the tested term)",
+     "+0.039",
+     "−0.011",
+     "+0.090",
+     "0.13",
+     "3,780"
+    ],
+    [
+     "Resilience, main run (site and year effects): Severe prior drought",
+     "+0.009",
+     "−0.039",
+     "+0.057",
+     "0.71",
+     "3,780"
+    ],
+    [
+     "Placebo window, main run: Drought after the event, moderate",
+     "+0.006",
+     "−0.059",
+     "+0.070",
+     "0.86",
+     "3,976"
+    ],
+    [
+     "Components after a severe prior drought, main run: Resistance: growth in the drought year",
+     "−0.087",
+     "−0.149",
+     "−0.025",
+     "0.006",
+     "3,780"
+    ],
+    [
+     "Components after a severe prior drought, main run: Recovery: growth after over drought year",
+     "+0.096",
+     "+0.035",
+     "+0.158",
+     "0.002",
+     "3,780"
+    ],
+    [
+     "Rerun on gridded drought (species and year effects): Moderate prior drought",
+     "+0.025",
+     "−0.009",
+     "+0.059",
+     "0.15",
+     "2,549"
+    ]
+   ]
+  },
+  {
+   "key": "nulls",
+   "form": "band",
+   "at": "results",
+   "claims": [
+    "c1",
+    "c3"
+   ],
+   "source": [
+    "main",
+    "rerun"
+   ],
+   "title": "The moderate-drought estimate against each null's range, main run and rerun.",
+   "takeaway": "The estimate sits inside the time-shift range in both runs (+0.039 against 0.065, then +0.025 against 0.038) and clears only the weaker label shuffle.",
+   "units": "moderate prior drought coefficient on log resilience; higher means more resilience after an earlier moderate drought",
+   "n": "3,780 site-drought events at 1,175 sites, 65 species; rerun 2,549 events at 1,097 sites; 200, 500 and 200 null draws",
+   "interval": "5th to 95th percentile of the null draws",
+   "baseline": "Time-shift null: each drought record moved by 20 or more years, which keeps its pattern and breaks its link with the rings. Label-permutation null: labels shuffled within a site.",
+   "threshold": "Real estimate above the null's 95th percentile, fixed before each run; the time-shift null is the one the rule binds",
+   "ruled_out": "A moderate-drought effect beyond what a time-shifted drought record gives: +0.039 is below 0.065 (p 0.18), and in the rerun +0.025 is below 0.038 (p 0.14)",
+   "value_name": "real estimate",
+   "band_name": "null draws, 5th to 95th percentile",
+   "axis": {
+    "label": "moderate prior drought coefficient on log resilience (higher is more resilience)"
+   },
+   "rows": [
+    {
+     "label": "Time-shift null (the binding one)",
+     "group": "Main run, division drought index",
+     "value": 0.03930952109012188,
+     "lo": -0.0660165740552649,
+     "hi": 0.06495271117116354,
+     "mean": -0.0014554884048307703,
+     "series": 0,
+     "note": "real +0.039; null −0.066 to +0.065; p 0.18 from 200 draws"
+    },
+    {
+     "label": "Label-permutation null",
+     "group": "Main run, division drought index",
+     "value": 0.03930952109012188,
+     "lo": -0.020790074093465782,
+     "hi": 0.020383753936263373,
+     "mean": -2.8129958896904314e-05,
+     "series": 0,
+     "note": "real +0.039; null −0.021 to +0.020; p 0.004 from 500 draws"
+    },
+    {
+     "label": "Time-shift null",
+     "group": "Rerun, 0.5 degree gridded drought index",
+     "value": 0.025052768099937704,
+     "lo": -0.04465014075315829,
+     "hi": 0.038434445614691115,
+     "mean": -0.0035441655417351435,
+     "series": 0,
+     "note": "real +0.025; null −0.045 to +0.038; p 0.14 from 200 draws"
+    }
+   ],
+   "columns": [
+    "Run and null",
+    "Real estimate",
+    "Null mean",
+    "Null 5th pct",
+    "Null 95th pct",
+    "p",
+    "Draws"
+   ],
+   "table": [
+    [
+     "Main run, division drought index: Time-shift null (the binding one)",
+     "+0.039",
+     "−0.001",
+     "−0.066",
+     "+0.065",
+     "0.18",
+     "200"
+    ],
+    [
+     "Main run, division drought index: Label-permutation null",
+     "+0.039",
+     "−0.000",
+     "−0.021",
+     "+0.020",
+     "0.004",
+     "500"
+    ],
+    [
+     "Rerun, 0.5 degree gridded drought index: Time-shift null",
+     "+0.025",
+     "−0.004",
+     "−0.045",
+     "+0.038",
+     "0.14",
+     "200"
+    ]
+   ]
+  },
+  {
+   "key": "rules",
+   "form": "rules",
+   "at": "results",
+   "claims": [
+    "c4",
+    "c1",
+    "c3"
+   ],
+   "source": [
+    "main",
+    "rerun"
+   ],
+   "title": "Every rule set in advance for the tree-ring test, the value it tested and the bar.",
+   "takeaway": "4 of 10 rules held. The placebo was clean (p 0.86); the adjusted q of 0.166 and the time-shift bar failed, so steeling is not shown.",
+   "units": "coefficients on log resilience, q and p values and a z statistic, as each rule states",
+   "n": "3,780 site-drought events at 1,175 sites, 65 species; rerun 2,549 events at 1,097 sites",
+   "interval": null,
+   "no_interval": "Each rule compares one value with one bar. The intervals and null ranges are in the two charts above.",
+   "threshold": "A prediction passes only when all of its rules hold",
+   "rows": [
+    {
+     "label": "A1: moderate-drought coefficient above 0",
+     "left": "+0.039",
+     "right": "0",
+     "holds": true
+    },
+    {
+     "label": "A1: adjusted q below 0.05",
+     "left": "0.166",
+     "right": "0.05",
+     "holds": false
+    },
+    {
+     "label": "A1: coefficient above the time-shift 95th percentile",
+     "left": "+0.039",
+     "right": "0.065",
+     "holds": false
+    },
+    {
+     "label": "A1: coefficient above the label-permutation 95th percentile",
+     "left": "+0.039",
+     "right": "0.020",
+     "holds": true
+    },
+    {
+     "label": "A2: moderate minus severe above 0",
+     "left": "+0.030",
+     "right": "0",
+     "holds": true
+    },
+    {
+     "label": "A2: adjusted q below 0.05",
+     "left": "0.214",
+     "right": "0.05",
+     "holds": false
+    },
+    {
+     "label": "A3: rise-then-fall statistic above 1.96",
+     "left": "−0.895",
+     "right": "1.96",
+     "holds": false
+    },
+    {
+     "label": "A3: statistic above its dose-shuffle 95th percentile",
+     "left": "−0.895",
+     "right": "1.256",
+     "holds": false
+    },
+    {
+     "label": "Placebo window: p at or above 0.05",
+     "left": "0.862",
+     "right": "0.05",
+     "holds": true
+    },
+    {
+     "label": "Rerun: coefficient above its time-shift 95th percentile",
+     "left": "+0.025",
+     "right": "0.038",
+     "holds": false
+    }
+   ],
+   "columns": [
+    "Rule set in advance",
+    "Value",
+    "Bar",
+    "Result"
+   ],
+   "table": [
+    [
+     "A1: moderate-drought coefficient above 0",
+     "+0.039",
+     "0",
+     "held"
+    ],
+    [
+     "A1: adjusted q below 0.05",
+     "0.166",
+     "0.05",
+     "failed"
+    ],
+    [
+     "A1: coefficient above the time-shift 95th percentile",
+     "+0.039",
+     "0.065",
+     "failed"
+    ],
+    [
+     "A1: coefficient above the label-permutation 95th percentile",
+     "+0.039",
+     "0.020",
+     "held"
+    ],
+    [
+     "A2: moderate minus severe above 0",
+     "+0.030",
+     "0",
+     "held"
+    ],
+    [
+     "A2: adjusted q below 0.05",
+     "0.214",
+     "0.05",
+     "failed"
+    ],
+    [
+     "A3: rise-then-fall statistic above 1.96",
+     "−0.895",
+     "1.96",
+     "failed"
+    ],
+    [
+     "A3: statistic above its dose-shuffle 95th percentile",
+     "−0.895",
+     "1.256",
+     "failed"
+    ],
+    [
+     "Placebo window: p at or above 0.05",
+     "0.862",
+     "0.05",
+     "held"
+    ],
+    [
+     "Rerun: coefficient above its time-shift 95th percentile",
+     "+0.025",
+     "0.038",
+     "failed"
+    ]
+   ]
+  }
+ ]
+}

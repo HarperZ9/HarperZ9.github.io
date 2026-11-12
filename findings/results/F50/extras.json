@@ -1,0 +1,194 @@
+{
+ "prereg_sha256_current_file": "f185c72a449a8649dda7177a3c93a4107da54bc243b4001edd439ad8cceadb82",
+ "prereg_frozen_body_sha256": "4d4681b9f44188b37e60fd9c53d94a85e01cd1529f4d2be7228a42a3ff36f753",
+ "inputs_sha256": {
+  "CHANGES": "d510e365f97a80be24ebaa272edb138fa29c09023982a500a28740265b954178",
+  "ctq01.tsv": "4b4f588179dd1391b7e687154adf1478102beadecacb8f88e2f25217b499b947",
+  "ctq01_definitions.tsv": "8b7a61c304142e392a872e3eed438f23aa229e001b114b83d8503a1353116679",
+  "dataset_description.json": "aa21a961dbc549c4004bb42f8fa094036e0f1b67e33f936855efb10569078933",
+  "demos.tsv": "b146ccf9a8326db7a4173533a12d796b77fb631b79672a2396d0174ab858ff52",
+  "notes.tsv": "d0e46666f754e3a5690cc263885f3622458757820cae1b5f8f6cbd343d5b0f66",
+  "participants.tsv": "ec2eb0d5457cf80417ce7e12eaae58571613465544caebc13f9937273bf27e83"
+ },
+ "ctq_copy": {
+  "ctq_rows": 226,
+  "ctq_unique_ids": 226
+ },
+ "inventory": {
+  "participant_dirs": 241,
+  "with_DONE": 241,
+  "runs_per_participant": {
+   "4 ts / 4 confounds": 230,
+   "3 ts / 3 confounds": 6,
+   "2 ts / 2 confounds": 5
+  },
+  "missing_qc_json": 0,
+  "fmriprep_generated_by": {
+   "[{\"CodeURL\": \"http25.2.6.tar.gz\", \"Name\": \"fMRIPrep\", \"Version\": \"25.2.6\"}]": 241
+  },
+  "sdc": {
+   "fieldmaps": 198,
+   "syn": 43
+  }
+ },
+ "flow": {
+  "done": 241,
+  "processing_error": 0,
+  "excluded_motion_lt2_usable_runs": 17,
+  "usable_motion": 224,
+  "with_ctq_row": 208,
+  "with_demographics": 208,
+  "ctq_total_missing": 21,
+  "analysed_primary": 187,
+  "usable_runs_distribution": {
+   "0": 8,
+   "1": 9,
+   "2": 15,
+   "3": 21,
+   "4": 188
+  }
+ },
+ "describe": {
+  "ctq_total": {
+   "mean": 42.967468805668446,
+   "sd": 17.293113255816248,
+   "min": 25.0,
+   "max": 110.0
+  },
+  "age": {
+   "mean": 33.3675935828877,
+   "sd": 13.254120969443685,
+   "min": 18.08,
+   "max": 68.33
+  },
+  "mean_fd": {
+   "mean": 0.028110113004663685,
+   "sd": 0.011487758571329349,
+   "min": 0.0078183709827523,
+   "max": 0.0702610048541567
+  },
+  "n_retained": {
+   "mean": 1808.4545454545455,
+   "sd": 268.3250753117489,
+   "min": 850.0,
+   "max": 1952.0
+  },
+  "z_primary": {
+   "mean": 0.17232840137200944,
+   "sd": 0.07293884484705142,
+   "min": 0.0049370077295503,
+   "max": 0.3770532543509128
+  },
+  "z_secondary": {
+   "mean": 0.14418794051143727,
+   "sd": 0.05938149649988944,
+   "min": 0.0156201903975638,
+   "max": 0.317518163334763
+  },
+  "sex": {
+   "F": 112,
+   "M": 73,
+   "O": 2
+  },
+  "site": {
+   "1": 122,
+   "2": 65
+  },
+  "group": {
+   "Patient": 114,
+   "GenPop": 73
+  }
+ },
+ "null_primary": {
+  "n": 187,
+  "observed_r": -0.005975271451098153,
+  "n_perm": 10000,
+  "seed": 20261029,
+  "percentile_of_observed": 47.06,
+  "p_two_sided_perm": 0.9338066193380662,
+  "null_quantiles": {
+   "0.025": -0.14605211417402864,
+   "0.05": -0.11863693351976143,
+   "0.5": -0.00060857679382476,
+   "0.95": 0.12387384056673634,
+   "0.975": 0.14728800783881893
+  }
+ },
+ "null_secondary": {
+  "n": 187,
+  "observed_r": -0.025274226611319492,
+  "n_perm": 10000,
+  "seed": 20261029,
+  "percentile_of_observed": 36.76,
+  "p_two_sided_perm": 0.7310268973102689,
+  "null_quantiles": {
+   "0.025": -0.141717723847237,
+   "0.05": -0.1200799808353144,
+   "0.5": -6.307103730751224e-05,
+   "0.95": 0.12442064611468687,
+   "0.975": 0.14923333402688632
+  }
+ },
+ "sensitivity_item88": [
+  {
+   "label": "primary",
+   "n": 173,
+   "k_covariates": 6,
+   "r": 0.03357859554889315,
+   "p": 0.6666186138189766,
+   "ci95": [
+    -0.11889126923851645,
+    0.1845013502598678
+   ],
+   "ci90": [
+    -0.09456684249388188,
+    0.16062941430950362
+   ],
+   "decision": "no_meaningful_association",
+   "magnitude": "",
+   "p_holm": 1.0,
+   "sensitivity": "exclude_any_clinical_item_88",
+   "status": "exploratory"
+  },
+  {
+   "label": "secondary",
+   "n": 173,
+   "k_covariates": 6,
+   "r": -0.0007664186390925124,
+   "p": 0.9921569832316565,
+   "ci95": [
+    -0.15261225059771089,
+    0.1511147644377318
+   ],
+   "ci90": [
+    -0.12849364910189584,
+    0.12698582381889498
+   ],
+   "decision": "no_meaningful_association",
+   "magnitude": "",
+   "p_holm": 1.0,
+   "sensitivity": "exclude_any_clinical_item_88",
+   "status": "exploratory"
+  }
+ ],
+ "power": [
+  {
+   "n": 187,
+   "k": 6,
+   "rho": 0.2,
+   "power_detect_alpha_0.05": 0.7718129806066113,
+   "power_detect_alpha_0.025_holm_worst": 0.6784568461991662,
+   "power_equivalence_tost_if_true_r_0": 0.7108262854371763,
+   "min_detectable_r_80pct_alpha_0.05": 0.206954717038009
+  },
+  {
+   "n": 187,
+   "k": 6,
+   "rho": 0.2,
+   "power_detect_alpha_0.05": 0.7718129806066113,
+   "power_detect_alpha_0.025_holm_worst": 0.6784568461991662,
+   "power_equivalence_tost_if_true_r_0": 0.7108262854371763,
+   "min_detectable_r_80pct_alpha_0.05": 0.206954717038009
+  }
+ ]
+}

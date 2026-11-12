@@ -39,7 +39,8 @@ function evidence(rec, ctx, appendix) {
     : `<p class="bound">${mark("outcome", d.outcome)}<span><b>${esc(OUTCOME_WORD[d.outcome].replace(/^./, (c) => c.toUpperCase()))}.</b> ${esc(d.tier_reason)}</span></p>`;
   return `<section id="evidence" class="landmark" aria-labelledby="evidence-h"><h2 id="evidence-h" class="d-3d" data-hue="brass">Evidence</h2>
 ${bound}
-${ctx.figures.length ? `<h3>Figures</h3>${ctx.figures.join("\n")}` : ""}
+${ctx.charts && ctx.charts.rest() ? `<h3>Charts</h3>${ctx.charts.rest()}
+` : ""}${ctx.figures.length ? `<h3>Figures</h3>${ctx.figures.join("\n")}` : ""}
 ${ctx.tables.length ? `<h3>Tables</h3>${ctx.tables.join("\n")}` : ""}
 ${appendix}
 ${recordNumbers(rec)}
@@ -53,6 +54,7 @@ ${ladder(rec)}
 export function findingBody(rec, env) {
   const d = rec.document, ctx = context(rec, env.pages, env.glossary, env.plate);
   numberLabels(ctx);
+  ctx.charts = env.charts || null;
   const lead = d.sections.filter((s) => s.role === "lead"), arg = d.sections.filter((s) => s.role === "argument"), ev = d.sections.filter((s) => s.role === "evidence");
   const sec = (s, keep) => `<section id="${s.id}" class="${s.role === "lead" ? "lead-sec" : "arg-sec"}" aria-labelledby="${s.id}-h"><h2 id="${s.id}-h" class="d-3d" data-hue="brass">${esc(s.title)}</h2>\n${sectionBody(s, ctx, { keep })}</section>`;
   const leadHtml = lead.map((s) => sec(s)).join("\n"), argHtml = arg.map((s) => sec(s)).join("\n");

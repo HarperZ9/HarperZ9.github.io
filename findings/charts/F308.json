@@ -1,0 +1,243 @@
+{
+ "finding": "F308",
+ "sources": [
+  {
+   "id": "result",
+   "name": "result.json",
+   "sha256_original": "d2b554ef618721f326ca8652c7db757b6bda7fa4e3a2cde013ace093c17929ea",
+   "sha256_copy": "efbeff7d747ce414a6903fa2f6fe813b55873f265ef350236cc81a9f19d60d6b",
+   "href": "/findings/results/F308/result.json",
+   "run": "20261031T223144Z"
+  },
+  {
+   "id": "frame",
+   "name": "frame_counts.json",
+   "sha256_original": "06094824e262954032a7586b66fae734f69e910908b0a53fcafbce4261290941",
+   "sha256_copy": "06094824e262954032a7586b66fae734f69e910908b0a53fcafbce4261290941",
+   "href": "/findings/results/F308/frame_counts.json"
+  }
+ ],
+ "charts": [
+  {
+   "key": "frame",
+   "form": "flow",
+   "at": "data",
+   "claims": [
+    "c4",
+    "c2"
+   ],
+   "source": [
+    "frame",
+    "result"
+   ],
+   "title": "From every entry that mentions a conjecture down to the one line that failed.",
+   "takeaway": "1,179 of 23,883 entries (4.9 percent) had a line the parser accepts; 213 lines from a random 500 were tested and 1 failed.",
+   "n": "23,883 entries that mention a conjecture",
+   "steps": [
+    {
+     "kind": "data",
+     "label": "23,883 entries mention a conjecture",
+     "detail": "Counted in the public OEIS data repository."
+    },
+    {
+     "kind": "measure",
+     "label": "1,179 have a parsable line",
+     "detail": "4.9 percent. The parser accepts an equation in n and earlier terms with integer coefficients, so the result describes simple linear recurrences."
+    },
+    {
+     "kind": "data",
+     "label": "500 entries drawn at random",
+     "detail": "Seeded draw. They held 531 conjecture lines, and 512 parsed."
+    },
+    {
+     "kind": "measure",
+     "label": "213 lines tested",
+     "detail": "Tested means the b-file (the entry's long list of terms) runs at least 30 indices past the entry's data section. Median reach: 967 terms past it."
+    },
+    {
+     "kind": "planted",
+     "label": "212 of 212 planted errors caught",
+     "detail": "Each passing equation had its first integer coefficient raised by one and was run again."
+    },
+    {
+     "kind": "control",
+     "label": "Wrong-entry equations pass at 0.005",
+     "detail": "Each equation applied to another entry's terms, 200 draws of 30. This is the chance level of the test."
+    },
+    {
+     "kind": "verdict",
+     "holds": false,
+     "label": "1 line failed: A031740",
+     "no": "already known",
+     "detail": "Held for 64 indices, failed at n = 65. The entry has recorded the conjecture as false since 2016."
+    }
+   ]
+  },
+  {
+   "key": "failrate",
+   "form": "interval",
+   "at": "results",
+   "claims": [
+    "c1"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "Share of tested conjecture lines that failed on their own b-file.",
+   "takeaway": "1 of 213 lines failed, 0.47 percent (interval 0.08 to 2.6), below the forecast of 4 percent; the interval spans the 1 percent rule.",
+   "units": "percent of tested lines whose equation is false at some index of the b-file; lower means fewer wrong conjectures",
+   "n": "213 tested conjecture lines from 500 sampled entries",
+   "interval": "95 percent Wilson interval (a range for a share that stays valid when the count is small)",
+   "baseline": "Forecast written before the run: 4 percent",
+   "threshold": "Failure rate above 1 percent, set in advance; not met, since the rate is 0.47 percent",
+   "planted": "Held: 212 of 212 planted errors caught",
+   "ruled_out": "A failure rate above 2.6 percent among simple linear recurrence conjectures of this kind (upper end of the interval)",
+   "value_name": "measured failure rate",
+   "axis": {
+    "label": "percent of tested lines that failed (lower is fewer wrong conjectures)",
+    "min": 0,
+    "max": 5,
+    "percent": true,
+    "refs": [
+     {
+      "value": 1.0,
+      "label": "rule set in advance, 1 percent"
+     },
+     {
+      "value": 4.0,
+      "label": "forecast, 4 percent"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "label": "Lines that failed",
+     "value": 0.4694835680751174,
+     "lo": 0.08292137381074073,
+     "hi": 2.6110266509225206,
+     "series": 0,
+     "note": "0.47 percent; 0.08 to 2.6"
+    }
+   ],
+   "columns": [
+    "Quantity",
+    "Value"
+   ],
+   "table": [
+    [
+     "Lines tested",
+     "213"
+    ],
+    [
+     "Lines that failed",
+     "1"
+    ],
+    [
+     "Failure rate",
+     "0.47 percent"
+    ],
+    [
+     "Wilson interval, lower end",
+     "0.08 percent"
+    ],
+    [
+     "Wilson interval, upper end",
+     "2.61 percent"
+    ],
+    [
+     "Rule set in advance",
+     "above 1 percent"
+    ],
+    [
+     "Forecast",
+     "4 percent"
+    ]
+   ]
+  },
+  {
+   "key": "planted",
+   "form": "bars",
+   "at": "controls",
+   "claims": [
+    "c3"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "Can the check tell a right equation from a wrong one?",
+   "takeaway": "Real lines pass at 0.995 and every planted error is caught, while equations run on another entry's terms pass at 0.005: the check separates right from wrong.",
+   "units": "share of lines, 0 to 1",
+   "n": "213 tested lines; 212 planted versions of the passing lines; 200 control draws of 30 equations",
+   "interval": "Whisker on the control row: 5th to 95th percentile of the draws. The other two rows are single counts.",
+   "baseline": "Cross-entry control: each equation applied to a different, randomly chosen entry's terms",
+   "threshold": "Planted errors caught at least 0.99; real pass rate above the control's 95th percentile (0.033)",
+   "planted": "Held: 212 of 212 caught",
+   "series_names": [
+    "Real conjecture lines",
+    "Cross-entry control",
+    "Planted errors"
+   ],
+   "axis": {
+    "label": "share of lines (0 to 1)",
+    "min": 0,
+    "max": 1
+   },
+   "rows": [
+    {
+     "label": "Real lines that pass on their own b-file",
+     "value": 0.9953051643192489,
+     "series": 0,
+     "note": "0.995 (212 of 213)"
+    },
+    {
+     "label": "Equations that pass on another entry's terms",
+     "value": 0.004833333333333334,
+     "lo": 0.0,
+     "hi": 0.03333333333333333,
+     "series": 1,
+     "note": "mean 0.005; draws 0 to 0.033"
+    },
+    {
+     "label": "Planted errors caught",
+     "value": 1.0,
+     "series": 2,
+     "note": "1.00 (212 of 212)"
+    }
+   ],
+   "columns": [
+    "Quantity",
+    "Value"
+   ],
+   "table": [
+    [
+     "Real pass rate",
+     "0.9953"
+    ],
+    [
+     "Planted errors caught",
+     "212 of 212"
+    ],
+    [
+     "Control mean pass rate",
+     "0.0048"
+    ],
+    [
+     "Control 5th percentile",
+     "0.000"
+    ],
+    [
+     "Control 95th percentile",
+     "0.033"
+    ],
+    [
+     "Control draws",
+     "200"
+    ],
+    [
+     "p from draws",
+     "0.005"
+    ]
+   ]
+  }
+ ]
+}

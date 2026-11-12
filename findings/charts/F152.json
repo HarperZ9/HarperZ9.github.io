@@ -1,0 +1,609 @@
+{
+ "finding": "F152",
+ "sources": [
+  {
+   "id": "result",
+   "name": "result.json",
+   "sha256_original": "68475b5fddf1d1f06e40cf67d05c6864f853eff2c9d33f60b2af3ba5ac01bd16",
+   "sha256_copy": "ea4cca13362346cc3158fd2ca7b512b22a2c97dd98613316dcc6b8bbc66ddfa4",
+   "href": "/findings/results/F152/result.json",
+   "run": "20261031T065109Z"
+  }
+ ],
+ "charts": [
+  {
+   "key": "design",
+   "form": "flow",
+   "at": "controls",
+   "claims": [
+    "c2"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "The design: rank pairs of concepts that are not yet linked, then count how many link later.",
+   "takeaway": "On the research notes the shared-neighbour ranking put 0.127 of its top 200 on pairs that linked later. Popularity alone put 0.268, and graphs rewired to keep only popularity reached a 95th percentile of 0.164.",
+   "n": "3 corpora, 3 folds each; every value is the mean over the folds; 20 draws per control on the research notes",
+   "steps": [
+    {
+     "kind": "data",
+     "label": "Three dated corpora",
+     "detail": "Our research notes and the questions of two Stack Exchange sites, each cut into time slices. A link is two concepts in one document."
+    },
+    {
+     "kind": "measure",
+     "label": "Train on early slices",
+     "detail": "3 folds. Each builds the concept graph from its training slices and scores every unlinked pair."
+    },
+    {
+     "kind": "measure",
+     "label": "Three rankers",
+     "detail": "Shared neighbours scores a pair by the specific neighbours its two concepts share. Popularity multiplies their link counts. Adamic-Adar was added after preregistration."
+    },
+    {
+     "kind": "measure",
+     "label": "Score on the next slice",
+     "detail": "A target is an unlinked pair that appears together in at least two documents of the next slice. The measure is precision in the top 200."
+    },
+    {
+     "kind": "control",
+     "label": "Rewired and permuted graphs",
+     "detail": "20 draws each on the research notes. Rewiring keeps every concept's popularity and breaks its neighbourhood. Permuting the labels breaks everything."
+    },
+    {
+     "kind": "verdict",
+     "holds": false,
+     "label": "Beats popularity",
+     "no": "failed",
+     "detail": "Difference interval on the research notes −0.182 to −0.125, all below 0."
+    },
+    {
+     "kind": "verdict",
+     "holds": false,
+     "label": "Beats both controls",
+     "no": "failed",
+     "detail": "0.127 is below the rewired 95th percentile of 0.164. It is above the permuted one, 0.048."
+    },
+    {
+     "kind": "verdict",
+     "holds": true,
+     "label": "Signal with popularity held fixed",
+     "yes": "held",
+     "detail": "Area under the curve 0.569 among pairs of similar popularity, limit 0.55."
+    },
+    {
+     "kind": "verdict",
+     "holds": false,
+     "label": "Beats popularity on Biology",
+     "no": "failed",
+     "detail": "Difference interval −0.105 to −0.062."
+    }
+   ]
+  },
+  {
+   "key": "precision",
+   "form": "bars",
+   "at": "results",
+   "claims": [
+    "c1"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "Precision in the top 200 for each ranker on each corpus.",
+   "takeaway": "Popularity found more later links than shared neighbours on every corpus: 0.268 against 0.127 on the research notes, 0.088 against 0.018 on Biology and 0.043 against 0.007 on Skeptics. Adamic-Adar scored 0.273, 0.122 and 0.055.",
+   "units": "precision in the top 200: the share of a ranker's 200 highest-scored unlinked pairs that became linked in the next time slice.",
+   "n": "3 corpora, 3 folds each; every value is the mean over the folds",
+   "interval": null,
+   "no_interval": "The run stores an interval for the difference between shared neighbours and popularity, drawn in the next figure, and none for a single ranker or for Adamic-Adar.",
+   "series_names": [
+    "shared neighbours",
+    "popularity",
+    "Adamic-Adar"
+   ],
+   "baseline": "Base rate, the share of all unlinked pairs that are targets: 0.032 on the research notes, 0.0038 on Biology, 0.0026 on Skeptics.",
+   "threshold": "Shared neighbours beats popularity when the interval for the difference lies above 0. It lay below 0 on all three corpora. Adamic-Adar was not preregistered, so its lead is a pointer for a later test.",
+   "axis": {
+    "label": "precision in the top 200",
+    "min": 0,
+    "max": 0.3
+   },
+   "rows": [
+    {
+     "group": "Research notes",
+     "label": "shared neighbours",
+     "value": 0.12666666666666668,
+     "series": 0,
+     "note": "0.127"
+    },
+    {
+     "group": "Research notes",
+     "label": "popularity",
+     "value": 0.26833333333333337,
+     "series": 1,
+     "note": "0.268"
+    },
+    {
+     "group": "Research notes",
+     "label": "Adamic-Adar",
+     "value": 0.2733333333333334,
+     "series": 2,
+     "note": "0.273"
+    },
+    {
+     "group": "Biology Stack Exchange",
+     "label": "shared neighbours",
+     "value": 0.018333333333333333,
+     "series": 0,
+     "note": "0.018"
+    },
+    {
+     "group": "Biology Stack Exchange",
+     "label": "popularity",
+     "value": 0.08833333333333333,
+     "series": 1,
+     "note": "0.088"
+    },
+    {
+     "group": "Biology Stack Exchange",
+     "label": "Adamic-Adar",
+     "value": 0.12166666666666666,
+     "series": 2,
+     "note": "0.122"
+    },
+    {
+     "group": "Skeptics Stack Exchange",
+     "label": "shared neighbours",
+     "value": 0.006666666666666667,
+     "series": 0,
+     "note": "0.007"
+    },
+    {
+     "group": "Skeptics Stack Exchange",
+     "label": "popularity",
+     "value": 0.043333333333333335,
+     "series": 1,
+     "note": "0.043"
+    },
+    {
+     "group": "Skeptics Stack Exchange",
+     "label": "Adamic-Adar",
+     "value": 0.055,
+     "series": 2,
+     "note": "0.055"
+    }
+   ],
+   "columns": [
+    "Corpus",
+    "Fold",
+    "Concepts",
+    "Targets",
+    "Candidate pairs",
+    "Base rate",
+    "Shared neighbours",
+    "Popularity",
+    "Adamic-Adar"
+   ],
+   "table": [
+    [
+     "Research notes",
+     "mean",
+     "1095",
+     "1774",
+     "658912",
+     "0.0321",
+     "0.127",
+     "0.268",
+     "0.273"
+    ],
+    [
+     "Biology Stack Exchange",
+     "mean",
+     "509",
+     "359",
+     "125028",
+     "0.0038",
+     "0.018",
+     "0.088",
+     "0.122"
+    ],
+    [
+     "Skeptics Stack Exchange",
+     "mean",
+     "373",
+     "127",
+     "69992",
+     "0.0026",
+     "0.007",
+     "0.043",
+     "0.055"
+    ],
+    [
+     "Research notes",
+     "1",
+     "285",
+     "2889",
+     "30841",
+     "0.0937",
+     "0.380",
+     "0.750",
+     "0.775"
+    ],
+    [
+     "Research notes",
+     "2",
+     "1500",
+     "1054",
+     "966650",
+     "0.0011",
+     "0.000",
+     "0.040",
+     "0.030"
+    ],
+    [
+     "Research notes",
+     "3",
+     "1500",
+     "1378",
+     "979245",
+     "0.0014",
+     "0.000",
+     "0.015",
+     "0.015"
+    ],
+    [
+     "Biology Stack Exchange",
+     "1",
+     "378",
+     "487",
+     "66577",
+     "0.0073",
+     "0.040",
+     "0.150",
+     "0.205"
+    ],
+    [
+     "Biology Stack Exchange",
+     "2",
+     "540",
+     "371",
+     "136117",
+     "0.0027",
+     "0.010",
+     "0.095",
+     "0.125"
+    ],
+    [
+     "Biology Stack Exchange",
+     "3",
+     "609",
+     "218",
+     "172390",
+     "0.0013",
+     "0.005",
+     "0.020",
+     "0.035"
+    ],
+    [
+     "Skeptics Stack Exchange",
+     "1",
+     "252",
+     "158",
+     "29894",
+     "0.0053",
+     "0.010",
+     "0.065",
+     "0.100"
+    ],
+    [
+     "Skeptics Stack Exchange",
+     "2",
+     "391",
+     "101",
+     "72530",
+     "0.0014",
+     "0.010",
+     "0.030",
+     "0.030"
+    ],
+    [
+     "Skeptics Stack Exchange",
+     "3",
+     "476",
+     "123",
+     "107553",
+     "0.0011",
+     "0.000",
+     "0.035",
+     "0.035"
+    ]
+   ]
+  },
+  {
+   "key": "delta",
+   "form": "interval",
+   "at": "results",
+   "claims": [
+    "c1"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "Shared neighbours minus popularity, with its interval, on each corpus.",
+   "takeaway": "The difference in precision is below 0 on every corpus and no interval reaches 0: −0.142 (−0.182 to −0.125) on the research notes, −0.070 (−0.105 to −0.062) on Biology, −0.037 (−0.077 to −0.042) on Skeptics.",
+   "units": "difference in precision in the top 200, shared neighbours minus popularity. Below 0 means popularity found more later links.",
+   "n": "3 corpora, 3 folds each; every value is the mean over the folds",
+   "interval": "95% interval from resampling the test slice's documents, averaged over the folds within each draw. On Skeptics the stored difference sits just outside its stored interval; both are drawn as the run recorded them.",
+   "series_names": [
+    "shared neighbours minus popularity"
+   ],
+   "baseline": "Popularity, the product of the two concepts' link counts. A difference of 0 is a tie.",
+   "threshold": "Lower end of the interval above 0, on the research notes and again on Biology. Both failed: −0.182 and −0.105.",
+   "axis": {
+    "label": "difference in precision in the top 200",
+    "min": -0.2,
+    "max": 0.05,
+    "refs": [
+     {
+      "value": 0,
+      "label": "a tie with popularity, 0"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "label": "Research notes",
+     "value": -0.1416666666666667,
+     "lo": -0.18166666666666667,
+     "hi": -0.12495833333333335,
+     "series": 0,
+     "note": "−0.142 (−0.182 to −0.125)"
+    },
+    {
+     "label": "Biology Stack Exchange",
+     "value": -0.07,
+     "lo": -0.105,
+     "hi": -0.061666666666666675,
+     "series": 0,
+     "note": "−0.070 (−0.105 to −0.062)"
+    },
+    {
+     "label": "Skeptics Stack Exchange",
+     "value": -0.03666666666666667,
+     "lo": -0.07670833333333334,
+     "hi": -0.041666666666666664,
+     "series": 0,
+     "note": "−0.037 (−0.077 to −0.042)"
+    }
+   ],
+   "columns": [
+    "Corpus",
+    "Shared neighbours",
+    "Popularity",
+    "Difference",
+    "Low",
+    "High"
+   ],
+   "table": [
+    [
+     "Research notes",
+     "0.127",
+     "0.268",
+     "−0.142",
+     "−0.182",
+     "−0.125"
+    ],
+    [
+     "Biology Stack Exchange",
+     "0.018",
+     "0.088",
+     "−0.070",
+     "−0.105",
+     "−0.062"
+    ],
+    [
+     "Skeptics Stack Exchange",
+     "0.007",
+     "0.043",
+     "−0.037",
+     "−0.077",
+     "−0.042"
+    ]
+   ]
+  },
+  {
+   "key": "controls",
+   "form": "band",
+   "at": "results",
+   "claims": [
+    "c2"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "The shared-neighbour score on the research notes against its two controls.",
+   "takeaway": "Graphs rewired so that each concept keeps its popularity and loses its real neighbours scored 0.146 on average, with a 95th percentile of 0.164. The real graph scored 0.127, inside and below that range. It beat only the permuted graphs, 95th percentile 0.048.",
+   "units": "precision in the top 200: the share of a ranker's 200 highest-scored unlinked pairs that became linked in the next time slice.",
+   "n": "research notes, mean of 3 folds; 20 draws per control",
+   "value_name": "real graph, shared neighbours",
+   "band_name": "control draws, 5th to 95th percentile",
+   "interval": "Band: 5th to 95th percentile of 20 control draws, with the control mean as a tick. The real score has no interval of its own in the run.",
+   "baseline": "Popularity on the real graph scored 0.268, the dashed line.",
+   "threshold": "Real score above the 95th percentile of both controls. It failed against rewiring, p 0.95, and held against permutation, p 0.048, the smallest value 20 draws can give.",
+   "ruled_out": "At the top of the list, the shared-neighbour score adds nothing detectable beyond popularity on this corpus. There was no planted check, so the study cannot say how large an effect it would have missed.",
+   "axis": {
+    "label": "precision in the top 200",
+    "min": 0,
+    "max": 0.3,
+    "refs": [
+     {
+      "value": 0.26833333333333337,
+      "label": "popularity on the real graph, 0.268"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "label": "Rewired, popularity kept",
+     "value": 0.12666666666666668,
+     "lo": 0.12975,
+     "hi": 0.16375,
+     "mean": 0.14550000000000002,
+     "series": 0,
+     "note": "real 0.127; control 0.130 to 0.164, mean 0.146; p 0.952"
+    },
+    {
+     "label": "Concept labels permuted",
+     "value": 0.12666666666666668,
+     "lo": 0.014916666666666667,
+     "hi": 0.04841666666666667,
+     "mean": 0.03233333333333334,
+     "series": 0,
+     "note": "real 0.127; control 0.015 to 0.048, mean 0.032; p 0.048"
+    }
+   ],
+   "columns": [
+    "Control",
+    "Draws",
+    "Mean",
+    "5th percentile",
+    "95th percentile",
+    "Real score",
+    "p"
+   ],
+   "table": [
+    [
+     "Rewired, popularity kept",
+     "20",
+     "0.146",
+     "0.130",
+     "0.164",
+     "0.127",
+     "0.952"
+    ],
+    [
+     "Concept labels permuted",
+     "20",
+     "0.032",
+     "0.015",
+     "0.048",
+     "0.127",
+     "0.048"
+    ]
+   ]
+  },
+  {
+   "key": "auc",
+   "form": "interval",
+   "at": "results",
+   "claims": [
+    "c3"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "With popularity held fixed, how well each score separates later links from the rest.",
+   "takeaway": "Among pairs of similar popularity the shared-neighbour score still ranks a later link above a non-link more often than a coin: 0.569 on the research notes, 0.757 on Biology and 0.696 on Skeptics. The signal is real and too weak to win the top of the list.",
+   "units": "area under the ROC curve within tenths of popularity: the chance that a pair that linked later scores above a pair that did not, both drawn from the same tenth. A coin gives 0.5.",
+   "n": "3 corpora, 3 folds each; every value is the mean over the folds; 40,000 sampled pairs per tenth as stated in the paper",
+   "interval": null,
+   "no_interval": "One value per corpus, the mean of three folds. The run reports no interval on it.",
+   "series_names": [
+    "shared neighbours",
+    "popularity (held fixed here, so it has no value)",
+    "Adamic-Adar"
+   ],
+   "baseline": "A coin, 0.5",
+   "threshold": "Above 0.55 on the research notes. It held at 0.569.",
+   "axis": {
+    "label": "area under the curve within tenths of popularity",
+    "min": 0.4,
+    "max": 0.9,
+    "refs": [
+     {
+      "value": 0.5,
+      "label": "a coin, 0.5"
+     },
+     {
+      "value": 0.55,
+      "label": "limit set in advance, 0.55"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "group": "Research notes",
+     "label": "shared neighbours",
+     "value": 0.5689442337326631,
+     "series": 0,
+     "note": "0.569"
+    },
+    {
+     "group": "Research notes",
+     "label": "Adamic-Adar",
+     "value": 0.5908601116547737,
+     "series": 2,
+     "note": "0.591"
+    },
+    {
+     "group": "Biology Stack Exchange",
+     "label": "shared neighbours",
+     "value": 0.7572280196233656,
+     "series": 0,
+     "note": "0.757"
+    },
+    {
+     "group": "Biology Stack Exchange",
+     "label": "Adamic-Adar",
+     "value": 0.7864823264471367,
+     "series": 2,
+     "note": "0.786"
+    },
+    {
+     "group": "Skeptics Stack Exchange",
+     "label": "shared neighbours",
+     "value": 0.6955542973535543,
+     "series": 0,
+     "note": "0.696"
+    },
+    {
+     "group": "Skeptics Stack Exchange",
+     "label": "Adamic-Adar",
+     "value": 0.7297534772808093,
+     "series": 2,
+     "note": "0.730"
+    }
+   ],
+   "columns": [
+    "Corpus",
+    "Shared neighbours, popularity held fixed",
+    "Adamic-Adar, popularity held fixed",
+    "Shared neighbours, all pairs",
+    "Popularity, all pairs"
+   ],
+   "table": [
+    [
+     "Research notes",
+     "0.569",
+     "0.591",
+     "0.739",
+     "0.782"
+    ],
+    [
+     "Biology Stack Exchange",
+     "0.757",
+     "0.786",
+     "0.810",
+     "0.815"
+    ],
+    [
+     "Skeptics Stack Exchange",
+     "0.696",
+     "0.730",
+     "0.762",
+     "0.836"
+    ]
+   ]
+  }
+ ]
+}

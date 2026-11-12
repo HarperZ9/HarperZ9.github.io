@@ -1,0 +1,603 @@
+{
+ "finding": "F515",
+ "sources": [
+  {
+   "id": "score",
+   "name": "score.json",
+   "sha256_original": "96b08d26e027bd325055b13f817ad168e045d6159228007d9a4a9fef6ddd24b2",
+   "sha256_copy": "96b08d26e027bd325055b13f817ad168e045d6159228007d9a4a9fef6ddd24b2",
+   "href": "/findings/results/F515/score.json"
+  },
+  {
+   "id": "fresh",
+   "name": "t5_fresh.json",
+   "sha256_original": "677a2ecf1621c85ceaf3ffce81a7ca392302caf299fcf28a45e0f4db64b5ea3b",
+   "sha256_copy": "677a2ecf1621c85ceaf3ffce81a7ca392302caf299fcf28a45e0f4db64b5ea3b",
+   "href": "/findings/results/F515/t5_fresh.json"
+  },
+  {
+   "id": "llm",
+   "name": "t5_llm.json",
+   "sha256_original": "74a522e61c75dd0450a8fdb2961a332e9ab4fd8ee0c97e8fdcad775546b718bd",
+   "sha256_copy": "74a522e61c75dd0450a8fdb2961a332e9ab4fd8ee0c97e8fdcad775546b718bd",
+   "href": "/findings/results/F515/t5_llm.json"
+  },
+  {
+   "id": "ppm",
+   "name": "t5_ppm.json",
+   "sha256_original": "8e6f441fb47d3eb9ede14dfd3b312bff0b44725134b4a498cba53ef42710a0d3",
+   "sha256_copy": "8e6f441fb47d3eb9ede14dfd3b312bff0b44725134b4a498cba53ef42710a0d3",
+   "href": "/findings/results/F515/t5_ppm.json"
+  }
+ ],
+ "charts": [
+  {
+   "key": "bpc",
+   "form": "bars",
+   "at": "results",
+   "claims": [
+    "c1",
+    "c4"
+   ],
+   "source": [
+    "ppm",
+    "llm",
+    "fresh",
+    "score"
+   ],
+   "title": "What each coder needs per character on three texts.",
+   "takeaway": "On the declaration the two language models need 0.27 and 0.57 bits per character against 2.83 for xz; on unseen text they need 1.59 and 1.66, and trained PPM (2.89) does worse than untrained PPM (2.70).",
+   "units": "bits per character (the average number of bits a coder needs to store one character; lower is better compression). A language model is used as a coder by turning its next-token probabilities into bits",
+   "n": "English declaration of human rights, 10,637 characters; Unseen text written after the models were released, 30,000 characters; Alice in Wonderland, 30,000 characters; each coder run once on each text",
+   "interval": null,
+   "no_interval": "Each value is one coder run once on one text. The result files hold no interval.",
+   "baseline": "xz and untrained PPM have seen no text before the one they code",
+   "threshold": "Forecasts set in advance had to land within 25 percent: 5 of 8 held, and all 3 that failed are language-model rows that came in far lower than forecast. The unseen text was added after the forecasts.",
+   "series_names": [
+    "the declaration",
+    "unseen text",
+    "Alice in Wonderland"
+   ],
+   "axis": {
+    "label": "bits per character (lower is better)",
+    "min": 0,
+    "max": 3.5
+   },
+   "rows": [
+    {
+     "label": "xz",
+     "group": "English declaration of human rights, 10,637 characters",
+     "value": 2.833881733571496,
+     "series": 0,
+     "note": "2.83; forecast 3.0, held"
+    },
+    {
+     "label": "PPM, untrained",
+     "group": "English declaration of human rights, 10,637 characters",
+     "value": 2.573403667784862,
+     "series": 0,
+     "note": "2.57; forecast 2.4, held"
+    },
+    {
+     "label": "PPM, trained",
+     "group": "English declaration of human rights, 10,637 characters",
+     "value": 1.9853871783829173,
+     "series": 0,
+     "note": "1.99; forecast 2.1, held"
+    },
+    {
+     "label": "SmolLM2-360M",
+     "group": "English declaration of human rights, 10,637 characters",
+     "value": 0.2678370051123003,
+     "series": 0,
+     "note": "0.27; forecast 1.2, failed"
+    },
+    {
+     "label": "Qwen3-0.6B",
+     "group": "English declaration of human rights, 10,637 characters",
+     "value": 0.5709518596873067,
+     "series": 0,
+     "note": "0.57; forecast 1.0, failed"
+    },
+    {
+     "label": "xz",
+     "group": "Unseen text written after the models were released, 30,000 characters",
+     "value": 2.7392,
+     "series": 1,
+     "note": "2.74"
+    },
+    {
+     "label": "PPM, untrained",
+     "group": "Unseen text written after the models were released, 30,000 characters",
+     "value": 2.702600591223166,
+     "series": 1,
+     "note": "2.70"
+    },
+    {
+     "label": "PPM, trained",
+     "group": "Unseen text written after the models were released, 30,000 characters",
+     "value": 2.887385518860302,
+     "series": 1,
+     "note": "2.89"
+    },
+    {
+     "label": "SmolLM2-360M",
+     "group": "Unseen text written after the models were released, 30,000 characters",
+     "value": 1.5918116034550185,
+     "series": 1,
+     "note": "1.59"
+    },
+    {
+     "label": "Qwen3-0.6B",
+     "group": "Unseen text written after the models were released, 30,000 characters",
+     "value": 1.6576989771005433,
+     "series": 1,
+     "note": "1.66"
+    },
+    {
+     "label": "xz",
+     "group": "Alice in Wonderland, 30,000 characters",
+     "value": 3.1168,
+     "series": 2,
+     "note": "3.12; forecast 2.9, held"
+    },
+    {
+     "label": "PPM, untrained",
+     "group": "Alice in Wonderland, 30,000 characters",
+     "value": 2.8387384236566366,
+     "series": 2,
+     "note": "2.84"
+    },
+    {
+     "label": "PPM, trained",
+     "group": "Alice in Wonderland, 30,000 characters",
+     "value": 2.1375396110138727,
+     "series": 2,
+     "note": "2.14; forecast 2.1, held"
+    },
+    {
+     "label": "SmolLM2-360M",
+     "group": "Alice in Wonderland, 30,000 characters",
+     "value": 0.8890527824256227,
+     "series": 2,
+     "note": "0.89; forecast 2.0, failed"
+    },
+    {
+     "label": "Qwen3-0.6B",
+     "group": "Alice in Wonderland, 30,000 characters",
+     "value": 1.163409806682226,
+     "series": 2,
+     "note": "1.16"
+    }
+   ],
+   "columns": [
+    "Coder",
+    "Declaration",
+    "Unseen text",
+    "Alice in Wonderland"
+   ],
+   "table": [
+    [
+     "xz (a general file compressor)",
+     "2.834",
+     "2.739",
+     "3.117"
+    ],
+    [
+     "PPM, untrained (predicts each character from the few before it)",
+     "2.573",
+     "2.703",
+     "2.839"
+    ],
+    [
+     "PPM trained on 5 million characters of old books",
+     "1.985",
+     "2.887",
+     "2.138"
+    ],
+    [
+     "SmolLM2-360M (language model)",
+     "0.268",
+     "1.592",
+     "0.889"
+    ],
+    [
+     "Qwen3-0.6B (language model)",
+     "0.571",
+     "1.658",
+     "1.163"
+    ]
+   ]
+  },
+  {
+   "key": "jump",
+   "form": "dumbbell",
+   "at": "results",
+   "claims": [
+    "c2",
+    "c3"
+   ],
+   "source": [
+    "ppm",
+    "llm",
+    "fresh"
+   ],
+   "title": "From a text the models may have seen to one they cannot have seen.",
+   "takeaway": "SmolLM2 goes from 0.27 to 1.59 bits per character, 5.9 times as many, while untrained PPM moves only from 2.57 to 2.70: the unseen text is about as hard in itself.",
+   "units": "bits per character (the average number of bits a coder needs to store one character; lower is better compression)",
+   "n": "10,637 characters of the declaration and 30,000 characters of unseen text; each coder run once on each",
+   "interval": null,
+   "no_interval": "Each value is one coder run once on one text. The result files hold no interval.",
+   "baseline": "Untrained PPM has seen nothing, so its two values measure how hard each text is in itself: 2.57 and 2.70",
+   "threshold": "None set in advance. The unseen text is a control added after the forecasts were fixed.",
+   "a_name": "the declaration",
+   "b_name": "unseen text",
+   "axis": {
+    "label": "bits per character (lower is better)",
+    "min": 0,
+    "max": 3.5
+   },
+   "rows": [
+    {
+     "label": "xz",
+     "a": 2.833881733571496,
+     "b": 2.7392,
+     "note": "2.83 to 2.74; 0.97 times"
+    },
+    {
+     "label": "PPM, untrained",
+     "a": 2.573403667784862,
+     "b": 2.702600591223166,
+     "note": "2.57 to 2.70; 1.05 times"
+    },
+    {
+     "label": "PPM, trained",
+     "a": 1.9853871783829173,
+     "b": 2.887385518860302,
+     "note": "1.99 to 2.89; 1.45 times"
+    },
+    {
+     "label": "SmolLM2-360M",
+     "a": 0.2678370051123003,
+     "b": 1.5918116034550185,
+     "note": "0.27 to 1.59; 5.94 times"
+    },
+    {
+     "label": "Qwen3-0.6B",
+     "a": 0.5709518596873067,
+     "b": 1.6576989771005433,
+     "note": "0.57 to 1.66; 2.90 times"
+    }
+   ],
+   "columns": [
+    "Coder",
+    "Declaration",
+    "Unseen text",
+    "Unseen over declaration"
+   ],
+   "table": [
+    [
+     "xz (a general file compressor)",
+     "2.834",
+     "2.739",
+     "0.97"
+    ],
+    [
+     "PPM, untrained (predicts each character from the few before it)",
+     "2.573",
+     "2.703",
+     "1.05"
+    ],
+    [
+     "PPM trained on 5 million characters of old books",
+     "1.985",
+     "2.887",
+     "1.45"
+    ],
+    [
+     "SmolLM2-360M (language model)",
+     "0.268",
+     "1.592",
+     "5.94"
+    ],
+    [
+     "Qwen3-0.6B (language model)",
+     "0.571",
+     "1.658",
+     "2.90"
+    ]
+   ]
+  },
+  {
+   "key": "answers",
+   "form": "dumbbell",
+   "at": "results",
+   "claims": [
+    "c1"
+   ],
+   "source": [
+    "llm",
+    "score"
+   ],
+   "title": "What it costs to send a right answer and a wrong one, given the question.",
+   "takeaway": "A right capital city costs about 1 bit and a wrong one 18.3 to 19.5; a right three-digit sum still costs 8.5 to 9.1 bits, so the models recall capitals and do not reliably add.",
+   "units": "mean code length in bits of the answer given its prompt (the bits the model needs to store the answer; fewer bits means the model expected it more)",
+   "n": "Capital cities: 20 prompts; One-digit sums: 30 prompts; Three-digit sums: 30 prompts; one right and one wrong answer per prompt",
+   "interval": null,
+   "no_interval": "Each value is a mean over the prompts of one task. The result file holds every prompt's bits and no interval.",
+   "baseline": "A model that knows the answer needs close to 0 bits for it",
+   "threshold": "Set in advance for Qwen3: a right three-digit sum costs at least 10 bits. Failed, 9.11",
+   "a_name": "right answer",
+   "b_name": "wrong answer",
+   "axis": {
+    "label": "bits to send the answer (fewer means more expected)",
+    "min": 0,
+    "max": 22
+   },
+   "rows": [
+    {
+     "label": "SmolLM2-360M",
+     "group": "Capital cities",
+     "a": 0.9791410557660841,
+     "b": 19.470899281988657,
+     "note": "right 0.98; wrong 19.47; right is cheaper in 20 of 20"
+    },
+    {
+     "label": "Qwen3-0.6B",
+     "group": "Capital cities",
+     "a": 0.949941605901343,
+     "b": 18.275243904417348,
+     "note": "right 0.95; wrong 18.28; right is cheaper in 20 of 20"
+    },
+    {
+     "label": "SmolLM2-360M",
+     "group": "One-digit sums",
+     "a": 4.009595330108585,
+     "b": 4.628103732014065,
+     "note": "right 4.01; wrong 4.63; right is cheaper in 24 of 30"
+    },
+    {
+     "label": "Qwen3-0.6B",
+     "group": "One-digit sums",
+     "a": 1.2930488768660788,
+     "b": 6.567157614920428,
+     "note": "right 1.29; wrong 6.57; right is cheaper in 28 of 30"
+    },
+    {
+     "label": "SmolLM2-360M",
+     "group": "Three-digit sums",
+     "a": 8.507338167638105,
+     "b": 13.341266081207696,
+     "note": "right 8.51; wrong 13.34; right is cheaper in 28 of 30"
+    },
+    {
+     "label": "Qwen3-0.6B",
+     "group": "Three-digit sums",
+     "a": 9.113557314183227,
+     "b": 13.832693091401405,
+     "note": "right 9.11; wrong 13.83; right is cheaper in 29 of 30"
+    }
+   ],
+   "columns": [
+    "Task",
+    "Model",
+    "Right answer, mean bits",
+    "Wrong answer, mean bits",
+    "Prompts where right is cheaper",
+    "Prompts"
+   ],
+   "table": [
+    [
+     "Capital cities",
+     "SmolLM2-360M",
+     "0.979",
+     "19.471",
+     "20",
+     "20"
+    ],
+    [
+     "Capital cities",
+     "Qwen3-0.6B",
+     "0.950",
+     "18.275",
+     "20",
+     "20"
+    ],
+    [
+     "One-digit sums",
+     "SmolLM2-360M",
+     "4.010",
+     "4.628",
+     "24",
+     "30"
+    ],
+    [
+     "One-digit sums",
+     "Qwen3-0.6B",
+     "1.293",
+     "6.567",
+     "28",
+     "30"
+    ],
+    [
+     "Three-digit sums",
+     "SmolLM2-360M",
+     "8.507",
+     "13.341",
+     "28",
+     "30"
+    ],
+    [
+     "Three-digit sums",
+     "Qwen3-0.6B",
+     "9.114",
+     "13.833",
+     "29",
+     "30"
+    ]
+   ]
+  },
+  {
+   "key": "shuffle",
+   "form": "bars",
+   "at": "controls",
+   "claims": [
+    "c4"
+   ],
+   "source": [
+    "ppm",
+    "score"
+   ],
+   "title": "Does PPM's training gain come from the order of the training text?",
+   "takeaway": "Yes: training takes PPM from 2.57 to 1.99 bits per character on the declaration; training on the same characters shuffled gives 3.59, worse than no training, and on shuffled words 2.10.",
+   "units": "bits per character (the average number of bits a coder needs to store one character; lower is better compression). PPM (prediction by partial matching) is a classical coder that predicts each character from the few before it",
+   "n": "5,000,000 training characters; scored on the 10,637 characters of the declaration; one run per training set",
+   "interval": null,
+   "no_interval": "Each value is one training run scored once. The result file holds no interval.",
+   "baseline": "Untrained PPM: 2.57 bits per character",
+   "threshold": "Character shuffling must remove at least 0.8 of the training gain, set in advance: held, it removed 2.74 times the gain. Word shuffling removed 0.20 of it.",
+   "axis": {
+    "label": "bits per character on the declaration (lower is better)",
+    "min": 0,
+    "max": 4,
+    "refs": [
+     {
+      "value": 2.573403667784862,
+      "label": "untrained, 2.57"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "label": "Untrained",
+     "value": 2.573403667784862,
+     "series": 0,
+     "note": "2.57"
+    },
+    {
+     "label": "Trained on the books as written",
+     "value": 1.9853871783829173,
+     "series": 0,
+     "note": "1.99"
+    },
+    {
+     "label": "Trained with every word shuffled",
+     "value": 2.1026133491946064,
+     "series": 0,
+     "note": "2.10"
+    },
+    {
+     "label": "Trained with every character shuffled",
+     "value": 3.59487226232238,
+     "series": 0,
+     "note": "3.59"
+    }
+   ],
+   "columns": [
+    "PPM training",
+    "Declaration",
+    "Alice in Wonderland"
+   ],
+   "table": [
+    [
+     "Untrained",
+     "2.573",
+     "2.839"
+    ],
+    [
+     "Trained on the books as written",
+     "1.985",
+     "2.138"
+    ],
+    [
+     "Trained with every word shuffled",
+     "2.103",
+     "2.395"
+    ],
+    [
+     "Trained with every character shuffled",
+     "3.595",
+     "3.893"
+    ]
+   ]
+  },
+  {
+   "key": "roundtrip",
+   "form": "rules",
+   "at": "controls",
+   "claims": [
+    "c5"
+   ],
+   "source": [
+    "llm",
+    "score"
+   ],
+   "title": "Are the model rows real codes that decode back to the text?",
+   "takeaway": "Yes: a 120-token passage was coded into 306 bits by SmolLM2 and 444 bits by Qwen3, and the decoder returned the same tokens and the same text both times.",
+   "units": "each row compares the decoder's output with the input of an arithmetic coder (a coder that turns a model's predicted probabilities into a string of bits)",
+   "n": "one passage of 120 tokens per model (614 and 618 characters)",
+   "interval": null,
+   "no_interval": "Each row is an exact comparison of one decoded passage with its input.",
+   "threshold": "An inexact round trip would have voided the model rows, set in advance. It did not happen.",
+   "baseline": "The long-document values in the other charts are ideal code lengths summed from the model's probabilities, not coded bit strings",
+   "rows": [
+    {
+     "label": "SmolLM2-360M: 120 tokens coded into 306 bits, token sequence after decoding",
+     "left": "identical",
+     "right": "identical to the tokens encoded",
+     "holds": true
+    },
+    {
+     "label": "SmolLM2-360M: the 614 characters of text after decoding",
+     "left": "identical",
+     "right": "identical to the passage",
+     "holds": true
+    },
+    {
+     "label": "Qwen3-0.6B: 120 tokens coded into 444 bits, token sequence after decoding",
+     "left": "identical",
+     "right": "identical to the tokens encoded",
+     "holds": true
+    },
+    {
+     "label": "Qwen3-0.6B: the 618 characters of text after decoding",
+     "left": "identical",
+     "right": "identical to the passage",
+     "holds": true
+    }
+   ],
+   "columns": [
+    "Check",
+    "Decoder output",
+    "Required",
+    "Result"
+   ],
+   "table": [
+    [
+     "SmolLM2-360M: 120 tokens coded into 306 bits, token sequence after decoding",
+     "identical",
+     "identical to the tokens encoded",
+     "held"
+    ],
+    [
+     "SmolLM2-360M: the 614 characters of text after decoding",
+     "identical",
+     "identical to the passage",
+     "held"
+    ],
+    [
+     "Qwen3-0.6B: 120 tokens coded into 444 bits, token sequence after decoding",
+     "identical",
+     "identical to the tokens encoded",
+     "held"
+    ],
+    [
+     "Qwen3-0.6B: the 618 characters of text after decoding",
+     "identical",
+     "identical to the passage",
+     "held"
+    ]
+   ]
+  }
+ ]
+}
