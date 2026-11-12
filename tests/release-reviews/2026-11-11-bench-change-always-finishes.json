@@ -1,0 +1,7 @@
+{
+  "date": "2026-11-11",
+  "note": "World asset revision restamped after the water loop fix: a change of state now finishes on slow renderers. index.html differs only by the revision stamp.",
+  "paths": {
+    "index.html": "2c410b2d73650f05bf3cd2d042ac4ca8f0fca0a3114b7ca40cfab6465b10631b"
+  }
+}

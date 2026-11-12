@@ -172,6 +172,7 @@ REVIEWED_ASSET_REVISIONS = {
     "system/hire.css": VOID_PLATES_REVISION,
     "system/bulletin-board.js": "20260909-media-filters",
     "system/bulletin-work.js": "20260909-open-work",
+    "system/bulletin/compose.js": "20261111-post-from-site",
     # 1 October 2026: the typefaces take the Zain name, so the sheet and script
     # that name them take a new stamp.
     "system/font-marketplace.css": "20261001-zain-typefaces",

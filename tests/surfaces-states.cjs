@@ -174,7 +174,10 @@ async function operate(page, op) {
     // 3: with motion on, the change is a front
     const m = await open(browser, '/elements.html?e=water,ink');
     assert.equal((await info(m.page)).ground, 'water'); await m.page.waitForTimeout(600);
-    const start = await m.page.evaluate(() => window.pic()); await m.page.click('[data-op="heat"]');
+    const start = await m.page.evaluate(() => window.pic());
+    // the water's idle clock has already run out when the change starts, as it does on a renderer too slow to cross in 45 seconds: the change must still finish
+    await m.page.evaluate(() => { const now = performance.now.bind(performance); window.__late = 60000; performance.now = () => now() - window.__late; });
+    await m.page.click('[data-op="heat"]'); await m.page.evaluate(() => { window.__late = 0; });
     assert.equal(await m.page.evaluate(() => [...document.querySelectorAll('[data-op]')].every((b) => b.disabled)), true, 'the controls wait while the change crosses');
     await m.page.waitForFunction(() => (window.W().value().well.changing()?.f ?? 1) >= 0.5, null, { timeout: 240000, polling: 50 });   // the front moves at most a quarter second of its nine per drawn frame, so a runner that draws in software needs minutes, not seconds
     const half = await m.page.evaluate((a) => { const b = window.pic(), band = (y0, y1) => { let s = 0, n = 0; for (let y = y0; y < y1; y++) for (let x = 0; x < 96; x++) for (let c = 0; c < 3; c++) { s += Math.abs(a[(y * 96 + x) * 4 + c] - b[(y * 96 + x) * 4 + c]); n++; } return +(s / n).toFixed(2); };

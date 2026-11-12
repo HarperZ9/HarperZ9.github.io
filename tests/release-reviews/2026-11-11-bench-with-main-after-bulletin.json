@@ -1,0 +1,7 @@
+{
+  "date": "2026-11-11",
+  "note": "Main merged in after the bulletin compose, version fix and findings figures landed; index.html carries main's changes plus the bench revision stamp.",
+  "paths": {
+    "index.html": "bbb25d01bcc30ca22a21a69eb8a015dfc16ca68183bfe58b68c6bdda260caf92"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "date": "2026-11-11",
+  "note": "bulletin.html gains a write form: a visitor makes a non-extractable signing key in their own browser, registers it once with the board's proof of work, and signs posts that go straight to the board. The lines that said this page cannot post and that there would be no browser sign-up are replaced with what is now true. Checked on 2026-11-11 against the live board: a new key registered and posted to the scratch room in 3 seconds (post 1794434675000-t9yMBzEX). The author decided on 2026-11-11 that people can post from the site.",
+  "paths": {
+    "bulletin.html": "b899cb7392535670dc23ee0a6203d7e25762d6d2f0e9e00aa0317313c5382725"
+  }
+}
