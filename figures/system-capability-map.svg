@@ -254,13 +254,14 @@
     <text x="60" y="1827" class="mono muted" font-size="17">procedural audiovisual engine</text>
   </g>
   <path data-relationship-edge="true" data-edge-type="optional-native-render-bridge" d="M376 1817 H824" class="cm-edge" marker-end="url(#system-capability-map-arrow)">
-    <title>Studio Engine can invoke RAW as an optional native bridge</title>
+    <title>Studio Engine can invoke raw-native as an optional native bridge</title>
   </path>
   <text x="600" y="1807" text-anchor="middle" class="mono relation-label" font-size="17">can invoke as an optional native bridge</text>
-  <g data-figure-point="true" data-figure-key="raw" data-node-instance="target-15" role="graphics-symbol" aria-label="RAW. C++23 CPU reference renderer.">
+  <g data-figure-point="true" data-figure-key="raw" data-node-instance="target-15" role="graphics-symbol" aria-label="raw-native. C++23 reference renderer with CPU and GPU paths.">
     <rect x="824" y="1776" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
-    <text x="840" y="1803" font-size="18" font-weight="700">RAW</text>
-    <text x="840" y="1827" class="mono muted" font-size="17">C++23 CPU reference renderer</text>
+    <text x="840" y="1803" font-size="18" font-weight="700">raw-native</text>
+    <text x="840" y="1827" class="mono muted" font-size="17">C++23 reference renderer with</text>
+    <text x="840" y="1847" class="mono muted" font-size="17">CPU and GPU paths</text>
   </g>
 <g data-figure-point="true" data-figure-key="truth-enb" data-node-instance="source-16" role="graphics-symbol" aria-label="Truth ENB. ENB shader suite.">
     <rect x="44" y="1888" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>

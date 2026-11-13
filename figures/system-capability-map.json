@@ -14,7 +14,7 @@
         "href": "https://github.com/HarperZ9/HarperZ9.github.io/blob/main/system/systems.json"
       }
     ],
-    "retrievedAt": "2026-10-03",
+    "retrievedAt": "2026-11-12",
     "units": "registry systems and verified typed relationship records",
     "transformations": [
       "Only verified-in-source typed relation records are included.",
@@ -147,9 +147,9 @@
         },
         {
           "id": "raw",
-          "label": "RAW",
+          "label": "raw-native",
           "status": "verified",
-          "stateLabel": "C++23 CPU reference renderer",
+          "stateLabel": "C++23 reference renderer with CPU and GPU paths",
           "group": "Graphics and media",
           "nodeType": "system"
         },

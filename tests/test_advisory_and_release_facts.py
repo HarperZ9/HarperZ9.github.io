@@ -145,19 +145,21 @@ def test_bulletin_names_its_newest_release_and_live_contract() -> None:
 def test_buildlang_separates_the_github_release_from_the_crates_io_version() -> None:
     registry = json.loads(read("system/systems.json"))
     buildlang = next(s for s in registry["systems"] if s["id"] == "buildlang")
-    # 2026-09-27: GitHub's latest release is v1.4.0, a source release with no registry
-    # artifact; crates.io still serves 1.2.0, which is what cargo install fetches.
+    # 2026-09-27: GitHub's latest release was v1.4.0, a source release with no registry
+    # artifact, while crates.io served 1.2.0. 2026-11-12: GitHub and crates.io both list
+    # 1.14.0; the 1.4.0 and 1.2.0 records stay as history.
     assert buildlang["releaseState"] == (
-        "GitHub release v1.4.0; buildlang 1.2.0 on crates.io; non-C backends experimental"
+        "GitHub release v1.14.0; buildlang 1.14.0 on crates.io; non-C backends experimental"
     )
     ids = [item["id"] for item in buildlang["evidence"]]
-    assert ids[:3] == ["buildlang-release-v1-4-0", "buildlang-crates-v1-2-0", "buildlang-release-v1-2-0"]
-    release = buildlang["evidence"][0]
+    assert ids[:5] == ["buildlang-release-v1-14-0", "buildlang-crates-v1-14-0",
+                       "buildlang-release-v1-4-0", "buildlang-crates-v1-2-0", "buildlang-release-v1-2-0"]
+    release = buildlang["evidence"][2]
     assert "no package registry artifact" in release["summary"]
     assert buildlang["entryCommand"].startswith("cargo install buildlang;")
     for page in ("catalog.html", "overview.html", "site-index.html"):
         source = read(page)
-        assert "GitHub release v1.4.0; buildlang 1.2.0 on crates.io" in source, page
+        assert "GitHub release v1.14.0; buildlang 1.14.0 on crates.io" in source, page
         assert "stable v1.2.0" not in source, page
     # buildlang.html is generated from the fetched releases (scripts/build-product-pages.mjs): it names the release
     # and the crates.io version it read, whatever they are on the day of the build

@@ -41,7 +41,7 @@
     <p class="lede" data-canonical-purpose="forum">Forum runs teams of AI agents. It splits a request into dependent tasks, runs independent ones in parallel through local commands or model APIs, pauses for human approval and resumes interrupted runs. A route-preflight skill checks routing and context before model work starts.</p>
     <p class="body-text"><a href="repo-explainers/forum.html">See it work, step by step</a>: an animated walkthrough with the real commands and output from the repository.</p>
   </div>
-  <div class="seal"><span translate="no">forum</span> &middot; engine v1.15.1 &middot; route-preflight skill v0.1.0</div>
+  <div class="seal"><span translate="no">forum</span> &middot; engine v1.17.0 &middot; route-preflight skill v0.1.0</div>
 </div>
 
 <main id="main">
@@ -90,7 +90,7 @@
 <!-- PROOF AND RUN IT -->
 <section class="mv" id="run" aria-labelledby="run-h">
   <h2 id="run-h" class="reveal">Install and try it</h2>
-  <pre class="artifact" translate="no"><span class="pr">$ pip install <span class="ident" translate="no">forum-engine==1.15.1</span></span>
+  <pre class="artifact" translate="no"><span class="pr">$ pip install <span class="ident" translate="no">forum-engine==1.17.0</span></span>
 <span class="pr">$ python examples/demo.py</span>   <span class="ok"># routes, plans, runs, then checks the ledger</span></pre>
   <p class="body-text reveal"><a href="demo-forum.html">Watch the recorded workflow</a>: one request becomes three dependency waves, three validator passes, 19 ledger entries and three checkpoints. Each example under <code translate="no">examples/</code> shows one feature offline.</p>
   <p class="body-text reveal">The <span translate="no">forum-route-preflight</span> skill (v0.1.0) is for agent hosts that load local skills. With the Forum CLI or a source checkout available, it checks route selection, context pressure and runtime readiness before model work starts. It never runs the command and always returns <code translate="no">safe_to_submit=false</code>, leaving the go-ahead to you or your host policy.</p>
@@ -103,7 +103,7 @@
   <div class="channels reveal">
     <span class="g">GitHub</span> &rarr; <a href="https://github.com/HarperZ9/forum" translate="no">HarperZ9/forum</a>
     &nbsp;&middot;&nbsp;
-    <span class="g">Release</span> &rarr; <a href="https://github.com/HarperZ9/forum/releases/tag/v1.15.1" translate="no">v1.15.1</a>
+    <span class="g">Release</span> &rarr; <a href="https://github.com/HarperZ9/forum/releases/tag/v1.17.0" translate="no">v1.17.0</a>
     &nbsp;&middot;&nbsp;
     <span class="g">Skill release</span> &rarr; <a href="https://github.com/HarperZ9/forum/releases/tag/forum-route-preflight-v0.1.0" translate="no">forum-route-preflight v0.1.0</a>
     &nbsp;&middot;&nbsp;

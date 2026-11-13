@@ -130,11 +130,11 @@
    "kind": "flagship",
    "summary": "A compiled language where a function's type lists what it may touch, such as files, the network or C.",
    "state": "released",
-   "version": "v1.10.0",
-   "date": "2026-10-23",
+   "version": "v1.14.0",
+   "date": "2026-11-10",
    "years": "2026",
    "repo": "https://github.com/HarperZ9/buildlang",
-   "release": "https://github.com/HarperZ9/buildlang/releases/tag/v1.10.0",
+   "release": "https://github.com/HarperZ9/buildlang/releases/tag/v1.14.0",
    "pages": [
     "buildlang.html"
    ],
@@ -142,7 +142,7 @@
     {
      "registry": "crates.io",
      "name": "buildlang",
-     "version": "1.10.0",
+     "version": "1.14.0",
      "url": "https://crates.io/crates/buildlang"
     }
    ],
@@ -922,11 +922,11 @@
    "kind": "tool",
    "summary": "Collects research material from the web, papers, scans, audio and video, and records where each item came from.",
    "state": "released",
-   "version": "v2.4.0",
-   "date": "2026-10-23",
+   "version": "v2.5.0",
+   "date": "2026-11-03",
    "years": "2026",
    "repo": "https://github.com/HarperZ9/gather",
-   "release": "https://github.com/HarperZ9/gather/releases/tag/v2.4.0",
+   "release": "https://github.com/HarperZ9/gather/releases/tag/v2.5.0",
    "pages": [
     "gather.html",
     "repo-explainers/gather.html"
@@ -935,7 +935,7 @@
     {
      "registry": "PyPI",
      "name": "gather-engine",
-     "version": "2.4.0",
+     "version": "2.5.0",
      "url": "https://pypi.org/project/gather-engine/"
     }
    ],
@@ -1484,11 +1484,11 @@
    "kind": "flagship",
    "summary": "Checks your prose on your own computer and names each writing pattern with the line it is on.",
    "state": "released",
-   "version": "v0.17.0",
-   "date": "2026-10-26",
+   "version": "v0.18.0",
+   "date": "2026-11-05",
    "years": "2026",
    "repo": "https://github.com/HarperZ9/articulate",
-   "release": "https://github.com/HarperZ9/articulate/releases/tag/v0.17.0",
+   "release": "https://github.com/HarperZ9/articulate/releases/tag/v0.18.0",
    "pages": [
     "articulate.html",
     "repo-explainers/articulate.html"
@@ -1497,7 +1497,7 @@
     {
      "registry": "PyPI",
      "name": "articulate-writing",
-     "version": "0.16.0",
+     "version": "0.18.0",
      "url": "https://pypi.org/project/articulate-writing/"
     }
    ],
@@ -2239,7 +2239,7 @@
    "repo": null,
    "release": null,
    "pages": [
-    "cv.html"
+    "low-water.html"
    ],
    "packages": [],
    "note": null

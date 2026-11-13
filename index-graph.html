@@ -41,7 +41,7 @@
     <p class="lede" data-canonical-purpose="index">Index maps a repository or a multi-repo workspace from its manifests, imports, symbols and docs. It builds offline wikis, dependency maps, context packets for agents and architecture checks, each pointing to a file and line. Large workspaces can run as background jobs you check on later.</p>
     <p class="body-text"><a href="repo-explainers/index-graph.html">See it work, step by step</a>: an animated walkthrough with the real commands and output from the repository.</p>
   </div>
-  <div class="seal"><span translate="no">index</span> &middot; PyPI <span translate="no"><span class="ident" translate="no">index-graph</span> 2.13.0</span> &middot; no dependencies &middot; offline</div>
+  <div class="seal"><span translate="no">index</span> &middot; PyPI <span translate="no"><span class="ident" translate="no">index-graph</span> 2.16.0</span> &middot; no dependencies &middot; offline</div>
 </div>
 
 <main id="main">
@@ -98,21 +98,21 @@
 <!-- RELEASE -->
 <section class="mv" id="state" aria-labelledby="state-h">
   <h2 id="state-h" class="reveal">Current release</h2>
-  <p class="body-text reveal"><code translate="no"><span class="ident" translate="no">index-graph</span> 2.13.0</code> includes the workspace atlas, dependency and module graphs, architecture checks, the claim checker, a router for CLAUDE.md and AGENTS.md files, an MCP server, the token benchmark and context packets. Version 2.12.0 added background jobs for large workspaces, and 2.11.0 added resumable <code translate="no">index map --resume-state PATH</code> runs. A run with a budget returns a partial view marked <span translate="no">UNVERIFIABLE</span>; use a full, resumable or background run when you need the complete inventory.</p>
+  <p class="body-text reveal"><code translate="no"><span class="ident" translate="no">index-graph</span> 2.16.0</code> includes the workspace atlas, dependency and module graphs, architecture checks, the claim checker, a router for CLAUDE.md and AGENTS.md files, an MCP server, the token benchmark and context packets. Version 2.12.0 added background jobs for large workspaces, and 2.11.0 added resumable <code translate="no">index map --resume-state PATH</code> runs. A run with a budget returns a partial view marked <span translate="no">UNVERIFIABLE</span>; use a full, resumable or background run when you need the complete inventory.</p>
 </section>
 
 <!-- RUN IT -->
 <section class="mv" id="run" aria-labelledby="run-h">
   <h2 id="run-h" class="reveal">Install and run it</h2>
   <p class="body-text reveal">For a small repository, run commands in the foreground. For a large workspace, start a background job. Start returns a <code translate="no">job_id</code>; use that id with <code translate="no">index router-job status</code> for progress and <code translate="no">index router-job result</code> for retrieval. MCP clients expose the same background path as <code translate="no">index.router.job.start</code>, <code translate="no">index.router.job.status</code>, and <code translate="no">index.router.job.result</code>.</p>
-  <pre class="artifact" translate="no"><span class="pr">$ python -m pip install <span class="ident" translate="no">index-graph==2.13.0</span></span>
-<span class="ok">Successfully installed index-graph-2.13.0</span>
+  <pre class="artifact" translate="no"><span class="pr">$ python -m pip install <span class="ident" translate="no">index-graph==2.16.0</span></span>
+<span class="ok">Successfully installed index-graph-2.16.0</span>
 
 <span class="pr">$ index router-job start --root . --json</span></pre>
   <div class="channels reveal">
-    <span class="g">GitHub</span> &rarr; <a href="https://github.com/HarperZ9/index/releases/tag/v2.13.0" translate="no">v2.13.0 release</a>
+    <span class="g">GitHub</span> &rarr; <a href="https://github.com/HarperZ9/index/releases/tag/v2.16.0" translate="no">v2.16.0 release</a>
     &nbsp;&middot;&nbsp;
-    <span class="g">PyPI</span> &rarr; <a href="https://pypi.org/project/index-graph/2.13.0/" translate="no"><span class="ident" translate="no">index-graph</span> 2.13.0</a>
+    <span class="g">PyPI</span> &rarr; <a href="https://pypi.org/project/index-graph/2.16.0/" translate="no"><span class="ident" translate="no">index-graph</span> 2.16.0</a>
     &nbsp;&middot;&nbsp;
     <span class="g">Recorded demo</span> &rarr; <a href="demo-index.html">watch the workflow</a>
     &nbsp;&middot;&nbsp;

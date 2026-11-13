@@ -6393,8 +6393,8 @@
    }
   },
   "raw.jpg": {
-   "backend": "chrome-156.0.8078.75-skia-2x-lanczos",
-   "content_sha256": "3a84ed15098654d705ea14e92876c88886c6dba4262fdf8dcd534196f7ae76b5",
+   "backend": "chrome-157.0.8103.40-skia-2x-lanczos",
+   "content_sha256": "f3cf876720ae686918632ade3148c765c16ebadbb6a4e41f791062b291b935df",
    "does_not_prove": [
     "It does not show the figure's numbers come from a real run, except where the alt text quotes a README result.",
     "It does not show the PNG bytes are the same under another Chrome build; the SVG and the scene are the portable record.",
@@ -6408,17 +6408,16 @@
     "width": 1200
    },
    "outputs": {
-    "raw.jpg": "023b2b1cea5a56d6312b8df7ef71d34259bb9049bf72790baf32d3916444c54b",
-    "raw.svg": "ffbe40382f5fe5a23cd6e3701bf1b77e4f635244bf4c47ed7ec50747de04bb61",
-    "raw@2x.jpg": "7d91ddd5e5dec75b01308e1da5f4d53220a1a32656a6f91c750ac2d96b5f2103"
+    "raw.jpg": "18dab32946b6048b904aa7aa2a63da9b2cfd18c3854d69768dfd76988ead1f90",
+    "raw.svg": "5231f3cfad630a4cc6a763a4d825e499daa4534cebff59850ba1cf6ac7d3b785"
    },
    "producer": {
     "name": "harperz9.repo-art",
     "version": "0.1.0"
    },
-   "receipt_sha256": "9cb06506bbf8dcc1f1969e52ca56f6c53e1709e55859de06e182700e97c555d5",
+   "receipt_sha256": "b72f12ca00a788acdfa7b93c939134b8e2109c02f18a65945619e5011ad05f3d",
    "reconcile": null,
-   "scene_sha256": "e3f78d4a818df5be1ea8686ba8d099a87a392240c09653941e888573d982888d",
+   "scene_sha256": "056e9ea38208ea0b3c81f67925c4135b3e86802714249fa0d6b4b82a4b9a2976",
    "schema": "superstack.receipt/1",
    "seed": "raw",
    "seed_rule": "xmur3-mulberry32/1",

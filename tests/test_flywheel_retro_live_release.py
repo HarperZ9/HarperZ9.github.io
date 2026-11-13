@@ -115,18 +115,20 @@ def test_flywheel_primary_page_uses_the_current_release_route() -> None:
     service_desk_section = source[source.index('<section class="mv" id="companions"'):]
     service_desk_section = service_desk_section[: service_desk_section.index("</section>")]
     # 2026-09-28: refresh the current release, retaining dated corrections and add-ons.
-    assert 'href="#next-release">1.1.0 release</a>' in source
+    # 2026-11-12: 1.9.0 is the current release; the page keeps the 1.1.0 installed-app check as dated history.
+    assert 'href="#next-release">1.9.0 release</a>' in source
     assert "0.6 candidate" not in source
     assert "Install the Python engine from PyPI" in release_section
-    assert "on 28 September 2026" in release_section
-    assert "/releases/download/v1.1.0/SHA256SUMS.txt" in release_section
+    assert "on 15 October 2026" in release_section
+    assert "/releases/download/v1.9.0/SHA256SUMS.txt" in release_section
     assert "a91b9bc71862f89b72c1a4655576134bbd0cd0d762128c9b05a1f186304a2881" not in release_section
     assert "The installer is unsigned" in release_section
     assert "pip install flywheel-verify" in source
     assert "flywheel up" in source
-    assert "Windows desktop: 1.1.0" in source
-    assert "Flywheel-Setup-1.1.0-x64.exe" in source
-    assert "/releases/download/v1.1.0" in source
+    assert "Windows desktop: 1.9.0" in source
+    assert "Flywheel-Setup-1.9.0-x64.exe" in source
+    assert "/releases/download/v1.9.0" in source
+    assert "/releases/download/v1.1.0" not in source
     assert "Flywheel-Setup-0.6.0-x64.exe" not in source
     assert "Service Desk Incident Environment 0.1.0" in service_desk_section
     assert "flywheel_env_service_desk_incident-0.1.0-py3-none-any.whl" in service_desk_section
@@ -136,7 +138,7 @@ def test_flywheel_primary_page_uses_the_current_release_route() -> None:
     assert "Windows Server runner and a stub model" in release_section
     # 2026-10-23 plain-copy rewrite: setup needs stay; caveat lines were cut.
     assert "Index needs Git" in release_section
-    assert "Telos is not in this build" in release_section
+    assert "Telos was not in the build that the installed-app check ran on" in release_section
     assert "Known issues" in release_section
     assert "flywheel-desktop" not in source
     assert "v0.2.2" not in source
