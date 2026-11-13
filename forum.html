@@ -92,7 +92,7 @@
   <h2 id="run-h" class="reveal">Install and try it</h2>
   <pre class="artifact" translate="no"><span class="pr">$ pip install <span class="ident" translate="no">forum-engine==1.17.0</span></span>
 <span class="pr">$ python examples/demo.py</span>   <span class="ok"># routes, plans, runs, then checks the ledger</span></pre>
-  <p class="body-text reveal"><a href="demo-forum.html">Watch the recorded workflow</a>: one request becomes three dependency waves, three validator passes, 19 ledger entries and three checkpoints. Each example under <code translate="no">examples/</code> shows one feature offline.</p>
+  <p class="body-text reveal"><a href="demo-forum.html">Watch the recorded workflow</a>: one request becomes three waves of tasks, each waiting on the one before it, with three validator passes, 19 ledger entries and three checkpoints. Each example under <code translate="no">examples/</code> shows one feature offline.</p>
   <p class="body-text reveal">The <span translate="no">forum-route-preflight</span> skill (v0.1.0) is for agent hosts that load local skills. With the Forum CLI or a source checkout available, it checks route selection, context pressure and runtime readiness before model work starts. It never runs the command and always returns <code translate="no">safe_to_submit=false</code>, leaving the go-ahead to you or your host policy.</p>
   <pre class="artifact" translate="no"><span class="pr">$ curl -L -O https://github.com/HarperZ9/forum/releases/download/forum-route-preflight-v0.1.0/forum-route-preflight-skill-20260907-final.zip</span>
 <span class="pr">$ curl -L -O https://github.com/HarperZ9/forum/releases/download/forum-route-preflight-v0.1.0/SHA256SUMS.txt</span>

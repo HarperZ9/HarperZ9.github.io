@@ -69,7 +69,7 @@ export const PILLARS = [
     html: `<figure class="w-demo">
         <figcaption>Three findings on a demonstration thread. Every account in it is invented.</figcaption>
         ${choose("Finding", [
-          { button: "Sources", html: `<img src="/media/daylight-commons/front-sources.webp" width="600" height="800" loading="lazy" decoding="async" alt="The Daylight Commons panel open on a reply that links to rt.com. Under Sources it reads: state-owned, Russia, with the Wikidata entry it came from.">` },
+          { button: "Sources", html: `<img src="/media/daylight-commons/front-sources.webp" width="600" height="800" loading="lazy" decoding="async" alt="The CMMNS panel open on a reply that links to rt.com. Under Sources it reads: state-owned, Russia, with the Wikidata entry it came from.">` },
           { button: "Coordination", html: `<img src="/media/daylight-commons/front-coordination.webp" width="600" height="800" loading="lazy" decoding="async" alt="The panel under Coordination: same text as two other replies in the thread, and how often that happens in ordinary threads.">` },
           { button: "Fact-check", html: `<img src="/media/daylight-commons/front-fact-check.webp" width="600" height="800" loading="lazy" decoding="async" alt="The panel showing that a fact-checker, Logically Facts, rated a matching claim False on 4 December 2024, with a link to the review.">` },
         ])}

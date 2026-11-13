@@ -21,6 +21,14 @@ const MONTHS = ["January", "February", "March", "April", "May", "June", "July", 
 export const longDate = (iso) => { const [y, m, d] = iso.split("-").map(Number); return `${d} ${MONTHS[m - 1]} ${y}`; };
 export const CHECKED = R.checkedAt ? longDate(R.checkedAt.slice(0, 10)) : "not yet checked";
 
+// What each pull request behind a row without a release adds, in the words of its own title and body.
+const PR_SHOWS = {
+  "HarperZ9/raw-native#239": "adds the fight timeline and its match against the game's JavaScript engine",
+  "HarperZ9/raw-native#242": "adds hit volumes and the timing of telegraphed strikes",
+  "HarperZ9/buildlang#135": "adds the game's rules module, written in BuildLang",
+  "HarperZ9/buildlang#158": "records 40 of 40 combat traces matching the game's own corpus",
+};
+
 // The Verified line says only what the fetch saw: the GitHub release, the registry, a download, a merge.
 function verifiedFor(id) {
   const p = R.products[id];
@@ -39,7 +47,10 @@ function verifiedFor(id) {
   if (p.prs) {
     const merged = p.prs.filter((x) => x.merged), open = p.prs.filter((x) => !x.merged);
     const name = (x) => `${x.repo.split("/")[1]} #${x.number}`;
-    if (merged.length) parts.push(`${merged.map(name).join("; ")} ${merged.length === 1 ? "is" : "are"} merged on main`);
+    // A pull request number alone tells a reader nothing; PR_SHOWS says what each one adds, from its title and body.
+    const shows = (x) => PR_SHOWS[`${x.repo}#${x.number}`];
+    if (merged.length && merged.every(shows)) parts.push(`${merged.length} pull requests are merged on main: ${merged.map((x) => `${name(x)} ${shows(x)}`).join("; ")}`);
+    else if (merged.length) parts.push(`${merged.map(name).join("; ")} ${merged.length === 1 ? "is" : "are"} merged on main`);
     if (open.length) parts.push(`${open.map(name).join("; ")} ${open.length === 1 ? "is" : "are"} still open`);
   }
   return parts.join(". ") + ".";
@@ -91,7 +102,7 @@ export const LANDMARKS = [
   // the words that leave; each keeps its own name and mark
   { id: "flywheel", hue: "theflywheel", word: "Flywheel", mark: "THEFLYWHEEL", href: "/world/ui/directions/cs-max/flywheel.html", tech: "light", def: "Three checking tools sit here. [[Flywheel]] checks a model's answer, CMMNS reads public replies, and Articulate checks prose. Each one shows its evidence and leaves the decision to you.", rows: ["flywheel", "cmmns", "articulate"] },
   { id: "engine", hue: "theplygrnd", word: "Engine", mark: "THEPLYGRND", href: "/raw.html", tech: "nightlights", def: "The [[engine]] means raw-native, which renders, and Superframe, which composes; together they are THE PLAYGROUND.", rows: ["raw-native", "superframe"] },
-  { id: "game", hue: "game", word: "Game", href: "/low-water.html", tech: "chladni", def: "Low Water, the game the engine is proved on.", rows: ["low-water"] },
+  { id: "game", hue: "game", word: "Game", href: "/low-water.html", tech: "chladni", def: "Low Water, the game built on the engine.", rows: ["low-water"] },
   { id: "site", hue: "brass", word: "Site", href: "/#site", tech: "swarm", def: "This site, built from the same engines.", rows: ["site"] },
   { id: "everything", hue: "brass", word: "Everything", href: "/floor.html", tech: "rope", def: "Every piece of work, current and past, with its status.", rows: ["research"] },
 ];

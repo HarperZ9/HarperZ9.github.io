@@ -49,7 +49,7 @@ export const SECTIONS = [
     run: "buildc verify laws.bld",
     figs: [
       { n: "10 of 10", text: "false laws with rare counterexamples stay unproved", detail: "A planted mutant prover, one that treats 0 >= 0 as a contradiction, fails that set. The prover is sound and incomplete: every step only weakens what it knows.", pr: 138 },
-      { n: "12 proved, 4 refuted", text: "on our own laws: the DETMATH integer rules, the trace codec and conservation laws", detail: "All four refutations are planted.", pr: 138 },
+      { n: "12 proved, 4 refuted", text: "on our own laws: the integer rules of DETMATH (BuildLang's deterministic maths), the trace codec and conservation laws", detail: "All four refutations are planted.", pr: 138 },
       { n: "12 of 13", text: "of Bend 2's laws, ported, are proved", detail: "The unknown one, add_comm over a recursive add on all of u32, needs induction the prover does not do. No comparison with Bend or any other verifier on a shared benchmark is claimed.", pr: 138 },
     ],
     source: { file: "docs/VERIFY.md" },
