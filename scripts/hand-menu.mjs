@@ -6,10 +6,13 @@ import { MENU } from "../site-src/world/platforms.mjs";
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
 export function menuItems(here = "") {
-  return MENU.map(([href, tech, name]) => `      <li><a href="${href}"${href === here ? ' aria-current="page"' : ""}><span class="o-word" data-display-on-open="${tech}">${esc(name)}</span></a></li>`).join("\n");
+  // a landmark's second level sits under its word as plain links (CMMNS and Articulate under Flywheel, The Playground
+  // and Superframe under Engine); the six words keep their order and their place
+  const current = (href) => (href === here ? ' aria-current="page"' : "");
+  return MENU.map(([href, tech, name, sub = []]) => `      <li><a href="${href}"${current(href)}><span class="o-word" data-display-on-open="${tech}">${esc(name)}</span></a>${sub.length ? `<small class="o-sub">${sub.map(([h, n]) => `<a href="${h}"${current(h)}>${esc(n)}</a>`).join(" ")}</small>` : ""}</li>`).join("\n");
 }
 
-export function menuDialog({ here = "", foot = '<a href="/elements.html">Elements</a> <a href="/swatches.html">Swatches</a> <a href="/studies/">Studies</a> <a href="/floor.html">Plain index</a>' } = {}) {
+export function menuDialog({ here = "", foot = '<a href="/elements.html">Elements</a> <a href="/swatches.html">Swatches</a> <a href="/studies/">Studies</a> <a href="/site-index.html">Site index</a>' } = {}) {
   return `<dialog id="o-menu" data-o="menu" data-material="chladni" aria-label="Places">
   <nav aria-label="Places">
     <ul class="o-places">

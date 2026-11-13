@@ -63,3 +63,8 @@ body.reading main h1:not(.d-3d) { text-shadow: -1px 1px 0 oklch(.3 .03 var(--d-b
 html.plain body.reading main h1, html.plain .d-3d, html.plain .term, html.plain .d-fine { color: inherit; -webkit-text-fill-color: currentColor; background: none; filter: none; text-shadow: none !important; font-weight: inherit; }
 @media print { body.reading main h1, .d-3d, .term, .d-fine { color: #000; -webkit-text-fill-color: currentColor; background: none; filter: none; text-shadow: none !important; } }
 @media (forced-colors: active) { body.reading main h1, .d-3d, .term, .d-fine { color: CanvasText; -webkit-text-fill-color: currentColor; background: none; filter: none; text-shadow: none !important; } }
+
+/* The menu's second level: the products under a landmark word (scripts/hand-menu.mjs). Full ink, underlined so the
+   links read as links, and a 44px row for touch. */
+.o-places .o-sub{opacity:1;margin-top:0}
+.o-places .o-sub a{display:inline-block;padding:12px 22px 12px 0;min-height:44px;box-sizing:border-box;text-decoration:underline;text-underline-offset:.2em}

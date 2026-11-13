@@ -30,7 +30,8 @@ function pick(html, re, what) { const m = html.match(re); if (!m) throw new Erro
 function roadParts() {
   const p = read("world/universe/proto/path.html");
   let hand = absolute(pick(p, /<header class="o-hand"[\s\S]*?<\/header>/, "the hand"));
-  hand = hand.replace(/<a class="skip" href="[^"]*">/, '<a class="skip" href="/floor.html">')
+  // the skip link skips: it lands on this page's own content, with the words every other page uses
+  hand = hand.replace(/<a class="skip" href="[^"]*">[^<]*<\/a>/, '<a class="skip" href="#main">Skip to the page</a>')
     .replace(/<a class="o-home" href="[^"]*">/, '<a class="o-home" href="/" aria-current="page">')
     .replace(/data-o="record" data-sound/, 'data-o="record" data-hum')
     // the home's hand keeps what has a job there: the menu, the lamp (light or dark), motion and plain view.

@@ -62,7 +62,7 @@ const fill = (s, id) => (s ? s.replace("{v}", versionOf(id) || "") : s);
 const ROWS = {
   buildlang: { hue: "bldlng", product: "BuildLang",
     try: "#w-buildlang", what: "A compiled language where a function's type lists what it may touch. The compiler proves the laws you write beside the code and builds native programs through C.",
-    see: ["/buildlang.html", "The registry, laws and the C path"], more: ["/buildlang/", "The language guide"],
+    see: ["/buildlang.html", "The registry, laws and the C path"], more: ["https://github.com/HarperZ9/buildlang/blob/main/docs/GETTING_STARTED.md", "The language guide"],
     run: "cargo install buildlang --version {v} --locked", repo: "https://github.com/HarperZ9/buildlang" },
   flywheel: { hue: "theflywheel", product: "Flywheel",
     try: "#w-flywheel", what: "Check any model's answer against the source that decides it, and keep every step as a [[receipt]]: a record of each step's inputs, output and hashes that anyone can recheck offline, not a log of what the model claimed.",
@@ -95,13 +95,14 @@ const ROWS = {
     see: ["/experiments/", "Every experiment, nulls included"], more: ["/research.html", "Papers and essays"] },
 };
 
-// The six landmarks. `href` is where the menu sends a reader; `rows` is the work the home sets under each.
+// The six landmarks. `href` is where the menu sends a reader, always the product's own page; `sub` is the second
+// level the menu lists under the word; `rows` is the work the home sets under each.
 export const LANDMARKS = [
   { id: "buildlang", hue: "bldlng", word: "BuildLang", mark: "BLDLNG", href: "/buildlang.html", tech: "glyphcell", def: "[[BuildLang]] means the language, its compiler buildc and its package registry; it is not a build system.", rows: ["buildlang"] },
   // the checking platforms sit together: Flywheel seals and rechecks, CMMNS reads public claims, Articulate checks
   // the words that leave; each keeps its own name and mark
-  { id: "flywheel", hue: "theflywheel", word: "Flywheel", mark: "THEFLYWHEEL", href: "/world/ui/directions/cs-max/flywheel.html", tech: "light", def: "Three checking tools sit here. [[Flywheel]] checks a model's answer, CMMNS reads public replies, and Articulate checks prose. Each one shows its evidence and leaves the decision to you.", rows: ["flywheel", "cmmns", "articulate"] },
-  { id: "engine", hue: "theplygrnd", word: "Engine", mark: "THEPLYGRND", href: "/raw.html", tech: "nightlights", def: "The [[engine]] means raw-native, which renders, and Superframe, which composes; together they are THE PLAYGROUND.", rows: ["raw-native", "superframe"] },
+  { id: "flywheel", hue: "theflywheel", word: "Flywheel", mark: "THEFLYWHEEL", href: "/flywheel.html", sub: [["/cmmns.html", "CMMNS"], ["/articulate.html", "Articulate"]], tech: "light", def: "Three checking tools sit here. [[Flywheel]] checks a model's answer, CMMNS reads public replies, and Articulate checks prose. Each one shows its evidence and leaves the decision to you.", rows: ["flywheel", "cmmns", "articulate"] },
+  { id: "engine", hue: "theplygrnd", word: "Engine", mark: "THEPLYGRND", href: "/raw.html", sub: [["/playground/", "The Playground"], ["/superframe.html", "Superframe"]], tech: "nightlights", def: "The [[engine]] means raw-native, which renders, and Superframe, which composes; together they are THE PLAYGROUND.", rows: ["raw-native", "superframe"] },
   { id: "game", hue: "game", word: "Game", href: "/low-water.html", tech: "chladni", def: "Low Water, the game built on the engine.", rows: ["low-water"] },
   { id: "site", hue: "brass", word: "Site", href: "/#site", tech: "swarm", def: "This site, built from the same engines.", rows: ["site"] },
   { id: "everything", hue: "brass", word: "Everything", href: "/floor.html", tech: "rope", def: "Every piece of work, current and past, with its status.", rows: ["research"] },
@@ -115,7 +116,7 @@ export const MENU_AFTER = [
   ["/hire.html", "rope", "Work"],
   ["/cv.html", "rope", "CV"],
 ];
-export const MENU = [...LANDMARKS.map((l) => [l.href, l.tech, l.word]), ...MENU_AFTER];
+export const MENU = [...LANDMARKS.map((l) => [l.href, l.tech, l.word, l.sub || []]), ...MENU_AFTER];
 
 // Every piece of work in landmark order, each with its generated version and Verified line.
 export const PLATFORMS = LANDMARKS.flatMap((l) => l.rows.map((id) => {

@@ -113,7 +113,7 @@ ${sections}
 <p class="lp-limit">${esc(first.toyNote)} <a href="${BL.file("docs/EFFECTS_GUIDE.md")}">docs/EFFECTS_GUIDE.md</a>.</p>
 <p class="lp-status">Captured from buildc check</p>
 <pre class="lp-code"><code>${esc(first.code)}</code></pre>
-<p class="lp-source">The language guide goes on from here: <a href="/buildlang/">the guide</a>, <a href="${BL.REPO}">the source</a>.</p>
+<p class="lp-source">The language guide goes on from here: <a href="https://github.com/HarperZ9/buildlang/blob/main/docs/GETTING_STARTED.md">the getting-started guide</a>, <a href="${BL.REPO}">the source</a>.</p>
 </section>
 <p class="lp-verified"><b>Verified</b> ${esc(CHECKED)}: the release and its date from GitHub, and crates.io lists ${esc(R.products.buildlang.registry.version)}; the merge state of every linked pull request from GitHub on the same day; each figure read from the body of the pull request it links.</p>
 </article>`;

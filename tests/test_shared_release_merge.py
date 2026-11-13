@@ -47,10 +47,13 @@ def test_route_registry_is_the_union_of_hiring_capability_and_legacy_routes() ->
     }
 
     assert {"hire.html", "resume.html", "cv.html", "portfolio.html", "cover-letter.html"} <= hrefs["Work"]
+    # 13 November 2026: demonstrations.html is a redirect to floor.html, so it is no longer a route of its own;
+    # the registry lists destinations, and a redirect survives only as an alias of the page it forwards to.
     assert {
-        "overview.html", "demonstrations.html", "systems/relay.html",
+        "overview.html", "systems/relay.html",
         "systems/plexus.html", "systems/mneme.html", "systems/studio-engine.html",
     } <= hrefs["Systems"]
+    assert "demonstrations.html" in hrefs["World"]
     assert {
         "security.html", "security-toolkit.html", "phantom.html", "private-practice.html",
         "behavior-transform.html", "systems/behavior-transform.html", "emet.html",

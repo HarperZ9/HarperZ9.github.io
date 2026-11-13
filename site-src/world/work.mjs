@@ -137,7 +137,6 @@ export const PILLARS = [
     id: "work", title: "Work and CV",
     html: `<ul class="w-list-plain">
         <li><a href="/flywheel-pilot.html">Flywheel verification pilot</a></li>
-        <li><a href="/work-with-me.html">Work with me</a></li>
         <li><a href="/cv.html">Full CV</a></li>
         <li><a href="/resume.html">Resume</a></li>
       </ul>

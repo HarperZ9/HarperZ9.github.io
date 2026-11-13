@@ -30,7 +30,7 @@ const escape = value => String(value).replace(/[&<>"']/g, c => ({
 }[c]));
 const pillars = [
   ['World', 'world', 'The world', 'index.html', 'Walk the road through ink and water, then the places for light, type, mosaic, sound, data, film and the tools.'],
-  ['Systems', 'flywheel', 'Flywheel and tools', 'flywheel.html', 'Start with the central engine, then explore its workflows and independently useful tools.'],
+  ['Systems', 'flywheel', 'Flywheel and tools', 'flywheel.html', 'Flywheel and the tools that work with it or on their own.'],
   ['Security', 'security', 'Safety, verification and privacy', 'security.html', 'Inspect controls, evidence boundaries and security projects.'],
   ['Research', 'research', 'Research', 'research.html', 'Read research notes, papers and evaluation work.'],
   ['Writing', 'writing', 'Writing', 'publications.html', 'Read every essay, investigation, briefing and paper, sorted into five sections.'],
@@ -69,7 +69,7 @@ ${cardTags("site-index.html").join(String.fromCharCode(10))}
 <script type="module" src="system/site-index.js?v=20260925-void-plates"></script>
 </head><body><a class="skip-link" href="#main">Skip to index</a><div id="site-nav" class="site-nav"></div>
 <main id="main" class="sheet site-directory"><header class="directory-head"><p class="directory-context masthead-path">Zain Dana Harper / Explore</p><h1>Find your way in.</h1>
-<p class="lead">Start with <a href="flywheel.html">Flywheel</a> for the central engine and its integrated workflows. Explore individual tools when you need them, or enter through research, graphics, typography and collaboration.</p>
+<p class="lead">Every page on the site, grouped by what it is. The <a href="floor.html">Everything</a> page lists each piece of work with its status.</p>
 <p>Each project page explains its purpose, current status and evidence. A listing here does not imply that every capability is installed or operational in Flywheel.</p>
 <p><a href="catalog.html">Browse the product catalog by capability</a> · <a href="site-index.html" aria-current="page">Site index</a></p></header>
 <div class="directory-search" hidden data-search-controls><label for="index-query">Find a page or topic</label><div><input id="index-query" type="search" placeholder="Try memory, receipts, graphics…" autocomplete="off"><button type="button" data-clear>Clear</button></div><p data-search-status role="status" aria-live="polite"></p></div>
