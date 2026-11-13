@@ -138,6 +138,7 @@ export const PILLARS = [
     html: `<ul class="w-list-plain">
         <li><a href="/flywheel-pilot.html">Flywheel verification pilot</a></li>
         <li><a href="/cv.html">Full CV</a></li>
+        <li><a href="/person.html#stand-for">The person behind it, and what I stand for</a></li>
         <li><a href="/resume.html">Resume</a></li>
       </ul>
       <p class="w-go"><a class="w-try" href="/hire.html">Hire or collaborate</a> <a href="mailto:zaindharper@gmail.com">Email</a></p>`,
