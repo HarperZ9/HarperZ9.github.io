@@ -1,0 +1,7 @@
+{
+  "date": "2026-11-13",
+  "note": "Follows 2026-11-13-shader-sharpness. index.html: only the asset revision stamp moved, after world/site/field/field.js changed (a renderer a quarter second a frame behind goes straight to the floor scale). No words or attributes on the page changed.",
+  "paths": {
+    "index.html": "fa00e706c56114828da39fd329257cbf08185010460726350557c935761125e4"
+  }
+}
