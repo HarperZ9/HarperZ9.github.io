@@ -181,9 +181,11 @@ def test_system_registry_keeps_flywheel_primary_and_private_security_bounded() -
     assert primary == ["flywheel"]
     assert records["flywheel"]["name"] == "Flywheel"
     assert records["flywheel"]["maturity"] == "shipped"
-    # 2026-09-28: current distribution is 1.1.0; earlier release evidence remains historical.
-    assert records["flywheel"]["evidence"][0]["label"] == "Flywheel v1.1.0"
-    assert records["flywheel"]["releaseState"] == "Python engine v1.1.0 and Windows desktop v1.1.0; release reports 15 of 17 lanes reached expected classes; Index below bar without Git; Telos excluded"
+    # 2026-11-12: current distribution is 1.9.0; earlier release evidence remains historical.
+    assert records["flywheel"]["evidence"][0]["label"] == "Flywheel v1.9.0"
+    assert records["flywheel"]["releaseState"] == "Python engine v1.9.0 on PyPI and Windows desktop v1.9.0 on GitHub"
+    labels = [item["label"] for item in records["flywheel"]["evidence"]]
+    assert "Flywheel v1.1.0" in labels
     assert {"engine-revival", "brender-archival", "retro-engine"}.isdisjoint(records["flywheel"]["related"])
 
     private_ids = ("array", "seed", "sofer", "isomorph", "bounds", "orca", "gate")
