@@ -1,0 +1,7 @@
+{
+  "date": "2026-11-13",
+  "note": "Shader sharpness on lower-resolution screens (2026-11-13 site audit, section 3). index.html: the home template sets data-alive-grain=\"off\", so the alive layer's page grain no longer lies over the home's type and field, and the asset revision stamp moved with the field's sources (world/site/field/field.js, upscale.glsl.js, scene.glsl.js, world/site/home-field.js). No words on the page changed.",
+  "paths": {
+    "index.html": "275c5c6db7556bb640f506ff197e5d341ed38ba263842b620da8894f6b2bef3f"
+  }
+}

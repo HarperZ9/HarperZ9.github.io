@@ -1,0 +1,7 @@
+{
+  "date": "2026-11-13",
+  "note": "Merge of the text and navigation branch into the shader sharpness branch. index.html carries both reviewed changes: the shortened home lede and the PLAYGROUND supergraphic sign from 2026-11-13-flywheel-full-product-home, and the page grain attribute and asset revision stamp from 2026-11-13-shader-sharpness-floor. The generator reproduces these bytes from the merged sources with no further diff.",
+  "paths": {
+    "index.html": "2293f1db8391d59368d6d1c9bf9e2c55a94910591a77841d045df1b629e4a1f2"
+  }
+}

@@ -121,7 +121,7 @@ export function lint(src, opts = {}) {
 // the shaders this repo ships, and the names the callers keep non-zero (field.js sets uRes from the canvas size)
 export const NONZERO = ["uRes", "uTiles", "uFocal", "uIor", "uMarch"], NONNEG_FNS = ["hash", "n3", "jit", "lum"];
 export async function shaders() {
-  const m = { ...(await import("./scene.glsl.js")), ...(await import("./atmosphere.glsl.js")) };
+  const m = { ...(await import("./scene.glsl.js")), ...(await import("./atmosphere.glsl.js")), ...(await import("./upscale.glsl.js")) };
   return Object.fromEntries(Object.entries(m).filter(([, v]) => typeof v === "string" && v.includes("#version")));
 }
 export const key = (f) => `${f.rule} | ${f.text}`;
