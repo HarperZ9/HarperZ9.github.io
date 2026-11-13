@@ -12,7 +12,8 @@
 //   3. build-studies.mjs, build-cmmns.mjs, build-experiments.mjs, record-findings.mjs and build-findings.mjs (from
 //      findings/src/ and findings/data/, which scripts/import-findings.mjs fills from the workshop's papers)
 //   4. fetch-releases.mjs (the versions behind every Verified line on the home), build-world-home.mjs,
-//      build-product-pages.mjs (buildlang.html, low-water.html), build-world-pages.mjs, world-asset-revision.mjs, world-discovery.mjs
+//      build-product-pages.mjs (buildlang.html, low-water.html), build-world-pages.mjs, build-addresses.mjs (the address
+//      ledger and 404.html), world-asset-revision.mjs, world-discovery.mjs
 //      render-route-registry.mjs, render-site-index.mjs (the World family and pillar)
 //   5. link cards for new sitemap pages, then the card tags on the world's pages only
 //   6. structured data, and the publication receipt that pins sitemap.xml
@@ -56,6 +57,7 @@ node("build-distill.mjs");
 node("build-world-home.mjs");
 node("build-product-pages.mjs");
 node("build-world-pages.mjs");
+node("build-addresses.mjs");  // after every generator that can write a new page, before the revision stamp reaches 404.html
 node("world-asset-revision.mjs");
 node("world-discovery.mjs");
 node("render-route-registry.mjs");
