@@ -31,6 +31,7 @@ function makeField(asked = false) {
       document.addEventListener("visibilitychange", () => field.setVisible(!document.hidden));
       new MutationObserver(() => { if (!skyOn) field.go(space()); }).observe(root, { attributes: true, attributeFilter: ["data-theme", "class"] });
       matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => { if (!skyOn) field.go(space()); });
+      window.__homeField = field;   // for measurement (tests/home-field-sharpness.cjs), as glass-water.js keeps __glassWater
       return field;
     } catch (e) { console.info("home field: the rendered plate stays", e.message); return null; }
   })();
