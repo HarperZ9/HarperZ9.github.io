@@ -145,5 +145,8 @@
   "unused-function | float phaseMie(float c) { float g = MIE_G, k = 3.0 / (8.0 * PI) * (1.0 - g * g) / (2.0 + g * g); return k * (1.0 + c * c) / pow(1.0 + g * g - 2.0 * g * c, 1.5); }",
   "div | vec2 transUV(float h, float mu) { return vec2(mu * 0.5 + 0.5, sqrt(clamp(h / (RT - RG), 0.0, 1.0))); }",
   "unused-function | vec2 transUV(float h, float mu) { return vec2(mu * 0.5 + 0.5, sqrt(clamp(h / (RT - RG), 0.0, 1.0))); }"
- ]
+ ],
+ "SETTLE_FRAG": [],
+ "SHARPEN_FRAG": [],
+ "UPSCALE_FRAG": []
 }

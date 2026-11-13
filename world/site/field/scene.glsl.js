@@ -601,7 +601,7 @@ void main() {
 // display: ACES filmic fit (Narkowicz 2015), the sRGB transfer function (IEC 61966-2-1), triangular dither
 export const POST_FRAG = `#version 300 es
 precision highp float;
-uniform sampler2D uImg; uniform float uSeq, uFrame, uNight, uLensRain, uT; uniform vec2 uRes;
+uniform sampler2D uImg; uniform float uSeq, uFrame, uNight, uLensRain, uT, uDither; uniform vec2 uRes;
 uniform vec2 uSunUV; uniform float uSunOn, uRays, uGhost, uBloom, uHalation, uQuality, uRainP, uTilt;
 float lum(vec3 c) { return dot(c, vec3(0.2126, 0.7152, 0.0722)); }
 vec3 hdrAt(vec2 p) { return textureLod(uImg, clamp(p, vec2(0.001), vec2(0.999)), 0.0).rgb; }
@@ -694,8 +694,9 @@ void main() {
   // rods take over only in the dark: a star or the Moon is bright enough for the cones, so it keeps its colour
   hdr = mix(hdr, Y * vec3(0.55, 0.72, 1.12), 0.75 * uNight * (1.0 - smoothstep(0.05, 0.4, Y)));
   vec3 c = srgb(aces(hdr));
+  // the dither goes on here when this pass draws to the canvas; before a resample it waits for the last pass (upscale.glsl.js)
   vec2 p = gl_FragCoord.xy + uFrame;
-  c += (hash(p) + hash(p + 17.3) - 1.0) / 255.0;
+  c += uDither * (hash(p) + hash(p + 17.3) - 1.0) / 255.0;
   o = vec4(c, 1.0);
 }`;
 

@@ -3,6 +3,7 @@
 // accumulates jittered frames into one still (renderStill) for the 4K plates the reduced-motion tier shows.
 import { TRANS_FRAG, MS_FRAG, SKY_FRAG } from "./atmosphere.glsl.js";
 import { WAVE_FRAG, SCENE_FRAG, POST_FRAG, VERT } from "./scene.glsl.js";
+import { UPSCALE_FRAG, SHARPEN_FRAG } from "./upscale.glsl.js";
 import { cascadeWaves, glyphField, sellmeier, N_BK7, swellWaves, swellHeight } from "./ocean.js";
 import { effectiveFetch } from "../sky/weather.mjs";
 import { blueMask, MASK_N } from "./jitter.mjs";
@@ -36,9 +37,9 @@ function program(gl, frag) {
   const u = new Proxy({}, { get: (c, n) => (n in c ? c[n] : (c[n] = gl.getUniformLocation(p, n))) });
   return { p, u };
 }
-function target(gl, w, h, { mip = false, filter = true } = {}) {
+function target(gl, w, h, { mip = false, filter = true, format = gl.RGBA16F } = {}) {
   const t = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, t);
-  gl.texStorage2D(gl.TEXTURE_2D, mip ? Math.floor(Math.log2(Math.max(w, h))) + 1 : 1, gl.RGBA16F, w, h);
+  gl.texStorage2D(gl.TEXTURE_2D, mip ? Math.floor(Math.log2(Math.max(w, h))) + 1 : 1, format, w, h);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, mip ? gl.LINEAR_MIPMAP_LINEAR : filter ? gl.LINEAR : gl.NEAREST);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, filter ? gl.LINEAR : gl.NEAREST);
   const wrap = mip === true ? gl.REPEAT : gl.CLAMP_TO_EDGE; gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, wrap); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, wrap);
@@ -55,7 +56,41 @@ function mixSpace(a, b, k) {
     windAngle: lerp(a.windAngle ?? 0.35, b.windAngle ?? 0.35, k), wx: Object.fromEntries(WX.map((key) => [key, lerp(a.wx?.[key] ?? 0, b.wx?.[key] ?? 0, k)])) };
 }
 
-export function createField(canvas, { space = "close", dprCap = 1.5, reduced = false, budgetMs = 16.7, minScale = 0.6, history = 0 } = {}) {
+// The scene's scale, in CSS pixels per axis. The ceiling: `dprCap` as before (a strong machine may draw above the
+// screen's own pixels), raised to the device pixel ratio where the box at that ratio stays inside `pixels` per frame,
+// so a 1280 by 720 screen at 1.25 draws its own 1600 by 900 on a machine held to dprCap 1
+export const scaleCeiling = (cssW, cssH, dpr, dprCap, pixels = 0) => Math.max(dprCap, Math.min(dpr, Math.sqrt(pixels / Math.max(1, cssW * cssH))));
+// The governor: the scale follows the frame budget. step() takes one frame gap in ms, the ceiling and the device
+// pixel ratio, and returns the scale to draw at. A mean over 30 frames above the budget steps down by a tenth; three
+// frames in a row of a quarter second or more step down by a quarter (a renderer far too slow never fills the mean).
+// It steps up by a twentieth (a tenth above the screen) after two seconds on budget (45 frames under 0.7 of it), and
+// only to the screen's own pixels; above them it wants that margin. A step toward the size that last failed waits
+// `hold` frames instead, and the hold doubles (to a minute) each time a step up is followed by a failure, so the
+// scale settles under the size the machine cannot carry and does not flap. Holding the ceiling for a hold forgets it
+export function scaleGovernor({ budgetMs = 16.7, minScale = 0.6 } = {}) {
+  let scale = null, ema = 0, seen = 0, calm = 0, slow = 0, failAt = Infinity, hold = 150, rose = false;
+  const fail = (k) => { if (rose) hold = Math.min(3600, hold * 2); failAt = scale; rose = false; scale = Math.max(Math.min(scale, minScale), scale * k); seen = 0; calm = 0; slow = 0; };
+  return {
+    get scale() { return scale ?? 1; }, get frameMs() { return ema; },
+    step(dtMs, top, native = top) {
+      scale = Math.min(scale ?? Math.min(top, native), top);
+      if (dtMs >= 250) { if (++slow >= 3) fail(0.75); return scale; }
+      slow = 0; if (!(dtMs > 0)) return scale;
+      ema = seen ? ema + (dtMs - ema) / 30 : dtMs; seen++;
+      if (seen <= 30) return scale;
+      if (ema > budgetMs * 1.15) { calm = 0; if (scale > minScale) fail(0.9); }
+      else if (ema < budgetMs * (scale >= top || scale < native ? 1.04 : 0.7)) {
+        calm++;
+        if (scale >= top) { if (calm >= hold) { failAt = Infinity; hold = 150; rose = false; } return scale; }
+        const next = Math.min(scale * (scale < native ? 1.05 : 1.1), scale < native ? native : top), near = next >= failAt * 0.93 && next <= failAt * 1.06;
+        if (calm >= (near ? hold : ema < budgetMs * 0.7 ? 45 : 120)) { scale = next; rose = true; seen = 0; calm = 0; }
+      } else calm = 0;
+      return scale;
+    },
+  };
+}
+
+export function createField(canvas, { space = "close", dprCap = 1.5, pixels = 0, sharpen = 0.14, reduced = false, budgetMs = 16.7, minScale = 0.6, history = 0 } = {}) {
   const gl = canvas.getContext("webgl2", { antialias: false, alpha: false, preserveDrawingBuffer: true, powerPreference: "high-performance" });
   if (!gl || !gl.getExtension("EXT_color_buffer_float")) throw new Error("glass-water field: WebGL2 with float targets is not available here");
   // a software rasteriser (SwiftShader, llvmpipe, WARP) runs this shader on the CPU and blocks the page; such a
@@ -65,7 +100,7 @@ export function createField(canvas, { space = "close", dprCap = 1.5, reduced = f
   const aniso = gl.getExtension("EXT_texture_filter_anisotropic");
   const quad = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, quad); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
   gl.enableVertexAttribArray(0); gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
-  const P = { trans: program(gl, TRANS_FRAG), ms: program(gl, MS_FRAG), sky: program(gl, SKY_FRAG), wave: program(gl, WAVE_FRAG), scene: program(gl, SCENE_FRAG), post: program(gl, POST_FRAG) };
+  const P = { trans: program(gl, TRANS_FRAG), ms: program(gl, MS_FRAG), sky: program(gl, SKY_FRAG), wave: program(gl, WAVE_FRAG), scene: program(gl, SCENE_FRAG), post: program(gl, POST_FRAG), up: program(gl, UPSCALE_FRAG), sharp: program(gl, SHARPEN_FRAG) };
   const T = { trans: target(gl, 256, 64), ms: target(gl, 32, 32), sky: target(gl, 192, 108), waves: CASCADES.map(() => target(gl, 256, 256, { mip: true })) };
   if (aniso) for (const w of T.waves) { gl.bindTexture(gl.TEXTURE_2D, w.t); gl.texParameterf(gl.TEXTURE_2D, aniso.TEXTURE_MAX_ANISOTROPY_EXT, Math.min(16, gl.getParameter(aniso.MAX_TEXTURE_MAX_ANISOTROPY_EXT))); }
   const draw = (prog, tgt, setup) => { gl.useProgram(prog.p); gl.bindFramebuffer(gl.FRAMEBUFFER, tgt ? tgt.f : null); gl.viewport(0, 0, tgt ? tgt.w : canvas.width, tgt ? tgt.h : canvas.height); setup?.(prog.u); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4); };
@@ -115,11 +150,32 @@ export function createField(canvas, { space = "close", dprCap = 1.5, reduced = f
   let from = SPACES[space], to = from, word = to.word, t0 = 0, dur = 1, hdr = null, clock = 0;
   const progress = () => (reduced ? 1 : ease(Math.min(1, (performance.now() - t0) / dur)));
   const state = () => mixSpace(from, to, progress());
-  function size(w, h) { if (!hdr || hdr.w !== w || hdr.h !== h) hdr = target(gl, w, h, { mip: "clamp" }); }
+  const drop = (t) => { if (t) { gl.deleteFramebuffer(t.f); gl.deleteTexture(t.t); } };
+  // the scene's target at w by h; true when it starts empty. A change of scale keeps the running mean: the picture so
+  // far is resampled into the new target, so a step in resolution does not restart the settling
+  function size(w, h) {
+    if (hdr && hdr.w === w && hdr.h === h) return false;
+    const old = hdr; hdr = target(gl, w, h, { mip: "clamp" }); if (!old) return true;
+    gl.bindFramebuffer(gl.READ_FRAMEBUFFER, old.f); gl.bindFramebuffer(gl.DRAW_FRAMEBUFFER, hdr.f);
+    gl.blitFramebuffer(0, 0, old.w, old.h, 0, 0, w, h, gl.COLOR_BUFFER_BIT, gl.LINEAR); drop(old); return false;
+  }
+  // the canvas is backed at the screen's pixels; the scene may be smaller (or, on a strong machine, larger). The
+  // display pass draws straight to the canvas when the sizes match and nothing is sharpened (a still for a plate).
+  // Otherwise it draws at the scene's size, a resample brings that to the canvas, and the sharpen pass finishes it
+  let ldr = null, up = null;
+  const fit = (t, w, h) => { if (t && t.w === w && t.h === h) return t; drop(t); return target(gl, w, h, { format: gl.RGB10_A2 }); };
+  function present(post, native, seed) {
+    const same = hdr.w === canvas.width && hdr.h === canvas.height, ratio = canvas.width / hdr.w;
+    const sharp = same ? native : ratio < 1 ? 0 : sharpen * Math.min(1, 0.5 + (ratio - 1));
+    if (same && sharp <= 0) return draw(P.post, null, (u) => { post(u); gl.uniform1f(u.uDither, 1); });
+    ldr = fit(ldr, hdr.w, hdr.h); draw(P.post, ldr, (u) => { post(u); gl.uniform1f(u.uDither, 0); });
+    if (!same) { up = fit(up, canvas.width, canvas.height); draw(P.up, up, (u) => { bind(0, ldr.t, u.uImg); gl.uniform2f(u.uSrc, ldr.w, ldr.h); gl.uniform2f(u.uPx, 1 / ldr.w, 1 / ldr.h); gl.uniform1f(u.uDown, ratio < 1 ? 1 : 0); }); }
+    draw(P.sharp, null, (u) => { bind(0, (same ? ldr : up).t, u.uImg); gl.uniform1f(u.uSharp, sharp); gl.uniform1f(u.uFrame, seed); });
+  }
 
   // one frame: the sea cascades at time t, the sky for this light, the scene (blended into the running mean when
   // accumulating), then the display pass
-  function frame({ t = clock, jitter = [0, 0], blendWeight = 1, seq = 0 } = {}) {
+  function frame({ t = clock, jitter = [0, 0], blendWeight = 1, seq = 0, native = 0 } = {}) {
     const s = state();
     // the word re-forms halfway along the path, while the camera is between framings
     setWind(s.wind, s.windAngle, !!to.near); setWord(progress() < 0.5 ? word : to.word); if (progress() >= 1) word = to.word;
@@ -171,12 +227,12 @@ export function createField(canvas, { space = "close", dprCap = 1.5, reduced = f
     const onScreen = zf > 0.05 && sun[0] > -0.1 && sun[0] < 1.1 && sun[1] > -0.1 && sun[1] < 1.1 && L[1] > -0.01;
     // the display pass reads wide averages of the image for bloom, so the mip chain is rebuilt from this frame
     gl.bindTexture(gl.TEXTURE_2D, hdr.t); gl.generateMipmap(gl.TEXTURE_2D);
-    draw(P.post, null, (u) => { bind(0, hdr.t, u.uImg); bind(6, blueTex, u.uBlue);
+    present((u) => { bind(0, hdr.t, u.uImg); bind(6, blueTex, u.uBlue);
       gl.uniform2f(u.uSunUV, sun[0], sun[1]); gl.uniform1f(u.uSunOn, onScreen ? 1 : 0); gl.uniform1f(u.uQuality, ladder);
       // rays need broken cloud and a low light; ghosts a clear line to it; mist blooms in haze; night halates
       gl.uniform1f(u.uRays, night ? 0.3 * s.wx.cloud : Math.min(1, s.wx.cloud * 1.6) * (1 - s.wx.storm) * Math.max(0.3, 1 - s.light.el / 40));
       gl.uniform1f(u.uGhost, night ? 0.3 : (1 - s.wx.cloud) * 0.8); gl.uniform1f(u.uBloom, 0.12 + Math.min(1, s.wx.haze / 3)); gl.uniform1f(u.uHalation, night ? 1 : 0);
-      gl.uniform1f(u.uRainP, s.wx.rain); gl.uniform1f(u.uTilt, -0.25 * Math.min(1, s.wind / 20)); gl.uniform1f(u.uFrame, (t * 60) % 97); gl.uniform1f(u.uSeq, seq); gl.uniform1f(u.uNight, s.night); gl.uniform1f(u.uLensRain, Math.min(1, Math.max(0, s.wx.rain - 3) / 8)); gl.uniform1f(u.uT, t); gl.uniform2f(u.uRes, canvas.width, canvas.height); });
+      gl.uniform1f(u.uRainP, s.wx.rain); gl.uniform1f(u.uTilt, -0.25 * Math.min(1, s.wind / 20)); gl.uniform1f(u.uFrame, (t * 60) % 97); gl.uniform1f(u.uSeq, seq); gl.uniform1f(u.uNight, s.night); gl.uniform1f(u.uLensRain, Math.min(1, Math.max(0, s.wx.rain - 3) / 8)); gl.uniform1f(u.uT, t); gl.uniform2f(u.uRes, hdr.w, hdr.h); }, native, (t * 60) % 97);
   }
 
   // lightning: a flash the scene adds to its light for a few frames; sky.js fires it and schedules the thunder
@@ -184,10 +240,10 @@ export function createField(canvas, { space = "close", dprCap = 1.5, reduced = f
   // "The Lightning Discharge", 1987); hold keeps one stroke lit, for a still
   let flash = 0, strokes = [], held = 0, bolt = [3, 0.5, 6];
   const flashAt = (now) => held || strokes.reduce((m, k) => (now >= k.t ? Math.max(m, k.s * Math.exp(-(now - k.t) / 45)) : m), 0);
-  let running = false, last = 0, visible = true;
-  // resolution follows the frame budget: the render scale starts at the device's cap and steps down when frames run
-  // long (a mean over 30 frames above `budgetMs`), back up when they run short, never below `minScale`
-  let scale = Math.min(devicePixelRatio || 1, dprCap), ema = 0, seen = 0, k = 0;
+  let running = false, last = 0, visible = true, stillScale = 1;
+  // resolution follows the frame budget (scaleGovernor above): the canvas keeps the screen's pixels and only the
+  // scene's target changes size
+  const gov = scaleGovernor({ budgetMs, minScale }); let top = dprCap, k = 0;
   // temporal anti-aliasing: each frame is drawn with a subpixel jitter from the R2 sequence and blended into the last
   // frames' mean, so edges and the glints on the water resolve below a pixel. The blend keeps `history` of the past,
   // short enough that moving water does not smear (0 turns it off)
@@ -195,18 +251,14 @@ export function createField(canvas, { space = "close", dprCap = 1.5, reduced = f
   function loop(ts) {
     if (!running) return;
     const dtMs = ts - last, dt = Math.min(0.05, dtMs / 1000); last = ts; clock += dt;
-    if (dtMs > 0 && dtMs < 250) { ema = seen ? ema + (dtMs - ema) / 30 : dtMs; seen++; }
-    if (seen > 30) {
-      if (ema > budgetMs * 1.15 && scale > minScale) { scale = Math.max(minScale, scale * 0.85); seen = 0; }
-      else if (ema < budgetMs * 0.7 && scale < dprCap) { scale = Math.min(dprCap, scale * 1.08); seen = 0; }
-    }
-    const r = canvas.getBoundingClientRect(), w = Math.max(2, Math.round(r.width * scale)), h = Math.max(2, Math.round(r.height * scale));
-    const resized = canvas.width !== w || canvas.height !== h;
-    if (resized) { canvas.width = w; canvas.height = h; }
+    const r = canvas.getBoundingClientRect(), dpr = devicePixelRatio || 1;
+    top = scaleCeiling(r.width, r.height, dpr, dprCap, pixels);
+    const scale = gov.step(dtMs, top, dpr), cw = Math.max(2, Math.round(r.width * dpr)), ch = Math.max(2, Math.round(r.height * dpr));
+    if (canvas.width !== cw || canvas.height !== ch) { canvas.width = cw; canvas.height = ch; }
     flash = flashAt(performance.now()); strokes = strokes.filter((x) => performance.now() - x.t < 400);
-    size(w, h); k++;
+    const fresh = size(Math.max(2, Math.round(r.width * scale)), Math.max(2, Math.round(r.height * scale))); k++;
     const jitter = history > 0 ? [((k * R2[0]) % 1) - 0.5, ((k * R2[1]) % 1) - 0.5] : [0, 0];
-    frame({ t: clock, jitter, blendWeight: resized || history <= 0 ? 1 : 1 - history });
+    frame({ t: clock, jitter, blendWeight: fresh || history <= 0 ? 1 : 1 - history, native: sharpen * 0.5 });
     if (visible) requestAnimationFrame(loop);
   }
   const api = {
@@ -230,11 +282,13 @@ export function createField(canvas, { space = "close", dprCap = 1.5, reduced = f
     start() { if (reduced) return api.still(); running = true; last = performance.now(); requestAnimationFrame(loop); },
     stop() { running = false; },
     // what the field is doing now, for the page's own budget checks and for measurement
-    stats() { return { scale, frameMs: ema, width: canvas.width, height: canvas.height }; },
+    // scale and top are in CSS pixels per axis; width and height are the canvas, renderWidth and renderHeight the scene
+    stats() { return { scale: gov.scale, top, frameMs: gov.frameMs, width: canvas.width, height: canvas.height, renderWidth: hdr?.w ?? 0, renderHeight: hdr?.h ?? 0 }; },
     setVisible(v) { visible = v; if (v && running) { last = performance.now(); requestAnimationFrame(loop); } },
-    // one settled still: n jittered frames averaged at a fixed time (subpixel antialiasing for the glass edges)
-    still({ n = 16, w = canvas.width, h = canvas.height, t = 7.0 } = {}) {
-      canvas.width = w; canvas.height = h; size(w, h); t0 = 0;
+    // one settled still: n jittered frames averaged at a fixed time (subpixel antialiasing for the glass edges).
+    // `scale` under 1 draws the scene smaller than the canvas and brings it up with the resample and sharpen passes
+    still({ n = 16, w = canvas.width, h = canvas.height, t = 7.0, scale = stillScale } = {}) {
+      canvas.width = w; canvas.height = h; stillScale = scale; size(Math.max(2, Math.round(w * scale)), Math.max(2, Math.round(h * scale))); t0 = 0;
       for (let i = 0; i < n; i++) frame({ t, jitter: [((i * 0.618034) % 1) - 0.5, ((i * 0.754878) % 1) - 0.5], blendWeight: 1 / (i + 1), seq: i });
     },
   };
