@@ -1,0 +1,9 @@
+{
+  "date": "2026-11-13",
+  "note": "Group B of the 2026-11-13 site text audit. Home: the Low Water Verified line now says what each merged pull request adds, the Game landmark drops the unsupported 'proved on', and the CMMNS capture's alt text uses the current name. The CMMNS description no longer leads with the former name. The world asset revision changed with the home sources.",
+  "paths": {
+    "index.html": "2dc872a57f9d0b924ec86a1b0886eba759b75b410a87c05cd11768917fd96680",
+    "site-index.html": "9329bbb13dfe730b781d952883af072cce35b6061c25d824811952d387c98bf0",
+    "system/routes.js": "472cda61540b91172a1a23eea480cebfc7cc77fecb851069099aa6e0a74363ab"
+  }
+}

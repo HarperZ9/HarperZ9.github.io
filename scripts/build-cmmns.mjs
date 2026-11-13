@@ -89,6 +89,6 @@ const body = `<article class="tool">
 <p class="verified"><b>Verified</b> 2 November 2026: the version, the date and the download names against the GitHub release <code>v${esc(v)}</code> (HarperZ9/cmmns, published 28 October 2026); the timings are the release notes' own measurements and were not rerun for this page.</p>
 </article>`;
 
-const description = "CMMNS (formerly Daylight Commons) is a browser extension that shows where social media replies come from: place, coordination, posting, language, fact-checks.";
+const description = "CMMNS is a browser extension that shows where social media replies come from: place, coordination, posting, language, fact-checks.";
 writeFileSync(path.join(site, "cmmns.html"), page({ path: "cmmns.html", title: "CMMNS", description, body }));
 console.log(`cmmns.html: CMMNS ${v}, ${description.length}-character description`);

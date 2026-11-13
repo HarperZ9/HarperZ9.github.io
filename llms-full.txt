@@ -14,6 +14,10 @@ author. Source for each is on GitHub under https://github.com/HarperZ9.
 Version 1.9.0. Licence FSL-1.1-MIT. Python 3.11 or newer, no third-party
 runtime dependencies.
 
+- What it is: an AI workstation and coding harness that you host yourself,
+  with a desktop app, an assistant (Rowan), a coding agent that works in your
+  own folders with your permission, and connected tools for research, memory
+  and writing.
 - What it does: runs AI tasks on any hosted or local model behind one
   OpenAI-compatible endpoint on your machine, checks the values in an answer
   against the source that decides them (a tax table, a formulary, a court
@@ -78,6 +82,7 @@ Brave and Firefox 128 or later, plus a command line for saved threads.
 
 ## Superframe
 
+The core of The Playground.
 Version 0.2.0. Licence FSL-1.1-MIT; fonts under the SIL Open Font License 1.1.
 Node 24 or later, no dependencies.
 
@@ -134,6 +139,7 @@ Version 1.14.0. Licence AGPL-3.0-only. Written in Rust.
 
 ## raw-native
 
+The native renderer of The Playground, released under the name raw-native.
 Version 0.8.0. Licence FSL-1.1-MIT. C++23; Windows, Linux and WebAssembly, with
 optional D3D12 and WebGPU builds.
 

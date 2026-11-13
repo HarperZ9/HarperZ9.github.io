@@ -15,7 +15,9 @@ test('compact menu leads to the full font and product route catalog', () => {
   }
   assert.equal(hrefs.filter(href => href === 'fonts.html').length, 1, 'Fonts route should appear once');
   const index = readFileSync(new URL('../site-index.html', import.meta.url), 'utf8');
-  for (const href of ['typeface.html', 'publications.html', 'bulletin.html', 'catalog.html']) {
+  // typeface.html retired to a redirect on 2026-11-02; the index lists the page it forwards to, never a redirect.
+  assert.ok(!index.includes('href="typeface.html"'), 'Index lists a redirect page');
+  for (const href of ['accession.html', 'fonts.html', 'publications.html', 'bulletin.html', 'catalog.html']) {
     assert.ok(index.includes(`href="${href}"`), `Index omits ${href}`);
   }
   assert.doesNotMatch(menu, /workspace\.html/, 'Font discovery must not depend on the absent workspace route');

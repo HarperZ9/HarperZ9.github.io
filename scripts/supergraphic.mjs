@@ -10,12 +10,12 @@
 // blue (the author, 2026-11-09: "Darken the day sky"), which holds every face at 3:1 or better.
 // supergraphic.css maps the three inks (--sg-hue, --sg-ink, --sg-deep) onto the depth model per theme.
 const INK = { pink: ["#ff6fb1", "#701f46"], red: ["#f53e39", "#721212"], yellow: ["#fcde3d", "#594d0e"] };
-// [name, platform (the drawn sign), face, second ink]. Engine and Game share The Playground's hue at two tones.
+// [name, platform (the drawn sign), face, second ink]. Playground and Game share The Playground's hue at two tones.
 // The second ink is chosen from the opposite side of the hue circle, after Chevreul's first chromatic circle (1861),
 // where facing wedges strengthen each other when set side by side: violet takes yellow, blue-green and green take
 // red, blue takes yellow. Amber and the pale blue-green have no facing ink among the three, so they take pink, the
 // farthest one. No two neighbours share a second ink.
-export const SIGNS = [["BUILDLANG", "bldlng", "#ada2ff", "yellow"], ["FLYWHEEL", "theflywheel", "#ffb94c", "pink"], ["ENGINE", "theplygrnd", "#3fdfd1", "red"],
+export const SIGNS = [["BUILDLANG", "bldlng", "#ada2ff", "yellow"], ["FLYWHEEL", "theflywheel", "#ffb94c", "pink"], ["PLAYGROUND", "theplygrnd", "#3fdfd1", "red"],
   ["GAME", "theplygrnd", "#a6f7ec", "pink"], ["CMMNS", "thecmmns", "#b0e562", "red"], ["ARTICULATE", "artiql8", "#8cc6ff", "yellow"]];
 
 // the three inks of one sign as custom properties

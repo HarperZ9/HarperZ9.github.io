@@ -1,0 +1,20 @@
+{
+  "date": "2026-11-13",
+  "note": "Follow-up to the 2026-11-13 site audit, on the author's ruling of 2026-11-11 that The Playground is the engine. The third landmark is shown as The Playground with its parts under it; raw.html and its registry record are presented as The Playground's native renderer, with the release still cited as raw-native 0.8.0; the site index lists The Playground and its parts together. Ids, routes, files and keys are unchanged.",
+  "paths": {
+    "catalog.html": "1a34b8d27956dce6ea63a02f3296293554b8c6e19bbc9a04ad6f931b3a6e0305",
+    "elder-enb.html": "ad0604dc00bbb2f9589f06e2bf49cac6372b3a0233dcca1e347bbc882bb8f94c",
+    "enb-runtime-core.html": "b75dc7b03a43e820714826f0b56c2339cd42c58e0669b46afbfd11473fe86000",
+    "figures/system-capability-map.html": "8a446af8ffff303aaeb4ed7787e6f2abdd90e311045c785cad48b12d775002f1",
+    "figures/system-capability-map.json": "d13782a0e8af26d5053b85dfed78feac970ae6ab01e898e8d33225befa74938f",
+    "figures/system-capability-map.svg": "57bc6d2ed9a83cd8cd1c261bbb98956d2702f2ed7a466424e7a52ecf42e37a2e",
+    "index.html": "43704891b9b5cdd934bd206cac7b085861850d420b100f13a160f60c6d6ae626",
+    "overview.html": "61887f7229a49caf489feb08efec3e878c787e17ff4122cf127adf45afdf19a3",
+    "site-index.html": "c58f3412dac971728dab5ebae6ed52ba081a5929615b78bc44c3c0f50d06278d",
+    "system/routes.js": "33d6c8086f749a739e610fc7049da1544e76bbbaad7ea03e3ccf3d4f10f61d44",
+    "system/systems.js": "4f95c8567e2cd066906284d3c70170742628e084aa4cabc5ee1eafe17790ca29",
+    "system/systems.json": "9f5bfef3cf91943f1bc121f658e84142a3937bc92b49dba2d399dd4252cbcb77",
+    "systems/studio-engine.html": "ed8201fada5ecfc9394d2cad08353377fdf77403d6e43e694511393f715552ec",
+    "truth-enb.html": "fbbd0eea3b44438d378ab0958781469e0d465650fa46f37e17b6691c37e0016e"
+  }
+}

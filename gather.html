@@ -48,7 +48,7 @@
     <p class="lede" data-canonical-purpose="gather">Gather collects research material from web pages, including JavaScript-rendered ones, APIs, scholarly records, PDFs, scans, audio, video, feeds and local files. It saves each item with its source in a local corpus you can search and verify.</p>
     <p class="body-text"><a href="repo-explainers/gather.html">See it work, step by step</a>: an animated walkthrough with the real commands and output from the repository.</p>
   </div>
-  <div class="seal"><span translate="no">gather</span> &middot; v1.9.1 &middot; <span translate="no">pip install <span class="ident" translate="no">gather-engine==1.9.1</span></span></div>
+  <div class="seal"><span translate="no">gather</span> &middot; v2.5.0 &middot; <span translate="no">pip install <span class="ident" translate="no">gather-engine==2.5.0</span></span></div>
 </div>
 
 <main id="main">
@@ -111,7 +111,7 @@
 <!-- PROOF AND RUN IT -->
 <section class="mv" id="run" aria-labelledby="run-h">
   <h2 id="run-h" class="reveal">Install and try it</h2>
-  <p class="body-text reveal">Version 1.9.1 installs from PyPI as <span class="ident" translate="no"><code translate="no">gather-engine</code>,</span> and gives you the <code translate="no">gather</code> command. Optional adapters need their own tool installed: <code translate="no">yt-dlp</code>, <code translate="no">pdftotext</code>, headless <code translate="no">chromium</code>, <code translate="no">tesseract</code> or a Whisper-style CLI.</p>
+  <p class="body-text reveal">Version 2.5.0 installs from PyPI as <span class="ident" translate="no"><code translate="no">gather-engine</code>,</span> and gives you the <code translate="no">gather</code> command. Optional adapters need their own tool installed: <code translate="no">yt-dlp</code>, <code translate="no">pdftotext</code>, headless <code translate="no">chromium</code>, <code translate="no">tesseract</code> or a Whisper-style CLI.</p>
   <p class="body-text reveal">Version 1.8.1 added protection for retained corpus reads against directory replacement on unsupported Linux mounts. On WSL, keep corpora on native Linux storage or use native Windows Python: Windows-drive 9p/v9fs mounts are refused with <code translate="no">UNSAFE_PATH</code>. Python hosts can pass a retained same-process corpus descriptor; CLI and MCP continue to accept directory strings.</p>
   <p class="body-text reveal">Install 1.9.1 or later. Every earlier release is inside the range of at least one of the four Gather advisories listed on the <a href="security.html#advisories">Security page</a>. A tool found only inside the working folder now needs its absolute path in its <code translate="no">GATHER_&lt;TOOL&gt;</code> variable, and an MCP host that relied on the old <code translate="no">gather.run</code> or <code translate="no">gather.pilot</code> behavior adds a grant to its launch configuration.</p>
   <p class="body-text reveal">Create <code translate="no">sample.txt</code> with this exact two-line body, then store it and select only the useful slice.</p>
@@ -119,7 +119,7 @@
 Offline quickstart: Gather keeps acquired context separate from conclusions.
 Decision fact: the release can select useful text from a stored corpus.</pre>
   <p class="body-text reveal">After the inspect command, replace ROW_REF and CORPUS_DIGEST with the values from the inspect JSON. 0:76 selects the first line of this fixture only.</p>
-  <pre class="artifact" translate="no"><span class="pr">$ pip install <span class="ident" translate="no">gather-engine==1.9.1</span></span>
+  <pre class="artifact" translate="no"><span class="pr">$ pip install <span class="ident" translate="no">gather-engine==2.5.0</span></span>
 <span class="pr">$ gather docs sample.txt --store corpus --json</span>
 <span class="pr">$ gather corpus context corpus --json --excerpt-chars 90</span>
 <span class="pr">$ gather corpus context corpus --json --select ROW_REF:0:76 --expect-digest CORPUS_DIGEST</span></pre>
@@ -137,11 +137,11 @@ Decision fact: the release can select useful text from a stored corpus.</pre>
   <div class="channels reveal">
     <span class="g">Recorded demo</span> &rarr; <a href="demo-gather.html">29-second demo and full workflow</a>
     &nbsp;&middot;&nbsp;
-    <span class="g">GitHub</span> &rarr; <a href="https://github.com/HarperZ9/gather/releases/tag/v1.9.1" translate="no">v1.9.1 release</a>
+    <span class="g">GitHub</span> &rarr; <a href="https://github.com/HarperZ9/gather/releases/tag/v2.5.0" translate="no">v2.5.0 release</a>
     &nbsp;&middot;&nbsp;
     <span class="g">Source</span> &rarr; <a href="https://github.com/HarperZ9/gather" translate="no">HarperZ9/gather</a>
     &nbsp;&middot;&nbsp;
-    <span class="g">PyPI</span> &rarr; <a href="https://pypi.org/project/gather-engine/1.9.1/" translate="no"><span class="ident" translate="no">gather-engine</span> 1.9.1</a>
+    <span class="g">PyPI</span> &rarr; <a href="https://pypi.org/project/gather-engine/2.5.0/" translate="no"><span class="ident" translate="no">gather-engine</span> 2.5.0</a>
     &nbsp;&middot;&nbsp;
     <a href="overview.html">&larr; all flagships</a> &nbsp;&middot;&nbsp; <a href="catalog.html">the index</a>
   </div>

@@ -63,7 +63,7 @@ ${wi.html}
 <h2 class="wi-rule">The site</h2>
 ${section("road", "The road", roadStops())}
 ${section("places", "The places", PLACES.map((p) => [`/#p-${p.id}`, p.title]))}
-${section("parts", "Parts", [["/elements.html", "The element table"], ["/swatches.html", "The swatch library"], ["/accession.html", "Accession"], ["/world/universe/proto/index.html", "The map"], ["/credits.html", "Credits"]])}
+${section("parts", "Parts", [["/elements.html", "The element table"], ["/swatches.html", "The swatch library"], ["/accession.html", "Accession"], ["/world/universe/proto/index.html", "Map"], ["/credits.html", "Credits"]])}
 ${section("live", "Live pieces", livePieces())}
 ${section("map", "Every place on the map", mapPlaces())}
 ${section("studies", "Studies", studyPages())}

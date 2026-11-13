@@ -37,7 +37,7 @@
 <body class="doc">
 <a class="skip-link" href="#main">Skip to content</a>
 <div id="site-nav" class="site-nav"></div>
-<noscript><nav class="site-nav" aria-label="Primary"><a href="index.html">Home</a> <a href="start-here.html">Start here</a> <a href="flywheel.html">Flywheel</a> <a href="research.html">Research</a> <a href="who-knew-first.html">Who Knew First</a> <a href="hire.html">Work</a></nav></noscript>
+<noscript><nav class="site-nav" aria-label="Primary"><a href="index.html">Home</a> <a href="flywheel.html">Flywheel</a> <a href="research.html">Research</a> <a href="who-knew-first.html">Who Knew First</a> <a href="hire.html">Work</a></nav></noscript>
 <script type="module" src="system/nav.js?v=20260909-pillar-navigation"></script>
 
 <main id="main">
@@ -76,16 +76,15 @@ articulate check notes.md --mode technical-docs/explain --gate</code></pre>
     <h2 id="example-title">One example check</h2>
     <p>This sentence went in:</p>
     <blockquote class="sample">It is important to note that this release really represents a significant step forward. Arguably, the new cache could potentially make builds faster in many cases.</blockquote>
-    <p>Articulate blocked it with four findings. Each finding also prints the line it came from, cut here for width.</p>
-    <pre class="cmd"><code>[articulate] notes.md [technical-docs/explain]: 1 high, 3 medium (blocked)  texture 0/100
-  L1 [HIGH filler-intensifier] genuinely / really / truly / actually
+    <p>Articulate 0.18.0 reports three medium findings on line 1 and does not block the text. Each finding also prints the line it came from, cut here for width.</p>
+    <pre class="cmd"><code>[articulate] notes.md [technical-docs/explain]: 0 high, 3 medium (ok)  texture 0/100
   L1 [MEDIUM throat-clearing] throat-clearing opener
   L1 [MEDIUM hedge-stack] stacked hedge
   L1 [MEDIUM throat-clearing] worth-noting preamble</code></pre>
-    <p>A rewrite that names the change and gives a number passes the gate. The numbers are made up for the example.</p>
+    <p>A rewrite that names the change and gives a number comes back with no findings. Two sentences are too short for a texture score, so the tool prints &ldquo;unverifiable&rdquo; for that part. The numbers are made up for the example.</p>
     <blockquote class="sample">This release adds a build cache. On our test project, a clean build took 41 seconds and a cached build took 9.</blockquote>
     <pre class="cmd"><code>[articulate] notes.md [technical-docs/explain]: unverifiable (below the signal floor)  texture 0/100</code></pre>
-    <p>The command exits with 0. This output is from Articulate 0.4.1.</p>
+    <p>Both commands exit with 0. This output is from Articulate 0.18.0, run on 12 November 2026. In version 0.4.1 the same draft was blocked with one high finding, on the word &ldquo;really&rdquo;; 0.18.0 no longer reports it in this mode.</p>
   </section>
 
   <section aria-labelledby="evidence-title">

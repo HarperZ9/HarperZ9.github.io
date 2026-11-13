@@ -1,0 +1,32 @@
+{
+  "date": "2026-11-13",
+  "note": "Group A of the 2026-11-13 site text audit. Release state in system/systems.json refreshed for 16 products from the GitHub release lists, PyPI, npm and crates.io as read on 12 November 2026, with one new release record and one registry record each; older records kept as history. flywheel.html moved from 1.1.0 to 1.9.0 with the 1.1.0 installed-app check kept as dated history. The registry name RAW became raw-native (id unchanged), which changes the capability maps and related-record lines. index-graph.html, engine-revival.html and the generated catalog, overview, site index and record pages follow the registry.",
+  "paths": {
+    "canon.html": "7e9d59ad7256af46fd83ba36d07780e3a5bc168432c13f884879a2b6bf461e7a",
+    "catalog.html": "6acc32ce4462d7ca54c11a18f2bd0f22a9a0f519462b000e3ef548c9b894fdce",
+    "elder-enb.html": "7e950a72386d4faf624ad53f507328b52e744d3fa60c1a0fa5b8f6ed25a73f60",
+    "enb-runtime-core.html": "22d0560d038566a9e0fc289f24aacbc1a73900e5a887d4d48bb0b8218542c119",
+    "engine-revival.html": "7331e73012426a471c7cccce17607e616f5e0cdff7bab20e2dd8c337b2eb93c1",
+    "figures/security-capability-map.html": "5409da6e6cd34b0257af0bbfeb005d6f0ec4a722029e570ea705f6747ed7cdbe",
+    "figures/security-capability-map.json": "2dd85a7c2f8df69a688188de471b87be63a88acf187afafeaa64396266fecb11",
+    "figures/system-capability-map.html": "1ee361fc467e82abaee523d4cb13ee07fb4162ca2d8c834b7c2a970471ebfb89",
+    "figures/system-capability-map.json": "e4f8ad56176beb6083f306ff0205330c52475e99c1edd354610cc122d587e734",
+    "figures/system-capability-map.svg": "4da1b87849cf8dc538afb882bd27ec521a80d9bde587b07aaedce1929c04db30",
+    "figures/verification-capability-map.html": "2399eee07986d6689c190b4cc60033a2804d60b57a5066f588702b6475207d53",
+    "figures/verification-capability-map.json": "80f9cccd57565ecc1ae9e74b71931aea25389d2a31aac7e4be6a9e832e9ec5c2",
+    "flywheel.html": "fc95feeafb1a40405131324cf77bd59856b0aa0dc97ae97e898c665d3dbe36ba",
+    "index-graph.html": "a0e8d8b42e6186ee90c086d8a19ef0bc723995fb6b1eb24c103ac7059b7716d5",
+    "index.html": "7a05ae4d3988e5129e2a2283dd94864d35f17da1a54f1067c1565cf6859becbd",
+    "overview.html": "dc2bd931fde6dba1f4090c428dbadc6df700a0226ff3741f7fc28f0b4a6e64aa",
+    "site-index.html": "d14ca9c922b2a7fc3441c13b1262e6d6f791112d89edb5f8d798128ca7eb6719",
+    "system/routes.js": "9717a1a2d92ef8d3e5a0b8720d391e1a43786573041af574c2a8fbec9eda70c4",
+    "system/systems.js": "592dac31553074fd81a4b53dbe597128eff3139a4e1b68b625ec6158db45659a",
+    "system/systems.json": "ea4c3bbf9e194fcb2acc18ec07a1075b5234859c95f559a5f9bc3850f944bf87",
+    "systems/mneme.html": "ca634dc1617d3eb0976fdfec28f9edece7dfed49ab7479af0cbfecbb64ece643",
+    "systems/plexus.html": "ecd37e1ed49028b8a7ee3f17d06858e116ad6efa29b54b044004ad89478d6899",
+    "systems/relay.html": "af1f048cd6f2ea128b2c15719142c72572520178f31f79f3975f9fae3f9df704",
+    "systems/studio-engine.html": "73ae4080aef74e95c789505a9e041463032b235b4deb1a8bdfa6f1d7a54cbb5b",
+    "systems/telos.html": "e2604946b36ca0e0848ea5b3d0f0a0f56c88635153f52c6edf55a2044b3b5ff5",
+    "truth-enb.html": "f82ae267b643fb8da565a4f95a8aa7ac1b15ef23bebdc1b7cb32b8343b176ba4"
+  }
+}

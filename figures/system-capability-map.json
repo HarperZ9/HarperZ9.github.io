@@ -14,7 +14,7 @@
         "href": "https://github.com/HarperZ9/HarperZ9.github.io/blob/main/system/systems.json"
       }
     ],
-    "retrievedAt": "2026-10-03",
+    "retrievedAt": "2026-11-12",
     "units": "registry systems and verified typed relationship records",
     "transformations": [
       "Only verified-in-source typed relation records are included.",
@@ -93,7 +93,7 @@
           "id": "flywheel",
           "label": "Flywheel",
           "status": "verified",
-          "stateLabel": "verified-inference platform and desktop client",
+          "stateLabel": "self-hosted AI workstation and coding harness",
           "group": "Agent systems",
           "nodeType": "system"
         },
@@ -146,14 +146,6 @@
           "nodeType": "system"
         },
         {
-          "id": "raw",
-          "label": "RAW",
-          "status": "verified",
-          "stateLabel": "C++23 CPU reference renderer",
-          "group": "Graphics and media",
-          "nodeType": "system"
-        },
-        {
           "id": "relay",
           "label": "Relay",
           "status": "verified",
@@ -183,6 +175,14 @@
           "status": "verified",
           "stateLabel": "local workbench for creating and replaying AI work",
           "group": "Developer infrastructure",
+          "nodeType": "system"
+        },
+        {
+          "id": "raw",
+          "label": "The Playground: native renderer",
+          "status": "verified",
+          "stateLabel": "native renderer of The Playground, in C++23",
+          "group": "Graphics and media",
           "nodeType": "system"
         },
         {

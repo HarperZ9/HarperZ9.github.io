@@ -131,6 +131,8 @@ const rawDomain = systemRegistry.domains.find((domain) => domain.id === rawSyste
 if (!rawDomain) throw new Error("RAW primary domain is missing from the system registry");
 const raw = moveRoute("raw.html", studio, "skyrimbridge.html");
 raw.breadcrumbLabel = rawDomain.label;
+// One name per thing: the route carries the registry's name for the renderer.
+raw.label = rawSystem.name;
 
 function takeRoute(href) {
   let route = null;
@@ -190,9 +192,18 @@ function normalizePublicHref(href) {
   return local;
 }
 
+// 13 November 2026: a page that only redirects, or that only says a name changed, is not a destination. The
+// registry and the site index list the page a reader lands on, never the stub that forwards to it.
+const RENAME_NOTICES = new Set(["warden.html"]);
+function isRedirectStub(href) {
+  if (RENAME_NOTICES.has(localFileForHref(href))) return true;
+  return /<meta\s+http-equiv="refresh"/i.test(readPublicHtml(href).slice(0, 6000));
+}
+
 function isIndexedPublicHref(href) {
   if (!href) return false;
   if (["index.html", "site-index.html", "orca.html"].includes(href)) return false;
+  if (isRedirectStub(href)) return false;
   if (href.startsWith("frontier-safety/archive/")) return false;
   if (href.startsWith("private-practice.html#")) return false;
   return hrefExists(href);
@@ -439,13 +450,14 @@ function reconcilePublicRoutes() {
   }
 }
 
-const typeface = takeRoute("typeface.html");
+// typeface.html retired to a redirect into accession.html on 2026-11-02, so the Fonts family no longer lists it;
+// the reconcile pass below files type-forge.html here again from the sitemap.
+if (findRouteByHref("typeface.html")) takeRoute("typeface.html");
 registry.families = registry.families.filter((family) => family.label !== "Fonts");
 registry.families.push({
   label: "Fonts",
   routes: [
     { label: "Fonts", href: "fonts.html" },
-    { ...typeface, label: "Typography specimen", href: "typeface.html" },
   ],
 });
 
@@ -489,9 +501,6 @@ for (const family of registry.families) {
 if (!systems.routes.some((route) => route.href === "site-index.html")) {
   systems.routes.push({ label: "Site index", href: "site-index.html", summary: "Find every sector, product, workflow and publication route." });
 }
-if (!systems.routes.some((route) => route.href === "start-here.html")) {
-  systems.routes.push({ label: "Start here", href: "start-here.html", summary: "A plain guide to the site: four ways in, one worked example and how to read the charts." });
-}
 if (!systems.routes.some((route) => route.href === "glossary.html")) {
   systems.routes.push({ label: "Glossary", href: "glossary.html", summary: "The terms this site uses often, in plain words." });
 }
@@ -502,6 +511,55 @@ if (!findRouteByHref("a-witness-should-not-become-a-ruler.html")) {
   research.routes.push({ label: "A witness should not become a ruler", href: "a-witness-should-not-become-a-ruler.html", summary: "AI-prepared editorial working draft; personal author review pending." });
 }
 reconcilePublicRoutes();
+// Drop every route that only forwards somewhere else (tour, demonstrations, start-here, build-products, toolkit,
+// atelier, the quanta pages, typeface, work-with-me) and the WARDEN rename notice.
+// The page a stub forwards to keeps the old address as an alias, so its pillar still lights for a reader who
+// lands on the old link (the same rule writing.html follows).
+const redirectTarget = (href) => readPublicHtml(href).slice(0, 6000).match(/http-equiv="refresh"[^>]*url=([^"'>\s]+)/i)?.[1] || "";
+for (const stub of registry.families.flatMap((family) => family.routes).filter((route) => isRedirectStub(route.href))) {
+  const target = findRouteByHref(normalizePublicHref(redirectTarget(stub.href)).split("#")[0] || "index.html");
+  if (target && !isRedirectStub(target.route.href)) target.route.aliases = [...new Set([...(target.route.aliases || []), stub.href])];
+}
+for (const family of registry.families) {
+  family.routes = family.routes.filter((route) => !isRedirectStub(route.href));
+}
+// A folder listed as "x/" is not listed again as "x/index.html".
+const folderHrefs = new Set(registry.families.flatMap((family) => family.routes.map((route) => route.href)).filter((href) => href.endsWith("/")));
+for (const family of registry.families) {
+  family.routes = family.routes.filter((route) => !(route.href.endsWith("/index.html") && folderHrefs.has(route.href.slice(0, -"index.html".length))));
+}
+// Pages a reader could reach only by knowing the address: the Studies index, the published-work list and the
+// resumes the Work page links. Labels come from each page's own title.
+const workFamily = familyByLabel("Work");
+for (const href of ["published-work.html", "resume-support-operations.html", "resume-evaluation-tooling.html",
+  "resume-graphics-developer-tools.html", "resume-grounds.html", "resume-public-operations.html"]) {
+  if (!hrefExists(href) || findRouteByHref(href)) continue;
+  const source = readPublicHtml(href);
+  const label = firstMatch(source, /<title\b[^>]*>([\s\S]*?)<\/title>/i).replace(/^Zain Dana Harper\s*\|\s*/, "");
+  const summary = firstMatch(source, /<meta\s+name="description"\s+content="([^"]*)"/i);
+  workFamily.routes.push({ label: href.startsWith("resume-") ? `Resume: ${label}` : label, href, summary });
+}
+if (hrefExists("studies/") && !findRouteByHref("studies/")) {
+  research.routes.push({ label: "Studies", href: "studies/", summary: firstMatch(readPublicHtml("studies/"), /<meta\s+name="description"\s+content="([^"]*)"/i) });
+}
+// The Playground is one engine with parts (author, 2026-11-11: "the playground is the rendering engine. It's the
+// engine."). The index lists the whole first and its parts under it, each label saying which part it is.
+const playgroundParts = [["playground/", "The Playground"], ["raw.html", null], ["superframe.html", "The Playground: Superframe, the core"],
+  ["playground/distill.html", "The Playground: Distill, a study tool"], ["low-water.html", "Low Water, the game made with The Playground"]];
+let afterPart = "studio.html";
+for (const [href, label] of playgroundParts) {
+  if (!findRouteByHref(href)) continue;
+  const route = moveRoute(href, studio, afterPart);
+  if (label) route.label = label;
+  afterPart = href;
+}
+// The findings, their glossary and the experiments are research; they had fallen into Systems by default.
+for (const family of registry.families) {
+  if (family === research) continue;
+  for (const route of [...family.routes]) {
+    if (/^(findings|experiments)\//.test(route.href)) moveRoute(route.href, research, null);
+  }
+}
 if (findRouteByHref("who-knew-first.html")) {
   const whoKnewFirst = moveRoute("who-knew-first.html", whoKnewFirstFamily, null);
   whoKnewFirst.label = whoKnewFirstLabel;

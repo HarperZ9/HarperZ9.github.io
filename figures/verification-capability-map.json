@@ -14,7 +14,7 @@
         "href": "https://github.com/HarperZ9/HarperZ9.github.io/blob/main/system/systems.json"
       }
     ],
-    "retrievedAt": "2026-09-28",
+    "retrievedAt": "2026-11-12",
     "units": "registry systems and verified typed relationship records",
     "transformations": [
       "Systems are included when evaluation-verification appears in their registry domains.",
@@ -93,7 +93,7 @@
           "id": "flywheel",
           "label": "Flywheel",
           "status": "verified",
-          "stateLabel": "verified-inference platform and desktop client",
+          "stateLabel": "self-hosted AI workstation and coding harness",
           "group": "Agent systems",
           "nodeType": "system"
         },

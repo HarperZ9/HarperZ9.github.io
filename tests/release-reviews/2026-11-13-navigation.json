@@ -1,0 +1,9 @@
+{
+  "date": "2026-11-13",
+  "note": "Group C of the 2026-11-13 site audit. The hand menu sends Flywheel to flywheel.html and lists CMMNS and Articulate under it, The Playground and Superframe under Engine; its foot links the site index. The home skip link lands on #main. The route registry and site index drop the eleven redirect pages and the WARDEN rename notice, keep each old address as an alias of the page it forwards to, add Studies, Published work and the five resume pages, file findings and experiments under Research, and label raw.html raw-native.",
+  "paths": {
+    "index.html": "4db0a38f3d3cbf7fd28b2dfdb979c0e0c6a514e507617d93901c75600bee2081",
+    "site-index.html": "2c4bbe14d248ce04841965321b91c76915914fd9815f81a52c4d325401a6fbd6",
+    "system/routes.js": "0c78bb79223dc06f8ce49ed57161a122f72b15f8e1249d1bcb61a961864bf08a"
+  }
+}

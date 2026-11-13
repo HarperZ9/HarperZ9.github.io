@@ -2,7 +2,8 @@
 // scripts/build-world-home.mjs, and the menu every generated page carries (scripts/studies-shell.mjs).
 //
 // Landmarks keep their place (DESIGN-RULES.md, author 2026-11-09: "Yes"). Their order is the author's, 2026-11-09,
-// verbatim: "BuildLang, Flywheel, Engine, Game, Site, Everything". The same six lead the menu on every page, in that
+// verbatim: "BuildLang, Flywheel, Engine, Game, Site, Everything". The third word is shown as The Playground (author,
+// 2026-11-11: "the playground is the rendering engine. It's the engine."); its id, anchors and hue key are unchanged. The same six lead the menu on every page, in that
 // order, and the home sets them down in that order.
 //
 // Display marks (the author, 2026-10-29: "THE COMMONS (THECMMNS) | THE PLAYGROUND (THEPLYGRND) THE FLYWHEEL
@@ -20,6 +21,14 @@ const R = existsSync(RELEASES) ? JSON.parse(readFileSync(RELEASES, "utf8")) : { 
 const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 export const longDate = (iso) => { const [y, m, d] = iso.split("-").map(Number); return `${d} ${MONTHS[m - 1]} ${y}`; };
 export const CHECKED = R.checkedAt ? longDate(R.checkedAt.slice(0, 10)) : "not yet checked";
+
+// What each pull request behind a row without a release adds, in the words of its own title and body.
+const PR_SHOWS = {
+  "HarperZ9/raw-native#239": "adds the fight timeline and its match against the game's JavaScript engine",
+  "HarperZ9/raw-native#242": "adds hit volumes and the timing of telegraphed strikes",
+  "HarperZ9/buildlang#135": "adds the game's rules module, written in BuildLang",
+  "HarperZ9/buildlang#158": "records 40 of 40 combat traces matching the game's own corpus",
+};
 
 // The Verified line says only what the fetch saw: the GitHub release, the registry, a download, a merge.
 function verifiedFor(id) {
@@ -39,7 +48,10 @@ function verifiedFor(id) {
   if (p.prs) {
     const merged = p.prs.filter((x) => x.merged), open = p.prs.filter((x) => !x.merged);
     const name = (x) => `${x.repo.split("/")[1]} #${x.number}`;
-    if (merged.length) parts.push(`${merged.map(name).join("; ")} ${merged.length === 1 ? "is" : "are"} merged on main`);
+    // A pull request number alone tells a reader nothing; PR_SHOWS says what each one adds, from its title and body.
+    const shows = (x) => PR_SHOWS[`${x.repo}#${x.number}`];
+    if (merged.length && merged.every(shows)) parts.push(`${merged.length} pull requests are merged on main: ${merged.map((x) => `${name(x)} ${shows(x)}`).join("; ")}`);
+    else if (merged.length) parts.push(`${merged.map(name).join("; ")} ${merged.length === 1 ? "is" : "are"} merged on main`);
     if (open.length) parts.push(`${open.map(name).join("; ")} ${open.length === 1 ? "is" : "are"} still open`);
   }
   return parts.join(". ") + ".";
@@ -51,23 +63,23 @@ const fill = (s, id) => (s ? s.replace("{v}", versionOf(id) || "") : s);
 const ROWS = {
   buildlang: { hue: "bldlng", product: "BuildLang",
     try: "#w-buildlang", what: "A compiled language where a function's type lists what it may touch. The compiler proves the laws you write beside the code and builds native programs through C.",
-    see: ["/buildlang.html", "The registry, laws and the C path"], more: ["/buildlang/", "The language guide"],
+    see: ["/buildlang.html", "The registry, laws and the C path"], more: ["https://github.com/HarperZ9/buildlang/blob/main/docs/GETTING_STARTED.md", "The language guide"],
     run: "cargo install buildlang --version {v} --locked", repo: "https://github.com/HarperZ9/buildlang" },
   flywheel: { hue: "theflywheel", product: "Flywheel",
-    try: "#w-flywheel", what: "Check any model's answer against the source that decides it, and keep every step as a [[receipt]]: a record of each step's inputs, output and hashes that anyone can recheck offline, not a log of what the model claimed.",
+    try: "#w-flywheel", what: "An AI workstation and coding harness that you host yourself. It runs any model, hosted or local, behind one interface, with a desktop assistant, a coding agent that works in your own folders and connected tools for research, memory and writing. What sets it apart: every step is kept as a [[receipt]]: a record of each step's inputs, output and hashes that anyone can recheck offline, not a log of what the model claimed.",
     see: ["/demo-flywheel.html", "Watch a check, a tamper and a refusal"], more: ["/flywheel.html", "Flywheel"],
     run: "pip install flywheel-verify", then: "flywheel up", repo: "https://github.com/HarperZ9/flywheel" },
-  "raw-native": { hue: "theplygrnd", product: "raw-native",
-    try: "#w-engine", what: "A renderer that draws each frame twice, on the CPU reference and on the GPU, and certifies whether they agree. Its light comes from [[radiance cascades]]: light gathered by rings of probes, each ring reaching farther at coarser detail, an approximation checked against a traced reference.",
-    see: ["/raw.html", "Render the frame, then check it"], more: ["/low-water.html", "The game it runs"],
+  "raw-native": { hue: "theplygrnd", product: "The native renderer",
+    try: "#w-engine", what: "The part of The Playground that renders frames in C++ on Direct3D 12, Vulkan and WebGPU, released as raw-native. It draws each frame twice, on the CPU reference and on the GPU, and certifies whether they agree. Its light comes from [[radiance cascades]]: light gathered by rings of probes, each ring reaching farther at coarser detail, an approximation checked against a traced reference.",
+    see: ["/raw.html", "Render the frame, then check it"], more: ["/low-water.html", "The game made with it"],
     run: "Download raw-native-{v}-windows-x64.zip from the release", runIsProse: true, repo: "https://github.com/HarperZ9/raw-native" },
   superframe: { hue: "theplygrnd", product: "Superframe",
-    try: "#w-engine", what: "One seed, written in plain words, comes back as paint, living type, lines, carved material, sound and touch. It is [[deterministic]]: the same words and seed give the same bytes on every run, not just a similar picture.",
+    try: "#w-engine", what: "The core of The Playground. One seed, written in plain words, comes back as paint, living type, lines, carved material, sound and touch. It is [[deterministic]]: the same words and seed give the same bytes on every run, not just a similar picture.",
     see: ["/superframe.html", "One recipe in every medium"], more: ["/world/superframe/room/index.html", "The assistive room"],
     run: "git clone https://github.com/HarperZ9/superframe", then: "npm run make", note: "Node 24 or later", repo: "https://github.com/HarperZ9/superframe" },
   "low-water": { hue: "game", product: "Low Water",
-    try: "#w-low-water", what: "A narrative game in five eras, built as the full-scale demonstration of the engine.",
-    see: ["/low-water.html", "Low Water"], more: ["/raw.html", "The engine under it"] },
+    try: "#w-low-water", what: "A narrative game in five eras, made with The Playground as its full-scale demonstration.",
+    see: ["/low-water.html", "Low Water"], more: ["/raw.html", "The renderer under it"] },
   site: { product: "This site",
     what: "Ten places, each a medium with the laws it draws on.",
     see: ["#p-light", "The places"], more: ["/world/universe/proto/index.html", "The map"], repo: "https://github.com/HarperZ9/HarperZ9.github.io" },
@@ -84,15 +96,16 @@ const ROWS = {
     see: ["/experiments/", "Every experiment, nulls included"], more: ["/research.html", "Papers and essays"] },
 };
 
-// The six landmarks. `href` is where the menu sends a reader; `rows` is the work the home sets under each.
+// The six landmarks. `href` is where the menu sends a reader, always the product's own page; `sub` is the second
+// level the menu lists under the word; `rows` is the work the home sets under each.
 export const LANDMARKS = [
   { id: "buildlang", hue: "bldlng", word: "BuildLang", mark: "BLDLNG", href: "/buildlang.html", tech: "glyphcell", def: "[[BuildLang]] means the language, its compiler buildc and its package registry; it is not a build system.", rows: ["buildlang"] },
   // the checking platforms sit together: Flywheel seals and rechecks, CMMNS reads public claims, Articulate checks
   // the words that leave; each keeps its own name and mark
-  { id: "flywheel", hue: "theflywheel", word: "Flywheel", mark: "THEFLYWHEEL", href: "/world/ui/directions/cs-max/flywheel.html", tech: "light", def: "[[Flywheel]] names the checking work: Flywheel checks answers, CMMNS reads public replies, Articulate checks prose. Each shows its evidence; none decides for you.", rows: ["flywheel", "cmmns", "articulate"] },
-  { id: "engine", hue: "theplygrnd", word: "Engine", mark: "THEPLYGRND", href: "/raw.html", tech: "nightlights", def: "The [[engine]] means raw-native, which renders, and Superframe, which composes; together they are THE PLAYGROUND.", rows: ["raw-native", "superframe"] },
-  { id: "game", hue: "game", word: "Game", href: "/low-water.html", tech: "chladni", def: "Low Water, the game the engine is proved on.", rows: ["low-water"] },
-  { id: "site", hue: "brass", word: "Site", href: "/#site", tech: "swarm", def: "This site, built from the same engines.", rows: ["site"] },
+  { id: "flywheel", hue: "theflywheel", word: "Flywheel", mark: "THEFLYWHEEL", href: "/flywheel.html", sub: [["/cmmns.html", "CMMNS"], ["/articulate.html", "Articulate"]], tech: "light", def: "[[Flywheel]] is an AI workstation and coding harness for any model, with runs you can recheck. CMMNS, which reads public replies, and Articulate, which checks prose, sit beside it. Each one shows its evidence and leaves the decision to you.", rows: ["flywheel", "cmmns", "articulate"] },
+  { id: "engine", hue: "theplygrnd", word: "The Playground", mark: "THEPLAYGRND", href: "/playground/", sub: [["/raw.html", "Native renderer"], ["/superframe.html", "Superframe, the core"], ["/playground/#instruments", "Instruments and study tools"], ["/low-water.html", "Low Water, the game"]], tech: "nightlights", def: "[[The Playground]] is a rendering engine that turns one description into picture, type and sound. Its parts are the native renderer, Superframe at the core, the instruments and study tools, and Low Water, the game made with it.", rows: ["raw-native", "superframe"] },
+  { id: "game", hue: "game", word: "Game", href: "/low-water.html", tech: "chladni", def: "Low Water, the game made with The Playground.", rows: ["low-water"] },
+  { id: "site", hue: "brass", word: "Site", href: "/#site", tech: "swarm", def: "This site, built with The Playground.", rows: ["site"] },
   { id: "everything", hue: "brass", word: "Everything", href: "/floor.html", tech: "rope", def: "Every piece of work, current and past, with its status.", rows: ["research"] },
 ];
 
@@ -104,7 +117,7 @@ export const MENU_AFTER = [
   ["/hire.html", "rope", "Work"],
   ["/cv.html", "rope", "CV"],
 ];
-export const MENU = [...LANDMARKS.map((l) => [l.href, l.tech, l.word]), ...MENU_AFTER];
+export const MENU = [...LANDMARKS.map((l) => [l.href, l.tech, l.word, l.sub || []]), ...MENU_AFTER];
 
 // Every piece of work in landmark order, each with its generated version and Verified line.
 export const PLATFORMS = LANDMARKS.flatMap((l) => l.rows.map((id) => {

@@ -3253,8 +3253,8 @@
    }
   },
   "flywheel.jpg": {
-   "backend": "chrome-156.0.8078.75-skia-2x-lanczos",
-   "content_sha256": "9fa6dc42657cbbb3b231bfb627a06a27c40235939ef7006db2f4f4a6eb3815e4",
+   "backend": "chrome-157.0.8103.40-skia-2x-lanczos",
+   "content_sha256": "dc989737838959df3d2c545b8ed3a15cafcac48e79da9f3f3d849d00a038a9ab",
    "does_not_prove": [
     "It does not show the figure's numbers come from a real run, except where the alt text quotes a README result.",
     "It does not show the PNG bytes are the same under another Chrome build; the SVG and the scene are the portable record.",
@@ -3268,17 +3268,16 @@
     "width": 1200
    },
    "outputs": {
-    "flywheel.jpg": "cdce5ca3763ddb7958a67613e9de3c269fd96d0127ba8155b2bc229f7775f6df",
-    "flywheel.svg": "c8769857edabec9a9f9b7b1803215cd87390b6776184ce2506997407df88a1c2",
-    "flywheel@2x.jpg": "6d423abbd3a42536812209e627e0ab396efe8460732cb1a2c90c1303b909d02a"
+    "flywheel.jpg": "132f136f5f8baa40167cb492b83d5b0c1303292d40e9dc3ece10aa616c0251e7",
+    "flywheel.svg": "3b5ef0348924ed277e3e05e9ba699a7c7f87540fe550aad49ef638c383688606"
    },
    "producer": {
     "name": "harperz9.repo-art",
     "version": "0.1.0"
    },
-   "receipt_sha256": "d08608cf19294975416f87f6e85bde2d313e7f2149d874dd23b4634de92a8d72",
+   "receipt_sha256": "e7292c595b1ecf32f82bf7927fec74faaff2cacd00e7b379ff83e0a376887857",
    "reconcile": null,
-   "scene_sha256": "5546093156cbb6a4534b7a14c1649376a7bf8ba3646b550101d00a69c41bce85",
+   "scene_sha256": "62765abbc0605087eed9a673637c65cc95e69a66ce1b7b8fa230eb4f09134799",
    "schema": "superstack.receipt/1",
    "seed": "flywheel",
    "seed_rule": "xmur3-mulberry32/1",
@@ -6025,8 +6024,8 @@
    }
   },
   "playground.jpg": {
-   "backend": "chrome-156.0.8078.75-skia",
-   "content_sha256": "80b6942626cb17f48f381a37152c1f4d09cbad7211ead553d2b1a8f5cee105ba",
+   "backend": "chrome-157.0.8103.40-skia-2x-lanczos",
+   "content_sha256": "c3fa2cf6da33a5d812bec0e70c6fb0948d5e12644a9f93d35ce11b4ab8c7741f",
    "does_not_prove": [
     "It does not show the figure's numbers come from a real run, except where the alt text quotes a README result.",
     "It does not show the PNG bytes are the same under another Chrome build; the SVG and the scene are the portable record.",
@@ -6040,16 +6039,16 @@
     "width": 1200
    },
    "outputs": {
-    "playground.jpg": "fcc16aca71eaa1d471ccf42fdc0d080728265b4983dae6a9d7a38945fa17fcd2",
-    "playground.svg": "95db7355c25d3da387d8e70c8a38f601f4d88dde3e99cd323ff6a334908bb03f"
+    "playground.jpg": "2c96139bee48d327f0a6905d063bf3be80e6dc72edca2a7dfe4de44373b0f3aa",
+    "playground.svg": "334f4cdd106b47d01691d1a58776fb8f92f36731f952ded50ca29a27505c93da"
    },
    "producer": {
     "name": "harperz9.repo-art",
     "version": "0.1.0"
    },
-   "receipt_sha256": "1b6497868a5250084f48f1aaac4334a1dc9ab1ce9dc00d4566bcd034d98ca732",
+   "receipt_sha256": "16a527e9e2df47031fb3bdcc72b9293f54d51ffb0a130ae23132a8a8561cc97a",
    "reconcile": null,
-   "scene_sha256": "252544e56001d57fee1c87768ac58e694b4a1f49ca9cf06c78f9243c647df0ac",
+   "scene_sha256": "d16683ef90f8c13a875e64f535c79041013ebe82950ac66bc9990454d940467a",
    "schema": "superstack.receipt/1",
    "seed": "playground",
    "seed_rule": "xmur3-mulberry32/1",
@@ -6393,8 +6392,8 @@
    }
   },
   "raw.jpg": {
-   "backend": "chrome-156.0.8078.75-skia-2x-lanczos",
-   "content_sha256": "3a84ed15098654d705ea14e92876c88886c6dba4262fdf8dcd534196f7ae76b5",
+   "backend": "chrome-157.0.8103.40-skia-2x-lanczos",
+   "content_sha256": "4d5ecfbb3efb55a3214ba24b8d20ac4aed897fec05bd73ba92f2750679c9b135",
    "does_not_prove": [
     "It does not show the figure's numbers come from a real run, except where the alt text quotes a README result.",
     "It does not show the PNG bytes are the same under another Chrome build; the SVG and the scene are the portable record.",
@@ -6408,17 +6407,16 @@
     "width": 1200
    },
    "outputs": {
-    "raw.jpg": "023b2b1cea5a56d6312b8df7ef71d34259bb9049bf72790baf32d3916444c54b",
-    "raw.svg": "ffbe40382f5fe5a23cd6e3701bf1b77e4f635244bf4c47ed7ec50747de04bb61",
-    "raw@2x.jpg": "7d91ddd5e5dec75b01308e1da5f4d53220a1a32656a6f91c750ac2d96b5f2103"
+    "raw.jpg": "04dda7d90eae4013485feaef7025d9ceb859a32309379d08328f5feecc0b2a87",
+    "raw.svg": "4abda9d50e5e7071e8170c66589af969cb5eee9151dee1b4bc3812f37c4b3c98"
    },
    "producer": {
     "name": "harperz9.repo-art",
     "version": "0.1.0"
    },
-   "receipt_sha256": "9cb06506bbf8dcc1f1969e52ca56f6c53e1709e55859de06e182700e97c555d5",
+   "receipt_sha256": "7d3b5235eb9703354750790bccfd329988e6764bff5d08e7d40d3c34ddf7ed8a",
    "reconcile": null,
-   "scene_sha256": "e3f78d4a818df5be1ea8686ba8d099a87a392240c09653941e888573d982888d",
+   "scene_sha256": "8e531fdeec49e146548803b2e42c65501ecd2b98d28b7834ffa278d7c73f425e",
    "schema": "superstack.receipt/1",
    "seed": "raw",
    "seed_rule": "xmur3-mulberry32/1",

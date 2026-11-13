@@ -1,0 +1,9 @@
+{
+  "date": "2026-11-13",
+  "note": "Group D of the 2026-11-13 site audit. person.html carries the biography line 'natural philosopher and toolmaker' and a short 'What I stand for' in the author's approved words; the home's Work and CV panel links it. The route registry and site index pick up the page's new heading.",
+  "paths": {
+    "index.html": "9129493279bf0b37a1932063eaac4a39e71f9ec7b5b2c2b40a0b7523a2b8f589",
+    "site-index.html": "566dd7c6cecf12216ef2c26314fd60863fafd83485a277a3bdc8fd5e5eab1a84",
+    "system/routes.js": "00ab6e4bf381e4a614ef0655be122f354b9434e6c93a2a619bc8464dfe14b861"
+  }
+}

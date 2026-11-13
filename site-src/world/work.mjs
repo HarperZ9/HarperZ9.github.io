@@ -54,7 +54,7 @@ export const PILLARS = [
   {
     id: "flywheel", title: "Flywheel",
     html: `<figure class="w-demo">
-        <figcaption>The record says 41 tests passed. Three answers, and what the checker decided about each.</figcaption>
+        <figcaption>Flywheel is a workstation and coding harness for any model. This is its checker at work: the record says 41 tests passed, and here are three answers with what the checker decided about each.</figcaption>
         ${choose("Answers", [
           { button: "Says 42, names the record", html: `<p class="w-io"><span>Answer</span> tests_passed: 42, source: the test record</p><p class="w-verdict" data-verdict="drift">FAIL, held</p><p class="w-io">The value disagrees with the test record.</p>` },
           { button: "Says 41, names the record", html: `<p class="w-io"><span>Answer</span> tests_passed: 41, source: the test record</p><p class="w-verdict" data-verdict="verified">PASS, released</p><p class="w-io">The value agrees with the test record.</p>` },
@@ -69,7 +69,7 @@ export const PILLARS = [
     html: `<figure class="w-demo">
         <figcaption>Three findings on a demonstration thread. Every account in it is invented.</figcaption>
         ${choose("Finding", [
-          { button: "Sources", html: `<img src="/media/daylight-commons/front-sources.webp" width="600" height="800" loading="lazy" decoding="async" alt="The Daylight Commons panel open on a reply that links to rt.com. Under Sources it reads: state-owned, Russia, with the Wikidata entry it came from.">` },
+          { button: "Sources", html: `<img src="/media/daylight-commons/front-sources.webp" width="600" height="800" loading="lazy" decoding="async" alt="The CMMNS panel open on a reply that links to rt.com. Under Sources it reads: state-owned, Russia, with the Wikidata entry it came from.">` },
           { button: "Coordination", html: `<img src="/media/daylight-commons/front-coordination.webp" width="600" height="800" loading="lazy" decoding="async" alt="The panel under Coordination: same text as two other replies in the thread, and how often that happens in ordinary threads.">` },
           { button: "Fact-check", html: `<img src="/media/daylight-commons/front-fact-check.webp" width="600" height="800" loading="lazy" decoding="async" alt="The panel showing that a fact-checker, Logically Facts, rated a matching claim False on 4 December 2024, with a link to the review.">` },
         ])}
@@ -81,10 +81,10 @@ export const PILLARS = [
     html: `<figure class="w-demo">
         <figcaption>One sentence, before and after.</figcaption>
         ${choose("Version", [
-          { button: "Draft", html: `<p class="w-prose"><mark>It is important to note that</mark> this release <mark>really</mark> represents a significant step forward. <mark>Arguably</mark>, the new cache <mark>could potentially</mark> make builds faster in many cases.</p><p class="w-verdict" data-verdict="drift">Blocked: 1 high, 3 medium</p><pre class="w-out">L1 HIGH   filler-intensifier\nL1 MEDIUM throat-clearing opener\nL1 MEDIUM stacked hedge\nL1 MEDIUM worth-noting preamble</pre>` },
-          { button: "Rewrite", html: `<p class="w-prose">This release adds a build cache. On our test project, a clean build took 41 seconds and a cached build took 9.</p><p class="w-verdict" data-verdict="verified">Passes the gate</p><pre class="w-out">exit 0</pre>` },
+          { button: "Draft", html: `<p class="w-prose"><mark>It is important to note that</mark> this release really represents a significant step forward. Arguably, the new cache <mark>could potentially</mark> make builds faster in many cases.</p><p class="w-verdict" data-verdict="drift">Flagged: 3 medium</p><pre class="w-out">L1 MEDIUM throat-clearing opener\nL1 MEDIUM stacked hedge\nL1 MEDIUM worth-noting preamble</pre>` },
+          { button: "Rewrite", html: `<p class="w-prose">This release adds a build cache. On our test project, a clean build took 41 seconds and a cached build took 9.</p><p class="w-verdict" data-verdict="verified">No findings</p><pre class="w-out">exit 0</pre>` },
         ])}
-        <p class="w-note">Output from <code>articulate check</code>, Articulate 0.4.1.</p>
+        <p class="w-note">Output from <code>articulate check</code>, Articulate 0.18.0, run on 12 November 2026.</p>
       </figure>
       <p class="w-go"><a class="w-try" href="/articulate.html">Articulate</a> <a href="https://pypi.org/project/articulate-writing/">pip install <span class="ident" translate="no">articulate-writing</span></a></p>`,
   },
@@ -137,8 +137,8 @@ export const PILLARS = [
     id: "work", title: "Work and CV",
     html: `<ul class="w-list-plain">
         <li><a href="/flywheel-pilot.html">Flywheel verification pilot</a></li>
-        <li><a href="/work-with-me.html">Work with me</a></li>
         <li><a href="/cv.html">Full CV</a></li>
+        <li><a href="/person.html#stand-for">The person behind it, and what I stand for</a></li>
         <li><a href="/resume.html">Resume</a></li>
       </ul>
       <p class="w-go"><a class="w-try" href="/hire.html">Hire or collaborate</a> <a href="mailto:zaindharper@gmail.com">Email</a></p>`,
