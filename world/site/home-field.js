@@ -18,7 +18,7 @@ function makeField(asked = false) {
   if (!canvas || root.classList.contains("plain") || (!asked && !able())) return Promise.resolve(null);
   making = (async () => {
     try {
-      const { createField } = await import("/world/site/field/field.js");
+      const { createField, scaleCeiling } = await import("/world/site/field/field.js");
       const reduced = reducedMotion();
       // the quality budget per device class: a desktop with eight or more cores renders above its pixel count (up to
       // twice) and steps down to hold 60 frames a second; a smaller machine holds the screen's own pixels, stepping
@@ -28,8 +28,11 @@ function makeField(asked = false) {
       // brought up to the canvas, which always holds the device's pixels (field.js). History keeps 60 percent of the
       // past and blends in 40 percent of each new jittered frame, which settles the edges without smearing the water
       const strong = (navigator.hardwareConcurrency || 4) >= 8 && (navigator.deviceMemory || 8) >= 8;
-      field = createField(canvas, { space: space(), dprCap: strong ? 2 : 1, pixels: strong ? 8.3e6 : 2.1e6, budgetMs: 16.7, minScale: 0.6, history: 0.6, reduced });
-      if (reduced) { const r = canvas.getBoundingClientRect(); field.still({ n: 4, w: Math.round(r.width), h: Math.round(r.height) }); }
+      const dprCap = strong ? 2 : 1, pixels = strong ? 8.3e6 : 2.1e6;
+      field = createField(canvas, { space: space(), dprCap, pixels, budgetMs: 16.7, minScale: 0.6, history: 0.6, reduced });
+      // reduced motion: one settled still on a canvas of the device's own pixels, the scene inside the same pixel budget
+      if (reduced) { const r = canvas.getBoundingClientRect(), dpr = devicePixelRatio || 1;
+        field.still({ n: 4, w: Math.round(r.width * dpr), h: Math.round(r.height * dpr), scale: Math.min(1, scaleCeiling(r.width, r.height, dpr, dprCap, pixels) / dpr) }); }
       field.start(); requestAnimationFrame(() => requestAnimationFrame(() => box.classList.add("live")));
       document.addEventListener("visibilitychange", () => field.setVisible(!document.hidden));
       new MutationObserver(() => { if (!skyOn) field.go(space()); }).observe(root, { attributes: true, attributeFilter: ["data-theme", "class"] });
