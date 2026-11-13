@@ -3,17 +3,19 @@
 // a settle pass for the moving picture, a Catmull-Rom resample, then a contrast-adaptive sharpen. Each one is held
 // inside the range of the pixels it reads, so none of them can ring or draw a halo.
 
-// settle: the moving picture's running mean. The history is first held inside the range of this frame's 3 by 3
-// neighbourhood, so what the camera has moved off cannot trail behind it, then `uKeep` of it is kept
+// settle: the moving picture's running mean is held inside the range of this frame's 3 by 3 neighbourhood, so what
+// the camera has moved off cannot trail behind it. The mean lives in the target this pass draws to, so the clamp is
+// done by blending: mode 1 writes the neighbourhood's maximum (blended by MIN), mode 2 its minimum (blended by
+// MAX), and mode 0 writes the frame itself, blended in by its weight (field.js)
 export const SETTLE_FRAG = `#version 300 es
 precision highp float;
-uniform sampler2D uCur, uHist; uniform float uKeep;
-in vec2 v; out vec4 o;
+uniform sampler2D uCur; uniform int uMode;
+out vec4 o;
 void main() {
   ivec2 p = ivec2(gl_FragCoord.xy), hi = textureSize(uCur, 0) - 1;
-  vec3 c = texelFetch(uCur, p, 0).rgb, mn = c, mx = c;
-  for (int j = -1; j <= 1; j++) for (int i = -1; i <= 1; i++) { vec3 n = texelFetch(uCur, clamp(p + ivec2(i, j), ivec2(0), hi), 0).rgb; mn = min(mn, n); mx = max(mx, n); }
-  o = vec4(mix(c, clamp(texture(uHist, v).rgb, mn, mx), uKeep), 1.0);
+  vec3 c = texelFetch(uCur, p, 0).rgb;
+  if (uMode > 0) for (int j = -1; j <= 1; j++) for (int i = -1; i <= 1; i++) { vec3 n = texelFetch(uCur, clamp(p + ivec2(i, j), ivec2(0), hi), 0).rgb; c = uMode == 1 ? max(c, n) : min(c, n); }
+  o = vec4(c, 1.0);
 }`;
 
 // resample: bicubic Catmull-Rom from the scene's size (uSrc texels, uPx = 1 / uSrc) to the canvas, as nine bilinear

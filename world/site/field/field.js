@@ -3,7 +3,7 @@
 // accumulates jittered frames into one still (renderStill) for the 4K plates the reduced-motion tier shows.
 import { TRANS_FRAG, MS_FRAG, SKY_FRAG } from "./atmosphere.glsl.js";
 import { WAVE_FRAG, SCENE_FRAG, POST_FRAG, VERT } from "./scene.glsl.js";
-import { UPSCALE_FRAG, SHARPEN_FRAG } from "./upscale.glsl.js";
+import { SETTLE_FRAG, UPSCALE_FRAG, SHARPEN_FRAG } from "./upscale.glsl.js";
 import { cascadeWaves, glyphField, sellmeier, N_BK7, swellWaves, swellHeight } from "./ocean.js";
 import { effectiveFetch } from "../sky/weather.mjs";
 import { blueMask, MASK_N } from "./jitter.mjs";
@@ -56,17 +56,14 @@ function mixSpace(a, b, k) {
     windAngle: lerp(a.windAngle ?? 0.35, b.windAngle ?? 0.35, k), wx: Object.fromEntries(WX.map((key) => [key, lerp(a.wx?.[key] ?? 0, b.wx?.[key] ?? 0, k)])) };
 }
 
-// The scene's scale, in CSS pixels per axis. The ceiling: `dprCap` as before (a strong machine may draw above the
-// screen's own pixels), raised to the device pixel ratio where the box at that ratio stays inside `pixels` per frame,
-// so a 1280 by 720 screen at 1.25 draws its own 1600 by 900 on a machine held to dprCap 1
+// The scene's scale ceiling, in CSS pixels per axis: `dprCap` as before, raised to the device pixel ratio where the
+// box at that ratio fits `pixels` a frame (a 1280 by 720 screen at 1.25 draws 1600 by 900 on a machine held to 1)
 export const scaleCeiling = (cssW, cssH, dpr, dprCap, pixels = 0) => Math.max(dprCap, Math.min(dpr, Math.sqrt(pixels / Math.max(1, cssW * cssH))));
-// The governor: the scale follows the frame budget. step() takes one frame gap in ms, the ceiling and the device
-// pixel ratio, and returns the scale to draw at. A mean over 30 frames above the budget steps down by a tenth; three
-// frames in a row of a quarter second or more step down by a quarter (a renderer far too slow never fills the mean).
-// It steps up by a twentieth (a tenth above the screen) after two seconds on budget (45 frames under 0.7 of it), and
-// only to the screen's own pixels; above them it wants that margin. A step toward the size that last failed waits
-// `hold` frames instead, and the hold doubles (to a minute) each time a step up is followed by a failure, so the
-// scale settles under the size the machine cannot carry and does not flap. Holding the ceiling for a hold forgets it
+// The governor: step() takes a frame gap in ms, the ceiling and the device pixel ratio, and returns the scale. A
+// 30-frame mean over budget steps down a tenth; three frames of a quarter second or more step down a quarter. Two
+// seconds on budget step up a twentieth, to the screen's pixels; above them it wants a mean under 0.7 of the budget
+// (45 frames, a tenth). A step toward the size that last failed waits `hold` frames, doubling to a minute each time
+// a step up fails, so the scale rests under what the machine cannot carry. A hold at the ceiling forgets the failure
 export function scaleGovernor({ budgetMs = 16.7, minScale = 0.6 } = {}) {
   let scale = null, ema = 0, seen = 0, calm = 0, slow = 0, failAt = Infinity, hold = 150, rose = false;
   const fail = (k) => { if (rose) hold = Math.min(3600, hold * 2); failAt = scale; rose = false; scale = Math.max(Math.min(scale, minScale), scale * k); seen = 0; calm = 0; slow = 0; };
@@ -100,13 +97,12 @@ export function createField(canvas, { space = "close", dprCap = 1.5, pixels = 0,
   const aniso = gl.getExtension("EXT_texture_filter_anisotropic");
   const quad = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, quad); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
   gl.enableVertexAttribArray(0); gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
-  const P = { trans: program(gl, TRANS_FRAG), ms: program(gl, MS_FRAG), sky: program(gl, SKY_FRAG), wave: program(gl, WAVE_FRAG), scene: program(gl, SCENE_FRAG), post: program(gl, POST_FRAG), up: program(gl, UPSCALE_FRAG), sharp: program(gl, SHARPEN_FRAG) };
+  const P = { trans: program(gl, TRANS_FRAG), ms: program(gl, MS_FRAG), sky: program(gl, SKY_FRAG), wave: program(gl, WAVE_FRAG), scene: program(gl, SCENE_FRAG), post: program(gl, POST_FRAG), settle: program(gl, SETTLE_FRAG), up: program(gl, UPSCALE_FRAG), sharp: program(gl, SHARPEN_FRAG) };
   const T = { trans: target(gl, 256, 64), ms: target(gl, 32, 32), sky: target(gl, 192, 108), waves: CASCADES.map(() => target(gl, 256, 256, { mip: true })) };
   if (aniso) for (const w of T.waves) { gl.bindTexture(gl.TEXTURE_2D, w.t); gl.texParameterf(gl.TEXTURE_2D, aniso.TEXTURE_MAX_ANISOTROPY_EXT, Math.min(16, gl.getParameter(aniso.MAX_TEXTURE_MAX_ANISOTROPY_EXT))); }
   const draw = (prog, tgt, setup) => { gl.useProgram(prog.p); gl.bindFramebuffer(gl.FRAMEBUFFER, tgt ? tgt.f : null); gl.viewport(0, 0, tgt ? tgt.w : canvas.width, tgt ? tgt.h : canvas.height); setup?.(prog.u); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4); };
   const bind = (unit, tex, loc) => { gl.activeTexture(gl.TEXTURE0 + unit); gl.bindTexture(gl.TEXTURE_2D, tex); gl.uniform1i(loc, unit); };
-  draw(P.trans, T.trans);
-  draw(P.ms, T.ms, (u) => bind(0, T.trans.t, u.uTrans));
+  draw(P.trans, T.trans); draw(P.ms, T.ms, (u) => bind(0, T.trans.t, u.uTrans));
 
   const waveTex = CASCADES.map(() => { const t = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, t); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST); return t; });
   let windNow = -1, angleNow = 0.35, swell = { waves: new Float32Array(32), Q: 0 }, hmax = 0, sigma = 0, breakH = 1e9, windDir = [1, 0];
@@ -151,19 +147,18 @@ export function createField(canvas, { space = "close", dprCap = 1.5, pixels = 0,
   const progress = () => (reduced ? 1 : ease(Math.min(1, (performance.now() - t0) / dur)));
   const state = () => mixSpace(from, to, progress());
   const drop = (t) => { if (t) { gl.deleteFramebuffer(t.f); gl.deleteTexture(t.t); } };
-  // the scene's target at w by h; true when it starts empty. A change of scale keeps the running mean: the picture so
-  // far is resampled into the new target, so a step in resolution does not restart the settling
+  // the scene's target; true when it starts empty. A change of size resamples the running mean into the new target
   function size(w, h) {
     if (hdr && hdr.w === w && hdr.h === h) return false;
     const old = hdr; hdr = target(gl, w, h, { mip: "clamp" }); if (!old) return true;
     gl.bindFramebuffer(gl.READ_FRAMEBUFFER, old.f); gl.bindFramebuffer(gl.DRAW_FRAMEBUFFER, hdr.f);
     gl.blitFramebuffer(0, 0, old.w, old.h, 0, 0, w, h, gl.COLOR_BUFFER_BIT, gl.LINEAR); drop(old); return false;
   }
-  // the canvas is backed at the screen's pixels; the scene may be smaller (or, on a strong machine, larger). The
-  // display pass draws straight to the canvas when the sizes match and nothing is sharpened (a still for a plate).
-  // Otherwise it draws at the scene's size, a resample brings that to the canvas, and the sharpen pass finishes it
-  let ldr = null, up = null;
-  const fit = (t, w, h) => { if (t && t.w === w && t.h === h) return t; drop(t); return target(gl, w, h, { format: gl.RGB10_A2 }); };
+  // the canvas holds the screen's pixels; the scene may be smaller (or larger, on a strong machine). The display pass
+  // draws to the canvas when the sizes match and nothing is sharpened (a plate's still); else resample, then sharpen
+  let ldr = null, up = null, cur = null, was = null;
+  { const w = target(gl, 2, 2); draw(P.settle, w, (u) => bind(0, T.trans.t, u.uCur)); drop(w); }   // compiled now, not at the first move
+  const fit = (t, w, h, format = gl.RGB10_A2) => { if (t && t.w === w && t.h === h) return t; drop(t); return target(gl, w, h, { format }); };
   function present(post, native, seed) {
     const same = hdr.w === canvas.width && hdr.h === canvas.height, ratio = canvas.width / hdr.w;
     const sharp = same ? native : ratio < 1 ? 0 : sharpen * Math.min(1, 0.5 + (ratio - 1));
@@ -173,9 +168,9 @@ export function createField(canvas, { space = "close", dprCap = 1.5, pixels = 0,
     draw(P.sharp, null, (u) => { bind(0, (same ? ldr : up).t, u.uImg); gl.uniform1f(u.uSharp, sharp); gl.uniform1f(u.uFrame, seed); });
   }
 
-  // one frame: the sea cascades at time t, the sky for this light, the scene (blended into the running mean when
-  // accumulating), then the display pass
-  function frame({ t = clock, jitter = [0, 0], blendWeight = 1, seq = 0, native = 0 } = {}) {
+  // one frame: the sea cascades at time t, the sky for this light, the scene (blended into the running mean: by
+  // `blendWeight` for a still, keeping `keep` of the past when live), then the display pass
+  function frame({ t = clock, jitter = [0, 0], blendWeight = 1, seq = 0, native = 0, keep = null } = {}) {
     const s = state();
     // the word re-forms halfway along the path, while the camera is between framings
     setWind(s.wind, s.windAngle, !!to.near); setWord(progress() < 0.5 ? word : to.word); if (progress() >= 1) word = to.word;
@@ -200,8 +195,16 @@ export function createField(canvas, { space = "close", dprCap = 1.5, pixels = 0,
     CASCADES.forEach((c, i) => draw(P.wave, T.waves[i], (u) => { bind(0, waveTex[i], u.uWaves); gl.uniform1i(u.uN, 96); gl.uniform1f(u.uTile, c.tile); gl.uniform1f(u.uT, t); gl.uniform1f(u.uChop, 1.1 + 0.6 * Math.min(1, Math.max(0, (s.wind - 6) / 14))); }));
     for (const w of T.waves) { gl.bindTexture(gl.TEXTURE_2D, w.t); gl.generateMipmap(gl.TEXTURE_2D); }
     draw(P.sky, T.sky, (u) => { bind(0, T.trans.t, u.uTrans); bind(1, T.ms.t, u.uMS); gl.uniform3fv(u.uL, L); gl.uniform1f(u.uViewH, Math.max(0.0005, s.cam.h / 1000)); });
-    gl.enable(gl.BLEND); gl.blendFunc(gl.CONSTANT_ALPHA, gl.ONE_MINUS_CONSTANT_ALPHA); gl.blendColor(0, 0, 0, blendWeight);
-    draw(P.scene, hdr, (u) => {
+    // pixels the camera's own change moved the picture this frame (an estimate from angles, zoom and the eye's rise)
+    const pose = [(s.cam.pitch + dPitch) * D, s.cam.yaw * D, roll, Math.log(s.cam.focal), 0.25 * Math.log(Math.max(0.1, camY))];
+    const moved = was ? hdr.h * s.cam.focal * pose.reduce((m, x, i) => m + Math.abs(x - was[i]), 0) : 9; was = pose;
+    // live, while the camera moves the picture over 1.5 pixels a frame (a change of space; the swell's bob stays under
+    // it): the mean is clamped to the frame's 3 by 3 range, so the past does not trail, and less of it is kept
+    const fast = keep === null ? 0 : Math.min(1, Math.max(0, (moved - 1.5) / 3)), settle = fast > 0;
+    if (settle) cur = fit(cur, hdr.w, hdr.h, gl.RGBA16F);
+    gl.blendEquation(gl.FUNC_ADD); gl.blendFunc(gl.CONSTANT_ALPHA, gl.ONE_MINUS_CONSTANT_ALPHA); gl.blendColor(0, 0, 0, keep === null ? blendWeight : 1 - keep);
+    if (!settle) gl.enable(gl.BLEND);
+    draw(P.scene, settle ? cur : hdr, (u) => {
       bind(0, T.trans.t, u.uTrans); bind(1, T.sky.t, u.uSky); T.waves.forEach((w, i) => bind(2 + i, w.t, u[`uW${i}`])); bind(5, glyphTex, u.uGlyph); bind(6, blueTex, u.uBlue);
       gl.uniform2f(u.uRes, hdr.w, hdr.h); gl.uniform2fv(u.uJitter, jitter); gl.uniform1f(u.uSeq, seq); gl.uniform3fv(u.uL, L); gl.uniform3f(u.uCam, 0, camY, 0);
       gl.uniform3fv(u.uIor, IOR); gl.uniform3fv(u.uAbs, ABS); gl.uniform3f(u.uLightCol, lightCol, lightCol, lightCol); gl.uniform3f(u.uTiles, ...CASCADES.map((c) => c.tile));
@@ -218,6 +221,11 @@ export function createField(canvas, { space = "close", dprCap = 1.5, pixels = 0,
       gl.uniform1f(u.uGX, s.glass.x ?? 0); gl.uniform1f(u.uGZ, s.glass.z); gl.uniform1f(u.uGH, s.glass.cap); gl.uniform1f(u.uGT, s.glass.thick); gl.uniform1f(u.uGR, Math.min(0.35, s.glass.thick * 0.3));
       gl.uniform1f(u.uGBase, glyphMeta.baseV); gl.uniform1f(u.uGCap, glyphMeta.capV); gl.uniform1f(u.uHasGlyph, glyphNow ? 1 : 0); gl.uniform1f(u.uFoam, Math.min(1, 3.84e-6 * Math.pow(s.wind, 3.41) * 100));
     });
+    if (settle) {
+      const pass = (mode) => draw(P.settle, hdr, (u) => { bind(0, cur.t, u.uCur); gl.uniform1i(u.uMode, mode); });
+      gl.enable(gl.BLEND); gl.blendEquation(gl.MIN); pass(1); gl.blendEquation(gl.MAX); pass(2);
+      gl.blendEquation(gl.FUNC_ADD); gl.blendColor(0, 0, 0, 1 - keep * (1 - 0.5 * fast)); pass(0);
+    }
     gl.disable(gl.BLEND);
     // where the light falls on the screen (the inverse of the scene's ray()), for rays and ghosts
     const cp = Math.cos((s.cam.pitch + dPitch) * D), spt = Math.sin(s.cam.pitch * D), cy = Math.cos(s.cam.yaw * D), sy = Math.sin(s.cam.yaw * D);
@@ -241,12 +249,10 @@ export function createField(canvas, { space = "close", dprCap = 1.5, pixels = 0,
   let flash = 0, strokes = [], held = 0, bolt = [3, 0.5, 6];
   const flashAt = (now) => held || strokes.reduce((m, k) => (now >= k.t ? Math.max(m, k.s * Math.exp(-(now - k.t) / 45)) : m), 0);
   let running = false, last = 0, visible = true, stillScale = 1;
-  // resolution follows the frame budget (scaleGovernor above): the canvas keeps the screen's pixels and only the
-  // scene's target changes size
+  // resolution follows the frame budget: the canvas keeps the screen's pixels, only the scene's target changes size
   const gov = scaleGovernor({ budgetMs, minScale }); let top = dprCap, k = 0;
   // temporal anti-aliasing: each frame is drawn with a subpixel jitter from the R2 sequence and blended into the last
-  // frames' mean, so edges and the glints on the water resolve below a pixel. The blend keeps `history` of the past,
-  // short enough that moving water does not smear (0 turns it off)
+  // frames' mean, so edges and glints resolve below a pixel. The blend keeps `history` of the past (0 turns it off)
   const R2 = [0.7548776662466927, 0.5698402909980532];
   function loop(ts) {
     if (!running) return;
@@ -258,7 +264,7 @@ export function createField(canvas, { space = "close", dprCap = 1.5, pixels = 0,
     flash = flashAt(performance.now()); strokes = strokes.filter((x) => performance.now() - x.t < 400);
     const fresh = size(Math.max(2, Math.round(r.width * scale)), Math.max(2, Math.round(r.height * scale))); k++;
     const jitter = history > 0 ? [((k * R2[0]) % 1) - 0.5, ((k * R2[1]) % 1) - 0.5] : [0, 0];
-    frame({ t: clock, jitter, blendWeight: fresh || history <= 0 ? 1 : 1 - history, native: sharpen * 0.5 });
+    frame({ t: clock, jitter, keep: history > 0 ? (fresh ? 0 : history) : null, native: sharpen * 0.5 });
     if (visible) requestAnimationFrame(loop);
   }
   const api = {
@@ -281,12 +287,10 @@ export function createField(canvas, { space = "close", dprCap = 1.5, pixels = 0,
     go(id, ms = 2600) { if (!SPACES[id]) return; word = progress() < 0.5 ? word : to.word; from = state(); to = SPACES[id]; t0 = performance.now(); dur = reduced ? 1 : ms; if (reduced) api.still(); },
     start() { if (reduced) return api.still(); running = true; last = performance.now(); requestAnimationFrame(loop); },
     stop() { running = false; },
-    // what the field is doing now, for the page's own budget checks and for measurement
-    // scale and top are in CSS pixels per axis; width and height are the canvas, renderWidth and renderHeight the scene
+    // what the field is doing now, for budget checks and measurement: scale and top in CSS pixels, render* the scene
     stats() { return { scale: gov.scale, top, frameMs: gov.frameMs, width: canvas.width, height: canvas.height, renderWidth: hdr?.w ?? 0, renderHeight: hdr?.h ?? 0 }; },
     setVisible(v) { visible = v; if (v && running) { last = performance.now(); requestAnimationFrame(loop); } },
-    // one settled still: n jittered frames averaged at a fixed time (subpixel antialiasing for the glass edges).
-    // `scale` under 1 draws the scene smaller than the canvas and brings it up with the resample and sharpen passes
+    // one settled still: n jittered frames averaged at a fixed time; `scale` under 1 draws the scene that much smaller
     still({ n = 16, w = canvas.width, h = canvas.height, t = 7.0, scale = stillScale } = {}) {
       canvas.width = w; canvas.height = h; stillScale = scale; size(Math.max(2, Math.round(w * scale)), Math.max(2, Math.round(h * scale))); t0 = 0;
       for (let i = 0; i < n; i++) frame({ t, jitter: [((i * 0.618034) % 1) - 0.5, ((i * 0.754878) % 1) - 0.5], blendWeight: 1 / (i + 1), seq: i });

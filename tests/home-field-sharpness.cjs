@@ -63,6 +63,10 @@ function compare() {
       await page.waitForTimeout(SETTLE);
       const r = await page.evaluate(() => { const c = document.querySelector('canvas.gw-live'), b = c.getBoundingClientRect(), s = window.__homeField.stats(), gl = c.getContext('webgl2'), dbg = gl.getExtension('WEBGL_debug_renderer_info');
         return { dpr: devicePixelRatio, box: [b.width, b.height], backing: [c.width, c.height], stats: s, renderer: dbg ? gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL) : '' }; });
+      // change between frames a sixtieth of a second apart (mean absolute difference over 320 by 180 of the canvas's own pixels, on the water, 0 to 255): reported, to tell shimmer from settling
+      r.frameChange = await page.evaluate(async () => { const c = document.querySelector('canvas.gw-live'), w = 320, h = 180, sx = Math.round(c.width * 0.55), sy = Math.round(c.height * 0.62), x = new OffscreenCanvas(w, h).getContext('2d', { willReadFrequently: true }), next = () => new Promise((f) => requestAnimationFrame(f));
+        const grab = () => { x.drawImage(c, sx, sy, w, h, 0, 0, w, h); return x.getImageData(0, 0, w, h).data; }; let prev = null, sum = 0, n = 0;
+        for (let i = 0; i < 24; i++) { await next(); const d = grab(); if (prev) { let s = 0; for (let k = 0; k < d.length; k += 4) s += Math.abs(d[k + 1] - prev[k + 1]); sum += s / (d.length / 4); n++; } prev = d; } return +(sum / n).toFixed(3); });
       r.view = `${v.w}x${v.h} @${v.dpr}, ${v.cores} cores`; r.top = r.stats.top ?? null; r.want = [Math.round(r.box[0] * r.dpr), Math.round(r.box[1] * r.dpr)]; r.backingOverDevice = +(r.backing[0] / r.want[0]).toFixed(3);
       r.internal = [r.stats.renderWidth ?? r.backing[0], r.stats.renderHeight ?? r.backing[1]]; r.scale = +r.stats.scale.toFixed(3); r.frameMs = +r.stats.frameMs.toFixed(1); delete r.stats;
       if (SHOTS) { await page.screenshot({ path: name(v, 'home') });
