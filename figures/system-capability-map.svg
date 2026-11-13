@@ -73,11 +73,11 @@
     <text x="840" y="483" class="mono muted" font-size="17">BRender restoration and</text>
     <text x="840" y="503" class="mono muted" font-size="17">build-test harness</text>
   </g>
-<g data-figure-point="true" data-figure-key="flywheel" data-node-instance="source-4" role="graphics-symbol" aria-label="Flywheel. verified-inference platform and desktop client.">
+<g data-figure-point="true" data-figure-key="flywheel" data-node-instance="source-4" role="graphics-symbol" aria-label="Flywheel. self-hosted AI workstation and coding harness.">
     <rect x="44" y="544" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
     <text x="60" y="571" font-size="18" font-weight="700">Flywheel</text>
-    <text x="60" y="595" class="mono muted" font-size="17">verified-inference platform</text>
-    <text x="60" y="615" class="mono muted" font-size="17">and desktop client</text>
+    <text x="60" y="595" class="mono muted" font-size="17">self-hosted AI workstation</text>
+    <text x="60" y="615" class="mono muted" font-size="17">and coding harness</text>
   </g>
   <path data-relationship-edge="true" data-edge-type="integrates-lane" d="M376 585 H824" class="cm-edge" marker-end="url(#system-capability-map-arrow)">
     <title>Flywheel includes Accountable Surface as a lane</title>
@@ -89,11 +89,11 @@
     <text x="840" y="595" class="mono muted" font-size="17">workbench that allows only</text>
     <text x="840" y="615" class="mono muted" font-size="17">approved AI agent actions</text>
   </g>
-<g data-figure-point="true" data-figure-key="flywheel" data-node-instance="source-5" role="graphics-symbol" aria-label="Flywheel. verified-inference platform and desktop client.">
+<g data-figure-point="true" data-figure-key="flywheel" data-node-instance="source-5" role="graphics-symbol" aria-label="Flywheel. self-hosted AI workstation and coding harness.">
     <rect x="44" y="656" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
     <text x="60" y="683" font-size="18" font-weight="700">Flywheel</text>
-    <text x="60" y="707" class="mono muted" font-size="17">verified-inference platform</text>
-    <text x="60" y="727" class="mono muted" font-size="17">and desktop client</text>
+    <text x="60" y="707" class="mono muted" font-size="17">self-hosted AI workstation</text>
+    <text x="60" y="727" class="mono muted" font-size="17">and coding harness</text>
   </g>
   <path data-relationship-edge="true" data-edge-type="integrates-lane" d="M376 697 H824" class="cm-edge" marker-end="url(#system-capability-map-arrow)">
     <title>Flywheel includes Articulate as a lane</title>
@@ -104,11 +104,11 @@
     <text x="840" y="683" font-size="18" font-weight="700">Articulate</text>
     <text x="840" y="707" class="mono muted" font-size="17">local prose checker</text>
   </g>
-<g data-figure-point="true" data-figure-key="flywheel" data-node-instance="source-6" role="graphics-symbol" aria-label="Flywheel. verified-inference platform and desktop client.">
+<g data-figure-point="true" data-figure-key="flywheel" data-node-instance="source-6" role="graphics-symbol" aria-label="Flywheel. self-hosted AI workstation and coding harness.">
     <rect x="44" y="768" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
     <text x="60" y="795" font-size="18" font-weight="700">Flywheel</text>
-    <text x="60" y="819" class="mono muted" font-size="17">verified-inference platform</text>
-    <text x="60" y="839" class="mono muted" font-size="17">and desktop client</text>
+    <text x="60" y="819" class="mono muted" font-size="17">self-hosted AI workstation</text>
+    <text x="60" y="839" class="mono muted" font-size="17">and coding harness</text>
   </g>
   <path data-relationship-edge="true" data-edge-type="integrates-lane" d="M376 809 H824" class="cm-edge" marker-end="url(#system-capability-map-arrow)">
     <title>Flywheel includes Crucible as a lane</title>
@@ -120,11 +120,11 @@
     <text x="840" y="819" class="mono muted" font-size="17">engine that tests claims</text>
     <text x="840" y="839" class="mono muted" font-size="17">against evidence</text>
   </g>
-<g data-figure-point="true" data-figure-key="flywheel" data-node-instance="source-7" role="graphics-symbol" aria-label="Flywheel. verified-inference platform and desktop client.">
+<g data-figure-point="true" data-figure-key="flywheel" data-node-instance="source-7" role="graphics-symbol" aria-label="Flywheel. self-hosted AI workstation and coding harness.">
     <rect x="44" y="880" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
     <text x="60" y="907" font-size="18" font-weight="700">Flywheel</text>
-    <text x="60" y="931" class="mono muted" font-size="17">verified-inference platform</text>
-    <text x="60" y="951" class="mono muted" font-size="17">and desktop client</text>
+    <text x="60" y="931" class="mono muted" font-size="17">self-hosted AI workstation</text>
+    <text x="60" y="951" class="mono muted" font-size="17">and coding harness</text>
   </g>
   <path data-relationship-edge="true" data-edge-type="integrates-lane" d="M376 921 H824" class="cm-edge" marker-end="url(#system-capability-map-arrow)">
     <title>Flywheel includes Forum as a lane</title>
@@ -136,11 +136,11 @@
     <text x="840" y="931" class="mono muted" font-size="17">multi-agent orchestration</text>
     <text x="840" y="951" class="mono muted" font-size="17">engine</text>
   </g>
-<g data-figure-point="true" data-figure-key="flywheel" data-node-instance="source-8" role="graphics-symbol" aria-label="Flywheel. verified-inference platform and desktop client.">
+<g data-figure-point="true" data-figure-key="flywheel" data-node-instance="source-8" role="graphics-symbol" aria-label="Flywheel. self-hosted AI workstation and coding harness.">
     <rect x="44" y="992" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
     <text x="60" y="1019" font-size="18" font-weight="700">Flywheel</text>
-    <text x="60" y="1043" class="mono muted" font-size="17">verified-inference platform</text>
-    <text x="60" y="1063" class="mono muted" font-size="17">and desktop client</text>
+    <text x="60" y="1043" class="mono muted" font-size="17">self-hosted AI workstation</text>
+    <text x="60" y="1063" class="mono muted" font-size="17">and coding harness</text>
   </g>
   <path data-relationship-edge="true" data-edge-type="integrates-lane" d="M376 1033 H824" class="cm-edge" marker-end="url(#system-capability-map-arrow)">
     <title>Flywheel includes Gather as a lane</title>
@@ -152,11 +152,11 @@
     <text x="840" y="1043" class="mono muted" font-size="17">research intake and corpus</text>
     <text x="840" y="1063" class="mono muted" font-size="17">system</text>
   </g>
-<g data-figure-point="true" data-figure-key="flywheel" data-node-instance="source-9" role="graphics-symbol" aria-label="Flywheel. verified-inference platform and desktop client.">
+<g data-figure-point="true" data-figure-key="flywheel" data-node-instance="source-9" role="graphics-symbol" aria-label="Flywheel. self-hosted AI workstation and coding harness.">
     <rect x="44" y="1104" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
     <text x="60" y="1131" font-size="18" font-weight="700">Flywheel</text>
-    <text x="60" y="1155" class="mono muted" font-size="17">verified-inference platform</text>
-    <text x="60" y="1175" class="mono muted" font-size="17">and desktop client</text>
+    <text x="60" y="1155" class="mono muted" font-size="17">self-hosted AI workstation</text>
+    <text x="60" y="1175" class="mono muted" font-size="17">and coding harness</text>
   </g>
   <path data-relationship-edge="true" data-edge-type="integrates-lane" d="M376 1145 H824" class="cm-edge" marker-end="url(#system-capability-map-arrow)">
     <title>Flywheel includes Index as a lane</title>
@@ -168,11 +168,11 @@
     <text x="840" y="1155" class="mono muted" font-size="17">workspace map and context</text>
     <text x="840" y="1175" class="mono muted" font-size="17">system</text>
   </g>
-<g data-figure-point="true" data-figure-key="flywheel" data-node-instance="source-10" role="graphics-symbol" aria-label="Flywheel. verified-inference platform and desktop client.">
+<g data-figure-point="true" data-figure-key="flywheel" data-node-instance="source-10" role="graphics-symbol" aria-label="Flywheel. self-hosted AI workstation and coding harness.">
     <rect x="44" y="1216" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
     <text x="60" y="1243" font-size="18" font-weight="700">Flywheel</text>
-    <text x="60" y="1267" class="mono muted" font-size="17">verified-inference platform</text>
-    <text x="60" y="1287" class="mono muted" font-size="17">and desktop client</text>
+    <text x="60" y="1267" class="mono muted" font-size="17">self-hosted AI workstation</text>
+    <text x="60" y="1287" class="mono muted" font-size="17">and coding harness</text>
   </g>
   <path data-relationship-edge="true" data-edge-type="integrates-lane" d="M376 1257 H824" class="cm-edge" marker-end="url(#system-capability-map-arrow)">
     <title>Flywheel includes Learn as a lane</title>
@@ -184,11 +184,11 @@
     <text x="840" y="1267" class="mono muted" font-size="17">learning and coursework</text>
     <text x="840" y="1287" class="mono muted" font-size="17">system</text>
   </g>
-<g data-figure-point="true" data-figure-key="flywheel" data-node-instance="source-11" role="graphics-symbol" aria-label="Flywheel. verified-inference platform and desktop client.">
+<g data-figure-point="true" data-figure-key="flywheel" data-node-instance="source-11" role="graphics-symbol" aria-label="Flywheel. self-hosted AI workstation and coding harness.">
     <rect x="44" y="1328" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
     <text x="60" y="1355" font-size="18" font-weight="700">Flywheel</text>
-    <text x="60" y="1379" class="mono muted" font-size="17">verified-inference platform</text>
-    <text x="60" y="1399" class="mono muted" font-size="17">and desktop client</text>
+    <text x="60" y="1379" class="mono muted" font-size="17">self-hosted AI workstation</text>
+    <text x="60" y="1399" class="mono muted" font-size="17">and coding harness</text>
   </g>
   <path data-relationship-edge="true" data-edge-type="integrates-lane" d="M376 1369 H824" class="cm-edge" marker-end="url(#system-capability-map-arrow)">
     <title>Flywheel includes Mneme as a lane</title>
@@ -200,11 +200,11 @@
     <text x="840" y="1379" class="mono muted" font-size="17">agent memory store with</text>
     <text x="840" y="1399" class="mono muted" font-size="17">repeatable recall</text>
   </g>
-<g data-figure-point="true" data-figure-key="flywheel" data-node-instance="source-12" role="graphics-symbol" aria-label="Flywheel. verified-inference platform and desktop client.">
+<g data-figure-point="true" data-figure-key="flywheel" data-node-instance="source-12" role="graphics-symbol" aria-label="Flywheel. self-hosted AI workstation and coding harness.">
     <rect x="44" y="1440" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
     <text x="60" y="1467" font-size="18" font-weight="700">Flywheel</text>
-    <text x="60" y="1491" class="mono muted" font-size="17">verified-inference platform</text>
-    <text x="60" y="1511" class="mono muted" font-size="17">and desktop client</text>
+    <text x="60" y="1491" class="mono muted" font-size="17">self-hosted AI workstation</text>
+    <text x="60" y="1511" class="mono muted" font-size="17">and coding harness</text>
   </g>
   <path data-relationship-edge="true" data-edge-type="integrates-lane" d="M376 1481 H824" class="cm-edge" marker-end="url(#system-capability-map-arrow)">
     <title>Flywheel includes Plexus as a lane</title>
@@ -216,11 +216,11 @@
     <text x="840" y="1491" class="mono muted" font-size="17">tool discovery and wiring for</text>
     <text x="840" y="1511" class="mono muted" font-size="17">AI agents</text>
   </g>
-<g data-figure-point="true" data-figure-key="flywheel" data-node-instance="source-13" role="graphics-symbol" aria-label="Flywheel. verified-inference platform and desktop client.">
+<g data-figure-point="true" data-figure-key="flywheel" data-node-instance="source-13" role="graphics-symbol" aria-label="Flywheel. self-hosted AI workstation and coding harness.">
     <rect x="44" y="1552" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
     <text x="60" y="1579" font-size="18" font-weight="700">Flywheel</text>
-    <text x="60" y="1603" class="mono muted" font-size="17">verified-inference platform</text>
-    <text x="60" y="1623" class="mono muted" font-size="17">and desktop client</text>
+    <text x="60" y="1603" class="mono muted" font-size="17">self-hosted AI workstation</text>
+    <text x="60" y="1623" class="mono muted" font-size="17">and coding harness</text>
   </g>
   <path data-relationship-edge="true" data-edge-type="integrates-lane" d="M376 1593 H824" class="cm-edge" marker-end="url(#system-capability-map-arrow)">
     <title>Flywheel includes Relay as a lane</title>
@@ -232,11 +232,11 @@
     <text x="840" y="1603" class="mono muted" font-size="17">coding agent that acts within</text>
     <text x="840" y="1623" class="mono muted" font-size="17">granted permissions</text>
   </g>
-<g data-figure-point="true" data-figure-key="flywheel" data-node-instance="source-14" role="graphics-symbol" aria-label="Flywheel. verified-inference platform and desktop client.">
+<g data-figure-point="true" data-figure-key="flywheel" data-node-instance="source-14" role="graphics-symbol" aria-label="Flywheel. self-hosted AI workstation and coding harness.">
     <rect x="44" y="1664" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
     <text x="60" y="1691" font-size="18" font-weight="700">Flywheel</text>
-    <text x="60" y="1715" class="mono muted" font-size="17">verified-inference platform</text>
-    <text x="60" y="1735" class="mono muted" font-size="17">and desktop client</text>
+    <text x="60" y="1715" class="mono muted" font-size="17">self-hosted AI workstation</text>
+    <text x="60" y="1735" class="mono muted" font-size="17">and coding harness</text>
   </g>
   <path data-relationship-edge="true" data-edge-type="integrates-lane" d="M376 1705 H824" class="cm-edge" marker-end="url(#system-capability-map-arrow)">
     <title>Flywheel includes Telos as a lane</title>

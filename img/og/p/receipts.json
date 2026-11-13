@@ -3253,8 +3253,8 @@
    }
   },
   "flywheel.jpg": {
-   "backend": "chrome-156.0.8078.75-skia-2x-lanczos",
-   "content_sha256": "9fa6dc42657cbbb3b231bfb627a06a27c40235939ef7006db2f4f4a6eb3815e4",
+   "backend": "chrome-157.0.8103.40-skia-2x-lanczos",
+   "content_sha256": "dc989737838959df3d2c545b8ed3a15cafcac48e79da9f3f3d849d00a038a9ab",
    "does_not_prove": [
     "It does not show the figure's numbers come from a real run, except where the alt text quotes a README result.",
     "It does not show the PNG bytes are the same under another Chrome build; the SVG and the scene are the portable record.",
@@ -3268,17 +3268,16 @@
     "width": 1200
    },
    "outputs": {
-    "flywheel.jpg": "cdce5ca3763ddb7958a67613e9de3c269fd96d0127ba8155b2bc229f7775f6df",
-    "flywheel.svg": "c8769857edabec9a9f9b7b1803215cd87390b6776184ce2506997407df88a1c2",
-    "flywheel@2x.jpg": "6d423abbd3a42536812209e627e0ab396efe8460732cb1a2c90c1303b909d02a"
+    "flywheel.jpg": "132f136f5f8baa40167cb492b83d5b0c1303292d40e9dc3ece10aa616c0251e7",
+    "flywheel.svg": "3b5ef0348924ed277e3e05e9ba699a7c7f87540fe550aad49ef638c383688606"
    },
    "producer": {
     "name": "harperz9.repo-art",
     "version": "0.1.0"
    },
-   "receipt_sha256": "d08608cf19294975416f87f6e85bde2d313e7f2149d874dd23b4634de92a8d72",
+   "receipt_sha256": "e7292c595b1ecf32f82bf7927fec74faaff2cacd00e7b379ff83e0a376887857",
    "reconcile": null,
-   "scene_sha256": "5546093156cbb6a4534b7a14c1649376a7bf8ba3646b550101d00a69c41bce85",
+   "scene_sha256": "62765abbc0605087eed9a673637c65cc95e69a66ce1b7b8fa230eb4f09134799",
    "schema": "superstack.receipt/1",
    "seed": "flywheel",
    "seed_rule": "xmur3-mulberry32/1",

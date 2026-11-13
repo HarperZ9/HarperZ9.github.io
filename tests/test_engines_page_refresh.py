@@ -96,7 +96,7 @@ def test_engines_page_routes_to_products_evidence_and_work() -> None:
         "Retro Engine",
         "Engine Revival",
         "BRender Archival",
-        "verified-inference platform and desktop client",
+        "self-hosted AI workstation and coding harness",
         "embedded browser visual and audiovisual studio",
         "archival/revival evidence platform",
         "BRender restoration and build-test harness",

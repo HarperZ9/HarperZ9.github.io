@@ -259,7 +259,7 @@
     {
       "id": "flywheel",
       "name": "Flywheel",
-      "purpose": "Flywheel runs AI tasks with the model you choose and checks each answer against the task contract. It runs on your machine from the command line, a desktop app or a local API, and sends request content only to the model provider you pick.",
+      "purpose": "Flywheel is an AI workstation and coding harness that you host yourself and run with any model, hosted or local. It has a desktop app with an assistant, a coding agent that works in your own folders with your permission, and connected tools for research, memory and writing. Every run leaves a record that can be rechecked offline.",
       "useCases": [
         "agent workflow orchestration",
         "model-neutral execution",
@@ -598,7 +598,7 @@
       ],
       "lastVerified": "2026-11-12",
       "primaryDomain": "agent-systems",
-      "productType": "verified-inference platform and desktop client",
+      "productType": "self-hosted AI workstation and coding harness",
       "releaseState": "Python engine v1.9.0 on PyPI and Windows desktop v1.9.0 on GitHub",
       "explainer": {
         "href": "/repo-explainers/flywheel.html",
