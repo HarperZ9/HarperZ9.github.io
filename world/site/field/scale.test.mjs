@@ -29,8 +29,8 @@ test("frames over budget step down in tenths, never under the floor", () => {
   for (let i = 0; i < 2000; i++) seen.add(+g.step(30, 1).toFixed(4));
   assert.equal(g.scale, 0.6); assert.deepEqual([...seen].slice(0, 3), [1, 0.9, 0.81]);
 });
-test("a renderer that takes a quarter second a frame steps down at once", () => {
-  const g = scaleGovernor({ budgetMs: 16.7, minScale: 0.6 }); run(g, 3, 400, 1); assert.equal(g.scale, 0.75); run(g, 6, 400, 1); assert.equal(g.scale, 0.6);
+test("a renderer that takes a quarter second a frame goes to the floor at once", () => {
+  const g = scaleGovernor({ budgetMs: 16.7, minScale: 0.6 }); run(g, 2, 400, 1); assert.equal(g.scale, 1); run(g, 1, 400, 1); assert.equal(g.scale, 0.6); run(g, 20, 6000, 1); assert.equal(g.scale, 0.6);
   const one = scaleGovernor(); run(one, 40, 16.7, 1); one.step(900, 1); run(one, 200, 16.7, 1); assert.equal(one.scale, 1, "one long gap (a hidden tab) is not a slow renderer");
 });
 test("the scale does not flap: a size that fails is held off longer after each failure", () => {

@@ -60,7 +60,7 @@ function mixSpace(a, b, k) {
 // box at that ratio fits `pixels` a frame (a 1280 by 720 screen at 1.25 draws 1600 by 900 on a machine held to 1)
 export const scaleCeiling = (cssW, cssH, dpr, dprCap, pixels = 0) => Math.max(dprCap, Math.min(dpr, Math.sqrt(pixels / Math.max(1, cssW * cssH))));
 // The governor: step() takes a frame gap in ms, the ceiling and the device pixel ratio, and returns the scale. A
-// 30-frame mean over budget steps down a tenth; three frames of a quarter second or more step down a quarter. Two
+// 30-frame mean over budget steps down a tenth; three frames of a quarter second or more go to the floor. Two
 // seconds on budget step up a twentieth, to the screen's pixels; above them it wants a mean under 0.7 of the budget
 // (45 frames, a tenth). A step toward the size that last failed waits `hold` frames, doubling to a minute each time
 // a step up fails, so the scale rests under what the machine cannot carry. A hold at the ceiling forgets the failure
@@ -71,7 +71,7 @@ export function scaleGovernor({ budgetMs = 16.7, minScale = 0.6 } = {}) {
     get scale() { return scale ?? 1; }, get frameMs() { return ema; },
     step(dtMs, top, native = top) {
       scale = Math.min(scale ?? Math.min(top, native), top);
-      if (dtMs >= 250) { if (++slow >= 3) fail(0.75); return scale; }
+      if (dtMs >= 250) { if (++slow >= 3 && scale > minScale) fail(0); return scale; }
       slow = 0; if (!(dtMs > 0)) return scale;
       ema = seen ? ema + (dtMs - ema) / 30 : dtMs; seen++;
       if (seen <= 30) return scale;
