@@ -154,6 +154,9 @@ SITE_IA_REVISION = "20261001-site-ia"
 READING_IMPORT_REVISION = VOID_PLATES_REVISION
 SYSTEM_CSS_REVISION = COPY_PASS_REVISION
 REVIEWED_ASSET_REVISIONS = {
+    # 11 November 2026: the meditations page (system/site-music/), the site music generated in the browser.
+    "system/site-music/music.css": "20261111-site-music",
+    "system/site-music/page.js": "20261111-site-music",
     # 3 October 2026: the live explainers (system/explainer/) join the essay and Flywheel pages.
     "system/explainer/explainer.css": "20261003-explainers",
     # 9 October 2026: the interactive version of a film drawn by raw-native's Motion layer.

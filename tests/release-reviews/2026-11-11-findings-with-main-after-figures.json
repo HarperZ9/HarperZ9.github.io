@@ -1,0 +1,7 @@
+{
+  "date": "2026-11-11",
+  "note": "Main merged in after the findings figures, bulletin compose and version fix landed; index.html carries main's changes with this branch's findings entries.",
+  "paths": {
+    "index.html": "e24da65607a3148ccddeb1d4623c61a2972fca6178494a6b158374c18290e722"
+  }
+}

@@ -1,0 +1,558 @@
+{
+ "study": "info-time-s8",
+ "run_id": "20261031T213610Z",
+ "date": "2026-10-31",
+ "prereg": {
+  "path": "PREREG.txt",
+  "sha256": "21d88e4c1e21947ade3dbf27f640ddcef60e8c4e3df62ca52aa9b9610aaf595f",
+  "anchors": [
+   "sidecar",
+   "lock"
+  ],
+  "plan_sha256": "acdcc05f486faa9c825953e7cd25544719c1053d0dd865f851012eb98255770a",
+  "locked_at": "2026-10-31T21:36:06+00:00"
+ },
+ "hashes": {
+  "lat_photon_weekly_w049_p305_v001.fits": "604304166152f9b746b7c5b6427eedf221af1c6570e7b03074dc6434c2ac70e0",
+  "s8.py": "481386e788bd70b96b5f7abc40c83ebd75a02db4984ad5c13d3dcac7d22ee075"
+ },
+ "analysis": {
+  "lv": {
+   "n_file": 1214533,
+   "n_100MeV_near": 119,
+   "emax": 29.914779296875,
+   "class_note": "weekly P305 photon file, Source class selection",
+   "one_photon_s_per_GeV": 0.02768928747531511,
+   "one_photon_EQG_Pl": 1.3553250362385787,
+   "top_E": 29.914779296875,
+   "top_t": 0.8283189237117767,
+   "n_window": 84,
+   "n_total": 119,
+   "peak_check_median_t": 0.9174481779336929,
+   "emax_window": 29.914779296875,
+   "tau": 0.0,
+   "boot_lo": -0.11704999999999999,
+   "boot_hi": 0.04609999999999989,
+   "limit_s_per_GeV": 0.11704999999999999,
+   "kappa_s": 4.5817541058350586e+17,
+   "EQG1_GeV": 3.9143563484280724e+18,
+   "EQG1_over_Pl": 0.320614989755676,
+   "dv_over_c_at_emax": 7.64232395675682e-18,
+   "shuf_lo": -0.043999999999999984,
+   "shuf_hi": 0.07600000000000001,
+   "plants": {
+    "1": {
+     "inj": 0.11704999999999999,
+     "rec": 0.11599999999999999,
+     "err": 0.008970525416488642
+    },
+    "3": {
+     "inj": 0.35114999999999996,
+     "rec": 0.354,
+     "err": 0.008116189662537432
+    },
+    "5": {
+     "inj": 0.5852499999999999,
+     "rec": 0.5900000000000001,
+     "err": 0.008116189662537623
+    },
+    "10": {
+     "inj": 1.1704999999999999,
+     "rec": 1.1600000000000001,
+     "err": 0.008970525416488451
+    }
+   }
+  },
+  "n_100": 84,
+  "tau": 0.0,
+  "lim": 0.11704999999999999,
+  "ms_per_GeV": 117.04999999999998,
+  "abs_tau": 0.0,
+  "EQG_Pl": 0.320614989755676,
+  "EQG_one": 1.3553250362385787,
+  "one_ms": 27.68928747531511,
+  "dv": 7.64232395675682e-18,
+  "emax": 29.914779296875,
+  "plant5_err": 0.008116189662537623,
+  "shuf_lo": -0.043999999999999984,
+  "shuf_hi": 0.07600000000000001,
+  "tau_in_shuf": 1,
+  "uniform": {
+   "right": 1.499999037959392,
+   "left": -0.4999999960329104,
+   "right_err": 9.620406080657062e-07,
+   "left_err": 3.967089601264462e-09
+  },
+  "uf_err": 9.620406080657062e-07,
+  "boost": {
+   "sound": 0.00045291601605228356,
+   "wrong_c": 0.7780863882272704
+  },
+  "boost_sound": 0.00045291601605228356,
+  "boost_wrong": 0.7780863882272704,
+  "horizon": {
+   "rows": [
+    {
+     "T": 1.0,
+     "packet": 0.4154536978574848,
+     "ray": 0.442552777022362,
+     "kmean": 14.093370213180846,
+     "kray": 13.85450420013864
+    },
+    {
+     "T": 2.0,
+     "packet": 0.552233052907005,
+     "ray": 0.645074213096953,
+     "kmean": 10.248937842964265,
+     "kray": 9.922860851811427
+    },
+    {
+     "T": 3.0,
+     "packet": 0.7011799410039062,
+     "ray": 0.9202226696892212,
+     "kmean": 7.7391329975912075,
+     "kray": 7.51385899093875
+    },
+    {
+     "T": 4.0,
+     "packet": 0.8585481180806388,
+     "ray": 1.2701045665655877,
+     "kmean": 6.083371832664879,
+     "kray": 6.1305755671835485
+    }
+   ],
+   "worst_err": 0.16462257939397956,
+   "inside_end": -24.754228173697907,
+   "outside_end": 24.754228173697907,
+   "kappa": 0.4,
+   "kappa_err": 0.03286118751663366
+  },
+  "hz_err": 0.16462257939397956,
+  "hz_inside": -24.754228173697907,
+  "hz_outside": 24.754228173697907,
+  "kappa_err": 0.03286118751663366,
+  "gp": {
+   "rows": [
+    {
+     "k": 0.09999999999999999,
+     "k_xi": 0.07071067811865474,
+     "omega": 0.09817477042468103,
+     "bogoliubov": 0.10012492197250393,
+     "err": 0.019477184195543656,
+     "phase_v": 0.9817477042468105,
+     "group_v_theory": 1.0037461005722337
+    },
+    {
+     "k": 0.3,
+     "k_xi": 0.21213203435596423,
+     "omega": 0.3023782929080176,
+     "bogoliubov": 0.30335622624235026,
+     "err": 0.003223712750010911,
+     "phase_v": 1.0079276430267254,
+     "group_v_theory": 1.0334384887473709
+    },
+    {
+     "k": 0.7,
+     "k_xi": 0.4949747468305832,
+     "omega": 0.7426818232373893,
+     "bogoliubov": 0.7416367035145981,
+     "err": 0.0014092071196562985,
+     "phase_v": 1.0609740331962705,
+     "group_v_theory": 1.1751036536756916
+    },
+    {
+     "k": 1.415,
+     "k_xi": 1.0005560953789647,
+     "omega": 1.7278759594743864,
+     "bogoliubov": 1.7333352929125545,
+     "err": 0.003149611884377345,
+     "phase_v": 1.2211137522787183,
+     "group_v_theory": 1.633598645961945
+    },
+    {
+     "k": 2.83,
+     "k_xi": 2.0011121907579295,
+     "omega": 4.908738521234052,
+     "bogoliubov": 4.903521163663924,
+     "err": 0.0010640022538884644,
+     "phase_v": 1.734536579941361,
+     "group_v_theory": 2.888249693903161
+    },
+    {
+     "k": 4.0,
+     "k_xi": 2.82842712474619,
+     "omega": 8.940449093340952,
+     "bogoliubov": 8.94427190999916,
+     "err": 0.0004274038956635021,
+     "phase_v": 2.235112273335238,
+     "group_v_theory": 4.024922359499621
+    }
+   ],
+   "packet_group": 2.889684804060087,
+   "worst_err": 0.019477184195543656
+  },
+  "gp_err": 0.019477184195543656,
+  "gp_low_err": 0.019477184195543656,
+  "group_k1": 1.6329931618554523,
+  "packet_group": 2.889684804060087,
+  "trachenko": {
+   "vu_km_s": 36.10078456765763,
+   "over": 0,
+   "vmax": 18.0,
+   "slope_v_vs_mass": -0.6012162783795213,
+   "rows": [
+    [
+     "diamond",
+     18.0,
+     12.01
+    ],
+    [
+     "beryllium",
+     12.9,
+     9.01
+    ],
+    [
+     "boron",
+     16.2,
+     10.81
+    ],
+    [
+     "sapphire",
+     11.0,
+     20.4
+    ],
+    [
+     "silicon carbide",
+     12.0,
+     20.0
+    ],
+    [
+     "silicon",
+     8.4,
+     28.09
+    ],
+    [
+     "aluminium",
+     6.4,
+     26.98
+    ],
+    [
+     "iron",
+     5.9,
+     55.85
+    ],
+    [
+     "copper",
+     4.7,
+     63.55
+    ],
+    [
+     "silver",
+     3.7,
+     107.9
+    ],
+    [
+     "gold",
+     3.2,
+     197.0
+    ],
+    [
+     "lead",
+     2.2,
+     207.2
+    ],
+    [
+     "water",
+     1.48,
+     18.0
+    ],
+    [
+     "helium gas 300K",
+     1.0,
+     4.0
+    ]
+   ],
+   "neutron_star_cs_over_vu": 2740.4255149798564,
+   "note": "neutron star sound speed about c/sqrt(3) in the conformal limit is outside the bonded matter scope"
+  },
+  "vu": 36.10078456765763,
+  "vu_over": 0,
+  "limits": [
+   {
+    "test": "GW170817 gravity against gamma rays",
+    "quantity": "(v_gw - c)/c",
+    "value": "-3e-15 to +7e-16",
+    "src": "Abbott et al 2017 ApJL, arXiv 1710.05834 abstract",
+    "checked": true
+   },
+   {
+    "test": "GRB 090510 linear dispersion",
+    "quantity": "E_QG,1 lower limit",
+    "value": "above 7.6 Planck (subluminal, 95 percent)",
+    "src": "Vasileiou et al 2013, arXiv 1305.3463 abstract",
+    "checked": true
+   },
+   {
+    "test": "GRB 221009A linear and quadratic",
+    "quantity": "E_QG,1, E_QG,2",
+    "value": "above 10 Planck; above 6e-8 Planck",
+    "src": "LHAASO, Cao et al 2024, arXiv 2402.06009 abstract",
+    "checked": true
+   },
+   {
+    "test": "OPERA corrected neutrinos",
+    "quantity": "(v-c)/c",
+    "value": "(2.7 +/- 3.1 stat +3.4 -3.3 sys)e-6",
+    "src": "OPERA arXiv 1109.4897v4 abstract",
+    "checked": true
+   },
+   {
+    "test": "OPERA 2011 first result",
+    "quantity": "(v-c)/c",
+    "value": "about 2.5e-5, 60 ns early; fibre connector and oscillator as causes, from memory",
+    "src": "arXiv 1109.4897 v1 from memory; ICARUS 1203.3433 abstract confirms the 60 ns report and finds no such difference",
+    "checked": false
+   },
+   {
+    "test": "SN 1987A neutrinos against light",
+    "quantity": "|v-c|/c",
+    "value": "about 2e-9, from memory",
+    "src": "Longo 1987, from memory; Crossref lookup missed",
+    "checked": false
+   }
+  ]
+ },
+ "controls": {
+  "shuf_energy": {
+   "n": 300,
+   "usable": true,
+   "mean": 0.016793333333333337,
+   "q95": 0.06610000000000002,
+   "q05": 0.0,
+   "p_ge": 1.0,
+   "compare": "analysis.abs_tau",
+   "description": "abs dispersion with energies shuffled"
+  }
+ },
+ "timing_s": {
+  "analysis": 127.0198902000011,
+  "shuf_energy": 7.856138299999657
+ },
+ "verdicts": {
+  "count_band": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.n_100 >= 50",
+     "left": 84,
+     "right": 50,
+     "holds": true
+    },
+    {
+     "rule": "analysis.n_100 <= 300",
+     "left": 84,
+     "right": 300,
+     "holds": true
+    }
+   ]
+  },
+  "slope_limit": {
+   "verdict": "FAIL",
+   "rules": [
+    {
+     "rule": "analysis.ms_per_GeV < 30",
+     "left": 117.04999999999998,
+     "right": 30,
+     "holds": false
+    }
+   ]
+  },
+  "eqg_band": {
+   "verdict": "FAIL",
+   "rules": [
+    {
+     "rule": "analysis.EQG_Pl >= 0.5",
+     "left": 0.320614989755676,
+     "right": 0.5,
+     "holds": false
+    },
+    {
+     "rule": "analysis.EQG_Pl <= 10",
+     "left": 0.320614989755676,
+     "right": 10,
+     "holds": true
+    }
+   ]
+  },
+  "one_photon_form": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.EQG_one >= 0.5",
+     "left": 1.3553250362385787,
+     "right": 0.5,
+     "holds": true
+    },
+    {
+     "rule": "analysis.EQG_one <= 10",
+     "left": 1.3553250362385787,
+     "right": 10,
+     "holds": true
+    }
+   ]
+  },
+  "kill_vacuum_form": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.dv < 1e-15",
+     "left": 7.64232395675682e-18,
+     "right": 1e-15,
+     "holds": true
+    }
+   ]
+  },
+  "plant": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.plant5_err < 0.2",
+     "left": 0.008116189662537623,
+     "right": 0.2,
+     "holds": true
+    }
+   ]
+  },
+  "tau_in_null": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.tau_in_shuf >= 1",
+     "left": 1,
+     "right": 1,
+     "holds": true
+    }
+   ]
+  },
+  "uniform_flow": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.uf_err < 0.01",
+     "left": 9.620406080657062e-07,
+     "right": 0.01,
+     "holds": true
+    }
+   ]
+  },
+  "boost": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.boost_sound < 0.001",
+     "left": 0.00045291601605228356,
+     "right": 0.001,
+     "holds": true
+    },
+    {
+     "rule": "analysis.boost_wrong > 0.1",
+     "left": 0.7780863882272704,
+     "right": 0.1,
+     "holds": true
+    }
+   ]
+  },
+  "horizon_ray": {
+   "verdict": "FAIL",
+   "rules": [
+    {
+     "rule": "analysis.hz_err < 0.01",
+     "left": 0.16462257939397956,
+     "right": 0.01,
+     "holds": false
+    },
+    {
+     "rule": "analysis.hz_inside < 0",
+     "left": -24.754228173697907,
+     "right": 0,
+     "holds": true
+    },
+    {
+     "rule": "analysis.hz_outside > 0",
+     "left": 24.754228173697907,
+     "right": 0,
+     "holds": true
+    }
+   ]
+  },
+  "kappa": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.kappa_err < 0.2",
+     "left": 0.03286118751663366,
+     "right": 0.2,
+     "holds": true
+    }
+   ]
+  },
+  "bogoliubov": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.gp_err < 0.02",
+     "left": 0.019477184195543656,
+     "right": 0.02,
+     "holds": true
+    }
+   ]
+  },
+  "above_cs": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.group_k1 > 1.1",
+     "left": 1.6329931618554523,
+     "right": 1.1,
+     "holds": true
+    },
+    {
+     "rule": "analysis.packet_group > 2",
+     "left": 2.889684804060087,
+     "right": 2,
+     "holds": true
+    }
+   ]
+  },
+  "trachenko": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.vu >= 36.0",
+     "left": 36.10078456765763,
+     "right": 36.0,
+     "holds": true
+    },
+    {
+     "rule": "analysis.vu <= 36.2",
+     "left": 36.10078456765763,
+     "right": 36.2,
+     "holds": true
+    }
+   ]
+  },
+  "trachenko_below": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.vu_over < 1",
+     "left": 0,
+     "right": 1,
+     "holds": true
+    }
+   ]
+  }
+ },
+ "reproduce": null,
+ "status": "scored"
+}

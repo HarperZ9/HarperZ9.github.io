@@ -1,0 +1,609 @@
+{
+ "finding": "F27",
+ "sources": [
+  {
+   "id": "result",
+   "name": "result.json (mood study run)",
+   "sha256_original": "04be61c813621f862a23b4c5006ae4579995e90ec925268ee3b2b1a5227b14d3",
+   "sha256_copy": "9cf98423c63f66d0cda9e7d100c46f65a69262f220e7c7e1d7da2f539e736b34",
+   "href": "/findings/results/F27/result.json",
+   "run": "20261029T130553Z"
+  }
+ ],
+ "charts": [
+  {
+   "key": "r",
+   "form": "interval",
+   "at": "results",
+   "claims": [
+    "c1",
+    "c5"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "Correlation of inertia and recovery across people, under the planned inertia measure and the usual all-pairs one.",
+   "takeaway": "r was negative in all 4 datasets, from −0.28 to −0.44: people whose mood carries over more recover less of a swing. With all-pairs inertia the size rose to 0.67 to 0.81.",
+   "units": "Pearson correlation r across people, −1 to 1; further below 0 means more carryover goes with less recovery. Inertia is how much of one prompt's mood carries into the next. Recovery is the share of a large swing that is gone by the next prompt. r is the correlation of the two across people",
+   "n": "0018: 71 of 999 people eligible; 0062: 49 of 321 people eligible; 0008: 99 of 114 people eligible; 0076: 259 of 519 people eligible",
+   "interval": "95% bootstrap interval over people",
+   "baseline": "All-pairs inertia, the usual definition. It reuses the same prompt pairs that recovery is computed from, so part of its correlation is built in",
+   "threshold": "95% interval of r inside −0.7 to 0.7",
+   "series_names": [
+    "Planned measure: inertia from pairs that are not spikes",
+    "All-pairs inertia (shares pairs with recovery)"
+   ],
+   "axis": {
+    "label": "r across people (below 0: more carryover, less recovery)",
+    "min": -1,
+    "max": 0.1,
+    "refs": [
+     {
+      "value": -0.7,
+      "label": "bound, −0.7"
+     },
+     {
+      "value": 0,
+      "label": "no relation"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "label": "Inertia from non-spike pairs",
+     "group": "Dataset 0018, 71 people",
+     "value": -0.4390894947016585,
+     "lo": -0.6278388515508694,
+     "hi": -0.190925993032492,
+     "series": 0,
+     "note": "−0.44 (−0.63 to −0.19)"
+    },
+    {
+     "label": "Inertia from all pairs",
+     "group": "Dataset 0018, 71 people",
+     "value": -0.811678613022053,
+     "lo": -0.8700736989854518,
+     "hi": -0.7226412245175579,
+     "series": 1,
+     "note": "−0.81 (−0.87 to −0.72)"
+    },
+    {
+     "label": "Inertia from non-spike pairs",
+     "group": "Dataset 0062, 49 people",
+     "value": -0.4137997901818102,
+     "lo": -0.682116998729061,
+     "hi": -0.08714140113796479,
+     "series": 0,
+     "note": "−0.41 (−0.68 to −0.09)"
+    },
+    {
+     "label": "Inertia from all pairs",
+     "group": "Dataset 0062, 49 people",
+     "value": -0.7450357043761606,
+     "lo": -0.8640310523781947,
+     "hi": -0.5941077141226044,
+     "series": 1,
+     "note": "−0.75 (−0.86 to −0.59)"
+    },
+    {
+     "label": "Inertia from non-spike pairs",
+     "group": "Dataset 0008, 99 people",
+     "value": -0.2792119143950174,
+     "lo": -0.446642496385569,
+     "hi": -0.09370987940635832,
+     "series": 0,
+     "note": "−0.28 (−0.45 to −0.09)"
+    },
+    {
+     "label": "Inertia from all pairs",
+     "group": "Dataset 0008, 99 people",
+     "value": -0.674584653451193,
+     "lo": -0.7830145079282662,
+     "hi": -0.5267838615916909,
+     "series": 1,
+     "note": "−0.67 (−0.78 to −0.53)"
+    },
+    {
+     "label": "Inertia from non-spike pairs",
+     "group": "Dataset 0076, 259 people",
+     "value": -0.289420955833984,
+     "lo": -0.40596402293443934,
+     "hi": -0.15455316618788253,
+     "series": 0,
+     "note": "−0.29 (−0.41 to −0.15)"
+    },
+    {
+     "label": "Inertia from all pairs",
+     "group": "Dataset 0076, 259 people",
+     "value": -0.6927794595065603,
+     "lo": -0.7551967195554273,
+     "hi": -0.6195544594055571,
+     "series": 1,
+     "note": "−0.69 (−0.76 to −0.62)"
+    }
+   ],
+   "columns": [
+    "Dataset",
+    "People",
+    "r, planned measure",
+    "95% interval",
+    "r, all-pairs inertia",
+    "95% interval",
+    "r, Kendall-corrected inertia",
+    "r, spike threshold 1.0 SD"
+   ],
+   "table": [
+    [
+     "0018",
+     "71",
+     "−0.44",
+     "−0.63 to −0.19",
+     "−0.81",
+     "−0.87 to −0.72",
+     "−0.43",
+     "−0.37 (n 79)"
+    ],
+    [
+     "0062",
+     "49",
+     "−0.41",
+     "−0.68 to −0.09",
+     "−0.75",
+     "−0.86 to −0.59",
+     "−0.42",
+     "−0.32 (n 138)"
+    ],
+    [
+     "0008",
+     "99",
+     "−0.28",
+     "−0.45 to −0.09",
+     "−0.67",
+     "−0.78 to −0.53",
+     "−0.28",
+     "−0.27 (n 112)"
+    ],
+    [
+     "0076",
+     "259",
+     "−0.29",
+     "−0.41 to −0.15",
+     "−0.69",
+     "−0.76 to −0.62",
+     "−0.29",
+     "−0.16 (n 272)"
+    ]
+   ]
+  },
+  {
+   "key": "null",
+   "form": "band",
+   "at": "results",
+   "claims": [
+    "c2"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "Size of the inertia and recovery correlation in each dataset, against people simulated with one parameter.",
+   "takeaway": "The coupling was weaker than the one-parameter null in 2 of 4 datasets: 0008 at 0.279 against a 5th percentile of 0.367, and 0018 at 0.4391 against 0.4399. The other 2 sat inside the null.",
+   "units": "size of r, from 0 to 1; lower means inertia and recovery vary more separately across people. Inertia is how much of one prompt's mood carries into the next. Recovery is the share of a large swing that is gone by the next prompt. r is the correlation of the two across people",
+   "n": "0018: 71 of 999 people eligible; 0062: 49 of 321 people eligible; 0008: 99 of 114 people eligible; 0076: 259 of 519 people eligible; 200, 156, 200, 200 usable null draws",
+   "interval": "5th to 95th percentile of the null draws",
+   "baseline": "One-parameter AR(1) null: simulated people whose mood follows a single carryover number, placed on the real prompt schedules. In that world inertia and recovery are one trait",
+   "threshold": "Size of r below the null's 5th percentile, with the 95% interval of r inside −0.7 to 0.7",
+   "ruled_out": "In 0062 and 0076 a one-parameter account is not ruled out: the sizes 0.414 and 0.289 sit above the null 5th percentiles 0.215 and 0.168",
+   "value_name": "size of r in the real data",
+   "band_name": "one-parameter null, 5th to 95th percentile",
+   "axis": {
+    "label": "size of r (lower: the two measures vary more separately)",
+    "min": 0,
+    "max": 0.8
+   },
+   "rows": [
+    {
+     "label": "Dataset 0018",
+     "value": 0.4390894947016585,
+     "lo": 0.43991867612958463,
+     "hi": 0.6984341362712428,
+     "mean": 0.5733565713692478,
+     "note": "0.4391; null 0.4399 to 0.698; below the null"
+    },
+    {
+     "label": "Dataset 0062",
+     "value": 0.4137997901818102,
+     "lo": 0.21548385990601862,
+     "hi": 0.6823667084364513,
+     "mean": 0.5115657270608622,
+     "note": "0.414; null 0.215 to 0.682; inside the null"
+    },
+    {
+     "label": "Dataset 0008",
+     "value": 0.2792119143950174,
+     "lo": 0.36700826851838947,
+     "hi": 0.5947829877997318,
+     "mean": 0.4754406636018066,
+     "note": "0.279; null 0.367 to 0.595; below the null"
+    },
+    {
+     "label": "Dataset 0076",
+     "value": 0.289420955833984,
+     "lo": 0.16803704909834358,
+     "hi": 0.39335323656804805,
+     "mean": 0.28252584412520987,
+     "note": "0.289; null 0.168 to 0.393; inside the null"
+    }
+   ],
+   "columns": [
+    "Dataset",
+    "People",
+    "Size of r",
+    "Null 5th pct",
+    "Null mean",
+    "Null 95th pct",
+    "Null draws",
+    "Below the null"
+   ],
+   "table": [
+    [
+     "0018",
+     "71",
+     "0.4391",
+     "0.4399",
+     "0.573",
+     "0.698",
+     "200",
+     "yes"
+    ],
+    [
+     "0062",
+     "49",
+     "0.4138",
+     "0.2155",
+     "0.512",
+     "0.682",
+     "156",
+     "no"
+    ],
+    [
+     "0008",
+     "99",
+     "0.2792",
+     "0.3670",
+     "0.475",
+     "0.595",
+     "200",
+     "yes"
+    ],
+    [
+     "0076",
+     "259",
+     "0.2894",
+     "0.1680",
+     "0.283",
+     "0.393",
+     "200",
+     "no"
+    ]
+   ]
+  },
+  {
+   "key": "rules",
+   "form": "rules",
+   "at": "results",
+   "claims": [
+    "c3",
+    "c2"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "The three rules set in advance, checked in each dataset.",
+   "takeaway": "The shuffle check held in 4 of 4 datasets and the separate-variation rule in 2 of 4. Two factors beat one in 0 of 3 fitted datasets, with p from 0.81 to 1.00.",
+   "units": "mean inertia for the shuffle rule; size of r for the null rule; p of the chi-square difference test (a test of whether the larger model fits better) for the factor rule",
+   "n": "0018: 71 of 999 people eligible; 0062: 49 of 321 people eligible; 0008: 99 of 114 people eligible; 0076: 259 of 519 people eligible",
+   "interval": null,
+   "no_interval": "Each row compares one computed value with one bar.",
+   "baseline": "Shuffle: each person's mood values permuted over their own prompts, 200 draws. Null: one-parameter AR(1) people on the real schedules",
+   "threshold": "A dataset supports two separate traits only when all three rules hold",
+   "rows": [
+    {
+     "label": "0018: mean inertia above the shuffle's 95th percentile",
+     "left": "0.236",
+     "right": "0.013",
+     "holds": true,
+     "yes": "holds",
+     "no": "fails"
+    },
+    {
+     "label": "0018: size of r below the null's 5th percentile",
+     "left": "0.4391",
+     "right": "0.4399",
+     "holds": true,
+     "yes": "holds",
+     "no": "fails"
+    },
+    {
+     "label": "0018: two factors beat one, p under 0.05",
+     "left": "0.81",
+     "right": "0.05",
+     "holds": false,
+     "yes": "holds",
+     "no": "fails"
+    },
+    {
+     "label": "0062: mean inertia above the shuffle's 95th percentile",
+     "left": "0.404",
+     "right": "0.011",
+     "holds": true,
+     "yes": "holds",
+     "no": "fails"
+    },
+    {
+     "label": "0062: size of r below the null's 5th percentile",
+     "left": "0.4138",
+     "right": "0.2155",
+     "holds": false,
+     "yes": "holds",
+     "no": "fails"
+    },
+    {
+     "label": "0062: two factors beat one, p under 0.05",
+     "left": "not fitted",
+     "right": "0.05",
+     "holds": false,
+     "yes": "holds",
+     "no": "untestable"
+    },
+    {
+     "label": "0008: mean inertia above the shuffle's 95th percentile",
+     "left": "0.270",
+     "right": "0.013",
+     "holds": true,
+     "yes": "holds",
+     "no": "fails"
+    },
+    {
+     "label": "0008: size of r below the null's 5th percentile",
+     "left": "0.2792",
+     "right": "0.3670",
+     "holds": true,
+     "yes": "holds",
+     "no": "fails"
+    },
+    {
+     "label": "0008: two factors beat one, p under 0.05",
+     "left": "0.97",
+     "right": "0.05",
+     "holds": false,
+     "yes": "holds",
+     "no": "fails"
+    },
+    {
+     "label": "0076: mean inertia above the shuffle's 95th percentile",
+     "left": "0.162",
+     "right": "−0.00002",
+     "holds": true,
+     "yes": "holds",
+     "no": "fails"
+    },
+    {
+     "label": "0076: size of r below the null's 5th percentile",
+     "left": "0.2894",
+     "right": "0.1680",
+     "holds": false,
+     "yes": "holds",
+     "no": "fails"
+    },
+    {
+     "label": "0076: two factors beat one, p under 0.05",
+     "left": "1.00",
+     "right": "0.05",
+     "holds": false,
+     "yes": "holds",
+     "no": "fails"
+    }
+   ],
+   "columns": [
+    "Rule",
+    "Value",
+    "Bar",
+    "Result"
+   ],
+   "table": [
+    [
+     "0018: mean inertia above the shuffle's 95th percentile",
+     "0.236",
+     "0.013",
+     "holds"
+    ],
+    [
+     "0018: size of r below the null's 5th percentile",
+     "0.4391",
+     "0.4399",
+     "holds"
+    ],
+    [
+     "0018: two factors beat one, p under 0.05",
+     "0.81",
+     "0.05",
+     "fails"
+    ],
+    [
+     "0062: mean inertia above the shuffle's 95th percentile",
+     "0.404",
+     "0.011",
+     "holds"
+    ],
+    [
+     "0062: size of r below the null's 5th percentile",
+     "0.4138",
+     "0.2155",
+     "fails"
+    ],
+    [
+     "0062: two factors beat one, p under 0.05",
+     "not fitted",
+     "0.05",
+     "untestable"
+    ],
+    [
+     "0008: mean inertia above the shuffle's 95th percentile",
+     "0.270",
+     "0.013",
+     "holds"
+    ],
+    [
+     "0008: size of r below the null's 5th percentile",
+     "0.2792",
+     "0.3670",
+     "holds"
+    ],
+    [
+     "0008: two factors beat one, p under 0.05",
+     "0.97",
+     "0.05",
+     "fails"
+    ],
+    [
+     "0076: mean inertia above the shuffle's 95th percentile",
+     "0.162",
+     "−0.00002",
+     "holds"
+    ],
+    [
+     "0076: size of r below the null's 5th percentile",
+     "0.2894",
+     "0.1680",
+     "fails"
+    ],
+    [
+     "0076: two factors beat one, p under 0.05",
+     "1.00",
+     "0.05",
+     "fails"
+    ]
+   ]
+  },
+  {
+   "key": "reliability",
+   "form": "bars",
+   "at": "results",
+   "claims": [
+    "c4"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "Split-half reliability of each person's inertia and recovery.",
+   "takeaway": "Reliability ran from 0.03 to 0.47, far from 1, so a person's odd-day and even-day scores barely agree and the two-factor test had little power.",
+   "units": "split-half reliability: the correlation across people between a measure computed on odd days and the same measure on even days. 1 is a perfectly repeatable measure, 0 is noise",
+   "n": "0018: 53 people; 0008: 60 people; 0076: 152 people. Dataset 0062 could not be fitted (5 persons with both halves, fewer than 30)",
+   "interval": null,
+   "no_interval": "The result file gives one split-half correlation for each measure and dataset, with no interval.",
+   "baseline": "A reliability of 1, a measure that gives the same person the same score on both halves",
+   "axis": {
+    "label": "split-half reliability (higher is more repeatable)",
+    "min": 0,
+    "max": 1,
+    "refs": [
+     {
+      "value": 1,
+      "label": "fully repeatable"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "label": "Inertia",
+     "group": "Dataset 0018, 53 people with both halves",
+     "value": 0.3826932246817876,
+     "series": 2,
+     "note": "0.38"
+    },
+    {
+     "label": "Recovery",
+     "group": "Dataset 0018, 53 people with both halves",
+     "value": 0.3287120003796307,
+     "series": 2,
+     "note": "0.33"
+    },
+    {
+     "label": "Inertia",
+     "group": "Dataset 0008, 60 people with both halves",
+     "value": 0.4668207851902433,
+     "series": 2,
+     "note": "0.47"
+    },
+    {
+     "label": "Recovery",
+     "group": "Dataset 0008, 60 people with both halves",
+     "value": 0.11255935187769671,
+     "series": 2,
+     "note": "0.11"
+    },
+    {
+     "label": "Inertia",
+     "group": "Dataset 0076, 152 people with both halves",
+     "value": 0.025311548960156957,
+     "series": 2,
+     "note": "0.03"
+    },
+    {
+     "label": "Recovery",
+     "group": "Dataset 0076, 152 people with both halves",
+     "value": 0.1728472665016742,
+     "series": 2,
+     "note": "0.17"
+    }
+   ],
+   "columns": [
+    "Dataset",
+    "People with both halves",
+    "Inertia",
+    "Recovery",
+    "Two factors against one, p",
+    "BIC, two minus one",
+    "Factor correlation"
+   ],
+   "table": [
+    [
+     "0018",
+     "53",
+     "0.38",
+     "0.33",
+     "0.81",
+     "+3.9",
+     "+0.95"
+    ],
+    [
+     "0008",
+     "60",
+     "0.47",
+     "0.11",
+     "0.97",
+     "+4.1",
+     "+0.98"
+    ],
+    [
+     "0076",
+     "152",
+     "0.03",
+     "0.17",
+     "1.00",
+     "+5.0",
+     "−1.00"
+    ],
+    [
+     "0062",
+     "too few",
+     "not fitted",
+     "not fitted",
+     "not fitted",
+     "not fitted",
+     "not fitted"
+    ]
+   ]
+  }
+ ]
+}

@@ -143,7 +143,8 @@ function installRailControls(root, scroller, cards) {
 
   function goTo(index) {
     const bounded = Math.max(0, Math.min(cards.length - 1, index));
-    scroller.scrollTo({ left: cards[bounded].offsetLeft, behavior: "smooth" });
+    const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    scroller.scrollTo({ left: cards[bounded].offsetLeft, behavior: still ? "auto" : "smooth" });
     updateControls(bounded);
   }
 

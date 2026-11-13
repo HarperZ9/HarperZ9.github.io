@@ -1,0 +1,26 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "glossary/1",
+ "title": "Findings glossary",
+ "description": "The one shared glossary for the findings pages: each technical term with what we mean by it, the field it comes from and what it excludes. A term in the shared list has scope 'shared'; a term a single paper defines for itself has that paper's F-number as its scope. Uses are derived from the records' {g:key} marks when the pages are built.",
+ "type": "object",
+ "required": ["schema", "terms"],
+ "additionalProperties": false,
+ "properties": {
+  "schema": {"const": "glossary/1"},
+  "about": {"type": "string"},
+  "terms": {"type": "array", "items": {
+   "type": "object",
+   "required": ["key", "scope", "term", "field", "definition", "excludes"],
+   "additionalProperties": false,
+   "properties": {
+    "key": {"type": "string", "pattern": "^[a-z0-9-]+$"},
+    "scope": {"type": "string", "pattern": "^shared$|^F[0-9]+$"},
+    "term": {"type": "string"},
+    "field": {"type": "string"},
+    "definition": {"type": "string"},
+    "excludes": {"type": "string"}
+   }
+  }}
+ }
+}

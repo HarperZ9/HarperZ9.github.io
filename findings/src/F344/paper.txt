@@ -1,0 +1,169 @@
+---
+id: F344
+title: No cubic pattern in public Auger cosmic-ray directions, at a sensitivity that sees only large ones
+subtitle: A preregistered search for a lattice imprint on the public Pierre Auger arrival directions at five energy cuts, with exposure-keeping scrambles and planted patterns
+version: 1.0
+date: 9 November 2026
+line: Finding F344 in the findings ledger. Honest null (tier D).
+pdf_author: Zain Dana Harper
+subject: A preregistered search for a cubic anisotropy in the public Pierre Auger Observatory arrival directions, with right-ascension scrambles, planted cubic patterns and a kinematic bound on lattice spacing
+footer: F344, no cubic pattern in public Auger data, version 1.0
+---
+# abstract
+If space were a fine cubic grid, the highest-energy cosmic rays could arrive in a pattern aligned with its axes, a signature Beane, Davoudi and Savage proposed in 2012. We searched the public Pierre Auger Observatory data for such a pattern with a method fixed in advance. The data are the 25,086 main-array events in the public 10 percent sample and the catalogue of the highest-energy events, cut at 8, 16, 32, 40 and 78 EeV. For each cut we fitted a cube-symmetric pattern over 400 orientations and compared the best fit with skies whose right ascensions were scrambled, which keeps the detector's exposure. {c1}No cut shows a cubic pattern: raw p values run from 0.19 to 0.85, and all five read 0.85 after the Benjamini-Hochberg correction.{/c1} {c2}The search could only have seen a strong pattern: at 8 EeV it reaches power 0.9 at a planted strength of 0.2, and at 32 EeV it reaches power 0.97 only at strength 1.0, where the sky along the cube axes is twice the average.{/c2} {c3}The highest-energy event, 166 EeV, bounds the lattice spacing below 3.7e-27 m, an inverse spacing of 5.3e10 GeV, which is 0.53 of the 1e11 GeV bound of Beane and colleagues.{/c3} This is a null whose value lies in stating how weak it is.
+
+# section What this means for a reader {sec:reader}
+The public share of the Auger data is small enough that only a large cubic imprint on the arrival directions would have shown up. So the result rules out a strong pattern and says nothing about a subtle one. Anyone citing public cosmic-ray data for or against a grid-like universe should quote the planted sensitivity beside the p value, and the full Auger dataset would do much better than the public share.
+
+# section Introduction {sec:intro}
+Lattice calculations in particle physics put space and time on a grid. Beane, Davoudi and Savage {cite:beane2014} asked what an observer inside such a calculation could detect if the universe itself were computed on a grid with some {g:lattice-spacing}lattice spacing{/g}. Their abstract reports that the most stringent bound on the inverse spacing, about 1e11 GeV, comes from the high-energy end of the cosmic-ray spectrum, and their published account predicts that the highest-energy cosmic rays would show the cube symmetry of the grid in their arrival directions.
+
+The particles that could carry that signature are the {g:uhecr}ultra-high-energy cosmic ray{/g}s, with energies of many {g:eev}EeV{/g}. The Pierre Auger Observatory records them with an array of ground detectors. The Auger Collaboration reported in 2017 a large-scale anisotropy above 8 EeV, a dipole of about 6.5 percent amplitude in 3e4 events, which it reads as evidence that these particles come from outside our galaxy {cite:auger2017}. Since 2021 the collaboration has published 10 percent of its cosmic-ray events, with a catalogue of the highest-energy events added in 2023 {cite:augeropen}.
+
+We asked whether the public arrival directions carry a cubic pattern, and what the most energetic event says about the spacing. The decision it informed was how to describe public cosmic-ray data in any work of ours on discretised space: as evidence, or as a weak test. Our searches found the proposal above and the Auger anisotropy results and no published cubic search on the open data; that is what the searches returned, and it does not show that none exists.
+
+![fig:plate width=0.5 alt=A white-on-black 1889 engraving with a plan view of the Sun and inner planets on a grid of radial lines and rings above an edge view of swirling streams](plate-traxler-fig2.png) Robert P. Traxler, Fig. II, "A sectional side and edge view of the Sun with Mercury Venus Earth and Mars", from The Principles of Mechanics as Applied to the Solar System (San Francisco, 1889) {cite:traxler1889}. Above, the inner planets on a grid of radial force lines and rings with a marked line of attraction; below, the Sun's equatorial plane drawn as swirling streams. Traxler drew his plates to argue for a repelling force from the Sun, his own theory in 1889, which physics did not adopt. The plate draws a grid laid over space, the kind of structure this test looks for. Public domain; scan from the Internet Archive, University of California Libraries.
+
+# section Preregistration and design {sec:prereg}
+The {g:preregistration}preregistration{/g} and the forecast file were written and hash-locked on 31 October 2026, before the run. They name the baseline (an isotropic sky at the data's declinations), the planted answer (a cubic pattern at random orientation), the {g:control}control{/g} (right-ascension scrambles), the outlier checks (the top 3 events and the region around Centaurus A, with and without), the assumption changed (the energy cut and the Centaurus A exclusion), and the kill condition.
+
+The {g:kill-condition}kill condition{/g}, fixed in advance: if the cubic search gives a corrected p below 0.01, the lattice reading must still survive the Centaurus A exclusion and a second energy cut, or it dies. Each forecast and condition became a rule set whose pass or fail is a {g:verdict}verdict{/g} read off by code.
+
+# section Data and provenance {sec:data}
+The data are the Pierre Auger Observatory Open Data release of 2024 {cite:augeropen}, Zenodo record 10488964, licensed CC BY-SA 4.0, fetched on 31 October 2026. We read the event summaries of the main surface array, vertical and inclined showers together with duplicates removed, which gave 25,086 events with direction and energy. This public sample is 10 percent of the recorded events. We also read the catalogue of the highest-energy surface-array events, 109 events with a top energy of 166 EeV. We report statistics only.
+
+The cuts at 8, 16 and 32 EeV use the event summaries, and the cuts at 40 and 78 EeV use the catalogue. Table {ref:tab:cuts} gives the count at each cut.
+
+# section Methods {sec:methods}
+## The pattern
+For an arrival direction written as a unit vector with components {m:x}, {m:y}, {m:z}, the {g:cubic-harmonic}cubic harmonic{/g} is
+$$ C = x^4 + y^4 + z^4 - 0.6 {eq:c4}
+The constant 0.6 is its average over the sphere, so {m:C} averages to zero on an isotropic sky. It is largest, 0.4, along the six axes of the cube and smallest along the eight diagonals. A grid in space need not line up with our coordinates, so the pattern was rotated through 400 random orientations {m:R}.
+
+## The statistic
+A ground array does not watch the whole sky evenly: its {g:exposure}exposure{/g} depends strongly on declination. The baseline sky was therefore built from 60,000 directions with uniform right ascension and declinations drawn from the data. For orientation {m:R}, let {m:\mu_R} and {m:s_R} be the mean and standard deviation of {m:C} on this baseline, and {m:m_R} its mean over the {m:N} real events. The standardised excess is
+$$ Z_R = \frac{|m_R - \mu_R|}{s_R / \sqrt{N}} {eq:z}
+and the statistic {m:T} is the largest {m:Z_R} over the 400 orientations. For cuts with 500 events or fewer, the baseline declinations were drawn from the 8 EeV events.
+
+## The null and the correction
+Each p value comes from a {g:ra-scramble}right-ascension scramble{/g}: each event keeps its declination and gets a random right ascension, which keeps the exposure and removes any pattern. The statistic was recomputed on 300 scrambled skies, and
+$$ p = \frac{k + 1}{n + 1} {eq:p}
+with {m:k} the number of scrambles at or above the real {m:T} and {m:n} the number of scrambles. The five p values were corrected with the {g:benjamini-hochberg}Benjamini-Hochberg correction{/g} {cite:bh1995}: with the raw values sorted so that {m:p_i} is the {m:i}th smallest of {m:M} = 5,
+$$ q_i = \frac{M p_i}{i} {eq:bh}
+and each corrected value is the smallest {m:q_j} at its own rank or above.
+
+## Planted patterns
+A planted sky keeps the real events' declinations and draws right ascensions from a density proportional to
+$$ 1 + \frac{\epsilon C}{0.4} {eq:plant}
+at one random orientation, so that the sky along the cube axes is {m:1 + \epsilon} times the average. The {g:power}detection power{/g} at strength {m:\epsilon} is the share of planted skies whose statistic exceeds the 95th percentile of scrambled skies. At 32 EeV the threshold came from 200 scrambles and each strength had 30 planted skies; at 8 EeV, 60 scrambles and 10 planted skies.
+
+## The kinematic reading
+On a grid of spacing {m:a}, a particle cannot have a wavelength much shorter than the grid. In the simple picture used here, a particle of energy {m:E_{top}} could not propagate unless
+$$ a < \frac{\pi Q}{E_{top}} {eq:a}
+where {m:Q} = 1.973e-16 GeV m is the reduced Planck constant times the speed of light. The inverse spacing in energy units is {m:E_{top} / \pi}.
+
+# section Controls and planted checks {sec:controls}
+The right-ascension scramble is the null for every p value. As a separate control at 32 EeV, 200 scrambled skies gave a mean statistic of 2.32 and a 95th percentile of 3.27; the real statistic, 1.69, sat well inside them ({g:p-value-draws}p value from draws{/g} 0.87).
+
+The {g:planted-check}planted check{/g} measured the search's power at each strength. Figure {ref:fig:power} and Table {ref:tab:power} give the result. The planted powers are coarse: each is a share of 30 or of 10 trials.
+
+The outlier checks removed the 28 events at 32 EeV within 27 degrees of Centaurus A, and separately the 3 highest-energy events, and recomputed the p value with 200 scrambles each.
+
+# section Results {sec:results}
+{c1}No cut shows a cubic pattern: raw p values run from 0.19 to 0.85, and all five read 0.85 after the Benjamini-Hochberg correction.{/c1} Table {ref:tab:cuts} and Figure {ref:fig:p} give the values.
+
+::table tab:cuts cols=0.18,0.20,0.20,0.20,0.22 The cubic search at each energy cut. Raw p from 300 scrambles; corrected p by Benjamini-Hochberg over the five cuts.
+Cut ¦ Events ¦ Statistic T ¦ Raw p ¦ Corrected p
+8 EeV ¦ 3,111 ¦ 2.74 ¦ 0.19 ¦ 0.85
+16 EeV ¦ 793 ¦ 1.91 ¦ 0.68 ¦ 0.85
+32 EeV ¦ 155 ¦ 1.69 ¦ 0.85 ¦ 0.85
+40 EeV ¦ 109 ¦ 2.80 ¦ 0.55 ¦ 0.85
+78 EeV ¦ 101 ¦ 2.79 ¦ 0.61 ¦ 0.85
+::end
+
+![fig:p width=0.62 alt=Five diamonds for raw p values between 0.19 and 0.85 and five bars at 0.85 for the corrected values, all far above 0.01](fig-pvalues.png) Raw and corrected p values at each energy cut, with the number of events. The preregistered bar of 0.01 is the dotted line. Drawn from the run's result file.
+
+{c4}Removing the 28 events near Centaurus A or the 3 highest-energy events leaves no pattern at 32 EeV: p 0.38 and 0.71.{/c4}
+
+{c2}The search could only have seen a strong pattern: at 8 EeV it reaches power 0.9 at a planted strength of 0.2, and at 32 EeV it reaches power 0.97 only at strength 1.0, where the sky along the cube axes is twice the average.{/c2}
+
+::table tab:power cols=0.34,0.33,0.33 Detection power against planted strength. Each power is a share of 30 planted skies at 32 EeV and of 10 at 8 EeV.
+Planted strength ¦ Power at 32 EeV ¦ Power at 8 EeV
+0.05 ¦ not run ¦ 0.10
+0.1 ¦ 0.03 ¦ 0.30
+0.2 ¦ 0.20 ¦ 0.90
+0.3 ¦ 0.27 ¦ not run
+0.5 ¦ 0.40 ¦ not run
+0.8 ¦ 0.80 ¦ not run
+1.0 ¦ 0.97 ¦ not run
+::end
+
+![fig:power width=0.8 alt=Two rising curves of detection power, the 8 EeV curve reaching 0.9 at strength 0.2 and the 32 EeV curve reaching 0.97 at strength 1.0](fig-power.png) Detection power against planted strength at the 8 and 32 EeV cuts. Drawn from the run's result file.
+
+{c3}The highest-energy event, 166 EeV, bounds the lattice spacing below 3.7e-27 m, an inverse spacing of 5.3e10 GeV, which is 0.53 of the 1e11 GeV bound of Beane and colleagues.{/c3} The 1e11 GeV figure was entered from memory before the run; the abstract of Beane and colleagues {cite:beane2014}, read for this paper, gives the same value.
+
+The study also ran a toy model of waves on a cubic grid, to check the dispersion a lattice would cause. Along an axis, the phase speed falls short of the continuum value by {m:(ka)^2 / 24}, with {m:k} the wavenumber, within 0.8 percent for {m:ka} up to 0.8. The group speed falls short by {m:(ka)^2 / 8}, within 1.3 percent; our forecast had given it the phase speed's coefficient, and that forecast missed. Along a diagonal, waves run faster than along an axis by {m:(ka)^2 / 48}, within 1.2 percent, and the model sets the highest energy along a diagonal at {m:\sqrt{3}}, 1.73, times that along an axis, from the grid's geometry. This direction dependence is what would imprint a cube on arrival directions.
+
+Table {ref:tab:forecast} sets the forecasts written before the run against the outcomes.
+
+::table tab:forecast cols=0.42,0.29,0.29 Forecasts fixed before the run against what it gave.
+Quantity ¦ Forecast ¦ Outcome
+Events above 32 EeV ¦ about 2,600 ¦ 155
+Cubic search, no pattern ¦ p above 0.05, probability 0.9 ¦ all raw p 0.19 or above
+Strength for power 0.9 ¦ about 0.12, band 0.05 to 0.3 ¦ 0.2 at 8 EeV; about 1.0 at 32 EeV
+Kinematic reading against 1e11 GeV ¦ within a factor of 3 ¦ 0.53
+Group speed on axis ¦ deficit {m:(ka)^2/24} within 1 percent ¦ deficit {m:(ka)^2/8}
+Axis minus diagonal ¦ {m:(ka)^2/48} within 5 percent ¦ within 1.2 percent
+Highest energy, diagonal over axis ¦ square root of 3 ¦ 1.73, set by the model
+::end
+
+The event forecast was made from memory of the full dataset; the public release holds a tenth of it.
+
+# section Discussion {sec:discussion}
+The search found nothing, and the planted skies say how little that means. At 32 EeV, the highest cut with event-level data, only 155 events are public, and the search needs a pattern that doubles the flux along the cube axes before it sees one reliably. At 8 EeV the sample is twenty times larger and the threshold falls to a 20 percent modulation, but at that energy the particles are bent strongly by galactic magnetic fields, which would smear a pattern made at the source.
+
+For scale, the dipole the Auger Collaboration measured above 8 EeV with its full data has an amplitude of about 6.5 percent {cite:auger2017}. A cubic pattern of that size would be far below what our search can see in the public share. The kinematic reading lands within a factor of 2 of the published bound because both rest on the same top energy and the same simple argument; it adds a check of arithmetic and no new information.
+
+The result therefore excludes a large cubic imprint on the public arrival directions and nothing smaller. The same method on the full Auger data would set a stronger limit.
+
+# section Limitations {sec:limits}
+- Only the public 10 percent of events was available, which is the main reason the sensitivity is low.
+- Cosmic rays at these energies are bent by galactic and intergalactic magnetic fields, and we did not model that; a lattice pattern at the source could be smeared before arrival.
+- Only a cubic pattern was tested. Other grid symmetries and other signatures of a lattice were not.
+- The scramble also removes the known dipole from the null skies. With partial sky coverage a dipole is not exactly independent of a cubic pattern, so a dipole could raise the statistic slightly; we did not test this.
+- The planted powers rest on 30 or 10 trials per strength and are coarse.
+- The 1e11 GeV bound was entered from memory and agrees with the abstract read for this paper; the full paper was not read.
+- Scoring was by our own code and was not blind.
+
+# section Verified {sec:verified}
+Verified: on 9 November 2026 the 25,086 events read, the catalogue count and top energy, the counts, statistics and raw p values at each cut, the corrected value of 0.85, the Centaurus A and top-3 p values with the 28 events removed, every planted power and the 32 EeV threshold, the scramble control's mean, percentile and p, the spacing bound, the inverse spacing and the 0.53 ratio, the lattice dispersion errors and the three verdicts were re-read from the run's result file. They match the {g:findings-ledger}findings ledger{/g}. The data source and licence were read from the download's source record. The preregistration's SHA-256 matches the hash recorded in the result file and in the lock file. Both figures were drawn by a script that reads only that result file. The study was not re-run for this paper. The literature was found by searches run on 9 November 2026 and read at the level of abstracts, publisher pages and search summaries; the full texts were not read. The Benjamini and Hochberg paper is cited for the method only and was not searched or read for this paper.
+
+# section Corrections {sec:corrections}
+- 31 October 2026: a review of our ledger noted that the public 10 percent of the data gives 155 events at 32 EeV and low power, with planted power needing strength 1.0 there. The claim was narrowed to a large pattern, as here.
+- 9 November 2026: first published version.
+
+# section Reproduction {sec:repro}
+- Data: the Pierre Auger Observatory Open Data release 2024, Zenodo record 10488964 (CC BY-SA 4.0): the surface-array event summaries and the highest-energy catalogue.
+- Cut at 8, 16 and 32 EeV in the summaries and at 40 and 78 EeV in the catalogue.
+- For each cut, compute eq. {ref:eq:z} over 400 random orientations of eq. {ref:eq:c4} against an exposure-matched baseline, keep the largest, and compute eq. {ref:eq:p} from 300 right-ascension scrambles. Correct with eq. {ref:eq:bh}.
+- Plant eq. {ref:eq:plant} at a random orientation into skies with the real declinations to measure power. Remove the events near Centaurus A and the top 3 events and recompute.
+- Apply eq. {ref:eq:a} to the top energy.
+- Preregistration SHA-256: 1b0153b42a6fffc2789b98f6f2bd9774da4c0da48bda7e22e51266e9bd5f0f29. Plan SHA-256: 6785b5da63d8a3597424d3b4d72015ad4bf66979959f281bb55fda7df057548b. Run 20261031T211927Z.
+- Cost: the analysis took about 138 s and the scramble control about 3 s on one desktop CPU.
+
+# section Appendix A. The preregistered verdicts {sec:appendix}
+Each verdict is a set of rules written before the run. A verdict passes only when every rule holds. Values are read from the run's result file.
+
+::table tab:verdicts cols=0.26,0.46,0.14,0.14 Preregistered verdicts and the rules that decided each one.
+Verdict ¦ Deciding rule ¦ Value ¦ Holds
+Cubic pattern absent ¦ smallest corrected p above 0.01 ¦ 0.85 ¦ yes
+Planted power ¦ power at strength 1.0, 32 EeV, at least 0.9 ¦ 0.97 ¦ yes
+Kinematic reading ¦ ratio to 1e11 GeV between 0.33 and 3 ¦ 0.53 ¦ yes
+::end
+
+# references
+[augeropen] Pierre Auger Collaboration. Auger Open Data release 2024. Zenodo record 10488964. doi:10.5281/zenodo.10488964. Licence CC BY-SA 4.0. Described in: Pierre Auger Collaboration (2024). The Pierre Auger Observatory open data. The European Physical Journal C. doi:10.1140/epjc/s10052-024-13560-5. arXiv:2309.16294
+[beane2014] Beane, S. R., Davoudi, Z. and Savage, M. J. (2014). Constraints on the universe as a numerical simulation. The European Physical Journal A. doi:10.1140/epja/i2014-14148-0. arXiv:1210.1847
+[auger2017] Pierre Auger Collaboration (2017). Observation of a large-scale anisotropy in the arrival directions of cosmic rays above 8 x 10^18 eV. Science 357, 1266-1270. doi:10.1126/science.aan4338. arXiv:1709.07321
+[bh1995] Benjamini, Y. and Hochberg, Y. (1995). Controlling the false discovery rate: a practical and powerful approach to multiple testing. Journal of the Royal Statistical Society, Series B 57, 289-300.
+[traxler1889] Traxler, R. P. (1889). The Principles of Mechanics as Applied to the Solar System. San Francisco: C. A. Murdock and Co. Internet Archive item principlesofmech00traxiala.

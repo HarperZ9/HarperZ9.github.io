@@ -1,0 +1,1493 @@
+{
+ "about": "Publication register rows for the published findings, public fields only.",
+ "built": "2026-10-31",
+ "ladder_rules": {
+  "lead": "An observation, oddity or idea with a source. No prediction and kill condition yet.",
+  "hypothesis": "Needs a prediction and a kill condition. A preregistered fail-closed verdict rule counts as a kill condition; kill_source says which kind.",
+  "thesis": "Needs surviving named opposition and a decisive observation. The rival and the observation are named in the row.",
+  "conjecture": "Needs a precise statement and checks. Checks are not proof.",
+  "theorem": "Needs a proof of the intended statement, on file. A proof of a nearby statement does not count.",
+  "law candidate": "Law cannot be self-awarded. It needs independent replication across domains by others. Ours is at most law candidate, and it needs that replication in hand.",
+  "killed": "The statement or the hypothesis behind it failed its own test, or the test was void at the kill. The row keeps its finding. Killed claims stay listed."
+ },
+ "rows": [
+  {
+   "f": "F114",
+   "tier": "B",
+   "strong_b": true,
+   "tier_reason": "Real data, prereg, truth anchor, working controls and a second code path in a second region, but bits are a monotone transform of CE and the density-over-width ranking is long known. The added-channel against added-tree comparison is an inconclusive null.",
+   "fields": [
+    "biology-plant-forest-pathology",
+    "ecology-climate",
+    "information-theory"
+   ],
+   "reviewer_attack": "Bits relabel CE, so what is new? Next: the regional gain partly reflects a smoother target, P3's null is underpowered, cores stand in for trees, cloud is interpolated, and windows end near 1975.",
+   "raise_tier": "Power P3 with wider panels and nested best-subset selection, an outside dendrochronologist's review, and a band or period out of sample past 1975",
+   "scorer": {
+    "who": "code",
+    "blind": false,
+    "self_graded": false,
+    "note": "Held-out skill against instrumental climate; second code path shares no code"
+   },
+   "evidence": {
+    "denominator": "51 Alpine and 24 Fennoscandian sites, 74 to 78 regional years, 43 sites for P3, 19 d18O sites",
+    "interval": "P1 +0.062 bits (0.034 to 0.089); Fennoscandia +0.28 (0.23 to 0.33); P3 difference 0.011 (-0.003 to 0.025)",
+    "controls": "working: phase, shuffle and white q95 -0.014 to -0.017 against 0.095 bits; 14 of 15 tests survive BH",
+    "forecast_vs_outcome": "P1, H4, H5 PASS; P2 saturation FAIL (0.25 against 0.10); P3 FAIL; both fail in Fennoscandia too",
+    "prereg": "bfec0fce (internal file); plan 6b038615; two pre-outcome deviations",
+    "known_answer": "planted 0.322 bits read 0.331 Gaussian, 0.308 KSG, 0.269 held-out"
+   },
+   "literature": {
+    "searches": [
+     {
+      "query": "tree ring proxy information content bits mutual information maximum latewood density versus ring width temperature reconstruction",
+      "where": "web",
+      "found": "No bits or mutual information against climate. MXD superiority known; a Swiss spruce study found combining proxies added little (search summary). https://boris.unibe.ch/id/eprint/101204"
+     },
+     {
+      "query": "adding tree-ring parameters blue intensity maximum latewood density ring width multi-parameter reconstruction skill compared to adding more trees sample replication Alps Fennoscandia",
+      "where": "web",
+      "found": "No direct parameter-against-tree comparison; BC work on series needed for MXD and BI. https://www.st-andrews.ac.uk/~rjsw/all%20pdfs/Wilsonetal2014.pdf"
+     }
+    ],
+    "verdict": "Nothing close found on a shared bit scale for channel against tree, not proof of novelty. Ranking is prior work. Project NOVELTY.json (19 queries) says incremental, with Semantic Scholar rate-limited; McPartland 2024 and Romer 2025 are closest, not opened by me."
+   },
+   "data_licence": "ITRDB open, cite; ISONET CC BY 4.0; CRU TS ODbL 1.0",
+   "verified_numbers": "Confirmed in Alps and rep_fenno result.json: all verdicts, P1, P3 43 sites and CI, tree gain 0.0035, channel gain 0.014, CE 0.317, 0.275 bits, RE split 0.391, null q95 0.023; Fennoscandia CE 0.72, 0.93 bits. Prereg sha and design read in part. Rep_alps not opened.",
+   "corrections": "none",
+   "ladder": {
+    "statement_sha256": "39cdbb871055477dc345a18c349b350f443f2104a7ee19389709f29e76c36170",
+    "entered": "2026-10-31",
+    "rung": "hypothesis",
+    "reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
+    "not_new": true,
+    "prediction_on_file": true,
+    "kill_source": "explicit"
+   },
+   "venue_type": "dendroclimatology or paleoclimate methods journal",
+   "publication": {
+    "date": "2026-11-09",
+    "wave": 1,
+    "status": "keep"
+   }
+  },
+  {
+   "f": "F132",
+   "tier": "D",
+   "strong_b": false,
+   "tier_reason": "Locked prereg, kill fired, truth anchor failed: a real negative on real data. Power at about 78 years and r 0.2 is low, and TE's direction failures are known generally, so the news is limited to the proxy setting.",
+   "fields": [
+    "ecology-climate",
+    "information-theory",
+    "method"
+   ],
+   "raise_tier": "A longer-series or monthly design with the anchor at real strength; test the synthetic D statistic of PU30-130 under a new lock.",
+   "scorer": {
+    "who": "code",
+    "blind": false,
+    "self_graded": false,
+    "note": "BH across sites nearly unable to reject at 199 surrogates; noted after the lock"
+   },
+   "evidence": {
+    "denominator": "135 sites, 57 2-degree blocks, median 78 years, 199 surrogates per test",
+    "interval": "real forward 0.088 to 0.262, reverse 0.049 to 0.225 (block bootstrap)",
+    "controls": "null arm working (0.074, 0.037); shared-trend arm failed (0.126, 0.170 against 0.10); time reversal 0.193, 0.222; 20-repeat pairing floor limits p",
+    "forecast_vs_outcome": "forward 0.35 got 0.156; reverse 0.30 got 0.119; kill 0.75 fired; Hc fail 0.85 did not fail",
+    "prereg": "54fc1c57 internal file",
+    "known_answer": "planted direction arms: failed, accuracy 0.60 strong, 0.474 matched"
+   },
+   "literature": {
+    "searches": [
+     {
+      "query": "transfer entropy direction known-answer failure tree ring width climate causality surrogate planted direction",
+      "where": "WebSearch",
+      "found": "No ring-width planted test. Spurious TE graphs in earth science, https://arxiv.org/abs/2209.12580; known-parameter TE checks, https://pdf.arxiv.org/pdf/2005.01860"
+     },
+     {
+      "query": "transfer entropy autocorrelation wrong direction false inference short series unidirectional coupling",
+      "where": "WebSearch",
+      "found": "Spurious causalities with transfer entropy, https://link.aps.org/doi/10.1103/PhysRevE.87.042917 (title level, not opened); net TE misdirection, De Lellis 2023, https://www.iris.unina.it/retrieve/b5b77330-b67e-4295-a579-9960a3d811c7/De_Lellis_2023_J._Phys._Complex._4_015001%20%282%29.pdf; finite-data TE, https://arxiv.org/html/2506.16215v1"
+     }
+    ],
+    "verdict": "prior work exists on TE direction failure in general (PRE 87 042917, De Lellis 2023); nothing close on ring-width data found, not proof of novelty"
+   },
+   "data_licence": "ITRDB and CRU TS; terms not checked here",
+   "verified_numbers": "Confirmed in result.json: real 0.156, 0.119; planted_matched false at or above 0.526; planted_strong false 0.40, accuracy 0.60; null and trend arms; H0_anchor FAIL. PREREG status rules read.",
+   "corrections": "PU30-116 and PU30-118 refuted; PU30-117 open; PU30-128 attenuation verified on synthetic; PU30-130 synthetic only.",
+   "ladder": {
+    "statement_sha256": "0c8bbe915b75d03bb18aff8d4be28eabea838c206e425baea70a2ac335ac8743",
+    "entered": "2026-10-31",
+    "rung": "killed",
+    "reason": "KSG transfer entropy as a direction reader on annual rings: kill 0.75 fired on planted truth.",
+    "not_new": false,
+    "prediction_on_file": true,
+    "kill_source": "verdict_rule"
+   },
+   "venue_type": "methods or negative-result note in dendroclimatology",
+   "publication": {
+    "date": "2026-11-09",
+    "wave": 1,
+    "status": "keep"
+   }
+  },
+  {
+   "f": "F14",
+   "tier": "B",
+   "strong_b": false,
+   "tier_reason": "Prereg check on a primary text with exact theory. The rings part is known physics. The reading that steep rows were computed needs a historian's check, since Newton states the rule himself.",
+   "fields": [
+    "history-philosophy-science",
+    "physics-optics"
+   ],
+   "raise_tier": "Read Shapiro 1993 and Optical Papers vol 2 on Obs 7, plus Newton's manuscripts.",
+   "scorer": {
+    "who": "code",
+    "blind": false,
+    "self_graded": false,
+    "note": "Table coded by the agent from Newton's text; the 90 deg row was checked before the prereg, as it discloses."
+   },
+   "evidence": {
+    "denominator": "table rows 0 to 90 deg",
+    "interval": "secant within 0.41% to 60 deg; rule within 0.99% all rows",
+    "controls": "theory control working",
+    "forecast_vs_outcome": "predictions C, E held",
+    "prereg": "RINGS-PREREG.md",
+    "known_answer": "Airy theory, 1:3:5:7 rings"
+   },
+   "literature": {
+    "searches": [
+     {
+      "query": "Newton Opticks obliquity table 106 arithmetical means secant law analysis",
+      "where": "WebSearch",
+      "found": "No analysis of the table found; Newton Project text only https://newtonproject.ox.ac.uk/view/texts/xml/NATP00038"
+     },
+     {
+      "query": "Observation 7 table 106 arithmetical means Shapiro Fits Passions and Paroxysms",
+      "where": "WebSearch",
+      "found": "Newton's text states the rule; Shapiro 1993 and Optical Papers vol 2 exist, contents not seen https://sirisaacnewton.info/writings/opticks-by-sir-isaac-newton/"
+     }
+    ],
+    "verdict": "nothing close found, not proof of novelty; Shapiro not read and may already cover it"
+   },
+   "data_licence": "public-domain text",
+   "verified_numbers": "rings result.json: first dark 275.7 vs 285.39 nm, ratios 1:3.005:5.031:7.070. Prereg: rule max 0.99%, 0.33% at 90 deg.",
+   "corrections": "Later entry at line 517 relates the 1/89000 inch offset.",
+   "ladder": {
+    "statement_sha256": "02c0ef704c77005f3ee4f3d51e39121966d864a2a95b591e6c90aa33f4214c35",
+    "entered": "2026-10-31",
+    "rung": "thesis",
+    "reason": "Survives The secant law as the source of Newton's steep obliquity rows. Decisive observation: The rows follow his 106-means rule; the secant runs 27 percent low at 85 degrees; preregistered predictions C and E held.",
+    "opposition": "The secant law as the source of Newton's steep obliquity rows",
+    "decisive_observation": "The rows follow his 106-means rule; the secant runs 27 percent low at 85 degrees; preregistered predictions C and E held",
+    "not_new": false,
+    "prediction_on_file": true,
+    "kill_source": "verdict_rule"
+   },
+   "venue_type": "history of science note",
+   "publication": {
+    "date": "2026-11-09",
+    "wave": 1,
+    "status": "keep"
+   }
+  },
+  {
+   "f": "F147",
+   "tier": "B",
+   "strong_b": false,
+   "tier_reason": "The DQE arm calibrated on planted grains and I found no published VISION3 figure, but it rests on digitised vendor sheets, one aperture and a peak-wavelength photon count. CAL_var failed, H6 failed, and Shaw and Dainty remain unread.",
+   "fields": [
+    "colour-film",
+    "instruments-metrology"
+   ],
+   "raise_tier": "Read Shaw and Dainty; measure one stock with a spectral photon count and a lab microdensitometer.",
+   "scorer": {
+    "who": "code",
+    "blind": false,
+    "self_graded": false,
+    "note": "one hand calculation on 5219 before lock, stated"
+   },
+   "evidence": {
+    "denominator": "3 stocks, 9 layers, one maker",
+    "interval": "none reported for DQE; planted error 0.11",
+    "controls": "CAL_dqe and CAL_forms working; CAL_var failed (0.70 against 0.80), so the variance verdict is not credited; pairing null not separating",
+    "forecast_vs_outcome": "DQE median 0.05 got 0.021; G spread 2 got 3.24; b 0.15 got -0.54",
+    "prereg": "c0dbcacf internal file",
+    "known_answer": "planted closed-form grains within 11 percent; planted Poisson n recovered 1.0"
+   },
+   "literature": {
+    "searches": [
+     {
+      "query": "detective quantum efficiency motion picture color negative film VISION3 DQE from granularity MTF sensitometry",
+      "where": "WebSearch",
+      "found": "No VISION3 DQE. Kodak brochure gives curves, https://www.kodak.com/content/products-brochures/motion-picture/KODAK-VISION3-500T-5219-7219-brochure.pdf; screen-film DQE method only"
+     },
+     {
+      "query": "detective quantum efficiency photographic film silver halide peak Shaw Dainty",
+      "where": "WebSearch",
+      "found": "Best films about 1 percent, Bird, Jones, Ames listing, https://data.zhenzhi.com/details/1/1007861162/1/4 (secondary); Shaw 1963, Dainty and Shaw 1976 cited, not read"
+     }
+    ],
+    "verdict": "prior work exists on film DQE in general (Shaw; Dainty and Shaw); nothing found for VISION3, not proof of novelty; classic texts unread"
+   },
+   "data_licence": "Kodak sheets digitised; copyright terms apply, derived values only",
+   "verified_numbers": "Confirmed in result.json: nine dqe_peak values, 0.0057 to 0.0492, median 0.0212; CAL_var FAIL 0.70; CAL_dqe 0.113. PREREG present.",
+   "corrections": "PU30-140, 141, 142, 143.",
+   "ladder": {
+    "statement_sha256": "e36b0185ea46f81e24a01e0e410fc7f85f25680fef231b39c5c279a08961e467",
+    "entered": "2026-10-31",
+    "rung": "hypothesis",
+    "reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
+    "not_new": false,
+    "prediction_on_file": true,
+    "kill_source": "verdict_rule"
+   },
+   "venue_type": "technical note, imaging science or motion-picture engineering",
+   "publication": {
+    "date": "2026-11-09",
+    "wave": 1,
+    "status": "keep"
+   }
+  },
+  {
+   "f": "F149",
+   "tier": "B",
+   "strong_b": true,
+   "tier_reason": "Real CC0 data, calibration passed, locked kill, and a live dispute makes it matter. Not blind, denominators rebuilt, the coding is Karst's, power 0.43 for a true doubling, and the rise inside studies largely supports them.",
+   "fields": [
+    "law-governance",
+    "biology-mycology",
+    "method"
+   ],
+   "reviewer_attack": "Rebuilt denominators with zero-rate years sharing the remainder; the definition of doubled with Fig. 3 unread; the abstract's 25 and almost 50 percent endpoints not compared.",
+   "raise_tier": "Blind rerun by an independent analyst, true denominators from Karst, and a read of Fig. 3 before calling any definition theirs.",
+   "scorer": {
+    "who": "code",
+    "blind": false,
+    "self_graded": false,
+    "note": "saw metadata, one row and F133 numerators before the lock; listed"
+   },
+   "evidence": {
+    "denominator": "268 study-year rates, 11 function and 7 structure studies, 4 blank rows skipped",
+    "interval": "NB 0.86 to 4.14, 1.18 to 6.62; weighted 0.52 to 2.99, 0.85 to 5.81",
+    "controls": "CAL working (flat 0.09, doubled median 2.11, coverage 0.89); shuffles working; D2 rebuild passed",
+    "forecast_vs_outcome": "NB function 2.2 got 2.19; structure 2.0 got 2.84; within-study structure fail: wrong, p 0.009",
+    "prereg": "55a37426 internal file",
+    "known_answer": "planted flat and doubled truths; table totals median gap 0"
+   },
+   "literature": {
+    "searches": [
+     {
+      "query": "Karst Jones Hoeksema 2023 positive citation bias common mycorrhizal networks reply Simard 2025 reanalysis",
+      "where": "WebSearch; Frontiers full text read to 100k of 130k chars",
+      "found": "Simard, Ryan, Perry 2025, https://www.frontiersin.org/articles/10.3389/ffgc.2024.1512518/full, criticises per-year counting and field growth; computes no new ratio in the part read"
+     },
+     {
+      "query": "Karst 2023 mycorrhizal citation bias critique reanalysis Dataverse citation-weighted unsupported claims trend",
+      "where": "WebSearch",
+      "found": "No reanalysis of the deposited data turned up"
+     },
+     {
+      "query": "reanalysis Karst 2023 positive citation bias unsupported citations doubled critique Simard 2025",
+      "where": "WebSearch, lead check",
+      "found": "Simard, Ryan and Perry 2025 (Frontiers, doi 10.3389/ffgc.2024.1512518) object to study selection and to counting publication years, which they say inflated the sample to 273. No numeric re-estimate surfaced in search summaries."
+     }
+    ],
+    "verdict": "prior critique exists: Simard et al. 2025 attacks year-based counting without re-estimating; no numeric reanalysis found, not proof of novelty"
+   },
+   "data_licence": "Dataverse table CC0; Note 3 numerators from a copyrighted supplement, derived values only",
+   "verified_numbers": "Confirmed in result.json: NB 2.195 and 2.838 with intervals, weighted 1.773 and 1.54 with intervals, within-study 3.02 and 3.46, pooled shares, share_integer 0.846; PREREG kill text read. Planted power 0.43 not separately opened.",
+   "corrections": "Follows F133; PU30-147 partly supported.",
+   "ladder": {
+    "statement_sha256": "0b9e314bc201ff0a99376fd3e40c7c64c65dedbddafdbf384f9355ca11fb0cd0",
+    "entered": "2026-10-31",
+    "rung": "hypothesis",
+    "reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
+    "not_new": false,
+    "prediction_on_file": true,
+    "kill_source": "verdict_rule"
+   },
+   "venue_type": "Matters Arising or short comment",
+   "publication": {
+    "date": "2026-11-09",
+    "wave": 1,
+    "status": "keep"
+   }
+  },
+  {
+   "f": "F152",
+   "tier": "D",
+   "strong_b": false,
+   "tier_reason": "A registered null with real corpora and a rewired control. It agrees with link-prediction practice, where degree baselines are hard to beat, so its value is the honest baseline test for gap tools.",
+   "fields": [
+    "method",
+    "forecasting-prediction",
+    "information-theory"
+   ],
+   "raise_tier": "Preregister Adamic-Adar on a citation corpus with dated held-out links.",
+   "scorer": {
+    "who": "code plus agent; blind model judges where stated",
+    "blind": false,
+    "self_graded": true,
+    "note": "The project chose corpora and rules; judges come from one vendor."
+   },
+   "evidence": {
+    "denominator": "3 corpora; precision at 200",
+    "interval": "own -0.182 to -0.125 against PA",
+    "controls": "rewired graph q95 0.164, working; BEAT_CONTROLS failed",
+    "forecast_vs_outcome": "BEAT_PA 0.25, correct direction; BEAT_CONTROLS 0.85, failed",
+    "prereg": "studyrun lock, internal file",
+    "known_answer": "none"
+   },
+   "literature": {
+    "searches": [
+     {
+      "query": "literature-based discovery link prediction ABC model versus preferential attachment Adamic-Adar baseline",
+      "where": "WebSearch",
+      "found": "Kastrin, Rindflesch and Hristovski 2016 (Methods Inf Med) treat discovery as link prediction on a MeSH graph, include preferential attachment, and report Adamic-Adar best among unsupervised measures. Read as a search summary."
+     }
+    ],
+    "verdict": "prior work exists: Kastrin et al. 2016 is close on method; no head-to-head on these corpora surfaced in one search"
+   },
+   "data_licence": "Stack Exchange text under CC BY-SA; own records internal",
+   "verified_numbers": "ledger entry read by the lead; result file not opened",
+   "corrections": "none",
+   "ladder": {
+    "statement_sha256": "229a4583d8314c86c2347a2365b10a5eb8e60c08225f8f9dee2811221613ebe7",
+    "entered": "2026-10-31",
+    "rung": "killed",
+    "reason": "A-B-C shared-neighbour ranking as a gap finder: loses to popularity.",
+    "not_new": false,
+    "prediction_on_file": true,
+    "kill_source": "verdict_rule"
+   },
+   "venue_type": "Workshop note on discovery evaluation",
+   "publication": {
+    "date": "2026-11-09",
+    "wave": 1,
+    "status": "keep"
+   }
+  },
+  {
+   "f": "F166",
+   "tier": "D",
+   "strong_b": false,
+   "tier_reason": "A refutation of our own formula with working controls; the lambda rows repeat a known kind of estimate.",
+   "fields": [
+    "psychology",
+    "economy",
+    "method"
+   ],
+   "raise_tier": "Person-level data and a preregistered reading of information gain.",
+   "scorer": {
+    "who": "code; entry by the agent that wrote the study",
+    "blind": false,
+    "self_graded": true,
+    "note": "Forecasts, rules and scoring all come from one agent."
+   },
+   "evidence": {
+    "denominator": "1,928 and 9,831 problems",
+    "interval": "lambda bootstrap 95%",
+    "controls": "permuted terms, simulated CPT, planted truth",
+    "forecast_vs_outcome": "COMB minus FLEX +0.005, got -0.011",
+    "prereg": "studyrun lock, internal file",
+    "known_answer": "planted CPT and CPT plus entropy"
+   },
+   "literature": {
+    "searches": [
+     "Europe PMC and Crossref over the map's sources"
+    ],
+    "verdict": "related work listed in the map; no search for prior identical tests"
+   },
+   "data_licence": "No stated licence; local research copy",
+   "verified_numbers": "result file opened by the study author",
+   "corrections": "2026-11-09 (whitepaper pass): boosted-trees R² without feedback is 0.73545 in result.json, 0.735 not 0.736. Tier unchanged.",
+   "ladder": {
+    "statement_sha256": "e77ddfe1c8d2367bef3dc65169396f21c14c98539a405c9abe08d43768c6f3cb",
+    "entered": "2026-10-31",
+    "rung": "killed",
+    "reason": "Combined formula over richer prospect theory: kill fired, retired.",
+    "not_new": false,
+    "prediction_on_file": true,
+    "kill_source": "explicit"
+   },
+   "venue_type": "None as it stands",
+   "publication": {
+    "date": "2026-11-09",
+    "wave": 1,
+    "status": "keep"
+   },
+   "licence_terms": "Statistics only; no choices13k data redistributed."
+  },
+  {
+   "f": "F172",
+   "tier": "B",
+   "strong_b": false,
+   "tier_reason": "Real held-out result on public data with gates passing; related methods exist, no literature check for identical tests, and mixed-metric conversions need review.",
+   "fields": [
+    "psychology",
+    "method",
+    "forecasting-prediction",
+    "economy"
+   ],
+   "reviewer_attack": "Fisher z standard errors ignore design, and unsigned rows assume direction.",
+   "raise_tier": "Lock the two-normal prior, review conversions by hand on a sample, search the literature.",
+   "scorer": {
+    "who": "code; entry by the agent that wrote the study",
+    "blind": false,
+    "self_graded": true,
+    "note": "The RPP forecast was not blind to the published 36 percent."
+   },
+   "evidence": {
+    "denominator": "1222 effects, 307 project clusters",
+    "interval": "project-cluster bootstrap 95 percent",
+    "controls": "shuffled outcomes, shuffled originals, planted truths, data gates",
+    "forecast_vs_outcome": "beat base P 0.7, failed at -0.004",
+    "prereg": "studyrun lock, internal file",
+    "known_answer": "planted mixtures; 35 RPP successes"
+   },
+   "literature": {
+    "searches": [
+     "Europe PMC and Crossref over the map's sources"
+    ],
+    "verdict": "z-curve and related models exist; no search for an identical held-out test"
+   },
+   "data_licence": "RPP CC0, FReD CC BY 4.0",
+   "verified_numbers": "result file opened by the study author",
+   "corrections": "none",
+   "ladder": {
+    "statement_sha256": "caf6bdbe566ab05217bbd5fa428a78fc66a596eb02a8c8427ba19e57b843063e",
+    "entered": "2026-10-31",
+    "rung": "hypothesis",
+    "reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
+    "not_new": false,
+    "prediction_on_file": true,
+    "kill_source": "explicit"
+   },
+   "venue_type": "Methods note after a literature check",
+   "publication": {
+    "date": "2026-11-09",
+    "wave": 1,
+    "status": "keep"
+   }
+  },
+  {
+   "f": "F183",
+   "tier": "D",
+   "strong_b": false,
+   "tier_reason": "Refutes the bio-labelled edge after my own bug fix; default parameters only.",
+   "fields": [
+    "cs-systems",
+    "method"
+   ],
+   "does_not_prove": "Other functions, dimensions or budgets. Parameters are defaults.",
+   "scorer": "code plus agent; self-graded",
+   "evidence": {},
+   "corrections": "Row added 2026-11-01 in the ledger catch-up. Tier set from the FINDINGS title, status and limit lines; the result files were not reopened.",
+   "ladder": {
+    "statement_sha256": "4c34a5b0658ee5b3946a5ec7b2a38a55890a7cfb6368dd26cd70a56fa4668992",
+    "entered": "2026-10-31",
+    "rung": "thesis",
+    "reason": "Survives Bio-labelled optimisers as better search. Decisive observation: Shifted known optima: CMA-ES rank 2.0 against best bio 3.14, and SMA and GWO lose 12 and 13.6 decades.",
+    "opposition": "Bio-labelled optimisers as better search",
+    "decisive_observation": "Shifted known optima: CMA-ES rank 2.0 against best bio 3.14, and SMA and GWO lose 12 and 13.6 decades",
+    "not_new": false,
+    "prediction_on_file": true,
+    "kill_source": "verdict_rule"
+   },
+   "publication": {
+    "date": "2026-11-09",
+    "wave": 1,
+    "status": "keep"
+   }
+  },
+  {
+   "f": "F190",
+   "tier": "D",
+   "strong_b": false,
+   "tier_reason": "My reproduction was self-benefit; corrected null under one update rule.",
+   "fields": [
+    "biology-other",
+    "economics"
+   ],
+   "does_not_prove": "Anything about microbes. One update rule with invented numbers.",
+   "scorer": "code plus agent; self-graded",
+   "evidence": {},
+   "corrections": "Row added 2026-11-01 in the ledger catch-up. Tier set from the FINDINGS title, status and limit lines; the result files were not reopened.",
+   "ladder": {
+    "statement_sha256": "faa94f43040477f02e338f1854ed78f1063d252221128bfcfd06cdae43f6d055",
+    "entered": "2026-10-31",
+    "rung": "killed",
+    "reason": "Our reproduction of the cheater result: it was self-benefit.",
+    "not_new": false,
+    "prediction_on_file": true,
+    "kill_source": "verdict_rule"
+   },
+   "publication": {
+    "date": "2026-11-09",
+    "wave": 1,
+    "status": "keep"
+   }
+  },
+  {
+   "f": "F23",
+   "tier": "B",
+   "strong_b": false,
+   "tier_reason": "Real data and a prereg, but the network sample is small (26 trees with size), cedar decay repeats the PI's rates, and the wind arm has almost no skill. The network reanalysis is what merits expansion. Degree-preserving nulls keep much of hub share by construction.",
+   "fields": [
+    "biology-plant-forest-pathology",
+    "biology-mycology",
+    "ecology-climate"
+   ],
+   "raise_tier": "Apply the same nulls to Beiler 2010 and other mapped networks, with a model that separates root extent from effort.",
+   "scorer": {
+    "who": "code",
+    "blind": false,
+    "self_graded": false,
+    "note": ""
+   },
+   "evidence": {
+    "denominator": "6 plots, 166 trees, 56 genets; 530 logs; 488,499 FIA trees",
+    "interval": "partial rho 0.20, p 0.067; cedar k 0.0026 (0.0016, 0.0038); Brier skill 0.0014",
+    "controls": "curveball nulls and effort control working; modularity prediction failed",
+    "forecast_vs_outcome": "log forecasts frozen for years 40, 50; bigger and slender wind predictions failed",
+    "prereg": "PREREG.txt 5f73b365, A1 9de36743",
+    "known_answer": "PI's published k order"
+   },
+   "literature": {
+    "searches": [
+     {
+      "query": "Beiler 2015 reanalysis null model sampling effort hub trees nestedness",
+      "where": "WebSearch",
+      "found": "Beiler et al. 2015 and Dryad data; no reanalysis surfaced https://datadryad.org/dataset/doi:10.5061/dryad.7ts20"
+     },
+     {
+      "query": "Thuja plicata heartwood decomposition k Harmon Andrews",
+      "where": "WebSearch",
+      "found": "TD014 and Andrews reports https://andrewsforest.oregonstate.edu/node/3495"
+     }
+    ],
+    "verdict": "nothing close found for the network reanalysis, not proof of novelty; Karst et al. 2023 is adjacent (cited in results.txt). Cedar rates: PI's TD01421 exists."
+   },
+   "data_licence": "TD014 CC BY 4.0 with credit line; Beiler Dryad CC0; FIA public domain",
+   "verified_numbers": "results.txt confirms k values, rho 0.45 and 0.20, 6 of 6 nulls, AUC 0.77, skill 0.0014. Current file hash matches A1 version.",
+   "corrections": "F63 and later forest work not read here. 2026-10-31: mirror F156 flagged the entry for no Evidence line; it names a folder, prereg or tool path but no result file. Dated note added to FINDINGS.md. Tier unchanged.",
+   "ladder": {
+    "statement_sha256": "48e16733a377c3bc63b0d31af6409d99a99a2935d3a31fc943e7527a94845226",
+    "entered": "2026-10-31",
+    "rung": "hypothesis",
+    "reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
+    "not_new": true,
+    "prediction_on_file": true,
+    "kill_source": "verdict_rule"
+   },
+   "venue_type": "short reanalysis note, forest ecology",
+   "publication": {
+    "date": "2026-11-09",
+    "wave": 1,
+    "status": "keep"
+   }
+  },
+  {
+   "f": "F27",
+   "tier": "D",
+   "strong_b": false,
+   "tier_reason": "Reported as a null. Power is limited by split-half reliability of 0.03 to 0.47, and the null has no noise term, so it does not show a single trait.",
+   "fields": [
+    "psychology"
+   ],
+   "raise_tier": "Longer series, an AR(1) null with measurement noise, and test-retest reliability.",
+   "scorer": {
+    "who": "code",
+    "blind": false,
+    "self_graded": false,
+    "note": ""
+   },
+   "evidence": {
+    "denominator": "4 datasets: n 71, 49, 99, 259",
+    "interval": "r -0.44, -0.41, -0.28, -0.29; 0018 (-0.63, -0.19)",
+    "controls": "shuffle removes inertia, working; AR(1) null lacks noise",
+    "forecast_vs_outcome": "P1 pass in 2 of 4; P2 no pass",
+    "prereg": "mood-study/PREREG.txt c26b85b5",
+    "known_answer": "P0 passed in all 4"
+   },
+   "literature": {
+    "searches": [
+     {
+      "query": "emotional inertia versus recovery after peaks AR(1) same construct",
+      "where": "WebSearch",
+      "found": "Koval et al. 2015 https://acuresearchbank.acu.edu.au/item/883x1/emotional-inertia-and-external-events-the-roles-of-exposure-reactivity-and-recovery ; Schreuder et al. 2024 https://research.tilburguniversity.edu/en/publications/bouncing-back-from-emotional-ups-and-downs-insights-in-emotional-/"
+     }
+    ],
+    "verdict": "adjacent work exists: Koval 2015; no direct AR(1) test of this form found, not proof of novelty"
+   },
+   "data_licence": "openESM CC BY 4.0",
+   "verified_numbers": "result.json confirms r values and verdicts. PREREG-R2 and R2 code exist, but only one run folder and no R2 ledger entry; R2 outcome unknown.",
+   "corrections": "None recorded; F38 relates. 2026-10-31: mirror F156 flagged the entry for no Evidence line; it names a folder, prereg or tool path but no result file. Dated note added to FINDINGS.md. Tier unchanged.",
+   "ladder": {
+    "statement_sha256": "0d9bb416fc6cf9ab5407f21372b2a5227bcfb2d6354438f1d53c952c327c04cf",
+    "entered": "2026-10-31",
+    "rung": "killed",
+    "reason": "Two factors never beat one AR(1) axis.",
+    "not_new": false,
+    "prediction_on_file": true,
+    "kill_source": "verdict_rule"
+   },
+   "venue_type": "methods note, affective science",
+   "publication": {
+    "date": "2026-11-09",
+    "wave": 1,
+    "status": "keep"
+   }
+  },
+  {
+   "f": "F281",
+   "tier": "D",
+   "strong_b": false,
+   "tier_reason": "Rung: killed in tested band. Locked with planted checks, self-graded, simulation or public data, largely reproducing or testing published results.",
+   "fields": [
+    "physics"
+   ],
+   "raise_tier": "Outside reader; primary full text for hand-typed rows; own instrument or data where simulated.",
+   "scorer": {
+    "who": "code",
+    "blind": false,
+    "self_graded": true,
+    "note": ""
+   },
+   "evidence": {
+    "denominator": "see RESULTS.md",
+    "interval": "in RESULTS.md where one applies",
+    "controls": "plants, shuffles, null simulations",
+    "forecast_vs_outcome": "in RESULTS.md",
+    "prereg": "studies/s8/PREREG.txt sha256 21d88e4c",
+    "known_answer": "listed in each PREREG",
+    "rung": "killed in tested band",
+    "hash": "21d88e4c"
+   },
+   "literature": {
+    "searches": [],
+    "verdict": "see RESULTS.md"
+   },
+   "data_licence": "see INTAKE",
+   "verified_numbers": "result file read by the study author",
+   "corrections": "2026-11-09 (publication pass): the 7.6e-18 headline is our rerun's bound (0.32 Planck by bootstrap), about 24 times weaker than the published 7.6 Planck limit; the write-up says so and frames the study as a method reproduction. Tier unchanged.",
+   "correction_pass": {
+    "errors": 1,
+    "high": 0,
+    "worst_survives": "narrowed",
+    "fixable": 1,
+    "kinds": {
+     "error": 1
+    }
+   },
+   "ladder": {
+    "statement_sha256": "5bf5c4795e3feb5080ca87d17eba42dee987f4f84de8206e54dde637f37eb060",
+    "entered": "2026-10-31",
+    "rung": "hypothesis",
+    "reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
+    "not_new": true,
+    "prediction_on_file": true,
+    "kill_source": "verdict_rule"
+   },
+   "publication": {
+    "date": "2026-11-09",
+    "wave": 1,
+    "status": "keep"
+   }
+  },
+  {
+   "f": "F308",
+   "tier": "D",
+   "strong_b": false,
+   "tier_reason": "Cheap, mostly confirms.",
+   "fields": [
+    "mathematics",
+    "method"
+   ],
+   "does_not_prove": "Passing lines true. Fitted lines pass by construction, and only 5 percent of conjecture entries parse.",
+   "scored_by": "code plus agent; self-graded",
+   "evidence": {},
+   "literature": "one search per candidate, or none",
+   "correction_pass": {
+    "errors": 2,
+    "high": 0,
+    "worst_survives": "narrowed",
+    "fixable": 1,
+    "kinds": {
+     "error": 1,
+     "untestable_control": 1
+    }
+   },
+   "rung": "preregistered, deviation noted",
+   "ladder": {
+    "statement_sha256": "4327c6f2ecbf0711c9fa51c991d16ab1f879796948a13e5543151582175ff529",
+    "entered": "2026-10-31",
+    "rung": "hypothesis",
+    "reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
+    "not_new": false,
+    "prediction_on_file": true,
+    "kill_source": "verdict_rule"
+   },
+   "publication": {
+    "date": "2026-11-09",
+    "wave": 1,
+    "status": "keep"
+   }
+  },
+  {
+   "f": "F310",
+   "tier": "B",
+   "strong_b": false,
+   "tier_reason": "Locked null with a fair control.",
+   "fields": [
+    "astronomy"
+   ],
+   "does_not_prove": "Spacing physics. Survey selection and multiplicity shape the gaps; the published forms are from memory.",
+   "scored_by": "code plus agent; self-graded",
+   "evidence": {},
+   "literature": "one search per candidate, or none",
+   "correction_pass": {
+    "errors": 1,
+    "high": 0,
+    "worst_survives": "narrowed",
+    "fixable": 1,
+    "kinds": {
+     "memory_value": 1
+    }
+   },
+   "rung": "preregistered, killed",
+   "ladder": {
+    "statement_sha256": "eed2fbcdcc719ae4838b32d61f0f172515a58bddfff27a42df30f3509fbb80de",
+    "entered": "2026-10-31",
+    "rung": "thesis",
+    "reason": "Survives Titius-Bode spacing is a law-like rule for exoplanet systems. Decisive observation: fails gap-order shuffle on all three forms at p 0.85, 0.995, 0.68.",
+    "opposition": "Titius-Bode spacing is a law-like rule for exoplanet systems",
+    "decisive_observation": "fails gap-order shuffle on all three forms at p 0.85, 0.995, 0.68",
+    "not_new": false,
+    "prediction_on_file": true,
+    "kill_source": "verdict_rule"
+   },
+   "publication": {
+    "date": "2026-11-09",
+    "wave": 1,
+    "status": "keep"
+   }
+  },
+  {
+   "f": "F32",
+   "tier": "B",
+   "strong_b": true,
+   "tier_reason": "Large real data with working shuffles and a clean prereg. Skips are inferred and causation is open, and a probability gate lowers Brier partly by arithmetic. Merkle 2017 is close on selection.",
+   "fields": [
+    "forecasting-prediction",
+    "psychology",
+    "method"
+   ],
+   "reviewer_attack": "Inferred skips may be unseen questions; matched strata may create the sign flip against Merkle; a probability gate rewards confidence by construction.",
+   "raise_tier": "Replicate on another tournament with visible question exposure; read Merkle in full.",
+   "scorer": {
+    "who": "code",
+    "blind": false,
+    "self_graded": false,
+    "note": ""
+   },
+   "evidence": {
+    "denominator": "410,451 binary forecasts; 1,578 same-condition pairs",
+    "interval": "first rho +0.286 (+0.264, +0.303); timed +0.195 (+0.174, +0.212); within +0.041 (-0.007, +0.095)",
+    "controls": "shuffles working; within-person rating shuffle gains 0.0024",
+    "forecast_vs_outcome": "R1a, R1t PASS; R1w, R3both, R4 FAIL",
+    "prereg": "PREREG-R2.txt be6f2c1a",
+    "known_answer": "random gate 0.277"
+   },
+   "literature": {
+    "searches": [
+     {
+      "query": "GJP forecasters skipping questions selectivity abstention accuracy",
+      "where": "WebSearch",
+      "found": "Merkle et al. 2017; arXiv 2106.11248 on incentives to skip under Brier https://arxiv.org/pdf/2106.11248"
+     },
+     {
+      "query": "Merkle Steyvers Mellers Tetlock question selection",
+      "where": "WebSearch",
+      "found": "Merkle 2017: good forecasters select more questions, selection data adds information https://econpapers.repec.org/RePEc:eee:intfor:v:33:y:2017:i:4:p:817-832"
+     }
+    ],
+    "verdict": "prior work exists: Merkle et al. 2017 is close, with an apparently opposite sign before matching. Abstract only; full paper not read."
+   },
+   "data_licence": "CC0, Dataverse BPCDH5; cite Mellers",
+   "verified_numbers": "result.json confirms 0.2858, 0.1949, within 0.0405; results.txt confirms 0.277, a 0.92. Hash matches.",
+   "corrections": "Narrows F28. 2026-11-09 (whitepaper pass): the Merkle 2017 opposite-sign reading is unconfirmed from the abstract; write-up corrected. Tier unchanged.",
+   "ladder": {
+    "statement_sha256": "70062abfb6735ff8a46277aaebdc38bdc4582d42dd1f673597f2d40a3e3cbbc8",
+    "entered": "2026-10-31",
+    "rung": "hypothesis",
+    "reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
+    "not_new": false,
+    "prediction_on_file": true,
+    "kill_source": "verdict_rule"
+   },
+   "venue_type": "forecasting journal, after replication",
+   "publication": {
+    "date": "2026-11-09",
+    "wave": 1,
+    "status": "keep"
+   }
+  },
+  {
+   "f": "F320",
+   "tier": "B",
+   "strong_b": false,
+   "tier_reason": "Open data, plants and controls; small sample and one protocol. A clean known-answer on leakage.",
+   "fields": [
+    "physiological computing",
+    "method"
+   ],
+   "does_not_prove": "Daily stress or trauma, or any person. One lab hour, 15 people, order confounded. Interval on felt correlations about plus or minus 0.5.",
+   "scored_by": "code plus agent; self-graded",
+   "evidence": {
+    "result_sha256_16": {
+     "a_wesad": "65165c7a7ae8e10e",
+     "a2_wesad": "142aab473f4fbe40"
+    }
+   },
+   "literature": "abstracts via Europe PMC",
+   "correction_pass": {
+    "errors": 2,
+    "high": 0,
+    "worst_survives": "narrowed",
+    "fixable": 0,
+    "kinds": {
+     "failed_plant": 1,
+     "error": 1
+    }
+   },
+   "rung": "preregistered study on open data",
+   "ladder": {
+    "statement_sha256": "56bfd8bef9a836b2b4684113941141a30eaaedca9721b1d50d915fb86468f6a7",
+    "entered": "2026-10-31",
+    "rung": "hypothesis",
+    "reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
+    "not_new": false,
+    "prediction_on_file": true,
+    "kill_source": "explicit"
+   },
+   "publication": {
+    "date": "2026-11-09",
+    "wave": 1,
+    "status": "keep"
+   }
+  },
+  {
+   "f": "F329",
+   "tier": "B",
+   "strong_b": false,
+   "tier_reason": "Real data, clean held-out design, useful negative; a reproduction with a limit on identifiability.",
+   "fields": [
+    "economics",
+    "behavior",
+    "method"
+   ],
+   "does_not_prove": "A mechanism. Lab die tasks only; report shares are read from distributions, not observed lies.",
+   "scorer": "code plus agent; self-graded",
+   "evidence": {},
+   "literature": "abstract level; graded per source",
+   "corrections": "2026-11-09 (publication pass): the preregistered reproduction check (subset mean standardised report within 0.03 of Abeler's 0.234) failed at 0.287 per RESULTS.md; not among the result verdicts and absent from the ledger entry. Stated in the write-up's limits. Tier unchanged.",
+   "correction_pass": {
+    "errors": 3,
+    "high": 1,
+    "worst_survives": "narrowed",
+    "fixable": 1,
+    "kinds": {
+     "failed_plant": 1,
+     "error": 1,
+     "post_hoc_rescue": 1
+    }
+   },
+   "rung": "preregistered analysis of public data, plant failed",
+   "ladder": {
+    "statement_sha256": "82fd245c26b240b31fcbff7b7ba02eb5db442b2a693739e038af186f0eff0346",
+    "entered": "2026-10-31",
+    "rung": "hypothesis",
+    "reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
+    "not_new": false,
+    "prediction_on_file": true,
+    "kill_source": "verdict_rule"
+   },
+   "publication": {
+    "date": "2026-11-09",
+    "wave": 1,
+    "status": "keep"
+   }
+  },
+  {
+   "f": "F344",
+   "tier": "D",
+   "strong_b": false,
+   "tier_reason": "Null with stated power.",
+   "fields": [
+    "physics-other"
+   ],
+   "does_not_prove": "No field deflection model; only public data; the null bounds a large pattern alone.",
+   "scorer": "code plus agent; self-graded",
+   "evidence": {},
+   "literature": "one arXiv query per candidate",
+   "correction_pass": {
+    "errors": 1,
+    "high": 0,
+    "worst_survives": "narrowed",
+    "fixable": 0,
+    "kinds": {
+     "error": 1
+    }
+   },
+   "rung": "preregistered null on public data",
+   "ladder": {
+    "statement_sha256": "191d20bb59d0e504ee9018834e1045f4dcd52a139e538e7c255d09c6f72486eb",
+    "entered": "2026-10-31",
+    "rung": "hypothesis",
+    "reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
+    "not_new": false,
+    "prediction_on_file": true,
+    "kill_source": "verdict_rule"
+   },
+   "publication": {
+    "date": "2026-11-09",
+    "wave": 1,
+    "status": "keep"
+   }
+  },
+  {
+   "f": "F362",
+   "tier": "B",
+   "strong_b": false,
+   "tier_reason": "Real public tables with planted and honest controls, and a clear statement of correlated inputs.",
+   "fields": [
+    "metrology",
+    "statistics"
+   ],
+   "scorer": "code plus agent; self-graded",
+   "evidence": {},
+   "literature": "one search per candidate; not found is not novel",
+   "corrections": "2026-11-09 (publication pass): the ledger's '6 of 10 forecasts held' cannot be reproduced from result.json (5 of 9 forecast rules, or 6 of 11 counting hypothesis rules). Count left out of the write-up. Tier unchanged. 2026-11-09 (later): the line above was wrong; result.json has 10 F_ forecast verdicts with 6 passing, so '6 of 10 forecasts held' reproduces. Our error in the first publication pass.",
+   "correction_pass": {
+    "errors": 2,
+    "high": 0,
+    "worst_survives": "narrowed",
+    "fixable": 1,
+    "kinds": {
+     "error": 2
+    }
+   },
+   "rung": "preregistered, public data",
+   "ladder": {
+    "statement_sha256": "196a423d7fcc5fdeafd4e708d46a516adf27905efb946f0f2bc448f30435e59d",
+    "entered": "2026-10-31",
+    "rung": "hypothesis",
+    "reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
+    "not_new": false,
+    "prediction_on_file": true,
+    "kill_source": "verdict_rule"
+   },
+   "publication": {
+    "date": "2026-11-09",
+    "wave": 1,
+    "status": "keep"
+   }
+  },
+  {
+   "f": "F39",
+   "tier": "B",
+   "strong_b": true,
+   "tier_reason": "Real recordings, artist-held-out test and working shuffle, with a reversed valence forecast kept. Spectrum-affect links are known, and tail is not separated from instrument or from room reverb.",
+   "fields": [
+    "music-acoustics",
+    "psychology"
+   ],
+   "reviewer_attack": "Tail is a proxy for instrumentation and production style, since timbre was not held; DEAM is short clips with crowd perceived-emotion ratings; the mirror audio provenance.",
+   "raise_tier": "Replicate on a second rated corpus, add a blind listening test with tail manipulated at fixed instrumentation, and measure felt calm",
+   "scorer": {
+    "who": "code",
+    "blind": false,
+    "self_graded": false,
+    "note": "ratings from DEAM crowd raters, stand apart from the code; personality part not blind"
+   },
+   "evidence": {
+    "denominator": "502 test clips, 270 artists (1744 total)",
+    "interval": "partial r -0.394 [-0.476, -0.304]; valence -0.375 [-0.455, -0.280]; dR2 +0.110 [0.034, 0.182]",
+    "controls": "working: permuted calm index q05 -0.076; synthetic music instrument gate passed; reverb size gate failed in dense music",
+    "forecast_vs_outcome": "P1, P2, P4, P5 pass; P3 forecast rising valence, fell; P6 and P7 not blind (smoke-test slip)",
+    "prereg": "ae20eac8, internal file (hash matches, lock b051a324)",
+    "known_answer": "synthetic music recovery, error ratios 0.12 and 0.21"
+   },
+   "literature": {
+    "searches": [
+     {
+      "query": "music emotion DEAM spectral slope decay tail arousal reverberation",
+      "where": "WebSearch",
+      "found": "only the DEAM benchmark https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5345802/; no tail analysis"
+     },
+     {
+      "query": "reverberation time perceived emotion music arousal valence",
+      "where": "WebSearch",
+      "found": "Wilkie and Harrison 2025 https://cms.mus.cam.ac.uk/publications/wilkie-reverberation/ reports mixed earlier results; Mo, Wu, Horner 2016 https://research.uca.ac.uk/7021/"
+     },
+     {
+      "query": "timbre attack decay spectral brightness arousal valence acoustic correlates",
+      "where": "WebSearch",
+      "found": "Eerola 2012 https://jyx.jyu.fi/jyx/Record/jyx_123456789_48672 and Korsmit 2024 re-analysis on isolated tones; brightness and sustain already tied to arousal"
+     }
+    ],
+    "verdict": "prior work exists for isolated tones (Eerola 2012, Korsmit 2024); nothing close found on onset-locked tail in full mixed music, not proof of novelty"
+   },
+   "data_licence": "research-only: DEAM CC BY-NC; audio from a Hugging Face mirror, official host unreachable",
+   "verified_numbers": "result.json: p1 -0.3938 [-0.4763,-0.3044], p2a -0.3006, p2b +0.3239, p3 -0.3752, p5 -0.3429, dR2 0.1101, C1 q05 -0.0763, n_test 502, all verdicts confirmed; prereg checked by hash only. Post hoc genre figures not checked.",
+   "corrections": "F49 two-lines rejects a U for calm against arousal (a fall that levels off)",
+   "ladder": {
+    "statement_sha256": "c84d8dae7d1d50a8624eb9b422d203c42f75332650ad9511b2481e5c30ba56d0",
+    "entered": "2026-10-31",
+    "rung": "hypothesis",
+    "reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
+    "not_new": false,
+    "prediction_on_file": true,
+    "kill_source": "verdict_rule"
+   },
+   "venue_type": "music cognition journal (Music Perception, Psychology of Music)",
+   "publication": {
+    "date": "2026-11-09",
+    "wave": 1,
+    "status": "keep"
+   }
+  },
+  {
+   "f": "F47",
+   "tier": "B",
+   "strong_b": true,
+   "tier_reason": "Real data across domains with working nulls, and an unusual side-by-side view. The second run is not blind, one ceiling failed, the core forecasts failed, and linear models cannot rule out nonlinear signal. The past-performance finding is known.",
+   "fields": [
+    "forecasting-prediction",
+    "method",
+    "psychology",
+    "biology-plant-forest-pathology"
+   ],
+   "reviewer_attack": "Ridge and logit may leave signal that a nonlinear model finds, so a stall may be the model class; datasets are a convenience sample; DEAM rater count is assumed and the ceilings are bounds.",
+   "raise_tier": "Rerun with nonlinear learners and a preregistered tree ceiling on fresh splits; drop the saves; add a domain outside this machine",
+   "scorer": {
+    "who": "code",
+    "blind": false,
+    "self_graded": false,
+    "note": "second run corrects a clipping fault after reading run 1"
+   },
+   "evidence": {
+    "denominator": "8 datasets; n 1744 to 150000; 22 to 1349 variables",
+    "interval": "GJP asymptote 0.137 [0.118,0.155]; other asymptote intervals often hit the fit bound (up to 2.0)",
+    "controls": "working: shuffled-target nulls beaten by all eight; failed: tree ceiling estimator (-3.97); P5 rule mis-specified",
+    "forecast_vs_outcome": "P1 1 of 6 at ceiling vs >= 4; P2 1 moved vs >= 3; P3, P4 toys pass; P6 gap -0.221",
+    "prereg": "ee38c3bd PREREG.txt, e722f680 PREREG-R2.txt (both match); R2 hashed after run 1",
+    "known_answer": "Lorenz horizon 2.51 vs theory 2.54 per decade; overfitting demo"
+   },
+   "literature": {
+    "searches": [
+     {
+      "query": "predictability limits noise ceiling predictors plateau Fragile Families",
+      "where": "WebSearch",
+      "found": "Salganik 2020 https://scholarworks.montana.edu/xmlui/handle/1/16106?show=full, held-out R2 limits on life outcomes; no ceiling comparison"
+     },
+     {
+      "query": "predicting forecaster accuracy past performance individual differences GJP",
+      "where": "WebSearch",
+      "found": "Himmelstein, Atanasov, Budescu 2021 https://libmast.utm.my/Record/doaj.art-8f3f09157bf64427b5db4b29dc0ae3dd; Mellers 2015; past accuracy already tied to later accuracy"
+     }
+    ],
+    "verdict": "prior work exists: Salganik 2020 on limits, Himmelstein 2021 on forecasters; a cross-domain curve against ceilings not found in two searches, not proof of novelty"
+   },
+   "data_licence": "mixed: DEAM CC BY-NC; GJP, FIA, THINGS each own terms; author saves private and should be dropped",
+   "verified_numbers": "result.json run 2: all verdicts; p1 n_at_ceiling 1; shares mood 0.653, valence 0.542, arousal 0.455, GJP 0.183, THINGS 0.985; GJP gain 0.229; trees 0.396 to 0.639; left_noise 4.965 shows the failed tree ceiling. Prereg hashes match; text not reread line by line.",
+   "corrections": "F49 cites it; none alter it",
+   "ladder": {
+    "statement_sha256": "6a24bc14200e18702dea5e449f526f747a9c14c190f65689e6ee8fe1a0f15154",
+    "entered": "2026-10-31",
+    "rung": "hypothesis",
+    "reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
+    "not_new": false,
+    "prediction_on_file": true,
+    "kill_source": "verdict_rule"
+   },
+   "venue_type": "methods or computational social science journal",
+   "publication": {
+    "date": "2026-11-09",
+    "wave": 1,
+    "status": "keep"
+   }
+  },
+  {
+   "f": "F50",
+   "tier": "D",
+   "strong_b": false,
+   "tier_reason": "A clean registered equivalence null on real CC0 data with a shuffled control. A larger null already exists, so it adds a replication and a specific equivalence bound. Power 0.77 at the bound, modest.",
+   "fields": [
+    "biology-neuro",
+    "medicine",
+    "psychology"
+   ],
+   "reviewer_attack": "Anatomical mask, a low-pass FD rule outside its validated single-band data, retrospective self-report, and no positive control showing the pipeline finds a known effect.",
+   "raise_tier": "Add a second open sample or functional vmPFC mask to shrink the 0.10 to 0.20 gap; add a positive control",
+   "scorer": {
+    "who": "code",
+    "blind": false,
+    "self_graded": false,
+    "note": "88 missing code added before outcome opened"
+   },
+   "evidence": {
+    "denominator": "n 187 of 241 (17 motion, 16 no CTQ, 21 missing subscale)",
+    "interval": "r -0.006, 95% CI -0.152 to 0.140, 90% CI -0.129 to 0.117",
+    "controls": "working: 10,000 permutations, 47th percentile; 15 exploratory sensitivities r -0.081 to 0.081",
+    "forecast_vs_outcome": "decision rule set before data; outcome no meaningful association",
+    "prereg": "4d4681b9, bio-research/project-docs/prereg/01-amygdala-vmpfc-ctq.md, 6 logged deviations",
+    "known_answer": "none (no positive control for connectivity)"
+   },
+   "literature": {
+    "searches": [
+     {
+      "query": "CTQ amygdala vmPFC resting connectivity adults null ds005237",
+      "where": "WebSearch",
+      "found": "Goltermann 2022 https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10388325/ null at n 1325; Birn 2014 positive in 27 veterans https://pmc.ncbi.nlm.nih.gov/articles/PMC4205190"
+     },
+     {
+      "query": "childhood maltreatment amygdala prefrontal connectivity meta-analysis large sample",
+      "where": "WebSearch",
+      "found": "Goltermann again; small conflicting studies; no meta-analysis surfaced"
+     }
+    ],
+    "verdict": "prior work exists: Goltermann et al. 2022, large null with seed-to-voxel ROIs; this one adds a registered equivalence bound on an independent transdiagnostic sample"
+   },
+   "data_licence": "CC0 (OpenNeuro ds005237); per-participant tables held back",
+   "verified_numbers": "registered.json: n 187, r -0.00598, CI confirmed, Holm 1.0, decision matches. Frozen body 4d4681b9 reproduced from commit 2c24b24. Permutation percentiles not rechecked.",
+   "corrections": "2026-11-09 (publication pass): two primary sensitivity analyses, emotional-neglect and physical-abuse subscales (r 0.081 and -0.081), are inconclusive (90% intervals touch 0.20), per registered.json. Ledger's 'none reaches association' is true but incomplete. Stated in the write-up. Tier unchanged.",
+   "ladder": {
+    "statement_sha256": "586dea1287710c4ecf0c9db4fad065d48f492b934b57eb28db1f7ccd368e1f5f",
+    "entered": "2026-10-31",
+    "rung": "hypothesis",
+    "reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
+    "not_new": false,
+    "prediction_on_file": true,
+    "kill_source": "verdict_rule"
+   },
+   "venue_type": "replication or registered-report track, e.g. Imaging Neuroscience or preprint",
+   "publication": {
+    "date": "2026-11-09",
+    "wave": 1,
+    "status": "keep"
+   }
+  },
+  {
+   "f": "F508",
+   "tier": "B",
+   "strong_b": false,
+   "tier_reason": "Real texts, one new source.",
+   "fields": [
+    "information theory"
+   ],
+   "does_not_prove": "Wikipedia is the only new text. No large model. Fword gap may be his Zipf tail.",
+   "scorer": "code plus agent; self-graded",
+   "evidence": {},
+   "literature": "abstracts and data searches; no novelty search",
+   "rung": "preregistered, simulation and public data",
+   "publication": {
+    "date": "2026-11-09",
+    "wave": 1,
+    "status": "keep"
+   }
+  },
+  {
+   "f": "F515",
+   "tier": "B",
+   "strong_b": false,
+   "tier_reason": "Changes how to read common LLM compression numbers; needs a wider unseen set.",
+   "fields": [
+    "machine-learning",
+    "information-theory"
+   ],
+   "scorer": "code plus agent; self-graded",
+   "evidence": {},
+   "rung": "post hoc control on a preregistered study",
+   "publication": {
+    "date": "2026-11-09",
+    "wave": 1,
+    "status": "keep"
+   }
+  },
+  {
+   "f": "F63",
+   "tier": "D",
+   "strong_b": false,
+   "tier_reason": "Test A is a real-data null with a clean placebo, and it held under site-scale scPDSI in F95 MT2. The interval still allows gains up to about 9 percent, and tests B to D are toy results with B_CTRL failed.",
+   "fields": [
+    "biology-plant-forest-pathology",
+    "ecology-climate"
+   ],
+   "raise_tier": "Add an autocorrelation (biological memory) baseline, then publish A alone as a null with its power stated.",
+   "scorer": {
+    "who": "code",
+    "blind": false,
+    "self_graded": false,
+    "note": "Rs = Rt x Rc makes the recovery gain partly mechanical"
+   },
+   "evidence": {
+    "denominator": "1,175 sites, 65 species, 3,780 site-drought events, 579 division droughts",
+    "interval": "+0.039 [-0.011, +0.090], BH q 0.17; rerun +0.025 [-0.009, +0.059]",
+    "controls": "A placebo clean; circular shift q95 0.065 not beaten; B_CTRL failed (metric defect)",
+    "forecast_vs_outcome": "steeling forecast refuted (A1 FAIL)",
+    "prereg": "1e723097 PREREG.txt; plan 99b4edfa",
+    "known_answer": "D Bayes matches closed form, by construction"
+   },
+   "literature": {
+    "searches": [
+     {
+      "query": "tree ring prior drought legacy resilience Lloret repeated drought ITRDB stress memory",
+      "where": "WebSearch",
+      "found": "Legacy effects rarely significant after biological memory; https://evans-dendroecology.ltrr.arizona.edu/publication/https-doi-org-10-1111-1365-2745-14045"
+     },
+     {
+      "query": "Anderegg 2020 repeated drought trees resistance divergent forest sensitivity",
+      "where": "WebSearch",
+      "found": "Nature Climate Change 2020, DOI 10.1038/s41558-020-00919-1, press coverage read: repeat droughts generally worse; https://news.ucsb.edu/print/pdf/node/20055"
+     }
+    ],
+    "verdict": "prior work exists: Anderegg 2020 and legacy papers cover nearby questions; this exact prior-moderate test not found, not proof of novelty"
+   },
+   "data_licence": "ITRDB and NOAA nClimDiv public; check ITRDB contributor terms; CRU scPDSI ODbL for the rerun",
+   "verified_numbers": "A main +0.0393 [-0.0113, +0.0899], n 3780, shift q95 0.065 confirmed. result.json has 10 PASS, 12 FAIL; the entry headline says 9 and 13",
+   "corrections": "PU30-06 and F95 MT2: within-species steeling sign does not survive site-scale drought. F87 adds the cost term the rod lacked. Ledger headline says 9/13 and result.json says 10/12; unresolved. 2026-11-09 (publication pass): ledger headline count 9 PASS / 13 FAIL disagrees with result.json and the ledger's own list, both 10 PASS / 12 FAIL. No tree number depends on it. Tier unchanged.",
+   "ladder": {
+    "statement_sha256": "ff876aa42d5c8eae0a826e6dc66d5cd1d10d97ddf1a8578074270278ca272201",
+    "entered": "2026-10-31",
+    "rung": "killed",
+    "reason": "Drought steeling: A1 failed across 1,175 sites.",
+    "not_new": false,
+    "prediction_on_file": true,
+    "kill_source": "verdict_rule"
+   },
+   "venue_type": "dendroecology or forest ecology, null report",
+   "publication": {
+    "date": "2026-11-09",
+    "wave": 1,
+    "status": "keep"
+   }
+  },
+  {
+   "f": "F675",
+   "tier": "D",
+   "strong_b": false,
+   "tier_reason": "Preregistered; the kill rule fired on two gates by small margins, so the strong real-data asymmetry is an exploratory reading. Planted truth had the wrong lag sign. Internal; not for outbound use until reviewed.",
+   "fields": [
+    "ecology",
+    "methods-causal-inference"
+   ],
+   "corrections": "2026-11-09 (publication pass): tier_reason said 'Internal; not for outbound use until reviewed'. Author D19 (2026-11-09) makes all findings publishable; the write-up goes out through the joint site review, which is the review. F676 context stated. Tier unchanged.",
+   "rung": "preregistered, public data, known-answer instrument test",
+   "publication": {
+    "date": "2026-11-09",
+    "wave": 1,
+    "status": "keep"
+   }
+  },
+  {
+   "f": "F76",
+   "tier": "B",
+   "strong_b": true,
+   "tier_reason": "Clean prereg with working controls and known answers, on real data, but it tests a 1940s bound and mostly one data type. The real-below-surrogate gap is the part worth expanding; it held on a split in F91 but not on new series.",
+   "fields": [
+    "forecasting-prediction",
+    "information-theory",
+    "instruments-metrology"
+   ],
+   "reviewer_attack": "Tree rings are 91 percent of series and arrive detrended; pooled rho may reflect group mix. Half-split AR estimation may explain the gap, and the bound is old.",
+   "raise_tier": "Independent series families (M-competitions, climate, physiology), then explain the surrogate gap by nonstationarity, non-Gaussianity or AR estimation.",
+   "scorer": {
+    "who": "code",
+    "blind": false,
+    "self_graded": false,
+    "note": "pre-lock estimator change disclosed"
+   },
+   "evidence": {
+    "denominator": "1,236 series; 1,128 tree-ring, 106 mood, 2 power",
+    "interval": "rho 0.414 [0.361, 0.461]; violation 6.5% [5.2%, 8.0%]",
+    "controls": "series shuffle, phase surrogates, planted AR and logistic map all working; S1 and S2 failed",
+    "forecast_vs_outcome": "Thresholds set, passed; rho below every surrogate set was not forecast",
+    "prereg": "fe8ddb06 PREREG.txt; plan 4b0268f1",
+    "known_answer": "planted AR rho 0.925 skill, 0.946 true bound, violation 4.3%; logistic map flagged 100%"
+   },
+   "literature": {
+    "searches": [
+     {
+      "query": "spectral flatness Kolmogorov-Szego bound empirical forecastability real series held-out skill",
+      "where": "WebSearch",
+      "found": "Fang et al. theory https://arxiv.org/pdf/1904.04765; forecastability measures on M5 https://arxiv.org/abs/2507.13556, abstract read, no coefficient given"
+     },
+     {
+      "query": "forecastability spectral entropy predictability bound ForeCA Goerg surrogate test",
+      "where": "WebSearch",
+      "found": "Goerg 2013 Omega measure, no surrogate violation test found; https://proceedings.mlr.press/v28/goerg13.html"
+     },
+     {
+      "query": "Kolmogorov-Szego innovation variance against out-of-sample AR error on geophysical series",
+      "where": "WebSearch",
+      "found": "Luati, Proietti and Reale variance profile, includes a tree-ring series, abstract level; https://art.torvergata.it/handle/2108/101893"
+     }
+    ],
+    "verdict": "prior theory is classical and close heuristics exist; this exact surrogate-calibrated test not found in 3 searches, abstracts only, not proof of novelty"
+   },
+   "data_licence": "ITRDB public; ESM open data, check terms; machine logs own",
+   "verified_numbers": "rho 0.4137 [0.3609, 0.4611], violation 80 of 1236, surrogate q05 0.568, q95 0.628, all 8 verdicts confirmed; PREREG read",
+   "corrections": "F91 C2: no drift-aware option beat it; test split rho 0.404 against surrogate 0.595, same data family, not independent.",
+   "ladder": {
+    "statement_sha256": "1611518b4500a5b566b2d90f627c6de45ed46ad203a4300c1e07e5416d8bbf39",
+    "entered": "2026-10-31",
+    "rung": "hypothesis",
+    "reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
+    "not_new": true,
+    "prediction_on_file": true,
+    "kill_source": "explicit"
+   },
+   "venue_type": "time-series or forecasting methods journal, short empirical note",
+   "publication": {
+    "date": "2026-11-09",
+    "wave": 1,
+    "status": "keep"
+   }
+  },
+  {
+   "f": "F81",
+   "tier": "B",
+   "strong_b": false,
+   "tier_reason": "Real spectra and working shuffles, and the direction replicates on a second set, but V0 failed twice, so only ranks and ratios stand. Sizes do not travel, and Dorin et al. 2023 used this very data for flower signalling.",
+   "fields": [
+    "biology-other",
+    "colour-film",
+    "ecology-climate"
+   ],
+   "raise_tier": "Pass V0 with sourced per-species noise, then match backgrounds to flowers' own sites and test behaviour.",
+   "scorer": {
+    "who": "code",
+    "blind": false,
+    "self_graded": false,
+    "note": "H3 overlap and reception draw on the same partitions; noise values partly from memory"
+   },
+   "evidence": {
+    "denominator": "728 surfaces (507 background, 221 flower); 1,108 FB and 3,892 BB pairs for bee given human",
+    "interval": "ratio 2.04 (shuffle q95 1.08, p 0.002); H3 rho 0.92 (q95 0.54)",
+    "controls": "label shuffles working; V0 instrument failed; H1c, H4, H4b, H5 failed",
+    "forecast_vs_outcome": "H2 forecast ratio above 1 passed; H5 reversed",
+    "prereg": "fec1f165 PREREG.txt; plan cc9c52ac",
+    "known_answer": "V0 failed: human 0.4 nm, bee 0.3 nm, too fine; coded mantis 17.4 nm passed"
+   },
+   "literature": {
+    "searches": [
+     {
+      "query": "flower reflectance metamers human cannot distinguish bee discriminate receptor noise flowers vs background",
+      "where": "WebSearch",
+      "found": "Background effects 581 surfaces https://research.monash.edu/en/publications/why-background-colour-matters-to-bees-and-flowers/"
+     },
+     {
+      "query": "cross-species visual overlap mutual information colour discrimination natural surfaces receptor noise",
+      "where": "WebSearch",
+      "found": "RNL information theory preprint https://www.biorxiv.org/content/10.1101/2020.08.07.242065.full.pdf; no cross-species MI on surfaces found"
+     },
+     {
+      "query": "flowers ultraviolet colour human-invisible vs background Chittka Shrestha Dyer",
+      "where": "WebSearch",
+      "found": "Dorin et al. 2023, same data set, https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10730291/; summary read, not full text"
+     }
+    ],
+    "verdict": "prior work exists: Dorin et al. 2023 on the same data; conditional human-blind mismatch and bit overlap not found, not proof of novelty"
+   },
+   "data_licence": "spectra CC0 (Dryad fn2z34v2c); CIE 2006 and D65 CC BY-SA 4.0; pavo curves GPL, check reuse",
+   "verified_numbers": "H2 ratios, FB and BB counts, H3 rho, delta_lambda and all verdicts confirmed; PREREG V0 rule read",
+   "corrections": "F88: V0 fails again under photon noise; set 1 ratio 1.67, set 2 45.6, a homogeneous-background effect; H4 null again; post hoc +0.39 shrank to +0.06. 2026-11-09 (publication pass): claim narrowed for the write-up, tier B kept. Evidence: F88 result under photon noise gives set 1 ratios 1.67 (bee) and 1.50 (blue tit) and set 2 45.6; 'about twice' is not carried, direction only.",
+   "ladder": {
+    "statement_sha256": "1046fef4ab27e1e2bb184ccb5b07224480ffb5dbd515547fe44ace575fdb469b",
+    "entered": "2026-10-31",
+    "rung": "hypothesis",
+    "reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
+    "not_new": true,
+    "prediction_on_file": true,
+    "kill_source": "verdict_rule"
+   },
+   "venue_type": "visual ecology journal after V0 is fixed",
+   "publication": {
+    "date": "2026-11-09",
+    "wave": 1,
+    "status": "downgrade (narrowed, tier kept)"
+   }
+  },
+  {
+   "f": "F97",
+   "tier": "B",
+   "strong_b": true,
+   "tier_reason": "Real data, locked prereg, passing instrument and a forecast H4. The climate grid is itself smooth, so the filter may belong to CRU rather than the trees; the next step must separate them.",
+   "fields": [
+    "ecology-climate",
+    "biology-plant-forest-pathology"
+   ],
+   "reviewer_attack": "CRU interpolates precipitation with a 450 km decay distance, right where the lens opens, so low fine-scale coherence may be reference smoothing. Site clustering and noise fill the finest band.",
+   "raise_tier": "Repeat with station or denser gridded data as reference, another region, a held-out fine-scale network.",
+   "scorer": {
+    "who": "code",
+    "blind": false,
+    "self_graded": false,
+    "note": "Per-site comparison post hoc and exploratory. Trees' H3 fit hit its bound, uninformative."
+   },
+   "evidence": {
+    "denominator": "664 chronologies, 399 cells, 1903 to 1980 and 2025",
+    "interval": "contrast 0.64 (0.62 to 0.68); passed share 0.003 below 55 km, up to 0.91 above 460 km",
+    "controls": "phase q95 0.22, shuffle q95 0.30 working; synthetic separable, wave, diffusion working",
+    "forecast_vs_outcome": "H4 pass forecast held; H1 pass forecast failed",
+    "prereg": "6d8b274a spacetime/PREREG.txt",
+    "known_answer": "synthetic wave speed within 2.2%, direction 0.7 deg"
+   },
+   "literature": {
+    "searches": [
+     {
+      "query": "tree-ring chronologies drought coherence spatial scale spectral filter ITRDB space-time",
+      "where": "WebSearch",
+      "found": "Density and search-radius work on drought atlases, https://cp.copernicus.org/articles/16/1901/2020/; no (k, omega) coherence grid seen"
+     },
+     {
+      "query": "climate signal tree-ring network coherence with spatial averaging, wavenumber coherence",
+      "where": "WebSearch",
+      "found": "Duchesne 2017 PLoS ONE, https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5744929/: averaging removes stand noise, covariance falls with distance"
+     },
+     {
+      "query": "CRU TS correlation decay distance precipitation 450 km Harris 2020",
+      "where": "WebSearch",
+      "found": "Harris 2020, https://doi.org/10.1038/s41597-020-0453-3: precipitation CDD 450 km, temperature 1200 km, the scale where the lens opens"
+     },
+     {
+      "query": "tree-ring network drought spatial scale coherence wavenumber spectrum local versus regional PDSI",
+      "where": "WebSearch, lead check",
+      "found": "Drought-atlas and regional-network work, Welch spectra in time; nothing on a wavenumber-frequency view in this search."
+     }
+    ],
+    "verdict": "prior work exists for the idea (averaging removes stand noise, Duchesne 2017); no (k, omega) grid found, not proof of novelty"
+   },
+   "data_licence": "CRU TS 4.10 ODbL; ITRDB public, cite contributors",
+   "verified_numbers": "Contrast and CI confirmed in result.json; all six band ranges confirmed in panel/spacetime-kw.json; tree finest-band share 0.607; prereg hash matches",
+   "corrections": "none",
+   "ladder": {
+    "statement_sha256": "47b8d20b886736119e93bb28dfe6cb3b2d7646127bff24fdc6e5dd047fe40407",
+    "entered": "2026-10-31",
+    "rung": "hypothesis",
+    "reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
+    "not_new": false,
+    "prediction_on_file": true,
+    "kill_source": "verdict_rule"
+   },
+   "venue_type": "dendroclimatology or paleoclimate methods journal",
+   "publication": {
+    "date": "2026-11-09",
+    "wave": 1,
+    "status": "keep"
+   }
+  }
+ ]
+}

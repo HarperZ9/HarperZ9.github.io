@@ -12,7 +12,7 @@ import { fileURLToPath } from "node:url";
 
 const site = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const rel = (p) => path.relative(site, p).split(path.sep).join("/");
-const OWN = ["index.html", "floor.html", "elements.html", "swatches.html", "accession.html", "credits.html", "cmmns.html", "superframe.html", "experiments/index.html", "glass-water.html", "playground/index.html", "playground/distill.html"];
+const OWN = ["index.html", "floor.html", "elements.html", "swatches.html", "accession.html", "credits.html", "cmmns.html", "superframe.html", "experiments/index.html", "glass-water.html", "playground/index.html", "playground/distill.html", "buildlang.html", "low-water.html", "system/site-music/index.html"];
 // asset folders governed by the world revision (the test reads the same list from IMPORT.json)
 const SCOPE = ["world/", "studies/", "system/fonts/accession/"];
 
@@ -50,7 +50,7 @@ function stamp(file, rev) {
 }
 
 const rev = revision();
-const pages = [...walk(path.join(site, "world")), ...walk(path.join(site, "studies")), ...OWN.map((p) => path.join(site, p))]
+const pages = [...walk(path.join(site, "world")), ...walk(path.join(site, "studies")), ...walk(path.join(site, "findings")), ...OWN.map((p) => path.join(site, p))]
   .filter((p) => p.endsWith(".html") && existsSync(p) && statSync(p).isFile());
 const changed = pages.filter((p) => stamp(p, rev)).length;
 const impPath = path.join(site, "world/IMPORT.json"), imp = JSON.parse(readFileSync(impPath, "utf8"));

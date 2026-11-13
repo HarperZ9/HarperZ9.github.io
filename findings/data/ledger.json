@@ -1,0 +1,235 @@
+{
+ "about": "Relations: each later record in the findings ledger that treats a published finding, with the standing word read from the ledger line (DATA.md: held for a recheck that reproduced, narrowed for a scope cut, extended for later work built on it, questioned for a doubt not yet settled). A finding that is only listed under another entry's 'Relates to' line, with no treatment stated, gets no relation. Standing is derived from these at build time, never stored on a finding. Redirects: a refuted or retracted finding's page redirects to the finding that replaced it (null sends it to its entry on the findings index); the build fails when a refuted or retracted finding has no entry here.",
+ "relations": [
+  {
+   "from": "F95",
+   "to": "F63",
+   "type": "held",
+   "scope": "test A, moderate prior drought",
+   "date": "2026-10-30",
+   "note": "Mirror test MT2 on gridded scPDSI: +0.025, below the time-shift 95th percentile of 0.038; the kill fires again.",
+   "source": "findings ledger, F95 MT2"
+  },
+  {
+   "from": "F95",
+   "to": "F63",
+   "type": "narrowed",
+   "scope": "within-species steeling sign",
+   "date": "2026-10-30",
+   "note": "The +0.037 sign under division PDSI with species effects does not survive site-scale drought.",
+   "record": "PU30-06",
+   "source": "findings ledger, Prior updates 2026-10-30"
+  },
+  {
+   "from": "F87",
+   "to": "F63",
+   "type": "extended",
+   "scope": "rod tests B3 and B4",
+   "date": "2026-10-29",
+   "note": "Adds the cost term the rod lacked; removing it reproduces F63 B3 and B4.",
+   "source": "findings ledger, F87"
+  },
+  {
+   "from": "F75",
+   "to": "F63",
+   "type": "extended",
+   "scope": "test D update weight",
+   "date": "2026-10-29",
+   "note": "Constant-rate copying follows F63's 1/(n+1) form at r 0.993.",
+   "source": "findings ledger, F75"
+  },
+  {
+   "from": "F163",
+   "to": "F147",
+   "type": "narrowed",
+   "scope": "film fit and its planted recovery",
+   "date": "2026-10-31",
+   "note": "The film fit passed log10 sigma into a model of log10 variance. On true variance the errors are 0.186 and 0.068; the failed verdict stands and the pattern of hit numbers changes.",
+   "source": "findings ledger, F163"
+  },
+  {
+   "from": "F164",
+   "to": "F147",
+   "type": "held",
+   "scope": "film hinge within the sheet's range",
+   "date": "2026-10-31",
+   "note": "The hinge sits within the sheet's range, as F147 said, now on BIC.",
+   "source": "findings ledger, F164"
+  },
+  {
+   "from": "F88",
+   "to": "F81",
+   "type": "narrowed",
+   "scope": "size of the ratios and the union gain",
+   "date": "2026-10-30",
+   "note": "Under photon noise the set 1 ratios fall to 1.67 for the bee and 1.50 for the blue tit, and the post hoc union gain of +0.39 shrinks to a null. Publication carries the direction only.",
+   "source": "findings ledger, F88 and Publication pass corrections 2026-11-09"
+  },
+  {
+   "from": "F675",
+   "to": "F132",
+   "type": "held",
+   "scope": "no direction-reading status",
+   "date": "2026-11-02",
+   "note": "On 161 held-out boreal sites the panel instrument's kill fired too; F132's block on direction readings stands.",
+   "source": "findings ledger, F675"
+  },
+  {
+   "from": "F675",
+   "to": "F132",
+   "type": "questioned",
+   "scope": "account of the planted lag-1 arm",
+   "date": "2026-11-02",
+   "note": "Exploratory and post hoc: a negative prior-summer term adds to the Granger signal, so F132's absorption account holds only for same-sign terms, and its planted arm had the wrong sign for these stands.",
+   "source": "findings ledger, F675"
+  },
+  {
+   "from": "F676",
+   "to": "F132",
+   "type": "extended",
+   "scope": "direction on rings, read on a panel",
+   "date": "2026-11-02",
+   "note": "A third round on 145 new sites: the lagged panel instrument passes every binding verdict but one and earns exclusion and forward status at that coupling strength.",
+   "source": "findings ledger, F676"
+  },
+  {
+   "from": "F676",
+   "to": "F675",
+   "type": "narrowed",
+   "scope": "the exploratory negative prior-summer term",
+   "date": "2026-11-02",
+   "note": "On a third held-out panel the negative prior-summer term is species-dependent, not a panel result; the same instrument passes every binding verdict but one there.",
+   "source": "findings ledger, F676"
+  },
+  {
+   "from": "F206",
+   "to": "F152",
+   "type": "held",
+   "scope": "corpus gap ranking",
+   "date": "2026-10-31",
+   "note": "F152's corpus gap ranking stays failed.",
+   "source": "findings ledger, F206"
+  },
+  {
+   "from": "F15",
+   "to": "F14",
+   "type": "extended",
+   "scope": "the 1/89000 inch offset",
+   "date": "2026-10-28",
+   "note": "Newton's thick-plate rings run about 0.8 percent large; with F14, both experiments suggest his 1/89000 inch is 2 to 3 percent thick.",
+   "source": "findings ledger, F15"
+  },
+  {
+   "from": "F57",
+   "to": "F14",
+   "type": "extended",
+   "scope": "the 1/89000 inch offset",
+   "date": "2026-10-29",
+   "note": "Newton's colour limits read as half-wavelengths: the same interval sits 3 percent short against a different reference, so the sign is not a contradiction.",
+   "source": "findings ledger, F57"
+  },
+  {
+   "from": "F270",
+   "to": "F172",
+   "type": "extended",
+   "scope": "the same replication records",
+   "date": "2026-10-31",
+   "note": "A single split of noise and field bias ranks failed replications on the same RPP and FReD set (Brier 0.222 against 0.256), adding nothing to the z value alone.",
+   "source": "findings ledger, F270"
+  },
+  {
+   "from": "F91",
+   "to": "F76",
+   "type": "held",
+   "scope": "flatness bound against drift-aware versions",
+   "date": "2026-10-30",
+   "note": "On 649 development series no drift-aware option beat the original bound (rho 0.350 to 0.398 against 0.414); same data family, not independent.",
+   "source": "findings ledger, F91 C2"
+  },
+  {
+   "from": "F49",
+   "to": "F39",
+   "type": "narrowed",
+   "scope": "shape of the arousal relation",
+   "date": "2026-10-29",
+   "note": "The two-lines test rejects a U for calm against arousal: the quadratic term is significant (p 0.012) and the relation is a fall that levels off.",
+   "source": "findings ledger, F49"
+  },
+  {
+   "from": "F422",
+   "to": "F281",
+   "type": "narrowed",
+   "scope": "headline bound",
+   "date": "2026-10-31",
+   "note": "The correction pass coded one error: the rerun bound is far below the published limit, so the headline was narrowed to a reproduction of method.",
+   "source": "findings ledger, F422 correction pass"
+  },
+  {
+   "from": "F422",
+   "to": "F308",
+   "type": "narrowed",
+   "scope": "sampling and control",
+   "date": "2026-10-31",
+   "note": "The correction pass coded an error and an untestable control: the sampling changed after the search route refused, and fitted lines pass by construction.",
+   "source": "findings ledger, F422 correction pass"
+  },
+  {
+   "from": "F422",
+   "to": "F310",
+   "type": "narrowed",
+   "scope": "the three forms",
+   "date": "2026-10-31",
+   "note": "The correction pass coded one memory value: the three forms were written from memory, so the result covers these three versions only.",
+   "source": "findings ledger, F422 correction pass"
+  },
+  {
+   "from": "F422",
+   "to": "F320",
+   "type": "narrowed",
+   "scope": "planted check and scoring",
+   "date": "2026-10-31",
+   "note": "The correction pass coded a failed plant and an error: the first planted check failed, and the entry was self-graded and not blind, with order confounded with condition.",
+   "source": "findings ledger, F422 correction pass"
+  },
+  {
+   "from": "F422",
+   "to": "F329",
+   "type": "narrowed",
+   "scope": "reproduction check",
+   "date": "2026-10-31",
+   "note": "The correction pass coded a failed plant, an error and a post hoc rescue; on 2026-11-09 the ledger added that the preregistered reproduction check failed at 0.287 against 0.234 within 0.03.",
+   "source": "findings ledger, F422 correction pass and Publication pass corrections 2026-11-09"
+  },
+  {
+   "from": "F422",
+   "to": "F344",
+   "type": "narrowed",
+   "scope": "sensitivity",
+   "date": "2026-10-31",
+   "note": "The correction pass coded one error: the public 10 percent sample has low power, so the claim covers large patterns only.",
+   "source": "findings ledger, F422 correction pass"
+  },
+  {
+   "from": "F422",
+   "to": "F362",
+   "type": "narrowed",
+   "scope": "reused inputs and a proxy truth",
+   "date": "2026-10-31",
+   "note": "The correction pass coded two errors: later tables reuse inputs, and the Hubble constant truth is a proxy.",
+   "source": "findings ledger, F422 correction pass"
+  }
+ ],
+ "corrections_about": "Dated corrections in the findings ledger that the paper's own Corrections section does not carry. The record builder adds them to the finding's trail beside the paper's.",
+ "corrections": [
+  {
+   "finding": "F32",
+   "date": "2026-11-09",
+   "type": "wording",
+   "reason": "The ledger entry read Merkle and colleagues (2017) as finding the opposite sign: good forecasters select more questions.",
+   "after": "The abstract we read does not state that sign, so the reading is unconfirmed until the full paper is read. The paper and this page say so.",
+   "found_by": "the publication pass",
+   "source": "findings ledger, Publication pass corrections 2026-11-09"
+  }
+ ],
+ "redirects": {}
+}

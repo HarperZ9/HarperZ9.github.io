@@ -88,7 +88,7 @@
   "image": "https://harperz9.github.io/img/og/p/build-color.jpg?v=5e95149c11a6"
  },
  "buildlang.html": {
-  "alt": "BuildLang: a typed-effects language, by Zain Dana Harper. A square chip at the center with its pins fanned out on all four sides as thin routed traces, each ending in a small pad, and a bright core inside the chip.",
+  "alt": "BuildLang, by Zain Dana Harper. A square chip at the center with its pins fanned out on all four sides as thin routed traces, each ending in a small pad, and a bright core inside the chip.",
   "image": "https://harperz9.github.io/img/og/p/buildlang.jpg?v=e05ae222febc"
  },
  "bulletin.html": {
@@ -206,6 +206,134 @@
  "field-guide.html": {
   "alt": "Flywheel field guide, by Zain Dana Harper. A bright core inside a large ring of fine radial lines, like a wheel drawn with a plotter pen.",
   "image": "https://harperz9.github.io/img/og/p/field-guide.jpg?v=5236573254f8"
+ },
+ "findings/F114-ring-channel-bits-per-year.html": {
+  "alt": "F114: How much summer warmth one tree ring remembers, measured in bits, by Zain Dana Harper. Two equal discs, one ringed by small discs and one by large discs that run off the card.",
+  "image": "https://harperz9.github.io/img/og/p/findings--F114-ring-channel-bits-per-year.jpg?v=9455bdb0cfed"
+ },
+ "findings/F132-transfer-entropy-direction-fails-on-rings.html": {
+  "alt": "F132: Transfer entropy could not tell which way climate and tree rings are linked, by Zain Dana Harper. Two equal discs, one ringed by small discs and one by large discs that run off the card.",
+  "image": "https://harperz9.github.io/img/og/p/findings--F132-transfer-entropy-direction-fails-on-rings.jpg?v=3a54a0f3a6ee"
+ },
+ "findings/F14-newtons-obliquity-table.html": {
+  "alt": "F14: Newton's grazing-angle ring table follows his fitted rule, which runs 27% low at 85°, by Zain Dana Harper. Cards of flat colour fanned from one corner, one in a second colour.",
+  "image": "https://harperz9.github.io/img/og/p/findings--F14-newtons-obliquity-table.jpg?v=c6cc68ec01a0"
+ },
+ "findings/F147-film-as-a-photon-detector.html": {
+  "alt": "F147: Kodak's own curves put modern colour negative at 0.6 to 4.9 percent quantum efficiency, by Zain Dana Harper. A row of upright bars of different heights, like a sound level, one in a second colour.",
+  "image": "https://harperz9.github.io/img/og/p/findings--F147-film-as-a-photon-detector.jpg?v=175f8a807a04"
+ },
+ "findings/F149-karst-doubled-reread.html": {
+  "alt": "F149: Did unsupported citations about fungal networks double? It depends on the weighting, by Zain Dana Harper. A cut-paper balance: a tilted beam on a post, a large disc on the low side and a small one on the high side.",
+  "image": "https://harperz9.github.io/img/og/p/findings--F149-karst-doubled-reread.jpg?v=4ab8e610af14"
+ },
+ "findings/F152-gap-ranking-loses-to-popularity.html": {
+  "alt": "F152: Finding missing links by shared neighbours lost to simple popularity on three corpora, by Zain Dana Harper. A record in flat colour with dark grooves, a cream wedge across them and an arm resting on it.",
+  "image": "https://harperz9.github.io/img/og/p/findings--F152-gap-ranking-loses-to-popularity.jpg?v=f70cf8315ab6"
+ },
+ "findings/F166-combined-value-formula-retired.html": {
+  "alt": "F166: Our combined value formula lost to plain prospect theory on 11,759 risky choice problems, by Zain Dana Harper. A row of upright bars of different heights, like a sound level, one in a second colour.",
+  "image": "https://harperz9.github.io/img/og/p/findings--F166-combined-value-formula-retired.jpg?v=13ffe6bde33b"
+ },
+ "findings/F172-selection-model-of-replication.html": {
+  "alt": "F172: A selection model shrinks the overstatement in published effects but cannot pick which replicate, by Zain Dana Harper. A field of flat discs in rows, a few of them raised and in a second colour.",
+  "image": "https://harperz9.github.io/img/og/p/findings--F172-selection-model-of-replication.jpg?v=08fed90dd604"
+ },
+ "findings/F183-shifted-optima-plain-beats-bio-optimisers.html": {
+  "alt": "F183: After we fixed our own bug, plain optimisers beat nature-inspired ones on shifted tests, by Zain Dana Harper. An open ring with a cream bar rising from one end off the card and a disc at the other end.",
+  "image": "https://harperz9.github.io/img/og/p/findings--F183-shifted-optima-plain-beats-bio-optimisers.jpg?v=93cf8d9086cd"
+ },
+ "findings/F190-public-goods-self-benefit-correction.html": {
+  "alt": "F190: Our model of cooperation on a grid had been rewarding selfishness, by Zain Dana Harper. A field of flat discs in rows, a few of them raised and in a second colour.",
+  "image": "https://harperz9.github.io/img/og/p/findings--F190-public-goods-self-benefit-correction.jpg?v=c3f9164f04c9"
+ },
+ "findings/F23-forest-hubs-cedar-decay-wind.html": {
+  "alt": "F23: Fungal hub trees mostly track sampling, cedar heartwood rots slowest, wind damage evades prediction, by Zain Dana Harper. A record in flat colour with dark grooves, a cream wedge across them and an arm resting on it.",
+  "image": "https://harperz9.github.io/img/og/p/findings--F23-forest-hubs-cedar-decay-wind.jpg?v=03f72973973a"
+ },
+ "findings/F27-emotional-inertia-and-recovery.html": {
+  "alt": "F27: Mood that lingers and mood that bounces back were not shown to be separate traits, by Zain Dana Harper. A large flat disc with a black keyhole cut in it and a cream key lying across its edge.",
+  "image": "https://harperz9.github.io/img/og/p/findings--F27-emotional-inertia-and-recovery.jpg?v=fdbf09919871"
+ },
+ "findings/F281-speed-limit-rerun.html": {
+  "alt": "F281: A home rerun of the GRB 090510 light-speed test, and sound waves that keep their own limit, by Zain Dana Harper. A row of upright bars of different heights, like a sound level, one in a second colour.",
+  "image": "https://harperz9.github.io/img/og/p/findings--F281-speed-limit-rerun.jpg?v=19ac7c9c9b4c"
+ },
+ "findings/F308-oeis-recurrence-conjectures.html": {
+  "alt": "F308: Checking 213 OEIS recurrence conjectures against their b-files finds one failure, already known, by Zain Dana Harper. A large flat disc with a black keyhole cut in it and a cream key lying across its edge.",
+  "image": "https://harperz9.github.io/img/og/p/findings--F308-oeis-recurrence-conjectures.jpg?v=7a96148a0973"
+ },
+ "findings/F310-titius-bode-is-spacing.html": {
+  "alt": "F310: Titius-Bode regularity in 122 exoplanet systems sits in gap sizes; their order adds nothing, by Zain Dana Harper. Cards of flat colour fanned from one corner, one in a second colour.",
+  "image": "https://harperz9.github.io/img/og/p/findings--F310-titius-bode-is-spacing.jpg?v=8a08f555a14c"
+ },
+ "findings/F32-skipping-and-abstain-gates.html": {
+  "alt": "F32: Forecasters who skip questions score better, and the best filter reads the probability, by Zain Dana Harper. A row of upright bars of different heights, like a sound level, one in a second colour.",
+  "image": "https://harperz9.github.io/img/og/p/findings--F32-skipping-and-abstain-gates.jpg?v=05b2a7d1230e"
+ },
+ "findings/F320-stress-classifier-leakage.html": {
+  "alt": "F320: A random split scores a stress classifier perfect on data with nothing to learn, by Zain Dana Harper. An open ring with a cream bar rising from one end off the card and a disc at the other end.",
+  "image": "https://harperz9.github.io/img/og/p/findings--F320-stress-classifier-leakage.jpg?v=a3d512b2ba68"
+ },
+ "findings/F329-lying-in-die-tasks.html": {
+  "alt": "F329: In 27,039 private die rolls, about 45 percent report honestly, and the reports cannot tell us why, by Zain Dana Harper. Cut-paper lanes: parallel bars of different lengths at three heights, one in a second colour.",
+  "image": "https://harperz9.github.io/img/og/p/findings--F329-lying-in-die-tasks.jpg?v=b09593ad721e"
+ },
+ "findings/F344-auger-cubic-null.html": {
+  "alt": "F344: No cubic pattern in public Auger cosmic-ray directions, at sensitivity that sees only large ones, by Zain Dana Harper. A large flat disc with a black keyhole cut in it and a cream key lying across its edge.",
+  "image": "https://harperz9.github.io/img/og/p/findings--F344-auger-cubic-null.jpg?v=04440c8fadd0"
+ },
+ "findings/F362-stated-uncertainty-tails.html": {
+  "alt": "F362: Published 1 sigma error bars hold near nominal; a 95 percent interval needs 3 to 5 sigma, by Zain Dana Harper. A cut-paper balance: a tilted beam on a post, a large disc on the low side and a small one on the high side.",
+  "image": "https://harperz9.github.io/img/og/p/findings--F362-stated-uncertainty-tails.jpg?v=08b7b70fb5b1"
+ },
+ "findings/F39-long-tails-dark-spectra.html": {
+  "alt": "F39: Music with long ringing tails and dark spectra is rated calmer, and also sadder, by Zain Dana Harper. A row of upright bars of different heights, like a sound level, one in a second colour.",
+  "image": "https://harperz9.github.io/img/og/p/findings--F39-long-tails-dark-spectra.jpg?v=7d752f640352"
+ },
+ "findings/F47-skill-against-noise-ceilings.html": {
+  "alt": "F47: More variables raise prediction skill, yet most targets stall far below their noise ceiling, by Zain Dana Harper. Cut-paper lanes: parallel bars of different lengths at three heights, one in a second colour.",
+  "image": "https://harperz9.github.io/img/og/p/findings--F47-skill-against-noise-ceilings.jpg?v=9f9eaf4af3f4"
+ },
+ "findings/F50-childhood-trauma-amygdala-vmpfc-null.html": {
+  "alt": "F50: Childhood trauma scores showed no meaningful link to amygdala-prefrontal coupling in 187 adults, by Zain Dana Harper. A record in flat colour with dark grooves, a cream wedge across them and an arm resting on it.",
+  "image": "https://harperz9.github.io/img/og/p/findings--F50-childhood-trauma-amygdala-vmpfc-null.jpg?v=ad8415397210"
+ },
+ "findings/F508-shannon-entropy-old-and-new-text.html": {
+  "alt": "F508: Shannon's 1951 letter statistics hold on old and new English; his third-order value reads high, by Zain Dana Harper. Cards of flat colour fanned from one corner, one in a second colour.",
+  "image": "https://harperz9.github.io/img/og/p/findings--F508-shannon-entropy-old-and-new-text.jpg?v=ba0e42985254"
+ },
+ "findings/F515-llm-compression-and-memorisation.html": {
+  "alt": "F515: A small language model squeezes the UDHR to 0.27 bits a letter, and fresh text to 1.59, by Zain Dana Harper. Cards of flat colour fanned from one corner, one in a second colour.",
+  "image": "https://harperz9.github.io/img/og/p/findings--F515-llm-compression-and-memorisation.jpg?v=d9d2180c5cd1"
+ },
+ "findings/F63-no-drought-steeling-in-tree-rings.html": {
+  "alt": "F63: Across 1,175 tree-ring sites, an earlier moderate drought did not toughen trees, by Zain Dana Harper. Two equal discs, one ringed by small discs and one by large discs that run off the card.",
+  "image": "https://harperz9.github.io/img/og/p/findings--F63-no-drought-steeling-in-tree-rings.jpg?v=d77bb5aaabbd"
+ },
+ "findings/F675-granger-panel-ring-direction-kill-fires.html": {
+  "alt": "F675: A panel test read climate driving tree rings correctly, and our own rule still failed it, by Zain Dana Harper. An open ring with a cream bar rising from one end off the card and a disc at the other end.",
+  "image": "https://harperz9.github.io/img/og/p/findings--F675-granger-panel-ring-direction-kill-fires.jpg?v=e8145ca6fa65"
+ },
+ "findings/F76-flatness-ceiling-on-real-series.html": {
+  "alt": "F76: How flat a spectrum is predicts forecast skill, but real series follow it loosely, by Zain Dana Harper. A row of upright bars of different heights, like a sound level, one in a second colour.",
+  "image": "https://harperz9.github.io/img/og/p/findings--F76-flatness-ceiling-on-real-series.jpg?v=e918fe164f9f"
+ },
+ "findings/F81-flower-colour-differences-humans-miss.html": {
+  "alt": "F81: Among colours people cannot tell apart, bees and birds split flowers from backgrounds more often, by Zain Dana Harper. A row of upright bars of different heights, like a sound level, one in a second colour.",
+  "image": "https://harperz9.github.io/img/og/p/findings--F81-flower-colour-differences-humans-miss.jpg?v=fea1de5a643b"
+ },
+ "findings/F97-drought-space-time-tree-lens.html": {
+  "alt": "F97: Tree rings record the broad drought pattern and almost none of the local one, by Zain Dana Harper. A winding road in flat colour runs up the card, with discs along it that shrink with distance.",
+  "image": "https://harperz9.github.io/img/og/p/findings--F97-drought-space-time-tree-lens.jpg?v=8b9ae26f7e60"
+ },
+ "findings/glossary.html": {
+  "alt": "Findings glossary, by Zain Dana Harper. A ring of coloured steps, with one or two cream steps drawn out of the ring and casting a shadow on it.",
+  "image": "https://harperz9.github.io/img/og/p/findings--glossary.jpg?v=ded18c63609c"
+ },
+ "findings/index.html": {
+  "alt": "Findings, by Zain Dana Harper. Squares of flat colour nested one inside another, each turned a little further than the last.",
+  "image": "https://harperz9.github.io/img/og/p/findings.jpg?v=946422b5cde4"
  },
  "floor.html": {
   "alt": "Everything, by Zain Dana Harper. A ring of coloured steps, with one or two cream steps drawn out of the ring and casting a shadow on it.",
@@ -338,6 +466,10 @@
  "loom.html": {
   "alt": "The Loom, by Zain Dana Harper. A bright core inside a ring that breaks into offset slices, like a glitching signal.",
   "image": "https://harperz9.github.io/img/og/p/loom.jpg?v=7c39aec4e450"
+ },
+ "low-water.html": {
+  "alt": "Low Water, by Zain Dana Harper. Two flat discs overlap, and the overlap takes the colour the two inks print together.",
+  "image": "https://harperz9.github.io/img/og/p/low-water.jpg?v=fb011ada363c"
  },
  "ltj-bukem-the-man-behind-the-atmosphere.html": {
   "alt": "LTJ Bukem: The Man Behind the Atmosphere, by Zain Dana Harper. A soft glowing orb hangs over a field of short woven strokes, like sound drawn as texture.",

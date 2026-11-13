@@ -1,0 +1,800 @@
+{
+ "rows": {
+  "1a plant r": {
+   "forecast": ">= 0.97",
+   "measured": 0.9689977088123537,
+   "holds": false
+  },
+  "1b image rhyme stat": {
+   "forecast": "0.03",
+   "measured": 0.08488481056404429,
+   "holds": false
+  },
+  "1b image p<.05": {
+   "forecast": "p<.05",
+   "measured": 0.1252874712528747,
+   "holds": false
+  },
+  "1c FSX p<.01": {
+   "forecast": "p<.01",
+   "measured": 0.011998800119988001,
+   "holds": false
+  },
+  "1c ee p>.05": {
+   "forecast": "p>.05",
+   "measured": 0.20157984201579843,
+   "holds": true
+  },
+  "1c ay p>.05": {
+   "forecast": "p>.05",
+   "measured": 0.5867413258674132,
+   "holds": true
+  },
+  "1d pairs at or above across-speaker r": {
+   "forecast": "0.3",
+   "measured": 0.27076923076923076,
+   "holds": true
+  },
+  "1e TTS all p<.05": {
+   "forecast": "p<.05",
+   "measured": 0.0334966503349665,
+   "holds": true
+  },
+  "1e TTS ee p<.05": {
+   "forecast": "p<.05",
+   "measured": 0.0217978202179782,
+   "holds": true
+  },
+  "1e TTS eh p<.05": {
+   "forecast": "p<.05",
+   "measured": 0.1912808719128087,
+   "holds": false
+  },
+  "1f image to TTS top-1": {
+   "forecast": "0.15",
+   "measured": 0.23076923076923078,
+   "holds": false
+  },
+  "1f above shuffle q95": {
+   "forecast": ">q95",
+   "measured": 0.11538461538461539,
+   "holds": true
+  },
+  "1g envelope within": {
+   "forecast": "0.75",
+   "measured": 0.635,
+   "holds": true
+  },
+  "1g envelope across": {
+   "forecast": "0.35",
+   "measured": 0.32266666666666666,
+   "holds": true
+  },
+  "1g spectrum within": {
+   "forecast": "0.98",
+   "measured": 0.9833333333333332,
+   "holds": true
+  },
+  "1g spectrum across": {
+   "forecast": "0.6",
+   "measured": 0.7236666666666667,
+   "holds": true
+  },
+  "1h 35 words envelope .12": {
+   "forecast": "0.12",
+   "measured": null,
+   "holds": null,
+   "why": "archive truncated: 4 words only, envelope 0.473, not comparable"
+  },
+  "1h 35 words spectrum .55": {
+   "forecast": "0.55",
+   "measured": null,
+   "holds": null,
+   "why": "archive truncated: 4 words only, spectrum 0.806, not comparable"
+  },
+  "1i ratio FSDD": {
+   "forecast": ">= 3",
+   "measured": 3.7385851404209167,
+   "holds": true
+  },
+  "1i ratio Speech Commands (4 words)": {
+   "forecast": ">= 3",
+   "measured": 3.0658541988265235,
+   "holds": true
+  },
+  "1j envelope bits/s": {
+   "forecast": "250",
+   "measured": 315.436642451665,
+   "holds": false
+  },
+  "1j spectrum bits/s": {
+   "forecast": "7000",
+   "measured": 17075.08062206994,
+   "holds": false
+  },
+  "1j ratio": {
+   "forecast": ">= 15",
+   "measured": 54.13156978009107,
+   "holds": true
+  },
+  "1k real rhymes": {
+   "forecast": "spectrum>=.75 envelope<=.75",
+   "measured": null,
+   "holds": null,
+   "why": "three, tree, go, no absent from the truncated archive; synthetic substitute in t1k_tts.json, unscored"
+  },
+  "1l recordings or generated": {
+   "forecast": "UNDECIDED",
+   "measured": "UNDECIDED",
+   "holds": true
+  },
+  "2a CV chars": {
+   "forecast": "0.45",
+   "measured": 0.4280480499836139,
+   "holds": true
+  },
+  "2a CV bytes": {
+   "forecast": "0.3",
+   "measured": 0.4169942663560849,
+   "holds": false
+  },
+  "2a CV order-0 per char": {
+   "forecast": "0.25",
+   "measured": 0.2582034907571944,
+   "holds": true
+  },
+  "2a CV PPM per char": {
+   "forecast": "0.4",
+   "measured": 0.5552308801704542,
+   "holds": false
+  },
+  "2a CV PPM document": {
+   "forecast": "0.12",
+   "measured": 0.11807525326947375,
+   "holds": true
+  },
+  "2a CV xz document": {
+   "forecast": "0.15",
+   "measured": 0.12534678429124982,
+   "holds": true
+  },
+  "2b CV ratio": {
+   "forecast": ">= 2",
+   "measured": 4.702347568997332,
+   "holds": true
+  },
+  "2c all files CV": {
+   "forecast": "0.15",
+   "measured": 0.16909823807768803,
+   "holds": true
+  },
+  "2d same language diff": {
+   "forecast": "0.08",
+   "measured": 0.03428079607361952,
+   "holds": false
+  },
+  "2d between language diff": {
+   "forecast": "0.18",
+   "measured": 0.11612053344787611,
+   "holds": false
+  },
+  "2e fewest chars": {
+   "forecast": "Chinese",
+   "measured": "Chinese",
+   "holds": true
+  },
+  "2e fewest bytes": {
+   "forecast": "Chinese",
+   "measured": "Chinese",
+   "holds": true
+  },
+  "2e fewest qwen tokens": {
+   "forecast": "English",
+   "measured": "Chinese",
+   "holds": false
+  },
+  "2e smallest area": {
+   "forecast": "Chinese",
+   "measured": "Chinese",
+   "holds": true
+  },
+  "2e fewest keys": {
+   "forecast": "English",
+   "measured": "Hebrew",
+   "holds": false
+  },
+  "2f CV tokens": {
+   "forecast": "0.35",
+   "measured": 0.6653926645043481,
+   "holds": false
+  },
+  "2g PPM below xz on all ten": {
+   "forecast": "yes",
+   "measured": true,
+   "holds": true
+  },
+  "2h syllable max over min": {
+   "forecast": "<= 2.0",
+   "measured": 2.0400613677807287,
+   "holds": false
+  },
+  "2h Chinese highest per syllable": {
+   "forecast": "Chinese",
+   "measured": "Chinese",
+   "holds": true
+  },
+  "2i planted relabel PPM change": {
+   "forecast": "<= 0.01",
+   "measured": 0.0,
+   "holds": true
+  },
+  "2i planted relabel order-0 change": {
+   "forecast": "<= 0.01",
+   "measured": 0.0,
+   "holds": true
+  },
+  "2j shuffled gain": {
+   "forecast": "<= 0.05",
+   "measured": -0.16676782689534836,
+   "holds": true
+  },
+  "2j real gain": {
+   "forecast": "0.45",
+   "measured": 0.275824256919208,
+   "holds": false
+  },
+  "d1 below lowest raw without table": {
+   "forecast": "yes",
+   "measured": 0.4289812239221141,
+   "holds": true
+  },
+  "d1 not below with table": {
+   "forecast": "no",
+   "measured": 19.03259735744089,
+   "holds": true
+  },
+  "d1 payback against raw, chars": {
+   "forecast": "<= 1000000.0",
+   "measured": 115527.58958745624,
+   "holds": true
+  },
+  "d1 payback against cold PPM 2-5 MB": {
+   "forecast": "2e6 to 5e6",
+   "measured": "never: code stays above Hawaiian cold PPM",
+   "holds": false
+  },
+  "d2 BPE tokens below English": {
+   "forecast": "0.15",
+   "measured": -0.06363636363636371,
+   "holds": false
+  },
+  "d2 BPE bits not 5 percent below": {
+   "forecast": ">=-.05",
+   "measured": 0.07523058174829467,
+   "holds": false
+  },
+  "d3 phrase notation token gain": {
+   "forecast": "0.2",
+   "measured": 0.12272727272727268,
+   "holds": false
+  },
+  "d4 glyph area below by at most .10": {
+   "forecast": "0 to .10",
+   "measured": 0.3336719230572899,
+   "holds": false
+  },
+  "d4 keys below lowest natural": {
+   "forecast": "yes",
+   "measured": 0.6341463414634146,
+   "holds": true
+  },
+  "d5 shuffled chars worse": {
+   "forecast": ">= 0.3",
+   "measured": 0.8659846547314578,
+   "holds": true
+  },
+  "d5 shuffled words Huffman change": {
+   "forecast": "<= 0.02",
+   "measured": 0.0007672634271100875,
+   "holds": true
+  },
+  "d5 shuffled words phrase gain left": {
+   "forecast": "<= 0.5",
+   "measured": 0.7968695449784708,
+   "holds": false
+  },
+  "d6 glyph no codebook": {
+   "forecast": "<= 0.6",
+   "measured": 0.52,
+   "holds": true
+  },
+  "d6 glyph with codebook": {
+   "forecast": ">= 0.885",
+   "measured": 0.845,
+   "holds": false
+  },
+  "d6 bpe_ids no codebook": {
+   "forecast": "<= 0.6",
+   "measured": 0.495,
+   "holds": true
+  },
+  "d6 bpe_ids with codebook": {
+   "forecast": ">= 0.885",
+   "measured": 0.895,
+   "holds": true
+  },
+  "d7 no design wins all three": {
+   "forecast": "yes",
+   "measured": {
+    "phrase": {
+     "bytes": false,
+     "tokens": true,
+     "use": true
+    },
+    "huffman or glyph": {
+     "bytes": true,
+     "tokens": false,
+     "use": false
+    },
+    "bpe": {
+     "bytes": true,
+     "tokens": false,
+     "use": false
+    }
+   },
+   "holds": true
+  },
+  "d8 table codes decode recall": {
+   "forecast": "<= 0.3",
+   "measured": 0.11711092198893636,
+   "holds": true
+  },
+  "d8 telegraphic decode recall": {
+   "forecast": ">= 0.8",
+   "measured": 0.5619614605607113,
+   "holds": false
+  },
+  "3a exact on every codec": {
+   "forecast": "100 percent",
+   "measured": 80,
+   "holds": true
+  },
+  "3b no medium under direct": {
+   "forecast": "0 docs",
+   "measured": 0,
+   "holds": true
+  },
+  "3c PCM plus xz over direct": {
+   "forecast": "<= 0.005",
+   "measured": 0.0,
+   "holds": true
+  },
+  "3d RGB best over xz": {
+   "forecast": "1.1",
+   "measured": 1.0020204081632653,
+   "holds": true
+  },
+  "3d FSK PCM best over xz": {
+   "forecast": "1.2",
+   "measured": 1.3909282907662082,
+   "holds": true
+  },
+  "3d FSK FLAC over xz": {
+   "forecast": ">= 3",
+   "measured": 102.75548501964636,
+   "holds": true
+  },
+  "3d plate tile image over xz": {
+   "forecast": "1.3",
+   "measured": 14.25957634646215,
+   "holds": false
+  },
+  "3e image codec beats gzip, docs of 10": {
+   "forecast": ">= 6",
+   "measured": 0,
+   "holds": false
+  },
+  "3f symbol count ratio": {
+   "forecast": "3",
+   "measured": 2.970954372123603,
+   "holds": true
+  },
+  "4a saved whitespace": {
+   "forecast": "0.03",
+   "measured": 0.0,
+   "holds": false
+  },
+  "4a saved case": {
+   "forecast": "0.02",
+   "measured": 0.03555959501887307,
+   "holds": false
+  },
+  "4a saved punctuation": {
+   "forecast": "0.08",
+   "measured": 0.050443187924915756,
+   "holds": false
+  },
+  "4a saved stopwords": {
+   "forecast": "0.3",
+   "measured": 0.29396788072027324,
+   "holds": true
+  },
+  "4a saved stems": {
+   "forecast": "0.15",
+   "measured": 0.03435067795992974,
+   "holds": false
+  },
+  "4a saved synonyms": {
+   "forecast": "0.1",
+   "measured": 0.025710785039445794,
+   "holds": false
+  },
+  "4b BoW drop whitespace": {
+   "forecast": "<= 0.01",
+   "measured": 0.0,
+   "holds": true
+  },
+  "4b BoW drop case": {
+   "forecast": "<= 0.01",
+   "measured": -0.0173333333333332,
+   "holds": true
+  },
+  "4b BoW drop stopwords": {
+   "forecast": ">= 0.02",
+   "measured": 0.020333333333333314,
+   "holds": true
+  },
+  "4c random drop at least 3x": {
+   "forecast": "all forms",
+   "measured": {
+    "case": 0.245,
+    "punctuation": 0.246,
+    "stopwords": 0.257,
+    "stems": 0.245,
+    "synonyms": 0.244
+   },
+   "holds": true
+  },
+  "4d reader drop whitespace": {
+   "forecast": "<= 0.01",
+   "measured": 0.0,
+   "holds": true
+  },
+  "4d reader drop case": {
+   "forecast": "0.02",
+   "measured": -0.0033333333333332993,
+   "holds": false
+  },
+  "4d reader drop no spaces": {
+   "forecast": "0.1",
+   "measured": 0.010000000000000009,
+   "holds": false
+  },
+  "4e python collapsed parses": {
+   "forecast": "0.05",
+   "measured": 0.452991452991453,
+   "holds": false
+  },
+  "4e python case fold parses": {
+   "forecast": "0.6",
+   "measured": 0.9829059829059829,
+   "holds": false
+  },
+  "4e name recall after case fold": {
+   "forecast": "<= 0.0",
+   "measured": 0.0,
+   "holds": true
+  },
+  "4f standard observer dE": {
+   "forecast": "<= 0.01",
+   "measured": 6.196914463356652e-14,
+   "holds": true
+  },
+  "4f shifted observer dE (4 nm)": {
+   "forecast": ">= 2",
+   "measured": 3.691027237023079,
+   "holds": true
+  },
+  "4f random 3-dim dE": {
+   "forecast": ">= 20",
+   "measured": 67.85387074177149,
+   "holds": true
+  },
+  "4g MFCC drop phase": {
+   "forecast": "<= 0.05",
+   "measured": 0.0025000000000000577,
+   "holds": true
+  },
+  "4g MFCC drop random half": {
+   "forecast": ">= 0.1",
+   "measured": 0.020000000000000018,
+   "holds": false
+  },
+  "4g time-domain drop phase": {
+   "forecast": ">= 0.4",
+   "measured": 0.22749999999999998,
+   "holds": false
+  },
+  "4h safe for one, differs for another": {
+   "forecast": "100 percent",
+   "measured": 1.0,
+   "holds": true
+  },
+  "5a English xz": {
+   "forecast": "3.0",
+   "measured": 2.833881733571496,
+   "holds": true
+  },
+  "5a English PPM cold": {
+   "forecast": "2.4",
+   "measured": 2.573403667784862,
+   "holds": true
+  },
+  "5a English PPM Gutenberg": {
+   "forecast": "2.1",
+   "measured": 1.9853871783829173,
+   "holds": true
+  },
+  "5a English SmolLM2": {
+   "forecast": "1.2",
+   "measured": 0.2678370051123003,
+   "holds": false
+  },
+  "5a English Qwen": {
+   "forecast": "1.0",
+   "measured": 0.5709518596873067,
+   "holds": false
+  },
+  "5b book xz": {
+   "forecast": "2.9",
+   "measured": 3.1168,
+   "holds": true
+  },
+  "5b book PPM trained": {
+   "forecast": "2.1",
+   "measured": 2.1375396110138727,
+   "holds": true
+  },
+  "5b book SmolLM2": {
+   "forecast": "2.0",
+   "measured": 0.8890527824256227,
+   "holds": false
+  },
+  "5c SmolLM2 above cold PPM, of 9": {
+   "forecast": ">= 3",
+   "measured": 0,
+   "holds": false
+  },
+  "5c Qwen below cold PPM, of 9": {
+   "forecast": ">= 6",
+   "measured": 8,
+   "holds": true
+  },
+  "5d SmolLM2 payback against xz, chars": {
+   "forecast": ">= 1000000000.0",
+   "measured": 2598768500.4511566,
+   "holds": true
+  },
+  "5d trained PPM payback against xz, chars": {
+   "forecast": "<= 200000000.0",
+   "measured": 11915310.913454397,
+   "holds": true
+  },
+  "5e arithmetic round trip exact": {
+   "forecast": "yes",
+   "measured": [
+    true,
+    true
+   ],
+   "holds": true
+  },
+  "5f LLM capital bits": {
+   "forecast": "<= 4",
+   "measured": 0.949941605901343,
+   "holds": true
+  },
+  "5f LLM small sum bits": {
+   "forecast": "<= 4",
+   "measured": 1.2930488768660793,
+   "holds": true
+  },
+  "5f LLM 3-digit sum bits": {
+   "forecast": ">= 10",
+   "measured": 9.113557314183227,
+   "holds": false
+  },
+  "5f wrong minus right": {
+   "forecast": ">= 10",
+   "measured": 8.0787922678562,
+   "holds": false
+  },
+  "5g PPM Gutenberg minimum task mean": {
+   "forecast": ">= 20",
+   "measured": 20.397986212572413,
+   "holds": true
+  },
+  "5g PPM table stored": {
+   "forecast": "<= 2",
+   "measured": 11.190085972319135,
+   "holds": false
+  },
+  "5g PPM table unseen": {
+   "forecast": ">= 15",
+   "measured": 4.890226852439832,
+   "holds": false
+  },
+  "5h shuffled training gain removed": {
+   "forecast": ">= 0.8",
+   "measured": 2.7371427722654946,
+   "holds": true
+  }
+ },
+ "held": 71,
+ "failed": 46,
+ "not_run": 3,
+ "bh": {
+  "image rhyme all": {
+   "p": 0.1252874712528747,
+   "survives": false
+  },
+  "image F S X": {
+   "p": 0.011998800119988001,
+   "survives": false
+  },
+  "image ee": {
+   "p": 0.20157984201579843,
+   "survives": false
+  },
+  "image ay": {
+   "p": 0.5867413258674132,
+   "survives": false
+  },
+  "TTS all": {
+   "p": 0.0334966503349665,
+   "survives": false
+  },
+  "TTS ee": {
+   "p": 0.0217978202179782,
+   "survives": false
+  },
+  "TTS eh": {
+   "p": 0.1912808719128087,
+   "survives": false
+  },
+  "TTS ay": {
+   "p": 0.8607139286071392,
+   "survives": false
+  },
+  "TTS spectrum all": {
+   "p": 0.0011998800119988001,
+   "survives": true
+  },
+  "TTS spectrum ee": {
+   "p": 0.00039996000399960006,
+   "survives": true
+  },
+  "TTS spectrum eh": {
+   "p": 0.11728827117288271,
+   "survives": false
+  },
+  "image to TTS": {
+   "p": 0.0003999200159968006,
+   "survives": true
+  },
+  "PPM gain Chinese": {
+   "p": 0.047619047619047616,
+   "survives": false
+  },
+  "PPM gain Japanese": {
+   "p": 0.047619047619047616,
+   "survives": false
+  },
+  "PPM gain Korean": {
+   "p": 0.047619047619047616,
+   "survives": false
+  },
+  "PPM gain Arabic": {
+   "p": 0.047619047619047616,
+   "survives": false
+  },
+  "PPM gain Hebrew": {
+   "p": 0.047619047619047616,
+   "survives": false
+  },
+  "PPM gain Hindi": {
+   "p": 0.047619047619047616,
+   "survives": false
+  },
+  "PPM gain Vietnamese": {
+   "p": 0.047619047619047616,
+   "survives": false
+  },
+  "PPM gain Finnish": {
+   "p": 0.047619047619047616,
+   "survives": false
+  },
+  "PPM gain English": {
+   "p": 0.047619047619047616,
+   "survives": false
+  },
+  "PPM gain Hawaiian": {
+   "p": 0.047619047619047616,
+   "survives": false
+  }
+ },
+ "matrix": {
+  "cells": {
+   "whitespace": {
+    "BoW sentiment": true,
+    "model reader": true,
+    "Python parser": false,
+    "capital name extractor": true
+   },
+   "case": {
+    "BoW sentiment": true,
+    "model reader": true,
+    "Python parser": false,
+    "capital name extractor": false
+   },
+   "punctuation": {
+    "BoW sentiment": true,
+    "model reader": true,
+    "Python parser": false,
+    "capital name extractor": false
+   },
+   "stopwords": {
+    "BoW sentiment": false,
+    "model reader": false,
+    "Python parser": false,
+    "capital name extractor": false
+   },
+   "stems": {
+    "BoW sentiment": true,
+    "model reader": true,
+    "Python parser": false,
+    "capital name extractor": false
+   },
+   "synonyms": {
+    "BoW sentiment": true,
+    "model reader": true,
+    "Python parser": false,
+    "capital name extractor": false
+   },
+   "nospace": {
+    "BoW sentiment": false,
+    "model reader": true,
+    "Python parser": false,
+    "capital name extractor": false
+   },
+   "cone null space": {
+    "standard observer": true,
+    "observer shifted 4 nm": false
+   },
+   "frame phase": {
+    "MFCC classifier": true,
+    "time-domain matcher": false
+   }
+  },
+  "safe_somewhere": [
+   "whitespace",
+   "case",
+   "punctuation",
+   "stems",
+   "synonyms",
+   "nospace",
+   "cone null space",
+   "frame phase"
+  ],
+  "unsafe_elsewhere": [
+   "whitespace",
+   "case",
+   "punctuation",
+   "stems",
+   "synonyms",
+   "nospace",
+   "cone null space",
+   "frame phase"
+  ],
+  "share": 1.0
+ }
+}

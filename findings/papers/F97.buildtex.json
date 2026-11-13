@@ -1,0 +1,65 @@
+{
+ "schema": "buildlang.buildtex-receipt/v0",
+ "source": {
+  "path": "F97.bld",
+  "sha256": "fdd72bd0b9a370d90f610636e0d0e72ae0004e1734c90e9b3385ddbeabe3a321"
+ },
+ "ir_sha256": "0c3bcdad47353642632c5fef948a67a8613662c9bcec1006caf0d834da680183",
+ "theme": "paper",
+ "overrides": [],
+ "outputs": {
+  "F97.pdf": "30581875f101f4353f402e2223a509e0c5fa5f46d5ac72094e9d3885020a6fa2"
+ },
+ "pdf_metadata": {
+  "pdfa": false,
+  "creation_date": "D:20261109000000Z"
+ },
+ "facts": {
+  "pages": 9,
+  "pages_layout": 9,
+  "overfull": [],
+  "underfull": 0,
+  "missing_glyphs": [],
+  "glyph_fallbacks": [],
+  "math_errors": [],
+  "fonts": [
+   {
+    "name": "FFKBNN+NotoSansMath-Regular",
+    "embedded": true
+   },
+   {
+    "name": "HLAJII+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "JIFKPI+AccessionDisplay-Master",
+    "embedded": true
+   },
+   {
+    "name": "LMDEDN+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "MMAOMM+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "PBMAFI+HankenGrotesk-Regular",
+    "embedded": true
+   }
+  ],
+  "images": 4,
+  "blind_text_runs": 0,
+  "reading_order": true,
+  "blocks_missing_from_text": [],
+  "pdf_bytes": 601561
+ },
+ "failed": [],
+ "notes": [
+  "buildc run F97.bld -> F97.doc.tsv",
+  "press: relief 1275x444 px at 150 dpi; 0 blind line(s); foil colour source: fallback constant"
+ ],
+ "external_programs": [
+  "buildc"
+ ]
+}

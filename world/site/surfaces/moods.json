@@ -1,0 +1,27 @@
+{
+ "format": "surfaces.moods/1",
+ "status": "proposal by the lead session, 2026-11-11, for the author to edit; nothing reads this file yet",
+ "note": "Maps an element id, or a sheet as a fallback, to a piece id of the site music. Only piece ids seen in the music work so far are used; a sheet with null has no proposal.",
+ "elements": {
+  "water": "low-tide",
+  "ink": "low-tide",
+  "cloud-mist": "low-tide",
+  "air": "low-tide",
+  "light": "glass-hour",
+  "glass": "glass-hour",
+  "iridescence": "glass-hour",
+  "refraction": "glass-hour",
+  "data": "night-school",
+  "code": "night-school",
+  "type": "night-school"
+ },
+ "sheets": {
+  "material": "low-tide",
+  "property": "glass-hour",
+  "process": "low-tide",
+  "form": null,
+  "composition": null,
+  "rules": "night-school",
+  "meaning": null
+ }
+}

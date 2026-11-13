@@ -2,10 +2,10 @@
 // same tour. The tour is a chain of real threads through the seven places (twin, then shared motifs):
 // Flywheel, The test that wasn't, The False Balance, Powers of Ten for a Lie, Four labels,
 // Manufactured consensus, Palimpsest. Position tau runs from -1 (the whole map) to 6 (the last place).
-// Scrolling moves tau one to one with the wheel's own pixels, so the platform's speed and momentum carry it;
+// The wheel is the page's own scroll and never moves the tour (author, 2026-11-09: "yes" to native scroll). The tour
+// moves by its keys (PageDown and PageUp, j and k, Space, Home, End, 1 to 7) and by the place list under the map;
 // nothing snaps and nothing traps: back, forward, Escape and the index always work.
 const TOUR = ["flywheel", "test", "balance", "powers", "labels", "crowd", "palimpsest"];
-const PX_PER_PLACE = 520;  // wheel pixels between two places: about one long trackpad flick
 
 export function initNav({ u, cam, S, focus, unfocus, enter, leave, quietFocus, here, WORLD }) {
   const say = document.getElementById("say");
@@ -24,22 +24,6 @@ export function initNav({ u, cam, S, focus, unfocus, enter, leave, quietFocus, h
     const i = Math.min(N - 2, Math.floor(t)), f = t - i, a = u.byId.get(tour[i]), b = u.byId.get(tour[i + 1]);
     return { x: a.x + (b.x - a.x) * f, y: a.y + (b.y - a.y) * f, k: kF * (1 - 0.28 * Math.sin(Math.PI * f)) };
   }
-  cam.onScroll = (dy) => {
-    if (document.querySelector(".room-layer:not(.standby)")) return;  // inside a place, the page scrolls itself
-    const tau = (S.tau = Math.min(N - 1, Math.max(-1, S.tau + dy / PX_PER_PLACE)));
-    const p = placeAt(tau); cam.x = p.x; cam.y = p.y; cam.k = p.k; cam.clamp();
-    here.progress((tau + 1) / N); S.onCam?.();
-    const near = Math.round(tau), d = Math.abs(tau - near);
-    const id = near >= 0 && d < 0.22 ? tour[near] : null;
-    if (id !== last) {
-      last = id;
-      if (id) { quietFocus(id); history.replaceState({ n: id }, "", `?n=${encodeURIComponent(id)}`); announce(where(id)); }
-      else if (tau < -0.5) { unfocus(); history.replaceState({}, "", location.pathname); announce(`The whole map. ${N} places.`); }
-      else unfocus();
-    }
-    S.dirty = true;
-  };
-
   S.tourIndex = (id) => tour.indexOf(id);
   const go = (i) => {
     i = Math.max(0, Math.min(N - 1, i)); const from = S.focus, id = tour[i], onMap = document.activeElement?.classList?.contains("node"); last = id;
@@ -53,11 +37,20 @@ export function initNav({ u, cam, S, focus, unfocus, enter, leave, quietFocus, h
     const inside = !!document.querySelector(".room-layer:not(.standby)");
     if (inside && !["Escape", "Backspace", "i"].includes(e.key)) return;  // inside a place, its own keys and scrolling rule
     const k = e.key;
+    // the page's own scroll keys move the tour only while the map has focus; elsewhere they scroll the page
+    const onStage = !!e.target.closest?.("#stage");
+    if (!onStage && ["PageDown", "PageUp", " ", "Home", "End"].includes(k)) return;
     if (k === "PageDown" || k === "j" || (k === " " && !e.shiftKey && !e.target.closest("button,a"))) { e.preventDefault(); go(cur() + 1); }
     else if (k === "PageUp" || k === "k" || (k === " " && e.shiftKey)) { e.preventDefault(); if (cur() <= 0) { unfocus(); cam.fitAll(); announce(`The whole map. ${N} places.`); } else go(cur() - 1); }
     else if (k === "Home") { e.preventDefault(); go(0); }
     else if (k === "End") { e.preventDefault(); go(N - 1); }
     else if (/^[1-9]$/.test(k) && +k <= N) { e.preventDefault(); go(+k - 1); }
   });
+  // the place list: the tour as words under the map, each one a way to its place (keys and taps reach it too)
+  const list = document.createElement("nav");
+  list.className = "tour-list"; list.setAttribute("aria-label", "The tour");
+  list.innerHTML = `<h2 class="tour-h">The tour</h2><ol>${tour.map((id, i) => `<li><button type="button" data-i="${i}"><span class="tour-n">${i + 1}</span> ${u.byId.get(id).title.replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]))}</button></li>`).join("")}</ol><p class="tour-keys">Keys: j and k, or 1 to ${N}; on the map, PageDown and PageUp too.</p>`;
+  list.addEventListener("click", (e) => { const b = e.target.closest("button[data-i]"); if (b) { document.getElementById("stage")?.scrollIntoView({ block: "start" }); go(+b.dataset.i); } });
+  document.getElementById("main")?.after(list);
   return { tour, go };
 }

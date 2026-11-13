@@ -1,0 +1,7 @@
+{
+  "date": "2026-11-11",
+  "note": "Bench fix merged in (a change of state finishes on slow renderers) together with main; world asset revision restamped.",
+  "paths": {
+    "index.html": "108d8bdd6b2081a3c00ac149a2dc22a7cca9446717ba6bab4eaaee1fa854fbd2"
+  }
+}

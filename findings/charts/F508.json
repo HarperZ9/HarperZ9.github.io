@@ -1,0 +1,528 @@
+{
+ "finding": "F508",
+ "sources": [
+  {
+   "id": "run1",
+   "name": "result.json (first run)",
+   "sha256_original": "ca7033cf3eff44fcdc2b61e167714daa84837e4dff5e5a5884c8cfefa642ec66",
+   "sha256_copy": "678a2207992cd263caab4b50754e74d796475a55838ac2cd7d4197d5f957a71e",
+   "href": "/findings/results/F508/result-run1.json",
+   "run": "20261101T081322Z"
+  },
+  {
+   "id": "run2",
+   "name": "result.json (second run)",
+   "sha256_original": "b4c34c4ababac67acbfe09e8763fb0aa3c6e84b2d6d190121eb28e5b5f724f1f",
+   "sha256_copy": "8adf06a8a03da3f19899e423a4a98a40c55a1759045779014f78daf560c4b145",
+   "href": "/findings/results/F508/result-run2.json",
+   "run": "20261101T082050Z"
+  }
+ ],
+ "charts": [
+  {
+   "key": "table",
+   "form": "dumbbell",
+   "at": "results",
+   "claims": [
+    "c1",
+    "c2"
+   ],
+   "source": [
+    "run1"
+   ],
+   "title": "Shannon's 1951 table against the same statistics on three bodies of text.",
+   "takeaway": "Single letters and letter pairs match his values within 0.12 bits; his letter-triple value of 3.1 sits 0.39 above ours on old books and 0.23 above ours on Wikipedia.",
+   "units": "bits per letter (the average number of yes or no questions needed to name the next letter; lower means more predictable text). F1, F2 and F3 are the entropy of a letter given none, one or two letters before it, over 27 symbols",
+   "n": "three pooled bodies of text, one value per statistic and body",
+   "interval": null,
+   "no_interval": "Each value is one statistic counted on one pooled body of text. The result file holds no interval.",
+   "baseline": "Shannon 1951: F1 4.03, F2 3.32, F3 3.1, word-based 2.14",
+   "threshold": "Gap to Shannon under 0.15 for F1, 0.2 for F2 and 0.3 for F3, set in advance: failed on old books (F3 gap 0.388), held on Wikipedia (F3 gap 0.228)",
+   "planted": "Held: the reader missed a known entropy by 0.004 bits",
+   "a_name": "Shannon 1951",
+   "b_name": "this study",
+   "axis": {
+    "label": "bits per letter (lower is more predictable)",
+    "min": 1.5,
+    "max": 4.5
+   },
+   "rows": [
+    {
+     "label": "Old books, 1788 to 1859",
+     "group": "Single letters (F1): Shannon 4.03",
+     "a": 4.03,
+     "b": 4.085157363800939,
+     "note": "ours 4.085; gap 0.055"
+    },
+    {
+     "label": "Books, 1892 to 1925",
+     "group": "Single letters (F1): Shannon 4.03",
+     "a": 4.03,
+     "b": 4.06680895488788,
+     "note": "ours 4.067; gap 0.037"
+    },
+    {
+     "label": "Wikipedia",
+     "group": "Single letters (F1): Shannon 4.03",
+     "a": 4.03,
+     "b": 4.112855608945797,
+     "note": "ours 4.113; gap 0.083"
+    },
+    {
+     "label": "Old books, 1788 to 1859",
+     "group": "Letter pairs (F2): Shannon 3.32",
+     "a": 3.32,
+     "b": 3.345033070829723,
+     "note": "ours 3.345; gap 0.025"
+    },
+    {
+     "label": "Books, 1892 to 1925",
+     "group": "Letter pairs (F2): Shannon 3.32",
+     "a": 3.32,
+     "b": 3.3237478763311694,
+     "note": "ours 3.324; gap 0.004"
+    },
+    {
+     "label": "Wikipedia",
+     "group": "Letter pairs (F2): Shannon 3.32",
+     "a": 3.32,
+     "b": 3.4396740384993505,
+     "note": "ours 3.440; gap 0.120"
+    },
+    {
+     "label": "Old books, 1788 to 1859",
+     "group": "Letter triples (F3): Shannon 3.1",
+     "a": 3.1,
+     "b": 2.7122463672683335,
+     "note": "ours 2.712; gap 0.388"
+    },
+    {
+     "label": "Books, 1892 to 1925",
+     "group": "Letter triples (F3): Shannon 3.1",
+     "a": 3.1,
+     "b": 2.6977297720192057,
+     "note": "ours 2.698; gap 0.402"
+    },
+    {
+     "label": "Wikipedia",
+     "group": "Letter triples (F3): Shannon 3.1",
+     "a": 3.1,
+     "b": 2.871751912909171,
+     "note": "ours 2.872; gap 0.228"
+    },
+    {
+     "label": "Old books, 1788 to 1859",
+     "group": "Word-based: Shannon 2.14",
+     "a": 2.14,
+     "b": 1.8007641656412132,
+     "note": "ours 1.801; gap 0.339"
+    },
+    {
+     "label": "Books, 1892 to 1925",
+     "group": "Word-based: Shannon 2.14",
+     "a": 2.14,
+     "b": 1.8528357027907427,
+     "note": "ours 1.853; gap 0.287"
+    },
+    {
+     "label": "Wikipedia",
+     "group": "Word-based: Shannon 2.14",
+     "a": 2.14,
+     "b": 1.7474330534631364,
+     "note": "ours 1.747; gap 0.393"
+    }
+   ],
+   "columns": [
+    "Statistic",
+    "Shannon 1951",
+    "Old books",
+    "Books, 1892 to 1925",
+    "Wikipedia",
+    "Gap, old books",
+    "Gap, Wikipedia"
+   ],
+   "table": [
+    [
+     "Single letters (F1)",
+     "4.03",
+     "4.085",
+     "4.067",
+     "4.113",
+     "0.055",
+     "0.083"
+    ],
+    [
+     "Letter pairs (F2)",
+     "3.32",
+     "3.345",
+     "3.324",
+     "3.440",
+     "0.025",
+     "0.120"
+    ],
+    [
+     "Letter triples (F3)",
+     "3.1",
+     "2.712",
+     "2.698",
+     "2.872",
+     "0.388",
+     "0.228"
+    ],
+    [
+     "Word-based",
+     "2.14",
+     "1.801",
+     "1.853",
+     "1.747",
+     "0.339",
+     "0.393"
+    ]
+   ]
+  },
+  {
+   "key": "cross",
+   "form": "matrix",
+   "at": "results",
+   "claims": [
+    "c3",
+    "c4"
+   ],
+   "source": [
+    "run2"
+   ],
+   "title": "What each trained reader needs on each kind of text.",
+   "takeaway": "On its own kind of text (the diagonal) a reader needs 1.63 to 2.41 bits per letter, never Shannon's 1.3; every move off the diagonal within a row costs more, up to 3.78.",
+   "units": "log loss in bits per letter (the average number of yes or no questions needed to name the next letter; lower means more predictable text). Rows are the text the reader was trained on; columns are the held-out text it read. Brighter cells are higher",
+   "n": "old fiction: 600,000 training letters, 100,000 held out; fiction, 1892 to 1925: 600,000 training letters, 100,000 held out; The Federalist: 600,000 training letters, 100,000 held out; Wikipedia: 588,712 training letters, 100,000 held out",
+   "interval": null,
+   "no_interval": "Each cell is one reader scored once on one held-out text. The result file holds no interval.",
+   "baseline": "Shannon's human reader: about 1.3 bits per letter. Shuffled held-out letters cost this reader 9.26 bits.",
+   "threshold": "Era penalty larger than genre penalty, set in advance: failed, 0.10 against 0.44",
+   "corner": "trained on (rows), read (columns)",
+   "cols": [
+    "old fiction",
+    "fiction, 1892 to 1925",
+    "The Federalist",
+    "Wikipedia"
+   ],
+   "rowLabels": [
+    "old fiction",
+    "fiction, 1892 to 1925",
+    "The Federalist",
+    "Wikipedia"
+   ],
+   "values": [
+    [
+     1.9313678542541342,
+     2.2502609836607474,
+     2.076469841164063,
+     3.305079844149717
+    ],
+    [
+     2.1839379746290573,
+     2.1500461260749786,
+     2.2569945808619303,
+     3.32880683752558
+    ],
+    [
+     2.9979112817549476,
+     3.254597754901603,
+     1.632132579540908,
+     3.776920141328096
+    ],
+    [
+     2.6254916705651246,
+     2.744679005357217,
+     2.1526736773903212,
+     2.411727618333086
+    ]
+   ],
+   "text": [
+    [
+     "1.93",
+     "2.25",
+     "2.08",
+     "3.31"
+    ],
+    [
+     "2.18",
+     "2.15",
+     "2.26",
+     "3.33"
+    ],
+    [
+     "3.00",
+     "3.25",
+     "1.63",
+     "3.78"
+    ],
+    [
+     "2.63",
+     "2.74",
+     "2.15",
+     "2.41"
+    ]
+   ],
+   "columns": [
+    "Trained on",
+    "Read: old fiction",
+    "Read: fiction, 1892 to 1925",
+    "Read: The Federalist",
+    "Read: Wikipedia"
+   ],
+   "table": [
+    [
+     "old fiction",
+     "1.931",
+     "2.250",
+     "2.076",
+     "3.305"
+    ],
+    [
+     "fiction, 1892 to 1925",
+     "2.184",
+     "2.150",
+     "2.257",
+     "3.329"
+    ],
+    [
+     "The Federalist",
+     "2.998",
+     "3.255",
+     "1.632",
+     "3.777"
+    ],
+    [
+     "Wikipedia",
+     "2.625",
+     "2.745",
+     "2.153",
+     "2.412"
+    ]
+   ]
+  },
+  {
+   "key": "penalty",
+   "form": "bars",
+   "at": "results",
+   "claims": [
+    "c4"
+   ],
+   "source": [
+    "run2"
+   ],
+   "title": "What a change of era costs a reader, against a change of genre.",
+   "takeaway": "Era alone costs 0.10 and 0.25 bits per letter within fiction; genre alone costs 0.44, so genre costs more than era and the claim set in advance failed.",
+   "units": "transfer penalty in bits per letter: the reader's log loss on the other text minus its log loss on its own kind of text; higher means the change hurt more",
+   "n": "four trained readers, 100,000 held-out letters per text",
+   "interval": null,
+   "no_interval": "Each penalty is a difference of two single scores. The result file holds no interval.",
+   "baseline": "A penalty of 0 means the reader reads the other text as well as its own",
+   "threshold": "Era penalty larger than genre penalty: failed (0.10 against 0.44). All four forecast bands held.",
+   "series_names": [
+    "era changes",
+    "genre changes",
+    "era and topic change"
+   ],
+   "axis": {
+    "label": "extra bits per letter (higher is a larger cost)",
+    "min": 0,
+    "max": 1.6
+   },
+   "rows": [
+    {
+     "label": "Era: old fiction reader on later fiction",
+     "value": 0.10021485758576887,
+     "series": 0,
+     "note": "0.10; forecast band 0.02 to 0.3"
+    },
+    {
+     "label": "Era: later fiction reader on old fiction",
+     "value": 0.2525701203749231,
+     "series": 0,
+     "note": "0.25; forecast band 0.02 to 0.3"
+    },
+    {
+     "label": "Genre: old fiction reader on The Federalist",
+     "value": 0.4443372616231551,
+     "series": 1,
+     "note": "0.44; forecast band 0.2 to 0.9"
+    },
+    {
+     "label": "Era and topic: Federalist reader on Wikipedia",
+     "value": 1.36519252299501,
+     "series": 2,
+     "note": "1.37; forecast band 0.4 to 1.6"
+    }
+   ],
+   "columns": [
+    "Change",
+    "Penalty",
+    "Forecast band, low",
+    "Forecast band, high"
+   ],
+   "table": [
+    [
+     "Era: old fiction reader on later fiction",
+     "0.100",
+     "0.02",
+     "0.3"
+    ],
+    [
+     "Era: later fiction reader on old fiction",
+     "0.253",
+     "0.02",
+     "0.3"
+    ],
+    [
+     "Genre: old fiction reader on The Federalist",
+     "0.444",
+     "0.2",
+     "0.9"
+    ],
+    [
+     "Era and topic: Federalist reader on Wikipedia",
+     "1.365",
+     "0.4",
+     "1.6"
+    ],
+    [
+     "Later fiction reader on Wikipedia (era, genre and topic)",
+     "0.917",
+     "",
+     ""
+    ]
+   ]
+  },
+  {
+   "key": "planted",
+   "form": "bars",
+   "at": "controls",
+   "claims": [
+    "c5"
+   ],
+   "source": [
+    "run1"
+   ],
+   "title": "Does the reader measure an entropy that is known in advance?",
+   "takeaway": "Yes: on a made-up letter stream whose true entropy is 2.673 bits, the reader missed by 0.004 bits, far inside the limit of 0.1.",
+   "units": "absolute error in bits per symbol between the reader's log loss and the true entropy of the planted stream; lower is better",
+   "n": "one planted stream (a random order-2 Markov chain, where each symbol depends on the two before it)",
+   "interval": null,
+   "no_interval": "One planted stream, one error. The result file holds no interval.",
+   "baseline": "True entropy of the planted stream: 2.673 bits per symbol",
+   "threshold": "Error at most 0.1 bits, set in advance; a larger miss would have voided the study. Held, 0.004",
+   "planted": "This chart is the planted check",
+   "axis": {
+    "label": "error in bits per symbol (lower is better)",
+    "min": 0,
+    "max": 0.12,
+    "refs": [
+     {
+      "value": 0.1,
+      "label": "limit set in advance, 0.1"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "label": "Reader's miss on the planted stream",
+     "value": 0.004107140485943184,
+     "series": 0,
+     "note": "0.004 bits"
+    }
+   ],
+   "columns": [
+    "Quantity",
+    "Value"
+   ],
+   "table": [
+    [
+     "True entropy",
+     "2.6725"
+    ],
+    [
+     "Reader's miss",
+     "0.0041"
+    ],
+    [
+     "Limit",
+     "0.1"
+    ]
+   ]
+  },
+  {
+   "key": "shuffle",
+   "form": "band",
+   "at": "controls",
+   "claims": [
+    "c3"
+   ],
+   "source": [
+    "run1",
+    "run2"
+   ],
+   "title": "Real held-out text against the same letters shuffled.",
+   "takeaway": "Real text costs the reader 2.73 and 1.93 bits per letter; the same letters shuffled cost 8.51 and 9.26, so the reader is using letter order.",
+   "units": "log loss in bits per letter (the average number of yes or no questions needed to name the next letter; lower means more predictable text)",
+   "n": "20 shuffles of the held-out letters in each run",
+   "interval": "Band: 5th to 95th percentile of the shuffles, with the mean marked",
+   "baseline": "Control: the held-out text with its letters shuffled, read by the same trained reader",
+   "threshold": "Real text must cost less than the shuffles' cheapest 5 percent, set in advance: held in both runs",
+   "value_name": "real held-out text",
+   "band_name": "shuffled letters, 5th to 95th percentile",
+   "axis": {
+    "label": "bits per letter (lower is more predictable)",
+    "min": 0,
+    "max": 10
+   },
+   "rows": [
+    {
+     "label": "Wikipedia reader on Wikipedia, first run",
+     "value": 2.7285282222203793,
+     "lo": 8.4445729946853,
+     "hi": 8.56489347443565,
+     "mean": 8.50973990460864,
+     "series": 0,
+     "note": "real 2.73; shuffled mean 8.51 (8.44 to 8.56)"
+    },
+    {
+     "label": "Old fiction reader on old fiction, second run",
+     "value": 1.9313678542541342,
+     "lo": 9.198522927406001,
+     "hi": 9.353890959413675,
+     "mean": 9.26361604933078,
+     "series": 0,
+     "note": "real 1.93; shuffled mean 9.26 (9.20 to 9.35)"
+    }
+   ],
+   "columns": [
+    "Run",
+    "Real text",
+    "Shuffled mean",
+    "Shuffled 5th percentile",
+    "Shuffled 95th percentile",
+    "Shuffles"
+   ],
+   "table": [
+    [
+     "Wikipedia reader on Wikipedia, first run",
+     "2.729",
+     "8.510",
+     "8.445",
+     "8.565",
+     "20"
+    ],
+    [
+     "Old fiction reader on old fiction, second run",
+     "1.931",
+     "9.264",
+     "9.199",
+     "9.354",
+     "20"
+    ]
+   ]
+  }
+ ]
+}

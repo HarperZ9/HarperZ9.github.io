@@ -1,0 +1,185 @@
+{
+ "study": "o11b-public",
+ "run_id": "20261031T084103Z",
+ "date": "2026-10-31",
+ "prereg": {
+  "path": "PREREG.txt",
+  "sha256": "156dfcf54e061acb39e5f34a1e7a6e6673dbc8e547add3a7ba18cb40bf762dc1",
+  "anchors": [
+   "sidecar",
+   "lock"
+  ],
+  "plan_sha256": "cf4fcd9b6c9847bb63fcb60b696dbda0dfb56ee59fcdad675779f7b0b2790731",
+  "locked_at": "2026-10-31T08:40:48+00:00"
+ },
+ "hashes": {
+  "units.py": "4164419c46ae1d723ed3c92296f3e88c6716b7d4f8b023795ab7d7d734306e22"
+ },
+ "analysis": {
+  "recursion_max_err": 0.0018624966931083398,
+  "thresholds": {
+   "1.0": {
+    "curve": {
+     "5": 0.0,
+     "6": 0.0,
+     "7": 0.0,
+     "8": 0.0,
+     "9": 0.5233666666666666,
+     "10": 0.9770166666666666,
+     "12": 1.0,
+     "14": 1.0,
+     "16": 1.0
+    },
+    "first_ratio_with_majority": 9
+   },
+   "2.0": {
+    "curve": {
+     "5": 0.0,
+     "6": 0.0,
+     "7": 0.0,
+     "8": 0.0,
+     "9": 0.662,
+     "10": 1.0,
+     "12": 1.0,
+     "14": 1.0,
+     "16": 1.0
+    },
+    "first_ratio_with_majority": 9
+   },
+   "4.0": {
+    "curve": {
+     "5": 0.0,
+     "6": 0.0,
+     "7": 0.0,
+     "8": 0.0,
+     "9": 0.8766333333333334,
+     "10": 1.0,
+     "12": 1.0,
+     "14": 1.0,
+     "16": 1.0
+    },
+    "first_ratio_with_majority": 9
+   }
+  },
+  "thr_min": 9,
+  "thr_max": 9,
+  "spatial_final": 1.0,
+  "mixed_final": 0.0,
+  "sweep_R": {
+   "1": 1.0,
+   "2": 0.0,
+   "3": 0.0,
+   "5": 0.0,
+   "10": 0.0,
+   "25": 0.0
+  },
+  "R_at_collapse": 2,
+  "R_max_final": 0.0,
+  "invasion_spatial": 1.0,
+  "invasion_mixed": 0.5
+ },
+ "controls": {
+  "shuffled": {
+   "n": 20,
+   "usable": true,
+   "mean": 0.37037,
+   "q95": 0.5175700000000001,
+   "q05": 0.25777,
+   "p_ge": 0.047619047619047616,
+   "compare": "analysis.spatial_final",
+   "description": "positions shuffled each generation"
+  }
+ },
+ "timing_s": {
+  "analysis": 173.73068669997156,
+  "shuffled": 62.45053649996407
+ },
+ "verdicts": {
+  "KNOWN_RECURSION": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.recursion_max_err < 0.03",
+     "left": 0.0018624966931083398,
+     "right": 0.03,
+     "holds": true
+    }
+   ]
+  },
+  "KNOWN_MIXED": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.mixed_final < 0.01",
+     "left": 0.0,
+     "right": 0.01,
+     "holds": true
+    }
+   ]
+  },
+  "SPACE_PERSISTS": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.spatial_final > 0.8",
+     "left": 1.0,
+     "right": 0.8,
+     "holds": true
+    },
+    {
+     "rule": "analysis.spatial_final > controls.shuffled.q95",
+     "left": 1.0,
+     "right": 0.5175700000000001,
+     "holds": true
+    }
+   ]
+  },
+  "THRESHOLD_NEAR_K": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.thr_min >= 7",
+     "left": 9,
+     "right": 7,
+     "holds": true
+    },
+    {
+     "rule": "analysis.thr_max <= 12",
+     "left": 9,
+     "right": 12,
+     "holds": true
+    }
+   ]
+  },
+  "RANGE_FAILS": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.R_max_final < 0.05",
+     "left": 0.0,
+     "right": 0.05,
+     "holds": true
+    }
+   ]
+  },
+  "INVASION_RESISTED": {
+   "verdict": "FAIL",
+   "rules": [
+    {
+     "rule": "analysis.invasion_spatial > 0.8",
+     "left": 1.0,
+     "right": 0.8,
+     "holds": true
+    },
+    {
+     "rule": "analysis.invasion_mixed < 0.05",
+     "left": 0.5,
+     "right": 0.05,
+     "holds": false
+    }
+   ]
+  }
+ },
+ "reproduce": null,
+ "status": "scored"
+}

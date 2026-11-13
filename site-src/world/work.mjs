@@ -37,7 +37,20 @@ export const HUB = {
       <p class="w-go"><a class="w-try" href="/studies/">Studies</a> <a href="/superframe.html">Superframe</a></p>`,
 };
 
+// the pillars follow the landmarks' order (author, 2026-11-09: "BuildLang, Flywheel, Engine, Game, Site, Everything")
 export const PILLARS = [
+  {
+    id: "buildlang", title: "BuildLang",
+    html: `<figure class="w-demo">
+        <figcaption>The same function, with and without its effect declared.</figcaption>
+        ${choose("Version", [
+          { button: "Undeclared", html: `<pre class="w-code">fn load_config() {\n    read_file("ops.toml");\n}</pre><p class="w-verdict" data-verdict="drift">Does not build</p><pre class="w-out">function \`load_config\` performs effect \`FileSystem\`\nbut does not declare it\n  help: add ~ FileSystem to the signature</pre>` },
+          { button: "Declared", html: `<pre class="w-code">fn load_config() ~ FileSystem {\n    read_file("ops.toml");\n}</pre><p class="w-verdict" data-verdict="verified">Type checking OK</p><pre class="w-out">"declared_effects": { "load_config": ["FileSystem"] }</pre>` },
+        ])}
+        <p class="w-note">Output from <code>buildc check</code>.</p>
+      </figure>
+      <p class="w-go"><a class="w-try" href="/buildlang.html">BuildLang</a> <a href="https://github.com/HarperZ9/buildlang">Source</a></p>`,
+  },
   {
     id: "flywheel", title: "Flywheel",
     html: `<figure class="w-demo">
@@ -52,18 +65,6 @@ export const PILLARS = [
       <p class="w-go"><a class="w-try" href="/flywheel.html">Flywheel</a> <a href="/flywheel-pilot.html">Pilot</a> <a href="https://github.com/HarperZ9/flywheel">Source</a></p>`,
   },
   {
-    id: "articulate", title: "Articulate",
-    html: `<figure class="w-demo">
-        <figcaption>One sentence, before and after.</figcaption>
-        ${choose("Version", [
-          { button: "Draft", html: `<p class="w-prose"><mark>It is important to note that</mark> this release <mark>really</mark> represents a significant step forward. <mark>Arguably</mark>, the new cache <mark>could potentially</mark> make builds faster in many cases.</p><p class="w-verdict" data-verdict="drift">Blocked: 1 high, 3 medium</p><pre class="w-out">L1 HIGH   filler-intensifier\nL1 MEDIUM throat-clearing opener\nL1 MEDIUM stacked hedge\nL1 MEDIUM worth-noting preamble</pre>` },
-          { button: "Rewrite", html: `<p class="w-prose">This release adds a build cache. On our test project, a clean build took 41 seconds and a cached build took 9.</p><p class="w-verdict" data-verdict="verified">Passes the gate</p><pre class="w-out">exit 0</pre>` },
-        ])}
-        <p class="w-note">Output from <code>articulate check</code>, Articulate 0.4.1.</p>
-      </figure>
-      <p class="w-go"><a class="w-try" href="/articulate.html">Articulate</a> <a href="https://pypi.org/project/articulate-writing/">pip install <span class="ident" translate="no">articulate-writing</span></a></p>`,
-  },
-  {
     id: "commons", title: "CMMNS",
     html: `<figure class="w-demo">
         <figcaption>Three findings on a demonstration thread. Every account in it is invented.</figcaption>
@@ -76,16 +77,16 @@ export const PILLARS = [
       <p class="w-go"><a class="w-try" href="/cmmns.html">CMMNS</a> <a href="https://github.com/HarperZ9/cmmns">Source</a></p>`,
   },
   {
-    id: "buildlang", title: "BuildLang",
+    id: "articulate", title: "Articulate",
     html: `<figure class="w-demo">
-        <figcaption>The same function, with and without its effect declared.</figcaption>
+        <figcaption>One sentence, before and after.</figcaption>
         ${choose("Version", [
-          { button: "Undeclared", html: `<pre class="w-code">fn load_config() {\n    read_file("ops.toml");\n}</pre><p class="w-verdict" data-verdict="drift">Does not build</p><pre class="w-out">function \`load_config\` performs effect \`FileSystem\`\nbut does not declare it\n  help: add ~ FileSystem to the signature</pre>` },
-          { button: "Declared", html: `<pre class="w-code">fn load_config() ~ FileSystem {\n    read_file("ops.toml");\n}</pre><p class="w-verdict" data-verdict="verified">Type checking OK</p><pre class="w-out">"declared_effects": { "load_config": ["FileSystem"] }</pre>` },
+          { button: "Draft", html: `<p class="w-prose"><mark>It is important to note that</mark> this release <mark>really</mark> represents a significant step forward. <mark>Arguably</mark>, the new cache <mark>could potentially</mark> make builds faster in many cases.</p><p class="w-verdict" data-verdict="drift">Blocked: 1 high, 3 medium</p><pre class="w-out">L1 HIGH   filler-intensifier\nL1 MEDIUM throat-clearing opener\nL1 MEDIUM stacked hedge\nL1 MEDIUM worth-noting preamble</pre>` },
+          { button: "Rewrite", html: `<p class="w-prose">This release adds a build cache. On our test project, a clean build took 41 seconds and a cached build took 9.</p><p class="w-verdict" data-verdict="verified">Passes the gate</p><pre class="w-out">exit 0</pre>` },
         ])}
-        <p class="w-note">Output from <code>buildc check</code>.</p>
+        <p class="w-note">Output from <code>articulate check</code>, Articulate 0.4.1.</p>
       </figure>
-      <p class="w-go"><a class="w-try" href="/buildlang.html">BuildLang</a> <a href="https://github.com/HarperZ9/buildlang">Source</a></p>`,
+      <p class="w-go"><a class="w-try" href="/articulate.html">Articulate</a> <a href="https://pypi.org/project/articulate-writing/">pip install <span class="ident" translate="no">articulate-writing</span></a></p>`,
   },
   {
     id: "engine", title: "The engine",
@@ -117,7 +118,7 @@ export const PILLARS = [
         <figcaption>Low tide, from the film Heavenly Bodies (1920). Public domain, Prelinger Archives.</figcaption>
       </figure>
       <p class="w-io">A narrative game in development, painted and played on the raw-native engine.</p>
-      <p class="w-go"><a class="w-try" href="/raw.html">The engine it runs on</a></p>`,
+      <p class="w-go"><a class="w-try" href="/low-water.html">Low Water</a> <a href="/raw.html">The engine it runs on</a></p>`,
   },
   {
     id: "writing", title: "Essays and films",

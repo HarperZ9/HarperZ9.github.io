@@ -31,7 +31,7 @@ jobs:
       - name: Python content contracts
         run: python -m pytest
       - name: Navigation and font catalog contracts
-        run: node --test system/lessons/*.test.mjs system/school/*.test.mjs media/school/attention/film.test.mjs media/school/vectors/film.test.mjs media/school/matrices/film.test.mjs media/school/gradients/film.test.mjs media/school/backprop/film.test.mjs media/school/optimisers/film.test.mjs media/school/heldout/film.test.mjs media/school/tokens/film.test.mjs media/school/embeddings/film.test.mjs media/school/nextword/film.test.mjs media/school/decoding/film.test.mjs media/school/block/film.test.mjs media/school/trainloop/film.test.mjs media/school/data/film.test.mjs media/school/scaling/film.test.mjs media/school/distill/film.test.mjs media/school/lora/film.test.mjs media/school/errorbars/film.test.mjs media/school/gaming/film.test.mjs media/school/evaluate/film.test.mjs media/school/threads/film.test.mjs media/school/quant/film.test.mjs media/school/tiling/film.test.mjs media/school/fused/film.test.mjs media/school/precision/film.test.mjs media/school/denoiser/film.test.mjs media/school/receipts/film.test.mjs media/school/search/film.test.mjs media/school/editdistance/film.test.mjs media/school/mmbu/film.test.mjs media/school/glyphs.test.mjs tests/night-school-sitemap.test.mjs system/nav.test.mjs tests/font-catalog.test.mjs tests/navigation-discovery.mjs tests/pillar-navigation.test.mjs tests/ident-tokens.test.mjs tests/explainer-film-labels.test.mjs world/site/sky/astro.test.mjs world/site/sky/weather.test.mjs world/site/sky/clocks.test.mjs world/site/field/jitter.test.mjs world/site/field/stars.test.mjs world/site/field/glsl-lint.test.mjs world/site/field/fuzz.test.mjs world/site/distill/distill.test.mjs
+        run: node --test system/lessons/*.test.mjs system/school/*.test.mjs media/school/attention/film.test.mjs media/school/vectors/film.test.mjs media/school/matrices/film.test.mjs media/school/gradients/film.test.mjs media/school/backprop/film.test.mjs media/school/optimisers/film.test.mjs media/school/heldout/film.test.mjs media/school/tokens/film.test.mjs media/school/embeddings/film.test.mjs media/school/nextword/film.test.mjs media/school/decoding/film.test.mjs media/school/block/film.test.mjs media/school/trainloop/film.test.mjs media/school/data/film.test.mjs media/school/scaling/film.test.mjs media/school/distill/film.test.mjs media/school/lora/film.test.mjs media/school/errorbars/film.test.mjs media/school/gaming/film.test.mjs media/school/evaluate/film.test.mjs media/school/threads/film.test.mjs media/school/quant/film.test.mjs media/school/tiling/film.test.mjs media/school/fused/film.test.mjs media/school/precision/film.test.mjs media/school/denoiser/film.test.mjs media/school/receipts/film.test.mjs media/school/search/film.test.mjs media/school/editdistance/film.test.mjs media/school/mmbu/film.test.mjs media/school/glyphs.test.mjs tests/night-school-sitemap.test.mjs system/nav.test.mjs tests/font-catalog.test.mjs tests/navigation-discovery.mjs tests/pillar-navigation.test.mjs tests/ident-tokens.test.mjs tests/explainer-film-labels.test.mjs world/site/sky/astro.test.mjs world/site/sky/weather.test.mjs world/site/sky/clocks.test.mjs world/site/field/jitter.test.mjs world/site/field/stars.test.mjs world/site/field/glsl-lint.test.mjs world/site/field/fuzz.test.mjs world/site/distill/distill.test.mjs tests/findings-build.test.mjs tests/findings-charts.test.mjs tests/findings-live.test.mjs
       # The vendored superstack contract: the copy must hold its pinned SHA-256, and it must pass
       # the release's own vectors on this runner's Node.
       - name: Superstack contract pin and vectors
@@ -66,6 +66,11 @@ jobs:
         run: >-
           node --test system/media-engine/sound.test.mjs system/media-engine/sound-retro.test.mjs system/audio.test.mjs system/midi-writer.test.mjs
           system/studio-sound.test.mjs system/scope-voice.test.mjs system/ans-voice.test.mjs
+      # The ear (known signals with known answers), the site music's voices, composer and renderer, and the
+      # planted-defect controls: clean renders raise no flag and each of eighteen defects raises its own.
+      - name: The ear and the site music
+        if: ${{ !cancelled() }}
+        run: node --test system/ear/ear.test.mjs system/ear/shape.test.mjs system/ear/note.test.mjs system/ear/identity.test.mjs system/site-music/voices.test.mjs system/site-music/music.test.mjs system/site-music/controls.test.mjs
       # The Python twins and the recorded-gate checks need numpy and scipy. Four tests need data
       # the repository does not carry (audit frames, the decoded image set, a Telos MCP checkout);
       # they skip with the reason printed. tests/telos-track-a/README.md has the full local run.
@@ -126,6 +131,25 @@ jobs:
           trap "kill $server_pid" EXIT
           sleep 2
           SITE_BASE_URL=http://127.0.0.1:8805 BROWSER_CHANNEL=chrome node tests/gallery-plates-visible.cjs
+      # The surfaces registry and the element bench (11 November 2026): the numbers, charts, recipe and
+      # contract in node; then the bench in a browser: no cut names at three widths, AA contrast in day,
+      # night and plain view, chart and blend values equal to the data, a well that answers, each
+      # element's still its own, the take-away files, mount and teardown, and no audio context. Since the ninth
+      # pass the paint checks run in their own file, and surfaces-place.cjs holds the bench still while tools open.
+      - name: Surfaces registry and the element bench
+        if: ${{ !cancelled() }}
+        run: |
+          node --test world/site/surfaces/surfaces.test.mjs world/site/surfaces/states.test.mjs world/site/surfaces/grounds-more.test.mjs world/site/surfaces/take-brush.test.mjs
+          export PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
+          npm install --no-save playwright@1.62.1
+          python tests/lib/serve.py 8811 . &
+          server_pid=$!
+          trap "kill $server_pid" EXIT
+          sleep 2
+          SITE_BASE_URL=http://127.0.0.1:8811 BROWSER_CHANNEL=chrome node tests/surfaces-bench.cjs
+          SITE_BASE_URL=http://127.0.0.1:8811 BROWSER_CHANNEL=chrome node tests/surfaces-states.cjs
+          SITE_BASE_URL=http://127.0.0.1:8811 BROWSER_CHANNEL=chrome node tests/surfaces-bench-paint.cjs
+          SITE_BASE_URL=http://127.0.0.1:8811 BROWSER_CHANNEL=chrome node tests/surfaces-place.cjs
       # The 64 seeded plates and 95 instruments against tests/fixtures/plate-baselines.json (3 October
       # 2026): every plate on screen, drawn, backed at its layout size; each instrument repeats exactly.
       # The pixel hashes belong to the fixture's reference machine and are compared only there.

@@ -1,0 +1,9 @@
+{
+  "date": "2026-11-11",
+  "note": "Main (media rounds 3 and 4, media showcase, cloud march, narrator default) merged into the wave 1 home-page branch. index.html, site-index.html and publications/build.json carry both sides' changes; the ?v= world asset revision was regenerated to world-e2c207b3f8. The author approved merging on 2026-11-11.",
+  "paths": {
+    "index.html": "0ba86b0c311f6375f4a0e9c89e08e0be2302daed448cd47747139f0a12c3e7d4",
+    "publications/build.json": "2d946172f4b05146a25fe4a4ca34aaac9d48a613f1e4e9c01b4b50feba5052c8",
+    "site-index.html": "162ad175d6cf4389ff3c841d2cdbe396b19a0505efa5398e7cd2c99ccea36967"
+  }
+}

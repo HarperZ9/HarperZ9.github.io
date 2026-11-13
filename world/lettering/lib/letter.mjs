@@ -164,7 +164,7 @@ class Lettering {
     this._moving = false;
   }
 
-  async rebuild() { if (!this.host) return; live.delete(this); this.impl?.dispose?.(); await this._build(this.host, this.canvas); this._place(); }
+  async rebuild() { if (!this.host || this._gone || !this.host.isConnected) return; live.delete(this); this.impl?.dispose?.(); await this._build(this.host, this.canvas); this._place(); }
   // Call a technique's own method (sound's play, for one) and keep the frame loop running while it acts.
   async act(name, ...args) { const f = this.impl?.[name]; if (typeof f !== 'function') throw new Error(`lettering: ${this.technique} has no ${name}()`); const r = await f.apply(this.impl, args); this._moving = true; wake(); return r; }
   // Jump to the finished state and draw it now (not on the next frame), so a still or a screenshot shows the end.
@@ -178,7 +178,7 @@ class Lettering {
     const url = this.canvas.toDataURL('image/png');
     return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${G.w} ${G.h}" role="img"><title>${title}</title><image href="${url}" width="${G.w}" height="${G.h}"/></svg>`;
   }
-  destroy() { live.delete(this); this._io?.disconnect(); this._ro?.disconnect(); this.impl?.dispose?.(); this.canvas?.remove(); this.host?.classList.remove('lt-on'); }
+  destroy() { this._gone = true; live.delete(this); this._io?.disconnect(); this._ro?.disconnect(); this.impl?.dispose?.(); this.canvas?.remove(); this.host?.classList.remove('lt-on'); }
 }
 
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));

@@ -1,0 +1,7 @@
+{
+  "date": "2026-11-09",
+  "note": "BuildLang 1.13.0 shipped: the home, the BuildLang page, discover.json, the llms files and the JSON-LD name it.",
+  "paths": {
+    "index.html": "0cd2ca3e6658db0a1c51cac8655b97db5939940b5a169487e33d50b780a5ec99"
+  }
+}

@@ -1,0 +1,112 @@
+{
+ "terms": {
+  "ctq": {
+   "term": "Childhood Trauma Questionnaire (CTQ)",
+   "field": "clinical psychology",
+   "definition": "a 28-item adult self-report questionnaire about childhood experiences, scored as five subscales (emotional abuse, physical abuse, sexual abuse, emotional neglect, physical neglect) of 5 to 25 each and a total of 25 to 125, plus minimisation items that flag denial",
+   "excludes": "records of maltreatment from the time it happened, and clinical diagnosis"
+  },
+  "rsfc": {
+   "term": "resting-state functional connectivity",
+   "field": "neuroimaging",
+   "definition": "the correlation over time between the blood-oxygen signals of two brain regions while a person lies in the scanner with no task",
+   "excludes": "anatomical connections, activity evoked by a task, and the direction of any influence between regions"
+  },
+  "amygdala": {
+   "term": "amygdala",
+   "field": "neuroanatomy",
+   "definition": "a pair of almond-shaped structures deep in the temporal lobes, one per hemisphere, involved in detecting threat and in emotional learning",
+   "excludes": "its separate subnuclei, which the anatomical masks here do not distinguish"
+  },
+  "vmpfc": {
+   "term": "ventromedial prefrontal cortex (vmPFC)",
+   "field": "neuroanatomy",
+   "definition": "the lower middle part of the frontal lobe, linked to the regulation of emotional responses; here defined by the Harvard-Oxford label Frontal Medial Cortex",
+   "excludes": "functional definitions from a task, and the dorsal and lateral prefrontal cortex"
+  },
+  "harvard-oxford": {
+   "term": "Harvard-Oxford atlas",
+   "field": "neuroimaging",
+   "definition": "a probabilistic atlas of cortical and subcortical regions in standard brain space; at a 50 percent threshold a voxel belongs to a region when at least half of the reference brains placed it there",
+   "excludes": "regions drawn from each participant's own anatomy or from functional data"
+  },
+  "fmriprep": {
+   "term": "fMRIPrep",
+   "field": "neuroimaging software",
+   "definition": "an open preprocessing pipeline for functional MRI that corrects head motion and distortion, aligns images to a standard brain space and writes nuisance signals for later cleaning",
+   "excludes": "the denoising and statistics that follow, which were run by our own code"
+  },
+  "fd": {
+   "term": "framewise displacement",
+   "field": "neuroimaging (motion quality control)",
+   "definition": "a summary of how far the head moved between two consecutive brain volumes, in millimetres, from the six rigid-body motion parameters",
+   "excludes": "motion within a single volume"
+  },
+  "censoring": {
+   "term": "censoring",
+   "field": "neuroimaging (motion quality control)",
+   "definition": "dropping single brain volumes whose head motion exceeds a threshold before connectivity is computed",
+   "excludes": "dropping whole runs or whole participants, which follow separate rules"
+  },
+  "acompcor": {
+   "term": "aCompCor",
+   "field": "neuroimaging (denoising)",
+   "definition": "anatomical component correction: the main components of the signal in white matter and cerebrospinal fluid, where little neural signal is expected, are regressed out as noise",
+   "excludes": "global signal regression, which removes the mean of the whole brain"
+  },
+  "gsr": {
+   "term": "global signal regression",
+   "field": "neuroimaging (denoising)",
+   "definition": "removing the average signal of the whole brain from every region before connectivity is computed",
+   "excludes": "aCompCor and motion regression, which remove other nuisance signals"
+  },
+  "fisher-z": {
+   "term": "Fisher z",
+   "field": "statistics",
+   "definition": "the transform z = artanh(r) of a correlation, which makes its sampling spread close to normal so that correlations can be averaged and given intervals",
+   "excludes": "any change to the sign or ranking of correlations"
+  },
+  "partial-r": {
+   "term": "partial correlation",
+   "field": "statistics",
+   "definition": "the correlation between two quantities after the linear effect of a set of covariates has been removed from both",
+   "excludes": "adjustment for covariates that were not measured, and any statement about cause"
+  },
+  "sesoi": {
+   "term": "smallest effect of interest",
+   "field": "statistics (equivalence testing)",
+   "definition": "the size of effect, fixed before the data are seen, below which an effect is treated as too small to matter for the decision at hand; here a correlation of 0.20 in size",
+   "excludes": "a claim that smaller effects are zero"
+  },
+  "tost": {
+   "term": "equivalence test (two one-sided tests)",
+   "field": "statistics",
+   "definition": "a test that supports the absence of a meaningful effect when the 90 percent interval of the estimate lies wholly inside the band set by the smallest effect of interest, which is the same as rejecting both edges of the band at the 5 percent level",
+   "excludes": "a test of whether the effect is exactly zero"
+  },
+  "holm": {
+   "term": "Holm correction",
+   "field": "statistics (multiple testing)",
+   "definition": "a step-down adjustment of p values across a family of tests that keeps the chance of any false positive in the family at the stated level",
+   "excludes": "adjustment for analyses outside the declared family, such as the exploratory sensitivity checks"
+  },
+  "stat-power": {
+   "term": "statistical power",
+   "field": "statistics",
+   "definition": "the chance that a test detects an effect of a stated size, given the sample size and the threshold for significance",
+   "excludes": "the chance that a detected effect is real"
+  },
+  "deviation": {
+   "term": "deviation",
+   "field": "research method (metascience)",
+   "definition": "a dated, reasoned change to a preregistered plan, written into the plan's log, with the point in the study at which it was decided",
+   "excludes": "a silent change to the analysis"
+  },
+  "positive-control": {
+   "term": "positive control",
+   "field": "experimental design",
+   "definition": "a test of a known effect run through the same pipeline, to show that the pipeline can find an effect of the expected kind",
+   "excludes": "shuffled controls, which show what no effect looks like"
+  }
+ }
+}

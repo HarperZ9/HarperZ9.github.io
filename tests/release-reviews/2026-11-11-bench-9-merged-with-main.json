@@ -1,0 +1,7 @@
+{
+  "date": "2026-11-11",
+  "note": "Main and the updated element bench branch merged into the ninth-pass bench branch. index.html carries both sides' changes; the ?v= world asset revision was regenerated to world-e7159ca51d. The author approved merging on 2026-11-11.",
+  "paths": {
+    "index.html": "ed4b0b8cc1736f7d2c02d92a5eb6c5cbec77a8ab973ae9749da5eb6df17eff52"
+  }
+}

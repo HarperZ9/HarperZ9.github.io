@@ -5,23 +5,12 @@ import { esc } from "./studies-markdown.mjs";
 
 import { backdrop as fieldBackdrop } from "./field-backdrop.mjs";
 import { labelHand } from "./hand-labels.mjs";
+import { menuDialog } from "./hand-menu.mjs";
 export const ORIGIN = "https://harperz9.github.io";
 const CARD = `${ORIGIN}/img/og/p/home.jpg`;
 const TEXT_FACE = "/world/ui/shell/fonts/hanken-grotesk.woff2";  // the still face; Accession and its families are materials a page adds
 
-const PLACES = [
-  ["/world/ui/directions/cs-max/flywheel.html", "light", "Flywheel"],
-  ["/articulate.html", "engraved", "Articulate"],
-  ["/cmmns.html", "glyphcell", "CMMNS"],
-  ["/buildlang.html", "glyphcell", "BuildLang"],
-  ["/raw.html", "nightlights", "raw-native"],
-  ["/explainers.html", "sound", "Films"],
-  ["/publications.html", "swarm", "Writing"],
-  ["/studies/", "rope", "Studies"],
-  ["/hire.html", "rope", "Work"],
-];
-
-function hand() {
+function hand(here = "") {
   return labelHand(`<header class="o-hand" aria-label="Site">
   <a class="skip" href="#main">Skip to the page</a>
   <a class="o-home" href="/">Zain Dana Harper</a>
@@ -29,19 +18,11 @@ function hand() {
   <button type="button" data-o="fold" aria-controls="o-menu" aria-expanded="false" hidden><span class="o-name">Menu (M)</span><i></i><i></i><i></i></button>
   <button type="button" data-o="lamp" data-theme-toggle aria-pressed="true"><span class="o-name">Lamp</span></button>
   <button type="button" data-o="peel" data-plain-toggle aria-pressed="false"><span class="o-name">Plain view</span></button>
-</header>
-<dialog id="o-menu" data-o="menu" data-material="chladni" aria-label="Places">
-  <nav aria-label="Places">
-    <ul class="o-places">
-${PLACES.map(([href, tech, name]) => `      <li><a href="${href}"><span class="o-word" data-display-on-open="${tech}">${esc(name)}</span></a></li>`).join("\n")}
-    </ul>
-  </nav>
-  <p class="o-menu-foot"><a href="/floor.html">Plain index</a> <a href="/world/universe/proto/index.html">The map</a> <button type="button" class="o-close" onclick="this.closest('dialog').close()">Close (Esc)</button></p>
-</dialog>`);
+</header>`) + "\n" + menuDialog({ here });
 }
 
 // page({ path, title, description, body, robots, extraHead, jsonld }) -> the whole document
-export function page({ path, title, description, body, robots = "", extraHead = "", jsonld = null, css = "/studies/studies.css", htmlAttrs = "", bodyClass = "reading", backdrop = true }) {
+export function page({ path, title, description, body, robots = "", extraHead = "", jsonld = null, css = "/studies/studies.css", htmlAttrs = "", bodyClass = "reading", backdrop = true, live = false }) {
   const url = `${ORIGIN}/${path.replace(/index\.html$/, "")}`, full = `${title} | Zain Dana Harper`;
   return `<!doctype html>
 <html lang="en" data-type="stock"${htmlAttrs ? " " + htmlAttrs : ""}>
@@ -65,12 +46,13 @@ ${robots ? `<meta name="robots" content="${esc(robots)}">\n` : ""}<link rel="can
 <link rel="preload" href="${TEXT_FACE}" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/world/ui/shell/shell.css">
 <link rel="stylesheet" href="${css}">
+<link rel="stylesheet" href="/world/site/depth.css">
 <script type="module" src="/world/ui/shell/shell.js"></script>
 <script type="module" src="/world/site/hand-scroll.js"></script>
 ${jsonld ? `<script type="application/ld+json">${JSON.stringify(jsonld)}</script>\n` : ""}${extraHead}</head>
 <body class="${bodyClass}">
-${backdrop ? fieldBackdrop() : ""}
-${hand()}
+${backdrop ? fieldBackdrop({ live }) : ""}
+${hand("/" + path.replace(/index\.html$/, ""))}
 <main id="main" tabindex="-1">
 ${body}
 </main>

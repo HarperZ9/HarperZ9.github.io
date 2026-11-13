@@ -1,0 +1,540 @@
+{
+ "schema": "research-record/1",
+ "built": "2026-11-09 by scripts/record-findings.mjs from paper.txt, the register row and the findings ledger",
+ "document": {
+  "id": "F27",
+  "kind": "finding",
+  "title": "Mood that lingers and mood that bounces back were not shown to be separate traits",
+  "standfirst": "In four open phone-survey mood datasets, people whose mood carries over from one prompt to the next also tend to return more slowly after a spike. A two-trait model never beat a one-trait model, but the measures were too noisy for that test to have much power.",
+  "date_found": "2026-10-29",
+  "fields": [
+   "psychology"
+  ],
+  "tier": "D",
+  "tier_reason": "Reported as a null. Power is limited by split-half reliability of 0.03 to 0.47, and the null has no noise term, so it does not show a single trait.",
+  "rung": "killed",
+  "rung_reason": "Two factors never beat one AR(1) axis.",
+  "outcome": "null",
+  "bound": "Split-half reliability ran from 0.03 to 0.47, so the factor test had little power; two separate traits are not ruled out.",
+  "objection": "Split-half reliability was 0.03 to 0.47, so the factor test had little power, and one dataset could not be fitted at all.",
+  "objection_source": "the paper's first stated limitation; no reviewer attack is on file",
+  "would_change": "Longer series, an AR(1) null with measurement noise, and test-retest reliability.",
+  "sections": [
+   {
+    "id": "reader",
+    "title": "What this means for a reader",
+    "role": "lead",
+    "paragraphs": [
+     "A person whose mood tends to linger from hour to hour also tends, in these data, to come back more slowly after a big swing. We could not show that these are two different things. That is weak evidence that they are one, because the person-level measures were noisy. If you read a study that reports a strong link between inertia and recovery, check whether both were computed from the same moments; in our data that overlap alone pushes the correlation from about 0.3 to about 0.7."
+    ]
+   },
+   {
+    "id": "abstract",
+    "title": "Abstract",
+    "role": "argument",
+    "paragraphs": [
+     "Emotional inertia is the carryover of mood from one moment to the next. Recovery is how fast mood returns to a person's usual level after a sharp high or low. We asked whether these are two separate traits or one trait seen twice. In four open phone-survey datasets from the openESM database (71, 49, 99 and 259 eligible people), the two measures were computed on disjoint sets of prompt pairs and correlated across people. {c1}Across people, inertia and recovery were negatively correlated in all four datasets, r -0.44, -0.41, -0.28 and -0.29.{/c1} {c2}The coupling was weaker than a one-parameter AR(1) null in two datasets, 0008 clearly and 0018 by 0.001, and sat inside that null in the other two.{/c2} {c3}A factor model with two factors never fit better than one.{/c3} {c4}Split-half reliability ran from 0.03 to 0.47, so the factor test had little power.{/c4} The preregistered prediction that the two are separate was not supported in any dataset on both of its tests. We report it as an {g:honest-null}honest null{/g} with low power, and with one methods warning: {c5}with the usual all-pairs inertia, which reuses the spike pairs, the correlation reached 0.67 to 0.81 in size.{/c5}"
+    ]
+   },
+   {
+    "id": "intro",
+    "title": "Introduction",
+    "role": "argument",
+    "paragraphs": [
+     "{g:emotional-inertia}Emotional inertia{/g} was introduced as a person-level property by Kuppens, Allen and Sheeber {cite:r2}, who found higher inertia of both positive and negative emotions in people with depression and low self-esteem, across two naturalistic studies. Inertia is usually read off as an autocorrelation, so it measures how self-predictable a person's mood is from one prompt to the next.",
+     "Koval and colleagues {cite:r3} asked how inertia relates to the events people meet. In 200 first-year students, measured in daily life and in a film-clip task, the most consistent result was that higher inertia of negative affect went with slower recovery after negative stimuli. Their abstract reads this as inertia being driven mostly by weaker repair of mood after negative events. Schreuder and colleagues {cite:r5} measured recovery more directly: in a preregistered study of 68 adults with burst sampling, they timed returns to baseline after positive and negative episodes with survival analysis, and trait resilience did not predict return time.",
+     "A broader caution comes from Dejonckheere and colleagues {cite:r4}. Across many datasets, measures of mood dynamics such as autocorrelation added little to the prediction of well-being once mean affect and its variability were known. A dynamic measure has to earn its place as a separate quantity.",
+     "Our question sits between these. If inertia and recovery are two traits, they should vary across people more loosely than a model with one parameter would allow. If they are one trait, the coupling should look like what a single parameter produces on the same prompt schedules. The search we ran found adjacent work but no test of this form; that is what the search returned, not proof that none exists."
+    ]
+   },
+   {
+    "id": "prereg",
+    "title": "Preregistration and design",
+    "role": "argument",
+    "paragraphs": [
+     "The {g:preregistration}preregistration{/g} was written on 29 October 2026, before any inertia, recovery, correlation or factor model was computed on the real data. Before writing it we had seen column names, row counts, the most common raw values of each mood column, and the number of prompts per person. All design choices were tested on synthetic populations first.",
+     "The idea and the prediction came from the author, who framed mood as an audio chain: a reverb, how long a feeling rings on, and a compressor release, how fast a large swing returns. The prediction had two parts, tested in each dataset separately:",
+     "- P1, separate variation: the across-person correlation of inertia and recovery has a 95 percent interval inside -0.7 to 0.7, and its size is below the 5th percentile of the same quantity from a one-parameter AR(1) null.",
+     "- P2, two factors beat one: a two-factor model of odd-day and even-day inertia and recovery beats a one-factor model, with a {g:chi2-diff}chi-square difference test{/g} p below 0.05 and a lower BIC.",
+     "The {g:verdict}verdict{/g} rules were fixed in advance. A dataset is \"supported\" when the shuffle check P0, P1 and P2 all pass; \"partly\" when P0 passes and exactly one of P1 and P2; \"null\" when P0 passes and both fail; \"instrument failure\" when P0 fails; \"untestable\" with fewer than 30 eligible people. There was no pooling across datasets, because their scales and samples differ. The preregistration's SHA-256 is given in the reproduction section."
+    ]
+   },
+   {
+    "id": "data",
+    "title": "Data and provenance",
+    "role": "argument",
+    "paragraphs": [
+     "The four datasets come from openESM {cite:r1}, a database of open {g:esm}experience sampling{/g} data, all under the Creative Commons Attribution 4.0 licence (CC BY 4.0). Only group statistics are reported here; nothing describes an individual participant.",
+     "- 0018, Bailon 2020 (CoVidAffect, Spain, spring 2020): a valence slider from 0 to 100. There are no prompt numbers, so prompts are ordered by answer time and a pair needs the same day and a gap of at most 6 hours.",
+     "- 0062, Neubauer 2024 (STECCO, German first-year students, 2021): valence is the mean of four positive items minus the mean of four negative items, each 1 to 7, from the five momentary prompts a day. Two 7-day bursts six weeks apart.",
+     "- 0008, Westhoff 2024 (young adults, Germany): a valence item from 0 to 100, five prompts a day for 21 days.",
+     "- 0076, Bayer (mCog, US adults with Android phones, 2019): positive affect from 1 to 5, six prompts a day for 14 days.",
+     "The four input files were hashed by the run, and the hashes are in its result file. The samples are convenience samples, each on its own scale, which is why each is analysed alone."
+    ]
+   },
+   {
+    "id": "methods",
+    "title": "Methods",
+    "role": "argument",
+    "paragraphs": [
+     "## Pairs, spikes and recovery",
+     "A {g:lag-pair}lag pair{/g} is two adjacent prompts on the same study day. For a person with mean {m:m} and standard deviation {m:s} over all their valid prompts, the deviation at prompt {m:t} is",
+     "$$ d_t = x_t - m {eq:dev}",
+     "A {g:spike}spike{/g} is the lead prompt of a lag pair with a deviation of at least {m:1.5 s} in size. For each spike, the share of the deviation that has gone at the next prompt is",
+     "$$ u_t = 1 - \\frac{d_{t+1}}{d_t} {eq:u}",
+     "clipped to the range -1 to 2. A person's {g:recovery}recovery{/g} is the median of {m:u_t} over their spikes, so 1 means back at the mean one prompt later and 0 means no change.",
+     "## Inertia on disjoint pairs",
+     "Primary inertia is the {g:pearson-r}Pearson r{/g} between {m:x_t} and {m:x_{t+1}} over the lag pairs whose lead prompt is not a spike. The reason was settled on synthetic data before the run. Inertia over all pairs is dominated by large deviations, so it reads the same spike pairs that define recovery. In a synthetic population with separate rates for small and large deviations, all-pairs inertia still correlated with recovery at -0.77 to -0.83; the disjoint version gave -0.23 to -0.29, against -0.54 to -0.61 in a one-parameter population. All-pairs inertia was kept as a secondary measure.",
+     "A person was eligible with at least 30 valid prompts, 20 lag pairs, 15 non-spike pairs and 5 spikes. A dataset was tested with at least 30 eligible people.",
+     "## The across-person correlation",
+     "For each dataset, {m:r} is the Pearson correlation of inertia and recovery across eligible people. Its 95 percent interval is a {g:person-bootstrap}person bootstrap{/g} with 2,000 resamples.",
+     "## The one-parameter null",
+     "The decisive comparison is with an {g:ar1}AR(1) process{/g}, in which each person has a single parameter {m:\\phi}:",
+     "$$ d_{t+1} = \\phi d_t + \\epsilon_{t+1} {eq:ar1}",
+     "where {m:\\epsilon} is fresh Gaussian noise. Each eligible person is simulated on their exact prompt schedule, with the same days, prompts and missed prompts, a fresh stationary start each day, their own {m:m} and {m:s}, and values rounded and clipped to the scale. The person's {m:\\phi} is their all-pairs inertia corrected for short-series {g:kendall-bias}Kendall bias{/g},",
+     "$$ \\phi_K = \\phi + \\frac{1 + 3 \\phi}{n} {eq:kendall}",
+     "with {m:n} the number of pairs, then shrunk toward the dataset mean so that its spread excludes sampling noise, and clipped to -0.5 to 0.95. The whole pipeline is rerun on the simulated people, and the size of {m:r} is recorded. Two hundred draws give the {g:null-distribution}null distribution{/g}.",
+     "## The factor test",
+     "Each person gives four indicators: inertia and recovery computed on odd study days and on even study days, each half needing at least 10 non-spike pairs and 3 spikes. A one-{g:factor-model}factor model{/g} (four loadings, four unique variances, 2 degrees of freedom) is compared with a two-factor model with inertia halves on one factor, recovery halves on the other and a free factor correlation (1 degree of freedom). The two-factor model wins only if the chi-square difference has p below 0.05 and its {g:bic}BIC{/g} is lower. The one-factor model is the two-factor model with the factor correlation at plus or minus 1, a boundary value, so the 1-degree-of-freedom p is conservative. The same halves give each measure's {g:split-half}split-half reliability{/g}.",
+     "## p values from draws",
+     "Each control's p value is the share of draws at or above the real value, with one added to the count and the number of draws:",
+     "$$ p = \\frac{k + 1}{n + 1} {eq:p}",
+     "At 200 draws the smallest value is 0.005."
+    ]
+   },
+   {
+    "id": "controls",
+    "title": "Controls and planted checks",
+    "role": "argument",
+    "paragraphs": [
+     "Three {g:control}controls{/g} ran per dataset, 200 draws each, from one random generator with seed 20261029.",
+     "- C1, time shuffle: each person's mood values are permuted over their own prompt slots, and pairs and spikes are recomputed. The real mean inertia must exceed the shuffle's 95th percentile (rule P0). This checks that the instrument reads real carryover.",
+     "- C2, the one-parameter AR(1) null of eq. {ref:eq:ar1}.",
+     "- C3, each person cut to a random block of 40 prompts, to see how the coupling behaves in short series.",
+     "The AR(1) null was itself a {g:planted-check}planted check{/g} before the run. {c6}In a synthetic one-parameter world the observed correlation fell inside this null in 6 of 6 runs, and in a two-parameter world below its 5th percentile in 6 of 6 runs,{/c6} on both continuous and 5-point scales. So the null can tell the two worlds apart when the data are as clean as the simulation.",
+     "The shuffle check passed in all four datasets. Mean primary inertia was 0.236, 0.404, 0.270 and 0.162, against shuffle 95th percentiles of 0.013, 0.011, 0.013 and 0.000, each with p 0.005, the smallest value 200 draws allow."
+    ]
+   },
+   {
+    "id": "results",
+    "title": "Results",
+    "role": "argument",
+    "paragraphs": [
+     "Table {ref:tab:main} gives the main numbers. {c1}Across people, inertia and recovery were negatively correlated in all four datasets, r -0.44, -0.41, -0.28 and -0.29.{/c1} Each {g:interval-95}95% interval{/g} excludes 0 and lies inside -0.7 to 0.7. People whose mood carries over more tend to recover less of a spike by the next prompt.",
+     "::table tab:main cols=0.12,0.13,0.25,0.22,0.14,0.14 Across-person correlation of inertia and recovery, with the one-parameter AR(1) null of its size. Intervals are person-bootstrap 95 percent intervals; the null runs 200 draws (156 usable in 0062, where some draws had fewer than 30 eligible people).\nDataset ¦ Eligible ¦ r (95% interval) ¦ Null 5th pct, mean ¦ P1 ¦ Factor r\n0018 ¦ 71 of 999 ¦ -0.44 (-0.63 to -0.19) ¦ 0.440, 0.573 ¦ pass ¦ 0.95\n0062 ¦ 49 of 321 ¦ -0.41 (-0.68 to -0.09) ¦ 0.215, 0.512 ¦ fail ¦ untestable\n0008 ¦ 99 of 114 ¦ -0.28 (-0.45 to -0.09) ¦ 0.367, 0.475 ¦ pass ¦ 0.98\n0076 ¦ 259 of 519 ¦ -0.29 (-0.41 to -0.15) ¦ 0.168, 0.283 ¦ fail ¦ -1.00\n::end",
+     "{c2}The coupling was weaker than a one-parameter AR(1) null in two datasets, 0008 clearly and 0018 by 0.001, and sat inside that null in the other two.{/c2} In 0008 the size of {m:r} was 0.279 against a null 5th percentile of 0.367. In 0018 it was 0.4391 against 0.4399, a pass that a different seed could reverse. In 0062 it was 0.414 inside a null running from 0.215 to 0.682, and in 0076 it was 0.289, next to the null mean of 0.283. Figure {ref:fig:null} draws these against the null and beside the all-pairs value.",
+     "{c3}A factor model with two factors never fit better than one.{/c3} In 0018 (53 people with both halves) the chi-square difference was 0.055 with p 0.81 and the BIC favoured one factor by 3.9; the factor correlation was 0.95. In 0008 (60 people) the difference was 0.001 with p 0.97, BIC +4.1, factor correlation 0.98. In 0076 (152 people) the difference was 0.00 with p 1.0, BIC +5.0, and the factor correlation sat at the boundary, -1.00. In 0062 only 5 people had enough spikes on both odd and even days, because the study ran in two 7-day bursts, so the model could not be fitted.",
+     "![fig:null width=0.85 alt=Four rows of diamonds for the real correlation size against grey null bars, with open circles further right for the all-pairs version](fig-null.png) Size of the across-person correlation of inertia and recovery (diamonds; blue where below the null's 5th percentile) against the one-parameter AR(1) null (grey bar from 5th to 95th percentile, tick at the mean). Open circles: the same correlation with all-pairs inertia, which shares the spike pairs with recovery. Drawn from the run's result file.",
+     "{c4}Split-half reliability ran from 0.03 to 0.47, so the factor test had little power.{/c4} For inertia it was 0.38, 0.47 and 0.03 in 0018, 0008 and 0076; for recovery 0.33, 0.11 and 0.17. Two factors cannot separate when each indicator carries this much noise.",
+     "The definition of inertia matters more than any other choice. {c5}With the usual all-pairs inertia, which reuses the spike pairs, the correlation reached 0.67 to 0.81 in size.{/c5} The values were -0.81, -0.75, -0.67 and -0.69. Under that definition P1 would have failed in every dataset on its first condition. Other preregistered sensitivity checks changed no conclusion: Kendall-corrected inertia gave r -0.43, -0.42, -0.28 and -0.29, and a spike threshold of 1.0 standard deviations gave -0.37, -0.32, -0.27 and -0.16 with more people eligible (79, 138, 112 and 272).",
+     "Coupling grew with series length in three datasets (Figure {ref:fig:tertile}). Split by prompts per person into thirds, {m:r} ran -0.14, -0.45 and -0.78 in 0018, -0.19, -0.27 and -0.40 in 0008, and -0.25, -0.24 and -0.37 in 0076. In 0062 it ran -0.31, -0.78 and +0.25 with 13 to 19 people per third. This pattern fits {g:attenuation}attenuation{/g}: in short series both measures are noisy and the correlation shrinks toward zero. The thirds are small and have no intervals. The 40-prompt control C3 was usable only in 0076, where the mean size of {m:r} was 0.235 (5th to 95th percentile 0.104 to 0.370); in the other three, too few people stayed eligible in 40 prompts.",
+     "![fig:tertile width=0.85 alt=Four lines across three prompt-count thirds; three fall from about -0.2 to about -0.4 to -0.8, one rises at the end](fig-tertile.png) Across-person r of inertia and recovery within thirds of prompts per person. Cells are small and carry no intervals. Drawn from the run's result file.",
+     "Table {ref:tab:forecast} sets the forecasts written in the preregistration against the outcomes.",
+     "::table tab:forecast cols=0.46,0.27,0.27 Forecasts fixed in the preregistration against what the run gave.\nQuantity ¦ Forecast ¦ Outcome\nShuffle check P0 passes in every tested dataset ¦ probability 0.9 ¦ 4 of 4\nMean primary inertia between 0.10 and 0.40 ¦ each dataset ¦ 3 of 4 (0062: 0.404)\nr negative, about -0.2 to -0.5 ¦ each dataset ¦ 4 of 4\n95% interval inside -0.7 to 0.7 ¦ probability 0.8 each ¦ 4 of 4\nSize of r below the AR(1) null 5th percentile ¦ probability 0.35 each ¦ 2 of 4\nTwo factors beat one ¦ probability 0.3 each ¦ 0 of 3 tested\nSplit-half reliability of recovery 0.1 to 0.3 ¦ expected ¦ 2 of 3 (0.33, 0.11, 0.17)\n0018 untestable or thin ¦ probability 0.4 ¦ tested, 71 people\n::end"
+    ]
+   },
+   {
+    "id": "discussion",
+    "title": "Discussion",
+    "role": "argument",
+    "paragraphs": [
+     "Read by the preregistered rules, 0018 and 0008 are \"partly\" (P1 passed, P2 failed), 0076 is \"null\", and 0062 failed P1 with P2 untestable. No dataset supported both parts of the prediction. The headline is therefore that inertia and recovery were not shown to be separate traits.",
+     "That does not show they are one trait, and two features of the design lean toward a pass rather than a fail. The AR(1) null has no measurement-noise term. Noise in the real data weakens the observed coupling, which makes a real value below the null's 5th percentile easier to reach. The two P1 passes are weak evidence for that reason, and the 0018 pass sits at the edge. The factor test, on the other side, had too little reliability to detect two factors even if they exist.",
+     "The direction agrees with Koval and colleagues {cite:r3}, whose abstract reports higher negative-affect inertia going with slower recovery. It also fits the caution of Dejonckheere and colleagues {cite:r4}: a dynamic measure computed from few prompts carries little information of its own, and here two such measures could not be told apart. Recovery measured in clock time with dense sampling, as in Schreuder and colleagues {cite:r5}, is a better instrument for the question than one-prompt-later recovery from five or six prompts a day.",
+     "The methods result stands apart from the null. Inertia computed over all pairs shares data with recovery, and in these four datasets that overlap alone moves the size of the correlation from 0.28 to 0.44 up to 0.67 to 0.81. Any study that relates autocorrelation to recovery after peaks should compute them from disjoint pairs, or report how much of the link the overlap creates."
+    ]
+   },
+   {
+    "id": "limits",
+    "title": "Limitations",
+    "role": "argument",
+    "paragraphs": [
+     "- Split-half reliability was 0.03 to 0.47, so the factor test had little power, and one dataset could not be fitted at all.",
+     "- The AR(1) null has no measurement-noise term, which favours a pass on P1.",
+     "- Recovery rests on few spikes per person, and one prompt later is a coarse clock.",
+     "- The four datasets are convenience samples on different scales and items, and three of the four eligible samples are small.",
+     "- The 40-prompt control was usable in one dataset only.",
+     "- A second round with a noise term was preregistered on the same day. No run of it is on record, so its outcome is unknown.",
+     "- Scoring was done by our own code and was not blind."
+    ]
+   },
+   {
+    "id": "appendix",
+    "title": "Appendix A. The preregistered verdicts",
+    "role": "evidence",
+    "paragraphs": [
+     "Each verdict is a set of rules written before the run, read off by code. Values are from the run's result file. P0 compares mean inertia with the shuffle's 95th percentile; P1 compares the size of r with the AR(1) null's 5th percentile (its interval conditions held everywhere); P2 needs a chi-square difference p below 0.05 and a lower two-factor BIC; S needs the 40-prompt control's mean size of r below 0.7.",
+     "::table tab:verdicts cols=0.12,0.22,0.22,0.22,0.22 Preregistered verdicts per dataset, with the deciding values.\nRule ¦ 0018 ¦ 0062 ¦ 0008 ¦ 0076\nP0 ¦ pass: 0.236 over 0.013 ¦ pass: 0.404 over 0.011 ¦ pass: 0.270 over 0.013 ¦ pass: 0.162 over 0.000\nP1 ¦ pass: 0.439 under 0.440 ¦ fail: 0.414 over 0.215 ¦ pass: 0.279 under 0.367 ¦ fail: 0.289 over 0.168\nP2 ¦ fail: p 0.81, BIC +3.9 ¦ untestable: 5 people ¦ fail: p 0.97, BIC +4.1 ¦ fail: p 1.0, BIC +5.0\nS ¦ untestable ¦ untestable ¦ untestable ¦ pass: 0.235\nReading ¦ partly ¦ P1 null, P2 untestable ¦ partly ¦ null\n::end"
+    ]
+   }
+  ]
+ },
+ "claims": [
+  {
+   "id": "c1",
+   "text": "Across people, inertia and recovery were negatively correlated in all four datasets, r -0.44, -0.41, -0.28 and -0.29.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e1"
+   ]
+  },
+  {
+   "id": "c2",
+   "text": "The coupling was weaker than a one-parameter AR(1) null in two datasets, 0008 clearly and 0018 by 0.001, and sat inside that null in the other two.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e2"
+   ]
+  },
+  {
+   "id": "c3",
+   "text": "A factor model with two factors never fit better than one.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": []
+  },
+  {
+   "id": "c4",
+   "text": "Split-half reliability ran from 0.03 to 0.47, so the factor test had little power.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e3"
+   ]
+  },
+  {
+   "id": "c5",
+   "text": "with the usual all-pairs inertia, which reuses the spike pairs, the correlation reached 0.67 to 0.81 in size.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e4"
+   ]
+  },
+  {
+   "id": "c6",
+   "text": "In a synthetic one-parameter world the observed correlation fell inside this null in 6 of 6 runs, and in a two-parameter world below its 5th percentile in 6 of 6 runs,",
+   "section": "controls",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e5"
+   ]
+  }
+ ],
+ "evidence": [
+  {
+   "id": "e1",
+   "kind": "number",
+   "label": "The numbers in claim 1",
+   "value": "-0.44; -0.41; -0.28; -0.29",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e2",
+   "kind": "number",
+   "label": "The numbers in claim 2",
+   "value": "1; 0008; 0018; 0.001",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e3",
+   "kind": "number",
+   "label": "The numbers in claim 4",
+   "value": "0.03; 0.47",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e4",
+   "kind": "number",
+   "label": "The numbers in claim 5",
+   "value": "0.67; 0.81",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e5",
+   "kind": "number",
+   "label": "The numbers in claim 6",
+   "value": "6; 5",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e6",
+   "kind": "number",
+   "label": "Sample",
+   "value": "4 datasets: n 71, 49, 99, 259",
+   "check": {
+    "by": "the register's evidence fields",
+    "result": "not_checked",
+    "note": "as recorded in the publication register"
+   }
+  },
+  {
+   "id": "e7",
+   "kind": "number",
+   "label": "Main estimate and interval",
+   "value": "r -0.44, -0.41, -0.28, -0.29; 0018 (-0.63, -0.19)",
+   "check": {
+    "by": "the register's evidence fields",
+    "result": "not_checked",
+    "note": "as recorded in the publication register"
+   }
+  },
+  {
+   "id": "e8",
+   "kind": "number",
+   "label": "Forecast against outcome",
+   "value": "P1 pass in 2 of 4; P2 no pass",
+   "check": {
+    "by": "the register's evidence fields",
+    "result": "not_checked",
+    "note": "as recorded in the publication register"
+   }
+  },
+  {
+   "id": "e9",
+   "kind": "control",
+   "label": "Known-answer check",
+   "value": "P0 passed in all 4",
+   "check": {
+    "by": "the register's evidence fields",
+    "result": "not_checked",
+    "note": "as recorded in the publication register"
+   }
+  }
+ ],
+ "references": [
+  {
+   "id": "r1",
+   "key": "Siepe 2026",
+   "kind": "dataset",
+   "title": "Siepe, B. S., Haslbeck, J. M. B., Kloft, M., Büchner, A., Zhang, Y., Fried, E. I. and Heck, D. W. (2026). Introducing openESM: a database of openly available experience sampling datasets. Behavior Research Methods 58, 240. doi:10.3758/s13428-026-03112-y. Datasets 0018, 0062, 0008 and 0076, CC BY 4.0.",
+   "access": "run",
+   "target": "https://doi.org/10.3758/s13428-026-03112-y",
+   "licence": "openESM CC BY 4.0"
+  },
+  {
+   "id": "r2",
+   "key": "Kuppens 2010",
+   "kind": "paper",
+   "title": "Kuppens, P., Allen, N. B. and Sheeber, L. B. (2010). Emotional inertia and psychological maladjustment. Psychological Science 21, 984-991. doi:10.1177/0956797610372634",
+   "access": "snippet",
+   "target": "https://doi.org/10.1177/0956797610372634",
+   "access_note": "abstracts and publisher or repository pages; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r3",
+   "key": "Koval 2015",
+   "kind": "paper",
+   "title": "Koval, P., Brose, A., Pe, M. L., Houben, M., Erbas, Y., Champagne, D. and Kuppens, P. (2015). Emotional inertia and external events: the roles of exposure, reactivity, and recovery. Emotion 15, 625-636. doi:10.1037/emo0000059",
+   "access": "snippet",
+   "target": "https://doi.org/10.1037/emo0000059",
+   "access_note": "abstracts and publisher or repository pages; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r4",
+   "key": "Dejonckheere 2019",
+   "kind": "paper",
+   "title": "Dejonckheere, E., Mestdagh, M., Houben, M., Rutten, I., Sels, L., Kuppens, P. and Tuerlinckx, F. (2019). Complex affect dynamics add limited information to the prediction of psychological well-being. Nature Human Behaviour 3, 478-491. doi:10.1038/s41562-019-0555-0",
+   "access": "snippet",
+   "target": "https://doi.org/10.1038/s41562-019-0555-0",
+   "access_note": "abstracts and publisher or repository pages; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r5",
+   "key": "Schreuder 2024",
+   "kind": "paper",
+   "title": "Schreuder, M. J., Ariens, S., Lafit, G. and Ceulemans, E. (2024). Bouncing back from emotional ups and downs: insights in emotional recovery using survival analyses of burst ESM data. Cognition and Emotion 39, 910-919 (online 2024). doi:10.1080/02699931.2024.2423706",
+   "access": "snippet",
+   "target": "https://doi.org/10.1080/02699931.2024.2423706",
+   "access_note": "abstracts and publisher or repository pages; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r6",
+   "key": "Kendall 1954",
+   "kind": "paper",
+   "title": "Kendall, M. G. (1954). Note on bias in the estimation of autocorrelation. Biometrika 41, 403-404. doi:10.1093/biomet/41.3-4.403",
+   "access": "snippet",
+   "target": "https://doi.org/10.1093/biomet/41.3-4.403",
+   "access_note": "abstracts and publisher or repository pages; full text not read",
+   "accessed": "2026-11-09"
+  }
+ ],
+ "relations": [],
+ "corrections": [
+  {
+   "id": "x1",
+   "date": "2026-10-31",
+   "target": "document",
+   "type": "wording",
+   "after": "The result file exists and is the source of every number in this paper.",
+   "reason": "A review of our ledger noted that the F27 entry named no result file.",
+   "found_by": "a review of our findings ledger"
+  },
+  {
+   "id": "x2",
+   "date": "2026-11-09",
+   "target": "document",
+   "type": "number",
+   "after": "The study's notes give 24 people per third in 0018; the result file gives 24, 23 and 24, which this paper uses.",
+   "reason": "Dated in the paper's Corrections section; found by the publication pass.",
+   "found_by": "the publication pass"
+  }
+ ],
+ "versions": [
+  {
+   "n": 1,
+   "date": "2026-10-29",
+   "what": "entered in the findings ledger"
+  },
+  {
+   "n": 2,
+   "date": "2026-10-31",
+   "what": "dated correction, 1 item"
+  },
+  {
+   "n": 3,
+   "date": "2026-11-09",
+   "what": "paper version 1.0, first published",
+   "hash": "d09dea91f6a8d1b4f450329ef61092a8f35f5d7f050f7218c5201e42b47baaa3"
+  }
+ ],
+ "grade": {
+  "lowers": [
+   {
+    "domain": "blinding",
+    "text": "Not blind: the analyst saw the data's shape before the lock.",
+    "from": "register scorer.blind"
+   },
+   {
+    "domain": "imprecision",
+    "text": "Split-half reliability ran from 0.03 to 0.47, so the factor test had little power; two separate traits are not ruled out.",
+    "from": "the bound"
+   },
+   {
+    "domain": "single source",
+    "text": "The cited literature was read at the level of abstracts and publisher or repository pages; full texts were not read.",
+    "from": "paper Verified"
+   }
+  ],
+  "holds": [
+   {
+    "domain": "scoring",
+    "text": "Scored by code against rules fixed in advance.",
+    "from": "register scorer.who"
+   },
+   {
+    "domain": "preregistration",
+    "text": "Preregistered and hash-locked before the run (sha256 c26b85b5).",
+    "from": "paper Reproduction"
+   },
+   {
+    "domain": "control",
+    "text": "Controls: shuffle removes inertia, working; AR(1) null lacks noise.",
+    "from": "register evidence.controls"
+   },
+   {
+    "domain": "open data",
+    "text": "Public data.",
+    "from": "register data_licence"
+   }
+  ]
+ },
+ "reproduce": {
+  "data": [
+   {
+    "name": "Siepe 2026",
+    "licence": "openESM CC BY 4.0",
+    "url": "https://doi.org/10.3758/s13428-026-03112-y"
+   }
+  ],
+  "prereg": {
+   "hash": "c26b85b57ec1c6495ee297009a4f7fa1e47184cfa1ee10b4aba77cef4280ce81",
+   "plan": "86d93b056d781b181f3873196c9a1ac049d019b151c230a16de2693e0ff51201"
+  },
+  "cost": "the timings in the result file sum to about 63 seconds on one desktop CPU.",
+  "steps": [
+   "Data: download openESM datasets 0018, 0062, 0008 and 0076 (CC BY 4.0).",
+   "For each person, form lag pairs of adjacent prompts on the same day, flag spikes at 1.5 standard deviations from the person's mean, and compute recovery with eq. {ref:eq:u} and inertia over non-spike pairs.",
+   "Correlate inertia and recovery across eligible people with a 2,000-resample person bootstrap.",
+   "Run the time shuffle, the AR(1) null of eqs. {ref:eq:ar1} and {ref:eq:kendall}, and the 40-prompt blocks, 200 draws each, seed 20261029.",
+   "Fit one-factor and two-factor models to odd-day and even-day halves.",
+   "Preregistration SHA-256: c26b85b57ec1c6495ee297009a4f7fa1e47184cfa1ee10b4aba77cef4280ce81. Plan SHA-256: 86d93b056d781b181f3873196c9a1ac049d019b151c230a16de2693e0ff51201. Run 20261029T130553Z."
+  ],
+  "not_rerun": "The study was not re-run for this paper."
+ },
+ "verified": {
+  "date": "2026-11-09",
+  "checks": [
+   {
+    "what": "On 9 November 2026 the person counts, the four correlations with their intervals, the shuffle and AR(1) null quantiles and draw counts, the factor-model statistics and correlations, the split-half reliabilities, the all-pairs, Kendall-corrected and 1.0 standard deviation correlations, and the tertile values were re-read from the run's result file.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   },
+   {
+    "what": "They match the {g:findings-ledger}findings ledger{/g} entry and the study's own ledger.",
+    "by": "the paper's Verified pass",
+    "result": "match"
+   },
+   {
+    "what": "The preregistration's SHA-256 was recomputed and matches the hash recorded in the result file.",
+    "by": "the paper's Verified pass",
+    "result": "match"
+   },
+   {
+    "what": "The synthetic checks and the forecasts were read from the preregistration.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   },
+   {
+    "what": "Both figures were drawn by a script that reads only the result file.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   },
+   {
+    "what": "For Kendall {cite:r6} only the bibliographic record was seen, and the bias formula used here is the one written in our preregistration.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   }
+  ],
+  "not_checked": [
+   "The study was not re-run for this paper.",
+   "The literature in the introduction was found by searches run on 9 November 2026 and read at the level of abstracts and publisher or repository pages; the full texts were not read."
+  ]
+ }
+}

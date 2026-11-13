@@ -1,0 +1,223 @@
+{
+ "built": "2026-11-09",
+ "pages": [
+  {
+   "path": "findings/",
+   "indexable": true
+  },
+  {
+   "path": "findings/glossary.html",
+   "indexable": true
+  },
+  {
+   "path": "findings/F14-newtons-obliquity-table.html",
+   "id": "F14",
+   "tier": "B",
+   "standing": "extended",
+   "indexable": true
+  },
+  {
+   "path": "findings/F23-forest-hubs-cedar-decay-wind.html",
+   "id": "F23",
+   "tier": "B",
+   "standing": "none",
+   "indexable": true
+  },
+  {
+   "path": "findings/F27-emotional-inertia-and-recovery.html",
+   "id": "F27",
+   "tier": "D",
+   "standing": "none",
+   "indexable": true
+  },
+  {
+   "path": "findings/F32-skipping-and-abstain-gates.html",
+   "id": "F32",
+   "tier": "B*",
+   "standing": "none",
+   "indexable": true
+  },
+  {
+   "path": "findings/F39-long-tails-dark-spectra.html",
+   "id": "F39",
+   "tier": "B*",
+   "standing": "narrowed",
+   "indexable": true
+  },
+  {
+   "path": "findings/F47-skill-against-noise-ceilings.html",
+   "id": "F47",
+   "tier": "B*",
+   "standing": "none",
+   "indexable": true
+  },
+  {
+   "path": "findings/F50-childhood-trauma-amygdala-vmpfc-null.html",
+   "id": "F50",
+   "tier": "D",
+   "standing": "none",
+   "indexable": true
+  },
+  {
+   "path": "findings/F63-no-drought-steeling-in-tree-rings.html",
+   "id": "F63",
+   "tier": "D",
+   "standing": "narrowed",
+   "indexable": true
+  },
+  {
+   "path": "findings/F76-flatness-ceiling-on-real-series.html",
+   "id": "F76",
+   "tier": "B*",
+   "standing": "held",
+   "indexable": true
+  },
+  {
+   "path": "findings/F81-flower-colour-differences-humans-miss.html",
+   "id": "F81",
+   "tier": "B",
+   "standing": "narrowed",
+   "indexable": true
+  },
+  {
+   "path": "findings/F97-drought-space-time-tree-lens.html",
+   "id": "F97",
+   "tier": "B*",
+   "standing": "none",
+   "indexable": true
+  },
+  {
+   "path": "findings/F114-ring-channel-bits-per-year.html",
+   "id": "F114",
+   "tier": "B*",
+   "standing": "none",
+   "indexable": true
+  },
+  {
+   "path": "findings/F132-transfer-entropy-direction-fails-on-rings.html",
+   "id": "F132",
+   "tier": "D",
+   "standing": "questioned",
+   "indexable": true
+  },
+  {
+   "path": "findings/F147-film-as-a-photon-detector.html",
+   "id": "F147",
+   "tier": "B",
+   "standing": "narrowed",
+   "indexable": true
+  },
+  {
+   "path": "findings/F149-karst-doubled-reread.html",
+   "id": "F149",
+   "tier": "B*",
+   "standing": "none",
+   "indexable": true
+  },
+  {
+   "path": "findings/F152-gap-ranking-loses-to-popularity.html",
+   "id": "F152",
+   "tier": "D",
+   "standing": "held",
+   "indexable": true
+  },
+  {
+   "path": "findings/F166-combined-value-formula-retired.html",
+   "id": "F166",
+   "tier": "D",
+   "standing": "none",
+   "indexable": true
+  },
+  {
+   "path": "findings/F172-selection-model-of-replication.html",
+   "id": "F172",
+   "tier": "B",
+   "standing": "extended",
+   "indexable": true
+  },
+  {
+   "path": "findings/F183-shifted-optima-plain-beats-bio-optimisers.html",
+   "id": "F183",
+   "tier": "D",
+   "standing": "none",
+   "indexable": true
+  },
+  {
+   "path": "findings/F190-public-goods-self-benefit-correction.html",
+   "id": "F190",
+   "tier": "D",
+   "standing": "none",
+   "indexable": true
+  },
+  {
+   "path": "findings/F281-speed-limit-rerun.html",
+   "id": "F281",
+   "tier": "D",
+   "standing": "narrowed",
+   "indexable": true
+  },
+  {
+   "path": "findings/F308-oeis-recurrence-conjectures.html",
+   "id": "F308",
+   "tier": "D",
+   "standing": "narrowed",
+   "indexable": true
+  },
+  {
+   "path": "findings/F310-titius-bode-is-spacing.html",
+   "id": "F310",
+   "tier": "B",
+   "standing": "narrowed",
+   "indexable": true
+  },
+  {
+   "path": "findings/F320-stress-classifier-leakage.html",
+   "id": "F320",
+   "tier": "B",
+   "standing": "narrowed",
+   "indexable": true
+  },
+  {
+   "path": "findings/F329-lying-in-die-tasks.html",
+   "id": "F329",
+   "tier": "B",
+   "standing": "narrowed",
+   "indexable": true
+  },
+  {
+   "path": "findings/F344-auger-cubic-null.html",
+   "id": "F344",
+   "tier": "D",
+   "standing": "narrowed",
+   "indexable": true
+  },
+  {
+   "path": "findings/F362-stated-uncertainty-tails.html",
+   "id": "F362",
+   "tier": "B",
+   "standing": "narrowed",
+   "indexable": true
+  },
+  {
+   "path": "findings/F508-shannon-entropy-old-and-new-text.html",
+   "id": "F508",
+   "tier": "B",
+   "standing": "none",
+   "indexable": true
+  },
+  {
+   "path": "findings/F515-llm-compression-and-memorisation.html",
+   "id": "F515",
+   "tier": "B",
+   "standing": "none",
+   "indexable": true
+  },
+  {
+   "path": "findings/F675-granger-panel-ring-direction-kill-fires.html",
+   "id": "F675",
+   "tier": "D",
+   "standing": "narrowed",
+   "indexable": true
+  }
+ ]
+}

@@ -1,0 +1,499 @@
+{
+ "schema": "research-record/1",
+ "built": "2026-11-09 by scripts/record-findings.mjs from paper.txt, the register row and the findings ledger",
+ "document": {
+  "id": "F147",
+  "kind": "finding",
+  "title": "Kodak's own curves put modern colour negative at 0.6 to 4.9 percent quantum efficiency",
+  "standfirst": "Reading three Kodak VISION3 data sheets as if the film were a photon counter, the best layer uses about 5 percent of the light's information and the median layer about 2 percent. The 500T and 200T stocks match each other within 10 percent although one needs about twice the photons of the other.",
+  "date_found": "2026-10-31",
+  "fields": [
+   "colour-film",
+   "instruments-metrology"
+  ],
+  "tier": "B",
+  "tier_reason": "The DQE arm calibrated on planted grains and I found no published VISION3 figure, but it rests on digitised vendor sheets, one aperture and a peak-wavelength photon count. CAL_var failed, H6 failed, and Shaw and Dainty remain unread.",
+  "rung": "hypothesis",
+  "rung_reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
+  "outcome": "held",
+  "objection": "One maker, one aperture, and vendor curves read from printed sheets. Digitising adds its own error, which was not measured.",
+  "objection_source": "the paper's first stated limitation; no reviewer attack is on file",
+  "would_change": "Read Shaw and Dainty; measure one stock with a spectral photon count and a lab microdensitometer.",
+  "sections": [
+   {
+    "id": "reader",
+    "title": "What this means for a reader",
+    "role": "lead",
+    "paragraphs": [
+     "Modern colour negative film keeps a few percent of the information in the light that reaches it, by this estimate at most about 5 percent in its best layer. That puts a number on film that can be set beside a sensor or an eye. For anyone who emulates film grain, the sheets themselves give a measured noise curve per layer, and that curve does not grow with density the way the textbook rule says."
+    ]
+   },
+   {
+    "id": "abstract",
+    "title": "Abstract",
+    "role": "argument",
+    "paragraphs": [
+     "Detective quantum efficiency asks how much of the information in arriving light a detector keeps, and it puts a film, a camera sensor and an eye on one scale. We derived it for the nine colour layers of three current Kodak motion-picture stocks, 5219 (500T), 7213 (200T) and 7203 (50D), from numbers Kodak prints on its data sheets, under a preregistered plan with planted checks. {c1}Peak detective quantum efficiency across the nine layers has a median of 2.1 percent and a range of 0.57 to 4.92 percent, an upper estimate because every photon is counted at the layer's most efficient wavelength.{/c1} {c2}In the green layer, 500T and 200T reach 4.5 and 4.9 percent although 200T needs about twice the photons; 50D needs 15.7 times the photons of 500T and reaches 1.5 percent.{/c2} {c3}Siedentopf's rule, that grain variance grows with density, lost on held-out points in 9 of 9 layers, and variance falls with density overall (median power slope -0.54); because our planted variance check failed, this is description only.{/c3} {c4}A straight hinge in log exposure was the best held-out response form in 9 of 9 layers.{/c4} A single Poisson hit-threshold model does not fit."
+    ]
+   },
+   {
+    "id": "intro",
+    "title": "Introduction and motivation",
+    "role": "argument",
+    "paragraphs": [
+     "A film is a photon detector with a long history of measurement. The {g:dqe}detective quantum efficiency (DQE){/g} of a detector compares the information in its output with the information in the light that arrived. Shaw introduced the photographic form of the idea in 1963 under the name equivalent quantum efficiency {cite:r2} and used it to compare the information capacity of photography with other detectors {cite:r3}. Dainty and Shaw's book on image science {cite:r4} treats DQE curves, granularity and the characteristic curve together. We found these works through searches run on 9 November 2026 and read the abstract of the second Shaw paper and the catalogue records of the others; the full texts were not read.",
+     "What a sheet gives is enough for a ceiling estimate. Kodak publishes, for each colour layer, the {g:characteristic-curve}characteristic curve{/g}, the {g:granularity}rms granularity{/g} against density, and the {g:spectral-sensitivity}spectral sensitivity{/g}. From the first two come the {g:neq}noise-equivalent quanta (NEQ){/g}; from the third comes the number of photons. Their ratio is the DQE. A search summary we could not trace to a primary source put the best older films near 1 percent. We found no published DQE for the VISION3 stocks; that is what our searches returned, and it does not show that none exists.",
+     "The same sheets bear on two working rules. {g:siedentopf-rule}Siedentopf's rule{/g} says the variance of density grows in proportion to mean density, and it is the basis of signal-dependent grain models used in film emulation; Stephenson's grain simulation states it together with Selwyn's aperture law {cite:r5}. And a {g:poisson-threshold}Poisson threshold model{/g}, in which a grain develops after it absorbs n photons, has been used for both grains and rod cells in the eye. The study asked whether one such model describes the response and the noise of layered colour film together."
+    ]
+   },
+   {
+    "id": "prereg",
+    "title": "Preregistration and design",
+    "role": "argument",
+    "paragraphs": [
+     "The plan was written and hash-locked in a {g:preregistration}preregistration{/g} on 31 October 2026 at 06:12:46 UTC, and the run followed at 06:12:48. It names the data, the measures, the {g:planted-check}planted checks{/g}, two {g:control}controls{/g}, the forecasts and the {g:kill-condition}kill conditions{/g}. The decision it informs is what the grain and response parts of our film renderer should use.",
+     "One disclosure comes from the file itself. Before the lock, the 5219 stored curves had been looked at and one hand calculation had been made for the 5219 green layer, giving a DQE of about 0.11 with assumed values of gamma and sigma. So the forecasts for 5219 were not blind. The stocks 7203 and 7213 had been looked at only for calibration.",
+     "The rules that decide each {g:verdict}verdict{/g} were written into the run's plan before the run. Any failed planted check voids its block. The full list is in Appendix A."
+    ]
+   },
+   {
+    "id": "data",
+    "title": "Data and provenance",
+    "role": "argument",
+    "paragraphs": [
+     "The data are the Kodak VISION3 technical data sheets for 5219 (500T), 7213 (200T) and 7203 (50D) {cite:r1}. The curves were digitised from the published vector sheets: for each of the blue, green and red layers, the characteristic curve, the diffuse rms granularity curve measured with a 48 micrometre aperture, and the spectral sensitivity curve at a {g:net-density}net density{/g} of 0.2. The curves were resampled to a grid of 0.05 in log exposure. The sheets are Kodak's copyright. This paper reports only values derived from them and redraws none of their curves.",
+     "Kodak notes that its granularity figures use a modified measuring technique. We did not correct for it."
+    ]
+   },
+   {
+    "id": "methods",
+    "title": "Methods",
+    "role": "argument",
+    "paragraphs": [
+     "## Photons",
+     "For each layer, let {m:S} be the sheet's spectral sensitivity at the layer's peak wavelength {m:\\lambda_p}, in reciprocal erg per square centimetre, at net density 0.2. The exposure that reaches net density 0.2 is {m:1/S}, and dividing by the energy of one photon at {m:\\lambda_p} gives the photon count per unit area there:",
+     "$$ q_{02} = \\frac{\\lambda_p}{S h c} {eq:q}",
+     "with {m:h} Planck's constant and {m:c} the speed of light, converted to photons per square micrometre. Counting every photon at the most efficient wavelength makes {m:q_{02}} the fewest photons that could give net density 0.2, and so makes the DQE below an upper estimate.",
+     "At log exposure {m:x}, the photons inside the 48 micrometre aperture, of area {m:A}, are",
+     "$$ Q(x) = A q_{02} 10^{x - x_{02}} {eq:Q}",
+     "where {m:x_{02}} is the log exposure at which the curve reaches net density 0.2.",
+     "## Noise-equivalent quanta and DQE",
+     "Let {m:\\gamma} be the {g:gamma}gamma{/g} of the curve at {m:x}, taken from a smoothed derivative, and {m:\\sigma} the rms granularity at the same point. Then",
+     "$$ N_{eq} = (\\frac{\\gamma}{\\sigma \\ln 10})^2 {eq:neq}",
+     "$$ DQE = \\frac{N_{eq}}{Q} {eq:dqe}",
+     "Each layer's peak DQE is the largest value of eq. {ref:eq:dqe} over points with net density and gamma both above 0.05.",
+     "## Grain variance",
+     "For points with net density {m:D} above 0.1, four laws for the variance {m:\\sigma^2} were compared: Siedentopf's {m:\\sigma^2 = a D}, a constant, an affine law {m:c + a D} and a quadratic. Each was scored by {g:bic}BIC{/g} on all points and by its {g:hold-out}hold-out score{/g} in log variance on the top 30 percent of density after fitting on the rest. A power slope {m:b} was fitted as",
+     "$$ \\ln \\sigma^2 = k + b \\ln D {eq:b}",
+     "so that Siedentopf's rule corresponds to {m:b = 1}.",
+     "## Response forms",
+     "Eight forms for net density against log exposure were fitted on the lowest 70 percent of the exposure axis and scored on the top 30 percent: Hill, Naka-Rushton with exponent 1, single hit, Erlang with real n, lognormal, Weibull, {g:hinge-form}hinge{/g} and soft hinge. The hinge has two parameters, a threshold and a slope. BIC was reported beside the hold-out score, though the forms have different numbers of parameters.",
+     "## Poisson threshold",
+     "The threshold model fits net density and log variance together, with hit number {m:n} in 1, 2, 3, 4 and 6 and a lognormal spread of grain area with free width, and picks {m:n} by BIC."
+    ]
+   },
+   {
+    "id": "controls",
+    "title": "Controls and planted checks",
+    "role": "argument",
+    "paragraphs": [
+     "Each block had a planted check with a known answer, run through the same code.",
+     "- DQE: synthetic single-size grains with a closed-form DQE. The pipeline came back within 11.3 percent, against a limit of 20. The DQE block stands.",
+     "- Response forms: five planted forms at the real data's scale of noise, 12 each, were recovered 80 percent of the time on hold-out, against a limit of 50. The forms block stands.",
+     "- Variance law: a planted affine law was chosen 70 percent of the time, against a locked requirement of 80. {c5}By the locked rule the variance verdict is {g:void}void{/g}, and what we say about grain variance is description only.{/c5}",
+     "- Poisson threshold: planted hit numbers 1 and 4 were recovered every time at both grain widths, 0.5 and 2.0.",
+     "Two controls built a {g:null-distribution}null distribution{/g} for a statistic. Shuffling density against exposure 25 times gave a top-form share of 0.36 on average with a 95th percentile of 0.44; the real share of 1.0 is above all of them, a {g:p-value-draws}p value from draws{/g} of 0.038, which is the smallest value 25 draws can give. Pairing one layer's slope with another layer's noise 200 times gave a mean correlation of 0.66 with a 95th percentile of 0.76; the real 0.61 sits inside it, p 0.74, so that test could not separate the layers.",
+     "The preregistration called for a {g:benjamini-hochberg}Benjamini-Hochberg correction{/g} at 0.05 over the control p values. The result file does not report it. With two p values, 0.038 and 0.74, the smaller would have to be at or below 0.025 to pass, and it is not, so after the correction neither control rejects. The hinge result rests on its hold-out errors, which Figure {ref:fig:forms} shows, more than on the shuffle."
+    ]
+   },
+   {
+    "id": "results",
+    "title": "Results",
+    "role": "argument",
+    "paragraphs": [
+     "{c1}Peak detective quantum efficiency across the nine layers has a median of 2.1 percent and a range of 0.57 to 4.92 percent, an upper estimate because every photon is counted at the layer's most efficient wavelength.{/c1} Table {ref:tab:layers} gives each layer and Figure {ref:fig:dqe} draws them. The peak falls low on the curve, at net density 0.06 to 0.31, in the toe.",
+     "::table tab:layers cols=0.11,0.1,0.15,0.13,0.14,0.11,0.13,0.13 Derived values per layer. Photons are per square micrometre at net density 0.2, counted at the layer's peak wavelength. Hinge error is its hold-out error in net density.\nStock ¦ Layer ¦ Photons ¦ Peak DQE, percent ¦ Net density at peak ¦ Gamma at peak ¦ Variance slope b ¦ Hinge error\n5219 ¦ blue ¦ 1.2 ¦ 2.12 ¦ 0.26 ¦ 0.55 ¦ -0.66 ¦ 0.096\n5219 ¦ green ¦ 4.2 ¦ 4.51 ¦ 0.31 ¦ 0.64 ¦ -0.54 ¦ 0.112\n5219 ¦ red ¦ 10.8 ¦ 2.51 ¦ 0.12 ¦ 0.44 ¦ -0.51 ¦ 0.117\n7213 ¦ blue ¦ 2.9 ¦ 2.35 ¦ 0.29 ¦ 0.60 ¦ -0.32 ¦ 0.047\n7213 ¦ green ¦ 8.7 ¦ 4.92 ¦ 0.24 ¦ 0.65 ¦ -0.49 ¦ 0.071\n7213 ¦ red ¦ 20.2 ¦ 1.99 ¦ 0.16 ¦ 0.55 ¦ -0.56 ¦ 0.054\n7203 ¦ blue ¦ 33.6 ¦ 0.57 ¦ 0.14 ¦ 0.46 ¦ -0.59 ¦ 0.137\n7203 ¦ green ¦ 65.8 ¦ 1.52 ¦ 0.06 ¦ 0.37 ¦ -0.36 ¦ 0.137\n7203 ¦ red ¦ 87.6 ¦ 0.90 ¦ 0.17 ¦ 0.54 ¦ -0.71 ¦ 0.132\n::end",
+     "![fig:dqe width=0.78 alt=Grouped bars of peak DQE per layer for three stocks; green layers highest, 50D lowest](fig-dqe.png) Peak DQE of each colour layer, an upper estimate. The dotted line is the median over the nine layers. Drawn from the run's result file.",
+     "{c2}In the green layer, 500T and 200T reach 4.5 and 4.9 percent although 200T needs about twice the photons; 50D needs 15.7 times the photons of 500T and reaches 1.5 percent.{/c2} The preregistered rule for \"same efficiency at every speed\" asked for a DQE spread of at most 3 across the three green layers while photon counts spread by 5 or more. The photon spread was 15.7 and the DQE spread 3.24, so the rule failed narrowly. Figure {ref:fig:speed} shows the three points.",
+     "![fig:speed width=0.78 alt=Three points; 500T and 200T near 5 percent at low photon counts, 50D near 1.5 percent at high counts](fig-speed.png) Green layer: photons per square micrometre needed for net density 0.2 against peak DQE.",
+     "{c3}Siedentopf's rule, that grain variance grows with density, lost on held-out points in 9 of 9 layers, and variance falls with density overall (median power slope -0.54); because our planted variance check failed, this is description only.{/c3} The forecast slope was +0.15. The variance curves also show a hump in the toe. Our guess at a cause, untested, is the hand-off between fast and slow emulsions in a layered coating together with the colour masking couplers.",
+     "{c4}A straight hinge in log exposure was the best held-out response form in 9 of 9 layers.{/c4} Its median hold-out error was 0.112 in net density, and every form that saturates did worse, as Figure {ref:fig:forms} shows. Negative stock shows no shoulder within the range a sheet covers, so a form that bends over at high exposure loses when it extrapolates. Hill's exponent, fitted anyway, had a median of 0.615, which here is the gamma in another guise.",
+     "![fig:forms width=0.78 alt=Hold-out errors per form; hinge and soft hinge near 0.11, other forms between 0.3 and 0.65](fig-forms.png) Hold-out error of each response form over the nine layers: median (diamond) and range (bar).",
+     "The Poisson threshold model does not fit. On the channel the run used, the median error was 0.134 in log variance and 0.043 in density, against limits of 0.05 and 0.04. A later study of ours found that this fit passed the logarithm of the standard deviation where the model expected the logarithm of the variance. On the corrected channel the errors are 0.186 and 0.068, and the best hit number per layer changes from 1, 1, 1, 6, 6, 6, 6, 6, 6 to 1, 1, 1, 1, 6, 1, 6, 1, 1. The verdict stands either way, and no hit number is read as a measurement."
+    ]
+   },
+   {
+    "id": "discussion",
+    "title": "Discussion",
+    "role": "argument",
+    "paragraphs": [
+     "The DQE figures sit above the roughly 1 percent we saw quoted for older films, and the planted grains show the pipeline itself is good to about 11 percent. Counting photons at the peak wavelength pushes every value up. Two other choices move them by an amount and in a direction we did not measure: the single aperture with Kodak's modified technique, and the toe, where gamma is small, so that a small error in the digitised slope is a large share of it, and NEQ goes as the square of gamma. The order of magnitude, a few percent, is the safer reading than any one figure.",
+     "The green layers carry the clearest pattern. 500T and 200T keep the same share of the information while one needs half the light of the other. A faster film here buys speed by needing fewer photons for the same density, and it does not lose efficiency doing so. 50D breaks the pattern at 1.5 percent. One stock is not enough to say why.",
+     "For a film renderer the decision is plain. Grain should come from each layer's measured granularity against exposure, with no square-root-of-density rule, and the response of negative stock within the sheet's range needs no saturating shoulder.",
+     "The threshold result connects to a later study of ours on rod cells, which found that rods and film grain do not share one threshold model on the data available. Nothing in this paper bears on rods."
+    ]
+   },
+   {
+    "id": "limits",
+    "title": "Limitations",
+    "role": "argument",
+    "paragraphs": [
+     "- One maker, one aperture, and vendor curves read from printed sheets. Digitising adds its own error, which was not measured.",
+     "- The photon count assumes all light at the peak wavelength, so every DQE here is an upper estimate. No interval is reported for the DQE values; the planted error of 11.3 percent is the only measure of the pipeline's accuracy.",
+     "- The variance verdict is void by our own rule. The variance results are description.",
+     "- The Benjamini-Hochberg correction the plan called for was not run; done by hand above, neither control survives it.",
+     "- Forecasts for 5219 were not blind, as the preregistration states.",
+     "- Shaw's 1963 papers and Dainty and Shaw's book were not read beyond abstracts and catalogue records, and may already set these numbers in context.",
+     "- Scoring was done by our own code and was not blind."
+    ]
+   },
+   {
+    "id": "appendix",
+    "title": "Appendix A. The preregistered verdicts",
+    "role": "evidence",
+    "paragraphs": [
+     "Each verdict is a set of rules written before the run. A verdict passes only when every rule holds. Values are read from the run's result file.",
+     "::table tab:verdicts cols=0.28,0.48,0.14,0.1 Preregistered verdicts and the rule that decided each one.\nVerdict ¦ Deciding rule ¦ Value ¦ Holds\nPlanted DQE ¦ planted error at most 0.2 ¦ 0.113 ¦ yes\nPlanted variance law ¦ planted law chosen at rate 0.8 or more ¦ 0.70 ¦ no\nPlanted forms ¦ hold-out recovery 0.5 or more ¦ 0.80 ¦ yes\nSiedentopf fails ¦ beaten share 0.7 or more, and slope b below 0.7 ¦ 1.0; -0.54 ¦ yes, void\nDQE in range ¦ median peak DQE above 0.01 and below 0.2 ¦ 0.021 ¦ yes\nSame efficiency at every speed ¦ green DQE spread at most 3, and photon spread 5 or more ¦ 3.24; 15.7 ¦ no\nNo one form wins ¦ top-form share below 0.6 ¦ 1.0 ¦ no\nForm beats shuffled density ¦ top-form share above the shuffle 95th percentile (0.44) ¦ 1.0 ¦ yes\nHit number unidentified, wide grains ¦ planted recovery below 0.5 at width 2.0 ¦ 1.0 ¦ no\nHit number recovered, narrow grains ¦ planted recovery 0.7 or more at width 0.5 ¦ 1.0 ¦ yes\nThreshold form fits ¦ density error at most 0.04, and log variance error at most 0.05 ¦ 0.043; 0.134 ¦ no\nSlope tracks noise ¦ median correlation above the pairing 95th percentile (0.76) ¦ 0.61 ¦ no\n::end"
+    ]
+   }
+  ]
+ },
+ "claims": [
+  {
+   "id": "c1",
+   "text": "Peak detective quantum efficiency across the nine layers has a median of 2.1 percent and a range of 0.57 to 4.92 percent, an upper estimate because every photon is counted at the layer's most efficient wavelength.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e1"
+   ]
+  },
+  {
+   "id": "c2",
+   "text": "In the green layer, 500T and 200T reach 4.5 and 4.9 percent although 200T needs about twice the photons; 50D needs 15.7 times the photons of 500T and reaches 1.5 percent.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e2"
+   ]
+  },
+  {
+   "id": "c3",
+   "text": "Siedentopf's rule, that grain variance grows with density, lost on held-out points in 9 of 9 layers, and variance falls with density overall (median power slope -0.54); because our planted variance check failed, this is description only.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e3"
+   ]
+  },
+  {
+   "id": "c4",
+   "text": "A straight hinge in log exposure was the best held-out response form in 9 of 9 layers.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e4"
+   ]
+  },
+  {
+   "id": "c5",
+   "text": "By the locked rule the variance verdict is void, and what we say about grain variance is description only.",
+   "section": "controls",
+   "basis": "observed",
+   "refs": []
+  }
+ ],
+ "evidence": [
+  {
+   "id": "e1",
+   "kind": "number",
+   "label": "The numbers in claim 1",
+   "value": "2.1; 0.57; 4.92",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e2",
+   "kind": "number",
+   "label": "The numbers in claim 2",
+   "value": "500; 200; 4.5; 4.9; 50; 15.7; 1.5",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e3",
+   "kind": "number",
+   "label": "The numbers in claim 3",
+   "value": "9; -0.54",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e4",
+   "kind": "number",
+   "label": "The numbers in claim 4",
+   "value": "9",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e5",
+   "kind": "number",
+   "label": "Sample",
+   "value": "3 stocks, 9 layers, one maker",
+   "check": {
+    "by": "the register's evidence fields",
+    "result": "not_checked",
+    "note": "as recorded in the publication register"
+   }
+  },
+  {
+   "id": "e6",
+   "kind": "number",
+   "label": "Main estimate and interval",
+   "value": "none reported for DQE; planted error 0.11",
+   "check": {
+    "by": "the register's evidence fields",
+    "result": "not_checked",
+    "note": "as recorded in the publication register"
+   }
+  },
+  {
+   "id": "e7",
+   "kind": "number",
+   "label": "Forecast against outcome",
+   "value": "DQE median 0.05 got 0.021; G spread 2 got 3.24; b 0.15 got -0.54",
+   "check": {
+    "by": "the register's evidence fields",
+    "result": "not_checked",
+    "note": "as recorded in the publication register"
+   }
+  },
+  {
+   "id": "e8",
+   "kind": "control",
+   "label": "Known-answer check",
+   "value": "planted closed-form grains within 11 percent; planted Poisson n recovered 1.0",
+   "check": {
+    "by": "the register's evidence fields",
+    "result": "not_checked",
+    "note": "as recorded in the publication register"
+   }
+  }
+ ],
+ "references": [
+  {
+   "id": "r1",
+   "key": "Eastman Kodak Company",
+   "kind": "dataset",
+   "title": "Eastman Kodak Company. KODAK VISION3 500T 5219, 200T 7213 and 50D 7203 colour negative films, technical data sheets. Example: https://www.kodak.com/content/products-brochures/motion-picture/KODAK-VISION3-500T-5219-7219-brochure.pdf",
+   "access": "run",
+   "target": "https://www.kodak.com/content/products-brochures/motion-picture/KODAK-VISION3-500T-5219-7219-brochure.pdf",
+   "licence": "Kodak sheets digitised; copyright terms apply, derived values only"
+  },
+  {
+   "id": "r2",
+   "key": "Shaw 1963",
+   "kind": "paper",
+   "title": "Shaw, R. (1963). The equivalent quantum efficiency of the photographic process. The Journal of Photographic Science 11, 199-204. doi:10.1080/00223638.1963.11736919",
+   "access": "snippet",
+   "target": "https://doi.org/10.1080/00223638.1963.11736919",
+   "access_note": "abstracts and catalogue records; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r3",
+   "key": "Shaw 1963",
+   "kind": "paper",
+   "title": "Shaw, R. (1963). Photon fluctuations, equivalent quantum efficiency, and the information capacity of photographic images. The Journal of Photographic Science 11(6), 313-320. doi:10.1080/00223638.1963.11736937",
+   "access": "snippet",
+   "target": "https://doi.org/10.1080/00223638.1963.11736937",
+   "access_note": "abstracts and catalogue records; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r4",
+   "key": "Dainty 1974",
+   "kind": "paper",
+   "title": "Dainty, J. C. and Shaw, R. (1974). Image Science: Principles, Analysis and Evaluation of Photographic-Type Imaging Processes. London: Academic Press. ISBN 0122008502.",
+   "access": "snippet",
+   "access_note": "abstracts and catalogue records; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r5",
+   "key": "Stephenson 2007",
+   "kind": "paper",
+   "title": "Stephenson, I. (2007). Simulating film grain using the noise power spectrum. Theory and Practice of Computer Graphics, Eurographics UK.",
+   "access": "snippet",
+   "access_note": "abstracts and catalogue records; full text not read",
+   "accessed": "2026-11-09"
+  }
+ ],
+ "relations": [
+  {
+   "from": "F163",
+   "to": "F147",
+   "type": "narrowed",
+   "scope": "film fit and its planted recovery",
+   "date": "2026-10-31",
+   "note": "The film fit passed log10 sigma into a model of log10 variance. On true variance the errors are 0.186 and 0.068; the failed verdict stands and the pattern of hit numbers changes.",
+   "record": "findings ledger, F163"
+  },
+  {
+   "from": "F164",
+   "to": "F147",
+   "type": "held",
+   "scope": "film hinge within the sheet's range",
+   "date": "2026-10-31",
+   "note": "The hinge sits within the sheet's range, as F147 said, now on BIC.",
+   "record": "findings ledger, F164"
+  }
+ ],
+ "corrections": [
+  {
+   "id": "x1",
+   "date": "2026-10-31",
+   "target": "document",
+   "type": "number",
+   "after": "Corrected errors 0.186 and 0.068; the failed verdict stands and the pattern of hit numbers changes, as given in the results.",
+   "reason": "A later study of ours found that the Poisson threshold fit used log standard deviation where the model expected log variance.",
+   "found_by": "a later study of ours"
+  },
+  {
+   "id": "x2",
+   "date": "2026-11-09",
+   "target": "document",
+   "type": "wording",
+   "after": "This paper states the outcome it would have had.",
+   "reason": "The Benjamini-Hochberg step named in the preregistration was not run by the study.",
+   "found_by": "the publication pass"
+  }
+ ],
+ "versions": [
+  {
+   "n": 1,
+   "date": "2026-10-31",
+   "what": "entered in the findings ledger"
+  },
+  {
+   "n": 2,
+   "date": "2026-11-09",
+   "what": "paper version 1.0, first published",
+   "hash": "91f5daaa7942c3c11dbfeb4470651949d65b89fe2e259fcec7cbe5e86cb57e3c"
+  }
+ ],
+ "grade": {
+  "lowers": [
+   {
+    "domain": "blinding",
+    "text": "Not blind. one hand calculation on 5219 before lock, stated",
+    "from": "register scorer.blind"
+   },
+   {
+    "domain": "missing control",
+    "text": "Controls: CAL_dqe and CAL_forms working; CAL_var failed (0.70 against 0.80), so the variance verdict is not credited; pairing null not separating.",
+    "from": "register evidence.controls"
+   },
+   {
+    "domain": "novelty",
+    "text": "Nearby work exists; novelty is not shown.",
+    "from": "register literature.verdict"
+   },
+   {
+    "domain": "single source",
+    "text": "The cited literature was read at the level of abstracts and catalogue records; full texts were not read.",
+    "from": "paper Verified"
+   }
+  ],
+  "holds": [
+   {
+    "domain": "scoring",
+    "text": "Scored by code against rules fixed in advance.",
+    "from": "register scorer.who"
+   },
+   {
+    "domain": "preregistration",
+    "text": "Preregistered and hash-locked before the run (sha256 c0dbcacf).",
+    "from": "paper Reproduction"
+   },
+   {
+    "domain": "replication",
+    "text": "Rechecked by F164 (film hinge within the sheet's range): The hinge sits within the sheet's range, as F147 said, now on BIC.",
+    "from": "relations"
+   }
+  ]
+ },
+ "reproduce": {
+  "data": [
+   {
+    "name": "Eastman Kodak Company",
+    "licence": "Kodak sheets digitised; copyright terms apply, derived values only",
+    "url": "https://www.kodak.com/content/products-brochures/motion-picture/KODAK-VISION3-500T-5219-7219-brochure.pdf"
+   }
+  ],
+  "prereg": {
+   "hash": "c0dbcacf4caf6bd35564dde5fd02ea7b651165162206b5b1c4565fd9d326329a",
+   "plan": "67bcd757fe62d97c70fef6dc556bc91e443a0842712cff5345841a4726373faa"
+  },
+  "cost": "about two and a half minutes on one desktop CPU (56 s analysis, 96 s shuffle control, under 1 s pairing control).",
+  "steps": [
+   "Data: the Kodak VISION3 technical data sheets for 5219, 7213 and 7203 {cite:r1}, from Kodak's motion-picture product pages.",
+   "Digitise, for each layer, the characteristic curve, the diffuse rms granularity curve at the 48 micrometre aperture and the spectral sensitivity at net density 0.2. Resample to 0.05 in log exposure.",
+   "Compute eqs. {ref:eq:q}, {ref:eq:Q}, {ref:eq:neq} and {ref:eq:dqe} on that grid and take each layer's peak.",
+   "Fit the variance laws, eq. {ref:eq:b}, the eight response forms and the threshold model as in the methods, using log variance and not log standard deviation in the threshold fit.",
+   "Preregistration SHA-256: c0dbcacf4caf6bd35564dde5fd02ea7b651165162206b5b1c4565fd9d326329a. Plan SHA-256: 67bcd757fe62d97c70fef6dc556bc91e443a0842712cff5345841a4726373faa. Run 20261031T061248Z. Result file SHA-256: 108b6952f1807a99580fdddd641ba3ca9dd38a3319f747becab8a60f168ad03a. Digitised data SHA-256: f3ebb6174d4a9e0f36f01837a6860c934c7b8c6783826b6661080a8b65c81427."
+  ],
+  "not_rerun": "The study was not re-run for this paper."
+ },
+ "verified": {
+  "date": "2026-11-09",
+  "checks": [
+   {
+    "what": "On 9 November 2026 the nine peak DQE values (0.0057 to 0.0492, median 0.0212), the per-layer values in Table {ref:tab:layers}, the green-layer DQE and photon counts, the 3.24 and 15.7 spreads, the median slope -0.54, the planted results (0.113, 0.70, 0.80, 1.0), both controls and every verdict in Appendix A were re-read from the run's result file.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   },
+   {
+    "what": "They match the {g:findings-ledger}findings ledger{/g}.",
+    "by": "the paper's Verified pass",
+    "result": "match"
+   },
+   {
+    "what": "The preregistration's SHA-256 was recomputed from the file and matches the hash recorded in the lock and the run manifest.",
+    "by": "the paper's Verified pass",
+    "result": "match"
+   },
+   {
+    "what": "All three figures were drawn by a script that reads only the result file.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   }
+  ],
+  "not_checked": [
+   "The Poisson threshold values on the corrected channel come from the later ledger entry and were not recomputed here.",
+   "The study was not re-run for this paper.",
+   "The cited works were found by searches run on 9 November 2026 and read at the level of abstracts and catalogue records; their full texts were not read."
+  ]
+ }
+}

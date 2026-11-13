@@ -1,0 +1,7 @@
+{
+  "date": "2026-11-09",
+  "note": "The full site index carries the standing flag after each of its 30 links to a finding, written by scripts/finding-flags.mjs (author, 2026-11-09: \"it can show on every link to a finding\"). Not merged until the author reviews the renders.",
+  "paths": {
+    "site-index.html": "7df7733f7cc4a75f22bc66bdda1c950d5dd20342d520b050591279a15df2edf2"
+  }
+}

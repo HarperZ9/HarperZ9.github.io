@@ -112,11 +112,16 @@ a:hover { text-decoration-thickness: 2px; }
 /* the field: glass and water behind the whole page; a rendered plate first, the live render over it where the
    device can carry it (world/site/home-field.js); night in the dark scheme */
 .gw-backdrop { position: fixed; inset: 0; z-index: 0; pointer-events: none; background: #0d1a24; }
+/* the large viewport height: when a phone's toolbar slides away, the field still reaches the bottom edge */
+@supports (height: 100lvh) { .gw-backdrop { bottom: auto; height: 100lvh; } }
 .gw-backdrop picture, .gw-backdrop img, .gw-backdrop canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 .gw-backdrop img { object-fit: cover; }
 .gw-backdrop canvas { opacity: 0; transition: opacity .9s var(--ease-standard, ease); }
 .gw-backdrop.live canvas { opacity: 1; }
 html.plain .gw-backdrop canvas { display: none; }
+/* a display dither: a lossless tile of high-passed noise, white and black at up to 2.4 percent alpha, laid over the plate, so
+   the night sky's gradient breaks up where the image encoder smoothed the renderer's own dither away */
+.gw-backdrop .gw-dither { position: absolute; inset: 0; background: url("/media/world/glass-water/dither-128.png") repeat; }
 main#main, body > footer { position: relative; z-index: 1; }
 @media (prefers-reduced-motion: reduce) { .gw-backdrop canvas { transition: none; } }
 
@@ -146,3 +151,27 @@ a[data-held] { text-decoration-thickness: 2px; text-underline-offset: .2em; }
 /* every label hangs a fixed distance below its control's centre, and the hand centres its controls on one line, so
    the labels share one baseline whatever height a form takes (the fold is 52 px, the rest 44, and a form may grow) */
 .o-hand.o-said > :is(a[data-o], button) .o-name, .o-hand.o-said .o-under { text-shadow: 0 0 8px var(--wall, #0c1620), 0 0 3px var(--wall, #0c1620), 0 0 1px var(--wall, #0c1620); }
+
+/* the field reaches the whole length of the page: under the fixed plate, the page's own ground is the same plate and
+   its mirror, stacked so the water meets the water and the sky meets the sky, repeated down the page without a seam.
+   A reader sees the fixed plate on every screen; the ground shows wherever the plate cannot reach (a full-page
+   capture, a phone toolbar sliding away, a print) */
+body:has(.gw-backdrop) {
+  --ground: url("/media/world/glass-water/field-night-ground-1920.webp");
+  --ground-wash: linear-gradient(90deg, rgba(7, 16, 26, .78) 0%, rgba(7, 16, 26, .62) 42%, rgba(7, 16, 26, .18) 70%, rgba(7, 16, 26, .06) 100%);
+  background: #0c1620; background-image: var(--ground-wash), var(--ground); background-size: 100% 100%, 100% auto;
+  background-position: 0 0, center top; background-repeat: no-repeat, repeat-y; background-attachment: local, scroll;
+}
+body.reading:has(.gw-backdrop) { --ground-wash: linear-gradient(rgba(7, 16, 26, .72), rgba(7, 16, 26, .72)); }
+@media (orientation: portrait) { body:has(.gw-backdrop) { --ground: url("/media/world/glass-water/field-night-ground-portrait-828.webp"); } }
+@media (max-width: 860px) { body:has(.gw-backdrop) { --ground-wash: linear-gradient(rgba(7, 16, 26, .8), rgba(7, 16, 26, .8)); } }
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) body:has(.gw-backdrop) { --ground: url("/media/world/glass-water/field-day-ground-1920.webp"); }
+}
+@media (prefers-color-scheme: light) and (orientation: portrait) {
+  :root:not([data-theme="dark"]) body:has(.gw-backdrop) { --ground: url("/media/world/glass-water/field-day-ground-portrait-828.webp"); }
+}
+:root[data-theme="light"] body:has(.gw-backdrop) { --ground: url("/media/world/glass-water/field-day-ground-1920.webp"); }
+@media (orientation: portrait) { :root[data-theme="light"] body:has(.gw-backdrop) { --ground: url("/media/world/glass-water/field-day-ground-portrait-828.webp"); } }
+@media (orientation: portrait) { :root[data-theme="dark"] body:has(.gw-backdrop) { --ground: url("/media/world/glass-water/field-night-ground-portrait-828.webp"); } }
+html.plain body:has(.gw-backdrop) { background-image: none; }

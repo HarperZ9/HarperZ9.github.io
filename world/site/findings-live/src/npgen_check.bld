@@ -1,0 +1,95 @@
+// npgen_check.bld: prints every generator routine's output for seed 20261036 in the layout of the recorded numpy
+// values (tests/fixtures/findings-live/npgen-20261036.json), one value per line, doubles as 64-bit patterns.
+// Unit: zig_tables.bld, npgen.bld, then this file.
+fn show_state(g: &mut Gen) ~ Console {
+    println!("{:016x}{:016x}", (g.state >> 64) as u64, g.state as u64);
+}
+
+fn show_perm(g: &mut Gen, n: i32) ~ Console {
+    let mut a: [f64; 8] = [0.0; 8];
+    let mut i: i32 = 0;
+    while i < n { a[i] = i as f64; i = i + 1; }
+    permutation(g, &mut a, n);
+    i = 0;
+    while i < n { println!("{}", a[i] as i64); i = i + 1; }
+}
+
+fn show_choice(g: &mut Gen, pool: &Vec<f64>, n: i32) ~ Console {
+    let mut a: [f64; 8] = [0.0; 8];
+    choice(g, pool, n, &mut a);
+    let mut i: i32 = 0;
+    while i < n { println!("{}", a[i] as i64); i = i + 1; }
+}
+
+fn show_normal(g: &mut Gen, n: i32) ~ Console + Foreign {
+    let mut i: i32 = 0;
+    while i < n {
+        let x: f64 = normal(g, 0.0, 0.05);
+        println!("{:016x}", x.to_bits());
+        i = i + 1;
+    }
+}
+
+fn show_seeding(seed: u64) ~ Console {
+    let mut pool: [u64; 4] = [0; 4];
+    let mut st: [u64; 4] = [0; 4];
+    seed_pool(seed, &mut pool);
+    seed_state(&mut pool, &mut st);
+    println!("pool");
+    let mut i: i32 = 0;
+    while i < 4 { println!("{}", pool[i]); i = i + 1; }
+    println!("state4");
+    i = 0;
+    while i < 4 { println!("{:016x}", st[i]); i = i + 1; }
+    let mut g: Gen = gen_new(seed);
+    println!("seeded");
+    show_state(&mut g);
+    println!("{:016x}{:016x}", (g.inc >> 64) as u64, g.inc as u64);
+}
+
+fn show_mixed(g: &mut Gen, p: &Vec<f64>) ~ Console + Foreign {
+    show_normal(g, 4); show_normal(g, 5); show_normal(g, 8); show_normal(g, 6);
+    show_perm(g, 3); show_perm(g, 4); show_perm(g, 7); show_perm(g, 5); show_perm(g, 3); show_perm(g, 6);
+    show_choice(g, p, 3); show_choice(g, p, 4); show_choice(g, p, 7);
+    show_choice(g, p, 5); show_choice(g, p, 3); show_choice(g, p, 6);
+    show_perm(g, 3); show_perm(g, 4); show_perm(g, 7);
+    show_normal(g, 5);
+    show_state(g);
+}
+
+fn main() ~ Console + Foreign {
+    let seed: u64 = 20261036;
+    show_seeding(seed);
+    let mut g: Gen = gen_new(seed);
+    println!("raw");
+    let mut i: i32 = 0;
+    while i < 256 { println!("{:016x}", next_u64(&mut g)); i = i + 1; }
+    g = gen_new(seed);
+    println!("random");
+    i = 0;
+    while i < 256 { let d: f64 = next_double(&mut g); println!("{:016x}", d.to_bits()); i = i + 1; }
+    g = gen_new(seed);
+    println!("stdnormal");
+    i = 0;
+    while i < 20000 { let d: f64 = standard_normal(&mut g); println!("{:016x}", d.to_bits()); i = i + 1; }
+    g = gen_new(seed);
+    println!("normal");
+    i = 0;
+    while i < 40 { show_normal(&mut g, 4 + i % 5); i = i + 1; }
+    g = gen_new(seed);
+    println!("perm");
+    i = 0;
+    while i < 300 { show_perm(&mut g, 3 + i % 5); i = i + 1; }
+    show_state(&mut g);
+    let mut p: Vec<f64> = Vec::new();
+    i = 0;
+    while i < 421 { p.push(i as f64); i = i + 1; }
+    g = gen_new(seed);
+    println!("choice");
+    i = 0;
+    while i < 300 { show_choice(&mut g, &p, 3 + i % 5); i = i + 1; }
+    show_state(&mut g);
+    g = gen_new(seed);
+    println!("mixed");
+    show_mixed(&mut g, &p);
+}

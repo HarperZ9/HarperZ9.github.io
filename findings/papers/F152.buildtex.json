@@ -1,0 +1,65 @@
+{
+ "schema": "buildlang.buildtex-receipt/v0",
+ "source": {
+  "path": "F152.bld",
+  "sha256": "3fdf0df5594d623d8570d09647b64eb761da91bcea866d6bdaa02042db2be25c"
+ },
+ "ir_sha256": "2ff1570f8f9e6b6eef9681176d48bb310dbf207e785a8566b5a405c81132a22a",
+ "theme": "paper",
+ "overrides": [],
+ "outputs": {
+  "F152.pdf": "e9660d3b34f12f9b01b9062f25a9c5de0b2af0a36d80706e78d6ba2127bd07e9"
+ },
+ "pdf_metadata": {
+  "pdfa": false,
+  "creation_date": "D:20261109000000Z"
+ },
+ "facts": {
+  "pages": 9,
+  "pages_layout": 9,
+  "overfull": [],
+  "underfull": 0,
+  "missing_glyphs": [],
+  "glyph_fallbacks": [],
+  "math_errors": [],
+  "fonts": [
+   {
+    "name": "ANMNPG+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "CECMKI+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "DNMPAD+AccessionDisplay-Master",
+    "embedded": true
+   },
+   {
+    "name": "FABIIN+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "OEAHEO+NotoSansMath-Regular",
+    "embedded": true
+   },
+   {
+    "name": "PDIMNL+HankenGrotesk-Regular",
+    "embedded": true
+   }
+  ],
+  "images": 3,
+  "blind_text_runs": 0,
+  "reading_order": true,
+  "blocks_missing_from_text": [],
+  "pdf_bytes": 476763
+ },
+ "failed": [],
+ "notes": [
+  "buildc run F152.bld -> F152.doc.tsv",
+  "press: relief 1275x393 px at 150 dpi; 0 blind line(s); foil colour source: fallback constant"
+ ],
+ "external_programs": [
+  "buildc"
+ ]
+}

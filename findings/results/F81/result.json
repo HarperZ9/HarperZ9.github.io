@@ -1,0 +1,2759 @@
+{
+ "study": "umwelt-main",
+ "run_id": "20261030T012757Z",
+ "date": "2026-10-30",
+ "prereg": {
+  "path": "PREREG.txt",
+  "sha256": "fec1f1655ac86d3c16394e1947b9e2919225d9420680e5981e219f5a7f8fccd2",
+  "anchors": [
+   "sidecar",
+   "lock"
+  ],
+  "plan_sha256": "cc9c52ac2d9456618a10e1429f135574afe43466735b431b2ee002b6c9c6531f",
+  "locked_at": "2026-10-30T01:27:38+00:00"
+ },
+ "hashes": {
+  "CIE_lms_cf_2deg.csv": "f48160edf11c1a121aaaf41d4c3b7513385bfc9c60d726b88e735519f6d37b1f",
+  "CIE_std_illum_D65.csv": "e76f210bffff3d552ef7113025da5f325d5dfec200dd4b878b1a2f3a507032cb",
+  "sysdata.rda": "51e1d4c7719e9593249fb8442be133c223cbae09849ad146abb07e98a993479f",
+  "vissyst.csv": "b064e7d706cb48a40525168adcc831b534b0d741f4f03bb5ccecf56c5a073799",
+  "bgandilum.csv": "0a19c1a8b0bd75dcfdd2c9e1940d827804b2103ef8d9e65852821adfda3ab3c0",
+  "transmissiondata.csv": "1c2f926e47a42ba92fe30fa77bedf40dbca2da2b6894f09e738461b604ed176c",
+  "Flowers_InsectOnlyPollinated_spectral_reflectance_data_SUBMITTED.zip": "b3453834f127d324ba04fc3e6d701491dfca3e22c8f14f47d286b4083679d87a",
+  "Flowers_BirdOnlyPollinated_spectral_reflectance_data_SUBMITTED.zip": "478f424cd3d1d5ee8438cacb894b25d27a718355c2dd9b228160f3e5491798ed",
+  "Processed_Backgrounds_Data_20_percent_markers_SUBMITTED_r1.zip": "ef6d1598bd6f0ee58127165ae29a8dbf999e76940215de645df61dd724ae1453",
+  "README.md": "49d582372b39145824cc55220a92e1026276af567b4fd62a56a8e7b00854c7ca",
+  "adapter.py": "5284e21261d442de8ce9c0fd31d8c6761113e5fdf57fba186e6e654e80ce734d",
+  "uc_analysis.py": "92782e125babab5ae231a8a393462a099a9eddfc7af3574d4e30b7aaf8f5759a",
+  "uc_checks.py": "2f27046a48b6bd696b55aae88ba963763eda9a3512ecba36814329e28256029a",
+  "uc_convert.py": "0afe8158e9d8d09ca48035fa37d8577848d4fdd37a3184090f37a4445ff3bee5",
+  "uc_data.py": "35c4ac3aafe9eaace1189d26264ddc637ad39c1ddde58e5d41c1c082fc8465be",
+  "uc_observers.py": "f0d2d3dcacb282e3f7487ff2cd5794e691ca8cb00deec98ade6c37248208d5a5",
+  "uc_overlap.py": "0eb6ae46482083be6528d5d56830615f8fdedcfb56c78c230e8df853a8fff3eb",
+  "uc_rnl.py": "10c7fdf8a0461bdccf4327ae3c2d618c51ec2a2d8f4fcc5d8a1151a911234d70",
+  "smoke.py": "b0efa8bcbadc2394d7d53d425e0bcb438dadc80d2cd20c40584aa022c6ee605c",
+  "make_spec.py": "d1deb11623745122d72f0aa75307815684a6887620ff5fa70c318f1fb96fd74a"
+ },
+ "analysis": {
+  "n_surfaces": 728,
+  "group_counts": {
+   "bg_bark": 96,
+   "bg_leaf": 65,
+   "bg_rock": 346,
+   "flower_bird": 68,
+   "flower_insect": 153
+  },
+  "d65_identity": 7.630478581877043e-06,
+  "sizes": {
+   "published": {
+    "human": {
+     "H_part1": 7.638213875804812,
+     "K1": 291,
+     "H_part3": 5.82942077594616,
+     "K3": 112,
+     "log2_packing1": 8.038918989292302,
+     "pair_rate1": 0.979794277249573,
+     "pair_rate3": 0.8880730686095197,
+     "glance_gauss": 6.275530042859204,
+     "glance_mc": 4.788054248676836,
+     "receptors": 3
+    },
+    "protanope": {
+     "H_part1": 5.55771127166853,
+     "K1": 81,
+     "H_part3": 3.9808693842123324,
+     "K3": 37,
+     "log2_packing1": 6.0,
+     "pair_rate1": 0.9275284550387715,
+     "pair_rate3": 0.7905739377541303,
+     "glance_gauss": 3.984784396360528,
+     "glance_mc": 3.3213310985318376,
+     "receptors": 2
+    },
+    "deuteranope": {
+     "H_part1": 5.6698728220507455,
+     "K1": 83,
+     "H_part3": 4.210784461564823,
+     "K3": 38,
+     "log2_packing1": 6.044394119358453,
+     "pair_rate1": 0.9405769608658192,
+     "pair_rate3": 0.8245915020330427,
+     "glance_gauss": 4.15939509219525,
+     "glance_mc": 3.504034257952532,
+     "receptors": 2
+    },
+    "dog": {
+     "H_part1": 4.506723288712157,
+     "K1": 45,
+     "H_part3": 2.907489441182135,
+     "K3": 21,
+     "log2_packing1": 5.20945336562895,
+     "pair_rate1": 0.8559071602400351,
+     "pair_rate3": 0.5996153090375924,
+     "glance_gauss": 2.949338605638688,
+     "glance_mc": 2.2496459273586993,
+     "receptors": 2
+    },
+    "bee": {
+     "H_part1": 7.234236554103937,
+     "K1": 225,
+     "H_part3": 5.300565884395147,
+     "K3": 81,
+     "log2_packing1": 7.614709844115208,
+     "pair_rate1": 0.9657065767794791,
+     "pair_rate3": 0.8211413758181296,
+     "glance_gauss": 5.5910915716913685,
+     "glance_mc": 4.059006965330375,
+     "receptors": 3
+    },
+    "bluetit": {
+     "H_part1": 8.214801591823615,
+     "K1": 408,
+     "H_part3": 6.482084596940409,
+     "K3": 180,
+     "log2_packing1": 8.588714635582264,
+     "pair_rate1": 0.9881153921731638,
+     "pair_rate3": 0.9104554317759269,
+     "glance_gauss": 7.8205337276201945,
+     "glance_mc": 5.439688065204267,
+     "receptors": 4
+    },
+    "mantis_rnl": {
+     "H_part1": 9.474827607231664,
+     "K1": 716,
+     "H_part3": 9.031526229554865,
+     "K3": 578,
+     "log2_packing1": 9.481799431665753,
+     "pair_rate1": 0.9999357588766117,
+     "pair_rate3": 0.9977742340190758,
+     "glance_gauss": 31.268096389434866,
+     "glance_mc": 8.896320254679514,
+     "receptors": 12
+    },
+    "mantis_coded": {
+     "H_part1": 1.6765990200865408,
+     "K1": 12,
+     "H_part3": 1.6765990200865408,
+     "K3": 12,
+     "log2_packing1": 3.584962500721156,
+     "pair_rate1": 0.5485171637166135,
+     "pair_rate3": 0.5485171637166135,
+     "glance_gauss": null,
+     "glance_mc": 1.296963546588702,
+     "receptors": 12
+    },
+    "ideal": {
+     "H_part1": 9.496805629209685,
+     "K1": 724,
+     "H_part3": 9.485816618220674,
+     "K3": 720,
+     "log2_packing1": 9.499845887083206,
+     "pair_rate1": 0.9999848844415556,
+     "pair_rate3": 0.9999659899935003,
+     "glance_gauss": 136.13103596389013,
+     "glance_mc": 9.483426572236365,
+     "receptors": 81
+    }
+   },
+   "matched": {
+    "human": {
+     "H_part1": 7.200388318808662,
+     "K1": 232,
+     "H_part3": 5.385377586508426,
+     "K3": 86,
+     "log2_packing1": 7.679480099505446,
+     "pair_rate1": 0.969791556449053,
+     "pair_rate3": 0.8611258067929319,
+     "glance_gauss": 5.445227826647814,
+     "glance_mc": 4.261123821506514,
+     "receptors": 3
+    },
+    "protanope": {
+     "H_part1": 5.483612445993692,
+     "K1": 79,
+     "H_part3": 3.9808693842123324,
+     "K3": 37,
+     "log2_packing1": 6.0,
+     "pair_rate1": 0.9259715525190079,
+     "pair_rate3": 0.7864133802923349,
+     "glance_gauss": 3.955457451492915,
+     "glance_mc": 3.2894467607219475,
+     "receptors": 2
+    },
+    "deuteranope": {
+     "H_part1": 5.619054263344097,
+     "K1": 78,
+     "H_part3": 4.202485225328606,
+     "K3": 37,
+     "log2_packing1": 5.930737337562887,
+     "pair_rate1": 0.9366695890079659,
+     "pair_rate3": 0.8130507731608144,
+     "glance_gauss": 4.0674908025899805,
+     "glance_mc": 3.4372703063570746,
+     "receptors": 2
+    },
+    "dog": {
+     "H_part1": 5.549775449980999,
+     "K1": 75,
+     "H_part3": 4.205934589522542,
+     "K3": 38,
+     "log2_packing1": 5.882643049361842,
+     "pair_rate1": 0.935343198754478,
+     "pair_rate3": 0.808742839004187,
+     "glance_gauss": 4.100564334390325,
+     "glance_mc": 3.33542960789903,
+     "receptors": 2
+    },
+    "bee": {
+     "H_part1": 8.1604592490146,
+     "K1": 366,
+     "H_part3": 6.636784248893132,
+     "K3": 161,
+     "log2_packing1": 8.405141463136344,
+     "pair_rate1": 0.9912405338815242,
+     "pair_rate3": 0.9399987907553244,
+     "glance_gauss": 7.688122896704791,
+     "glance_mc": 5.724825826349529,
+     "receptors": 3
+    },
+    "bluetit": {
+     "H_part1": 9.067604062668178,
+     "K1": 589,
+     "H_part3": 7.960673443298358,
+     "K3": 366,
+     "log2_packing1": 9.177419537989236,
+     "pair_rate1": 0.998322173012682,
+     "pair_rate3": 0.9824319421981045,
+     "glance_gauss": 11.537377968301769,
+     "glance_mc": 7.450342745667449,
+     "receptors": 4
+    },
+    "mantis_rnl": {
+     "H_part1": 9.474827607231664,
+     "K1": 716,
+     "H_part3": 9.031526229554865,
+     "K3": 578,
+     "log2_packing1": 9.481799431665753,
+     "pair_rate1": 0.9999357588766117,
+     "pair_rate3": 0.9977742340190758,
+     "glance_gauss": 31.268096389434866,
+     "glance_mc": 8.887776295275236,
+     "receptors": 12
+    },
+    "mantis_coded": {
+     "H_part1": 1.6765990200865408,
+     "K1": 12,
+     "H_part3": 1.6765990200865408,
+     "K3": 12,
+     "log2_packing1": 3.584962500721156,
+     "pair_rate1": 0.5485171637166135,
+     "pair_rate3": 0.5485171637166135,
+     "glance_gauss": null,
+     "glance_mc": 1.2782637417565255,
+     "receptors": 12
+    }
+   },
+   "boot95_published": {
+    "human": {
+     "H_part1": [
+      7.078271266582973,
+      7.327017508362322
+     ],
+     "glance_gauss": [
+      5.842410596851542,
+      6.582592151596523
+     ]
+    },
+    "protanope": {
+     "H_part1": [
+      5.194564499989672,
+      5.467784850166874
+     ],
+     "glance_gauss": [
+      3.6657920900221797,
+      4.220893120275695
+     ]
+    },
+    "deuteranope": {
+     "H_part1": [
+      5.384057853633119,
+      5.633894535033178
+     ],
+     "glance_gauss": [
+      3.8136673956180798,
+      4.4187398417627906
+     ]
+    },
+    "dog": {
+     "H_part1": [
+      4.284462741089891,
+      4.596256265186374
+     ],
+     "glance_gauss": [
+      2.596435559061311,
+      3.203108309965958
+     ]
+    },
+    "bee": {
+     "H_part1": [
+      6.715035424430436,
+      6.96259014256225
+     ],
+     "glance_gauss": [
+      5.071086309862014,
+      5.926761645772283
+     ]
+    },
+    "bluetit": {
+     "H_part1": [
+      7.564075447407098,
+      7.778936518616049
+     ],
+     "glance_gauss": [
+      7.34858497792957,
+      8.113269874673092
+     ]
+    },
+    "mantis_rnl": {
+     "H_part1": [
+      8.596333341165877,
+      8.71791159760468
+     ],
+     "glance_gauss": [
+      28.999510490293332,
+      32.07134194506762
+     ]
+    },
+    "mantis_coded": {
+     "H_part1": [
+      1.5354684324548982,
+      1.7808130050346285
+     ],
+     "glance_gauss": null
+    }
+   },
+   "noise_x0.5": {
+    "human": {
+     "H_part1": 8.409648685187975,
+     "K1": 421,
+     "H_part3": 7.097378480040202,
+     "K3": 218,
+     "log2_packing1": 8.651051691178928,
+     "pair_rate1": 0.9937497165832792,
+     "pair_rate3": 0.9610434269994105,
+     "glance_gauss": 8.244451650228068,
+     "glance_mc": null,
+     "receptors": 3
+    },
+    "protanope": {
+     "H_part1": 6.2849564447804305,
+     "K1": 121,
+     "H_part3": 4.9448932593226775,
+     "K3": 59,
+     "log2_packing1": 6.643856189774724,
+     "pair_rate1": 0.9636886497271642,
+     "pair_rate3": 0.8918368426621521,
+     "glance_gauss": 4.982622787588209,
+     "glance_mc": null,
+     "receptors": 2
+    },
+    "deuteranope": {
+     "H_part1": 6.469959635971586,
+     "K1": 129,
+     "H_part3": 5.176711990612173,
+     "K3": 62,
+     "log2_packing1": 6.754887502163468,
+     "pair_rate1": 0.9701694454101607,
+     "pair_rate3": 0.9108635518539232,
+     "glance_gauss": 5.157698759704492,
+     "glance_mc": null,
+     "receptors": 2
+    },
+    "dog": {
+     "H_part1": 5.382112442604129,
+     "K1": 67,
+     "H_part3": 3.9404957631829944,
+     "K3": 35,
+     "log2_packing1": 5.700439718141092,
+     "pair_rate1": 0.9279894795713227,
+     "pair_rate3": 0.7868857414937195,
+     "glance_gauss": 3.9402127987002853,
+     "glance_mc": null,
+     "receptors": 2
+    },
+    "bee": {
+     "H_part1": 8.097490524842224,
+     "K1": 352,
+     "H_part3": 6.539729599022319,
+     "K3": 156,
+     "log2_packing1": 8.361943773735241,
+     "pair_rate1": 0.9902995903683661,
+     "pair_rate3": 0.9317797058512327,
+     "glance_gauss": 7.563805640065193,
+     "glance_mc": null,
+     "receptors": 3
+    },
+    "bluetit": {
+     "H_part1": 8.90676122759977,
+     "K1": 551,
+     "H_part3": 7.7606672952969715,
+     "K3": 329,
+     "log2_packing1": 9.076815597050832,
+     "pair_rate1": 0.9972376316943029,
+     "pair_rate3": 0.9736044560666294,
+     "glance_gauss": 10.752586677651434,
+     "glance_mc": null,
+     "receptors": 4
+    },
+    "mantis_rnl": {
+     "H_part1": 9.496805629209685,
+     "K1": 724,
+     "H_part3": 9.40578274115132,
+     "K3": 692,
+     "log2_packing1": 9.499845887083206,
+     "pair_rate1": 0.9999848844415556,
+     "pair_rate3": 0.9997808244025576,
+     "glance_gauss": 41.26878623519316,
+     "glance_mc": null,
+     "receptors": 12
+    }
+   },
+   "noise_x2": {
+    "human": {
+     "H_part1": 6.59930043798336,
+     "K1": 171,
+     "H_part3": 4.652564659710488,
+     "K3": 59,
+     "log2_packing1": 7.169925001442312,
+     "pair_rate1": 0.9383360793264507,
+     "pair_rate3": 0.7320729476850523,
+     "glance_gauss": 4.3891233925822135,
+     "glance_mc": null,
+     "receptors": 3
+    },
+    "protanope": {
+     "H_part1": 4.671267313874165,
+     "K1": 49,
+     "H_part3": 3.1357754919021654,
+     "K3": 23,
+     "log2_packing1": 5.285402218862249,
+     "pair_rate1": 0.8573733694091328,
+     "pair_rate3": 0.6093950753510589,
+     "glance_gauss": 2.9933666326376938,
+     "glance_mc": null,
+     "receptors": 2
+    },
+    "deuteranope": {
+     "H_part1": 4.9499478900836715,
+     "K1": 54,
+     "H_part3": 3.2705838402614518,
+     "K3": 24,
+     "log2_packing1": 5.321928094887363,
+     "pair_rate1": 0.8817283129525221,
+     "pair_rate3": 0.6640378191272277,
+     "glance_gauss": 3.166140810149951,
+     "glance_mc": null,
+     "receptors": 2
+    },
+    "dog": {
+     "H_part1": 3.6863438666138757,
+     "K1": 27,
+     "H_part3": 1.9021276518984096,
+     "K3": 13,
+     "log2_packing1": 4.523561956057013,
+     "pair_rate1": 0.7211821878259292,
+     "pair_rate3": 0.3353348851973336,
+     "glance_gauss": 1.9847293574184022,
+     "glance_mc": null,
+     "receptors": 2
+    },
+    "bee": {
+     "H_part1": 6.031855082468934,
+     "K1": 119,
+     "H_part3": 4.1241493706308985,
+     "K3": 37,
+     "log2_packing1": 6.475733430966398,
+     "pair_rate1": 0.8957404356303944,
+     "pair_rate3": 0.6258294662696313,
+     "glance_gauss": 3.693988572318519,
+     "glance_mc": null,
+     "receptors": 3
+    },
+    "bluetit": {
+     "H_part1": 7.285639518035532,
+     "K1": 262,
+     "H_part3": 5.123587058889697,
+     "K3": 84,
+     "log2_packing1": 7.864186144654281,
+     "pair_rate1": 0.9548384902580226,
+     "pair_rate3": 0.7452310413108212,
+     "glance_gauss": 5.065195339749696,
+     "glance_mc": null,
+     "receptors": 4
+    },
+    "mantis_rnl": {
+     "H_part1": 9.265982689625472,
+     "K1": 644,
+     "H_part3": 8.400753204960093,
+     "K3": 460,
+     "log2_packing1": 9.319672120946995,
+     "pair_rate1": 0.9993500309868948,
+     "pair_rate3": 0.9872915942379491,
+     "glance_gauss": 22.403289765475126,
+     "glance_mc": null,
+     "receptors": 12
+    }
+   },
+   "ceiling_log2_n": 9.507794640198696
+  },
+  "h1": {
+   "k_curve_median_bits": {
+    "2": 3.8641607602391135,
+    "3": 6.3734580208329135,
+    "4": 8.899023551499472,
+    "5": 10.329162408913216,
+    "6": 12.33759698256403,
+    "7": 13.982187494139191,
+    "8": 14.478039704995357,
+    "9": 15.950762670568123,
+    "10": 16.79296179326314,
+    "11": 17.768872153618936,
+    "12": 18.121001949728047
+   },
+   "D_nat": 2.183853647814873,
+   "p_vs_indep": 0.009900990099009901,
+   "D_indep_median": 1.2622470921516529,
+   "D_global_median": 1.4686527985220468,
+   "tuning": {
+    "human": {
+     "real": 6.275530042859204,
+     "null_median": 7.699570385098323,
+     "percentile": 0.19,
+     "q05": 4.330310259331098,
+     "q95": 9.497499675326225
+    },
+    "bee": {
+     "real": 5.5910915716913685,
+     "null_median": 4.390020009419126,
+     "percentile": 0.9,
+     "q05": 1.689855855303997,
+     "q95": 5.764447305275052
+    },
+    "bluetit": {
+     "real": 7.8205337276201945,
+     "null_median": 6.758424874750501,
+     "percentile": 0.82,
+     "q05": 4.0151172582434125,
+     "q95": 8.45575437408013
+    }
+   }
+  },
+  "h2": {
+   "bee_given_human": {
+    "FB": 0.983754512635379,
+    "n_FB": 1108,
+    "BB": 0.48252826310380265,
+    "n_BB": 3892,
+    "ratio": 2.0387500336405195,
+    "null_q95": 1.0803280071993315,
+    "p": 0.001996007984031936
+   },
+   "bluetit_given_human": {
+    "FB": 0.9918772563176895,
+    "n_FB": 1108,
+    "BB": 0.4460431654676259,
+    "n_BB": 3892,
+    "ratio": 2.223724816583207,
+    "null_q95": 1.0906779085731622,
+    "p": 0.001996007984031936
+   },
+   "bee_given_dog": {
+    "FB": 0.9501623605816745,
+    "n_FB": 14166,
+    "BB": 0.6574775368114033,
+    "n_BB": 21257,
+    "ratio": 1.4451632297427486,
+    "null_q95": 1.0331401245153367,
+    "p": 0.001996007984031936
+   },
+   "bluetit_given_dog": {
+    "FB": 0.9984469857405054,
+    "n_FB": 14166,
+    "BB": 0.8581643693842028,
+    "n_BB": 21257,
+    "ratio": 1.163468236809885,
+    "null_q95": 1.0166733130281773,
+    "p": 0.001996007984031936
+   }
+  },
+  "h2b": {
+   "bee": {
+    "insect_minus_bird": 2.6380365731006954,
+    "insect_median": 9.46772345928248,
+    "bird_median": 6.8296868861817845,
+    "p_greater": 0.001996007984031936
+   },
+   "bluetit": {
+    "insect_minus_bird": -0.5107724017798532,
+    "insect_median": 9.6483041154036,
+    "bird_median": 10.159076517183452,
+    "p_greater": 0.7924151696606786
+   },
+   "human": {
+    "insect_minus_bird": 4.281422519451198,
+    "insect_median": 13.692145742550355,
+    "bird_median": 9.410723223099158,
+    "p_greater": 0.00998003992015968
+   }
+  },
+  "overlap": {
+   "mi": {
+    "human|human": 7.638213875804812,
+    "human|protanope": 5.156441379422272,
+    "human|deuteranope": 5.293290747969557,
+    "human|dog": 3.873551407814558,
+    "human|bee": 5.925853026337164,
+    "human|bluetit": 7.036239967947825,
+    "human|mantis_rnl": 7.632719370310305,
+    "human|mantis_coded": 1.2270526896153857,
+    "protanope|human": 5.156441379422272,
+    "protanope|protanope": 5.55771127166853,
+    "protanope|deuteranope": 3.594367937219044,
+    "protanope|dog": 3.0906178578132852,
+    "protanope|bee": 4.51325991390704,
+    "protanope|bluetit": 5.0169742270354405,
+    "protanope|mantis_rnl": 5.552216766174025,
+    "protanope|mantis_coded": 0.5414663563914157,
+    "deuteranope|human": 5.2932907479695555,
+    "deuteranope|protanope": 3.594367937219044,
+    "deuteranope|deuteranope": 5.6698728220507455,
+    "deuteranope|dog": 3.0272209809125483,
+    "deuteranope|bee": 4.27271019403838,
+    "deuteranope|bluetit": 5.093408988468651,
+    "deuteranope|mantis_rnl": 5.66437831655624,
+    "deuteranope|mantis_coded": 0.548053611801901,
+    "dog|human": 3.873551407814558,
+    "dog|protanope": 3.0906178578132844,
+    "dog|deuteranope": 3.0272209809125474,
+    "dog|dog": 4.506723288712157,
+    "dog|bee": 3.810942414281179,
+    "dog|bluetit": 4.261714888703114,
+    "dog|mantis_rnl": 4.5039760359649055,
+    "dog|mantis_coded": 0.42724255285628754,
+    "bee|human": 5.925853026337165,
+    "bee|protanope": 4.51325991390704,
+    "bee|deuteranope": 4.27271019403838,
+    "bee|dog": 3.81094241428118,
+    "bee|bee": 7.234236554103937,
+    "bee|bluetit": 6.682794346031766,
+    "bee|mantis_rnl": 7.228742048609432,
+    "bee|mantis_coded": 0.9274849676153369,
+    "bluetit|human": 7.036239967947827,
+    "bluetit|protanope": 5.0169742270354405,
+    "bluetit|deuteranope": 5.093408988468651,
+    "bluetit|dog": 4.261714888703112,
+    "bluetit|bee": 6.6827943460317645,
+    "bluetit|bluetit": 8.214801591823615,
+    "bluetit|mantis_rnl": 8.214801591823615,
+    "bluetit|mantis_coded": 1.3740153834453555,
+    "mantis_rnl|human": 7.632719370310307,
+    "mantis_rnl|protanope": 5.552216766174025,
+    "mantis_rnl|deuteranope": 5.66437831655624,
+    "mantis_rnl|dog": 4.5039760359649055,
+    "mantis_rnl|bee": 7.228742048609432,
+    "mantis_rnl|bluetit": 8.214801591823615,
+    "mantis_rnl|mantis_rnl": 9.474827607231664,
+    "mantis_rnl|mantis_coded": 1.6738517673392899,
+    "mantis_coded|human": 1.227052689615384,
+    "mantis_coded|protanope": 0.5414663563914166,
+    "mantis_coded|deuteranope": 0.548053611801901,
+    "mantis_coded|dog": 0.42724255285628754,
+    "mantis_coded|bee": 0.927484967615336,
+    "mantis_coded|bluetit": 1.3740153834453555,
+    "mantis_coded|mantis_rnl": 1.6738517673392899,
+    "mantis_coded|mantis_coded": 1.6765990200865408
+   },
+   "mi_excess": {
+    "human|human": 1.8437140370581249,
+    "human|protanope": 1.3536153556717991,
+    "human|deuteranope": 1.3871442050876421,
+    "human|dog": 1.016507347171808,
+    "human|bee": 0.5249292036581759,
+    "human|bluetit": 0.672742101712732,
+    "human|mantis_rnl": 0.027087912087910837,
+    "human|mantis_coded": 0.33556505322399344,
+    "protanope|human": 1.3524462579640537,
+    "protanope|protanope": 3.4926386231206172,
+    "protanope|deuteranope": 1.4565274768404626,
+    "protanope|dog": 1.7216982210075988,
+    "protanope|bee": 1.0659079301742973,
+    "protanope|bluetit": 0.6791869292171144,
+    "protanope|mantis_rnl": 0.026538461538462066,
+    "protanope|mantis_coded": 0.17300372231202504,
+    "deuteranope|human": 1.38828721262503,
+    "deuteranope|protanope": 1.4546574642846322,
+    "deuteranope|deuteranope": 3.4624499249991274,
+    "deuteranope|dog": 1.6037087686430613,
+    "deuteranope|bee": 0.7298096147759274,
+    "deuteranope|bluetit": 0.6513070379344894,
+    "deuteranope|mantis_rnl": 0.026648351648351998,
+    "deuteranope|mantis_coded": 0.1702932364127115,
+    "dog|human": 1.0100944326641517,
+    "dog|protanope": 1.7137761312954785,
+    "dog|deuteranope": 1.6016804437673788,
+    "dog|dog": 3.6439016530025805,
+    "dog|bee": 1.2687956303964687,
+    "dog|bluetit": 0.900914294691133,
+    "dog|mantis_rnl": 0.02813186813186963,
+    "dog|mantis_coded": 0.20231517937158305,
+    "bee|human": 0.5242463807743238,
+    "bee|protanope": 1.0693161929614616,
+    "bee|deuteranope": 0.728190596984192,
+    "bee|dog": 1.276319278877052,
+    "bee|bee": 2.2210545571636215,
+    "bee|bluetit": 0.7174412805490933,
+    "bee|mantis_rnl": 0.027252747252746623,
+    "bee|mantis_coded": 0.17758559507281302,
+    "bluetit|human": 0.6720951545967555,
+    "bluetit|protanope": 0.6805858216494913,
+    "bluetit|deuteranope": 0.648009260461488,
+    "bluetit|dog": 0.9005878877390145,
+    "bluetit|bee": 0.7150298949031901,
+    "bluetit|bluetit": 1.2814742513279613,
+    "bluetit|mantis_rnl": 0.032857142857144694,
+    "bluetit|mantis_coded": 0.2632821862292827,
+    "mantis_rnl|human": 0.02725274725274751,
+    "mantis_rnl|protanope": 0.02675824175824193,
+    "mantis_rnl|deuteranope": 0.026648351648351998,
+    "mantis_rnl|dog": 0.02829670329670453,
+    "mantis_rnl|bee": 0.027362637362636555,
+    "mantis_rnl|bluetit": 0.03291208791208966,
+    "mantis_rnl|mantis_rnl": 0.03296703296703285,
+    "mantis_rnl|mantis_coded": 0.014780219780221149,
+    "mantis_coded|human": 0.3372633429759816,
+    "mantis_coded|protanope": 0.1706661260752702,
+    "mantis_coded|deuteranope": 0.17123385078971154,
+    "mantis_coded|dog": 0.1985753868025805,
+    "mantis_coded|bee": 0.169619773919504,
+    "mantis_coded|bluetit": 0.2591518342042807,
+    "mantis_coded|mantis_rnl": 0.0158791208791218,
+    "mantis_coded|mantis_coded": 1.6167094595055849
+   },
+   "mi_frac": {
+    "human|human": 1.0,
+    "human|protanope": 0.6750847074020896,
+    "human|deuteranope": 0.6930011170198899,
+    "human|dog": 0.5071279059211229,
+    "human|bee": 0.775816587842374,
+    "human|bluetit": 0.921189178825716,
+    "human|mantis_rnl": 0.9992806557156102,
+    "human|mantis_coded": 0.16064654768338696,
+    "protanope|human": 0.9277994353013973,
+    "protanope|protanope": 1.0,
+    "protanope|deuteranope": 0.6467352767211937,
+    "protanope|dog": 0.5560954333069238,
+    "protanope|bee": 0.8120716772233608,
+    "protanope|bluetit": 0.9027050852048402,
+    "protanope|mantis_rnl": 0.9990113726269816,
+    "protanope|mantis_coded": 0.09742613999248963,
+    "deuteranope|human": 0.9335819186954915,
+    "deuteranope|protanope": 0.633941545080193,
+    "deuteranope|deuteranope": 1.0,
+    "deuteranope|dog": 0.5339133832313416,
+    "deuteranope|bee": 0.7535813109284127,
+    "deuteranope|bluetit": 0.8983286130616256,
+    "deuteranope|mantis_rnl": 0.9990309296756822,
+    "deuteranope|mantis_coded": 0.09666065342250034,
+    "dog|human": 0.8595050460534188,
+    "dog|protanope": 0.6857793700257244,
+    "dog|deuteranope": 0.6717121924247554,
+    "dog|dog": 1.0,
+    "dog|bee": 0.8456126924469319,
+    "dog|bluetit": 0.945634913813611,
+    "dog|mantis_rnl": 0.999390410155837,
+    "dog|mantis_coded": 0.0948011505224623,
+    "bee|human": 0.8191400684810985,
+    "bee|protanope": 0.6238750806879125,
+    "bee|deuteranope": 0.590623511145001,
+    "bee|dog": 0.5267926180986239,
+    "bee|bee": 1.0,
+    "bee|bluetit": 0.9237732684094576,
+    "bee|mantis_rnl": 0.9992404857854159,
+    "bee|mantis_coded": 0.1282077190424718,
+    "bluetit|human": 0.8565319428957555,
+    "bluetit|protanope": 0.6107237248467392,
+    "bluetit|deuteranope": 0.6200282418918359,
+    "bluetit|dog": 0.5187848837329069,
+    "bluetit|bee": 0.8135064823334633,
+    "bluetit|bluetit": 1.0,
+    "bluetit|mantis_rnl": 1.0,
+    "bluetit|mantis_coded": 0.167260933582735,
+    "mantis_rnl|human": 0.8055787067286198,
+    "mantis_rnl|protanope": 0.585996600290257,
+    "mantis_rnl|deuteranope": 0.5978344463209971,
+    "mantis_rnl|dog": 0.4753623203157011,
+    "mantis_rnl|bee": 0.7629418020325872,
+    "mantis_rnl|bluetit": 0.8670133043427267,
+    "mantis_rnl|mantis_rnl": 1.0,
+    "mantis_rnl|mantis_coded": 0.17666303142673775,
+    "mantis_coded|human": 0.7318700982850672,
+    "mantis_coded|protanope": 0.32295519077869184,
+    "mantis_coded|deuteranope": 0.3268841298580815,
+    "mantis_coded|dog": 0.2548269131364723,
+    "mantis_coded|bee": 0.5531942679815369,
+    "mantis_coded|bluetit": 0.8195253408739516,
+    "mantis_coded|mantis_rnl": 0.9983614133645926,
+    "mantis_coded|mantis_coded": 1.0
+   },
+   "gauss_mi": {
+    "human|human": 5.2961149514118055,
+    "human|protanope": 3.4900634097548533,
+    "human|deuteranope": 3.660530030937411,
+    "human|dog": 2.0911141440134866,
+    "human|bee": 2.1027891750840695,
+    "human|bluetit": 3.738883124503771,
+    "human|mantis_rnl": 3.7948143574420166,
+    "protanope|human": 3.4900634097548573,
+    "protanope|protanope": 3.486224748910029,
+    "protanope|deuteranope": 2.682484712895072,
+    "protanope|dog": 2.0115188719003876,
+    "protanope|bee": 2.056966266129291,
+    "protanope|bluetit": 2.334141562684296,
+    "protanope|mantis_rnl": 2.3886622039906973,
+    "deuteranope|human": 3.6605300309373865,
+    "deuteranope|protanope": 2.6824847128950746,
+    "deuteranope|deuteranope": 3.660525537170796,
+    "deuteranope|dog": 2.057601270734738,
+    "deuteranope|bee": 2.0372514198992073,
+    "deuteranope|bluetit": 2.4767634158659453,
+    "deuteranope|mantis_rnl": 2.4431067690110777,
+    "dog|human": 2.0911141440134853,
+    "dog|protanope": 2.0115188719003867,
+    "dog|deuteranope": 2.057601270734738,
+    "dog|dog": 2.455409631058315,
+    "dog|bee": 2.1675577856698123,
+    "dog|bluetit": 2.103786215603675,
+    "dog|mantis_rnl": 2.4236227988545407,
+    "bee|human": 2.102789175084067,
+    "bee|protanope": 2.0569662661292925,
+    "bee|deuteranope": 2.03725141989921,
+    "bee|dog": 2.167557785669815,
+    "bee|bee": 4.609206824882228,
+    "bee|bluetit": 2.9063248748982233,
+    "bee|mantis_rnl": 3.3516376290626955,
+    "bluetit|human": 3.7388831245037695,
+    "bluetit|protanope": 2.3341415626843007,
+    "bluetit|deuteranope": 2.47676341586595,
+    "bluetit|dog": 2.1037862156036775,
+    "bluetit|bee": 2.9063248748982256,
+    "bluetit|bluetit": 6.365483806245028,
+    "bluetit|mantis_rnl": 5.860067697162278,
+    "mantis_rnl|human": 3.7948143574420423,
+    "mantis_rnl|protanope": 2.388662203990723,
+    "mantis_rnl|deuteranope": 2.4431067690111443,
+    "mantis_rnl|dog": 2.4236227988545256,
+    "mantis_rnl|bee": 3.351637629062726,
+    "mantis_rnl|bluetit": 5.860067697162293,
+    "mantis_rnl|mantis_rnl": 26.376184709307754
+   },
+   "gauss_frac": {
+    "human|human": 0.8439310966948752,
+    "human|protanope": 0.5561384274984269,
+    "human|deuteranope": 0.5833021284158543,
+    "human|dog": 0.3332171354024386,
+    "human|bee": 0.3350775409762861,
+    "human|bluetit": 0.5957876225543958,
+    "human|mantis_rnl": 0.6047002136114474,
+    "protanope|human": 0.8758474895009326,
+    "protanope|protanope": 0.8748841598793012,
+    "protanope|deuteranope": 0.6731818954483707,
+    "protanope|dog": 0.5047999268762428,
+    "protanope|bee": 0.5162051598094003,
+    "protanope|bluetit": 0.5857635772756403,
+    "protanope|mantis_rnl": 0.5994457833584079,
+    "deuteranope|human": 0.8800630740287354,
+    "deuteranope|protanope": 0.6449218344101354,
+    "deuteranope|deuteranope": 0.880061993639282,
+    "deuteranope|dog": 0.494687622869886,
+    "deuteranope|bee": 0.4897951203822729,
+    "deuteranope|bluetit": 0.5954624076259023,
+    "deuteranope|mantis_rnl": 0.5873706908957409,
+    "dog|human": 0.7090112135702534,
+    "dog|protanope": 0.6820237147591897,
+    "dog|deuteranope": 0.697648369977227,
+    "dog|dog": 0.8325289020270321,
+    "dog|bee": 0.7349301234947287,
+    "dog|bluetit": 0.713307794358218,
+    "dog|mantis_rnl": 0.8217512883128921,
+    "bee|human": 0.3760963575933616,
+    "bee|protanope": 0.3679006576361683,
+    "bee|deuteranope": 0.36437454006551323,
+    "bee|dog": 0.38768060903250495,
+    "bee|bee": 0.8243840698691849,
+    "bee|bluetit": 0.5198134993197808,
+    "bee|mantis_rnl": 0.5994603354437257,
+    "bluetit|human": 0.4780854165105071,
+    "bluetit|protanope": 0.29846320519540614,
+    "bluetit|deuteranope": 0.3167000491435301,
+    "bluetit|dog": 0.2690080100509795,
+    "bluetit|bee": 0.3716274331295067,
+    "bluetit|bluetit": 0.8139449336768041,
+    "bluetit|mantis_rnl": 0.7493181285653133,
+    "mantis_rnl|human": 0.12136377955916328,
+    "mantis_rnl|protanope": 0.07639295255587816,
+    "mantis_rnl|deuteranope": 0.0781341703243771,
+    "mantis_rnl|dog": 0.07751104412206687,
+    "mantis_rnl|bee": 0.1071903318743512,
+    "mantis_rnl|bluetit": 0.18741363798348604,
+    "mantis_rnl|mantis_rnl": 0.8435494243333588
+   }
+  },
+  "h3": {
+   "rho": 0.9211815355688242,
+   "null_q95": 0.5436221231137439,
+   "p": 0.001996007984031936,
+   "rho_gauss_frac_rnl_only": 0.6814732945826862,
+   "reception": {
+    "human|protanope": 0.8132037454071352,
+    "human|deuteranope": 0.8384496859073131,
+    "human|dog": 0.5142823278416498,
+    "human|bee": 0.9794950811899964,
+    "human|bluetit": 0.9996444233732369,
+    "human|mantis_rnl": 1.0,
+    "human|mantis_coded": 0.5610999170321205,
+    "n_human": 8437,
+    "protanope|human": 1.0,
+    "protanope|deuteranope": 0.912332838038633,
+    "protanope|dog": 0.5515252163272442,
+    "protanope|bee": 0.9896862162398392,
+    "protanope|bluetit": 0.99982519010576,
+    "protanope|mantis_rnl": 1.0,
+    "protanope|mantis_coded": 0.5283629053404423,
+    "n_protanope": 11441,
+    "deuteranope|human": 1.0,
+    "deuteranope|protanope": 0.8846371882086168,
+    "deuteranope|dog": 0.5165343915343915,
+    "deuteranope|bee": 0.9774187452758881,
+    "deuteranope|bluetit": 0.9997165532879818,
+    "deuteranope|mantis_rnl": 1.0,
+    "deuteranope|mantis_coded": 0.5297619047619048,
+    "n_deuteranope": 10584,
+    "dog|human": 0.9997061663098686,
+    "dog|protanope": 0.9803131427611972,
+    "dog|deuteranope": 0.9704907022625194,
+    "dog|bee": 0.9946270410947404,
+    "dog|bluetit": 1.0,
+    "dog|mantis_rnl": 1.0,
+    "dog|mantis_coded": 0.5019518952273013,
+    "n_dog": 23823,
+    "bee|human": 0.9938236945536215,
+    "bee|protanope": 0.8907355418304324,
+    "bee|deuteranope": 0.8920830993823694,
+    "bee|dog": 0.7246490735541831,
+    "bee|bluetit": 0.9996631106120157,
+    "bee|mantis_rnl": 1.0,
+    "bee|mantis_coded": 0.4952274003368894,
+    "n_bee": 8905,
+    "bluetit|human": 0.9791029561671764,
+    "bluetit|protanope": 0.8631498470948012,
+    "bluetit|deuteranope": 0.8476044852191641,
+    "bluetit|dog": 0.6113659531090724,
+    "bluetit|bee": 0.9533639143730887,
+    "bluetit|mantis_rnl": 1.0,
+    "bluetit|mantis_coded": 0.5140163098878695,
+    "n_bluetit": 3924,
+    "mantis_rnl|human": NaN,
+    "mantis_rnl|protanope": NaN,
+    "mantis_rnl|deuteranope": NaN,
+    "mantis_rnl|dog": NaN,
+    "mantis_rnl|bee": NaN,
+    "mantis_rnl|bluetit": NaN,
+    "mantis_rnl|mantis_coded": NaN,
+    "n_mantis_rnl": 0,
+    "mantis_coded|human": 0.9888219844981103,
+    "mantis_coded|protanope": 0.9433572480942924,
+    "mantis_coded|deuteranope": 0.9512683364294408,
+    "mantis_coded|dog": 0.8823906219973096,
+    "mantis_coded|bee": 0.9909679072448915,
+    "mantis_coded|bluetit": 0.9997918134648646,
+    "mantis_coded|mantis_rnl": 1.0,
+    "n_mantis_coded": 62444
+   }
+  },
+  "h4": {
+   "median_excess": -0.12119062982218853,
+   "max_gauss_gain": 3.4883023966072972,
+   "p_le0": 0.9701492537313433,
+   "median_part_gain": 0.5639530208271326,
+   "conspecific_part_gain": {
+    "human": 0.42468609520316747,
+    "protanope": 0.9396950501700045,
+    "deuteranope": 0.9464081111842084,
+    "dog": 0.7722906745581408,
+    "bee": 0.49709597882301715,
+    "bluetit": 0.1459362292859705,
+    "mantis_rnl": 0.0,
+    "mantis_coded": 0.09291759485548923
+   },
+   "rows": {
+    "human+protanope": {
+     "part_gain": 0.4012698922462583,
+     "gauss_gain": 0.49472098660567454,
+     "gauss_double_look_gain": 0.9794150914473896,
+     "gauss_excess": -0.48469410484171505,
+     "fused_gain": 0.7554771182491491,
+     "fused_H_part1_gain": 0.30750124988083183
+    },
+    "human+deuteranope": {
+     "part_gain": 0.37658207408118827,
+     "gauss_gain": 0.49886506125783914,
+     "gauss_double_look_gain": 0.9794150914473896,
+     "gauss_excess": -0.48055003018955045,
+     "fused_gain": 0.61539933976377,
+     "fused_H_part1_gain": 0.3128427013468382
+    },
+    "human+dog": {
+     "part_gain": 0.6331718808975992,
+     "gauss_gain": 0.858224461625201,
+     "gauss_double_look_gain": 0.9794150914473896,
+     "gauss_excess": -0.12119062982218853,
+     "fused_gain": 1.2491997652547218,
+     "fused_H_part1_gain": 0.40244434626272074
+    },
+    "human+bee": {
+     "part_gain": 1.3083835277667735,
+     "gauss_gain": 3.4883023966072972,
+     "gauss_double_look_gain": 0.9818847468091363,
+     "gauss_excess": 2.506417649798161,
+     "fused_gain": 4.558975405469319,
+     "fused_H_part1_gain": 1.1572347660261961
+    },
+    "human+bluetit": {
+     "part_gain": 0.601973907856987,
+     "gauss_gain": 2.5366469183554337,
+     "gauss_double_look_gain": 1.4550499213751689,
+     "gauss_excess": 1.0815969969802648,
+     "fused_gain": 2.9890247702475783,
+     "fused_H_part1_gain": 0.4950429635310165
+    },
+    "human+mantis_rnl": {
+     "part_gain": 0.005494505494507251,
+     "gauss_gain": 2.480715685417188,
+     "gauss_double_look_gain": 4.891911680127144,
+     "gauss_excess": -2.4111959947099564,
+     "fused_gain": 4.816686596437044,
+     "fused_H_part1_gain": 0.0082417582417591
+    },
+    "human+mantis_coded": {
+     "part_gain": 0.449546330471156
+    },
+    "protanope+deuteranope": {
+     "part_gain": 1.9633433344494868,
+     "gauss_gain": 1.3022996834654545,
+     "gauss_double_look_gain": 0.4988695550244522,
+     "gauss_excess": 0.8034301284410024,
+     "fused_gain": 2.5709201963454618,
+     "fused_H_part1_gain": 2.1833271803973924
+    },
+    "protanope+dog": {
+     "part_gain": 1.4161054308988712,
+     "gauss_gain": 0.9378197337383005,
+     "gauss_double_look_gain": 0.4985596474504872,
+     "gauss_excess": 0.4392600862878133,
+     "fused_gain": 1.9513668204283512,
+     "fused_H_part1_gain": 1.8947437677938632
+    },
+    "protanope+bee": {
+     "part_gain": 1.0444513577614902,
+     "gauss_gain": 1.9278181302312367,
+     "gauss_double_look_gain": 0.9818847468091363,
+     "gauss_excess": 0.9459333834221004,
+     "fused_gain": 2.9019804746993394,
+     "fused_H_part1_gain": 0.897778020576002
+    },
+    "protanope+bluetit": {
+     "part_gain": 0.5407370446330901,
+     "gauss_gain": 1.6506428336762315,
+     "gauss_double_look_gain": 1.4550499213751689,
+     "gauss_excess": 0.19559291230106268,
+     "fused_gain": 2.092595648465206,
+     "fused_H_part1_gain": 0.4036468094537078
+    },
+    "protanope+mantis_rnl": {
+     "part_gain": 0.005494505494505475,
+     "gauss_gain": 1.5961221923698332,
+     "gauss_double_look_gain": 4.891911680127144,
+     "gauss_excess": -3.295789487757311,
+     "fused_gain": 3.817161368198434,
+     "fused_H_part1_gain": 0.005494505494505475
+    },
+    "protanope+mantis_coded": {
+     "part_gain": 1.135132663695125
+    },
+    "deuteranope+dog": {
+     "part_gain": 1.479502307799609,
+     "gauss_gain": 0.891737334903949,
+     "gauss_double_look_gain": 0.4988695550244522,
+     "gauss_excess": 0.39286777987949684,
+     "fused_gain": 1.5896700344869448,
+     "fused_H_part1_gain": 1.6256092039580148
+    },
+    "deuteranope+bee": {
+     "part_gain": 1.3971626280123655,
+     "gauss_gain": 2.1221436722960423,
+     "gauss_double_look_gain": 0.9818847468091363,
+     "gauss_excess": 1.140258925486906,
+     "fused_gain": 3.6543631121789772,
+     "fused_H_part1_gain": 1.2587110163649946
+    },
+    "deuteranope+bluetit": {
+     "part_gain": 0.5764638335820944,
+     "gauss_gain": 1.682631676329306,
+     "gauss_double_look_gain": 1.4550499213751689,
+     "gauss_excess": 0.22758175495413724,
+     "fused_gain": 2.145509048459738,
+     "fused_H_part1_gain": 0.4172776090638646
+    },
+    "deuteranope+mantis_rnl": {
+     "part_gain": 0.005494505494505475,
+     "gauss_gain": 1.7162883231841732,
+     "gauss_double_look_gain": 4.891911680127144,
+     "gauss_excess": -3.175623356942971,
+     "fused_gain": 3.9243256784618126,
+     "fused_H_part1_gain": 0.005494505494505475
+    },
+    "deuteranope+mantis_coded": {
+     "part_gain": 1.1285454082846398
+    },
+    "dog+bee": {
+     "part_gain": 0.6957808744309784,
+     "gauss_gain": 0.7817808199688763,
+     "gauss_double_look_gain": 0.9818847468091363,
+     "gauss_excess": -0.20010392684026002,
+     "fused_gain": 1.827231424280349,
+     "fused_H_part1_gain": 0.7489770277725114
+    },
+    "dog+bluetit": {
+     "part_gain": 0.24500840000904311,
+     "gauss_gain": 0.8455523900350137,
+     "gauss_double_look_gain": 1.4550499213751689,
+     "gauss_excess": -0.6094975313401552,
+     "fused_gain": 1.3967047927002856,
+     "fused_H_part1_gain": 0.17804523099866287
+    },
+    "dog+mantis_rnl": {
+     "part_gain": 0.0027472527472518493,
+     "gauss_gain": 0.5257158067841488,
+     "gauss_double_look_gain": 4.891911680127144,
+     "gauss_excess": -4.3661958733429955,
+     "fused_gain": 2.153512402826337,
+     "fused_H_part1_gain": 0.0
+    },
+    "dog+mantis_coded": {
+     "part_gain": 1.2493564672302533
+    },
+    "bee+bluetit": {
+     "part_gain": 0.5514422080721708,
+     "gauss_gain": 2.6847666967931456,
+     "gauss_double_look_gain": 1.4550499213751689,
+     "gauss_excess": 1.2297167754179767,
+     "fused_gain": 3.4655784361207154,
+     "fused_H_part1_gain": 0.46798295415383606
+    },
+    "bee+mantis_rnl": {
+     "part_gain": 0.005494505494505475,
+     "gauss_gain": 2.2394539426286713,
+     "gauss_double_look_gain": 4.891911680127144,
+     "gauss_excess": -2.652457737498473,
+     "fused_gain": 3.856725586928931,
+     "fused_H_part1_gain": 0.0027472527472536257
+    },
+    "bee+mantis_coded": {
+     "part_gain": 0.7491140524712048
+    },
+    "bluetit+mantis_rnl": {
+     "part_gain": 0.0,
+     "gauss_gain": 1.9604660304579156,
+     "gauss_double_look_gain": 4.891911680127144,
+     "gauss_excess": -2.9314456496692287,
+     "fused_gain": 2.452154523056059,
+     "fused_H_part1_gain": 0.0
+    },
+    "bluetit+mantis_coded": {
+     "part_gain": 0.30258363664118626
+    },
+    "mantis_rnl+mantis_coded": {
+     "part_gain": 0.0027472527472518493
+    }
+   },
+   "median_part_excess_over_conspecific": -0.025824782429586968
+  },
+  "delta_lambda": {
+   "human": {
+    "median": 0.9,
+    "min": 0.4,
+    "argmin_nm": 615.0,
+    "n_unresolved": 0,
+    "curve": [
+     3.0,
+     3.6,
+     1.8,
+     1.8,
+     1.6,
+     1.7,
+     1.6,
+     2.1,
+     2.0,
+     2.0,
+     1.6,
+     1.3,
+     1.1,
+     1.0,
+     0.9,
+     0.8,
+     0.8,
+     0.8,
+     0.8,
+     0.7,
+     0.7,
+     0.7,
+     0.7,
+     0.7,
+     0.8,
+     0.8,
+     0.8,
+     0.8,
+     0.8,
+     0.8,
+     0.8,
+     0.8,
+     0.9,
+     0.9,
+     0.9,
+     0.9,
+     0.9,
+     0.9,
+     0.9,
+     1.0,
+     1.0,
+     1.0,
+     1.1,
+     0.4,
+     1.1,
+     1.1,
+     1.1,
+     1.1,
+     1.0,
+     1.2,
+     1.1
+    ]
+   },
+   "protanope": {
+    "median": 1.2000000000000002,
+    "min": 0.5,
+    "argmin_nm": 615.0,
+    "n_unresolved": 0,
+    "curve": [
+     23.7,
+     16.4,
+     10.7,
+     6.1,
+     3.4,
+     2.8,
+     2.1,
+     2.5,
+     2.1,
+     2.0,
+     1.6,
+     1.4,
+     1.2,
+     1.1,
+     1.0,
+     0.9,
+     0.9,
+     0.9,
+     0.9,
+     0.8,
+     0.8,
+     0.7,
+     0.8,
+     0.8,
+     0.9,
+     0.9,
+     0.9,
+     0.9,
+     0.9,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.1,
+     1.2,
+     1.3,
+     1.4,
+     1.5,
+     1.7,
+     2.0,
+     2.3,
+     2.7,
+     3.3,
+     0.5,
+     1.3,
+     1.2,
+     1.2,
+     1.2,
+     1.1,
+     1.2,
+     1.1
+    ]
+   },
+   "deuteranope": {
+    "median": 1.0,
+    "min": 0.4,
+    "argmin_nm": 615.0,
+    "n_unresolved": 0,
+    "curve": [
+     4.1,
+     5.7,
+     5.3,
+     19.5,
+     12.1,
+     7.2,
+     4.6,
+     4.5,
+     3.0,
+     2.4,
+     1.6,
+     1.4,
+     1.1,
+     1.0,
+     0.9,
+     0.8,
+     0.8,
+     0.8,
+     0.8,
+     0.7,
+     0.7,
+     0.7,
+     0.7,
+     0.7,
+     0.8,
+     0.8,
+     0.8,
+     0.8,
+     0.8,
+     0.8,
+     0.8,
+     0.9,
+     0.9,
+     0.9,
+     0.9,
+     1.0,
+     1.0,
+     1.0,
+     1.1,
+     1.1,
+     1.2,
+     1.3,
+     1.5,
+     0.4,
+     2.3,
+     1.9,
+     1.7,
+     1.7,
+     1.6,
+     1.4,
+     1.3
+    ]
+   },
+   "dog": {
+    "median": 2.6,
+    "min": 1.5,
+    "argmin_nm": 500.0,
+    "n_unresolved": 0,
+    "curve": [
+     5.9,
+     6.5,
+     7.6,
+     11.0,
+     28.0,
+     20.8,
+     14.7,
+     10.2,
+     7.2,
+     5.3,
+     4.2,
+     3.5,
+     3.0,
+     2.6,
+     2.4,
+     2.1,
+     2.0,
+     1.8,
+     1.7,
+     1.6,
+     1.5,
+     1.5,
+     1.5,
+     1.5,
+     1.5,
+     1.5,
+     1.5,
+     1.5,
+     1.6,
+     1.6,
+     1.7,
+     1.7,
+     1.8,
+     1.9,
+     1.9,
+     2.0,
+     2.2,
+     2.3,
+     2.5,
+     2.6,
+     2.8,
+     3.1,
+     3.4,
+     3.7,
+     4.1,
+     4.8,
+     5.6,
+     7.0,
+     9.6,
+     54.0,
+     43.8
+    ]
+   },
+   "bee": {
+    "median": 2.1,
+    "min": 0.30000000000000004,
+    "argmin_nm": 540.0,
+    "n_unresolved": 0,
+    "curve": [
+     2.3,
+     2.4,
+     2.4,
+     2.4,
+     2.7,
+     2.4,
+     2.7,
+     4.1,
+     3.4,
+     4.0,
+     3.3,
+     3.1,
+     3.1,
+     2.8,
+     2.6,
+     2.4,
+     2.0,
+     1.7,
+     1.5,
+     1.5,
+     1.7,
+     1.8,
+     3.0,
+     2.1,
+     2.1,
+     1.4,
+     0.8,
+     0.4,
+     0.3,
+     0.5,
+     7.1,
+     2.1,
+     0.4,
+     0.7,
+     0.4,
+     4.3,
+     1.1,
+     0.5,
+     0.4,
+     2.1,
+     0.4,
+     1.5,
+     0.4,
+     2.3,
+     2.4,
+     2.4,
+     2.1,
+     1.8,
+     1.7,
+     2.3,
+     3.9
+    ]
+   },
+   "bluetit": {
+    "median": 1.2000000000000002,
+    "min": 0.1,
+    "argmin_nm": 490.0,
+    "n_unresolved": 0,
+    "curve": [
+     3.1,
+     0.2,
+     0.4,
+     0.7,
+     0.8,
+     1.0,
+     1.1,
+     1.3,
+     1.4,
+     1.5,
+     1.5,
+     1.5,
+     1.6,
+     1.6,
+     1.6,
+     1.6,
+     1.7,
+     1.7,
+     0.1,
+     0.3,
+     0.4,
+     0.6,
+     0.7,
+     0.9,
+     0.9,
+     1.1,
+     1.2,
+     1.3,
+     1.4,
+     0.4,
+     1.1,
+     0.3,
+     0.4,
+     0.5,
+     0.5,
+     0.6,
+     0.7,
+     0.9,
+     1.0,
+     1.2,
+     1.3,
+     1.6,
+     1.7,
+     2.0,
+     2.1,
+     2.1,
+     2.5,
+     2.9,
+     3.3,
+     3.8,
+     4.5
+    ]
+   },
+   "mantis_rnl": {
+    "median": 0.1,
+    "min": 0.1,
+    "argmin_nm": 400.0,
+    "n_unresolved": 0,
+    "curve": [
+     0.1,
+     0.1,
+     0.1,
+     0.1,
+     0.1,
+     0.1,
+     0.1,
+     0.1,
+     0.1,
+     0.1,
+     0.1,
+     0.1,
+     0.1,
+     0.1,
+     0.1,
+     0.1,
+     0.1,
+     0.1,
+     0.1,
+     0.1,
+     0.1,
+     0.1,
+     0.1,
+     0.1,
+     0.2,
+     0.2,
+     0.2,
+     0.2,
+     0.1,
+     0.1,
+     0.1,
+     0.1,
+     0.1,
+     0.1,
+     0.1,
+     0.1,
+     0.1,
+     0.2,
+     0.2,
+     0.2,
+     0.2,
+     0.2,
+     0.2,
+     0.2,
+     0.2,
+     0.2,
+     0.2,
+     0.2,
+     0.2,
+     0.2,
+     0.2
+    ]
+   },
+   "mantis_coded": {
+    "median": 17.400000000000002,
+    "min": 0.5,
+    "argmin_nm": 425.0,
+    "n_unresolved": 4,
+    "curve": [
+     25.5,
+     20.5,
+     15.5,
+     10.5,
+     5.5,
+     0.5,
+     26.6,
+     21.6,
+     16.6,
+     11.6,
+     6.6,
+     1.6,
+     22.8,
+     17.8,
+     12.8,
+     7.8,
+     2.8,
+     27.8,
+     22.8,
+     17.8,
+     12.8,
+     7.8,
+     2.8,
+     22.6,
+     17.6,
+     12.6,
+     7.6,
+     2.6,
+     39.9,
+     34.9,
+     29.9,
+     24.9,
+     19.9,
+     14.9,
+     9.9,
+     4.9,
+     52.4,
+     47.4,
+     42.4,
+     37.4,
+     32.4,
+     27.4,
+     22.4,
+     17.4,
+     12.4,
+     7.4,
+     2.4,
+     null,
+     null,
+     null,
+     null
+    ]
+   }
+  },
+  "illuminant_shift": {
+   "human|forestshade": {
+    "median_shift": 0.4756252135934814,
+    "frac_over1": 0.11950549450549451,
+    "frac_over3": 0.016483516483516484,
+    "partition_kept_frac": 0.9549336836238299
+   },
+   "human|bluesky": {
+    "median_shift": 0.6399431161403273,
+    "frac_over1": 0.3090659340659341,
+    "frac_over3": 0.04807692307692308,
+    "partition_kept_frac": 0.90957873312348
+   },
+   "protanope|forestshade": {
+    "median_shift": 0.2009465665645771,
+    "frac_over1": 0.050824175824175824,
+    "frac_over3": 0.013736263736263736,
+    "partition_kept_frac": 0.8784079158460161
+   },
+   "protanope|bluesky": {
+    "median_shift": 0.3379284692004054,
+    "frac_over1": 0.14285714285714285,
+    "frac_over3": 0.020604395604395604,
+    "partition_kept_frac": 0.7676988149437374
+   },
+   "deuteranope|forestshade": {
+    "median_shift": 0.07888680525266079,
+    "frac_over1": 0.04532967032967033,
+    "frac_over3": 0.016483516483516484,
+    "partition_kept_frac": 0.8689986073752843
+   },
+   "deuteranope|bluesky": {
+    "median_shift": 0.44193384998642493,
+    "frac_over1": 0.2087912087912088,
+    "frac_over3": 0.03983516483516483,
+    "partition_kept_frac": 0.7358371053229571
+   },
+   "dog|forestshade": {
+    "median_shift": 0.19629615973579406,
+    "frac_over1": 0.013736263736263736,
+    "frac_over3": 0.0027472527472527475,
+    "partition_kept_frac": 0.874606166663778
+   },
+   "dog|bluesky": {
+    "median_shift": 0.4205030909101797,
+    "frac_over1": 0.12637362637362637,
+    "frac_over3": 0.03021978021978022,
+    "partition_kept_frac": 0.6750488294362887
+   },
+   "bee|forestshade": {
+    "median_shift": 0.2956162472228653,
+    "frac_over1": 0.017857142857142856,
+    "frac_over3": 0.0027472527472527475,
+    "partition_kept_frac": 0.9420754232931366
+   },
+   "bee|bluesky": {
+    "median_shift": 0.6953437199185404,
+    "frac_over1": 0.3804945054945055,
+    "frac_over3": 0.1401098901098901,
+    "partition_kept_frac": 0.8969775321219651
+   },
+   "bluetit|forestshade": {
+    "median_shift": 0.11658009238611547,
+    "frac_over1": 0.057692307692307696,
+    "frac_over3": 0.012362637362637362,
+    "partition_kept_frac": 0.9869336451062057
+   },
+   "bluetit|bluesky": {
+    "median_shift": 0.40125787814385505,
+    "frac_over1": 0.28296703296703296,
+    "frac_over3": 0.0521978021978022,
+    "partition_kept_frac": 0.9721523008920127
+   },
+   "mantis_rnl|forestshade": {
+    "median_shift": 0.8946813975581095,
+    "frac_over1": 0.4478021978021978,
+    "frac_over3": 0.13324175824175824,
+    "partition_kept_frac": 1.0
+   },
+   "mantis_rnl|bluesky": {
+    "median_shift": 1.3353126234040238,
+    "frac_over1": 0.5769230769230769,
+    "frac_over3": 0.26785714285714285,
+    "partition_kept_frac": 0.9997100472049586
+   },
+   "mantis_coded|forestshade": {
+    "median_shift": 0.0,
+    "frac_over1": 0.01098901098901099,
+    "frac_over3": 0.01098901098901099,
+    "partition_kept_frac": 0.9597050182188803
+   },
+   "mantis_coded|bluesky": {
+    "median_shift": 0.0,
+    "frac_over1": 0.023351648351648352,
+    "frac_over3": 0.023351648351648352,
+    "partition_kept_frac": 0.9227028677007882
+   }
+  },
+  "examples": {
+   "human_blind_bee_sees": [
+    {
+     "a": "1296_DryThinBrownLeaf_DryLeaves",
+     "b": "Hypericum_pygmae (Clusiaceae) #231",
+     "group_a": "bg_bark",
+     "group_b": "flower_insect",
+     "dS_human": 0.63,
+     "dS_bee": 22.39,
+     "uv_share_a": 0.0,
+     "uv_share_b": 0.7
+    },
+    {
+     "a": "1300_GreenLeaf_DryLeaves_2",
+     "b": "Caladenia_clavigera (Orchidaceae) #145",
+     "group_a": "bg_bark",
+     "group_b": "flower_insect",
+     "dS_human": 0.54,
+     "dS_bee": 15.94,
+     "uv_share_a": 0.0,
+     "uv_share_b": 0.45
+    },
+    {
+     "a": "1963_LeptospermumSericeum_FreshLeaves",
+     "b": "Acacia_triptera (Fabaceae) #388",
+     "group_a": "bg_leaf",
+     "group_b": "flower_insect",
+     "dS_human": 0.84,
+     "dS_bee": 15.14,
+     "uv_share_a": 0.0,
+     "uv_share_b": 0.07
+    },
+    {
+     "a": "1542_Quartz_RocksMinerals",
+     "b": "Burchardia_umbellata (Colchicaceae) #157",
+     "group_a": "bg_rock",
+     "group_b": "flower_insect",
+     "dS_human": 0.96,
+     "dS_bee": 13.92,
+     "uv_share_a": 1.09,
+     "uv_share_b": 0.02
+    },
+    {
+     "a": "1542_Quartz_RocksMinerals",
+     "b": "Wurmbea_dioica (Colchicaceae) #129",
+     "group_a": "bg_rock",
+     "group_b": "flower_insect",
+     "dS_human": 0.56,
+     "dS_bee": 13.6,
+     "uv_share_a": 1.09,
+     "uv_share_b": 0.03
+    },
+    {
+     "a": "1566_Basalt_RocksMinerals",
+     "b": "Wurmbea_dioica (Colchicaceae) #129",
+     "group_a": "bg_rock",
+     "group_b": "flower_insect",
+     "dS_human": 0.86,
+     "dS_bee": 13.5,
+     "uv_share_a": 1.14,
+     "uv_share_b": 0.03
+    },
+    {
+     "a": "1542_Quartz_RocksMinerals",
+     "b": "Leptoceras_menziesii (Orchidaceae) #160",
+     "group_a": "bg_rock",
+     "group_b": "flower_insect",
+     "dS_human": 0.31,
+     "dS_bee": 13.27,
+     "uv_share_a": 1.09,
+     "uv_share_b": 0.03
+    },
+    {
+     "a": "1025_Coal_RocksMinerals",
+     "b": "Wurmbea_dioica (Colchicaceae) #129",
+     "group_a": "bg_rock",
+     "group_b": "flower_insect",
+     "dS_human": 0.81,
+     "dS_bee": 13.27,
+     "uv_share_a": 1.03,
+     "uv_share_b": 0.03
+    }
+   ],
+   "human_blind_bluetit_sees": [
+    {
+     "a": "1296_DryThinBrownLeaf_DryLeaves",
+     "b": "Hypericum_pygmae (Clusiaceae) #231",
+     "group_a": "bg_bark",
+     "group_b": "flower_insect",
+     "dS_human": 0.63,
+     "dS_bluetit": 28.74,
+     "uv_share_a": 0.0,
+     "uv_share_b": 0.7
+    },
+    {
+     "a": "1963_LeptospermumSericeum_FreshLeaves",
+     "b": "Acacia_triptera (Fabaceae) #388",
+     "group_a": "bg_leaf",
+     "group_b": "flower_insect",
+     "dS_human": 0.84,
+     "dS_bluetit": 28.28,
+     "uv_share_a": 0.0,
+     "uv_share_b": 0.07
+    },
+    {
+     "a": "1300_GreenLeaf_DryLeaves_2",
+     "b": "Caladenia_clavigera (Orchidaceae) #145",
+     "group_a": "bg_bark",
+     "group_b": "flower_insect",
+     "dS_human": 0.54,
+     "dS_bluetit": 19.94,
+     "uv_share_a": 0.0,
+     "uv_share_b": 0.45
+    },
+    {
+     "a": "1903_PhebaliumStenophyllum_FreshLeaves",
+     "b": "Darwinia sp523 (Myrtaceae) #523",
+     "group_a": "bg_leaf",
+     "group_b": "flower_bird",
+     "dS_human": 0.22,
+     "dS_bluetit": 16.99,
+     "uv_share_a": 0.48,
+     "uv_share_b": 0.02
+    },
+    {
+     "a": "1304_DryThinMulticolouredLeaf_DryLeaves_2",
+     "b": "Lyperanthus_suaveolens (Orchidaceae) #136",
+     "group_a": "bg_bark",
+     "group_b": "flower_insect",
+     "dS_human": 0.83,
+     "dS_bluetit": 16.53,
+     "uv_share_a": 0.0,
+     "uv_share_b": 0.23
+    },
+    {
+     "a": "1950_BanksiaMenziesii_FreshLeaves",
+     "b": "Eucalyptus sp1713 (Myrtaceae) #1713",
+     "group_a": "bg_leaf",
+     "group_b": "flower_bird",
+     "dS_human": 0.71,
+     "dS_bluetit": 15.69,
+     "uv_share_a": 0.54,
+     "uv_share_b": 0.03
+    },
+    {
+     "a": "1298_RedandGreenLeaf_DryLeaves_1",
+     "b": "Acacia_fauntleroyi (Fabaceae) #317",
+     "group_a": "bg_bark",
+     "group_b": "flower_insect",
+     "dS_human": 0.31,
+     "dS_bluetit": 15.43,
+     "uv_share_a": 0.0,
+     "uv_share_b": 0.07
+    },
+    {
+     "a": "1903_PhebaliumStenophyllum_FreshLeaves",
+     "b": "Eucalyptus sp1713 (Myrtaceae) #1713",
+     "group_a": "bg_leaf",
+     "group_b": "flower_bird",
+     "dS_human": 0.89,
+     "dS_bluetit": 15.25,
+     "uv_share_a": 0.48,
+     "uv_share_b": 0.03
+    }
+   ],
+   "bee_blind_human_sees": [
+    {
+     "a": "1039_Fuchsite_RocksMinerals_1",
+     "b": "Calothamnus graniticus (Myrtaceae) #540",
+     "group_a": "bg_rock",
+     "group_b": "flower_bird",
+     "dS_bee": 0.63,
+     "dS_human": 30.33,
+     "uv_share_a": 0.86,
+     "uv_share_b": 0.15
+    },
+    {
+     "a": "1042_OpalWhite_RocksMinerals_2",
+     "b": "Calothamnus graniticus (Myrtaceae) #540",
+     "group_a": "bg_rock",
+     "group_b": "flower_bird",
+     "dS_bee": 0.71,
+     "dS_human": 29.25,
+     "uv_share_a": 0.73,
+     "uv_share_b": 0.15
+    },
+    {
+     "a": "1261_Quartz_RocksMinerals",
+     "b": "Calothamnus graniticus (Myrtaceae) #540",
+     "group_a": "bg_rock",
+     "group_b": "flower_bird",
+     "dS_bee": 0.76,
+     "dS_human": 28.85,
+     "uv_share_a": 0.75,
+     "uv_share_b": 0.15
+    },
+    {
+     "a": "1035_Amphibolite_RocksMinerals",
+     "b": "Calothamnus graniticus (Myrtaceae) #540",
+     "group_a": "bg_rock",
+     "group_b": "flower_bird",
+     "dS_bee": 0.84,
+     "dS_human": 28.55,
+     "uv_share_a": 0.72,
+     "uv_share_b": 0.15
+    },
+    {
+     "a": "1506_Quartz_RocksMinerals",
+     "b": "Calothamnus graniticus (Myrtaceae) #540",
+     "group_a": "bg_rock",
+     "group_b": "flower_bird",
+     "dS_bee": 0.97,
+     "dS_human": 28.54,
+     "uv_share_a": 0.88,
+     "uv_share_b": 0.15
+    },
+    {
+     "a": "1912_AcaciaUnidentifiedSp_FreshLeaves",
+     "b": "Calothamnus graniticus (Myrtaceae) #540",
+     "group_a": "bg_leaf",
+     "group_b": "flower_bird",
+     "dS_bee": 0.75,
+     "dS_human": 28.49,
+     "uv_share_a": 0.72,
+     "uv_share_b": 0.15
+    },
+    {
+     "a": "1022_Greywacke_RocksMinerals",
+     "b": "Calothamnus graniticus (Myrtaceae) #540",
+     "group_a": "bg_rock",
+     "group_b": "flower_bird",
+     "dS_bee": 0.89,
+     "dS_human": 28.13,
+     "uv_share_a": 0.74,
+     "uv_share_b": 0.15
+    },
+    {
+     "a": "1036_Serpentinite_RocksMinerals",
+     "b": "Calothamnus graniticus (Myrtaceae) #540",
+     "group_a": "bg_rock",
+     "group_b": "flower_bird",
+     "dS_bee": 0.34,
+     "dS_human": 28.09,
+     "uv_share_a": 0.72,
+     "uv_share_b": 0.15
+    }
+   ],
+   "bee_blind_bluetit_sees": [
+    {
+     "a": "1039_Fuchsite_RocksMinerals_1",
+     "b": "Calothamnus graniticus (Myrtaceae) #540",
+     "group_a": "bg_rock",
+     "group_b": "flower_bird",
+     "dS_bee": 0.63,
+     "dS_bluetit": 22.15,
+     "uv_share_a": 0.86,
+     "uv_share_b": 0.15
+    },
+    {
+     "a": "1042_OpalWhite_RocksMinerals_2",
+     "b": "Calothamnus graniticus (Myrtaceae) #540",
+     "group_a": "bg_rock",
+     "group_b": "flower_bird",
+     "dS_bee": 0.71,
+     "dS_bluetit": 21.63,
+     "uv_share_a": 0.73,
+     "uv_share_b": 0.15
+    },
+    {
+     "a": "1912_AcaciaUnidentifiedSp_FreshLeaves",
+     "b": "Calothamnus graniticus (Myrtaceae) #540",
+     "group_a": "bg_leaf",
+     "group_b": "flower_bird",
+     "dS_bee": 0.75,
+     "dS_bluetit": 21.36,
+     "uv_share_a": 0.72,
+     "uv_share_b": 0.15
+    },
+    {
+     "a": "1964_AcaciaPravissima_FreshLeaves",
+     "b": "Calothamnus graniticus (Myrtaceae) #540",
+     "group_a": "bg_leaf",
+     "group_b": "flower_bird",
+     "dS_bee": 0.89,
+     "dS_bluetit": 20.52,
+     "uv_share_a": 0.73,
+     "uv_share_b": 0.15
+    },
+    {
+     "a": "1261_Quartz_RocksMinerals",
+     "b": "Calothamnus graniticus (Myrtaceae) #540",
+     "group_a": "bg_rock",
+     "group_b": "flower_bird",
+     "dS_bee": 0.76,
+     "dS_bluetit": 20.25,
+     "uv_share_a": 0.75,
+     "uv_share_b": 0.15
+    },
+    {
+     "a": "1035_Amphibolite_RocksMinerals",
+     "b": "Calothamnus graniticus (Myrtaceae) #540",
+     "group_a": "bg_rock",
+     "group_b": "flower_bird",
+     "dS_bee": 0.84,
+     "dS_bluetit": 19.98,
+     "uv_share_a": 0.72,
+     "uv_share_b": 0.15
+    },
+    {
+     "a": "1506_Quartz_RocksMinerals",
+     "b": "Calothamnus graniticus (Myrtaceae) #540",
+     "group_a": "bg_rock",
+     "group_b": "flower_bird",
+     "dS_bee": 0.97,
+     "dS_bluetit": 19.96,
+     "uv_share_a": 0.88,
+     "uv_share_b": 0.15
+    },
+    {
+     "a": "1036_Serpentinite_RocksMinerals",
+     "b": "Calothamnus graniticus (Myrtaceae) #540",
+     "group_a": "bg_rock",
+     "group_b": "flower_bird",
+     "dS_bee": 0.34,
+     "dS_bluetit": 19.93,
+     "uv_share_a": 0.72,
+     "uv_share_b": 0.15
+    }
+   ],
+   "dog_blind_human_sees": [
+    {
+     "a": "1969_GrevilleaBaueriSubspAsperula_FreshLeaves",
+     "b": "Platylobium_obtusangulum (Fabaceae) #202",
+     "group_a": "bg_leaf",
+     "group_b": "flower_insect",
+     "dS_dog": 0.99,
+     "dS_human": 31.76,
+     "uv_share_a": 0.03,
+     "uv_share_b": 0.98
+    },
+    {
+     "a": "1980_CarpobrotusRossii_FreshLeaves",
+     "b": "Epacris reclinata (Ericaceae) #556",
+     "group_a": "bg_leaf",
+     "group_b": "flower_bird",
+     "dS_dog": 0.27,
+     "dS_human": 31.05,
+     "uv_share_a": 0.48,
+     "uv_share_b": 0.04
+    },
+    {
+     "a": "1948_RhodantheAnthemoides_FreshLeaves",
+     "b": "Epacris reclinata (Ericaceae) #556",
+     "group_a": "bg_leaf",
+     "group_b": "flower_bird",
+     "dS_dog": 0.69,
+     "dS_human": 30.71,
+     "uv_share_a": 0.34,
+     "uv_share_b": 0.04
+    },
+    {
+     "a": "1973_DaviesiaHorrida_FreshLeaves",
+     "b": "Epacris reclinata (Ericaceae) #556",
+     "group_a": "bg_leaf",
+     "group_b": "flower_bird",
+     "dS_dog": 0.28,
+     "dS_human": 30.58,
+     "uv_share_a": 0.51,
+     "uv_share_b": 0.04
+    },
+    {
+     "a": "1965_VeronicaPerfoliata_FreshLeaves",
+     "b": "Epacris reclinata (Ericaceae) #556",
+     "group_a": "bg_leaf",
+     "group_b": "flower_bird",
+     "dS_dog": 0.36,
+     "dS_human": 30.49,
+     "uv_share_a": 0.76,
+     "uv_share_b": 0.04
+    },
+    {
+     "a": "1968_AcaciaVestita_FreshLeaves",
+     "b": "Epacris reclinata (Ericaceae) #556",
+     "group_a": "bg_leaf",
+     "group_b": "flower_bird",
+     "dS_dog": 0.76,
+     "dS_human": 30.05,
+     "uv_share_a": 0.73,
+     "uv_share_b": 0.04
+    },
+    {
+     "a": "1950_BanksiaMenziesii_FreshLeaves",
+     "b": "Epacris reclinata (Ericaceae) #556",
+     "group_a": "bg_leaf",
+     "group_b": "flower_bird",
+     "dS_dog": 0.23,
+     "dS_human": 29.99,
+     "uv_share_a": 0.54,
+     "uv_share_b": 0.04
+    },
+    {
+     "a": "1472_OrangeSand_RocksMinerals",
+     "b": "Platylobium_obtusangulum (Fabaceae) #202",
+     "group_a": "bg_rock",
+     "group_b": "flower_insect",
+     "dS_dog": 0.94,
+     "dS_human": 29.91,
+     "uv_share_a": 0.0,
+     "uv_share_b": 0.98
+    }
+   ],
+   "flowers_human_blind_bee_sees": [
+    {
+     "a": "Brachyscome_chrysoglossa (Asteraceae) #150",
+     "b": "Calytrix_aurea (Myrtaceae) #411",
+     "dS_human": 0.94,
+     "dS_bee": 17.13,
+     "uv_share_a": 0.76,
+     "uv_share_b": 0.03
+    },
+    {
+     "a": "Sisyrinchium_iridifolium (Iridaceae) #230",
+     "b": "Ozothamnus_diosmifolius (Asteraceae) #334",
+     "dS_human": 0.02,
+     "dS_bee": 16.67,
+     "uv_share_a": 1.32,
+     "uv_share_b": 0.01
+    },
+    {
+     "a": "Oxalis_perennans (Oxalidaceae) #194",
+     "b": "Craspedia_variabilis (Asteraceae) #227",
+     "dS_human": 0.85,
+     "dS_bee": 16.52,
+     "uv_share_a": 0.76,
+     "uv_share_b": 0.04
+    },
+    {
+     "a": "Goodenia_ovata (Goodeniaceae) #203",
+     "b": "Craspedia_variabilis (Asteraceae) #227",
+     "dS_human": 0.26,
+     "dS_bee": 16.11,
+     "uv_share_a": 0.72,
+     "uv_share_b": 0.04
+    },
+    {
+     "a": "Pimelea_stricta (Thymelaeaceae) #210",
+     "b": "Sisyrinchium_iridifolium (Iridaceae) #230",
+     "dS_human": 0.48,
+     "dS_bee": 15.48,
+     "uv_share_a": 0.04,
+     "uv_share_b": 1.32
+    },
+    {
+     "a": "Sisyrinchium_iridifolium (Iridaceae) #230",
+     "b": "Leionema_elatius (Rutaceae) #381",
+     "dS_human": 0.98,
+     "dS_bee": 15.47,
+     "uv_share_a": 1.32,
+     "uv_share_b": 0.04
+    },
+    {
+     "a": "Sisyrinchium_iridifolium (Iridaceae) #230",
+     "b": "Eucalyptus sp1719 (Myrtaceae) #1719",
+     "dS_human": 0.48,
+     "dS_bee": 15.24,
+     "uv_share_a": 1.32,
+     "uv_share_b": 0.06
+    },
+    {
+     "a": "Sisyrinchium_iridifolium (Iridaceae) #230",
+     "b": "Eucalyptus sp1716 (Myrtaceae) #1716",
+     "dS_human": 0.83,
+     "dS_bee": 15.17,
+     "uv_share_a": 1.32,
+     "uv_share_b": 0.05
+    }
+   ]
+  },
+  "bh": {
+   "H1_vs_indep": {
+    "p": 0.009900990099009901,
+    "pass": 1.0
+   },
+   "H2_bee_given_human": {
+    "p": 0.001996007984031936,
+    "pass": 1.0
+   },
+   "H2_bluetit_given_human": {
+    "p": 0.001996007984031936,
+    "pass": 1.0
+   },
+   "H2_bee_given_dog": {
+    "p": 0.001996007984031936,
+    "pass": 1.0
+   },
+   "H2_bluetit_given_dog": {
+    "p": 0.001996007984031936,
+    "pass": 1.0
+   },
+   "H3": {
+    "p": 0.001996007984031936,
+    "pass": 1.0
+   },
+   "H4": {
+    "p": 0.9701492537313433,
+    "pass": 0.0
+   }
+  },
+  "timing_s": {
+   "views": 3.7,
+   "boot_sizes": 110.0,
+   "k_curve": 14.4,
+   "shuffle_indep": 396.0,
+   "tuning": 6.0,
+   "overlap": 3.8,
+   "union": 1.6,
+   "h4_boot": 19.0,
+   "extras": 2.3
+  }
+ },
+ "controls": {
+  "shuffled_spectra_indep": {
+   "n": 100,
+   "usable": true,
+   "mean": 1.3027853247784662,
+   "q95": 1.6724377703737048,
+   "q05": 1.0279999703721814,
+   "p_ge": 0.009900990099009901,
+   "compare": "analysis.h1.D_nat",
+   "description": "each spectrum permuted across wavelength independently"
+  },
+  "shuffled_spectra_global": {
+   "n": 100,
+   "usable": true,
+   "mean": 1.5215597183007263,
+   "q95": 2.5815840952622655,
+   "q05": 0.8026437868104498,
+   "p_ge": 0.12871287128712872,
+   "compare": "analysis.h1.D_nat",
+   "description": "one wavelength permutation applied to every spectrum"
+  },
+  "label_shuffle_bee": {
+   "n": 500,
+   "usable": true,
+   "mean": 1.0015323646347811,
+   "q95": 1.0803280071993315,
+   "q05": 0.9349349161872397,
+   "p_ge": 0.001996007984031936,
+   "compare": "analysis.h2.bee_given_human.ratio",
+   "description": "flower/background labels permuted"
+  },
+  "label_shuffle_bluetit": {
+   "n": 500,
+   "usable": true,
+   "mean": 1.0015761834312484,
+   "q95": 1.0906779085731622,
+   "q05": 0.9227186794820963,
+   "p_ge": 0.001996007984031936,
+   "compare": "analysis.h2.bluetit_given_human.ratio",
+   "description": "flower/background labels permuted"
+  },
+  "label_shuffle_bee_dog": {
+   "n": 500,
+   "usable": true,
+   "mean": 0.99966293285083,
+   "q95": 1.0331401245153367,
+   "q05": 0.9708473068922653,
+   "p_ge": 0.001996007984031936,
+   "compare": "analysis.h2.bee_given_dog.ratio",
+   "description": "flower/background labels permuted"
+  },
+  "label_shuffle_bluetit_dog": {
+   "n": 500,
+   "usable": true,
+   "mean": 1.0006238308532862,
+   "q95": 1.0166733130281773,
+   "q05": 0.9866288130675925,
+   "p_ge": 0.001996007984031936,
+   "compare": "analysis.h2.bluetit_given_dog.ratio",
+   "description": "flower/background labels permuted"
+  },
+  "observer_permutation": {
+   "n": 500,
+   "usable": true,
+   "mean": -0.0020157474816368355,
+   "q95": 0.5436221231137439,
+   "q05": -0.6419475820287757,
+   "p_ge": 0.001996007984031936,
+   "compare": "analysis.h3.rho",
+   "description": "observer labels permuted in the overlap matrix (Mantel)"
+  },
+  "h4_bootstrap": {
+   "n": 200,
+   "usable": true,
+   "mean": -0.11970765193091942,
+   "q95": -0.006208773807245743,
+   "q05": -0.23670929067696833,
+   "p_ge": 0.5024875621890548,
+   "compare": "analysis.h4.median_excess",
+   "description": "surface bootstrap of the median union excess"
+  },
+  "random_receptors_human": {
+   "n": 200,
+   "usable": true,
+   "mean": 7.449740635375732,
+   "q95": 9.497499675326225,
+   "q05": 4.330310259331098,
+   "p_ge": 0.8109452736318408,
+   "compare": "analysis.h1.tuning.human.real",
+   "description": "human curve shapes at random peaks"
+  },
+  "random_receptors_bee": {
+   "n": 200,
+   "usable": true,
+   "mean": 4.148493567386986,
+   "q95": 5.764447305275052,
+   "q05": 1.689855855303997,
+   "p_ge": 0.1044776119402985,
+   "compare": "analysis.h1.tuning.bee.real",
+   "description": "bee curve shapes at random peaks"
+  },
+  "random_receptors_bluetit": {
+   "n": 200,
+   "usable": true,
+   "mean": 6.51927073045662,
+   "q95": 8.45575437408013,
+   "q05": 4.0151172582434125,
+   "p_ge": 0.18407960199004975,
+   "compare": "analysis.h1.tuning.bluetit.real",
+   "description": "blue tit curve shapes at random peaks"
+  }
+ },
+ "timing_s": {
+  "analysis": 1174.914816000004,
+  "shuffled_spectra_indep": 0.001300199975958094,
+  "shuffled_spectra_global": 0.0004966999986208975,
+  "label_shuffle_bee": 0.0006585999799426645,
+  "label_shuffle_bluetit": 0.0011312999995425344,
+  "label_shuffle_bee_dog": 0.000897699996130541,
+  "label_shuffle_bluetit_dog": 0.0007475999882444739,
+  "observer_permutation": 0.0006025000184308738,
+  "h4_bootstrap": 0.00048110002535395324,
+  "random_receptors_human": 0.0007705000170972198,
+  "random_receptors_bee": 0.0008763999794609845,
+  "random_receptors_bluetit": 0.0004931000003125519
+ },
+ "verdicts": {
+  "V0_instrument": {
+   "verdict": "FAIL",
+   "rules": [
+    {
+     "rule": "analysis.n_surfaces >= 728",
+     "left": 728,
+     "right": 728,
+     "holds": true
+    },
+    {
+     "rule": "analysis.n_surfaces <= 728",
+     "left": 728,
+     "right": 728,
+     "holds": true
+    },
+    {
+     "rule": "analysis.d65_identity < 0.0001",
+     "left": 7.630478581877043e-06,
+     "right": 0.0001,
+     "holds": true
+    },
+    {
+     "rule": "analysis.delta_lambda.human.min >= 0.5",
+     "left": 0.4,
+     "right": 0.5,
+     "holds": false
+    },
+    {
+     "rule": "analysis.delta_lambda.human.min <= 5.0",
+     "left": 0.4,
+     "right": 5.0,
+     "holds": true
+    },
+    {
+     "rule": "analysis.delta_lambda.human.argmin_nm >= 470",
+     "left": 615.0,
+     "right": 470,
+     "holds": true
+    },
+    {
+     "rule": "analysis.delta_lambda.human.argmin_nm <= 620",
+     "left": 615.0,
+     "right": 620,
+     "holds": true
+    },
+    {
+     "rule": "analysis.delta_lambda.bee.min >= 1.5",
+     "left": 0.30000000000000004,
+     "right": 1.5,
+     "holds": false
+    },
+    {
+     "rule": "analysis.delta_lambda.bee.min <= 12",
+     "left": 0.30000000000000004,
+     "right": 12,
+     "holds": true
+    },
+    {
+     "rule": "analysis.delta_lambda.mantis_coded.median >= 8.0",
+     "left": 17.400000000000002,
+     "right": 8.0,
+     "holds": true
+    }
+   ]
+  },
+  "H1a_diminishing_returns": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.h1.D_nat >= 2.0",
+     "left": 2.183853647814873,
+     "right": 2.0,
+     "holds": true
+    },
+    {
+     "rule": "analysis.h1.D_nat > controls.shuffled_spectra_indep.q95",
+     "left": 2.183853647814873,
+     "right": 1.6724377703737048,
+     "holds": true
+    },
+    {
+     "rule": "analysis.bh.H1_vs_indep.pass > 0.5",
+     "left": 1.0,
+     "right": 0.5,
+     "holds": true
+    }
+   ]
+  },
+  "H1a2_size_rises_with_count": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.h1.k_curve_median_bits.4 > analysis.h1.k_curve_median_bits.2",
+     "left": 8.899023551499472,
+     "right": 3.8641607602391135,
+     "holds": true
+    },
+    {
+     "rule": "analysis.h1.k_curve_median_bits.12 > analysis.h1.k_curve_median_bits.4",
+     "left": 18.121001949728047,
+     "right": 8.899023551499472,
+     "holds": true
+    },
+    {
+     "rule": "analysis.sizes.published.ideal.glance_gauss > analysis.h1.k_curve_median_bits.12",
+     "left": 136.13103596389013,
+     "right": 18.121001949728047,
+     "holds": true
+    }
+   ]
+  },
+  "H1b_mantis_breaks_trend": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.sizes.matched.mantis_coded.glance_mc < analysis.sizes.matched.human.glance_mc",
+     "left": 1.2782637417565255,
+     "right": 4.261123821506514,
+     "holds": true
+    },
+    {
+     "rule": "analysis.sizes.published.mantis_coded.glance_mc < analysis.sizes.published.human.glance_mc",
+     "left": 1.296963546588702,
+     "right": 4.788054248676836,
+     "holds": true
+    },
+    {
+     "rule": "analysis.sizes.matched.mantis_rnl.glance_gauss > analysis.sizes.matched.human.glance_gauss",
+     "left": 31.268096389434866,
+     "right": 5.445227826647814,
+     "holds": true
+    },
+    {
+     "rule": "analysis.delta_lambda.mantis_coded.median > analysis.delta_lambda.human.median",
+     "left": 17.400000000000002,
+     "right": 0.9,
+     "holds": true
+    }
+   ]
+  },
+  "H1c_tuned_better_than_random_median": {
+   "verdict": "FAIL",
+   "rules": [
+    {
+     "rule": "analysis.h1.tuning.human.percentile >= 0.5",
+     "left": 0.19,
+     "right": 0.5,
+     "holds": false
+    },
+    {
+     "rule": "analysis.h1.tuning.bee.percentile >= 0.5",
+     "left": 0.9,
+     "right": 0.5,
+     "holds": true
+    },
+    {
+     "rule": "analysis.h1.tuning.bluetit.percentile >= 0.5",
+     "left": 0.82,
+     "right": 0.5,
+     "holds": true
+    }
+   ]
+  },
+  "H2_bee_given_human": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.h2.bee_given_human.ratio > 1.0",
+     "left": 2.0387500336405195,
+     "right": 1.0,
+     "holds": true
+    },
+    {
+     "rule": "analysis.h2.bee_given_human.ratio > controls.label_shuffle_bee.q95",
+     "left": 2.0387500336405195,
+     "right": 1.0803280071993315,
+     "holds": true
+    },
+    {
+     "rule": "analysis.bh.H2_bee_given_human.pass > 0.5",
+     "left": 1.0,
+     "right": 0.5,
+     "holds": true
+    }
+   ]
+  },
+  "H2_bluetit_given_human": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.h2.bluetit_given_human.ratio > 1.0",
+     "left": 2.223724816583207,
+     "right": 1.0,
+     "holds": true
+    },
+    {
+     "rule": "analysis.h2.bluetit_given_human.ratio > controls.label_shuffle_bluetit.q95",
+     "left": 2.223724816583207,
+     "right": 1.0906779085731622,
+     "holds": true
+    },
+    {
+     "rule": "analysis.bh.H2_bluetit_given_human.pass > 0.5",
+     "left": 1.0,
+     "right": 0.5,
+     "holds": true
+    }
+   ]
+  },
+  "H2_bee_given_dog": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.h2.bee_given_dog.ratio > 1.0",
+     "left": 1.4451632297427486,
+     "right": 1.0,
+     "holds": true
+    },
+    {
+     "rule": "analysis.h2.bee_given_dog.ratio > controls.label_shuffle_bee_dog.q95",
+     "left": 1.4451632297427486,
+     "right": 1.0331401245153367,
+     "holds": true
+    },
+    {
+     "rule": "analysis.bh.H2_bee_given_dog.pass > 0.5",
+     "left": 1.0,
+     "right": 0.5,
+     "holds": true
+    }
+   ]
+  },
+  "H2_bluetit_given_dog": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.h2.bluetit_given_dog.ratio > 1.0",
+     "left": 1.163468236809885,
+     "right": 1.0,
+     "holds": true
+    },
+    {
+     "rule": "analysis.h2.bluetit_given_dog.ratio > controls.label_shuffle_bluetit_dog.q95",
+     "left": 1.163468236809885,
+     "right": 1.0166733130281773,
+     "holds": true
+    },
+    {
+     "rule": "analysis.bh.H2_bluetit_given_dog.pass > 0.5",
+     "left": 1.0,
+     "right": 0.5,
+     "holds": true
+    }
+   ]
+  },
+  "H2b_insect_flowers_salient_to_bee": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.h2b.bee.insect_minus_bird > 0",
+     "left": 2.6380365731006954,
+     "right": 0,
+     "holds": true
+    },
+    {
+     "rule": "analysis.h2b.bee.p_greater < 0.05",
+     "left": 0.001996007984031936,
+     "right": 0.05,
+     "holds": true
+    }
+   ]
+  },
+  "H3_overlap_predicts_reception": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.h3.rho > controls.observer_permutation.q95",
+     "left": 0.9211815355688242,
+     "right": 0.5436221231137439,
+     "holds": true
+    },
+    {
+     "rule": "analysis.h3.rho >= 0.3",
+     "left": 0.9211815355688242,
+     "right": 0.3,
+     "holds": true
+    },
+    {
+     "rule": "analysis.bh.H3.pass > 0.5",
+     "left": 1.0,
+     "right": 0.5,
+     "holds": true
+    }
+   ]
+  },
+  "H4_union_beats_second_look": {
+   "verdict": "FAIL",
+   "rules": [
+    {
+     "rule": "analysis.h4.median_excess > 0",
+     "left": -0.12119062982218853,
+     "right": 0,
+     "holds": false
+    },
+    {
+     "rule": "controls.h4_bootstrap.q05 > 0",
+     "left": -0.23670929067696833,
+     "right": 0,
+     "holds": false
+    },
+    {
+     "rule": "analysis.h4.max_gauss_gain >= 1.0",
+     "left": 3.4883023966072972,
+     "right": 1.0,
+     "holds": true
+    },
+    {
+     "rule": "analysis.bh.H4.pass > 0.5",
+     "left": 0.0,
+     "right": 0.5,
+     "holds": false
+    }
+   ]
+  },
+  "H4b_partition_union_beats_conspecific": {
+   "verdict": "FAIL",
+   "rules": [
+    {
+     "rule": "analysis.h4.median_part_excess_over_conspecific > 0",
+     "left": -0.025824782429586968,
+     "right": 0,
+     "holds": false
+    }
+   ]
+  },
+  "H5_bee_shifts_more_than_human_in_shade": {
+   "verdict": "FAIL",
+   "rules": [
+    {
+     "rule": "analysis.illuminant_shift.bee|forestshade.median_shift > analysis.illuminant_shift.human|forestshade.median_shift",
+     "left": 0.2956162472228653,
+     "right": 0.4756252135934814,
+     "holds": false
+    }
+   ]
+  }
+ },
+ "reproduce": null,
+ "status": "scored"
+}

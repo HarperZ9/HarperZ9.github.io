@@ -1,0 +1,7 @@
+{
+  "date": "2026-11-09",
+  "note": "Findings pages take the shared depth model (world/site/depth.css, identical to the home page copy) and letter colour by platform hue: research hue for titles, defined terms and index entries, brass for section headings and numbers. index.html changes only by the asset revision in its stylesheet links.",
+  "paths": {
+    "index.html": "61e6a66f5bc5eb6ee5459b197fbc6feef65e0a5dc7f59692da7b8a585f17f7bb"
+  }
+}

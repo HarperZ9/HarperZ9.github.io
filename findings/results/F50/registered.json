@@ -1,0 +1,606 @@
+{
+  "prereg_sha256": "4d4681b9f44188b37e60fd9c53d94a85e01cd1529f4d2be7228a42a3ff36f753",
+  "n_after_merge": 208,
+  "registered": [
+    {
+      "label": "primary",
+      "n": 187,
+      "k_covariates": 6,
+      "r": -0.005975271451098152,
+      "p": 0.9363702196224831,
+      "ci95": [
+        -0.15170081305424463,
+        0.1400045029093872
+      ],
+      "ci90": [
+        -0.12854717627239665,
+        0.11677644660592007
+      ],
+      "decision": "no_meaningful_association",
+      "magnitude": "",
+      "p_holm": 1.0
+    },
+    {
+      "label": "secondary",
+      "n": 187,
+      "k_covariates": 6,
+      "r": -0.025274226611319495,
+      "p": 0.7355680696191293,
+      "ci95": [
+        -0.17050343049355796,
+        0.12102969722271222
+      ],
+      "ci90": [
+        -0.14748311117949123,
+        0.09769478087828355
+      ],
+      "decision": "no_meaningful_association",
+      "magnitude": "",
+      "p_holm": 1.0
+    }
+  ],
+  "sensitivity": [
+    {
+      "label": "primary",
+      "n": 180,
+      "k_covariates": 6,
+      "r": -0.06086050371997846,
+      "p": 0.42501058237623923,
+      "ci95": [
+        -0.20774933321590752,
+        0.08871255309045872
+      ],
+      "ci90": [
+        -0.18458076601993384,
+        0.06475853331272013
+      ],
+      "decision": "no_meaningful_association",
+      "magnitude": "",
+      "p_holm": 0.7129375914347522,
+      "sensitivity": "fd_rule_unfiltered",
+      "status": "exploratory"
+    },
+    {
+      "label": "secondary",
+      "n": 180,
+      "k_covariates": 6,
+      "r": -0.07032562102505666,
+      "p": 0.3564687957173761,
+      "ci95": [
+        -0.2168269407761541,
+        0.07927360060965004
+      ],
+      "ci90": [
+        -0.19374662309697935,
+        0.05528676419905909
+      ],
+      "decision": "no_meaningful_association",
+      "magnitude": "",
+      "p_holm": 0.7129375914347522,
+      "sensitivity": "fd_rule_unfiltered",
+      "status": "exploratory"
+    },
+    {
+      "label": "primary",
+      "n": 131,
+      "k_covariates": 6,
+      "r": -0.04734806317658889,
+      "p": 0.6000396624601335,
+      "ci95": [
+        -0.22111706596778719,
+        0.12933483358823572
+      ],
+      "ci90": [
+        -0.1938183640995204,
+        0.10118707440540539
+      ],
+      "decision": "no_meaningful_association",
+      "magnitude": "",
+      "p_holm": 0.6000396624601335,
+      "sensitivity": "fd_rule_bandstop",
+      "status": "exploratory"
+    },
+    {
+      "label": "secondary",
+      "n": 131,
+      "k_covariates": 6,
+      "r": -0.10966726923088349,
+      "p": 0.22342341411590014,
+      "ci95": [
+        -0.27988465885881586,
+        0.06723509037744131
+      ],
+      "ci90": [
+        -0.25338632501429453,
+        0.038788457549222166
+      ],
+      "decision": "inconclusive",
+      "magnitude": "",
+      "p_holm": 0.4468468282318003,
+      "sensitivity": "fd_rule_bandstop",
+      "status": "exploratory"
+    },
+    {
+      "label": "primary",
+      "n": 180,
+      "k_covariates": 6,
+      "r": -0.043147002478075146,
+      "p": 0.5718635215692836,
+      "ci95": [
+        -0.190692785725049,
+        0.10630520267075044
+      ],
+      "ci90": [
+        -0.1673692942387456,
+        0.08242387437104473
+      ],
+      "decision": "no_meaningful_association",
+      "magnitude": "",
+      "p_holm": 0.7066079546586903,
+      "sensitivity": "fd_rule_lowpass_strict",
+      "status": "exploratory"
+    },
+    {
+      "label": "secondary",
+      "n": 180,
+      "k_covariates": 6,
+      "r": -0.07078854426826722,
+      "p": 0.35330397732934515,
+      "ci95": [
+        -0.21727026265029306,
+        0.07881126794339173
+      ],
+      "ci90": [
+        -0.19419435801975557,
+        0.0548229350112985
+      ],
+      "decision": "no_meaningful_association",
+      "magnitude": "",
+      "p_holm": 0.7066079546586903,
+      "sensitivity": "fd_rule_lowpass_strict",
+      "status": "exploratory"
+    },
+    {
+      "label": "primary",
+      "n": 187,
+      "k_covariates": 6,
+      "r": 0.021887477262148024,
+      "p": 0.7699342992942346,
+      "ci95": [
+        -0.12436731508534078,
+        0.1672114166692486
+      ],
+      "ci90": [
+        -0.10104995210264132,
+        0.14416653664031093
+      ],
+      "decision": "no_meaningful_association",
+      "magnitude": "",
+      "p_holm": 1.0,
+      "sensitivity": "gsr",
+      "status": "exploratory"
+    },
+    {
+      "label": "secondary",
+      "n": 187,
+      "k_covariates": 6,
+      "r": -0.023092518133981294,
+      "p": 0.7576510805098772,
+      "ci95": [
+        -0.16838312113888762,
+        0.12318013489198369
+      ],
+      "ci90": [
+        -0.1453469235009624,
+        0.0998564674539259
+      ],
+      "decision": "no_meaningful_association",
+      "magnitude": "",
+      "p_holm": 1.0,
+      "sensitivity": "gsr",
+      "status": "exploratory"
+    },
+    {
+      "label": "primary",
+      "n": 187,
+      "k_covariates": 6,
+      "r": -0.03234118115100559,
+      "p": 0.6655926298475902,
+      "ci95": [
+        -0.1773622805409717,
+        0.11405459343512314
+      ],
+      "ci90": [
+        -0.1543947963480527,
+        0.09068470545011642
+      ],
+      "decision": "no_meaningful_association",
+      "magnitude": "",
+      "p_holm": 0.9459118920922552,
+      "sensitivity": "amygdala_l",
+      "status": "exploratory"
+    },
+    {
+      "label": "secondary",
+      "n": 187,
+      "k_covariates": 6,
+      "r": -0.053677986873341986,
+      "p": 0.4729559460461276,
+      "ci95": [
+        -0.19798564273335365,
+        0.09290717082613828
+      ],
+      "ci90": [
+        -0.1751905748696925,
+        0.06944539951827758
+      ],
+      "decision": "no_meaningful_association",
+      "magnitude": "",
+      "p_holm": 0.9459118920922552,
+      "sensitivity": "amygdala_l",
+      "status": "exploratory"
+    },
+    {
+      "label": "primary",
+      "n": 187,
+      "k_covariates": 6,
+      "r": -0.004282261215515408,
+      "p": 0.9543754818351564,
+      "ci95": [
+        -0.15004629702834707,
+        0.1416639771282218
+      ],
+      "ci90": [
+        -0.12688173690831822,
+        0.11844608233257313
+      ],
+      "decision": "no_meaningful_association",
+      "magnitude": "",
+      "p_holm": 1.0,
+      "sensitivity": "amygdala_r",
+      "status": "exploratory"
+    },
+    {
+      "label": "secondary",
+      "n": 187,
+      "k_covariates": 6,
+      "r": -0.010102512398069715,
+      "p": 0.8926298946788838,
+      "ci95": [
+        -0.15573079331792222,
+        0.13595557707411215
+      ],
+      "ci90": [
+        -0.13260430955335661,
+        0.11270327876415022
+      ],
+      "decision": "no_meaningful_association",
+      "magnitude": "",
+      "p_holm": 1.0,
+      "sensitivity": "amygdala_r",
+      "status": "exploratory"
+    },
+    {
+      "label": "primary",
+      "n": 190,
+      "k_covariates": 6,
+      "r": 0.034992927815926694,
+      "p": 0.6372288381676859,
+      "ci95": [
+        -0.11022606390157615,
+        0.17874909478340612
+      ],
+      "ci90": [
+        -0.08703303063563704,
+        0.15598434176374862
+      ],
+      "decision": "no_meaningful_association",
+      "magnitude": "",
+      "p_holm": 1.0,
+      "sensitivity": "subscale_ctqscore_ea",
+      "status": "exploratory"
+    },
+    {
+      "label": "secondary",
+      "n": 190,
+      "k_covariates": 6,
+      "r": 0.03247099391081104,
+      "p": 0.661696735801679,
+      "ci95": [
+        -0.11271949689601544,
+        0.176303859083178
+      ],
+      "ci90": [
+        -0.08953815813557876,
+        0.15351999977264327
+      ],
+      "decision": "no_meaningful_association",
+      "magnitude": "",
+      "p_holm": 1.0,
+      "sensitivity": "subscale_ctqscore_ea",
+      "status": "exploratory"
+    },
+    {
+      "label": "primary",
+      "n": 189,
+      "k_covariates": 6,
+      "r": 0.08110986455227598,
+      "p": 0.2750463507997127,
+      "ci95": [
+        -0.06470810979373263,
+        0.22353648980106683
+      ],
+      "ci90": [
+        -0.0412882263806052,
+        0.20110953703012763
+      ],
+      "decision": "inconclusive",
+      "magnitude": "",
+      "p_holm": 0.5500927015994254,
+      "sensitivity": "subscale_ctqscore_en",
+      "status": "exploratory"
+    },
+    {
+      "label": "secondary",
+      "n": 189,
+      "k_covariates": 6,
+      "r": -0.06148094767100548,
+      "p": 0.4083604051067306,
+      "ci95": [
+        -0.20471193102762483,
+        0.08432775527605105
+      ],
+      "ci90": [
+        -0.18210471834052452,
+        0.060965860578507135
+      ],
+      "decision": "no_meaningful_association",
+      "magnitude": "",
+      "p_holm": 0.5500927015994254,
+      "sensitivity": "subscale_ctqscore_en",
+      "status": "exploratory"
+    },
+    {
+      "label": "primary",
+      "n": 188,
+      "k_covariates": 6,
+      "r": -0.08121879026249934,
+      "p": 0.27573348418978266,
+      "ci95": [
+        -0.22402773621141603,
+        0.06500470506540293
+      ],
+      "ci90": [
+        -0.20154286105558045,
+        0.041520161614547475
+      ],
+      "decision": "inconclusive",
+      "magnitude": "",
+      "p_holm": 0.5514669683795653,
+      "sensitivity": "subscale_ctqscore_pa",
+      "status": "exploratory"
+    },
+    {
+      "label": "secondary",
+      "n": 188,
+      "k_covariates": 6,
+      "r": 0.043459469434688966,
+      "p": 0.5602056620124848,
+      "ci95": [
+        -0.10264494014642471,
+        0.18772830749075586
+      ],
+      "ci90": [
+        -0.07928848790927696,
+        0.16490921265687625
+      ],
+      "decision": "no_meaningful_association",
+      "magnitude": "",
+      "p_holm": 0.5602056620124848,
+      "sensitivity": "subscale_ctqscore_pa",
+      "status": "exploratory"
+    },
+    {
+      "label": "primary",
+      "n": 189,
+      "k_covariates": 6,
+      "r": -0.001173001921887189,
+      "p": 0.9874263781615668,
+      "ci95": [
+        -0.1462047743770764,
+        0.14390813374610475
+      ],
+      "ci90": [
+        -0.12314494284948091,
+        0.12083385090501073
+      ],
+      "decision": "no_meaningful_association",
+      "magnitude": "",
+      "p_holm": 0.9874263781615668,
+      "sensitivity": "subscale_ctqscore_pn",
+      "status": "exploratory"
+    },
+    {
+      "label": "secondary",
+      "n": 189,
+      "k_covariates": 6,
+      "r": -0.06708365566278111,
+      "p": 0.3669030980895264,
+      "ci95": [
+        -0.2100958767749447,
+        0.0787391994510684
+      ],
+      "ci90": [
+        -0.1875384955282674,
+        0.05535893674536854
+      ],
+      "decision": "no_meaningful_association",
+      "magnitude": "",
+      "p_holm": 0.7338061961790528,
+      "sensitivity": "subscale_ctqscore_pn",
+      "status": "exploratory"
+    },
+    {
+      "label": "primary",
+      "n": 188,
+      "k_covariates": 6,
+      "r": -0.05295556570751494,
+      "p": 0.4777129541037274,
+      "ci95": [
+        -0.19689449794392583,
+        0.09321801058227466
+      ],
+      "ci90": [
+        -0.17415386089596435,
+        0.06982318002486401
+      ],
+      "decision": "no_meaningful_association",
+      "magnitude": "",
+      "p_holm": 0.4777129541037274,
+      "sensitivity": "subscale_ctqscore_sa",
+      "status": "exploratory"
+    },
+    {
+      "label": "secondary",
+      "n": 188,
+      "k_covariates": 6,
+      "r": -0.0978080237826193,
+      "p": 0.18899335347863028,
+      "ci95": [
+        -0.2398512746440156,
+        0.04833517490913309
+      ],
+      "ci90": [
+        -0.21753180344763834,
+        0.02481531983357801
+      ],
+      "decision": "inconclusive",
+      "magnitude": "",
+      "p_holm": 0.37798670695726055,
+      "sensitivity": "subscale_ctqscore_sa",
+      "status": "exploratory"
+    },
+    {
+      "label": "primary",
+      "n": 175,
+      "k_covariates": 6,
+      "r": -0.027022754262550665,
+      "p": 0.7272752905542608,
+      "ci95": [
+        -0.17725967785934427,
+        0.12444492976438956
+      ],
+      "ci90": [
+        -0.15347246185054014,
+        0.10029770210407087
+      ],
+      "decision": "no_meaningful_association",
+      "magnitude": "",
+      "p_holm": 1.0,
+      "sensitivity": "exclude_max_minimization",
+      "status": "exploratory"
+    },
+    {
+      "label": "secondary",
+      "n": 175,
+      "k_covariates": 6,
+      "r": -0.04220309792249179,
+      "p": 0.5858833544104667,
+      "ci95": [
+        -0.1919402789602597,
+        0.10945426197333223
+      ],
+      "ci90": [
+        -0.16827764267536657,
+        0.0852299416613106
+      ],
+      "decision": "no_meaningful_association",
+      "magnitude": "",
+      "p_holm": 1.0,
+      "sensitivity": "exclude_max_minimization",
+      "status": "exploratory"
+    },
+    {
+      "label": "primary",
+      "n": 187,
+      "k_covariates": 6,
+      "r": -0.005975271451098152,
+      "p": 0.9363702196224831,
+      "ci95": [
+        -0.15170081305424463,
+        0.1400045029093872
+      ],
+      "ci90": [
+        -0.12854717627239665,
+        0.11677644660592007
+      ],
+      "decision": "no_meaningful_association",
+      "magnitude": "",
+      "p_holm": 1.0,
+      "sensitivity": "exclude_compcor_short",
+      "status": "exploratory"
+    },
+    {
+      "label": "secondary",
+      "n": 187,
+      "k_covariates": 6,
+      "r": -0.025274226611319495,
+      "p": 0.7355680696191293,
+      "ci95": [
+        -0.17050343049355796,
+        0.12102969722271222
+      ],
+      "ci90": [
+        -0.14748311117949123,
+        0.09769478087828355
+      ],
+      "decision": "no_meaningful_association",
+      "magnitude": "",
+      "p_holm": 1.0,
+      "sensitivity": "exclude_compcor_short",
+      "status": "exploratory"
+    },
+    {
+      "label": "primary",
+      "n": 187,
+      "k_covariates": 7,
+      "r": -0.009232647999053458,
+      "p": 0.9021002649271839,
+      "ci95": [
+        -0.15528626674624643,
+        0.13721596509532924
+      ],
+      "ci90": [
+        -0.13209128788545088,
+        0.11390536921235757
+      ],
+      "decision": "no_meaningful_association",
+      "magnitude": "",
+      "p_holm": 1.0,
+      "sensitivity": "plus_diagnostic_group",
+      "status": "exploratory"
+    },
+    {
+      "label": "secondary",
+      "n": 187,
+      "k_covariates": 7,
+      "r": -0.03483598579172275,
+      "p": 0.6424624238358289,
+      "ci95": [
+        -0.18018123847871836,
+        0.11199798632115102
+      ],
+      "ci90": [
+        -0.15717114274607258,
+        0.08855212676885056
+      ],
+      "decision": "no_meaningful_association",
+      "magnitude": "",
+      "p_holm": 1.0,
+      "sensitivity": "plus_diagnostic_group",
+      "status": "exploratory"
+    }
+  ],
+  "compcor_full_only": false,
+  "fd_rule": "lowpass"
+}

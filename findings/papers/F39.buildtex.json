@@ -1,0 +1,65 @@
+{
+ "schema": "buildlang.buildtex-receipt/v0",
+ "source": {
+  "path": "F39.bld",
+  "sha256": "60e36a8f60ad382cbfaa53ec0bf3a58cd0cb08f2438ab1f72af899f9e4336dbb"
+ },
+ "ir_sha256": "ecefc5817a9a65fdd47eb8a4b27444e098b3f6ec47b4aaee854b0ee1dbf3aa85",
+ "theme": "paper",
+ "overrides": [],
+ "outputs": {
+  "F39.pdf": "ba17e291945c97d425d0fbffd57907c9c17aa903d5992d47fc3c691a53dcf880"
+ },
+ "pdf_metadata": {
+  "pdfa": false,
+  "creation_date": "D:20261109000000Z"
+ },
+ "facts": {
+  "pages": 9,
+  "pages_layout": 9,
+  "overfull": [],
+  "underfull": 0,
+  "missing_glyphs": [],
+  "glyph_fallbacks": [],
+  "math_errors": [],
+  "fonts": [
+   {
+    "name": "DADKFA+NotoSansMath-Regular",
+    "embedded": true
+   },
+   {
+    "name": "EBCBIG+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "EHHGLP+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "GDOPEF+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "MHLIBH+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "PEMNDP+AccessionDisplay-Master",
+    "embedded": true
+   }
+  ],
+  "images": 4,
+  "blind_text_runs": 0,
+  "reading_order": true,
+  "blocks_missing_from_text": [],
+  "pdf_bytes": 583599
+ },
+ "failed": [],
+ "notes": [
+  "buildc run F39.bld -> F39.doc.tsv",
+  "press: relief 1275x444 px at 150 dpi; 0 blind line(s); foil colour source: fallback constant"
+ ],
+ "external_programs": [
+  "buildc"
+ ]
+}

@@ -1,0 +1,428 @@
+{
+ "schema": "research-record/1",
+ "built": "2026-11-09 by scripts/record-findings.mjs from paper.txt, the register row and the findings ledger",
+ "document": {
+  "id": "F308",
+  "kind": "finding",
+  "title": "Checking 213 OEIS recurrence conjectures against their b-files finds one failure, already known",
+  "standfirst": "We tested a random sample of conjectured recurrences in the On-Line Encyclopedia of Integer Sequences against the long term lists stored beside them. One of 213 failed, and the entry itself had recorded that failure in 2016, so the sweep produced no new counterexample.",
+  "date_found": "2026-10-31",
+  "fields": [
+   "mathematics-complexity",
+   "method"
+  ],
+  "tier": "D",
+  "tier_reason": "Cheap, mostly confirms.",
+  "rung": "hypothesis",
+  "rung_reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
+  "outcome": "null",
+  "bound": "One failure in 213 tested lines, 0.47 percent; the 95 percent Wilson interval runs to 2.6 percent, so failure rates above that are ruled out for lines of this kind.",
+  "objection": "The lines were fitted to data, so passing is what a correct fit does, and a high-order fit can pass by construction when the b-file is short relative to its order. A passing line stays a conjecture with more range.",
+  "objection_source": "the paper's first stated limitation; no reviewer attack is on file",
+  "would_change": "No condition for raising or overturning the call is on file in the register.",
+  "sections": [
+   {
+    "id": "reader",
+    "title": "What this means for a reader",
+    "role": "lead",
+    "paragraphs": [
+     "When an OEIS entry says \"Conjecture\" in front of a simple recurrence, the line has usually held far past the terms it was fitted on. In our sample, 212 of 213 such lines held for a median of 967 further terms, and the one that failed had already been marked false by a later contributor. Read such a line as a well-tested guess. It still has no proof behind it, and holding for a thousand more terms does not supply one."
+    ]
+   },
+   {
+    "id": "abstract",
+    "title": "Abstract",
+    "role": "argument",
+    "paragraphs": [
+     "Many entries in the On-Line Encyclopedia of Integer Sequences carry a line such as \"Conjecture: a(n) = 3*a(n-1) - 3*a(n-2) + a(n-3)\". Most such lines were found by fitting the terms known at the time, and the b-file stored beside the entry often lists hundreds or thousands more. We asked how often these conjectures fail on their own b-files and whether the failures are data errors or counterexamples. From the public OEIS data, 23,883 entries mention a conjecture and 1,179 have a line our parser accepts; we drew a random 500 and tested every line that its b-file extends by at least 30 terms. {c1}One of 213 tested conjecture lines failed on its b-file, 0.47 percent, with a 95 percent Wilson interval of 0.08 to 2.6 percent.{/c1} {c2}The one failure, A031740, holds for 64 indices and fails at n = 65, and the entry has recorded the conjecture as false since 2016, so the sweep found no new counterexample.{/c2} {c3}Planted errors were caught in 212 of 212 passing lines, and equations applied to other entries' terms passed at a mean rate of 0.005.{/c3} The sampling frame changed after the preregistered route failed, and the change is recorded. The result says the check is cheap and, on this kind of line, low in yield."
+    ]
+   },
+   {
+    "id": "intro",
+    "title": "Introduction",
+    "role": "argument",
+    "paragraphs": [
+     "The {g:oeis}OEIS{/g} is a public database of integer sequences, online since 1995 and holding over 300,000 entries when Sloane described its recent history in 2018 {cite:r2}. Each entry lists the first terms of a sequence in a short data section, with formulas, comments and references contributed by many people. Beside most entries sits a {g:b-file}b-file{/g}, a plain list of index and term pairs that often runs to thousands of terms.",
+     "Some entries carry a {g:conjecture-line}conjecture line{/g}: an equation for the sequence, offered without proof. Many are a {g:linear-recurrence}linear recurrence{/g} with integer coefficients, found by fitting the terms then listed. Fitting of this kind is a standard method in computer algebra. Kauers and Koutschan {cite:r3} describe guessing a recurrence from finitely many terms by linear algebra, note that the overdetermination of the linear system is one source of trust in a guess, and show how to guess from fewer terms by restricting the coefficients. In a later search across the OEIS {cite:r4} they found conjectured recurrences for sequences not previously known to satisfy one, proved some, and showed that a recurrence exists for others without proving the guessed one.",
+     "Our question was smaller. The b-files already hold the data a mechanical check needs. We asked what share of conjecture lines fail on their own b-files, and whether each failure is a data error or a true {g:counterexample}counterexample{/g}. The decision it informed was whether such lines are worth a routine check as a cheap source of counterexamples, and how to read one when it appears in our own work. Our searches found the guessing literature above and no published sweep of this exact kind; that is what the searches returned, and it does not show that none exists."
+    ]
+   },
+   {
+    "id": "prereg",
+    "title": "Preregistration and design",
+    "role": "argument",
+    "paragraphs": [
+     "The {g:preregistration}preregistration{/g} was written and hash-locked on 31 October 2026, before any entry was sampled beyond one probe request that returned an unrelated entry. It names the sampling route, the parser rules, the definition of tested and of failed, the planted errors, the control, the forecasts and the kill conditions.",
+     "Kill conditions, without discretion:",
+     "- The run is {g:void}void{/g} if fewer than 99 percent of planted errors are caught, if fewer than 100 lines are tested, or if the real pass rate is at or below the control's 95th percentile.",
+     "- A failure counts only after a second check that the failing term is not a known b-file error.",
+     "- Nothing here proves the passing recurrences; a passing line stays a conjecture with more range.",
+     "Each {g:kill-condition}kill condition{/g} and forecast became a rule set whose pass or fail is a {g:verdict}verdict{/g} read off by code.",
+     "The locked plan sampled entries through the OEIS search pages at random offsets. That route returned only 10 entries, because the site asks for a sign-in past the first 100 search results, and we did not work around it. The first run tested 2 lines and was void under the first kill condition. Having seen only those 2 lines, both passing, we changed the {g:sampling-frame}sampling frame{/g}: the public OEIS data repository, every entry with a parsable conjecture line, then a seeded random 500. The change is recorded as a {g:deviation}deviation{/g} with its reason and what had been seen. The new frame is wider than the locked one, and the second run used the same locked plan, rules and forecasts."
+    ]
+   },
+   {
+    "id": "data",
+    "title": "Data and provenance",
+    "role": "argument",
+    "paragraphs": [
+     "The data are the OEIS entries from the public oeis/oeisdata repository and the b-files from oeis.org {cite:r1}, retrieved on 31 October 2026. OEIS content is licensed CC BY-SA 4.0 under the OEIS End-User License Agreement. We used it as data for checks; this paper reports counts and quotes one entry's conjecture and comment lines with attribution.",
+     "Of all entries, 23,883 mention a conjecture and 1,179 have a conjecture line our parser accepts. The seeded random 500 entries held 531 lines that mention a conjecture and a term a(n), and 512 of those parsed. {c4}Only about 5 percent of the entries that mention a conjecture had a line our parser accepts: 1,179 of 23,883.{/c4} The result therefore describes simple linear recurrences, not OEIS conjectures in general."
+    ]
+   },
+   {
+    "id": "methods",
+    "title": "Methods",
+    "role": "argument",
+    "paragraphs": [
+     "## Parsing",
+     "A line was parsed only if it states an equation in {m:n} and earlier terms {m:a(n - k)} with integer coefficients. A pattern match finds the candidate equation, and a {g:ast-whitelist}parser whitelist{/g} accepts it only if every part of its syntax tree is an integer, {m:n}, a term {m:a(n - k)}, addition, subtraction, multiplication or a power. Anything else was skipped and counted.",
+     "## Testing",
+     "For each sampled entry, the first conjecture line that parsed and qualified was tested; at most one line per entry was tested. A line qualified when the b-file holds at least 30 more terms than the entry's data section and the equation can be evaluated at 10 or more indices. The equation was evaluated at every index in the b-file's range where all the terms it needs exist. A line fails if its two sides differ at any such index; the first failing index and the number of indices it held for were recorded. This left 213 tested lines, with a median of 967 b-file terms beyond the data section.",
+     "## The failure rate",
+     "With {m:k} failures among {m:N} tested lines, the failure rate is {m:f = k / N}. Its {g:wilson}Wilson interval{/g} {cite:r5} at {m:z} = 1.96 has centre {m:c} and half-width {m:w}:",
+     "$$ D = 1 + \\frac{z^2}{N} {eq:d}",
+     "$$ c = \\frac{1}{D} (f + \\frac{z^2}{2N}) {eq:c}",
+     "$$ w = \\frac{z}{D} \\sqrt{\\frac{f(1 - f)}{N} + \\frac{z^2}{4N^2}} {eq:w}"
+    ]
+   },
+   {
+    "id": "controls",
+    "title": "Controls and planted checks",
+    "role": "argument",
+    "paragraphs": [
+     "The {g:planted-check}planted check{/g} raised the first integer coefficient of each passing equation by one and ran the check again. A planted line should fail. Of the 213 tested lines, 212 passed, so 212 planted versions were built. All 212 were caught.",
+     "The cross-entry {g:control}control{/g} applied each equation to a different, randomly chosen entry's terms, up to index 200. One draw takes 30 equations at random, applies each to another entry's terms, and records the share that pass. This share is the pass rate of an equation on a sequence it was not written for, the chance level of the test. Over 200 draws the mean share was 0.0048, and the 95th percentile of this {g:null-distribution}null distribution{/g} was 0.033, one equation in 30.",
+     "The real pass rate, 0.995, was above every draw. The {g:p-value-draws}p value from draws{/g} is",
+     "$$ p = \\frac{k + 1}{n + 1} {eq:p}",
+     "with {m:k} the number of draws at or above the real pass rate and {m:n} the number of draws. Here {m:k} = 0 and {m:n} = 200, so {m:p} = 0.005, the smallest value 200 draws can give."
+    ]
+   },
+   {
+    "id": "results",
+    "title": "Results",
+    "role": "argument",
+    "paragraphs": [
+     "Figure {ref:fig:frame} follows the counts from the whole corpus to the one failure.",
+     "![fig:frame width=0.8 alt=Seven horizontal bars on a log scale falling from 23,883 entries to one failed line](fig-frame.png) From the whole OEIS corpus to the one failing line. The first two counts are from the frame count file; the rest are from the run's result file.",
+     "{c1}One of 213 tested conjecture lines failed on its b-file, 0.47 percent, with a 95 percent Wilson interval of 0.08 to 2.6 percent.{/c1} Figure {ref:fig:fail} places the rate against the forecast of 4 percent and the preregistered 1 percent rule.",
+     "![fig:fail width=0.85 alt=A diamond at 0.47 percent on a bar from 0.08 to 2.6 percent, with dashed lines at 1 and 4 percent](fig-failrate.png) Failure rate with its 95 percent Wilson interval, against the 1 percent rule and the preregistered forecast of 4 percent. Drawn from the run's result file and the preregistration.",
+     "The failing line is in entry A031740. Its conjecture, contributed by Colin Barker on 30 September 2012, reads:",
+     "$$ a(n) = n(961n + 1) {eq:quad}",
+     "$$ a(n) = 3a(n - 1) - 3a(n - 2) + a(n - 3) {eq:rec}",
+     "The entry's data section has 32 terms and its b-file 10,000. {c2}The one failure, A031740, holds for 64 indices and fails at n = 65, and the entry has recorded the conjecture as false since 2016, so the sweep found no new counterexample.{/c2} The stored copy of the entry carries a comment by Chai Wah Wu dated 19 June 2016: the conjecture is false, and 3940288 is a term not of the form {m:m(961m + 1)}. The preregistration asked for a second code path before a failure counts; the result file records no such rerun. The check by hand was reading this comment, which confirms the failure is a true counterexample and not a b-file error.",
+     "Table {ref:tab:counts} gives the counts and rates.",
+     "::table tab:counts cols=0.62,0.38 Counts and rates from the run.\nQuantity ¦ Value\nEntries mentioning a conjecture ¦ 23,883\nEntries with a parsable conjecture line ¦ 1,179\nEntries sampled ¦ 500\nConjecture lines in the sample, parsed ¦ 531, 512\nLines tested ¦ 213\nMedian b-file terms beyond the data section ¦ 967\nLines that failed ¦ 1 (A031740, first failure at n = 65)\nFailure rate, 95% Wilson interval ¦ 0.47 percent, 0.08 to 2.6 percent\nPlanted errors caught ¦ 212 of 212\nCross-entry pass rate, mean and 95th percentile ¦ 0.0048, 0.033\nReal pass rate, p from 200 draws ¦ 0.995, 0.005\n::end",
+     "Table {ref:tab:forecast} sets the forecasts written before the run against the outcomes.",
+     "::table tab:forecast cols=0.46,0.27,0.27 Forecasts fixed in the preregistration against what the run gave.\nQuantity ¦ Forecast ¦ Outcome\nLines parsed ¦ 300 ¦ 512\nLines tested ¦ 150 ¦ 213\nFailure rate ¦ 0.04 ¦ 0.0047\nPass rate ¦ 0.96 ¦ 0.995\nPlanted errors caught ¦ 1.0 ¦ 1.0\nCross-entry pass rate ¦ 0.001 ¦ mean 0.0048, 95th percentile 0.033\nShare of failures from data errors ¦ 0.5 ¦ 0 of 1\nAt least one failure not from a data error ¦ probability 0.5 ¦ one, already recorded in the entry; none new\n::end"
+    ]
+   },
+   {
+    "id": "discussion",
+    "title": "Discussion",
+    "role": "argument",
+    "paragraphs": [
+     "The sweep shows that a mechanical check of OEIS conjecture lines is cheap: the analysis took about 6 seconds once the data were stored. On simple linear recurrences it is also low in yield. The lines held at a rate of 99.5 percent, the failure rate came in an order of magnitude under the forecast, and the single failure had been caught by a contributor four years after it was posted.",
+     "Two features of the lines explain much of this. They were fitted to data, so passing on further terms is what a correct fit does. And a recurrence of order {m:d} fitted to a few more than {m:d} terms is close to determined by them, so the guess is either right or wrong in a way that shows quickly; A031740's conjecture failed just past twice the length of its data section. Kauers and Koutschan {cite:r3} point to the same property, overdetermination, as a source of trust in a guessed recurrence. Our pass rate is a measurement of how well that trust held on one class of OEIS line.",
+     "The more interesting conjectures are the ones our parser skipped: 95 percent of the entries that mention a conjecture state something our whitelist cannot read; we did not classify what those lines say. A sweep of those would need a different checker for each kind of line."
+    ]
+   },
+   {
+    "id": "limits",
+    "title": "Limitations",
+    "role": "argument",
+    "paragraphs": [
+     "- The lines were fitted to data, so passing is what a correct fit does, and a high-order fit can pass by construction when the b-file is short relative to its order. A passing line stays a conjecture with more range.",
+     "- Only about 5 percent of conjecture entries parse under our rules, so the rate describes simple linear recurrences with integer coefficients.",
+     "- Many lines come from a few contributors, so the rate also describes their habits.",
+     "- The sampling frame changed after the locked route failed. A later review of our ledger marked this as narrowing the claim. The new frame was chosen after seeing 2 lines, both passing.",
+     "- The preregistered second code path for a failure was not recorded; the single failure was confirmed by the entry's own comment.",
+     "- Scoring was by our own code and was not blind."
+    ]
+   },
+   {
+    "id": "appendix",
+    "title": "Appendix A. The preregistered verdicts",
+    "role": "evidence",
+    "paragraphs": [
+     "Each verdict is a set of rules written before the run. A verdict passes only when every rule holds. Values are read from the run's result file. The first three rules are shared by all three verdicts.",
+     "::table tab:verdicts cols=0.28,0.44,0.16,0.12 Preregistered verdicts and the rules that decided each one.\nVerdict ¦ Deciding rule ¦ Value ¦ Holds\nInstrument works (not void) ¦ planted errors caught at least 0.99; at least 100 lines tested; pass rate above the control's 95th percentile (0.033) ¦ 1.0; 213; 0.995 ¦ yes\nAny failure ¦ the three rules above, and at least one failure ¦ 1 ¦ yes\nFailure rate above 1 percent ¦ the three rules above, and failure rate above 0.01 ¦ 0.0047 ¦ no\nFirst run, search-page frame ¦ the instrument rules ¦ 2 lines tested ¦ no (void)\n::end"
+    ]
+   }
+  ]
+ },
+ "claims": [
+  {
+   "id": "c1",
+   "text": "One of 213 tested conjecture lines failed on its b-file, 0.47 percent, with a 95 percent Wilson interval of 0.08 to 2.6 percent.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e1"
+   ]
+  },
+  {
+   "id": "c2",
+   "text": "The one failure, A031740, holds for 64 indices and fails at n = 65, and the entry has recorded the conjecture as false since 2016, so the sweep found no new counterexample.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e2"
+   ]
+  },
+  {
+   "id": "c3",
+   "text": "Planted errors were caught in 212 of 212 passing lines, and equations applied to other entries' terms passed at a mean rate of 0.005.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e3"
+   ]
+  },
+  {
+   "id": "c4",
+   "text": "Only about 5 percent of the entries that mention a conjecture had a line our parser accepts: 1,179 of 23,883.",
+   "section": "data",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e4"
+   ]
+  }
+ ],
+ "evidence": [
+  {
+   "id": "e1",
+   "kind": "number",
+   "label": "The numbers in claim 1",
+   "value": "213; 0.47; 95; 0.08; 2.6",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e2",
+   "kind": "number",
+   "label": "The numbers in claim 2",
+   "value": "031740,; 64; 65,; 2016,",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e3",
+   "kind": "number",
+   "label": "The numbers in claim 3",
+   "value": "212; 0.005",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e4",
+   "kind": "number",
+   "label": "The numbers in claim 4",
+   "value": "5; 1,179; 23,883",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  }
+ ],
+ "references": [
+  {
+   "id": "r1",
+   "key": "The OEIS Foundation",
+   "kind": "dataset",
+   "title": "The OEIS Foundation. The On-Line Encyclopedia of Integer Sequences, entries and b-files, and the oeis/oeisdata repository. Retrieved 31 October 2026. Licence CC BY-SA 4.0. https://oeis.org",
+   "access": "run",
+   "target": "https://oeis.org",
+   "licence": "as stated in the paper's data section"
+  },
+  {
+   "id": "r2",
+   "key": "Sloane 2018",
+   "kind": "paper",
+   "title": "Sloane, N. J. A. (2018). The On-Line Encyclopedia of Integer Sequences. Notices of the American Mathematical Society 65(9), 1062-1074. doi:10.1090/noti1734. arXiv:1805.10343",
+   "access": "snippet",
+   "target": "https://doi.org/10.1090/noti1734",
+   "access_note": "abstracts, arXiv pages and search summaries; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r3",
+   "key": "Kauers 2022",
+   "kind": "paper",
+   "title": "Kauers, M. and Koutschan, C. (2022). Guessing with little data. Proceedings of ISSAC 2022, 83-90. arXiv:2202.07966",
+   "access": "snippet",
+   "target": "https://arxiv.org/abs/2202.07966",
+   "access_note": "abstracts, arXiv pages and search summaries; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r4",
+   "key": "Kauers 2023",
+   "kind": "paper",
+   "title": "Kauers, M. and Koutschan, C. (2023). Some D-finite and some possibly D-finite sequences in the OEIS. Journal of Integer Sequences 26, article 23.4.5. arXiv:2303.02793",
+   "access": "snippet",
+   "target": "https://arxiv.org/abs/2303.02793",
+   "access_note": "abstracts, arXiv pages and search summaries; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r5",
+   "key": "Wilson 1927",
+   "kind": "paper",
+   "title": "Wilson, E. B. (1927). Probable inference, the law of succession, and statistical inference. Journal of the American Statistical Association 22(158), 209-212. doi:10.1080/01621459.1927.10502953",
+   "access": "snippet",
+   "target": "https://doi.org/10.1080/01621459.1927.10502953",
+   "access_note": "abstracts, arXiv pages and search summaries; full text not read",
+   "accessed": "2026-11-09"
+  }
+ ],
+ "relations": [
+  {
+   "from": "F422",
+   "to": "F308",
+   "type": "narrowed",
+   "scope": "sampling and control",
+   "date": "2026-10-31",
+   "note": "The correction pass coded an error and an untestable control: the sampling changed after the search route refused, and fitted lines pass by construction.",
+   "record": "findings ledger, F422 correction pass"
+  }
+ ],
+ "corrections": [
+  {
+   "id": "x1",
+   "date": "2026-10-31",
+   "target": "document",
+   "type": "scope",
+   "after": "Both narrow the claim and are stated here.",
+   "reason": "A review of our ledger recorded that the sampling changed after the search route refused requests past 100 results without sign-in, and that fitted lines pass by construction while only 5 percent of conjecture entries parse.",
+   "found_by": "a review of our findings ledger"
+  },
+  {
+   "id": "x2",
+   "date": "2026-11-09",
+   "target": "document",
+   "type": "wording",
+   "after": "The cross-entry control is described here as the code runs it, 30 equations per draw, each applied to another entry's terms; an earlier summary of ours described it as 30 terms at a time.",
+   "reason": "Dated in the paper's Corrections section; found by the publication pass.",
+   "found_by": "the publication pass"
+  }
+ ],
+ "versions": [
+  {
+   "n": 1,
+   "date": "2026-10-31",
+   "what": "entered in the findings ledger"
+  },
+  {
+   "n": 2,
+   "date": "2026-11-09",
+   "what": "paper version 1.0, first published",
+   "hash": "1cd38685d693529320972bf3a0f6524b357be204faf6e77f3e047138ddfbc674"
+  }
+ ],
+ "grade": {
+  "lowers": [
+   {
+    "domain": "scoring",
+    "text": "Scored by code and by the agent that ran it; self-graded.",
+    "from": "register scorer"
+   },
+   {
+    "domain": "blinding",
+    "text": "Not blind, as the paper's limitations state.",
+    "from": "paper Limitations"
+   },
+   {
+    "domain": "imprecision",
+    "text": "One failure in 213 tested lines, 0.47 percent; the 95 percent Wilson interval runs to 2.6 percent, so failure rates above that are ruled out for lines of this kind.",
+    "from": "the bound"
+   },
+   {
+    "domain": "single source",
+    "text": "The cited literature was read at the level of abstracts, arXiv pages and search summaries; full texts were not read.",
+    "from": "paper Verified"
+   }
+  ],
+  "holds": [
+   {
+    "domain": "preregistration",
+    "text": "Preregistered and hash-locked before the run (sha256 9736ef8a).",
+    "from": "paper Reproduction"
+   }
+  ]
+ },
+ "reproduce": {
+  "data": [
+   {
+    "name": "The OEIS Foundation",
+    "licence": "as stated in the paper's data section",
+    "url": "https://oeis.org"
+   }
+  ],
+  "prereg": {
+   "hash": "9736ef8a01a18ddaa94949f06de0b127eb9bdc9085bf9265fbb1d33a061f9d37",
+   "plan": "f8fbd127e431e832302cdd548c974029630a778f7c14125e20711b5a5ffb045f"
+  },
+  "cost": "the analysis took about 6 s and the control under 1 s on one desktop CPU, after the data were downloaded.",
+  "steps": [
+   "Data: the public oeis/oeisdata repository and the b-files from oeis.org (CC BY-SA 4.0).",
+   "Find every entry with a comment or formula line that contains \"Conjecture\" and a term a(n); keep entries with a line that the whitelist accepts; draw a seeded random 500.",
+   "For each sampled entry, test the first qualifying line: at least 30 b-file terms beyond the data section and at least 10 indices where the equation can be evaluated. Record the first failing index.",
+   "Compute the Wilson interval, eqs. {ref:eq:d} to {ref:eq:w}. Raise the first integer coefficient of each passing equation by one and rerun. Build the cross-entry control from 200 draws of 30 equations and compute eq. {ref:eq:p}.",
+   "Preregistration SHA-256: 9736ef8a01a18ddaa94949f06de0b127eb9bdc9085bf9265fbb1d33a061f9d37. Plan SHA-256: f8fbd127e431e832302cdd548c974029630a778f7c14125e20711b5a5ffb045f. Run 20261031T223144Z; the earlier void run is 20261031T220825Z."
+  ],
+  "not_rerun": "The study was not re-run for this paper."
+ },
+ "verified": {
+  "date": "2026-11-09",
+  "checks": [
+   {
+    "what": "On 9 November 2026 the frame counts (23,883, 1,179 and 500) were re-read from the frame count file, and the 531 lines, 512 parsed and 213 tested, the median of 967 terms, the single failure with its first failing index of 65 after 64 indices, the data and b-file lengths, the Wilson interval, the 212 of 212 planted catches, the cross-entry mean, percentile and p value, and the three verdicts were re-read from the run's result file.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   },
+   {
+    "what": "They match the {g:findings-ledger}findings ledger{/g}.",
+    "by": "the paper's Verified pass",
+    "result": "match"
+   },
+   {
+    "what": "The 2012 conjecture and the 2016 comment marking it false were read in the stored copy of entry A031740.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   },
+   {
+    "what": "The preregistration's SHA-256 matches the hash recorded in the result file and in the lock file.",
+    "by": "the paper's Verified pass",
+    "result": "match"
+   },
+   {
+    "what": "Both figures were drawn by a script that reads only the result file, the frame count file and the preregistration.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   }
+  ],
+  "not_checked": [
+   "The study was not re-run for this paper.",
+   "The literature was found by searches run on 9 November 2026 and read at the level of abstracts, arXiv pages and search summaries; the full texts were not read."
+  ]
+ }
+}

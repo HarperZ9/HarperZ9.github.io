@@ -1,0 +1,88 @@
+{
+ "terms": {
+  "spectrum": {
+   "term": "power spectrum",
+   "field": "time-series analysis and signal processing",
+   "definition": "how a series' variance is spread over frequencies, from slow swings to fast jitter",
+   "excludes": "the timing or phase of the swings, which the spectrum does not record"
+  },
+  "spectral-flatness": {
+   "term": "spectral flatness",
+   "field": "signal processing (speech coding) and the theory of stationary processes",
+   "definition": "the geometric mean of a power spectrum divided by its arithmetic mean; it is 1 for white noise and near 0 when a few frequencies hold most of the variance",
+   "excludes": "flatness of the series itself in time, and measures that use the spectrum's entropy instead of its geometric mean"
+  },
+  "ks-bound": {
+   "term": "Kolmogorov-Szego bound",
+   "field": "the theory of weakly stationary processes",
+   "definition": "the smallest one-step error variance any linear predictor can reach on a weakly stationary series, equal to the exponential of the average log spectrum; one minus the flatness is therefore the most variance a linear one-step forecast can remove",
+   "excludes": "nonlinear predictors on non-Gaussian series, multi-step forecasts, and series whose statistics drift over time"
+  },
+  "stationary": {
+   "term": "weakly stationary",
+   "field": "probability and time-series analysis",
+   "definition": "a series whose mean and autocovariance do not change over time",
+   "excludes": "series with trends, level shifts or drifting variance, such as a machine whose load changes between the halves"
+  },
+  "periodogram": {
+   "term": "tapered periodogram",
+   "field": "spectral estimation",
+   "definition": "the squared Fourier transform of a series after its ends are faded with a Hann window, used as a raw estimate of the power spectrum at each Fourier frequency",
+   "excludes": "smoothed or averaged spectrum estimates such as Welch's method, which we report only as secondaries"
+  },
+  "ar-model": {
+   "term": "autoregressive model",
+   "field": "time-series statistics",
+   "definition": "a linear forecast of the next value from a weighted sum of the last p values, with the weights fitted by least squares; p is the order",
+   "excludes": "models with moving-average terms, external inputs or nonlinear terms"
+  },
+  "aic": {
+   "term": "AIC",
+   "field": "statistical model selection",
+   "definition": "the Akaike information criterion, a fit score that adds a penalty of two per fitted parameter, used here to choose the autoregressive order",
+   "excludes": "choice by held-out error, which would use the test half"
+  },
+  "one-step-skill": {
+   "term": "one-step skill",
+   "field": "forecast verification",
+   "definition": "one minus the mean squared error of one-step-ahead forecasts on the test half, divided by the test half's variance; 0 matches forecasting the mean and 1 is perfect",
+   "excludes": "skill at longer horizons and skill measured on the data used to fit the model"
+  },
+  "phase-surrogate": {
+   "term": "phase-randomised surrogate",
+   "field": "nonlinear time-series analysis (surrogate data)",
+   "definition": "a copy of a series with the same power spectrum and random Fourier phases, so it keeps the autocorrelation and is Gaussian and stationary by construction",
+   "excludes": "shuffling in time, which also destroys the spectrum"
+  },
+  "violation": {
+   "term": "violation of the bound",
+   "field": "our usage in this study",
+   "definition": "a series whose excess skill over the bound beats that of at least 38 of its own 39 phase-randomised surrogates, which happens to 5 percent of Gaussian stationary series by chance",
+   "excludes": "a series whose skill merely exceeds the point bound, which estimation error makes common"
+  },
+  "spearman": {
+   "term": "Spearman rho",
+   "field": "statistics (rank correlation)",
+   "definition": "the correlation between the ranks of two quantities across cases; 1 means the same order, 0 no relation of order",
+   "excludes": "agreement in size, since two quantities can share an order and differ in scale"
+  },
+  "analogue": {
+   "term": "analogue forecaster",
+   "field": "nonlinear time-series prediction (method of analogues)",
+   "definition": "a forecast that finds the k past states most like the present one and averages what came next; it can follow nonlinear structure a linear model misses",
+   "excludes": "trained nonlinear models such as neural networks"
+  },
+  "wilson": {
+   "term": "Wilson interval",
+   "field": "statistics (binomial proportions)",
+   "definition": "a 95 percent interval for a proportion that stays inside 0 and 1 and behaves well when the count is small",
+   "excludes": "intervals from resampling"
+  },
+  "bh": {
+   "term": "Benjamini-Hochberg correction",
+   "field": "statistics (multiple testing)",
+   "definition": "a rule that adjusts a set of p values so that, among the tests called significant, the expected share of false calls stays at or below a chosen rate, here 0.05",
+   "excludes": "corrections that control the chance of any false call at all, such as Bonferroni"
+  }
+ }
+}

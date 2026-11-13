@@ -1,0 +1,204 @@
+---
+id: F166
+title: A combined value formula for risky choice, retired on choices13k
+subtitle: A preregistered test of prospect theory plus information, threat and drive terms against a flexible prospect theory on 11,759 choice problems
+version: 1.0
+date: 9 November 2026
+line: Finding F166 in the findings ledger. Honest null (tier D).
+pdf_author: Zain Dana Harper
+subject: A preregistered comparison of a combined value formula with cumulative and flexible prospect theory on the choices13k risky choice data
+footer: F166, combined value formula retired, version 1.0
+---
+# abstract
+We had written a single value formula for risky choice: prospect value plus a term for the information a gamble resolves, a term for the threat of a loss, and a term for drive toward a setpoint. We tested it on the public choices13k data, 1,928 problems answered without outcome feedback and 9,831 answered with it, against cumulative prospect theory and against a flexible prospect theory with the same room to absorb misfit. The kill rule was fixed before any real fit. {c1}The combined formula never beat the flexible prospect theory by the preregistered margin: cross-validated R² 0.634 against 0.645 without feedback and 0.597 against 0.596 with it, against a bar of 0.005.{/c1} {c2}Without feedback, the joint gain of the four added terms, 7.6 in deviance, sat below the 95th percentile of both null controls, 52.0 and 58.9.{/c2} With feedback two of the terms help as corrections to prospect theory, and the drive term does not. The kill rule fired, and the formula is retired as a model of risky choice. {c4}Fitted loss aversion was 1.16 (1.05 to 1.30) without feedback and 0.89 (0.86 to 0.93) with feedback.{/c4}
+
+# section What this means for a reader {sec:reader}
+Adding terms to a model of choice will almost always improve its fit a little. The fair test is whether the new terms beat a version of the old theory given the same number of extra parameters. Ours did not, so the terms we named after information, threat and drive describe where prospect theory misfits, and they do not add a new account of why people choose. The loss aversion we measured sits near 1, well below the classic 2.25, which says this number depends on the task that measures it.
+
+# section Introduction {sec:intro}
+{g:cpt}Cumulative prospect theory{/g} {cite:tk1992} describes a choice between gambles with three ingredients: a value function that is concave for gains and steeper for losses, a {g:loss-aversion}loss aversion{/g} coefficient {m:\lambda} that scales losses, and a {g:probability-weighting}weighting function{/g} that bends probabilities. The theory comes from behavioural economics and describes choices; it gives no account of the feelings behind them. Loss aversion is the factor by which a loss weighs more than an equal gain, so 1 means losses and gains count alike, and it says nothing about a dislike of risk as such. The weighting function maps a stated probability to the weight a choice gives it, so small chances can count for more than their size; it is no belief about the odds. Tversky and Kahneman reported a median {m:\lambda} of 2.25 from their own experiment. Brown, Imai, Vieider and Camerer {cite:brown2024} collected 607 estimates of {m:\lambda} from 150 articles published from 1992 to 2017 and pooled them in a {g:meta-analysis}meta-analysis{/g}, the statistical pooling of published estimates of one quantity, which collects no new data of its own.
+
+Peterson, Bourgin, Agrawal, Reichman and Griffiths {cite:peterson2021} ran the largest risky choice experiment to that date, choices13k, with choice rates on 13,006 problems collected online. They used it to compare classical decision theories with machine-learning models and to search for better theories. Thomas and colleagues {cite:thomas2023} argued that the choice behaviour in choices13k contains structured decision noise when compared with a laboratory data set, which bears on how much of the gap between theories and flexible learners is psychology.
+
+The data set also separates problems answered with and without feedback on outcomes. Hertwig, Barron, Weber and Erev {cite:hertwig2004} reported that people choose as if they overweight rare events when choosing from descriptions and underweight them when choosing from experience, the pattern later called the {g:description-experience-gap}description-experience gap{/g}. In decision research the term means that difference between choices from stated odds and choices learned from sampled outcomes; it excludes any difference in the gambles themselves. We analysed the two settings apart for that reason.
+
+Our own starting point was a {g:combined-formula}combined value formula{/g} from earlier notes in this project, a name of ours for prospect value plus three added terms in one choice rule, which makes no claim about mechanisms in the brain. It adds to prospect value a term for the information a gamble resolves, a term for the threat of a loss, and a term for reduction of a drive toward a setpoint. This paper is a test of that formula, and the formula is ours to retire.
+
+# section Preregistration and design {sec:prereg}
+The design was written and hash-locked on 31 October 2026 at 08:02 UTC as a {g:preregistration}preregistration{/g}, a practice from clinical trials and psychology: a dated plan fixed before any result is seen, so a plan revised after a look at the outcome does not qualify. Before writing it we had seen the file schemas, the row counts and outcomes simulated by the study code. No real outcome had been fitted.
+
+The locked file names the data, the two settings, every model, the scoring, the {g:planted-check}planted checks{/g}, both {g:control}controls{/g}, the forecasts and the {g:kill-condition}kill rule{/g}. A planted check runs data with a known answer through the same analysis first, to show the analysis can find an effect when it is there, which no check on real data can show. A control is a version of the data with the structure under test removed, scored the same way as the real data; a published number from another study is no control. The kill rule decides against the claim when it is met, with no room for judgement after the run. The question it states is whether the combined formula predicts human risky choice better than cumulative prospect theory, and better than a richer pure prospect theory that could absorb the same misfit. Nothing was added after the run. The preregistration's SHA-256 is given in the reproduction section.
+
+Kill and void conditions, as written:
+- If the combined formula fails to beat the flexible prospect theory in both settings by 0.005 in cross-validated R² with a quasi-binomial BIC change below -10, the formula is retired as a model of risky choice, and its added terms are read as patches for prospect theory misfit whatever their permutation p values say.
+- If the planted check fails, every other {g:verdict}verdict{/g} is {g:void}void{/g}. A verdict, in our usage, is the pass or fail of one preregistered rule set read off by code. A void verdict says nothing for or against the claim, unlike a null result from an instrument that works.
+
+# section Data and provenance {sec:data}
+The data are choices13k {cite:peterson2021}, the selections table and the problems file from the authors' public repository. Each row gives, for one problem, the share of participants who chose option B over option A, the number of participants and the between-person standard deviation of that share. There is no person-level input.
+
+We kept rows marked unambiguous and split them by the feedback flag: 1,928 problems answered without outcome feedback, which we call the {g:description-setting}description setting{/g} because people chose from stated odds alone and learned no outcomes along the way, and 9,831 answered with feedback. In each setting each problem appears once. The repository states no licence. We used a local research copy and report only statistics computed from it.
+
+A join check ran before the lock. The problems file uses row positions in the selections table as its keys, and problem identifiers do not match them. On a dry run with simulated outcomes the join by identifier matched 0.015 of rows; after the fix the match was 1.0 in both settings, checked by recomputing each problem's expected value from both files.
+
+# section Methods {sec:methods}
+## The choice rule
+Every value model predicts the {g:log-odds}log odds{/g} of choosing B from the difference in value between the options. The log odds of a rate {m:p} is {m:\ln(p / (1 - p))}, a statistics rescaling that is 0 at an even split and adds no information to the rate:
+$$ \ln \frac{P_B}{1 - P_B} = b_0 + \tau (V_B - V_A) {eq:choice}
+where {m:P_B} is the predicted rate, {m:b_0} an intercept and {m:\tau} a sensitivity. Models were fitted by {g:binomial-likelihood}binomial likelihood{/g} on the observed rates, the statistics method that picks the parameters under which the observed counts of B choices are most probable, treating each choice as an independent coin with the predicted rate, counting five choices per listed participant, the count the study code uses for each problem.
+
+## The models
+The {g:expected-value}expected value{/g} baseline (EV), the probability-weighted average payoff from probability theory with no allowance for risk or loss, uses {m:V = \sum_i p_i x_i} for outcomes {m:x_i} with probabilities {m:p_i}. Cumulative prospect theory (CPT) uses {g:rank-dependent}rank-dependent weights{/g} {m:\pi_i}, decision weights that depend on where an outcome ranks among the gamble's outcomes and are taken as differences of the weighting function at cumulative probabilities, which excludes weighting each probability on its own, and a value function that for gains is
+$$ v(x) = x^{\alpha} {eq:value}
+and for losses is {m:v(x) = -\lambda (-x)^{\alpha}}, with {m:V = \sum_i \pi_i v(x_i)}. The weights come from the Tversky and Kahneman weighting function applied to cumulative probabilities, with its own {m:\gamma} for gains and for losses:
+$$ w(p) = \frac{p^{\gamma}}{(p^{\gamma} + (1 - p)^{\gamma})^{1/\gamma}} {eq:tk}
+CPT has six parameters. The flexible prospect theory (FLEX) has separate curvature for gains and losses, {m:\lambda}, and the two-parameter {g:prelec}Prelec weighting function{/g} {cite:prelec1998} on each side, nine parameters in all. Prelec's function, from decision theory, sets the curvature and the crossing point of the weighting curve separately, a shape the one-parameter function cannot take:
+$$ w(p) = e^{-\delta (-\ln p)^{\gamma}} {eq:prelec}
+
+## The combined formula
+The combined formula (COMB) keeps CPT and adds four terms to the log odds of eq. {ref:eq:choice}, each the value for option B minus the value for option A:
+$$ \ln \frac{P_B}{1 - P_B} = b_0 + \tau (V_B - V_A) + \beta_1 (H_B - H_A) + \beta_2 (T_B - T_A) + \beta_3 (M_B - M_A) + \beta_4 (Q_B - Q_A) {eq:comb}
+Here {m:H} is the {g:shannon-entropy}Shannon entropy{/g} of the outcome distribution in bits, read as the information gained when the gamble resolves. In information theory entropy measures how uncertain an outcome is before it happens, 0 for a sure thing; it ignores the sizes of the payoffs:
+$$ H = -\sum_i p_i \log_2 p_i {eq:entropy}
+{m:T} is the probability of a loss, read as threat. {m:M} is the mean outcome and {m:Q} the mean squared outcome. Those two carry the drive term: for a setpoint {m:S}, the {g:drive-reduction}drive reduction{/g} of an outcome is
+$$ S^2 - (S - x)^2 = 2 S x - x^2 {eq:drive}
+so its expectation is linear in {m:M} and {m:Q}. Drive reduction is a term from motivation psychology, here only the quadratic form above, and it excludes any measured need or state of the people choosing. The mean was divided by 10 and the mean square by 1,000 before fitting. COMB has ten parameters. Three reduced models add each term alone: CPT+H (entropy), CPT+T (loss probability) and CPT+D (mean and mean square).
+
+## Scoring
+Each model was scored by 10-fold {g:cv-r2}cross-validated R²{/g} on the rates, with folds grouped by problem. Cross-validated R², from statistics and machine learning, is the share of variance in the observed rates that predictions made without seeing those rates account for, so it does not reward fitting noise as in-sample R² does. With out-of-fold predictions {m:q_i}, observed rates {m:y_i} and their mean {m:m_y},
+$$ R^2 = 1 - \frac{\sum_i (y_i - q_i)^2}{\sum_i (y_i - m_y)^2} {eq:r2}
+Each model was also scored by a {g:bic}quasi-binomial BIC{/g}, with the {g:dispersion}dispersion{/g} {m:\phi} taken from the COMB fit in each setting (5.70 without feedback, 7.58 with it):
+$$ B_q = -\frac{2 \ln L}{\phi} + k \ln n {eq:bic}
+where {m:L} is the binomial likelihood, {m:k} the number of parameters and {m:n} the number of problems. The Bayesian information criterion, a statistics score, trades fit against the number of parameters, lower being better; it compares models on the same data and gives no absolute test. The dispersion scales the likelihood for rates that scatter more than independent choices would allow, the quasi-binomial adjustment, and it is no parameter of choice.
+
+Two references bound the value models. {g:boosted-trees}Gradient-boosted trees{/g}, fitted to the raw problem parameters and the four added terms with the same folds, give a flexible learner's score. The method, from machine learning, adds many small decision trees each fitted to what the previous ones missed; it predicts well and states no theory of choice. A {g:sampling-ceiling}sampling ceiling{/g}, our bound, is the share of variance across problems not explained by sampling noise, {m:C = 1 - m_s / v_y}. Here {m:m_s} is the mean over problems of the squared between-person standard deviation divided by the number of participants, and {m:v_y} is the variance of the observed rates.
+
+## Tests on the added terms
+Each added term was tested with the fitted CPT log odds held as a fixed {g:offset}offset{/g}: the term was standardised, fitted by {g:irls}iteratively reweighted least squares{/g}, and its {g:deviance}deviance{/g} gain was compared with 200 fits on the same term permuted across problems. An offset, in regression, is a part of the prediction fixed in advance and never refitted, so the term can only explain what CPT leaves over. Iteratively reweighted least squares is the standard fitting routine for such models, a means of fitting with no effect on what is tested. Deviance is twice the log-likelihood shortfall of a model against a perfect fit, so a deviance gain is the improvement in fit from the term, before any penalty for its parameter. The {g:p-value-draws}p value{/g} is a p value from draws, as in permutation statistics, and assumes no textbook distribution; it counts one added to the numerator and the denominator:
+$$ p = \frac{k + 1}{n + 1} {eq:p}
+where {m:k} is the number of permuted gains at or above the real one and {m:n} the number of permutations. The smallest possible value at 200 permutations is 0.005. The six p values, three terms in two settings, were corrected by {g:benjamini-hochberg}Benjamini and Hochberg's procedure{/g} at q 0.05. That multiple-testing rule keeps the expected share of false calls among the tests called significant at or below q, which is looser than the Bonferroni bound on any false call; the corrected values are q values.
+
+The loss aversion {g:interval-95}interval{/g} comes from refitting CPT on problems resampled with replacement: 100 resamples without feedback and 30 with feedback, with the 2.5th and 97.5th percentiles reported. This is a {g:bootstrap}bootstrap{/g}, the statistics method that reads a number's spread from resampled data with no distribution assumed, and the interval holds the middle 95 percent of the resamples; it is no statement that the true value lies inside with 95 percent probability.
+
+# section Controls and planted checks {sec:controls}
+The planted check ran on the description problems with their real participant counts. Three data sets were simulated from CPT with {m:\lambda} 1.6, and three from CPT plus an entropy term with coefficient 0.25, each with {g:extra-binomial}extra-binomial noise{/g} drawn from a Beta distribution. That is scatter in the choice rate from problem to problem beyond what independent coin flips would give, the kind of spread real aggregate rates show, and it adds no bias to the rate. Selection between CPT and COMB was by the quasi-binomial BIC. The rule required the right model in at least 5 of 6 data sets and {m:\lambda} recovered within 0.3 in at least 2 of 3. {c5}Model selection picked the true model in 6 of 6 planted data sets and recovered loss aversion within 0.3 in 3 of 3.{/c5} The three recovered values were 1.64, 1.55 and 1.59. The check passed, and no verdict was voided.
+
+Two null controls ask whether the description setting's joint gain from the four added terms is larger than chance would give. Their draws form a {g:null-distribution}null distribution{/g}, drawn from these data and never assumed from theory, whose 95th percentile is the bar the real gain must clear. The first permutes the four terms together across problems with CPT held fixed (200 draws). The second simulates outcomes from the fitted CPT at the observed dispersion and fits the four terms to those (100 draws). The second is a {g:false-success}false-success check{/g}: on data with no added effect, it shows how large a gain the procedure finds anyway.
+
+# section Results {sec:results}
+Table {ref:tab:models} gives every model's score in both settings, and Figure {ref:fig:r2} draws the main rows. Prospect theory improves on expected value by a wide margin in both settings. The flexible prospect theory improves on CPT by 0.017 without feedback and 0.012 with it.
+
+::table tab:models cols=0.22,0.06,0.18,0.18,0.18,0.18 Cross-validated R² and quasi-binomial BIC by model and setting. Lower BIC is better. k is the number of parameters.
+Model ¦ k ¦ R², no feedback ¦ BIC, no feedback ¦ R², feedback ¦ BIC, feedback
+EV ¦ 2 ¦ 0.373 ¦ 4,870.3 ¦ 0.464 ¦ 19,465.6
+CPT ¦ 6 ¦ 0.628 ¦ 3,637.8 ¦ 0.584 ¦ 16,745.2
+FLEX ¦ 9 ¦ 0.645 ¦ 3,569.5 ¦ 0.596 ¦ 16,479.2
+CPT+H ¦ 7 ¦ 0.628 ¦ 3,645.2 ¦ 0.587 ¦ 16,681.1
+CPT+T ¦ 7 ¦ 0.628 ¦ 3,644.9 ¦ 0.585 ¦ 16,724.6
+CPT+D ¦ 8 ¦ 0.634 ¦ 3,615.9 ¦ 0.593 ¦ 16,527.3
+COMB ¦ 10 ¦ 0.634 ¦ 3,628.1 ¦ 0.597 ¦ 16,440.8
+Boosted trees ¦ - ¦ 0.735 ¦ - ¦ 0.805 ¦ -
+Sampling ceiling ¦ - ¦ 0.825 ¦ - ¦ 0.863 ¦ -
+::end
+
+{c1}The combined formula never beat the flexible prospect theory by the preregistered margin: cross-validated R² 0.634 against 0.645 without feedback and 0.597 against 0.596 with it, against a bar of 0.005.{/c1} The differences are -0.011 and +0.001. Without feedback COMB also loses on BIC, by 58.7. With feedback COMB has the lower BIC by 38.4, which meets the BIC half of the rule, and the R² half fails. The kill rule fired in both settings.
+
+Against basic CPT the picture differs by setting. Without feedback COMB gains 0.006 in R², which meets the 0.005 bar, but its BIC change is -9.6, short of -10, and no added term survives correction. With feedback COMB gains 0.013 in R² and lowers BIC by 304.4, and that verdict passes. Most of COMB's gain without feedback comes from the drive term alone: CPT+D scores 0.634, the same as COMB to three places.
+
+![fig:r2 width=0.8 alt=Paired horizontal bars of cross-validated R squared for five models in the two settings, with dashed ceiling lines](fig-r2.png) Cross-validated R² by model, without and with feedback. The flexible prospect theory (dark) and the combined formula (ochre) have about the same score in both settings. Dashed lines mark the sampling ceiling. Drawn from the run's result file.
+
+{c2}Without feedback, the joint gain of the four added terms, 7.6 in deviance, sat below the 95th percentile of both null controls, 52.0 and 58.9.{/c2} Figure {ref:fig:nulls} shows the real gain at the low end of both null ranges.
+
+![fig:nulls width=0.9 alt=Two grey bars for the null ranges with a diamond for the real gain near their left ends](fig-nulls.png) Joint deviance gain of the four added terms without feedback (diamonds) against the 5th to 95th percentile range (bars) and mean (ticks) of each null control.
+
+Table {ref:tab:perm} gives the tests on single terms. {c3}With feedback, entropy and loss probability each cleared the correction as residual terms on top of prospect theory (q 0.015), and the drive term did not (q 0.46).{/c3} Both surviving terms sit at the smallest p value 200 permutations can give.
+
+::table tab:perm cols=0.30,0.24,0.23,0.23 Deviance gain of each added term with CPT held as an offset, its permutation p value (200 permutations) and the Benjamini-Hochberg q value over all six tests.
+Setting and term ¦ Deviance gain ¦ p ¦ q
+No feedback, entropy ¦ 0.68 ¦ 0.77 ¦ 0.77
+No feedback, loss probability ¦ 0.48 ¦ 0.75 ¦ 0.77
+No feedback, drive ¦ 6.38 ¦ 0.55 ¦ 0.77
+Feedback, entropy ¦ 475.0 ¦ 0.005 ¦ 0.015
+Feedback, loss probability ¦ 59.5 ¦ 0.005 ¦ 0.015
+Feedback, drive ¦ 25.5 ¦ 0.23 ¦ 0.46
+::end
+
+{c4}Fitted loss aversion was 1.16 (1.05 to 1.30) without feedback and 0.89 (0.86 to 0.93) with feedback.{/c4} Figure {ref:fig:lambda} sets both against 1 and against 2.25. The other CPT parameters without feedback were curvature 0.75 and weighting {m:\gamma} 0.78 for gains and 0.57 for losses; with feedback, 0.79, 0.87 and 0.82.
+
+![fig:lambda width=0.9 alt=Two points with interval bars for loss aversion, one just above 1 and one just below, far from a dashed line at 2.25](fig-lambda.png) Fitted loss aversion with bootstrap 95 percent intervals: 100 resamples without feedback, 30 with feedback.
+
+Table {ref:tab:forecast} sets the forecasts written before the run against the outcomes.
+
+::table tab:forecast cols=0.50,0.25,0.25 Forecasts fixed in the preregistration against what the run gave. R² is cross-validated.
+Quantity ¦ Forecast ¦ Outcome
+EV R², no feedback ¦ 0.35 ¦ 0.373
+CPT R², no feedback ¦ 0.60 (0.45 to 0.72) ¦ 0.628
+FLEX minus CPT, no feedback ¦ +0.02 ¦ +0.017
+COMB minus CPT, no feedback ¦ +0.015 ¦ +0.006
+COMB minus FLEX, no feedback ¦ +0.005 ¦ -0.011
+Boosted trees R², no feedback ¦ 0.75 ¦ 0.735
+Sampling ceiling, no feedback ¦ 0.90 ¦ 0.825
+Loss aversion, no feedback ¦ 1.3 (1.0 to 1.8) ¦ 1.16
+CPT R², feedback ¦ 0.50 ¦ 0.584
+COMB minus FLEX, feedback ¦ +0.01 ¦ +0.001
+COMB beats CPT, no feedback ¦ probability 0.55 ¦ no
+COMB beats FLEX, no feedback ¦ probability 0.25 ¦ no
+Loss aversion interval below 2.25 ¦ probability 0.8 ¦ yes
+::end
+
+# section Discussion {sec:discussion}
+The test was built so that the combined formula had to beat a pure prospect theory with comparable freedom. It did not. Without feedback the added terms carry no signal beyond what the nulls produce, and three extra prospect theory parameters do more than four added terms. With feedback the added terms and the flexible theory tie. The preregistered reading follows: the terms are patches for places where CPT misfits.
+
+The terms themselves suggest which places. The drive term expands into the mean and the mean square of outcomes, so it adds an expected value and a variance correction to CPT. That is a change to the shape of the value function, which FLEX can also make through separate curvatures. Entropy and loss probability help only with feedback. Rare events are underweighted when people learn from experience {cite:hertwig2004}, and a gamble with more outcomes, or with a small chance of loss, is the kind of gamble where that matters. This reading is inferred and was not tested here; a prospect theory with weighting fitted to experience could absorb these terms as well.
+
+Both prospect theories fall well short of boosted trees, by 0.09 without feedback and 0.21 with it, and the trees fall short of the sampling ceiling. Peterson and colleagues {cite:peterson2021} reported a similar gap between classical theories and learned models on the same data. Part of the gap may be structure that a value model cannot express, such as correlation between payoffs; part may be the structured noise Thomas and colleagues {cite:thomas2023} described. We did not separate the two.
+
+Loss aversion of 1.16 without feedback, with an interval that excludes 1 and lies far below 2.25, adds one more estimate to the spread Brown and colleagues {cite:brown2024} pooled. With feedback the estimate falls below 1. This is an aggregate estimate on small online stakes and says nothing about any single person's loss aversion.
+
+# section Limitations {sec:limits}
+- Entropy, loss probability and the mean and mean square of outcomes are one reading of information, threat and drive. Another reading could score differently, so the result covers this operationalisation only.
+- The data are aggregate rates per problem, so no individual parameters were estimated, and the planned mapping of individual parameter tails was not possible here.
+- Stakes are small and the sample was collected online.
+- The repository states no licence, so the data are used as a local research copy.
+- Each cross-validation fold was refitted from the full-data optimum with a capped number of iterations. That start leaks a little information from the held-out fold, the same for every value model.
+- The interval for loss aversion with feedback rests on 30 bootstrap resamples, and the simulated null control on 100 draws.
+- The planted check ran on the description problems only.
+- One author wrote the forecasts, the rules and the scoring code, and scoring was not blind.
+
+# section Verified {sec:verified}
+Verified: on 9 November 2026 the problem counts 1,928 and 9,831, every cross-validated R² and BIC in Table {ref:tab:models}, the dispersions, the differences between models, the deviance gains, p values and q values in Table {ref:tab:perm}, the joint gain 7.6 and both null controls' means, percentiles and draw counts, the CPT parameters, both loss aversion estimates and intervals, the planted results and all seven verdicts were re-read from the run's result file. The forecasts were re-read from the preregistration. The preregistration's SHA-256 matches the hash recorded in the result file and the lock file. All three figures were drawn by a script that reads only that result file. Methods were checked against the study code, whose hash the result file records. The study was not re-run for this paper. The boosted-trees score without feedback is 0.7355 in the result file, which rounds to 0.735; the {g:findings-ledger}ledger entry{/g} and an earlier write-up give 0.736, and this paper uses the result file. The findings ledger is our append-only, dated list of every recorded result, where corrections enter as new lines and old entries are never rewritten. The literature in the introduction was found by searches run on 9 November 2026 and read at the level of abstracts, publisher pages and index records; the full texts of the cited papers were not read.
+
+# section Corrections {sec:corrections}
+- 31 October 2026: before the lock, a dry run found that the problems file uses row positions in the selections table as its keys. The join was fixed and a join check added to the planted rule.
+- 9 November 2026: first published version. The boosted-trees score without feedback is reported as 0.735, from the result file, in place of 0.736 in the ledger entry.
+
+# section Reproduction {sec:repro}
+- Data: download choices13k from the authors' public repository (the selections table and the problems file). Join the problems file by row position in the selections table.
+- Keep rows marked unambiguous and split them by the feedback flag.
+- Fit EV, CPT, FLEX, CPT+H, CPT+T, CPT+D and COMB under eq. {ref:eq:choice} by binomial likelihood, with the terms of eqs. {ref:eq:comb} to {ref:eq:drive}.
+- Score by 10-fold cross-validated R², eq. {ref:eq:r2}, and quasi-binomial BIC, eq. {ref:eq:bic}, with the dispersion from COMB. Fit boosted trees on the same folds and compute the sampling ceiling.
+- Test each added term with CPT as an offset against 200 permutations, correct the six p values by Benjamini and Hochberg, and run both null controls on the description setting's joint gain.
+- Bootstrap CPT's loss aversion over problems: 100 resamples without feedback, 30 with feedback.
+- Preregistration SHA-256: cecb9ceb76ab37020c14039391fd85eece47333c4b75a2cf3f87cd0a6133103a. Plan SHA-256: b8e125eabcc4160e6dad5de3d90207cbae261b9a0779fb1f56dd6ded054fba32. Run 20261031T080226Z, seed 20261031.
+- Cost: the analysis took 641 seconds on one workstation, and both controls together under one second.
+
+# section Appendix A. The preregistered verdicts {sec:appendix}
+Each verdict is a set of rules written before the run. A verdict passes only when every rule holds. Values are read from the run's result file.
+
+::table tab:verdicts cols=0.24,0.44,0.20,0.12 Preregistered verdicts and the rules that decided each one.
+Verdict ¦ Deciding rules ¦ Values ¦ Passes
+Planted check ¦ selection right above 0.8 of planted sets; loss aversion recovered above 0.6 of sets; join match above 0.999 ¦ 1.0; 1.0; 1.0 ¦ yes
+COMB beats CPT, no feedback ¦ R² gain at least 0.005; BIC change below -10; smallest q below 0.05; joint gain above both null 95th percentiles (52.0, 58.9) ¦ 0.006; -9.6; 0.77; 7.6 ¦ no
+COMB beats FLEX, no feedback ¦ R² gain at least 0.005; BIC change below -10 ¦ -0.011; +58.7 ¦ no
+COMB beats CPT, feedback ¦ R² gain at least 0.005; BIC change below -10; smallest q below 0.05 ¦ 0.013; -304.4; 0.015 ¦ yes
+COMB beats FLEX, feedback ¦ R² gain at least 0.005; BIC change below -10 ¦ +0.001; -38.4 ¦ no
+Loss aversion above 1 ¦ lower bound of the interval without feedback above 1 ¦ 1.05 ¦ yes
+Loss aversion below 2.25 ¦ upper bound of the interval without feedback below 2.25 ¦ 1.30 ¦ yes
+::end
+
+# references
+[peterson2021] Peterson, J. C., Bourgin, D. D., Agrawal, M., Reichman, D. and Griffiths, T. L. (2021). Using large-scale experiments and machine learning to discover theories of human decision-making. Science 372, 1209-1214. doi:10.1126/science.abe2629. Data: https://github.com/jcpeterson/choices13k
+[tk1992] Tversky, A. and Kahneman, D. (1992). Advances in prospect theory: cumulative representation of uncertainty. Journal of Risk and Uncertainty 5, 297-323. doi:10.1007/BF00122574
+[brown2024] Brown, A. L., Imai, T., Vieider, F. M. and Camerer, C. F. (2024). Meta-analysis of empirical estimates of loss aversion. Journal of Economic Literature 62, 485-516. doi:10.1257/jel.20221698
+[prelec1998] Prelec, D. (1998). The probability weighting function. Econometrica 66, 497-527. doi:10.2307/2998573
+[hertwig2004] Hertwig, R., Barron, G., Weber, E. U. and Erev, I. (2004). Decisions from experience and the effect of rare events in risky choice. Psychological Science 15. doi:10.1111/j.0956-7976.2004.00715.x
+[thomas2023] Thomas, T., Straub, D., Tatai, F., Shene, M., Tosik, T., Kersting, K. and Rothkopf, C. A. (2023). Modelling dataset bias in machine-learned theories of economic decision-making. Nature Human Behaviour. doi:10.1038/s41562-023-01784-6
