@@ -1,0 +1,29 @@
+{
+  "date": "2026-11-13",
+  "note": "Follow-up to the 2026-11-13 site audit, on the author's correction that Flywheel is a full workstation and coding harness whose rechecked record is what sets it apart. The registry purpose, flywheel.html (title, masthead, intro, link card), the home row and landmark line, the workshop's static purpose line, catalog, overview and site index now lead with the full product. Each capability named was read in the Flywheel 1.9.0 README.",
+  "paths": {
+    "accountable-surface.html": "5160ae7c7b2d056aa3da50eb6f0a529185a2ee825e637e50cf454507a986fefa",
+    "canon.html": "cd513c6f60a3bbf895c618a7c98bdad1ae14c488a7a3890f0472489b6e48e501",
+    "catalog.html": "93ca82b96f9d05e340dbbaea06008e447e866cc3f6aafd7b0a1e0b3c144e57c1",
+    "figures/system-capability-map.html": "2323263d8d24f382ee6b83afbab0debbddae3b8ab8889e3f2d77201bb81cee45",
+    "figures/system-capability-map.json": "df07e4ff5cbb606e9e2fa9790b7083eeda43f43974d3b3cb74bf9390c5f84162",
+    "figures/system-capability-map.svg": "63605c7795e1758685e6b419cffb7701851dc2ab48a12e9e32453a34f3a4531d",
+    "figures/verification-capability-map.html": "56a7683a53f40faea6f243336e4277e6d5d0661b3afa4d9b350087315948a57f",
+    "figures/verification-capability-map.json": "b16bec3cc12b7bb785102936149c35f962dd3eadbb08dc698dbece8c1278adce",
+    "figures/verification-capability-map.svg": "0a9693f144cab8911b9d27c4431466c0f389e4c2c87fe67e91216cb9cae227bc",
+    "flywheel.html": "240f331bcdab22e72b59806365cf2dff7c4b38368059d6e0afccc4c072be1ca3",
+    "img/og/cards-data.js": "2ce3b8d996c5660b50ecda611a2031366d8a9371dc10e1d8c2b096467132396e",
+    "index.html": "3ec858b000d881f5320c2693e5c909b65ebd7cdd38f39133e56c2081aeade86f",
+    "overview.html": "613199d34f6fe34787c6c7a6f015be96a6d8428ecbc7b8453c88361c18693022",
+    "site-index.html": "2e7b30393de3da3271856c07b0f75ec56b7d24a4217c4afd5526d807538cd1c5",
+    "system/routes.js": "573683a0a879bf5a07f64e8b758ac1b8e0449f33afa13ea6738fbc78f0795ad3",
+    "system/systems.js": "499703cf40c3b1e4eb2da274444b897244c730b4dbd7980d8b75ea932ba4254e",
+    "system/systems.json": "928d11e2a65121a549b679986d22722103311967cdc99baca83ed6c8de96995e",
+    "systems/behavior-transform.html": "9221e0dc25c19c417368f5c2b95e1b95091466e38fa7e0a5771c7768b9e9e702",
+    "systems/bulletin.html": "a9df760da1877efcf0b61c42cbd7cbac13f7397646052f7d5aec7ee64d33ad4a",
+    "systems/mneme.html": "8ae9bb05cc3725656582a1fb79fc67166110984743ee430fb0b8c020a6f97a32",
+    "systems/plexus.html": "9884d40ab71ca4d0be3611c7ba098051d5167d1e744e0cab68cbec3d195fbd86",
+    "systems/relay.html": "915411c9c293d984b3f4acb9917dec1619332f8305b7c446ec8c6aed40aac1f7",
+    "systems/telos.html": "dfd8c44b3bdce9f49693e6baf8ccc61a80dbf67acaa93e71f3cb817f56c6eba0"
+  }
+}

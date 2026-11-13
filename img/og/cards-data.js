@@ -124,7 +124,7 @@ window.CARD_DATA = {
     "constellationCard": true,
     "routeHref": "flywheel.html",
     "routeTitle": "Flywheel",
-    "routeSummary": "Flywheel runs AI tasks with the model you choose and checks each answer against the task contract. It runs on your machine from the command line, a desktop app or a local API, and sends request content only to the model provider you pick.",
+    "routeSummary": "Flywheel is an AI workstation and coding harness that you host yourself and run with any model, hosted or local. It has a desktop app with an assistant, a coding agent that works in your own folders with your permission, and connected tools for research, memory and writing. Every run leaves a record that can be rechecked offline.",
     "imagePath": "img/og/flywheel.png"
   },
   "relay": {

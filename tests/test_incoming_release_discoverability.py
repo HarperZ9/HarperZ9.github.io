@@ -245,7 +245,8 @@ def test_flywheel_101_release_discovery_keeps_engine_desktop_and_service_desk_li
     release = evidence["flywheel-release-v1-0-1"]
     pypi = evidence["flywheel-pypi-v1-0-1"]
     service_desk = evidence["flywheel-service-desk-env-v0-1-0"]
-    assert flywheel["purpose"] == "Flywheel runs AI tasks with the model you choose and checks each answer against the task contract. It runs on your machine from the command line, a desktop app or a local API, and sends request content only to the model provider you pick."
+    # 13 November 2026: the purpose leads with the full product; the rechecked record comes second (author ruling).
+    assert flywheel["purpose"] == "Flywheel is an AI workstation and coding harness that you host yourself and run with any model, hosted or local. It has a desktop app with an assistant, a coding agent that works in your own folders with your permission, and connected tools for research, memory and writing. Every run leaves a record that can be rechecked offline."
     assert "Service Desk Incident Environment" not in flywheel["purpose"]
     assert flywheel["releaseState"] == "Python engine v1.9.0 on PyPI and Windows desktop v1.9.0 on GitHub"
     assert flywheel["entryCommand"] == "pip install flywheel-verify"

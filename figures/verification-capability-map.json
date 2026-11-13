@@ -93,7 +93,7 @@
           "id": "flywheel",
           "label": "Flywheel",
           "status": "verified",
-          "stateLabel": "verified-inference platform and desktop client",
+          "stateLabel": "self-hosted AI workstation and coding harness",
           "group": "Agent systems",
           "nodeType": "system"
         },

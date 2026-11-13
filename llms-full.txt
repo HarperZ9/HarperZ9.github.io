@@ -14,6 +14,10 @@ author. Source for each is on GitHub under https://github.com/HarperZ9.
 Version 1.9.0. Licence FSL-1.1-MIT. Python 3.11 or newer, no third-party
 runtime dependencies.
 
+- What it is: an AI workstation and coding harness that you host yourself,
+  with a desktop app, an assistant (Rowan), a coding agent that works in your
+  own folders with your permission, and connected tools for research, memory
+  and writing.
 - What it does: runs AI tasks on any hosted or local model behind one
   OpenAI-compatible endpoint on your machine, checks the values in an answer
   against the source that decides them (a tax table, a formulary, a court

@@ -54,7 +54,7 @@ export const PILLARS = [
   {
     id: "flywheel", title: "Flywheel",
     html: `<figure class="w-demo">
-        <figcaption>The record says 41 tests passed. Three answers, and what the checker decided about each.</figcaption>
+        <figcaption>Flywheel is a workstation and coding harness for any model. This is its checker at work: the record says 41 tests passed, and here are three answers with what the checker decided about each.</figcaption>
         ${choose("Answers", [
           { button: "Says 42, names the record", html: `<p class="w-io"><span>Answer</span> tests_passed: 42, source: the test record</p><p class="w-verdict" data-verdict="drift">FAIL, held</p><p class="w-io">The value disagrees with the test record.</p>` },
           { button: "Says 41, names the record", html: `<p class="w-io"><span>Answer</span> tests_passed: 41, source: the test record</p><p class="w-verdict" data-verdict="verified">PASS, released</p><p class="w-io">The value agrees with the test record.</p>` },
