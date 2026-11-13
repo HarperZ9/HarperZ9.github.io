@@ -132,7 +132,6 @@
   {"path":"/systems/relay.html","kind":"leaf","surface":"flywheel","since":"2026-08-27"},
   {"path":"/systems/studio-engine.html","kind":"leaf","surface":"unassigned","since":"2026-08-27"},
   {"path":"/accountable-surface.html","kind":"leaf","surface":"flywheel","since":"2026-08-28"},
-  {"path":"/aeterna.html","kind":"gone","surface":"unassigned","since":"2026-08-28","removed":"c19eec6c","note":"Published and withdrawn on the same day (pull requests 156 and 159). The page was withdrawn on purpose and nothing replaced it."},
   {"path":"/analytics/benchmark-evidence-status.html","kind":"record","surface":"flywheel","since":"2026-08-28"},
   {"path":"/analytics/current-cross-harness-pilot.html","kind":"record","surface":"flywheel","since":"2026-08-28"},
   {"path":"/analytics/exploratory-stack-comparison.html","kind":"record","surface":"flywheel","since":"2026-08-28"},

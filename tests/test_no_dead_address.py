@@ -158,7 +158,7 @@ def test_a_gone_address_has_no_page_and_is_rare() -> None:
     for row in gone:
         assert not file_of(row["path"]).exists(), f"{row['path']} has a page again: give the row its kind back"
     # a gone row is a decision the author made about one address, not a way to pass the check above
-    assert {row["path"] for row in gone} == {"/aeterna.html"}
+    assert not gone, "a gone row needs the author's decision; list it here once he has made it"
 
 
 def test_every_served_page_has_a_row() -> None:
@@ -186,13 +186,16 @@ def absolute_links() -> dict[str, str]:
     return found
 
 
+GONE = "the address is gone"
+
+
 def link_problem(address: str) -> str | None:
     if in_project_site(address) or address == "/404.html":  # the not-found page names itself and has no row
         return None
     page = address.split("#")[0]
     row = BY_PATH.get(address) or BY_PATH.get(page)
     if row is not None:
-        return "the address is gone" if row["kind"] == "gone" else dead_reason(address)
+        return GONE if row["kind"] == "gone" else dead_reason(address)
     if not page.endswith((".html", "/")) and file_of(page).is_file():
         return None  # a file that is not a page (a PDF, an image, a data file) and is in the repository
     return "no row in the address ledger and no such file"
@@ -212,7 +215,13 @@ def test_the_check_catches_a_dead_address() -> None:
     assert dead_reason("/no-such-page-anywhere.html") == "no page at /no-such-page-anywhere.html"
     assert dead_reason("/flywheel.html#no-such-place-on-the-page") is not None
     assert dead_reason("/flywheel.html") is None
-    assert link_problem("/aeterna.html") == "the address is gone"
+    # a synthetic gone row: a link to a withdrawn address is a dead link
+    fixture = {"path": "/fixture-withdrawn.html", "kind": "gone", "surface": "unassigned", "since": "2026-01-01", "removed": "0123abc"}
+    BY_PATH[fixture["path"]] = fixture
+    try:
+        assert link_problem("/fixture-withdrawn.html") == GONE
+    finally:
+        del BY_PATH[fixture["path"]]
     assert link_problem("/no-such-file.pdf") is not None
     assert link_problem("/cmmns/install.html") is None
 
