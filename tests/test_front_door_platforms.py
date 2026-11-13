@@ -63,7 +63,9 @@ def test_the_home_page_carries_every_platform():
 
 def test_the_menu_leads_with_the_six_landmarks_on_every_generated_page():
     """Landmarks keep their place (DESIGN-RULES.md): the same six words, in the same order, on every page."""
-    words = ["BuildLang", "Flywheel", "Engine", "Game", "Site", "Everything"]
+    # 13 November 2026: the third landmark is shown as The Playground (author, 2026-11-11: "the playground is the
+    # rendering engine. It's the engine."); its place in the order is unchanged.
+    words = ["BuildLang", "Flywheel", "The Playground", "Game", "Site", "Everything"]
     for page in ("index.html", "buildlang.html", "low-water.html", "floor.html", "credits.html"):
         html = (ROOT / page).read_text(encoding="utf-8")
         menu = html.split('<ul class="o-places">', 1)[1].split("</ul>", 1)[0]

@@ -146,14 +146,6 @@
           "nodeType": "system"
         },
         {
-          "id": "raw",
-          "label": "raw-native",
-          "status": "verified",
-          "stateLabel": "C++23 reference renderer with CPU and GPU paths",
-          "group": "Graphics and media",
-          "nodeType": "system"
-        },
-        {
           "id": "relay",
           "label": "Relay",
           "status": "verified",
@@ -183,6 +175,14 @@
           "status": "verified",
           "stateLabel": "local workbench for creating and replaying AI work",
           "group": "Developer infrastructure",
+          "nodeType": "system"
+        },
+        {
+          "id": "raw",
+          "label": "The Playground: native renderer",
+          "status": "verified",
+          "stateLabel": "native renderer of The Playground, in C++23",
+          "group": "Graphics and media",
           "nodeType": "system"
         },
         {

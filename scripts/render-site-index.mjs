@@ -35,7 +35,7 @@ const pillars = [
   ['Research', 'research', 'Research', 'research.html', 'Read research notes, papers and evaluation work.'],
   ['Writing', 'writing', 'Writing', 'publications.html', 'Read every essay, investigation, briefing and paper, sorted into five sections.'],
   ['Who Knew First', 'who-knew-first', 'Who Knew First', 'who-knew-first.html', 'Read the investigation of nine 2026 AI agent incidents: who held the facts, and who told the public first.'],
-  ['Studio', 'studio', 'Studio and graphics', 'studio.html', 'Explore rendering, restoration, generative work and media.'],
+  ['Studio', 'studio', 'Studio and graphics', 'studio.html', 'The Playground and its parts, then restoration, generative work and media.'],
   ['Fonts', 'fonts', 'Fonts and typography', 'fonts.html', 'Browse type families, previews and specimens.'],
   ['Work', 'work', 'Work and collaboration', 'hire.html', 'Find background, experience and ways to work together.'],
 ];

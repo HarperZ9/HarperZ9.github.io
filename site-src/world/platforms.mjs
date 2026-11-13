@@ -2,7 +2,8 @@
 // scripts/build-world-home.mjs, and the menu every generated page carries (scripts/studies-shell.mjs).
 //
 // Landmarks keep their place (DESIGN-RULES.md, author 2026-11-09: "Yes"). Their order is the author's, 2026-11-09,
-// verbatim: "BuildLang, Flywheel, Engine, Game, Site, Everything". The same six lead the menu on every page, in that
+// verbatim: "BuildLang, Flywheel, Engine, Game, Site, Everything". The third word is shown as The Playground (author,
+// 2026-11-11: "the playground is the rendering engine. It's the engine."); its id, anchors and hue key are unchanged. The same six lead the menu on every page, in that
 // order, and the home sets them down in that order.
 //
 // Display marks (the author, 2026-10-29: "THE COMMONS (THECMMNS) | THE PLAYGROUND (THEPLYGRND) THE FLYWHEEL
@@ -68,17 +69,17 @@ const ROWS = {
     try: "#w-flywheel", what: "Check any model's answer against the source that decides it, and keep every step as a [[receipt]]: a record of each step's inputs, output and hashes that anyone can recheck offline, not a log of what the model claimed.",
     see: ["/demo-flywheel.html", "Watch a check, a tamper and a refusal"], more: ["/flywheel.html", "Flywheel"],
     run: "pip install flywheel-verify", then: "flywheel up", repo: "https://github.com/HarperZ9/flywheel" },
-  "raw-native": { hue: "theplygrnd", product: "raw-native",
-    try: "#w-engine", what: "A renderer that draws each frame twice, on the CPU reference and on the GPU, and certifies whether they agree. Its light comes from [[radiance cascades]]: light gathered by rings of probes, each ring reaching farther at coarser detail, an approximation checked against a traced reference.",
-    see: ["/raw.html", "Render the frame, then check it"], more: ["/low-water.html", "The game it runs"],
+  "raw-native": { hue: "theplygrnd", product: "The native renderer",
+    try: "#w-engine", what: "The part of The Playground that renders frames in C++ on Direct3D 12, Vulkan and WebGPU, released as raw-native. It draws each frame twice, on the CPU reference and on the GPU, and certifies whether they agree. Its light comes from [[radiance cascades]]: light gathered by rings of probes, each ring reaching farther at coarser detail, an approximation checked against a traced reference.",
+    see: ["/raw.html", "Render the frame, then check it"], more: ["/low-water.html", "The game made with it"],
     run: "Download raw-native-{v}-windows-x64.zip from the release", runIsProse: true, repo: "https://github.com/HarperZ9/raw-native" },
   superframe: { hue: "theplygrnd", product: "Superframe",
-    try: "#w-engine", what: "One seed, written in plain words, comes back as paint, living type, lines, carved material, sound and touch. It is [[deterministic]]: the same words and seed give the same bytes on every run, not just a similar picture.",
+    try: "#w-engine", what: "The core of The Playground. One seed, written in plain words, comes back as paint, living type, lines, carved material, sound and touch. It is [[deterministic]]: the same words and seed give the same bytes on every run, not just a similar picture.",
     see: ["/superframe.html", "One recipe in every medium"], more: ["/world/superframe/room/index.html", "The assistive room"],
     run: "git clone https://github.com/HarperZ9/superframe", then: "npm run make", note: "Node 24 or later", repo: "https://github.com/HarperZ9/superframe" },
   "low-water": { hue: "game", product: "Low Water",
-    try: "#w-low-water", what: "A narrative game in five eras, built as the full-scale demonstration of the engine.",
-    see: ["/low-water.html", "Low Water"], more: ["/raw.html", "The engine under it"] },
+    try: "#w-low-water", what: "A narrative game in five eras, made with The Playground as its full-scale demonstration.",
+    see: ["/low-water.html", "Low Water"], more: ["/raw.html", "The renderer under it"] },
   site: { product: "This site",
     what: "Ten places, each a medium with the laws it draws on.",
     see: ["#p-light", "The places"], more: ["/world/universe/proto/index.html", "The map"], repo: "https://github.com/HarperZ9/HarperZ9.github.io" },
@@ -102,9 +103,9 @@ export const LANDMARKS = [
   // the checking platforms sit together: Flywheel seals and rechecks, CMMNS reads public claims, Articulate checks
   // the words that leave; each keeps its own name and mark
   { id: "flywheel", hue: "theflywheel", word: "Flywheel", mark: "THEFLYWHEEL", href: "/flywheel.html", sub: [["/cmmns.html", "CMMNS"], ["/articulate.html", "Articulate"]], tech: "light", def: "Three checking tools sit here. [[Flywheel]] checks a model's answer, CMMNS reads public replies, and Articulate checks prose. Each one shows its evidence and leaves the decision to you.", rows: ["flywheel", "cmmns", "articulate"] },
-  { id: "engine", hue: "theplygrnd", word: "Engine", mark: "THEPLYGRND", href: "/raw.html", sub: [["/playground/", "The Playground"], ["/superframe.html", "Superframe"]], tech: "nightlights", def: "The [[engine]] means raw-native, which renders, and Superframe, which composes; together they are THE PLAYGROUND.", rows: ["raw-native", "superframe"] },
-  { id: "game", hue: "game", word: "Game", href: "/low-water.html", tech: "chladni", def: "Low Water, the game built on the engine.", rows: ["low-water"] },
-  { id: "site", hue: "brass", word: "Site", href: "/#site", tech: "swarm", def: "This site, built from the same engines.", rows: ["site"] },
+  { id: "engine", hue: "theplygrnd", word: "The Playground", mark: "THEPLAYGRND", href: "/playground/", sub: [["/raw.html", "Native renderer"], ["/superframe.html", "Superframe, the core"], ["/playground/#instruments", "Instruments and study tools"], ["/low-water.html", "Low Water, the game"]], tech: "nightlights", def: "[[The Playground]] is a rendering engine that turns one description into picture, type and sound. Its parts are the native renderer, Superframe at the core, the instruments and study tools, and Low Water, the game made with it.", rows: ["raw-native", "superframe"] },
+  { id: "game", hue: "game", word: "Game", href: "/low-water.html", tech: "chladni", def: "Low Water, the game made with The Playground.", rows: ["low-water"] },
+  { id: "site", hue: "brass", word: "Site", href: "/#site", tech: "swarm", def: "This site, built with The Playground.", rows: ["site"] },
   { id: "everything", hue: "brass", word: "Everything", href: "/floor.html", tech: "rope", def: "Every piece of work, current and past, with its status.", rows: ["research"] },
 ];
 

@@ -6,8 +6,8 @@ import { MENU } from "../site-src/world/platforms.mjs";
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
 export function menuItems(here = "") {
-  // a landmark's second level sits under its word as plain links (CMMNS and Articulate under Flywheel, The Playground
-  // and Superframe under Engine); the six words keep their order and their place
+  // a landmark's second level sits under its word as plain links (CMMNS and Articulate under Flywheel; the native
+  // renderer, Superframe, the instruments and Low Water under The Playground, as its parts); the six words keep their order and their place
   const current = (href) => (href === here ? ' aria-current="page"' : "");
   return MENU.map(([href, tech, name, sub = []]) => `      <li><a href="${href}"${current(href)}><span class="o-word" data-display-on-open="${tech}">${esc(name)}</span></a>${sub.length ? `<small class="o-sub">${sub.map(([h, n]) => `<a href="${h}"${current(h)}>${esc(n)}</a>`).join(" ")}</small>` : ""}</li>`).join("\n");
 }

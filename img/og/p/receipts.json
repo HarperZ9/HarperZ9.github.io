@@ -6025,8 +6025,8 @@
    }
   },
   "playground.jpg": {
-   "backend": "chrome-156.0.8078.75-skia",
-   "content_sha256": "80b6942626cb17f48f381a37152c1f4d09cbad7211ead553d2b1a8f5cee105ba",
+   "backend": "chrome-157.0.8103.40-skia-2x-lanczos",
+   "content_sha256": "c3fa2cf6da33a5d812bec0e70c6fb0948d5e12644a9f93d35ce11b4ab8c7741f",
    "does_not_prove": [
     "It does not show the figure's numbers come from a real run, except where the alt text quotes a README result.",
     "It does not show the PNG bytes are the same under another Chrome build; the SVG and the scene are the portable record.",
@@ -6040,16 +6040,16 @@
     "width": 1200
    },
    "outputs": {
-    "playground.jpg": "fcc16aca71eaa1d471ccf42fdc0d080728265b4983dae6a9d7a38945fa17fcd2",
-    "playground.svg": "95db7355c25d3da387d8e70c8a38f601f4d88dde3e99cd323ff6a334908bb03f"
+    "playground.jpg": "2c96139bee48d327f0a6905d063bf3be80e6dc72edca2a7dfe4de44373b0f3aa",
+    "playground.svg": "334f4cdd106b47d01691d1a58776fb8f92f36731f952ded50ca29a27505c93da"
    },
    "producer": {
     "name": "harperz9.repo-art",
     "version": "0.1.0"
    },
-   "receipt_sha256": "1b6497868a5250084f48f1aaac4334a1dc9ab1ce9dc00d4566bcd034d98ca732",
+   "receipt_sha256": "16a527e9e2df47031fb3bdcc72b9293f54d51ffb0a130ae23132a8a8561cc97a",
    "reconcile": null,
-   "scene_sha256": "252544e56001d57fee1c87768ac58e694b4a1f49ca9cf06c78f9243c647df0ac",
+   "scene_sha256": "d16683ef90f8c13a875e64f535c79041013ebe82950ac66bc9990454d940467a",
    "schema": "superstack.receipt/1",
    "seed": "playground",
    "seed_rule": "xmur3-mulberry32/1",
@@ -6394,7 +6394,7 @@
   },
   "raw.jpg": {
    "backend": "chrome-157.0.8103.40-skia-2x-lanczos",
-   "content_sha256": "f3cf876720ae686918632ade3148c765c16ebadbb6a4e41f791062b291b935df",
+   "content_sha256": "4d5ecfbb3efb55a3214ba24b8d20ac4aed897fec05bd73ba92f2750679c9b135",
    "does_not_prove": [
     "It does not show the figure's numbers come from a real run, except where the alt text quotes a README result.",
     "It does not show the PNG bytes are the same under another Chrome build; the SVG and the scene are the portable record.",
@@ -6408,16 +6408,16 @@
     "width": 1200
    },
    "outputs": {
-    "raw.jpg": "18dab32946b6048b904aa7aa2a63da9b2cfd18c3854d69768dfd76988ead1f90",
-    "raw.svg": "5231f3cfad630a4cc6a763a4d825e499daa4534cebff59850ba1cf6ac7d3b785"
+    "raw.jpg": "04dda7d90eae4013485feaef7025d9ceb859a32309379d08328f5feecc0b2a87",
+    "raw.svg": "4abda9d50e5e7071e8170c66589af969cb5eee9151dee1b4bc3812f37c4b3c98"
    },
    "producer": {
     "name": "harperz9.repo-art",
     "version": "0.1.0"
    },
-   "receipt_sha256": "b72f12ca00a788acdfa7b93c939134b8e2109c02f18a65945619e5011ad05f3d",
+   "receipt_sha256": "7d3b5235eb9703354750790bccfd329988e6764bff5d08e7d40d3c34ddf7ed8a",
    "reconcile": null,
-   "scene_sha256": "056e9ea38208ea0b3c81f67925c4135b3e86802714249fa0d6b4b82a4b9a2976",
+   "scene_sha256": "8e531fdeec49e146548803b2e42c65501ecd2b98d28b7834ffa278d7c73f425e",
    "schema": "superstack.receipt/1",
    "seed": "raw",
    "seed_rule": "xmur3-mulberry32/1",

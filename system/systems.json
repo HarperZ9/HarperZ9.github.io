@@ -4487,8 +4487,8 @@
       "boundary": "A certificate covers only the frame it was written for. The 0.8.0 release notes say no render on a hardware GPU was checked for that release; the packaged viewer was checked in Chrome on a software GPU.",
       "lastVerified": "2026-11-12",
       "id": "raw",
-      "name": "raw-native",
-      "purpose": "raw-native is a dependency-free C++23 renderer that draws a scene on the CPU, checks its fast screen-space ambient occlusion against a ray-traced reference, and writes a JSON certificate saying whether the shortcut held.",
+      "name": "The Playground: native renderer",
+      "purpose": "The native renderer is the part of The Playground that renders frames in C++ on Direct3D 12, Vulkan and WebGPU, formerly released as raw-native. It also draws each scene on a CPU reference path, checks its fast screen-space ambient occlusion against a ray-traced reference, and writes a JSON certificate saying whether the shortcut held.",
       "useCases": [
         "checking a fast ambient occlusion method against a ray-traced reference",
         "deterministic CPU reference renders with certificates",
@@ -4502,7 +4502,7 @@
       ],
       "primaryDomain": "graphics-media",
       "family": "graphics-retro",
-      "productType": "C++23 reference renderer with CPU and GPU paths",
+      "productType": "native renderer of The Playground, in C++23",
       "architectureRole": "cpu-reference-renderer",
       "audiences": [
         "rendering engineers",
@@ -4527,6 +4527,15 @@
           "date": "2026-10-14",
           "status": "verified",
           "summary": "GitHub lists v0.8.0 as the latest release of HarperZ9/raw-native, published on 14 October 2026 (UTC). The release attaches Windows x64, Windows x64 D3D12, Linux x64, WebAssembly and viewer archives with SHA256SUMS. Its notes report that ctest passes 60 of 60 with MSVC and with GCC 13.3, and that the default render's certificate is byte-identical from the packaged Windows, Windows D3D12, Linux and CPU WebAssembly builds. Read on 12 November 2026. This metadata review did not install the package or rerun its tests."
+        },
+        {
+          "id": "raw-playground-native-source",
+          "type": "source",
+          "label": "The Playground: native/",
+          "href": "https://github.com/HarperZ9/superframe/tree/main/native",
+          "date": "2026-11-12",
+          "status": "verified",
+          "summary": "The README of HarperZ9/superframe says the repository is The Playground and describes native/ as the C++23 renderer, formerly raw-native, on Direct3D 12, Vulkan and WebGPU. The Vulkan code sits under native/src/rhi/vulkan and its changelog entries are dated 16 October 2026, after the raw-native 0.8.0 release, which ships CPU, Direct3D 12 and WebGPU builds. Read on 12 November 2026. This review read the source listing and did not build or run it."
         },
         {
           "id": "raw-native-release-0-2-0",

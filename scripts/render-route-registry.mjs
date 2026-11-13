@@ -131,7 +131,7 @@ const rawDomain = systemRegistry.domains.find((domain) => domain.id === rawSyste
 if (!rawDomain) throw new Error("RAW primary domain is missing from the system registry");
 const raw = moveRoute("raw.html", studio, "skyrimbridge.html");
 raw.breadcrumbLabel = rawDomain.label;
-// One name per thing: the route carries the registry's name for the renderer (raw-native).
+// One name per thing: the route carries the registry's name for the renderer.
 raw.label = rawSystem.name;
 
 function takeRoute(href) {
@@ -541,6 +541,17 @@ for (const href of ["published-work.html", "resume-support-operations.html", "re
 }
 if (hrefExists("studies/") && !findRouteByHref("studies/")) {
   research.routes.push({ label: "Studies", href: "studies/", summary: firstMatch(readPublicHtml("studies/"), /<meta\s+name="description"\s+content="([^"]*)"/i) });
+}
+// The Playground is one engine with parts (author, 2026-11-11: "the playground is the rendering engine. It's the
+// engine."). The index lists the whole first and its parts under it, each label saying which part it is.
+const playgroundParts = [["playground/", "The Playground"], ["raw.html", null], ["superframe.html", "The Playground: Superframe, the core"],
+  ["playground/distill.html", "The Playground: Distill, a study tool"], ["low-water.html", "Low Water, the game made with The Playground"]];
+let afterPart = "studio.html";
+for (const [href, label] of playgroundParts) {
+  if (!findRouteByHref(href)) continue;
+  const route = moveRoute(href, studio, afterPart);
+  if (label) route.label = label;
+  afterPart = href;
 }
 // The findings, their glossary and the experiments are research; they had fallen into Systems by default.
 for (const family of registry.families) {
