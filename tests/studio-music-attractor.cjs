@@ -67,7 +67,7 @@ const backend = (p) => p.page.evaluate(() => window.ReactiveVisuals.attractorBac
         assert.equal(await backend(cpu), 'canvas2d', `${tag} ?music=cpu draws the Canvas2D mode`);
         const cpuCells = await grown(cpu.page);
         if (cpuCells.length <= 20) {
-          // Say what the stage is doing, for the open Linux-Firefox finding (see ci.yml).
+          // Say what the stage is doing, for the open Linux-Firefox finding (see .github/workflows/ci.yml and tests/ci/suites.json).
           const f1 = await W.frame(cpu.page); await W.sleep(1000); const f2 = await W.frame(cpu.page);
           const playing = await cpu.page.evaluate(() => (document.getElementById('music-play') || {}).textContent);
           console.log(`${tag} stage ${f1 === f2 ? 'still' : 'changing'}, play button "${(playing || '').trim()}", errors ${JSON.stringify(cpu.errors)}`);
