@@ -23,7 +23,7 @@ Compression on public text has a known weakness. If the text was in the training
 Our question is smaller and concrete. How many {g:bpc}bits per character{/g} do two small open models need on a famous public document, against classical compressors, and how much of the result survives on text written after they were trained?
 
 # section Preregistration and design {sec:prereg}
-This test is one part of a larger study of language as a code. Its {g:preregistration}preregistration{/g}, a dated plan fixed and hash-locked before any result is seen, is a forecast file written and hashed on 1 November 2026 at 03:14 UTC, before any measurement. A first session wrote it and stopped with no measurement saved. A second session wrote a file of scoring rules 13 minutes later, before computing anything, and ran every measurement after that. A point forecast holds if the measured value is within 25 percent of it, and an inequality forecast holds when the inequality is true.
+This test is one part of a larger study of language as a code. Its {g:preregistration}preregistration{/g}, a dated plan fixed and hash-locked before any result is seen, is a forecast file written and hashed on 1 November 2026 at 03:14 UTC, before any measurement. A first work session wrote it and stopped with no measurement saved. A second work session wrote a file of scoring rules 13 minutes later, before computing anything, and ran every measurement after that. A point forecast holds if the measured value is within 25 percent of it, and an inequality forecast holds when the inequality is true.
 
 For this part the forecast file fixed:
 - The bits per character on the English declaration: xz 3.0, PPM cold 2.4, PPM trained on Gutenberg 2.1, SmolLM2 1.2, Qwen3 1.0.

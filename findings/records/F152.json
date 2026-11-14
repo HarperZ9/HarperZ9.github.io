@@ -31,7 +31,7 @@
    "note": "The paper states that the kill condition did not fire, because the within-decile result passed."
   },
   "objection": "A later co-occurrence is an attention event. A hit means two concepts were later used together; it does not show that a link between them is true or new to science.",
-  "objection_source": "the paper's first stated limitation; no reviewer attack is on file",
+  "objection_source": "the paper's first stated limitation; our register records no separate objection",
   "would_change": "Preregister Adamic-Adar on a citation corpus with dated held-out links.",
   "sections": [
    {
@@ -274,7 +274,7 @@
    "label": "Sample",
    "value": "3 corpora; precision at 200",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -283,9 +283,9 @@
    "id": "e6",
    "kind": "number",
    "label": "Main estimate and interval",
-   "value": "own -0.182 to -0.125 against PA",
+   "value": "shared neighbours minus popularity, research notes: -0.182 to -0.125",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -294,9 +294,9 @@
    "id": "e7",
    "kind": "number",
    "label": "Forecast against outcome",
-   "value": "BEAT_PA 0.25, correct direction; BEAT_CONTROLS 0.85, failed",
+   "value": "beating popularity was given a probability of 0.25 and did not happen; beating the controls was given 0.85 and did not happen",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -307,7 +307,7 @@
    "label": "Known-answer check",
    "value": "none",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -379,7 +379,7 @@
    "kind": "dataset",
    "title": "Stack Exchange, Inc. Stack Exchange data dump, Biology and Skeptics sites, question posts 2011 to 2024. Licensed CC BY-SA.",
    "access": "run",
-   "licence": "Stack Exchange text under CC BY-SA; own records internal"
+   "licence": "Stack Exchange text under CC BY-SA; our own research notes are not public"
   }
  ],
  "relations": [
@@ -421,50 +421,50 @@
   "lowers": [
    {
     "domain": "blinding",
-    "text": "Not blind. The project chose corpora and rules; judges come from one vendor.",
-    "from": "register scorer.blind"
+    "text": "Not blind. The project chose the corpora and the rules; scoring was by code.",
+    "from": "our publication register, on blinding"
    },
    {
     "domain": "scoring",
     "text": "Graded by the same agent that ran it.",
-    "from": "register scorer.self_graded"
-   },
-   {
-    "domain": "missing control",
-    "text": "Controls: rewired graph q95 0.164, working; BEAT_CONTROLS failed.",
-    "from": "register evidence.controls"
+    "from": "our publication register, on who scored it"
    },
    {
     "domain": "missing control",
     "text": "No positive control.",
-    "from": "register evidence.known_answer"
+    "from": "our publication register, on the known-answer check"
    },
    {
     "domain": "novelty",
     "text": "Nearby work exists; novelty is not shown.",
-    "from": "register literature.verdict"
+    "from": "our publication register, on the literature"
    },
    {
-    "domain": "single source",
+    "domain": "depth of reading",
     "text": "The cited literature was read at the level of abstracts and publisher pages; full texts were not read.",
-    "from": "paper Verified"
+    "from": "the Verified section"
    }
   ],
   "holds": [
    {
     "domain": "preregistration",
     "text": "Preregistered and hash-locked before the run (sha256 9ccb8658).",
-    "from": "paper Reproduction"
+    "from": "the Reproduce section"
+   },
+   {
+    "domain": "control",
+    "text": "Controls: the rewired-graph control worked (95th percentile 0.164); the real score did not beat it.",
+    "from": "our publication register, on controls"
    },
    {
     "domain": "replication",
     "text": "Rechecked by F206 (corpus gap ranking): F152's corpus gap ranking stays failed.",
-    "from": "relations"
+    "from": "a later finding"
    },
    {
     "domain": "open data",
-    "text": "Public data.",
-    "from": "register data_licence"
+    "text": "Part of the data is public and part is not; the data licence line under Reproduce says which.",
+    "from": "our publication register, on the data licence"
    }
   ]
  },
@@ -472,7 +472,7 @@
   "data": [
    {
     "name": "Stack Exchange, Inc",
-    "licence": "Stack Exchange text under CC BY-SA; own records internal",
+    "licence": "Stack Exchange text under CC BY-SA; our own research notes are not public",
     "url": ""
    }
   ],

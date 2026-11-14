@@ -13,6 +13,7 @@
   ],
   "tier": "B",
   "tier_reason": "Real texts, one new source.",
+  "rung_reason": "Its entry describes the study as: preregistered, simulation and public data.",
   "outcome": "held",
   "verdicts": {
    "held": 12,
@@ -24,8 +25,8 @@
    ]
   },
   "objection": "Wikipedia is the only new text, so era, genre and topic stay tangled in every new-text row.",
-  "objection_source": "the paper's first stated limitation; no reviewer attack is on file",
-  "would_change": "No condition for raising or overturning the call is on file in the register.",
+  "objection_source": "the paper's first stated limitation; our register records no separate objection",
+  "would_change": "Our publication register records no condition that would raise or overturn this call.",
   "sections": [
    {
     "id": "reader",
@@ -58,7 +59,7 @@
     "title": "Preregistration and design",
     "role": "argument",
     "paragraphs": [
-     "A {g:preregistration}preregistration{/g} is a dated plan fixed and hash-locked before any result is seen. This study had two. The first was locked on 1 November 2026 at 08:13 UTC. It named the corpora, the statistics, the reader, the planted text, the control, nine numeric forecasts and the {g:kill-condition}kill condition{/g}, a rule that decides against the run with no judgement after it. The decision it informed was which claims from saved reading material survive a changed frame, so which ones we can reuse.",
+     "A {g:preregistration}preregistration{/g} is a dated plan fixed and hash-locked before any result is seen. This study had two. The first was locked on 1 November 2026 at 08:13 UTC. It named the corpora, the statistics, the reader, the planted text, the control, nine numeric forecasts and the {g:kill-condition}kill condition{/g}, a rule that decides against the run with no judgement after it. The decision it informed was which claims in material we had saved still hold when the text or the reader changes, and so which ones we can reuse.",
      "The first run had a fault of ours. The code promised in a comment to shuffle the books before splitting training text from test text and never did. The old corpus's test text was therefore all The Federalist, and the mid corpus's all Fitzgerald, so era was read through one book. We wrote a second preregistration to fix the split and locked it at 08:20 UTC the same day. It was not blind: it was written after the first run had been read. The first run stands as recorded, and both are reported here.",
      "Claims and kill condition, as locked:",
      "- Claim 1, first run: the 1951 table holds on present data within 0.15 bits for F1, 0.2 for F2 and 0.3 for F3.",
@@ -142,7 +143,7 @@
      "F3 is different. Our value is lower than his on every corpus, by more than our forecast allowed on the old books. We have not found the cause. Two are open, and neither was tested. A plug-in estimate falls below the true value as the number of contexts grows against the sample, and 27 squared, 729, two-letter contexts is many for 750,000 characters if rare pairs matter. Shannon's F3 also rests on letter counts from other text than ours, and a difference in the source counts would move it. Either way the third row should be quoted with its source and method.",
      "The word-based gap fits a difference of method. Counting words directly misses the long tail of rare words that a fitted Zipf curve adds, and a missing tail lowers the entropy. We did not refit his tail to confirm it.",
      "The reader result agrees with the line of work after Shannon {cite:r2} {cite:r3}: letter counts alone do not reach a human reader's figure. Our context model sits at 1.63 to 2.41 bits per letter on held-out text. Shannon's 1.3 is a bound on a reader who knows words, grammar and the world.",
-     "The transfer result was the frame we most wanted to change. A reader from one era of fiction reads another era at a cost of 0.10 to 0.25 bits, and the same reader reads The Federalist at 0.44. What a text is about and how it is argued changes letter statistics more than when it was written."
+     "The transfer result was the condition we most wanted to vary. A reader from one era of fiction reads another era at a cost of 0.10 to 0.25 bits, and the same reader reads The Federalist at 0.44. What a text is about and how it is argued changes letter statistics more than when it was written."
     ]
    },
    {
@@ -151,7 +152,7 @@
     "role": "argument",
     "paragraphs": [
      "- Wikipedia is the only new text, so era, genre and topic stay tangled in every new-text row.",
-     "- No large language model was used as a reader. That was the change of frame we most wanted, and it stays open.",
+     "- No large language model was used as a reader. That was the change we most wanted to make, and it stays open.",
      "- The word-based gap may come from Shannon's fitted Zipf tail against our direct count. We did not test that.",
      "- The cause of the F3 gap is unknown. Sampling bias in the plug-in estimate and a difference in his source counts are both candidates, and neither was measured.",
      "- Shannon's own test passages are not openly available, so the comparison is with his printed table.",
@@ -399,24 +400,24 @@
    {
     "domain": "scoring",
     "text": "Scored by code and by the agent that ran it; self-graded.",
-    "from": "register scorer"
+    "from": "our publication register, on who scored it"
    },
    {
     "domain": "blinding",
     "text": "Not blind, as the paper's limitations state.",
-    "from": "paper Limitations"
+    "from": "the paper's Limitations"
    },
    {
-    "domain": "single source",
+    "domain": "depth of reading",
     "text": "The cited literature was read at the level of abstracts and publisher pages; full texts were not read.",
-    "from": "paper Verified"
+    "from": "the Verified section"
    }
   ],
   "holds": [
    {
     "domain": "preregistration",
     "text": "Preregistered and hash-locked before the run (sha256 551f636e).",
-    "from": "paper Reproduction"
+    "from": "the Reproduce section"
    }
   ]
  },

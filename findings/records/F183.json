@@ -27,8 +27,8 @@
    ]
   },
   "objection": "Seven functions, 10 dimensions, one budget of 20,000 evaluations and 15 repeats. Other functions, dimensions or budgets could reorder the methods.",
-  "objection_source": "the paper's first stated limitation; no reviewer attack is on file",
-  "would_change": "No condition for raising or overturning the call is on file in the register.",
+  "objection_source": "the paper's first stated limitation; our register records no separate objection",
+  "would_change": "Our publication register records no condition that would raise or overturn this call.",
   "sections": [
    {
     "id": "reader",
@@ -62,7 +62,7 @@
     "title": "Preregistration and design",
     "role": "argument",
     "paragraphs": [
-     "The study ran twice, each time under its own {g:preregistration}preregistration{/g}. The first (here, the first run) was hash-locked on 31 October 2026 before any result of the run was seen; only smoke runs in 3 dimensions with small budgets had been made, to fix crashes, and no rankings were read from them. It named the methods, the functions, the measures, two {g:control}controls{/g}, the forecasts and the {g:kill-condition}kill conditions{/g}. The decision it informs was written in it: no slime or plant-labelled optimiser becomes a default search method in our tools unless it beats differential evolution and CMA-ES on the shifted functions.",
+     "The study ran twice, each time under its own {g:preregistration}preregistration{/g}. The first (here, the first run) was hash-locked on 31 October 2026 before any result of the run was seen; only smoke runs (short trial runs that check the code executes) in 3 dimensions with small budgets had been made, to fix crashes, and no rankings were read from them. It named the methods, the functions, the measures, two {g:control}controls{/g}, the forecasts and the {g:kill-condition}kill conditions{/g}. The decision it informs was written in it: no slime or plant-labelled optimiser becomes a default search method in our tools unless it beats differential evolution and CMA-ES on the shifted functions.",
      "The second (the rerun) was hash-locked on 31 October 2026 after the first run had been read in full. It records what went wrong, the fix, and new forecasts. Its own kill condition reads: if CMA-ES fails to bring the median error on the shifted ellipsoid below 1, it is still broken and the study stops. It also commits to reporting any biologically labelled method that beats the best plain one, whatever we expected.",
      "Both preregistrations' SHA-256 hashes are in the reproduction section."
     ]
@@ -357,19 +357,19 @@
    {
     "domain": "scoring",
     "text": "Scored by code and by the agent that ran it; self-graded.",
-    "from": "register scorer"
+    "from": "our publication register, on who scored it"
    },
    {
-    "domain": "single source",
+    "domain": "depth of reading",
     "text": "The cited literature was read at the level of abstracts and publisher pages; full texts were not read.",
-    "from": "paper Verified"
+    "from": "the Verified section"
    }
   ],
   "holds": [
    {
     "domain": "preregistration",
     "text": "Preregistered and hash-locked before the run (sha256 dbf3b210).",
-    "from": "paper Reproduction"
+    "from": "the Reproduce section"
    }
   ]
  },

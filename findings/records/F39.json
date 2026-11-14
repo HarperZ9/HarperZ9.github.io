@@ -14,7 +14,7 @@
   "tier": "B*",
   "tier_reason": "Real recordings, artist-held-out test and working shuffle, with a reversed valence forecast kept. Spectrum-affect links are known, and tail is not separated from instrument or from room reverb.",
   "rung": "hypothesis",
-  "rung_reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
+  "rung_reason": "A preregistration with pass-or-fail rules is on file, which this rung needs. The next rung needs a named rival reading beaten by a decisive observation, and none is on file.",
   "outcome": "held",
   "verdicts": {
    "held": 7,
@@ -25,7 +25,7 @@
    ]
   },
   "objection": "Tail is a proxy for instrumentation and production style, since timbre was not held; DEAM is short clips with crowd perceived-emotion ratings. The register lists a third point, on where the audio copies came from, and its text is cut short there.",
-  "objection_source": "the register's reviewer attack",
+  "objection_source": "the strongest objection recorded in our publication register",
   "would_change": "Replicate on a second rated corpus, add a blind listening test with tail manipulated at fixed instrumentation, and measure felt calm",
   "sections": [
    {
@@ -294,9 +294,9 @@
    "id": "e6",
    "kind": "number",
    "label": "Sample",
-   "value": "502 test clips, 270 artists (1744 total)",
+   "value": "502 test clips by 270 artists, from 1,744 rated clips",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -305,9 +305,9 @@
    "id": "e7",
    "kind": "number",
    "label": "Main estimate and interval",
-   "value": "partial r -0.394 [-0.476, -0.304]; valence -0.375 [-0.455, -0.280]; dR2 +0.110 [0.034, 0.182]",
+   "value": "partial r -0.394 (-0.476 to -0.304); valence -0.375 (-0.455 to -0.280); gain in explained variance +0.110 (0.034 to 0.182)",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -316,9 +316,9 @@
    "id": "e8",
    "kind": "number",
    "label": "Forecast against outcome",
-   "value": "P1, P2, P4, P5 pass; P3 forecast rising valence, fell; P6 and P7 not blind (smoke-test slip)",
+   "value": "The arousal forecasts passed. The valence forecast expected a rise and valence fell. Two further forecasts on listeners' personality were not blind, and the paper leaves them out",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -329,7 +329,7 @@
    "label": "Known-answer check",
    "value": "synthetic music recovery, error ratios 0.12 and 0.21",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -456,40 +456,40 @@
   "lowers": [
    {
     "domain": "blinding",
-    "text": "Not blind. ratings from DEAM crowd raters, stand apart from the code; personality part not blind",
-    "from": "register scorer.blind"
+    "text": "Not blind. The ratings come from DEAM's crowd raters and stand apart from our code; a personality part of the study was not blind.",
+    "from": "our publication register, on blinding"
    },
    {
-    "domain": "missing control",
-    "text": "Controls: working: permuted calm index q05 -0.076; synthetic music instrument gate passed; reverb size gate failed in dense music.",
-    "from": "register evidence.controls"
+    "domain": "failed check",
+    "text": "Controls: working: the 5th percentile of the permuted calm index was -0.076; the instrument check on synthetic music passed; a check on reverb size failed in dense music.",
+    "from": "our publication register, on controls"
    },
    {
     "domain": "novelty",
     "text": "Nearby work exists; novelty is not shown.",
-    "from": "register literature.verdict"
+    "from": "our publication register, on the literature"
    },
    {
-    "domain": "single source",
+    "domain": "depth of reading",
     "text": "The cited literature was read at the level of abstracts, repository records and publisher pages; full texts were not read.",
-    "from": "paper Verified"
+    "from": "the Verified section"
    }
   ],
   "holds": [
    {
     "domain": "scoring",
     "text": "Scored by code against rules fixed in advance.",
-    "from": "register scorer.who"
+    "from": "our publication register, on who scored it"
    },
    {
     "domain": "preregistration",
     "text": "Preregistered and hash-locked before the run (sha256 ae20eac8).",
-    "from": "paper Reproduction"
+    "from": "the Reproduce section"
    },
    {
     "domain": "open data",
     "text": "Public data.",
-    "from": "register data_licence"
+    "from": "our publication register, on the data licence"
    }
   ]
  },

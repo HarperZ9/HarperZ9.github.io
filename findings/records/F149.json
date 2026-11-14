@@ -13,9 +13,9 @@
    "method"
   ],
   "tier": "B*",
-  "tier_reason": "Real CC0 data, calibration passed, locked kill, and a live dispute makes it matter. Not blind, denominators rebuilt, the coding is Karst's, power 0.43 for a true doubling, and the rise inside studies largely supports them.",
+  "tier_reason": "Real CC0 data, a calibration that passed and a kill condition fixed in advance, on a question in live dispute. Not blind; the denominators are rebuilt; the coding is the original authors'; power is 0.43 for a true doubling; and the rise inside studies largely supports them.",
   "rung": "hypothesis",
-  "rung_reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
+  "rung_reason": "A preregistration with pass-or-fail rules is on file, which this rung needs. The next rung needs a named rival reading beaten by a decisive observation, and none is on file.",
   "outcome": "held",
   "verdicts": {
    "held": 7,
@@ -26,7 +26,7 @@
    ]
   },
   "objection": "Rebuilt denominators with zero-rate years sharing the remainder; the definition of doubled with Fig. 3 unread; the abstract's 25 and almost 50 percent endpoints not compared.",
-  "objection_source": "the register's reviewer attack",
+  "objection_source": "the strongest objection recorded in our publication register",
   "would_change": "Blind rerun by an independent analyst, true denominators from Karst, and a read of Fig. 3 before calling any definition theirs.",
   "sections": [
    {
@@ -276,7 +276,7 @@
    "label": "Sample",
    "value": "268 study-year rates, 11 function and 7 structure studies, 4 blank rows skipped",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -285,9 +285,9 @@
    "id": "e6",
    "kind": "number",
    "label": "Main estimate and interval",
-   "value": "NB 0.86 to 4.14, 1.18 to 6.62; weighted 0.52 to 2.99, 0.85 to 5.81",
+   "value": "authors' count model 0.86 to 4.14 (function) and 1.18 to 6.62 (structure); citation-weighted 0.52 to 2.99 and 0.85 to 5.81",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -296,9 +296,9 @@
    "id": "e7",
    "kind": "number",
    "label": "Forecast against outcome",
-   "value": "NB function 2.2 got 2.19; structure 2.0 got 2.84; within-study structure fail: wrong, p 0.009",
+   "value": "count model, function: forecast 2.2, got 2.19; structure: forecast 2.0, got 2.84; the within-study rise for structure was forecast to fail and passed at p 0.009",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -307,9 +307,9 @@
    "id": "e8",
    "kind": "control",
    "label": "Known-answer check",
-   "value": "planted flat and doubled truths; table totals median gap 0",
+   "value": "planted flat and doubled truths; rebuilt totals against the paper's table totals, median gap 0",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -395,35 +395,35 @@
   "lowers": [
    {
     "domain": "blinding",
-    "text": "Not blind. saw metadata, one row and F133 numerators before the lock; listed",
-    "from": "register scorer.blind"
+    "text": "Not blind. The analyst saw the metadata, one row and the numerators from an earlier reading of ours before the lock; the paper lists this.",
+    "from": "our publication register, on blinding"
    },
    {
-    "domain": "single source",
+    "domain": "depth of reading",
     "text": "The cited literature was read at the level of abstracts, search summaries and publisher pages; full texts were not read.",
-    "from": "paper Verified"
+    "from": "the Verified section"
    }
   ],
   "holds": [
    {
     "domain": "scoring",
     "text": "Scored by code against rules fixed in advance.",
-    "from": "register scorer.who"
+    "from": "our publication register, on who scored it"
    },
    {
     "domain": "preregistration",
     "text": "Preregistered and hash-locked before the run (sha256 55a37426).",
-    "from": "paper Reproduction"
+    "from": "the Reproduce section"
    },
    {
     "domain": "control",
-    "text": "Controls: CAL working (flat 0.09, doubled median 2.11, coverage 0.89); shuffles working; D2 rebuild passed.",
-    "from": "register evidence.controls"
+    "text": "Controls: the calibration on planted data worked (a flat truth called a rise 0.09 of the time, a doubled truth read at a median of 2.11, coverage 0.89); the shuffles worked; the rebuild of the denominators passed its check.",
+    "from": "our publication register, on controls"
    },
    {
     "domain": "open data",
     "text": "Public data.",
-    "from": "register data_licence"
+    "from": "our publication register, on the data licence"
    }
   ]
  },

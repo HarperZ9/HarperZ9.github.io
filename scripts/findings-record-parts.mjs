@@ -101,26 +101,27 @@ export function grade({ row, paper, relationsIn, bound, outcome }) {
   const sc = row.scorer;
   const limits = paper.limitations.join(" ");
   if (sc && typeof sc === "object") {
-    if (sc.blind === false) lowers.push(reason("blinding", sc.note ? `Not blind. ${sc.note}` : "Not blind: the analyst saw the data's shape before the lock.", "register scorer.blind"));
-    if (sc.self_graded) lowers.push(reason("scoring", "Graded by the same agent that ran it.", "register scorer.self_graded"));
-    else if (/^code/.test(sc.who || "")) holds.push(reason("scoring", "Scored by code against rules fixed in advance.", "register scorer.who"));
+    if (sc.blind === false) lowers.push(reason("blinding", sc.note ? `Not blind. ${sc.note}` : "Not blind: the analyst saw the data's shape before the lock.", "our publication register, on blinding"));
+    if (sc.self_graded) lowers.push(reason("scoring", "Graded by the same agent that ran it.", "our publication register, on who scored it"));
+    else if (/^code/.test(sc.who || "")) holds.push(reason("scoring", "Scored by code against rules fixed in advance.", "our publication register, on who scored it"));
   } else if (typeof (sc || row.scored_by) === "string") {
-    if (/self-graded/.test(sc || row.scored_by)) lowers.push(reason("scoring", "Scored by code and by the agent that ran it; self-graded.", "register scorer"));
+    if (/self-graded/.test(sc || row.scored_by)) lowers.push(reason("scoring", "Scored by code and by the agent that ran it; self-graded.", "our publication register, on who scored it"));
   }
-  if (!lowers.some((r) => r.domain === "blinding") && /not blind/i.test(limits)) lowers.push(reason("blinding", "Not blind, as the paper's limitations state.", "paper Limitations"));
-  if (paper.prereg) holds.push(reason("preregistration", `Preregistered and hash-locked before the run (sha256 ${paper.prereg.slice(0, 8)}).`, "paper Reproduction"));
+  if (!lowers.some((r) => r.domain === "blinding") && /not blind/i.test(limits)) lowers.push(reason("blinding", "Not blind, as the paper's limitations state.", "the paper's Limitations"));
+  if (paper.prereg) holds.push(reason("preregistration", `Preregistered and hash-locked before the run (sha256 ${paper.prereg.slice(0, 8)}).`, "the Reproduce section"));
   const ev = row.evidence || {};
-  if (ev.controls) (/fail/i.test(ev.controls) ? lowers : holds).push(reason(/fail/i.test(ev.controls) ? "missing control" : "control", `Controls: ${ev.controls}.`, "register evidence.controls"));
-  if (/^none/i.test(ev.known_answer || "")) lowers.push(reason("missing control", "No positive control.", "register evidence.known_answer"));
-  if (outcome === "null" && bound && row.tier === "D") lowers.push(reason("imprecision", bound, "the bound"));
+  if (ev.controls) (/fail/i.test(ev.controls) ? lowers : holds).push(reason(/fail/i.test(ev.controls) ? "failed check" : "control", `Controls: ${ev.controls}.`, "our publication register, on controls"));
+  if (/^none/i.test(ev.known_answer || "")) lowers.push(reason("missing control", "No positive control.", "our publication register, on the known-answer check"));
+  if (outcome === "null" && bound && row.tier === "D") lowers.push(reason("imprecision", bound, "the bound stated under Evidence"));
   const lit = typeof row.literature === "object" ? row.literature?.verdict : row.literature;
-  if (/prior work exists/i.test(lit || "")) lowers.push(reason("novelty", "Nearby work exists; novelty is not shown.", "register literature.verdict"));
-  if (paper.litNote) lowers.push(reason("single source", `The cited literature was read at the level of ${paper.litNote}; full texts were not read.`, "paper Verified"));
-  for (const r of relationsIn.filter((x) => x.type === "held")) holds.push(reason("replication", `Rechecked by ${r.from} (${r.scope}): ${r.note}`, "relations"));
+  if (/prior work exists/i.test(lit || "")) lowers.push(reason("novelty", "Nearby work exists; novelty is not shown.", "our publication register, on the literature"));
+  if (paper.litNote) lowers.push(reason("depth of reading", `The cited literature was read at the level of ${paper.litNote}; full texts were not read.`, "the Verified section"));
+  for (const r of relationsIn.filter((x) => x.type === "held")) holds.push(reason("replication", `Rechecked by ${r.from} (${r.scope}): ${r.note}`, "a later finding"));
   const lic = row.data_licence || "";
-  if (/no stated licence/i.test(lic)) lowers.push(reason("open data", "The data carry no stated licence; the page reports statistics only.", "register data_licence"));
-  else if (/non-commercial/i.test(lic + limits)) holds.push(reason("open data", "Public data under non-commercial terms.", "register data_licence"));
-  else if (/public|CC0|CC BY|ODbL|open/i.test(lic)) holds.push(reason("open data", "Public data.", "register data_licence"));
+  if (/no stated licence/i.test(lic)) lowers.push(reason("open data", "The data carry no stated licence; the page reports statistics only.", "our publication register, on the data licence"));
+  else if (/non-commercial/i.test(lic + limits)) holds.push(reason("open data", "Public data under non-commercial terms.", "our publication register, on the data licence"));
+  else if (/not public|is private|not published/i.test(lic)) holds.push(reason("open data", "Part of the data is public and part is not; the data licence line under Reproduce says which.", "our publication register, on the data licence"));
+  else if (/public|CC0|CC BY|ODbL|open/i.test(lic)) holds.push(reason("open data", "Public data.", "our publication register, on the data licence"));
   return { lowers, holds };
 }
 

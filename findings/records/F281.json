@@ -14,7 +14,7 @@
   "tier": "D",
   "tier_reason": "Locked with planted checks, self-graded, simulation or public data, largely reproducing or testing published results. The register's tier note also read \"killed in tested band\" while its ladder entry places the claim at hypothesis; the two entries have not been reconciled.",
   "rung": "hypothesis",
-  "rung_reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
+  "rung_reason": "A preregistration with pass-or-fail rules is on file, which this rung needs. The next rung needs a named rival reading beaten by a decisive observation, and none is on file.",
   "outcome": "null",
   "bound": "Rules out a linear energy-dependent change in light speed larger than 7.6e-18 of c at 29.9 GeV, an energy scale below 0.32 Planck energies; the published bound from the same burst is about 24 times stronger.",
   "verdicts": {
@@ -26,8 +26,8 @@
    ]
   },
   "objection": "The bound holds only in the tested band, about 0.1 to 30 GeV, and only for a delay linear in energy. The quadratic form, other energies and other carriers were not tested.",
-  "objection_source": "the paper's first stated limitation; no reviewer attack is on file",
-  "would_change": "Outside reader; primary full text for hand-typed rows; own instrument or data where simulated.",
+  "objection_source": "the paper's first stated limitation; our register records no separate objection",
+  "would_change": "A reader from outside; the full texts behind the values typed by hand from abstracts; an instrument or data of our own where the result is simulated.",
   "sections": [
    {
     "id": "reader",
@@ -276,9 +276,9 @@
    "id": "e5",
    "kind": "number",
    "label": "Sample",
-   "value": "see RESULTS.md",
+   "value": "84 photons in the analysis window",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -287,9 +287,9 @@
    "id": "e6",
    "kind": "number",
    "label": "Main estimate and interval",
-   "value": "in RESULTS.md where one applies",
+   "value": "fitted slope 0; 95 percent bootstrap bound 117 ms per GeV",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -298,9 +298,9 @@
    "id": "e7",
    "kind": "number",
    "label": "Forecast against outcome",
-   "value": "in RESULTS.md",
+   "value": "12 of 15 preregistered verdicts passed",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -309,9 +309,9 @@
    "id": "e8",
    "kind": "control",
    "label": "Known-answer check",
-   "value": "listed in each PREREG",
+   "value": "planted delays of 1, 3, 5 and 10 times the bound recovered within 0.9 percent",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -325,7 +325,7 @@
    "title": "Fermi Science Support Center. Fermi LAT weekly photon files and trigger data for bn090510016. NASA High Energy Astrophysics Science Archive Research Center. Retrieved 31 October 2026. https://heasarc.gsfc.nasa.gov/FTP/fermi/data/lat/",
    "access": "run",
    "target": "https://heasarc.gsfc.nasa.gov/FTP/fermi/data/lat/",
-   "licence": "see INTAKE"
+   "licence": "Fermi LAT science data are public, released by NASA's Fermi Science Support Center"
   },
   {
    "id": "r2",
@@ -373,7 +373,7 @@
    "kind": "dataset",
    "title": "Rau, A., McBreen, S., Kruehler, T. and Greiner, J. (2009). GRB 090510: VLT/FORS2 spectroscopic redshift. GCN Circular 9353.",
    "access": "run",
-   "licence": "see INTAKE"
+   "licence": "Fermi LAT science data are public, released by NASA's Fermi Science Support Center"
   },
   {
    "id": "r7",
@@ -401,7 +401,7 @@
    "type": "narrowed",
    "scope": "headline bound",
    "date": "2026-10-31",
-   "note": "The correction pass coded one error: the rerun bound is far below the published limit, so the headline was narrowed to a reproduction of method.",
+   "note": "A later review of our ledger recorded one error: the rerun bound is far below the published limit, so the headline was narrowed to a reproduction of method.",
    "record": "findings ledger, F422 correction pass"
   }
  ],
@@ -448,34 +448,39 @@
    {
     "domain": "blinding",
     "text": "Not blind: the analyst saw the data's shape before the lock.",
-    "from": "register scorer.blind"
+    "from": "our publication register, on blinding"
    },
    {
     "domain": "scoring",
     "text": "Graded by the same agent that ran it.",
-    "from": "register scorer.self_graded"
+    "from": "our publication register, on who scored it"
    },
    {
     "domain": "imprecision",
     "text": "Rules out a linear energy-dependent change in light speed larger than 7.6e-18 of c at 29.9 GeV, an energy scale below 0.32 Planck energies; the published bound from the same burst is about 24 times stronger.",
-    "from": "the bound"
+    "from": "the bound stated under Evidence"
    },
    {
-    "domain": "single source",
+    "domain": "depth of reading",
     "text": "The cited literature was read at the level of abstracts, publisher pages and search summaries; full texts were not read.",
-    "from": "paper Verified"
+    "from": "the Verified section"
    }
   ],
   "holds": [
    {
     "domain": "preregistration",
     "text": "Preregistered and hash-locked before the run (sha256 21d88e4c).",
-    "from": "paper Reproduction"
+    "from": "the Reproduce section"
    },
    {
     "domain": "control",
     "text": "Controls: plants, shuffles, null simulations.",
-    "from": "register evidence.controls"
+    "from": "our publication register, on controls"
+   },
+   {
+    "domain": "open data",
+    "text": "Public data.",
+    "from": "our publication register, on the data licence"
    }
   ]
  },
@@ -483,12 +488,12 @@
   "data": [
    {
     "name": "Fermi Science Support Center",
-    "licence": "see INTAKE",
+    "licence": "Fermi LAT science data are public, released by NASA's Fermi Science Support Center",
     "url": "https://heasarc.gsfc.nasa.gov/FTP/fermi/data/lat/"
    },
    {
     "name": "Rau 2009",
-    "licence": "see INTAKE",
+    "licence": "Fermi LAT science data are public, released by NASA's Fermi Science Support Center",
     "url": ""
    }
   ],

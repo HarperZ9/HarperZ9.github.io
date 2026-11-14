@@ -13,12 +13,12 @@
    "ecology-climate"
   ],
   "tier": "B",
-  "tier_reason": "Real data and a prereg, but the network sample is small (26 trees with size), cedar decay repeats the PI's rates, and the wind arm has almost no skill. The network reanalysis is what merits expansion. Degree-preserving nulls keep much of hub share by construction.",
+  "tier_reason": "Real data and a preregistration, but the network sample is small (26 trees with a measured size), the cedar decay rate repeats rates the experiment's own team has published, and the wind part has almost no skill. The network reanalysis is what merits expansion. Shuffles that keep each tree's number of links keep much of the hub share by construction.",
   "rung": "hypothesis",
-  "rung_reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
+  "rung_reason": "A preregistration with pass-or-fail rules is on file, which this rung needs. The next rung needs a named rival reading beaten by a decisive observation, and none is on file.",
   "outcome": "held",
   "objection": "The network sample is small: 26 trees had a measured diameter, in one forest type and one region, sampled once. Plots of 13 to 41 trees cannot establish or exclude a power-law tail.",
-  "objection_source": "the paper's first stated limitation; no reviewer attack is on file",
+  "objection_source": "the paper's first stated limitation; our register records no separate objection",
   "would_change": "Apply the same nulls to Beiler 2010 and other mapped networks, with a model that separates root extent from effort.",
   "sections": [
    {
@@ -253,7 +253,7 @@
    "label": "Sample",
    "value": "6 plots, 166 trees, 56 genets; 530 logs; 488,499 FIA trees",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -264,7 +264,7 @@
    "label": "Main estimate and interval",
    "value": "partial rho 0.20, p 0.067; cedar k 0.0026 (0.0016, 0.0038); Brier skill 0.0014",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -273,9 +273,9 @@
    "id": "e6",
    "kind": "number",
    "label": "Forecast against outcome",
-   "value": "log forecasts frozen for years 40, 50; bigger and slender wind predictions failed",
+   "value": "log-density forecasts are frozen for years 40 and 50; the forecasts that bigger and more slender trees take more wind damage failed",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -284,9 +284,9 @@
    "id": "e7",
    "kind": "control",
    "label": "Known-answer check",
-   "value": "PI's published k order",
+   "value": "the published order of decay rates",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -407,34 +407,34 @@
    {
     "domain": "blinding",
     "text": "Not blind: the analyst saw the data's shape before the lock.",
-    "from": "register scorer.blind"
+    "from": "our publication register, on blinding"
    },
    {
-    "domain": "missing control",
-    "text": "Controls: curveball nulls and effort control working; modularity prediction failed.",
-    "from": "register evidence.controls"
+    "domain": "failed check",
+    "text": "Controls: the degree-preserving shuffles and the sampling-effort control worked; the modularity prediction failed.",
+    "from": "our publication register, on controls"
    },
    {
-    "domain": "single source",
+    "domain": "depth of reading",
     "text": "The cited literature was read at the level of abstracts, publisher pages and search summaries; full texts were not read.",
-    "from": "paper Verified"
+    "from": "the Verified section"
    }
   ],
   "holds": [
    {
     "domain": "scoring",
     "text": "Scored by code against rules fixed in advance.",
-    "from": "register scorer.who"
+    "from": "our publication register, on who scored it"
    },
    {
     "domain": "preregistration",
     "text": "Preregistered and hash-locked before the run (sha256 5f73b365).",
-    "from": "paper Reproduction"
+    "from": "the Reproduce section"
    },
    {
     "domain": "open data",
     "text": "Public data.",
-    "from": "register data_licence"
+    "from": "our publication register, on the data licence"
    }
   ]
  },

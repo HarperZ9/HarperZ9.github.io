@@ -12,7 +12,7 @@
    "economy"
   ],
   "tier": "D",
-  "tier_reason": "My reproduction was self-benefit; corrected null under one update rule.",
+  "tier_reason": "Our reproduction turned out to rest on producers benefiting from their own goods; the corrected result is a null under one update rule.",
   "rung": "killed",
   "rung_reason": "Our reproduction of the cheater result: it was self-benefit.",
   "outcome": "failed",
@@ -27,8 +27,8 @@
    ]
   },
   "objection": "One update rule, fitness-proportional and synchronous, with invented numbers. Other update rules, asynchronous timing, other neighbourhood sizes or a parent window separate from the goods box could let producers persist.",
-  "objection_source": "the paper's first stated limitation; no reviewer attack is on file",
-  "would_change": "No condition for raising or overturning the call is on file in the register.",
+  "objection_source": "the paper's first stated limitation; our register records no separate objection",
+  "would_change": "Our publication register records no condition that would raise or overturn this call.",
   "sections": [
    {
     "id": "reader",
@@ -374,19 +374,19 @@
    {
     "domain": "scoring",
     "text": "Scored by code and by the agent that ran it; self-graded.",
-    "from": "register scorer"
+    "from": "our publication register, on who scored it"
    },
    {
-    "domain": "single source",
+    "domain": "depth of reading",
     "text": "The cited literature was read at the level of abstracts and publisher pages; full texts were not read.",
-    "from": "paper Verified"
+    "from": "the Verified section"
    }
   ],
   "holds": [
    {
     "domain": "preregistration",
     "text": "Preregistered and hash-locked before the run (sha256 40a99201).",
-    "from": "paper Reproduction"
+    "from": "the Reproduce section"
    }
   ]
  },

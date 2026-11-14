@@ -12,9 +12,9 @@
    "instruments-metrology"
   ],
   "tier": "B",
-  "tier_reason": "The DQE arm calibrated on planted grains and I found no published VISION3 figure, but it rests on digitised vendor sheets, one aperture and a peak-wavelength photon count. CAL_var failed, H6 failed, and Shaw and Dainty remain unread.",
+  "tier_reason": "The quantum-efficiency part was calibrated on planted grains, and we found no published VISION3 figure. It rests on digitised vendor sheets, one aperture and a photon count at the peak wavelength. The planted variance check failed, the threshold-model fit failed, and the books by Shaw and by Dainty remain unread.",
   "rung": "hypothesis",
-  "rung_reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
+  "rung_reason": "A preregistration with pass-or-fail rules is on file, which this rung needs. The next rung needs a named rival reading beaten by a decisive observation, and none is on file.",
   "outcome": "held",
   "verdicts": {
    "held": 6,
@@ -25,7 +25,7 @@
    ]
   },
   "objection": "One maker, one aperture, and vendor curves read from printed sheets. Digitising adds its own error, which was not measured.",
-  "objection_source": "the paper's first stated limitation; no reviewer attack is on file",
+  "objection_source": "the paper's first stated limitation; our register records no separate objection",
   "would_change": "Read Shaw and Dainty; measure one stock with a spectral photon count and a lab microdensitometer.",
   "sections": [
    {
@@ -270,7 +270,7 @@
    "label": "Sample",
    "value": "3 stocks, 9 layers, one maker",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -279,9 +279,9 @@
    "id": "e6",
    "kind": "number",
    "label": "Main estimate and interval",
-   "value": "none reported for DQE; planted error 0.11",
+   "value": "none reported for peak efficiency; planted error 0.11",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -290,9 +290,9 @@
    "id": "e7",
    "kind": "number",
    "label": "Forecast against outcome",
-   "value": "DQE median 0.05 got 0.021; G spread 2 got 3.24; b 0.15 got -0.54",
+   "value": "median peak efficiency forecast 0.05, got 0.021; spread of green-layer efficiency across stocks forecast 2, got 3.24; variance slope forecast 0.15, got -0.54",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -301,9 +301,9 @@
    "id": "e8",
    "kind": "control",
    "label": "Known-answer check",
-   "value": "planted closed-form grains within 11 percent; planted Poisson n recovered 1.0",
+   "value": "planted closed-form grains recovered within 11 percent; planted hit numbers recovered in every case",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -429,40 +429,40 @@
   "lowers": [
    {
     "domain": "blinding",
-    "text": "Not blind. one hand calculation on 5219 before lock, stated",
-    "from": "register scorer.blind"
+    "text": "Not blind. One hand calculation on the 5219 stock was made before the lock, as the paper states.",
+    "from": "our publication register, on blinding"
    },
    {
-    "domain": "missing control",
-    "text": "Controls: CAL_dqe and CAL_forms working; CAL_var failed (0.70 against 0.80), so the variance verdict is not credited; pairing null not separating.",
-    "from": "register evidence.controls"
+    "domain": "failed check",
+    "text": "Controls: the planted checks on quantum efficiency and on response forms worked; the planted variance check failed (0.70 against 0.80), so the variance verdict is not credited; the pairing control did not separate.",
+    "from": "our publication register, on controls"
    },
    {
     "domain": "novelty",
     "text": "Nearby work exists; novelty is not shown.",
-    "from": "register literature.verdict"
+    "from": "our publication register, on the literature"
    },
    {
-    "domain": "single source",
+    "domain": "depth of reading",
     "text": "The cited literature was read at the level of abstracts and catalogue records; full texts were not read.",
-    "from": "paper Verified"
+    "from": "the Verified section"
    }
   ],
   "holds": [
    {
     "domain": "scoring",
     "text": "Scored by code against rules fixed in advance.",
-    "from": "register scorer.who"
+    "from": "our publication register, on who scored it"
    },
    {
     "domain": "preregistration",
     "text": "Preregistered and hash-locked before the run (sha256 c0dbcacf).",
-    "from": "paper Reproduction"
+    "from": "the Reproduce section"
    },
    {
     "domain": "replication",
     "text": "Rechecked by F164 (film hinge within the sheet's range): The hinge sits within the sheet's range, as F147 said, now on BIC.",
-    "from": "relations"
+    "from": "a later finding"
    }
   ]
  },

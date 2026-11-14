@@ -13,9 +13,9 @@
    "psychology"
   ],
   "tier": "B",
-  "tier_reason": "Open data, plants and controls; small sample and one protocol. A clean known-answer on leakage.",
+  "tier_reason": "Open data with planted checks and controls; a small sample and one protocol. Planted data with nothing to learn give a clean known answer on leakage. The planted shared shift failed in the first run and passed in a second run at a larger shift.",
   "rung": "hypothesis",
-  "rung_reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
+  "rung_reason": "A preregistration with pass-or-fail rules is on file, which this rung needs. The next rung needs a named rival reading beaten by a decisive observation, and none is on file.",
   "outcome": "held",
   "verdicts": {
    "held": 10,
@@ -27,8 +27,8 @@
    ]
   },
   "objection": "Fifteen people, one laboratory, one protocol, about one hour each. A held-out person is a stranger only inside this sample.",
-  "objection_source": "the paper's first stated limitation; no reviewer attack is on file",
-  "would_change": "No condition for raising or overturning the call is on file in the register.",
+  "objection_source": "the paper's first stated limitation; our register records no separate objection",
+  "would_change": "Our publication register records no condition that would raise or overturn this call.",
   "sections": [
    {
     "id": "reader",
@@ -354,7 +354,7 @@
    "type": "narrowed",
    "scope": "planted check and scoring",
    "date": "2026-10-31",
-   "note": "The correction pass coded a failed plant and an error: the first planted check failed, and the entry was self-graded and not blind, with order confounded with condition.",
+   "note": "A later review of our ledger recorded a failed planted check and an error: the first planted check failed, and the entry was self-graded and not blind, with order confounded with condition.",
    "record": "findings ledger, F422 correction pass"
   }
  ],
@@ -410,24 +410,24 @@
    {
     "domain": "scoring",
     "text": "Scored by code and by the agent that ran it; self-graded.",
-    "from": "register scorer"
+    "from": "our publication register, on who scored it"
    },
    {
     "domain": "blinding",
     "text": "Not blind, as the paper's limitations state.",
-    "from": "paper Limitations"
+    "from": "the paper's Limitations"
    },
    {
-    "domain": "single source",
+    "domain": "depth of reading",
     "text": "The cited literature was read at the level of abstracts and search summaries, except Campbell and Ehlert, whose abstract was read during the study on 31 October 2026; full texts were not read.",
-    "from": "paper Verified"
+    "from": "the Verified section"
    }
   ],
   "holds": [
    {
     "domain": "preregistration",
     "text": "Preregistered and hash-locked before the run (sha256 9263e28c).",
-    "from": "paper Reproduction"
+    "from": "the Reproduce section"
    }
   ]
  },

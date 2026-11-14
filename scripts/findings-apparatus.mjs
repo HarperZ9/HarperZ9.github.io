@@ -28,7 +28,7 @@ export function downloads(rec, where) {
 export function recordNumbers(rec) {
   const rows = rec.evidence.filter((e) => !/^The numbers in claim/.test(e.label));
   if (!rows.length) return "";
-  return `<h3>The register's numbers</h3><div class="st-table" tabindex="0" role="region" aria-label="The register's numbers"><table class="ev"><thead><tr><th scope="col">What</th><th scope="col">Value</th></tr></thead>
+  return `<h3>Numbers recorded in our publication register</h3><div class="st-table" tabindex="0" role="region" aria-label="Numbers recorded in our publication register"><table class="ev"><thead><tr><th scope="col">What</th><th scope="col">Value</th></tr></thead>
 <tbody>${rows.map((e) => `<tr><th scope="row">${esc(e.label)}</th><td>${esc(e.value)}</td></tr>`).join("")}</tbody></table></div>
 <p class="soft">As recorded in the publication register, the summary row each finding gets; the paper's own numbers above were re-read from the result files.</p>`;
 }
@@ -41,7 +41,7 @@ export function grade(rec) {
 
 export function ladder(rec) {
   const d = rec.document;
-  if (!d.rung) return `<div id="ladder" class="ladder"><h3>Where the claim stands</h3><p class="soft">This finding has not been placed on the ladder of rungs yet.</p></div>`;
+  if (!d.rung) return `<div id="ladder" class="ladder"><h3>Where the claim stands</h3><p class="soft">Our register assigns this finding no rung on the ladder.${d.rung_reason ? ` ${esc(d.rung_reason)}` : ""}</p></div>`;
   const killed = d.rung === "killed", x0 = 44, step = 120;
   const nodes = RUNGS.map((r, i) => `<circle cx="${x0 + i * step}" cy="38" r="${r === d.rung ? 6 : 4.5}" class="node${r === d.rung ? " cur" : ""}"/><text x="${x0 + i * step}" y="18" class="${r === d.rung ? "cur" : ""}">${r}</text>`).join("");
   const branch = killed ? `<path d="M${x0 + step} 43 L${x0 + step + 30} 76" class="branch"/><path d="M${x0 + step + 23} 72h14l-7 12z" class="kill"/><text x="${x0 + step + 44}" y="84" class="cur kill-t">killed</text>` : "";

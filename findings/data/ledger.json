@@ -7,7 +7,7 @@
    "type": "held",
    "scope": "test A, moderate prior drought",
    "date": "2026-10-30",
-   "note": "Mirror test MT2 on gridded scPDSI: +0.025, below the time-shift 95th percentile of 0.038; the kill fires again.",
+   "note": "A repeat of test A on gridded scPDSI near each site gave +0.025, below the time-shift 95th percentile of 0.038; the kill fires again.",
    "source": "findings ledger, F95 MT2"
   },
   {
@@ -17,7 +17,7 @@
    "scope": "within-species steeling sign",
    "date": "2026-10-30",
    "note": "The +0.037 sign under division PDSI with species effects does not survive site-scale drought.",
-   "record": "PU30-06",
+   "record": "findings ledger, prior updates of 2026-10-30",
    "source": "findings ledger, Prior updates 2026-10-30"
   },
   {
@@ -60,9 +60,9 @@
    "from": "F88",
    "to": "F81",
    "type": "narrowed",
-   "scope": "size of the ratios and the union gain",
+   "scope": "size of the ratios and the gain from combining observers",
    "date": "2026-10-30",
-   "note": "Under photon noise the set 1 ratios fall to 1.67 for the bee and 1.50 for the blue tit, and the post hoc union gain of +0.39 shrinks to a null. Publication carries the direction only.",
+   "note": "Under photon noise the set 1 ratios fall to 1.67 for the bee and 1.50 for the blue tit, and the gain from combining two observers, +0.39 and found after the fact, shrinks to a null. Publication carries the direction only.",
    "source": "findings ledger, F88 and Publication pass corrections 2026-11-09"
   },
   {
@@ -161,7 +161,7 @@
    "type": "narrowed",
    "scope": "headline bound",
    "date": "2026-10-31",
-   "note": "The correction pass coded one error: the rerun bound is far below the published limit, so the headline was narrowed to a reproduction of method.",
+   "note": "A later review of our ledger recorded one error: the rerun bound is far below the published limit, so the headline was narrowed to a reproduction of method.",
    "source": "findings ledger, F422 correction pass"
   },
   {
@@ -170,7 +170,7 @@
    "type": "narrowed",
    "scope": "sampling and control",
    "date": "2026-10-31",
-   "note": "The correction pass coded an error and an untestable control: the sampling changed after the search route refused, and fitted lines pass by construction.",
+   "note": "A later review of our ledger recorded an error and a control that could not fail: the sampling changed after the search route refused, and fitted lines pass by construction.",
    "source": "findings ledger, F422 correction pass"
   },
   {
@@ -179,7 +179,7 @@
    "type": "narrowed",
    "scope": "the three forms",
    "date": "2026-10-31",
-   "note": "The correction pass coded one memory value: the three forms were written from memory, so the result covers these three versions only.",
+   "note": "A later review of our ledger recorded one value entered from memory: the three forms were written from memory, so the result covers these three versions only.",
    "source": "findings ledger, F422 correction pass"
   },
   {
@@ -188,7 +188,7 @@
    "type": "narrowed",
    "scope": "planted check and scoring",
    "date": "2026-10-31",
-   "note": "The correction pass coded a failed plant and an error: the first planted check failed, and the entry was self-graded and not blind, with order confounded with condition.",
+   "note": "A later review of our ledger recorded a failed planted check and an error: the first planted check failed, and the entry was self-graded and not blind, with order confounded with condition.",
    "source": "findings ledger, F422 correction pass"
   },
   {
@@ -197,7 +197,7 @@
    "type": "narrowed",
    "scope": "reproduction check",
    "date": "2026-10-31",
-   "note": "The correction pass coded a failed plant, an error and a post hoc rescue; on 2026-11-09 the ledger added that the preregistered reproduction check failed at 0.287 against 0.234 within 0.03.",
+   "note": "A later review of our ledger recorded a failed planted check, an error and an explanation added after the result; on 2026-11-09 the ledger added that the preregistered reproduction check failed at 0.287 against 0.234 within 0.03.",
    "source": "findings ledger, F422 correction pass and Publication pass corrections 2026-11-09"
   },
   {
@@ -206,7 +206,7 @@
    "type": "narrowed",
    "scope": "sensitivity",
    "date": "2026-10-31",
-   "note": "The correction pass coded one error: the public 10 percent sample has low power, so the claim covers large patterns only.",
+   "note": "A later review of our ledger recorded one error: the public 10 percent sample has low power, so the claim covers large patterns only.",
    "source": "findings ledger, F422 correction pass"
   },
   {
@@ -215,7 +215,7 @@
    "type": "narrowed",
    "scope": "reused inputs and a proxy truth",
    "date": "2026-10-31",
-   "note": "The correction pass coded two errors: later tables reuse inputs, and the Hubble constant truth is a proxy.",
+   "note": "A later review of our ledger recorded two errors: later tables reuse inputs, and the Hubble constant truth is a proxy.",
    "source": "findings ledger, F422 correction pass"
   }
  ],

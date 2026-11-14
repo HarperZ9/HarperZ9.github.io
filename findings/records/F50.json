@@ -15,11 +15,11 @@
   "tier": "D",
   "tier_reason": "A clean registered equivalence null on real CC0 data with a shuffled control. A larger null already exists, so it adds a replication and a specific equivalence bound. Power 0.77 at the bound, modest.",
   "rung": "hypothesis",
-  "rung_reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
+  "rung_reason": "A preregistration with pass-or-fail rules is on file, which this rung needs. The next rung needs a named rival reading beaten by a decisive observation, and none is on file.",
   "outcome": "null",
   "bound": "Correlations of 0.20 or larger in size are excluded at the preregistered bound (90 percent interval -0.129 to 0.117); true effects between 0.10 and 0.20 remain open.",
-  "objection": "Anatomical mask, a low-pass FD rule outside its validated single-band data, retrospective self-report, and no positive control showing the pipeline finds a known effect.",
-  "objection_source": "the register's reviewer attack",
+  "objection": "An anatomical mask, a low-pass rule for head motion (framewise displacement) used outside the single-band data it was validated on, retrospective self-report, and no positive control showing the pipeline finds a known effect.",
+  "objection_source": "the strongest objection recorded in our publication register",
   "would_change": "Add a second open sample or functional vmPFC mask to shrink the 0.10 to 0.20 gap; add a positive control",
   "sections": [
    {
@@ -128,7 +128,7 @@
     "role": "argument",
     "paragraphs": [
      "The registered result is an {g:honest-null}honest null{/g} with a stated bound. Within this sample and this measure, the correlation between CTQ total and amygdala-vmPFC resting connectivity is smaller than 0.20 in size. That is consistent with Goltermann and colleagues {cite:r3}, whose abstract reports no maltreatment association with the connectivity of its regions of interest in 1,325 adults.",
-     "It does not contradict Birn and colleagues {cite:r2} directly. Their sample was 27 male veterans, most with PTSD, and their model held combat exposure and PTSD symptoms fixed alongside maltreatment; ours is a mixed transdiagnostic sample, mostly women and men, with demographic and motion covariates. An effect confined to a population like theirs could exist and be diluted here. The difference in design is the main reason the two results can both stand.",
+     "It does not contradict Birn and colleagues {cite:r2} directly. Their sample was 27 male veterans, most with PTSD, and their model held combat exposure and PTSD symptoms fixed alongside maltreatment; ours is a mixed transdiagnostic sample of women and men (112 and 73), with demographic and motion covariates. An effect confined to a population like theirs could exist and be diluted here. The difference in design is the main reason the two results can both stand.",
      "The inconclusive subscale results deserve plain reporting. Emotional neglect and physical abuse gave correlations of opposite sign, each with a 90 percent interval that crosses 0.20 by a small margin. They come from fifteen exploratory analyses with no correction, so one or two such edges are expected by chance. They do not support an association, and they also do not let us extend the equivalence claim to each subscale.",
      "The deeper limit is the missing positive control. A null from a pipeline never shown to detect a known effect is weaker than a null from one that has. Adding one, for example a well-replicated connectivity difference with age or between homologous regions, is the next step before this pipeline is used for further trauma questions."
     ]
@@ -277,7 +277,7 @@
    "label": "Sample",
    "value": "n 187 of 241 (17 motion, 16 no CTQ, 21 missing subscale)",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -288,7 +288,7 @@
    "label": "Main estimate and interval",
    "value": "r -0.006, 95% CI -0.152 to 0.140, 90% CI -0.129 to 0.117",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -299,7 +299,7 @@
    "label": "Forecast against outcome",
    "value": "decision rule set before data; outcome no meaningful association",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -310,7 +310,7 @@
    "label": "Known-answer check",
    "value": "none (no positive control for connectivity)",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -386,6 +386,15 @@
    "after": "The emotional-neglect and physical-abuse subscale analyses (r 0.081 and -0.081) are inconclusive, their 90% intervals touching 0.20. This paper reports them that way, and also reports the two inconclusive secondary-region analyses.",
    "reason": "The findings ledger said of the fifteen sensitivity analyses only that none reached an association.",
    "found_by": "the publication pass"
+  },
+  {
+   "id": "x3",
+   "date": "2026-11-14",
+   "target": "document",
+   "type": "wording",
+   "after": "The charts spoke of six covariates while the text names five variables; the result file records six model terms built from those five, and the charts now say so. The discussion described the sample as mostly women and men; it holds 112 women, 73 men and 2 people who reported another sex.",
+   "reason": "A review of the published page found two unclear phrases.",
+   "found_by": "a review of the published pages"
   }
  ],
  "versions": [
@@ -399,51 +408,56 @@
    "date": "2026-11-09",
    "what": "paper version 1.0, first published",
    "hash": "656e5d6d455e965caddd8d0522e85ea32fd3805f2c2c9049ec70ae0434e9da3a"
+  },
+  {
+   "n": 3,
+   "date": "2026-11-14",
+   "what": "this page corrected, 1 item; the PDF and its BuildTeX source are still paper version 1.0"
   }
  ],
  "grade": {
   "lowers": [
    {
     "domain": "blinding",
-    "text": "Not blind. 88 missing code added before outcome opened",
-    "from": "register scorer.blind"
+    "text": "Not blind. The questionnaire's code 88 for a missing answer was handled before the outcome was opened.",
+    "from": "our publication register, on blinding"
    },
    {
     "domain": "missing control",
     "text": "No positive control.",
-    "from": "register evidence.known_answer"
+    "from": "our publication register, on the known-answer check"
    },
    {
     "domain": "imprecision",
     "text": "Correlations of 0.20 or larger in size are excluded at the preregistered bound (90 percent interval -0.129 to 0.117); true effects between 0.10 and 0.20 remain open.",
-    "from": "the bound"
+    "from": "the bound stated under Evidence"
    },
    {
     "domain": "novelty",
     "text": "Nearby work exists; novelty is not shown.",
-    "from": "register literature.verdict"
+    "from": "our publication register, on the literature"
    },
    {
-    "domain": "single source",
+    "domain": "depth of reading",
     "text": "The cited literature was read at the level of abstracts and publisher or repository pages; full texts were not read.",
-    "from": "paper Verified"
+    "from": "the Verified section"
    }
   ],
   "holds": [
    {
     "domain": "scoring",
     "text": "Scored by code against rules fixed in advance.",
-    "from": "register scorer.who"
+    "from": "our publication register, on who scored it"
    },
    {
     "domain": "control",
     "text": "Controls: working: 10,000 permutations, 47th percentile; 15 exploratory sensitivities r -0.081 to 0.081.",
-    "from": "register evidence.controls"
+    "from": "our publication register, on controls"
    },
    {
     "domain": "open data",
     "text": "Public data.",
-    "from": "register data_licence"
+    "from": "our publication register, on the data licence"
    }
   ]
  },
@@ -462,7 +476,7 @@
    "Extract mean time series from the Harvard-Oxford amygdala and Frontal Medial Cortex masks at the 50 percent threshold, correlate, apply eq. {ref:eq:z} and average with eq. {ref:eq:mean}.",
    "Sum the five CTQ subscales, treating 88 as missing. Compute the partial correlation with the six covariate terms and its intervals with eq. {ref:eq:se}, then apply the decision rule at 0.20.",
    "Shuffle CTQ totals 10,000 times with seed 20261029 for the null.",
-   "Preregistration, frozen body SHA-256: 4d4681b9f44188b37e60fd9c53d94a85e01cd1529f4d2be7228a42a3ff36f753. Current file with the deviation log: f185c72a449a8649dda7177a3c93a4107da54bc243b4001edd439ad8cceadb82. This study ran before our study runner was used for it, so it has no plan hash or run id; the result files carry the frozen hash and the SHA-256 of every phenotype input."
+   "Preregistration, frozen body SHA-256: 4d4681b9f44188b37e60fd9c53d94a85e01cd1529f4d2be7228a42a3ff36f753. Current file with the deviation log: f185c72a449a8649dda7177a3c93a4107da54bc243b4001edd439ad8cceadb82. This study ran before we used our study-running tool, which records a plan hash and a run id, so it has no plan hash or run id; the result files carry the frozen hash and the SHA-256 of every phenotype input."
   ],
   "not_rerun": "The study was not re-run."
  },

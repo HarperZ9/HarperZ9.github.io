@@ -13,9 +13,9 @@
    "method"
   ],
   "tier": "B*",
-  "tier_reason": "Large real data with working shuffles and a clean prereg. Skips are inferred and causation is open, and a probability gate lowers Brier partly by arithmetic. Merkle 2017 is close on selection.",
+  "tier_reason": "Large real data with working shuffle controls and a preregistration. Skips are inferred and causation is open, and a filter on stated probability lowers the Brier score partly by arithmetic. Merkle and colleagues (2017) is close prior work on selection.",
   "rung": "hypothesis",
-  "rung_reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
+  "rung_reason": "A preregistration with pass-or-fail rules is on file, which this rung needs. The next rung needs a named rival reading beaten by a decisive observation, and none is on file.",
   "outcome": "held",
   "verdicts": {
    "held": 5,
@@ -25,9 +25,9 @@
     "result.json"
    ]
   },
-  "objection": "Inferred skips may be unseen questions; matched strata may create the sign flip against Merkle; a probability gate rewards confidence by construction.",
-  "objection_source": "the register's reviewer attack",
-  "would_change": "Replicate on another tournament with visible question exposure; read Merkle in full.",
+  "objection": "Inferred skips may be questions a forecaster never saw; matched strata may explain any difference in sign from Merkle and colleagues, whose sign we have not confirmed; a filter on stated probability rewards confidence by construction.",
+  "objection_source": "the strongest objection recorded in our publication register",
+  "would_change": "Replicate on another tournament where question exposure is visible; read Merkle and colleagues in full.",
   "sections": [
    {
     "id": "reader",
@@ -306,7 +306,7 @@
    "label": "Sample",
    "value": "410,451 binary forecasts; 1,578 same-condition pairs",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -317,7 +317,7 @@
    "label": "Main estimate and interval",
    "value": "first rho +0.286 (+0.264, +0.303); timed +0.195 (+0.174, +0.212); within +0.041 (-0.007, +0.095)",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -326,9 +326,9 @@
    "id": "e8",
    "kind": "number",
    "label": "Forecast against outcome",
-   "value": "R1a, R1t PASS; R1w, R3both, R4 FAIL",
+   "value": "Passed: skip rate tracks first-forecast score across people, with and without timing matched. Failed: the within-person version, the combined filter beating the probability filter by the bar, and the two team-level forecasts",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -337,9 +337,9 @@
    "id": "e9",
    "kind": "control",
    "label": "Known-answer check",
-   "value": "random gate 0.277",
+   "value": "a random filter has area 0.277",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -460,39 +460,39 @@
    {
     "domain": "blinding",
     "text": "Not blind: the analyst saw the data's shape before the lock.",
-    "from": "register scorer.blind"
+    "from": "our publication register, on blinding"
    },
    {
     "domain": "novelty",
     "text": "Nearby work exists; novelty is not shown.",
-    "from": "register literature.verdict"
+    "from": "our publication register, on the literature"
    },
    {
-    "domain": "single source",
+    "domain": "depth of reading",
     "text": "The cited literature was read at the level of abstracts, publisher pages and search summaries; full texts were not read.",
-    "from": "paper Verified"
+    "from": "the Verified section"
    }
   ],
   "holds": [
    {
     "domain": "scoring",
     "text": "Scored by code against rules fixed in advance.",
-    "from": "register scorer.who"
+    "from": "our publication register, on who scored it"
    },
    {
     "domain": "preregistration",
     "text": "Preregistered and hash-locked before the run (sha256 be6f2c1a).",
-    "from": "paper Reproduction"
+    "from": "the Reproduce section"
    },
    {
     "domain": "control",
-    "text": "Controls: shuffles working; within-person rating shuffle gains 0.0024.",
-    "from": "register evidence.controls"
+    "text": "Controls: the shuffles worked; a rating shuffled within each person gains 0.0024.",
+    "from": "our publication register, on controls"
    },
    {
     "domain": "open data",
     "text": "Public data.",
-    "from": "register data_licence"
+    "from": "our publication register, on the data licence"
    }
   ]
  },

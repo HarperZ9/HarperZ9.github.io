@@ -23,7 +23,7 @@ Later work kept both routes. Cover and King {cite:coverking1978} replaced guessi
 Those studies push the estimate of the entropy rate downward. Our question is narrower. Do the low rows of Shannon's table, which are easy to recompute, still hold on text of other eras and kinds? And when a reader built from letter counts is trained on one kind of text and reads another, which costs more, a change of era or a change of genre?
 
 # section Preregistration and design {sec:prereg}
-A {g:preregistration}preregistration{/g} is a dated plan fixed and hash-locked before any result is seen. This study had two. The first was locked on 1 November 2026 at 08:13 UTC. It named the corpora, the statistics, the reader, the planted text, the control, nine numeric forecasts and the {g:kill-condition}kill condition{/g}, a rule that decides against the run with no judgement after it. The decision it informed was which claims from saved reading material survive a changed frame, so which ones we can reuse.
+A {g:preregistration}preregistration{/g} is a dated plan fixed and hash-locked before any result is seen. This study had two. The first was locked on 1 November 2026 at 08:13 UTC. It named the corpora, the statistics, the reader, the planted text, the control, nine numeric forecasts and the {g:kill-condition}kill condition{/g}, a rule that decides against the run with no judgement after it. The decision it informed was which claims in material we had saved still hold when the text or the reader changes, and so which ones we can reuse.
 
 The first run had a fault of ours. The code promised in a comment to shuffle the books before splitting training text from test text and never did. The old corpus's test text was therefore all The Federalist, and the mid corpus's all Fitzgerald, so era was read through one book. We wrote a second preregistration to fix the split and locked it at 08:20 UTC the same day. It was not blind: it was written after the first run had been read. The first run stands as recorded, and both are reported here.
 
@@ -117,11 +117,11 @@ The word-based gap fits a difference of method. Counting words directly misses t
 
 The reader result agrees with the line of work after Shannon {cite:coverking1978} {cite:brown1992}: letter counts alone do not reach a human reader's figure. Our context model sits at 1.63 to 2.41 bits per letter on held-out text. Shannon's 1.3 is a bound on a reader who knows words, grammar and the world.
 
-The transfer result was the frame we most wanted to change. A reader from one era of fiction reads another era at a cost of 0.10 to 0.25 bits, and the same reader reads The Federalist at 0.44. What a text is about and how it is argued changes letter statistics more than when it was written.
+The transfer result was the condition we most wanted to vary. A reader from one era of fiction reads another era at a cost of 0.10 to 0.25 bits, and the same reader reads The Federalist at 0.44. What a text is about and how it is argued changes letter statistics more than when it was written.
 
 # section Limitations {sec:limits}
 - Wikipedia is the only new text, so era, genre and topic stay tangled in every new-text row.
-- No large language model was used as a reader. That was the change of frame we most wanted, and it stays open.
+- No large language model was used as a reader. That was the change we most wanted to make, and it stays open.
 - The word-based gap may come from Shannon's fitted Zipf tail against our direct count. We did not test that.
 - The cause of the F3 gap is unknown. Sampling bias in the plug-in estimate and a difference in his source counts are both candidates, and neither was measured.
 - Shannon's own test passages are not openly available, so the comparison is with his printed table.

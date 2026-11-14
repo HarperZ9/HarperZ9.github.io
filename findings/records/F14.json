@@ -17,7 +17,7 @@
   "rung_reason": "Named rival, which the finding stood against: The secant law as the source of Newton's steep obliquity rows. Decisive observation against the rival: The rows follow his 106-means rule, which runs 27 percent below the secant law at 85 degrees; preregistered predictions C and E held.",
   "outcome": "held",
   "objection": "Which rows Newton measured and which he computed is our reading. The text cannot settle it, and a historian should check it against his manuscripts and his optical papers.",
-  "objection_source": "the paper's first stated limitation; no reviewer attack is on file",
+  "objection_source": "the paper's first stated limitation; our register records no separate objection",
   "would_change": "Read Shapiro 1993 and Optical Papers vol 2 on Obs 7, plus Newton's manuscripts.",
   "sections": [
    {
@@ -259,7 +259,7 @@
    "label": "Sample",
    "value": "table rows 0 to 90 deg",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -270,7 +270,7 @@
    "label": "Main estimate and interval",
    "value": "secant within 0.41% to 60 deg; rule within 0.99% all rows",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -281,7 +281,7 @@
    "label": "Forecast against outcome",
    "value": "predictions C, E held",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -292,7 +292,7 @@
    "label": "Known-answer check",
    "value": "Airy theory, 1:3:5:7 rings",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -305,7 +305,7 @@
    "kind": "dataset",
    "title": "Newton, I. (1730). Opticks: or, a Treatise of the Reflections, Refractions, Inflections and Colours of Light. 4th edition. London. Book II, Part I, Observations 6 and 7. Project Gutenberg ebook 33504.",
    "access": "run",
-   "licence": "public-domain text"
+   "licence": "Newton's text is in the public domain; the reuse terms of the Newton Project transcription and of the CIE tables were not confirmed for this page, which quotes numbers only"
   },
   {
    "id": "r2",
@@ -314,7 +314,7 @@
    "title": "The Newton Project. The Second Book of Opticks, transcription. University of Oxford. https://newtonproject.ox.ac.uk/view/texts/xml/NATP00038",
    "access": "run",
    "target": "https://newtonproject.ox.ac.uk/view/texts/xml/NATP00038",
-   "licence": "public-domain text"
+   "licence": "Newton's text is in the public domain; the reuse terms of the Newton Project transcription and of the CIE tables were not confirmed for this page, which quotes numbers only"
   },
   {
    "id": "r3",
@@ -351,7 +351,7 @@
    "kind": "dataset",
    "title": "International Commission on Illumination (CIE). CIE standard illuminant D65 and CIE 1931 2 degree standard observer colour-matching functions, official data tables.",
    "access": "run",
-   "licence": "public-domain text"
+   "licence": "Newton's text is in the public domain; the reuse terms of the Newton Project transcription and of the CIE tables were not confirmed for this page, which quotes numbers only"
   },
   {
    "id": "r7",
@@ -434,34 +434,34 @@
    {
     "domain": "blinding",
     "text": "Not blind. Table coded by the agent from Newton's text; the 90 deg row was checked before the prereg, as it discloses.",
-    "from": "register scorer.blind"
+    "from": "our publication register, on blinding"
    },
    {
-    "domain": "single source",
+    "domain": "depth of reading",
     "text": "The cited literature was read at the level of catalogue records and abstracts; full texts were not read.",
-    "from": "paper Verified"
+    "from": "the Verified section"
    }
   ],
   "holds": [
    {
     "domain": "scoring",
     "text": "Scored by code against rules fixed in advance.",
-    "from": "register scorer.who"
+    "from": "our publication register, on who scored it"
    },
    {
     "domain": "preregistration",
     "text": "Preregistered and hash-locked before the run (sha256 d4104e90).",
-    "from": "paper Reproduction"
+    "from": "the Reproduce section"
    },
    {
     "domain": "control",
     "text": "Controls: theory control working.",
-    "from": "register evidence.controls"
+    "from": "our publication register, on controls"
    },
    {
     "domain": "open data",
     "text": "Public data.",
-    "from": "register data_licence"
+    "from": "our publication register, on the data licence"
    }
   ]
  },
@@ -469,17 +469,17 @@
   "data": [
    {
     "name": "Newton 1730",
-    "licence": "public-domain text",
+    "licence": "Newton's text is in the public domain; the reuse terms of the Newton Project transcription and of the CIE tables were not confirmed for this page, which quotes numbers only",
     "url": ""
    },
    {
     "name": "The Newton Project",
-    "licence": "public-domain text",
+    "licence": "Newton's text is in the public domain; the reuse terms of the Newton Project transcription and of the CIE tables were not confirmed for this page, which quotes numbers only",
     "url": "https://newtonproject.ox.ac.uk/view/texts/xml/NATP00038"
    },
    {
     "name": "International Commission on Illumination (CIE)",
-    "licence": "public-domain text",
+    "licence": "Newton's text is in the public domain; the reuse terms of the Newton Project transcription and of the CIE tables were not confirmed for this page, which quotes numbers only",
     "url": ""
    }
   ],

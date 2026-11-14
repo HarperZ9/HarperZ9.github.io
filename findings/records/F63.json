@@ -12,9 +12,9 @@
    "ecology-climate"
   ],
   "tier": "D",
-  "tier_reason": "Test A is a real-data null with a clean placebo, and it held under site-scale scPDSI in F95 MT2. The interval still allows gains up to about 9 percent, and tests B to D are toy results with B_CTRL failed.",
+  "tier_reason": "Test A is a null on real data with a clean placebo, and it stayed null in a rerun with drought measured near each site. The interval still allows gains up to about 9 percent. Tests B to D are toy-model results, and the control for test B failed.",
   "rung": "killed",
-  "rung_reason": "Drought steeling: A1 failed across 1,175 sites.",
+  "rung_reason": "Drought steeling: the steeling test failed across 1,175 sites.",
   "outcome": "null",
   "bound": "The 95 percent interval runs to +0.090 in log resilience, about a 9 percent gain, so small conditioning effects stay open.",
   "verdicts": {
@@ -27,8 +27,8 @@
    ]
   },
   "objection": "The 95% interval reaches +0.090 in log resilience, a gain of about 9 percent. Small conditioning effects are not ruled out.",
-  "objection_source": "the paper's first stated limitation; no reviewer attack is on file",
-  "would_change": "Add an autocorrelation (biological memory) baseline, then publish A alone as a null with its power stated.",
+  "objection_source": "the paper's first stated limitation; our register records no separate objection",
+  "would_change": "Add a baseline for autocorrelation (biological memory) and state the test's power.",
   "sections": [
    {
     "id": "reader",
@@ -62,7 +62,7 @@
     "title": "Preregistration and design",
     "role": "argument",
     "paragraphs": [
-     "The design was written as a {g:preregistration}preregistration{/g} and hash-locked on 29 October 2026 at 22:54 UTC, before any hypothesis value was computed. A smoke run at small sizes before the lock printed design counts only: 1,175 sites, 3,780 events, 65 species, 177 climate divisions, and the prior-drought group sizes. No coefficient was printed or read.",
+     "The design was written as a {g:preregistration}preregistration{/g} and hash-locked on 29 October 2026 at 22:54 UTC, before any hypothesis value was computed. A smoke run (a short trial run that checks the code executes) at small sizes before the lock printed design counts only: 1,175 sites, 3,780 events, 65 species, 177 climate divisions, and the prior-drought group sizes. No coefficient was printed or read.",
      "The locked file covers four tests, A to D. Tests B to D are simulations of a loaded rod, a small neural network and a Bayesian learner, and they say nothing about trees. This paper reports Test A, the only test on real data. Across all four tests the run returned 22 {g:verdict}verdicts{/g}, 10 passing and 12 failing.",
      "Test A had four preregistered predictions, each a set of rules that must all hold:",
      "- A1, steeling: the moderate-drought coefficient is above 0, its {g:benjamini-hochberg}Benjamini-Hochberg{/g} adjusted q is below 0.05, and it is above the 95th percentile of both nulls.",
@@ -275,7 +275,7 @@
    "label": "Sample",
    "value": "1,175 sites, 65 species, 3,780 site-drought events, 579 division droughts",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -284,9 +284,9 @@
    "id": "e6",
    "kind": "number",
    "label": "Main estimate and interval",
-   "value": "+0.039 [-0.011, +0.090], BH q 0.17; rerun +0.025 [-0.009, +0.059]",
+   "value": "+0.039 (-0.011 to +0.090), adjusted q 0.17; rerun +0.025 (-0.009 to +0.059)",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -297,7 +297,7 @@
    "label": "Forecast against outcome",
    "value": "the steeling test failed (A1 FAIL), as the forecast of a weak or null effect expected",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -306,9 +306,9 @@
    "id": "e8",
    "kind": "control",
    "label": "Known-answer check",
-   "value": "D Bayes matches closed form, by construction",
+   "value": "none for test A; in the toy test D the Bayesian case matches its closed form by construction",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -362,7 +362,7 @@
    "title": "International Tree-Ring Data Bank. NOAA National Centers for Environmental Information, World Data Service for Paleoclimatology. Standard chronologies, North America. https://www.ncei.noaa.gov/pub/data/paleo/treering/",
    "access": "run",
    "target": "https://www.ncei.noaa.gov/pub/data/paleo/treering/",
-   "licence": "ITRDB and NOAA nClimDiv public; check ITRDB contributor terms; CRU scPDSI ODbL for the rerun"
+   "licence": "ITRDB, a public archive at NOAA, with contributors cited (its page states no licence text); NOAA nClimDiv is public; CRU scPDSI under the Open Database License for the rerun"
   },
   {
    "id": "r6",
@@ -370,7 +370,7 @@
    "kind": "dataset",
    "title": "NOAA National Centers for Environmental Information. nClimDiv climate division data, Palmer Drought Severity Index, version 1.0.0, build of 6 October 2026, with the contiguous US climate division boundaries. Retrieved 29 October 2026.",
    "access": "run",
-   "licence": "ITRDB and NOAA nClimDiv public; check ITRDB contributor terms; CRU scPDSI ODbL for the rerun"
+   "licence": "ITRDB, a public archive at NOAA, with contributors cited (its page states no licence text); NOAA nClimDiv is public; CRU scPDSI under the Open Database License for the rerun"
   },
   {
    "id": "r7",
@@ -379,7 +379,7 @@
    "title": "Harris, I., Osborn, T. J., Jones, P. and Lister, D. (2020). Version 4 of the CRU TS monthly high-resolution gridded multivariate climate dataset. Scientific Data 7, 109. doi:10.1038/s41597-020-0453-3",
    "access": "run",
    "target": "https://doi.org/10.1038/s41597-020-0453-3",
-   "licence": "ITRDB and NOAA nClimDiv public; check ITRDB contributor terms; CRU scPDSI ODbL for the rerun"
+   "licence": "ITRDB, a public archive at NOAA, with contributors cited (its page states no licence text); NOAA nClimDiv is public; CRU scPDSI under the Open Database License for the rerun"
   },
   {
    "id": "r8",
@@ -388,7 +388,7 @@
    "title": "Climatic Research Unit, University of East Anglia. CRU TS 4.10 self-calibrating Palmer Drought Severity Index, 0.5 degree, 1903 to 2025. Open Database License 1.0. https://crudata.uea.ac.uk/cru/data/hrg/",
    "access": "run",
    "target": "https://crudata.uea.ac.uk/cru/data/hrg/",
-   "licence": "ITRDB and NOAA nClimDiv public; check ITRDB contributor terms; CRU scPDSI ODbL for the rerun"
+   "licence": "ITRDB, a public archive at NOAA, with contributors cited (its page states no licence text); NOAA nClimDiv is public; CRU scPDSI under the Open Database License for the rerun"
   }
  ],
  "relations": [
@@ -398,7 +398,7 @@
    "type": "held",
    "scope": "test A, moderate prior drought",
    "date": "2026-10-30",
-   "note": "Mirror test MT2 on gridded scPDSI: +0.025, below the time-shift 95th percentile of 0.038; the kill fires again.",
+   "note": "A repeat of test A on gridded scPDSI near each site gave +0.025, below the time-shift 95th percentile of 0.038; the kill fires again.",
    "record": "findings ledger, F95 MT2"
   },
   {
@@ -408,7 +408,7 @@
    "scope": "within-species steeling sign",
    "date": "2026-10-30",
    "note": "The +0.037 sign under division PDSI with species effects does not survive site-scale drought.",
-   "record": "PU30-06; findings ledger, Prior updates 2026-10-30"
+   "record": "findings ledger, prior updates of 2026-10-30; findings ledger, Prior updates 2026-10-30"
   },
   {
    "from": "F87",
@@ -485,50 +485,55 @@
   "lowers": [
    {
     "domain": "blinding",
-    "text": "Not blind. Rs = Rt x Rc makes the recovery gain partly mechanical",
-    "from": "register scorer.blind"
+    "text": "Not blind. Resilience is resistance times recovery, which makes the recovery gain partly mechanical.",
+    "from": "our publication register, on blinding"
+   },
+   {
+    "domain": "failed check",
+    "text": "Controls: the placebo window for test A was clean; the estimate did not beat the 95th percentile of the time-shifted drought record (0.065); the control for the toy test B failed through a fault in its metric.",
+    "from": "our publication register, on controls"
    },
    {
     "domain": "missing control",
-    "text": "Controls: A placebo clean; circular shift q95 0.065 not beaten; B_CTRL failed (metric defect).",
-    "from": "register evidence.controls"
+    "text": "No positive control.",
+    "from": "our publication register, on the known-answer check"
    },
    {
     "domain": "imprecision",
     "text": "The 95 percent interval runs to +0.090 in log resilience, about a 9 percent gain, so small conditioning effects stay open.",
-    "from": "the bound"
+    "from": "the bound stated under Evidence"
    },
    {
     "domain": "novelty",
     "text": "Nearby work exists; novelty is not shown.",
-    "from": "register literature.verdict"
+    "from": "our publication register, on the literature"
    },
    {
-    "domain": "single source",
+    "domain": "depth of reading",
     "text": "The cited literature was read at the level of abstracts, publisher pages, press coverage and search summaries; full texts were not read.",
-    "from": "paper Verified"
+    "from": "the Verified section"
    }
   ],
   "holds": [
    {
     "domain": "scoring",
     "text": "Scored by code against rules fixed in advance.",
-    "from": "register scorer.who"
+    "from": "our publication register, on who scored it"
    },
    {
     "domain": "preregistration",
     "text": "Preregistered and hash-locked before the run (sha256 1e723097).",
-    "from": "paper Reproduction"
+    "from": "the Reproduce section"
    },
    {
     "domain": "replication",
-    "text": "Rechecked by F95 (test A, moderate prior drought): Mirror test MT2 on gridded scPDSI: +0.025, below the time-shift 95th percentile of 0.038; the kill fires again.",
-    "from": "relations"
+    "text": "Rechecked by F95 (test A, moderate prior drought): A repeat of test A on gridded scPDSI near each site gave +0.025, below the time-shift 95th percentile of 0.038; the kill fires again.",
+    "from": "a later finding"
    },
    {
     "domain": "open data",
     "text": "Public data.",
-    "from": "register data_licence"
+    "from": "our publication register, on the data licence"
    }
   ]
  },
@@ -536,22 +541,22 @@
   "data": [
    {
     "name": "International Tree-Ring Data Bank",
-    "licence": "ITRDB and NOAA nClimDiv public; check ITRDB contributor terms; CRU scPDSI ODbL for the rerun",
+    "licence": "ITRDB, a public archive at NOAA, with contributors cited (its page states no licence text); NOAA nClimDiv is public; CRU scPDSI under the Open Database License for the rerun",
     "url": "https://www.ncei.noaa.gov/pub/data/paleo/treering/"
    },
    {
     "name": "nclimdiv",
-    "licence": "ITRDB and NOAA nClimDiv public; check ITRDB contributor terms; CRU scPDSI ODbL for the rerun",
+    "licence": "ITRDB, a public archive at NOAA, with contributors cited (its page states no licence text); NOAA nClimDiv is public; CRU scPDSI under the Open Database License for the rerun",
     "url": ""
    },
    {
     "name": "Harris 2020",
-    "licence": "ITRDB and NOAA nClimDiv public; check ITRDB contributor terms; CRU scPDSI ODbL for the rerun",
+    "licence": "ITRDB, a public archive at NOAA, with contributors cited (its page states no licence text); NOAA nClimDiv is public; CRU scPDSI under the Open Database License for the rerun",
     "url": "https://doi.org/10.1038/s41597-020-0453-3"
    },
    {
     "name": "cruts",
-    "licence": "ITRDB and NOAA nClimDiv public; check ITRDB contributor terms; CRU scPDSI ODbL for the rerun",
+    "licence": "ITRDB, a public archive at NOAA, with contributors cited (its page states no licence text); NOAA nClimDiv is public; CRU scPDSI under the Open Database License for the rerun",
     "url": "https://crudata.uea.ac.uk/cru/data/hrg/"
    }
   ],

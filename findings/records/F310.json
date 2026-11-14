@@ -26,8 +26,8 @@
    ]
   },
   "objection": "The three forms were written from memory of the published ones, and a later review of our own ledger flagged that. A published form that differs could score differently, so the result covers these three versions only. Blagg's formula with its periodic term was not tested.",
-  "objection_source": "the paper's first stated limitation; no reviewer attack is on file",
-  "would_change": "No condition for raising or overturning the call is on file in the register.",
+  "objection_source": "the paper's first stated limitation; our register records no separate objection",
+  "would_change": "Our publication register records no condition that would raise or overturn this call.",
   "sections": [
    {
     "id": "reader",
@@ -353,7 +353,7 @@
    "type": "narrowed",
    "scope": "the three forms",
    "date": "2026-10-31",
-   "note": "The correction pass coded one memory value: the three forms were written from memory, so the result covers these three versions only.",
+   "note": "A later review of our ledger recorded one value entered from memory: the three forms were written from memory, so the result covers these three versions only.",
    "record": "findings ledger, F422 correction pass"
   }
  ],
@@ -400,24 +400,24 @@
    {
     "domain": "scoring",
     "text": "Scored by code and by the agent that ran it; self-graded.",
-    "from": "register scorer"
+    "from": "our publication register, on who scored it"
    },
    {
     "domain": "blinding",
     "text": "Not blind, as the paper's limitations state.",
-    "from": "paper Limitations"
+    "from": "the paper's Limitations"
    },
    {
-    "domain": "single source",
+    "domain": "depth of reading",
     "text": "The cited literature was read at the level of abstracts and publisher pages; full texts were not read.",
-    "from": "paper Verified"
+    "from": "the Verified section"
    }
   ],
   "holds": [
    {
     "domain": "preregistration",
     "text": "Preregistered and hash-locked before the run (sha256 c11616a0).",
-    "from": "paper Reproduction"
+    "from": "the Reproduce section"
    }
   ]
  },

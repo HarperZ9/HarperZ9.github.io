@@ -15,7 +15,7 @@
   "tier": "B*",
   "tier_reason": "Real data across domains with working nulls, and an unusual side-by-side view. The second run is not blind, one ceiling failed, the core forecasts failed, and linear models cannot rule out nonlinear signal. The past-performance finding is known.",
   "rung": "hypothesis",
-  "rung_reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
+  "rung_reason": "A preregistration with pass-or-fail rules is on file, which this rung needs. The next rung needs a named rival reading beaten by a decisive observation, and none is on file.",
   "outcome": "mixed",
   "bound": "Four of the six preregistered verdicts failed. One target reached 0.8 of its ceiling against a forecast of at least four, and one plateau moved when a new kind of variable arrived against a forecast of at least three. Held-out skill did rise with added variables and beat its shuffled control in every target, and the two toy-model verdicts passed.",
   "verdicts": {
@@ -27,8 +27,8 @@
    ]
   },
   "objection": "Ridge and logit may leave signal that a nonlinear model finds, so a stall may be the model class; datasets are a convenience sample; DEAM rater count is assumed and the ceilings are bounds.",
-  "objection_source": "the register's reviewer attack",
-  "would_change": "Rerun with nonlinear learners and a preregistered tree ceiling on fresh splits; drop the saves; add a domain outside this machine",
+  "objection_source": "the strongest objection recorded in our publication register",
+  "would_change": "Rerun with nonlinear learners and a preregistered tree ceiling on fresh splits; leave out the private image collection; add a domain from outside our own records",
   "sections": [
    {
     "id": "reader",
@@ -294,7 +294,7 @@
    "label": "Sample",
    "value": "8 datasets; n 1744 to 150000; 22 to 1349 variables",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -303,9 +303,9 @@
    "id": "e6",
    "kind": "number",
    "label": "Main estimate and interval",
-   "value": "GJP asymptote 0.137 [0.118,0.155]; other asymptote intervals often hit the fit bound (up to 2.0)",
+   "value": "forecaster plateau 0.137 (0.118 to 0.155); other plateau intervals often hit the bound of the fit (up to 2.0)",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -314,9 +314,9 @@
    "id": "e7",
    "kind": "number",
    "label": "Forecast against outcome",
-   "value": "P1 1 of 6 at ceiling vs >= 4; P2 1 moved vs >= 3; P3, P4 toys pass; P6 gap -0.221",
+   "value": "1 of 6 targets at its ceiling against a forecast of at least 4; 1 plateau moved against at least 3; the two toy-model forecasts passed; an identification test on the private image collection, left out of the paper, missed its bar at -0.221",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -325,9 +325,9 @@
    "id": "e8",
    "kind": "control",
    "label": "Known-answer check",
-   "value": "Lorenz horizon 2.51 vs theory 2.54 per decade; overfitting demo",
+   "value": "Lorenz forecast horizon 2.51 per tenfold precision against 2.54 from theory; an overfitting demonstration",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -371,7 +371,7 @@
    "title": "Hebart, M. N., Contier, O., Teichmann, L. and others (2023). THINGS-data, a multimodal collection of large-scale datasets for investigating object representations in human brain and behavior. eLife 12, e82580. doi:10.7554/eLife.82580",
    "access": "run",
    "target": "https://doi.org/10.7554/eLife.82580",
-   "licence": "mixed: DEAM CC BY-NC; GJP, FIA, THINGS each own terms; author saves private and should be dropped"
+   "licence": "mixed: DEAM CC BY-NC; the Good Judgment Project, Forest Inventory and THINGS data each under their own terms; the image collection is private and is not published"
   },
   {
    "id": "r5",
@@ -390,7 +390,7 @@
    "title": "Aljanaki, A., Yang, Y.-H. and Soleymani, M. (2017). Developing a benchmark for emotional analysis of music. PLoS ONE 12(3), e0173392. doi:10.1371/journal.pone.0173392",
    "access": "run",
    "target": "https://doi.org/10.1371/journal.pone.0173392",
-   "licence": "mixed: DEAM CC BY-NC; GJP, FIA, THINGS each own terms; author saves private and should be dropped"
+   "licence": "mixed: DEAM CC BY-NC; the Good Judgment Project, Forest Inventory and THINGS data each under their own terms; the image collection is private and is not published"
   },
   {
    "id": "r7",
@@ -399,7 +399,7 @@
    "title": "Good Judgment Project. GJP data. Harvard Dataverse, CC0 1.0. doi:10.7910/DVN/BPCDH5",
    "access": "run",
    "target": "https://doi.org/10.7910/DVN/BPCDH5",
-   "licence": "mixed: DEAM CC BY-NC; GJP, FIA, THINGS each own terms; author saves private and should be dropped"
+   "licence": "mixed: DEAM CC BY-NC; the Good Judgment Project, Forest Inventory and THINGS data each under their own terms; the image collection is private and is not published"
   },
   {
    "id": "r8",
@@ -407,7 +407,7 @@
    "kind": "dataset",
    "title": "USDA Forest Service. Forest Inventory and Analysis database, Washington and Oregon. FIA DataMart.",
    "access": "run",
-   "licence": "mixed: DEAM CC BY-NC; GJP, FIA, THINGS each own terms; author saves private and should be dropped"
+   "licence": "mixed: DEAM CC BY-NC; the Good Judgment Project, Forest Inventory and THINGS data each under their own terms; the image collection is private and is not published"
   },
   {
    "id": "r9",
@@ -415,7 +415,7 @@
    "kind": "dataset",
    "title": "openESM. Experience sampling dataset 0062 (Neubauer). CC BY 4.0.",
    "access": "run",
-   "licence": "mixed: DEAM CC BY-NC; GJP, FIA, THINGS each own terms; author saves private and should be dropped"
+   "licence": "mixed: DEAM CC BY-NC; the Good Judgment Project, Forest Inventory and THINGS data each under their own terms; the image collection is private and is not published"
   },
   {
    "id": "r10",
@@ -488,40 +488,40 @@
   "lowers": [
    {
     "domain": "blinding",
-    "text": "Not blind. second run corrects a clipping fault after reading run 1",
-    "from": "register scorer.blind"
+    "text": "Not blind. The second run corrects a clipping fault found by reading the first run.",
+    "from": "our publication register, on blinding"
    },
    {
-    "domain": "missing control",
-    "text": "Controls: working: shuffled-target nulls beaten by all eight; failed: tree ceiling estimator (-3.96); P5 rule mis-specified.",
-    "from": "register evidence.controls"
+    "domain": "failed check",
+    "text": "Controls: working: all eight targets beat their shuffled-target control; failed: the tree ceiling estimator (-3.96); the overfitting rule asked for a training fit of 0.99 and got 0.96, a bar we set wrongly.",
+    "from": "our publication register, on controls"
    },
    {
     "domain": "novelty",
     "text": "Nearby work exists; novelty is not shown.",
-    "from": "register literature.verdict"
+    "from": "our publication register, on the literature"
    },
    {
-    "domain": "single source",
+    "domain": "depth of reading",
     "text": "The cited literature was read at the level of abstracts, repository records and publisher pages; full texts were not read.",
-    "from": "paper Verified"
+    "from": "the Verified section"
    }
   ],
   "holds": [
    {
     "domain": "scoring",
     "text": "Scored by code against rules fixed in advance.",
-    "from": "register scorer.who"
+    "from": "our publication register, on who scored it"
    },
    {
     "domain": "preregistration",
     "text": "Preregistered and hash-locked before the run (sha256 ee38c3bd).",
-    "from": "paper Reproduction"
+    "from": "the Reproduce section"
    },
    {
     "domain": "open data",
-    "text": "Public data.",
-    "from": "register data_licence"
+    "text": "Part of the data is public and part is not; the data licence line under Reproduce says which.",
+    "from": "our publication register, on the data licence"
    }
   ]
  },
@@ -529,27 +529,27 @@
   "data": [
    {
     "name": "Hebart 2023",
-    "licence": "mixed: DEAM CC BY-NC; GJP, FIA, THINGS each own terms; author saves private and should be dropped",
+    "licence": "mixed: DEAM CC BY-NC; the Good Judgment Project, Forest Inventory and THINGS data each under their own terms; the image collection is private and is not published",
     "url": "https://doi.org/10.7554/eLife.82580"
    },
    {
     "name": "Aljanaki 2017",
-    "licence": "mixed: DEAM CC BY-NC; GJP, FIA, THINGS each own terms; author saves private and should be dropped",
+    "licence": "mixed: DEAM CC BY-NC; the Good Judgment Project, Forest Inventory and THINGS data each under their own terms; the image collection is private and is not published",
     "url": "https://doi.org/10.1371/journal.pone.0173392"
    },
    {
     "name": "Good Judgment Project",
-    "licence": "mixed: DEAM CC BY-NC; GJP, FIA, THINGS each own terms; author saves private and should be dropped",
+    "licence": "mixed: DEAM CC BY-NC; the Good Judgment Project, Forest Inventory and THINGS data each under their own terms; the image collection is private and is not published",
     "url": "https://doi.org/10.7910/DVN/BPCDH5"
    },
    {
     "name": "USDA Forest Service",
-    "licence": "mixed: DEAM CC BY-NC; GJP, FIA, THINGS each own terms; author saves private and should be dropped",
+    "licence": "mixed: DEAM CC BY-NC; the Good Judgment Project, Forest Inventory and THINGS data each under their own terms; the image collection is private and is not published",
     "url": ""
    },
    {
     "name": "openESM",
-    "licence": "mixed: DEAM CC BY-NC; GJP, FIA, THINGS each own terms; author saves private and should be dropped",
+    "licence": "mixed: DEAM CC BY-NC; the Good Judgment Project, Forest Inventory and THINGS data each under their own terms; the image collection is private and is not published",
     "url": ""
    }
   ],

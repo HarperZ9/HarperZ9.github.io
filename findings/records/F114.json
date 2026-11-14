@@ -13,9 +13,9 @@
    "information-theory"
   ],
   "tier": "B*",
-  "tier_reason": "Real data, prereg, truth anchor, working controls and a second code path in a second region, but bits are a monotone transform of CE and the density-over-width ranking is long known. The added-channel against added-tree comparison is an inconclusive null.",
+  "tier_reason": "Real data, a preregistration, a planted check with a known answer, working controls and a second code path in a second region. Bits are a monotone transform of the coefficient of efficiency, and the ranking of density over width is long known. The comparison of an added channel with an added tree is an inconclusive null.",
   "rung": "hypothesis",
-  "rung_reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
+  "rung_reason": "A preregistration with pass-or-fail rules is on file, which this rung needs. The next rung needs a named rival reading beaten by a decisive observation, and none is on file.",
   "outcome": "held",
   "verdicts": {
    "held": 5,
@@ -29,9 +29,9 @@
    "state": "not fired",
    "note": "The paper states that the kill condition did not fire: the best channel beat all three controls and tests survived correction."
   },
-  "objection": "Bits relabel CE, so what is new? Next: the regional gain partly reflects a smoother target, P3's null is underpowered, cores stand in for trees, cloud is interpolated, and windows end near 1975.",
-  "objection_source": "the register's reviewer attack",
-  "would_change": "Power P3 with wider panels and nested best-subset selection, an outside dendrochronologist's review, and a band or period out of sample past 1975",
+  "objection": "Bits are a relabelling of the coefficient of efficiency, so what is new? Further: the regional gain partly reflects a smoother target, the null on the forecast that an added channel beats an added tree is underpowered, cores stand in for trees, cloud cover is interpolated, and the windows end near 1975.",
+  "objection_source": "the strongest objection recorded in our publication register",
+  "would_change": "Give the channel-against-tree test more power with wider panels and nested best-subset selection; an outside dendrochronologist's review; a band or period out of sample past 1975",
   "sections": [
    {
     "id": "reader",
@@ -321,9 +321,9 @@
    "id": "e7",
    "kind": "number",
    "label": "Sample",
-   "value": "51 Alpine and 24 Fennoscandian sites, 74 to 78 regional years, 43 sites for P3, 19 d18O sites",
+   "value": "51 Alpine and 24 Fennoscandian sites, 74 to 78 regional years, 43 sites for the channel-against-tree test, 19 oxygen-isotope sites",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -332,9 +332,9 @@
    "id": "e8",
    "kind": "number",
    "label": "Main estimate and interval",
-   "value": "P1 +0.062 bits (0.034 to 0.089); Fennoscandia +0.28 (0.23 to 0.33); P3 difference 0.011 (-0.003 to 0.025)",
+   "value": "density minus width +0.062 bits (0.034 to 0.089); Fennoscandia +0.28 (0.23 to 0.33); added channel minus added tree 0.011 (-0.003 to 0.025)",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -343,9 +343,9 @@
    "id": "e9",
    "kind": "number",
    "label": "Forecast against outcome",
-   "value": "P1, H4, H5 PASS; P2 saturation FAIL (0.25 against 0.10); P3 FAIL; both fail in Fennoscandia too",
+   "value": "Passed: density beats width, the season forecast and the isotope forecast. Failed: saturation by three channels (ratio 0.25 against a bar of 0.10) and an added channel beating an added tree; both also fail in Fennoscandia",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -354,9 +354,9 @@
    "id": "e10",
    "kind": "control",
    "label": "Known-answer check",
-   "value": "planted 0.322 bits read 0.331 Gaussian, 0.308 KSG, 0.269 held-out",
+   "value": "a planted signal of 0.322 bits read 0.331 by the Gaussian estimate, 0.308 by the KSG estimate and 0.269 held out",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -494,34 +494,34 @@
    {
     "domain": "blinding",
     "text": "Not blind. Held-out skill against instrumental climate; second code path shares no code",
-    "from": "register scorer.blind"
+    "from": "our publication register, on blinding"
    },
    {
-    "domain": "single source",
+    "domain": "depth of reading",
     "text": "The cited literature was read at the level of abstracts, publisher pages and search summaries; full texts were not read.",
-    "from": "paper Verified"
+    "from": "the Verified section"
    }
   ],
   "holds": [
    {
     "domain": "scoring",
     "text": "Scored by code against rules fixed in advance.",
-    "from": "register scorer.who"
+    "from": "our publication register, on who scored it"
    },
    {
     "domain": "preregistration",
     "text": "Preregistered and hash-locked before the run (sha256 bfec0fce).",
-    "from": "paper Reproduction"
+    "from": "the Reproduce section"
    },
    {
     "domain": "control",
-    "text": "Controls: working: phase, shuffle and white q95 -0.014 to -0.017 against 0.095 bits; 14 of 15 tests survive BH.",
-    "from": "register evidence.controls"
+    "text": "Controls: working: the 95th percentiles of the phase-randomised, shuffled and white-noise controls ran from -0.014 to -0.017 bits against a real value of 0.095; 14 of 15 tests survive the Benjamini-Hochberg correction.",
+    "from": "our publication register, on controls"
    },
    {
     "domain": "open data",
     "text": "Public data.",
-    "from": "register data_licence"
+    "from": "our publication register, on the data licence"
    }
   ]
  },

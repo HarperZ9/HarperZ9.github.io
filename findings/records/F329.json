@@ -13,9 +13,9 @@
    "human-studies"
   ],
   "tier": "B",
-  "tier_reason": "Real data, clean held-out design, useful negative; a reproduction with a limit on identifiability.",
+  "tier_reason": "Real data and a held-out design, with a useful negative: this method could not tell the six models apart. The reproduction check against the published mean failed (0.287 against 0.234, tolerance 0.03).",
   "rung": "hypothesis",
-  "rung_reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
+  "rung_reason": "A preregistration with pass-or-fail rules is on file, which this rung needs. The next rung needs a named rival reading beaten by a decisive observation, and none is on file.",
   "outcome": "mixed",
   "bound": "The planted check failed: the method did not recover a known model at this sample size (the planted model trailed its rival by 0.0003 nats per report). By the preregistered kill condition no ranking among the six models counts. The reports do differ from a shuffled control, and the shares read from the held-out reports are a description.",
   "verdicts": {
@@ -31,8 +31,8 @@
    "note": "The planted check failed, so by the preregistered kill condition no ranking among the six models counts. The kill condition on the shuffle control did not fire."
   },
   "objection": "The planted check failed, so the near-tie says nothing about which model is true, and the model ranking in Table {ref:tab:loss} is not a result.",
-  "objection_source": "the paper's first stated limitation; no reviewer attack is on file",
-  "would_change": "No condition for raising or overturning the call is on file in the register.",
+  "objection_source": "the paper's first stated limitation; our register records no separate objection",
+  "would_change": "Our publication register records no condition that would raise or overturn this call.",
   "sections": [
    {
     "id": "reader",
@@ -323,7 +323,7 @@
    "type": "narrowed",
    "scope": "reproduction check",
    "date": "2026-10-31",
-   "note": "The correction pass coded a failed plant, an error and a post hoc rescue; on 2026-11-09 the ledger added that the preregistered reproduction check failed at 0.287 against 0.234 within 0.03.",
+   "note": "A later review of our ledger recorded a failed planted check, an error and an explanation added after the result; on 2026-11-09 the ledger added that the preregistered reproduction check failed at 0.287 against 0.234 within 0.03.",
    "record": "findings ledger, F422 correction pass and Publication pass corrections 2026-11-09"
   }
  ],
@@ -356,24 +356,24 @@
    {
     "domain": "scoring",
     "text": "Scored by code and by the agent that ran it; self-graded.",
-    "from": "register scorer"
+    "from": "our publication register, on who scored it"
    },
    {
     "domain": "blinding",
     "text": "Not blind, as the paper's limitations state.",
-    "from": "paper Limitations"
+    "from": "the paper's Limitations"
    },
    {
-    "domain": "single source",
+    "domain": "depth of reading",
     "text": "The cited literature was read at the level of abstracts, publisher pages and search summaries; full texts were not read.",
-    "from": "paper Verified"
+    "from": "the Verified section"
    }
   ],
   "holds": [
    {
     "domain": "preregistration",
     "text": "Preregistered and hash-locked before the run (sha256 bff18a49).",
-    "from": "paper Reproduction"
+    "from": "the Reproduce section"
    }
   ]
  },

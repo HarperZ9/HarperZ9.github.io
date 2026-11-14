@@ -13,9 +13,9 @@
    "forecasting-prediction"
   ],
   "tier": "B",
-  "tier_reason": "Real held-out result on public data with gates passing; related methods exist, no literature check for identical tests, and mixed-metric conversions need review.",
+  "tier_reason": "A real held-out result on public data, with its planted and data checks passing. Related methods exist; a search on 9 November 2026 found no test of this exact design, which does not show that none exists. Conversions between effect measures still need review.",
   "rung": "hypothesis",
-  "rung_reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
+  "rung_reason": "A preregistration with pass-or-fail rules is on file, which this rung needs. The next rung needs a named rival reading beaten by a decisive observation, and none is on file.",
   "outcome": "mixed",
   "bound": "The model beat taking originals at face value (the 95 percent interval of the Brier gain starts at 0.108). It did not beat the base rate (the interval starts at -0.039) and it lost to a small logistic model. Skill was positive in half the fields against a bar of three quarters, and its Reproducibility Project rate missed by 0.16 against a tolerance of 0.05. The preregistered kill rule fired, so the claim that the model picks which effects replicate is withdrawn.",
   "verdicts": {
@@ -31,8 +31,8 @@
    "note": "The model did not beat the base rate on held-out fields, so the preregistered kill rule fired and the claim that it tells which effects replicate is withdrawn."
   },
   "objection": "Fisher z standard errors ignore design, and unsigned rows assume direction.",
-  "objection_source": "the register's reviewer attack",
-  "would_change": "Lock the two-normal prior, review conversions by hand on a sample, search the literature.",
+  "objection_source": "the strongest objection recorded in our publication register",
+  "would_change": "Lock the two-normal prior and review the conversions by hand on a sample.",
   "sections": [
    {
     "id": "reader",
@@ -277,7 +277,7 @@
    "label": "Sample",
    "value": "1222 effects, 307 project clusters",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -288,7 +288,7 @@
    "label": "Main estimate and interval",
    "value": "project-cluster bootstrap 95 percent",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -297,9 +297,9 @@
    "id": "e7",
    "kind": "number",
    "label": "Forecast against outcome",
-   "value": "beat base P 0.7, failed at -0.004",
+   "value": "beating the base rate was given a probability of 0.7; it failed at -0.004",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -310,7 +310,7 @@
    "label": "Known-answer check",
    "value": "planted mixtures; 34 reported Reproducibility Project successes in the rows kept, against the 35 published",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -435,35 +435,35 @@
   "lowers": [
    {
     "domain": "blinding",
-    "text": "Not blind. The RPP forecast was not blind to the published 36 percent.",
-    "from": "register scorer.blind"
+    "text": "Not blind. The Reproducibility Project forecast was not blind to the published 36 percent.",
+    "from": "our publication register, on blinding"
    },
    {
     "domain": "scoring",
     "text": "Graded by the same agent that ran it.",
-    "from": "register scorer.self_graded"
+    "from": "our publication register, on who scored it"
    },
    {
-    "domain": "single source",
+    "domain": "depth of reading",
     "text": "The cited literature was read at the level of abstracts, publisher pages and search summaries; full texts were not read.",
-    "from": "paper Verified"
+    "from": "the Verified section"
    }
   ],
   "holds": [
    {
     "domain": "preregistration",
     "text": "Preregistered and hash-locked before the run (sha256 93132f99).",
-    "from": "paper Reproduction"
+    "from": "the Reproduce section"
    },
    {
     "domain": "control",
-    "text": "Controls: shuffled outcomes, shuffled originals, planted truths, data gates.",
-    "from": "register evidence.controls"
+    "text": "Controls: shuffled outcomes, shuffled originals, planted truths, data checks.",
+    "from": "our publication register, on controls"
    },
    {
     "domain": "open data",
     "text": "Public data.",
-    "from": "register data_licence"
+    "from": "our publication register, on the data licence"
    }
   ]
  },

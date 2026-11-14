@@ -15,7 +15,7 @@
   "tier": "B",
   "tier_reason": "Real public tables with planted and honest controls, and a clear statement of correlated inputs.",
   "rung": "hypothesis",
-  "rung_reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
+  "rung_reason": "A preregistration with pass-or-fail rules is on file, which this rung needs. The next rung needs a named rival reading beaten by a decisive observation, and none is on file.",
   "outcome": "held",
   "verdicts": {
    "held": 8,
@@ -30,8 +30,8 @@
    "note": "The paper states that the kill condition did not fire: the planted check passed."
   },
   "objection": "Later tables reuse inputs from earlier ones (shared inputs), so the later edition is not independent of the earlier one. That flatters every coverage figure here. Editions that share no inputs would be the cleaner test.",
-  "objection_source": "the paper's first stated limitation; no reviewer attack is on file",
-  "would_change": "No condition for raising or overturning the call is on file in the register.",
+  "objection_source": "the paper's first stated limitation; our register records no separate objection",
+  "would_change": "Our publication register records no condition that would raise or overturn this call.",
   "sections": [
    {
     "id": "reader",
@@ -369,7 +369,7 @@
    "type": "narrowed",
    "scope": "reused inputs and a proxy truth",
    "date": "2026-10-31",
-   "note": "The correction pass coded two errors: later tables reuse inputs, and the Hubble constant truth is a proxy.",
+   "note": "A later review of our ledger recorded two errors: later tables reuse inputs, and the Hubble constant truth is a proxy.",
    "record": "findings ledger, F422 correction pass"
   }
  ],
@@ -411,24 +411,24 @@
    {
     "domain": "scoring",
     "text": "Scored by code and by the agent that ran it; self-graded.",
-    "from": "register scorer"
+    "from": "our publication register, on who scored it"
    },
    {
     "domain": "blinding",
     "text": "Not blind, as the paper's limitations state.",
-    "from": "paper Limitations"
+    "from": "the paper's Limitations"
    },
    {
-    "domain": "single source",
+    "domain": "depth of reading",
     "text": "The cited literature was read at the level of abstracts and search summaries; full texts were not read.",
-    "from": "paper Verified"
+    "from": "the Verified section"
    }
   ],
   "holds": [
    {
     "domain": "preregistration",
     "text": "Preregistered and hash-locked before the run (sha256 fd8fcf7a).",
-    "from": "paper Reproduction"
+    "from": "the Reproduce section"
    }
   ]
  },

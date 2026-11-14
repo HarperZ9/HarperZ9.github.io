@@ -167,7 +167,7 @@
     "reason": {
       "type": "object", "required": ["domain", "text"], "additionalProperties": false,
       "properties": {
-        "domain": {"enum": ["blinding", "imprecision", "indirectness", "missing control", "measurement", "novelty", "single source", "preregistration", "control", "replication", "open data", "scoring"]},
+        "domain": {"enum": ["blinding", "imprecision", "indirectness", "missing control", "measurement", "novelty", "single source", "depth of reading", "failed check", "preregistration", "control", "replication", "open data", "scoring"]},
         "text": {"type": "string"},
         "from": {"type": "string", "description": "The register field it was derived from."}
       }

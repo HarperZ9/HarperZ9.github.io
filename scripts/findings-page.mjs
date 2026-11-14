@@ -17,7 +17,7 @@ function standingLine(rec, rels) {
   const items = [
     ["Tier", `${esc(d.tier)}, ${TIER_WORD[d.tier]}`],
     ["Outcome", `<a href="#evidence">${mark("outcome", d.outcome)}${esc(OUTCOME_WORD[d.outcome])}</a>`],
-    ["Rung", d.rung ? `<a href="#ladder">${esc(d.rung)}</a>` : "not yet placed"],
+    ["Rung", d.rung ? `<a href="#ladder">${esc(d.rung)}</a>` : '<a href="#ladder">none assigned</a>'],
     ...(d.verdicts ? [["Verdicts", `${d.verdicts.held} passed, ${d.verdicts.failed} failed${d.verdicts.untestable ? `, ${d.verdicts.untestable} untestable` : ""}`]] : []),
     ...(d.kill ? [["Kill rule", `<span title="${esc(d.kill.note)}">${esc(d.kill.state)}</span>`]] : []),
     ...(w ? [["Standing", stand]] : []),

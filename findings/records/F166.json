@@ -13,9 +13,9 @@
    "method"
   ],
   "tier": "D",
-  "tier_reason": "A refutation of our own formula with working controls; the lambda rows repeat a known kind of estimate.",
+  "tier_reason": "A refutation of our own formula with working controls; the loss-aversion estimates repeat a known kind of estimate.",
   "rung": "killed",
-  "rung_reason": "Combined formula over richer prospect theory: kill fired, retired.",
+  "rung_reason": "The combined formula against richer prospect theory: the kill rule fired and the formula is retired.",
   "outcome": "failed",
   "bound": "The combined formula never beat flexible prospect theory by the preregistered 0.005 in cross-validated R2 (0.634 against 0.645 without feedback, 0.597 against 0.596 with it).",
   "verdicts": {
@@ -31,7 +31,7 @@
    "note": "The kill rule fired in both settings, and the formula is retired as a model of risky choice."
   },
   "objection": "Entropy, loss probability and the mean and mean square of outcomes are one reading of information, threat and drive. Another reading could score differently, so the result covers this operationalisation only.",
-  "objection_source": "the paper's first stated limitation; no reviewer attack is on file",
+  "objection_source": "the paper's first stated limitation; our register records no separate objection",
   "would_change": "Person-level data and a preregistered reading of information gain.",
   "sections": [
    {
@@ -306,7 +306,7 @@
    "label": "Sample",
    "value": "1,928 and 9,831 problems",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -315,9 +315,9 @@
    "id": "e7",
    "kind": "number",
    "label": "Main estimate and interval",
-   "value": "lambda bootstrap 95%",
+   "value": "loss aversion, 95 percent bootstrap interval: 1.05 to 1.30 without feedback, 0.86 to 0.93 with it",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -326,9 +326,9 @@
    "id": "e8",
    "kind": "number",
    "label": "Forecast against outcome",
-   "value": "COMB minus FLEX +0.005, got -0.011",
+   "value": "combined formula minus flexible prospect theory, without feedback: bar +0.005, got -0.011",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -339,7 +339,7 @@
    "label": "Known-answer check",
    "value": "planted CPT and CPT plus entropy",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -459,34 +459,34 @@
    {
     "domain": "blinding",
     "text": "Not blind. Forecasts, rules and scoring all come from one agent.",
-    "from": "register scorer.blind"
+    "from": "our publication register, on blinding"
    },
    {
     "domain": "scoring",
     "text": "Graded by the same agent that ran it.",
-    "from": "register scorer.self_graded"
+    "from": "our publication register, on who scored it"
    },
    {
-    "domain": "single source",
+    "domain": "depth of reading",
     "text": "The cited literature was read at the level of abstracts, publisher pages and index records; full texts were not read.",
-    "from": "paper Verified"
+    "from": "the Verified section"
    },
    {
     "domain": "open data",
     "text": "The data carry no stated licence; the page reports statistics only.",
-    "from": "register data_licence"
+    "from": "our publication register, on the data licence"
    }
   ],
   "holds": [
    {
     "domain": "preregistration",
     "text": "Preregistered and hash-locked before the run (sha256 cecb9ceb).",
-    "from": "paper Reproduction"
+    "from": "the Reproduce section"
    },
    {
     "domain": "control",
     "text": "Controls: permuted terms, simulated CPT, planted truth.",
-    "from": "register evidence.controls"
+    "from": "our publication register, on controls"
    }
   ]
  },

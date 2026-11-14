@@ -25,7 +25,7 @@ The usual measures of drought response come from Lloret, Keeling and Sala {cite:
 Our searches, run on 9 November 2026, found these and related studies on legacies and repeated drought. We did not find a study of this exact contrast, moderate earlier drought against later resilience, scored against a time-shifted drought record. That is a search result, not proof that none exists.
 
 # section Preregistration and design {sec:prereg}
-The design was written as a {g:preregistration}preregistration{/g} and hash-locked on 29 October 2026 at 22:54 UTC, before any hypothesis value was computed. A smoke run at small sizes before the lock printed design counts only: 1,175 sites, 3,780 events, 65 species, 177 climate divisions, and the prior-drought group sizes. No coefficient was printed or read.
+The design was written as a {g:preregistration}preregistration{/g} and hash-locked on 29 October 2026 at 22:54 UTC, before any hypothesis value was computed. A smoke run (a short trial run that checks the code executes) at small sizes before the lock printed design counts only: 1,175 sites, 3,780 events, 65 species, 177 climate divisions, and the prior-drought group sizes. No coefficient was printed or read.
 
 The locked file covers four tests, A to D. Tests B to D are simulations of a loaded rod, a small neural network and a Bayesian learner, and they say nothing about trees. This paper reports Test A, the only test on real data. Across all four tests the run returned 22 {g:verdict}verdicts{/g}, 10 passing and 12 failing.
 

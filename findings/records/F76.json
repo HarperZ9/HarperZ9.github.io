@@ -13,9 +13,9 @@
    "instruments-metrology"
   ],
   "tier": "B*",
-  "tier_reason": "Clean prereg with working controls and known answers, on real data, but it tests a 1940s bound and mostly one data type. The real-below-surrogate gap is the part worth expanding; it held on a split in F91 but not on new series.",
+  "tier_reason": "A preregistration with working controls and known answers, on real data, but it tests a 1940s bound on mostly one type of data. The gap between real series and their surrogates is the part worth expanding; a later study of ours repeated it on a split of the same data, and it has not been tested on new series.",
   "rung": "hypothesis",
-  "rung_reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
+  "rung_reason": "A preregistration with pass-or-fail rules is on file, which this rung needs. The next rung needs a named rival reading beaten by a decisive observation, and none is on file.",
   "outcome": "held",
   "verdicts": {
    "held": 6,
@@ -30,7 +30,7 @@
    "note": "80 of 1,236 series beat the bound, 6.5 percent, under the preregistered 10 percent kill."
   },
   "objection": "Tree rings are 91 percent of series and arrive detrended; pooled rho may reflect group mix. Half-split AR estimation may explain the gap, and the bound is old.",
-  "objection_source": "the register's reviewer attack",
+  "objection_source": "the strongest objection recorded in our publication register",
   "would_change": "Independent series families (M-competitions, climate, physiology), then explain the surrogate gap by nonstationarity, non-Gaussianity or AR estimation.",
   "sections": [
    {
@@ -66,7 +66,7 @@
     "title": "Preregistration and design",
     "role": "argument",
     "paragraphs": [
-     "The {g:preregistration}preregistration{/g} was written on 29 October 2026 and hash-locked at 00:35:53 UTC on 30 October. Before the lock, two things had run: a smoke test on scrambled data, with every real series permuted in time and only counts and timings printed, and a calibration of the bound estimator on synthetic autoregressive series only. No statistic of an unscrambled real series was computed before the lock.",
+     "The {g:preregistration}preregistration{/g} was written on 29 October 2026 and hash-locked at 00:35:53 UTC on 30 October. Before the lock, two things had run: a smoke test (a short trial run that checks the code executes) on scrambled data, with every real series permuted in time and only counts and timings printed, and a calibration of the bound estimator on synthetic autoregressive series only. No statistic of an unscrambled real series was computed before the lock.",
      "One change came before the lock and is disclosed in the locked file. The first estimator, a Welch spectrum with a log-bias correction, underestimated the true bound on synthetic series by 0.13, 0.12, 0.06 and 0.02 at lengths 60, 150, 300 and 1000. A Hann-tapered periodogram with the Euler-gamma log correction gave 0.07, 0.04, 0.02 and 0.01. The tapered periodogram became the primary estimator and both Welch forms became secondaries.",
      "The decision the study informs was written in the same file: whether the flatness estimator is adopted into our study tooling as a predictability bound. It is adopted only if the planted check, the ranking test and the ceiling test all pass.",
      "{g:kill-condition}Kill conditions{/g}, without discretion:",
@@ -280,7 +280,7 @@
    "label": "Sample",
    "value": "1,236 series; 1,128 tree-ring, 106 mood, 2 power",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -291,7 +291,7 @@
    "label": "Main estimate and interval",
    "value": "rho 0.414 [0.361, 0.461]; violation 6.5% [5.2%, 8.0%]",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -300,9 +300,9 @@
    "id": "e7",
    "kind": "number",
    "label": "Forecast against outcome",
-   "value": "Thresholds set, passed; rho below every surrogate set was not forecast",
+   "value": "the thresholds set in advance were passed; real series ranking below every surrogate set was not forecast",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -313,7 +313,7 @@
    "label": "Known-answer check",
    "value": "planted AR rho 0.925 skill, 0.946 true bound, violation 4.3%; logistic map flagged 100%",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -376,7 +376,7 @@
    "title": "International Tree-Ring Data Bank. NOAA National Centers for Environmental Information, World Data Service for Paleoclimatology. Standard chronologies, retrieved October 2026. https://www.ncei.noaa.gov/products/paleoclimatology/tree-ring",
    "access": "run",
    "target": "https://www.ncei.noaa.gov/products/paleoclimatology/tree-ring",
-   "licence": "ITRDB public; ESM open data, check terms; machine logs own"
+   "licence": "ITRDB, a public archive; the openESM datasets under CC BY 4.0, as the paper's data section states; the two power logs are our own and not public"
   },
   {
    "id": "r7",
@@ -385,7 +385,7 @@
    "title": "openESM experience-sampling datasets 0008 Westhoff, 0018 Bailon, 0062 Neubauer and 0076 Bayer. Zenodo, CC BY 4.0. doi:10.5281/zenodo.17347510, doi:10.5281/zenodo.22763396, doi:10.5281/zenodo.17347974, doi:10.5281/zenodo.22911022",
    "access": "run",
    "target": "https://doi.org/10.5281/zenodo.17347510",
-   "licence": "ITRDB public; ESM open data, check terms; machine logs own"
+   "licence": "ITRDB, a public archive; the openESM datasets under CC BY 4.0, as the paper's data section states; the two power logs are our own and not public"
   },
   {
    "id": "r8",
@@ -449,40 +449,40 @@
   "lowers": [
    {
     "domain": "blinding",
-    "text": "Not blind. pre-lock estimator change disclosed",
-    "from": "register scorer.blind"
+    "text": "Not blind. A change of estimator before the lock is disclosed in the paper.",
+    "from": "our publication register, on blinding"
    },
    {
-    "domain": "missing control",
-    "text": "Controls: series shuffle, phase surrogates, planted AR and logistic map all working; S1 and S2 failed.",
-    "from": "register evidence.controls"
+    "domain": "failed check",
+    "text": "Controls: the series shuffle, the phase surrogates and the planted autoregressive and logistic-map series all worked; two side forecasts failed, that a nonlinear forecaster beats the linear bound and that the spectral slope alone ranks skill.",
+    "from": "our publication register, on controls"
    },
    {
-    "domain": "single source",
+    "domain": "depth of reading",
     "text": "The cited literature was read at the level of abstracts, search summaries and publisher pages; full texts were not read.",
-    "from": "paper Verified"
+    "from": "the Verified section"
    }
   ],
   "holds": [
    {
     "domain": "scoring",
     "text": "Scored by code against rules fixed in advance.",
-    "from": "register scorer.who"
+    "from": "our publication register, on who scored it"
    },
    {
     "domain": "preregistration",
     "text": "Preregistered and hash-locked before the run (sha256 fe8ddb06).",
-    "from": "paper Reproduction"
+    "from": "the Reproduce section"
    },
    {
     "domain": "replication",
     "text": "Rechecked by F91 (flatness bound against drift-aware versions): On 649 development series no drift-aware option beat the original bound (rho 0.350 to 0.398 against 0.414); same data family, not independent.",
-    "from": "relations"
+    "from": "a later finding"
    },
    {
     "domain": "open data",
-    "text": "Public data.",
-    "from": "register data_licence"
+    "text": "Part of the data is public and part is not; the data licence line under Reproduce says which.",
+    "from": "our publication register, on the data licence"
    }
   ]
  },
@@ -490,12 +490,12 @@
   "data": [
    {
     "name": "International Tree-Ring Data Bank",
-    "licence": "ITRDB public; ESM open data, check terms; machine logs own",
+    "licence": "ITRDB, a public archive; the openESM datasets under CC BY 4.0, as the paper's data section states; the two power logs are our own and not public",
     "url": "https://www.ncei.noaa.gov/products/paleoclimatology/tree-ring"
    },
    {
     "name": "openesm",
-    "licence": "ITRDB public; ESM open data, check terms; machine logs own",
+    "licence": "ITRDB, a public archive; the openESM datasets under CC BY 4.0, as the paper's data section states; the two power logs are our own and not public",
     "url": "https://doi.org/10.5281/zenodo.17347510"
    }
   ],
