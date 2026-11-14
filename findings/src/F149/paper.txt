@@ -74,7 +74,7 @@ The authors' stated means were recovered. Row means came out at 33.2 and 15.3 pe
 
 The rebuild passed: 143 of 169 nonzero rates, 0.846, gave a whole-number denominator, and the rebuilt numerators matched the paper's table totals with a median gap of 0. The per-study totals are in Appendix B.
 
-The calibration passed. With a flat truth the pipeline called a rise 0.092 of the time. With a doubled truth the median ratio was 2.11 and the interval covered the truth 0.89 of the time. The calibration also measured {g:power}statistical power{/g}: with a true doubling, the interval excluded 1 only 0.425 of the time.
+The calibration met its preregistered bar. With a flat truth the pipeline called a rise 0.092 of the time. With a doubled truth the median ratio was 2.11 and the interval covered the truth 0.89 of the time, against a bar of 0.8. The intervals are narrower than their stated level: they are 95 percent intervals, and they covered a planted doubling about 0.89 of the time where 0.95 was claimed. Read every interval on this page as somewhat too narrow. The calibration also measured {g:power}statistical power{/g}: with a true doubling, the interval excluded 1 only 0.425 of the time.
 
 # section Results {sec:results}
 Table {ref:tab:ratios} gives the ratios from all three models and Figure {ref:fig:ratios} draws them.
@@ -134,6 +134,7 @@ For citing practice we take one rule from this: when a rate is modelled as a cou
 - Every rate is the original authors' coding. Their Note 2 calls the coding subjective and names an element of presentism. We did not recode any citation.
 - Our definition of doubled may differ from the authors'. Their main figure and article body were not read.
 - The calibration measures this pipeline on planted data shaped like the real table. It does not test the coding.
+- The intervals are narrower than their stated level. They are 95 percent intervals, and in the planted check they covered a true doubling about 0.89 of the time where 0.95 was claimed. That met the preregistered bar of 0.8. Read every interval on this page as somewhat too narrow.
 - Nothing here bears on whether common mycorrhizal networks exist or move resources between trees.
 - The literature on the dispute was read at abstract and summary level.
 
@@ -144,6 +145,7 @@ Verified: on 9 November 2026 the 268 rates and 4 skipped rows, the group row cou
 - 31 October 2026, before any result: the first run stopped on rows with an empty rate cell. Such rows are now skipped and counted. The preregistration and plan were unchanged; the code hash changed.
 - 9 November 2026: first published version.
 - 14 November 2026: A review of the published page found one sentence that claimed more than was checked. The abstract said doubled fairly describes the authors' fitted curve; their curve was not available, and the page refits their model from the deposited table, so the sentence now says that.
+- 14 November 2026, second entry: A review found that the page reported interval coverage of 0.89 as a pass and left out what it means for the intervals. The calibration met its preregistered bar of 0.8. The intervals are 95 percent intervals and covered a planted doubling about 0.89 of the time, so they are narrower than their stated level. The results, the limitations and charts 1 and 5 now say so. No result changed.
 
 # section Reproduction {sec:repro}
 - Data: the CC0 rate table from the Dataverse deposit for Karst, Jones and Hoeksema (2023), and the per-year numerators in the paper's supplementary Note 3.

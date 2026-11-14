@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Build the landmark pages that carry their own figures: buildlang.html and low-water.html. Words come from
 // site-src/world/buildlang.mjs and low-water.mjs; versions and merge states come from site-src/world/releases.json
-// (scripts/fetch-releases.mjs), so a figure says "in 1.11.0", "on main" or "open" as GitHub said on the day of the
+// (scripts/fetch-releases.mjs), so a figure says "first released in 1.11.0" (the first release whose tag holds the change), "on main" or "open" as GitHub said on the day of the
 // fetch. Every figure opens in place to its source: the pull request or file it was read from.
 //
 //   node scripts/build-product-pages.mjs
@@ -24,6 +24,14 @@ const BLR = R.products.buildlang.github;
 // meta description and one line on the page, so every surface states the same purpose
 const PURPOSE = JSON.parse(readFileSync(path.join(site, "system/systems.json"), "utf8")).systems.find((x) => x.id === "buildlang").purpose;
 
+// The first release that contained a merged change, as the fetch read it from the release tags, or null when no
+// release carries it yet. The page states this release and never the latest one: a change that shipped in 1.11.0
+// is "first released in 1.11.0" however many releases followed.
+function firstOf(x) {
+  if (x.firstRelease === undefined) throw new Error(`product pages: ${x.repo}#${x.number} has no firstRelease in releases.json; run node scripts/fetch-releases.mjs`);
+  return x.firstRelease;
+}
+
 // a pull request's state in words, against the release it did or did not make
 function prState(repo, n) {
   const x = PRS.get(`${repo}#${n}`);
@@ -31,7 +39,7 @@ function prState(repo, n) {
   const name = `${repo.split("/")[1]} #${n}`;
   if (!x.merged) return { x, words: `${name}, open and in review` };
   let when = `merged ${longDate(x.mergedAt)} (${x.commit})`;
-  if (repo === "HarperZ9/buildlang") when += x.mergedTime <= BLR.publishedAt ? `, in ${BLR.version}` : `, on main after ${BLR.version}`;
+  if (repo === "HarperZ9/buildlang") { const first = firstOf(x); when += first ? `, first released in ${first.version}` : `, on main after ${BLR.version}`; }
   return { x, words: `${name}, ${when}` };
 }
 
@@ -47,15 +55,18 @@ const figs = (list, repo) => (list?.length ? `<ul class="figs">${list.map((f) =>
 function status(list) {
   const seen = new Map();
   for (const f of list || []) { const r = f.repo || "HarperZ9/buildlang", x = PRS.get(`${r}#${f.pr}`); if (x) seen.set(`${r}#${f.pr}`, x); }
-  const groups = { in: [], after: [], open: [] };
+  const groups = { in: new Map(), merged: [], after: [], open: [] };
   for (const x of seen.values()) {
     const tag = `#${x.number}`;
     if (!x.merged) groups.open.push(tag);
-    else if (x.repo === "HarperZ9/buildlang" && x.mergedTime > BLR.publishedAt) groups.after.push(tag);
-    else groups.in.push(tag);
+    else if (x.repo !== "HarperZ9/buildlang") groups.merged.push(tag);
+    else if (!firstOf(x)) groups.after.push(tag);
+    else { const v = firstOf(x).version; groups.in.set(v, [...(groups.in.get(v) || []), tag]); }
   }
   const parts = [];
-  if (groups.in.length) parts.push(`in ${BLR.version} (${groups.in.join(", ")})`);
+  const byVersion = (a, b) => a[0].localeCompare(b[0], "en", { numeric: true });
+  for (const [v, tags] of [...groups.in].sort(byVersion)) parts.push(`first released in ${v} (${tags.join(", ")})`);
+  if (groups.merged.length) parts.push(`merged (${groups.merged.join(", ")})`);
   if (groups.after.length) parts.push(`on main after ${BLR.version} (${groups.after.join(", ")})`);
   if (groups.open.length) parts.push(`in review, not merged (${groups.open.join(", ")})`);
   return parts.length ? `<p class="lp-status">${esc(parts.join("; ").replace(/^./, (c) => c.toUpperCase()))}.</p>` : "";
@@ -102,7 +113,7 @@ ${limit(s.limit)}${run(s.run)}${list}${figs(s.figs)}${src(s.source)}
 <p class="lp-lede lp-lede-1">${esc(BL.INTRO.lede)}</p>
 <p class="lp-purpose" data-canonical-purpose="buildlang">${esc(PURPOSE)}</p>
 <p class="lp-run"><code>cargo install buildlang --version ${esc(BLR.version)} --locked</code></p>
-<p class="lp-rel">Release <a href="${BLR.url}">${esc(BLR.version)}</a>, ${esc(longDate(BLR.published))}. Each figure below opens to the pull request it was read from, and says whether that work is in the release, on main after it, or still in review.</p>
+<p class="lp-rel">Release <a href="${BLR.url}">${esc(BLR.version)}</a>, ${esc(longDate(BLR.published))}. Each figure below opens to the pull request it was read from, and names the release that first carried that work, or says it is on main after this release or still in review.</p>
 ${sectionsNav([...BL.SECTIONS, { id: "first", title: first.title }])}
 </header>
 ${sections}

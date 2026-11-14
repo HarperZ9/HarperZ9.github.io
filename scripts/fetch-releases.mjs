@@ -35,6 +35,27 @@ async function registry({ kind, name }) {
   throw new Error(`releases: unknown registry ${kind}`);
 }
 
+// The first release that contained a merged change: the oldest release whose tag has the merge commit in its
+// history. The publish time only picks where to start looking; the tag's history decides. null when no release
+// carries the change yet (it is on main after the latest release, or the repository has no release).
+const RELEASES = new Map(), FIRST = new Map();
+function releasesOf(repo) {
+  if (!RELEASES.has(repo)) RELEASES.set(repo, get(`https://api.github.com/repos/${repo}/releases?per_page=100`, true)
+    .then((list) => list.filter((r) => !r.draft && !r.prerelease).sort((a, b) => a.published_at.localeCompare(b.published_at))));
+  return RELEASES.get(repo);
+}
+function firstRelease(repo, sha, mergedTime) {
+  const key = `${repo}@${sha}`;
+  if (!FIRST.has(key)) FIRST.set(key, (async () => {
+    for (const rel of (await releasesOf(repo)).filter((r) => r.published_at >= mergedTime)) {
+      const c = await get(`https://api.github.com/repos/${repo}/compare/${encodeURIComponent(rel.tag_name)}...${sha}`, true);
+      if (c.status === "behind" || c.status === "identical") return { version: rel.tag_name.replace(/^v/, ""), published: day(rel.published_at), url: rel.html_url };
+    }
+    return null;
+  })());
+  return FIRST.get(key);
+}
+
 async function one(id, s) {
   const row = { id };
   if (s.github) {
@@ -50,7 +71,10 @@ async function one(id, s) {
     row.prs = [];
     for (const [repo, n] of s.prs) {
       const p = await get(`https://api.github.com/repos/${repo}/pulls/${n}`, true);
-      row.prs.push({ repo, number: n, title: p.title, merged: !!p.merged_at, mergedAt: day(p.merged_at), mergedTime: p.merged_at, commit: p.merged_at ? p.merge_commit_sha.slice(0, 7) : null, url: p.html_url });
+      const pr = { repo, number: n, title: p.title, merged: !!p.merged_at, mergedAt: day(p.merged_at), mergedTime: p.merged_at, commit: p.merged_at ? p.merge_commit_sha.slice(0, 7) : null, url: p.html_url };
+      // --check compares versions and merge states only, so it skips these extra reads
+      if (p.merged_at && !args.includes("--check")) pr.firstRelease = await firstRelease(repo, p.merge_commit_sha, p.merged_at);
+      row.prs.push(pr);
     }
   }
   return row;

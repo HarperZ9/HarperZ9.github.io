@@ -1,5 +1,5 @@
 {
- "checkedAt": "2026-11-14T11:27:39Z",
+ "checkedAt": "2026-11-14T12:46:21Z",
  "products": {
   "buildlang": {
    "id": "buildlang",
@@ -104,7 +104,8 @@
      "mergedAt": "2026-11-08",
      "mergedTime": "2026-11-08T04:41:03Z",
      "commit": "ab0e692",
-     "url": "https://github.com/HarperZ9/raw-native/pull/239"
+     "url": "https://github.com/HarperZ9/raw-native/pull/239",
+     "firstRelease": null
     },
     {
      "repo": "HarperZ9/raw-native",
@@ -114,7 +115,8 @@
      "mergedAt": "2026-11-09",
      "mergedTime": "2026-11-09T00:13:14Z",
      "commit": "7cfc64a",
-     "url": "https://github.com/HarperZ9/raw-native/pull/242"
+     "url": "https://github.com/HarperZ9/raw-native/pull/242",
+     "firstRelease": null
     },
     {
      "repo": "HarperZ9/buildlang",
@@ -124,7 +126,12 @@
      "mergedAt": "2026-11-08",
      "mergedTime": "2026-11-08T04:53:44Z",
      "commit": "d9ea546",
-     "url": "https://github.com/HarperZ9/buildlang/pull/135"
+     "url": "https://github.com/HarperZ9/buildlang/pull/135",
+     "firstRelease": {
+      "version": "1.11.0",
+      "published": "2026-11-09",
+      "url": "https://github.com/HarperZ9/buildlang/releases/tag/v1.11.0"
+     }
     },
     {
      "repo": "HarperZ9/buildlang",
@@ -134,7 +141,12 @@
      "mergedAt": "2026-11-09",
      "mergedTime": "2026-11-09T01:16:08Z",
      "commit": "3c7cc54",
-     "url": "https://github.com/HarperZ9/buildlang/pull/158"
+     "url": "https://github.com/HarperZ9/buildlang/pull/158",
+     "firstRelease": {
+      "version": "1.12.0",
+      "published": "2026-11-09",
+      "url": "https://github.com/HarperZ9/buildlang/releases/tag/v1.12.0"
+     }
     }
    ]
   },
@@ -149,7 +161,12 @@
      "mergedAt": "2026-11-04",
      "mergedTime": "2026-11-04T06:58:54Z",
      "commit": "0caed2d",
-     "url": "https://github.com/HarperZ9/buildlang/pull/118"
+     "url": "https://github.com/HarperZ9/buildlang/pull/118",
+     "firstRelease": {
+      "version": "1.11.0",
+      "published": "2026-11-09",
+      "url": "https://github.com/HarperZ9/buildlang/releases/tag/v1.11.0"
+     }
     },
     {
      "repo": "HarperZ9/buildlang",
@@ -159,7 +176,12 @@
      "mergedAt": "2026-11-05",
      "mergedTime": "2026-11-05T02:27:34Z",
      "commit": "0246f5b",
-     "url": "https://github.com/HarperZ9/buildlang/pull/119"
+     "url": "https://github.com/HarperZ9/buildlang/pull/119",
+     "firstRelease": {
+      "version": "1.11.0",
+      "published": "2026-11-09",
+      "url": "https://github.com/HarperZ9/buildlang/releases/tag/v1.11.0"
+     }
     },
     {
      "repo": "HarperZ9/buildlang",
@@ -169,7 +191,12 @@
      "mergedAt": "2026-11-08",
      "mergedTime": "2026-11-08T04:53:44Z",
      "commit": "d9ea546",
-     "url": "https://github.com/HarperZ9/buildlang/pull/135"
+     "url": "https://github.com/HarperZ9/buildlang/pull/135",
+     "firstRelease": {
+      "version": "1.11.0",
+      "published": "2026-11-09",
+      "url": "https://github.com/HarperZ9/buildlang/releases/tag/v1.11.0"
+     }
     },
     {
      "repo": "HarperZ9/buildlang",
@@ -179,7 +206,12 @@
      "mergedAt": "2026-11-08",
      "mergedTime": "2026-11-08T05:20:26Z",
      "commit": "bbcf9dd",
-     "url": "https://github.com/HarperZ9/buildlang/pull/136"
+     "url": "https://github.com/HarperZ9/buildlang/pull/136",
+     "firstRelease": {
+      "version": "1.11.0",
+      "published": "2026-11-09",
+      "url": "https://github.com/HarperZ9/buildlang/releases/tag/v1.11.0"
+     }
     },
     {
      "repo": "HarperZ9/buildlang",
@@ -189,7 +221,12 @@
      "mergedAt": "2026-11-08",
      "mergedTime": "2026-11-08T18:30:26Z",
      "commit": "585ed28",
-     "url": "https://github.com/HarperZ9/buildlang/pull/137"
+     "url": "https://github.com/HarperZ9/buildlang/pull/137",
+     "firstRelease": {
+      "version": "1.11.0",
+      "published": "2026-11-09",
+      "url": "https://github.com/HarperZ9/buildlang/releases/tag/v1.11.0"
+     }
     },
     {
      "repo": "HarperZ9/buildlang",
@@ -199,7 +236,12 @@
      "mergedAt": "2026-11-09",
      "mergedTime": "2026-11-09T01:50:59Z",
      "commit": "25d1171",
-     "url": "https://github.com/HarperZ9/buildlang/pull/138"
+     "url": "https://github.com/HarperZ9/buildlang/pull/138",
+     "firstRelease": {
+      "version": "1.12.0",
+      "published": "2026-11-09",
+      "url": "https://github.com/HarperZ9/buildlang/releases/tag/v1.12.0"
+     }
     },
     {
      "repo": "HarperZ9/buildlang",
@@ -209,7 +251,12 @@
      "mergedAt": "2026-11-09",
      "mergedTime": "2026-11-09T00:30:42Z",
      "commit": "b1a4df2",
-     "url": "https://github.com/HarperZ9/buildlang/pull/156"
+     "url": "https://github.com/HarperZ9/buildlang/pull/156",
+     "firstRelease": {
+      "version": "1.12.0",
+      "published": "2026-11-09",
+      "url": "https://github.com/HarperZ9/buildlang/releases/tag/v1.12.0"
+     }
     },
     {
      "repo": "HarperZ9/buildlang",
@@ -219,7 +266,12 @@
      "mergedAt": "2026-11-09",
      "mergedTime": "2026-11-09T01:16:08Z",
      "commit": "3c7cc54",
-     "url": "https://github.com/HarperZ9/buildlang/pull/158"
+     "url": "https://github.com/HarperZ9/buildlang/pull/158",
+     "firstRelease": {
+      "version": "1.12.0",
+      "published": "2026-11-09",
+      "url": "https://github.com/HarperZ9/buildlang/releases/tag/v1.12.0"
+     }
     },
     {
      "repo": "HarperZ9/buildlang",
@@ -229,7 +281,12 @@
      "mergedAt": "2026-11-09",
      "mergedTime": "2026-11-09T02:53:29Z",
      "commit": "217224f",
-     "url": "https://github.com/HarperZ9/buildlang/pull/160"
+     "url": "https://github.com/HarperZ9/buildlang/pull/160",
+     "firstRelease": {
+      "version": "1.12.0",
+      "published": "2026-11-09",
+      "url": "https://github.com/HarperZ9/buildlang/releases/tag/v1.12.0"
+     }
     },
     {
      "repo": "HarperZ9/buildlang",
@@ -239,7 +296,12 @@
      "mergedAt": "2026-11-09",
      "mergedTime": "2026-11-09T02:33:51Z",
      "commit": "6c90a98",
-     "url": "https://github.com/HarperZ9/buildlang/pull/161"
+     "url": "https://github.com/HarperZ9/buildlang/pull/161",
+     "firstRelease": {
+      "version": "1.12.0",
+      "published": "2026-11-09",
+      "url": "https://github.com/HarperZ9/buildlang/releases/tag/v1.12.0"
+     }
     },
     {
      "repo": "HarperZ9/buildlang",
@@ -249,7 +311,12 @@
      "mergedAt": "2026-11-09",
      "mergedTime": "2026-11-09T05:29:48Z",
      "commit": "5bb8fad",
-     "url": "https://github.com/HarperZ9/buildlang/pull/162"
+     "url": "https://github.com/HarperZ9/buildlang/pull/162",
+     "firstRelease": {
+      "version": "1.12.0",
+      "published": "2026-11-09",
+      "url": "https://github.com/HarperZ9/buildlang/releases/tag/v1.12.0"
+     }
     }
    ]
   }

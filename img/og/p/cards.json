@@ -240,7 +240,7 @@
   "image": "https://harperz9.github.io/img/og/p/findings--F172-selection-model-of-replication.jpg?v=08fed90dd604"
  },
  "findings/F183-shifted-optima-plain-beats-bio-optimisers.html": {
-  "alt": "F183: After we fixed our own bug, plain optimisers beat nature-inspired ones on shifted tests, by Zain Dana Harper. An open ring with a cream bar rising from one end off the card and a disc at the other end.",
+  "alt": "F183: After we fixed our own bug, CMA-ES ranked first and two nature-inspired optimisers proved centre-biased, by Zain Dana Harper. An open ring with a cream bar rising from one end off the card and a disc at the other end.",
   "image": "https://harperz9.github.io/img/og/p/findings--F183-shifted-optima-plain-beats-bio-optimisers.jpg?v=93cf8d9086cd"
  },
  "findings/F190-public-goods-self-benefit-correction.html": {
@@ -276,7 +276,7 @@
   "image": "https://harperz9.github.io/img/og/p/findings--F320-stress-classifier-leakage.jpg?v=a3d512b2ba68"
  },
  "findings/F329-lying-in-die-tasks.html": {
-  "alt": "F329: In 27,039 private die rolls, about 45 percent report honestly, and the reports cannot tell us why, by Zain Dana Harper. Cut-paper lanes: parallel bars of different lengths at three heights, one in a second colour.",
+  "alt": "F329: In held-out private die-roll reports, about 45 percent read as honest, and this method cannot tell us why, by Zain Dana Harper. Cut-paper lanes: parallel bars of different lengths at three heights, one in a second colour.",
   "image": "https://harperz9.github.io/img/og/p/findings--F329-lying-in-die-tasks.jpg?v=b09593ad721e"
  },
  "findings/F344-auger-cubic-null.html": {
@@ -288,7 +288,7 @@
   "image": "https://harperz9.github.io/img/og/p/findings--F362-stated-uncertainty-tails.jpg?v=08b7b70fb5b1"
  },
  "findings/F39-long-tails-dark-spectra.html": {
-  "alt": "F39: Music with long ringing tails and dark spectra is rated calmer, and also sadder, by Zain Dana Harper. A row of upright bars of different heights, like a sound level, one in a second colour.",
+  "alt": "F39: Music with long ringing tails and dark spectra is rated calmer, and also less pleasant, by Zain Dana Harper. A row of upright bars of different heights, like a sound level, one in a second colour.",
   "image": "https://harperz9.github.io/img/og/p/findings--F39-long-tails-dark-spectra.jpg?v=7d752f640352"
  },
  "findings/F47-skill-against-noise-ceilings.html": {
@@ -304,11 +304,11 @@
   "image": "https://harperz9.github.io/img/og/p/findings--F508-shannon-entropy-old-and-new-text.jpg?v=ba0e42985254"
  },
  "findings/F515-llm-compression-and-memorisation.html": {
-  "alt": "F515: A small language model squeezes the UDHR to 0.27 bits a letter, and fresh text to 1.59, by Zain Dana Harper. Cards of flat colour fanned from one corner, one in a second colour.",
+  "alt": "F515: A small language model squeezes the UDHR to 0.27 bits a character, and fresh text to 1.59, by Zain Dana Harper. Cards of flat colour fanned from one corner, one in a second colour.",
   "image": "https://harperz9.github.io/img/og/p/findings--F515-llm-compression-and-memorisation.jpg?v=d9d2180c5cd1"
  },
  "findings/F63-no-drought-steeling-in-tree-rings.html": {
-  "alt": "F63: Across 1,175 tree-ring sites, an earlier moderate drought did not toughen trees, by Zain Dana Harper. Two equal discs, one ringed by small discs and one by large discs that run off the card.",
+  "alt": "F63: Across 1,175 tree-ring sites, an earlier moderate drought did not detectably toughen trees, by Zain Dana Harper. Two equal discs, one ringed by small discs and one by large discs that run off the card.",
   "image": "https://harperz9.github.io/img/og/p/findings--F63-no-drought-steeling-in-tree-rings.jpg?v=d77bb5aaabbd"
  },
  "findings/F675-granger-panel-ring-direction-kill-fires.html": {
@@ -320,11 +320,11 @@
   "image": "https://harperz9.github.io/img/og/p/findings--F76-flatness-ceiling-on-real-series.jpg?v=e918fe164f9f"
  },
  "findings/F81-flower-colour-differences-humans-miss.html": {
-  "alt": "F81: Among colours people cannot tell apart, bees and birds split flowers from backgrounds more often, by Zain Dana Harper. A row of upright bars of different heights, like a sound level, one in a second colour.",
+  "alt": "F81: Among colours people cannot tell apart, modelled bees and blue tits split flowers from backgrounds more often, by Zain Dana Harper. A row of upright bars of different heights, like a sound level, one in a second colour.",
   "image": "https://harperz9.github.io/img/og/p/findings--F81-flower-colour-differences-humans-miss.jpg?v=fea1de5a643b"
  },
  "findings/F97-drought-space-time-tree-lens.html": {
-  "alt": "F97: Tree rings record the broad drought pattern and almost none of the local one, by Zain Dana Harper. A winding road in flat colour runs up the card, with discs along it that shrink with distance.",
+  "alt": "F97: Tree rings track the broad drought pattern in a gridded record and almost none of its local detail, by Zain Dana Harper. A winding road in flat colour runs up the card, with discs along it that shrink with distance.",
   "image": "https://harperz9.github.io/img/og/p/findings--F97-drought-space-time-tree-lens.jpg?v=8b9ae26f7e60"
  },
  "findings/glossary.html": {

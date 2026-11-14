@@ -84,7 +84,9 @@ Brave and Firefox 128 or later, plus a command line for saved threads.
 
 The core of The Playground.
 Version 0.3.0. Licence FSL-1.1-MIT; fonts under the SIL Open Font License 1.1.
-Node 24 or later, no dependencies.
+Node 24 or later. The JavaScript engine has no dependencies; the instruments in
+`packages/` pin their own Python dependencies, and the native renderer in
+`native/` is a separate C++23 build.
 
 - What it does: you describe a piece in plain words; the engine compiles the
   words into a recipe of elements, each a law with weights, and renders it from
