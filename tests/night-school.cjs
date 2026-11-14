@@ -18,6 +18,11 @@ async function save(page, sel, name) {
   fs.writeFileSync(path.join(shots, name), Buffer.from(url.split(',')[1], 'base64'));
 }
 
+// After a scrub the film's clock reads the new time and a caption is on screen. This waits for those two things (a fixed 2.5 s stood here
+// until 14 November 2026, 62 times a run); if they never come, the caption assertion that follows reports what was shown.
+const captionAt = (page, at) => page.waitForFunction((t) => { const m = /^(\d+):(\d\d)/.exec(document.querySelector('.sf-time')?.textContent || '');
+  return !!m && +m[1] * 60 + +m[2] >= t && (document.querySelector('.sf-cap')?.textContent || '').length > 10; }, at, { timeout: 30000, polling: 100 }).catch(() => {});
+
 async function check(browser, width, force2d) {
   const ctx = await browser.newContext({ viewport: { width, height: 900 } });
   ctx.setDefaultTimeout(120000);
@@ -33,7 +38,7 @@ async function check(browser, width, force2d) {
   await page.waitForFunction(() => /^0:0[3-9]|^0:[1-5]/.test(document.querySelector('.sf-time')?.textContent || ''), null, { timeout: 90000 });
   // Jump to the inside of the lamp and check a caption is shown.
   await page.$eval('.sf-scrub', (s) => { s.value = '187'; s.dispatchEvent(new Event('input')); });
-  await page.waitForTimeout(2500);
+  await captionAt(page, 187);
   const cap = await page.textContent('.sf-cap');
   assert.ok(cap && cap.length > 10, `${tag}: a caption shows at 3:07 (got "${cap}")`);
   await save(page, '[data-school="film"] canvas', `film-${tag}.png`);
@@ -112,7 +117,7 @@ async function checkLesson(browser, width, force2d, L) {
   await page.waitForSelector('[data-school="film"] canvas', { timeout: 60000 });
   await page.waitForFunction(() => /^0:0[3-9]|^0:[1-5]/.test(document.querySelector('.sf-time')?.textContent || ''), null, { timeout: 90000 });
   await page.$eval('.sf-scrub', (s, v) => { s.value = v; s.dispatchEvent(new Event('input')); }, L.at);
-  await page.waitForTimeout(2500);
+  await captionAt(page, +L.at);
   const cap = await page.textContent('.sf-cap');
   assert.ok(cap && cap.length > 10, `${tag}: a caption shows (got "${cap}")`);
   await save(page, '[data-school="film"] canvas', `film-${tag}.png`);
@@ -145,8 +150,14 @@ async function checkLesson(browser, width, force2d, L) {
     const all = [[1280, false], [375, false], [1280, true], [375, true]];
     // NS_ONLY=vectors,matrices limits a local run to those lessons (CI runs everything).
     const only = (process.env.NS_ONLY || '').split(',').filter(Boolean);
-    if (!only.length || only.includes('attention')) for (const [w, f] of process.env.NS_MODES === '2d' ? all.filter((x) => x[1]) : all) await check(browser, w, f);
-    for (const L of PAIR.filter((x) => !only.length || only.includes(x.slug))) for (const [w, f] of process.env.NS_MODES === '2d' ? all.filter((x) => x[1]) : all) await checkLesson(browser, w, f, L);
+    const modes = process.env.NS_MODES === '2d' ? all.filter((x) => x[1]) : all, jobs = [];
+    if (!only.length || only.includes('attention')) for (const [w, f] of modes) jobs.push(() => check(browser, w, f));
+    for (const L of PAIR.filter((x) => !only.length || only.includes(x.slug))) for (const [w, f] of modes) jobs.push(() => checkLesson(browser, w, f, L));
+    // NS_WORKERS=3 runs three lessons at a time, each in its own context (the default, 1, is the old serial order). Every job runs to its end;
+    // the first failure is thrown after the rest have finished, so one run names every lesson that fails.
+    const failed = []; let next = 0;
+    await Promise.all(Array.from({ length: Math.max(1, +(process.env.NS_WORKERS || 1)) }, async () => { while (next < jobs.length) { const job = jobs[next++]; try { await job(); } catch (e) { failed.push(e); console.error(e); } } }));
+    if (failed.length) throw new Error(`${failed.length} of ${jobs.length} Night School checks failed; the first: ${failed[0].message}`);
     const idx = await browser.newPage();
     await idx.goto(`${base}/night-school.html`, { waitUntil: 'networkidle' });
     for (const rel of ['night-school-attention.html', 'night-school-vectors.html', 'night-school-matrices.html', 'night-school-gradients.html', 'night-school-backprop.html', 'night-school-optimisers.html', 'night-school-heldout.html', 'night-school-tokens.html', 'night-school-embeddings.html', 'night-school-nextword.html', 'night-school-decoding.html', 'night-school-block.html', 'night-school-trainloop.html', 'night-school-data.html', 'night-school-scaling.html', 'night-school-distill.html', 'night-school-lora.html', 'night-school-errorbars.html', 'night-school-gaming.html', 'night-school-evaluate.html', 'night-school-threads.html', 'night-school-quant.html', 'night-school-tiling.html', 'night-school-fused.html', 'night-school-precision.html', 'night-school-denoiser.html', 'night-school-receipts.html', 'night-school-search.html', 'night-school-editdistance.html', 'night-school-mmbu.html']) assert.ok(await idx.locator(`a[href="${rel}"]`).count() >= 1, `the school links ${rel}`);
