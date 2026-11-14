@@ -29,7 +29,7 @@
 <script type="module" src="/world/ui/shell/shell.js?v=world-60c8bc4b9e"></script>
 <script type="module" src="/world/site/hand-scroll.js?v=world-60c8bc4b9e"></script>
 <!-- structured-data:begin (tools/structured_data.py) -->
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareApplication","@id":"https://harperz9.github.io/cmmns.html#application","name":"CMMNS","url":"https://harperz9.github.io/cmmns.html","softwareVersion":"3.9.1","applicationCategory":"BrowserApplication","operatingSystem":"Chrome, Edge, Brave, Firefox","downloadUrl":"https://github.com/HarperZ9/cmmns/releases/latest","license":"https://spdx.org/licenses/AGPL-3.0-only.html","author":{"@id":"https://harperz9.github.io/#person","@type":"Person","name":"Zain Dana Harper"},"isAccessibleForFree":true,"sameAs":"https://github.com/HarperZ9/cmmns"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareApplication","@id":"https://harperz9.github.io/cmmns.html#application","name":"CMMNS","url":"https://harperz9.github.io/cmmns.html","softwareVersion":"3.10.0","applicationCategory":"BrowserApplication","operatingSystem":"Chrome, Edge, Brave, Firefox","downloadUrl":"https://github.com/HarperZ9/cmmns/releases/latest","license":"https://spdx.org/licenses/AGPL-3.0-only.html","author":{"@id":"https://harperz9.github.io/#person","@type":"Person","name":"Zain Dana Harper"},"isAccessibleForFree":true,"sameAs":"https://github.com/HarperZ9/cmmns"}]}</script>
 <!-- structured-data:end -->
 </head>
 <body class="reading">
@@ -83,7 +83,7 @@ new MutationObserver(s).observe(r,{attributes:true,attributeFilter:["data-theme"
 <h1>CMMNS</h1>
 <p>Rest the pointer on a reply and a window opens beside it: where the account is placed, signs of coordination, how it posts, how the reply argues, and whether a fact-checker has reviewed the claim. It works on X, YouTube, Reddit, Facebook, Instagram, Bluesky, Threads, TikTok and any Mastodon server you turn it on for. On a phone, tap the post's CMMNS button.</p>
 <p>CMMNS, spoken "commons", was formerly Daylight Commons, and Radar before that. An install from before the rename updates in place and keeps its settings, its saves and its save folder.</p>
-<dl class="facts"><dt>Version</dt><dd><a href="https://github.com/HarperZ9/cmmns/releases/tag/v3.9.1">3.9.1</a></dd><dt>Browsers</dt><dd>Chrome, Edge, Brave, Firefox</dd><dt>Licence</dt><dd><a href="https://spdx.org/licenses/AGPL-3.0-only.html">AGPL-3.0</a></dd><dt>Source</dt><dd><a href="https://github.com/HarperZ9/cmmns">HarperZ9/cmmns</a></dd></dl>
+<dl class="facts"><dt>Version</dt><dd><a href="https://github.com/HarperZ9/cmmns/releases/tag/v3.10.0">3.10.0</a></dd><dt>Browsers</dt><dd>Chrome, Edge, Brave, Firefox</dd><dt>Licence</dt><dd><a href="https://spdx.org/licenses/AGPL-3.0-only.html">AGPL-3.0</a></dd><dt>Source</dt><dd><a href="https://github.com/HarperZ9/cmmns">HarperZ9/cmmns</a></dd></dl>
 
 <section id="try" class="ct" data-commons-try aria-labelledby="h-try">
 <h2 id="h-try">Try it on your own words</h2>
@@ -103,7 +103,7 @@ new MutationObserver(s).observe(r,{attributes:true,attributeFilter:["data-theme"
 <h2 id="install">Install</h2>
 <h3>Chrome, Edge or Brave</h3>
 <ol>
-<li>Download <code>cmmns-chrome-3.9.1.zip</code> from <a href="https://github.com/HarperZ9/cmmns/releases/tag/v3.9.1">the 3.9.1 release</a> and unzip it.</li>
+<li>Download <code>cmmns-chrome-3.10.0.zip</code> from <a href="https://github.com/HarperZ9/cmmns/releases/tag/v3.10.0">the 3.10.0 release</a> and unzip it.</li>
 <li>Open <code>chrome://extensions</code> (Edge: <code>edge://extensions</code>) and turn on Developer mode.</li>
 <li>Choose Load unpacked and pick the unzipped folder.</li>
 <li>Pick your sites on the first-run page and press Start CMMNS.</li>
@@ -111,12 +111,12 @@ new MutationObserver(s).observe(r,{attributes:true,attributeFilter:["data-theme"
 <p>To update, replace the folder and press Reload. Settings carry over, and pages left open get the new buttons without a reload.</p>
 <h3>Firefox 128 or later</h3>
 <ol>
-<li>Download <code>cmmns-firefox-3.9.1.xpi</code> from the same release.</li>
+<li>Download <code>cmmns-firefox-3.10.0.xpi</code> from the same release.</li>
 <li>Open <code>about:debugging#/runtime/this-firefox</code>, choose Load Temporary Add-on and pick the file.</li>
 </ol>
 <p>Firefox removes temporary add-ons on restart until a signed build is published.</p>
 <h3>Command line</h3>
-<p>Unzip <code>cmmns-cli-3.9.1.zip</code> and run it with Node 22 or later on a saved thread or your own export:</p>
+<p>Unzip <code>cmmns-cli-3.10.0.zip</code> and run it with Node 22 or later on a saved thread or your own export:</p>
 <pre class="cmd" tabindex="0" aria-label="Command"><code>node bin/radar.mjs analyze saved-thread.html</code></pre>
 
 <h2 id="verify">Check the download</h2>
@@ -132,10 +132,10 @@ new MutationObserver(s).observe(r,{attributes:true,attributeFilter:["data-theme"
 <h2 id="privacy">What it sends and keeps</h2>
 <p>It reads what the site shows you and requests account details only from the site you are on. Other coverage and evidence lookups reach further, and only after you turn them on and click. Account details stay in your browser for 14 days and thread history for 60, both adjustable, and one control clears everything.</p>
 
-<h2 id="new">New in 3.9.1</h2>
-<p>The Download control leaves with the pointer, and it now shows on X and Instagram pictures that sit under a clear layer: 10 of 10 tries on each path in the release's timing test, against 0 of 10 before. A gallery saves four files at a time, so the last file reaches the browser after 452 ms instead of 1,173 ms. A download the browser stopped now reads "Not saved" with the browser's reason. <a href="https://github.com/HarperZ9/cmmns/releases/tag/v3.9.1">Release notes</a>.</p>
+<h2 id="new">New in 3.10.0</h2>
+<p>The Download control leaves with the pointer, and it now shows on X and Instagram pictures that sit under a clear layer: 10 of 10 tries on each path in the release's timing test, against 0 of 10 before. A gallery saves four files at a time, so the last file reaches the browser after 452 ms instead of 1,173 ms. A download the browser stopped now reads "Not saved" with the browser's reason. <a href="https://github.com/HarperZ9/cmmns/releases/tag/v3.10.0">Release notes</a>.</p>
 <p>Since 3.9.0 the extension carries the new name. Everything saved before, every case and every signed bundle still reads and verifies. New installs save into Downloads/CMMNS, and an install from before keeps Downloads/Daylight. The command line answers to <code>cmmns</code>, and <code>daylight</code> still works.</p>
-<p class="verified"><b>Verified</b> 2 November 2026: the version, the date and the download names against the GitHub release <code>v3.9.1</code> (HarperZ9/cmmns, published 28 October 2026); the timings are the release notes' own measurements and were not rerun for this page.</p>
+<p class="verified"><b>Verified</b> 2 November 2026: the version, the date and the download names against the GitHub release <code>v3.10.0</code> (HarperZ9/cmmns, published 28 October 2026); the timings are the release notes' own measurements and were not rerun for this page.</p>
 </article>
 </main>
 </body>
