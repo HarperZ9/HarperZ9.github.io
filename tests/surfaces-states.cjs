@@ -32,7 +32,7 @@ const own = (errors) => errors;
 
 const noAudio = () => { window.__audio = 0; for (const k of ['AudioContext', 'webkitAudioContext']) { const C = window[k]; if (C) window[k] = function (...a) { window.__audio++; return new C(...a); }; } };
 async function open(browser, path, view = {}) {
-  const ctx = await browser.newContext({ viewport: { width: view.w || 1280, height: view.h || 720 }, colorScheme: 'light', reducedMotion: view.reduced ? 'reduce' : 'no-preference' });
+  const ctx = await browser.newContext({ viewport: { width: view.w || 1280, height: view.h || 720 }, colorScheme: 'light', reducedMotion: view.reduced ? 'reduce' : 'no-preference', deviceScaleFactor: view.scale || 1 });
   const page = await ctx.newPage(), errors = [];
   page.on('pageerror', (e) => { errors.push(e.message); if (process.env.BENCH_STACK) console.error(e.stack); });
   await page.addInitScript(noAudio);
@@ -172,7 +172,11 @@ async function operate(page, op) {
     await ctx.close();
 
     // 3: with motion on, the change is a front
-    const m = await open(browser, '/elements.html?e=water,ink');
+    // The front crosses in drawn frames, and a frame's cost is the well's pixel count. On the shared runner's software GL a frame of this change took
+    // 6 seconds at one device pixel per CSS pixel (36 frames in 232 s on 13 November 2026) and twice that on a slower runner, which ran out the 240 s
+    // wait in two of four runs on main. Half the device scale is a quarter of the pixels (78 ms a frame down to 18 on a desk machine). The layout,
+    // the 96 by 72 read and every check below are the same.
+    const m = await open(browser, '/elements.html?e=water,ink', { scale: 0.5 });
     assert.equal((await info(m.page)).ground, 'water'); await m.page.waitForTimeout(600);
     const start = await m.page.evaluate(() => window.pic());
     // the water's idle clock has already run out when the change starts, as it does on a renderer too slow to cross in 45 seconds: the change must still finish

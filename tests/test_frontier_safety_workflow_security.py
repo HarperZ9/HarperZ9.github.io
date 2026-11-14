@@ -217,7 +217,8 @@ def test_actions_are_immutable_and_checkout_never_persists_credentials() -> None
 
 def test_primary_ci_installs_the_workflow_test_parser_at_a_pinned_version() -> None:
     workflow = yaml.load(CI_WORKFLOW_PATH.read_text(encoding="utf-8"), Loader=yaml.BaseLoader)
-    install = named_step(workflow["jobs"]["static-site"], "Install test dependencies")
+    # the contracts job runs pytest since the split of 14 November 2026; static-site is now the job that needs every other
+    install = named_step(workflow["jobs"]["contracts"], "Install test dependencies")
 
     assert "pytest==8.4.2" in install["run"]
     assert "PyYAML==6.0.2" in install["run"]
