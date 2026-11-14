@@ -21,12 +21,13 @@ env:
 # tests/ci/run-suite.mjs starts each suite's server, waits until it answers, runs every test of the share and prints a
 # timing table. Each job has a time limit a little above what it took when it was split, and the last job,
 # static-site, passes only when every one of them passed, so one status still stands for the whole site.
-# Budget: the whole run under 30 minutes, the contracts job under 5.
+# Budget: the whole run under 30 minutes, the contracts job under 5. First run of the split (14 November 2026): 11.4 minutes
+# for the whole run, contracts 2.1, the longest job 11.1.
 jobs:
   # Fast checks with no browser suite of their own: the first answer a pull request gets.
   contracts:
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v6
@@ -86,7 +87,7 @@ jobs:
   # and the node halves of the surfaces and fractal suites.
   node-contracts:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 7
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v6
@@ -117,7 +118,7 @@ jobs:
   # controls.test.mjs shares its eighteen defects over four worker threads (one thread took 470 s of this step's 480).
   audio:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v6
@@ -132,7 +133,7 @@ jobs:
   # The short browser checks, each with its own server and port, each reporting on its own line.
   pages:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 8
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v6
@@ -180,7 +181,7 @@ jobs:
   # Three lessons run at a time (NS_WORKERS in the manifest), and a caption is waited for, not slept for.
   night-school:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 8
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v6
@@ -202,7 +203,7 @@ jobs:
   surfaces:
     name: surfaces (${{ matrix.share }} of 3)
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 12
     strategy:
       fail-fast: false
       matrix:
@@ -227,7 +228,7 @@ jobs:
   studio-chromium:
     name: studio-chromium (${{ matrix.share }} of 4)
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 17
     strategy:
       fail-fast: false
       matrix:
@@ -264,7 +265,7 @@ jobs:
   studio-firefox:
     name: studio-firefox (${{ matrix.share }} of 4)
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 17
     strategy:
       fail-fast: false
       matrix:
@@ -294,7 +295,7 @@ jobs:
   fractal:
     name: fractal (${{ matrix.share }} of 2)
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 9
     strategy:
       fail-fast: false
       matrix:
