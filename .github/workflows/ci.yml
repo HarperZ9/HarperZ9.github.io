@@ -128,7 +128,12 @@ jobs:
         with:
           node-version: "24"
       - name: The ear and the site music
-        run: node --test system/ear/ear.test.mjs system/ear/shape.test.mjs system/ear/note.test.mjs system/ear/identity.test.mjs system/site-music/voices.test.mjs system/site-music/music.test.mjs system/site-music/controls.test.mjs
+        run: node --test system/ear/ear.test.mjs system/ear/shape.test.mjs system/ear/note.test.mjs system/ear/identity.test.mjs system/site-music/voices.test.mjs system/site-music/music.test.mjs
+      # Its own step, after the others: the live renderer test above measures how long a render takes on this machine,
+      # and the four worker threads of the controls took the processors from it (run 43571162919, 14 November 2026).
+      - name: Planted-defect controls
+        if: ${{ !cancelled() }}
+        run: node --test system/site-music/controls.test.mjs
 
   # The short browser checks, each with its own server and port, each reporting on its own line.
   pages:
