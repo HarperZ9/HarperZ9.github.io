@@ -1011,10 +1011,10 @@
       "status": "Private repository; described from the author's completion ledger without spoilers or private detail. Five era scripts exist; tools/endingcheck.mjs reached the ending on every class in scripted runs; combat traces are byte-checked; the C++ port steps are open raw-native PRs #218 and #219. No release date, store listing or player count is claimed; a cold read and the native build are not done."
     },
     {
-      "id": "census-20261023",
+      "id": "census-20261114",
       "url": "https://harperz9.github.io/career/open-source-census.json",
-      "read": "2026-10-23",
-      "status": "tools/pr_census.py output: 37 merged engineering pull requests in 30 external repositories, 3 merged listings counted apart, 14 open engineering, 17 closed without merge. Plain-text counts on the pages are not census-stamped; rerun the census and update the text together."
+      "read": "2026-11-14",
+      "status": "tools/pr_census.py output: 38 merged engineering pull requests in 31 external repositories, 3 merged listings counted apart, 13 open engineering, 17 closed without merge. Each of the 82 pull requests was also read once through the pull request API to confirm author, state and merge date. Plain-text counts on the pages are not census-stamped; rerun the census and update the text together."
     },
     {
       "id": "synthesis-20261023",

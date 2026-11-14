@@ -3,9 +3,9 @@
  "source": {
   "path": "career/resume-source.json",
   "document": "page:cv",
-  "sha256": "9859e3bbbe9a483ba0cba41a14d942248944a64498558ef4f47ed6af5c3c251f"
+  "sha256": "8b1ae1984058407385c8474216a7196ca827e75f3846ed70bb6763ad99cb3055"
  },
- "ir_sha256": "a233702f89b91cfedc1ec391e9a8e5ec13a55403e6bdccc1e8888a0949e667cc",
+ "ir_sha256": "7488b738cec58b921ed73c3be382142152459906346266edbaad5784bef1b908",
  "theme": "press-resume",
  "overrides": [
   "base.size=10.0",
@@ -13,7 +13,11 @@
   "emboss.deboss_finish=inked"
  ],
  "outputs": {
-  "Zain-Dana-Harper-CV.pdf": "7e64be163c64e4294adbd37328057556041cff5d42de2761fb4a018a95605a0c"
+  "Zain-Dana-Harper-CV.pdf": "7eebad77267c68bf78dc55fc6b6b072573b85b0a4649c1a4f5d91e16ddf47b36"
+ },
+ "pdf_metadata": {
+  "pdfa": false,
+  "creation_date": null
  },
  "facts": {
   "pages": 6,
@@ -21,6 +25,8 @@
   "overfull": [],
   "underfull": 0,
   "missing_glyphs": [],
+  "glyph_fallbacks": [],
+  "math_errors": [],
   "fonts": [
    {
     "name": "BANFBE+HankenGrotesk-Regular",
@@ -43,7 +49,7 @@
   "blind_text_runs": 0,
   "reading_order": true,
   "blocks_missing_from_text": [],
-  "pdf_bytes": 274350
+  "pdf_bytes": 273417
  },
  "failed": [],
  "notes": [

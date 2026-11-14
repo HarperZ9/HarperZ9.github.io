@@ -3,7 +3,7 @@
  "source": {
   "path": "career/resume-source.json",
   "document": "graphics-developer-tools",
-  "sha256": "9859e3bbbe9a483ba0cba41a14d942248944a64498558ef4f47ed6af5c3c251f"
+  "sha256": "8b1ae1984058407385c8474216a7196ca827e75f3846ed70bb6763ad99cb3055"
  },
  "ir_sha256": "cc5ff3bf3cfc4c3eb6038e165aa0b5b6eb5d33825e991cce917bd56866db6272",
  "theme": "press-resume",
@@ -13,7 +13,11 @@
   "emboss.deboss_finish=inked"
  ],
  "outputs": {
-  "Zain-Dana-Harper-Resume-Graphics-Developer-Tools.pdf": "24ad7a588da9158c476f241a0e14fe65a2a49a216c921686b26d3d2cc02f4c1c"
+  "Zain-Dana-Harper-Resume-Graphics-Developer-Tools.pdf": "04312e4de026bd9226246731d7478620fd340237767c16e0942f85a99881d767"
+ },
+ "pdf_metadata": {
+  "pdfa": false,
+  "creation_date": null
  },
  "facts": {
   "pages": 1,
@@ -21,6 +25,8 @@
   "overfull": [],
   "underfull": 0,
   "missing_glyphs": [],
+  "glyph_fallbacks": [],
+  "math_errors": [],
   "fonts": [
    {
     "name": "BJEJEB+AccessionDisplay-Master",
@@ -43,7 +49,7 @@
   "blind_text_runs": 0,
   "reading_order": true,
   "blocks_missing_from_text": [],
-  "pdf_bytes": 229183
+  "pdf_bytes": 228150
  },
  "failed": [],
  "notes": [

@@ -3,7 +3,7 @@
  "source": {
   "path": "career/resume-source.json",
   "document": "grounds",
-  "sha256": "9859e3bbbe9a483ba0cba41a14d942248944a64498558ef4f47ed6af5c3c251f"
+  "sha256": "8b1ae1984058407385c8474216a7196ca827e75f3846ed70bb6763ad99cb3055"
  },
  "ir_sha256": "1f653f96a4b5019290b42ccd69c02d4c9b5372b0db779272b647495f76becfc4",
  "theme": "press-resume",
@@ -13,7 +13,11 @@
   "emboss.deboss_finish=inked"
  ],
  "outputs": {
-  "Zain-Dana-Harper-Resume-Grounds.pdf": "edf9a78ed588e4b50d5c7729ed55ae5c7f9a6fcffa4c1ceddb7543e0f89afdc3"
+  "Zain-Dana-Harper-Resume-Grounds.pdf": "f0cc6244260854609b841186548869f192c8e86e50352f6db117268f828674ae"
+ },
+ "pdf_metadata": {
+  "pdfa": false,
+  "creation_date": null
  },
  "facts": {
   "pages": 1,
@@ -21,6 +25,8 @@
   "overfull": [],
   "underfull": 0,
   "missing_glyphs": [],
+  "glyph_fallbacks": [],
+  "math_errors": [],
   "fonts": [
    {
     "name": "BHOJBC+HankenGrotesk-Regular",
@@ -43,7 +49,7 @@
   "blind_text_runs": 0,
   "reading_order": true,
   "blocks_missing_from_text": [],
-  "pdf_bytes": 225122
+  "pdf_bytes": 224067
  },
  "failed": [],
  "notes": [

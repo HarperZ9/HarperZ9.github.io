@@ -744,11 +744,11 @@ Merged to main after v0.8.0 and not yet released: a Vulkan 1.3 render hardware i
 
 Private repository, described without spoilers or private detail. Five era scripts exist, scripted ending checks reached the ending on every class, and combat traces are checked byte for byte. The C++ port steps are open raw-native pull requests #218 and #219. No release date, store listing or player count is claimed.
 
-### census-20261023
+### census-20261114
 
 https://harperz9.github.io/career/open-source-census.json
 
-From `tools/pr_census.py`: 37 merged engineering pull requests in 30 external repositories (3 merged listings counted apart), 14 open and 17 closed without merge. The counts on the pages are plain text and are not census-stamped, so a census rerun must update the text with it.
+From `tools/pr_census.py`: 38 merged engineering pull requests in 31 external repositories (3 merged listings counted apart), 13 open and 17 closed without merge, read November 14, 2026. Each of the 82 pull requests was also read once through the pull request API to confirm author, state and merge date. The counts on the pages are plain text and are not census-stamped, so a census rerun must update the text with it.
 
 ### synthesis-20261023
 

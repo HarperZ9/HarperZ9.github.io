@@ -1,0 +1,333 @@
+{
+ "about": "One plain line for each pull request in open-source-census.json, written from the pull request's title, description and diff size. kind is one of fix, feature, perf, test, docs, data, ci or listing.",
+ "notes": {
+  "https://github.com/0xzr/freellmpool/pull/79": {
+   "kind": "test",
+   "line": "Added a command-line test fixture for capacity status edge cases, isolated from local credentials."
+  },
+  "https://github.com/adammmmmm/LoopCompass/pull/19": {
+   "kind": "feature",
+   "line": "Added evaluation benchmark fixtures and a script that renders a metric report from receipts."
+  },
+  "https://github.com/agronholm/typeguard/pull/558": {
+   "kind": "fix",
+   "line": "A fix for type checks on annotated walrus assignments."
+  },
+  "https://github.com/ai-boost/awesome-harness-engineering/pull/89": {
+   "kind": "listing",
+   "line": "List entry: one line naming Project Telos."
+  },
+  "https://github.com/ai-boost/awesome-harness-engineering/pull/90": {
+   "kind": "listing",
+   "line": "List entry: one line naming Project Telos."
+  },
+  "https://github.com/AjnasNB/maqam/pull/28": {
+   "kind": "test",
+   "line": "Added an offline contract test for Google ADK FunctionTool routing, covering the allowed case and the policy-denied case."
+  },
+  "https://github.com/astropy/astropy/pull/20258": {
+   "kind": "fix",
+   "line": "A fix that keeps masks when values are inserted into a Time object."
+  },
+  "https://github.com/AvAdiii/rewardspy/pull/7": {
+   "kind": "feature",
+   "line": "Added an optional ASCII chart mode for terminals that cannot draw block glyphs."
+  },
+  "https://github.com/biomejs/biome/pull/11518": {
+   "kind": "fix",
+   "line": "Fixed the formatter so the TypeScript declare modifier prints before accessibility modifiers."
+  },
+  "https://github.com/caramaschiHG/awesome-ai-agents-2026/pull/395": {
+   "kind": "listing",
+   "line": "List entry: one line naming Project Telos."
+  },
+  "https://github.com/Codelab-Davis/Anchor/pull/101": {
+   "kind": "test",
+   "line": "Integration tests for file metadata propagation. Pull request 102 carries the same work."
+  },
+  "https://github.com/Codelab-Davis/Anchor/pull/102": {
+   "kind": "test",
+   "line": "Adds integration tests that show which extractor metadata is dropped before storage."
+  },
+  "https://github.com/community-shaders/skyrim-community-shaders/pull/2663": {
+   "kind": "data",
+   "line": "Added three setting names so two ENB presets are recognised. Data only, seven lines."
+  },
+  "https://github.com/confident-ai/deepeval/pull/2822": {
+   "kind": "fix",
+   "line": "Fixed a TypeError in the tool correctness metric when a tool output or a nested parameter is unhashable."
+  },
+  "https://github.com/confident-ai/deepeval/pull/2823": {
+   "kind": "ci",
+   "line": "Formats two TypeScript files so the lint workflow passes."
+  },
+  "https://github.com/confident-ai/deepeval/pull/3091": {
+   "kind": "fix",
+   "line": "Makes measure() return the score in async mode across 46 metrics."
+  },
+  "https://github.com/dgenio/agentfence/pull/253": {
+   "kind": "test",
+   "line": "Added a deterministic large-trace benchmark baseline for rule evaluation."
+  },
+  "https://github.com/dgenio/agentfence/pull/261": {
+   "kind": "perf",
+   "line": "Precomputed the rule lookup order so a lookup allocates and sorts nothing per call. Match behaviour is unchanged."
+  },
+  "https://github.com/dgenio/agentfence/pull/262": {
+   "kind": "docs",
+   "line": "Added a document that maps AIUC-1 review questions to controls and evidence."
+  },
+  "https://github.com/dgilland/pydash/pull/250": {
+   "kind": "fix",
+   "line": "Fixed to_list() so a dict input returns a list."
+  },
+  "https://github.com/drizzle-team/drizzle-orm/pull/5961": {
+   "kind": "fix",
+   "line": "Keeps commas inside MySQL enum values when snapshots are serialized."
+  },
+  "https://github.com/finos/opengris-scaler/pull/961": {
+   "kind": "fix",
+   "line": "Makes PyYMQ exception types survive a pickle round trip."
+  },
+  "https://github.com/freelawproject/litigant-portal/pull/820": {
+   "kind": "docs",
+   "line": "Documented how to run the database-free fast tests. Documentation only, three lines."
+  },
+  "https://github.com/frostney/lwpt/pull/122": {
+   "kind": "test",
+   "line": "Deterministic tests for HTTP fetch failures through a loopback override."
+  },
+  "https://github.com/github-linguist/linguist/pull/7913": {
+   "kind": "feature",
+   "line": "A request to add QuantaLang as a recognised language."
+  },
+  "https://github.com/gkroiz/agent-interp-envs/pull/55": {
+   "kind": "docs",
+   "line": "Corrected documentation and comments about one experiment arm and resume behaviour. Six lines."
+  },
+  "https://github.com/gkroiz/agent-interp-envs/pull/56": {
+   "kind": "feature",
+   "line": "Adds a deterministic five-player claim-and-vote environment."
+  },
+  "https://github.com/gkroiz/model_forensics_paper/pull/54": {
+   "kind": "feature",
+   "line": "Implements the documented dataset download script, with an access check before download."
+  },
+  "https://github.com/haeliotang/agent-runtime-observatory/pull/42": {
+   "kind": "fix",
+   "line": "Made committed golden traces content-only, so recording twice leaves a clean diff."
+  },
+  "https://github.com/Hebbian-Robotics/hflow/pull/157": {
+   "kind": "test",
+   "line": "Added a test that compares the episodes view columns with the reserved-column list and reports drift in both directions."
+  },
+  "https://github.com/hsaghir/looplet/pull/109": {
+   "kind": "docs",
+   "line": "Added a migration recipe with a runnable example and one regression contract."
+  },
+  "https://github.com/huangyikai05/Tabulint/pull/20": {
+   "kind": "feature",
+   "line": "Adds a deterministic benchmark for large workbooks."
+  },
+  "https://github.com/jim-schwoebel/awesome_ai_agents/pull/372": {
+   "kind": "listing",
+   "line": "List entry: one line naming Project Telos."
+  },
+  "https://github.com/kysely-org/kysely/pull/1993": {
+   "kind": "test",
+   "line": "A test that a connection is released when the abort strategy is unsupported."
+  },
+  "https://github.com/langfuse/langfuse/pull/14636": {
+   "kind": "fix",
+   "line": "Mapping of GenAI input and output attributes on AI SDK spans."
+  },
+  "https://github.com/Liuyanfeng1234/governance-spec/pull/1": {
+   "kind": "test",
+   "line": "Added JSON fixtures and a validator that reject duplicate keys before canonicalization."
+  },
+  "https://github.com/lliangcol/llm-plugins-fusion/pull/104": {
+   "kind": "docs",
+   "line": "Added a completed example of a workflow evaluation record, marked as fictional."
+  },
+  "https://github.com/METR/vivaria/pull/1122": {
+   "kind": "test",
+   "line": "Adds an example fixture that classifies terminal run states across 324 combinations."
+  },
+  "https://github.com/michalstrnadel/scorekeeper/pull/7": {
+   "kind": "fix",
+   "line": "Added a file-lock fallback and UTF-8 file handling for Windows, plus one local model report."
+  },
+  "https://github.com/MobinX/awesome-mcp-list/pull/336": {
+   "kind": "listing",
+   "line": "List entry: one line naming Project Telos."
+  },
+  "https://github.com/modelcontextprotocol/inspector/pull/1728": {
+   "kind": "fix",
+   "line": "Waking of task polling when a terminal status notification arrives."
+  },
+  "https://github.com/modelcontextprotocol/inspector/pull/1729": {
+   "kind": "feature",
+   "line": "A cancel control for tool calls that run as polled tasks."
+  },
+  "https://github.com/modelcontextprotocol/python-sdk/pull/3053": {
+   "kind": "fix",
+   "line": "A clearer validation error when a tool result is missing."
+  },
+  "https://github.com/modelcontextprotocol/registry/pull/1405": {
+   "kind": "feature",
+   "line": "Optional security scan receipt metadata in the server schema."
+  },
+  "https://github.com/morganlinton/Albatross/pull/13": {
+   "kind": "feature",
+   "line": "Added loading of evaluation fixtures from external files, with path traversal rejected."
+  },
+  "https://github.com/open-multi-agent/open-multi-agent/pull/452": {
+   "kind": "test",
+   "line": "Added a conformance test for four mid-task recovery cases."
+  },
+  "https://github.com/ProjectRecon/awesome-ai-agents-security/pull/66": {
+   "kind": "listing",
+   "line": "List entry: one line naming Project Telos."
+  },
+  "https://github.com/Puliczek/awesome-mcp-security/pull/222": {
+   "kind": "listing",
+   "line": "List entry: one line naming Project Telos."
+  },
+  "https://github.com/punkpeye/awesome-mcp-devtools/pull/216": {
+   "kind": "listing",
+   "line": "List entry: one line naming Project Telos."
+  },
+  "https://github.com/punkpeye/awesome-mcp-servers/pull/8911": {
+   "kind": "listing",
+   "line": "List entry: one line naming Project Telos."
+  },
+  "https://github.com/punkpeye/awesome-mcp-servers/pull/8966": {
+   "kind": "listing",
+   "line": "List entries: five lines naming Project Telos servers."
+  },
+  "https://github.com/PyCQA/isort/pull/2573": {
+   "kind": "fix",
+   "line": "Wrapping of sorted literals that exceed the line length under the Black profile."
+  },
+  "https://github.com/pydantic/pydantic-ai/pull/6135": {
+   "kind": "feature",
+   "line": "A turn index attribute on agent chat spans."
+  },
+  "https://github.com/pydantic/pydantic-ai/pull/6205": {
+   "kind": "fix",
+   "line": "Kept the FileUrl force_download setting through message round trips in two UI adapters."
+  },
+  "https://github.com/pypa/pip/pull/14271": {
+   "kind": "fix",
+   "line": "An error message that names the wheel file when a corrupt wheel fails to install."
+  },
+  "https://github.com/pypa/setuptools/pull/5245": {
+   "kind": "docs",
+   "line": "A fix for one broken cross-reference that was failing the documentation build."
+  },
+  "https://github.com/python-grimp/grimp/pull/303": {
+   "kind": "fix",
+   "line": "Made direct-import queries raise ModuleNotPresent for a module that is absent from the graph."
+  },
+  "https://github.com/python-grimp/grimp/pull/304": {
+   "kind": "fix",
+   "line": "Replaced a Rust panic with a ValueError when one module is assigned to two layers."
+  },
+  "https://github.com/python-grimp/grimp/pull/305": {
+   "kind": "ci",
+   "line": "Fixed two lint failures that were failing continuous integration on the main branch."
+  },
+  "https://github.com/python-poetry/poetry/pull/10968": {
+   "kind": "fix",
+   "line": "Launchers for gui-scripts in editable installs."
+  },
+  "https://github.com/python-poetry/tomlkit/pull/549": {
+   "kind": "fix",
+   "line": "Fixed an array of tables that replaced a dotted key and captured the next sibling key."
+  },
+  "https://github.com/python-poetry/tomlkit/pull/588": {
+   "kind": "fix",
+   "line": "Fixes a dotted-key child that is promoted to a table and captures the keys that follow it."
+  },
+  "https://github.com/redxzeta/runtrail/pull/154": {
+   "kind": "fix",
+   "line": "Kept the bridge startup diagnostic in the MCP initialize response and bounded startup to five seconds."
+  },
+  "https://github.com/rfingerlin9284/coinbase_clean_rbotz/pull/2": {
+   "kind": "feature",
+   "line": "Adds a startup check that reports credential-shaped values found in the environment."
+  },
+  "https://github.com/rohitg00/awesome-devops-mcp-servers/pull/270": {
+   "kind": "listing",
+   "line": "List entry: one line naming Project Telos."
+  },
+  "https://github.com/sguruvar/ai-inference-observability-eks/pull/1": {
+   "kind": "fix",
+   "line": "Fixed the local MCP entry point import and added a static check for it."
+  },
+  "https://github.com/sigstore/sigstore-python/pull/1884": {
+   "kind": "fix",
+   "line": "Closing of the OAuth redirect server socket on exit."
+  },
+  "https://github.com/simonw/datasette/pull/2815": {
+   "kind": "fix",
+   "line": "Made row URLs with the wrong number of composite primary key parts return HTTP 400. They returned HTTP 500 before."
+  },
+  "https://github.com/simonw/datasette/pull/2861": {
+   "kind": "fix",
+   "line": "Gave each non-blocking write its own task id. The id had been a constant."
+  },
+  "https://github.com/simonw/llm/pull/1506": {
+   "kind": "feature",
+   "line": "Adds timeout and retry options for OpenAI Responses models."
+  },
+  "https://github.com/sjh9714/mergewarden/pull/107": {
+   "kind": "test",
+   "line": "Added replay fixtures for reusable workflows pinned by branch and by commit hash."
+  },
+  "https://github.com/slavakurilyak/awesome-ai-agents/pull/330": {
+   "kind": "listing",
+   "line": "List entry naming Project Telos: 36 lines across three files."
+  },
+  "https://github.com/smdysk/cc-parachute/pull/12": {
+   "kind": "docs",
+   "line": "Wrote the filler strategy and cost ceiling section of a benchmark design document."
+  },
+  "https://github.com/sundeep-dayalan/sentient-trader/pull/53": {
+   "kind": "feature",
+   "line": "Added a replay mode, set in configuration, that runs a deterministic stub when no model key is present."
+  },
+  "https://github.com/TensorBlock/awesome-mcp-servers/pull/1017": {
+   "kind": "listing",
+   "line": "List entry: one line naming Project Telos."
+  },
+  "https://github.com/tylerjrbuell/reactive-agents-ts/pull/196": {
+   "kind": "test",
+   "line": "Added an end-to-end replay determinism test that needs no network."
+  },
+  "https://github.com/tylerjrbuell/reactive-agents-ts/pull/197": {
+   "kind": "test",
+   "line": "Moved replayed-step capture into a harness handle, a follow-up to pull request 196."
+  },
+  "https://github.com/tylerjrbuell/reactive-agents-ts/pull/202": {
+   "kind": "feature",
+   "line": "Made path traversal rejections name the working root and the relative-path rule. What is refused is unchanged."
+  },
+  "https://github.com/vectorvoyager358/voxwire/pull/44": {
+   "kind": "test",
+   "line": "Added an offline test of a degraded voice turn through the websocket handler, with a replay fixture."
+  },
+  "https://github.com/WagnerAgent/awesome-mcp-servers-devops/pull/55": {
+   "kind": "listing",
+   "line": "List entry: one line naming Project Telos."
+  },
+  "https://github.com/YoadElkayam/mcp-fuse/pull/9": {
+   "kind": "test",
+   "line": "Added conformance fixtures and negative controls that expose a retry identity gap after a dropped response."
+  },
+  "https://github.com/zilliztech/claude-context/pull/406": {
+   "kind": "feature",
+   "line": "Adds an optional receipt to code search results that carries hashes of the query and paths."
+  }
+ }
+}

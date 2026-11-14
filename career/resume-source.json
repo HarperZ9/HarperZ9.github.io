@@ -980,9 +980,9 @@
         },
         {
           "kind": "li",
-          "text": "Open source: 37 merged engineering pull requests in 30 external repositories, with 17 closed without merge and 14 open, counted from the GitHub API on October 23, 2026. harperz9.github.io/career/open-source-census.json",
+          "text": "Open source: 38 merged engineering pull requests in 31 external repositories, with 17 closed without merge and 13 open, counted from the GitHub API on November 14, 2026. harperz9.github.io/career/open-source-census.json",
           "evidence": [
-            "census-20261023"
+            "census-20261114"
           ]
         },
         {
@@ -1337,9 +1337,9 @@
         },
         {
           "kind": "p",
-          "text": "Six of 37 merged engineering pull requests in 30 external repositories. Full list: harperz9.github.io/career/open-source-census.json",
+          "text": "Six of 38 merged engineering pull requests in 31 external repositories. Full list: harperz9.github.io/portfolio.html",
           "evidence": [
-            "census-20261023"
+            "census-20261114"
           ]
         },
         {

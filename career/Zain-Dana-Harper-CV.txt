@@ -16,7 +16,7 @@ Selected Evidence
 
 - Elder ENB: 996,649 total downloads, 176,359 unique downloads and 2,413 endorsements on Nexus Mods, read October 23, 2026. First uploaded April 21, 2024; last updated February 20, 2026, at version final-elder-9. nexusmods.com/skyrimspecialedition/mods/117327
 
-- Open source: 37 merged engineering pull requests in 30 external repositories, with 17 closed without merge and 14 open, counted from the GitHub API on October 23, 2026. harperz9.github.io/career/open-source-census.json
+- Open source: 38 merged engineering pull requests in 31 external repositories, with 17 closed without merge and 13 open, counted from the GitHub API on November 14, 2026. harperz9.github.io/career/open-source-census.json
 
 Flagship Projects
 
@@ -146,7 +146,7 @@ Built Gather for research intake from web, scholarly and document sources, Index
 
 Selected Open-Source Contributions
 
-Six of 37 merged engineering pull requests in 30 external repositories. Full list: harperz9.github.io/career/open-source-census.json
+Six of 38 merged engineering pull requests in 31 external repositories. Full list: harperz9.github.io/portfolio.html
 
 - DeepEval #2822: fixed unhashable tool-output and nested-parameter failures in tool-correctness evaluation; merged July 2, 2026. github.com/confident-ai/deepeval/pull/2822
 

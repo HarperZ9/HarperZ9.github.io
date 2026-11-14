@@ -3,7 +3,7 @@
  "source": {
   "path": "career/resume-source.json",
   "document": "evaluation-python-tools",
-  "sha256": "9859e3bbbe9a483ba0cba41a14d942248944a64498558ef4f47ed6af5c3c251f"
+  "sha256": "8b1ae1984058407385c8474216a7196ca827e75f3846ed70bb6763ad99cb3055"
  },
  "ir_sha256": "ff2c5bc05ef5d799672f1f115a1513c18813131f2b12ec4b171711767f07d57d",
  "theme": "press-resume",
@@ -13,7 +13,11 @@
   "emboss.deboss_finish=inked"
  ],
  "outputs": {
-  "Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.pdf": "b7c931353f7acad9d4af7442a7895d83f9b3533e1dae8c41241b8a247c00279f"
+  "Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.pdf": "3c6dea300107a6e29fd4ac62e837b5502fb2673bed1b49986683bfbc4e655915"
+ },
+ "pdf_metadata": {
+  "pdfa": false,
+  "creation_date": null
  },
  "facts": {
   "pages": 1,
@@ -21,6 +25,8 @@
   "overfull": [],
   "underfull": 0,
   "missing_glyphs": [],
+  "glyph_fallbacks": [],
+  "math_errors": [],
   "fonts": [
    {
     "name": "BJEJEB+AccessionDisplay-Master",
@@ -43,7 +49,7 @@
   "blind_text_runs": 0,
   "reading_order": true,
   "blocks_missing_from_text": [],
-  "pdf_bytes": 226952
+  "pdf_bytes": 225911
  },
  "failed": [],
  "notes": [

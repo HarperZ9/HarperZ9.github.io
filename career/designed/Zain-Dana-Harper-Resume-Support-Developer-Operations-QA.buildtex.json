@@ -3,7 +3,7 @@
  "source": {
   "path": "career/resume-source.json",
   "document": "support-operations-qa",
-  "sha256": "9859e3bbbe9a483ba0cba41a14d942248944a64498558ef4f47ed6af5c3c251f"
+  "sha256": "8b1ae1984058407385c8474216a7196ca827e75f3846ed70bb6763ad99cb3055"
  },
  "ir_sha256": "59fdf4920f00f8f75a4ed322d7e1fb5cca28b840df38b4c4c98c7e61232ece60",
  "theme": "press-resume",
@@ -13,7 +13,11 @@
   "emboss.deboss_finish=inked"
  ],
  "outputs": {
-  "Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.pdf": "356664afb3f714fdf3444b33d27766d169b5cb78c29cda41181d9c6478f91880"
+  "Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.pdf": "5657489a5e56eb2bb258272179d697e6f5ebae3d57c903dd2672f647c1a83acc"
+ },
+ "pdf_metadata": {
+  "pdfa": false,
+  "creation_date": null
  },
  "facts": {
   "pages": 1,
@@ -21,6 +25,8 @@
   "overfull": [],
   "underfull": 0,
   "missing_glyphs": [],
+  "glyph_fallbacks": [],
+  "math_errors": [],
   "fonts": [
    {
     "name": "BFGKHN+HankenGrotesk-Regular",
@@ -43,7 +49,7 @@
   "blind_text_runs": 0,
   "reading_order": true,
   "blocks_missing_from_text": [],
-  "pdf_bytes": 228152
+  "pdf_bytes": 227124
  },
  "failed": [],
  "notes": [
