@@ -20,8 +20,11 @@ import argparse
 from datetime import datetime, timezone
 import json
 from pathlib import Path
+import re
 import sys
 import tempfile
+
+from docx import Document
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
@@ -61,6 +64,26 @@ def markdown_blocks(path: Path) -> tuple[B.Block, ...]:
     return tuple(blocks)
 
 
+def _blank_file_metadata(pdf: Path, docx: Path, fixed: datetime) -> None:
+    """A new published file carries no author or creator field; the name is in the text.
+
+    The publish metadata gate counts /Author and /Creator in a PDF and dc:creator and
+    cp:lastModifiedBy in a DOCX. Each value is overwritten with spaces of the same
+    length, so the PDF's byte offsets stay valid.
+    """
+    data = pdf.read_bytes()
+    blanked = re.sub(rb"(/(?:Author|Creator)\s*\()((?:\\.|[^\\)])*)(\))",
+                     lambda m: m.group(1) + b" " * len(m.group(2)) + m.group(3), data)
+    if len(blanked) != len(data):
+        raise ValueError(f"{pdf.name}: metadata blanking changed the file length")
+    pdf.write_bytes(blanked)
+    document = Document(docx)
+    document.core_properties.author = ""
+    document.core_properties.last_modified_by = ""
+    document.save(docx)
+    B._repack_docx(docx, fixed)
+
+
 def build(output: Path) -> dict[str, dict]:
     fixed = datetime.fromtimestamp(B.SOURCE_EPOCH, timezone.utc)
     rows = {}
@@ -68,6 +91,8 @@ def build(output: Path) -> dict[str, dict]:
                          (EVAL_STEM, markdown_blocks(EVAL_SOURCE))):
         B._build_pdf(output / f"{stem}.pdf", blocks)
         B._build_docx(output / f"{stem}.docx", blocks, fixed)
+        if stem == EVAL_STEM:
+            _blank_file_metadata(output / f"{stem}.pdf", output / f"{stem}.docx", fixed)
         for suffix in ("pdf", "docx"):
             path = output / f"{stem}.{suffix}"
             payload = path.read_bytes()
