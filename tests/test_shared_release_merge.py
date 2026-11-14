@@ -172,7 +172,8 @@ def test_career_pages_keep_downloads_and_describe_the_committed_census() -> None
     assert 'href="career/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.pdf"' in resume
     assert "Zain-Dana-Harper-Portfolio-Brief.pdf" in manifest
     assert "Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.pdf" in manifest
-    assert "Free Law Project" in portfolio
+    # 14 November 2026: the contribution record names each pull request by repository.
+    assert "freelawproject/litigant-portal" in portfolio
     assert "Free Law Project" in resume
     assert "read straight from the GitHub API" not in portfolio
     assert "come from the GitHub API" not in resume

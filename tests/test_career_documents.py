@@ -220,8 +220,11 @@ def test_experience_dates_use_the_adopted_low_claim_boundary() -> None:
         src = read(name)
         for value in ("Stream/Convergys", "Wilsonville, Oregon", "2014 to 2015",
                       "Legendary Tree", "April 25, 2015 to June 2, 2026",
-                      "2017", "June 2026", "Self-Directed Projects", "Employment", "High School Diploma"):
+                      "2017", "thirteen years of programming", "<h2>Projects</h2>", "<h2>Experience</h2>",
+                      "High School Diploma"):
             assert value in src, (name, value)
+        # 14 November 2026: one start date; the June 2026 transition line is gone from every surface.
+        assert "transition began" not in src and "13 years" not in src, name
         assert "Not direct Microsoft employment" in src
         assert "Operations and Commercial Arboriculture Lead" not in src
         assert "family business" not in src
@@ -233,7 +236,7 @@ def test_public_markdown_career_sources_preserve_the_same_date_and_employer_boun
     """Public text sources retain the same employment facts and exclude invented tenure."""
     for name in MARKDOWN_STATUS_BOUNDARY_DOCS:
         src = read(name)
-        for value in ("2017", "June 2026", "Legendary Tree", "Stream/Convergys",
+        for value in ("2017", "thirteen years of programming", "Legendary Tree", "Stream/Convergys",
                       "April 25, 2015 to June 2, 2026", "2014 to 2015"):
             assert value in src, (name, value)
         for forbidden in ("2017-present", "2015-present", "Xbox Division | Microsoft",

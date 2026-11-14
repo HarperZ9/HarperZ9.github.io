@@ -1,6 +1,6 @@
 # Zain Dana Harper: Resumes
 
-Updated 2026-11-02.
+Updated 2026-11-14.
 
 Four primary families: support/developer operations/QA; AI systems/evaluation/Python tooling; graphics, rendering and developer tools; arboriculture/field operations/estimating. Each targeted resume is one page. A public-operations variant and full CV are also available.
 
@@ -60,10 +60,10 @@ https://harperz9.github.io/cv.html
 
 ## Work-history and source notes
 
-Owner-confirmed September 30, 2026: about 13 years of personal, self-directed programming; no professional programming experience. Career transition began June 2026 after eleven years of full-time production arboriculture.
+Owner-confirmed November 14, 2026: about thirteen years of programming, self-directed and unpaid. No paid software role to date, so no professional programming experience is claimed. Full-time production arboriculture ran from April 25, 2015 to June 2, 2026.
 Start year 2017 is known. No current status, end year, or continuous employment is inferred.
 Full-time period April 25, 2015 to June 2, 2026. Legendary Tree is an applicant-provided organization label; the displayed role describes duties and does not establish a formal title or legal employer name.
 2014 to 2015, Xbox/Microsoft product contract, subcontracted through Stream/Convergys in Wilsonville, Oregon. Not direct Microsoft employment.
-Sole proprietorship began September 2026; no paid software clients. No LLC or registered trade name is claimed.
+Sole proprietorship began September 2026, with no client work in software to date. No LLC or registered trade name is claimed.
 
 Detailed source ledger: https://harperz9.github.io/career/source-ledger.md

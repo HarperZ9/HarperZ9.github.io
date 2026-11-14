@@ -1,0 +1,13 @@
+{
+  "date": "2026-11-13",
+  "note": "Cover letter and dossier headers say Kent, Washington and carry the 13 November date; the cover letter files are rebuilt from the page by tools/build_cover_letters.py; a general letter for red-team, security-evaluation and AI-evaluation roles is added from career/cover-letter-evaluation.md, under 300 words, with no email or phone.",
+  "paths": {
+    "career/Zain-Dana-Harper-Cover-Letter-Evaluation.docx": "e7043207c2adccbdb008dda600ef5844c43932e19365c38b61311bba29000168",
+    "career/Zain-Dana-Harper-Cover-Letter-Evaluation.pdf": "b777835c7175d512c92a4a3dcccc28717f087ecfca492f9aee4092c1b516756c",
+    "career/Zain-Dana-Harper-Cover-Letter.docx": "ca29f2e30d0ce0d938dbd16c906a2aef449c85dbd67571c2f81892cc1a46aca3",
+    "career/Zain-Dana-Harper-Cover-Letter.pdf": "0c364652c88d60a9322e08b8f1200440c5a5e341923065938c687cbb94741c34",
+    "career/career-artifacts.json": "20c812e856dff91292dbc379466b42f70080becafe832f82a15424cc605d0951",
+    "cover-letter.html": "a447b513f4f46d148eb70332a9ddd706b4d8049e95120c6183e8a2c7c343ba99",
+    "dossier.html": "041d9eeb2de81db55b814b9539d66d582892009eae7049b7f51689f7681bd92b"
+  }
+}
