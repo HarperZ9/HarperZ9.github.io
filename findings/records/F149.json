@@ -17,6 +17,14 @@
   "rung": "hypothesis",
   "rung_reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
   "outcome": "held",
+  "verdicts": {
+   "held": 7,
+   "failed": 3,
+   "untestable": 0,
+   "files": [
+    "result.json"
+   ]
+  },
   "objection": "Rebuilt denominators with zero-rate years sharing the remainder; the definition of doubled with Fig. 3 unread; the abstract's 25 and almost 50 percent endpoints not compared.",
   "objection_source": "the register's reviewer attack",
   "would_change": "Blind rerun by an independent analyst, true denominators from Karst, and a read of Fig. 3 before calling any definition theirs.",

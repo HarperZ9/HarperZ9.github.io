@@ -16,7 +16,20 @@
   "tier_reason": "Real data, clean held-out design, useful negative; a reproduction with a limit on identifiability.",
   "rung": "hypothesis",
   "rung_reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
-  "outcome": "held",
+  "outcome": "mixed",
+  "bound": "The planted check failed: the method did not recover a known model at this sample size (the planted model trailed its rival by 0.0003 nats per report). By the preregistered kill condition no ranking among the six models counts. The reports do differ from a shuffled control, and the shares read from the held-out reports are a description.",
+  "verdicts": {
+   "held": 3,
+   "failed": 3,
+   "untestable": 0,
+   "files": [
+    "result.json"
+   ]
+  },
+  "kill": {
+   "state": "fired",
+   "note": "The planted check failed, so by the preregistered kill condition no ranking among the six models counts. The kill condition on the shuffle control did not fire."
+  },
   "objection": "The planted check failed, so the near-tie says nothing about which model is true, and the model ranking in Table {ref:tab:loss} is not a result.",
   "objection_source": "the paper's first stated limitation; no reviewer attack is on file",
   "would_change": "No condition for raising or overturning the call is on file in the register.",

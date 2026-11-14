@@ -18,6 +18,18 @@
   "rung_reason": "KSG transfer entropy as a direction reader on annual rings: kill 0.75 fired on planted truth.",
   "outcome": "failed",
   "bound": "At the real coupling strength the false direction ranked at or above the true one at 52.6 percent of planted sites, so the estimator gets no direction-reading status on data like these.",
+  "verdicts": {
+   "held": 3,
+   "failed": 6,
+   "untestable": 0,
+   "files": [
+    "result.json"
+   ]
+  },
+  "kill": {
+   "state": "fired",
+   "note": "The estimator's own kill condition fired."
+  },
   "objection": "Power is low at about 78 years and a ring-temperature correlation near 0.2. This is a failure on short annual series. A longer or monthly design might behave differently.",
   "objection_source": "the paper's first stated limitation; no reviewer attack is on file",
   "would_change": "A longer-series or monthly design with the anchor at real strength; test the synthetic D statistic of PU30-130 under a new lock.",

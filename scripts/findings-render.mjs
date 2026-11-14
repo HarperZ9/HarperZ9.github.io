@@ -56,16 +56,22 @@ function term(n, ctx) {
   if (!g) throw new Error(`${ctx.id}: no glossary entry for ${n.key}`);
   const id = uid(ctx, `use-${n.key}`);
   ctx.termUses.push({ key: n.key, scope: g.scope, anchor: id, section: ctx.section });
-  const d = g.definition.slice(0, 1).toUpperCase() + g.definition.slice(1), cut = clauseEnd(d);
-  const first = d.slice(0, cut).replace(/[,;:]$/, ""), rest = d.slice(cut).replace(/^[,;:]?\s*/, "");
+  const [first, rest] = shortDefinition(g.definition);
   return `<a class="gt d-fine" data-hue="rsrch" id="${id}" href="/findings/glossary.html#${g.anchor}">${nodes(n.kids, ctx)}</a><span class="gd" role="note"><span class="sr-only">Definition: </span><b class="gd-t d-fine" data-hue="rsrch">${esc(g.term)}</b> <span class="gd-f">${esc(g.field)}</span> <span class="gd-1">${esc(first)}.</span><span class="gd-more">${rest ? ` ${esc(rest.slice(0, 1).toUpperCase() + rest.slice(1))}.` : ""} <span class="gd-x">Excludes</span> ${esc(g.excludes)}.</span> <a class="gd-full" href="/findings/glossary.html#${g.anchor}" aria-label="Full definition of ${esc(g.term)}">full definition</a></span>`;
 }
 
-// where a definition's first clause ends: the first semicolon, or the first comma after its opening words
-function clauseEnd(d) {
-  const semi = d.indexOf(";"), comma = d.indexOf(", ", 30);
-  const ends = [semi, comma].filter((i) => i > 0);
+// Where a definition's short form ends: at its first full stop or semicolon, where a sentence or a whole clause
+// closes. A definition with neither is shown whole. A cut at a comma left fragments such as "A rule written in the
+// preregistration that."; shortDefinition is exported so a test can hold every short form to a whole sentence.
+export function clauseEnd(d) {
+  const ends = [d.indexOf("; "), d.indexOf(". ")].filter((i) => i > 0);
   return ends.length ? Math.min(...ends) : d.length;
+}
+
+// shortDefinition(definition) -> [the short form without its closing stop, the rest]
+export function shortDefinition(definition) {
+  const d = definition.slice(0, 1).toUpperCase() + definition.slice(1), cut = clauseEnd(d);
+  return [d.slice(0, cut).replace(/[.,;:]$/, ""), d.slice(cut).replace(/^[.,;:]?\s*/, "")];
 }
 
 function cite(n, ctx) {

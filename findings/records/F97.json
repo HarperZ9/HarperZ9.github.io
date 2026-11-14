@@ -15,7 +15,16 @@
   "tier_reason": "Real data, locked prereg, passing instrument and a forecast H4. The climate grid is itself smooth, so the filter may belong to CRU rather than the trees; the next step must separate them.",
   "rung": "hypothesis",
   "rung_reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
-  "outcome": "held",
+  "outcome": "mixed",
+  "bound": "The broad-against-fine contrast held: 0.64 against control 95th percentiles of 0.22 and 0.30. The three tests on the drought field itself, separability, travel and dispersion, came back null on the climate grid and on the trees, so six of the eleven preregistered verdicts failed.",
+  "verdicts": {
+   "held": 5,
+   "failed": 6,
+   "untestable": 0,
+   "files": [
+    "result.json"
+   ]
+  },
   "objection": "CRU interpolates precipitation with a 450 km decay distance, right where the lens opens, so low fine-scale coherence may be reference smoothing. Site clustering and noise fill the finest band.",
   "objection_source": "the register's reviewer attack",
   "would_change": "Repeat with station or denser gridded data as reference, another region, a held-out fine-scale network.",

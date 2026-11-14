@@ -14,6 +14,15 @@
   "tier": "B",
   "tier_reason": "Real texts, one new source.",
   "outcome": "held",
+  "verdicts": {
+   "held": 12,
+   "failed": 9,
+   "untestable": 0,
+   "files": [
+    "result-run1.json",
+    "result-run2.json"
+   ]
+  },
   "objection": "Wikipedia is the only new text, so era, genre and topic stay tangled in every new-text row.",
   "objection_source": "the paper's first stated limitation; no reviewer attack is on file",
   "would_change": "No condition for raising or overturning the call is on file in the register.",

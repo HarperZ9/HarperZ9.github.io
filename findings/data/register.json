@@ -176,9 +176,9 @@
     "statement_sha256": "02c0ef704c77005f3ee4f3d51e39121966d864a2a95b591e6c90aa33f4214c35",
     "entered": "2026-10-31",
     "rung": "thesis",
-    "reason": "Survives The secant law as the source of Newton's steep obliquity rows. Decisive observation: The rows follow his 106-means rule; the secant runs 27 percent low at 85 degrees; preregistered predictions C and E held.",
+    "reason": "Survives The secant law as the source of Newton's steep obliquity rows. Decisive observation: The rows follow his 106-means rule, which runs 27 percent below the secant law at 85 degrees; preregistered predictions C and E held.",
     "opposition": "The secant law as the source of Newton's steep obliquity rows",
-    "decisive_observation": "The rows follow his 106-means rule; the secant runs 27 percent low at 85 degrees; preregistered predictions C and E held",
+    "decisive_observation": "The rows follow his 106-means rule, which runs 27 percent below the secant law at 85 degrees; preregistered predictions C and E held",
     "not_new": false,
     "prediction_on_file": true,
     "kill_source": "verdict_rule"
@@ -355,7 +355,7 @@
     "statement_sha256": "229a4583d8314c86c2347a2365b10a5eb8e60c08225f8f9dee2811221613ebe7",
     "entered": "2026-10-31",
     "rung": "killed",
-    "reason": "A-B-C shared-neighbour ranking as a gap finder: loses to popularity.",
+    "reason": "Shared-neighbour ranking as a gap finder lost to popularity on all three corpora, so the claim failed its own test. The preregistered kill condition did not fire, because the within-decile check passed.",
     "not_new": false,
     "prediction_on_file": true,
     "kill_source": "verdict_rule"
@@ -627,7 +627,7 @@
     "statement_sha256": "0d9bb416fc6cf9ab5407f21372b2a5227bcfb2d6354438f1d53c952c327c04cf",
     "entered": "2026-10-31",
     "rung": "killed",
-    "reason": "Two factors never beat one AR(1) axis.",
+    "reason": "The two-trait model never beat the one-trait model in the three datasets where both were fitted, so the claim failed its own test. The measures were unreliable enough that the test had little power, and two separate traits are not ruled out.",
     "not_new": false,
     "prediction_on_file": true,
     "kill_source": "verdict_rule"
@@ -643,7 +643,7 @@
    "f": "F281",
    "tier": "D",
    "strong_b": false,
-   "tier_reason": "Rung: killed in tested band. Locked with planted checks, self-graded, simulation or public data, largely reproducing or testing published results.",
+   "tier_reason": "Locked with planted checks, self-graded, simulation or public data, largely reproducing or testing published results. The register's tier note also read \"killed in tested band\" while its ladder entry places the claim at hypothesis; the two entries have not been reconciled.",
    "fields": [
     "physics"
    ],

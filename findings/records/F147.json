@@ -16,6 +16,14 @@
   "rung": "hypothesis",
   "rung_reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
   "outcome": "held",
+  "verdicts": {
+   "held": 6,
+   "failed": 6,
+   "untestable": 0,
+   "files": [
+    "result.json"
+   ]
+  },
   "objection": "One maker, one aperture, and vendor curves read from printed sheets. Digitising adds its own error, which was not measured.",
   "objection_source": "the paper's first stated limitation; no reviewer attack is on file",
   "would_change": "Read Shaw and Dainty; measure one stock with a spectral photon count and a lab microdensitometer.",

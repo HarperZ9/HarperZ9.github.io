@@ -13,9 +13,17 @@
   "tier": "D",
   "tier_reason": "Reported as a null. Power is limited by split-half reliability of 0.03 to 0.47, and the null has no noise term, so it does not show a single trait.",
   "rung": "killed",
-  "rung_reason": "Two factors never beat one AR(1) axis.",
+  "rung_reason": "The two-trait model never beat the one-trait model in the three datasets where both were fitted, so the claim failed its own test. The measures were unreliable enough that the test had little power, and two separate traits are not ruled out.",
   "outcome": "null",
   "bound": "Split-half reliability ran from 0.03 to 0.47, so the factor test had little power; two separate traits are not ruled out.",
+  "verdicts": {
+   "held": 7,
+   "failed": 5,
+   "untestable": 4,
+   "files": [
+    "result.json"
+   ]
+  },
   "objection": "Split-half reliability was 0.03 to 0.47, so the factor test had little power, and one dataset could not be fitted at all.",
   "objection_source": "the paper's first stated limitation; no reviewer attack is on file",
   "would_change": "Longer series, an AR(1) null with measurement noise, and test-retest reliability.",

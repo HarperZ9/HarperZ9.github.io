@@ -17,6 +17,15 @@
   "rung_reason": "Drought steeling: A1 failed across 1,175 sites.",
   "outcome": "null",
   "bound": "The 95 percent interval runs to +0.090 in log resilience, about a 9 percent gain, so small conditioning effects stay open.",
+  "verdicts": {
+   "held": 19,
+   "failed": 17,
+   "untestable": 0,
+   "files": [
+    "main-result.json",
+    "rerun-result.json"
+   ]
+  },
   "objection": "The 95% interval reaches +0.090 in log resilience, a gain of about 9 percent. Small conditioning effects are not ruled out.",
   "objection_source": "the paper's first stated limitation; no reviewer attack is on file",
   "would_change": "Add an autocorrelation (biological memory) baseline, then publish A alone as a null with its power stated.",

@@ -15,6 +15,18 @@
   "tier_reason": "Preregistered; the kill rule fired on two gates by small margins, so the strong real-data asymmetry is an exploratory reading. Planted truth had the wrong lag sign. Internal; not for outbound use until reviewed.",
   "outcome": "failed",
   "bound": "Two binding first-difference checks failed by less than 0.02, so the preregistered kill fired and the panel instrument earned no standing in this round.",
+  "verdicts": {
+   "held": 9,
+   "failed": 3,
+   "untestable": 0,
+   "files": [
+    "result.json"
+   ]
+  },
+  "kill": {
+   "state": "fired",
+   "note": "Two binding first-difference checks failed, so the kill condition written before the run fired."
+  },
   "objection": "The planted forward and reverse worlds used a positive prior-summer term, the wrong sign for most of these stands. The pass of the planted forward world at real strength is a pass on a world unlike the real one.",
   "objection_source": "the paper's first stated limitation; no reviewer attack is on file",
   "would_change": "No condition for raising or overturning the call is on file in the register.",

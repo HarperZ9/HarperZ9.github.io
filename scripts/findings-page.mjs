@@ -18,6 +18,8 @@ function standingLine(rec, rels) {
     ["Tier", `${esc(d.tier)}, ${TIER_WORD[d.tier]}`],
     ["Outcome", `<a href="#evidence">${mark("outcome", d.outcome)}${esc(OUTCOME_WORD[d.outcome])}</a>`],
     ["Rung", d.rung ? `<a href="#ladder">${esc(d.rung)}</a>` : "not yet placed"],
+    ...(d.verdicts ? [["Verdicts", `${d.verdicts.held} passed, ${d.verdicts.failed} failed${d.verdicts.untestable ? `, ${d.verdicts.untestable} untestable` : ""}`]] : []),
+    ...(d.kill ? [["Kill rule", `<span title="${esc(d.kill.note)}">${esc(d.kill.state)}</span>`]] : []),
     ...(w ? [["Standing", stand]] : []),
     ["Corrections", xs.length ? `<a href="#trail">${xs.length}, latest ${esc(xs[xs.length - 1].date)}</a>` : "none"],
     ["Version", `<a href="#trail">v${Math.max(...rec.versions.map((v) => v.n))}, ${esc(rec.versions[rec.versions.length - 1].date)}</a>`],

@@ -15,9 +15,21 @@
   "tier": "D",
   "tier_reason": "A registered null with real corpora and a rewired control. It agrees with link-prediction practice, where degree baselines are hard to beat, so its value is the honest baseline test for gap tools.",
   "rung": "killed",
-  "rung_reason": "A-B-C shared-neighbour ranking as a gap finder: loses to popularity.",
+  "rung_reason": "Shared-neighbour ranking as a gap finder lost to popularity on all three corpora, so the claim failed its own test. The preregistered kill condition did not fire, because the within-decile check passed.",
   "outcome": "failed",
   "bound": "Shared-neighbour ranking found fewer later links than popularity on all three corpora; among pairs of similar popularity it still separated later links (AUC 0.569 to 0.757).",
+  "verdicts": {
+   "held": 1,
+   "failed": 3,
+   "untestable": 0,
+   "files": [
+    "result.json"
+   ]
+  },
+  "kill": {
+   "state": "not fired",
+   "note": "The paper states that the kill condition did not fire, because the within-decile result passed."
+  },
   "objection": "A later co-occurrence is an attention event. A hit means two concepts were later used together; it does not show that a link between them is true or new to science.",
   "objection_source": "the paper's first stated limitation; no reviewer attack is on file",
   "would_change": "Preregister Adamic-Adar on a citation corpus with dated held-out links.",

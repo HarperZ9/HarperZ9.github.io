@@ -12,11 +12,19 @@
    "physics-other"
   ],
   "tier": "D",
-  "tier_reason": "Rung: killed in tested band. Locked with planted checks, self-graded, simulation or public data, largely reproducing or testing published results.",
+  "tier_reason": "Locked with planted checks, self-graded, simulation or public data, largely reproducing or testing published results. The register's tier note also read \"killed in tested band\" while its ladder entry places the claim at hypothesis; the two entries have not been reconciled.",
   "rung": "hypothesis",
   "rung_reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
   "outcome": "null",
   "bound": "Rules out a linear energy-dependent change in light speed larger than 7.6e-18 of c at 29.9 GeV, an energy scale below 0.32 Planck energies; the published bound from the same burst is about 24 times stronger.",
+  "verdicts": {
+   "held": 12,
+   "failed": 3,
+   "untestable": 0,
+   "files": [
+    "result.json"
+   ]
+  },
   "objection": "The bound holds only in the tested band, about 0.1 to 30 GeV, and only for a delay linear in energy. The quadratic form, other energies and other carriers were not tested.",
   "objection_source": "the paper's first stated limitation; no reviewer attack is on file",
   "would_change": "Outside reader; primary full text for hand-typed rows; own instrument or data where simulated.",

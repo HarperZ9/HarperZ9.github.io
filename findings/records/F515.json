@@ -14,6 +14,10 @@
   "tier": "B",
   "tier_reason": "Changes how to read common LLM compression numbers; needs a wider unseen set.",
   "outcome": "held",
+  "kill": {
+   "state": "not fired",
+   "note": "The paper states that the kill condition did not fire: the arithmetic-coded round trip was exact."
+  },
   "objection": "There is one unseen text. It is our own technical writing in one register, full of numbers and technical terms, and it was chosen after the headline numbers were seen. A set of fresh texts across registers is needed before the size of the memorisation share can be stated.",
   "objection_source": "the paper's first stated limitation; no reviewer attack is on file",
   "would_change": "No condition for raising or overturning the call is on file in the register.",

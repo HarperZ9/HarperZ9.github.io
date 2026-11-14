@@ -17,6 +17,18 @@
   "rung": "hypothesis",
   "rung_reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
   "outcome": "held",
+  "verdicts": {
+   "held": 5,
+   "failed": 2,
+   "untestable": 0,
+   "files": [
+    "alps-result.json"
+   ]
+  },
+  "kill": {
+   "state": "not fired",
+   "note": "The paper states that the kill condition did not fire: the best channel beat all three controls and tests survived correction."
+  },
   "objection": "Bits relabel CE, so what is new? Next: the regional gain partly reflects a smoother target, P3's null is underpowered, cores stand in for trees, cloud is interpolated, and windows end near 1975.",
   "objection_source": "the register's reviewer attack",
   "would_change": "Power P3 with wider panels and nested best-subset selection, an outside dendrochronologist's review, and a band or period out of sample past 1975",

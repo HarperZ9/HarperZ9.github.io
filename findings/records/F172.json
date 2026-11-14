@@ -16,7 +16,20 @@
   "tier_reason": "Real held-out result on public data with gates passing; related methods exist, no literature check for identical tests, and mixed-metric conversions need review.",
   "rung": "hypothesis",
   "rung_reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
-  "outcome": "held",
+  "outcome": "mixed",
+  "bound": "The model beat taking originals at face value (the 95 percent interval of the Brier gain starts at 0.108). It did not beat the base rate (the interval starts at -0.039) and it lost to a small logistic model. Skill was positive in half the fields against a bar of three quarters, and its Reproducibility Project rate missed by 0.16 against a tolerance of 0.05. The preregistered kill rule fired, so the claim that the model picks which effects replicate is withdrawn.",
+  "verdicts": {
+   "held": 5,
+   "failed": 4,
+   "untestable": 0,
+   "files": [
+    "result.json"
+   ]
+  },
+  "kill": {
+   "state": "fired",
+   "note": "The model did not beat the base rate on held-out fields, so the preregistered kill rule fired and the claim that it tells which effects replicate is withdrawn."
+  },
   "objection": "Fisher z standard errors ignore design, and unsigned rows assume direction.",
   "objection_source": "the register's reviewer attack",
   "would_change": "Lock the two-normal prior, review conversions by hand on a sample, search the literature.",

@@ -17,6 +17,15 @@
   "rung_reason": "Our reproduction of the cheater result: it was self-benefit.",
   "outcome": "failed",
   "bound": "With goods paid to others only, local producers never reached the preregistered mean share of 0.5 (0.48 at a benefit-to-cost ratio of 400).",
+  "verdicts": {
+   "held": 7,
+   "failed": 2,
+   "untestable": 1,
+   "files": [
+    "round2-result.json",
+    "round3-result.json"
+   ]
+  },
   "objection": "One update rule, fitness-proportional and synchronous, with invented numbers. Other update rules, asynchronous timing, other neighbourhood sizes or a parent window separate from the goods box could let producers persist.",
   "objection_source": "the paper's first stated limitation; no reviewer attack is on file",
   "would_change": "No condition for raising or overturning the call is on file in the register.",

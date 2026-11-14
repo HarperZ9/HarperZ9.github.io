@@ -17,6 +17,14 @@
   "rung": "hypothesis",
   "rung_reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
   "outcome": "held",
+  "verdicts": {
+   "held": 5,
+   "failed": 5,
+   "untestable": 0,
+   "files": [
+    "result.json"
+   ]
+  },
   "objection": "Inferred skips may be unseen questions; matched strata may create the sign flip against Merkle; a probability gate rewards confidence by construction.",
   "objection_source": "the register's reviewer attack",
   "would_change": "Replicate on another tournament with visible question exposure; read Merkle in full.",

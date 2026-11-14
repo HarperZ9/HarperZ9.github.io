@@ -50,6 +50,17 @@
         "rung_reason": {"type": "string"},
         "outcome": {"$ref": "#/$defs/outcome"},
         "bound": {"type": "string", "description": "For a null: what the result rules out and what it leaves open."},
+        "verdicts": {
+          "type": "object", "required": ["held", "failed", "untestable", "files"], "additionalProperties": false,
+          "description": "The count of preregistered verdicts in the named result files. The outcome word may not be 'held' when more failed than held.",
+          "properties": {"held": {"type": "integer"}, "failed": {"type": "integer"}, "untestable": {"type": "integer"},
+            "files": {"type": "array", "items": {"type": "string"}}}
+        },
+        "kill": {
+          "type": "object", "required": ["state", "note"], "additionalProperties": false,
+          "description": "Whether a preregistered kill rule fired, as the paper states it. The outcome word may not be 'held' when one fired.",
+          "properties": {"state": {"enum": ["fired", "not fired"]}, "note": {"type": "string"}}
+        },
         "objection": {"type": "string", "description": "The strongest case against. Register: reviewer_attack."},
         "objection_source": {"type": "string"},
         "would_change": {"type": "string", "description": "What would raise or overturn the call. Register: raise_tier."},

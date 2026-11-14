@@ -18,6 +18,18 @@
   "rung_reason": "Combined formula over richer prospect theory: kill fired, retired.",
   "outcome": "failed",
   "bound": "The combined formula never beat flexible prospect theory by the preregistered 0.005 in cross-validated R2 (0.634 against 0.645 without feedback, 0.597 against 0.596 with it).",
+  "verdicts": {
+   "held": 4,
+   "failed": 3,
+   "untestable": 0,
+   "files": [
+    "result.json"
+   ]
+  },
+  "kill": {
+   "state": "fired",
+   "note": "The kill rule fired in both settings, and the formula is retired as a model of risky choice."
+  },
   "objection": "Entropy, loss probability and the mean and mean square of outcomes are one reading of information, threat and drive. Another reading could score differently, so the result covers this operationalisation only.",
   "objection_source": "the paper's first stated limitation; no reviewer attack is on file",
   "would_change": "Person-level data and a preregistered reading of information gain.",

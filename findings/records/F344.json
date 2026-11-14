@@ -17,6 +17,14 @@
   "rung_reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
   "outcome": "null",
   "bound": "Only strong cubic patterns are ruled out: power 0.9 at planted strength 0.2 at 8 EeV, and at 32 EeV only at strength 1.0, where the sky along the cube axes is twice the average.",
+  "verdicts": {
+   "held": 3,
+   "failed": 0,
+   "untestable": 0,
+   "files": [
+    "result.json"
+   ]
+  },
   "objection": "Only the public 10 percent of events was available, which is the main reason the sensitivity is low.",
   "objection_source": "the paper's first stated limitation; no reviewer attack is on file",
   "would_change": "No condition for raising or overturning the call is on file in the register.",

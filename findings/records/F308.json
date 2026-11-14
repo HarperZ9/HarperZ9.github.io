@@ -17,6 +17,14 @@
   "rung_reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
   "outcome": "null",
   "bound": "One failure in 213 tested lines, 0.47 percent; the 95 percent Wilson interval runs to 2.6 percent, so failure rates above that are ruled out for lines of this kind.",
+  "verdicts": {
+   "held": 2,
+   "failed": 1,
+   "untestable": 0,
+   "files": [
+    "result.json"
+   ]
+  },
   "objection": "The lines were fitted to data, so passing is what a correct fit does, and a high-order fit can pass by construction when the b-file is short relative to its order. A passing line stays a conjecture with more range.",
   "objection_source": "the paper's first stated limitation; no reviewer attack is on file",
   "would_change": "No condition for raising or overturning the call is on file in the register.",

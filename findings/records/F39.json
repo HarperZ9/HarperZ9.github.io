@@ -16,6 +16,14 @@
   "rung": "hypothesis",
   "rung_reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
   "outcome": "held",
+  "verdicts": {
+   "held": 7,
+   "failed": 2,
+   "untestable": 0,
+   "files": [
+    "result.json"
+   ]
+  },
   "objection": "Tail is a proxy for instrumentation and production style, since timbre was not held; DEAM is short clips with crowd perceived-emotion ratings; the mirror audio provenance.",
   "objection_source": "the register's reviewer attack",
   "would_change": "Replicate on a second rated corpus, add a blind listening test with tail manipulated at fixed instrumentation, and measure felt calm",

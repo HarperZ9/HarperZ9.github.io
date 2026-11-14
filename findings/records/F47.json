@@ -16,7 +16,16 @@
   "tier_reason": "Real data across domains with working nulls, and an unusual side-by-side view. The second run is not blind, one ceiling failed, the core forecasts failed, and linear models cannot rule out nonlinear signal. The past-performance finding is known.",
   "rung": "hypothesis",
   "rung_reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
-  "outcome": "held",
+  "outcome": "mixed",
+  "bound": "Four of the six preregistered verdicts failed. One target reached 0.8 of its ceiling against a forecast of at least four, and one plateau moved when a new kind of variable arrived against a forecast of at least three. Held-out skill did rise with added variables and beat its shuffled control in every target, and the two toy-model verdicts passed.",
+  "verdicts": {
+   "held": 2,
+   "failed": 4,
+   "untestable": 0,
+   "files": [
+    "result.json"
+   ]
+  },
   "objection": "Ridge and logit may leave signal that a nonlinear model finds, so a stall may be the model class; datasets are a convenience sample; DEAM rater count is assumed and the ceilings are bounds.",
   "objection_source": "the register's reviewer attack",
   "would_change": "Rerun with nonlinear learners and a preregistered tree ceiling on fresh splits; drop the saves; add a domain outside this machine",

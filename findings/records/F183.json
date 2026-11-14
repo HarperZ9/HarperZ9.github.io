@@ -14,9 +14,18 @@
   "tier": "D",
   "tier_reason": "Refutes the bio-labelled edge after my own bug fix; default parameters only.",
   "rung": "thesis",
-  "rung_reason": "Survives Bio-labelled optimisers as better search. Decisive observation: Shifted known optima: CMA-ES rank 2.0 against best bio 3.14, and SMA and GWO lose 12 and 13.6 decades.",
+  "rung_reason": "Named rival, which the finding stood against: Bio-labelled optimisers as better search. Decisive observation against the rival: Shifted known optima: CMA-ES rank 2.0 against best bio 3.14, and SMA and GWO lose 12 and 13.6 decades.",
   "outcome": "mixed",
   "bound": "The group contest between plain and biologically labelled optimisers sat inside the label-permutation range (p 0.45); the method-level ranks hold.",
+  "verdicts": {
+   "held": 17,
+   "failed": 3,
+   "untestable": 0,
+   "files": [
+    "first-run-result.json",
+    "rerun-result.json"
+   ]
+  },
   "objection": "Seven functions, 10 dimensions, one budget of 20,000 evaluations and 15 repeats. Other functions, dimensions or budgets could reorder the methods.",
   "objection_source": "the paper's first stated limitation; no reviewer attack is on file",
   "would_change": "No condition for raising or overturning the call is on file in the register.",

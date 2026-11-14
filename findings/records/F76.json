@@ -17,6 +17,18 @@
   "rung": "hypothesis",
   "rung_reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
   "outcome": "held",
+  "verdicts": {
+   "held": 6,
+   "failed": 2,
+   "untestable": 0,
+   "files": [
+    "result.json"
+   ]
+  },
+  "kill": {
+   "state": "not fired",
+   "note": "80 of 1,236 series beat the bound, 6.5 percent, under the preregistered 10 percent kill."
+  },
   "objection": "Tree rings are 91 percent of series and arrive detrended; pooled rho may reflect group mix. Half-split AR estimation may explain the gap, and the bound is old.",
   "objection_source": "the register's reviewer attack",
   "would_change": "Independent series families (M-competitions, climate, physiology), then explain the surrogate gap by nonstationarity, non-Gaussianity or AR estimation.",
