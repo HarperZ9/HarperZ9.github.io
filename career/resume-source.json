@@ -377,9 +377,9 @@
         },
         {
           "kind": "li",
-          "text": "Released and updated Elder ENB, a Skyrim lighting preset: 996,649 downloads on Nexus Mods, 2024 to 2026.",
+          "text": "Released and updated Elder ENB, a Skyrim lighting preset: 1,004,693 downloads on Nexus Mods, 2024 to 2026.",
           "evidence": [
-            "elder-enb-nexus"
+            "elder-enb-nexus-20261113"
           ]
         },
         {
@@ -679,9 +679,9 @@
         },
         {
           "kind": "li",
-          "text": "Released Elder ENB, a lighting and post-processing preset for Skyrim Special Edition with 38 atmosphere presets: 996,649 downloads and 2,413 endorsements on Nexus Mods, read October 23, 2026.",
+          "text": "Released Elder ENB, a lighting and post-processing preset for Skyrim Special Edition with 38 atmosphere presets: 1,004,693 downloads and 2,418 endorsements on Nexus Mods, read November 13, 2026.",
           "evidence": [
-            "elder-enb-nexus"
+            "elder-enb-nexus-20261113"
           ]
         },
         {
@@ -954,10 +954,10 @@
         },
         {
           "kind": "p",
-          "text": "Self-directed software builder who writes tools that test AI systems and the software around them, and graphics work that people install. Elder ENB, a lighting preset for Skyrim Special Edition, has 996,649 downloads on Nexus Mods. About 13 years of personal programming. Career transition began June 2026 after eleven years of full-time production arboriculture; no professional programming experience.",
+          "text": "Self-directed software builder who writes tools that test AI systems and the software around them, and graphics work that people install. Elder ENB, a lighting preset for Skyrim Special Edition, has 1,004,693 downloads on Nexus Mods. About 13 years of personal programming. Career transition began June 2026 after eleven years of full-time production arboriculture; no professional programming experience.",
           "evidence": [
             "history",
-            "elder-enb-nexus",
+            "elder-enb-nexus-20261113",
             "flywheel-190"
           ]
         },
@@ -974,9 +974,9 @@
         },
         {
           "kind": "li",
-          "text": "Elder ENB: 996,649 total downloads, 176,359 unique downloads and 2,413 endorsements on Nexus Mods, read October 23, 2026. First uploaded April 21, 2024; last updated February 20, 2026, at version final-elder-9. nexusmods.com/skyrimspecialedition/mods/117327",
+          "text": "Elder ENB: 1,004,693 total downloads, 179,218 unique downloads and 2,418 endorsements on Nexus Mods, read November 13, 2026. First uploaded April 21, 2024; last updated February 20, 2026, at version final-elder-9. nexusmods.com/skyrimspecialedition/mods/117327",
           "evidence": [
-            "elder-enb-nexus"
+            "elder-enb-nexus-20261113"
           ]
         },
         {
@@ -1269,7 +1269,7 @@
           "kind": "p",
           "text": "An ENBSeries preset with a layered design: weather presets set the atmosphere, and stackable overlays adjust style, lighting, effects and post-processing. It ships 38 atmosphere presets for the KreatE weather system, updated from April 2024 to February 2026. ENBSeries and the required mods belong to their authors. nexusmods.com/skyrimspecialedition/mods/117327",
           "evidence": [
-            "elder-enb-nexus"
+            "elder-enb-nexus-20261113"
           ]
         },
         {
@@ -1509,7 +1509,7 @@
           "text": "Graphics and domain knowledge: D3D11/D3D12, Vulkan, HLSL, WebGPU/WGSL, ENBSeries presets, painterly and stylised post-processing, signed distance fields, CPU reference rendering and GPU parity checks, color-space and tone-mapping work, GPU instrumentation, and applied arboriculture/horticulture from field practice.",
           "evidence": [
             "history",
-            "elder-enb-nexus",
+            "elder-enb-nexus-20261113",
             "raw-native-main-20261023",
             "build-color"
           ]

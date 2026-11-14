@@ -768,7 +768,7 @@ Published October 23, 2026, on GitHub and on PyPI as articulate-writing 0.15.1.
 
 ## November 13, 2026 CV and resume refresh
 
-The CV and resumes carry releases and merged work through November 13, 2026. Each entry below was read that day with the GitHub CLI or a registry API. Merged work that is not in a release is labelled so on the pages. The Elder ENB counts were not re-read: Nexus Mods answered a scripted request with HTTP 403, so the October 23 reading stays with its date. Credential IDs and check results are in `credentials.json`.
+The CV and resumes carry releases and merged work through November 13, 2026. Each entry below was read that day with the GitHub CLI or a registry API. Merged work that is not in a release is labelled so on the pages. The Elder ENB counts were read from the public mod page by the author that day; see elder-enb-nexus-20261113. Credential IDs and check results are in `credentials.json`.
 
 ### census-20261113
 
@@ -859,3 +859,9 @@ Low Water main is public in the engine repository since superframe #72 (November
 https://github.com/HarperZ9/gather/releases/tag/v2.5.0
 
 Gather 2.5.0 (November 3, 2026; PyPI gather-engine 2.5.0), Crucible 1.6.0, EMET 1.3.1 and Canon 0.7.0 are the latest releases, checked November 13, 2026. The Flywheel README lists gather, crucible and forum among the companion tools Flywheel connects to; the author treats Crucible, EMET, Gather and Forum as parts of the Flywheel platform since November 2, 2026.
+
+### elder-enb-nexus-20261113
+
+https://www.nexusmods.com/skyrimspecialedition/mods/117327
+
+Read from the public mod page by the author on November 13, 2026 (Pacific), from his screenshot of the page: 1,004,693 total downloads, 179,218 unique downloads, 2,418 endorsements, 147,566 total views, version final-elder-9. This reading replaces the October 23, 2026 one (996,649 total, 176,359 unique, 2,413 endorsements) on the pages. Nexus Mods answered a scripted request with HTTP 403 the same day, so the figures were not read by a script. Counts are Nexus Mods' own counters and change over time; unique downloads count distinct downloading accounts, not active users; endorsements are not a satisfaction survey.

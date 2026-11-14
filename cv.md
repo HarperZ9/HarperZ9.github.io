@@ -8,13 +8,13 @@ Curriculum Vitae | Security Evaluation, AI Evaluation, Graphics, and Developer T
 
 ## Profile
 
-Self-directed software builder who writes tools that test AI systems and the software around them, and graphics work that people install. Elder ENB, a lighting preset for Skyrim Special Edition, has 996,649 downloads on Nexus Mods. About 13 years of personal programming. Career transition began June 2026 after eleven years of full-time production arboriculture; no professional programming experience.
+Self-directed software builder who writes tools that test AI systems and the software around them, and graphics work that people install. Elder ENB, a lighting preset for Skyrim Special Edition, has 1,004,693 downloads on Nexus Mods. About 13 years of personal programming. Career transition began June 2026 after eleven years of full-time production arboriculture; no professional programming experience.
 
 Seeking red-team, purple-team and security-evaluation work, AI evaluation roles, and graphics engineering. Willing to relocate to London; available for regular travel to San Francisco.
 
 ## Selected Evidence
 
-- Elder ENB: 996,649 total downloads, 176,359 unique downloads and 2,413 endorsements on Nexus Mods, read October 23, 2026. First uploaded April 21, 2024; last updated February 20, 2026, at version final-elder-9. nexusmods.com/skyrimspecialedition/mods/117327
+- Elder ENB: 1,004,693 total downloads, 179,218 unique downloads and 2,418 endorsements on Nexus Mods, read November 13, 2026. First uploaded April 21, 2024; last updated February 20, 2026, at version final-elder-9. nexusmods.com/skyrimspecialedition/mods/117327
 
 - Open source: 38 merged engineering pull requests in 31 external repositories, with 17 closed without merge and 13 open, counted from the GitHub API on November 13, 2026. harperz9.github.io/career/open-source-census.json
 

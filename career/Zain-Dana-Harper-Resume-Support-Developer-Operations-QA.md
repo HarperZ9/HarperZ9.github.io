@@ -24,7 +24,7 @@ About 13 years self-directed | Career transition began June 2026
 
 - Built Articulate, a prose checker on PyPI; Accountable Surface approval interfaces; and CMMNS 3.9.1 (formerly Daylight Commons), a browser extension that shows the sources behind social media replies.
 
-- Released and updated Elder ENB, a Skyrim lighting preset: 996,649 downloads on Nexus Mods, 2024 to 2026.
+- Released and updated Elder ENB, a Skyrim lighting preset: 1,004,693 downloads on Nexus Mods, 2024 to 2026.
 
 ### Freelance Technical Writer | Independent projects | Began 2017
 

@@ -3,7 +3,7 @@
  "source": {
   "path": "career/resume-source.json",
   "document": "evaluation-python-tools",
-  "sha256": "22de4ad9ffa323f84aea080b8cd97a75e4cb12eb58ebe971322049e4435c6840"
+  "sha256": "3bc64da2343e5d20450a0e1498b9499f9522674e54502cef0c370fadf245e8b0"
  },
  "ir_sha256": "f2df7b4258ed6af7cc7519151a1a0726cfd843cc2520ff9ab008129bfc0c28c3",
  "theme": "press-resume",

@@ -3,9 +3,9 @@
  "source": {
   "path": "career/resume-source.json",
   "document": "support-operations-qa",
-  "sha256": "22de4ad9ffa323f84aea080b8cd97a75e4cb12eb58ebe971322049e4435c6840"
+  "sha256": "3bc64da2343e5d20450a0e1498b9499f9522674e54502cef0c370fadf245e8b0"
  },
- "ir_sha256": "04a0d9a6d7a35c4afc5628c81b1fbcefbca009110eba96b38c5109ca07e9d3c7",
+ "ir_sha256": "888dcfc5285867f124c9e6f888e50d7f59e72c19d50bf459d5ef067180456c3f",
  "theme": "press-resume",
  "overrides": [
   "base.size=10.0",
@@ -13,7 +13,7 @@
   "emboss.deboss_finish=inked"
  ],
  "outputs": {
-  "Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.pdf": "c7e8174f1ec8f71a7f036bb649e6f03c1d7d83ccda32cadb4ed02e4fb9295743"
+  "Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.pdf": "18bb4159bb2191558901a933425b9ed4b1ab8a00fa4383af915ec25932156196"
  },
  "pdf_metadata": {
   "pdfa": false,
@@ -49,7 +49,7 @@
   "blind_text_runs": 0,
   "reading_order": true,
   "blocks_missing_from_text": [],
-  "pdf_bytes": 227270
+  "pdf_bytes": 227312
  },
  "failed": [],
  "notes": [

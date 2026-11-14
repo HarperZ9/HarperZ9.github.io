@@ -22,7 +22,7 @@ About 13 years self-directed | Career transition began June 2026
 
 - Merged and not yet released: a Vulkan 1.3 backend whose 600 presented frames match the offscreen and D3D12 WARP renders hash for hash, radiance cascades measured against the path trace, and ray queries.
 
-- Released Elder ENB, a lighting and post-processing preset for Skyrim Special Edition with 38 atmosphere presets: 996,649 downloads and 2,413 endorsements on Nexus Mods, read October 23, 2026.
+- Released Elder ENB, a lighting and post-processing preset for Skyrim Special Edition with 38 atmosphere presets: 1,004,693 downloads and 2,418 endorsements on Nexus Mods, read November 13, 2026.
 
 - Developed BuildLang, a language with typed capability effects and C and shader output; 1.14.0 is on crates.io. WebAssembly and x86-64 native (first slice) backends are merged, not yet released.
 
