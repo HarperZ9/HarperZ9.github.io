@@ -1,0 +1,27 @@
+{
+  "date": "2026-11-13",
+  "note": "Elder ENB counts read from the public Nexus Mods page by the author on 13 November 2026: 1,004,693 total downloads, 179,218 unique, 2,418 endorsements. They replace the 23 October reading on the CV and the graphics and support resumes.",
+  "paths": {
+    "career/Zain-Dana-Harper-CV.docx": "0b1cc826784514e38cb2056d9ad18ca9baef1380dc4c8dfcf96fd594d04b8d71",
+    "career/Zain-Dana-Harper-CV.pdf": "bf98bea5cf1ad8e0c1af71dfb73ed15dabb4254535b262b93d4ea5df07ac3f78",
+    "career/Zain-Dana-Harper-Resume-Graphics-Developer-Tools.docx": "51cda367f5961fcbe8ef322d4f593bf865e53ad8175a7757be9a2c52c27005b3",
+    "career/Zain-Dana-Harper-Resume-Graphics-Developer-Tools.pdf": "61b9303d78b376e00548045f42212043df43f2a8d61a17f22beb722e64d0b7c3",
+    "career/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.docx": "976f599cbb4e8bdab20c0c49b57b09c2e3e354cc9ac886239a65d5819f052a64",
+    "career/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.pdf": "cc577eea6c5e03171a8a5cb5a24338e69da65c3c28e401602cb22dea4a2d3648",
+    "career/career-artifacts.json": "52cf5c594be696c3ddca599ed10e7e0ef7bf939fae91f23a480152ab42804558",
+    "career/career-build-receipt.json": "493e602ec31936df676ffc272c8fa98e531d9fe578d094443bfdfd176b8a2b34",
+    "career/designed/Zain-Dana-Harper-CV.buildtex.json": "7fb995ed3ec3b9d916bb28ad092113e6e9766d44211bbc10bd57576bbb3a2b09",
+    "career/designed/Zain-Dana-Harper-CV.pdf": "6397294235bbec61facdcc554c2973f61eb689b959db29822a056c92f905f3e8",
+    "career/designed/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.buildtex.json": "944dea713f2706eb42219afde6b4272019d97de49cebef76ccd68a9704c1ac95",
+    "career/designed/Zain-Dana-Harper-Resume-Graphics-Developer-Tools.buildtex.json": "8c3b149a57c908537514095ae5674594465efeb7b8a31ce2967f6cd3e3bd8480",
+    "career/designed/Zain-Dana-Harper-Resume-Graphics-Developer-Tools.pdf": "6d17b09047baae75821a3ecbbc202473b56614275032ea6fc6062dfcec42de9b",
+    "career/designed/Zain-Dana-Harper-Resume-Grounds.buildtex.json": "d658dfb8d95f8733f54afa4821e3243043e4c7c2142ea0310042dee2caa19e5f",
+    "career/designed/Zain-Dana-Harper-Resume-Public-Operations.buildtex.json": "b9d0a50ecdf19b9acb53cf46d53120e7d7d1f2fa4616aead4efc3b557d30e76f",
+    "career/designed/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.buildtex.json": "fef67b31fac77d8077336c5ff2f5f3969bc614e2494c6df61c3b28e497f72840",
+    "career/designed/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.pdf": "18bb4159bb2191558901a933425b9ed4b1ab8a00fa4383af915ec25932156196",
+    "cv.html": "194e548e3ad4566b5f1183c645e23af425647d40ccda7e4c400c8d5c9ad2c8fd",
+    "cv.md": "9762480de47d80e60c35f3e9cf820211da4c375ff0f6201c3afdae6574dbb1b2",
+    "resume-graphics-developer-tools.html": "7798d3bbb24b0d60363bd4e4bc2da283dbd8d83c2af007314c00b21fee94e0a1",
+    "resume-support-operations.html": "951912b9cda3c8b9026fe2fb318cd18946937d1ceb5f2511f81751919394eca3"
+  }
+}

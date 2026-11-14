@@ -45,7 +45,7 @@
     {
       "name": "CMMNS",
       "repo": "cmmns",
-      "version": "3.9.1",
+      "version": "3.10.0",
       "registry": "github",
       "package": "HarperZ9/cmmns",
       "downloadUrl": "https://github.com/HarperZ9/cmmns/releases/latest",
@@ -71,7 +71,7 @@
       "name": "BuildLang",
       "repo": "buildlang",
       "page": "buildlang.html",
-      "version": "1.14.0",
+      "version": "1.15.0",
       "registry": "github",
       "package": "HarperZ9/buildlang",
       "downloadUrl": "https://crates.io/crates/buildlang",
@@ -141,7 +141,7 @@
     {
       "name": "Superframe",
       "repo": "superframe",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "registry": "github",
       "package": "HarperZ9/superframe",
       "downloadUrl": "https://github.com/HarperZ9/superframe/releases/latest",

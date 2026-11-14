@@ -19,6 +19,7 @@ engineering work rather than folded into the same total.
 from __future__ import annotations
 
 import argparse
+import datetime
 import json
 import pathlib
 import re
@@ -94,7 +95,12 @@ def search(query: str) -> dict:
 
 def collect() -> dict:
     owners = own_accounts()
-    census: dict = {"user": USER, "excluded_admin_orgs": len(owners) - 1, "buckets": {}}
+    census: dict = {
+        "user": USER,
+        "read_on": datetime.datetime.now(datetime.timezone.utc).date().isoformat(),
+        "excluded_admin_orgs": len(owners) - 1,
+        "buckets": {},
+    }
     for bucket, query in queries(owners).items():
         payload = search(query)
         total = payload.get("total_count", 0)
@@ -107,6 +113,7 @@ def collect() -> dict:
                     "title": item["title"],
                     "url": item["html_url"],
                     "listing": is_listing(repo),
+                    "created_at": item.get("created_at"),
                     "closed_at": item.get("closed_at"),
                 }
             )
@@ -132,6 +139,7 @@ def collect() -> dict:
         "all": sum(v["total"] for v in b.values()),
         "engineering": sum(v["engineering"] for v in b.values()),
         "listings": sum(v["listings"] for v in b.values()),
+        "repos": len({i["repo"] for v in b.values() for i in v["items"]}),
         "engineering_repos": len(
             {i["repo"] for v in b.values() for i in v["items"] if not i["listing"]}
         ),
@@ -146,6 +154,8 @@ def numbers(census: dict) -> dict[str, str]:
         "all": str(t["all"]),
         "engineering": str(t["engineering"]),
         "listings": str(t["listings"]),
+        "repos": str(t["repos"]),
+        "read-on": census["read_on"],
         "engineering-repos": str(t["engineering_repos"]),
         "merged": str(b["merged"]["total"]),
         "merged-engineering": str(b["merged"]["engineering"]),
@@ -200,7 +210,7 @@ def main() -> int:
     else:
         census = collect()
         CENSUS.parent.mkdir(parents=True, exist_ok=True)
-        CENSUS.write_text(json.dumps(census, indent=1) + "\n", encoding="utf-8")
+        CENSUS.write_text(json.dumps(census, indent=1) + "\n", encoding="utf-8", newline="\n")
 
     values = numbers(census)
     stale = stamp(values, write=args.apply)

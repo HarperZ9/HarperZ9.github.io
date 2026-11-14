@@ -1,4 +1,10 @@
-"""Source parity and one-page constraints for the 2026-09-20 career release."""
+"""Source parity and one-page constraints for the 2026-09-20 career release.
+
+14 November 2026: every document leads with a job-title headline, a summary and its
+results. The start date is one statement, about thirteen years of programming, and the
+fact that no paid software role has been held sits once in the Experience section.
+"""
+from datetime import date
 from pathlib import Path
 import json
 import re
@@ -9,6 +15,16 @@ from docx import Document
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = json.loads((ROOT / 'career/resume-source.json').read_text())
+HEADINGS = ('Summary', 'Selected Results', 'Flagship Projects', 'Experience', 'Projects', 'Education', 'Skills')
+ENGINEERING = ('support-operations-qa', 'evaluation-python-tools', 'graphics-developer-tools', 'page:cv')
+# Words that open a document with what is missing. None may sit above the Experience heading.
+LACKS = ('not yet held', 'no professional', 'no paid', 'No paid', 'weak point', 'transition',
+         'career change', 'moving from', 'Self-directed', 'first full-time')
+
+
+def sections(text):
+    parts = re.split(r'(?m)^(' + '|'.join(HEADINGS) + r')$', text)
+    return [parts[i] for i in range(1, len(parts), 2)], {parts[i]: parts[i + 1] for i in range(1, len(parts), 2)}
 
 
 def words(text):
@@ -28,26 +44,25 @@ def test_all_submission_formats_share_reading_order_and_complete_content():
         docx = Document(stem.with_suffix('.docx'))
         assert words(text) == words(' '.join(p.get_text() for p in pdf)), item['id']
         assert words(text) == words(' '.join(p.text for p in docx.paragraphs)), item['id']
-        # 2 November 2026: the published-work inventory moved to its own page; the CV runs to six pages.
-        assert len(pdf) == (6 if item['id'] == 'page:cv' else 1)
+        # 2 November 2026: the published-work inventory moved to its own page; the CV ran to six pages.
+        # 13 November 2026: it carries the work through that day and runs to seven.
+        assert len(pdf) == (7 if item['id'] == 'page:cv' else 1)
         assert not docx.tables
         assert len(text.split()) >= 250
-        assert 'Self-Directed Projects' in text
-        assert 'Employment' in text
-        assert 'June 2026' in text
-        assert '13 years' in text
+        order, scope = sections(text)
+        assert 'Projects' in order and 'Experience' in order and order[0] == 'Summary'
         assert 'Professional Experience' not in text
-        sections = re.split(r'(?m)^(Self-Directed Projects|Employment)$', text)
-        scope = {sections[i]: sections[i + 1] for i in range(1, len(sections), 2)}
-        assert 'About 13 years' in scope['Self-Directed Projects']
-        assert 'Legendary Tree' in scope['Employment']
-        assert '13 years self-directed' not in scope['Employment']
-        assert 'Independent Systems Engineer' not in scope['Employment']
+        # One start date on every surface, stated once per document.
+        assert len(re.findall(r'[Aa]bout thirteen years of programming', text)) == 1
+        for variant in ('13 years', 'June 2026', 'since 2023', 'Career transition', 'career change began'):
+            assert variant not in text, (item['id'], variant)
+        assert 'Legendary Tree' in scope['Experience']
+        assert 'thirteen years of programming' not in scope['Experience']
         assert 'Independent Systems Engineer' not in text
         assert '2023 to Present' not in text
         assert 'April 25, 2015 to June 2, 2026' in text
         assert '2014 to 2015' in text
-        assert 'Began 2017' in text
+        assert '2017' in text
         for page in pdf:
             assert page.rect.width == 612 and page.rect.height == 792
             assert not page.get_images()
@@ -57,6 +72,65 @@ def test_all_submission_formats_share_reading_order_and_complete_content():
                         assert span['size'] >= 10.5
                         assert 20 <= span['bbox'][0] < span['bbox'][2] <= 592
                         assert 20 <= span['bbox'][1] < span['bbox'][3] <= 772
+
+
+def test_documents_lead_with_strengths_and_state_the_paid_role_fact_once():
+    """Headline, summary and results come first; the limit is stated once, where the work history is."""
+    for item in SOURCE['documents']:
+        text = (ROOT / 'career' / item['stem']).with_suffix('.txt').read_text()
+        order, scope = sections(text)
+        above_experience = text.split('\nExperience\n', 1)[0]
+        for lack in LACKS:
+            assert lack not in above_experience, (item['id'], lack)
+        headline = text.split('\nSummary\n', 1)[0].strip().splitlines()[-1]
+        assert 'philosopher' not in headline and 'Curriculum Vitae' not in headline, item['id']
+        assert order.index('Summary') < order.index('Experience') < order.index('Projects'), item['id']
+        if item['id'] not in ENGINEERING:
+            continue
+        assert order[:2] == ['Summary', 'Selected Results'], item['id']
+        assert text.count('not yet held a paid software role') == 1, item['id']
+        assert 'not yet held a paid software role' in scope['Experience'], item['id']
+        results = scope['Selected Results']
+        for proof in ("other people's projects", 'nexusmods.com/skyrimspecialedition/mods/117327',
+                      'November 13, 2026', 'Not peer reviewed'):
+            assert proof in results or proof.lower() in results.lower(), (item['id'], proof)
+        assert re.search(r'on (?:PyPI|crates\.io)', results), item['id']
+    for name in ('hire.html', 'resume.html', 'cover-letter.html', 'portfolio.html'):
+        page = (ROOT / name).read_text(encoding='utf-8')
+        for gone in ('no paid software clients', 'transition began', 'Current employment targets', 'since 2023'):
+            assert gone not in page, (name, gone)
+    hire = (ROOT / 'hire.html').read_text(encoding='utf-8')
+    assert hire.index('id="proof"') < hire.index('id="technical-lanes"') < hire.index('id="background"')
+    assert hire.count('not yet held a paid software role') == 1
+    assert 'not yet held a paid software role' in hire.split('id="background"', 1)[1]
+
+
+def test_merged_counts_on_every_career_surface_match_the_census():
+    """One number with its date: the census file decides what the documents may say."""
+    census = json.loads((ROOT / 'career/open-source-census.json').read_text(encoding='utf-8'))
+    merged = census['buckets']['merged']
+    total, projects = str(merged['total']), str(merged['repos'])
+    read = date.fromisoformat(census['read_on'])
+    stamp = f'{read:%B} {read.day}, {read.year}'
+    surfaces = {item['id']: (ROOT / 'career' / item['stem']).with_suffix('.txt').read_text()
+                for item in SOURCE['documents'] if item['id'] in ENGINEERING}
+    for name in ('hire.html', 'cover-letter.html', 'career/cover-letter-evaluation.md',
+                 'career/cover-letter-evaluation-template.md'):
+        surfaces[name] = (ROOT / name).read_text(encoding='utf-8').replace('&#x27;', "'")
+    patterns = (r"(\d+) pull requests (?:merged )?in (\d+) other people's projects",
+                r'(\d+) of my pull requests in (\d+) projects')
+    for name, text in surfaces.items():
+        pairs = [m.groups() for pattern in patterns for m in re.finditer(pattern, text)]
+        pairs += [(m.group(2), m.group(1)) for m in
+                  re.finditer(r'(\d+) open-source projects(?:, [^.]*?,)? have merged (\d+) of my pull requests', text)]
+        assert pairs, name
+        assert set(pairs) == {(total, projects)}, (name, pairs)
+        assert stamp in text, (name, stamp)
+    cv = surfaces['page:cv']
+    assert (f"{merged['engineering']} engineering changes in {merged['engineering_repos']} repositories "
+            f"and {merged['listings']} list entries") in cv
+    closed, still_open = census['buckets']['closed_unmerged'], census['buckets']['open']
+    assert f"{closed['engineering']} more were closed without merge and {still_open['engineering']} are open" in cv
 
 
 def test_evaluation_metrics_are_coverage_not_financial_or_performance_claims():
@@ -211,10 +285,11 @@ def test_credentials_keep_issuer_type_and_completion_evidence_separate():
     assert secops['score_percent'] == 96 and secops['local_completion_date'] == '2026-09-30'
     assert 'earned' not in secops and secops['url_role'] == 'Official course description'
     assert secops['title'] in cv and '96% knowledge assessment' in cv
-    assert 'Sole proprietor since September 2026' in cv
-    assert 'Willing to relocate to London; available for regular travel to San Francisco.' in cv
-    assert 'no professional programming experience' in cv
-    assert 'no paid software clients' in cv
+    assert 'sole proprietor since September 2026' in cv
+    # 14 November 2026: relocation and pay are answered on application forms, not in the CV.
+    assert 'relocate' not in cv and 'no paid software clients' not in cv
+    assert 'I have not yet held a paid software role.' in cv
+    assert 'No paid red-team or purple-team engagement to date.' in cv
 
 
 def test_public_interest_work_retains_its_evidence_limits():
@@ -235,7 +310,7 @@ def test_quantified_outcomes_keep_their_scope_and_reference_types():
     assert '324 terminal-state fixtures and 337 component cases' in cv
     assert 'count_odds task through the Inspect-to-Flywheel bridge with three deterministic controls' in cv
     assert 'HTTP 500 or incorrect HTTP 200 to HTTP 400' in cv
-    assert 'Six of 37 merged engineering pull requests in 30 external repositories' in cv
+    assert 'Six of 38 merged engineering pull requests in 31 external repositories' in cv
     references = (ROOT / 'career/standards-reference.md').read_text(encoding='utf-8')
     rows = [line for line in references.splitlines() if line.startswith('| [')]
     assert len(rows) == 25

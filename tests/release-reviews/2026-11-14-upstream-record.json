@@ -1,0 +1,25 @@
+{
+  "date": "2026-11-14",
+  "note": "CV open-source counts refreshed from the GitHub API read on November 14, 2026 (38 merged engineering pull requests in 31 repositories, 13 open, 17 closed without merge); CV documents and designed PDFs rebuilt from the changed source. Bytes recorded for the author's review in the pull request before merge.",
+  "paths": {
+    "career/Zain-Dana-Harper-CV.docx": "23606bb6ab55319c042b5b85bd34da22565b2b22686a224f6195f47899e22adc",
+    "career/Zain-Dana-Harper-CV.pdf": "d9e343eaef33f43340ae28589524d6439a14eaa9f0a7df19f38322884345f7c1",
+    "career/career-artifacts.json": "198c492b2a1db9868a460c7f11f07b1b738ad16959abd507bfa80d09bb2d2679",
+    "career/career-build-receipt.json": "28dec8e8610945cccddb96c886c47d53e56e3b86e6fe6f2b9d30cc7bf25a1ef6",
+    "career/designed/Zain-Dana-Harper-CV.buildtex.json": "37f98239e424565d5a5c1d21b83bd4606ad1c73c2b3ec06093297ab48aa9cff7",
+    "career/designed/Zain-Dana-Harper-CV.pdf": "7eebad77267c68bf78dc55fc6b6b072573b85b0a4649c1a4f5d91e16ddf47b36",
+    "career/designed/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.buildtex.json": "c7753f45e614a73750adb5bdb12782abe518f086730226f15ead0a7ab6a1d6f7",
+    "career/designed/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.pdf": "3c6dea300107a6e29fd4ac62e837b5502fb2673bed1b49986683bfbc4e655915",
+    "career/designed/Zain-Dana-Harper-Resume-Graphics-Developer-Tools.buildtex.json": "8da544f9c04317349c9591b74f66c471420d3d7f2c078ebc46edee7620de3fd2",
+    "career/designed/Zain-Dana-Harper-Resume-Graphics-Developer-Tools.pdf": "04312e4de026bd9226246731d7478620fd340237767c16e0942f85a99881d767",
+    "career/designed/Zain-Dana-Harper-Resume-Grounds.buildtex.json": "41e57aca9cf525f24cdba3f3ab55532a384dc9f15d6c60ba8759ae2b2b1fa1ea",
+    "career/designed/Zain-Dana-Harper-Resume-Grounds.pdf": "f0cc6244260854609b841186548869f192c8e86e50352f6db117268f828674ae",
+    "career/designed/Zain-Dana-Harper-Resume-Public-Operations.buildtex.json": "9b738b5d19020d4c0624b06fe5d0c871295d0e3faad77d13b36393535f20d32a",
+    "career/designed/Zain-Dana-Harper-Resume-Public-Operations.pdf": "f404cf6a5664a858344868be752f8d2dde2afe57aec2689ec29be5dd689dd0b0",
+    "career/designed/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.buildtex.json": "7a98cfb9d5de75630b49419301489e59e517de071089d445ebbf2a1d302fc190",
+    "career/designed/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.pdf": "5657489a5e56eb2bb258272179d697e6f5ebae3d57c903dd2672f647c1a83acc",
+    "career/open-source-census.json": "783a17f841743c2dd7d91f33037c92ae42c03886301c2056e735959ca6c699eb",
+    "cv.html": "30220dd7780139a6800730c0bcff6ed67943ef169bc16c7a77cb885de08f4b0b",
+    "cv.md": "8f7eb74933209ba0460e06a71ce31779bf064600ac027b197cb7297f26d6b38e"
+  }
+}

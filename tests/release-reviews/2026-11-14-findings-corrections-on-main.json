@@ -1,0 +1,8 @@
+{
+  "date": "2026-11-14",
+  "note": "Main merged into the findings correction pass after pull requests 519, 523 and 524. system/routes.js and site-index.html were built again from this branch's route registry with scripts/build-world.mjs --site-only, so they carry the corrected finding titles together with main's resume wording and the tool versions of 14 November 2026 (BuildLang 1.15.0, CMMNS 3.10.0, Superframe 0.3.0).",
+  "paths": {
+    "site-index.html": "6e898329bf8bbfecb2d795c23613ffc59e7a48bb9fccd7335b19fd32455b50c9",
+    "system/routes.js": "ecee1d65437cd19e4b2b4aa1d9a1c729798e11f3389974cc911b39e71c385469"
+  }
+}
