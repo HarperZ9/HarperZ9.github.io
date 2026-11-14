@@ -3,11 +3,11 @@
  "excluded_admin_orgs": 1,
  "buckets": {
   "merged": {
-   "total": 40,
-   "engineering": 37,
+   "total": 41,
+   "engineering": 38,
    "listings": 3,
-   "engineering_repos": 30,
-   "repos": 33,
+   "engineering_repos": 31,
+   "repos": 34,
    "items": [
     {
      "repo": "YoadElkayam/mcp-fuse",
@@ -92,6 +92,13 @@
      "url": "https://github.com/hsaghir/looplet/pull/109",
      "listing": false,
      "closed_at": "2026-08-28T18:05:27Z"
+    },
+    {
+     "repo": "smdysk/cc-parachute",
+     "title": "docs: auto-compact filler strategy and cost ceiling for the compaction benchmark",
+     "url": "https://github.com/smdysk/cc-parachute/pull/12",
+     "listing": false,
+     "closed_at": "2026-11-04T10:14:02Z"
     },
     {
      "repo": "sundeep-dayalan/sentient-trader",
@@ -292,11 +299,11 @@
    ]
   },
   "open": {
-   "total": 21,
-   "engineering": 14,
+   "total": 20,
+   "engineering": 13,
    "listings": 7,
-   "engineering_repos": 13,
-   "repos": 20,
+   "engineering_repos": 12,
+   "repos": 19,
    "items": [
     {
      "repo": "Codelab-Davis/Anchor",
@@ -351,13 +358,6 @@
      "repo": "confident-ai/deepeval",
      "title": "fix(metrics): measure() returns the score under async_mode=True across all metrics",
      "url": "https://github.com/confident-ai/deepeval/pull/3091",
-     "listing": false,
-     "closed_at": null
-    },
-    {
-     "repo": "smdysk/cc-parachute",
-     "title": "docs: auto-compact filler strategy and cost ceiling for the compaction benchmark",
-     "url": "https://github.com/smdysk/cc-parachute/pull/12",
      "listing": false,
      "closed_at": null
     },

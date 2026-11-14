@@ -18,13 +18,13 @@ C++23, Rust, Python, HLSL, WGSL, TypeScript; D3D11, D3D12, Vulkan, WebGPU; CPU r
 
 About 13 years self-directed | Career transition began June 2026
 
-- Built raw-native, a C++23 renderer with a CPU reference beside D3D12 and WebGPU backends; release 0.8.0 passed 60 of 60 tests with MSVC and GCC, and its default renders were byte-identical across Windows, D3D12, Linux and WebAssembly builds.
+- Built a C++23 renderer (raw-native, now in my Superframe engine) with a CPU reference beside D3D12 and WebGPU backends; release 0.8.0 passed 60 of 60 tests with MSVC and GCC, and its default renders were byte-identical across Windows, D3D12, Linux and WebAssembly builds.
 
-- Added a Vulkan 1.3 backend to raw-native, merged and not yet released, whose 600 presented frames match the offscreen and D3D12 WARP renders hash for hash.
+- Merged and not yet released: a Vulkan 1.3 backend whose 600 presented frames match the offscreen and D3D12 WARP renders hash for hash, radiance cascades measured against the path trace, and ray queries.
 
 - Released Elder ENB, a lighting and post-processing preset for Skyrim Special Edition with 38 atmosphere presets: 996,649 downloads and 2,413 endorsements on Nexus Mods, read October 23, 2026.
 
-- Developed BuildLang, a Rust compiler with typed capability effects, type inference, C and shader output and a language server; version 1.10.0 is on crates.io.
+- Developed BuildLang, a language with typed capability effects and C and shader output; 1.14.0 is on crates.io. WebAssembly and x86-64 native (first slice) backends are merged, not yet released.
 
 - Brought Argonaut's 1990s BRender engine to 64-bit Windows and Linux in Brender Archival, and built Calibrate Pro (ICC profiles, 3D LUTs, DDC/CI) and Build Color (Oklab, CAM16, Delta E), both on PyPI.
 
@@ -46,7 +46,7 @@ Xbox/Microsoft product contract | Wilsonville, Oregon
 
 - Resolved Xbox connectivity problems across TCP/IP, DNS, NAT, firewalls, and routers; documented troubleshooting steps for consistent support handoffs.
 
-## Open-Source Contributions: 37 Merged in 30 Repositories
+## Open-Source Contributions: 38 Merged in 31 Repositories
 
 - TOMLKit #549: preserved sibling keys in dotted-key replacement, preventing silent configuration loss. Merged.
 

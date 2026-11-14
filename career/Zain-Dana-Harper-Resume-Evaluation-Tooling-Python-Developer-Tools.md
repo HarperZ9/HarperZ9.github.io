@@ -20,13 +20,13 @@ About 13 years self-directed | Career transition began June 2026
 
 - Shipped Flywheel 1.9.0 on PyPI, a Python/Flutter AI workstation with model routing and a Windows installer; its behavior-check caught 20 of 20 planted changes with 0 of 50 false alarms.
 
-- Built test infrastructure for evaluating AI agents: 324 terminal-state fixtures and 337 component cases that separate failed outputs from provider failures.
+- Built 324 terminal-state fixtures and 337 component cases that separate failed agent outputs from provider failures; ran a pinned METR count_odds task through the Inspect bridge with three deterministic controls.
 
-- Built Articulate 0.16.0 writing analysis, Accountable Surface approval interfaces, BuildLang 1.10.0 capability checks and Phantom audit and restore.
+- Measured which guards stop destructive tool calls from a steered agent, with mocked tools: a consistency check caught 64 of 66; merged, not yet released.
 
-- Built Daylight Commons 3.2.2 (now CMMNS), a browser extension for nine platforms; slur-sign precision 3,995 of 4,392.
+- Built Articulate 0.18.0 writing analysis, Accountable Surface approval interfaces, BuildLang 1.14.0 capability checks and Phantom audit and restore.
 
-- Ran a pinned METR count_odds task through the Inspect-to-Flywheel bridge with three deterministic controls.
+- Built CMMNS 3.9.1, a nine-platform browser extension; slur-sign precision 3,995 of 4,392.
 
 ### Freelance Technical Writer | Independent projects | Began 2017
 
@@ -46,7 +46,7 @@ Xbox/Microsoft product contract | Wilsonville, Oregon
 
 - Resolved Xbox connectivity problems across TCP/IP, DNS, NAT, firewalls, and routers; documented troubleshooting steps for consistent support handoffs.
 
-## Open-Source Contributions: 37 Merged in 30 Repositories
+## Open-Source Contributions: 38 Merged in 31 Repositories
 
 - DeepEval #2822: fixed crashes on unhashable tool outputs and nested parameters, with regression tests. Merged.
 

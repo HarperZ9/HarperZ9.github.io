@@ -28,8 +28,9 @@ def test_all_submission_formats_share_reading_order_and_complete_content():
         docx = Document(stem.with_suffix('.docx'))
         assert words(text) == words(' '.join(p.get_text() for p in pdf)), item['id']
         assert words(text) == words(' '.join(p.text for p in docx.paragraphs)), item['id']
-        # 2 November 2026: the published-work inventory moved to its own page; the CV runs to six pages.
-        assert len(pdf) == (6 if item['id'] == 'page:cv' else 1)
+        # 2 November 2026: the published-work inventory moved to its own page; the CV ran to six pages.
+        # 13 November 2026: it carries the work through that day and runs to seven.
+        assert len(pdf) == (7 if item['id'] == 'page:cv' else 1)
         assert not docx.tables
         assert len(text.split()) >= 250
         assert 'Self-Directed Projects' in text
@@ -235,7 +236,7 @@ def test_quantified_outcomes_keep_their_scope_and_reference_types():
     assert '324 terminal-state fixtures and 337 component cases' in cv
     assert 'count_odds task through the Inspect-to-Flywheel bridge with three deterministic controls' in cv
     assert 'HTTP 500 or incorrect HTTP 200 to HTTP 400' in cv
-    assert 'Six of 37 merged engineering pull requests in 30 external repositories' in cv
+    assert 'Six of 38 merged engineering pull requests in 31 external repositories' in cv
     references = (ROOT / 'career/standards-reference.md').read_text(encoding='utf-8')
     rows = [line for line in references.splitlines() if line.startswith('| [')]
     assert len(rows) == 25

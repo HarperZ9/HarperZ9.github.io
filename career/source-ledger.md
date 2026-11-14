@@ -1,6 +1,6 @@
 # Career source ledger
 
-Reviewed October 23, 2026. The structured career source is `resume-source.json`. It generates the current resume/CV HTML, Markdown, and plain text; the reviewed HTML generates the PDF and DOCX files.
+Reviewed November 13, 2026. The structured career source is `resume-source.json`. It generates the current resume/CV HTML, Markdown, and plain text; the reviewed HTML generates the PDF and DOCX files.
 
 ## Recovery and authority
 
@@ -765,3 +765,97 @@ Latest release, published October 23, 2026. A browser extension for nine platfor
 https://github.com/HarperZ9/articulate/releases/tag/v0.15.1
 
 Published October 23, 2026, on GitHub and on PyPI as articulate-writing 0.15.1.
+
+## November 13, 2026 CV and resume refresh
+
+The CV and resumes carry releases and merged work through November 13, 2026. Each entry below was read that day with the GitHub CLI or a registry API. Merged work that is not in a release is labelled so on the pages. The Elder ENB counts were not re-read: Nexus Mods answered a scripted request with HTTP 403, so the October 23 reading stays with its date. Credential IDs and check results are in `credentials.json`.
+
+### census-20261113
+
+https://harperz9.github.io/career/open-source-census.json
+
+tools/pr_census.py --apply run November 13, 2026: 38 merged engineering pull requests in 31 external repositories, 3 merged listings counted apart, 13 open engineering, 17 closed without merge. The change from October 23 is smdysk/cc-parachute #12, merged November 4, 2026. Plain-text counts on the pages are not census-stamped; rerun the census and update the text together.
+
+### findings-20261113
+
+https://harperz9.github.io/findings/
+
+Page fetched November 13, 2026 (HTTP 200): 30 findings, 12 of them honest nulls, 7 strong signal and 11 signal. Not peer reviewed. The counts are read from the page and change as findings are added or revised.
+
+### articulate-0180
+
+https://github.com/HarperZ9/articulate/releases/tag/v0.18.0
+
+Latest GitHub release, published November 5, 2026; PyPI serves articulate-writing 0.18.0. Checked November 13, 2026. The 0.14.0 mask result is a dated figure from that release.
+
+### buildlang-1140
+
+https://github.com/HarperZ9/buildlang/releases/tag/v1.14.0
+
+Latest GitHub release, published November 10, 2026; crates.io serves buildlang 1.14.0. Checked November 13, 2026. STATUS.md on main records the 1.14.0 test run: 2,079 passed, 0 failed, 11 ignored.
+
+### buildlang-main-20261113
+
+https://github.com/HarperZ9/buildlang/pull/283
+
+Merged to main after 1.14.0 and not in a release, read November 13, 2026: WebAssembly binary target (#279, #280, #281; SHA-256 and Merkle programs run in Node); x86-64 native executables, PE and ELF, written by the compiler (#283, titled a first slice: integers, control flow, calls and printing; floats, structs, arrays and strings are refused; nine programs compared with the C backend; the CI test jobs passed on Windows and Linux); RISC-V packages emu-rv64 0.7.0, asm-rv64 0.4.0 and cg-rv64 0.2.0 (#240, #244, #246, #247, #249, #250, #251, #252, #255); port, a C-subset to BuildLang translator (#258, a first slice: 3 of 3 corpus programs equal to gcc output, 1 of 1 out-of-subset program refused).
+
+### flywheel-main-20261113
+
+https://github.com/HarperZ9/flywheel/pull/431
+
+Flywheel 1.9.0 is still the latest release and the latest on PyPI. Merged to main since and not released, read November 13, 2026: steered-agent false-accept test (#431: 28 held-out tasks, 66 harmful calls, 145 baseline calls; schema check 1 of 66; request-versus-action consistency 64 of 66 with 3 of 145 false alarms; all tools are mocks; the consistency guard and the labeller share an author; label agreement on a 70-call hand-read was 60 of 70, read by a model); study runner (#436), data pipeline (#434), shared receipt contract (#437), reviewer independence (#442), spent budget is inconclusive (#441); peer-session observers (#444), provider fault and retry-deadline handling (#445, #447), coding session writes in the project folder (#448), named accounts and key stores (#449).
+
+### cmmns-391
+
+https://github.com/HarperZ9/cmmns/releases/tag/v3.9.1
+
+Latest GitHub release, published October 28, 2026; checked November 13, 2026. The README lists nine platforms; TikTok comments are not checked live.
+
+### superframe-20261113
+
+https://github.com/HarperZ9/superframe/releases/tag/v0.2.0
+
+Superframe 0.2.0 (October 28, 2026) is the latest release; 0.1.0 is dated October 26, 2026. Merged November 12, 2026: superstack and reconcile (#69), studio-libs (#71), the renderer as native/ and Low Water as games/low-water/ (#72), each with history. raw-native 0.8.0 is still the last renderer release.
+
+### renderer-main-20261113
+
+https://github.com/HarperZ9/superframe/tree/main/native
+
+Merged and not released, read November 13, 2026: radiance cascades in flatland and world space with probe denoise and a white-furnace check (raw-native #232, #233, #234, #238, #241); hardware ray queries and spectral caustics through measured glass (raw-native #231); the art scene renderer in BuildLang, whose frame hash equals the value the C++ test pins (superframe #75).
+
+### superframe-cosmo-20261113
+
+https://github.com/HarperZ9/superframe/pull/42
+
+Merged and not released: particle-mesh solver (#34), bitwise CUDA runs (#35), P3M short-range force (#36), lean CUDA engine and 512^3 (#38). #41: all 14 bands to k = 5 at z = 0 and z = 1 inside 3 percent of the Cosmic Emu on the three-seed mean. #42: three seeds is a small sample; the 95 percent interval on the mass-resolution factor spans 0.2 to 4.3 percent. 1024^3 was not run.
+
+### superframe-daw-20261113
+
+https://github.com/HarperZ9/superframe/tree/main/packages/daw
+
+Merged November 9, 2026, and not released: modal bar bank (#53), stiff-string piano (#58) and pipe organ (#59) as CLAP instruments; VST3 plug-ins bit for bit with CLAP (#61); piano string kernel in BuildLang with the same bytes as the C kernel (#60); piano inharmonicity measured from a Steinway model B (#56); singing tract over measured MRI tract shapes (#48).
+
+### superframe-registry-20261113
+
+https://github.com/HarperZ9/superframe/tree/main/packages/registry
+
+Merged November 13, 2026, and not released: one entry schema and the unit table, 90 units in six scale kinds (#77); a BuildLang checker with broken-table controls (#79).
+
+### superframe-colourmix-20261113
+
+https://github.com/HarperZ9/superframe/pull/67
+
+Merged November 10, 2026: Mayer 1775, Lambert 1772 and Benson 1872 colour-mixing kernels in BuildLang (#67, #68). The studio-engine repository is archived on GitHub, read November 13, 2026.
+
+### low-water-public
+
+https://github.com/HarperZ9/superframe/tree/main/games/low-water
+
+Low Water main is public in the engine repository since superframe #72 (November 12, 2026), with its history. That change records 256 engine and combat tests on CI: 250 pass, 6 skip. The raw-native port steps #218 and #219 are merged. No release date, store listing or player count is claimed.
+
+### suite-20261113
+
+https://github.com/HarperZ9/gather/releases/tag/v2.5.0
+
+Gather 2.5.0 (November 3, 2026; PyPI gather-engine 2.5.0), Crucible 1.6.0, EMET 1.3.1 and Canon 0.7.0 are the latest releases, checked November 13, 2026. The Flywheel README lists gather, crucible and forum among the companion tools Flywheel connects to; the author treats Crucible, EMET, Gather and Forum as parts of the Flywheel platform since November 2, 2026.

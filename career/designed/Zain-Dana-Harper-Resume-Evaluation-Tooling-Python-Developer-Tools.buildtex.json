@@ -3,9 +3,9 @@
  "source": {
   "path": "career/resume-source.json",
   "document": "evaluation-python-tools",
-  "sha256": "9859e3bbbe9a483ba0cba41a14d942248944a64498558ef4f47ed6af5c3c251f"
+  "sha256": "22de4ad9ffa323f84aea080b8cd97a75e4cb12eb58ebe971322049e4435c6840"
  },
- "ir_sha256": "ff2c5bc05ef5d799672f1f115a1513c18813131f2b12ec4b171711767f07d57d",
+ "ir_sha256": "f2df7b4258ed6af7cc7519151a1a0726cfd843cc2520ff9ab008129bfc0c28c3",
  "theme": "press-resume",
  "overrides": [
   "base.size=10.0",
@@ -13,7 +13,11 @@
   "emboss.deboss_finish=inked"
  ],
  "outputs": {
-  "Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.pdf": "b7c931353f7acad9d4af7442a7895d83f9b3533e1dae8c41241b8a247c00279f"
+  "Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.pdf": "0d0ea796884a1198c0ea4cbbd15b9c31bcd719ee1aa8a34042894b2e3bba254c"
+ },
+ "pdf_metadata": {
+  "pdfa": false,
+  "creation_date": null
  },
  "facts": {
   "pages": 1,
@@ -21,13 +25,15 @@
   "overfull": [],
   "underfull": 0,
   "missing_glyphs": [],
+  "glyph_fallbacks": [],
+  "math_errors": [],
   "fonts": [
    {
-    "name": "BJEJEB+AccessionDisplay-Master",
+    "name": "BHAAKD+HankenGrotesk-Regular",
     "embedded": true
    },
    {
-    "name": "BJFOEO+HankenGrotesk-Regular",
+    "name": "BJEJEB+AccessionDisplay-Master",
     "embedded": true
    },
    {
@@ -43,7 +49,7 @@
   "blind_text_runs": 0,
   "reading_order": true,
   "blocks_missing_from_text": [],
-  "pdf_bytes": 226952
+  "pdf_bytes": 226251
  },
  "failed": [],
  "notes": [

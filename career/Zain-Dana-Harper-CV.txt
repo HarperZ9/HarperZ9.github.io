@@ -16,7 +16,9 @@ Selected Evidence
 
 - Elder ENB: 996,649 total downloads, 176,359 unique downloads and 2,413 endorsements on Nexus Mods, read October 23, 2026. First uploaded April 21, 2024; last updated February 20, 2026, at version final-elder-9. nexusmods.com/skyrimspecialedition/mods/117327
 
-- Open source: 37 merged engineering pull requests in 30 external repositories, with 17 closed without merge and 14 open, counted from the GitHub API on October 23, 2026. harperz9.github.io/career/open-source-census.json
+- Open source: 38 merged engineering pull requests in 31 external repositories, with 17 closed without merge and 13 open, counted from the GitHub API on November 13, 2026. harperz9.github.io/career/open-source-census.json
+
+- Research results: 30 findings published, 12 of them nulls, each with its standing, its evidence and the steps to repeat it. Not peer reviewed. harperz9.github.io/findings/
 
 Flagship Projects
 
@@ -24,13 +26,13 @@ Flagship Projects
 
 - CMMNS (formerly Daylight Commons) is a browser extension that shows the sources behind replies on nine social platforms. Its slur sign has 91.0% precision, 3,995 of 4,392, on public human-labelled corpora. github.com/HarperZ9/cmmns/blob/main/project-docs/EVALUATION.md
 
-- Articulate is prose analysis and model-assisted editing for the command line, editors and CI. In 0.14.0, Markdown masks removed 5,123 findings on table separator rows across 3,000 files and added none. github.com/HarperZ9/articulate/releases/tag/v0.14.0
+- Articulate is prose analysis and model-assisted editing for the command line, editors and CI. In 0.14.0, Markdown masks removed 5,123 findings on table separator rows across 3,000 files and added none. The latest release is 0.18.0. github.com/HarperZ9/articulate/releases/tag/v0.14.0
 
-- BuildLang is a systems language in which a program declares what it may touch, and the compiler checks it. Version 1.10.0 is on crates.io. crates.io/crates/buildlang
+- BuildLang is a systems language in which a program declares what it may touch, and the compiler checks it. Version 1.14.0, released November 10, 2026, is on crates.io; its test run passed 2,079 with 0 failed. crates.io/crates/buildlang
 
-- raw-native is a C++ renderer with a CPU reference and D3D12 and WebGPU backends. In release 0.8.0, default renders were byte-identical across the Windows, D3D12, Linux and WebAssembly builds. github.com/HarperZ9/raw-native/releases/tag/v0.8.0
+- Superframe (The Playground) is my engine repository; release 0.2.0 is dated October 28, 2026. Its native renderer is C++ with a CPU reference and D3D12 and WebGPU backends, and moved in from the raw-native repository on November 12, 2026. In raw-native 0.8.0, default renders were byte-identical across the Windows, D3D12, Linux and WebAssembly builds. github.com/HarperZ9/raw-native/releases/tag/v0.8.0
 
-- Low Water is an original narrative game in development on raw-native, in a private repository.
+- Low Water is an original narrative game in development on the same engine. Its main branch is public. github.com/HarperZ9/superframe/tree/main/games/low-water
 
 Self-Directed Projects
 
@@ -74,6 +76,10 @@ Planted controls in release checks
 
 Released a Flywheel monitor-admission check over 2,676 fixed test items with six planted controls and a second, independent math kernel. github.com/HarperZ9/flywheel/releases/tag/v1.5.0
 
+Steered-agent false-accept test
+
+Measured which guards stop destructive tool calls from an agent pushed toward a hostile persona, on 28 held-out tasks with 66 harmful calls and 145 baseline calls. A schema check caught 1 of 66; a request-versus-action consistency check caught 64 of 66 with 3 false alarms in 145. All tools were mocks and nothing the model emitted was executed; the consistency check and the labeller share an author. Merged November 11, 2026, not yet released. github.com/HarperZ9/flywheel/pull/431
+
 Accountable Surface | Governed actions and computer-use adapters
 
 Built operator-granted action interfaces for filesystem, command, API, browser, and Windows UI Automation work. Actions carry explicit scope and postconditions, journals preserve decisions and observed effects, and fake drivers make browser and desktop scenarios testable without live actions.
@@ -92,11 +98,15 @@ AI Evaluation
 
 Flywheel | Model-agnostic AI workstation and coding harness
 
-Primary owned platform. Flywheel 1.9.0, released October 15, 2026, is on PyPI as flywheel-verify, installs through Homebrew or Scoop, and ships a Windows installer with a bundled engine.
+Primary owned platform. Flywheel 1.9.0, released October 15, 2026, is the latest release. It is on PyPI as flywheel-verify, installs through Homebrew or Scoop, and ships a Windows installer with a bundled engine.
 
 - Routes tasks to hosted or local models through an OpenAI-compatible gateway, with command-line, desktop, and API entry points.
 
 - Provides Rowan, a desktop assistant that turns requests into recorded tasks, with permission-checked coding and tool-use workflows and session state.
+
+Merged since 1.9.0 and not yet released: a coding session whose commands may write inside the project folder; provider fault and retry-deadline handling with redacted records; named accounts with a key test at setup and macOS and Linux key stores; and peer-session observers.
+
+Study tooling, also merged and not yet released: a study runner with a power gate, planted truth, automatic checks and forecasts; a data pipeline that writes a receipt at each stage; one receipt contract shared by every tool; a reviewer-independence check; and a rule that a spent budget reads as inconclusive, never as a pass.
 
 Terminal State Fixtures and Crucible
 
@@ -104,11 +114,11 @@ Test infrastructure for evaluating AI agents: 324 terminal-state fixtures and 33
 
 CMMNS (formerly Daylight Commons) | Browser extension for checking where replies come from
 
-A browser extension that shows the sources behind replies on X, YouTube, Reddit, Facebook, Instagram, Bluesky, Threads, TikTok and Mastodon. Runs locally with no account. Open source (AGPL-3.0). Version 3.2.2, released October 23, 2026. github.com/HarperZ9/cmmns/releases/tag/v3.2.2
+A browser extension that shows the sources behind replies on X, YouTube, Reddit, Facebook, Instagram, Bluesky, Threads, TikTok and Mastodon. Runs locally with no account. Open source (AGPL-3.0). Version 3.9.1, released October 28, 2026. github.com/HarperZ9/cmmns/releases/tag/v3.9.1
 
 Articulate | Prose analysis and editing
 
-Prose analysis and model-assisted editing for the command line, editors and CI. It names each writing pattern it finds and the line it is on, in the terminal, in an editor through its language server, or as SARIF in code review. Version 0.16.0 is on PyPI as articulate-writing. pypi.org/project/articulate-writing
+Prose analysis and model-assisted editing for the command line, editors and CI. It names each writing pattern it finds and the line it is on, in the terminal, in an editor through its language server, or as SARIF in code review. Version 0.18.0 is on PyPI as articulate-writing. pypi.org/project/articulate-writing
 
 Graphics and Rendering
 
@@ -116,37 +126,47 @@ Elder ENB | Lighting and post-processing preset for Skyrim Special Edition
 
 An ENBSeries preset with a layered design: weather presets set the atmosphere, and stackable overlays adjust style, lighting, effects and post-processing. It ships 38 atmosphere presets for the KreatE weather system, updated from April 2024 to February 2026. ENBSeries and the required mods belong to their authors. nexusmods.com/skyrimspecialedition/mods/117327
 
-raw-native | C++ renderer with a CPU reference and checked GPU backends
+Superframe engine and native renderer | C++ renderer with a CPU reference and checked GPU backends
 
-Release 0.8.0, October 14, 2026, renders on a CPU reference and through D3D12 and WebGPU, and passed 60 of 60 tests with MSVC and GCC. github.com/HarperZ9/raw-native/releases/tag/v0.8.0
+raw-native release 0.8.0, October 14, 2026, renders on a CPU reference and through D3D12 and WebGPU, and passed 60 of 60 tests with MSVC and GCC. It is still the last renderer release. On November 12, 2026 the renderer moved, with its history, into the Superframe engine repository as native/, alongside the superstack, reconcile and studio-libs packages and Low Water. Superframe 0.1.0 and 0.2.0 are released. github.com/HarperZ9/superframe/tree/main/native
 
-Merged since 0.8.0 and not yet released: a Vulkan 1.3 backend whose 600 presented frames on lavapipe match the offscreen and D3D12 WARP renders hash for hash; the painterly shader ported to the C++ core, equal to the JavaScript version across fifteen cases; a tilt-shift lens that repaints out-of-focus areas with coarser brushwork and no blur, about 0.86 ms a frame at 1080p on an RTX 4090; and a character asset toolchain that turns brush strokes into signed distance fields, game meshes, UV atlases and baked maps.
+Merged since 0.8.0 and not yet released: a Vulkan 1.3 backend whose 600 presented frames on lavapipe match the offscreen and D3D12 WARP renders hash for hash; the painterly shader ported to the C++ core, equal to the JavaScript version across fifteen cases; a tilt-shift lens that repaints out-of-focus areas with coarser brushwork and no blur, about 0.86 ms a frame at 1080p on an RTX 4090; a character asset toolchain that turns brush strokes into signed distance fields, game meshes, UV atlases and baked maps; radiance cascades in flatland and world space, measured against a brute force and against the path trace, with a white-furnace check; hardware ray queries for the path tracer, with spectral caustics through measured glass; and the art scene renderer rewritten in BuildLang, byte-identical to the C++ on its pinned frame.
+
+Simulation, audio and registry | Merged in the engine, not yet released
+
+Cosmological N-body solver, particle-mesh and P3M, with a lean CUDA engine and bitwise-repeatable runs. At 512^3 particles in 256 Mpc/h, all 14 bands to k = 5 at z = 0 and z = 1 sit inside 3 percent of the Cosmic Emu on the three-seed mean. Three seeds is a small sample: the 95 percent interval on the mass-resolution factor spans 0.2 to 4.3 percent. github.com/HarperZ9/superframe/pull/42
+
+Audio: a modal bar bank, a stiff-string piano and a pipe organ as CLAP instruments that match the offline kernels bit for bit; the same instruments as VST3 plug-ins; a piano string kernel in BuildLang with the same bytes as the C kernel; piano inharmonicity measured from a Steinway model B; and a singing tract over measured MRI tract shapes. github.com/HarperZ9/superframe/tree/main/packages/daw
+
+Registry: one entry schema and a unit table of 90 units in six scale kinds, with a checker written in BuildLang and broken-table controls.
 
 Low Water | Original narrative game in development
 
-An original narrative game written and built on my own engine, with a deterministic combat simulation. A C++ port onto raw-native is in progress in open raw-native pull requests. The repository is private.
+An original narrative game written and built on my own engine, with a deterministic combat simulation. Its main branch became public on November 12, 2026, at games/low-water in the engine repository, where 250 engine and combat tests pass on CI and 6 skip. The first C++ port steps (story VM, trace replay, host modules) are merged. github.com/HarperZ9/superframe/tree/main/games/low-water
 
 Earlier graphics and color work
 
-Earlier HLSL and C++ modding covered post-processing, Direct3D 11 integration, shader debugging and GPU traces, with public projects SkyrimBridge, ENB Runtime Core, Brender Archival and Engine Revival. Color tools include Build Color, Calibrate Pro and Studio Engine.
+Earlier HLSL and C++ modding covered post-processing, Direct3D 11 integration, shader debugging and GPU traces, with public projects SkyrimBridge, ENB Runtime Core, Brender Archival and Engine Revival. Color tools include Build Color and Calibrate Pro; Studio Engine was archived on November 11, 2026, as superseded. Newer colour work, merged in the engine: Mayer 1775, Lambert 1772 and Benson 1872 colour-mixing kernels in BuildLang.
 
 Developer Tools and Languages
 
-BuildLang | Rust compiler and developer tooling
+BuildLang | Language, compiler and developer tooling
 
-Developed a systems-language toolchain with typed capability effects, type inference, parser and intermediate-representation work, native C output, shader output, and language-server support. Version 1.10.0 is on crates.io, published October 23, 2026; the 1.8.0 release that day added Box<T> and recursive types. crates.io/crates/buildlang
+Developed a systems-language toolchain with typed capability effects, type inference, parser and intermediate-representation work, native C output, shader output, and language-server support; the compiler is written in Rust. Version 1.14.0, released November 10, 2026, is on crates.io; its test run passed 2,079 with 0 failed. crates.io/crates/buildlang
+
+Merged after 1.14.0 and not yet released: a WebAssembly target that writes a binary module, with SHA-256 and Merkle programs running in Node; x86-64 native executables, Windows PE and Linux ELF, written by the compiler with no C compiler, assembler or linker, a first slice limited to integers, control flow, calls and printing, whose nine test programs match the C backend output on Windows and Linux in CI; a RISC-V toolchain written in BuildLang (an RV64 emulator with machine, supervisor and user modes, Sv39, a timer, interrupts and a replay check; a text assembler; and a code generator that runs BuildLang programs on the emulator); and a one-step C-subset to BuildLang translator, a first slice whose three corpus programs match gcc output byte for byte. github.com/HarperZ9/buildlang/pull/283
 
 EMET | Byte-integrity witnessing
 
 Developed Python, Rust, Node, and Go implementations that check whether bytes still match their source, sharing one set of conformance cases. On PyPI as emet. pypi.org/project/emet
 
-Research intake and workspace tooling
+Flywheel companion tools | Research intake and workspace tooling
 
-Built Gather for research intake from web, scholarly and document sources, Index for workspace and symbol maps, and Forum for running teams of agents. On October 23, 2026, Gather 2.4.0, Crucible 1.6.0, and EMET 1.3.1 shipped to PyPI and Canon 0.7.0 to GitHub. Companion tools include Relay for coding agents, Plexus for tool wiring, Mneme for agent memory, Canon for assistant instructions, and Bulletin, a message board for agents.
+Built Gather for research intake from web, scholarly and document sources, Index for workspace and symbol maps, and Forum for running teams of agents. Gather, Crucible and Forum are companion tools that Flywheel connects to; they are developed as parts of that platform and also ship as separate packages. Latest releases: Gather 2.5.0 (November 3, 2026), Crucible 1.6.0, EMET 1.3.1 and Canon 0.7.0 (October 23, 2026). Companion tools include Relay for coding agents, Plexus for tool wiring, Mneme for agent memory, Canon for assistant instructions, and Bulletin, a message board for agents.
 
 Selected Open-Source Contributions
 
-Six of 37 merged engineering pull requests in 30 external repositories. Full list: harperz9.github.io/career/open-source-census.json
+Six of 38 merged engineering pull requests in 31 external repositories. Full list: harperz9.github.io/career/open-source-census.json
 
 - DeepEval #2822: fixed unhashable tool-output and nested-parameter failures in tool-correctness evaluation; merged July 2, 2026. github.com/confident-ai/deepeval/pull/2822
 
@@ -234,7 +254,7 @@ ORCID: orcid.org/0009-0001-7175-5393 | harperz9.github.io/publications.html | ha
 
 Credentials and Continuing Education
 
-2026 completions. Verification: harperz9.github.io/career/source-ledger.md.
+2026 completions. Credential IDs and check results: harperz9.github.io/career/credentials.json
 
 Qualys Certified Specialist: Policy Audit; Custom Assessment and Remediation; Vulnerability Management Detection and Response; Qualys Kubernetes and Container Security; Qualys TotalCloud Exam; Endpoint Detection and Response | Issued 2026-09-30; expire 2028-09-29
 

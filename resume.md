@@ -1,6 +1,6 @@
 # Zain Dana Harper: Resumes
 
-Updated 2026-11-02.
+Updated 2026-11-13.
 
 Four primary families: support/developer operations/QA; AI systems/evaluation/Python tooling; graphics, rendering and developer tools; arboriculture/field operations/estimating. Each targeted resume is one page. A public-operations variant and full CV are also available.
 
