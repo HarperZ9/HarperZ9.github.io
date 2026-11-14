@@ -3,9 +3,9 @@
  "source": {
   "path": "career/resume-source.json",
   "document": "public-operations",
-  "sha256": "8b1ae1984058407385c8474216a7196ca827e75f3846ed70bb6763ad99cb3055"
+  "sha256": "a3b6fa37ccf7422e7c5b747310c7d648c56af5e918605479aa6a75258afaea19"
  },
- "ir_sha256": "bacbe345fcc8b1f76b2d1913914ef6230b093e7a5232d77b3e40aeeae29763b8",
+ "ir_sha256": "ac0bcff1d4e7c367b4630bca81186c69b696753b240223c231d859b3ea4872ba",
  "theme": "press-resume",
  "overrides": [
   "base.size=10.0",
@@ -13,7 +13,7 @@
   "emboss.deboss_finish=inked"
  ],
  "outputs": {
-  "Zain-Dana-Harper-Resume-Public-Operations.pdf": "f404cf6a5664a858344868be752f8d2dde2afe57aec2689ec29be5dd689dd0b0"
+  "Zain-Dana-Harper-Resume-Public-Operations.pdf": "dd3e7815ee59325b7c7341c86375cf0cae0a1ccc0b1d73f1afd4224f36cabb73"
  },
  "pdf_metadata": {
   "pdfa": false,
@@ -33,15 +33,15 @@
     "embedded": true
    },
    {
-    "name": "DBNKMH+HankenGrotesk-Regular",
+    "name": "HMOPAF+HankenGrotesk-Regular",
     "embedded": true
    },
    {
-    "name": "GJLEJI+HankenGrotesk-Regular",
+    "name": "MBAOJE+HankenGrotesk-Regular",
     "embedded": true
    },
    {
-    "name": "HPNAAK+HankenGrotesk-Regular",
+    "name": "NHOHBC+HankenGrotesk-Regular",
     "embedded": true
    }
   ],
@@ -49,7 +49,7 @@
   "blind_text_runs": 0,
   "reading_order": true,
   "blocks_missing_from_text": [],
-  "pdf_bytes": 219733
+  "pdf_bytes": 219261
  },
  "failed": [],
  "notes": [
