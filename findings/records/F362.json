@@ -5,7 +5,7 @@
   "id": "F362",
   "kind": "finding",
   "title": "Published 1 sigma error bars hold near nominal; a 95 percent interval needs 3 to 5 sigma",
-  "standfirst": "When a particle mass or an atomic mass moves between editions of its reference table, the old 1 sigma error bar covers the new value about as often as it should. The tails are far heavier than a bell curve, so covering 95 percent of later values takes 3 to 5 times the stated sigma.",
+  "standfirst": "When a particle mass or an atomic mass moves between editions of its reference table, the old 1 sigma error bar covers the new value about as often as it should (0.68 and 0.66). The tails are far heavier than a bell curve, so covering 95 percent of later values took 3 to 5 times the stated sigma in these tables. Six of our ten forecasts held; we expected error bars to cover too rarely, and counted over all values they covered 0.79.",
   "date_found": "2026-10-31",
   "fields": [
    "instruments-metrology",
@@ -38,7 +38,7 @@
     "title": "What this means for a reader",
     "role": "lead",
     "paragraphs": [
-     "When a table prints a value plus or minus one sigma, the next edition usually lands about as close as that promise says. Large misses are the problem: shifts of four or five sigma happen far more often than a bell curve allows. If you need 95 percent confidence from a published plus-or-minus, multiply it by three to five, and by more for an astronomical quantity that is still being settled."
+     "When a table prints a value plus or minus one sigma, the next edition usually lands about as close as that promise says. Large misses are the problem: shifts of four or five sigma happen far more often than a bell curve allows. If you need 95 percent confidence from a published plus-or-minus, multiply it by three to five, and by more for an astronomical quantity that is still being settled. That multiple describes how these tables behaved in the past, and it will miss when an input shared by many values turns out wrong."
     ]
    },
    {
@@ -391,6 +391,15 @@
    "after": "That note was wrong and was withdrawn the same day: the result file has ten forecast verdicts, and six pass (cov2, k95, nu, moved, shrink, own_hold), so 6 of 10 forecasts held, as the ledger says. Every preregistered verdict is listed in the appendix.",
    "reason": "A first publication note said the ledger's count of forecasts held could not be reproduced.",
    "found_by": "the publication pass"
+  },
+  {
+   "id": "x3",
+   "date": "2026-11-14",
+   "target": "document",
+   "type": "wording",
+   "after": "Six of ten forecasts held; the hypothesis that stated error bars cover too rarely failed, since counted over all values they covered 0.79 against a nominal 0.68. The summary now says so, and the rule of thumb in the reader section now carries the limit the paper states for it.",
+   "reason": "A review of the published page found the summary silent on the forecasts that failed.",
+   "found_by": "a review of the published pages"
   }
  ],
  "versions": [
@@ -404,6 +413,11 @@
    "date": "2026-11-09",
    "what": "paper version 1.0, first published",
    "hash": "712109ae8ebf3f4880d3f9bf072f252166c78f3f3df5ab976e0a80f159d5e3fc"
+  },
+  {
+   "n": 3,
+   "date": "2026-11-14",
+   "what": "this page corrected, 1 item; the PDF and its BuildTeX source are still paper version 1.0"
   }
  ],
  "grade": {

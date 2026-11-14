@@ -135,6 +135,7 @@ Verified: on 9 November 2026 the 728 surfaces and their group counts, every flow
 # section Corrections {sec:corrections}
 - 30 October 2026 (UTC): the replication run with photon noise lowered the set 1 ratios to 1.67 for the bee and 1.50 for the blue tit. A later dated line in the findings ledger narrows the published claim to the direction of the effect, and this paper follows it.
 - 9 November 2026: first published version.
+- 14 November 2026: A review of the published page found the title and summary wider than the study. The title said bees and birds; the observers are a modelled bee and a modelled blue tit, and no behaviour was tested. The summary said far more often, a size word, while only the direction of the ratio is claimed. Both now say so.
 
 # section Reproduction {sec:repro}
 - Data: download the Dorin and colleagues spectra from Dryad (or its Zenodo mirror), the CIE 2006 cone fundamentals and D65, and the pavo 2.10.0 receptor curves; for set 2, the LeCroy and colleagues flower spectra and the Kraemer and Adams soil and litter spectra.

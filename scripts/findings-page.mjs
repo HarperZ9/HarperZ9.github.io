@@ -36,6 +36,9 @@ function objection(d, ctx) {
 <p class="src">From ${esc(d.objection_source)}.</p></section>`;
 }
 
+// The text's "Figure n" follows the PDF; the page's charts are numbered on their own. Say so where the figures sit.
+const FIGURE_NOTE = `<p class="soft">These are the paper's own figures, numbered as in the PDF, and each "Figure" reference in the text points here. The charts on this page redraw the same results from the result files and carry their own numbers.</p>`;
+
 function evidence(rec, ctx, appendix) {
   const d = rec.document;
   const bound = d.bound ? `<p class="bound">${mark("outcome", d.outcome)}<span><b>${esc(OUTCOME_WORD[d.outcome].replace(/^./, (c) => c.toUpperCase()))}.</b> ${esc(d.bound)}</span></p>`
@@ -43,7 +46,7 @@ function evidence(rec, ctx, appendix) {
   return `<section id="evidence" class="landmark" aria-labelledby="evidence-h"><h2 id="evidence-h" class="d-3d" data-hue="brass">Evidence</h2>
 ${bound}
 ${ctx.charts && ctx.charts.rest() ? `<h3>Charts</h3>${ctx.charts.rest()}
-` : ""}${ctx.figures.length ? `<h3>Figures</h3>${ctx.figures.join("\n")}` : ""}
+` : ""}${ctx.figures.length ? `<h3>Figures</h3>${ctx.charts ? FIGURE_NOTE : ""}${ctx.figures.join("\n")}` : ""}
 ${ctx.tables.length ? `<h3>Tables</h3>${ctx.tables.join("\n")}` : ""}
 ${appendix}
 ${recordNumbers(rec)}

@@ -4,7 +4,7 @@
  "document": {
   "id": "F63",
   "kind": "finding",
-  "title": "Across 1,175 tree-ring sites, an earlier moderate drought did not toughen trees",
+  "title": "Across 1,175 tree-ring sites, an earlier moderate drought did not detectably toughen trees",
   "standfirst": "We tested whether trees that lived through a moderate drought came through a later severe drought better. Across 1,175 North American tree-ring sites they did not, detectably, and a rerun with a finer drought grid gave the same null.",
   "date_found": "2026-10-29",
   "fields": [
@@ -456,6 +456,15 @@
    "after": "The five groups by number of moderate-drought years hold 3,763 events and the sample is 3,780; the result file lists no group for the other 17, and the text now says so. One chart listed the time-shift comparison under what is ruled out; a p of 0.18 shows no effect and rules none out, and the chart now says that.",
    "reason": "A review of the published page found a count that does not add up.",
    "found_by": "a review of the published pages"
+  },
+  {
+   "id": "x4",
+   "date": "2026-11-14",
+   "target": "document",
+   "type": "wording",
+   "after": "The interval still allows a gain of up to about 9 percent, so the title now says the earlier drought did not detectably toughen trees, as the summary already did.",
+   "reason": "A review of the published page found the title stated as a flat negative.",
+   "found_by": "a review of the published pages"
   }
  ],
  "versions": [
@@ -478,7 +487,7 @@
   {
    "n": 4,
    "date": "2026-11-14",
-   "what": "this page corrected, 1 item; the PDF and its BuildTeX source are still paper version 1.0"
+   "what": "this page corrected, 2 items; the PDF and its BuildTeX source are still paper version 1.0"
   }
  ],
  "grade": {

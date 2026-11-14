@@ -4,7 +4,7 @@
  "document": {
   "id": "F39",
   "kind": "finding",
-  "title": "Music with long ringing tails and dark spectra is rated calmer, and also sadder",
+  "title": "Music with long ringing tails and dark spectra is rated calmer, and also less pleasant",
   "standfirst": "Across 502 held-out music clips by 270 artists, sounds that ring on longer and lean toward low frequencies were rated lower in arousal, beyond loudness, genre and year. We forecast they would also be rated more pleasant; they were rated less pleasant instead.",
   "date_found": "2026-10-29",
   "fields": [
@@ -33,7 +33,7 @@
     "title": "What this means for a reader",
     "role": "lead",
     "paragraphs": [
-     "Music that rings on and sounds dark is heard as calmer, across every genre in the set. It is also heard as sadder. If you build a playlist to relax, these two properties will move the music toward calm, and they will also move it toward melancholy. The ratings describe what listeners judged the music to express, and say nothing about what it made them feel."
+     "Music that rings on and sounds dark is heard as calmer, across every genre in the set. It is also rated less pleasant. If you build a playlist to relax, music with these two properties was rated calmer, and it was also rated less pleasant; the study did not change the sound of any clip, so it does not show that adding them causes either. The ratings describe what listeners judged the music to express, and say nothing about what it made them feel."
     ]
    },
    {
@@ -147,7 +147,7 @@
     "paragraphs": [
      "The arousal result agrees with what single-note studies found for brightness {cite:r2} {cite:r3} and extends it to full mixes by many artists, on artists held out from fitting, with a tail measure checked on synthetic music before use. The size, about -0.39, is larger than we forecast. It survives tempo, spectral entropy and note rate, and holds inside every genre.",
      "The valence result is the more interesting one. A reader might expect calm music to be rated pleasant. In DEAM it is rated less pleasant, and the drop is not only the shared variance with arousal. Wilkie and Harrison {cite:r5} found that longer reverberation raised sublimity and nostalgia and left unease and vitality about the same, and Mo, Wu and Horner {cite:r4} found reverberation moved instrument sounds toward romantic and mysterious and, less strongly, sad. Both fit a reading in which long dark tails carry a wistful or melancholy calm.",
-     "For a music tool, the practical reading is that a sustain or darkness control moves perceived calm and perceived sadness together. A tool that offers calm through these controls should say so.",
+     "For a music tool, the practical reading is that a sustain or darkness control may move perceived calm and lower perceived pleasantness together, which a test that changes the sound would have to confirm. A tool that offers calm through these controls should say so.",
      "The {g:tier}tier{/g} B* places this as a strong signal worth expanding. Three things would raise it: a second rated corpus, a listening test that changes the tail with instrumentation held fixed, and ratings of felt calm."
     ]
    },
@@ -432,6 +432,15 @@
    "after": "The per-genre result was described as covering all 1,744 clips; the 11 genres hold 1,743, and the one clip tagged Other is left out. The text and the figure caption now say 1,743.",
    "reason": "A review of the published page found a clip count that did not match the post hoc file.",
    "found_by": "a review of the published pages"
+  },
+  {
+   "id": "x5",
+   "date": "2026-11-14",
+   "target": "document",
+   "type": "wording",
+   "after": "The title and the reader section said sadder; the ratings measure valence, how pleasant a clip is judged to be, and name no emotion, so both now say less pleasant. The reader section and the discussion said these properties will move music toward calm; timbre was not held fixed and no clip was altered, so the text now reports the association and says a causal test is still needed.",
+   "reason": "A review of the published page found two words that go past the ratings.",
+   "found_by": "a review of the published pages"
   }
  ],
  "versions": [
@@ -449,7 +458,7 @@
   {
    "n": 3,
    "date": "2026-11-14",
-   "what": "this page corrected, 1 item; the PDF and its BuildTeX source are still paper version 1.0"
+   "what": "this page corrected, 2 items; the PDF and its BuildTeX source are still paper version 1.0"
   }
  ],
  "grade": {

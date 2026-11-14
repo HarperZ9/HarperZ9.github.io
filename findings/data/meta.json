@@ -59,7 +59,7 @@
   },
   "F39": {
    "slug": "long-tails-dark-spectra",
-   "title": "Music with long ringing tails and dark spectra is rated calmer, and also sadder",
+   "title": "Music with long ringing tails and dark spectra is rated calmer, and also less pleasant",
    "standfirst": "Across 502 held-out music clips by 270 artists, sounds that ring on longer and lean toward low frequencies were rated lower in arousal, beyond loudness, genre and year. We forecast they would also be rated more pleasant; they were rated less pleasant instead.",
    "fields": [
     "music-acoustics",
@@ -105,7 +105,7 @@
   },
   "F63": {
    "slug": "no-drought-steeling-in-tree-rings",
-   "title": "Across 1,175 tree-ring sites, an earlier moderate drought did not toughen trees",
+   "title": "Across 1,175 tree-ring sites, an earlier moderate drought did not detectably toughen trees",
    "standfirst": "We tested whether trees that lived through a moderate drought came through a later severe drought better. Across 1,175 North American tree-ring sites they did not, detectably, and a rerun with a finer drought grid gave the same null.",
    "fields": [
     "biology-plant-forest-pathology",
@@ -142,8 +142,8 @@
   },
   "F81": {
    "slug": "flower-colour-differences-humans-miss",
-   "title": "Among colours people cannot tell apart, bees and birds split flowers from backgrounds more often",
-   "standfirst": "On 728 measured natural surfaces, modelled bees and blue tits separate flower-against-background pairs that look identical to people far more often than background-against-background pairs. The direction held on a second surface set and under a second noise model; the size of the effect did not travel.",
+   "title": "Among colours people cannot tell apart, modelled bees and blue tits split flowers from backgrounds more often",
+   "standfirst": "On 728 measured natural surfaces, modelled bees and blue tits separate flower-against-background pairs that look identical to people more often than background-against-background pairs. No animal was tested; the observers are models. The direction held on a second surface set and under a second noise model; the size of the effect did not travel.",
    "fields": [
     "biology-other",
     "colour-film",
@@ -159,8 +159,8 @@
   },
   "F97": {
    "slug": "drought-space-time-tree-lens",
-   "title": "Tree rings record the broad drought pattern and almost none of the local one",
-   "standfirst": "Across 664 western North American tree-ring sites, the trees pass almost none of the summer drought signal at scales below about 55 km and most of it above about 460 km. A tree-ring record that looks like a weak, flat climate recorder site by site is acting as a spatial filter.",
+   "title": "Tree rings track the broad drought pattern in a gridded record and almost none of its local detail",
+   "standfirst": "Across 664 western North American tree-ring sites, the trees pass almost none of the summer drought signal at scales below about 55 km and most of it above about 460 km, measured against a gridded climate record. That grid is itself smoothed over hundreds of kilometres, so part of the missing fine detail may belong to the grid and not to the trees. Three further tests on how drought moves through space and time came back null.",
    "fields": [
     "ecology-climate",
     "biology-plant-forest-pathology"
@@ -310,8 +310,8 @@
   },
   "F183": {
    "slug": "shifted-optima-plain-beats-bio-optimisers",
-   "title": "After we fixed our own bug, plain optimisers beat nature-inspired ones on shifted tests",
-   "standfirst": "Our first benchmark said optimisers named after slime moulds, wolves, bees and ants beat the standard methods. The win came partly from a bug in our own CMA-ES code. Fixed, CMA-ES ranked first, and two popular nature-inspired methods turned out to work well only when the answer sits at the centre of the search box.",
+   "title": "After we fixed our own bug, CMA-ES ranked first and two nature-inspired optimisers proved centre-biased",
+   "standfirst": "Our first benchmark said optimisers named after slime moulds, wolves, bees and ants beat the standard methods. The win came partly from a bug in our own CMA-ES code. Fixed, CMA-ES ranked first on the shifted tests, and two popular nature-inspired methods turned out to work well only when the answer sits at the centre of the search box. As groups, plain and nature-inspired methods did not differ (mean rank gap 0.09, p 0.45).",
    "fields": [
     "cs-systems",
     "method"
@@ -409,8 +409,8 @@
   },
   "F329": {
    "slug": "lying-in-die-tasks",
-   "title": "In 27,039 private die rolls, about 45 percent report honestly, and the reports cannot tell us why",
-   "standfirst": "Payoff maximisation says everyone in a private die-roll task should claim the top number. Across 58 published studies with 27,039 subjects, the held-out reports look like about 45 percent honest, 26 percent claiming the maximum and 29 percent shading upward partway. Six competing theories of why people hold back fit those reports almost equally well.",
+   "title": "In held-out private die-roll reports, about 45 percent read as honest, and this method cannot tell us why",
+   "standfirst": "Payoff maximisation says everyone in a private die-roll task should claim the top number. Of 58 published studies with 27,039 subjects, 19 papers with 9,960 subjects were held out. In their tasks with three or more outcomes the reports read as about 45 percent honest, 26 percent claiming the maximum and 29 percent in between; the result file gives no interval and the reading depends on the method. Six competing theories fit those reports almost equally well, and our planted check failed, so the tie shows only that this method could not separate them.",
    "fields": [
     "psychology",
     "economy",
@@ -447,7 +447,7 @@
   "F362": {
    "slug": "stated-uncertainty-tails",
    "title": "Published 1 sigma error bars hold near nominal; a 95 percent interval needs 3 to 5 sigma",
-   "standfirst": "When a particle mass or an atomic mass moves between editions of its reference table, the old 1 sigma error bar covers the new value about as often as it should. The tails are far heavier than a bell curve, so covering 95 percent of later values takes 3 to 5 times the stated sigma.",
+   "standfirst": "When a particle mass or an atomic mass moves between editions of its reference table, the old 1 sigma error bar covers the new value about as often as it should (0.68 and 0.66). The tails are far heavier than a bell curve, so covering 95 percent of later values took 3 to 5 times the stated sigma in these tables. Six of our ten forecasts held; we expected error bars to cover too rarely, and counted over all values they covered 0.79.",
    "fields": [
     "instruments-metrology",
     "physics-other",
@@ -482,8 +482,8 @@
   },
   "F515": {
    "slug": "llm-compression-and-memorisation",
-   "title": "A small language model squeezes the UDHR to 0.27 bits a letter, and fresh text to 1.59",
-   "standfirst": "Used as a compressor, SmolLM2 encodes the English Universal Declaration of Human Rights at 0.27 bits per character, far below any classical compressor. On 30,000 characters written after its training it needs 1.59, so most of the headline figure comes from text the model has already seen.",
+   "title": "A small language model squeezes the UDHR to 0.27 bits a character, and fresh text to 1.59",
+   "standfirst": "Used as a compressor, SmolLM2 encodes the English Universal Declaration of Human Rights at 0.27 bits per character, far below any classical compressor. On 30,000 characters written after its training it needs 1.59, which points at the model having seen the declaration. One fresh text cannot say how large that share is.",
    "fields": [
     "information-theory",
     "linguistics-literature"

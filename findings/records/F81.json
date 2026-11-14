@@ -4,8 +4,8 @@
  "document": {
   "id": "F81",
   "kind": "finding",
-  "title": "Among colours people cannot tell apart, bees and birds split flowers from backgrounds more often",
-  "standfirst": "On 728 measured natural surfaces, modelled bees and blue tits separate flower-against-background pairs that look identical to people far more often than background-against-background pairs. The direction held on a second surface set and under a second noise model; the size of the effect did not travel.",
+  "title": "Among colours people cannot tell apart, modelled bees and blue tits split flowers from backgrounds more often",
+  "standfirst": "On 728 measured natural surfaces, modelled bees and blue tits separate flower-against-background pairs that look identical to people more often than background-against-background pairs. No animal was tested; the observers are models. The direction held on a second surface set and under a second noise model; the size of the effect did not travel.",
   "date_found": "2026-10-29",
   "fields": [
    "biology-other",
@@ -361,6 +361,15 @@
    "after": "A later dated line in the findings ledger narrows the published claim to the direction of the effect, and this paper follows it.",
    "reason": "The replication run with photon noise lowered the set 1 ratios to 1.67 for the bee and 1.50 for the blue tit.",
    "found_by": "a later study of ours"
+  },
+  {
+   "id": "x2",
+   "date": "2026-11-14",
+   "target": "document",
+   "type": "scope",
+   "after": "The title said bees and birds; the observers are a modelled bee and a modelled blue tit, and no behaviour was tested. The summary said far more often, a size word, while only the direction of the ratio is claimed. Both now say so.",
+   "reason": "A review of the published page found the title and summary wider than the study.",
+   "found_by": "a review of the published pages"
   }
  ],
  "versions": [
@@ -379,6 +388,11 @@
    "date": "2026-11-09",
    "what": "paper version 1.0, first published",
    "hash": "43d4098cd03bf7bb5e2b3f9eb37d6e4e0163f323188575bc11a298064fc41935"
+  },
+  {
+   "n": 4,
+   "date": "2026-11-14",
+   "what": "this page corrected, 1 item; the PDF and its BuildTeX source are still paper version 1.0"
   }
  ],
  "grade": {

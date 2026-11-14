@@ -474,7 +474,7 @@
    "f": "F183",
    "tier": "D",
    "strong_b": false,
-   "tier_reason": "Refutes the bio-labelled edge after my own bug fix; default parameters only.",
+   "tier_reason": "After our own bug fix the nature-inspired methods showed no edge as a group (mean rank gap 0.09, p 0.45), and CMA-ES ranked first; default parameters only.",
    "fields": [
     "cs-systems",
     "method"

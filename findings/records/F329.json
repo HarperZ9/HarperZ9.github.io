@@ -4,8 +4,8 @@
  "document": {
   "id": "F329",
   "kind": "finding",
-  "title": "In 27,039 private die rolls, about 45 percent report honestly, and the reports cannot tell us why",
-  "standfirst": "Payoff maximisation says everyone in a private die-roll task should claim the top number. Across 58 published studies with 27,039 subjects, the held-out reports look like about 45 percent honest, 26 percent claiming the maximum and 29 percent shading upward partway. Six competing theories of why people hold back fit those reports almost equally well.",
+  "title": "In held-out private die-roll reports, about 45 percent read as honest, and this method cannot tell us why",
+  "standfirst": "Payoff maximisation says everyone in a private die-roll task should claim the top number. Of 58 published studies with 27,039 subjects, 19 papers with 9,960 subjects were held out. In their tasks with three or more outcomes the reports read as about 45 percent honest, 26 percent claiming the maximum and 29 percent in between; the result file gives no interval and the reading depends on the method. Six competing theories fit those reports almost equally well, and our planted check failed, so the tie shows only that this method could not separate them.",
   "date_found": "2026-10-31",
   "fields": [
    "psychology",
@@ -336,6 +336,15 @@
    "after": "The original ledger entry did not state it. The claim stands narrowed, and this paper states the failed check in the abstract, the controls and the limitations.",
    "reason": "A dated correction in our {g:findings-ledger}findings ledger{/g} records that the preregistered reproduction check failed at 0.287 against 0.234 within 0.03.",
    "found_by": "the publication pass"
+  },
+  {
+   "id": "x2",
+   "date": "2026-11-14",
+   "target": "document",
+   "type": "scope",
+   "after": "The 45 percent comes from held-out tasks with three or more outcomes, part of the 9,960 held-out subjects, and has no interval; 27,039 is the whole sample. The near-tie among six theories was presented as showing the reports cannot identify a theory; the planted check failed, so it shows only that this method could not separate them. The title and summary now say so, and the outcome word changed from held to mixed because a kill condition fired.",
+   "reason": "A review of the published page found the title and summary wider than the result.",
+   "found_by": "a review of the published pages"
   }
  ],
  "versions": [
@@ -349,6 +358,11 @@
    "date": "2026-11-09",
    "what": "paper version 1.0, first published",
    "hash": "3610edab4bbafad786865e9dcf0a55ad96368668b4ded75ac823e95915c4c49c"
+  },
+  {
+   "n": 3,
+   "date": "2026-11-14",
+   "what": "this page corrected, 1 item; the PDF and its BuildTeX source are still paper version 1.0"
   }
  ],
  "grade": {

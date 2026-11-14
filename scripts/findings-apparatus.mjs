@@ -73,7 +73,8 @@ function trail(rec, env, ctx) {
 <h3>Corrections</h3>${corr ? `<ol class="corrections">${corr}</ol>` : "<p>None recorded.</p>"}
 ${standingTrail(rec)}
 ${replaced ? `<h3>Findings this one replaced</h3><ol class="corrections">${replaced}</ol>` : ""}
-<p class="soft">Each correction is a dated note; the findings ledger is never rewritten, and a note governs where it differs.</p></section>`;
+<p class="soft">Each correction is a dated note; the findings ledger is never rewritten, and a note governs where it differs.</p>
+<p class="soft">Ledger and version dates are local dates in US Pacific time. Clock times in the text are UTC, seven or eight hours ahead, so a lock or a run stamped just after midnight UTC belongs to the previous local day.</p></section>`;
 }
 
 // a reference's own text, with its DOI, arXiv id and web address made into links where they stand

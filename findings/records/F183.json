@@ -4,15 +4,15 @@
  "document": {
   "id": "F183",
   "kind": "finding",
-  "title": "After we fixed our own bug, plain optimisers beat nature-inspired ones on shifted tests",
-  "standfirst": "Our first benchmark said optimisers named after slime moulds, wolves, bees and ants beat the standard methods. The win came partly from a bug in our own CMA-ES code. Fixed, CMA-ES ranked first, and two popular nature-inspired methods turned out to work well only when the answer sits at the centre of the search box.",
+  "title": "After we fixed our own bug, CMA-ES ranked first and two nature-inspired optimisers proved centre-biased",
+  "standfirst": "Our first benchmark said optimisers named after slime moulds, wolves, bees and ants beat the standard methods. The win came partly from a bug in our own CMA-ES code. Fixed, CMA-ES ranked first on the shifted tests, and two popular nature-inspired methods turned out to work well only when the answer sits at the centre of the search box. As groups, plain and nature-inspired methods did not differ (mean rank gap 0.09, p 0.45).",
   "date_found": "2026-10-31",
   "fields": [
    "cs-systems",
    "method"
   ],
   "tier": "D",
-  "tier_reason": "Refutes the bio-labelled edge after my own bug fix; default parameters only.",
+  "tier_reason": "After our own bug fix the nature-inspired methods showed no edge as a group (mean rank gap 0.09, p 0.45), and CMA-ES ranked first; default parameters only.",
   "rung": "thesis",
   "rung_reason": "Named rival, which the finding stood against: Bio-labelled optimisers as better search. Decisive observation against the rival: Shifted known optima: CMA-ES rank 2.0 against best bio 3.14, and SMA and GWO lose 12 and 13.6 decades.",
   "outcome": "mixed",
@@ -337,6 +337,15 @@
    "after": "This paper reports both.",
    "reason": "Our ledger and write-up did not report that the group gap with random search sat inside the label-permutation range in both runs, nor that the rerun's forecast of PSO in the top three failed.",
    "found_by": "the publication pass"
+  },
+  {
+   "id": "x4",
+   "date": "2026-11-14",
+   "target": "document",
+   "type": "number",
+   "after": "It said plain optimisers beat nature-inspired ones; the rerun's group contest gave a mean rank gap of 0.09, inside the label-permutation range (p 0.45), and two nature-inspired methods ranked second and third. The title and the summary now name what the method-level ranks show: CMA-ES first at 2.00, and the slime-mould and grey-wolf methods losing their lead when the optimum leaves the centre.",
+   "reason": "A review of the published page found the title wider than the result.",
+   "found_by": "a review of the published pages"
   }
  ],
  "versions": [
@@ -350,6 +359,11 @@
    "date": "2026-11-09",
    "what": "paper version 1.0, first published",
    "hash": "2c1d02484bcb2dd14a712b5e2a9a09976f4ea93b31dc3bfecfce9262893add76"
+  },
+  {
+   "n": 3,
+   "date": "2026-11-14",
+   "what": "this page corrected, 1 item; the PDF and its BuildTeX source are still paper version 1.0"
   }
  ],
  "grade": {

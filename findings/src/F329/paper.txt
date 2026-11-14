@@ -167,6 +167,7 @@ Verified: on 9 November 2026 the subject and paper counts of the split, the eigh
 # section Corrections {sec:corrections}
 - 9 November 2026: a dated correction in our {g:findings-ledger}findings ledger{/g} records that the preregistered reproduction check failed at 0.287 against 0.234 within 0.03. The original ledger entry did not state it. The claim stands narrowed, and this paper states the failed check in the abstract, the controls and the limitations.
 - 9 November 2026: first published version.
+- 14 November 2026: A review of the published page found the title and summary wider than the result. The 45 percent comes from held-out tasks with three or more outcomes, part of the 9,960 held-out subjects, and has no interval; 27,039 is the whole sample. The near-tie among six theories was presented as showing the reports cannot identify a theory; the planted check failed, so it shows only that this method could not separate them. The title and summary now say so, and the outcome word changed from held to mixed because a kill condition fired.
 
 # section Reproduction {sec:repro}
 - Data: download the merged meta-study file from the resources page of Abeler, Nosenzo and Raymond (figshare file 16211150), CC BY.

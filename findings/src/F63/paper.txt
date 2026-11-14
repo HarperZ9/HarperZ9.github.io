@@ -162,6 +162,7 @@ Verified: on 9 November 2026 the counts (1,175 sites, 65 species, 177 divisions,
 - 9 November 2026: the findings ledger headline and the run's own summary gave 9 passing and 13 failing verdicts across Tests A to D. The result file and the ledger entry's own list of names give 10 passing and 12 failing. No tree value changes.
 - 9 November 2026: first published version.
 - 14 November 2026: A review of the published page found a count that does not add up. The five groups by number of moderate-drought years hold 3,763 events and the sample is 3,780; the result file lists no group for the other 17, and the text now says so. One chart listed the time-shift comparison under what is ruled out; a p of 0.18 shows no effect and rules none out, and the chart now says that.
+- 14 November 2026: A review of the published page found the title stated as a flat negative. The interval still allows a gain of up to about 9 percent, so the title now says the earlier drought did not detectably toughen trees, as the summary already did.
 
 # section Reproduction {sec:repro}
 - Data: ITRDB standard ring-width chronologies for the contiguous United States; NOAA nClimDiv divisional PDSI; for the rerun, CRU TS 4.10 scPDSI at 0.5 degree.
