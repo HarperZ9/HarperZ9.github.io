@@ -21,8 +21,8 @@ env:
 # tests/ci/run-suite.mjs starts each suite's server, waits until it answers, runs every test of the share and prints a
 # timing table. Each job has a time limit a little above what it took when it was split, and the last job,
 # static-site, passes only when every one of them passed, so one status still stands for the whole site.
-# Budget: the whole run under 30 minutes, the contracts job under 5. First run of the split (14 November 2026): 11.4 minutes
-# for the whole run, contracts 2.1, the longest job 11.1.
+# Budget: the whole run under 30 minutes, the contracts job under 5. Runs of the split on 14 November 2026: 11.2 to 11.4 minutes
+# when every job starts at once (19.9 when jobs waited for a runner), contracts 2.1 to 2.6, the longest job 11.9.
 jobs:
   # Fast checks with no browser suite of their own: the first answer a pull request gets.
   contracts:
@@ -118,7 +118,7 @@ jobs:
   # controls.test.mjs shares its eighteen defects over four worker threads (one thread took 470 s of this step's 480).
   audio:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 13
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v6
