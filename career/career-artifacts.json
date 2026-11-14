@@ -101,24 +101,24 @@
       "sha256": "38d049acb7aa2ab9a2b6b1a6b2ecf0bbca937b62a84512d43304a6b05424e83d"
     },
     {
-      "byte_length": 3225,
-      "extraction_sha256": "0d4f9923a4b79a369b2e61a752fe10c65451154294d6d317a0e57f07cb3897ac",
+      "byte_length": 3134,
+      "extraction_sha256": "623bbb358419eaaff0691ad6055128b21554a0bc731d66090d4be4486a24bdab",
       "format": "pdf",
       "lane_id": "page:cover-letter",
       "mime_type": "application/pdf",
       "page_count": 1,
       "path": "career/Zain-Dana-Harper-Cover-Letter.pdf",
-      "sha256": "35e7e373157cfcd874131ab852e602bb8da8de9789004df6dab6b652f142e549"
+      "sha256": "0c364652c88d60a9322e08b8f1200440c5a5e341923065938c687cbb94741c34"
     },
     {
-      "byte_length": 37823,
-      "extraction_sha256": "303569ed6e99abfb191c73bee7c95fa31756c535b547d81a2a8ddd80287f4583",
+      "byte_length": 37990,
+      "extraction_sha256": "452df829f06cf16262ce94cb999ed24fca7732f5672b6b3b3d5d296c802eea92",
       "format": "docx",
       "lane_id": "page:cover-letter",
       "mime_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
       "page_count": null,
       "path": "career/Zain-Dana-Harper-Cover-Letter.docx",
-      "sha256": "34b6ecce3a9ff02b21ba5950c4c0b703b46ca13866c003bda9dd59cddc79df44"
+      "sha256": "e49d2428567dc43c6d82615859bc69b36b9103470302770b8363fcb47980ed8f"
     },
     {
       "byte_length": 22679,
@@ -194,14 +194,14 @@
       "sha256": "bef67bf724915535fd9edc95acffbe4ee226ff02b01233d16d8a664de3337472"
     },
     {
-      "byte_length": 4548,
-      "extraction_sha256": "7ede35a6897d35bb59d91082c2835f59b9921c07547bd63b93f42e8ec1332e95",
+      "byte_length": 4685,
+      "extraction_sha256": "452df829f06cf16262ce94cb999ed24fca7732f5672b6b3b3d5d296c802eea92",
       "format": "html",
       "lane_id": "page:cover-letter",
       "mime_type": "text/html; charset=utf-8",
       "page_count": null,
       "path": "cover-letter.html",
-      "sha256": "fac734e4990cae7cb97be6e39957274cd92292ef3bfc60d73134cb69ee79f509"
+      "sha256": "a447b513f4f46d148eb70332a9ddd706b4d8049e95120c6183e8a2c7c343ba99"
     },
     {
       "byte_length": 36526,
@@ -214,14 +214,14 @@
       "sha256": "2d9adce78848cba5bab68172bba048ecf122eeb39e7047f4e4ae41acbc9c2649"
     },
     {
-      "byte_length": 4653,
-      "extraction_sha256": "c7ea2855f258dc3f9b0058403a3d48110761615b716be2e25369d85b7af9af70",
+      "byte_length": 4650,
+      "extraction_sha256": "e677bd53bdf7e7e62f91a0eefaeffee04e4d186676290934ca2897ccb8ccab9a",
       "format": "html",
       "lane_id": null,
       "mime_type": "text/html; charset=utf-8",
       "page_count": null,
       "path": "dossier.html",
-      "sha256": "49acce1a3408e4acdbfd555c988dd9bb657c3447e801f760d7b74200599b6771"
+      "sha256": "041d9eeb2de81db55b814b9539d66d582892009eae7049b7f51689f7681bd92b"
     },
     {
       "byte_length": 9083,

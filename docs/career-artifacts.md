@@ -30,12 +30,28 @@ SHA-256, source page, lane, byte length, MIME type, and page count. It also
 binds the generator and requirements-file hashes plus the exact Python and
 dependency versions used for the build.
 
+Build the cover letters after the step above. The letter page (`cover-letter.html`)
+and the general letter for security and AI evaluation roles
+(`career/cover-letter-evaluation.md`) each give one PDF and one DOCX through the
+same writers; `--check` rebuilds them and compares bytes. The template copy with
+`[COMPANY]` and `[ROLE]` placeholders is never built.
+
+```powershell
+python tools/build_cover_letters.py
+python tools/build_cover_letters.py --check
+```
+
+The designed editions under `career/designed/` come from
+`tools/build_career_typeset.py --buildlang PATH`, and `tools/career_pdf_checks.py`
+reads them back. The full CV runs to seven pages since 13 November 2026.
+
 Verify before release:
 
 ```powershell
 python -m pytest `
   tests/test_career_artifact_generation.py `
   tests/test_career_documents.py `
+  tests/test_cover_letters.py `
   tests/test_capability_publication_release.py
 ```
 
