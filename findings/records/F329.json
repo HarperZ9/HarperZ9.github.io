@@ -170,7 +170,8 @@
      "- The pooled report shapes were seen before the lock, so the share forecasts were not blind.",
      "- All tasks are laboratory or online die and coin tasks with 2, 3, 6 or 10 outcomes, first rounds only.",
      "- The designed treatments that separate the models were removed by our filters and not refitted.",
-     "- Scoring was done by our own code and was not blind."
+     "- Scoring was done by our own code and was not blind.",
+     "- The three-part reading is not neutral between models. The fixed-cost model has no partial liars by construction, yet its predicted reports read as 22 percent partial under this reading (Table {ref:tab:shares}). The 29 percent partial and the 45 percent honest read from the real reports carry the same bias, of unknown size."
     ]
    },
    {
@@ -345,6 +346,15 @@
    "after": "The 45 percent comes from held-out tasks with three or more outcomes, part of the 9,960 held-out subjects, and has no interval; 27,039 is the whole sample. The near-tie among six theories was presented as showing the reports cannot identify a theory; the planted check failed, so it shows only that this method could not separate them. The title and summary now say so, and the outcome word changed from held to mixed because a kill condition fired.",
    "reason": "A review of the published page found the title and summary wider than the result.",
    "found_by": "a review of the published pages"
+  },
+  {
+   "id": "x3",
+   "date": "2026-11-14",
+   "target": "document",
+   "type": "wording",
+   "after": "The fixed-cost model allows no partial liars, yet its predicted reports read as 22 percent partial under this reading, so the 29 percent partial and 45 percent honest read from the real reports depend on the method. The limitations and the summary now say so.",
+   "reason": "A review of the published page found that the three-part reading is biased between models.",
+   "found_by": "a review of the published pages"
   }
  ],
  "versions": [
@@ -362,7 +372,7 @@
   {
    "n": 3,
    "date": "2026-11-14",
-   "what": "this page corrected, 1 item; the PDF and its BuildTeX source are still paper version 1.0"
+   "what": "this page corrected, 2 items; the PDF and its BuildTeX source are still paper version 1.0"
   }
  ],
  "grade": {

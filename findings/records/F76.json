@@ -38,7 +38,7 @@
     "title": "What this means for a reader",
     "role": "lead",
     "paragraphs": [
-     "Before you fit any forecasting model, you can compute from the data alone a rough upper limit on how much a linear forecast can help. On real tree-ring and mood series that limit sorted series by how forecastable they turned out to be, though less sharply than it does on idealised copies. Treat it as a ceiling with an error band: useful for deciding which series deserve modelling effort, unreliable as a promise about any one series."
+     "Before you fit any forecasting model, you can compute from the data alone a rough upper limit on how much a linear forecast can help. On 1,128 real tree-ring series that limit sorted series by how forecastable they turned out to be (rank correlation 0.40); on the 106 mood series it did not (0.035), though less sharply than it does on idealised copies. Treat it as a ceiling with an error band: useful for deciding which series deserve modelling effort, unreliable as a promise about any one series."
     ]
    },
    {
@@ -137,7 +137,7 @@
      "![fig:rho width=0.7 alt=Diamonds for real and planted rank correlations against grey bars for the two control ranges](fig-rho.png) Rank correlation between the bound and one-step AR skill. Grey bars are the 5th to 95th percentile of each control, with ticks at the mean; the blue bar is the bootstrap interval of the pooled real value. Real series sit far above the time-shuffled control and below every phase-randomised surrogate set. Drawn from the run's result file.",
      "::table tab:main cols=0.38,0.27,0.35 Main results on 1,236 series. Intervals are 95 percent: bootstrap over series for rho, Wilson for rates.\nQuantity ¦ Value ¦ Interval or comparison\nSpearman rho, bound against AR skill ¦ 0.414 ¦ 0.361 to 0.461\nTime-shuffled control, 95th percentile ¦ -0.023 ¦ p 0.0099, 100 draws\nPhase-surrogate sets, rho ¦ 0.595 mean ¦ 0.568 to 0.628, 39 sets\nViolations, AR forecast ¦ 80 of 1,236, 6.5 percent ¦ 5.2 to 8.0\nViolations, analogue forecast ¦ 79 of 1,236, 6.4 percent ¦ 5.2 to 7.9\nMedian bound ¦ 0.203 ¦ \nMedian AR skill ¦ 0.129 ¦ \nMedian excess, skill minus bound ¦ -0.063 ¦ \nAR skill above the point bound ¦ 36.4 percent ¦ planted AR: 45.7 percent\n::end",
      "{c3}Real series tracked the bound less tightly than copies with the same spectra: rho 0.414 against 0.568 to 0.628 on 39 phase-randomised surrogate sets.{/c3} The real value sits below every one of the 39 sets. Gaussian stationary series with the same spectra let the bound rank skill better than the real series do.",
-     "{c2}80 of 1,236 series (6.5 percent, 5.2 to 8.0) beat the bound beyond estimation error, under the preregistered 10 percent kill.{/c2} The rate sits above the 5 percent expected by chance (binomial p 0.013, which passed the correction), yet no single series survives a Benjamini-Hochberg correction across series: 0 of 1,236. Figure {ref:fig:viol} shows the rates. Without the surrogate rule the bound would look much weaker as a ceiling: AR skill exceeded the point bound in 36.4 percent of real series and in 45.7 percent of planted Gaussian ones, where the bound is true by construction.",
+     "{c2}80 of 1,236 series (6.5 percent, 5.2 to 8.0) beat the bound beyond estimation error, under the preregistered 10 percent kill.{/c2} The rate sits above the 5 percent expected by chance (binomial p 0.013, which passed the correction), yet no single series survives a Benjamini-Hochberg correction across series: 0 of 1,236. With 39 surrogates the smallest p value one series can reach is 0.025, far above what that correction needs across 1,236 series, so no series could have passed and this line rules nothing out. Figure {ref:fig:viol} shows the rates. Without the surrogate rule the bound would look much weaker as a ceiling: AR skill exceeded the point bound in 36.4 percent of real series and in 45.7 percent of planted Gaussian ones, where the bound is true by construction.",
      "![fig:viol width=0.85 alt=Diamonds with interval bars for violation rates near five to seven percent, with lines at five and ten percent](fig-violations.png) Share of series whose excess skill beats at least 38 of 39 of their own surrogates, with Wilson intervals where the result file gives one. The dotted line is the 5 percent chance rate and the dashed line the 10 percent kill.",
      "{c4}A nonlinear analogue forecaster beat the bound in 6.4 percent of series, the same as its false rate of 6.3 percent on planted Gaussian series, so no predictability beyond the linear bound turned up.{/c4} Its median skill was 0.044 below the linear model's. The secondary verdict for nonlinear excess failed.",
      "Table {ref:tab:groups} breaks the result down by kind of series.",
@@ -425,6 +425,15 @@
    "after": "Added to the results here.",
    "reason": "A follow-up round tested drift-aware versions of the bound on a split of the same series; none beat the original.",
    "found_by": "a later study of ours"
+  },
+  {
+   "id": "x3",
+   "date": "2026-11-14",
+   "target": "document",
+   "type": "scope",
+   "after": "No single series survived the correction across series, 0 of 1,236; with 39 surrogates per series the smallest possible p value is 0.025, so none could have. The results now say so. The reader section said the bound sorted tree-ring and mood series; for mood the rank correlation was 0.035 and failed its correction, so the sentence now names tree rings only.",
+   "reason": "A review of the published page found one line that reads as a result and could not have come out otherwise.",
+   "found_by": "a review of the published pages"
   }
  ],
  "versions": [
@@ -443,6 +452,11 @@
    "date": "2026-11-09",
    "what": "paper version 1.0, first published",
    "hash": "03bf9be3b777617402e4219cc832a1f1b284ba4e80c3ca80671bed1a6ece48b5"
+  },
+  {
+   "n": 4,
+   "date": "2026-11-14",
+   "what": "this page corrected, 1 item; the PDF and its BuildTeX source are still paper version 1.0"
   }
  ],
  "grade": {

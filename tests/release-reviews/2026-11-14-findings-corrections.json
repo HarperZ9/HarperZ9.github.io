@@ -1,0 +1,8 @@
+{
+  "date": "2026-11-14",
+  "note": "Findings correction pass: seven finding titles changed and the Findings listing joined the Writing hub, so the route registry and the site index were rendered again.",
+  "paths": {
+    "site-index.html": "17b2a4bc347bc59eadea3f71d2aad8c72141569753abe618a1321355f00d88a0",
+    "system/routes.js": "6df83db8ba2831942e089a97eb77f8575e2f2a2aea312935c2aba6f4a0309875"
+  }
+}

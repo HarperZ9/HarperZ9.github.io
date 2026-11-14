@@ -162,7 +162,8 @@
      "- One tokenizer was used on the research notes, with no synonym handling; tags on the Stack Exchange sites are chosen by users and moderators and merge synonyms by their own rules.",
      "- The study does not show that Adamic-Adar is the better method. It was not preregistered.",
      "- There was no planted check, so the study has no measure of how often the instrument misses a real effect.",
-     "- Scoring was done by our own code and was not blind."
+     "- Scoring was done by our own code and was not blind.",
+     "- For Skeptics the point difference, -0.037, lies outside its own bootstrap interval (-0.077 to -0.042), and the other two differences sit near the upper ends of theirs. That suggests the document bootstrap leans toward larger gaps, so its intervals should not be read as intervals for the differences reported here. The sign of the difference is the same in every resample."
     ]
    },
    {
@@ -402,6 +403,15 @@
    "after": "It is a higher point value with no interval, and this paper says so.",
    "reason": "Our earlier write-up called Adamic-Adar's 0.122 on Biology a win over popularity.",
    "found_by": "the publication pass"
+  },
+  {
+   "id": "x2",
+   "date": "2026-11-14",
+   "target": "document",
+   "type": "wording",
+   "after": "The Skeptics difference is -0.037 and its bootstrap interval is -0.077 to -0.042; the limitations now say what that implies for the three intervals. The line on where the claim stands now says that the claim failed its own test while the preregistered kill condition did not fire.",
+   "reason": "A review of the published page found that one reported difference lies outside its own interval.",
+   "found_by": "a review of the published pages"
   }
  ],
  "versions": [
@@ -415,6 +425,11 @@
    "date": "2026-11-09",
    "what": "paper version 1.0, first published",
    "hash": "e9660d3b34f12f9b01b9062f25a9c5de0b2af0a36d80706e78d6ba2127bd07e9"
+  },
+  {
+   "n": 3,
+   "date": "2026-11-14",
+   "what": "this page corrected, 1 item; the PDF and its BuildTeX source are still paper version 1.0"
   }
  ],
  "grade": {

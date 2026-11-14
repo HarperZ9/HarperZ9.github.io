@@ -152,7 +152,8 @@
      "- The catalogue's multi-planet entries are a selected set, and the sample is 122 systems, short of the 150 we forecast.",
      "- The 200-draw controls for the two richer forms give coarse p values.",
      "- The finding says nothing about the physics that sets spacing.",
-     "- Scoring was done by our own code and was not blind."
+     "- Scoring was done by our own code and was not blind.",
+     "- The order-shuffle test cannot be passed by an exact geometric law. A system whose log gaps are all equal is unchanged by shuffling them, so the law-like verdict tests only whether unequal gaps come in an ordered sequence. An exact Titius-Bode spacing would show up here as regularity in gap sizes, which the pooled-gap control did detect."
     ]
    },
    {
@@ -375,6 +376,15 @@
    "after": "The results said the real score sits inside the order-shuffle range for all three forms; the Blagg-Richardson style score, -0.141, lies below its shuffle range of -0.134 to -0.116, and the text now says so. A chart showed that form's p value as 1.00; the file gives 0.995, as the text does. The line on where the claim stands was reworded so that it reads as the rival reading losing, which is what the verdicts say.",
    "reason": "A review of the published page found one sentence the result file contradicts and one rounded label.",
    "found_by": "a review of the published pages"
+  },
+  {
+   "id": "x3",
+   "date": "2026-11-14",
+   "target": "document",
+   "type": "scope",
+   "after": "Shuffling equal gaps changes nothing, so the order-shuffle test cannot be passed by an exact geometric spacing law; it tests only whether unequal gaps come in order. The limitations now say so.",
+   "reason": "A review of the published page found a limit of the decisive test that the page did not state.",
+   "found_by": "a review of the published pages"
   }
  ],
  "versions": [
@@ -392,7 +402,7 @@
   {
    "n": 3,
    "date": "2026-11-14",
-   "what": "this page corrected, 1 item; the PDF and its BuildTeX source are still paper version 1.0"
+   "what": "this page corrected, 2 items; the PDF and its BuildTeX source are still paper version 1.0"
   }
  ],
  "grade": {

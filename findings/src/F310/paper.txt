@@ -123,6 +123,7 @@ This bears on the prediction debate between Bovaird and Lineweaver {cite:bovaird
 - The 200-draw controls for the two richer forms give coarse p values.
 - The finding says nothing about the physics that sets spacing.
 - Scoring was done by our own code and was not blind.
+- The order-shuffle test cannot be passed by an exact geometric law. A system whose log gaps are all equal is unchanged by shuffling them, so the law-like verdict tests only whether unequal gaps come in an ordered sequence. An exact Titius-Bode spacing would show up here as regularity in gap sizes, which the pooled-gap control did detect.
 
 # section Verified {sec:verified}
 Verified: on 9 November 2026 the counts (122 systems, 543 planets), the three real scores, every control mean and percentile, the p values, the draw counts, the planted score, the two leave-one-out errors and their ratio, and the Solar System values were re-read from the run's result file. They match the {g:findings-ledger}findings ledger{/g}, our append-only, dated list of every recorded result, where corrections enter as new lines, old entries are never rewritten and failures stand beside successes. The preregistration's SHA-256 matches the hash recorded in the result file. Both figures were drawn by a script that reads only that result file. The study was not re-run for this paper. The literature in the introduction was found by searches run on 9 November 2026 and read at the level of abstracts and publisher pages; the full texts of the cited papers were not read.
@@ -131,6 +132,7 @@ Verified: on 9 November 2026 the counts (122 systems, 543 planets), the three re
 - 31 October 2026: a review of our ledger noted that the three forms were written from memory. This paper states it in the methods and the limitations.
 - 9 November 2026: first published version.
 - 14 November 2026: A review of the published page found one sentence the result file contradicts and one rounded label. The results said the real score sits inside the order-shuffle range for all three forms; the Blagg-Richardson style score, -0.141, lies below its shuffle range of -0.134 to -0.116, and the text now says so. A chart showed that form's p value as 1.00; the file gives 0.995, as the text does. The line on where the claim stands was reworded so that it reads as the rival reading losing, which is what the verdicts say.
+- 14 November 2026: A review of the published page found a limit of the decisive test that the page did not state. Shuffling equal gaps changes nothing, so the order-shuffle test cannot be passed by an exact geometric spacing law; it tests only whether unequal gaps come in order. The limitations now say so.
 
 # section Reproduction {sec:repro}
 - Data: query the NASA Exoplanet Archive Planetary Systems Composite Parameters table (pscomppars) for systems with four or more planets with orbital periods and a controversy flag of zero.

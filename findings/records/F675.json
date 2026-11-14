@@ -45,7 +45,7 @@
     "title": "Abstract",
     "role": "argument",
     "paragraphs": [
-     "Tree rings and summer temperature give a causal-direction test with a known answer: warmth shapes the ring, and the ring has no meaningful effect on the weather. An earlier round on 135 European sites found that a site-by-site transfer entropy estimator could not tell the two directions apart. In this second round we read lagged Granger tests across a panel of 161 held-out ring-width chronologies at or above 55 degrees north, under a plan hash-locked before any ring series was set against climate. {c1}On the high-pass series the panel direction index was +1.206 (95% interval +0.871 to +1.591), against a far-pairing 95th percentile of +0.213.{/c1} {c2}Reversing time flipped the index to -0.894.{/c2} {c5}Rings predicted the next summer at 6.8 percent of sites, inside the no-coupling world's 7.8 percent.{/c5} {c3}Two binding first-difference checks failed by less than 0.02: the planted reverse world was called correctly at 58.4 percent of sites against a bar of 60 percent, and the shared-trend world's reverse rate was 0.117 against a limit of 0.10.{/c3} The kill condition written before the run therefore fired, and the instrument earned no standing in this round. The real-data asymmetry is reported as an exploratory reading."
+     "Tree rings and summer temperature give a causal-direction test with a known answer: warmth shapes the ring, and the ring has no meaningful effect on the weather. An earlier round on 135 European sites found that a site-by-site transfer entropy estimator could not tell the two directions apart. In this second round we read lagged Granger tests across a panel of 161 held-out ring-width chronologies at or above 55 degrees north, under a plan hash-locked before any ring series was set against climate. {c1}On the high-pass series the panel direction index was +1.206 (95% interval +0.871 to +1.591), against a far-pairing 95th percentile of +0.213.{/c1} {c2}Reversing time flipped the index to -0.894.{/c2} {c5}Rings predicted the next summer at 6.8 percent of sites, below the no-coupling world's 7.8 percent and above the 95th percentile of the far-site pairing control, 6.2 percent.{/c5} {c3}Two binding first-difference checks failed by less than 0.02: the planted reverse world was called correctly at 58.4 percent of sites against a bar of 60 percent, and the shared-trend world's reverse rate was 0.117 against a limit of 0.10.{/c3} The kill condition written before the run therefore fired, and the instrument earned no standing in this round. The real-data asymmetry is reported as an exploratory reading."
     ]
    },
    {
@@ -138,7 +138,7 @@
     "role": "argument",
     "paragraphs": [
      "Table {ref:tab:arms} gives the panel index and both detection rates in every world, and Figure {ref:fig:index} draws the index with its interval on the two binding arms. Synthetic worlds are averaged over five draws per site.",
-     "{c1}On the high-pass series the panel direction index was +1.206 (95% interval +0.871 to +1.591), against a far-pairing 95th percentile of +0.213.{/c1} The pairing mean was +0.047 and its 5th percentile -0.099, and no pairing reached the real value, so p is 0.005, the floor at 199 pairings. First differences gave +1.107 against a pairing 95th percentile of +0.186 (p 0.005), and the raw series +1.242 (+0.873 to +1.655). Climate predicted next year's ring at 39.8 percent of sites. {c5}Rings predicted the next summer at 6.8 percent of sites, inside the no-coupling world's 7.8 percent.{/c5} The mean same-year correlation on the high-pass arm was 0.160, positive at 87.0 percent of sites.",
+     "{c1}On the high-pass series the panel direction index was +1.206 (95% interval +0.871 to +1.591), against a far-pairing 95th percentile of +0.213.{/c1} The pairing mean was +0.047 and its 5th percentile -0.099, and no pairing reached the real value, so p is 0.005, the floor at 199 pairings. First differences gave +1.107 against a pairing 95th percentile of +0.186 (p 0.005), and the raw series +1.242 (+0.873 to +1.655). Climate predicted next year's ring at 39.8 percent of sites. {c5}Rings predicted the next summer at 6.8 percent of sites, below the no-coupling world's 7.8 percent and above the 95th percentile of the far-site pairing control, 6.2 percent.{/c5} The mean same-year correlation on the high-pass arm was 0.160, positive at 87.0 percent of sites.",
      "::table tab:arms cols=0.27,0.23,0.13,0.23,0.14 Panel direction index with block-bootstrap 95% interval, and forward and reverse detection rates, 161 sites.\nWorld ¦ High-pass index ¦ Rates ¦ First-difference index ¦ Rates\nReal data ¦ +1.206 (+0.871 to +1.591) ¦ 0.398, 0.068 ¦ +1.107 (+0.729 to +1.496) ¦ 0.360, 0.062\nReal, time reversed ¦ -0.894 (-1.326 to -0.541) ¦ 0.137, 0.391 ¦ -1.092 (-1.528 to -0.720) ¦ 0.081, 0.385\nNo coupling ¦ -0.011 (-0.095 to +0.073) ¦ 0.055, 0.078 ¦ -0.055 (-0.164 to +0.048) ¦ 0.066, 0.072\nPlanted forward, real strength ¦ +0.180 (+0.073 to +0.296) ¦ 0.104, 0.052 ¦ +0.155 (+0.045 to +0.285) ¦ 0.123, 0.096\nPlanted forward, strong ¦ +1.274 (+1.079 to +1.465) ¦ 0.402, 0.061 ¦ +0.789 (+0.512 to +1.088) ¦ 0.404, 0.176\nPlanted reverse, real strength ¦ -0.429 (-0.556 to -0.303) ¦ 0.058, 0.154 ¦ -0.157 (-0.279 to -0.042) ¦ 0.073, 0.123\nPlanted reverse, strong ¦ -2.230 (-2.458 to -1.978) ¦ 0.086, 0.740 ¦ -1.448 (-1.662 to -1.218) ¦ 0.096, 0.507\nCommon driver ¦ -0.090 (-0.193 to +0.023) ¦ 0.061, 0.067 ¦ -0.082 (-0.181 to +0.019) ¦ 0.075, 0.086\nShared trend ¦ -0.317 (-0.426 to -0.199) ¦ 0.135, 0.221 ¦ -0.070 (-0.171 to +0.038) ¦ 0.092, 0.117\nPrecipitation, descriptive ¦ +0.344 (+0.059 to +0.664) ¦ 0.174, 0.043 ¦ +0.071 (-0.182 to +0.333) ¦ 0.143, 0.081\n::end",
      "![fig:index width=0.98 alt=Diamonds with interval bars for nine worlds on two arms, the real data far to the right of the dashed pairing lines and the time-reversed data far to the left](fig-index.png) Panel direction index with block-bootstrap 95% intervals, high-pass (navy) and first differences (ochre). Dashed lines are the 95th percentiles of 199 far-site pairings; the dotted line is zero. Drawn from the run's result file.",
      "{c2}Reversing time flipped the index to -0.894.{/c2} On first differences it flipped to -1.092 and on the raw series to -1.041. The shared trend pushed the high-pass index negative (-0.317) and the raw index further (-0.744, with rates 0.335 and 0.594), and the common driver gave -0.090 with an interval across zero. Neither confound produced a positive index like the real one.",
@@ -231,7 +231,7 @@
   },
   {
    "id": "c5",
-   "text": "Rings predicted the next summer at 6.8 percent of sites, inside the no-coupling world's 7.8 percent.",
+   "text": "Rings predicted the next summer at 6.8 percent of sites, below the no-coupling world's 7.8 percent and above the 95th percentile of the far-site pairing control, 6.2 percent.",
    "section": "abstract",
    "basis": "observed",
    "refs": [],
@@ -293,7 +293,7 @@
    "id": "e5",
    "kind": "number",
    "label": "The numbers in claim 5",
-   "value": "6.8; 7.8",
+   "value": "6.8; 7.8; 95; 6.2",
    "check": {
     "by": "re-read from the run's result file in the paper's Verified pass",
     "date": "2026-11-09",
@@ -453,6 +453,15 @@
    "after": "Stated in the results report; the preregistration is unchanged.",
    "reason": "The preregistration gave a smoke-test range of -0.31 to +0.12 for the planted forward index at real strength, which mixed high-pass and first-difference rows; the high-pass range alone is -0.14 to +0.12.",
    "found_by": "the study itself, before publication"
+  },
+  {
+   "id": "x2",
+   "date": "2026-11-14",
+   "target": "document",
+   "type": "scope",
+   "after": "Rings predicted the next summer at 6.8 percent of sites; that is below the no-coupling world's 7.8 percent and above the far-site pairing control's 95th percentile of 6.2 percent, and the text now gives both.",
+   "reason": "A review of the published page found the reverse rate compared with one control only.",
+   "found_by": "a review of the published pages"
   }
  ],
  "versions": [
@@ -466,6 +475,11 @@
    "date": "2026-11-09",
    "what": "paper version 1.0, first published",
    "hash": "34e06fece9f50b48b68f18d89c329618bcc8beff3229699771d8d63bd8fe5b3b"
+  },
+  {
+   "n": 3,
+   "date": "2026-11-14",
+   "what": "this page corrected, 1 item; the PDF and its BuildTeX source are still paper version 1.0"
   }
  ],
  "grade": {

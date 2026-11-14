@@ -141,6 +141,7 @@ Krenn and Zeilinger {cite:krenn2020} and Krenn and colleagues {cite:krenn2023} p
 - The study does not show that Adamic-Adar is the better method. It was not preregistered.
 - There was no planted check, so the study has no measure of how often the instrument misses a real effect.
 - Scoring was done by our own code and was not blind.
+- For Skeptics the point difference, -0.037, lies outside its own bootstrap interval (-0.077 to -0.042), and the other two differences sit near the upper ends of theirs. That suggests the document bootstrap leans toward larger gaps, so its intervals should not be read as intervals for the differences reported here. The sign of the difference is the same in every resample.
 
 # section Verified {sec:verified}
 Verified: on 9 November 2026 every precision value, base rate, fold count, bootstrap interval, area under the curve, control mean, percentile and p value in this paper was re-read from the run's result file. The headline values match the findings ledger. The preregistration's SHA-256 was recomputed from the locked file and matches the hash recorded in the result file. The question counts for the two Stack Exchange sites were counted from the extracted question file the run read. Both figures were drawn by a script that reads only the result file. The study was not re-run for this paper. The literature in the introduction was found by searches run on 9 November 2026 and read at the level of abstracts and publisher pages; the full texts of the cited papers were not read.
@@ -148,6 +149,7 @@ Verified: on 9 November 2026 every precision value, base rate, fold count, boots
 # section Corrections {sec:corrections}
 - 9 November 2026: our earlier write-up called Adamic-Adar's 0.122 on Biology a win over popularity. It is a higher point value with no interval, and this paper says so.
 - 9 November 2026: first published version.
+- 14 November 2026: A review of the published page found that one reported difference lies outside its own interval. The Skeptics difference is -0.037 and its bootstrap interval is -0.077 to -0.042; the limitations now say what that implies for the three intervals. The line on where the claim stands now says that the claim failed its own test while the preregistered kill condition did not fire.
 
 # section Reproduction {sec:repro}
 - Data: the public Stack Exchange data dump for the Biology and Skeptics sites (CC BY-SA). From each site's posts file keep question posts only, with their id, creation date and tags.

@@ -74,7 +74,7 @@ A second program, written apart and sharing no code with the first, repeats the 
 # section Controls and planted checks {sec:controls}
 The {g:planted-check}planted check{/g} ran in the same job, four synthetic sites per real site, on the panel's own series lengths. A target with year-to-year persistence of 0.3 was paired with a channel at correlation 0.6, which carries 0.322 bits. {c6}The planted 0.322 bits read 0.331 by the Gaussian value, 0.308 by KSG and 0.269 on held-out years.{/c6} The held-out reading falls short of the truth, as a lower bound should, and inside the preregistered range. A second independent channel worth 0.222 bits more added 0.201 on held-out years. A white-noise channel scored -0.050 and a near-copy of the first channel added -0.012, so neither was mistaken for signal. Every anchor rule held.
 
-On the real data the best test scored 0.095 bits, sunshine from maximum latewood density, against control 95th percentiles of -0.014 (phase), -0.017 (shuffle) and -0.017 (white noise), each with p 0.001. Of the 15 channel and target tests, 14 survived correction on held-out bits and 9 on KSG. The kill condition did not fire.
+On the real data the best test scored 0.095 bits, sunshine from maximum latewood density, against control 95th percentiles of -0.014 (phase), -0.017 (shuffle) and -0.017 (white noise), each with p 0.001. Of the 15 channel and target tests, 14 survived correction on held-out bits and 9 on KSG. Six of those 14 have negative held-out bits (the lowest is earlywood width for sunshine at -0.043): they score above the controls and still forecast worse than the held-out mean, so surviving the correction is not the same as carrying signal. The kill condition did not fire.
 
 # section Results {sec:results}
 ## One channel at a time
@@ -150,6 +150,7 @@ Verified: on 9 November 2026 every Alpine verdict, the planted-signal readings, 
 - 30 October 2026: two deviations from the preregistration, both before any outcome was seen, recorded in the design section above.
 - 9 November 2026: first published version.
 - 14 November 2026: A review of the published page found the planted-check rule stated in two units. The first chart gave the rule as 12 percent below to 2 percent above the truth; the locked rule and the result file use bits, 0.12 below to 0.02 above, and the reading was 0.053 bits low (0.269 against 0.322). The chart now uses bits. The page also said the plan hash was not recorded while printing it; that was a fault in how the page read the line, and the hash now shows in both places.
+- 14 November 2026: A review of the published page found that the count of 14 surviving tests can be misread. In the result file six of the 14 have negative held-out bits, so they beat the controls and still forecast worse than the held-out mean; the results now say so beside the count.
 
 # section Reproduction {sec:repro}
 - Data: ITRDB European sites with ring width, earlywood and latewood width and minimum and maximum density gap-free from 1901; ISONET oxygen isotope chronologies; CRU TS 4.10 temperature, precipitation and cloud cover at each site's nearest land cell.
