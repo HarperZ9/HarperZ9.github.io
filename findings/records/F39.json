@@ -24,7 +24,7 @@
     "result.json"
    ]
   },
-  "objection": "Tail is a proxy for instrumentation and production style, since timbre was not held; DEAM is short clips with crowd perceived-emotion ratings; the mirror audio provenance.",
+  "objection": "Tail is a proxy for instrumentation and production style, since timbre was not held; DEAM is short clips with crowd perceived-emotion ratings. The register lists a third point, on where the audio copies came from, and its text is cut short there.",
   "objection_source": "the register's reviewer attack",
   "would_change": "Replicate on a second rated corpus, add a blind listening test with tail manipulated at fixed instrumentation, and measure felt calm",
   "sections": [
@@ -135,8 +135,8 @@
      "{c3}We forecast that the same sounds would be rated more pleasant; they were rated less pleasant, -0.375 (-0.455 to -0.280), and -0.227 with arousal also held.{/c3} P3 failed on all three of its rules. This is an {g:honest-null}honest null{/g} of the forecast, reported with the same weight as the passes: arousal and valence correlate 0.54 on the test clips, so part of the valence drop rides on arousal, and the rest (-0.227, interval -0.312 to -0.123) does not.",
      "## Post hoc checks",
      "The following were run after the verdicts and carry no verdict. In busy music the next onset cuts each tail short, so the tail could stand in for note rate. Note rate has a median of 4.9 events per second and correlates -0.17 with the log tail. With note rate added to the controls, P1 is -0.370 (-0.444 to -0.284) and the tail alone -0.285; with note rate, tempo and entropy all added, P1 is -0.324.",
-     "{c5}Inside each of the 11 genres, on all 1,744 clips, the calm index correlates negatively with arousal, from -0.25 in hip-hop to -0.62 in international music.{/c5} Figure {ref:fig:genres} shows each genre.",
-     "![fig:genres width=0.95 alt=Horizontal bars for eleven genres, all negative, from about -0.25 for hip-hop to about -0.62 for international](fig-genres.png) Partial correlation of the calm index with arousal inside each genre, all 1,744 clips, loudness and year held. Post hoc. Drawn from the post hoc file.",
+     "{c5}Inside each of the 11 genres, on the 1,743 clips they hold (one clip tagged Other is left out), the calm index correlates negatively with arousal, from -0.25 in hip-hop to -0.62 in international music.{/c5} Figure {ref:fig:genres} shows each genre.",
+     "![fig:genres width=0.95 alt=Horizontal bars for eleven genres, all negative, from about -0.25 for hip-hop to about -0.62 for international](fig-genres.png) Partial correlation of the calm index with arousal inside each genre, the 1,743 clips in the 11 genres, loudness and year held. Post hoc. Drawn from the post hoc file.",
      "On the whole sample, P1 is -0.414 and the valence correlation -0.395. Among exploratory measures on the test clips, the failed reverb-size measure reads in the same direction as the tail (partial correlation with arousal -0.237), and so does the envelope's autocorrelation decay (-0.198); neither can be read as room reverberation. Rise time shows no relation (0.024), which is a null of a weak instrument and says nothing about attack itself."
     ]
    },
@@ -220,7 +220,7 @@
   },
   {
    "id": "c5",
-   "text": "Inside each of the 11 genres, on all 1,744 clips, the calm index correlates negatively with arousal, from -0.25 in hip-hop to -0.62 in international music.",
+   "text": "Inside each of the 11 genres, on the 1,743 clips they hold (one clip tagged Other is left out), the calm index correlates negatively with arousal, from -0.25 in hip-hop to -0.62 in international music.",
    "section": "results",
    "basis": "observed",
    "refs": [],
@@ -282,7 +282,7 @@
    "id": "e5",
    "kind": "number",
    "label": "The numbers in claim 5",
-   "value": "11; 1,744; -0.25; -0.62",
+   "value": "11; 1,743; -0.25; -0.62",
    "check": {
     "by": "re-read from the run's result file in the paper's Verified pass",
     "date": "2026-11-09",
@@ -423,6 +423,15 @@
    "after": "The two questionnaire tests in the same preregistration are left out because they were not blind.",
    "reason": "Dated in the paper's Corrections section; found by the publication pass.",
    "found_by": "the publication pass"
+  },
+  {
+   "id": "x4",
+   "date": "2026-11-14",
+   "target": "document",
+   "type": "scope",
+   "after": "The per-genre result was described as covering all 1,744 clips; the 11 genres hold 1,743, and the one clip tagged Other is left out. The text and the figure caption now say 1,743.",
+   "reason": "A review of the published page found a clip count that did not match the post hoc file.",
+   "found_by": "a review of the published pages"
   }
  ],
  "versions": [
@@ -436,6 +445,11 @@
    "date": "2026-11-09",
    "what": "paper version 1.0, first published",
    "hash": "ba17e291945c97d425d0fbffd57907c9c17aa903d5992d47fc3c691a53dcf880"
+  },
+  {
+   "n": 3,
+   "date": "2026-11-14",
+   "what": "this page corrected, 1 item; the PDF and its BuildTeX source are still paper version 1.0"
   }
  ],
  "grade": {

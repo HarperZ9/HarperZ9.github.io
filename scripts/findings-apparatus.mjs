@@ -22,7 +22,7 @@ export function downloads(rec, where) {
   }
   return `<h3 id="downloads">Downloads</h3><ul class="fd-files">${files.map(([f, w]) => `<li><a href="/${f}">${w}</a> <span class="soft">${path.basename(f)}, ${size(f)}</span></li>`).join("")}
 <li><a href="/findings/papers/doc.bld">BuildLang doc module</a> <span class="soft">doc.bld, ${size("findings/papers/doc.bld")}, imported by the source</span></li></ul>
-<p class="soft">The PDF is typeset by BuildTeX from ${id}.bld, which is written from the same source as this page. The receipt records the source's SHA-256 and the PDF's (${esc(rec.versions[rec.versions.length - 1].hash.slice(0, 12))}), so anyone can rebuild it and compare. The copy here has its hidden author field blanked, as the site does for every file it publishes; blank the same field in a rebuild before comparing. The name stays on the first page.</p>`;
+<p class="soft">The PDF is typeset by BuildTeX from ${id}.bld, which is written from the same source as this page. The receipt records the source's SHA-256 and the PDF's (${esc(rec.versions.findLast((v) => v.hash).hash.slice(0, 12))}), so anyone can rebuild it and compare. The copy here has its hidden author field blanked, as the site does for every file it publishes; blank the same field in a rebuild before comparing. The name stays on the first page.</p>`;
 }
 
 export function recordNumbers(rec) {

@@ -427,6 +427,11 @@
     "from": "register scorer.who"
    },
    {
+    "domain": "preregistration",
+    "text": "Preregistered and hash-locked before the run (sha256 5f73b365).",
+    "from": "paper Reproduction"
+   },
+   {
     "domain": "open data",
     "text": "Public data.",
     "from": "register data_licence"
@@ -456,6 +461,10 @@
     "url": ""
    }
   ],
+  "prereg": {
+   "hash": "5f73b365e8e533bfdea8b7f08f764055eeb682817dcfd93a0b599b1e086fe228",
+   "plan": "not recorded"
+  },
   "cost": "no energy or time measurement was recorded for this run.",
   "steps": [
    "Network data: download the Beiler, Simard and Durall 2015 network and tree tables from Dryad. Build one tree by genet network per plot, both Rhizopogon species combined.",

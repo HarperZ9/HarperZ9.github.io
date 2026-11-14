@@ -131,7 +131,7 @@
      "Figure {ref:fig:nulls} sets the moderate-drought estimate against the three null ranges. It sits inside the time-shift range in both runs and above the label-permutation range (95th percentile 0.020, p 0.004). The label permutation keeps each site's drought timing, so beating it says less, and the preregistered rule used the time shift.",
      "![fig:nulls width=0.98 alt=Grey bars for three null ranges with the real estimate marked as a diamond on each](fig-nulls.png) The moderate prior drought estimate (diamond) against the 5th to 95th percentile range (bar) and mean (tick) of each null. Ochre marks an estimate inside the range, navy one above it.",
      "The components explain the null in resilience. {c2}A severe prior drought lowered growth in the drought year (resistance -0.087, p 0.006) and raised recovery after it by +0.096, so resilience barely moved.{/c2} By eq. {ref:eq:lloret}, a lower drought-year ring raises recovery by the same factor it lowers resistance, so the recovery gain is partly arithmetic and is not evidence of conditioning.",
-     "{c4}The placebo window was clean: drought after the event gave +0.006 (p 0.86).{/c4} No rise-then-fall shape appeared with dose. The two lines fell and then rose, neither significantly (z -0.89 and +0.81), and the statistic of -0.89 sat below its shuffle 95th percentile of 1.26. The mean residual resilience by number of moderate-drought years in the window was -0.007 for none (1,705 events), +0.005 for one (1,268), +0.008 for two (643), -0.019 for three (103) and +0.059 for four (44).",
+     "{c4}The placebo window was clean: drought after the event gave +0.006 (p 0.86).{/c4} No rise-then-fall shape appeared with dose. The two lines fell and then rose, neither significantly (z -0.89 and +0.81), and the statistic of -0.89 sat below its shuffle 95th percentile of 1.26. The mean residual resilience by number of moderate-drought years in the window was -0.007 for none (1,705 events), +0.005 for one (1,268), +0.008 for two (643), -0.019 for three (103) and +0.059 for four (44). These five groups hold 3,763 of the 3,780 events; the result file lists no group for the other 17.",
      "With species and year effects in place of site effects, the moderate prior drought gave +0.037 (0.000 to +0.074, p 0.047), and severe +0.035 (p 0.089). The two did not differ (+0.002), so under that model any prior drought went with slightly higher resilience, with no edge for a moderate one. The rerun tested that sign.",
      "## The rerun on gridded drought",
      "The rerun, preregistered and locked on 30 October 2026 at 03:20 UTC, took drought from the nearest 0.5 degree cell of the CRU self-calibrating PDSI. Its {g:kill-condition}kill condition{/g} fires when the 95% interval of the species-effects estimate includes 0 or the estimate sits at or below the time-shift 95th percentile. Table {ref:tab:rerun} gives its estimates.",
@@ -295,7 +295,7 @@
    "id": "e7",
    "kind": "number",
    "label": "Forecast against outcome",
-   "value": "steeling forecast refuted (A1 FAIL)",
+   "value": "the steeling test failed (A1 FAIL), as the forecast of a weak or null effect expected",
    "check": {
     "by": "the register's evidence fields",
     "result": "not_checked",
@@ -447,6 +447,15 @@
    "after": "No tree value changes.",
    "reason": "The findings ledger headline and the run's own summary gave 9 passing and 13 failing verdicts across Tests A to D. The result file and the ledger entry's own list of names give 10 passing and 12 failing.",
    "found_by": "the publication pass"
+  },
+  {
+   "id": "x3",
+   "date": "2026-11-14",
+   "target": "document",
+   "type": "wording",
+   "after": "The five groups by number of moderate-drought years hold 3,763 events and the sample is 3,780; the result file lists no group for the other 17, and the text now says so. One chart listed the time-shift comparison under what is ruled out; a p of 0.18 shows no effect and rules none out, and the chart now says that.",
+   "reason": "A review of the published page found a count that does not add up.",
+   "found_by": "a review of the published pages"
   }
  ],
  "versions": [
@@ -465,6 +474,11 @@
    "date": "2026-11-09",
    "what": "paper version 1.0, first published",
    "hash": "0d2acf8b4815746b102fb6ea83c828e3ec40528f132990c3ec45b7fee13a432f"
+  },
+  {
+   "n": 4,
+   "date": "2026-11-14",
+   "what": "this page corrected, 1 item; the PDF and its BuildTeX source are still paper version 1.0"
   }
  ],
  "grade": {

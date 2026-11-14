@@ -323,7 +323,7 @@
     "result"
    ],
    "title": "How far each row of the table sits from the secant law and from his rule.",
-   "takeaway": "Up to 60 degrees both gaps stay under 1 percent. From 65 degrees the gap to the secant grows to 26.7 percent at 85 degrees, and the gap to his rule stays under 0.99 percent.",
+   "takeaway": "Up to 60 degrees both gaps stay under 1 percent. From 65 degrees the gap to the secant grows to 26.7 percent at 85 degrees, and the gap to his rule stays under 1 percent (0.99 at its largest).",
    "units": "size of the gap between Newton's tabled thickness and each law, as a percent of the law's value; lower is a closer match",
    "n": "13 rows of Newton's table, air angles 0 to 90 degrees; the secant has no finite value at 90",
    "interval": null,
@@ -650,7 +650,7 @@
     {
      "label": "Control, shuffled rows: rule must fail in every shuffle",
      "left": "7 rows or more",
-     "right": "1 row or more",
+     "right": "3 rows or more",
      "holds": true,
      "yes": "as planned",
      "no": "not as planned"
@@ -702,7 +702,7 @@
     [
      "Control, shuffled rows: rule must fail in every shuffle",
      "7 rows or more",
-     "1 row or more",
+     "3 rows or more",
      "as planned"
     ]
    ]

@@ -99,7 +99,7 @@ Both together ¦ 0.168 ¦ 0.0026 over probability (0.0007 to 0.0046)
 Both, rating shuffled within forecaster-year ¦ not reported ¦ 0.0024 over probability on average; 95th percentile 0.0030; p 0.31
 ::end
 
-{c2}Adding the self-rating to the probability gained 0.0026 (95 percent interval 0.0007 to 0.0046), under the preregistered bar of 0.005, and a rating shuffled within each forecaster-year gained 0.0024 on average.{/c2} The interval excludes zero, so the combined filter is better than the probability alone by a small amount. The shuffle buys nearly all of it: the small edge comes from who rates themselves high on average. The rating given to one forecast adds nothing past that. The combined filter leads only below coverage 0.30. Relative Brier gives the same order: areas 0.124 for self-rating, 0.063 for probability, 0.061 for both and 0.134 for random.
+{c2}Adding the self-rating to the probability gained 0.0026 (95 percent interval 0.0007 to 0.0046), under the preregistered bar of 0.005, and a rating shuffled within each forecaster-year gained 0.0024 on average.{/c2} The interval excludes zero, so the combined filter is better than the probability alone by a small amount. The shuffle buys nearly all of it: the small edge comes from who rates themselves high on average. The rating given to one forecast adds nothing past that. The combined filter leads by 0.007 to 0.011 in Brier score up to coverage 0.25, and by 0.004 or less above that. Relative Brier gives the same order: areas 0.124 for self-rating, 0.063 for probability, 0.061 for both and 0.134 for random.
 
 The by-hand rules lose to the probability filter at the same coverage. Withholding every expertise-1 forecast keeps 78 percent of forecasts at Brier 0.267; the probability filter at that coverage reaches 0.214 and the combined filter 0.214. Withholding expertise 1 and 2 keeps 48 percent at 0.259, against 0.141 for the probability filter and 0.142 combined.
 
@@ -165,6 +165,7 @@ Verified: on 9 November 2026 every count, correlation, interval, extremising fac
 # section Corrections {sec:corrections}
 - 29 October 2026: this round narrows the first round's reading. The first round took the low-rating hedge as the self-rating carrying information past the stated probability; this round shows the probability already carries it.
 - 9 November 2026: first published version.
+- 14 November 2026: A review of the published page found one sentence that the result file contradicts. The results section said the combined filter leads only below coverage 0.30; in the file it is ahead at most coverage levels, by 0.007 to 0.011 up to coverage 0.25 and by 0.004 or less above that. The sentence now gives those sizes.
 
 # section Reproduction {sec:repro}
 - Data: download the GJP survey forecasts (years 1 to 4) and the question file from the Harvard Dataverse, doi:10.7910/DVN/BPCDH5.

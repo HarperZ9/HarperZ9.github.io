@@ -5,7 +5,7 @@
   "id": "F508",
   "kind": "finding",
   "title": "Shannon's 1951 letter statistics hold on old and new English; his third-order value reads high",
-  "standfirst": "Shannon's first- and second-order entropy figures for English letters match ours within 0.12 bits on books from 1788 to 1925 and on present-day Wikipedia. His third-order figure sits 0.23 to 0.39 bits above ours, and an n-gram reader never gets near his 1.3 bits per letter.",
+  "standfirst": "Shannon's first- and second-order entropy figures for English letters match ours within 0.12 bits on books from 1788 to 1925 and on present-day Wikipedia. His third-order figure sits 0.23 to 0.40 bits above ours, and an n-gram reader never gets near his 1.3 bits per letter.",
   "date_found": "2026-11-01",
   "fields": [
    "information-theory",
@@ -122,7 +122,7 @@
      "Table {ref:tab:table} and Figure {ref:fig:table} set Shannon's table against ours. The first run computed the letter statistics on each pooled corpus.",
      "::table tab:table cols=0.26,0.16,0.14,0.14,0.14,0.16 Shannon's 1951 table for 27 symbols against the three corpora, in bits per letter. The gap is to Shannon's value, for the old and new corpora.\nStatistic ¦ Shannon 1951 ¦ Old ¦ Mid ¦ New ¦ Gap old, new\nF1 ¦ 4.03 ¦ 4.085 ¦ 4.067 ¦ 4.113 ¦ 0.055, 0.083\nF2 ¦ 3.32 ¦ 3.345 ¦ 3.324 ¦ 3.440 ¦ 0.025, 0.120\nF3 ¦ 3.1 ¦ 2.712 ¦ 2.698 ¦ 2.872 ¦ 0.388, 0.228\nWord-based ¦ 2.14 ¦ 1.801 ¦ 1.853 ¦ 1.747 ¦ 0.339, 0.393\n::end",
      "![fig:table width=0.98 alt=Grouped bars for F1, F2, F3 and the word-based figure, Shannon against old, mid and new corpora](fig-table.png) Shannon's 1951 values against the three corpora. The first two groups agree within 0.12 bits; the third and fourth sit lower than his. Drawn from the first run's result file and the preregistered table values.",
-     "{c1}The single-letter and letter-pair rows match Shannon's within 0.12 bits on all three corpora.{/c1} The largest of those gaps is F2 on Wikipedia, 0.120. {c2}His third-order value of 3.1 bits sits 0.39 bits above ours on the old books and 0.23 above ours on Wikipedia.{/c2} The first-run verdict on the old table failed on that row alone, and the verdict on the new table passed, since 0.228 is inside the 0.3 bound. The word-based figure is 0.34 to 0.39 bits below his. Words in the Wikipedia sample are longer, 5.92 characters with the space against 5.41 in the old books, and their frequency distribution carries 10.34 bits per word against 9.74.",
+     "{c1}The single-letter and letter-pair rows match Shannon's within 0.12 bits on all three corpora.{/c1} The largest of those gaps is F2 on Wikipedia, 0.120. {c2}His third-order value of 3.1 bits sits 0.39 bits above ours on the old books and 0.23 above ours on Wikipedia.{/c2} The first-run verdict on the old table failed on that row alone, and the verdict on the new table passed, since 0.228 is inside the 0.3 bound. The word-based figure is 0.29 to 0.39 bits below his. Words in the Wikipedia sample are longer, 5.92 characters with the space against 5.41 in the old books, and their frequency distribution carries 10.34 bits per word against 9.74.",
      "## The reader",
      "In the first run the reader trained on the old corpus needed 2.13 bits per letter on the old held-out text, inside the forecast band of 1.85 to 2.35. Because of the faulty split, that held-out text was all The Federalist. The guessing game gave bounds of 1.34 and 2.35 by eqs. {ref:eq:low} and {ref:eq:up}, and the reader's first guess was right on 58 percent of letters. The claim that this reader reaches 1.3 bits failed, as forecast.",
      "The second run, with the split fixed, gives the matrix in Figure {ref:fig:cross}. {c3}With the corrected split, the reader needs 1.63 to 2.41 bits per letter on its own kind of text and never reaches Shannon's 1.3.{/c3} The Federalist is the easiest text for its own reader, 1.63, and Wikipedia the hardest, 2.41.",
@@ -138,7 +138,7 @@
     "title": "Discussion",
     "role": "argument",
     "paragraphs": [
-     "The low rows of Shannon's table describe English letters across two centuries of text. Single-letter frequencies and letter-pair statistics move by a few hundredths of a bit between Austen and Wikipedia. That is the part of the table a reader can quote.",
+     "The low rows of Shannon's table describe English letters across two centuries of text. Single-letter frequencies and letter-pair statistics differ by 0.03 and 0.09 bits between the oldest books and Wikipedia. That is the part of the table a reader can quote.",
      "F3 is different. Our value is lower than his on every corpus, by more than our forecast allowed on the old books. We have not found the cause. Two are open, and neither was tested. A plug-in estimate falls below the true value as the number of contexts grows against the sample, and 27 squared, 729, two-letter contexts is many for 750,000 characters if rare pairs matter. Shannon's F3 also rests on letter counts from other text than ours, and a difference in the source counts would move it. Either way the third row should be quoted with its source and method.",
      "The word-based gap fits a difference of method. Counting words directly misses the long tail of rare words that a fitted Zipf curve adds, and a missing tail lowers the entropy. We did not refit his tail to confirm it.",
      "The reader result agrees with the line of work after Shannon {cite:r2} {cite:r3}: letter counts alone do not reach a human reader's figure. Our context model sits at 1.63 to 2.41 bits per letter on held-out text. Shannon's 1.3 is a bound on a reader who knows words, grammar and the world.",
@@ -165,9 +165,9 @@
     "role": "evidence",
     "paragraphs": [
      "Each {g:verdict}verdict{/g} is the pass or fail of rules written before the run, read off by code. A verdict passes only when every rule holds. Values are read from the result files.",
-     "::table tab:v1 cols=0.33,0.37,0.19,0.11 First run, locked 1 November 2026 at 08:13 UTC.\nVerdict ¦ Deciding rule ¦ Value ¦ Holds\nInstrument works ¦ planted gap at most 0.1 ¦ 0.004 ¦ yes\nTable holds, old ¦ gaps F1 below 0.15, F2 below 0.2, F3 below 0.3 ¦ 0.055, 0.025, 0.388 ¦ no\nTable holds, new ¦ gaps F1 below 0.15, F2 below 0.2, F3 below 0.3 ¦ 0.083, 0.120, 0.228 ¦ yes\nReader reaches 1.3 ¦ old reader on old text at most 1.3 ¦ 2.130 ¦ no\nForecast, own-era loss ¦ 1.85 to 2.35 ¦ 2.130 ¦ yes\nForecast, guessing upper bound ¦ 1.9 to 2.5 ¦ 2.350 ¦ yes\nForecast, word-based gap, new ¦ 0.1 to 0.5 ¦ 0.393 ¦ yes\nForecast, era penalty, old reader on new ¦ 0.1 to 0.5 ¦ 0.735 ¦ no\nForecast, era penalty, new reader on old ¦ 0.1 to 0.6 ¦ 0.084 ¦ no\nForecast, genre penalty ¦ 0.1 to 0.45 ¦ 0.661 ¦ no\nForecast, new against old own-text loss ¦ -0.1 to 0.25 ¦ 0.599 ¦ no\nForecast, word-order information ¦ 0.4 to 1.2 ¦ 0.498 ¦ yes\nForecast, gain from four times the training text ¦ 0.1 to 0.4 ¦ 0.450 ¦ no\nShuffle control ¦ real loss below every shuffle's 95th percentile ¦ 2.73 against 8.44 ¦ yes\n::end",
+     "::table tab:v1 cols=0.33,0.37,0.19,0.11 First run, locked 1 November 2026 at 08:13 UTC.\nVerdict ¦ Deciding rule ¦ Value ¦ Holds\nInstrument works ¦ planted gap at most 0.1 ¦ 0.004 ¦ yes\nTable holds, old ¦ gaps F1 below 0.15, F2 below 0.2, F3 below 0.3 ¦ 0.055, 0.025, 0.388 ¦ no\nTable holds, new ¦ gaps F1 below 0.15, F2 below 0.2, F3 below 0.3 ¦ 0.083, 0.120, 0.228 ¦ yes\nReader reaches 1.3 ¦ old reader on old text at most 1.3 ¦ 2.130 ¦ no\nForecast, own-era loss ¦ 1.85 to 2.35 ¦ 2.130 ¦ yes\nForecast, guessing upper bound ¦ 1.9 to 2.5 ¦ 2.350 ¦ yes\nForecast, word-based gap, new ¦ 0.1 to 0.5 ¦ 0.393 ¦ yes\nForecast, era penalty, old reader on new ¦ 0.1 to 0.5 ¦ 0.735 ¦ no\nForecast, era penalty, new reader on old ¦ 0.1 to 0.6 ¦ 0.084 ¦ no\nForecast, genre penalty ¦ 0.1 to 0.45 ¦ 0.661 ¦ no\nForecast, new against old own-text loss ¦ -0.1 to 0.25 ¦ 0.599 ¦ no\nForecast, word-order information ¦ 0.4 to 1.2 ¦ 0.498 ¦ yes\nForecast, gain from four times the training text ¦ 0.1 to 0.4 ¦ 0.450 ¦ no\nShuffle control ¦ real loss below the lowest 5 percent of the shuffles' losses ¦ 2.73 against 8.44 ¦ yes\n::end",
      "The first run's era and genre values were read through one test book per corpus and are superseded by the second run for the era and genre question. Word-order information is the extra loss when the words of the Wikipedia test text are shuffled. The training gain is the extra loss of a Wikipedia reader trained on a quarter of the text.",
-     "::table tab:v2 cols=0.33,0.37,0.19,0.11 Second run, locked 1 November 2026 at 08:20 UTC, not blind.\nVerdict ¦ Deciding rule ¦ Value ¦ Holds\nEra costs more than genre ¦ era penalty, old to mid fiction, above genre penalty, old fiction to The Federalist ¦ 0.100 against 0.444 ¦ no\nForecast, own-text fiction loss ¦ 2.0 to 2.5 ¦ 1.931 ¦ no\nForecast, era, old to mid ¦ 0.02 to 0.3 ¦ 0.100 ¦ yes\nForecast, era, mid to old ¦ 0.02 to 0.3 ¦ 0.253 ¦ yes\nForecast, genre ¦ 0.2 to 0.9 ¦ 0.444 ¦ yes\nForecast, Federalist reader on Wikipedia ¦ 0.4 to 1.6 ¦ 1.365 ¦ yes\nShuffle control ¦ real loss below every shuffle's 95th percentile ¦ 1.93 against 9.20 ¦ yes\n::end"
+     "::table tab:v2 cols=0.33,0.37,0.19,0.11 Second run, locked 1 November 2026 at 08:20 UTC, not blind.\nVerdict ¦ Deciding rule ¦ Value ¦ Holds\nEra costs more than genre ¦ era penalty, old to mid fiction, above genre penalty, old fiction to The Federalist ¦ 0.100 against 0.444 ¦ no\nForecast, own-text fiction loss ¦ 2.0 to 2.5 ¦ 1.931 ¦ no\nForecast, era, old to mid ¦ 0.02 to 0.3 ¦ 0.100 ¦ yes\nForecast, era, mid to old ¦ 0.02 to 0.3 ¦ 0.253 ¦ yes\nForecast, genre ¦ 0.2 to 0.9 ¦ 0.444 ¦ yes\nForecast, Federalist reader on Wikipedia ¦ 0.4 to 1.6 ¦ 1.365 ¦ yes\nShuffle control ¦ real loss below the lowest 5 percent of the shuffles' losses ¦ 1.93 against 9.20 ¦ yes\n::end"
     ]
    }
   ]
@@ -365,6 +365,15 @@
    "after": "A second preregistration fixed the split and was run the same day. The first run stands as recorded and both are reported.",
    "reason": "The first run's test text for the old and mid corpora was a single book each, because a promised shuffle was never done.",
    "found_by": "the study itself, before publication"
+  },
+  {
+   "id": "x2",
+   "date": "2026-11-14",
+   "target": "document",
+   "type": "number",
+   "after": "The summary under the title gave the third-order gap as 0.23 to 0.39 bits; the files give 0.39, 0.40 and 0.23, so it now reads 0.23 to 0.40. The word-based gap was given as 0.34 to 0.39 bits and is 0.29 to 0.39 with the middle corpus counted. The shuffle rule was described as the 95th percentile of the shuffles; the comparison is with the lowest 5 percent of the shuffles' losses, 8.44 and 9.20. Two chart labels were corrected: each text is read most cheaply by its own reader, which is true by text and not by reader, and the transfer penalty is measured against the other text's own reader, as the equation in the methods defines it. No value in the tables changed.",
+   "reason": "A review of the published page found ranges and labels that did not match the result files.",
+   "found_by": "a review of the published pages"
   }
  ],
  "versions": [
@@ -378,6 +387,11 @@
    "date": "2026-11-09",
    "what": "paper version 1.0, first published",
    "hash": "63a28ee325a02899f7cbad4e24e273beabe79989f01848471f6a92cf43350fc7"
+  },
+  {
+   "n": 3,
+   "date": "2026-11-14",
+   "what": "this page corrected, 1 item; the PDF and its BuildTeX source are still paper version 1.0"
   }
  ],
  "grade": {

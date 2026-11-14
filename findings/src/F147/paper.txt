@@ -127,6 +127,7 @@ Verified: on 9 November 2026 the nine peak DQE values (0.0057 to 0.0492, median 
 - 31 October 2026: a later study of ours found that the Poisson threshold fit used log standard deviation where the model expected log variance. Corrected errors 0.186 and 0.068; the failed verdict stands and the pattern of hit numbers changes, as given in the results.
 - 9 November 2026: the Benjamini-Hochberg step named in the preregistration was not run by the study. This paper states the outcome it would have had.
 - 9 November 2026: first published version.
+- 14 November 2026: A review of the published page found the summary under the title wider than the result file supports. It said the 500T and 200T stocks match within 10 percent; the file gives that for the green layer only (4.51 and 4.92 percent), with blue at 2.12 and 2.35 and red at 2.51 and 1.99. The summary now names the layer.
 
 # section Reproduction {sec:repro}
 - Data: the Kodak VISION3 technical data sheets for 5219, 7213 and 7203 {cite:kodak}, from Kodak's motion-picture product pages.

@@ -30,7 +30,7 @@ The {g:preregistration}preregistration{/g}, a dated plan hash-locked before any 
 The plan fixed the targets, variables, splits, models, ceilings and the rule for each {g:verdict}verdict{/g}, the pass or fail of one preregistered rule set read off by code. The predictions were:
 - P1, ceiling reached: a target is at ceiling when its all-variable held-out skill above chance is at least 0.8 of its ceiling above chance. Pass if at least 4 of the 6 targets with a ceiling are at ceiling.
 - P2, unmeasured variables: a target's plateau moves when its named strong variable adds at least 0.02 skill over all base variables and the result exceeds the upper 97.5th percentile of the fitted plateau. Pass if at least 3 of 7 targets move.
-- P3, chaos: in the Lorenz-63 toy, the forecast horizon is linear in the log of precision (linear R2 at least 0.98), its slope is within 25 percent of theory, and the last three decades gain no more than the first three.
+- P3, chaos: in the Lorenz-63 toy, the forecast horizon is linear in the log of precision (linear R2 at least 0.98), its slope is within 25 percent of theory, and the gain over the last three decades is between 0.75 and 1.33 times the gain over the first three.
 - P4, reflexivity: five rules on a toy crowd, listed in Appendix A.
 - P5, overfitting control: every target beats its shuffled-target control, and a deliberately overfitted fit behaves as expected (Appendix A).
 
@@ -118,7 +118,7 @@ Figure {ref:fig:variance} shows where the variance left after the full model sit
 {c4}One of six targets reached 0.8 of its ceiling, against a forecast of at least four, and one of seven plateaus moved, against a forecast of at least three.{/c4} Both are {g:honest-null}honest nulls{/g} of the claim's forecasts, reported with the same weight as the passes.
 
 ## The toys
-{c5}In the Lorenz toy the forecast horizon grew 2.51 time units per tenfold gain in precision, against 2.54 from theory, with linear R2 0.99994; twelve decades of precision bought 1.2 to 28.7 time units.{/c5} The gain per decade over the last three decades was 1.02 times that over the first three. Figure {ref:fig:lorenz} shows the line.
+{c5}In the Lorenz toy the forecast horizon grew 2.51 time units per tenfold gain in precision, against 2.54 from theory, with linear R2 0.99994; twelve levels of precision, from one decimal digit to twelve, moved the horizon from 1.2 to 28.7 time units.{/c5} The gain per decade over the last three decades was 1.02 times that over the first three. Figure {ref:fig:lorenz} shows the line.
 
 ![fig:lorenz width=0.8 alt=Median horizon rising in a straight line with precision, lying on the dashed theory line](fig-lorenz.png) Lorenz-63 forecast horizon against starting precision, median over 100 attractor states, with the slope from the Lyapunov exponent. Drawn from the result file.
 
@@ -156,6 +156,7 @@ Verified: on 9 November 2026 every skill, ceiling, share, strong-variable value,
 - 29 October 2026: the first run's forecaster R2 of -1.686 came from unclipped scaling of nearly constant variables. A disclosed addendum clipped scaled values at 5 in either direction and nothing else; the second run is primary and not blind.
 - 29 October 2026: the addendum recorded three defects left in place on purpose: the failed tree ceiling estimator, the P2 rule that cannot pass for an unflattened curve, and the similarity control's above-chance start.
 - 9 November 2026: first published version. The identification test and the target built on a private image collection are left out.
+- 14 November 2026: A review of the published page found three statements that did not match the result file. The summary under the title said five of six targets stopped between 0.18 and 0.65 of their ceiling and that the gap closed when a different kind of variable arrived; the file gives four of the five targets with a valid ceiling, and one plateau of seven moved, so the summary now says that. The design section described the third forecast as the last three decades gaining no more than the first three; the locked rule is a ratio between 0.75 and 1.33, and the section now says so. The charts are drawn from all eight targets in the result file, including the image-preference target that the text leaves out, and the first chart now says so. The outcome word changed from held to mixed, because four of the six preregistered verdicts failed.
 
 # section Reproduction {sec:repro}
 - Data: Forest Inventory and Analysis for Washington and Oregon {cite:fia}; openESM dataset 0062 {cite:openesm}; DEAM static ratings {cite:aljanaki2017}; Good Judgment Project data {cite:gjp}; THINGS odd-one-out triplets and the 66 object dimensions {cite:hebart2023}.

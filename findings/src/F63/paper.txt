@@ -105,7 +105,7 @@ Figure {ref:fig:nulls} sets the moderate-drought estimate against the three null
 
 The components explain the null in resilience. {c2}A severe prior drought lowered growth in the drought year (resistance -0.087, p 0.006) and raised recovery after it by +0.096, so resilience barely moved.{/c2} By eq. {ref:eq:lloret}, a lower drought-year ring raises recovery by the same factor it lowers resistance, so the recovery gain is partly arithmetic and is not evidence of conditioning.
 
-{c4}The placebo window was clean: drought after the event gave +0.006 (p 0.86).{/c4} No rise-then-fall shape appeared with dose. The two lines fell and then rose, neither significantly (z -0.89 and +0.81), and the statistic of -0.89 sat below its shuffle 95th percentile of 1.26. The mean residual resilience by number of moderate-drought years in the window was -0.007 for none (1,705 events), +0.005 for one (1,268), +0.008 for two (643), -0.019 for three (103) and +0.059 for four (44).
+{c4}The placebo window was clean: drought after the event gave +0.006 (p 0.86).{/c4} No rise-then-fall shape appeared with dose. The two lines fell and then rose, neither significantly (z -0.89 and +0.81), and the statistic of -0.89 sat below its shuffle 95th percentile of 1.26. The mean residual resilience by number of moderate-drought years in the window was -0.007 for none (1,705 events), +0.005 for one (1,268), +0.008 for two (643), -0.019 for three (103) and +0.059 for four (44). These five groups hold 3,763 of the 3,780 events; the result file lists no group for the other 17.
 
 With species and year effects in place of site effects, the moderate prior drought gave +0.037 (0.000 to +0.074, p 0.047), and severe +0.035 (p 0.089). The two did not differ (+0.002), so under that model any prior drought went with slightly higher resilience, with no edge for a moderate one. The rerun tested that sign.
 
@@ -161,6 +161,7 @@ Verified: on 9 November 2026 the counts (1,175 sites, 65 species, 177 divisions,
 - 30 October 2026: the gridded rerun found that the positive sign under division drought with species effects (+0.037, p 0.047) did not survive site-scale drought (+0.025, below the time-shift 95th percentile of 0.038). Forest and stress models keep no steeling as the default. This paper reports both.
 - 9 November 2026: the findings ledger headline and the run's own summary gave 9 passing and 13 failing verdicts across Tests A to D. The result file and the ledger entry's own list of names give 10 passing and 12 failing. No tree value changes.
 - 9 November 2026: first published version.
+- 14 November 2026: A review of the published page found a count that does not add up. The five groups by number of moderate-drought years hold 3,763 events and the sample is 3,780; the result file lists no group for the other 17, and the text now says so. One chart listed the time-shift comparison under what is ruled out; a p of 0.18 shows no effect and rules none out, and the chart now says that.
 
 # section Reproduction {sec:repro}
 - Data: ITRDB standard ring-width chronologies for the contiguous United States; NOAA nClimDiv divisional PDSI; for the rerun, CRU TS 4.10 scPDSI at 0.5 degree.

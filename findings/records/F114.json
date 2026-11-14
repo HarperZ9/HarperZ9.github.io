@@ -75,7 +75,7 @@
     "title": "Data and provenance",
     "role": "argument",
     "paragraphs": [
-     "Rings: International Tree-Ring Data Bank chronologies for Europe {cite:r8}, held by NOAA's National Centers for Environmental Information as open federal data, with a request to cite the original study, landing page and access date. Five channels per site: ring width, earlywood width, latewood width, minimum density and maximum latewood density, with raw measurement files for width and density. A site entered when all five channels were gap-free from 1901 to their common end year, with at least 50 years. The Alpine box is 43.5 to 48.5 N and 5 to 17 E, and the Fennoscandian box is 58 to 71.5 N and 4 to 32 E. Most of these density sites come from the Schweingruber collection, so the series end about 1975 to 1990.",
+     "Rings: International Tree-Ring Data Bank chronologies for Europe {cite:r8}, held by NOAA's National Centers for Environmental Information as open federal data, with a request to cite the original study, landing page and access date. Five channels per site: ring width, earlywood width, latewood width, minimum density and maximum latewood density, with raw measurement files for width and density. A site entered when all five channels were gap-free from 1901 to their common end year, with at least 50 years. The Alpine box is 43.5 to 48.5 N and 5 to 17 E, and the Fennoscandian box is 58 to 71.5 N and 4 to 32 E. Most of these density sites come from the Schweingruber collection, so the series end about 1975 to 1990; the 51 Alpine windows used here run 74 to 82 years from 1901, so they end between 1974 and 1982.",
      "Isotopes: ISONET latewood or whole-ring cellulose oxygen isotope chronologies {cite:r9}, released under CC BY 4.0. 19 European sites with complete values from 1901 to 2002 were used.",
      "Climate: CRU TS 4.10 monthly temperature, precipitation and cloud cover at 0.5 degree, 1901 to 2025 {cite:r6} {cite:r7}, released under the Open Database License 1.0. Each site takes the nearest land cell with complete data. The targets are the June to August mean temperature (warmth), total precipitation (rain) and 100 minus mean cloud cover in percent (sunshine, a proxy for light).",
      "Every channel and target series was passed through a {g:high-pass}high-pass filter{/g} on its own window: the series minus a Gaussian smooth of width 10 years, renormalised at the edges, then scaled to zero mean and unit variance. The study therefore measures variation from 2 years to roughly 30 years."
@@ -460,6 +460,15 @@
    "after": "Two deviations from the preregistration, both before any outcome was seen, recorded in the design section above.",
    "reason": "Dated in the paper's Corrections section; found by the study itself, before publication.",
    "found_by": "the study itself, before publication"
+  },
+  {
+   "id": "x2",
+   "date": "2026-11-14",
+   "target": "document",
+   "type": "number",
+   "after": "The first chart gave the rule as 12 percent below to 2 percent above the truth; the locked rule and the result file use bits, 0.12 below to 0.02 above, and the reading was 0.053 bits low (0.269 against 0.322). The chart now uses bits. The page also said the plan hash was not recorded while printing it; that was a fault in how the page read the line, and the hash now shows in both places.",
+   "reason": "A review of the published page found the planted-check rule stated in two units.",
+   "found_by": "a review of the published pages"
   }
  ],
  "versions": [
@@ -473,6 +482,11 @@
    "date": "2026-11-09",
    "what": "paper version 1.0, first published",
    "hash": "d00805eade920732d487165305965b563e3e561ff0bdd71bd22dafc5b7c8fa58"
+  },
+  {
+   "n": 3,
+   "date": "2026-11-14",
+   "what": "this page corrected, 1 item; the PDF and its BuildTeX source are still paper version 1.0"
   }
  ],
  "grade": {
@@ -536,7 +550,7 @@
   ],
   "prereg": {
    "hash": "bfec0fceb32bf9299844575ae5155d7bed603dc92d53e76e6a1fcb46d37bc609",
-   "plan": "not recorded"
+   "plan": "6b038615377aad2c11c456f135e0b705bc638ca02eff47a09543c0ef2cb83ba7"
   },
   "cost": "about 18 minutes for the main run, 8 for the Alpine check and 4 for Fennoscandia, on one desktop CPU.",
   "steps": [

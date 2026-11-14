@@ -60,7 +60,8 @@ const corrType = (s) => (/retract|withdr/i.test(s) ? "retraction" : /narrow|scop
   : /tier/i.test(s) ? "tier" : /\d/.test(s) && /in place of|gives?|gave|reads|not \d|rounded|should read|from the result file/i.test(s) ? "number" : "wording");
 const foundBy = (s, date, published) => (/review of our ledger|our ledger noted|ledger recorded/i.test(s) ? "a review of our findings ledger"
   : /later study of ours|later review|follow-up round|replication run/i.test(s) ? "a later study of ours"
-  : date === published ? "the publication pass" : "the study itself, before publication");
+  : /review of the published page/i.test(s) ? "a review of the published pages"
+  : date === published ? "the publication pass" : date > published ? "a check after publication" : "the study itself, before publication");
 
 // the paper's Corrections section: one bullet per dated change; "first published version" is a version, not a change
 export function corrections(items, published) {
@@ -83,6 +84,10 @@ export function versions(dateFound, corr, published, version, pdfHash) {
   const dates = [...new Set(corr.map((x) => x.date))].filter((d) => d > dateFound && d < published).sort();
   for (const d of dates) vs.push({ n: vs.length + 1, date: d, what: `dated correction, ${corr.filter((x) => x.date === d).length} item${corr.filter((x) => x.date === d).length > 1 ? "s" : ""}` });
   vs.push({ n: vs.length + 1, date: published, what: `paper version ${version}, first published`, hash: pdfHash });
+  // A correction dated after publication changes this page only: the PDF and its BuildTeX source stay at the
+  // published paper version until the paper is typeset again, and the version line says so.
+  const later = [...new Set(corr.map((x) => x.date))].filter((d) => d > published).sort();
+  for (const d of later) vs.push({ n: vs.length + 1, date: d, what: `this page corrected, ${corr.filter((x) => x.date === d).length} item${corr.filter((x) => x.date === d).length > 1 ? "s" : ""}; the PDF and its BuildTeX source are still paper version ${version}` });
   return vs;
 }
 
@@ -126,7 +131,8 @@ export function reproduce(items, dataRefs) {
     const it = plain(raw);
     if (/^Cost:/i.test(it)) out.cost = it.replace(/^Cost:\s*/i, "");
     else if (/SHA-256/.test(it)) {
-      const pre = it.match(/[Pp]reregistration SHA-256[^0-9a-f]*([0-9a-f]{64})/), plan = it.match(/Plan SHA-256[^0-9a-f]*([0-9a-f]{64})/);
+      // the words between the label and the hash may hold hex letters ("of the main run"), so skip to the first 64-digit run
+      const pre = it.match(/[Pp]reregistration SHA-256.*?([0-9a-f]{64})/), plan = it.match(/[Pp]lan SHA-256.*?([0-9a-f]{64})/);
       if (pre && !out.prereg) out.prereg = { hash: pre[1], plan: plan ? plan[1] : "not recorded" };
       steps.push(raw);
     } else steps.push(raw);

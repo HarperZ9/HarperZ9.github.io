@@ -5,7 +5,7 @@
   "id": "F147",
   "kind": "finding",
   "title": "Kodak's own curves put modern colour negative at 0.6 to 4.9 percent quantum efficiency",
-  "standfirst": "Reading three Kodak VISION3 data sheets as if the film were a photon counter, the best layer uses about 5 percent of the light's information and the median layer about 2 percent. The 500T and 200T stocks match each other within 10 percent although one needs about twice the photons of the other.",
+  "standfirst": "Reading three Kodak VISION3 data sheets as if the film were a photon counter, the best layer uses about 5 percent of the light's information and the median layer about 2 percent. In the green layer the 500T and 200T stocks match within 10 percent (4.5 and 4.9 percent) although one needs about twice the photons of the other; their blue layers differ by 11 percent and their red layers by 26.",
   "date_found": "2026-10-31",
   "fields": [
    "colour-film",
@@ -396,6 +396,15 @@
    "after": "This paper states the outcome it would have had.",
    "reason": "The Benjamini-Hochberg step named in the preregistration was not run by the study.",
    "found_by": "the publication pass"
+  },
+  {
+   "id": "x3",
+   "date": "2026-11-14",
+   "target": "document",
+   "type": "scope",
+   "after": "It said the 500T and 200T stocks match within 10 percent; the file gives that for the green layer only (4.51 and 4.92 percent), with blue at 2.12 and 2.35 and red at 2.51 and 1.99. The summary now names the layer.",
+   "reason": "A review of the published page found the summary under the title wider than the result file supports.",
+   "found_by": "a review of the published pages"
   }
  ],
  "versions": [
@@ -409,6 +418,11 @@
    "date": "2026-11-09",
    "what": "paper version 1.0, first published",
    "hash": "91f5daaa7942c3c11dbfeb4470651949d65b89fe2e259fcec7cbe5e86cb57e3c"
+  },
+  {
+   "n": 3,
+   "date": "2026-11-14",
+   "what": "this page corrected, 1 item; the PDF and its BuildTeX source are still paper version 1.0"
   }
  ],
  "grade": {

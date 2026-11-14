@@ -400,6 +400,15 @@
    "after": "The result file gives 26.7 percent for the table's value; the rule's own gap at 85 degrees is 26.8 percent. This paper uses the table's value.",
    "reason": "The summary written for the site said that at 85 degrees \"the rule\" sits 26.7 percent below the secant.",
    "found_by": "the publication pass"
+  },
+  {
+   "id": "x3",
+   "date": "2026-11-14",
+   "target": "document",
+   "type": "number",
+   "after": "The line on where the claim stands said the secant runs 27 percent low at 85 degrees; it is Newton's table and his rule that run 27 percent below the secant there (84.1 against 114.7), and the line now says so. One chart gave the bar for the shuffled control as 1 row or more; the locked rule is 3 rows or more, and every shuffle failed at 7 or more.",
+   "reason": "A review of the published page found two statements that did not match the study's records.",
+   "found_by": "a review of the published pages"
   }
  ],
  "versions": [
@@ -413,6 +422,11 @@
    "date": "2026-11-09",
    "what": "paper version 1.0, first published",
    "hash": "577f0a6b199c39a908aabf9e79ef01f6d52ff96ae581e9da48c9b03d9d9f3dec"
+  },
+  {
+   "n": 3,
+   "date": "2026-11-14",
+   "what": "this page corrected, 1 item; the PDF and its BuildTeX source are still paper version 1.0"
   }
  ],
  "grade": {
@@ -433,6 +447,11 @@
     "domain": "scoring",
     "text": "Scored by code against rules fixed in advance.",
     "from": "register scorer.who"
+   },
+   {
+    "domain": "preregistration",
+    "text": "Preregistered and hash-locked before the run (sha256 d4104e90).",
+    "from": "paper Reproduction"
    },
    {
     "domain": "control",
@@ -464,6 +483,10 @@
     "url": ""
    }
   ],
+  "prereg": {
+   "hash": "d4104e90dc4a56eacbee874b19d7cfa1dde3d30326dbf84822d775aab6a0d3fa",
+   "plan": "not recorded"
+  },
   "cost": "seconds to minutes on one desktop CPU.",
   "steps": [
    "Data: the Opticks, 1730, Book II, Part I, Observations 6 and 7 (Project Gutenberg 33504); the CIE D65 and CIE 1931 2 degree observer tables.",

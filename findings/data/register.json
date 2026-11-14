@@ -443,7 +443,7 @@
     "controls": "shuffled outcomes, shuffled originals, planted truths, data gates",
     "forecast_vs_outcome": "beat base P 0.7, failed at -0.004",
     "prereg": "studyrun lock, internal file",
-    "known_answer": "planted mixtures; 35 RPP successes"
+    "known_answer": "planted mixtures; 34 reported Reproducibility Project successes in the rows kept, against the 35 published"
    },
    "literature": {
     "searches": [
@@ -1003,7 +1003,7 @@
     "music-acoustics",
     "psychology"
    ],
-   "reviewer_attack": "Tail is a proxy for instrumentation and production style, since timbre was not held; DEAM is short clips with crowd perceived-emotion ratings; the mirror audio provenance.",
+   "reviewer_attack": "Tail is a proxy for instrumentation and production style, since timbre was not held; DEAM is short clips with crowd perceived-emotion ratings. The register lists a third point, on where the audio copies came from, and its text is cut short there.",
    "raise_tier": "Replicate on a second rated corpus, add a blind listening test with tail manipulated at fixed instrumentation, and measure felt calm",
    "scorer": {
     "who": "code",
@@ -1080,7 +1080,7 @@
    "evidence": {
     "denominator": "8 datasets; n 1744 to 150000; 22 to 1349 variables",
     "interval": "GJP asymptote 0.137 [0.118,0.155]; other asymptote intervals often hit the fit bound (up to 2.0)",
-    "controls": "working: shuffled-target nulls beaten by all eight; failed: tree ceiling estimator (-3.97); P5 rule mis-specified",
+    "controls": "working: shuffled-target nulls beaten by all eight; failed: tree ceiling estimator (-3.96); P5 rule mis-specified",
     "forecast_vs_outcome": "P1 1 of 6 at ceiling vs >= 4; P2 1 moved vs >= 3; P3, P4 toys pass; P6 gap -0.221",
     "prereg": "ee38c3bd PREREG.txt, e722f680 PREREG-R2.txt (both match); R2 hashed after run 1",
     "known_answer": "Lorenz horizon 2.51 vs theory 2.54 per decade; overfitting demo"
@@ -1236,7 +1236,7 @@
     "denominator": "1,175 sites, 65 species, 3,780 site-drought events, 579 division droughts",
     "interval": "+0.039 [-0.011, +0.090], BH q 0.17; rerun +0.025 [-0.009, +0.059]",
     "controls": "A placebo clean; circular shift q95 0.065 not beaten; B_CTRL failed (metric defect)",
-    "forecast_vs_outcome": "steeling forecast refuted (A1 FAIL)",
+    "forecast_vs_outcome": "the steeling test failed (A1 FAIL), as the forecast of a weak or null effect expected",
     "prereg": "1e723097 PREREG.txt; plan 99b4edfa",
     "known_answer": "D Bayes matches closed form, by construction"
    },

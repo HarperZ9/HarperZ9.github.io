@@ -452,7 +452,7 @@
   ],
   "prereg": {
    "hash": "fec1f1655ac86d3c16394e1947b9e2919225d9420680e5981e219f5a7f8fccd2",
-   "plan": "not recorded"
+   "plan": "cc9c52ac2d9456618a10e1429f135574afe43466735b431b2ee002b6c9c6531f"
   },
   "cost": "the first run took 19.7 minutes of wall time on one desktop; the energy attributed to it by a CPU-share model, which is a model and not a measurement, was 1,645 J. The replication run took 7.3 minutes, with 1,995 J attributed the same way.",
   "steps": [

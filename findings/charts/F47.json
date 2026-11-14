@@ -23,7 +23,7 @@
     "result"
    ],
    "title": "Held-out skill as variables are added, target by target.",
-   "takeaway": "Skill rose with added variables in all 8 targets and the full model beat its shuffled-target control in 8 of 8. Forecaster accuracy flattened at R2 0.131 with all 1,349 variables.",
+   "takeaway": "Skill rose with added variables in all 8 targets in the result file and the full model beat its shuffled-target control in 8 of 8. The eighth target, image preference, was built on a private image collection; the paper's text leaves it out and counts seven. Forecaster accuracy flattened at R2 0.131 with all 1,349 variables.",
    "units": "held-out skill above chance, in each target's own unit; higher is better. Held-out skill: how well the model predicts cases it was not fitted on. It is R2 (share of variance explained) for numeric targets, AUC (the chance a random positive case ranks above a random negative one) for tree death and image preference, and accuracy for triplets. Chance is 0 for R2, 0.5 for AUC and one in three for triplets",
    "n": "Similarity triplets 150,000 cases; Mood at the next beep 8,141 cases; Music valence 1,744 cases; Music arousal 1,744 cases; Forecaster accuracy 2,120 cases; Tree growth 73,553 cases; Tree death 90,427 cases; Image preference 2,625 cases",
    "interval": null,

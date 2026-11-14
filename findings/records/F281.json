@@ -42,7 +42,7 @@
     "title": "Abstract",
     "role": "argument",
     "paragraphs": [
-     "Some ideas about quantum gravity predict that light in vacuum travels at a speed that depends slightly on photon energy. A short, distant gamma-ray burst tests this well, because high-energy and low-energy photons leave together and travel for billions of years. We reran the test on the public Fermi Large Area Telescope photons from GRB 090510 with a simple method, fixed in advance. {c1}Our rerun bounds any linear energy-dependent change in light speed to less than 7.6e-18 of c at 29.9 GeV, a linear energy scale above 0.32 Planck energies, about 24 times weaker than the published limit of 7.6 Planck energies from the same burst.{/c1} The value of the rerun is as a reproduction of the method, and the published limits stand. {c2}Planted delays from 1 to 10 times our bound were recovered within 0.9 percent, and the fitted slope of zero sat inside the range that shuffled photon energies gave.{/c2} In the same study we simulated sound, which has a speed limit of its own. {c3}Sound in a uniform flow moved at the flow speed plus or minus the sound speed to within 1e-6, and in a simulated condensate the wave frequencies followed the Bogoliubov law within 2 percent, with a short-wavelength packet moving at 2.89 times the sound speed.{/c3} {c4}Twelve of the 15 preregistered rules passed; the three that failed were two forecasts of our own bound's strength and one test of a packet near a simulated horizon.{/c4}"
+     "Some ideas about quantum gravity predict that light in vacuum travels at a speed that depends slightly on photon energy. A short, distant gamma-ray burst tests this well, because high-energy and low-energy photons leave together and travel for billions of years. We reran the test on the public Fermi Large Area Telescope photons from GRB 090510 with a simple method, fixed in advance. {c1}Our rerun bounds any linear energy-dependent change in light speed to less than 7.6e-18 of c at 29.9 GeV, a linear energy scale above 0.32 Planck energies, about 24 times weaker than the published limit of 7.6 Planck energies from the same burst.{/c1} The value of the rerun is as a reproduction of the method, and the published limits stand. {c2}Planted delays from 1 to 10 times our bound were recovered within 0.9 percent, and the fitted slope of zero sat inside the range that shuffled photon energies gave.{/c2} In the same study we simulated sound, which has a speed limit of its own. {c3}Sound in a uniform flow moved at the flow speed plus or minus the sound speed to within 1e-6, and in a simulated condensate the wave frequencies followed the Bogoliubov law within 2 percent, with a short-wavelength packet moving at 2.89 times the sound speed.{/c3} {c4}Twelve of the 15 preregistered verdicts passed; the three that failed were two forecasts of our own bound's strength and one test of a packet near a simulated horizon.{/c4}"
     ]
    },
    {
@@ -50,7 +50,7 @@
     "title": "Introduction",
     "role": "argument",
     "paragraphs": [
-     "Special relativity says every observer measures the same speed of light. Several approaches to quantum gravity allow a small {g:liv}Lorentz invariance violation{/g} in which that speed depends on photon energy. The size of such an effect is usually stated as a {g:eqg}linear energy scale (E_QG,1){/g}, and the natural reference is the {g:planck-energy}Planck energy{/g}. A photon of 30 GeV is about 1e-18 of the Planck energy, so the expected effect on its speed is tiny, and only a very long flight can make it visible.",
+     "Special relativity says every observer measures the same speed of light. Several approaches to quantum gravity allow a small {g:liv}Lorentz invariance violation{/g} in which that speed depends on photon energy. The size of such an effect is usually stated as a {g:eqg}linear energy scale (E_QG,1){/g}, and the natural reference is the {g:planck-energy}Planck energy{/g}. A photon of 30 GeV is about 2.5e-18 of the Planck energy, so the expected effect on its speed is tiny, and only a very long flight can make it visible.",
      "Gamma-ray bursts give that flight. Jacob and Piran {cite:r5} derived how an energy-dependent speed turns into an arrival-time delay over a path through an expanding universe; that relation is the one used here. GRB 090510 is a short burst at redshift 0.903, measured from the spectrum of its host galaxy {cite:r6}. Abdo and colleagues {cite:r2} used the Fermi observation of this burst, with emission up to about 31 GeV, and set a lower limit of 1.2 Planck energies on the linear scale under conservative assumptions about when the photons were emitted. Vasileiou and colleagues {cite:r3} analysed four bright Fermi bursts with three complementary methods; their strongest limit, from GRB 090510, is above 7.6 Planck energies at 95 percent confidence for the case where higher energies travel slower. The LHAASO collaboration {cite:r4} used the TeV photons of GRB 221009A and reported a linear limit above 10 Planck energies.",
      "We had a narrower aim. A published limit rests on a pipeline most readers cannot run. We asked how close a short, plain analysis of the public photon file comes, with its forecasts and kill rules fixed before the run. The same study asked the companion question for sound: sound in a fluid has its own speed limit, and that limit is known to bend at short wavelength. Trachenko and colleagues {cite:r7} proposed an upper bound on the speed of sound in condensed matter, about 36 km per second, built from fundamental constants; it entered our study as one table check.",
      "![fig:plate width=0.5 alt=A white-on-black 1889 engraving of the Sun at lower left with straight force lines radiating outward across orbit rings and labelled planets](plate-traxler-frontispiece.png) Robert P. Traxler, frontispiece, printed without caption or figure number: a quarter view of the solar system with the Sun at lower left, from The Principles of Mechanics as Applied to the Solar System (San Francisco, 1889) {cite:r8}. The straight lines leaving the Sun are Traxler's force lines. He drew his plates to argue for a repelling force from the Sun, his own theory in 1889, which physics did not adopt. The picture of straight paths leaving one source is the geometry a time-of-flight test depends on. Public domain; scan from the Internet Archive, University of California Libraries."
@@ -118,7 +118,7 @@
     "paragraphs": [
      "Two checks were run on the photon fit.",
      "The first {g:control}control{/g} shuffled the photon energies among the 84 photons, which breaks any link between energy and arrival time, and refitted the slope 300 times. The shuffled slopes ran from -44 to +76 ms per GeV (2.5th to 97.5th percentile). The real fitted slope, 0, sits inside that range, as forecast.",
-     "The {g:planted-check}planted check{/g} added a known delay, {m:\\tau E}, to every photon at 1, 3, 5 and 10 times our bound, with both signs, and refitted. Table {ref:tab:plants} gives the result: every planted delay came back within 0.9 percent, so the fit sees a delay of the size of our bound when one is there.",
+     "The {g:planted-check}planted check{/g} added a known delay, {m:\\tau E}, to every photon at 1, 3, 5 and 10 times our bound, with both signs, and refitted. Table {ref:tab:plants} gives the result: every planted delay came back within 0.9 percent, so the fit sees a delay of the size of our bound when one is there. The result file stores one recovered value for each planted size, a positive delay, and none for the opposite sign. Three of the four planted delays lie outside the search grid of -250 to +250 ms per GeV stated in the methods, so the planted refits searched a wider range than that sentence gives; the file does not record the range.",
      "::table tab:plants cols=0.28,0.28,0.24,0.2 Planted delays and their recovery, ms per GeV. Error is relative to the planted value.\nPlanted, times our bound ¦ Planted delay ¦ Recovered ¦ Error\n1 ¦ 117 ¦ 116 ¦ 0.90 percent\n3 ¦ 351 ¦ 354 ¦ 0.81 percent\n5 ¦ 585 ¦ 590 ¦ 0.81 percent\n10 ¦ 1,170 ¦ 1,160 ¦ 0.90 percent\n::end",
      "For sound, the frame test is its own control: under the true sound speed the residual was 4.5e-4, and under a wrong speed 0.78."
     ]
@@ -142,7 +142,7 @@
      "## Forecasts",
      "Table {ref:tab:forecast} sets the forecasts written before the run against the outcomes.",
      "::table tab:forecast cols=0.46,0.27,0.27 Forecasts fixed before the run against what it gave.\nQuantity ¦ Forecast ¦ Outcome\nPhotons in the window ¦ about 150, band 50 to 300 ¦ 84\nSlope bound ¦ below 30 ms per GeV ¦ 117 ms per GeV\nLinear energy scale ¦ 0.5 to 10 Planck energies ¦ 0.32\nPlanted delay at 5 times the bound ¦ within 20 percent ¦ 0.81 percent\nShuffled range contains the real slope ¦ yes ¦ yes\nRays in a uniform flow ¦ within 1 percent ¦ 9.6e-7\nFrame test with the sound speed ¦ to 1e-3 ¦ 4.5e-4\nGroup velocity at kh = 1 ¦ more than 10 percent above sound ¦ 1.63 times\nGroup velocity at kh above 2 ¦ about twice sound or more ¦ 2.89 times\nTrachenko bound ¦ 36.1 km/s ¦ 36.10 km/s\n::end",
-     "{c4}Twelve of the 15 preregistered rules passed; the three that failed were two forecasts of our own bound's strength and one test of a packet near a simulated horizon.{/c4} Appendix A lists every rule."
+     "{c4}Twelve of the 15 preregistered verdicts passed; the three that failed were two forecasts of our own bound's strength and one test of a packet near a simulated horizon.{/c4} Appendix A lists every rule."
     ]
    },
    {
@@ -214,7 +214,7 @@
   },
   {
    "id": "c4",
-   "text": "Twelve of the 15 preregistered rules passed; the three that failed were two forecasts of our own bound's strength and one test of a packet near a simulated horizon.",
+   "text": "Twelve of the 15 preregistered verdicts passed; the three that failed were two forecasts of our own bound's strength and one test of a packet near a simulated horizon.",
    "section": "abstract",
    "basis": "observed",
    "refs": [],
@@ -414,6 +414,15 @@
    "after": "The headline was narrowed to a reproduction of method, as here.",
    "reason": "A review of our ledger noted that the rerun limit, 0.32 Planck energies by bootstrap and 1.36 by one photon, is far below the published 7.6 and 10, so the rerun does not reproduce the published limit.",
    "found_by": "a review of our findings ledger"
+  },
+  {
+   "id": "x2",
+   "date": "2026-11-14",
+   "target": "document",
+   "type": "scope",
+   "after": "The abstract counted 12 of 15 preregistered rules; the file holds 15 verdicts built from 23 rules, and 12 verdicts passed. The introduction put a 30 GeV photon at about 1e-18 of the Planck energy; 30 GeV over 1.22e19 GeV is 2.5e-18. The planted check was described as run with both signs inside a grid of -250 to +250 ms per GeV; the file stores positive delays only, up to 1,160 ms per GeV, and the text now says what the file does and does not record.",
+   "reason": "A review of the published page found three statements that did not match the result file.",
+   "found_by": "a review of the published pages"
   }
  ],
  "versions": [
@@ -427,6 +436,11 @@
    "date": "2026-11-09",
    "what": "paper version 1.0, first published",
    "hash": "b65b8b8f28322f0b262c71e8fa27a093eee4f9f15dd8801f0b34dab0a2a88c71"
+  },
+  {
+   "n": 3,
+   "date": "2026-11-14",
+   "what": "this page corrected, 1 item; the PDF and its BuildTeX source are still paper version 1.0"
   }
  ],
  "grade": {

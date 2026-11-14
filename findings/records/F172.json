@@ -132,7 +132,7 @@
      "![fig:brier width=0.92 alt=Six horizontal bars of Brier score, the logistic model shortest and face value longest](fig-brier.png) Held-out Brier scores of the six forecasts. Navy bars beat the base rate (grey); ochre bars do not. Drawn from the run's result file.",
      "Table {ref:tab:tests} gives the four preregistered comparisons. {c1}The selection model beat taking the originals at face value by 0.142 in Brier score (95% interval 0.108 to 0.186) and did not beat the base rate, at -0.004 (-0.039 to 0.027).{/c1} {c2}A small logistic model on the original z value and the two sample sizes beat the selection model by 0.037 (0.011 to 0.069).{/c2}",
      "::table tab:tests cols=0.34,0.16,0.26,0.12,0.12 Competitor's Brier score minus the selection model's, so a positive value favours the selection model. Interval from the project-cluster bootstrap, 2,000 draws; p from 4,000 project sign flips; q after the Benjamini-Hochberg correction over the four.\nComparison ¦ Difference ¦ 95% interval ¦ p ¦ q\nFace value ¦ 0.142 ¦ 0.108 to 0.186 ¦ 0.00025 ¦ 0.0005\nBase rate ¦ -0.004 ¦ -0.039 to 0.027 ¦ 0.811 ¦ 0.811\nLogistic regression ¦ -0.037 ¦ -0.069 to -0.011 ¦ 0.010 ¦ 0.014\nNormal prior, no spike ¦ 0.085 ¦ 0.059 to 0.118 ¦ 0.00025 ¦ 0.0005\n::end",
-     "By field (Table {ref:tab:fields}, Figure {ref:fig:fields}), skill over the base rate was positive in three of the six fields the run counted as large, short of the preregistered target of 75 percent. The model's predicted rate sat above the observed rate in seven of the eight fields and below face value in all eight. {c4}For the Reproducibility Project the model predicted a success rate of 0.50 against 0.34 observed, where face value predicted 0.83; in social psychology it predicted 0.65 against 0.41, where face value predicted 0.89.{/c4}",
+     "By field (Table {ref:tab:fields}, Figure {ref:fig:fields}), skill over the base rate was positive in three of the six fields the run counted as large (cognitive, marketing, other, other psychology, the Reproducibility Project and social; economics with 16 rows and management with 82 were left out), short of the preregistered target of 75 percent. The project counts by field sum to 342, more than the 307 clusters, because a cluster with rows in two fields is counted in each. The model's predicted rate sat above the observed rate in seven of the eight fields and below face value in all eight. {c4}For the Reproducibility Project the model predicted a success rate of 0.50 against 0.34 observed, where face value predicted 0.83; in social psychology it predicted 0.65 against 0.41, where face value predicted 0.89.{/c4}",
      "::table tab:fields cols=0.22,0.1,0.11,0.14,0.15,0.14,0.14 Held-out results by field. Rates are shares of rows that replicated by our rule. Skill is the base rate's Brier score minus the selection model's.\nField ¦ Rows ¦ Projects ¦ Observed ¦ Predicted ¦ Face value ¦ Skill\nCognitive ¦ 200 ¦ 50 ¦ 0.50 ¦ 0.63 ¦ 0.88 ¦ 0.020\nEconomics ¦ 16 ¦ 7 ¦ 0.50 ¦ 0.50 ¦ 0.79 ¦ -0.006\nManagement ¦ 82 ¦ 4 ¦ 0.79 ¦ 0.84 ¦ 0.96 ¦ 0.088\nMarketing ¦ 84 ¦ 6 ¦ 0.37 ¦ 0.66 ¦ 0.98 ¦ -0.053\nOther ¦ 163 ¦ 43 ¦ 0.62 ¦ 0.69 ¦ 0.89 ¦ -0.002\nOther psychology ¦ 229 ¦ 70 ¦ 0.62 ¦ 0.72 ¦ 0.98 ¦ 0.016\nReproducibility Project ¦ 79 ¦ 79 ¦ 0.34 ¦ 0.50 ¦ 0.83 ¦ 0.048\nSocial ¦ 369 ¦ 83 ¦ 0.41 ¦ 0.65 ¦ 0.89 ¦ -0.050\n::end",
      "![fig:fields width=0.92 alt=Dot plot by field with observed rate left, selection model in the middle and face value right](fig-fields.png) Observed replication rate (circles) against the selection model's forecast (diamonds) and face value (squares), by held-out field. The model moves every field's forecast toward the observed rate and stops short of it in most.",
      "The forecasts were also miscalibrated at the top, as Figure {ref:fig:calib} shows. In five bands of equal count, {g:calibration}calibration{/g} was close in the lowest two and overconfident above: effects given a mean chance of 0.97 replicated at 0.57, and effects given 1.00 replicated at 0.83.",
@@ -308,7 +308,7 @@
    "id": "e8",
    "kind": "control",
    "label": "Known-answer check",
-   "value": "planted mixtures; 35 RPP successes",
+   "value": "planted mixtures; 34 reported Reproducibility Project successes in the rows kept, against the 35 published",
    "check": {
     "by": "the register's evidence fields",
     "result": "not_checked",
@@ -402,6 +402,15 @@
    "after": "Read against the table it only shrinks the overstatement. This paper states the narrower reading throughout.",
    "reason": "The original heading and kill line in our {g:findings-ledger}findings ledger{/g} said the model corrects the rate.",
    "found_by": "the study itself, before publication"
+  },
+  {
+   "id": "x2",
+   "date": "2026-11-14",
+   "target": "document",
+   "type": "number",
+   "after": "The header said held while the preregistered kill rule had fired and four of nine verdicts had failed; it now says mixed, and the header shows the verdict count. The results now name the six fields the run counted as large and say why the project counts by field sum to more than the 307 clusters. The register line that read 35 Reproducibility Project successes now gives the 34 the kept rows carry, against the 35 published.",
+   "reason": "A review of the published page found the outcome word at odds with the page.",
+   "found_by": "a review of the published pages"
   }
  ],
  "versions": [
@@ -415,6 +424,11 @@
    "date": "2026-11-09",
    "what": "paper version 1.0, first published",
    "hash": "eeb1c60eee68fe44c9946b084e9aad2c7018322a064bcdb86c46546541a3d386"
+  },
+  {
+   "n": 3,
+   "date": "2026-11-14",
+   "what": "this page corrected, 1 item; the PDF and its BuildTeX source are still paper version 1.0"
   }
  ],
  "grade": {

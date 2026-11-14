@@ -10,7 +10,7 @@ subject: A public-goods simulation whose apparent reproduction of a kin-and-spac
 footer: F190, the cheater result was self-benefit, version 1.0
 ---
 # abstract
-Microbes that release costly products into their surroundings are exposed to cheaters that take the benefit and skip the cost. A standard result in social evolution says that when relatives stay near each other, producers can persist anyway. We tried to reproduce that on a simple grid model before using the idea in our own writing, and in the second of three preregistered rounds the model seemed to succeed, with a threshold that matched a rule from the theory literature. It had a flaw: each producer received a share of its own goods. {c1}The shuffled control, which should have collapsed, kept producers at a mean share of 0.37 (95th percentile 0.52), and with a 3 by 3 goods box a producer recovers a ninth of its own output, so producing paid for itself whenever the benefit-to-cost ratio passed 9.{/c1} The third round paid goods to others only. {c2}With goods paid to others only, local producers ended at a share of 0.03 at a benefit-to-cost ratio of 100, 0.19 at 200 and 0.48 at 400, and never reached the preregistered bar of 0.5.{/c2} Under this update rule, space alone gave producers no foothold at any sensible cost.
+Microbes that release costly products into their surroundings are exposed to cheaters that take the benefit and skip the cost. A standard result in social evolution says that when relatives stay near each other, producers can persist anyway. We tried to reproduce that on a simple grid model before using the idea in our own writing, and in the second of three preregistered rounds the model seemed to succeed, with a threshold that matched a rule from the theory literature. It had a flaw: each producer received a share of its own goods. {c1}The shuffled control, which should have collapsed, kept producers at a mean share of 0.37 (95th percentile 0.52), and with a 3 by 3 goods box a producer recovers a ninth of its own output, so producing paid for itself whenever the benefit-to-cost ratio passed 9.{/c1} The third round paid goods to others only. {c2}With goods paid to others only, local producers ended at a share of 0.03 at a benefit-to-cost ratio of 100, 0.19 at 200 and 0.48 at 400, and never reached the preregistered bar of 0.5.{/c2} Under this update rule, space alone gave producers no foothold at any benefit-to-cost ratio up to 50, where their share was 0.00.
 
 # section What this means for a reader {sec:reader}
 A simulation can match a known answer for the wrong reason. Ours produced a clean threshold for when cooperation survives, close to a number from the theory literature, and we credited the theory. The match came from a coding choice that let each cooperator keep part of its own contribution, which turns cooperation into private investment. If you build or read individual-based models of microbes, markets or teams, check whether the "cooperators" are paid by their own act.
@@ -51,7 +51,7 @@ The local arm uses the rules above. The {g:mixed-arm}mixed arm{/g} sets {m:\phi}
 ## The flaw
 Under eq. {ref:eq:self} a producer is one of the {m:N} cells its own goods reach, so it receives {m:b/N} of its own output. Producing then pays the producer directly whenever
 $$ \frac{b}{N} > c {eq:flaw}
-that is, whenever {m:b/c} exceeds {m:N}, which is 9 for a 3 by 3 box. That is a private return. It needs no relatives nearby, so it survives in the shuffled arm too.
+that is, whenever {m:b/c} exceeds {m:N}, which is 9 for a 3 by 3 box. That is a private return. It needs no relatives nearby, so it survives in the shuffled arm too. In round three it did so from a ratio of 20 (a share of 0.37) and fully from 30; at ratios of 12 and 16 the shuffled producers ended at 0.00 while local producers ended at 1.00, so in that band clustering still mattered.
 
 ## Measures
 The {g:final-share}final producer share{/g} is the share of producers at the end of a run, averaged over replicate runs; a run stops early when one type fills the grid. A ratio counts as persistence when that average reaches 0.5. Round one ran 1,500 generations and 8 replicates; round two 1,200 generations and 6 replicates; round three 1,000 generations and 5 replicates.
@@ -112,7 +112,7 @@ Two: first ratio with persistence ¦ 7 to 12 ¦ 9 at every b
 Two: local final share at ratio 20 ¦ above 0.8 ¦ 1.0
 Two: mixed lawn invaded by a cheater patch ¦ below 0.05 ¦ 0.5
 Three: threshold with own goods included ¦ 9 ¦ 9
-Three: shuffled with own goods persists above 9 ¦ yes ¦ from 30; 0.37 at 20
+Three: shuffled with own goods persists above 9 ¦ yes ¦ from 30; 0.37 at 20; 0.00 at 12 and 16
 Three: mixed and shuffled collapse, others only ¦ yes ¦ yes
 Three: others-only local never persists up to 400 ¦ probability 0.4 ¦ it did not persist
 ::end
@@ -120,7 +120,7 @@ Three: others-only local never persists up to 400 ¦ probability 0.4 ¦ it did n
 # section Discussion {sec:discussion}
 The second round looked like a textbook reproduction, and the shuffled control is what showed it was not one. Scrambling positions every generation removes relatives from a producer's neighbourhood, so any persistence that survives scrambling cannot come from kin. Producers kept a mean share of 0.37 in the scrambled grid. Reading that number led to eq. {ref:eq:flaw}: the threshold of 9 was the size of the goods box, and the match with the neighbour count of 8 in the rule of Ohtsuki and colleagues {cite:ohtsuki2006} was a coincidence. Their rule concerns a game played between pairs of neighbours on a graph. Ours shares a public good over a box, a different model, so the match was never a test of their rule.
 
-With the private return removed, local producers did not persist anywhere up to a ratio of 400, and widening the goods box made them worse off. This fits the result of Taylor {cite:taylor1992} and of Griffin and colleagues {cite:griffin2004}: when relatives compete for the same space, the competition can cancel the benefit of living near them. In our model the parent window and the goods box overlap, so a producer's goods feed the same neighbours that compete for its offspring's cells. The model does not show that space never protects cooperators. It shows that this model, with this update rule, gives them no protection at sensible costs.
+With the private return removed, local producers did not persist anywhere up to a ratio of 400, and widening the goods box made them worse off. This fits the result of Taylor {cite:taylor1992} and of Griffin and colleagues {cite:griffin2004}: when relatives compete for the same space, the competition can cancel the benefit of living near them. In our model the parent window and the goods box overlap, so a producer's goods feed the same neighbours that compete for its offspring's cells. The model does not show that space never protects cooperators. It shows that this model, with this update rule, gives them no protection at benefit-to-cost ratios up to 50.
 
 The claim that space protects cooperators in microbes therefore stays a citation of published work, such as the review of Nadell and colleagues {cite:nadell2016} and the experiment of Griffin and colleagues {cite:griffin2004}. It is not a result of ours.
 
@@ -140,6 +140,7 @@ Verified: on 9 November 2026 every final share, threshold, sweep value, control 
 - 31 October 2026: round one's closed-form slope check failed because the formula held the producer share fixed. Round two replaced it with the exact recursion.
 - 9 November 2026: our earlier write-up said local producers in round two "persisted in the majority of runs" at a ratio of 9. The rule was a mean final share of at least 0.5, and this paper says so. It also did not report that round three's space verdict was recorded as untestable; this paper does.
 - 9 November 2026: first published version.
+- 14 November 2026: A review of the published page found wording that the round-three result file narrows. The page said the private return survives in the shuffled arm above a ratio of 9; in the file shuffled producers with their own goods ended at 0.00 at ratios of 12 and 16, 0.37 at 20 and 1.00 from 30, while local producers ended at 1.00 from 12. The methods and the forecast table now give those values, and one chart caption now says space is not the only thing that keeps producers alive. The phrase sensible cost is replaced by the ratios it stood for.
 
 # section Reproduction {sec:repro}
 - Build a 100 by 100 torus of producers and cheaters, half and half at random.

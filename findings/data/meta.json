@@ -75,7 +75,7 @@
   "F47": {
    "slug": "skill-against-noise-ceilings",
    "title": "More variables raise prediction skill, yet most targets stall far below their noise ceiling",
-   "standfirst": "Across trees, mood, music ratings, forecasters and a similarity task, held-out skill grew as we added measured variables and always beat a shuffled baseline. In five of six targets with a measurable ceiling it stopped between 0.18 and 0.65 of the way there, and the gap closed mainly when a different kind of variable arrived.",
+   "standfirst": "Across trees, mood, music ratings, forecasters and a similarity task, held-out skill grew as we added measured variables and always beat a shuffled baseline. In four of the five targets with a valid ceiling it stopped between 0.18 and 0.65 of the way there. We forecast that a different kind of variable would move at least three of those plateaus, and it moved one of seven.",
    "fields": [
     "forecasting-prediction",
     "method",
@@ -217,7 +217,7 @@
   "F147": {
    "slug": "film-as-a-photon-detector",
    "title": "Kodak's own curves put modern colour negative at 0.6 to 4.9 percent quantum efficiency",
-   "standfirst": "Reading three Kodak VISION3 data sheets as if the film were a photon counter, the best layer uses about 5 percent of the light's information and the median layer about 2 percent. The 500T and 200T stocks match each other within 10 percent although one needs about twice the photons of the other.",
+   "standfirst": "Reading three Kodak VISION3 data sheets as if the film were a photon counter, the best layer uses about 5 percent of the light's information and the median layer about 2 percent. In the green layer the 500T and 200T stocks match within 10 percent (4.5 and 4.9 percent) although one needs about twice the photons of the other; their blue layers differ by 11 percent and their red layers by 26.",
    "fields": [
     "colour-film",
     "instruments-metrology"
@@ -269,7 +269,7 @@
   "F166": {
    "slug": "combined-value-formula-retired",
    "title": "Our combined value formula lost to plain prospect theory on 11,759 risky choice problems",
-   "standfirst": "We tested our own formula for how people value risky options, prospect theory plus terms for information, threat and drive, against a richer version of prospect theory on the public choices13k data. It never beat that richer model, so we retired it. Fitted loss aversion came out at 1.16 when people chose from descriptions and 0.89 when they learned from feedback.",
+   "standfirst": "We tested our own formula for how people value risky options, prospect theory plus terms for information, threat and drive, against a richer version of prospect theory on the public choices13k data. It never beat that richer model by the margin we set in advance (with feedback it led by 0.001 against a bar of 0.005), so we retired it. Fitted loss aversion came out at 1.16 when people chose from descriptions and 0.89 when they learned from feedback.",
    "fields": [
     "psychology",
     "economy",
@@ -328,7 +328,7 @@
   "F190": {
    "slug": "public-goods-self-benefit-correction",
    "title": "Our model of cooperation on a grid had been rewarding selfishness",
-   "standfirst": "We set out to reproduce a textbook result, that living near relatives lets costly cooperation survive cheaters, and our model appeared to succeed. It had a flaw: cooperators were paid back by their own contribution. With that removed, cooperation collapsed at every sensible cost under our update rule.",
+   "standfirst": "We set out to reproduce a textbook result, that living near relatives lets costly cooperation survive cheaters, and our model appeared to succeed. It had a flaw: cooperators were paid back by their own contribution. With that removed, cooperation collapsed at every benefit-to-cost ratio up to 50 under our update rule, and reached a share of only 0.48 at a ratio of 400.",
    "fields": [
     "biology-other",
     "economy"
@@ -467,7 +467,7 @@
   "F508": {
    "slug": "shannon-entropy-old-and-new-text",
    "title": "Shannon's 1951 letter statistics hold on old and new English; his third-order value reads high",
-   "standfirst": "Shannon's first- and second-order entropy figures for English letters match ours within 0.12 bits on books from 1788 to 1925 and on present-day Wikipedia. His third-order figure sits 0.23 to 0.39 bits above ours, and an n-gram reader never gets near his 1.3 bits per letter.",
+   "standfirst": "Shannon's first- and second-order entropy figures for English letters match ours within 0.12 bits on books from 1788 to 1925 and on present-day Wikipedia. His third-order figure sits 0.23 to 0.40 bits above ours, and an n-gram reader never gets near his 1.3 bits per letter.",
    "fields": [
     "information-theory",
     "linguistics-literature"

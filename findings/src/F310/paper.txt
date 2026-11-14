@@ -75,7 +75,7 @@ The instrument was checked on planted systems before the real data were read. Pl
 The two controls ask different questions, and they are read in that order. Beating the pooled-gap control says the gaps inside a system resemble each other more than gaps drawn from other systems. Beating the order-shuffle control would say the order of those gaps is regular as well. Only the second is a claim about a sequence.
 
 # section Results {sec:results}
-Table {ref:tab:scores} gives the score of each form against its controls, and Figure {ref:fig:reg} draws the same numbers. The plain form scores -0.157. The real systems are far more regular than systems built from pooled gaps. They are not more regular than their own gaps in a shuffled order: the real score sits inside the order-shuffle range for all three forms.
+Table {ref:tab:scores} gives the score of each form against its controls, and Figure {ref:fig:reg} draws the same numbers. The plain form scores -0.157. The real systems are far more regular than systems built from pooled gaps. They are not more regular than their own gaps in a shuffled order: the real score sits inside the order-shuffle range for the plain and gapped forms and below it for the Blagg-Richardson style form (-0.141 against a 5th to 95th percentile range of -0.134 to -0.116).
 
 ::table tab:scores cols=0.31,0.11,0.12,0.22,0.11,0.10 Regularity scores against the two controls. The interval is the 5th to 95th percentile of the control draws.
 Form and control ¦ Real score ¦ Control mean ¦ Control interval ¦ p ¦ Draws
@@ -87,7 +87,7 @@ Gapped, order shuffled ¦ -0.079 ¦ -0.078 ¦ -0.081 to -0.074 ¦ 0.68 ¦ 200
 
 ![fig:reg width=0.98 alt=Diamonds for the real scores against grey bars for the control ranges](fig-regularity.png) Real regularity scores (diamonds) against the 5th to 95th percentile range (bars) and mean (ticks) of each control. Only the pooled-gap control is beaten. Drawn from the run's result file.
 
-{c4}The Blagg-Richardson style form scores below its own order-shuffle mean, and the gapped form sits at its mean.{/c4} The extra freedom in those forms fits shuffled systems as well as real ones.
+{c4}The Blagg-Richardson style form scores below the 5th percentile of its own order shuffles, and the gapped form sits at its mean.{/c4} The extra freedom in those forms fits shuffled systems as well as real ones.
 
 {c2}When an interior planet is dropped, the geometric mean of its two neighbours predicts its period better than the rule does: median error 0.107 against 0.131 in log period, a ratio of 1.23.{/c2} Figure {ref:fig:loo} shows the two errors.
 
@@ -130,6 +130,7 @@ Verified: on 9 November 2026 the counts (122 systems, 543 planets), the three re
 # section Corrections {sec:corrections}
 - 31 October 2026: a review of our ledger noted that the three forms were written from memory. This paper states it in the methods and the limitations.
 - 9 November 2026: first published version.
+- 14 November 2026: A review of the published page found one sentence the result file contradicts and one rounded label. The results said the real score sits inside the order-shuffle range for all three forms; the Blagg-Richardson style score, -0.141, lies below its shuffle range of -0.134 to -0.116, and the text now says so. A chart showed that form's p value as 1.00; the file gives 0.995, as the text does. The line on where the claim stands was reworded so that it reads as the rival reading losing, which is what the verdicts say.
 
 # section Reproduction {sec:repro}
 - Data: query the NASA Exoplanet Archive Planetary Systems Composite Parameters table (pscomppars) for systems with four or more planets with orbital periods and a controversy flag of zero.

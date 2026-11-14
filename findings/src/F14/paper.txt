@@ -145,6 +145,7 @@ Verified: on 9 November 2026 the first dark ring values (275.7 nm and 285.39 nm)
 - 28 October 2026: the first run's dark-ring search stopped at 1 nm; fixed before grading, model unchanged, as described in the controls section.
 - 9 November 2026: the summary written for the site said that at 85 degrees "the rule" sits 26.7 percent below the secant. The result file gives 26.7 percent for the table's value; the rule's own gap at 85 degrees is 26.8 percent. This paper uses the table's value.
 - 9 November 2026: first published version.
+- 14 November 2026: A review of the published page found two statements that did not match the study's records. The line on where the claim stands said the secant runs 27 percent low at 85 degrees; it is Newton's table and his rule that run 27 percent below the secant there (84.1 against 114.7), and the line now says so. One chart gave the bar for the shuffled control as 1 row or more; the locked rule is 3 rows or more, and every shuffle failed at 7 or more.
 
 # section Reproduction {sec:repro}
 - Data: the Opticks, 1730, Book II, Part I, Observations 6 and 7 (Project Gutenberg 33504); the CIE D65 and CIE 1931 2 degree observer tables.

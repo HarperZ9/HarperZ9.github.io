@@ -334,7 +334,7 @@
     "round2"
    ],
    "title": "Round two at a ratio of 20: local producers against the shuffled control.",
-   "takeaway": "Local producers end at 1.00. Shuffled producers, which should end at 0, end at 0.37 on average (0.26 to 0.52). Space is not what keeps them alive.",
+   "takeaway": "Local producers end at 1.00. Shuffled producers, which should end at 0, end at 0.37 on average (0.26 to 0.52). Space is not the only thing that keeps them alive.",
    "units": "final producer share: share of grid cells holding a producer at the end of a run, averaged over runs; 0 means cheaters took the grid",
    "n": "20 shuffled-control runs; local arm 100 by 100 grid, 1,200 generations, 6 runs per point",
    "interval": "5th to 95th percentile of the shuffled-control runs",
