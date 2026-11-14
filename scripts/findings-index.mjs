@@ -46,6 +46,13 @@ function entry(it) {
 </li>`;
 }
 
+// The index's own Verified line: what was checked on the section as a whole, by what, with what result, on one date.
+// A dated statement: change it only when the checks are run again.
+const VERIFIED = [
+  ["Verified on 2026-11-13.", "The index and all 30 finding pages were read in full by AI model readers working for the author, looking for a stated result with its numbers and limits, nulls kept as nulls, local file paths, stale claims and broken text. A script followed all 7,245 internal links and anchors on the 32 pages of this section and found none broken. It sent one request to each of the 164 outside addresses the pages cite: 158 answered (124 of them are DOI redirects, which shows the DOI is registered and says nothing about the publisher's page), five arXiv links carried a stray full stop and failed, and one, the Atomic Mass Data Center, refused the script. The five links were repaired that day and answer now. The same pass repaired one table reference that had printed as raw markup on F329 and one chart label on F310 that had rounded p 0.995 to 1.00."],
+  ["Not checked.", "No study was re-run and no number was recomputed from its result file in this pass; each finding's own Verified section says what was checked for it. The glossary was scanned by script and not read in full. The read also raised points about wording and scope on single pages that this pass did not settle; a correction joins a finding's Trail when it is accepted."],
+];
+
 export function indexBody(list) {
   const domains = DOMAINS.map(([id]) => id).filter((id) => list.some((it) => it.domains.includes(id)));
   const tiers = Object.keys(TIERS).filter((t) => list.some((it) => it.tier === t));
@@ -63,7 +70,8 @@ ${field(list, domains)}
 ${filters(list, tiers, domains)}
 <p class="xp-count" aria-live="polite">${list.length} findings shown.</p>
 <ol class="xp-stream">${list.map(entry).join("\n")}</ol>
-<p class="fd-also">Looking for the shorter cards? <a href="/experiments/">Experiments</a> lists the preregistered studies that came back null, one card each.</p>
+${VERIFIED.map((v) => `<p class="fd-standkey fd-verified"><b>${esc(v[0])}</b> ${esc(v[1])}</p>`).join("")}
+<p class="fd-also">Looking for the shorter cards? <a href="/experiments/">Experiments</a> lists the preregistered studies that came back null, one card each. Findings are listed with the other writing under <a href="/publications.html#research">Research notes and papers</a>.</p>
 </article>
 <script type="module" src="/world/site/findings.js"></script>`;
 }

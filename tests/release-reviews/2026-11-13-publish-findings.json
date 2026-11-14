@@ -1,0 +1,12 @@
+{
+  "date": "2026-11-13",
+  "note": "Findings joins the Writing hub and the feeds as one listing in Research notes and papers; publications page, feeds, publication index and build receipt rebuilt.",
+  "paths": {
+    "feed.json": "a007289391c1c1559f6b067e0acbdc377adb18d7d9f8ff5d4eab3869c6eebc3d",
+    "feed.xml": "0460ebd061a6e8736e2b436996069d5b7c298c6bd4b6ba61b631f00c8f8a1017",
+    "publications.html": "e529c3714f1daa6a3a203e39b90c289e76f0fb0a7c99358385a54efdcf4330be",
+    "publications/build.json": "ede47d71f1a316c46b56b6f7a7164044fb54a95558ae34cd138cdeac45021d3e",
+    "publications/data/index.json": "fd214411ddeb1036d018303ff3c4cc06f7a01a1d39cb3ff8719df417d9b6c24d",
+    "publications/data/sections.json": "6933afd9d37e4f480d676a890d54f3dee52a42b9d9331c354feb5b5ac566bd6d"
+  }
+}

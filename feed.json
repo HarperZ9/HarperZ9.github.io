@@ -5,6 +5,14 @@
   "feed_url": "https://harperz9.github.io/feed.json",
   "items": [
     {
+      "id": "https://harperz9.github.io/findings/",
+      "url": "https://harperz9.github.io/findings/",
+      "title": "Findings",
+      "content_text": "What our experiments found, one finding per page: the result with its numbers and limits, the strongest objection, and the steps to repeat it. Thirty findings as of November 2026, twelve of them honest nulls: tests that failed, claims that did not hold, and errors of our own that we found and fixed.",
+      "date_published": "2026-11-09T00:00:00Z",
+      "date_modified": "2026-11-13T00:00:00Z"
+    },
+    {
       "id": "https://harperz9.github.io/who-kept-the-books.html",
       "url": "https://harperz9.github.io/who-kept-the-books.html",
       "title": "Who Kept the Books",

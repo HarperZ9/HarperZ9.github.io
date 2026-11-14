@@ -87,7 +87,7 @@ def test_every_piece_sits_in_exactly_one_writing_section() -> None:
 def test_each_piece_carries_the_kind_word_from_sections_json() -> None:
     kinds = {member["id"]: member["kind"] for section in SECTIONS["sections"] for member in section["members"]}
     allowed = {"Investigation", "Series opener", "Series piece", "Essay", "Open letter", "Atlas essay", "Dossier",
-               "Briefing", "Research corpus", "Visual sequence"}
+               "Briefing", "Research corpus", "Visual sequence", "Findings"}
     assert set(kinds.values()) <= allowed
     rows = re.findall(r'<article data-publication-entry[^>]*><p class="publication-meta">([^·<]+) ·.*?<h3><a href="([^"]+)"',
                       generated_hub())
@@ -213,6 +213,13 @@ def test_every_piece_links_back_to_its_section() -> None:
         if route.endswith(".pdf") or route.startswith(frozen) or route.startswith("briefings/"):
             continue  # frozen editions and the hashed dossier reach the hub through the menu crumb
         path = ROOT / route
+        if path.is_dir():
+            # A section listed as one piece (Findings) is built by its own generator and has no
+            # docnav line; its index links back to its Writing section from the root.
+            source = (path / "index.html").read_text(encoding="utf-8")
+            section = next(item["collection"] for item in INDEX["listings"] if item["route"] == route)
+            assert f'href="/publications.html#{section}"' in source, f"{route} does not link back to Writing"
+            continue
         source = path.read_text(encoding="utf-8")
         docnav = re.search(r'<(?:nav|div) class="docnav"[^>]*>(.*?)</(?:nav|div)>', source, re.S)
         assert docnav, f"{route} has no back-link line"

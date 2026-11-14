@@ -78,6 +78,7 @@
       "more": "More research",
       "explainer": "Working notes and archived papers from the research program. Nothing here is peer reviewed.",
       "members": [
+        {"id": "findings", "kind": "Findings", "topic": "experiments and null results"},
         {"id": "witnessing-spine", "kind": "Research corpus", "topic": "verification"},
         {"id": "conferred-existence", "kind": "Research corpus", "topic": "philosophy"}
       ],

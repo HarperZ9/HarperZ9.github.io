@@ -218,7 +218,7 @@
    "id": "e2",
    "kind": "number",
    "label": "The numbers in claim 2",
-   "value": "0.03; 100,; 0.19; 200; 0.48; 400,; 0.5",
+   "value": "0.03; 100; 0.19; 200; 0.48; 400; 0.5",
    "check": {
     "by": "re-read from the run's result file in the paper's Verified pass",
     "date": "2026-11-09",

@@ -56,7 +56,7 @@ function collectClaims(sections, refIds) {
   return [...claims.values()].sort((a, b) => Number(a.id.slice(1)) - Number(b.id.slice(1)));
 }
 
-function numbersOf(text) { return [...new Set(plain(text).replace(/\{m:[^}]*\}/g, "").match(/[-+]?\d[\d,]*(?:\.\d+)?(?:e-?\d+)?/g) || [])]; }
+function numbersOf(text) { return [...new Set(plain(text).replace(/\{m:[^}]*\}/g, "").match(/[-+]?\d+(?:,\d{3})*(?:\.\d+)?(?:e-?\d+)?/g) || [])]; }
 
 // evidence: the numbers each claim states, checked in the paper's Verified pass, then the register's own numbers
 function evidenceFor(claims, row, date) {

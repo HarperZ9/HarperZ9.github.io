@@ -110,6 +110,8 @@ what it does not do.
 - [Research](https://harperz9.github.io/research.html): the research index.
 - [Publications](https://harperz9.github.io/publications.html): papers and
   public records.
+- [Findings](https://harperz9.github.io/findings/index.html): what our experiments found,
+  one finding per page, with numbers, limits and the nulls kept.
 - [Hire or collaborate](https://harperz9.github.io/hire.html): the routes in.
 - [Work with me](https://harperz9.github.io/work-with-me.html): evaluation and
   investigation services, scoped quotes, limits and case studies from published work.
