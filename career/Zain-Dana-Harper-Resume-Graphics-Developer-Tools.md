@@ -4,56 +4,56 @@ Kent, Washington | zaindharper@gmail.com | harperz9.github.io
 
 linkedin.com/in/zaindanaharper | github.com/HarperZ9 | harperz9.github.io/published-work.html
 
-Graphics and Rendering | Developer Tools | Languages
+Graphics and Tools Programmer
 
 ## Summary
 
-Self-directed graphics and tools programmer moving from eleven years of arboriculture; the career change began June 2026, with no professional programming role yet. Builds renderers, shader presets and compilers that check each fast path against a reference.
+I write renderers, shader presets and compilers and check each fast path against a reference. My Skyrim mod has 1,004,693 downloads, and 34 open-source projects have merged 41 of my pull requests. About thirteen years of programming, and eleven years of commercial tree care scoping jobs and coordinating crews.
 
-## Technical Skills
+## Selected Results
 
-C++23, Rust, Python, HLSL, WGSL, TypeScript; D3D11, D3D12, Vulkan, WebGPU; CPU reference rendering and GPU parity checks; color science (Oklab, CAM16, ICC profiles); compilers, type inference, language servers; CMake, GitHub Actions, pytest.
+- Released Elder ENB, a Skyrim lighting preset with 38 atmosphere presets: 1,004,693 downloads (179,218 unique) and 2,418 endorsements as of November 13, 2026. nexusmods.com/skyrimspecialedition/mods/117327
 
-## Self-Directed Projects
+- Merged 41 pull requests in 34 other people's projects, 3 of them list entries, counted November 14, 2026. Biome #11518 fixed TypeScript modifier order in the formatter. TOMLKit #549 kept sibling keys when a dotted key is replaced. Grimp #304 replaced a Rust panic with a Python error. harperz9.github.io/portfolio.html
 
-About 13 years self-directed | Career transition began June 2026
+- Shipped BuildLang 1.15.0 on crates.io, Calibrate Pro 2.0.1 and Build Color 1.0.2 on PyPI, and Superframe 0.3.0 and raw-native 0.8.0 as GitHub releases. Versions read November 14, 2026.
 
-- Built raw-native, a C++23 renderer with a CPU reference beside D3D12 and WebGPU backends; release 0.8.0 passed 60 of 60 tests with MSVC and GCC, and its default renders were byte-identical across Windows, D3D12, Linux and WebAssembly builds.
+- Published the BuildLang systems paper, not peer reviewed: doi.org/10.5281/zenodo.21231253
 
-- Added a Vulkan 1.3 backend to raw-native, merged and not yet released, whose 600 presented frames match the offscreen and D3D12 WARP renders hash for hash.
-
-- Released Elder ENB, a lighting and post-processing preset for Skyrim Special Edition with 38 atmosphere presets: 996,649 downloads and 2,413 endorsements on Nexus Mods, read October 23, 2026.
-
-- Developed BuildLang, a Rust compiler with typed capability effects, type inference, C and shader output and a language server; version 1.10.0 is on crates.io.
-
-- Brought Argonaut's 1990s BRender engine to 64-bit Windows and Linux in Brender Archival, and built Calibrate Pro (ICC profiles, 3D LUTs, DDC/CI) and Build Color (Oklab, CAM16, Delta E), both on PyPI.
-
-### Freelance Technical Writer | Independent projects | Began 2017
-
-- Wrote implementation guides, API documentation, and release notes for developers and customers.
-
-## Employment
+## Experience
 
 ### Arboriculture and Field Operations | Legendary Tree
 
 Seattle area | April 25, 2015 to June 2, 2026
 
-- Turned site assessments into estimates, proposals, and workable job scopes; coordinated clients, crews, and vendors so teams understood access constraints, timing, and hazards.
+- Turned site assessments into estimates and job scopes; coordinated clients, crews and vendors on access, timing and hazards; watched rigging and clearances from the ground.
 
 ### Technical Networking Support | Stream/Convergys | 2014 to 2015
 
-Xbox/Microsoft product contract | Wilsonville, Oregon
+- Resolved Xbox connectivity problems on a Microsoft product contract in Wilsonville, Oregon, by phone and chat, across TCP/IP, DNS, NAT, firewalls and routers; documented the steps for support handoffs.
 
-- Resolved Xbox connectivity problems across TCP/IP, DNS, NAT, firewalls, and routers; documented troubleshooting steps for consistent support handoffs.
+I have not yet held a paid software role. The software on this page is independent work.
 
-## Open-Source Contributions: 37 Merged in 30 Repositories
+## Projects
 
-- TOMLKit #549: preserved sibling keys in dotted-key replacement, preventing silent configuration loss. Merged.
+- Built a C++23 renderer with a CPU reference beside D3D12 and WebGPU backends; release 0.8.0 passed 60 of 60 tests with MSVC and GCC, with default renders byte-identical across four builds.
 
-- Datasette #2815: corrected malformed composite-key requests from HTTP 500 to HTTP 400, with tests. Merged.
+- Added a Vulkan 1.3 backend whose 600 presented frames match the offscreen and D3D12 WARP renders hash for hash, and radiance cascades measured against the path trace. Merged, not yet released.
 
-## Certifications and Education
+- Developed BuildLang, a language with typed capability effects and C and shader output. Release 1.15.0 adds experimental WebAssembly and x86-64 targets that need no C toolchain.
 
-Security and cloud certifications from Qualys, Microsoft Applied Skills and Google Cloud, none specific to graphics; all 42 credentials, with verification links: harperz9.github.io/published-work.html
+- Brought Argonaut's 1990s BRender engine to 64-bit Windows and Linux from its public source.
+
+- Wrote guides, API documentation and release notes as a freelance technical writer, from 2017.
+
+I write with coding agents and review, test and release the work myself.
+
+## Education
 
 High School Diploma | Wilsonville High School, Oregon | 2013
+
+Credentials, 2026: security and cloud certifications from Qualys, Microsoft and Google, none in graphics.
+
+## Skills
+
+C++23, Rust, Python, HLSL, WGSL, TypeScript; D3D11, D3D12, Vulkan, WebGPU; CPU reference rendering and GPU parity checks; color science (Oklab, CAM16, ICC profiles); compilers and language servers; CMake.

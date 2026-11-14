@@ -4,60 +4,52 @@ Kent, Washington | zaindharper@gmail.com | harperz9.github.io
 
 linkedin.com/in/zaindanaharper | github.com/HarperZ9 | harperz9.github.io/published-work.html
 
-Technical Support | Developer Operations | Quality Assurance
+Technical Support and QA Engineer
 
 ## Summary
 
-Self-directed software builder after eleven years of full-time arboriculture; turns reported failures into reproducible tests.
+I turn reported failures into reproducible tests and clear write-ups. Maintainers of 34 open-source projects have merged 41 of my pull requests, and I have worked Xbox networking support by phone and chat. About thirteen years of programming, and eleven years of commercial tree care scoping jobs and coordinating crews.
 
-## Technical Skills
+## Selected Results
 
-Python, SQL, Git, GitHub Actions, pytest, Linux, Windows, HTTP/JSON APIs, WebSocket, TCP/IP, DNS, NAT; issue reproduction, regression testing, release packaging, technical documentation.
+- Merged 41 pull requests in 34 other people's projects, 3 of them list entries, counted November 14, 2026. Datasette #2815 turned a server error on malformed row URLs into a client error, with tests. Hebbian Robotics #157 added a test that reports schema drift in both directions. Voxwire #44 added offline replay coverage for a degraded voice turn. harperz9.github.io/portfolio.html
 
-## Self-Directed Projects
+- Shipped Flywheel 1.9.0 on PyPI, Homebrew and Scoop with a Windows installer, Articulate 0.18.0 on PyPI, and CMMNS 3.10.0 as a GitHub release. Versions read November 14, 2026.
 
-About 13 years self-directed | Career transition began June 2026
+- Released and updated Elder ENB, a Skyrim lighting mod: 1,004,693 downloads (179,218 unique) and 2,418 endorsements as of November 13, 2026. nexusmods.com/skyrimspecialedition/mods/117327
 
-- Built Flywheel, a Python/Flutter AI workstation on PyPI, Homebrew, Scoop and a Windows installer, with permission-checked tools.
+- Published 30 research findings, 12 of them nulls, each with the steps to repeat it. Not peer reviewed. harperz9.github.io/findings/
 
-- Enumerated all 324 combinations of a defined evaluation record into seven verdicts, separating provider failures and missing evidence from model-quality scores.
-
-- Built Articulate, a prose checker on PyPI; Accountable Surface approval interfaces; and Daylight Commons 3.2.2 (now CMMNS), a browser extension that shows the sources behind social media replies.
-
-- Released and updated Elder ENB, a Skyrim lighting preset: 996,649 downloads on Nexus Mods, 2024 to 2026.
-
-### Freelance Technical Writer | Independent projects | Began 2017
-
-- Wrote implementation guides, API documentation, and release notes for developers and customers.
-
-## Employment
+## Experience
 
 ### Arboriculture and Field Operations | Legendary Tree
 
 Seattle area | April 25, 2015 to June 2, 2026
 
-- Turned site assessments into estimates, proposals, and workable job scopes; coordinated clients, crews, and vendors so teams understood access constraints, timing, and hazards.
+- Turned site assessments into estimates and job scopes; coordinated clients, crews and vendors on access, timing and hazards; watched rigging and clearances from the ground.
 
 ### Technical Networking Support | Stream/Convergys | 2014 to 2015
 
-Xbox/Microsoft product contract | Wilsonville, Oregon
+- Resolved Xbox connectivity problems on a Microsoft product contract in Wilsonville, Oregon, by phone and chat, across TCP/IP, DNS, NAT, firewalls and routers; documented the steps for support handoffs.
 
-- Resolved Xbox connectivity problems across TCP/IP, DNS, NAT, firewalls, and routers; documented troubleshooting steps for consistent support handoffs.
+I have not yet held a paid software role. The software on this page is independent work.
 
-## Open-Source Contributions: 37 Merged in 30 Repositories
+## Projects
 
-- Free Law Project #820: documented runnable database-free tests, giving contributors a focused check path without starting the full database-backed stack. Merged.
+- Built Flywheel, a Python/Flutter AI workstation with permission-checked tools; sorted all 324 combinations of its evaluation record into seven verdicts that separate provider failures from model-quality scores.
 
-- Hebbian Robotics #157: added schema-drift coverage that flags mismatches between queryable episode columns and reserved names before incompatible changes go unnoticed. Merged.
+- Built Articulate, a prose checker; Accountable Surface approval interfaces; and CMMNS, a browser extension that shows the sources behind social media replies.
 
-## Certifications and Education
+- Wrote guides, API documentation and release notes as a freelance technical writer, from 2017.
 
-- Google Cloud skill badges: BigQuery predictive analysis; BigQuery ML models | Google | October 2026
+I write with coding agents and review, test and release the work myself.
 
-- Microsoft Applied Skills, four credentials, including Azure DevOps pipeline security (95% assessment) and Microsoft Entra identities and access | Microsoft | September 2026
-
-- Qualys Certified Specialist, six exams: VMDR, Policy Audit, EDR, TotalCloud, Kubernetes, Custom Assessment | Qualys | September 2026
-
-Training: Cisco Ethical Hacker, Claude Academy MCP, UNESCO Ethics of AI, 17 Linux Foundation security courses. All 42 credentials and verification links: harperz9.github.io/published-work.html
+## Education
 
 High School Diploma | Wilsonville High School, Oregon | 2013
+
+Credentials, 2026: 4 Microsoft Applied Skills including Azure DevOps pipeline security, 6 Qualys Certified Specialist exams, 2 Google Cloud BigQuery skill badges.
+
+## Skills
+
+Python, SQL, Git, GitHub Actions, pytest, Linux, Windows, HTTP/JSON APIs, WebSocket, TCP/IP, DNS, NAT; issue reproduction, regression testing, release packaging, technical documentation.

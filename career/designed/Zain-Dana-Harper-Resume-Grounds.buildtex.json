@@ -3,9 +3,9 @@
  "source": {
   "path": "career/resume-source.json",
   "document": "grounds",
-  "sha256": "9859e3bbbe9a483ba0cba41a14d942248944a64498558ef4f47ed6af5c3c251f"
+  "sha256": "a3b6fa37ccf7422e7c5b747310c7d648c56af5e918605479aa6a75258afaea19"
  },
- "ir_sha256": "1f653f96a4b5019290b42ccd69c02d4c9b5372b0db779272b647495f76becfc4",
+ "ir_sha256": "ddd8d60d8a8e237b06fe47bf77d08101399bc95ac5364a4aacf4d4997934014d",
  "theme": "press-resume",
  "overrides": [
   "base.size=10.0",
@@ -13,7 +13,11 @@
   "emboss.deboss_finish=inked"
  ],
  "outputs": {
-  "Zain-Dana-Harper-Resume-Grounds.pdf": "edf9a78ed588e4b50d5c7729ed55ae5c7f9a6fcffa4c1ceddb7543e0f89afdc3"
+  "Zain-Dana-Harper-Resume-Grounds.pdf": "096b229a7351b96f63ab354e917d62f5c3fd853b28575302a6d6607c3ed73eda"
+ },
+ "pdf_metadata": {
+  "pdfa": false,
+  "creation_date": null
  },
  "facts": {
   "pages": 1,
@@ -21,21 +25,23 @@
   "overfull": [],
   "underfull": 0,
   "missing_glyphs": [],
+  "glyph_fallbacks": [],
+  "math_errors": [],
   "fonts": [
-   {
-    "name": "BHOJBC+HankenGrotesk-Regular",
-    "embedded": true
-   },
    {
     "name": "BJEJEB+AccessionDisplay-Master",
     "embedded": true
    },
    {
-    "name": "GJLEJI+HankenGrotesk-Regular",
+    "name": "DIDCJL+HankenGrotesk-Regular",
     "embedded": true
    },
    {
-    "name": "HPNAAK+HankenGrotesk-Regular",
+    "name": "HMOPAF+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "MBAOJE+HankenGrotesk-Regular",
     "embedded": true
    }
   ],
@@ -43,7 +49,7 @@
   "blind_text_runs": 0,
   "reading_order": true,
   "blocks_missing_from_text": [],
-  "pdf_bytes": 225122
+  "pdf_bytes": 223516
  },
  "failed": [],
  "notes": [

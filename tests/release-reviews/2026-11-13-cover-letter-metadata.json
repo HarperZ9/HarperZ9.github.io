@@ -1,0 +1,8 @@
+{
+  "date": "2026-11-13",
+  "note": "The new evaluation cover letter PDF and DOCX carry blank author and creator fields, as the publish metadata gate requires for a new file; the text is unchanged.",
+  "paths": {
+    "career/Zain-Dana-Harper-Cover-Letter-Evaluation.docx": "ddb1983a564a94213c07e278569712f6944fd1cf80238e28a0779ecd011a2e01",
+    "career/Zain-Dana-Harper-Cover-Letter-Evaluation.pdf": "27a095f1ab5ef3590ea1251aae53ea6dedd8d6bc3738756bb8ecf565a9101527"
+  }
+}
