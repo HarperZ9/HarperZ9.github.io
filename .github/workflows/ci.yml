@@ -8,9 +8,26 @@ on:
 permissions:
   contents: read
 
+# A newer push to a pull request replaces the run in flight. Runs on main are never cancelled.
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+env:
+  PLAYWRIGHT_VERSION: "1.62.1"
+
+# One job ran every check in turn until 14 November 2026 and took two hours (23:22 to 01:29 UTC on 13 November). The
+# same checks now run side by side. The browser suites and their recorded times are in tests/ci/suites.json;
+# tests/ci/run-suite.mjs starts each suite's server, waits until it answers, runs every test of the share and prints a
+# timing table. Each job has a time limit a little above what it took when it was split, and the last job,
+# static-site, passes only when every one of them passed, so one status still stands for the whole site.
+# Budget: the whole run under 30 minutes, the contracts job under 5. Runs of the split on 14 November 2026: 11.2 to 11.4 minutes
+# when every job starts at once (19.9 when jobs waited for a runner), contracts 2.1 to 2.6, the longest job 11.9.
 jobs:
-  static-site:
+  # Fast checks with no browser suite of their own: the first answer a pull request gets.
+  contracts:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v6
@@ -28,10 +45,14 @@ jobs:
           python -m pip install --quiet "git+https://github.com/HarperZ9/discover@v0.1.2"
           discover site . --gate
           python tools/video_registry.py --check
+      # Every tests/*.cjs is in a suite of tests/ci/suites.json or named there as not in CI, so a new browser test
+      # cannot be left out of the split without a line that says so.
+      - name: Browser suite manifest
+        if: ${{ !cancelled() }}
+        run: node tests/ci/run-suite.mjs --check
       - name: Python content contracts
+        if: ${{ !cancelled() }}
         run: python -m pytest
-      - name: Navigation and font catalog contracts
-        run: node --test system/lessons/*.test.mjs system/school/*.test.mjs media/school/attention/film.test.mjs media/school/vectors/film.test.mjs media/school/matrices/film.test.mjs media/school/gradients/film.test.mjs media/school/backprop/film.test.mjs media/school/optimisers/film.test.mjs media/school/heldout/film.test.mjs media/school/tokens/film.test.mjs media/school/embeddings/film.test.mjs media/school/nextword/film.test.mjs media/school/decoding/film.test.mjs media/school/block/film.test.mjs media/school/trainloop/film.test.mjs media/school/data/film.test.mjs media/school/scaling/film.test.mjs media/school/distill/film.test.mjs media/school/lora/film.test.mjs media/school/errorbars/film.test.mjs media/school/gaming/film.test.mjs media/school/evaluate/film.test.mjs media/school/threads/film.test.mjs media/school/quant/film.test.mjs media/school/tiling/film.test.mjs media/school/fused/film.test.mjs media/school/precision/film.test.mjs media/school/denoiser/film.test.mjs media/school/receipts/film.test.mjs media/school/search/film.test.mjs media/school/editdistance/film.test.mjs media/school/mmbu/film.test.mjs media/school/glyphs.test.mjs tests/night-school-sitemap.test.mjs system/nav.test.mjs tests/font-catalog.test.mjs tests/navigation-discovery.mjs tests/pillar-navigation.test.mjs tests/ident-tokens.test.mjs tests/explainer-film-labels.test.mjs world/site/sky/astro.test.mjs world/site/sky/weather.test.mjs world/site/sky/clocks.test.mjs world/site/field/jitter.test.mjs world/site/field/stars.test.mjs world/site/field/glsl-lint.test.mjs world/site/field/fuzz.test.mjs world/site/distill/distill.test.mjs tests/findings-build.test.mjs tests/findings-charts.test.mjs tests/findings-live.test.mjs tests/addresses-nearest.test.mjs
       # The vendored superstack contract: the copy must hold its pinned SHA-256, and it must pass
       # the release's own vectors on this runner's Node.
       - name: Superstack contract pin and vectors
@@ -46,19 +67,11 @@ jobs:
       # The media engine, its plugins, and every module that now takes its seed from it.
       - name: Media engine and renderer regressions
         if: ${{ !cancelled() }}
-        run: >-
-          node --test system/retro-crt.test.mjs system/generative-field.test.mjs system/retro-engine.test.mjs
-          system/retro-studio.test.mjs system/hero-aperture.test.mjs system/media-engine/seed.test.mjs
-          system/media-engine/colour.test.mjs system/plotter.test.mjs system/plot-bridge.test.mjs
-          system/plot-compose.test.mjs system/plot-image-studies.test.mjs system/plot-maps.test.mjs system/studio-library.test.mjs
-          system/sketch.test.mjs system/voxel-forge.test.mjs system/studio-shelf.test.mjs
-          system/spatial-core.test.mjs system/engine/particles-cpu.test.mjs system/discovery/discovery.test.mjs
-          system/discovery/noether.test.mjs system/showcase/showcase.test.mjs system/media-engine/page.test.mjs
-          system/studio-loop.test.mjs system/media-engine/scene.test.mjs system/media-engine/core.test.mjs
-          system/media-engine/raw.test.mjs system/media-engine/plate.test.mjs system/media-engine/sketch.test.mjs system/media-engine/plotmap.test.mjs system/media-engine/atelier.test.mjs system/media-engine/poster.test.mjs system/media-engine/voxels.test.mjs system/media-engine/fractal.test.mjs system/media-engine/showcase.test.mjs system/poster.test.mjs
-          system/type-forge/forge.test.mjs system/typeface.test.mjs
-          system/neural.test.mjs system/neural-kernels.test.mjs system/studio-neural.test.mjs
-          system/studio-shell.test.mjs system/studio-keep.test.mjs system/studio-project.test.mjs system/studio-presets.test.mjs system/studio-dnd.test.mjs system/studio-layout.test.mjs system/studio-timeline.test.mjs system/studio-viewer.test.mjs system/studio-finish.test.mjs
+        # retro-studio.test.mjs looks for Chrome at CHROME_PATH. Without it the share-button test was skipped here.
+        run: |
+          export CHROME_PATH="$(command -v google-chrome || command -v chromium)"
+          test -n "$CHROME_PATH"
+          node --test system/retro-crt.test.mjs system/generative-field.test.mjs system/retro-engine.test.mjs system/retro-studio.test.mjs system/hero-aperture.test.mjs system/media-engine/seed.test.mjs system/media-engine/colour.test.mjs system/plotter.test.mjs system/plot-bridge.test.mjs system/plot-compose.test.mjs system/plot-image-studies.test.mjs system/plot-maps.test.mjs system/studio-library.test.mjs system/sketch.test.mjs system/voxel-forge.test.mjs system/studio-shelf.test.mjs system/spatial-core.test.mjs system/engine/particles-cpu.test.mjs system/discovery/discovery.test.mjs system/discovery/noether.test.mjs system/showcase/showcase.test.mjs system/media-engine/page.test.mjs system/studio-loop.test.mjs system/media-engine/scene.test.mjs system/media-engine/core.test.mjs system/media-engine/raw.test.mjs system/media-engine/plate.test.mjs system/media-engine/sketch.test.mjs system/media-engine/plotmap.test.mjs system/media-engine/atelier.test.mjs system/media-engine/poster.test.mjs system/media-engine/voxels.test.mjs system/media-engine/fractal.test.mjs system/media-engine/showcase.test.mjs system/poster.test.mjs system/type-forge/forge.test.mjs system/typeface.test.mjs system/neural.test.mjs system/neural-kernels.test.mjs system/studio-neural.test.mjs system/studio-shell.test.mjs system/studio-keep.test.mjs system/studio-project.test.mjs system/studio-presets.test.mjs system/studio-dnd.test.mjs system/studio-layout.test.mjs system/studio-timeline.test.mjs system/studio-viewer.test.mjs system/studio-finish.test.mjs
       # The sound layer (offline reference PCM pinned by hash, loudness, receipts) and the five
       # audio modules' own tests, which did not run in CI before.
       - name: Sound layer and audio regressions
@@ -66,235 +79,279 @@ jobs:
         run: >-
           node --test system/media-engine/sound.test.mjs system/media-engine/sound-retro.test.mjs system/audio.test.mjs system/midi-writer.test.mjs
           system/studio-sound.test.mjs system/scope-voice.test.mjs system/ans-voice.test.mjs
-      # The ear (known signals with known answers), the site music's voices, composer and renderer, and the
-      # planted-defect controls: clean renders raise no flag and each of eighteen defects raises its own.
-      - name: The ear and the site music
+      - name: Internal link crawl
         if: ${{ !cancelled() }}
-        run: node --test system/ear/ear.test.mjs system/ear/shape.test.mjs system/ear/note.test.mjs system/ear/identity.test.mjs system/site-music/voices.test.mjs system/site-music/music.test.mjs system/site-music/controls.test.mjs
+        run: node tests/ci/run-suite.mjs linkcheck
+
+  # The node contracts that take minutes: the lessons and films, the measurement layers and their Python twins,
+  # and the node halves of the surfaces and fractal suites.
+  node-contracts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+      - name: Navigation and font catalog contracts
+        run: node --test system/lessons/*.test.mjs system/school/*.test.mjs media/school/attention/film.test.mjs media/school/vectors/film.test.mjs media/school/matrices/film.test.mjs media/school/gradients/film.test.mjs media/school/backprop/film.test.mjs media/school/optimisers/film.test.mjs media/school/heldout/film.test.mjs media/school/tokens/film.test.mjs media/school/embeddings/film.test.mjs media/school/nextword/film.test.mjs media/school/decoding/film.test.mjs media/school/block/film.test.mjs media/school/trainloop/film.test.mjs media/school/data/film.test.mjs media/school/scaling/film.test.mjs media/school/distill/film.test.mjs media/school/lora/film.test.mjs media/school/errorbars/film.test.mjs media/school/gaming/film.test.mjs media/school/evaluate/film.test.mjs media/school/threads/film.test.mjs media/school/quant/film.test.mjs media/school/tiling/film.test.mjs media/school/fused/film.test.mjs media/school/precision/film.test.mjs media/school/denoiser/film.test.mjs media/school/receipts/film.test.mjs media/school/search/film.test.mjs media/school/editdistance/film.test.mjs media/school/mmbu/film.test.mjs media/school/glyphs.test.mjs tests/night-school-sitemap.test.mjs system/nav.test.mjs tests/font-catalog.test.mjs tests/navigation-discovery.mjs tests/pillar-navigation.test.mjs tests/ident-tokens.test.mjs tests/explainer-film-labels.test.mjs world/site/sky/astro.test.mjs world/site/sky/weather.test.mjs world/site/sky/clocks.test.mjs world/site/field/jitter.test.mjs world/site/field/stars.test.mjs world/site/field/glsl-lint.test.mjs world/site/field/fuzz.test.mjs world/site/distill/distill.test.mjs tests/findings-build.test.mjs tests/findings-charts.test.mjs tests/findings-live.test.mjs tests/addresses-nearest.test.mjs
       # The Python twins and the recorded-gate checks need numpy and scipy. Four tests need data
       # the repository does not carry (audit frames, the decoded image set, a Telos MCP checkout);
       # they skip with the reason printed. tests/telos-track-a/README.md has the full local run.
       - name: Telos measurement layers, receipts and their Python twins
         if: ${{ !cancelled() }}
         run: |
-          python -m pip install numpy==2.4.5 scipy==1.17.1
+          python -m pip install numpy==2.4.5 scipy==1.17.1 PyYAML==6.0.2
           node --test tests/telos-track-a/*.test.mjs system/sense.test.mjs system/sense-parity.test.mjs system/audio-perceptual.test.mjs system/vision-biomimetic.test.mjs system/exporters.test.mjs system/importers.test.mjs system/media/ir.test.mjs shared-frame/tests/certificate.test.mjs shared-frame/tests/fidelity-log.test.mjs
+      - name: Surfaces registry in node
+        if: ${{ !cancelled() }}
+        run: node --test world/site/surfaces/surfaces.test.mjs world/site/surfaces/states.test.mjs world/site/surfaces/grounds-more.test.mjs world/site/surfaces/take-brush.test.mjs
+      - name: Fractal renderers in node
+        if: ${{ !cancelled() }}
+        run: node --test system/fractal.test.mjs system/fractal-gl.test.mjs system/fractal-color.test.mjs system/fractal3d.test.mjs system/fractal-perturb.test.mjs system/fractal-hp.test.mjs system/fractal-formula.test.mjs system/fractal-gradient.test.mjs system/fractal3d-pro.test.mjs system/fractal-flight.test.mjs
+
+      # The ear (known signals with known answers), the site music's voices, composer and renderer, and the
+      # planted-defect controls: clean renders raise no flag and each of eighteen defects raises its own.
+  # controls.test.mjs shares its eighteen defects over four worker threads (one thread took 470 s of this step's 480).
+  audio:
+    runs-on: ubuntu-latest
+    timeout-minutes: 13
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+      - name: The ear and the site music
+        run: node --test system/ear/ear.test.mjs system/ear/shape.test.mjs system/ear/note.test.mjs system/ear/identity.test.mjs system/site-music/voices.test.mjs system/site-music/music.test.mjs
+      # Its own step, after the others: the live renderer test above measures how long a render takes on this machine,
+      # and the four worker threads of the controls took the processors from it (run 43571162919, 14 November 2026).
+      - name: Planted-defect controls
+        if: ${{ !cancelled() }}
+        run: node --test system/site-music/controls.test.mjs
+
+  # The short browser checks, each with its own server and port, each reporting on its own line.
+  pages:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+      - name: Install Playwright (the runner's own Chrome is the browser)
+        run: PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 npm install --no-save "playwright@$PLAYWRIGHT_VERSION"
       - name: Bulletin browser media and open work regressions
+        if: ${{ !cancelled() }}
         run: |
           export CHROME_PATH="$(command -v google-chrome || command -v chromium)"
           test -n "$CHROME_PATH"
           # Each suite launches Chrome; avoid competing browser startup on the runner.
           node --test --test-concurrency=1 system/bulletin-board.test.mjs system/bulletin-board-media-filter.test.mjs system/bulletin-work.test.mjs
       - name: Font marketplace browser regressions
-        run: |
-          export PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
-          npm install --no-save playwright@1.62.1
-          python -m http.server 8802 &
-          server_pid=$!
-          trap "kill $server_pid" EXIT
-          sleep 2
-          SITE_BASE_URL=http://127.0.0.1:8802 BROWSER_CHANNEL=chrome node tests/font-original-preview.cjs
-          SITE_BASE_URL=http://127.0.0.1:8802 BROWSER_CHANNEL=chrome node tests/font-marketplace-reading.cjs
-      # Night School: the film and the lab mount on a press, play, train and report numbers,
-      # at desktop and phone widths, on the Canvas 2D path (no WebGPU canvas on the runner).
-      - name: Night School in a browser
         if: ${{ !cancelled() }}
-        run: |
-          export PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
-          npm install --no-save playwright@1.62.1
-          python -m http.server 8810 &
-          server_pid=$!
-          trap "kill $server_pid" EXIT
-          sleep 2
-          NS_MODES=2d SITE_BASE_URL=http://127.0.0.1:8810 BROWSER_CHANNEL=chrome node tests/night-school.cjs
-      # Its own step, server and port, and it runs even when an earlier step failed, so
-      # its pass or fail always shows on its own line.
+        run: node tests/ci/run-suite.mjs fonts
       - name: Advisory IDs and package names on narrow screens
         if: ${{ !cancelled() }}
-        run: |
-          export PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
-          npm install --no-save playwright@1.62.1
-          python -m http.server 8803 &
-          server_pid=$!
-          trap "kill $server_pid" EXIT
-          sleep 2
-          SITE_BASE_URL=http://127.0.0.1:8803 BROWSER_CHANNEL=chrome node tests/ident-narrow-reading.cjs
+        run: node tests/ci/run-suite.mjs ident
       # Every Gallery plate on screen at desktop and phone widths, and Plate 14 drawn. A reading
       # rule hid all 43 until 3 October 2026; tests/test_gallery_plates_visible.py is its static twin.
       - name: Gallery plates on screen
         if: ${{ !cancelled() }}
-        run: |
-          export PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
-          npm install --no-save playwright@1.62.1
-          python -m http.server 8805 &
-          server_pid=$!
-          trap "kill $server_pid" EXIT
-          sleep 2
-          SITE_BASE_URL=http://127.0.0.1:8805 BROWSER_CHANNEL=chrome node tests/gallery-plates-visible.cjs
-      # The surfaces registry and the element bench (11 November 2026): the numbers, charts, recipe and
-      # contract in node; then the bench in a browser: no cut names at three widths, AA contrast in day,
-      # night and plain view, chart and blend values equal to the data, a well that answers, each
-      # element's still its own, the take-away files, mount and teardown, and no audio context. Since the ninth
-      # pass the paint checks run in their own file, and surfaces-place.cjs holds the bench still while tools open.
-      - name: Surfaces registry and the element bench
-        if: ${{ !cancelled() }}
-        run: |
-          node --test world/site/surfaces/surfaces.test.mjs world/site/surfaces/states.test.mjs world/site/surfaces/grounds-more.test.mjs world/site/surfaces/take-brush.test.mjs
-          export PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
-          npm install --no-save playwright@1.62.1
-          python tests/lib/serve.py 8811 . &
-          server_pid=$!
-          trap "kill $server_pid" EXIT
-          sleep 2
-          SITE_BASE_URL=http://127.0.0.1:8811 BROWSER_CHANNEL=chrome node tests/surfaces-bench.cjs
-          SITE_BASE_URL=http://127.0.0.1:8811 BROWSER_CHANNEL=chrome node tests/surfaces-states.cjs
-          SITE_BASE_URL=http://127.0.0.1:8811 BROWSER_CHANNEL=chrome node tests/surfaces-bench-paint.cjs
-          SITE_BASE_URL=http://127.0.0.1:8811 BROWSER_CHANNEL=chrome node tests/surfaces-place.cjs
-      # The 64 seeded plates and 95 instruments against tests/fixtures/plate-baselines.json (3 October
-      # 2026): every plate on screen, drawn, backed at its layout size; each instrument repeats exactly.
-      # The pixel hashes belong to the fixture's reference machine and are compared only there.
-      - name: Plate baselines
-        if: ${{ !cancelled() }}
-        run: |
-          export PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
-          npm install --no-save playwright@1.62.1
-          python -m http.server 8806 &
-          server_pid=$!
-          trap "kill $server_pid" EXIT
-          sleep 2
-          SITE_BASE_URL=http://127.0.0.1:8806 BROWSER_CHANNEL=chrome node tests/plate-baselines.cjs 1 2
-      # The Studio shell (4 October 2026): one source switch, the action bar on screen at desktop and
-      # phone widths, each source's own frame on entry, work kept across a switch, exact pixels after
-      # Undo and Redo, and every Showcase system re-checking to MATCH with its own terms. Then the
-      # readings fold while making, work kept across a reload, Start fresh, and blocked storage.
-      - name: Studio shell contract
-        if: ${{ !cancelled() }}
-        run: |
-          export PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
-          npm install --no-save playwright@1.62.1
-          python tests/lib/serve.py 8807 &
-          server_pid=$!
-          trap "kill $server_pid" EXIT
-          sleep 2
-          SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-shell.cjs
-          SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-keep.cjs
-          SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-entry.cjs
-          SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-controls.cjs
-          SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-retro.cjs
-          SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-bring.cjs
-          SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-threads.cjs
-          SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-worlds.cjs
-          SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-films.cjs
-          SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-link-entry.cjs
-          SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-bar.cjs
-          SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-plot.cjs
-          SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-engines.cjs
-          SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-spatial.cjs
-          SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-instruments.cjs
-          SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-gallery.cjs
-          SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-loom.cjs
-          SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-type.cjs
-          SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-splats.cjs
-          SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-films-source.cjs
-          SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-choosing.cjs
-          SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-palette.cjs
-          SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-export-project.cjs
-          SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-presets.cjs
-          SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-drag-drop.cjs
-          SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-layout.cjs
-          SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-timeline.cjs
-          SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-sound-engine.cjs
-          SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-ndim-gpu.cjs
-          SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-neural-gpu.cjs
-          SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-viewer.cjs
-          SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-music-attractor.cjs
-          SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-music-flow.cjs
-          # The Finish layer: raw-native 0.8.0's post stack over the stage, each look against the engine's
-          # CPU reference on the committed frame set (M1 criterion 9), on SwiftShader.
-          SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-finish.cjs
-          SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-plot-order.cjs
-      # The same Studio suite in Firefox (10 October 2026): tests/lib/browser.cjs picks the engine
-      # from BROWSER. Playwright's Firefox build plays no H.264, so the Films frame-copy check says so
-      # and is skipped there. On this Linux runner, headless Firefox does not draw the WebGL sources
-      # (3D Fractal, the Retro Engine, Spatial, Splats, and the WebGL fallback Dimensions checks);
-      # on Windows the whole suite passes in Firefox.
-      # The tests that need those sources run and report here but do not fail the step; every
-      # other Studio test must pass.
-      - name: Studio suite in Firefox
-        if: ${{ !cancelled() }}
-        run: |
-          npm install --no-save playwright@1.62.1
-          npx playwright install --with-deps firefox
-          python tests/lib/serve.py 8817 &
-          server_pid=$!
-          trap "kill $server_pid" EXIT
-          sleep 2
-          webgl_only=" studio-entry studio-fractal-deep studio-gallery studio-loom studio-ndim-gpu studio-retro studio-spatial studio-splats "
-          # Open finding, not an environment limit we have proven: here the timeline's WebM came back
-          # without an audio track (10 October 2026); it carries one in Firefox on Windows and in
-          # Chrome on this runner. Reported until the cause is known.
-          webgl_only="$webgl_only studio-sound-engine "
-          # Open finding (14 October 2026): here the Music source's Canvas2D attractor, with ?music=cpu,
-          # lit only 4 cells of the stage on a phone in three of three runs and on desktop in one of
-          # three; the flow field's Canvas2D mode did the same on a phone. Both pass in Firefox on
-          # Windows and in Chrome on this runner, and the Canvas2D paths are unchanged by the GPU ports.
-          # Cause unknown; possibly the same missing audio backend as the sound finding above.
-          webgl_only="$webgl_only studio-music-attractor "
-          webgl_only="$webgl_only studio-music-flow "
-          failed=""; reported=""
-          # Only tests that pick their engine through tests/lib/browser.cjs can run in Firefox.
-          for t in $(grep -l "lib/browser.cjs" tests/studio-*.cjs); do
-            name=$(basename "$t" .cjs)
-            echo "== $t"
-            if ! SITE_BASE_URL=http://127.0.0.1:8817 BROWSER=firefox node "$t"; then
-              case "$webgl_only" in *" $name "*) reported="$reported $name" ;; *) failed="$failed $name" ;; esac
-            fi
-          done
-          if [ -n "$reported" ]; then echo "Reported only (WebGL sources, and the open sound finding, Linux headless Firefox):$reported"; fi
-          if [ -n "$failed" ]; then echo "Failed in Firefox:$failed"; exit 1; fi
-      # The fractal renderers: the CPU reference, the GPU programs' source, deep zoom by perturbation
-      # (reference orbit, BLA, rebasing, against direct BigInt iteration), then the deep path in the
-      # browser (SwiftShader here) and in the Studio. Its own step and port, so it reports alone.
-      - name: Fractal renderers, deep zoom, formulas, colouring and 3D
-        if: ${{ !cancelled() }}
-        run: |
-          node --test system/fractal.test.mjs system/fractal-gl.test.mjs system/fractal-color.test.mjs system/fractal3d.test.mjs system/fractal-perturb.test.mjs system/fractal-hp.test.mjs system/fractal-formula.test.mjs system/fractal-gradient.test.mjs system/fractal3d-pro.test.mjs system/fractal-flight.test.mjs
-          export PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
-          npm install --no-save playwright@1.62.1
-          python -m http.server 8809 &
-          server_pid=$!
-          trap "kill $server_pid" EXIT
-          sleep 2
-          SITE_BASE_URL=http://127.0.0.1:8809 BROWSER_CHANNEL=chrome node tests/fractal-deep.cjs
-          SITE_BASE_URL=http://127.0.0.1:8809 BROWSER_CHANNEL=chrome node tests/studio-fractal-deep.cjs
-          SITE_BASE_URL=http://127.0.0.1:8809 BROWSER_CHANNEL=chrome node tests/studio-fractal-formulas.cjs
-          SITE_BASE_URL=http://127.0.0.1:8809 BROWSER_CHANNEL=chrome node tests/studio-fractal-colour.cjs
-          SITE_BASE_URL=http://127.0.0.1:8809 BROWSER_CHANNEL=chrome node tests/studio-fractal-still.cjs
-          SITE_BASE_URL=http://127.0.0.1:8809 BROWSER_CHANNEL=chrome node tests/studio-fractal3d.cjs
-          SITE_BASE_URL=http://127.0.0.1:8809 BROWSER_CHANNEL=chrome node tests/studio-fractal-flight.cjs
+        run: node tests/ci/run-suite.mjs gallery
       # The live explainers: spec hash MATCH, no network while a reader interacts, recall
       # diagnosis without the answer, and one still per step with reduced motion.
       # The long films: a byte-range server, and seeking from a source card or the transcript
       # opens no skipped questions while reaching a chapter end still does.
       - name: Live explainers in the browser
         if: ${{ !cancelled() }}
+        run: node tests/ci/run-suite.mjs explainers
+      # The 64 seeded plates and 95 instruments against tests/fixtures/plate-baselines.json (3 October
+      # 2026): every plate on screen, drawn, backed at its layout size; each instrument repeats exactly.
+      # The pixel hashes belong to the fixture's reference machine and are compared only there.
+      - name: Plate baselines
+        if: ${{ !cancelled() }}
+        run: node tests/ci/run-suite.mjs plates
+
+      # Night School: the film and the lab mount on a press, play, train and report numbers,
+      # at desktop and phone widths, on the Canvas 2D path (no WebGPU canvas on the runner).
+  # Three lessons run at a time (NS_WORKERS in the manifest), and a caption is waited for, not slept for.
+  night-school:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+      - name: Install Playwright (the runner's own Chrome is the browser)
+        run: PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 npm install --no-save "playwright@$PLAYWRIGHT_VERSION"
+      - name: Run the suite and print its timing table
+        run: node tests/ci/run-suite.mjs night-school
+
+  # The surfaces registry and the element bench (11 November 2026): the numbers, charts, recipe and
+  # contract in node; then the bench in a browser: no cut names at three widths, AA contrast in day,
+  # night and plain view, chart and blend values equal to the data, a well that answers, each
+  # element's still its own, the take-away files, mount and teardown, and no audio context. Since the ninth
+  # pass the paint checks run in their own file, and surfaces-place.cjs holds the bench still while tools open.
+  surfaces:
+    name: surfaces (${{ matrix.share }} of 3)
+    runs-on: ubuntu-latest
+    timeout-minutes: 14
+    strategy:
+      fail-fast: false
+      matrix:
+        share: [1, 2, 3]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+      - name: Install Playwright (the runner's own Chrome is the browser)
+        run: PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 npm install --no-save "playwright@$PLAYWRIGHT_VERSION"
+      - name: Run the suite and print its timing table
+        run: node tests/ci/run-suite.mjs surfaces --shard ${{ matrix.share }}/3
+
+  # The Studio shell (4 October 2026): one source switch, the action bar on screen at desktop and
+  # phone widths, each source's own frame on entry, work kept across a switch, exact pixels after
+  # Undo and Redo, and every Showcase system re-checking to MATCH with its own terms. Then the
+  # readings fold while making, work kept across a reload, Start fresh, and blocked storage.
+  studio-chromium:
+    name: studio-chromium (${{ matrix.share }} of 4)
+    runs-on: ubuntu-latest
+    timeout-minutes: 17
+    strategy:
+      fail-fast: false
+      matrix:
+        share: [1, 2, 3, 4]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+      - name: Install Playwright (the runner's own Chrome is the browser)
+        run: PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 npm install --no-save "playwright@$PLAYWRIGHT_VERSION"
+      - name: Run the suite and print its timing table
+        run: node tests/ci/run-suite.mjs studio-chromium --shard ${{ matrix.share }}/4
+
+  # The same Studio suite in Firefox (10 October 2026): tests/lib/browser.cjs picks the engine
+  # from BROWSER. Playwright's Firefox build plays no H.264, so the Films frame-copy check says so
+  # and is skipped there. On this Linux runner, headless Firefox does not draw the WebGL sources
+  # (3D Fractal, the Retro Engine, Spatial, Splats, and the WebGL fallback Dimensions checks);
+  # on Windows the whole suite passes in Firefox.
+  # The tests that need those sources run and report here but do not fail the step; every
+  # other Studio test must pass.
+  # Open finding, not an environment limit we have proven: here the timeline's WebM came back
+  # without an audio track (10 October 2026); it carries one in Firefox on Windows and in
+  # Chrome on this runner. Reported until the cause is known.
+  # Open finding (14 October 2026): here the Music source's Canvas2D attractor, with ?music=cpu,
+  # lit only 4 cells of the stage on a phone in three of three runs and on desktop in one of
+  # three; the flow field's Canvas2D mode did the same on a phone. Both pass in Firefox on
+  # Windows and in Chrome on this runner, and the Canvas2D paths are unchanged by the GPU ports.
+  # Cause unknown; possibly the same missing audio backend as the sound finding above.
+  # The names of the reported-only tests and the open findings behind them are in tests/ci/suites.json.
+  studio-firefox:
+    name: studio-firefox (${{ matrix.share }} of 4)
+    runs-on: ubuntu-latest
+    timeout-minutes: 17
+    strategy:
+      fail-fast: false
+      matrix:
+        share: [1, 2, 3, 4]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+      - name: Install Playwright
+        run: npm install --no-save "playwright@$PLAYWRIGHT_VERSION"
+      - uses: actions/cache@v6
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-firefox-${{ runner.os }}-${{ env.PLAYWRIGHT_VERSION }}
+      - name: Install Firefox and its system libraries
+        run: npx playwright install --with-deps firefox
+      - name: Run the suite and print its timing table
+        run: node tests/ci/run-suite.mjs studio-firefox --shard ${{ matrix.share }}/4
+
+  # The fractal renderers: the CPU reference, the GPU programs' source, deep zoom by perturbation
+  # (reference orbit, BLA, rebasing, against direct BigInt iteration), then the deep path in the
+  # browser (SwiftShader here) and in the Studio. Its own step and port, so it reports alone.
+  fractal:
+    name: fractal (${{ matrix.share }} of 2)
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    strategy:
+      fail-fast: false
+      matrix:
+        share: [1, 2]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+      - name: Install Playwright (the runner's own Chrome is the browser)
+        run: PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 npm install --no-save "playwright@$PLAYWRIGHT_VERSION"
+      - name: Run the suite and print its timing table
+        run: node tests/ci/run-suite.mjs fractal --shard ${{ matrix.share }}/2
+
+  # The one status for the whole site. It needs every job above and fails when any of them did not pass, so a
+  # merge rule that reads "static-site" reads all of them. It also prints how long each job and the whole run took.
+  static-site:
+    if: ${{ always() }}
+    needs: [contracts, node-contracts, audio, pages, night-school, surfaces, studio-chromium, studio-firefox, fractal]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      actions: read
+    steps:
+      - name: Timing table
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BUDGET_MINUTES: "30"
         run: |
-          export PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
-          npm install --no-save playwright@1.62.1
-          python tools/serve.py --port 8804 &
-          server_pid=$!
-          trap "kill $server_pid" EXIT
-          sleep 2
-          SITE_BASE_URL=http://127.0.0.1:8804 BROWSER_CHANNEL=chrome node tests/explainer-live.cjs
-          SITE_BASE_URL=http://127.0.0.1:8804 BROWSER_CHANNEL=chrome node tests/explainer-films-seek.cjs
-      - name: Internal link crawl
+          jobs="$(gh api --paginate "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/attempts/$GITHUB_RUN_ATTEMPT/jobs?per_page=100" --jq '.jobs[]' | jq -s .)"
+          {
+            echo "### CI timing, attempt $GITHUB_RUN_ATTEMPT"
+            if [ "$GITHUB_RUN_ATTEMPT" != "1" ]; then echo; echo "This is a re-run (attempt $GITHUB_RUN_ATTEMPT). A job that passed in an earlier attempt shows the time of that attempt."; fi
+            echo; echo "| job | minutes | result |"; echo "|---|---:|---|"
+            echo "$jobs" | jq -r 'map(select(.completed_at != null)) | sort_by(.name)[] | "| \(.name) | \((((.completed_at | fromdate) - (.started_at | fromdate)) / 6 | round) / 10) | \(.conclusion) |"'
+          } | tee -a "$GITHUB_STEP_SUMMARY"
+          wall="$(echo "$jobs" | jq -r '((now - (map(.started_at | fromdate) | min)) / 6 | round) / 10')"
+          echo "Wall time to this point: $wall minutes (budget $BUDGET_MINUTES)" | tee -a "$GITHUB_STEP_SUMMARY"
+          if [ "$(echo "$jobs" | jq -r --argjson b "$BUDGET_MINUTES" '(now - (map(.started_at | fromdate) | min)) > ($b * 60)')" = "true" ]; then
+            echo "::warning title=CI over its time budget::the run took $wall minutes and the budget is $BUDGET_MINUTES"
+          fi
+      - name: Every suite passed
+        env:
+          RESULTS: ${{ toJSON(needs) }}
         run: |
-          python -m http.server 8802 &
-          server_pid=$!
-          trap "kill $server_pid" EXIT
-          sleep 2
-          node tests/linkcheck.mjs --self-test
-          node tests/linkcheck.mjs
+          echo "$RESULTS" | jq -r 'to_entries[] | "\(.key): \(.value.result)"'
+          bad="$(echo "$RESULTS" | jq -r '[to_entries[] | select(.value.result != "success") | .key] | join(", ")')"
+          if [ -n "$bad" ]; then echo "::error title=static-site::did not pass: $bad"; exit 1; fi
 
   # Windows leg for hash-pinned files: check out the way a default Git for Windows
   # install does, so a line-ending rewrite of a pinned file fails here instead of on a

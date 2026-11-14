@@ -18,7 +18,9 @@ const ROW = { multibrot: 'fractal-power-row', newton: 'fractal-newton-row', nova
   buddhabrot: 'fractal-buddha-row', nebulabrot: 'fractal-limits-row' };
 const wait = (page, ms) => page.waitForTimeout(ms);
 async function stage(page) {
-  const png = await page.locator('#viewport-stage').screenshot();
+  // A screenshot waits for the page's next frame, and on a software renderer one phone-size frame of some types takes longer than Playwright's
+  // default 30 s: this read timed out on main on 11 November 2026 and again on 14 November. It gets the time the Buddhabrot wait below has.
+  const png = await page.locator('#viewport-stage').screenshot({ timeout: 180000 });
   return require('crypto').createHash('sha256').update(png).digest('hex').slice(0, 16);
 }
 const click = (page, sel) => page.evaluate((s) => document.querySelector(s).click(), sel);
