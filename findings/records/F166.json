@@ -5,7 +5,7 @@
   "id": "F166",
   "kind": "finding",
   "title": "Our combined value formula lost to plain prospect theory on 11,759 risky choice problems",
-  "standfirst": "We tested our own formula for how people value risky options, prospect theory plus terms for information, threat and drive, against a richer version of prospect theory on the public choices13k data. It never beat that richer model, so we retired it. Fitted loss aversion came out at 1.16 when people chose from descriptions and 0.89 when they learned from feedback.",
+  "standfirst": "We tested our own formula for how people value risky options, prospect theory plus terms for information, threat and drive, against a richer version of prospect theory on the public choices13k data. It never beat that richer model by the margin we set in advance (with feedback it led by 0.001 against a bar of 0.005), so we retired it. Fitted loss aversion came out at 1.16 when people chose from descriptions and 0.89 when they learned from feedback.",
   "date_found": "2026-10-31",
   "fields": [
    "psychology",
@@ -13,13 +13,25 @@
    "method"
   ],
   "tier": "D",
-  "tier_reason": "A refutation of our own formula with working controls; the lambda rows repeat a known kind of estimate.",
+  "tier_reason": "A refutation of our own formula with working controls; the loss-aversion estimates repeat a known kind of estimate.",
   "rung": "killed",
-  "rung_reason": "Combined formula over richer prospect theory: kill fired, retired.",
+  "rung_reason": "The combined formula against richer prospect theory: the kill rule fired and the formula is retired.",
   "outcome": "failed",
   "bound": "The combined formula never beat flexible prospect theory by the preregistered 0.005 in cross-validated R2 (0.634 against 0.645 without feedback, 0.597 against 0.596 with it).",
+  "verdicts": {
+   "held": 4,
+   "failed": 3,
+   "untestable": 0,
+   "files": [
+    "result.json"
+   ]
+  },
+  "kill": {
+   "state": "fired",
+   "note": "The kill rule fired in both settings, and the formula is retired as a model of risky choice."
+  },
   "objection": "Entropy, loss probability and the mean and mean square of outcomes are one reading of information, threat and drive. Another reading could score differently, so the result covers this operationalisation only.",
-  "objection_source": "the paper's first stated limitation; no reviewer attack is on file",
+  "objection_source": "the paper's first stated limitation; our register records no separate objection",
   "would_change": "Person-level data and a preregistered reading of information gain.",
   "sections": [
    {
@@ -27,7 +39,7 @@
     "title": "What this means for a reader",
     "role": "lead",
     "paragraphs": [
-     "Adding terms to a model of choice will almost always improve its fit a little. The fair test is whether the new terms beat a version of the old theory given the same number of extra parameters. Ours did not, so the terms we named after information, threat and drive describe where prospect theory misfits, and they do not add a new account of why people choose. The loss aversion we measured sits near 1, well below the classic 2.25, which says this number depends on the task that measures it."
+     "Adding terms to a model of choice will almost always improve its fit a little. The fair test is whether the new terms beat a version of the old theory given a similar number of extra parameters, three against our four. Ours did not, so the terms we named after information, threat and drive describe where prospect theory misfits, and they do not add a new account of why people choose. The loss aversion we measured sits near 1, well below the classic 2.25, which says this number depends on the task that measures it."
     ]
    },
    {
@@ -35,7 +47,7 @@
     "title": "Abstract",
     "role": "argument",
     "paragraphs": [
-     "We had written a single value formula for risky choice: prospect value plus a term for the information a gamble resolves, a term for the threat of a loss, and a term for drive toward a setpoint. We tested it on the public choices13k data, 1,928 problems answered without outcome feedback and 9,831 answered with it, against cumulative prospect theory and against a flexible prospect theory with the same room to absorb misfit. The kill rule was fixed before any real fit. {c1}The combined formula never beat the flexible prospect theory by the preregistered margin: cross-validated R² 0.634 against 0.645 without feedback and 0.597 against 0.596 with it, against a bar of 0.005.{/c1} {c2}Without feedback, the joint gain of the four added terms, 7.6 in deviance, sat below the 95th percentile of both null controls, 52.0 and 58.9.{/c2} With feedback two of the terms help as corrections to prospect theory, and the drive term does not. The kill rule fired, and the formula is retired as a model of risky choice. {c4}Fitted loss aversion was 1.16 (1.05 to 1.30) without feedback and 0.89 (0.86 to 0.93) with feedback.{/c4}"
+     "We had written a single value formula for risky choice: prospect value plus a term for the information a gamble resolves, a term for the threat of a loss, and a term for drive toward a setpoint. We tested it on the public choices13k data, 1,928 problems answered without outcome feedback and 9,831 answered with it, against cumulative prospect theory and against a flexible prospect theory with comparable room to absorb misfit (three extra parameters against our four). The kill rule was fixed before any real fit. {c1}The combined formula never beat the flexible prospect theory by the preregistered margin: cross-validated R² 0.634 against 0.645 without feedback and 0.597 against 0.596 with it, against a bar of 0.005.{/c1} {c2}Without feedback, the joint gain of the four added terms, 7.6 in deviance, sat below the 95th percentile of both null controls, 52.0 and 58.9.{/c2} With feedback two of the terms help as corrections to prospect theory, and the drive term does not. The kill rule fired, and the formula is retired as a model of risky choice. {c4}Fitted loss aversion was 1.16 (1.05 to 1.30) without feedback and 0.89 (0.86 to 0.93) with feedback.{/c4}"
     ]
    },
    {
@@ -46,7 +58,7 @@
      "{g:cpt}Cumulative prospect theory{/g} {cite:r2} describes a choice between gambles with three ingredients: a value function that is concave for gains and steeper for losses, a {g:loss-aversion}loss aversion{/g} coefficient {m:\\lambda} that scales losses, and a {g:probability-weighting}weighting function{/g} that bends probabilities. The theory comes from behavioural economics and describes choices; it gives no account of the feelings behind them. Loss aversion is the factor by which a loss weighs more than an equal gain, so 1 means losses and gains count alike, and it says nothing about a dislike of risk as such. The weighting function maps a stated probability to the weight a choice gives it, so small chances can count for more than their size; it is no belief about the odds. Tversky and Kahneman reported a median {m:\\lambda} of 2.25 from their own experiment. Brown, Imai, Vieider and Camerer {cite:r3} collected 607 estimates of {m:\\lambda} from 150 articles published from 1992 to 2017 and pooled them in a {g:meta-analysis}meta-analysis{/g}, the statistical pooling of published estimates of one quantity, which collects no new data of its own.",
      "Peterson, Bourgin, Agrawal, Reichman and Griffiths {cite:r1} ran the largest risky choice experiment to that date, choices13k, with choice rates on 13,006 problems collected online. They used it to compare classical decision theories with machine-learning models and to search for better theories. Thomas and colleagues {cite:r6} argued that the choice behaviour in choices13k contains structured decision noise when compared with a laboratory data set, which bears on how much of the gap between theories and flexible learners is psychology.",
      "The data set also separates problems answered with and without feedback on outcomes. Hertwig, Barron, Weber and Erev {cite:r5} reported that people choose as if they overweight rare events when choosing from descriptions and underweight them when choosing from experience, the pattern later called the {g:description-experience-gap}description-experience gap{/g}. In decision research the term means that difference between choices from stated odds and choices learned from sampled outcomes; it excludes any difference in the gambles themselves. We analysed the two settings apart for that reason.",
-     "Our own starting point was a {g:combined-formula}combined value formula{/g} from earlier notes in this project, a name of ours for prospect value plus three added terms in one choice rule, which makes no claim about mechanisms in the brain. It adds to prospect value a term for the information a gamble resolves, a term for the threat of a loss, and a term for reduction of a drive toward a setpoint. This paper is a test of that formula, and the formula is ours to retire."
+     "Our own starting point was a {g:combined-formula}combined value formula{/g} from earlier notes in this project, a name of ours for prospect value plus four added terms in one choice rule, standing for three ideas: information, threat and drive, which makes no claim about mechanisms in the brain. It adds to prospect value a term for the information a gamble resolves, a term for the threat of a loss, and a term for reduction of a drive toward a setpoint. This paper is a test of that formula, and the formula is ours to retire."
     ]
    },
    {
@@ -145,7 +157,7 @@
     "paragraphs": [
      "The test was built so that the combined formula had to beat a pure prospect theory with comparable freedom. It did not. Without feedback the added terms carry no signal beyond what the nulls produce, and three extra prospect theory parameters do more than four added terms. With feedback the added terms and the flexible theory tie. The preregistered reading follows: the terms are patches for places where CPT misfits.",
      "The terms themselves suggest which places. The drive term expands into the mean and the mean square of outcomes, so it adds an expected value and a variance correction to CPT. That is a change to the shape of the value function, which FLEX can also make through separate curvatures. Entropy and loss probability help only with feedback. Rare events are underweighted when people learn from experience {cite:r5}, and a gamble with more outcomes, or with a small chance of loss, is the kind of gamble where that matters. This reading is inferred and was not tested here; a prospect theory with weighting fitted to experience could absorb these terms as well.",
-     "Both prospect theories fall well short of boosted trees, by 0.09 without feedback and 0.21 with it, and the trees fall short of the sampling ceiling. Peterson and colleagues {cite:r1} reported a similar gap between classical theories and learned models on the same data. Part of the gap may be structure that a value model cannot express, such as correlation between payoffs; part may be the structured noise Thomas and colleagues {cite:r6} described. We did not separate the two.",
+     "Both prospect theories fall well short of boosted trees: the flexible one by 0.09 without feedback and 0.21 with it, the plain one by 0.11 and 0.22, and the trees fall short of the sampling ceiling. Peterson and colleagues {cite:r1} reported a similar gap between classical theories and learned models on the same data. Part of the gap may be structure that a value model cannot express, such as correlation between payoffs; part may be the structured noise Thomas and colleagues {cite:r6} described. We did not separate the two.",
      "Loss aversion of 1.16 without feedback, with an interval that excludes 1 and lies far below 2.25, adds one more estimate to the spread Brown and colleagues {cite:r3} pooled. With feedback the estimate falls below 1. This is an aggregate estimate on small online stakes and says nothing about any single person's loss aversion."
     ]
    },
@@ -294,7 +306,7 @@
    "label": "Sample",
    "value": "1,928 and 9,831 problems",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -303,9 +315,9 @@
    "id": "e7",
    "kind": "number",
    "label": "Main estimate and interval",
-   "value": "lambda bootstrap 95%",
+   "value": "loss aversion, 95 percent bootstrap interval: 1.05 to 1.30 without feedback, 0.86 to 0.93 with it",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -314,9 +326,9 @@
    "id": "e8",
    "kind": "number",
    "label": "Forecast against outcome",
-   "value": "COMB minus FLEX +0.005, got -0.011",
+   "value": "combined formula minus flexible prospect theory, without feedback: bar +0.005, got -0.011",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -327,7 +339,7 @@
    "label": "Known-answer check",
    "value": "planted CPT and CPT plus entropy",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -413,6 +425,15 @@
    "after": "The boosted-trees score without feedback is reported as 0.735, from the result file, in place of 0.736 in the ledger entry.",
    "reason": "Dated in the paper's Corrections section; found by the publication pass.",
    "found_by": "the publication pass"
+  },
+  {
+   "id": "x3",
+   "date": "2026-11-14",
+   "target": "document",
+   "type": "number",
+   "after": "The text said the rival model had the same number of extra parameters; the file gives the flexible prospect theory 9 parameters and the combined formula 10, against 6 for plain prospect theory, so three extra against four. One sentence called the formula three added terms; it has four terms for three ideas. The gaps to boosted trees quoted for both prospect theories were the flexible model's; the plain model's are 0.11 and 0.22. The summary under the title now says the formula never beat the richer model by the preregistered margin, since with feedback it led by 0.001.",
+   "reason": "A review of the published page found counts that did not match the result file.",
+   "found_by": "a review of the published pages"
   }
  ],
  "versions": [
@@ -426,6 +447,11 @@
    "date": "2026-11-09",
    "what": "paper version 1.0, first published",
    "hash": "a8abb68c9d3c67064cf86dd13ec8c5e2afbe2aa2dcfbd30482e2dd7a63357ceb"
+  },
+  {
+   "n": 3,
+   "date": "2026-11-14",
+   "what": "this page corrected, 1 item; the PDF and its BuildTeX source are still paper version 1.0"
   }
  ],
  "grade": {
@@ -433,34 +459,34 @@
    {
     "domain": "blinding",
     "text": "Not blind. Forecasts, rules and scoring all come from one agent.",
-    "from": "register scorer.blind"
+    "from": "our publication register, on blinding"
    },
    {
     "domain": "scoring",
     "text": "Graded by the same agent that ran it.",
-    "from": "register scorer.self_graded"
+    "from": "our publication register, on who scored it"
    },
    {
-    "domain": "single source",
+    "domain": "depth of reading",
     "text": "The cited literature was read at the level of abstracts, publisher pages and index records; full texts were not read.",
-    "from": "paper Verified"
+    "from": "the Verified section"
    },
    {
     "domain": "open data",
     "text": "The data carry no stated licence; the page reports statistics only.",
-    "from": "register data_licence"
+    "from": "our publication register, on the data licence"
    }
   ],
   "holds": [
    {
     "domain": "preregistration",
     "text": "Preregistered and hash-locked before the run (sha256 cecb9ceb).",
-    "from": "paper Reproduction"
+    "from": "the Reproduce section"
    },
    {
     "domain": "control",
     "text": "Controls: permuted terms, simulated CPT, planted truth.",
-    "from": "register evidence.controls"
+    "from": "our publication register, on controls"
    }
   ]
  },

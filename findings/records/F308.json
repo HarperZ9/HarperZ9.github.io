@@ -12,14 +12,22 @@
    "method"
   ],
   "tier": "D",
-  "tier_reason": "Cheap, mostly confirms.",
+  "tier_reason": "A low-cost sweep that mostly confirms the entries it tested.",
   "rung": "hypothesis",
-  "rung_reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
+  "rung_reason": "A preregistration with pass-or-fail rules is on file, which this rung needs. The next rung needs a named rival reading beaten by a decisive observation, and none is on file.",
   "outcome": "null",
   "bound": "One failure in 213 tested lines, 0.47 percent; the 95 percent Wilson interval runs to 2.6 percent, so failure rates above that are ruled out for lines of this kind.",
+  "verdicts": {
+   "held": 2,
+   "failed": 1,
+   "untestable": 0,
+   "files": [
+    "result.json"
+   ]
+  },
   "objection": "The lines were fitted to data, so passing is what a correct fit does, and a high-order fit can pass by construction when the b-file is short relative to its order. A passing line stays a conjecture with more range.",
-  "objection_source": "the paper's first stated limitation; no reviewer attack is on file",
-  "would_change": "No condition for raising or overturning the call is on file in the register.",
+  "objection_source": "the paper's first stated limitation; our register records no separate objection",
+  "would_change": "Our publication register records no condition that would raise or overturn this call.",
   "sections": [
    {
     "id": "reader",
@@ -301,7 +309,7 @@
    "type": "narrowed",
    "scope": "sampling and control",
    "date": "2026-10-31",
-   "note": "The correction pass coded an error and an untestable control: the sampling changed after the search route refused, and fitted lines pass by construction.",
+   "note": "A later review of our ledger recorded an error and a control that could not fail: the sampling changed after the search route refused, and fitted lines pass by construction.",
    "record": "findings ledger, F422 correction pass"
   }
  ],
@@ -343,29 +351,29 @@
    {
     "domain": "scoring",
     "text": "Scored by code and by the agent that ran it; self-graded.",
-    "from": "register scorer"
+    "from": "our publication register, on who scored it"
    },
    {
     "domain": "blinding",
     "text": "Not blind, as the paper's limitations state.",
-    "from": "paper Limitations"
+    "from": "the paper's Limitations"
    },
    {
     "domain": "imprecision",
     "text": "One failure in 213 tested lines, 0.47 percent; the 95 percent Wilson interval runs to 2.6 percent, so failure rates above that are ruled out for lines of this kind.",
-    "from": "the bound"
+    "from": "the bound stated under Evidence"
    },
    {
-    "domain": "single source",
+    "domain": "depth of reading",
     "text": "The cited literature was read at the level of abstracts, arXiv pages and search summaries; full texts were not read.",
-    "from": "paper Verified"
+    "from": "the Verified section"
    }
   ],
   "holds": [
    {
     "domain": "preregistration",
     "text": "Preregistered and hash-locked before the run (sha256 9736ef8a).",
-    "from": "paper Reproduction"
+    "from": "the Reproduce section"
    }
   ]
  },

@@ -5,7 +5,7 @@
   "id": "F362",
   "kind": "finding",
   "title": "Published 1 sigma error bars hold near nominal; a 95 percent interval needs 3 to 5 sigma",
-  "standfirst": "When a particle mass or an atomic mass moves between editions of its reference table, the old 1 sigma error bar covers the new value about as often as it should. The tails are far heavier than a bell curve, so covering 95 percent of later values takes 3 to 5 times the stated sigma.",
+  "standfirst": "When a particle mass or an atomic mass moves between editions of its reference table, the old 1 sigma error bar covers the new value about as often as it should (0.68 and 0.66). The tails are far heavier than a bell curve, so covering 95 percent of later values took 3 to 5 times the stated sigma in these tables. Six of our ten forecasts held; we expected error bars to cover too rarely, and counted over all values they covered 0.79.",
   "date_found": "2026-10-31",
   "fields": [
    "instruments-metrology",
@@ -15,18 +15,30 @@
   "tier": "B",
   "tier_reason": "Real public tables with planted and honest controls, and a clear statement of correlated inputs.",
   "rung": "hypothesis",
-  "rung_reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
+  "rung_reason": "A preregistration with pass-or-fail rules is on file, which this rung needs. The next rung needs a named rival reading beaten by a decisive observation, and none is on file.",
   "outcome": "held",
+  "verdicts": {
+   "held": 8,
+   "failed": 5,
+   "untestable": 0,
+   "files": [
+    "result.json"
+   ]
+  },
+  "kill": {
+   "state": "not fired",
+   "note": "The paper states that the kill condition did not fire: the planted check passed."
+  },
   "objection": "Later tables reuse inputs from earlier ones (shared inputs), so the later edition is not independent of the earlier one. That flatters every coverage figure here. Editions that share no inputs would be the cleaner test.",
-  "objection_source": "the paper's first stated limitation; no reviewer attack is on file",
-  "would_change": "No condition for raising or overturning the call is on file in the register.",
+  "objection_source": "the paper's first stated limitation; our register records no separate objection",
+  "would_change": "Our publication register records no condition that would raise or overturn this call.",
   "sections": [
    {
     "id": "reader",
     "title": "What this means for a reader",
     "role": "lead",
     "paragraphs": [
-     "When a table prints a value plus or minus one sigma, the next edition usually lands about as close as that promise says. Large misses are the problem: shifts of four or five sigma happen far more often than a bell curve allows. If you need 95 percent confidence from a published plus-or-minus, multiply it by three to five, and by more for an astronomical quantity that is still being settled."
+     "When a table prints a value plus or minus one sigma, the next edition usually lands about as close as that promise says. Large misses are the problem: shifts of four or five sigma happen far more often than a bell curve allows. If you need 95 percent confidence from a published plus-or-minus, multiply it by three to five, and by more for an astronomical quantity that is still being settled. That multiple describes how these tables behaved in the past, and it will miss when an input shared by many values turns out wrong."
     ]
    },
    {
@@ -357,7 +369,7 @@
    "type": "narrowed",
    "scope": "reused inputs and a proxy truth",
    "date": "2026-10-31",
-   "note": "The correction pass coded two errors: later tables reuse inputs, and the Hubble constant truth is a proxy.",
+   "note": "A later review of our ledger recorded two errors: later tables reuse inputs, and the Hubble constant truth is a proxy.",
    "record": "findings ledger, F422 correction pass"
   }
  ],
@@ -379,6 +391,15 @@
    "after": "That note was wrong and was withdrawn the same day: the result file has ten forecast verdicts, and six pass (cov2, k95, nu, moved, shrink, own_hold), so 6 of 10 forecasts held, as the ledger says. Every preregistered verdict is listed in the appendix.",
    "reason": "A first publication note said the ledger's count of forecasts held could not be reproduced.",
    "found_by": "the publication pass"
+  },
+  {
+   "id": "x3",
+   "date": "2026-11-14",
+   "target": "document",
+   "type": "wording",
+   "after": "Six of ten forecasts held; the hypothesis that stated error bars cover too rarely failed, since counted over all values they covered 0.79 against a nominal 0.68. The summary now says so, and the rule of thumb in the reader section now carries the limit the paper states for it.",
+   "reason": "A review of the published page found the summary silent on the forecasts that failed.",
+   "found_by": "a review of the published pages"
   }
  ],
  "versions": [
@@ -392,6 +413,11 @@
    "date": "2026-11-09",
    "what": "paper version 1.0, first published",
    "hash": "712109ae8ebf3f4880d3f9bf072f252166c78f3f3df5ab976e0a80f159d5e3fc"
+  },
+  {
+   "n": 3,
+   "date": "2026-11-14",
+   "what": "this page corrected, 1 item; the PDF and its BuildTeX source are still paper version 1.0"
   }
  ],
  "grade": {
@@ -399,24 +425,24 @@
    {
     "domain": "scoring",
     "text": "Scored by code and by the agent that ran it; self-graded.",
-    "from": "register scorer"
+    "from": "our publication register, on who scored it"
    },
    {
     "domain": "blinding",
     "text": "Not blind, as the paper's limitations state.",
-    "from": "paper Limitations"
+    "from": "the paper's Limitations"
    },
    {
-    "domain": "single source",
+    "domain": "depth of reading",
     "text": "The cited literature was read at the level of abstracts and search summaries; full texts were not read.",
-    "from": "paper Verified"
+    "from": "the Verified section"
    }
   ],
   "holds": [
    {
     "domain": "preregistration",
     "text": "Preregistered and hash-locked before the run (sha256 fd8fcf7a).",
-    "from": "paper Reproduction"
+    "from": "the Reproduce section"
    }
   ]
  },

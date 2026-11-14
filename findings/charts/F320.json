@@ -36,7 +36,7 @@
     {
      "kind": "data",
      "label": "2,122 windows, 15 people",
-     "detail": "WESAD chest and wrist recordings cut into windows. 30 percent are stress windows."
+     "detail": "WESAD chest recordings cut into windows. 30 percent are stress windows."
     },
     {
      "kind": "measure",
@@ -117,7 +117,7 @@
      "label": "Random forest, real recordings",
      "a": 0.9996046182286896,
      "b": 0.9662685288830094,
-     "note": "random 1.000; held-out 0.966; gap 0.033"
+     "note": "random 1.000; held-out 0.966; gap 0.033, taken before rounding (0.9996 minus 0.9663)"
     },
     {
      "label": "Logistic regression, real recordings",

@@ -14,12 +14,20 @@
   "tier": "D",
   "tier_reason": "Null with stated power.",
   "rung": "hypothesis",
-  "rung_reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
+  "rung_reason": "A preregistration with pass-or-fail rules is on file, which this rung needs. The next rung needs a named rival reading beaten by a decisive observation, and none is on file.",
   "outcome": "null",
   "bound": "Only strong cubic patterns are ruled out: power 0.9 at planted strength 0.2 at 8 EeV, and at 32 EeV only at strength 1.0, where the sky along the cube axes is twice the average.",
+  "verdicts": {
+   "held": 3,
+   "failed": 0,
+   "untestable": 0,
+   "files": [
+    "result.json"
+   ]
+  },
   "objection": "Only the public 10 percent of events was available, which is the main reason the sensitivity is low.",
-  "objection_source": "the paper's first stated limitation; no reviewer attack is on file",
-  "would_change": "No condition for raising or overturning the call is on file in the register.",
+  "objection_source": "the paper's first stated limitation; our register records no separate objection",
+  "would_change": "Our publication register records no condition that would raise or overturn this call.",
   "sections": [
    {
     "id": "reader",
@@ -306,7 +314,7 @@
    "type": "narrowed",
    "scope": "sensitivity",
    "date": "2026-10-31",
-   "note": "The correction pass coded one error: the public 10 percent sample has low power, so the claim covers large patterns only.",
+   "note": "A later review of our ledger recorded one error: the public 10 percent sample has low power, so the claim covers large patterns only.",
    "record": "findings ledger, F422 correction pass"
   }
  ],
@@ -339,29 +347,29 @@
    {
     "domain": "scoring",
     "text": "Scored by code and by the agent that ran it; self-graded.",
-    "from": "register scorer"
+    "from": "our publication register, on who scored it"
    },
    {
     "domain": "blinding",
     "text": "Not blind, as the paper's limitations state.",
-    "from": "paper Limitations"
+    "from": "the paper's Limitations"
    },
    {
     "domain": "imprecision",
     "text": "Only strong cubic patterns are ruled out: power 0.9 at planted strength 0.2 at 8 EeV, and at 32 EeV only at strength 1.0, where the sky along the cube axes is twice the average.",
-    "from": "the bound"
+    "from": "the bound stated under Evidence"
    },
    {
-    "domain": "single source",
+    "domain": "depth of reading",
     "text": "The cited literature was read at the level of abstracts, publisher pages and search summaries; full texts were not read.",
-    "from": "paper Verified"
+    "from": "the Verified section"
    }
   ],
   "holds": [
    {
     "domain": "preregistration",
     "text": "Preregistered and hash-locked before the run (sha256 1b0153b4).",
-    "from": "paper Reproduction"
+    "from": "the Reproduce section"
    }
   ]
  },

@@ -44,7 +44,7 @@
    "interval": null,
    "no_interval": "The result file stores one network mean per estimator for the planted check and no spread.",
    "baseline": "The planted truth, 0.322 bits",
-   "threshold": "Gaussian error at most 0.04 (was 0.009), KSG error at most 0.03 (was 0.014), held-out reading between 12 percent below and 2 percent above the truth as a share of it (was −5.3 percent).",
+   "threshold": "Gaussian error at most 0.04 (was 0.009), KSG error at most 0.03 (was 0.014), held-out reading between 0.12 bits below and 0.02 bits above the truth (was −0.053 bits: 0.269 against 0.322).",
    "planted": "A planted white-noise channel read −0.050 held-out bits, at or below zero as required.",
    "axis": {
     "label": "bits per year about the planted target",

@@ -23,7 +23,7 @@ Later work kept both routes. Cover and King {cite:coverking1978} replaced guessi
 Those studies push the estimate of the entropy rate downward. Our question is narrower. Do the low rows of Shannon's table, which are easy to recompute, still hold on text of other eras and kinds? And when a reader built from letter counts is trained on one kind of text and reads another, which costs more, a change of era or a change of genre?
 
 # section Preregistration and design {sec:prereg}
-A {g:preregistration}preregistration{/g} is a dated plan fixed and hash-locked before any result is seen. This study had two. The first was locked on 1 November 2026 at 08:13 UTC. It named the corpora, the statistics, the reader, the planted text, the control, nine numeric forecasts and the {g:kill-condition}kill condition{/g}, a rule that decides against the run with no judgement after it. The decision it informed was which claims from saved reading material survive a changed frame, so which ones we can reuse.
+A {g:preregistration}preregistration{/g} is a dated plan fixed and hash-locked before any result is seen. This study had two. The first was locked on 1 November 2026 at 08:13 UTC. It named the corpora, the statistics, the reader, the planted text, the control, nine numeric forecasts and the {g:kill-condition}kill condition{/g}, a rule that decides against the run with no judgement after it. The decision it informed was which claims in material we had saved still hold when the text or the reader changes, and so which ones we can reuse.
 
 The first run had a fault of ours. The code promised in a comment to shuffle the books before splitting training text from test text and never did. The old corpus's test text was therefore all The Federalist, and the mid corpus's all Fitzgerald, so era was read through one book. We wrote a second preregistration to fix the split and locked it at 08:20 UTC the same day. It was not blind: it was written after the first run had been read. The first run stands as recorded, and both are reported here.
 
@@ -85,7 +85,7 @@ Word-based ¦ 2.14 ¦ 1.801 ¦ 1.853 ¦ 1.747 ¦ 0.339, 0.393
 
 ![fig:table width=0.98 alt=Grouped bars for F1, F2, F3 and the word-based figure, Shannon against old, mid and new corpora](fig-table.png) Shannon's 1951 values against the three corpora. The first two groups agree within 0.12 bits; the third and fourth sit lower than his. Drawn from the first run's result file and the preregistered table values.
 
-{c1}The single-letter and letter-pair rows match Shannon's within 0.12 bits on all three corpora.{/c1} The largest of those gaps is F2 on Wikipedia, 0.120. {c2}His third-order value of 3.1 bits sits 0.39 bits above ours on the old books and 0.23 above ours on Wikipedia.{/c2} The first-run verdict on the old table failed on that row alone, and the verdict on the new table passed, since 0.228 is inside the 0.3 bound. The word-based figure is 0.34 to 0.39 bits below his. Words in the Wikipedia sample are longer, 5.92 characters with the space against 5.41 in the old books, and their frequency distribution carries 10.34 bits per word against 9.74.
+{c1}The single-letter and letter-pair rows match Shannon's within 0.12 bits on all three corpora.{/c1} The largest of those gaps is F2 on Wikipedia, 0.120. {c2}His third-order value of 3.1 bits sits 0.39 bits above ours on the old books and 0.23 above ours on Wikipedia.{/c2} The first-run verdict on the old table failed on that row alone, and the verdict on the new table passed, since 0.228 is inside the 0.3 bound. The word-based figure is 0.29 to 0.39 bits below his. Words in the Wikipedia sample are longer, 5.92 characters with the space against 5.41 in the old books, and their frequency distribution carries 10.34 bits per word against 9.74.
 
 ## The reader
 In the first run the reader trained on the old corpus needed 2.13 bits per letter on the old held-out text, inside the forecast band of 1.85 to 2.35. Because of the faulty split, that held-out text was all The Federalist. The guessing game gave bounds of 1.34 and 2.35 by eqs. {ref:eq:low} and {ref:eq:up}, and the reader's first guess was right on 58 percent of letters. The claim that this reader reaches 1.3 bits failed, as forecast.
@@ -109,7 +109,7 @@ Era and topic, Federalist reader on Wikipedia ¦ 1 ¦ 0.4 to 1.6 ¦ 1.365
 Of the numeric forecasts, 4 of 9 held in the first run and 4 of 5 held after the fix. Appendix A lists each one.
 
 # section Discussion {sec:discussion}
-The low rows of Shannon's table describe English letters across two centuries of text. Single-letter frequencies and letter-pair statistics move by a few hundredths of a bit between Austen and Wikipedia. That is the part of the table a reader can quote.
+The low rows of Shannon's table describe English letters across two centuries of text. Single-letter frequencies and letter-pair statistics differ by 0.03 and 0.09 bits between the oldest books and Wikipedia. That is the part of the table a reader can quote.
 
 F3 is different. Our value is lower than his on every corpus, by more than our forecast allowed on the old books. We have not found the cause. Two are open, and neither was tested. A plug-in estimate falls below the true value as the number of contexts grows against the sample, and 27 squared, 729, two-letter contexts is many for 750,000 characters if rare pairs matter. Shannon's F3 also rests on letter counts from other text than ours, and a difference in the source counts would move it. Either way the third row should be quoted with its source and method.
 
@@ -117,11 +117,11 @@ The word-based gap fits a difference of method. Counting words directly misses t
 
 The reader result agrees with the line of work after Shannon {cite:coverking1978} {cite:brown1992}: letter counts alone do not reach a human reader's figure. Our context model sits at 1.63 to 2.41 bits per letter on held-out text. Shannon's 1.3 is a bound on a reader who knows words, grammar and the world.
 
-The transfer result was the frame we most wanted to change. A reader from one era of fiction reads another era at a cost of 0.10 to 0.25 bits, and the same reader reads The Federalist at 0.44. What a text is about and how it is argued changes letter statistics more than when it was written.
+The transfer result was the condition we most wanted to vary. A reader from one era of fiction reads another era at a cost of 0.10 to 0.25 bits, and the same reader reads The Federalist at 0.44. What a text is about and how it is argued changes letter statistics more than when it was written.
 
 # section Limitations {sec:limits}
 - Wikipedia is the only new text, so era, genre and topic stay tangled in every new-text row.
-- No large language model was used as a reader. That was the change of frame we most wanted, and it stays open.
+- No large language model was used as a reader. That was the change we most wanted to make, and it stays open.
 - The word-based gap may come from Shannon's fitted Zipf tail against our direct count. We did not test that.
 - The cause of the F3 gap is unknown. Sampling bias in the plug-in estimate and a difference in his source counts are both candidates, and neither was measured.
 - Shannon's own test passages are not openly available, so the comparison is with his printed table.
@@ -134,6 +134,7 @@ Verified: on 9 November 2026 every F1, F2, F3 and word-based value in Table {ref
 # section Corrections {sec:corrections}
 - 1 November 2026: the first run's test text for the old and mid corpora was a single book each, because a promised shuffle was never done. A second preregistration fixed the split and was run the same day. The first run stands as recorded and both are reported.
 - 9 November 2026: first published version.
+- 14 November 2026: A review of the published page found ranges and labels that did not match the result files. The summary under the title gave the third-order gap as 0.23 to 0.39 bits; the files give 0.39, 0.40 and 0.23, so it now reads 0.23 to 0.40. The word-based gap was given as 0.34 to 0.39 bits and is 0.29 to 0.39 with the middle corpus counted. The shuffle rule was described as the 95th percentile of the shuffles; the comparison is with the lowest 5 percent of the shuffles' losses, 8.44 and 9.20. Two chart labels were corrected: each text is read most cheaply by its own reader, which is true by text and not by reader, and the transfer penalty is measured against the other text's own reader, as the equation in the methods defines it. No value in the tables changed.
 
 # section Reproduction {sec:repro}
 - Data: the Project Gutenberg books listed in the data section, and a sample of Wikipedia featured articles of about 0.77 MB.
@@ -163,7 +164,7 @@ Forecast, genre penalty ¦ 0.1 to 0.45 ¦ 0.661 ¦ no
 Forecast, new against old own-text loss ¦ -0.1 to 0.25 ¦ 0.599 ¦ no
 Forecast, word-order information ¦ 0.4 to 1.2 ¦ 0.498 ¦ yes
 Forecast, gain from four times the training text ¦ 0.1 to 0.4 ¦ 0.450 ¦ no
-Shuffle control ¦ real loss below every shuffle's 95th percentile ¦ 2.73 against 8.44 ¦ yes
+Shuffle control ¦ real loss below the lowest 5 percent of the shuffles' losses ¦ 2.73 against 8.44 ¦ yes
 ::end
 
 The first run's era and genre values were read through one test book per corpus and are superseded by the second run for the era and genre question. Word-order information is the extra loss when the words of the Wikipedia test text are shuffled. The training gain is the extra loss of a Wikipedia reader trained on a quarter of the text.
@@ -176,7 +177,7 @@ Forecast, era, old to mid ¦ 0.02 to 0.3 ¦ 0.100 ¦ yes
 Forecast, era, mid to old ¦ 0.02 to 0.3 ¦ 0.253 ¦ yes
 Forecast, genre ¦ 0.2 to 0.9 ¦ 0.444 ¦ yes
 Forecast, Federalist reader on Wikipedia ¦ 0.4 to 1.6 ¦ 1.365 ¦ yes
-Shuffle control ¦ real loss below every shuffle's 95th percentile ¦ 1.93 against 9.20 ¦ yes
+Shuffle control ¦ real loss below the lowest 5 percent of the shuffles' losses ¦ 1.93 against 9.20 ¦ yes
 ::end
 
 # references

@@ -22,13 +22,13 @@ export function downloads(rec, where) {
   }
   return `<h3 id="downloads">Downloads</h3><ul class="fd-files">${files.map(([f, w]) => `<li><a href="/${f}">${w}</a> <span class="soft">${path.basename(f)}, ${size(f)}</span></li>`).join("")}
 <li><a href="/findings/papers/doc.bld">BuildLang doc module</a> <span class="soft">doc.bld, ${size("findings/papers/doc.bld")}, imported by the source</span></li></ul>
-<p class="soft">The PDF is typeset by BuildTeX from ${id}.bld, which is written from the same source as this page. The receipt records the source's SHA-256 and the PDF's (${esc(rec.versions[rec.versions.length - 1].hash.slice(0, 12))}), so anyone can rebuild it and compare. The copy here has its hidden author field blanked, as the site does for every file it publishes; blank the same field in a rebuild before comparing. The name stays on the first page.</p>`;
+<p class="soft">The PDF is typeset by BuildTeX from ${id}.bld, which is written from the same source as this page. The receipt records the source's SHA-256 and the PDF's (${esc(rec.versions.findLast((v) => v.hash).hash.slice(0, 12))}), so anyone can rebuild it and compare. The copy here has its hidden author field blanked, as the site does for every file it publishes; blank the same field in a rebuild before comparing. The name stays on the first page.</p>`;
 }
 
 export function recordNumbers(rec) {
   const rows = rec.evidence.filter((e) => !/^The numbers in claim/.test(e.label));
   if (!rows.length) return "";
-  return `<h3>The register's numbers</h3><div class="st-table" tabindex="0" role="region" aria-label="The register's numbers"><table class="ev"><thead><tr><th scope="col">What</th><th scope="col">Value</th></tr></thead>
+  return `<h3>Numbers recorded in our publication register</h3><div class="st-table" tabindex="0" role="region" aria-label="Numbers recorded in our publication register"><table class="ev"><thead><tr><th scope="col">What</th><th scope="col">Value</th></tr></thead>
 <tbody>${rows.map((e) => `<tr><th scope="row">${esc(e.label)}</th><td>${esc(e.value)}</td></tr>`).join("")}</tbody></table></div>
 <p class="soft">As recorded in the publication register, the summary row each finding gets; the paper's own numbers above were re-read from the result files.</p>`;
 }
@@ -41,7 +41,7 @@ export function grade(rec) {
 
 export function ladder(rec) {
   const d = rec.document;
-  if (!d.rung) return `<div id="ladder" class="ladder"><h3>Where the claim stands</h3><p class="soft">This finding has not been placed on the ladder of rungs yet.</p></div>`;
+  if (!d.rung) return `<div id="ladder" class="ladder"><h3>Where the claim stands</h3><p class="soft">Our register assigns this finding no rung on the ladder.${d.rung_reason ? ` ${esc(d.rung_reason)}` : ""}</p></div>`;
   const killed = d.rung === "killed", x0 = 44, step = 120;
   const nodes = RUNGS.map((r, i) => `<circle cx="${x0 + i * step}" cy="38" r="${r === d.rung ? 6 : 4.5}" class="node${r === d.rung ? " cur" : ""}"/><text x="${x0 + i * step}" y="18" class="${r === d.rung ? "cur" : ""}">${r}</text>`).join("");
   const branch = killed ? `<path d="M${x0 + step} 43 L${x0 + step + 30} 76" class="branch"/><path d="M${x0 + step + 23} 72h14l-7 12z" class="kill"/><text x="${x0 + step + 44}" y="84" class="cur kill-t">killed</text>` : "";
@@ -73,7 +73,8 @@ function trail(rec, env, ctx) {
 <h3>Corrections</h3>${corr ? `<ol class="corrections">${corr}</ol>` : "<p>None recorded.</p>"}
 ${standingTrail(rec)}
 ${replaced ? `<h3>Findings this one replaced</h3><ol class="corrections">${replaced}</ol>` : ""}
-<p class="soft">Each correction is a dated note; the findings ledger is never rewritten, and a note governs where it differs.</p></section>`;
+<p class="soft">Each correction is a dated note; the findings ledger is never rewritten, and a note governs where it differs.</p>
+<p class="soft">Ledger and version dates up to publication are local dates in US Pacific time. Clock times in the text are UTC, seven or eight hours ahead, so a lock or a run stamped just after midnight UTC belongs to the previous local day. Corrections from 14 November 2026 on are dated in UTC.</p></section>`;
 }
 
 // a reference's own text, with its DOI, arXiv id and web address made into links where they stand

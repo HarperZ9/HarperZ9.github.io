@@ -96,7 +96,7 @@ The same sensitivity analyses were also run on the secondary region. Two of them
 # section Discussion {sec:discussion}
 The registered result is an {g:honest-null}honest null{/g} with a stated bound. Within this sample and this measure, the correlation between CTQ total and amygdala-vmPFC resting connectivity is smaller than 0.20 in size. That is consistent with Goltermann and colleagues {cite:goltermann2022}, whose abstract reports no maltreatment association with the connectivity of its regions of interest in 1,325 adults.
 
-It does not contradict Birn and colleagues {cite:birn2014} directly. Their sample was 27 male veterans, most with PTSD, and their model held combat exposure and PTSD symptoms fixed alongside maltreatment; ours is a mixed transdiagnostic sample, mostly women and men, with demographic and motion covariates. An effect confined to a population like theirs could exist and be diluted here. The difference in design is the main reason the two results can both stand.
+It does not contradict Birn and colleagues {cite:birn2014} directly. Their sample was 27 male veterans, most with PTSD, and their model held combat exposure and PTSD symptoms fixed alongside maltreatment; ours is a mixed transdiagnostic sample of women and men (112 and 73), with demographic and motion covariates. An effect confined to a population like theirs could exist and be diluted here. The difference in design is the main reason the two results can both stand.
 
 The inconclusive subscale results deserve plain reporting. Emotional neglect and physical abuse gave correlations of opposite sign, each with a 90 percent interval that crosses 0.20 by a small margin. They come from fifteen exploratory analyses with no correction, so one or two such edges are expected by chance. They do not support an association, and they also do not let us extend the equivalence claim to each subscale.
 
@@ -118,6 +118,7 @@ Verified: on 9 November 2026 the flow counts (241, 17, 16, 21, 187), the primary
 - 10 October 2026: deviation 5 contained an error; its supporting numbers came from a low-pass check while its rule named a band-stop filter. Deviation 5a corrected it before any trauma or connectivity value was opened.
 - 9 November 2026: the findings ledger said of the fifteen sensitivity analyses only that none reached an association. The emotional-neglect and physical-abuse subscale analyses (r 0.081 and -0.081) are inconclusive, their 90% intervals touching 0.20. This paper reports them that way, and also reports the two inconclusive secondary-region analyses.
 - 9 November 2026: first published version.
+- 14 November 2026: A review of the published page found two unclear phrases. The charts spoke of six covariates while the text names five variables; the result file records six model terms built from those five, and the charts now say so. The discussion described the sample as mostly women and men; it holds 112 women, 73 men and 2 people who reported another sex.
 
 # section Reproduction {sec:repro}
 - Data: download OpenNeuro ds005237, snapshot 1.1.3 (CC0).
@@ -125,7 +126,7 @@ Verified: on 9 November 2026 the flow counts (241, 17, 16, 21, 187), the primary
 - Extract mean time series from the Harvard-Oxford amygdala and Frontal Medial Cortex masks at the 50 percent threshold, correlate, apply eq. {ref:eq:z} and average with eq. {ref:eq:mean}.
 - Sum the five CTQ subscales, treating 88 as missing. Compute the partial correlation with the six covariate terms and its intervals with eq. {ref:eq:se}, then apply the decision rule at 0.20.
 - Shuffle CTQ totals 10,000 times with seed 20261029 for the null.
-- Preregistration, frozen body SHA-256: 4d4681b9f44188b37e60fd9c53d94a85e01cd1529f4d2be7228a42a3ff36f753. Current file with the deviation log: f185c72a449a8649dda7177a3c93a4107da54bc243b4001edd439ad8cceadb82. This study ran before our study runner was used for it, so it has no plan hash or run id; the result files carry the frozen hash and the SHA-256 of every phenotype input.
+- Preregistration, frozen body SHA-256: 4d4681b9f44188b37e60fd9c53d94a85e01cd1529f4d2be7228a42a3ff36f753. Current file with the deviation log: f185c72a449a8649dda7177a3c93a4107da54bc243b4001edd439ad8cceadb82. This study ran before we used our study-running tool, which records a plan hash and a run id, so it has no plan hash or run id; the result files carry the frozen hash and the SHA-256 of every phenotype input.
 - Cost: the analysis session used 50.4 kJ (14.0 Wh), measured at the machine. The 19-day preprocessing batch was not metered.
 
 # section Appendix A. Sensitivity analyses on the primary region {sec:appendix}

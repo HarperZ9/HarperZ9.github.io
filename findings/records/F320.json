@@ -13,13 +13,22 @@
    "psychology"
   ],
   "tier": "B",
-  "tier_reason": "Open data, plants and controls; small sample and one protocol. A clean known-answer on leakage.",
+  "tier_reason": "Open data with planted checks and controls; a small sample and one protocol. Planted data with nothing to learn give a clean known answer on leakage. The planted shared shift failed in the first run and passed in a second run at a larger shift.",
   "rung": "hypothesis",
-  "rung_reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
+  "rung_reason": "A preregistration with pass-or-fail rules is on file, which this rung needs. The next rung needs a named rival reading beaten by a decisive observation, and none is on file.",
   "outcome": "held",
+  "verdicts": {
+   "held": 10,
+   "failed": 1,
+   "untestable": 0,
+   "files": [
+    "result-run1.json",
+    "result-run2.json"
+   ]
+  },
   "objection": "Fifteen people, one laboratory, one protocol, about one hour each. A held-out person is a stranger only inside this sample.",
-  "objection_source": "the paper's first stated limitation; no reviewer attack is on file",
-  "would_change": "No condition for raising or overturning the call is on file in the register.",
+  "objection_source": "the paper's first stated limitation; our register records no separate objection",
+  "would_change": "Our publication register records no condition that would raise or overturn this call.",
   "sections": [
    {
     "id": "reader",
@@ -34,7 +43,7 @@
     "title": "Abstract",
     "role": "argument",
     "paragraphs": [
-     "Wearable stress detectors are often scored by cutting recordings into overlapping windows and splitting the windows at random into training and test sets. We tested what that split measures. On planted data built on the same windows and timing as the WESAD recordings, where each person and each condition block carries its own random offsets and nothing carries from one person to the next, {c1}a random split over windows scored an AUC of 1.000 and a held-out-person split scored 0.469.{/c1} On the real chest recordings of 15 people (2,122 windows of 60 s, 30 percent of them stress), {c2}the random forest held across people at a held-out-person AUC of 0.966, against 1.000 under the random split.{/c2} {c3}The random split inflated the AUC by 0.033 for the random forest and 0.086 for logistic regression.{/c3} {c4}ECG, EDA and skin temperature together reached 0.97 for a held-out person, and acceleration with EMG reached 0.79.{/c4} {c5}Across the 15 people, the rise in reported anxiety did not follow the size of the bodily change: Spearman rho 0.03 with EDA, 0.02 with heart rate and -0.45 with breathing rate (p 0.09).{/c5} The first run failed its own planted check because we set an unreachable bar; a second preregistered run repaired the plant and passed."
+     "Wearable stress detectors are often scored by cutting recordings into overlapping windows and splitting the windows at random into training and test sets. We tested what that split measures. On planted data built on the same windows and timing as the WESAD recordings, where each person and each condition block carries its own random offsets and nothing carries from one person to the next, {c1}a random split over windows scored an AUC of 1.000 and a held-out-person split scored 0.469.{/c1} On the real chest recordings of 15 people (2,122 windows of 60 s, 30 percent of them stress), {c2}the random forest held across people at a held-out-person AUC of 0.966, against 1.000 under the random split.{/c2} {c3}The random split inflated the AUC by 0.033 for the random forest and 0.086 for logistic regression.{/c3} {c4}ECG, EDA and skin temperature together reached 0.97 for a held-out person, and acceleration with EMG reached 0.79.{/c4} {c5}Across the 15 people, the rise in reported anxiety did not follow the size of the bodily change: Spearman rho 0.03 with EDA, 0.02 with heart rate and -0.45 with breathing rate (p 0.09).{/c5} The first run failed its own planted check because we set its bar at 0.90, within 0.012 of the best score that planted shift allows; a second preregistered run repaired the plant and passed."
     ]
    },
    {
@@ -58,7 +67,7 @@
      "Kill conditions, without discretion:",
      "- If the planted data with nothing to learn fail (random split under 0.8 or held-out person above 0.6), or if the planted data with a real shared shift score under 0.9 for a held-out person, the instrument gets no claim.",
      "- A leakage claim requires the random forest's random-split AUC to exceed its held-out-person AUC by at least 0.02.",
-     "The first run met the second part of the first rule: the planted shift scored 0.824 against a bar of 0.90. By its own rule that run was {g:void}void{/g}, a verdict that says nothing for or against the claim. A calculation after the run showed the bar was out of reach: for the planted shift of 2 the best possible AUC is about 0.91 (section {ref:sec:methods}). A second preregistration, locked at 22:39 UTC the same evening, kept the real-data handling unchanged, tested planted shifts of 2, 3 and 4 on a fresh seed, and required the shift of 4 to reach 0.90 for a held-out person. If it passed, the first run's real-data results were to be credited. It passed. The second plan was written after the first run's results were seen, and its forecasts for the real data copy the first run's values; we report it as a repair, not as a blind test."
+     "The first run met the second part of the first rule: the planted shift scored 0.824 against a bar of 0.90. By its own rule that run was {g:void}void{/g}, a verdict that says nothing for or against the claim. A calculation after the run showed the bar left almost no room: for the planted shift of 2 the best possible AUC is about 0.91 (section {ref:sec:methods}). A second preregistration, locked at 22:39 UTC the same evening, kept the real-data handling unchanged, tested planted shifts of 2, 3 and 4 on a fresh seed, and required the shift of 4 to reach 0.90 for a held-out person. If it passed, the first run's real-data results were to be credited. It passed. The second plan was written after the first run's results were seen, and its forecasts for the real data copy the first run's values; we report it as a repair, not as a blind test."
     ]
    },
    {
@@ -345,7 +354,7 @@
    "type": "narrowed",
    "scope": "planted check and scoring",
    "date": "2026-10-31",
-   "note": "The correction pass coded a failed plant and an error: the first planted check failed, and the entry was self-graded and not blind, with order confounded with condition.",
+   "note": "A later review of our ledger recorded a failed planted check and an error: the first planted check failed, and the entry was self-graded and not blind, with order confounded with condition.",
    "record": "findings ledger, F422 correction pass"
   }
  ],
@@ -356,7 +365,7 @@
    "target": "document",
    "type": "wording",
    "after": "A second preregistered run repaired the plant. Both runs are reported.",
-   "reason": "The first run's planted check failed because its bar of 0.90 was above the ceiling of about 0.91 for a shift of 2.",
+   "reason": "The first run's planted check failed against a bar of 0.90 that sat just under the ceiling of about 0.91 for a shift of 2.",
    "found_by": "the study itself, before publication"
   },
   {
@@ -367,6 +376,15 @@
    "after": "Both are stated in the limitations.",
    "reason": "A review of our ledger recorded the entry as self-graded and not blind, with order confounded with condition.",
    "found_by": "a review of our findings ledger"
+  },
+  {
+   "id": "x3",
+   "date": "2026-11-14",
+   "target": "document",
+   "type": "scope",
+   "after": "The bar was 0.90 and the ceiling for a planted shift of 2 is 0.912, so the bar sat just under the ceiling; the run scored 0.824, and the second run scored 0.692 at the same shift. The abstract, the design section and the earlier correction note now give those numbers. The first diagram said chest and wrist recordings; only the chest device was used, and it now says so.",
+   "reason": "A review of the published page found the first run's failed planted check described as a bar above the ceiling.",
+   "found_by": "a review of the published pages"
   }
  ],
  "versions": [
@@ -380,6 +398,11 @@
    "date": "2026-11-09",
    "what": "paper version 1.0, first published",
    "hash": "d26e7ed246f323258e6dfe6adddf93518a9e07ea6214fbfa27d1eb02276608cb"
+  },
+  {
+   "n": 3,
+   "date": "2026-11-14",
+   "what": "this page corrected, 1 item; the PDF and its BuildTeX source are still paper version 1.0"
   }
  ],
  "grade": {
@@ -387,24 +410,24 @@
    {
     "domain": "scoring",
     "text": "Scored by code and by the agent that ran it; self-graded.",
-    "from": "register scorer"
+    "from": "our publication register, on who scored it"
    },
    {
     "domain": "blinding",
     "text": "Not blind, as the paper's limitations state.",
-    "from": "paper Limitations"
+    "from": "the paper's Limitations"
    },
    {
-    "domain": "single source",
+    "domain": "depth of reading",
     "text": "The cited literature was read at the level of abstracts and search summaries, except Campbell and Ehlert, whose abstract was read during the study on 31 October 2026; full texts were not read.",
-    "from": "paper Verified"
+    "from": "the Verified section"
    }
   ],
   "holds": [
    {
     "domain": "preregistration",
     "text": "Preregistered and hash-locked before the run (sha256 9263e28c).",
-    "from": "paper Reproduction"
+    "from": "the Reproduce section"
    }
   ]
  },

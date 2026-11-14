@@ -5,7 +5,7 @@
   "id": "F47",
   "kind": "finding",
   "title": "More variables raise prediction skill, yet most targets stall far below their noise ceiling",
-  "standfirst": "Across trees, mood, music ratings, forecasters and a similarity task, held-out skill grew as we added measured variables and always beat a shuffled baseline. In five of six targets with a measurable ceiling it stopped between 0.18 and 0.65 of the way there, and the gap closed mainly when a different kind of variable arrived.",
+  "standfirst": "Across trees, mood, music ratings, forecasters and a similarity task, held-out skill grew as we added measured variables and always beat a shuffled baseline. In four of the five targets with a valid ceiling it stopped between 0.18 and 0.65 of the way there. We forecast that a different kind of variable would move at least three of those plateaus, and it moved one of seven.",
   "date_found": "2026-10-29",
   "fields": [
    "forecasting-prediction",
@@ -15,11 +15,20 @@
   "tier": "B*",
   "tier_reason": "Real data across domains with working nulls, and an unusual side-by-side view. The second run is not blind, one ceiling failed, the core forecasts failed, and linear models cannot rule out nonlinear signal. The past-performance finding is known.",
   "rung": "hypothesis",
-  "rung_reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
-  "outcome": "held",
+  "rung_reason": "A preregistration with pass-or-fail rules is on file, which this rung needs. The next rung needs a named rival reading beaten by a decisive observation, and none is on file.",
+  "outcome": "mixed",
+  "bound": "Four of the six preregistered verdicts failed. One target reached 0.8 of its ceiling against a forecast of at least four, and one plateau moved when a new kind of variable arrived against a forecast of at least three. Held-out skill did rise with added variables and beat its shuffled control in every target, and the two toy-model verdicts passed.",
+  "verdicts": {
+   "held": 2,
+   "failed": 4,
+   "untestable": 0,
+   "files": [
+    "result.json"
+   ]
+  },
   "objection": "Ridge and logit may leave signal that a nonlinear model finds, so a stall may be the model class; datasets are a convenience sample; DEAM rater count is assumed and the ceilings are bounds.",
-  "objection_source": "the register's reviewer attack",
-  "would_change": "Rerun with nonlinear learners and a preregistered tree ceiling on fresh splits; drop the saves; add a domain outside this machine",
+  "objection_source": "the strongest objection recorded in our publication register",
+  "would_change": "Rerun with nonlinear learners and a preregistered tree ceiling on fresh splits; leave out the private image collection; add a domain from outside our own records",
   "sections": [
    {
     "id": "reader",
@@ -57,7 +66,7 @@
      "The plan fixed the targets, variables, splits, models, ceilings and the rule for each {g:verdict}verdict{/g}, the pass or fail of one preregistered rule set read off by code. The predictions were:",
      "- P1, ceiling reached: a target is at ceiling when its all-variable held-out skill above chance is at least 0.8 of its ceiling above chance. Pass if at least 4 of the 6 targets with a ceiling are at ceiling.",
      "- P2, unmeasured variables: a target's plateau moves when its named strong variable adds at least 0.02 skill over all base variables and the result exceeds the upper 97.5th percentile of the fitted plateau. Pass if at least 3 of 7 targets move.",
-     "- P3, chaos: in the Lorenz-63 toy, the forecast horizon is linear in the log of precision (linear R2 at least 0.98), its slope is within 25 percent of theory, and the last three decades gain no more than the first three.",
+     "- P3, chaos: in the Lorenz-63 toy, the forecast horizon is linear in the log of precision (linear R2 at least 0.98), its slope is within 25 percent of theory, and the gain over the last three decades is between 0.75 and 1.33 times the gain over the first three.",
      "- P4, reflexivity: five rules on a toy crowd, listed in Appendix A.",
      "- P5, overfitting control: every target beats its shuffled-target control, and a deliberately overfitted fit behaves as expected (Appendix A).",
      "The plan also held an identification test on a private image collection. That test, and the seventh P2 target built on the same collection, are left out of this paper; the P2 count below includes that target because the verdict was computed over seven.",
@@ -136,7 +145,7 @@
      "{c3}The largest gains came from a different kind of variable: past accuracy lifted forecasters from 0.131 to 0.360 and prior growth lifted trees from 0.396 to 0.639.{/c3} The other dimension's rating added 0.082 to valence and 0.092 to arousal; mood's training mean added 0.032 and tree death's prior growth 0.015 AUC. Only forecasters moved by the P2 rule. For trees the gain was 0.243, but the plateau interval for tree growth ran to the fit bound of 2.0, so the rule could not pass; the preregistration's addendum records that defect and keeps the rule.",
      "{c4}One of six targets reached 0.8 of its ceiling, against a forecast of at least four, and one of seven plateaus moved, against a forecast of at least three.{/c4} Both are {g:honest-null}honest nulls{/g} of the claim's forecasts, reported with the same weight as the passes.",
      "## The toys",
-     "{c5}In the Lorenz toy the forecast horizon grew 2.51 time units per tenfold gain in precision, against 2.54 from theory, with linear R2 0.99994; twelve decades of precision bought 1.2 to 28.7 time units.{/c5} The gain per decade over the last three decades was 1.02 times that over the first three. Figure {ref:fig:lorenz} shows the line.",
+     "{c5}In the Lorenz toy the forecast horizon grew 2.51 time units per tenfold gain in precision, against 2.54 from theory, with linear R2 0.99994; twelve levels of precision, from one decimal digit to twelve, moved the horizon from 1.2 to 28.7 time units.{/c5} The gain per decade over the last three decades was 1.02 times that over the first three. Figure {ref:fig:lorenz} shows the line.",
      "![fig:lorenz width=0.8 alt=Median horizon rising in a straight line with precision, lying on the dashed theory line](fig-lorenz.png) Lorenz-63 forecast horizon against starting precision, median over 100 attractor states, with the slope from the Lyapunov exponent. Drawn from the result file.",
      "In the crowd toy with steep reaction ({m:\\beta} = 20) and 1,000 members, an unpublished forecast with every member measured scored R2 1.00, the same forecast published naively scored -1.55, and a fixed-point forecast that solves for the reaction scored 0.9999. Measuring 100 of the 1,000 members cut the fixed-point forecast to 0.40 while the unpublished one scored 0.98. With identical members there is no fixed point, and the best published forecast scored -0.02.",
      "In the overfitting check, plain least squares with 150 variables on 150 forecasters fitted the training data at R2 0.96 and scored -135,817 held out. Ridge on shuffled targets stayed at or below -0.005 at every count, and ridge on real targets reached 0.067 with all variables. P5 failed on its own wording, because it asked for a training R2 of at least 0.99 at 150 variables and got 0.96; every other rule in it held."
@@ -221,7 +230,7 @@
   },
   {
    "id": "c5",
-   "text": "In the Lorenz toy the forecast horizon grew 2.51 time units per tenfold gain in precision, against 2.54 from theory, with linear R2 0.99994; twelve decades of precision bought 1.2 to 28.7 time units.",
+   "text": "In the Lorenz toy the forecast horizon grew 2.51 time units per tenfold gain in precision, against 2.54 from theory, with linear R2 0.99994; twelve levels of precision, from one decimal digit to twelve, moved the horizon from 1.2 to 28.7 time units.",
    "section": "results",
    "basis": "observed",
    "refs": [],
@@ -285,7 +294,7 @@
    "label": "Sample",
    "value": "8 datasets; n 1744 to 150000; 22 to 1349 variables",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -294,9 +303,9 @@
    "id": "e6",
    "kind": "number",
    "label": "Main estimate and interval",
-   "value": "GJP asymptote 0.137 [0.118,0.155]; other asymptote intervals often hit the fit bound (up to 2.0)",
+   "value": "forecaster plateau 0.137 (0.118 to 0.155); other plateau intervals often hit the bound of the fit (up to 2.0)",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -305,9 +314,9 @@
    "id": "e7",
    "kind": "number",
    "label": "Forecast against outcome",
-   "value": "P1 1 of 6 at ceiling vs >= 4; P2 1 moved vs >= 3; P3, P4 toys pass; P6 gap -0.221",
+   "value": "1 of 6 targets at its ceiling against a forecast of at least 4; 1 plateau moved against at least 3; the two toy-model forecasts passed; an identification test on the private image collection, left out of the paper, missed its bar at -0.221",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -316,9 +325,9 @@
    "id": "e8",
    "kind": "control",
    "label": "Known-answer check",
-   "value": "Lorenz horizon 2.51 vs theory 2.54 per decade; overfitting demo",
+   "value": "Lorenz forecast horizon 2.51 per tenfold precision against 2.54 from theory; an overfitting demonstration",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -362,7 +371,7 @@
    "title": "Hebart, M. N., Contier, O., Teichmann, L. and others (2023). THINGS-data, a multimodal collection of large-scale datasets for investigating object representations in human brain and behavior. eLife 12, e82580. doi:10.7554/eLife.82580",
    "access": "run",
    "target": "https://doi.org/10.7554/eLife.82580",
-   "licence": "mixed: DEAM CC BY-NC; GJP, FIA, THINGS each own terms; author saves private and should be dropped"
+   "licence": "mixed: DEAM CC BY-NC; the Good Judgment Project, Forest Inventory and THINGS data each under their own terms; the image collection is private and is not published"
   },
   {
    "id": "r5",
@@ -381,7 +390,7 @@
    "title": "Aljanaki, A., Yang, Y.-H. and Soleymani, M. (2017). Developing a benchmark for emotional analysis of music. PLoS ONE 12(3), e0173392. doi:10.1371/journal.pone.0173392",
    "access": "run",
    "target": "https://doi.org/10.1371/journal.pone.0173392",
-   "licence": "mixed: DEAM CC BY-NC; GJP, FIA, THINGS each own terms; author saves private and should be dropped"
+   "licence": "mixed: DEAM CC BY-NC; the Good Judgment Project, Forest Inventory and THINGS data each under their own terms; the image collection is private and is not published"
   },
   {
    "id": "r7",
@@ -390,7 +399,7 @@
    "title": "Good Judgment Project. GJP data. Harvard Dataverse, CC0 1.0. doi:10.7910/DVN/BPCDH5",
    "access": "run",
    "target": "https://doi.org/10.7910/DVN/BPCDH5",
-   "licence": "mixed: DEAM CC BY-NC; GJP, FIA, THINGS each own terms; author saves private and should be dropped"
+   "licence": "mixed: DEAM CC BY-NC; the Good Judgment Project, Forest Inventory and THINGS data each under their own terms; the image collection is private and is not published"
   },
   {
    "id": "r8",
@@ -398,7 +407,7 @@
    "kind": "dataset",
    "title": "USDA Forest Service. Forest Inventory and Analysis database, Washington and Oregon. FIA DataMart.",
    "access": "run",
-   "licence": "mixed: DEAM CC BY-NC; GJP, FIA, THINGS each own terms; author saves private and should be dropped"
+   "licence": "mixed: DEAM CC BY-NC; the Good Judgment Project, Forest Inventory and THINGS data each under their own terms; the image collection is private and is not published"
   },
   {
    "id": "r9",
@@ -406,7 +415,7 @@
    "kind": "dataset",
    "title": "openESM. Experience sampling dataset 0062 (Neubauer). CC BY 4.0.",
    "access": "run",
-   "licence": "mixed: DEAM CC BY-NC; GJP, FIA, THINGS each own terms; author saves private and should be dropped"
+   "licence": "mixed: DEAM CC BY-NC; the Good Judgment Project, Forest Inventory and THINGS data each under their own terms; the image collection is private and is not published"
   },
   {
    "id": "r10",
@@ -446,6 +455,15 @@
    "after": "The identification test and the target built on a private image collection are left out.",
    "reason": "Dated in the paper's Corrections section; found by the publication pass.",
    "found_by": "the publication pass"
+  },
+  {
+   "id": "x4",
+   "date": "2026-11-14",
+   "target": "document",
+   "type": "number",
+   "after": "The summary under the title said five of six targets stopped between 0.18 and 0.65 of their ceiling and that the gap closed when a different kind of variable arrived; the file gives four of the five targets with a valid ceiling, and one plateau of seven moved, so the summary now says that. The design section described the third forecast as the last three decades gaining no more than the first three; the locked rule is a ratio between 0.75 and 1.33, and the section now says so. The charts are drawn from all eight targets in the result file, including the image-preference target that the text leaves out, and the first chart now says so. The outcome word changed from held to mixed, because four of the six preregistered verdicts failed.",
+   "reason": "A review of the published page found three statements that did not match the result file.",
+   "found_by": "a review of the published pages"
   }
  ],
  "versions": [
@@ -459,46 +477,51 @@
    "date": "2026-11-09",
    "what": "paper version 1.0, first published",
    "hash": "633238f22619b8d3257370dd072adebab46ee65dabac013541fabaa29109ee8e"
+  },
+  {
+   "n": 3,
+   "date": "2026-11-14",
+   "what": "this page corrected, 1 item; the PDF and its BuildTeX source are still paper version 1.0"
   }
  ],
  "grade": {
   "lowers": [
    {
     "domain": "blinding",
-    "text": "Not blind. second run corrects a clipping fault after reading run 1",
-    "from": "register scorer.blind"
+    "text": "Not blind. The second run corrects a clipping fault found by reading the first run.",
+    "from": "our publication register, on blinding"
    },
    {
-    "domain": "missing control",
-    "text": "Controls: working: shuffled-target nulls beaten by all eight; failed: tree ceiling estimator (-3.97); P5 rule mis-specified.",
-    "from": "register evidence.controls"
+    "domain": "failed check",
+    "text": "Controls: working: all eight targets beat their shuffled-target control; failed: the tree ceiling estimator (-3.96); the overfitting rule asked for a training fit of 0.99 and got 0.96, a bar we set wrongly.",
+    "from": "our publication register, on controls"
    },
    {
     "domain": "novelty",
     "text": "Nearby work exists; novelty is not shown.",
-    "from": "register literature.verdict"
+    "from": "our publication register, on the literature"
    },
    {
-    "domain": "single source",
+    "domain": "depth of reading",
     "text": "The cited literature was read at the level of abstracts, repository records and publisher pages; full texts were not read.",
-    "from": "paper Verified"
+    "from": "the Verified section"
    }
   ],
   "holds": [
    {
     "domain": "scoring",
     "text": "Scored by code against rules fixed in advance.",
-    "from": "register scorer.who"
+    "from": "our publication register, on who scored it"
    },
    {
     "domain": "preregistration",
     "text": "Preregistered and hash-locked before the run (sha256 ee38c3bd).",
-    "from": "paper Reproduction"
+    "from": "the Reproduce section"
    },
    {
     "domain": "open data",
-    "text": "Public data.",
-    "from": "register data_licence"
+    "text": "Part of the data is public and part is not; the data licence line under Reproduce says which.",
+    "from": "our publication register, on the data licence"
    }
   ]
  },
@@ -506,27 +529,27 @@
   "data": [
    {
     "name": "Hebart 2023",
-    "licence": "mixed: DEAM CC BY-NC; GJP, FIA, THINGS each own terms; author saves private and should be dropped",
+    "licence": "mixed: DEAM CC BY-NC; the Good Judgment Project, Forest Inventory and THINGS data each under their own terms; the image collection is private and is not published",
     "url": "https://doi.org/10.7554/eLife.82580"
    },
    {
     "name": "Aljanaki 2017",
-    "licence": "mixed: DEAM CC BY-NC; GJP, FIA, THINGS each own terms; author saves private and should be dropped",
+    "licence": "mixed: DEAM CC BY-NC; the Good Judgment Project, Forest Inventory and THINGS data each under their own terms; the image collection is private and is not published",
     "url": "https://doi.org/10.1371/journal.pone.0173392"
    },
    {
     "name": "Good Judgment Project",
-    "licence": "mixed: DEAM CC BY-NC; GJP, FIA, THINGS each own terms; author saves private and should be dropped",
+    "licence": "mixed: DEAM CC BY-NC; the Good Judgment Project, Forest Inventory and THINGS data each under their own terms; the image collection is private and is not published",
     "url": "https://doi.org/10.7910/DVN/BPCDH5"
    },
    {
     "name": "USDA Forest Service",
-    "licence": "mixed: DEAM CC BY-NC; GJP, FIA, THINGS each own terms; author saves private and should be dropped",
+    "licence": "mixed: DEAM CC BY-NC; the Good Judgment Project, Forest Inventory and THINGS data each under their own terms; the image collection is private and is not published",
     "url": ""
    },
    {
     "name": "openESM",
-    "licence": "mixed: DEAM CC BY-NC; GJP, FIA, THINGS each own terms; author saves private and should be dropped",
+    "licence": "mixed: DEAM CC BY-NC; the Good Judgment Project, Forest Inventory and THINGS data each under their own terms; the image collection is private and is not published",
     "url": ""
    }
   ],

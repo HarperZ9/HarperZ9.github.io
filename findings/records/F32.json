@@ -13,13 +13,21 @@
    "method"
   ],
   "tier": "B*",
-  "tier_reason": "Large real data with working shuffles and a clean prereg. Skips are inferred and causation is open, and a probability gate lowers Brier partly by arithmetic. Merkle 2017 is close on selection.",
+  "tier_reason": "Large real data with working shuffle controls and a preregistration. Skips are inferred and causation is open, and a filter on stated probability lowers the Brier score partly by arithmetic. Merkle and colleagues (2017) is close prior work on selection.",
   "rung": "hypothesis",
-  "rung_reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
+  "rung_reason": "A preregistration with pass-or-fail rules is on file, which this rung needs. The next rung needs a named rival reading beaten by a decisive observation, and none is on file.",
   "outcome": "held",
-  "objection": "Inferred skips may be unseen questions; matched strata may create the sign flip against Merkle; a probability gate rewards confidence by construction.",
-  "objection_source": "the register's reviewer attack",
-  "would_change": "Replicate on another tournament with visible question exposure; read Merkle in full.",
+  "verdicts": {
+   "held": 5,
+   "failed": 5,
+   "untestable": 0,
+   "files": [
+    "result.json"
+   ]
+  },
+  "objection": "Inferred skips may be questions a forecaster never saw; matched strata may explain any difference in sign from Merkle and colleagues, whose sign we have not confirmed; a filter on stated probability rewards confidence by construction.",
+  "objection_source": "the strongest objection recorded in our publication register",
+  "would_change": "Replicate on another tournament where question exposure is visible; read Merkle and colleagues in full.",
   "sections": [
    {
     "id": "reader",
@@ -125,7 +133,7 @@
      "Figure {ref:fig:rc} draws the three risk-coverage curves and Table {ref:tab:filters} gives their areas. {c1}A filter on the stated probability scored 0.171, a filter on the self-rating 0.259, and random order 0.277.{/c1} The probability filter gains 0.107 (0.097 to 0.115) over random, and the self-rating filter 0.018 (0.009 to 0.027), about a sixth as much.",
      "![fig:rc width=0.88 alt=Three risk-coverage curves; the self-rating curve stays near the random line while the probability and combined curves fall steeply](fig-risk-coverage.png) Mean Brier score of kept forecasts against coverage for the three filters, on 410,451 binary forecasts from years 1 to 3. Squares mark two rules a person could apply by hand: withhold every expertise-1 forecast (coverage 0.78) and withhold expertise 1 and 2 (coverage 0.48), each against the probability filter at the same coverage. Drawn from the run's result file.",
      "::table tab:filters cols=0.4,0.18,0.42 Area under the risk-coverage curve (raw Brier, 0 to 2 scale; lower is better). Intervals are 95 percent bootstraps over questions.\nFilter ¦ Area ¦ Gain and interval\nRandom order ¦ 0.277 ¦ reference\nSelf-rated expertise ¦ 0.259 ¦ 0.018 over random (0.009 to 0.027)\nStated probability ¦ 0.171 ¦ 0.107 over random (0.097 to 0.115)\nBoth together ¦ 0.168 ¦ 0.0026 over probability (0.0007 to 0.0046)\nBoth, rating shuffled within forecaster-year ¦ not reported ¦ 0.0024 over probability on average; 95th percentile 0.0030; p 0.31\n::end",
-     "{c2}Adding the self-rating to the probability gained 0.0026 (95 percent interval 0.0007 to 0.0046), under the preregistered bar of 0.005, and a rating shuffled within each forecaster-year gained 0.0024 on average.{/c2} The interval excludes zero, so the combined filter is better than the probability alone by a small amount. The shuffle buys nearly all of it: the small edge comes from who rates themselves high on average. The rating given to one forecast adds nothing past that. The combined filter leads only below coverage 0.30. Relative Brier gives the same order: areas 0.124 for self-rating, 0.063 for probability, 0.061 for both and 0.134 for random.",
+     "{c2}Adding the self-rating to the probability gained 0.0026 (95 percent interval 0.0007 to 0.0046), under the preregistered bar of 0.005, and a rating shuffled within each forecaster-year gained 0.0024 on average.{/c2} The interval excludes zero, so the combined filter is better than the probability alone by a small amount. The shuffle buys nearly all of it: the small edge comes from who rates themselves high on average. The rating given to one forecast adds nothing past that. The combined filter leads by 0.007 to 0.011 in Brier score up to coverage 0.25, and by 0.004 or less above that. Relative Brier gives the same order: areas 0.124 for self-rating, 0.063 for probability, 0.061 for both and 0.134 for random.",
      "The by-hand rules lose to the probability filter at the same coverage. Withholding every expertise-1 forecast keeps 78 percent of forecasts at Brier 0.267; the probability filter at that coverage reaches 0.214 and the combined filter 0.214. Withholding expertise 1 and 2 keeps 48 percent at 0.259, against 0.141 for the probability filter and 0.142 combined.",
      "## Skipping and first forecasts",
      "Figure {ref:fig:skip} and Table {ref:tab:skip} give the skip correlations. Across the 9,204 eligible forecaster-years (1,781; 1,114; 1,360 and 4,949 in years 1 to 4), the median skip rate was 0.59. {c3}On first forecasts only, skip rate correlated with better relative Brier score at rho +0.286 (+0.264 to +0.303) across 9,204 forecaster-years, and +0.195 (+0.174 to +0.212) when timing was matched as well.{/c3} The first round's statistic on all forecasts, updates included, recomputed on the same table, was +0.351, so removing every update keeps about 80 percent of it.",
@@ -298,7 +306,7 @@
    "label": "Sample",
    "value": "410,451 binary forecasts; 1,578 same-condition pairs",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -309,7 +317,7 @@
    "label": "Main estimate and interval",
    "value": "first rho +0.286 (+0.264, +0.303); timed +0.195 (+0.174, +0.212); within +0.041 (-0.007, +0.095)",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -318,9 +326,9 @@
    "id": "e8",
    "kind": "number",
    "label": "Forecast against outcome",
-   "value": "R1a, R1t PASS; R1w, R3both, R4 FAIL",
+   "value": "Passed: skip rate tracks first-forecast score across people, with and without timing matched. Failed: the within-person version, the combined filter beating the probability filter by the bar, and the two team-level forecasts",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -329,9 +337,9 @@
    "id": "e9",
    "kind": "control",
    "label": "Known-answer check",
-   "value": "random gate 0.277",
+   "value": "a random filter has area 0.277",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -411,6 +419,15 @@
   },
   {
    "id": "x2",
+   "date": "2026-11-14",
+   "target": "document",
+   "type": "scope",
+   "after": "The results section said the combined filter leads only below coverage 0.30; in the file it is ahead at most coverage levels, by 0.007 to 0.011 up to coverage 0.25 and by 0.004 or less above that. The sentence now gives those sizes.",
+   "reason": "A review of the published page found one sentence that the result file contradicts.",
+   "found_by": "a review of the published pages"
+  },
+  {
+   "id": "x3",
    "target": "document",
    "date": "2026-11-09",
    "type": "wording",
@@ -431,6 +448,11 @@
    "date": "2026-11-09",
    "what": "paper version 1.0, first published",
    "hash": "097c91b8868a3fe7a73b2175348126d625fb6163cea0f7368796c46edc4382dc"
+  },
+  {
+   "n": 3,
+   "date": "2026-11-14",
+   "what": "this page corrected, 1 item; the PDF and its BuildTeX source are still paper version 1.0"
   }
  ],
  "grade": {
@@ -438,39 +460,39 @@
    {
     "domain": "blinding",
     "text": "Not blind: the analyst saw the data's shape before the lock.",
-    "from": "register scorer.blind"
+    "from": "our publication register, on blinding"
    },
    {
     "domain": "novelty",
     "text": "Nearby work exists; novelty is not shown.",
-    "from": "register literature.verdict"
+    "from": "our publication register, on the literature"
    },
    {
-    "domain": "single source",
+    "domain": "depth of reading",
     "text": "The cited literature was read at the level of abstracts, publisher pages and search summaries; full texts were not read.",
-    "from": "paper Verified"
+    "from": "the Verified section"
    }
   ],
   "holds": [
    {
     "domain": "scoring",
     "text": "Scored by code against rules fixed in advance.",
-    "from": "register scorer.who"
+    "from": "our publication register, on who scored it"
    },
    {
     "domain": "preregistration",
     "text": "Preregistered and hash-locked before the run (sha256 be6f2c1a).",
-    "from": "paper Reproduction"
+    "from": "the Reproduce section"
    },
    {
     "domain": "control",
-    "text": "Controls: shuffles working; within-person rating shuffle gains 0.0024.",
-    "from": "register evidence.controls"
+    "text": "Controls: the shuffles worked; a rating shuffled within each person gains 0.0024.",
+    "from": "our publication register, on controls"
    },
    {
     "domain": "open data",
     "text": "Public data.",
-    "from": "register data_licence"
+    "from": "our publication register, on the data licence"
    }
   ]
  },

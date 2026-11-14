@@ -4,8 +4,8 @@
  "document": {
   "id": "F81",
   "kind": "finding",
-  "title": "Among colours people cannot tell apart, bees and birds split flowers from backgrounds more often",
-  "standfirst": "On 728 measured natural surfaces, modelled bees and blue tits separate flower-against-background pairs that look identical to people far more often than background-against-background pairs. The direction held on a second surface set and under a second noise model; the size of the effect did not travel.",
+  "title": "Among colours people cannot tell apart, modelled bees and blue tits split flowers from backgrounds more often",
+  "standfirst": "On 728 measured natural surfaces, modelled bees and blue tits separate flower-against-background pairs that look identical to people more often than background-against-background pairs. No animal was tested; the observers are models. The direction held on a second surface set and under a second noise model; the size of the effect did not travel.",
   "date_found": "2026-10-29",
   "fields": [
    "biology-other",
@@ -13,13 +13,22 @@
    "ecology-climate"
   ],
   "tier": "B",
-  "tier_reason": "Real spectra and working shuffles, and the direction replicates on a second set, but V0 failed twice, so only ranks and ratios stand. Sizes do not travel, and Dorin et al. 2023 used this very data for flower signalling.",
+  "tier_reason": "Real spectra and working shuffles, and the direction replicates on a second set. The instrument check failed in both runs, so only the direction of the ratios stands; their sizes do not carry over. Dorin and colleagues (2023) used the same data to study flower signalling.",
   "rung": "hypothesis",
-  "rung_reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
+  "rung_reason": "A preregistration with pass-or-fail rules is on file, which this rung needs. The next rung needs a named rival reading beaten by a decisive observation, and none is on file.",
   "outcome": "held",
+  "verdicts": {
+   "held": 24,
+   "failed": 9,
+   "untestable": 0,
+   "files": [
+    "result.json",
+    "replication-result.json"
+   ]
+  },
   "objection": "The instrument check failed twice, with Weber noise and with photon noise, so the model is too fine for at least the bee. Only the direction of the ratio is claimed.",
-  "objection_source": "the paper's first stated limitation; no reviewer attack is on file",
-  "would_change": "Pass V0 with sourced per-species noise, then match backgrounds to flowers' own sites and test behaviour.",
+  "objection_source": "the paper's first stated limitation; our register records no separate objection",
+  "would_change": "Pass the instrument check with noise values sourced for each species, then match backgrounds to each flower's own site and test behaviour.",
   "sections": [
    {
     "id": "reader",
@@ -217,9 +226,9 @@
    "id": "e3",
    "kind": "number",
    "label": "Sample",
-   "value": "728 surfaces (507 background, 221 flower); 1,108 FB and 3,892 BB pairs for bee given human",
+   "value": "728 surfaces (507 background, 221 flower); 1,108 flower-background and 3,892 background-background pairs for the bee given the human",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -228,9 +237,9 @@
    "id": "e4",
    "kind": "number",
    "label": "Main estimate and interval",
-   "value": "ratio 2.04 (shuffle q95 1.08, p 0.002); H3 rho 0.92 (q95 0.54)",
+   "value": "ratio 2.04 (shuffle 95th percentile 1.08, p 0.002); a side hypothesis on receptor overlap, rho 0.92 (shuffle 95th percentile 0.54)",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -239,9 +248,9 @@
    "id": "e5",
    "kind": "number",
    "label": "Forecast against outcome",
-   "value": "H2 forecast ratio above 1 passed; H5 reversed",
+   "value": "the main forecast, a ratio above 1, passed; the shade forecast came out reversed",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -250,9 +259,9 @@
    "id": "e6",
    "kind": "control",
    "label": "Known-answer check",
-   "value": "V0 failed: human 0.4 nm, bee 0.3 nm, too fine; coded mantis 17.4 nm passed",
+   "value": "the instrument check failed: the modelled human and bee resolve wavelength steps of 0.4 and 0.3 nm, finer than behaviour shows; a coded mantis shrimp at 17.4 nm passed",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -296,7 +305,7 @@
    "title": "Dorin, A., Shrestha, M., Garcia, J. E., Burd, M. and Dyer, A. G. Reflectance spectra of rocks, minerals, sticks, bark, leaves and bird- and insect-pollinated flower petals (data deposit). Dryad, doi:10.5061/dryad.fn2z34v2c; Zenodo mirror record 10641891. CC0.",
    "access": "run",
    "target": "https://doi.org/10.5061/dryad.fn2z34v2c",
-   "licence": "spectra CC0 (Dryad fn2z34v2c); CIE 2006 and D65 CC BY-SA 4.0; pavo curves GPL, check reuse"
+   "licence": "spectra CC0 (Dryad fn2z34v2c); CIE 2006 and D65 tables CC BY-SA 4.0; receptor curves from the pavo package, GPL 2 or later, used to compute statistics and not redistributed here"
   },
   {
    "id": "r5",
@@ -305,7 +314,7 @@
    "title": "CIE. CIE 2006 LMS cone fundamentals, 2 degree, and CIE standard illuminant D65. CIE datasets, doi:10.25039/CIE.DS.tijidesg. CC BY-SA 4.0.",
    "access": "run",
    "target": "https://doi.org/10.25039/CIE.DS.tijidesg",
-   "licence": "spectra CC0 (Dryad fn2z34v2c); CIE 2006 and D65 CC BY-SA 4.0; pavo curves GPL, check reuse"
+   "licence": "spectra CC0 (Dryad fn2z34v2c); CIE 2006 and D65 tables CC BY-SA 4.0; receptor curves from the pavo package, GPL 2 or later, used to compute statistics and not redistributed here"
   },
   {
    "id": "r6",
@@ -313,7 +322,7 @@
    "kind": "dataset",
    "title": "pavo: perceptual analysis, visualization and organization of spectral colour data. R package version 2.10.0, internal data (receptor sensitivities, ocular media and illuminants). GPL version 2 or later.",
    "access": "run",
-   "licence": "spectra CC0 (Dryad fn2z34v2c); CIE 2006 and D65 CC BY-SA 4.0; pavo curves GPL, check reuse"
+   "licence": "spectra CC0 (Dryad fn2z34v2c); CIE 2006 and D65 tables CC BY-SA 4.0; receptor curves from the pavo package, GPL 2 or later, used to compute statistics and not redistributed here"
   },
   {
    "id": "r7",
@@ -321,7 +330,7 @@
    "kind": "dataset",
    "title": "LeCroy and colleagues. Flower reflectance spectra from Californian serpentine seeps. Dryad dataset v41ns1rtq, read through its Zenodo mirror. CC0.",
    "access": "run",
-   "licence": "spectra CC0 (Dryad fn2z34v2c); CIE 2006 and D65 CC BY-SA 4.0; pavo curves GPL, check reuse"
+   "licence": "spectra CC0 (Dryad fn2z34v2c); CIE 2006 and D65 tables CC BY-SA 4.0; receptor curves from the pavo package, GPL 2 or later, used to compute statistics and not redistributed here"
   },
   {
    "id": "r8",
@@ -329,7 +338,7 @@
    "kind": "dataset",
    "title": "Kraemer and Adams. Soil and leaf litter reflectance spectra. Dryad dataset 4dv78, read through its Zenodo mirror. CC0.",
    "access": "run",
-   "licence": "spectra CC0 (Dryad fn2z34v2c); CIE 2006 and D65 CC BY-SA 4.0; pavo curves GPL, check reuse"
+   "licence": "spectra CC0 (Dryad fn2z34v2c); CIE 2006 and D65 tables CC BY-SA 4.0; receptor curves from the pavo package, GPL 2 or later, used to compute statistics and not redistributed here"
   }
  ],
  "relations": [
@@ -337,9 +346,9 @@
    "from": "F88",
    "to": "F81",
    "type": "narrowed",
-   "scope": "size of the ratios and the union gain",
+   "scope": "size of the ratios and the gain from combining observers",
    "date": "2026-10-30",
-   "note": "Under photon noise the set 1 ratios fall to 1.67 for the bee and 1.50 for the blue tit, and the post hoc union gain of +0.39 shrinks to a null. Publication carries the direction only.",
+   "note": "Under photon noise the set 1 ratios fall to 1.67 for the bee and 1.50 for the blue tit, and the gain from combining two observers, +0.39 and found after the fact, shrinks to a null. Publication carries the direction only.",
    "record": "findings ledger, F88 and Publication pass corrections 2026-11-09"
   }
  ],
@@ -352,6 +361,15 @@
    "after": "A later dated line in the findings ledger narrows the published claim to the direction of the effect, and this paper follows it.",
    "reason": "The replication run with photon noise lowered the set 1 ratios to 1.67 for the bee and 1.50 for the blue tit.",
    "found_by": "a later study of ours"
+  },
+  {
+   "id": "x2",
+   "date": "2026-11-14",
+   "target": "document",
+   "type": "scope",
+   "after": "The title said bees and birds; the observers are a modelled bee and a modelled blue tit, and no behaviour was tested. The summary said far more often, a size word, while only the direction of the ratio is claimed. Both now say so.",
+   "reason": "A review of the published page found the title and summary wider than the study.",
+   "found_by": "a review of the published pages"
   }
  ],
  "versions": [
@@ -370,46 +388,51 @@
    "date": "2026-11-09",
    "what": "paper version 1.0, first published",
    "hash": "43d4098cd03bf7bb5e2b3f9eb37d6e4e0163f323188575bc11a298064fc41935"
+  },
+  {
+   "n": 4,
+   "date": "2026-11-14",
+   "what": "this page corrected, 1 item; the PDF and its BuildTeX source are still paper version 1.0"
   }
  ],
  "grade": {
   "lowers": [
    {
     "domain": "blinding",
-    "text": "Not blind. H3 overlap and reception draw on the same partitions; noise values partly from memory",
-    "from": "register scorer.blind"
+    "text": "Not blind. Two measures in a side hypothesis draw on the same partitions; some noise values were entered from memory.",
+    "from": "our publication register, on blinding"
    },
    {
-    "domain": "missing control",
-    "text": "Controls: label shuffles working; V0 instrument failed; H1c, H4, H4b, H5 failed.",
-    "from": "register evidence.controls"
+    "domain": "failed check",
+    "text": "Controls: the label shuffles worked; the instrument check failed; four side hypotheses failed: receptors tuned better than random placement, two on combining observers, and a larger shift for the bee under shade.",
+    "from": "our publication register, on controls"
    },
    {
     "domain": "novelty",
     "text": "Nearby work exists; novelty is not shown.",
-    "from": "register literature.verdict"
+    "from": "our publication register, on the literature"
    },
    {
-    "domain": "single source",
+    "domain": "depth of reading",
     "text": "The cited literature was read at the level of abstracts, publisher pages and search summaries; full texts were not read.",
-    "from": "paper Verified"
+    "from": "the Verified section"
    }
   ],
   "holds": [
    {
     "domain": "scoring",
     "text": "Scored by code against rules fixed in advance.",
-    "from": "register scorer.who"
+    "from": "our publication register, on who scored it"
    },
    {
     "domain": "preregistration",
     "text": "Preregistered and hash-locked before the run (sha256 fec1f165).",
-    "from": "paper Reproduction"
+    "from": "the Reproduce section"
    },
    {
     "domain": "open data",
     "text": "Public data.",
-    "from": "register data_licence"
+    "from": "our publication register, on the data licence"
    }
   ]
  },
@@ -417,33 +440,33 @@
   "data": [
    {
     "name": "Dorin, A., Shrestha, M., Garcia, J",
-    "licence": "spectra CC0 (Dryad fn2z34v2c); CIE 2006 and D65 CC BY-SA 4.0; pavo curves GPL, check reuse",
+    "licence": "spectra CC0 (Dryad fn2z34v2c); CIE 2006 and D65 tables CC BY-SA 4.0; receptor curves from the pavo package, GPL 2 or later, used to compute statistics and not redistributed here",
     "url": "https://doi.org/10.5061/dryad.fn2z34v2c"
    },
    {
     "name": "CIE",
-    "licence": "spectra CC0 (Dryad fn2z34v2c); CIE 2006 and D65 CC BY-SA 4.0; pavo curves GPL, check reuse",
+    "licence": "spectra CC0 (Dryad fn2z34v2c); CIE 2006 and D65 tables CC BY-SA 4.0; receptor curves from the pavo package, GPL 2 or later, used to compute statistics and not redistributed here",
     "url": "https://doi.org/10.25039/CIE.DS.tijidesg"
    },
    {
     "name": "pavo",
-    "licence": "spectra CC0 (Dryad fn2z34v2c); CIE 2006 and D65 CC BY-SA 4.0; pavo curves GPL, check reuse",
+    "licence": "spectra CC0 (Dryad fn2z34v2c); CIE 2006 and D65 tables CC BY-SA 4.0; receptor curves from the pavo package, GPL 2 or later, used to compute statistics and not redistributed here",
     "url": ""
    },
    {
     "name": "LeCroy and colleagues",
-    "licence": "spectra CC0 (Dryad fn2z34v2c); CIE 2006 and D65 CC BY-SA 4.0; pavo curves GPL, check reuse",
+    "licence": "spectra CC0 (Dryad fn2z34v2c); CIE 2006 and D65 tables CC BY-SA 4.0; receptor curves from the pavo package, GPL 2 or later, used to compute statistics and not redistributed here",
     "url": ""
    },
    {
     "name": "Kraemer and Adams",
-    "licence": "spectra CC0 (Dryad fn2z34v2c); CIE 2006 and D65 CC BY-SA 4.0; pavo curves GPL, check reuse",
+    "licence": "spectra CC0 (Dryad fn2z34v2c); CIE 2006 and D65 tables CC BY-SA 4.0; receptor curves from the pavo package, GPL 2 or later, used to compute statistics and not redistributed here",
     "url": ""
    }
   ],
   "prereg": {
    "hash": "fec1f1655ac86d3c16394e1947b9e2919225d9420680e5981e219f5a7f8fccd2",
-   "plan": "not recorded"
+   "plan": "cc9c52ac2d9456618a10e1429f135574afe43466735b431b2ee002b6c9c6531f"
   },
   "cost": "the first run took 19.7 minutes of wall time on one desktop; the energy attributed to it by a CPU-share model, which is a model and not a measurement, was 1,645 J. The replication run took 7.3 minutes, with 1,995 J attributed the same way.",
   "steps": [

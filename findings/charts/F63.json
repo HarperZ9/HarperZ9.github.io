@@ -248,7 +248,7 @@
    "interval": "5th to 95th percentile of the null draws",
    "baseline": "Time-shift null: each drought record moved by 20 or more years, which keeps its pattern and breaks its link with the rings. Label-permutation null: labels shuffled within a site.",
    "threshold": "Real estimate above the null's 95th percentile, fixed before each run; the time-shift null is the one the rule binds",
-   "ruled_out": "A moderate-drought effect beyond what a time-shifted drought record gives: +0.039 is below 0.065 (p 0.18), and in the rerun +0.025 is below 0.038 (p 0.14)",
+   "ruled_out": "Nothing by this chart alone. The estimate of +0.039 does not exceed what a time-shifted drought record gives (0.065, p 0.18), and in the rerun +0.025 does not exceed 0.038 (p 0.14), so an effect is not shown; the interval in chart 2 gives the bound",
    "value_name": "real estimate",
    "band_name": "null draws, 5th to 95th percentile",
    "axis": {

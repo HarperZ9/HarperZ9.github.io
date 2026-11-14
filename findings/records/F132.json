@@ -13,14 +13,26 @@
    "method"
   ],
   "tier": "D",
-  "tier_reason": "Locked prereg, kill fired, truth anchor failed: a real negative on real data. Power at about 78 years and r 0.2 is low, and TE's direction failures are known generally, so the news is limited to the proxy setting.",
+  "tier_reason": "A locked preregistration; the kill condition fired and the planted check failed: a real negative on real data. Power at about 78 years and a correlation of 0.2 is low, and transfer entropy's direction failures are known in general, so the news is limited to tree-ring data.",
   "rung": "killed",
-  "rung_reason": "KSG transfer entropy as a direction reader on annual rings: kill 0.75 fired on planted truth.",
+  "rung_reason": "KSG transfer entropy as a direction reader on annual rings: the kill condition fired, and the planted check with a known direction failed.",
   "outcome": "failed",
   "bound": "At the real coupling strength the false direction ranked at or above the true one at 52.6 percent of planted sites, so the estimator gets no direction-reading status on data like these.",
+  "verdicts": {
+   "held": 3,
+   "failed": 6,
+   "untestable": 0,
+   "files": [
+    "result.json"
+   ]
+  },
+  "kill": {
+   "state": "fired",
+   "note": "The estimator's own kill condition fired."
+  },
   "objection": "Power is low at about 78 years and a ring-temperature correlation near 0.2. This is a failure on short annual series. A longer or monthly design might behave differently.",
-  "objection_source": "the paper's first stated limitation; no reviewer attack is on file",
-  "would_change": "A longer-series or monthly design with the anchor at real strength; test the synthetic D statistic of PU30-130 under a new lock.",
+  "objection_source": "the paper's first stated limitation; our register records no separate objection",
+  "would_change": "A longer-series or monthly design with the planted check at the real coupling strength; a test of a direction statistic on synthetic data under a new preregistration.",
   "sections": [
    {
     "id": "reader",
@@ -286,7 +298,7 @@
    "label": "Sample",
    "value": "135 sites, 57 2-degree blocks, median 78 years, 199 surrogates per test",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -297,7 +309,7 @@
    "label": "Main estimate and interval",
    "value": "real forward 0.088 to 0.262, reverse 0.049 to 0.225 (block bootstrap)",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -306,9 +318,9 @@
    "id": "e8",
    "kind": "number",
    "label": "Forecast against outcome",
-   "value": "forward 0.35 got 0.156; reverse 0.30 got 0.119; kill 0.75 fired; Hc fail 0.85 did not fail",
+   "value": "forward rate forecast 0.35, got 0.156; reverse rate forecast 0.30, got 0.119; the kill condition, given a probability of 0.75 of firing, fired; the common-driver check passed",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -317,9 +329,9 @@
    "id": "e9",
    "kind": "control",
    "label": "Known-answer check",
-   "value": "planted direction arms: failed, accuracy 0.60 strong, 0.474 matched",
+   "value": "planted direction arms failed: accuracy 0.60 with strong coupling, 0.474 at the matched strength",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -392,7 +404,7 @@
    "title": "International Tree-Ring Data Bank. NOAA National Centers for Environmental Information, World Data Service for Paleoclimatology. Ring-width chronologies. https://www.ncei.noaa.gov/pub/data/paleo/treering/",
    "access": "run",
    "target": "https://www.ncei.noaa.gov/pub/data/paleo/treering/",
-   "licence": "ITRDB and CRU TS; terms not checked here"
+   "licence": "ITRDB, a public archive, with contributors cited; CRU TS under the Open Database License 1.0"
   },
   {
    "id": "r8",
@@ -401,7 +413,7 @@
    "title": "Harris, I., Osborn, T. J., Jones, P. and Lister, D. (2020). Version 4 of the CRU TS monthly high-resolution gridded multivariate climate dataset. Scientific Data 7, 109. doi:10.1038/s41597-020-0453-3",
    "access": "run",
    "target": "https://doi.org/10.1038/s41597-020-0453-3",
-   "licence": "ITRDB and CRU TS; terms not checked here"
+   "licence": "ITRDB, a public archive, with contributors cited; CRU TS under the Open Database License 1.0"
   },
   {
    "id": "r9",
@@ -410,7 +422,7 @@
    "title": "Climatic Research Unit, University of East Anglia. CRU TS 4.10 monthly temperature and precipitation, 0.5 degree. Open Database License 1.0. https://crudata.uea.ac.uk/cru/data/hrg/",
    "access": "run",
    "target": "https://crudata.uea.ac.uk/cru/data/hrg/",
-   "licence": "ITRDB and CRU TS; terms not checked here"
+   "licence": "ITRDB, a public archive, with contributors cited; CRU TS under the Open Database License 1.0"
   },
   {
    "id": "r10",
@@ -477,40 +489,45 @@
   "lowers": [
    {
     "domain": "blinding",
-    "text": "Not blind. BH across sites nearly unable to reject at 199 surrogates; noted after the lock",
-    "from": "register scorer.blind"
+    "text": "Not blind. The Benjamini-Hochberg correction across sites can hardly reject with 199 surrogates per test; this was noted after the lock.",
+    "from": "our publication register, on blinding"
    },
    {
-    "domain": "missing control",
-    "text": "Controls: null arm working (0.074, 0.037); shared-trend arm failed (0.126, 0.170 against 0.10); time reversal 0.193, 0.222; 20-repeat pairing floor limits p.",
-    "from": "register evidence.controls"
+    "domain": "failed check",
+    "text": "Controls: the no-coupling arm worked (detection rates 0.074 and 0.037); the shared-trend arm failed (0.126 and 0.170 against a limit of 0.10); time reversal gave 0.193 and 0.222; the far-site pairing has 20 repeats, which limits how small its p value can be.",
+    "from": "our publication register, on controls"
    },
    {
     "domain": "novelty",
     "text": "Nearby work exists; novelty is not shown.",
-    "from": "register literature.verdict"
+    "from": "our publication register, on the literature"
    },
    {
-    "domain": "single source",
+    "domain": "depth of reading",
     "text": "The cited literature was read at the level of abstracts, publisher pages and search summaries; full texts were not read.",
-    "from": "paper Verified"
+    "from": "the Verified section"
    }
   ],
   "holds": [
    {
     "domain": "scoring",
     "text": "Scored by code against rules fixed in advance.",
-    "from": "register scorer.who"
+    "from": "our publication register, on who scored it"
    },
    {
     "domain": "preregistration",
     "text": "Preregistered and hash-locked before the run (sha256 54fc1c57).",
-    "from": "paper Reproduction"
+    "from": "the Reproduce section"
    },
    {
     "domain": "replication",
     "text": "Rechecked by F675 (no direction-reading status): On 161 held-out boreal sites the panel instrument's kill fired too; F132's block on direction readings stands.",
-    "from": "relations"
+    "from": "a later finding"
+   },
+   {
+    "domain": "open data",
+    "text": "Public data.",
+    "from": "our publication register, on the data licence"
    }
   ]
  },
@@ -518,17 +535,17 @@
   "data": [
    {
     "name": "International Tree-Ring Data Bank",
-    "licence": "ITRDB and CRU TS; terms not checked here",
+    "licence": "ITRDB, a public archive, with contributors cited; CRU TS under the Open Database License 1.0",
     "url": "https://www.ncei.noaa.gov/pub/data/paleo/treering/"
    },
    {
     "name": "Harris 2020",
-    "licence": "ITRDB and CRU TS; terms not checked here",
+    "licence": "ITRDB, a public archive, with contributors cited; CRU TS under the Open Database License 1.0",
     "url": "https://doi.org/10.1038/s41597-020-0453-3"
    },
    {
     "name": "cruts",
-    "licence": "ITRDB and CRU TS; terms not checked here",
+    "licence": "ITRDB, a public archive, with contributors cited; CRU TS under the Open Database License 1.0",
     "url": "https://crudata.uea.ac.uk/cru/data/hrg/"
    }
   ],

@@ -14,6 +14,7 @@ import { fileURLToPath } from "node:url";
 import { inline, plain, read } from "./findings-paper.mjs";
 import { corrections, grade, references, reproduce, sentences, verified, versions } from "./findings-record-parts.mjs";
 import { validate } from "./findings-schema.mjs";
+import { verdictsFor } from "./findings-outcome.mjs";
 
 const site = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const F = path.join(site, "findings");
@@ -71,7 +72,7 @@ function evidenceFor(claims, row, date) {
   const ev = row.evidence || {};
   for (const [k, label] of [["denominator", "Sample"], ["interval", "Main estimate and interval"], ["forecast_vs_outcome", "Forecast against outcome"], ["known_answer", "Known-answer check"]])
     if (ev[k]) evidence.push({ id: `e${evidence.length + 1}`, kind: k === "known_answer" ? "control" : "number", label, value: ev[k],
-      check: { by: "the register's evidence fields", result: "not_checked", note: "as recorded in the publication register" } });
+      check: { by: "our publication register", result: "not_checked", note: "as recorded in the publication register" } });
   return evidence;
 }
 
@@ -95,13 +96,21 @@ function checkedPdfHash(id) {
   return pdfHash;
 }
 
+// A thesis needs a named rival and a decisive observation; say which reading lost, in a sentence a reader can parse.
+const stop = (s) => (/[.!?]$/.test(s) ? s : `${s}.`);
+function rungReason(ladder) {
+  if (ladder.rung === "thesis" && ladder.opposition && ladder.decisive_observation)
+    return `Named rival, which the finding stood against: ${stop(ladder.opposition)} Decisive observation against the rival: ${stop(ladder.decisive_observation)}`;
+  return ladder.reason;
+}
+
 function documentFor(id, meta, row, limitations, sections) {
   const ladder = row.ladder && ["lead", "hypothesis", "thesis", "conjecture", "theorem", "law candidate", "killed"].includes(row.ladder.rung) ? row.ladder : null;
   return { id, kind: "finding", title: meta.title, standfirst: meta.standfirst, date_found: meta.date_found, fields: meta.fields,
-    tier: row.strong_b ? "B*" : row.tier, tier_reason: row.tier_reason, ...(ladder ? { rung: ladder.rung, rung_reason: ladder.reason } : {}),
-    outcome: meta.outcome, ...(meta.bound ? { bound: meta.bound } : {}), objection: row.reviewer_attack || limitations[0],
-    objection_source: row.reviewer_attack ? "the register's reviewer attack" : "the paper's first stated limitation; no reviewer attack is on file",
-    would_change: row.raise_tier || "No condition for raising or overturning the call is on file in the register.", sections };
+    tier: row.strong_b ? "B*" : row.tier, tier_reason: row.tier_reason, ...(ladder ? { rung: ladder.rung, rung_reason: rungReason(ladder) } : typeof row.rung === "string" ? { rung_reason: `Its entry describes the study as: ${row.rung}.` } : {}),
+    outcome: meta.outcome, ...(meta.bound ? { bound: meta.bound } : {}), ...verdictsFor(id, meta), objection: row.reviewer_attack || limitations[0],
+    objection_source: row.reviewer_attack ? "the strongest objection recorded in our publication register" : "the paper's first stated limitation; our register records no separate objection",
+    would_change: row.raise_tier || "Our publication register records no condition that would raise or overturn this call.", sections };
 }
 
 export function buildRecord(id, data) {

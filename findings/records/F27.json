@@ -13,11 +13,19 @@
   "tier": "D",
   "tier_reason": "Reported as a null. Power is limited by split-half reliability of 0.03 to 0.47, and the null has no noise term, so it does not show a single trait.",
   "rung": "killed",
-  "rung_reason": "Two factors never beat one AR(1) axis.",
+  "rung_reason": "The two-trait model never beat the one-trait model in the three datasets where both were fitted, so the claim failed its own test. The measures were unreliable enough that the test had little power, and two separate traits are not ruled out.",
   "outcome": "null",
   "bound": "Split-half reliability ran from 0.03 to 0.47, so the factor test had little power; two separate traits are not ruled out.",
+  "verdicts": {
+   "held": 7,
+   "failed": 5,
+   "untestable": 4,
+   "files": [
+    "result.json"
+   ]
+  },
   "objection": "Split-half reliability was 0.03 to 0.47, so the factor test had little power, and one dataset could not be fitted at all.",
-  "objection_source": "the paper's first stated limitation; no reviewer attack is on file",
+  "objection_source": "the paper's first stated limitation; our register records no separate objection",
   "would_change": "Longer series, an AR(1) null with measurement noise, and test-retest reliability.",
   "sections": [
    {
@@ -295,7 +303,7 @@
    "label": "Sample",
    "value": "4 datasets: n 71, 49, 99, 259",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -304,9 +312,9 @@
    "id": "e7",
    "kind": "number",
    "label": "Main estimate and interval",
-   "value": "r -0.44, -0.41, -0.28, -0.29; 0018 (-0.63, -0.19)",
+   "value": "r -0.44, -0.41, -0.28, -0.29; for dataset 0018 the interval is -0.63 to -0.19",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -315,9 +323,9 @@
    "id": "e8",
    "kind": "number",
    "label": "Forecast against outcome",
-   "value": "P1 pass in 2 of 4; P2 no pass",
+   "value": "separate variation passed in 2 of 4 datasets; two factors beating one passed in none",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -326,9 +334,9 @@
    "id": "e9",
    "kind": "control",
    "label": "Known-answer check",
-   "value": "P0 passed in all 4",
+   "value": "the time-shuffle control passed in all 4 datasets",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -439,39 +447,39 @@
    {
     "domain": "blinding",
     "text": "Not blind: the analyst saw the data's shape before the lock.",
-    "from": "register scorer.blind"
+    "from": "our publication register, on blinding"
    },
    {
     "domain": "imprecision",
     "text": "Split-half reliability ran from 0.03 to 0.47, so the factor test had little power; two separate traits are not ruled out.",
-    "from": "the bound"
+    "from": "the bound stated under Evidence"
    },
    {
-    "domain": "single source",
+    "domain": "depth of reading",
     "text": "The cited literature was read at the level of abstracts and publisher or repository pages; full texts were not read.",
-    "from": "paper Verified"
+    "from": "the Verified section"
    }
   ],
   "holds": [
    {
     "domain": "scoring",
     "text": "Scored by code against rules fixed in advance.",
-    "from": "register scorer.who"
+    "from": "our publication register, on who scored it"
    },
    {
     "domain": "preregistration",
     "text": "Preregistered and hash-locked before the run (sha256 c26b85b5).",
-    "from": "paper Reproduction"
+    "from": "the Reproduce section"
    },
    {
     "domain": "control",
-    "text": "Controls: shuffle removes inertia, working; AR(1) null lacks noise.",
-    "from": "register evidence.controls"
+    "text": "Controls: the time shuffle removes inertia, as it should; the one-parameter null has no noise term.",
+    "from": "our publication register, on controls"
    },
    {
     "domain": "open data",
     "text": "Public data.",
-    "from": "register data_licence"
+    "from": "our publication register, on the data licence"
    }
   ]
  },
@@ -507,7 +515,7 @@
     "result": "as stated"
    },
    {
-    "what": "They match the {g:findings-ledger}findings ledger{/g} entry and the study's own ledger.",
+    "what": "They match the {g:findings-ledger}findings ledger{/g} entry and the study's own log.",
     "by": "the paper's Verified pass",
     "result": "match"
    },

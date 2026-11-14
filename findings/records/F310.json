@@ -14,12 +14,20 @@
   "tier": "B",
   "tier_reason": "Locked null with a fair control.",
   "rung": "thesis",
-  "rung_reason": "Survives Titius-Bode spacing is a law-like rule for exoplanet systems. Decisive observation: fails gap-order shuffle on all three forms at p 0.85, 0.995, 0.68.",
+  "rung_reason": "Named rival, which the finding stood against: Titius-Bode spacing is a law-like rule for exoplanet systems. Decisive observation against the rival: fails gap-order shuffle on all three forms at p 0.85, 0.995, 0.68.",
   "outcome": "mixed",
   "bound": "The spacing signal is real: the systems beat gaps pooled from the whole catalogue (p 0.0005). The order and law-like verdicts are null: against each system's own gaps put in a new order none of the three forms scored above the shuffled range (p 0.85, 0.995 and 0.68).",
+  "verdicts": {
+   "held": 2,
+   "failed": 4,
+   "untestable": 0,
+   "files": [
+    "result.json"
+   ]
+  },
   "objection": "The three forms were written from memory of the published ones, and a later review of our own ledger flagged that. A published form that differs could score differently, so the result covers these three versions only. Blagg's formula with its periodic term was not tested.",
-  "objection_source": "the paper's first stated limitation; no reviewer attack is on file",
-  "would_change": "No condition for raising or overturning the call is on file in the register.",
+  "objection_source": "the paper's first stated limitation; our register records no separate objection",
+  "would_change": "Our publication register records no condition that would raise or overturn this call.",
   "sections": [
    {
     "id": "reader",
@@ -113,10 +121,10 @@
     "title": "Results",
     "role": "argument",
     "paragraphs": [
-     "Table {ref:tab:scores} gives the score of each form against its controls, and Figure {ref:fig:reg} draws the same numbers. The plain form scores -0.157. The real systems are far more regular than systems built from pooled gaps. They are not more regular than their own gaps in a shuffled order: the real score sits inside the order-shuffle range for all three forms.",
+     "Table {ref:tab:scores} gives the score of each form against its controls, and Figure {ref:fig:reg} draws the same numbers. The plain form scores -0.157. The real systems are far more regular than systems built from pooled gaps. They are not more regular than their own gaps in a shuffled order: the real score sits inside the order-shuffle range for the plain and gapped forms and below it for the Blagg-Richardson style form (-0.141 against a 5th to 95th percentile range of -0.134 to -0.116).",
      "::table tab:scores cols=0.31,0.11,0.12,0.22,0.11,0.1 Regularity scores against the two controls. The interval is the 5th to 95th percentile of the control draws.\nForm and control ¦ Real score ¦ Control mean ¦ Control interval ¦ p ¦ Draws\nPlain, pooled gaps ¦ -0.157 ¦ -0.213 ¦ -0.236 to -0.190 ¦ 0.0005 ¦ 2,000\nPlain, order shuffled ¦ -0.157 ¦ -0.153 ¦ -0.161 to -0.145 ¦ 0.85 ¦ 2,000\nBlagg-Richardson style, order shuffled ¦ -0.141 ¦ -0.125 ¦ -0.134 to -0.116 ¦ 0.995 ¦ 200\nGapped, order shuffled ¦ -0.079 ¦ -0.078 ¦ -0.081 to -0.074 ¦ 0.68 ¦ 200\n::end",
      "![fig:reg width=0.98 alt=Diamonds for the real scores against grey bars for the control ranges](fig-regularity.png) Real regularity scores (diamonds) against the 5th to 95th percentile range (bars) and mean (ticks) of each control. Only the pooled-gap control is beaten. Drawn from the run's result file.",
-     "{c4}The Blagg-Richardson style form scores below its own order-shuffle mean, and the gapped form sits at its mean.{/c4} The extra freedom in those forms fits shuffled systems as well as real ones.",
+     "{c4}The Blagg-Richardson style form scores below the 5th percentile of its own order shuffles, and the gapped form sits at its mean.{/c4} The extra freedom in those forms fits shuffled systems as well as real ones.",
      "{c2}When an interior planet is dropped, the geometric mean of its two neighbours predicts its period better than the rule does: median error 0.107 against 0.131 in log period, a ratio of 1.23.{/c2} Figure {ref:fig:loo} shows the two errors.",
      "![fig:loo width=0.98 alt=Two horizontal bars, the fit's error longer than the neighbours' error](fig-loo.png) Leave-one-out prediction of an interior planet's period: the plain form fitted to the other planets against the geometric mean of the two neighbours.",
      "The Solar System was scored beside the test and is not part of it. It has {m:r} of 0.32 on the plain form and 0.17 on the gapped form, against a catalogue median of 0.157 on the plain form. On this statistic the median exoplanet system is more regular than ours.",
@@ -144,7 +152,8 @@
      "- The catalogue's multi-planet entries are a selected set, and the sample is 122 systems, short of the 150 we forecast.",
      "- The 200-draw controls for the two richer forms give coarse p values.",
      "- The finding says nothing about the physics that sets spacing.",
-     "- Scoring was done by our own code and was not blind."
+     "- Scoring was done by our own code and was not blind.",
+     "- The order-shuffle test cannot be passed by an exact geometric law. A system whose log gaps are all equal is unchanged by shuffling them, so the law-like verdict tests only whether unequal gaps come in an ordered sequence. An exact Titius-Bode spacing would show up here as regularity in gap sizes, which the pooled-gap control did detect."
     ]
    },
    {
@@ -191,10 +200,13 @@
   },
   {
    "id": "c4",
-   "text": "The Blagg-Richardson style form scores below its own order-shuffle mean, and the gapped form sits at its mean.",
+   "text": "The Blagg-Richardson style form scores below the 5th percentile of its own order shuffles, and the gapped form sits at its mean.",
    "section": "results",
    "basis": "observed",
-   "refs": []
+   "refs": [],
+   "evidence": [
+    "e4"
+   ]
   }
  ],
  "evidence": [
@@ -227,6 +239,18 @@
    "kind": "number",
    "label": "The numbers in claim 3",
    "value": "-0.050; 95; -0.190",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e4",
+   "kind": "number",
+   "label": "The numbers in claim 4",
+   "value": "5",
    "check": {
     "by": "re-read from the run's result file in the paper's Verified pass",
     "date": "2026-11-09",
@@ -330,7 +354,7 @@
    "type": "narrowed",
    "scope": "the three forms",
    "date": "2026-10-31",
-   "note": "The correction pass coded one memory value: the three forms were written from memory, so the result covers these three versions only.",
+   "note": "A later review of our ledger recorded one value entered from memory: the three forms were written from memory, so the result covers these three versions only.",
    "record": "findings ledger, F422 correction pass"
   }
  ],
@@ -343,6 +367,24 @@
    "after": "This paper states it in the methods and the limitations.",
    "reason": "A review of our ledger noted that the three forms were written from memory.",
    "found_by": "a review of our findings ledger"
+  },
+  {
+   "id": "x2",
+   "date": "2026-11-14",
+   "target": "document",
+   "type": "number",
+   "after": "The results said the real score sits inside the order-shuffle range for all three forms; the Blagg-Richardson style score, -0.141, lies below its shuffle range of -0.134 to -0.116, and the text now says so. A chart showed that form's p value as 1.00; the file gives 0.995, as the text does. The line on where the claim stands was reworded so that it reads as the rival reading losing, which is what the verdicts say.",
+   "reason": "A review of the published page found one sentence the result file contradicts and one rounded label.",
+   "found_by": "a review of the published pages"
+  },
+  {
+   "id": "x3",
+   "date": "2026-11-14",
+   "target": "document",
+   "type": "scope",
+   "after": "Shuffling equal gaps changes nothing, so the order-shuffle test cannot be passed by an exact geometric spacing law; it tests only whether unequal gaps come in order. The limitations now say so.",
+   "reason": "A review of the published page found a limit of the decisive test that the page did not state.",
+   "found_by": "a review of the published pages"
   }
  ],
  "versions": [
@@ -356,6 +398,11 @@
    "date": "2026-11-09",
    "what": "paper version 1.0, first published",
    "hash": "ecfdc95d5bfb55aea39aa2b9465e8f8f493e3db406f6d61620613dacc620f28c"
+  },
+  {
+   "n": 3,
+   "date": "2026-11-14",
+   "what": "this page corrected, 2 items; the PDF and its BuildTeX source are still paper version 1.0"
   }
  ],
  "grade": {
@@ -363,24 +410,24 @@
    {
     "domain": "scoring",
     "text": "Scored by code and by the agent that ran it; self-graded.",
-    "from": "register scorer"
+    "from": "our publication register, on who scored it"
    },
    {
     "domain": "blinding",
     "text": "Not blind, as the paper's limitations state.",
-    "from": "paper Limitations"
+    "from": "the paper's Limitations"
    },
    {
-    "domain": "single source",
+    "domain": "depth of reading",
     "text": "The cited literature was read at the level of abstracts and publisher pages; full texts were not read.",
-    "from": "paper Verified"
+    "from": "the Verified section"
    }
   ],
   "holds": [
    {
     "domain": "preregistration",
     "text": "Preregistered and hash-locked before the run (sha256 c11616a0).",
-    "from": "paper Reproduction"
+    "from": "the Reproduce section"
    }
   ]
  },

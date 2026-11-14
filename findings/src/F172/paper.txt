@@ -100,7 +100,7 @@ Logistic regression ¦ -0.037 ¦ -0.069 to -0.011 ¦ 0.010 ¦ 0.014
 Normal prior, no spike ¦ 0.085 ¦ 0.059 to 0.118 ¦ 0.00025 ¦ 0.0005
 ::end
 
-By field (Table {ref:tab:fields}, Figure {ref:fig:fields}), skill over the base rate was positive in three of the six fields the run counted as large, short of the preregistered target of 75 percent. The model's predicted rate sat above the observed rate in seven of the eight fields and below face value in all eight. {c4}For the Reproducibility Project the model predicted a success rate of 0.50 against 0.34 observed, where face value predicted 0.83; in social psychology it predicted 0.65 against 0.41, where face value predicted 0.89.{/c4}
+By field (Table {ref:tab:fields}, Figure {ref:fig:fields}), skill over the base rate was positive in three of the six fields the run counted as large (cognitive, marketing, other, other psychology, the Reproducibility Project and social; economics with 16 rows and management with 82 were left out), short of the preregistered target of 75 percent. The project counts by field sum to 342, more than the 307 clusters, because a cluster with rows in two fields is counted in each. The model's predicted rate sat above the observed rate in seven of the eight fields and below face value in all eight. {c4}For the Reproducibility Project the model predicted a success rate of 0.50 against 0.34 observed, where face value predicted 0.83; in social psychology it predicted 0.65 against 0.41, where face value predicted 0.89.{/c4}
 
 ::table tab:fields cols=0.22,0.10,0.11,0.14,0.15,0.14,0.14 Held-out results by field. Rates are shares of rows that replicated by our rule. Skill is the base rate's Brier score minus the selection model's.
 Field ¦ Rows ¦ Projects ¦ Observed ¦ Predicted ¦ Face value ¦ Skill
@@ -168,6 +168,7 @@ Verified: on 9 November 2026 the row, project and conversion counts, the six Bri
 # section Corrections {sec:corrections}
 - 31 October 2026: the original heading and kill line in our {g:findings-ledger}findings ledger{/g} said the model corrects the rate. Read against the table it only shrinks the overstatement. This paper states the narrower reading throughout.
 - 9 November 2026: first published version.
+- 14 November 2026: A review of the published page found the outcome word at odds with the page. The header said held while the preregistered kill rule had fired and four of nine verdicts had failed; it now says mixed, and the header shows the verdict count. The results now name the six fields the run counted as large and say why the project counts by field sum to more than the 307 clusters. The register line that read 35 Reproducibility Project successes now gives the 34 the kept rows carry, against the 35 published.
 
 # section Reproduction {sec:repro}
 - Data: download the Reproducibility Project Psychology data and FReD from the Open Science Framework, and remove the Reproducibility Project rows from FReD.

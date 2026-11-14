@@ -13,12 +13,20 @@
    "method"
   ],
   "tier": "B*",
-  "tier_reason": "Real CC0 data, calibration passed, locked kill, and a live dispute makes it matter. Not blind, denominators rebuilt, the coding is Karst's, power 0.43 for a true doubling, and the rise inside studies largely supports them.",
+  "tier_reason": "Real CC0 data, a calibration that passed and a kill condition fixed in advance, on a question in live dispute. Not blind; the denominators are rebuilt; the coding is the original authors'; power is 0.43 for a true doubling; and the rise inside studies largely supports them.",
   "rung": "hypothesis",
-  "rung_reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
+  "rung_reason": "A preregistration with pass-or-fail rules is on file, which this rung needs. The next rung needs a named rival reading beaten by a decisive observation, and none is on file.",
   "outcome": "held",
+  "verdicts": {
+   "held": 7,
+   "failed": 3,
+   "untestable": 0,
+   "files": [
+    "result.json"
+   ]
+  },
   "objection": "Rebuilt denominators with zero-rate years sharing the remainder; the definition of doubled with Fig. 3 unread; the abstract's 25 and almost 50 percent endpoints not compared.",
-  "objection_source": "the register's reviewer attack",
+  "objection_source": "the strongest objection recorded in our publication register",
   "would_change": "Blind rerun by an independent analyst, true denominators from Karst, and a read of Fig. 3 before calling any definition theirs.",
   "sections": [
    {
@@ -34,7 +42,7 @@
     "title": "Abstract",
     "role": "argument",
     "paragraphs": [
-     "Karst, Jones and Hoeksema reported in 2023 that citations crediting forest fungal network studies with more than their results support had doubled in the past 25 years. That sentence is now part of a public dispute. We reran the claim on the table the authors deposited, under a plan hash-locked before the table was analysed. The table holds 268 study-year rates for 11 focal studies on network function and 7 on network structure, and no denominators, which we rebuilt from the paper's supplement. {c1}On the authors' negative binomial model, unsupported citations rose by a factor of 2.19 for network function (0.86 to 4.14) and 2.84 for network structure (1.18 to 6.62).{/c1} {c2}Weighted by citations, the rise was 1.77 for function (0.52 to 2.99) and 1.54 for structure (0.85 to 5.81), and neither interval excludes 1.{/c2} {c3}Inside individual focal studies the rate rose for both: 3.0 times for function (p 0.001) and 3.5 times for structure (p 0.009).{/c3} {c4}With this many focal studies, a true doubling gives an interval clear of 1 only 0.425 of the time, so an interval that includes 1 is no evidence against doubling.{/c4} \"Doubled\" fairly describes the authors' fitted curve. Counted as a share of all citations the rise is smaller and less certain."
+     "Karst, Jones and Hoeksema reported in 2023 that citations crediting forest fungal network studies with more than their results support had doubled in the past 25 years. That sentence is now part of a public dispute. We reran the claim on the table the authors deposited, under a plan hash-locked before the table was analysed. The table holds 268 study-year rates for 11 focal studies on network function and 7 on network structure, and no denominators, which we rebuilt from the paper's supplement. {c1}On the authors' negative binomial model, unsupported citations rose by a factor of 2.19 for network function (0.86 to 4.14) and 2.84 for network structure (1.18 to 6.62).{/c1} {c2}Weighted by citations, the rise was 1.77 for function (0.52 to 2.99) and 1.54 for structure (0.85 to 5.81), and neither interval excludes 1.{/c2} {c3}Inside individual focal studies the rate rose for both: 3.0 times for function (p 0.001) and 3.5 times for structure (p 0.009).{/c3} {c4}With this many focal studies, a true doubling gives an interval clear of 1 only 0.425 of the time, so an interval that includes 1 is no evidence against doubling.{/c4} \"Doubled\" fairly describes our refit of the authors' model; their own fitted curve was not available to us. Counted as a share of all citations the rise is smaller and less certain."
     ]
    },
    {
@@ -268,7 +276,7 @@
    "label": "Sample",
    "value": "268 study-year rates, 11 function and 7 structure studies, 4 blank rows skipped",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -277,9 +285,9 @@
    "id": "e6",
    "kind": "number",
    "label": "Main estimate and interval",
-   "value": "NB 0.86 to 4.14, 1.18 to 6.62; weighted 0.52 to 2.99, 0.85 to 5.81",
+   "value": "authors' count model 0.86 to 4.14 (function) and 1.18 to 6.62 (structure); citation-weighted 0.52 to 2.99 and 0.85 to 5.81",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -288,9 +296,9 @@
    "id": "e7",
    "kind": "number",
    "label": "Forecast against outcome",
-   "value": "NB function 2.2 got 2.19; structure 2.0 got 2.84; within-study structure fail: wrong, p 0.009",
+   "value": "count model, function: forecast 2.2, got 2.19; structure: forecast 2.0, got 2.84; the within-study rise for structure was forecast to fail and passed at p 0.009",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -299,9 +307,9 @@
    "id": "e8",
    "kind": "control",
    "label": "Known-answer check",
-   "value": "planted flat and doubled truths; table totals median gap 0",
+   "value": "planted flat and doubled truths; rebuilt totals against the paper's table totals, median gap 0",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -368,6 +376,15 @@
    "after": "Such rows are now skipped and counted. The preregistration and plan were unchanged; the code hash changed.",
    "reason": "The first run stopped on rows with an empty rate cell.",
    "found_by": "the study itself, before publication"
+  },
+  {
+   "id": "x2",
+   "date": "2026-11-14",
+   "target": "document",
+   "type": "wording",
+   "after": "The abstract said doubled fairly describes the authors' fitted curve; their curve was not available, and the page refits their model from the deposited table, so the sentence now says that.",
+   "reason": "A review of the published page found one sentence that claimed more than was checked.",
+   "found_by": "a review of the published pages"
   }
  ],
  "versions": [
@@ -381,41 +398,46 @@
    "date": "2026-11-09",
    "what": "paper version 1.0, first published",
    "hash": "44c892b8578ac367027e8d551a621c04eea3dafa93b02c03c1c1e6b24b531420"
+  },
+  {
+   "n": 3,
+   "date": "2026-11-14",
+   "what": "this page corrected, 1 item; the PDF and its BuildTeX source are still paper version 1.0"
   }
  ],
  "grade": {
   "lowers": [
    {
     "domain": "blinding",
-    "text": "Not blind. saw metadata, one row and F133 numerators before the lock; listed",
-    "from": "register scorer.blind"
+    "text": "Not blind. The analyst saw the metadata, one row and the numerators from an earlier reading of ours before the lock; the paper lists this.",
+    "from": "our publication register, on blinding"
    },
    {
-    "domain": "single source",
+    "domain": "depth of reading",
     "text": "The cited literature was read at the level of abstracts, search summaries and publisher pages; full texts were not read.",
-    "from": "paper Verified"
+    "from": "the Verified section"
    }
   ],
   "holds": [
    {
     "domain": "scoring",
     "text": "Scored by code against rules fixed in advance.",
-    "from": "register scorer.who"
+    "from": "our publication register, on who scored it"
    },
    {
     "domain": "preregistration",
     "text": "Preregistered and hash-locked before the run (sha256 55a37426).",
-    "from": "paper Reproduction"
+    "from": "the Reproduce section"
    },
    {
     "domain": "control",
-    "text": "Controls: CAL working (flat 0.09, doubled median 2.11, coverage 0.89); shuffles working; D2 rebuild passed.",
-    "from": "register evidence.controls"
+    "text": "Controls: the calibration on planted data worked (a flat truth called a rise 0.09 of the time, a doubled truth read at a median of 2.11, coverage 0.89); the shuffles worked; the rebuild of the denominators passed its check.",
+    "from": "our publication register, on controls"
    },
    {
     "domain": "open data",
     "text": "Public data.",
-    "from": "register data_licence"
+    "from": "our publication register, on the data licence"
    }
   ]
  },

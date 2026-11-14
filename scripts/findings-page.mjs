@@ -17,7 +17,9 @@ function standingLine(rec, rels) {
   const items = [
     ["Tier", `${esc(d.tier)}, ${TIER_WORD[d.tier]}`],
     ["Outcome", `<a href="#evidence">${mark("outcome", d.outcome)}${esc(OUTCOME_WORD[d.outcome])}</a>`],
-    ["Rung", d.rung ? `<a href="#ladder">${esc(d.rung)}</a>` : "not yet placed"],
+    ["Rung", d.rung ? `<a href="#ladder">${esc(d.rung)}</a>` : '<a href="#ladder">none assigned</a>'],
+    ...(d.verdicts ? [["Verdicts", `${d.verdicts.held} passed, ${d.verdicts.failed} failed${d.verdicts.untestable ? `, ${d.verdicts.untestable} untestable` : ""}`]] : []),
+    ...(d.kill ? [["Kill rule", `<span title="${esc(d.kill.note)}">${esc(d.kill.state)}</span>`]] : []),
     ...(w ? [["Standing", stand]] : []),
     ["Corrections", xs.length ? `<a href="#trail">${xs.length}, latest ${esc(xs[xs.length - 1].date)}</a>` : "none"],
     ["Version", `<a href="#trail">v${Math.max(...rec.versions.map((v) => v.n))}, ${esc(rec.versions[rec.versions.length - 1].date)}</a>`],
@@ -34,6 +36,9 @@ function objection(d, ctx) {
 <p class="src">From ${esc(d.objection_source)}.</p></section>`;
 }
 
+// The text's "Figure n" follows the PDF; the page's charts are numbered on their own. Say so where the figures sit.
+const FIGURE_NOTE = `<p class="soft">These are the paper's own figures, numbered as in the PDF, and each "Figure" reference in the text points here. The charts on this page redraw the same results from the result files and carry their own numbers.</p>`;
+
 function evidence(rec, ctx, appendix) {
   const d = rec.document;
   const bound = d.bound ? `<p class="bound">${mark("outcome", d.outcome)}<span><b>${esc(OUTCOME_WORD[d.outcome].replace(/^./, (c) => c.toUpperCase()))}.</b> ${esc(d.bound)}</span></p>`
@@ -41,7 +46,7 @@ function evidence(rec, ctx, appendix) {
   return `<section id="evidence" class="landmark" aria-labelledby="evidence-h"><h2 id="evidence-h" class="d-3d" data-hue="brass">Evidence</h2>
 ${bound}
 ${ctx.charts && ctx.charts.rest() ? `<h3>Charts</h3>${ctx.charts.rest()}
-` : ""}${ctx.figures.length ? `<h3>Figures</h3>${ctx.figures.join("\n")}` : ""}
+` : ""}${ctx.figures.length ? `<h3>Figures</h3>${ctx.charts ? FIGURE_NOTE : ""}${ctx.figures.join("\n")}` : ""}
 ${ctx.tables.length ? `<h3>Tables</h3>${ctx.tables.join("\n")}` : ""}
 ${appendix}
 ${recordNumbers(rec)}

@@ -4,8 +4,8 @@
  "document": {
   "id": "F515",
   "kind": "finding",
-  "title": "A small language model squeezes the UDHR to 0.27 bits a letter, and fresh text to 1.59",
-  "standfirst": "Used as a compressor, SmolLM2 encodes the English Universal Declaration of Human Rights at 0.27 bits per character, far below any classical compressor. On 30,000 characters written after its training it needs 1.59, so most of the headline figure comes from text the model has already seen.",
+  "title": "A small language model squeezes the UDHR to 0.27 bits a character, and fresh text to 1.59",
+  "standfirst": "Used as a compressor, SmolLM2 encodes the English Universal Declaration of Human Rights at 0.27 bits per character, far below any classical compressor. On 30,000 characters written after its training it needs 1.59, which points at the model having seen the declaration. One fresh text cannot say how large that share is.",
   "date_found": "2026-11-01",
   "fields": [
    "information-theory",
@@ -13,10 +13,15 @@
   ],
   "tier": "B",
   "tier_reason": "Changes how to read common LLM compression numbers; needs a wider unseen set.",
+  "rung_reason": "Its entry describes the study as: post hoc control on a preregistered study.",
   "outcome": "held",
+  "kill": {
+   "state": "not fired",
+   "note": "The paper states that the kill condition did not fire: the arithmetic-coded round trip was exact."
+  },
   "objection": "There is one unseen text. It is our own technical writing in one register, full of numbers and technical terms, and it was chosen after the headline numbers were seen. A set of fresh texts across registers is needed before the size of the memorisation share can be stated.",
-  "objection_source": "the paper's first stated limitation; no reviewer attack is on file",
-  "would_change": "No condition for raising or overturning the call is on file in the register.",
+  "objection_source": "the paper's first stated limitation; our register records no separate objection",
+  "would_change": "Our publication register records no condition that would raise or overturn this call.",
   "sections": [
    {
     "id": "reader",
@@ -31,7 +36,7 @@
     "title": "Abstract",
     "role": "argument",
     "paragraphs": [
-     "A language model that predicts the next word well is also a compressor, and its compression rate is often quoted as a measure of how well it models text. We used two small open models, SmolLM2-360M and Qwen3-0.6B, as arithmetic coders and compared them with xz and with a PPM context model. {c1}SmolLM2 encodes the English Universal Declaration of Human Rights at 0.27 bits per character, and Qwen3-0.6B at 0.57.{/c1} The best classical coder, PPM trained on 5 million characters of Project Gutenberg, needs 1.99. We then added a control we had not planned: 30,000 characters of our own technical writing from October 2026, written after both models were released. {c2}On text written after their training, the two models need 1.59 and 1.66 bits per character.{/c2} {c3}Cold PPM, which has seen nothing, finds the unseen text only slightly harder than the declaration: 2.70 against 2.57 bits per character.{/c3} Most of the models' advantage on the declaration therefore comes from having seen it. {c5}An arithmetic encoder and decoder round-tripped a 120-token passage exactly with both models.{/c5}"
+     "A language model that predicts the next word well is also a compressor, and its compression rate is often quoted as a measure of how well it models text. We used two small open models, SmolLM2-360M and Qwen3-0.6B, as arithmetic coders and compared them with xz and with a PPM context model. {c1}SmolLM2 encodes the English Universal Declaration of Human Rights at 0.27 bits per character, and Qwen3-0.6B at 0.57.{/c1} The best classical coder, PPM trained on 5 million characters of Project Gutenberg, needs 1.99. We then added a control we had not planned: 30,000 characters of our own technical writing from October 2026, written after both models were released. {c2}On text written after their training, the two models need 1.59 and 1.66 bits per character.{/c2} {c3}Cold PPM, which has seen nothing, finds the unseen text only slightly harder than the declaration: 2.70 against 2.57 bits per character.{/c3} The models' advantage on the declaration therefore points at their having seen it; one fresh text cannot size that share. {c5}An arithmetic encoder and decoder round-tripped a 120-token passage exactly with both models.{/c5}"
     ]
    },
    {
@@ -49,7 +54,7 @@
     "title": "Preregistration and design",
     "role": "argument",
     "paragraphs": [
-     "This test is one part of a larger study of language as a code. Its {g:preregistration}preregistration{/g}, a dated plan fixed and hash-locked before any result is seen, is a forecast file written and hashed on 1 November 2026 at 03:14 UTC, before any measurement. A first session wrote it and stopped with no measurement saved. A second session wrote a file of scoring rules 13 minutes later, before computing anything, and ran every measurement after that. A point forecast holds if the measured value is within 25 percent of it, and an inequality forecast holds when the inequality is true.",
+     "This test is one part of a larger study of language as a code. Its {g:preregistration}preregistration{/g}, a dated plan fixed and hash-locked before any result is seen, is a forecast file written and hashed on 1 November 2026 at 03:14 UTC, before any measurement. A first work session wrote it and stopped with no measurement saved. A second work session wrote a file of scoring rules 13 minutes later, before computing anything, and ran every measurement after that. A point forecast holds if the measured value is within 25 percent of it, and an inequality forecast holds when the inequality is true.",
      "For this part the forecast file fixed:",
      "- The bits per character on the English declaration: xz 3.0, PPM cold 2.4, PPM trained on Gutenberg 2.1, SmolLM2 1.2, Qwen3 1.0.",
      "- On a held-out Gutenberg book: xz 2.9, trained PPM 2.1, SmolLM2 2.0.",
@@ -362,6 +367,15 @@
    "after": "The unseen-text control was added after the first results were seen and is labelled post hoc wherever it appears.",
    "reason": "Dated in the paper's Corrections section; found by the study itself, before publication.",
    "found_by": "the study itself, before publication"
+  },
+  {
+   "id": "x2",
+   "date": "2026-11-14",
+   "target": "document",
+   "type": "wording",
+   "after": "The summary and the abstract said most of the advantage on the declaration comes from the model having seen it; with one fresh text of 30,000 characters the page can say the result points at prior exposure, and both now say that. The title said bits a letter; the unit is bits per character, which counts spaces and punctuation.",
+   "reason": "A review of the published page found the summary stating a size the paper's own limitations say cannot yet be stated.",
+   "found_by": "a review of the published pages"
   }
  ],
  "versions": [
@@ -375,6 +389,11 @@
    "date": "2026-11-09",
    "what": "paper version 1.0, first published",
    "hash": "2551ac61b645b010f8ccf52bf3a32b0f644017bc0dc754fef8dfc561792beb46"
+  },
+  {
+   "n": 3,
+   "date": "2026-11-14",
+   "what": "this page corrected, 1 item; the PDF and its BuildTeX source are still paper version 1.0"
   }
  ],
  "grade": {
@@ -382,24 +401,24 @@
    {
     "domain": "scoring",
     "text": "Scored by code and by the agent that ran it; self-graded.",
-    "from": "register scorer"
+    "from": "our publication register, on who scored it"
    },
    {
     "domain": "blinding",
     "text": "Not blind, as the paper's limitations state.",
-    "from": "paper Limitations"
+    "from": "the paper's Limitations"
    },
    {
-    "domain": "single source",
+    "domain": "depth of reading",
     "text": "The cited literature was read at the level of abstracts, publisher pages and repository pages; full texts were not read.",
-    "from": "paper Verified"
+    "from": "the Verified section"
    }
   ],
   "holds": [
    {
     "domain": "preregistration",
     "text": "Preregistered and hash-locked before the run (sha256 568a182b).",
-    "from": "paper Reproduction"
+    "from": "the Reproduce section"
    }
   ]
  },

@@ -4,20 +4,29 @@
  "document": {
   "id": "F97",
   "kind": "finding",
-  "title": "Tree rings record the broad drought pattern and almost none of the local one",
-  "standfirst": "Across 664 western North American tree-ring sites, the trees pass almost none of the summer drought signal at scales below about 55 km and most of it above about 460 km. A tree-ring record that looks like a weak, flat climate recorder site by site is acting as a spatial filter.",
+  "title": "Tree rings track the broad drought pattern in a gridded record and almost none of its local detail",
+  "standfirst": "Across 664 western North American tree-ring sites, the trees pass almost none of the summer drought signal at scales below about 55 km and most of it above about 460 km, measured against a gridded climate record. That grid is itself smoothed over hundreds of kilometres, so part of the missing fine detail may belong to the grid and not to the trees. Three further tests on how drought moves through space and time came back null.",
   "date_found": "2026-10-29",
   "fields": [
    "ecology-climate",
    "biology-plant-forest-pathology"
   ],
   "tier": "B*",
-  "tier_reason": "Real data, locked prereg, passing instrument and a forecast H4. The climate grid is itself smooth, so the filter may belong to CRU rather than the trees; the next step must separate them.",
+  "tier_reason": "Real data, a locked preregistration, a passing instrument check and a forecast that held for the main contrast. The climate grid is itself smooth, so the filter may belong to the CRU grid and not to the trees; the next step must separate them.",
   "rung": "hypothesis",
-  "rung_reason": "Prereg with fail-closed rules on file; no named rival beaten by a decisive observation.",
-  "outcome": "held",
-  "objection": "CRU interpolates precipitation with a 450 km decay distance, right where the lens opens, so low fine-scale coherence may be reference smoothing. Site clustering and noise fill the finest band.",
-  "objection_source": "the register's reviewer attack",
+  "rung_reason": "A preregistration with pass-or-fail rules is on file, which this rung needs. The next rung needs a named rival reading beaten by a decisive observation, and none is on file.",
+  "outcome": "mixed",
+  "bound": "The broad-against-fine contrast held: 0.64 against control 95th percentiles of 0.22 and 0.30. The three tests on the drought field itself, separability, travel and dispersion, came back null on the climate grid and on the trees, so six of the eleven preregistered verdicts failed.",
+  "verdicts": {
+   "held": 5,
+   "failed": 6,
+   "untestable": 0,
+   "files": [
+    "result.json"
+   ]
+  },
+  "objection": "CRU interpolates precipitation with a 450 km decay distance, right where the filter opens, so low fine-scale coherence may be smoothing in the reference. Site clustering and noise fill the finest band.",
+  "objection_source": "the strongest objection recorded in our publication register",
   "would_change": "Repeat with station or denser gridded data as reference, another region, a held-out fine-scale network.",
   "sections": [
    {
@@ -25,7 +34,7 @@
     "title": "What this means for a reader",
     "role": "lead",
     "paragraphs": [
-     "A tree-ring site that matches its local drought record only weakly is not a weak drought recorder in every sense. In the American West the trees carry most of the broad, regional pattern of summer drought and almost none of the local detail. When a proxy is scored site by site, ask how much of its lost skill is lost in space rather than in time."
+     "A tree-ring site that matches its local drought record only weakly is not a weak drought recorder in every sense. In the American West the trees carry most of the broad, regional pattern of summer drought and almost none of the local detail, as far as a gridded record that is itself smoothed can show. When a proxy is scored site by site, ask how much of its lost skill is lost in space rather than in time."
     ]
    },
    {
@@ -33,7 +42,7 @@
     "title": "Abstract",
     "role": "argument",
     "paragraphs": [
-     "Tree-ring records are often judged one site at a time, by comparing a site's yearly growth with the climate at that spot. We split that comparison by spatial scale as well as by time scale. The data are June to August drought from a gridded index, 399 one-degree cells in western North America from 1903 to 2025, and 664 tree-ring chronologies in the same box, complete from 1903 to 1980. In each of 30 cells of a grid of six spatial bands and five time bands we measured the share of the drought signal that the trees pass. {c1}The preregistered contrast between broad, slow scales and fine, fast scales was 0.64 (95% interval 0.62 to 0.68), against 95th percentiles of 0.22 for phase-randomised trees and 0.30 for trees moved to shuffled sites, with an adjusted p of 0.035.{/c1} {c2}Below 55 km the trees pass at most 0.004 of the drought signal in every time band, and above 460 km they pass 0.27 to 0.91.{/c2} Three tests on the drought field came back null. {c3}The drought field's covariance did not depart from a space part times a time part{/c3}, {c4}no travel speed could be claimed{/c4}, and {c5}broad and fine patterns lose their memory at the same rate, with a dispersion exponent of 0.02 (-0.12 to 0.17){/c5}. The trees act as a spatial filter."
+     "Tree-ring records are often judged one site at a time, by comparing a site's yearly growth with the climate at that spot. We split that comparison by spatial scale as well as by time scale. The data are June to August drought from a gridded index, 399 one-degree cells in western North America from 1903 to 2025, and 664 tree-ring chronologies in the same box, complete from 1903 to 1980. In each of 30 cells of a grid of six spatial bands and five time bands we measured the share of the drought signal that the trees pass. {c1}The preregistered contrast between broad, slow scales and fine, fast scales was 0.64 (95% interval 0.62 to 0.68), against 95th percentiles of 0.22 for phase-randomised trees and 0.30 for trees moved to shuffled sites, with an adjusted p of 0.035.{/c1} {c2}Below 55 km the trees pass at most 0.004 of the drought signal in every time band, and above 460 km they pass 0.27 to 0.91.{/c2} Three tests on the drought field came back null. {c3}The drought field's covariance did not depart from a space part times a time part{/c3}, {c4}no travel speed could be claimed{/c4}, and {c5}broad and fine patterns lose their memory at the same rate, with a dispersion exponent of 0.02 (-0.12 to 0.17){/c5}. Measured against this gridded record, the trees act as a spatial filter; the grid is itself smooth, so the filter may belong partly to the grid."
     ]
    },
    {
@@ -272,9 +281,9 @@
    "id": "e5",
    "kind": "number",
    "label": "Sample",
-   "value": "664 chronologies, 399 cells, 1903 to 1980 and 2025",
+   "value": "664 chronologies, 1903 to 1980; 399 grid cells, 1903 to 2025",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -283,9 +292,9 @@
    "id": "e6",
    "kind": "number",
    "label": "Main estimate and interval",
-   "value": "contrast 0.64 (0.62 to 0.68); passed share 0.003 below 55 km, up to 0.91 above 460 km",
+   "value": "contrast 0.64 (0.62 to 0.68); passed share at most 0.004 below 55 km, up to 0.91 above 460 km",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -294,9 +303,9 @@
    "id": "e7",
    "kind": "number",
    "label": "Forecast against outcome",
-   "value": "H4 pass forecast held; H1 pass forecast failed",
+   "value": "the forecast that the contrast would pass held; the forecast that the separability test would pass failed",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -305,9 +314,9 @@
    "id": "e8",
    "kind": "control",
    "label": "Known-answer check",
-   "value": "synthetic wave speed within 2.2%, direction 0.7 deg",
+   "value": "synthetic wave speed read within 2.2 percent, direction within 0.7 degrees",
    "check": {
-    "by": "the register's evidence fields",
+    "by": "our publication register",
     "result": "not_checked",
     "note": "as recorded in the publication register"
    }
@@ -383,6 +392,15 @@
    "after": "The draft summary called the fitted travel direction east-northeast; the result file gives 34.5 degrees north of east, which this paper uses.",
    "reason": "Dated in the paper's Corrections section; found by the publication pass.",
    "found_by": "the publication pass"
+  },
+  {
+   "id": "x2",
+   "date": "2026-11-14",
+   "target": "document",
+   "type": "wording",
+   "after": "The climate reference is a grid interpolated over hundreds of kilometres, so low agreement at fine scales may come from the grid and not from the trees; the title, the summary, the abstract and the reader section now carry that limit. The outcome word changed from held to mixed, because six of the eleven preregistered verdicts failed: the three tests on the drought field came back null on the grid and on the trees.",
+   "reason": "A review of the published page found the headline stated without a limit the page itself gives lower down.",
+   "found_by": "a review of the published pages"
   }
  ],
  "versions": [
@@ -396,46 +414,51 @@
    "date": "2026-11-09",
    "what": "paper version 1.0, first published",
    "hash": "30581875f101f4353f402e2223a509e0c5fa5f46d5ac72094e9d3885020a6fa2"
+  },
+  {
+   "n": 3,
+   "date": "2026-11-14",
+   "what": "this page corrected, 1 item; the PDF and its BuildTeX source are still paper version 1.0"
   }
  ],
  "grade": {
   "lowers": [
    {
     "domain": "blinding",
-    "text": "Not blind. Per-site comparison post hoc and exploratory. Trees' H3 fit hit its bound, uninformative.",
-    "from": "register scorer.blind"
+    "text": "Not blind. The per-site comparison is post hoc and exploratory. The dispersion fit for the trees hit its bound and says nothing.",
+    "from": "our publication register, on blinding"
    },
    {
     "domain": "novelty",
     "text": "Nearby work exists; novelty is not shown.",
-    "from": "register literature.verdict"
+    "from": "our publication register, on the literature"
    },
    {
-    "domain": "single source",
+    "domain": "depth of reading",
     "text": "The cited literature was read at the level of abstracts, publisher pages and search summaries; full texts were not read.",
-    "from": "paper Verified"
+    "from": "the Verified section"
    }
   ],
   "holds": [
    {
     "domain": "scoring",
     "text": "Scored by code against rules fixed in advance.",
-    "from": "register scorer.who"
+    "from": "our publication register, on who scored it"
    },
    {
     "domain": "preregistration",
     "text": "Preregistered and hash-locked before the run (sha256 6d8b274a).",
-    "from": "paper Reproduction"
+    "from": "the Reproduce section"
    },
    {
     "domain": "control",
-    "text": "Controls: phase q95 0.22, shuffle q95 0.30 working; synthetic separable, wave, diffusion working.",
-    "from": "register evidence.controls"
+    "text": "Controls: the phase-randomised and shuffled controls worked (95th percentiles 0.22 and 0.30); the synthetic separable, travelling-wave and diffusion fields were read correctly.",
+    "from": "our publication register, on controls"
    },
    {
     "domain": "open data",
     "text": "Public data.",
-    "from": "register data_licence"
+    "from": "our publication register, on the data licence"
    }
   ]
  },

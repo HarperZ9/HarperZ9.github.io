@@ -107,7 +107,7 @@ export function build({ records, glossary, ledger, meta, figures }) {
     const { body, termUses } = findingBody(rec, { pages, glossary: glossaryFor(id, glossary), plate: plateFor(figures), relations: ledger.relations, replaced, charts });
     for (const u of termUses) uses.push({ ...u, page: id });
     const jsonld = { "@context": "https://schema.org", "@type": "ScholarlyArticle", headline: d.title, abstract: d.standfirst, identifier: id, dateCreated: d.date_found,
-      datePublished: rec.versions[rec.versions.length - 1].date, author: AUTHOR, about: d.fields, encoding: { "@type": "MediaObject", encodingFormat: "application/pdf", contentUrl: `https://harperz9.github.io/findings/papers/${id}.pdf` },
+      datePublished: rec.versions.findLast((v) => v.hash).date, author: AUTHOR, about: d.fields, encoding: { "@type": "MediaObject", encodingFormat: "application/pdf", contentUrl: `https://harperz9.github.io/findings/papers/${id}.pdf` },
       isPartOf: { "@type": "CollectionPage", name: "Findings", url: "https://harperz9.github.io/findings/" } };
     const rel = pages[id].slice(1);
     outputs.push([path.basename(rel), page({ path: rel, title: `${id}: ${d.title}`, description: d.standfirst, body, extraHead: CSS + (charts ? CHART_HEAD : "") + `<meta name="citation_pdf_url" content="https://harperz9.github.io/findings/papers/${id}.pdf">\n`, jsonld })]);

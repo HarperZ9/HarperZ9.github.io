@@ -4,22 +4,31 @@
  "document": {
   "id": "F183",
   "kind": "finding",
-  "title": "After we fixed our own bug, plain optimisers beat nature-inspired ones on shifted tests",
-  "standfirst": "Our first benchmark said optimisers named after slime moulds, wolves, bees and ants beat the standard methods. The win came partly from a bug in our own CMA-ES code. Fixed, CMA-ES ranked first, and two popular nature-inspired methods turned out to work well only when the answer sits at the centre of the search box.",
+  "title": "After we fixed our own bug, CMA-ES ranked first and two nature-inspired optimisers proved centre-biased",
+  "standfirst": "Our first benchmark said optimisers named after slime moulds, wolves, bees and ants beat the standard methods. The win came partly from a bug in our own CMA-ES code. Fixed, CMA-ES ranked first on the shifted tests, and two popular nature-inspired methods turned out to work well only when the answer sits at the centre of the search box. As groups, plain and nature-inspired methods did not differ (mean rank gap 0.09, p 0.45).",
   "date_found": "2026-10-31",
   "fields": [
    "cs-systems",
    "method"
   ],
   "tier": "D",
-  "tier_reason": "Refutes the bio-labelled edge after my own bug fix; default parameters only.",
+  "tier_reason": "After our own bug fix the nature-inspired methods showed no edge as a group (mean rank gap 0.09, p 0.45), and CMA-ES ranked first; default parameters only.",
   "rung": "thesis",
-  "rung_reason": "Survives Bio-labelled optimisers as better search. Decisive observation: Shifted known optima: CMA-ES rank 2.0 against best bio 3.14, and SMA and GWO lose 12 and 13.6 decades.",
+  "rung_reason": "Named rival, which the finding stood against: Bio-labelled optimisers as better search. Decisive observation against the rival: Shifted known optima: CMA-ES rank 2.0 against best bio 3.14, and SMA and GWO lose 12 and 13.6 decades.",
   "outcome": "mixed",
   "bound": "The group contest between plain and biologically labelled optimisers sat inside the label-permutation range (p 0.45); the method-level ranks hold.",
+  "verdicts": {
+   "held": 17,
+   "failed": 3,
+   "untestable": 0,
+   "files": [
+    "first-run-result.json",
+    "rerun-result.json"
+   ]
+  },
   "objection": "Seven functions, 10 dimensions, one budget of 20,000 evaluations and 15 repeats. Other functions, dimensions or budgets could reorder the methods.",
-  "objection_source": "the paper's first stated limitation; no reviewer attack is on file",
-  "would_change": "No condition for raising or overturning the call is on file in the register.",
+  "objection_source": "the paper's first stated limitation; our register records no separate objection",
+  "would_change": "Our publication register records no condition that would raise or overturn this call.",
   "sections": [
    {
     "id": "reader",
@@ -53,7 +62,7 @@
     "title": "Preregistration and design",
     "role": "argument",
     "paragraphs": [
-     "The study ran twice, each time under its own {g:preregistration}preregistration{/g}. The first (here, the first run) was hash-locked on 31 October 2026 before any result of the run was seen; only smoke runs in 3 dimensions with small budgets had been made, to fix crashes, and no rankings were read from them. It named the methods, the functions, the measures, two {g:control}controls{/g}, the forecasts and the {g:kill-condition}kill conditions{/g}. The decision it informs was written in it: no slime or plant-labelled optimiser becomes a default search method in our tools unless it beats differential evolution and CMA-ES on the shifted functions.",
+     "The study ran twice, each time under its own {g:preregistration}preregistration{/g}. The first (here, the first run) was hash-locked on 31 October 2026 before any result of the run was seen; only smoke runs (short trial runs that check the code executes) in 3 dimensions with small budgets had been made, to fix crashes, and no rankings were read from them. It named the methods, the functions, the measures, two {g:control}controls{/g}, the forecasts and the {g:kill-condition}kill conditions{/g}. The decision it informs was written in it: no slime or plant-labelled optimiser becomes a default search method in our tools unless it beats differential evolution and CMA-ES on the shifted functions.",
      "The second (the rerun) was hash-locked on 31 October 2026 after the first run had been read in full. It records what went wrong, the fix, and new forecasts. Its own kill condition reads: if CMA-ES fails to bring the median error on the shifted ellipsoid below 1, it is still broken and the study stops. It also commits to reporting any biologically labelled method that beats the best plain one, whatever we expected.",
      "Both preregistrations' SHA-256 hashes are in the reproduction section."
     ]
@@ -328,6 +337,15 @@
    "after": "This paper reports both.",
    "reason": "Our ledger and write-up did not report that the group gap with random search sat inside the label-permutation range in both runs, nor that the rerun's forecast of PSO in the top three failed.",
    "found_by": "the publication pass"
+  },
+  {
+   "id": "x4",
+   "date": "2026-11-14",
+   "target": "document",
+   "type": "number",
+   "after": "It said plain optimisers beat nature-inspired ones; the rerun's group contest gave a mean rank gap of 0.09, inside the label-permutation range (p 0.45), and two nature-inspired methods ranked second and third. The title and the summary now name what the method-level ranks show: CMA-ES first at 2.00, and the slime-mould and grey-wolf methods losing their lead when the optimum leaves the centre.",
+   "reason": "A review of the published page found the title wider than the result.",
+   "found_by": "a review of the published pages"
   }
  ],
  "versions": [
@@ -341,6 +359,11 @@
    "date": "2026-11-09",
    "what": "paper version 1.0, first published",
    "hash": "2c1d02484bcb2dd14a712b5e2a9a09976f4ea93b31dc3bfecfce9262893add76"
+  },
+  {
+   "n": 3,
+   "date": "2026-11-14",
+   "what": "this page corrected, 1 item; the PDF and its BuildTeX source are still paper version 1.0"
   }
  ],
  "grade": {
@@ -348,19 +371,19 @@
    {
     "domain": "scoring",
     "text": "Scored by code and by the agent that ran it; self-graded.",
-    "from": "register scorer"
+    "from": "our publication register, on who scored it"
    },
    {
-    "domain": "single source",
+    "domain": "depth of reading",
     "text": "The cited literature was read at the level of abstracts and publisher pages; full texts were not read.",
-    "from": "paper Verified"
+    "from": "the Verified section"
    }
   ],
   "holds": [
    {
     "domain": "preregistration",
     "text": "Preregistered and hash-locked before the run (sha256 dbf3b210).",
-    "from": "paper Reproduction"
+    "from": "the Reproduce section"
    }
   ]
  },

@@ -1,5 +1,5 @@
 {
- "about": "Per finding: the reader's title, slug, standfirst, fields and date from the wave 1 write-ups, and the outcome word with its bound, chosen by hand from each paper's abstract (DATA.md: the outcome needs the verdict keys, so it is chosen by hand).",
+ "about": "Per finding: the reader's title, slug, standfirst, fields and date from the wave 1 write-ups, and the outcome word with its bound, chosen by hand from each paper's abstract (DATA.md: the outcome needs the verdict keys, so it is chosen by hand). verdict_files names the result files whose preregistered verdicts the page rests on; kill records, where the paper states it, whether a kill rule fired. scripts/findings-outcome.mjs counts the verdicts and refuses \"held\" when a kill rule fired or more verdicts failed than passed.",
  "findings": {
   "F14": {
    "slug": "newtons-obliquity-table",
@@ -36,7 +36,10 @@
    "date_found": "2026-10-29",
    "figure": "none",
    "outcome": "null",
-   "bound": "Split-half reliability ran from 0.03 to 0.47, so the factor test had little power; two separate traits are not ruled out."
+   "bound": "Split-half reliability ran from 0.03 to 0.47, so the factor test had little power; two separate traits are not ruled out.",
+   "verdict_files": [
+    "result.json"
+   ]
   },
   "F32": {
    "slug": "skipping-and-abstain-gates",
@@ -49,11 +52,14 @@
    ],
    "date_found": "2026-10-29",
    "figure": "none",
-   "outcome": "held"
+   "outcome": "held",
+   "verdict_files": [
+    "result.json"
+   ]
   },
   "F39": {
    "slug": "long-tails-dark-spectra",
-   "title": "Music with long ringing tails and dark spectra is rated calmer, and also sadder",
+   "title": "Music with long ringing tails and dark spectra is rated calmer, and also less pleasant",
    "standfirst": "Across 502 held-out music clips by 270 artists, sounds that ring on longer and lean toward low frequencies were rated lower in arousal, beyond loudness, genre and year. We forecast they would also be rated more pleasant; they were rated less pleasant instead.",
    "fields": [
     "music-acoustics",
@@ -61,12 +67,15 @@
    ],
    "date_found": "2026-10-29",
    "figure": "none",
-   "outcome": "held"
+   "outcome": "held",
+   "verdict_files": [
+    "result.json"
+   ]
   },
   "F47": {
    "slug": "skill-against-noise-ceilings",
    "title": "More variables raise prediction skill, yet most targets stall far below their noise ceiling",
-   "standfirst": "Across trees, mood, music ratings, forecasters and a similarity task, held-out skill grew as we added measured variables and always beat a shuffled baseline. In five of six targets with a measurable ceiling it stopped between 0.18 and 0.65 of the way there, and the gap closed mainly when a different kind of variable arrived.",
+   "standfirst": "Across trees, mood, music ratings, forecasters and a similarity task, held-out skill grew as we added measured variables and always beat a shuffled baseline. In four of the five targets with a valid ceiling it stopped between 0.18 and 0.65 of the way there. We forecast that a different kind of variable would move at least three of those plateaus, and it moved one of seven.",
    "fields": [
     "forecasting-prediction",
     "method",
@@ -74,7 +83,11 @@
    ],
    "date_found": "2026-10-29",
    "figure": "none",
-   "outcome": "held"
+   "outcome": "mixed",
+   "verdict_files": [
+    "result.json"
+   ],
+   "bound": "Four of the six preregistered verdicts failed. One target reached 0.8 of its ceiling against a forecast of at least four, and one plateau moved when a new kind of variable arrived against a forecast of at least three. Held-out skill did rise with added variables and beat its shuffled control in every target, and the two toy-model verdicts passed."
   },
   "F50": {
    "slug": "childhood-trauma-amygdala-vmpfc-null",
@@ -92,7 +105,7 @@
   },
   "F63": {
    "slug": "no-drought-steeling-in-tree-rings",
-   "title": "Across 1,175 tree-ring sites, an earlier moderate drought did not toughen trees",
+   "title": "Across 1,175 tree-ring sites, an earlier moderate drought did not detectably toughen trees",
    "standfirst": "We tested whether trees that lived through a moderate drought came through a later severe drought better. Across 1,175 North American tree-ring sites they did not, detectably, and a rerun with a finer drought grid gave the same null.",
    "fields": [
     "biology-plant-forest-pathology",
@@ -101,7 +114,11 @@
    "date_found": "2026-10-29",
    "figure": "none",
    "outcome": "null",
-   "bound": "The 95 percent interval runs to +0.090 in log resilience, about a 9 percent gain, so small conditioning effects stay open."
+   "bound": "The 95 percent interval runs to +0.090 in log resilience, about a 9 percent gain, so small conditioning effects stay open.",
+   "verdict_files": [
+    "main-result.json",
+    "rerun-result.json"
+   ]
   },
   "F76": {
    "slug": "flatness-ceiling-on-real-series",
@@ -114,12 +131,19 @@
    ],
    "date_found": "2026-10-29",
    "figure": "traxler-slot",
-   "outcome": "held"
+   "outcome": "held",
+   "verdict_files": [
+    "result.json"
+   ],
+   "kill": {
+    "state": "not fired",
+    "note": "80 of 1,236 series beat the bound, 6.5 percent, under the preregistered 10 percent kill."
+   }
   },
   "F81": {
    "slug": "flower-colour-differences-humans-miss",
-   "title": "Among colours people cannot tell apart, bees and birds split flowers from backgrounds more often",
-   "standfirst": "On 728 measured natural surfaces, modelled bees and blue tits separate flower-against-background pairs that look identical to people far more often than background-against-background pairs. The direction held on a second surface set and under a second noise model; the size of the effect did not travel.",
+   "title": "Among colours people cannot tell apart, modelled bees and blue tits split flowers from backgrounds more often",
+   "standfirst": "On 728 measured natural surfaces, modelled bees and blue tits separate flower-against-background pairs that look identical to people more often than background-against-background pairs. No animal was tested; the observers are models. The direction held on a second surface set and under a second noise model; the size of the effect did not travel.",
    "fields": [
     "biology-other",
     "colour-film",
@@ -127,19 +151,27 @@
    ],
    "date_found": "2026-10-29",
    "figure": "none",
-   "outcome": "held"
+   "outcome": "held",
+   "verdict_files": [
+    "result.json",
+    "replication-result.json"
+   ]
   },
   "F97": {
    "slug": "drought-space-time-tree-lens",
-   "title": "Tree rings record the broad drought pattern and almost none of the local one",
-   "standfirst": "Across 664 western North American tree-ring sites, the trees pass almost none of the summer drought signal at scales below about 55 km and most of it above about 460 km. A tree-ring record that looks like a weak, flat climate recorder site by site is acting as a spatial filter.",
+   "title": "Tree rings track the broad drought pattern in a gridded record and almost none of its local detail",
+   "standfirst": "Across 664 western North American tree-ring sites, the trees pass almost none of the summer drought signal at scales below about 55 km and most of it above about 460 km, measured against a gridded climate record. That grid is itself smoothed over hundreds of kilometres, so part of the missing fine detail may belong to the grid and not to the trees. Three further tests on how drought moves through space and time came back null.",
    "fields": [
     "ecology-climate",
     "biology-plant-forest-pathology"
    ],
    "date_found": "2026-10-29",
    "figure": "none",
-   "outcome": "held"
+   "outcome": "mixed",
+   "verdict_files": [
+    "result.json"
+   ],
+   "bound": "The broad-against-fine contrast held: 0.64 against control 95th percentiles of 0.22 and 0.30. The three tests on the drought field itself, separability, travel and dispersion, came back null on the climate grid and on the trees, so six of the eleven preregistered verdicts failed."
   },
   "F114": {
    "slug": "ring-channel-bits-per-year",
@@ -152,7 +184,14 @@
    ],
    "date_found": "2026-10-30",
    "figure": "none",
-   "outcome": "held"
+   "outcome": "held",
+   "verdict_files": [
+    "alps-result.json"
+   ],
+   "kill": {
+    "state": "not fired",
+    "note": "The paper states that the kill condition did not fire: the best channel beat all three controls and tests survived correction."
+   }
   },
   "F132": {
    "slug": "transfer-entropy-direction-fails-on-rings",
@@ -166,19 +205,29 @@
    "date_found": "2026-10-31",
    "figure": "none",
    "outcome": "failed",
-   "bound": "At the real coupling strength the false direction ranked at or above the true one at 52.6 percent of planted sites, so the estimator gets no direction-reading status on data like these."
+   "bound": "At the real coupling strength the false direction ranked at or above the true one at 52.6 percent of planted sites, so the estimator gets no direction-reading status on data like these.",
+   "verdict_files": [
+    "result.json"
+   ],
+   "kill": {
+    "state": "fired",
+    "note": "The estimator's own kill condition fired."
+   }
   },
   "F147": {
    "slug": "film-as-a-photon-detector",
    "title": "Kodak's own curves put modern colour negative at 0.6 to 4.9 percent quantum efficiency",
-   "standfirst": "Reading three Kodak VISION3 data sheets as if the film were a photon counter, the best layer uses about 5 percent of the light's information and the median layer about 2 percent. The 500T and 200T stocks match each other within 10 percent although one needs about twice the photons of the other.",
+   "standfirst": "Reading three Kodak VISION3 data sheets as if the film were a photon counter, the best layer uses about 5 percent of the light's information and the median layer about 2 percent. In the green layer the 500T and 200T stocks match within 10 percent (4.5 and 4.9 percent) although one needs about twice the photons of the other; their blue layers differ by 11 percent and their red layers by 26.",
    "fields": [
     "colour-film",
     "instruments-metrology"
    ],
    "date_found": "2026-10-31",
    "figure": "traxler-slot",
-   "outcome": "held"
+   "outcome": "held",
+   "verdict_files": [
+    "result.json"
+   ]
   },
   "F149": {
    "slug": "karst-doubled-reread",
@@ -191,7 +240,10 @@
    ],
    "date_found": "2026-10-31",
    "figure": "none",
-   "outcome": "held"
+   "outcome": "held",
+   "verdict_files": [
+    "result.json"
+   ]
   },
   "F152": {
    "slug": "gap-ranking-loses-to-popularity",
@@ -205,12 +257,19 @@
    "date_found": "2026-10-31",
    "figure": "none",
    "outcome": "failed",
-   "bound": "Shared-neighbour ranking found fewer later links than popularity on all three corpora; among pairs of similar popularity it still separated later links (AUC 0.569 to 0.757)."
+   "bound": "Shared-neighbour ranking found fewer later links than popularity on all three corpora; among pairs of similar popularity it still separated later links (AUC 0.569 to 0.757).",
+   "verdict_files": [
+    "result.json"
+   ],
+   "kill": {
+    "state": "not fired",
+    "note": "The paper states that the kill condition did not fire, because the within-decile result passed."
+   }
   },
   "F166": {
    "slug": "combined-value-formula-retired",
    "title": "Our combined value formula lost to plain prospect theory on 11,759 risky choice problems",
-   "standfirst": "We tested our own formula for how people value risky options, prospect theory plus terms for information, threat and drive, against a richer version of prospect theory on the public choices13k data. It never beat that richer model, so we retired it. Fitted loss aversion came out at 1.16 when people chose from descriptions and 0.89 when they learned from feedback.",
+   "standfirst": "We tested our own formula for how people value risky options, prospect theory plus terms for information, threat and drive, against a richer version of prospect theory on the public choices13k data. It never beat that richer model by the margin we set in advance (with feedback it led by 0.001 against a bar of 0.005), so we retired it. Fitted loss aversion came out at 1.16 when people chose from descriptions and 0.89 when they learned from feedback.",
    "fields": [
     "psychology",
     "economy",
@@ -219,7 +278,14 @@
    "date_found": "2026-10-31",
    "figure": "none",
    "outcome": "failed",
-   "bound": "The combined formula never beat flexible prospect theory by the preregistered 0.005 in cross-validated R2 (0.634 against 0.645 without feedback, 0.597 against 0.596 with it)."
+   "bound": "The combined formula never beat flexible prospect theory by the preregistered 0.005 in cross-validated R2 (0.634 against 0.645 without feedback, 0.597 against 0.596 with it).",
+   "verdict_files": [
+    "result.json"
+   ],
+   "kill": {
+    "state": "fired",
+    "note": "The kill rule fired in both settings, and the formula is retired as a model of risky choice."
+   }
   },
   "F172": {
    "slug": "selection-model-of-replication",
@@ -232,12 +298,20 @@
    ],
    "date_found": "2026-10-31",
    "figure": "none",
-   "outcome": "held"
+   "outcome": "mixed",
+   "verdict_files": [
+    "result.json"
+   ],
+   "kill": {
+    "state": "fired",
+    "note": "The model did not beat the base rate on held-out fields, so the preregistered kill rule fired and the claim that it tells which effects replicate is withdrawn."
+   },
+   "bound": "The model beat taking originals at face value (the 95 percent interval of the Brier gain starts at 0.108). It did not beat the base rate (the interval starts at -0.039) and it lost to a small logistic model. Skill was positive in half the fields against a bar of three quarters, and its Reproducibility Project rate missed by 0.16 against a tolerance of 0.05. The preregistered kill rule fired, so the claim that the model picks which effects replicate is withdrawn."
   },
   "F183": {
    "slug": "shifted-optima-plain-beats-bio-optimisers",
-   "title": "After we fixed our own bug, plain optimisers beat nature-inspired ones on shifted tests",
-   "standfirst": "Our first benchmark said optimisers named after slime moulds, wolves, bees and ants beat the standard methods. The win came partly from a bug in our own CMA-ES code. Fixed, CMA-ES ranked first, and two popular nature-inspired methods turned out to work well only when the answer sits at the centre of the search box.",
+   "title": "After we fixed our own bug, CMA-ES ranked first and two nature-inspired optimisers proved centre-biased",
+   "standfirst": "Our first benchmark said optimisers named after slime moulds, wolves, bees and ants beat the standard methods. The win came partly from a bug in our own CMA-ES code. Fixed, CMA-ES ranked first on the shifted tests, and two popular nature-inspired methods turned out to work well only when the answer sits at the centre of the search box. As groups, plain and nature-inspired methods did not differ (mean rank gap 0.09, p 0.45).",
    "fields": [
     "cs-systems",
     "method"
@@ -245,12 +319,16 @@
    "date_found": "2026-10-31",
    "figure": "none",
    "outcome": "mixed",
-   "bound": "The group contest between plain and biologically labelled optimisers sat inside the label-permutation range (p 0.45); the method-level ranks hold."
+   "bound": "The group contest between plain and biologically labelled optimisers sat inside the label-permutation range (p 0.45); the method-level ranks hold.",
+   "verdict_files": [
+    "first-run-result.json",
+    "rerun-result.json"
+   ]
   },
   "F190": {
    "slug": "public-goods-self-benefit-correction",
    "title": "Our model of cooperation on a grid had been rewarding selfishness",
-   "standfirst": "We set out to reproduce a textbook result, that living near relatives lets costly cooperation survive cheaters, and our model appeared to succeed. It had a flaw: cooperators were paid back by their own contribution. With that removed, cooperation collapsed at every sensible cost under our update rule.",
+   "standfirst": "We set out to reproduce a textbook result, that living near relatives lets costly cooperation survive cheaters, and our model appeared to succeed. It had a flaw: cooperators were paid back by their own contribution. With that removed, cooperation collapsed at every benefit-to-cost ratio up to 50 under our update rule, and reached a share of only 0.48 at a ratio of 400.",
    "fields": [
     "biology-other",
     "economy"
@@ -258,7 +336,11 @@
    "date_found": "2026-10-31",
    "figure": "none",
    "outcome": "failed",
-   "bound": "With goods paid to others only, local producers never reached the preregistered mean share of 0.5 (0.48 at a benefit-to-cost ratio of 400)."
+   "bound": "With goods paid to others only, local producers never reached the preregistered mean share of 0.5 (0.48 at a benefit-to-cost ratio of 400).",
+   "verdict_files": [
+    "round2-result.json",
+    "round3-result.json"
+   ]
   },
   "F281": {
    "slug": "speed-limit-rerun",
@@ -271,7 +353,10 @@
    "date_found": "2026-10-31",
    "figure": "traxler-slot",
    "outcome": "null",
-   "bound": "Rules out a linear energy-dependent change in light speed larger than 7.6e-18 of c at 29.9 GeV, an energy scale below 0.32 Planck energies; the published bound from the same burst is about 24 times stronger."
+   "bound": "Rules out a linear energy-dependent change in light speed larger than 7.6e-18 of c at 29.9 GeV, an energy scale below 0.32 Planck energies; the published bound from the same burst is about 24 times stronger.",
+   "verdict_files": [
+    "result.json"
+   ]
   },
   "F308": {
    "slug": "oeis-recurrence-conjectures",
@@ -284,7 +369,10 @@
    "date_found": "2026-10-31",
    "figure": "none",
    "outcome": "null",
-   "bound": "One failure in 213 tested lines, 0.47 percent; the 95 percent Wilson interval runs to 2.6 percent, so failure rates above that are ruled out for lines of this kind."
+   "bound": "One failure in 213 tested lines, 0.47 percent; the 95 percent Wilson interval runs to 2.6 percent, so failure rates above that are ruled out for lines of this kind.",
+   "verdict_files": [
+    "result.json"
+   ]
   },
   "F310": {
    "slug": "titius-bode-is-spacing",
@@ -297,7 +385,10 @@
    "date_found": "2026-10-31",
    "figure": "traxler-slot",
    "outcome": "mixed",
-   "bound": "The spacing signal is real: the systems beat gaps pooled from the whole catalogue (p 0.0005). The order and law-like verdicts are null: against each system's own gaps put in a new order none of the three forms scored above the shuffled range (p 0.85, 0.995 and 0.68)."
+   "bound": "The spacing signal is real: the systems beat gaps pooled from the whole catalogue (p 0.0005). The order and law-like verdicts are null: against each system's own gaps put in a new order none of the three forms scored above the shuffled range (p 0.85, 0.995 and 0.68).",
+   "verdict_files": [
+    "result.json"
+   ]
   },
   "F320": {
    "slug": "stress-classifier-leakage",
@@ -310,12 +401,16 @@
    ],
    "date_found": "2026-10-31",
    "figure": "none",
-   "outcome": "held"
+   "outcome": "held",
+   "verdict_files": [
+    "result-run1.json",
+    "result-run2.json"
+   ]
   },
   "F329": {
    "slug": "lying-in-die-tasks",
-   "title": "In 27,039 private die rolls, about 45 percent report honestly, and the reports cannot tell us why",
-   "standfirst": "Payoff maximisation says everyone in a private die-roll task should claim the top number. Across 58 published studies with 27,039 subjects, the held-out reports look like about 45 percent honest, 26 percent claiming the maximum and 29 percent shading upward partway. Six competing theories of why people hold back fit those reports almost equally well.",
+   "title": "In held-out private die-roll reports, about 45 percent read as honest, and this method cannot tell us why",
+   "standfirst": "Payoff maximisation says everyone in a private die-roll task should claim the top number. Of 58 published studies with 27,039 subjects, 19 papers with 9,960 subjects were held out. In their tasks with three or more outcomes the reports read as about 45 percent honest, 26 percent claiming the maximum and 29 percent in between; the result file gives no interval and the reading depends on the method. Six competing theories fit those reports almost equally well, and our planted check failed, so the tie shows only that this method could not separate them.",
    "fields": [
     "psychology",
     "economy",
@@ -323,7 +418,15 @@
    ],
    "date_found": "2026-10-31",
    "figure": "none",
-   "outcome": "held"
+   "outcome": "mixed",
+   "verdict_files": [
+    "result.json"
+   ],
+   "kill": {
+    "state": "fired",
+    "note": "The planted check failed, so by the preregistered kill condition no ranking among the six models counts. The kill condition on the shuffle control did not fire."
+   },
+   "bound": "The planted check failed: the method did not recover a known model at this sample size (the planted model trailed its rival by 0.0003 nats per report). By the preregistered kill condition no ranking among the six models counts. The reports do differ from a shuffled control, and the shares read from the held-out reports are a description."
   },
   "F344": {
    "slug": "auger-cubic-null",
@@ -336,12 +439,15 @@
    "date_found": "2026-10-31",
    "figure": "traxler-slot",
    "outcome": "null",
-   "bound": "Only strong cubic patterns are ruled out: power 0.9 at planted strength 0.2 at 8 EeV, and at 32 EeV only at strength 1.0, where the sky along the cube axes is twice the average."
+   "bound": "Only strong cubic patterns are ruled out: power 0.9 at planted strength 0.2 at 8 EeV, and at 32 EeV only at strength 1.0, where the sky along the cube axes is twice the average.",
+   "verdict_files": [
+    "result.json"
+   ]
   },
   "F362": {
    "slug": "stated-uncertainty-tails",
    "title": "Published 1 sigma error bars hold near nominal; a 95 percent interval needs 3 to 5 sigma",
-   "standfirst": "When a particle mass or an atomic mass moves between editions of its reference table, the old 1 sigma error bar covers the new value about as often as it should. The tails are far heavier than a bell curve, so covering 95 percent of later values takes 3 to 5 times the stated sigma.",
+   "standfirst": "When a particle mass or an atomic mass moves between editions of its reference table, the old 1 sigma error bar covers the new value about as often as it should (0.68 and 0.66). The tails are far heavier than a bell curve, so covering 95 percent of later values took 3 to 5 times the stated sigma in these tables. Six of our ten forecasts held; we expected error bars to cover too rarely, and counted over all values they covered 0.79.",
    "fields": [
     "instruments-metrology",
     "physics-other",
@@ -349,31 +455,46 @@
    ],
    "date_found": "2026-10-31",
    "figure": "traxler-slot",
-   "outcome": "held"
+   "outcome": "held",
+   "verdict_files": [
+    "result.json"
+   ],
+   "kill": {
+    "state": "not fired",
+    "note": "The paper states that the kill condition did not fire: the planted check passed."
+   }
   },
   "F508": {
    "slug": "shannon-entropy-old-and-new-text",
    "title": "Shannon's 1951 letter statistics hold on old and new English; his third-order value reads high",
-   "standfirst": "Shannon's first- and second-order entropy figures for English letters match ours within 0.12 bits on books from 1788 to 1925 and on present-day Wikipedia. His third-order figure sits 0.23 to 0.39 bits above ours, and an n-gram reader never gets near his 1.3 bits per letter.",
+   "standfirst": "Shannon's first- and second-order entropy figures for English letters match ours within 0.12 bits on books from 1788 to 1925 and on present-day Wikipedia. His third-order figure sits 0.23 to 0.40 bits above ours, and an n-gram reader never gets near his 1.3 bits per letter.",
    "fields": [
     "information-theory",
     "linguistics-literature"
    ],
    "date_found": "2026-11-01",
    "figure": "none",
-   "outcome": "held"
+   "outcome": "held",
+   "verdict_files": [
+    "result-run1.json",
+    "result-run2.json"
+   ]
   },
   "F515": {
    "slug": "llm-compression-and-memorisation",
-   "title": "A small language model squeezes the UDHR to 0.27 bits a letter, and fresh text to 1.59",
-   "standfirst": "Used as a compressor, SmolLM2 encodes the English Universal Declaration of Human Rights at 0.27 bits per character, far below any classical compressor. On 30,000 characters written after its training it needs 1.59, so most of the headline figure comes from text the model has already seen.",
+   "title": "A small language model squeezes the UDHR to 0.27 bits a character, and fresh text to 1.59",
+   "standfirst": "Used as a compressor, SmolLM2 encodes the English Universal Declaration of Human Rights at 0.27 bits per character, far below any classical compressor. On 30,000 characters written after its training it needs 1.59, which points at the model having seen the declaration. One fresh text cannot say how large that share is.",
    "fields": [
     "information-theory",
     "linguistics-literature"
    ],
    "date_found": "2026-11-01",
    "figure": "none",
-   "outcome": "held"
+   "outcome": "held",
+   "kill": {
+    "state": "not fired",
+    "note": "The paper states that the kill condition did not fire: the arithmetic-coded round trip was exact."
+   }
   },
   "F675": {
    "slug": "granger-panel-ring-direction-kill-fires",
@@ -386,7 +507,14 @@
    "date_found": "2026-11-02",
    "figure": "none",
    "outcome": "failed",
-   "bound": "Two binding first-difference checks failed by less than 0.02, so the preregistered kill fired and the panel instrument earned no standing in this round."
+   "bound": "Two binding first-difference checks failed by less than 0.02, so the preregistered kill fired and the panel instrument earned no standing in this round.",
+   "verdict_files": [
+    "result.json"
+   ],
+   "kill": {
+    "state": "fired",
+    "note": "Two binding first-difference checks failed, so the kill condition written before the run fired."
+   }
   }
  }
 }
