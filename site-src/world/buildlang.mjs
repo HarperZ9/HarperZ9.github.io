@@ -1,6 +1,6 @@
 // buildlang.mjs: the words and figures of buildlang.html, built by scripts/build-product-pages.mjs.
 // Every figure names the pull request or file it was read from. The build reads each pull request's merge state and
-// the release from site-src/world/releases.json, so "in 1.11.0", "on main" and "open" are fetched, never typed here.
+// the release from site-src/world/releases.json, so "first released in 1.11.0", "on main" and "open" are fetched, never typed here.
 // A figure with no public source does not go on this page.
 export const REPO = "https://github.com/HarperZ9/buildlang";
 export const file = (p) => `${REPO}/blob/main/${p}`;

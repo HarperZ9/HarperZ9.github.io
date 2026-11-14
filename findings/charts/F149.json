@@ -55,7 +55,7 @@
      "holds": true,
      "label": "Planted check",
      "yes": "held",
-     "detail": "A flat truth was called a rise 0.092 of the time, limit 0.15. A doubling came back as 2.11 and was covered 0.89 of the time."
+     "detail": "A flat truth was called a rise 0.092 of the time, limit 0.15. A doubling came back as 2.11 and was covered 0.89 of the time, above the bar of 0.8. The intervals claim 95 percent, so they run somewhat too narrow."
     },
     {
      "kind": "verdict",
@@ -966,7 +966,7 @@
    "series_names": [
     "share of simulations called a rise"
    ],
-   "threshold": "A flat truth called a rise at most 0.15 of the time, and a doubling covered by its interval at least 0.8 of the time. Both held: 0.092 and 0.89.",
+   "threshold": "A flat truth called a rise at most 0.15 of the time, and a doubling covered by its interval at least 0.8 of the time. Both held: 0.092 and 0.89. The intervals are 95 percent intervals, so coverage of 0.89 where 0.95 was claimed means they are narrower than their stated level.",
    "planted": "Truth 1 came back with a median ratio of 1.13, truth 2 with 2.11.",
    "axis": {
     "label": "share of simulations called a rise",

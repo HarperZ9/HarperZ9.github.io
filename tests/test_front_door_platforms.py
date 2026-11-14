@@ -79,3 +79,26 @@ def test_the_home_versions_come_from_the_fetched_releases():
     for pid in ("buildlang", "flywheel", "raw-native", "superframe", "cmmns", "articulate"):
         g = releases[pid]["github"]
         assert f'href="{g["url"]}">{g["version"]}</a>' in home, pid
+
+
+def test_a_figure_names_the_first_release_that_carried_its_change():
+    """buildlang.html and low-water.html (scripts/build-product-pages.mjs) say which release first contained each
+    merged pull request, read from the release tags by scripts/fetch-releases.mjs. Stating the latest release there
+    is the fault this guards: #136 shipped in 1.11.0 and #158 in 1.12.0, whatever the latest release is."""
+    products = json.loads((ROOT / "site-src" / "world" / "releases.json").read_text(encoding="utf-8"))["products"]
+    latest = products["buildlang"]["github"]["version"]
+    known = {136: "1.11.0", 158: "1.12.0"}
+    for row, page in (("buildlang-page", "buildlang.html"), ("low-water", "low-water.html")):
+        html = (ROOT / page).read_text(encoding="utf-8")
+        for pr in products[row]["prs"]:
+            if pr["repo"] != "HarperZ9/buildlang" or not pr["merged"]:
+                continue
+            assert "firstRelease" in pr, f'{row} #{pr["number"]}: no firstRelease; run node scripts/fetch-releases.mjs'
+            first = pr["firstRelease"]
+            if pr["number"] in known:
+                assert first and first["version"] == known[pr["number"]], (row, pr["number"], first)
+            cited = re.findall(rf'buildlang #{pr["number"]}, merged [^<]*?\({pr["commit"]}\)([^<]*)</a>', html)
+            want = f', first released in {first["version"]}' if first else f", on main after {latest}"
+            assert all(c == want for c in cited), (page, pr["number"], cited, want)
+    low = (ROOT / "low-water.html").read_text(encoding="utf-8")
+    assert "first released in 1.11.0" in low and "first released in 1.12.0" in low
