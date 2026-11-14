@@ -223,6 +223,15 @@
       "updated_at": "2026-07-23"
     },
     {
+      "id": "findings",
+      "route": "findings/",
+      "title": "Findings",
+      "collection": "research",
+      "kind": "Findings",
+      "published_at": "2026-11-09",
+      "updated_at": "2026-11-13"
+    },
+    {
       "id": "frontier-safety-openai-hugging-face-incident",
       "route": "frontier-safety-openai-hugging-face-incident.html",
       "title": "The OpenAI and Hugging Face incident: an essay",
@@ -360,6 +369,14 @@
   ],
   "newest": [
     {
+      "id": "findings",
+      "route": "findings/",
+      "title": "Findings",
+      "kind": "Findings",
+      "published_at": "2026-11-09",
+      "summary": "What our experiments found, one finding per page: the result with its numbers and limits, the strongest objection, and the steps to repeat it. Thirty findings as of November 2026, twelve of them honest nulls: tests that failed, claims that did not hold, and errors of our own that we found and fixed."
+    },
+    {
       "id": "who-kept-the-books",
       "route": "who-kept-the-books.html",
       "title": "Who Kept the Books",
@@ -374,14 +391,6 @@
       "kind": "Series piece",
       "published_at": "2026-10-08",
       "summary": "Frankenstein, Pinocchio and The Fifth Element, read past their famous morals, put the danger in the maker's arrangements: who funds the work, who sets the measure of success, and who keeps and edits the record."
-    },
-    {
-      "id": "a-check-it-cannot-predict",
-      "route": "a-check-it-cannot-predict.html",
-      "title": "A Check It Cannot Predict",
-      "kind": "Series piece",
-      "published_at": "2026-10-08",
-      "summary": "For people and institutions, a check that is certain and outside the actor's control does more than an announced watcher. Whether that holds for trained AI models is a test, designed here, that has not run."
     }
   ]
 }

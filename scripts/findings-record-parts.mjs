@@ -34,7 +34,7 @@ export function displayKey(text, key) {
 export function targetOf(text) {
   const doi = text.match(/\bdoi:\s*(10\.\S+?)[.,;]?(?:\s|$)/i);
   if (doi) return `https://doi.org/${doi[1]}`;
-  const ax = text.match(/\barXiv:\s*([0-9.]+(?:v\d+)?)/);
+  const ax = text.match(/\barXiv:\s*(\d+(?:\.\d+)*(?:v\d+)?)/);
   if (ax) return `https://arxiv.org/abs/${ax[1]}`;
   const url = text.match(/https?:\/\/[^\s)]+[^\s).,;]/);
   return url ? url[0] : "";

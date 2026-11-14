@@ -29,6 +29,8 @@ def test_every_listing_validates_and_points_at_a_real_page() -> None:
         "the-summary-is-not-the-record", "verified-is-not-trustworthy", "conferred-existence-essay",
         "frontier-safety-openai-hugging-face-incident", "witnessing-spine", "conferred-existence",
         "why", "current-story",
+        # 13 November 2026: the Findings section joins the hub and the feeds as one listing.
+        "findings",
     }
     for path in LISTINGS:
         listing, stored = load_listing(path, ROOT)

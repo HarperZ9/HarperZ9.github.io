@@ -210,7 +210,7 @@
    "id": "e2",
    "kind": "number",
    "label": "The numbers in claim 2",
-   "value": "031740,; 64; 65,; 2016,",
+   "value": "031740; 64; 65; 2016",
    "check": {
     "by": "re-read from the run's result file in the paper's Verified pass",
     "date": "2026-11-09",

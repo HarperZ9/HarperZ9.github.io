@@ -78,7 +78,7 @@ ${replaced ? `<h3>Findings this one replaced</h3><ol class="corrections">${repla
 
 // a reference's own text, with its DOI, arXiv id and web address made into links where they stand
 const linkify = (t) => esc(t).replace(/\bdoi:\s*(10\.\S+?)(?=[.,;]?(?:\s|$))/gi, (m, d) => `<a class="out" href="https://doi.org/${d}">doi:${d}</a>`)
-  .replace(/\barXiv:\s*([0-9.]+(?:v\d+)?)/g, (m, a) => `<a class="out" href="https://arxiv.org/abs/${a}">arXiv:${a}</a>`)
+  .replace(/\barXiv:\s*(\d+(?:\.\d+)*(?:v\d+)?)/g, (m, a) => `<a class="out" href="https://arxiv.org/abs/${a}">arXiv:${a}</a>`)
   .replace(/(?<!href=")(https?:\/\/[^\s<"]+[^\s<".,;)])/g, '<a class="out" href="$1">$1</a>');
 
 function references(rec, ctx, env) {
@@ -104,7 +104,7 @@ ${other.length ? `<h3>Standing of findings cited here</h3><ul class="cited">${ot
 
 function reproduce(rec, ctx) {
   const r = rec.reproduce;
-  const data = (r.data || []).map((x) => `<li>${esc(x.name)}. <span class="soft">Licence: ${esc(x.licence)}.</span>${x.url ? ` <a class="out" href="${esc(x.url)}">${esc(x.url)}</a>` : ""}</li>`).join("");
+  const data = (r.data || []).map((x) => `<li>${esc(x.name)}. <span class="soft">Licence: ${esc(x.licence.replace(/\.$/, ""))}.</span>${x.url ? ` <a class="out" href="${esc(x.url)}">${esc(x.url)}</a>` : ""}</li>`).join("");
   const pre = r.prereg ? `<h3>Preregistration</h3><p class="hash">sha256 ${esc(r.prereg.hash)}<br>plan ${esc(r.prereg.plan)}</p>` : "";
   return `<section id="reproduce" class="landmark" aria-labelledby="repro-h"><h2 id="repro-h" class="d-3d" data-hue="brass">Reproduce</h2>
 ${data ? `<h3>Data</h3><ul>${data}</ul>` : ""}${pre}

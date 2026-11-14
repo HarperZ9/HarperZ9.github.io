@@ -26,9 +26,10 @@ function standingLine(rec, rels) {
   return `<dl class="standing">${items.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join("")}</dl>`;
 }
 
-function objection(d) {
+function objection(d, ctx) {
+  const text = /[.!?]$/.test(d.objection) ? d.objection : d.objection + ".";
   return `<section id="objection" class="objection" aria-labelledby="objection-h"><h2 id="objection-h" class="d-3d" data-hue="brass">Objection</h2>
-<p>${esc(/[.!?]$/.test(d.objection) ? d.objection : d.objection + ".")}</p>
+<p>${/\{[a-z]+:/.test(text) ? prose(text, ctx) : esc(text)}</p>
 <p><b>What would change the call.</b> ${esc(/[.!?]$/.test(d.would_change) ? d.would_change : d.would_change + ".")}</p>
 <p class="src">From ${esc(d.objection_source)}.</p></section>`;
 }
@@ -69,7 +70,7 @@ ${standingLine(rec, env.relations)}
 ${downloads(rec, "lead")}
 </header>
 ${leadHtml}
-${objection(d)}
+${objection(d, ctx)}
 <div class="argument" id="argument">
 ${argHtml}
 </div>

@@ -312,7 +312,7 @@
    "kind": "dataset",
    "title": "Ben Allal, L., Lozhkov, A., Bakouch, E. and others (2025). SmolLM2: when smol goes big, data-centric training of a small language model. arXiv:2502.02737. Model: https://huggingface.co/HuggingFaceTB/SmolLM2-360M, Apache-2.0.",
    "access": "run",
-   "target": "https://arxiv.org/abs/2502.02737.",
+   "target": "https://arxiv.org/abs/2502.02737",
    "licence": "as stated in the paper's data section"
   },
   {
@@ -321,7 +321,7 @@
    "kind": "dataset",
    "title": "Qwen Team (2025). Qwen3 technical report. arXiv:2505.09388. Model: https://huggingface.co/Qwen/Qwen3-0.6B, Apache-2.0.",
    "access": "run",
-   "target": "https://arxiv.org/abs/2505.09388.",
+   "target": "https://arxiv.org/abs/2505.09388",
    "licence": "as stated in the paper's data section"
   },
   {
@@ -408,12 +408,12 @@
    {
     "name": "Ben Allal 2025",
     "licence": "as stated in the paper's data section",
-    "url": "https://arxiv.org/abs/2502.02737."
+    "url": "https://arxiv.org/abs/2502.02737"
    },
    {
     "name": "Qwen Team (2025)",
     "licence": "as stated in the paper's data section",
-    "url": "https://arxiv.org/abs/2505.09388."
+    "url": "https://arxiv.org/abs/2505.09388"
    },
    {
     "name": "United Nations (1948)",

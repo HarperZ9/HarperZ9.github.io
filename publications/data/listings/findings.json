@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "id": "findings",
+  "route": "findings/",
+  "form": "findings index",
+  "category": "research",
+  "title": "Findings",
+  "summary": "What our experiments found, one finding per page: the result with its numbers and limits, the strongest objection, and the steps to repeat it. Thirty findings as of November 2026, twelve of them honest nulls: tests that failed, claims that did not hold, and errors of our own that we found and fixed.",
+  "published_at": "2026-11-09",
+  "updated_at": "2026-11-13",
+  "date_source": null,
+  "topics": [
+    "research",
+    "experiments",
+    "null results",
+    "preregistration"
+  ],
+  "ai_assistance": "AI-assisted studies and write-ups; each page says who ran and scored it"
+}

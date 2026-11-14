@@ -181,7 +181,7 @@
      "hi": -0.11598037538499734,
      "mean": -0.12534887431429848,
      "series": 0,
-     "note": "real −0.141; control −0.134 to −0.116, mean −0.125; p 1.00 from 200 draws"
+     "note": "real −0.141; control −0.134 to −0.116, mean −0.125; p 0.995 from 200 draws"
     },
     {
      "label": "Gapped form, order shuffled",
@@ -228,7 +228,7 @@
      "−0.125",
      "−0.134",
      "−0.116",
-     "1.00",
+     "0.995",
      "200"
     ],
     [
