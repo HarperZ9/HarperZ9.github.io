@@ -53,7 +53,7 @@ Version 0.18.0. Licence FSL-1.1-MIT. Python 3.9 or newer, standard library only.
   183 texts of known origin it flagged all 84 AI texts and 57 of 75 human texts
   (76%, 95% interval 65% to 84%). It needs no model, account or API key.
 - Links: https://harperz9.github.io/articulate.html ,
-  https://github.com/HarperZ9/flywheel/tree/main/packages/articulate , https://pypi.org/project/articulate-writing/
+  https://github.com/HarperZ9/articulate , https://pypi.org/project/articulate-writing/
 
 ## CMMNS
 
@@ -119,7 +119,7 @@ next release. Python 3.8 or newer, no dependencies. Ports in Rust, Node.js and G
 - What it does not do: it compares bytes. It does not judge whether the content
   of a matching file is correct. With no recorded hash it answers UNVERIFIABLE
   and exits 2 rather than guessing.
-- Links: https://harperz9.github.io/emet.html , https://github.com/HarperZ9/flywheel/tree/main/packages/emet ,
+- Links: https://harperz9.github.io/emet.html , https://github.com/HarperZ9/emet ,
   https://pypi.org/project/emet/
 
 ## BuildLang
@@ -189,7 +189,7 @@ Version 2.3.0. Fair Source licence. Node.js 20 or newer, no dependencies.
 - Try it: `npx -y @harperz9/learn@2.3.0 tutor plan mysession --topic "derivatives" --objectives "power-rule,chain-rule"`.
 - What it does not do: it never answers a graded question. Its course engine
   stops at every graded step for you to do yourself.
-- Links: https://harperz9.github.io/learn.html , https://github.com/HarperZ9/flywheel/tree/main/packages/learn ,
+- Links: https://harperz9.github.io/learn.html , https://github.com/HarperZ9/learn ,
   https://www.npmjs.com/package/@harperz9/learn
 
 ## open-archives
@@ -207,7 +207,7 @@ standard library only; media work uses ffmpeg.
   `python -m openarchives search "cotton mill" --media image --from 1837 --to 1955`.
 - What it does not do: it records the rights basis it finds; a licence you hold
   or a fair-use call is yours to record with `rights`.
-- Links: https://github.com/HarperZ9/superframe/tree/main/library/open-archives
+- Links: https://github.com/HarperZ9/open-archives
 
 ## discover
 
@@ -225,7 +225,7 @@ Version 0.1.2. Licence AGPL-3.0-only. Python 3.11 or newer, standard library onl
   then `discover repo . --gate`.
 - What it does not do: it checks form, not merit, and claims no ranking effect.
   Its video check fails engagement bait.
-- Links: https://github.com/HarperZ9/flywheel/tree/main/packages/discover
+- Links: https://github.com/HarperZ9/discover
 
 ## Author
 
