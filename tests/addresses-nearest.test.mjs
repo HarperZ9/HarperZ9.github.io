@@ -60,3 +60,12 @@ test("a moved row has no file and leads to its place, query and fragment kept", 
   assert.deepEqual(nearest("/night-school-attention", more), { path: "/night-school.html?lab=attention#lab", why: "spelling" });
   assert.notEqual(nearest("/night-school-attentoin.html", more)?.path, "/night-school-attention.html", "a moved address is never offered as a live one");
 });
+
+test("a moved row sends a place the old page had to that place's new address", () => {
+  const more = [...rows, { path: "/writing.html", kind: "moved", to: "/publications.html", places: { verified: "/verified-is-not-trustworthy.html" } },
+    { path: "/publications.html", kind: "leaf" }, { path: "/verified-is-not-trustworthy.html", kind: "record" }];
+  assert.deepEqual(nearest("/writing.html", more, [], "#verified"), { path: "/verified-is-not-trustworthy.html", why: "moved", placed: true });
+  assert.deepEqual(nearest("/writing.html", more, [], "#not-a-place"), { path: "/publications.html", why: "moved" });
+  assert.deepEqual(nearest("/writing.html", more, [], ""), { path: "/publications.html", why: "moved" });
+  assert.deepEqual(nearest("/writing.html", more, [], "#toString"), { path: "/publications.html", why: "moved" }, "an inherited name is not a place");
+});

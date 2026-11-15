@@ -5,7 +5,8 @@
 // prefixes that other repositories publish under.
 //
 // nearest("/Flywheel", rows) -> { path, why } or null, where why is one of:
-//   "moved"      the address is a redirect or a moved row; path is where it leads
+//   "moved"      the address is a redirect or a moved row; path is where it leads (when the row maps the old
+//                page's places and `hash` names one, path is that place's new address and placed is true)
 //   "withdrawn"  the address is a gone row; path is the home
 //   "spelling"   the same address in another letter case, or with or without .html or a closing slash
 //   "name"       one live page elsewhere has the same file name
@@ -53,13 +54,17 @@ function closest(key, live) {
   return best;
 }
 
-export function nearest(pathname, rows, projectSites = []) {
+export function nearest(pathname, rows, projectSites = [], hash = "") {
   const byPath = new Map(rows.map((r) => [r.path, r])), end = (row) => endOf(row, byPath, projectSites);
   const live = rows.filter((r) => r.kind !== "gone" && !leadsOn(r) && !r.path.includes("#"));
   let asked = pathname;
   try { asked = decodeURIComponent(pathname); } catch { /* a malformed escape is compared as typed */ }
   asked = asked.replace(/\/index\.html?$/i, "/");
   const exact = byPath.get(asked);
+  // A moved row may map the places the old page had ("places": { "old-fragment": "/new-address" }).
+  let place = hash.replace(/^#/, "");
+  try { place = decodeURIComponent(place); } catch { /* compared as typed */ }
+  if (exact && exact.kind === "moved" && place && exact.places && Object.hasOwn(exact.places, place)) return { path: exact.places[place], why: "moved", placed: true };
   if (exact && leadsOn(exact) && end(exact)) return { path: end(exact), why: "moved" };
   if (exact && exact.kind === "gone") return { path: "/", why: "withdrawn" };
 

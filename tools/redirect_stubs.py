@@ -1,10 +1,13 @@
-"""Write the redirect pages that keep retired reading addresses working.
+"""Write the redirect pages that still stand at a retired address.
 
-GitHub Pages has no server redirects, so each retired address keeps a small page: it
-tells search engines not to index it, names its replacement as canonical, sends a reader
-on with a meta refresh, and lists every target as a plain link so nothing depends on the
-script. writing.html also carries a fragment map, because a meta refresh drops the part
-after "#": an old link to writing.html#verified must land on the essay's own page.
+Since 15 November 2026 a retired address has no file: its row in site-src/world/addresses.json
+has kind "moved" and 404.html sends the reader on. The writing index, its three folders, the
+two retired brand canvases, the toolkit, the product list and the start page went that way,
+and the fragment map writing.html carried is now "places" on its row.
+
+Four pages stay here until the pages that link to them are folded: demonstrations.html (the
+Demonstrations fold), tour.html and typeface.html (The Playground's rooms), and
+work-with-me.html (the map's pages name it).
 
     python tools/redirect_stubs.py          # write the stubs
     python tools/redirect_stubs.py --check  # fail if any stub differs from this source
@@ -20,80 +23,20 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SITE_URL = "https://harperz9.github.io/"
 
-# writing.html anchors and where each one now lives. The sixteen generated anchors were
-# the piece ids; the two inline essays moved onto pages of their own on 1 October 2026.
-WRITING_FRAGMENTS = {
-    "verified": "verified-is-not-trustworthy.html",
-    "conferred": "conferred-existence-essay.html",
-    **{
-        slug: f"{slug}.html"
-        for slug in (
-            "who-pays-the-referees", "who-knew-first", "the-number-has-a-vintage",
-            "what-the-formula-counts", "the-timestamp-is-not-the-order",
-            "the-scene-the-song-did-not-tell-you", "support-has-more-than-one-record",
-            "what-the-label-changes", "the-second-hearing", "the-sandbox-was-never-just-a-box",
-            "ltj-bukem-the-man-behind-the-atmosphere", "borrowed-ground", "checking-the-machines",
-            "a-witness-should-not-become-a-ruler", "growth-needs-a-before", "availability-is-not-reach",
-        )
-    },
-}
-
-STUBS = {
-    "writing.html": {
-        "target": "publications.html",
-        "note": "The writing index moved. Every essay, investigation, briefing and paper is now listed on one page.",
-        "fragments": WRITING_FRAGMENTS,
-    },
-    "writing/index.html": {
-        "target": "/publications.html",
-        "note": "This folder holds the plain-text sources of some essays. The essays themselves are listed on the Writing page.",
-        "fragments": {},
-    },
-    "publications/index.html": {
-        "target": "/publications.html",
-        "note": "This folder holds the machine records behind the essays. The essays themselves are listed on the Writing page.",
-        "fragments": {},
-    },
-    "papers/index.html": {
-        "target": "/publications.html#research",
-        "note": "The papers in this folder are listed, with their research notes, on the Writing page.",
-        "fragments": {},
-    },
-    # The retired Zentropy Labs logotype and avatar canvases (retired 1 October 2026).
-    # The addresses stay so old links land on a live page; the art itself is gone.
-    "brand/zentropy-logo.html": {
-        "target": "/typeface.html",
-        "note": "This page is retired. The typography the site uses now is on the Typography page.",
-        "title": "Moved to the Typography page",
-        "link": "Open the Typography page",
-        "fragments": {},
-    },
-    "brand/zentropy-avatar.html": {
-        "target": "/",
-        "note": "This page is retired. The site's current mark appears in the header of every page.",
-        "title": "Moved to the home page",
-        "link": "Open the home page",
-        "fragments": {},
-    },
-}
+STUBS: dict[str, dict] = {}
 
 # Consolidation of 2 November 2026 (the author: "I think that the non-destructive rules should start being favored
 # less than consolidation and reintegration."). The list pages fold into the one index of the work on floor.html;
 # the type pages into the Accession page; the second contact page into Work. Git history keeps every retired page.
 _INDEX = "The site's list pages are now one index of all the work, current and past, by platform."
 for _page, _target in {
-    # site-index.html stays (the navigation search reads it); overview.html and catalog.html stay: they carry each product's Verified line and limits, which the index does
-    # not; portfolio.html is a career document; workshop.html carries the React app; fonts.html the font previews
     "demonstrations.html": "/floor.html",
     "tour.html": "/floor.html",
-    "toolkit.html": "/floor.html#theflywheel", "build-products.html": "/floor.html#bldlng",
 }.items():
     STUBS[_page] = {"target": _target, "note": _INDEX, "title": "Moved to the index of the work", "link": "Open the index", "fragments": {}, "keep_hash": "#" not in _target}
 for _page in ("typeface.html",):
     STUBS[_page] = {"target": "/accession.html", "note": "The site's type now lives on one page: Accession and the faces the site draws on.", "title": "Moved to the Accession page", "link": "Open the Accession page", "fragments": {}}
 STUBS["work-with-me.html"] = {"target": "/hire.html", "note": "Working with me is now on the Work page.", "title": "Moved to the Work page", "link": "Open the Work page", "fragments": {}, "keep_hash": True}
-STUBS["start-here.html"] = {"target": "/", "note": "The front door is now the place to start: what the work is, then each platform.", "title": "Moved to the home page", "link": "Open the home page", "fragments": {}}
-STUBS["brand/zentropy-logo.html"].update(target="/accession.html", note="This page is retired. The type the site uses now is on the Accession page.", title="Moved to the Accession page", link="Open the Accession page")
 
 LABELS = {
     "verified-is-not-trustworthy.html": "Verified Is Not Trustworthy",

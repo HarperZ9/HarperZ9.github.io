@@ -798,12 +798,10 @@ def test_product_and_system_routes_do_not_repeat_decorative_eyebrows() -> None:
     decorative_routes = (
         "accountable-engine.html",
         "accountable-machines.html",
-        "build-products.html",
         "coherence-membrane.html",
         "overview.html",
         "proof-surface.html",
         "provenance-sensorium.html",
-        "toolkit.html",
         "typeface.html",
         "why.html",
     )
