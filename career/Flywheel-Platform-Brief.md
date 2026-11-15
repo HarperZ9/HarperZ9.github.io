@@ -140,7 +140,7 @@ I built Harper Advocates and Harper Compliance. Harper Advocates has had one pay
 
 Flywheel customer sales are $0. The other projects show experience shipping and earning a first payment, not Flywheel customer adoption.
 
-Customer and income statements are founder-reported. Zentropy is a solo, bootstrapped effort; no incorporated entity is claimed.
+Customer and income statements are founder-reported. Flywheel is a solo, bootstrapped effort; no incorporated entity is claimed.
 
 Sources: [Elder ENB](https://www.nexusmods.com/skyrimspecialedition/mods/117327) | [hflow contribution](https://github.com/Hebbian-Robotics/hflow/pull/157) | [Graphics contribution](https://github.com/community-shaders/skyrim-community-shaders/pull/2663) | [Portfolio](https://harperz9.github.io/)
 

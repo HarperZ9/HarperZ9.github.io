@@ -30,7 +30,7 @@
 @font-face{font-family:"Conso"; src:url("fonts/conso-bold.woff2") format("woff2"),url("fonts/conso-bold.woff") format("woff"); font-weight:700; font-style:normal; font-display:swap}
 
 /* ── tokens ────────────────────────────────────────────────────────────────
-   These are the Zentropy palette values, the same ones system.css uses. An
+   These are the site palette values, the same ones system.css uses. An
    earlier pass at this file invented its own near-identical greys, which meant
    the document half of the site and the rest of it were quietly a shade apart;
    a contract test caught it. One palette, shared.
