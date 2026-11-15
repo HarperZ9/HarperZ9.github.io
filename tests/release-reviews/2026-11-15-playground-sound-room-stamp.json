@@ -1,0 +1,7 @@
+{
+  "date": "2026-11-15",
+  "note": "The Playground gains the sound room and /system/site-music/ moves to it; world asset revision restamped to world-02020a795e. index.html changes are the stamp only.",
+  "paths": {
+    "index.html": "34c43e8e8f23402ae4a405150864841cd44660aef6c0680e377ec24bc07d47d0"
+  }
+}

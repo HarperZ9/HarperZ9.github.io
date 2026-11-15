@@ -119,13 +119,13 @@ test('the registry: every tool folder has a row, every surface keeps the contrac
     assert.ok([...t.takes, ...t.gives].every((m) => MEDIA.includes(m)), `${t.id} media`); assert.ok(t.mounted === null || typeof t.mounted === 'string'); }
   for (const s of Object.values(SURFACES)) { assert.ok(s.offers.every((c) => CAPABILITIES.includes(c)) && [...s.takes, ...s.gives].every((m) => MEDIA.includes(m)), s.id);
     for (const t of s.tools) assert.ok(rows.has(t), `${s.id} names ${t}`); }
-  assert.equal(SURFACES.sound.load, null, 'the sound layer has a place and nothing behind it');
+  assert.equal(typeof SURFACES.sound.load, 'function', 'the sound layer is the sound room, with the site music behind it'); assert.equal(SURFACES.sound.room, 'sound');
   for (const t of TOOLS.filter((x) => typeof x.mounted === 'string' && x.mounted !== 'frame')) assert.ok(Object.values(SURFACES).some((s) => s.load && s.tools.includes(t.id)), `${t.id} says mounted, and a surface loads it`);
   assert.deepEqual([...EMPTY].sort(), ['print'], 'weave and fabricate have tools on the site (single files, listed as LOOSE); print still has none');
   for (const t of LOOSE) { assert.ok(existsSync(new URL(t.id, root)), t.id); assert.ok(t.offers.every((c) => CAPABILITIES.includes(c)) && (t.mounted === null || t.mounted.split(', ').every((m) => SURFACES[m]?.load)), `${t.id} is mounted by a surface that loads, or by none`); }
   assert.equal(TOOLS.find((t) => t.id === 'world/feed-23').mounted, 'well'); assert.equal(LOOSE.filter((t) => t.overlap).length, 1, 'one overlap with bench code is named (the fibre sheet now uses the fibre module itself)');
   assert.deepEqual(chain('elements', 'png'), ['well']); assert.deepEqual(chain('elements', 'type'), ['blend', 'lettering']); assert.deepEqual(chain('elements', 'palette'), ['blend']);
-  assert.deepEqual(chain('settings', 'json'), ['recipe']); assert.deepEqual(chain('elements', 'motion'), ['blend', 'motion']); assert.equal(chain('elements', 'wav'), null, 'nothing reaches sound yet');
+  assert.deepEqual(chain('settings', 'json'), ['recipe']); assert.deepEqual(chain('elements', 'motion'), ['blend', 'motion']); assert.deepEqual(chain('elements', 'wav'), ['blend', 'sound'], 'a blend reaches a sound file through the sound room');
   assert.equal(chain('elements', 'gcode'), null); assert.deepEqual(chain('palette', 'png'), ['plot']);
 });
 

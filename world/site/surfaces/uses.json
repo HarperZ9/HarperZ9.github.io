@@ -188,12 +188,12 @@
   },
   "sound": {
    "home": "playground",
-   "form": null,
-   "state": "placeholder",
-   "weight": null,
+   "form": "live",
+   "state": "ready",
+   "weight": "heavy",
    "plain": null,
-   "bytes": 0,
-   "files": 0
+   "bytes": 450359,
+   "files": 33
   }
  },
  "tools": {
@@ -347,7 +347,7 @@
   },
   "world/sound": {
    "direct": 0,
-   "reach": 10
+   "reach": 9
   },
   "world/studio": {
    "direct": 0,

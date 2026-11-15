@@ -30,6 +30,15 @@
    ]
   },
   {
+   "id": "playground-sound",
+   "page": "/playground/#sound",
+   "form": "live",
+   "what": "The sound room composes and synthesizes one of five pieces in the browser, plays it on a press and renders it there as a sound file.",
+   "modules": [
+    "sound"
+   ]
+  },
+  {
    "id": "bench",
    "page": "/elements.html",
    "form": "live",
