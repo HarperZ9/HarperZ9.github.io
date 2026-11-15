@@ -68,9 +68,10 @@ export async function start() {
     // the value's record sits behind its own control: the id is internal detail, kept for whoever wants to check it
     if (rec) { rec.hidden = false; rec.dataset.id = id;
       rec.querySelector('dl').innerHTML = `<dt>Shares</dt><dd>${esc(made.map((n, i) => `${n} ${Math.round(recipe.weights[i] * 100)}%`).join(', '))}</dd><dt>Id in this tab</dt><dd><code>${esc(id)}</code></dd><dt>Kept</dt><dd>Only in this tab. The address carries the blend, so a link opens the same one.</dd>`; }
-    // the well's picture changes with the blend, so it is handed on again; the pen study hands its own on while there is no well
+    // the well's picture changes with the blend, so it is handed on again; the pen study hands its own on while there is no
+    // well. A room may have handed a picture on before the blend started (the shader room does); it still takes this one.
     const giver = PICTURES.find((n) => shared.pictures[n]?.());
-    if (giver && (giver === 'well' || !shared.last.image || shared.last.image.from.module === 'plot')) givePicture(giver, recipe);
+    if (giver && (giver === 'well' || shared.last.image?.from.module !== 'well')) givePicture(giver, recipe);
     root.dataset.sent = String(bus.log().filter((l) => l.ok).length);
     writeAddress(state);
   }
@@ -125,7 +126,7 @@ export async function start() {
     if (n === 'plot') {
       shared.pictures.plot = () => hostOf('plot')?.querySelector('canvas.pl') || null;
       // the pen study draws a moment after it mounts; its picture is handed on once it is there, while no other picture has been
-      const seen = new MutationObserver(() => { if (!shared.pictures.plot()) return; seen.disconnect(); if (!shared.last.image) givePicture('plot', { elements: state.elements }); });
+      const seen = new MutationObserver(() => { if (!shared.pictures.plot()) return; seen.disconnect(); if (shared.last.image?.from.module !== 'well') givePicture('plot', { elements: state.elements }); });
       seen.observe(hostOf('plot'), { childList: true });
     }
     const takes = ['blend', 'palette', 'text', 'image'].filter((medium) => MOUNTED_TAKES[n]?.includes(medium));
