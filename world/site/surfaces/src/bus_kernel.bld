@@ -1,0 +1,58 @@
+// bus_kernel.bld: the pure kernel of the exchange bus (world/site/surfaces/bus.mjs), the source of record.
+// bus-kernel.mjs mirrors this file function for function, and bus.test.mjs compares both against
+// bus_kernel.expected, the output of this program.
+//
+// A value made in the page gets the id session.<hash>. The hash is FNV-1a over the bytes of the value's canonical
+// text, run twice from two offsets, so the id is 16 hex digits and the same value gives the same id in every tab.
+
+// one FNV-1a pass over the first n bytes, from a chosen offset basis; arithmetic is modulo 2^32
+fn fnv1a(bytes: &Vec<i32>, n: i32, basis: i64) -> i64 {
+    let mut h: i64 = basis;
+    let mut i: i32 = 0;
+    while i < n {
+        let b: i64 = bytes[i] as i64;
+        // xor of h with one byte, written with arithmetic: only the low 8 bits differ
+        let low: i64 = h % 256;
+        let mut x: i64 = 0;
+        let mut bit: i64 = 1;
+        let mut k: i32 = 0;
+        let mut lo: i64 = low;
+        let mut bb: i64 = b;
+        while k < 8 {
+            if (lo % 2) != (bb % 2) { x = x + bit; }
+            lo = lo / 2; bb = bb / 2; bit = bit * 2;
+            k = k + 1;
+        }
+        h = (h - low) + x;
+        h = (h * 16777619) % 4294967296;
+        i = i + 1;
+    }
+    return h;
+}
+
+// the two halves of a session id
+fn session_hi(bytes: &Vec<i32>, n: i32) -> i64 { return fnv1a(bytes, n, 2166136261); }
+fn session_lo(bytes: &Vec<i32>, n: i32) -> i64 { return fnv1a(bytes, n, 3339675911); }
+
+fn show(name: &str, bytes: &Vec<i32>, n: i32) ~ Console {
+    println!("{} {:08x}{:08x}", name, session_hi(bytes, n), session_lo(bytes, n));
+}
+
+fn main() ~ Console {
+    let mut v: Vec<i32> = Vec::new();
+    show("empty", &v, 0);
+    v.push(97);
+    show("a", &v, 1);
+    v.push(98); v.push(99);
+    show("abc", &v, 3);
+    // every byte value once, 0 to 255
+    let mut all: Vec<i32> = Vec::new();
+    let mut i: i32 = 0;
+    while i < 256 { all.push(i); i = i + 1; }
+    show("bytes", &all, 256);
+    // {"medium":"palette"} as bytes
+    let mut p: Vec<i32> = Vec::new();
+    p.push(123); p.push(34); p.push(109); p.push(101); p.push(100); p.push(105); p.push(117); p.push(109); p.push(34); p.push(58);
+    p.push(34); p.push(112); p.push(97); p.push(108); p.push(101); p.push(116); p.push(116); p.push(101); p.push(34); p.push(125);
+    show("palette", &p, 20);
+}
