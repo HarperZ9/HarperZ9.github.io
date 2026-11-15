@@ -247,6 +247,18 @@
   "alt": "F190: Our model of cooperation on a grid had been rewarding selfishness, by Zain Dana Harper. A field of flat discs in rows, a few of them raised and in a second colour.",
   "image": "https://harperz9.github.io/img/og/p/findings--F190-public-goods-self-benefit-correction.jpg?v=c3f9164f04c9"
  },
+ "findings/F204-backward-and-contrary-checks.html": {
+  "alt": "F204: Backward and contrary checks caught 39 of 47 quiet faults in eight small simulated instruments, by Zain Dana Harper. Two equal discs, one ringed by small discs and one by large discs that run off the card.",
+  "image": "https://harperz9.github.io/img/og/p/findings--F204-backward-and-contrary-checks.jpg?v=c3caff6329cc"
+ },
+ "findings/F209-dead-shoot-on-a-lever.html": {
+  "alt": "F209: A simulated dead shoot reads as growing on a lever, and growth-stop detectors fail under misfit, by Zain Dana Harper. A winding road in flat colour runs up the card, with discs along it that shrink with distance.",
+  "image": "https://harperz9.github.io/img/og/p/findings--F209-dead-shoot-on-a-lever.jpg?v=0f99738c3982"
+ },
+ "findings/F210-stepped-luneburg-lens-shells.html": {
+  "alt": "F210: In a 2D wave simulation, a stepped Luneburg lens keeps its focus with shells one wavelength thick, by Zain Dana Harper. A field of flat discs in rows, a few of them raised and in a second colour.",
+  "image": "https://harperz9.github.io/img/og/p/findings--F210-stepped-luneburg-lens-shells.jpg?v=0c277734fb12"
+ },
  "findings/F23-forest-hubs-cedar-decay-wind.html": {
   "alt": "F23: Fungal hub trees mostly track sampling, cedar heartwood rots slowest, wind damage evades prediction, by Zain Dana Harper. A record in flat colour with dark grooves, a cream wedge across them and an arm resting on it.",
   "image": "https://harperz9.github.io/img/og/p/findings--F23-forest-hubs-cedar-decay-wind.jpg?v=03f72973973a"
@@ -254,6 +266,10 @@
  "findings/F27-emotional-inertia-and-recovery.html": {
   "alt": "F27: Mood that lingers and mood that bounces back were not shown to be separate traits, by Zain Dana Harper. A large flat disc with a black keyhole cut in it and a cream key lying across its edge.",
   "image": "https://harperz9.github.io/img/og/p/findings--F27-emotional-inertia-and-recovery.jpg?v=fdbf09919871"
+ },
+ "findings/F28-self-rated-expertise-and-skipping.html": {
+  "alt": "F28: Forecasts people rate low are worse and more hedged, and people who skip more score better, by Zain Dana Harper. A row of upright bars of different heights, like a sound level, one in a second colour.",
+  "image": "https://harperz9.github.io/img/og/p/findings--F28-self-rated-expertise-and-skipping.jpg?v=57d69718e3f4"
  },
  "findings/F281-speed-limit-rerun.html": {
   "alt": "F281: A home rerun of the GRB 090510 light-speed test, and sound waves that keep their own limit, by Zain Dana Harper. A row of upright bars of different heights, like a sound level, one in a second colour.",
@@ -279,6 +295,10 @@
   "alt": "F329: In held-out private die-roll reports, about 45 percent read as honest, and this method cannot tell us why, by Zain Dana Harper. Cut-paper lanes: parallel bars of different lengths at three heights, one in a second colour.",
   "image": "https://harperz9.github.io/img/og/p/findings--F329-lying-in-die-tasks.jpg?v=b09593ad721e"
  },
+ "findings/F33-cedar-decline-and-water.html": {
+  "alt": "F33: Cedar decline and water: observer site calls show no pattern either way, by Zain Dana Harper. Two flat discs overlap, and the overlap takes the colour the two inks print together.",
+  "image": "https://harperz9.github.io/img/og/p/findings--F33-cedar-decline-and-water.jpg?v=1b69e14bd178"
+ },
  "findings/F344-auger-cubic-null.html": {
   "alt": "F344: No cubic pattern in public Auger cosmic-ray directions, at sensitivity that sees only large ones, by Zain Dana Harper. A large flat disc with a black keyhole cut in it and a cream key lying across its edge.",
   "image": "https://harperz9.github.io/img/og/p/findings--F344-auger-cubic-null.jpg?v=04440c8fadd0"
@@ -286,6 +306,10 @@
  "findings/F362-stated-uncertainty-tails.html": {
   "alt": "F362: Published 1 sigma error bars hold near nominal; a 95 percent interval needs 3 to 5 sigma, by Zain Dana Harper. A cut-paper balance: a tilted beam on a post, a large disc on the low side and a small one on the high side.",
   "image": "https://harperz9.github.io/img/og/p/findings--F362-stated-uncertainty-tails.jpg?v=08b7b70fb5b1"
+ },
+ "findings/F38-forecasts-drift-mood-moves-sampling-floor.html": {
+  "alt": "F38: Forecasts drift, mood steps or drifts in many people; simulated five-a-day prompts miss fast emotion, by Zain Dana Harper. A row of upright bars of different heights, like a sound level, one in a second colour.",
+  "image": "https://harperz9.github.io/img/og/p/findings--F38-forecasts-drift-mood-moves-sampling-floor.jpg?v=a87a2960e7c8"
  },
  "findings/F39-long-tails-dark-spectra.html": {
   "alt": "F39: Music with long ringing tails and dark spectra is rated calmer, and also less pleasant, by Zain Dana Harper. A row of upright bars of different heights, like a sound level, one in a second colour.",

@@ -1,0 +1,325 @@
+{
+ "study": "m3b-inversion",
+ "run_id": "20261031T110819Z",
+ "date": "2026-10-31",
+ "prereg": {
+  "path": "PREREG.txt",
+  "sha256": "d82bfea0f79dd4708e1fe0c06639da6091c977f6e3d10ab07bc11bb7c2803940",
+  "anchors": [
+   "sidecar",
+   "lock"
+  ],
+  "plan_sha256": "be230e2b62c03e607781e72f210fc6023865d5557bd5680f8f2ce02901409918",
+  "locked_at": "2026-10-31T11:08:09+00:00"
+ },
+ "hashes": {
+  "units.py": "c4fd7d72410161794bf73ab11dda6676a53219650476e8cebd073a867534c58a",
+  "threeway.py": "ec38d151cb7f6186926a81dfc2c09fcf5c59b3959900eab700bd8c600a8ad90a",
+  "threeway_tests.py": "549db51d0ad1120e7747cc11fad4866d86ff2fcbc574cc29b75984bc971f8cc2",
+  "targets.py": "ab286b5eba13251ce7f7e65e739b5b30f949482e1fa17a0c490a0a04298160d2",
+  "stats.py": "75b895fde531c666aafcbaab9b2cec044d8a27e41bd11c1f785f1b8d072b46a7"
+ },
+ "analysis": {
+  "singles": {
+   "false_passes": 47,
+   "wide": 0.6170212765957447,
+   "back": 0.7021276595744681,
+   "contra": 0.5957446808510638,
+   "threeway": 0.8297872340425532,
+   "union": 0.851063829787234,
+   "only_threeway": 11,
+   "only_wide": 1,
+   "survive_all": 7
+  },
+  "pairs": {
+   "false_passes": 30,
+   "wide": 0.9,
+   "back": 0.7666666666666667,
+   "contra": 0.7,
+   "threeway": 0.8,
+   "union": 0.9,
+   "only_threeway": 0,
+   "only_wide": 3,
+   "survive_all": 3
+  },
+  "inverse_fns": {
+   "false_passes": 34,
+   "wide": 0.0,
+   "back": 0.9117647058823529,
+   "contra": 0.029411764705882353,
+   "threeway": 0.9411764705882353,
+   "union": 0.9411764705882353,
+   "only_threeway": 32,
+   "only_wide": 0,
+   "survive_all": 2
+  },
+  "inverse_n": 34,
+  "per": {
+   "film": {
+    "false_passes": 6,
+    "wide": 0.6666666666666666,
+    "back": 0.5,
+    "contra": 0.6666666666666666,
+    "threeway": 1.0,
+    "union": 1.0,
+    "only_threeway": 2,
+    "only_wide": 0,
+    "survive_all": 0
+   },
+   "angular": {
+    "false_passes": 3,
+    "wide": 0.0,
+    "back": 0.0,
+    "contra": 0.0,
+    "threeway": 0.0,
+    "union": 0.0,
+    "only_threeway": 0,
+    "only_wide": 0,
+    "survive_all": 3
+   },
+   "wave": {
+    "false_passes": 1,
+    "wide": 0.0,
+    "back": 0.0,
+    "contra": 0.0,
+    "threeway": 0.0,
+    "union": 0.0,
+    "only_threeway": 0,
+    "only_wide": 0,
+    "survive_all": 1
+   },
+   "blur": {
+    "false_passes": 0,
+    "wide": 0.0,
+    "back": 0.0,
+    "contra": 0.0,
+    "threeway": 0.0,
+    "union": 0.0,
+    "only_threeway": 0,
+    "only_wide": 0,
+    "survive_all": 0
+   },
+   "radon": {
+    "false_passes": 23,
+    "wide": 0.7391304347826086,
+    "back": 1.0,
+    "contra": 0.6956521739130435,
+    "threeway": 1.0,
+    "union": 1.0,
+    "only_threeway": 6,
+    "only_wide": 0,
+    "survive_all": 0
+   },
+   "heat": {
+    "false_passes": 3,
+    "wide": 0.0,
+    "back": 0.0,
+    "contra": 0.0,
+    "threeway": 0.0,
+    "union": 0.0,
+    "only_threeway": 0,
+    "only_wide": 0,
+    "survive_all": 3
+   },
+   "rays": {
+    "false_passes": 4,
+    "wide": 1.0,
+    "back": 1.0,
+    "contra": 1.0,
+    "threeway": 1.0,
+    "union": 1.0,
+    "only_threeway": 0,
+    "only_wide": 0,
+    "survive_all": 0
+   },
+   "polar": {
+    "false_passes": 7,
+    "wide": 0.5714285714285714,
+    "back": 0.42857142857142855,
+    "contra": 0.5714285714285714,
+    "threeway": 0.8571428571428571,
+    "union": 1.0,
+    "only_threeway": 3,
+    "only_wide": 1,
+    "survive_all": 0
+   }
+  },
+  "survivors_all": [
+   {
+    "instrument": "angular",
+    "fn": "angular",
+    "site": 2,
+    "kind": "binop"
+   },
+   {
+    "instrument": "angular",
+    "fn": "angular",
+    "site": 3,
+    "kind": "binop"
+   },
+   {
+    "instrument": "angular",
+    "fn": "angular",
+    "site": 25,
+    "kind": "binop"
+   },
+   {
+    "instrument": "wave",
+    "fn": "wave1d",
+    "site": 0,
+    "kind": "binop"
+   },
+   {
+    "instrument": "heat",
+    "fn": "heat",
+    "site": 0,
+    "kind": "binop"
+   },
+   {
+    "instrument": "heat",
+    "fn": "heat",
+    "site": 15,
+    "kind": "binop"
+   },
+   {
+    "instrument": "heat",
+    "fn": "heat",
+    "site": 22,
+    "kind": "binop"
+   }
+  ],
+  "tests": {
+   "singles_threeway_over_wide": {
+    "p": 0.0032491877030742314,
+    "q": 0.012996750812296926,
+    "pass": true
+   },
+   "singles_wide_over_threeway": {
+    "p": 0.9995001249687578,
+    "q": 1.0,
+    "pass": false
+   },
+   "pairs_threeway_over_wide": {
+    "p": 1.0,
+    "q": 1.0,
+    "pass": false
+   },
+   "pairs_wide_over_threeway": {
+    "p": 0.11622094476380905,
+    "q": 0.2324418895276181,
+    "pass": false
+   }
+  },
+  "originals_ok": 1,
+  "counts": {
+   "singles": 200,
+   "singles_crash": 52,
+   "pairs": 344,
+   "pairs_crash": 155,
+   "equiv": 9
+  },
+  "single_threeway": 0.8297872340425532,
+  "single_wide": 0.6170212765957447,
+  "pairs_threeway": 0.8,
+  "pairs_wide": 0.9,
+  "only_threeway": 11,
+  "only_wide": 1
+ },
+ "controls": {
+  "labels": {
+   "n": 200,
+   "usable": true,
+   "mean": 0.7259441638657192,
+   "q95": 0.76,
+   "q05": 0.6981132075471698,
+   "p_ge": 0.004975124378109453,
+   "compare": "analysis.single_threeway",
+   "description": "fault labels permuted within instrument"
+  }
+ },
+ "timing_s": {
+  "analysis": 3.249300800031051,
+  "labels": 0.023556899977847934
+ },
+ "verdicts": {
+  "KILL_RATE": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.single_threeway >= 0.3",
+     "left": 0.8297872340425532,
+     "right": 0.3,
+     "holds": true
+    }
+   ]
+  },
+  "ORIGINALS": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.originals_ok >= 1",
+     "left": 1,
+     "right": 1,
+     "holds": true
+    }
+   ]
+  },
+  "ONLY_WIDE_3": {
+   "verdict": "FAIL",
+   "rules": [
+    {
+     "rule": "analysis.only_wide >= 3",
+     "left": 1,
+     "right": 3,
+     "holds": false
+    }
+   ]
+  },
+  "ONLY_THREEWAY_3": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.only_threeway >= 3",
+     "left": 11,
+     "right": 3,
+     "holds": true
+    }
+   ]
+  },
+  "WIDE_OVER_THREEWAY_SINGLES": {
+   "verdict": "FAIL",
+   "rules": [
+    {
+     "rule": "analysis.single_wide > analysis.single_threeway",
+     "left": 0.6170212765957447,
+     "right": 0.8297872340425532,
+     "holds": false
+    }
+   ]
+  },
+  "WIDE_OVER_THREEWAY_PAIRS": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.pairs_wide > analysis.pairs_threeway",
+     "left": 0.9,
+     "right": 0.8,
+     "holds": true
+    }
+   ]
+  },
+  "BEATS_LABELS": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.single_threeway > controls.labels.q95",
+     "left": 0.8297872340425532,
+     "right": 0.76,
+     "holds": true
+    }
+   ]
+  }
+ },
+ "reproduce": null,
+ "status": "scored"
+}

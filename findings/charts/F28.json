@@ -1,0 +1,154 @@
+{
+ "finding": "F28",
+ "sources": [
+  {
+   "id": "result",
+   "name": "result.json",
+   "sha256_original": "bd52e655dd11e74f24bd5eb51b100db1353c8cefaa39818c26c0b7e23b701f50",
+   "sha256_copy": "161f2519a06eac16a83e24eca491b91a521e426980f48cf85e77d395df1ffa6d",
+   "href": "/findings/results/F28/result.json",
+   "run": "20261029T142954Z"
+  }
+ ],
+ "charts": [
+  {
+   "key": "design",
+   "form": "flow",
+   "at": "controls",
+   "claims": [
+    "c2",
+    "c3"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "How the low-rating prediction was tested, and why it failed.",
+   "takeaway": "Forecasts a person rated 1 scored 0.0218 worse than the same person's other forecasts, which cleared the bar, but they sat 0.055 nearer 50 percent, so the prediction of worse and no less hedged failed.",
+   "n": "1,064,355 scored forecasts; 1,826 forecaster-years with 5 or more forecasts in each arm (243,486 forecasts, 77,572 rated 1)",
+   "steps": [
+    {
+     "kind": "data",
+     "label": "1,064,355 scored forecasts",
+     "detail": "Good Judgment Project survey forecasts, years 1 to 4. Self-rated expertise, 1 to 5, exists in years 1 to 3."
+    },
+    {
+     "kind": "measure",
+     "label": "Relative Brier score",
+     "detail": "Each forecast's squared error minus the median for its question, on a 0 to 2 scale. The gap is rated 1 minus rated 2 to 5, inside one forecaster-year."
+    },
+    {
+     "kind": "control",
+     "label": "Control: ratings shuffled",
+     "detail": "Ratings shuffled within each forecaster-year, 1,000 times. The 95th percentile of the shuffled gap is 0.0048."
+    },
+    {
+     "kind": "rule",
+     "label": "Rule: worse and no less hedged",
+     "detail": "The gap had to reach 0.02 with its interval above 0 and above the shuffle, and the low-rated forecasts could be at most 0.02 nearer 50 percent."
+    },
+    {
+     "kind": "verdict",
+     "holds": false,
+     "no": "failed on hedging",
+     "label": "Worse by 0.0218, and 0.055 more hedged",
+     "detail": "The extremity difference was -0.0548 (-0.0584 to -0.0514), past the limit of -0.02. With question-by-time medians the gap was 0.0156, under the bar."
+    }
+   ]
+  },
+  {
+   "key": "skip",
+   "form": "interval",
+   "at": "results",
+   "claims": [
+    "c4"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "Skip rate and accuracy across forecaster-years, four ways of matching.",
+   "takeaway": "People who skipped more scored better on what they answered: rho +0.351 at matched forecast count, +0.119 unmatched. This round includes updates; F32 gives +0.286 on first forecasts.",
+   "units": "Spearman rank correlation (rho) between skip rate and relative Brier score, signed so that above 0 means more skipping goes with better accuracy",
+   "n": "9,204 forecaster-years with at least 10 available and 5 answered questions",
+   "interval": "95% bootstrap interval, resampling forecaster-years inside strata; the unmatched value has none in the result file",
+   "baseline": "Skip rate shuffled within year and forecast-count strata, 1,000 times: 95th percentile +0.017",
+   "threshold": "For the primary row: rho of 0.05 or more, interval above 0 and above the shuffle's 95th percentile",
+   "series_names": [
+    "Correlation between skipping and accuracy"
+   ],
+   "axis": {
+    "label": "rank correlation, rho (above 0: more skipping goes with better accuracy)",
+    "min": 0,
+    "refs": [
+     {
+      "value": 0.016693947811413243,
+      "label": "shuffle 95th percentile, 0.017"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "label": "Matched on forecast count (primary)",
+     "value": 0.3512056708053581,
+     "lo": 0.33085590406867366,
+     "hi": 0.3677740351937102,
+     "series": 0,
+     "note": "+0.351 (+0.331 to +0.368)"
+    },
+    {
+     "label": "Matched on questions answered",
+     "value": 0.23599194291803316,
+     "lo": 0.2159585029858377,
+     "hi": 0.2518991743494421,
+     "series": 0,
+     "note": "+0.236 (+0.216 to +0.252)"
+    },
+    {
+     "label": "Matched, question-by-time medians",
+     "value": 0.21050910272979914,
+     "lo": 0.1881159230824952,
+     "hi": 0.22885550310476807,
+     "series": 0,
+     "note": "+0.211 (+0.188 to +0.229)"
+    },
+    {
+     "label": "Unmatched",
+     "value": 0.11862269800244554,
+     "series": 0,
+     "note": "+0.119, no interval"
+    }
+   ],
+   "columns": [
+    "Matching",
+    "rho",
+    "Low",
+    "High"
+   ],
+   "table": [
+    [
+     "Matched on forecast count (primary)",
+     "+0.351",
+     "+0.331",
+     "+0.368"
+    ],
+    [
+     "Matched on questions answered",
+     "+0.236",
+     "+0.216",
+     "+0.252"
+    ],
+    [
+     "Matched, question-by-time medians",
+     "+0.211",
+     "+0.188",
+     "+0.229"
+    ],
+    [
+     "Unmatched",
+     "+0.119",
+     "none",
+     "none"
+    ]
+   ]
+  }
+ ]
+}

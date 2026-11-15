@@ -1,0 +1,233 @@
+{
+ "finding": "F209",
+ "sources": [
+  {
+   "id": "results",
+   "name": "results.json (the simulation's result file; the crescograph block)",
+   "sha256_original": "f9f6d525caa8adde2ba1bb167c1a6ac01750a46cdcadcb080d02ea342e389b37",
+   "sha256_copy": "37f7673ca70da615a11f44ec724875c6726a483e87fbea68235ac0069b361e83",
+   "href": "/findings/results/F209/results.json"
+  }
+ ],
+ "charts": [
+  {
+   "key": "design",
+   "form": "flow",
+   "at": "controls",
+   "claims": [
+    "c1",
+    "c2"
+   ],
+   "source": [
+    "results"
+   ],
+   "title": "The dead-shoot objection as a simulation.",
+   "takeaway": "With the room drift we assumed, a lever on a dead shoot reads 5.2 micrometres an hour against a true growth of 2.0; subtracting a paired dead shoot recovers the mean (2.04) with a spread of 1.03.",
+   "n": "300 simulated lever runs with assumed drift ranges; no plant was measured",
+   "steps": [
+    {
+     "kind": "planted",
+     "label": "Planted: growth of 2.0 micrometres an hour",
+     "detail": "A live shoot that grows at a known rate and a dead shoot that does not grow, on the same lever, in a room that warms and dampens by amounts we assumed."
+    },
+    {
+     "kind": "measure",
+     "label": "What the lever reads",
+     "detail": "The live shoot reads a mean of 7.2; the dead shoot reads 5.2, and 94 percent of dead runs read above 1."
+    },
+    {
+     "kind": "control",
+     "label": "Control: a paired dead shoot",
+     "detail": "Subtracting the dead shoot's reading gives a mean of 2.04 with a spread of 1.03; 67 percent of single runs land within 1 of the truth."
+    },
+    {
+     "kind": "verdict",
+     "holds": null,
+     "na": "an illustration",
+     "label": "The reading restates the assumed drift",
+     "detail": "The dead-shoot number follows from the drift ranges by arithmetic. It shows the size of drift that would bury the growth and is no evidence about the historical instrument."
+    }
+   ]
+  },
+  {
+   "key": "alarms",
+   "form": "bars",
+   "at": "results",
+   "claims": [
+    "c3",
+    "c4"
+   ],
+   "source": [
+    "results"
+   ],
+   "title": "False alarms on stems that never stop growing, by scenario and detector.",
+   "takeaway": "Neither detector raises a false alarm on data made by its own model. Under misfit at 5 micrometres a day they alarm on 62 and 46 percent of stems that are still growing.",
+   "units": "percent of 200 simulated stems that never stop growing on which the detector flagged a stop",
+   "n": "200 stopping and 200 non-stopping simulated stems in each of five scenarios; one seed",
+   "interval": null,
+   "no_interval": "The study computed no interval; each share rests on 200 simulated stems from one seed.",
+   "baseline": "The matched scenarios, where the simulated stem follows the detector's own model",
+   "threshold": "No bar was set in advance for the misfit scenarios, which were added after the matched result was seen",
+   "series_names": [
+    "Regression detector",
+    "Daily-maximum detector"
+   ],
+   "axis": {
+    "label": "false alarms on stems that never stop (percent)",
+    "min": 0,
+    "max": 100
+   },
+   "rows": [
+    {
+     "label": "Daily maximum",
+     "group": "Matched model, drying, 5 a day",
+     "value": 0.0,
+     "series": 1,
+     "note": "0%"
+    },
+    {
+     "label": "Regression",
+     "group": "Matched model, drying, 5 a day",
+     "value": 0.0,
+     "series": 0,
+     "note": "0%"
+    },
+    {
+     "label": "Daily maximum",
+     "group": "Matched model, 5 a day",
+     "value": 0.0,
+     "series": 1,
+     "note": "0%"
+    },
+    {
+     "label": "Regression",
+     "group": "Matched model, 5 a day",
+     "value": 0.0,
+     "series": 0,
+     "note": "0%"
+    },
+    {
+     "label": "Daily maximum",
+     "group": "Misfit, 5 a day",
+     "value": 62.0,
+     "series": 1,
+     "note": "62%"
+    },
+    {
+     "label": "Regression",
+     "group": "Misfit, 5 a day",
+     "value": 46.0,
+     "series": 0,
+     "note": "46%"
+    },
+    {
+     "label": "Daily maximum",
+     "group": "Misfit, drying, 5 a day",
+     "value": 65.5,
+     "series": 1,
+     "note": "65.5%"
+    },
+    {
+     "label": "Regression",
+     "group": "Misfit, drying, 5 a day",
+     "value": 44.5,
+     "series": 0,
+     "note": "44.5%"
+    },
+    {
+     "label": "Daily maximum",
+     "group": "Misfit, 1 a day",
+     "value": 100.0,
+     "series": 1,
+     "note": "100%"
+    },
+    {
+     "label": "Regression",
+     "group": "Misfit, 1 a day",
+     "value": 100.0,
+     "series": 0,
+     "note": "100%"
+    }
+   ],
+   "columns": [
+    "Scenario",
+    "Detector",
+    "False alarms (%)",
+    "Flags before the stop (%)",
+    "Median lag (days)"
+   ],
+   "table": [
+    [
+     "Matched model, drying, 5 a day",
+     "Daily maximum",
+     "0",
+     "0",
+     "2"
+    ],
+    [
+     "Matched model, drying, 5 a day",
+     "Regression",
+     "0",
+     "0",
+     "1"
+    ],
+    [
+     "Matched model, 5 a day",
+     "Daily maximum",
+     "0",
+     "0",
+     "2"
+    ],
+    [
+     "Matched model, 5 a day",
+     "Regression",
+     "0",
+     "0",
+     "2"
+    ],
+    [
+     "Misfit, 5 a day",
+     "Daily maximum",
+     "62",
+     "49",
+     "3"
+    ],
+    [
+     "Misfit, 5 a day",
+     "Regression",
+     "46",
+     "35.5",
+     "2"
+    ],
+    [
+     "Misfit, drying, 5 a day",
+     "Daily maximum",
+     "65.5",
+     "50.5",
+     "2"
+    ],
+    [
+     "Misfit, drying, 5 a day",
+     "Regression",
+     "44.5",
+     "40",
+     "1"
+    ],
+    [
+     "Misfit, 1 a day",
+     "Daily maximum",
+     "100",
+     "100",
+     "none on time"
+    ],
+    [
+     "Misfit, 1 a day",
+     "Regression",
+     "100",
+     "99.5",
+     "5"
+    ]
+   ]
+  }
+ ]
+}

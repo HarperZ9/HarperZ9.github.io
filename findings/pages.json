@@ -31,9 +31,30 @@
    "indexable": true
   },
   {
+   "path": "findings/F28-self-rated-expertise-and-skipping.html",
+   "id": "F28",
+   "tier": "B",
+   "standing": "narrowed",
+   "indexable": true
+  },
+  {
    "path": "findings/F32-skipping-and-abstain-gates.html",
    "id": "F32",
    "tier": "B*",
+   "standing": "none",
+   "indexable": true
+  },
+  {
+   "path": "findings/F33-cedar-decline-and-water.html",
+   "id": "F33",
+   "tier": "B",
+   "standing": "none",
+   "indexable": true
+  },
+  {
+   "path": "findings/F38-forecasts-drift-mood-moves-sampling-floor.html",
+   "id": "F38",
+   "tier": "B",
    "standing": "none",
    "indexable": true
   },
@@ -147,6 +168,27 @@
    "id": "F190",
    "tier": "D",
    "standing": "none",
+   "indexable": true
+  },
+  {
+   "path": "findings/F204-backward-and-contrary-checks.html",
+   "id": "F204",
+   "tier": "B",
+   "standing": "none",
+   "indexable": true
+  },
+  {
+   "path": "findings/F209-dead-shoot-on-a-lever.html",
+   "id": "F209",
+   "tier": "B",
+   "standing": "none",
+   "indexable": true
+  },
+  {
+   "path": "findings/F210-stepped-luneburg-lens-shells.html",
+   "id": "F210",
+   "tier": "B",
+   "standing": "narrowed",
    "indexable": true
   },
   {

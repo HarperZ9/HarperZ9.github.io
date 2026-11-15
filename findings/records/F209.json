@@ -1,0 +1,454 @@
+{
+ "schema": "research-record/1",
+ "built": "2026-11-14 by scripts/record-findings.mjs from paper.txt, the register row and the findings ledger",
+ "document": {
+  "id": "F209",
+  "kind": "finding",
+  "title": "A simulated dead shoot reads as growing on a lever, and growth-stop detectors fail under misfit",
+  "standfirst": "In a simulation with assumed room drift, a lever on a dead shoot reads 5.2 micrometres an hour against a true growth of 2.0 on the live one, and a paired dead shoot recovers the mean but not single readings. Two detectors of the day a tree stem stops growing raise no false alarms on data made by their own model and alarm on 46 to 62 percent of still-growing stems once the model misfits. No plant was measured.",
+  "date_found": "2026-10-31",
+  "fields": [
+   "instruments-metrology",
+   "biology-plant-forest-pathology",
+   "method"
+  ],
+  "tier": "B",
+  "tier_reason": "A clear next test on real data. The first result, with no false alarms, came from testing a detector on data made by its own model, and was corrected the same day.",
+  "rung": "lead",
+  "rung_reason": "An observation with a source. No prediction with a kill condition was on file before the run, which the next rung needs.",
+  "outcome": "mixed",
+  "bound": "Under misfit at 5 micrometres a day the daily-maximum detector raised false alarms on 124 of 200 stems that never stop and the regression detector on 92 of 200; at 1 micrometre a day both alarmed on all 200. The forecast that the regression detector beats the daily maximum held only by 1 day in the matched case with drying, and no claim is made under misfit. The paired dead shoot left a spread of 1.03 micrometres an hour on a growth of 2.0.",
+  "objection": "Nothing was measured. Every parameter is assumed from memory, including the growth rates, the swing, the drift ranges and the rain store.",
+  "objection_source": "the paper's first stated limitation; our register records no separate objection",
+  "would_change": "Real stem records with independently dated growth stops.",
+  "sections": [
+   {
+    "id": "reader",
+    "title": "What this means for a reader",
+    "role": "lead",
+    "paragraphs": [
+     "A sensitive growth recorder also records the room. In this simulation a dead shoot on a lever shows more apparent growth than the live shoot has, purely from the warming and dampening we assumed, and a dead partner shoot fixes the average while leaving single readings loose. The second half carries the wider warning: a method for spotting the day a tree stops growing looked perfect until the simulated tree stopped obeying the method's own equations, and then it raised an alarm on about half of the trees that were still growing. Real stem records with independently dated growth stops are what would settle how these detectors behave."
+    ]
+   },
+   {
+    "id": "abstract",
+    "title": "Abstract",
+    "role": "argument",
+    "paragraphs": [
+     "In 1920 A. D. Waller told the Royal Society that the plant movement shown on J. C. Bose's crescograph could come from heat, moisture and handling. We simulated that objection, and then the modern form of the same problem: telling growth from swelling in the stem of a tree. Everything here is a simulation with assumed parameters, and no plant was measured. {c1}With the assumed room drift, a lever on a dead shoot reads a mean of 5.2 micrometres an hour over 300 simulated runs, against a true growth of 2.0 on the live shoot, and 94 percent of dead runs read above 1.{/c1} {c2}Subtracting a paired dead shoot recovers the mean, 2.04 micrometres an hour, with a spread of 1.03, so 67 percent of single runs land within 1 of the truth.{/c2} {c3}When the simulated stem follows the detector's own model, neither growth-stop detector raises a false alarm in 200 runs, and the stop is flagged after a median of 1 day by a regression detector and 2 days by a daily-maximum detector.{/c3} {c4}Under misfit at 5 micrometres a day, the daily-maximum detector raises a false alarm on 62 percent of stems that never stop and the regression detector on 46 percent; at 1 micrometre a day both alarm on every stem.{/c4} The clean result came from testing a detector on data made by its own model."
+    ]
+   },
+   {
+    "id": "intro",
+    "title": "Introduction",
+    "role": "argument",
+    "paragraphs": [
+     "Jagadis Chandra Bose built the {g:crescograph}crescograph{/g} to make plant growth visible in seconds. The instrument, from plant physiology, magnifies the lengthening of a shoot with compound levers and writes it as a trace. Bose's 1927 account gives a magnification of 10,000 times by two levers for the high magnification version and far more for a later magnetic version {cite:r2}. A report in Nature of the Royal Society meeting of 13 May 1920 records Waller's objection after a demonstration at a claimed ten-million-fold magnification: he judged the demonstration illusory, and held that effects with no physiological cause, visible at a thousand-fold, could hide or imitate the physiological ones {cite:r1}. The title of his paper extended apparent growth to inanimate materials.",
+     "The objection is a statement about a control. A recorder that cannot tell growth from thermal expansion or moisture swelling needs a specimen that does everything a living shoot does except grow. A dead shoot is the plain candidate. We wanted to size the problem: how large the drift is against the growth under stated assumptions, and how well a dead partner removes it when the partner is not an exact twin.",
+     "The modern form of the question is asked of trees. A {g:dendrometer}dendrometer{/g} records the radius of a stem through the day. In forest science the term covers any gauge of stem size, from a band read by eye to an electronic point sensor; it records size and cannot by itself say which part of a change is new wood. Stems shrink by day as water is drawn out and swell at night, and this swing can be many times the daily growth. The {g:zero-growth}zero-growth concept{/g} of Zweifel and colleagues counts growth only when the stem passes its previous maximum and treats everything below that maximum as water deficit {cite:r3}. A practical question follows: how soon after growth stops for the season can a record show it. The decision this study informed was whether to spend effort on a detector that models the daily swing, or to stay with the running maximum.",
+     "Our searches found the historical report and the zero-growth literature. They did not look for published tests of cessation detectors on simulated stems, so we make no claim that this comparison is new."
+    ]
+   },
+   {
+    "id": "prereg",
+    "title": "Preregistration and design",
+    "role": "argument",
+    "paragraphs": [
+     "There was no {g:preregistration}preregistration{/g}, meaning no dated plan locked by a hash before the run. Forecasts were written to a file on 31 October 2026 before any simulation ran, and the file says so in its own first line. It holds four forecasts for this study: that a dead shoot on a lever would read as growing (probability 0.9), that the daily-maximum detector would flag a stop after 5 days, that the regression detector would flag it after 3, and that the regression detector would beat the daily maximum (probability 0.5).",
+     "No {g:kill-condition}kill condition{/g}, an outcome fixed in advance that would end the claim, was set, and no pass or fail rules. Our register records that the first version of the stem test had only the matched case, in which the detector's model is the generator's model, and that the misfit scenarios were added after that result was seen. The misfit scenarios are therefore a correction made after a first look, and are reported as that."
+    ]
+   },
+   {
+    "id": "data",
+    "title": "Data and provenance",
+    "role": "argument",
+    "paragraphs": [
+     "There is no external dataset. Every input is an assumed parameter, chosen from memory and not checked against a measurement: shoot elongation of 2 micrometres an hour, a daily stem swing of 100 micrometres, radial growth of 5 micrometres a day, and the drift ranges given below. The simulation is a short Python program with NumPy, run once with a fixed seed. The historical facts come from the two sources cited in the introduction."
+    ]
+   },
+   {
+    "id": "methods",
+    "title": "Methods",
+    "role": "argument",
+    "paragraphs": [
+     "## The lever and the dead shoot",
+     "Each of 300 runs is a 10-minute record sampled every 5 seconds, in micrometres of displacement at the specimen. The lever's magnification does not enter; the lever is represented by its {g:dead-band}dead band{/g}, a mechanical slack of 0.05 micrometres below which the pointer does not follow the specimen.",
+     "A live shoot's displacement is the sum of four parts: growth at 2.0 micrometres an hour; thermal expansion of a 10 cm frame and tissue with a coefficient of 1.2e-5 per kelvin, for a room warming by 0.02 to 0.2 K over the record; {g:hygroscopic}hygroscopic swelling{/g} of 0 to 1.5 micrometres over the record, which is the lengthening of tissue as it takes up moisture from the air; and a small random walk for handling. Warming and swelling are drawn uniformly from those ranges for each run and rise linearly in time. A dead shoot has no growth, its own handling noise, and the same warming and swelling scaled by a factor drawn between 0.7 and 1.3, because a dead shoot is not a twin of the live one.",
+     "The reading {m:s} is the least-squares slope of the pointer trace over the record. The paired estimate of growth is",
+     "$$ g = s_{live} - s_{dead} {eq:pair}",
+     "The mean drift the assumptions imply can be written down without a simulation. With a mean warming of 0.11 K and a mean swelling of 0.75 micrometres, the common displacement over the record is",
+     "$$ 1.2 \\times 0.11 + 0.75 = 0.88 {eq:drift}",
+     "micrometres, where 1.2 micrometres per kelvin is the coefficient times the 10 cm length. Over a record of 595 seconds that is about 5.3 micrometres an hour. The swelling term supplies most of it.",
+     "## The stem",
+     "A stem is simulated hourly for 60 days. Its radius is",
+     "$$ y = G - A (1 + 0.5 D) T + S + e {eq:stem}",
+     "Here {m:G} is growth, rising at a fixed rate per day until the stop and flat after it. {m:A} is the swing, 100 micrometres. {m:T} is the water tension: a daytime half-sine of {g:vpd}vapour pressure deficit{/g}, scaled by a weather factor that changes from day to day, and smoothed by an exponential memory with time constant {m:\\tau}. Vapour pressure deficit, from meteorology, is the gap between the water vapour the air holds and what it could hold, and here it stands for the drying demand on the tree. {m:D} is a drying term that grows after the stop in the scenarios that include it. {m:S} is rain: a store that refills on random days and drains over about three days. {m:e} is sensor noise of 1 micrometre.",
+     "Each scenario simulates 200 stems that stop growing on day 40 and 200 that never stop.",
+     "## Two detectors",
+     "The daily-maximum detector takes each day's largest radius, keeps the running maximum, and flags a stop when the running maximum has gained no more than 0.5 micrometres for 4 days in a row. It is a simplified reading of the zero-growth concept written for this study, and is not the published method or its software.",
+     "The regression detector fits each 8-day window with the vapour pressure deficit smoothed at a 4-hour time constant, a straight-line trend, and a daily sine and cosine, and flags a stop when the fitted trend falls below 0.3 of the growth rate. It is told the true growth rate, which favours it. Both detectors start after a 15-day baseline.",
+     "A {g:false-alarm}false alarm{/g} is a flag on a stem that never stops. An early flag is a flag before day 40 on a stem that does stop. The lag is the flag day minus 40, and its median is taken over flags that are not early.",
+     "## Matched and misfit scenarios",
+     "In the matched scenarios the generator uses the same 4-hour time constant as the regression detector, no rain, and a vapour pressure deficit measured with noise of 0.05. Testing an inverse method on data made by its own forward model is known in the inverse-problems literature as an {g:inverse-crime}inverse crime{/g}, because it hides every error of the model. The {g:misfit}misfit{/g} scenarios break the match in three ways at once: the generator's time constant is 7 hours, rain is on, and the vapour pressure deficit is measured with noise of 0.2. They were run at growth rates of 5 and 1 micrometres a day."
+    ]
+   },
+   {
+    "id": "controls",
+    "title": "Controls and planted checks",
+    "role": "argument",
+    "paragraphs": [
+     "The stems that never stop are the {g:control}control{/g} for every detector: any flag on them is false. The matched scenarios serve as the known-answer case, since there the regression detector's model is exactly right and the stop day is known.",
+     "There is no control for the lever simulation beyond the arithmetic of eq. {ref:eq:drift}, which the simulated dead reading should and does come close to. No noise-only or shuffled version of the stem series was run."
+    ]
+   },
+   {
+    "id": "results",
+    "title": "Results",
+    "role": "argument",
+    "paragraphs": [
+     "## The lever",
+     "{c1}With the assumed room drift, a lever on a dead shoot reads a mean of 5.2 micrometres an hour over 300 simulated runs, against a true growth of 2.0 on the live shoot, and 94 percent of dead runs read above 1.{/c1} The live shoot on the same lever reads a mean of 7.2 with a standard deviation of 2.6, more than three times its true growth. The dead reading of 5.2 sits close to the 5.3 that eq. {ref:eq:drift} gives, so this number restates the assumed drift ranges and could not have come out far from them. What it shows is the size of drift that would bury the growth: under 1 micrometre of swelling and a tenth of a kelvin in ten minutes.",
+     "{c2}Subtracting a paired dead shoot recovers the mean, 2.04 micrometres an hour, with a spread of 1.03, so 67 percent of single runs land within 1 of the truth.{/c2} The spread is half the growth rate. It follows from the assumed mismatch of up to 30 percent between the two shoots. Figure {ref:fig:twig} shows the three readings.",
+     "![fig:twig width=0.8 alt=Three horizontal bars: live shoot on the lever 7.21, dead shoot 5.18, live minus dead 2.04, with a dotted line at the true growth of 2.0](fig-twig.png) Lever readings in the simulation: mean over 300 runs, with one standard deviation where the result file records it. The dotted line is the true growth rate. Drawn from the simulation's result file.",
+     "## The stem",
+     "{c3}When the simulated stem follows the detector's own model, neither growth-stop detector raises a false alarm in 200 runs, and the stop is flagged after a median of 1 day by a regression detector and 2 days by a daily-maximum detector.{/c3} That is the scenario with drying after the stop. Without drying both detectors take a median of 2 days.",
+     "{c4}Under misfit at 5 micrometres a day, the daily-maximum detector raises a false alarm on 62 percent of stems that never stop and the regression detector on 46 percent; at 1 micrometre a day both alarm on every stem.{/c4} Those shares are 124 and 92 of 200 stems. The regression detector's count is lower by 32 stems, and it is still wrong on nearly half the stems that never stop. On stems that do stop, the detectors flag before the stop in 49 and 35.5 percent of runs. Table {ref:tab:stem} gives all five scenarios and Figure {ref:fig:alarms} the false alarms.",
+     "::table tab:stem cols=0.3,0.22,0.16,0.16,0.16 Growth-stop detection in five scenarios, 200 stopping and 200 non-stopping stems each. Median lag is over flags on or after the stop day.\nScenario ¦ Detector ¦ False alarms ¦ Early flags ¦ Median lag, days\nMatched, drying, 5 a day ¦ Daily maximum ¦ 0 ¦ 0 ¦ 2\nMatched, drying, 5 a day ¦ Regression ¦ 0 ¦ 0 ¦ 1\nMatched, 5 a day ¦ Daily maximum ¦ 0 ¦ 0 ¦ 2\nMatched, 5 a day ¦ Regression ¦ 0 ¦ 0 ¦ 2\nMisfit, 5 a day ¦ Daily maximum ¦ 0.62 ¦ 0.49 ¦ 3\nMisfit, 5 a day ¦ Regression ¦ 0.46 ¦ 0.355 ¦ 2\nMisfit, drying, 5 a day ¦ Daily maximum ¦ 0.655 ¦ 0.505 ¦ 2\nMisfit, drying, 5 a day ¦ Regression ¦ 0.445 ¦ 0.40 ¦ 1\nMisfit, 1 a day ¦ Daily maximum ¦ 1.0 ¦ 1.0 ¦ none on time\nMisfit, 1 a day ¦ Regression ¦ 1.0 ¦ 0.995 ¦ 5, from one run\n::end",
+     "![fig:alarms width=0.82 alt=Paired bars of false-alarm share in five scenarios: zero in the two matched scenarios, 0.62 and 0.46 under misfit, 0.655 and 0.445 under misfit with drying, and 1 for both at 1 micrometre a day](fig-alarms.png) Share of stems that never stop growing on which each detector flags a stop. Drawn from the simulation's result file.",
+     "Neither detector missed a stop in any scenario; every stopping stem was flagged, early or late.",
+     "Table {ref:tab:forecast} sets the forecasts against the outcomes. The first forecast was a probability and the outcome beside it is a share of runs, so the two are of different kinds.",
+     "::table tab:forecast cols=0.4,0.24,0.36 Forecasts written before the simulation against what it gave.\nQuantity ¦ Forecast ¦ Outcome\nA dead shoot reads as growing ¦ probability 0.9 ¦ 94 percent of dead runs read above 1 micrometre an hour\nDaily-maximum detector, days to flag ¦ 5 ¦ 2 when matched\nRegression detector, days to flag ¦ 3 ¦ 1 when matched with drying, 2 without\nRegression beats daily maximum ¦ probability 0.5 ¦ by 1 day when matched with drying; no claim under misfit\n::end"
+    ]
+   },
+   {
+    "id": "discussion",
+    "title": "Discussion",
+    "role": "argument",
+    "paragraphs": [
+     "The lever result is a sizing exercise. If a cut shoot in a lecture room swells by a micrometre in ten minutes, a lever reads several times the growth, and it does so on dead tissue. Whether real shoots swell that much is a question for a measurement, and our ranges are guesses. The pairing result has a practical edge: a dead partner removes the average drift, and the single-run error is set by how alike the two specimens are. An experimenter would need many pairs, or a better twin, before trusting one trace.",
+     "The stem result is the one we would act on. With the generator matched to the detector, the regression detector looked a day faster with no false alarms. That was the inverse crime at work. Once the stem had a slower water memory than the detector assumed, rain the detector had no term for, and a noisier humidity record, both detectors flagged stops that never happened on about half the stems, and at a slow growth rate on all of them. The regression detector's lower false-alarm share under misfit is real in these counts and has no practical use at that level.",
+     "Two things follow for our own work. A detector of this kind gets no credit from a matched simulation. The next test has to use recorded stems with a stop date known from another method."
+    ]
+   },
+   {
+    "id": "limits",
+    "title": "Limitations",
+    "role": "argument",
+    "paragraphs": [
+     "- Nothing was measured. Every parameter is assumed from memory, including the growth rates, the swing, the drift ranges and the rain store.",
+     "- The dead-shoot reading follows from the assumed drift ranges by arithmetic, so it is an illustration of the objection and no evidence about Bose's instrument or his results.",
+     "- The lever is modelled only by a dead band. Friction, creep of the levers and the contact with the plant are left out.",
+     "- The simulated instrument is the 10,000 times lever version. Waller's objection, as reported, was to a demonstration at a claimed ten-million-fold magnification.",
+     "- The daily-maximum detector is our simplification of the zero-growth concept. Its failure here says nothing about the published method on real data.",
+     "- The regression detector is told the true growth rate, and the misfit scenarios change three things at once, so the result does not say which misfit does the damage.",
+     "- One seed, one run. The shares rest on 200 or 300 simulated runs, and no interval was computed in the study.",
+     "- The misfit scenarios were added after the matched result was seen.",
+     "- Scoring was by our own code and was not blind. Nobody outside the project has checked it."
+    ]
+   },
+   {
+    "id": "appendix",
+    "title": "Appendix A. Assumed parameters",
+    "role": "evidence",
+    "paragraphs": [
+     "Every value below was chosen by us and none was fitted to data.",
+     "::table tab:params cols=0.46,0.27,0.27 Parameters of the two simulations.\nParameter ¦ Matched ¦ Misfit\nShoot growth, micrometres an hour ¦ 2.0 ¦ same\nRoom warming over 10 minutes, K ¦ 0.02 to 0.2 ¦ same\nSwelling over 10 minutes, micrometres ¦ 0 to 1.5 ¦ same\nDead-shoot drift factor ¦ 0.7 to 1.3 ¦ same\nLever dead band, micrometres ¦ 0.05 ¦ same\nStem swing, micrometres ¦ 100 ¦ 100\nStem growth, micrometres a day ¦ 5 ¦ 5 or 1\nSensor noise, micrometres ¦ 1 ¦ 1\nWater memory of the stem, hours ¦ 4 ¦ 7\nWater memory assumed by the detector, hours ¦ 4 ¦ 4\nRain store ¦ off ¦ 5 to 30 micrometres, on 8 of 60 days\nNoise on vapour pressure deficit ¦ 0.05 ¦ 0.2\n::end"
+    ]
+   }
+  ]
+ },
+ "claims": [
+  {
+   "id": "c1",
+   "text": "With the assumed room drift, a lever on a dead shoot reads a mean of 5.2 micrometres an hour over 300 simulated runs, against a true growth of 2.0 on the live shoot, and 94 percent of dead runs read above 1.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e1"
+   ]
+  },
+  {
+   "id": "c2",
+   "text": "Subtracting a paired dead shoot recovers the mean, 2.04 micrometres an hour, with a spread of 1.03, so 67 percent of single runs land within 1 of the truth.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e2"
+   ]
+  },
+  {
+   "id": "c3",
+   "text": "When the simulated stem follows the detector's own model, neither growth-stop detector raises a false alarm in 200 runs, and the stop is flagged after a median of 1 day by a regression detector and 2 days by a daily-maximum detector.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e3"
+   ]
+  },
+  {
+   "id": "c4",
+   "text": "Under misfit at 5 micrometres a day, the daily-maximum detector raises a false alarm on 62 percent of stems that never stop and the regression detector on 46 percent; at 1 micrometre a day both alarm on every stem.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e4"
+   ]
+  }
+ ],
+ "evidence": [
+  {
+   "id": "e1",
+   "kind": "number",
+   "label": "The numbers in claim 1",
+   "value": "5.2; 300; 2.0; 94; 1",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-14",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e2",
+   "kind": "number",
+   "label": "The numbers in claim 2",
+   "value": "2.04; 1.03; 67; 1",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-14",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e3",
+   "kind": "number",
+   "label": "The numbers in claim 3",
+   "value": "200; 1; 2",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-14",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e4",
+   "kind": "number",
+   "label": "The numbers in claim 4",
+   "value": "5; 62; 46; 1",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-14",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e5",
+   "kind": "number",
+   "label": "Sample",
+   "value": "300 simulated lever runs; 200 stopping and 200 non-stopping stems per scenario",
+   "check": {
+    "by": "our publication register",
+    "result": "not_checked",
+    "note": "as recorded in the publication register"
+   }
+  },
+  {
+   "id": "e6",
+   "kind": "number",
+   "label": "Main estimate and interval",
+   "value": "no interval was computed; one seed",
+   "check": {
+    "by": "our publication register",
+    "result": "not_checked",
+    "note": "as recorded in the publication register"
+   }
+  },
+  {
+   "id": "e7",
+   "kind": "number",
+   "label": "Forecast against outcome",
+   "value": "A dead shoot reads as growing: forecast probability 0.9, and 94 percent of dead runs read above 1 micrometre an hour. Regression beats daily maximum: forecast 0.5; by 1 day when matched with drying, and no claim under misfit",
+   "check": {
+    "by": "our publication register",
+    "result": "not_checked",
+    "note": "as recorded in the publication register"
+   }
+  },
+  {
+   "id": "e8",
+   "kind": "control",
+   "label": "Known-answer check",
+   "value": "the dead-shoot reading of 5.2 sits beside the 5.3 that the assumed drift gives by arithmetic",
+   "check": {
+    "by": "our publication register",
+    "result": "not_checked",
+    "note": "as recorded in the publication register"
+   }
+  }
+ ],
+ "references": [
+  {
+   "id": "r1",
+   "key": "Societies and Academies (1920)",
+   "kind": "paper",
+   "title": "Societies and Academies (1920). Report of the Royal Society meeting of 13 May 1920, with A. D. Waller's paper on apparent growth of plants and of inanimate materials. Nature 105, 410-411. doi:10.1038/105410a0",
+   "access": "snippet",
+   "target": "https://doi.org/10.1038/105410a0",
+   "access_note": "abstracts and search snippets; full text not read",
+   "accessed": "2026-11-14"
+  },
+  {
+   "id": "r2",
+   "key": "Bose 1927",
+   "kind": "paper",
+   "title": "Bose, J. C. (1927). Plant Autographs and Their Revelations. Internet Archive item plantautographst00bose.",
+   "access": "snippet",
+   "access_note": "abstracts and search snippets; full text not read",
+   "accessed": "2026-11-14"
+  },
+  {
+   "id": "r3",
+   "key": "Zweifel 2016",
+   "kind": "paper",
+   "title": "Zweifel, R., Haeni, M., Buchmann, N. and Eugster, W. (2016). Are trees able to grow in periods of stem shrinkage? New Phytologist 211(3), 839-849. doi:10.1111/nph.13995",
+   "access": "snippet",
+   "target": "https://doi.org/10.1111/nph.13995",
+   "access_note": "abstracts and search snippets; full text not read",
+   "accessed": "2026-11-14"
+  }
+ ],
+ "relations": [],
+ "corrections": [
+  {
+   "id": "x1",
+   "date": "2026-10-31",
+   "target": "document",
+   "type": "retraction",
+   "after": "The misfit scenarios were added the same day, and the claim that the regression detector beats the daily maximum was withdrawn for the misfit case.",
+   "reason": "The first version of the stem test used only a generator matched to the regression detector, and gave no false alarms.",
+   "found_by": "the study itself, before publication"
+  },
+  {
+   "id": "x2",
+   "date": "2026-11-14",
+   "target": "document",
+   "type": "number",
+   "after": "The result file gives 92 against 124 false alarms in 200 stems. This paper states both counts and calls neither detector usable; the word \"tie\" is dropped.",
+   "reason": "The ledger title says the two detectors tie under misfit.",
+   "found_by": "the publication pass"
+  },
+  {
+   "id": "x3",
+   "date": "2026-11-14",
+   "target": "document",
+   "type": "wording",
+   "after": "The dead-shoot reading is now stated as a consequence of the assumed drift, with the arithmetic beside it.",
+   "reason": "Dated in the paper's Corrections section; found by the publication pass.",
+   "found_by": "the publication pass"
+  }
+ ],
+ "versions": [
+  {
+   "n": 1,
+   "date": "2026-10-31",
+   "what": "entered in the findings ledger"
+  },
+  {
+   "n": 2,
+   "date": "2026-11-14",
+   "what": "paper version 1.0, first published",
+   "hash": "85ea0017dcaef567ceac43b3c3b0ab9a6a2743ad1092d044e39ae09b461ec68e"
+  }
+ ],
+ "grade": {
+  "lowers": [
+   {
+    "domain": "blinding",
+    "text": "Not blind. No preregistration; the misfit scenarios were added after the matched result was seen.",
+    "from": "our publication register, on blinding"
+   },
+   {
+    "domain": "depth of reading",
+    "text": "The cited literature was read at the level of abstracts and search snippets; full texts were not read.",
+    "from": "the Verified section"
+   }
+  ],
+  "holds": [
+   {
+    "domain": "scoring",
+    "text": "Scored by code against rules fixed in advance.",
+    "from": "our publication register, on who scored it"
+   },
+   {
+    "domain": "control",
+    "text": "Controls: misfit scenarios, added after the matched result was seen.",
+    "from": "our publication register, on controls"
+   }
+  ]
+ },
+ "reproduce": {
+  "data": [],
+  "cost": "the simulation took about 6 s on one desktop CPU.",
+  "steps": [
+   "Data: no external dataset. The inputs are the assumed parameters listed in the Methods section; the simulation code is not yet in a public repository.",
+   "Lever: for each of 300 runs, build a 10-minute trace every 5 seconds from growth, thermal expansion, swelling and a random walk, pass it through a dead band of 0.05 micrometres, and fit a slope. Do the same for a dead shoot with the drift scaled by a factor between 0.7 and 1.3, and apply eq. {ref:eq:pair}.",
+   "Stem: simulate eq. {ref:eq:stem} hourly for 60 days, 200 stems with a stop on day 40 and 200 without, in the five scenarios of Table {ref:tab:stem}.",
+   "Run both detectors on every stem and count false alarms, early flags and lags.",
+   "Random numbers: NumPy default generator, seed 20261036.",
+   "No preregistration exists, so there is no preregistration hash, plan hash or run id. The forecast file carries a written date and no hash."
+  ],
+  "not_rerun": "The simulation was not re-run for this paper."
+ },
+ "verified": {
+  "date": "2026-11-14",
+  "checks": [
+   {
+    "what": "On 14 November 2026 the lever means, standard deviations and shares, and every false-alarm share, early share and median lag in the five stem scenarios were re-read from the simulation's result file, and the four forecasts from the forecast file.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   },
+   {
+    "what": "They match the {g:findings-ledger}findings ledger{/g} except for the word \"tie\", which is corrected below.",
+    "by": "the paper's Verified pass",
+    "result": "match"
+   },
+   {
+    "what": "The parameter values, run counts, detector rules and the seed were read from the simulation's source code.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   },
+   {
+    "what": "The drift of 5.3 micrometres an hour is our arithmetic for this paper from the code's parameter ranges.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   },
+   {
+    "what": "The counts 124 and 92 are the file's shares times 200.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   },
+   {
+    "what": "Both figures were drawn by a script that reads only the result file.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   },
+   {
+    "what": "The order in which the matched and misfit scenarios were written rests on our register's note; no file timestamp was used to confirm it.",
+    "by": "the paper's Verified pass",
+    "result": "match"
+   }
+  ],
+  "not_checked": [
+   "The simulation was not re-run for this paper.",
+   "The literature was found by two searches on 14 November 2026 and read at the level of abstracts and search snippets; the full texts were not read.",
+   "The magnification figures attributed to Bose's 1927 book come from our census record of that source, made on 31 October 2026; the book itself was not opened for this paper."
+  ]
+ }
+}

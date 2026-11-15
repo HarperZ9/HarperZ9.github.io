@@ -217,6 +217,24 @@
    "date": "2026-10-31",
    "note": "A later review of our ledger recorded two errors: later tables reuse inputs, and the Hubble constant truth is a proxy.",
    "source": "findings ledger, F422 correction pass"
+  },
+  {
+   "from": "F32",
+   "to": "F28",
+   "type": "narrowed",
+   "scope": "the skip correlation and the reading of the self-rating",
+   "date": "2026-10-29",
+   "note": "On first forecasts only the matched skip correlation is +0.286 against +0.351 here, the within-person value is +0.041 (-0.007 to +0.095), and adding the self-rating to a probability filter gained 0.0026 against a 0.005 bar.",
+   "source": "findings ledger, F32"
+  },
+  {
+   "from": "F303",
+   "to": "F210",
+   "type": "narrowed",
+   "scope": "the rim index claim, at a radius of 50 wavelengths in two dimensions",
+   "date": "2026-10-31",
+   "note": "A quadratic profile refitted to the rim index keeps 0.53 of the focal peak at rim 1.1, 0.41 at 1.3 and 0.38 at 1.5, where clipping keeps 0.31, 0.035 and 0.05, so the rim limit in F210 came from the clipping.",
+   "source": "findings ledger, F303"
   }
  ],
  "corrections_about": "Dated corrections in the findings ledger that the paper's own Corrections section does not carry. The record builder adds them to the finding's trail beside the paper's.",
