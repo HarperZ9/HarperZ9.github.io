@@ -1,0 +1,8 @@
+{
+  "date": "2026-11-15",
+  "note": "Cleanroom demo page: its form label now names the record (9 July 2026, the packet zip and its SHA-256) in place of the sentence saying the record is not published; the date is the UTC day of registered_at in the packet's run.json and the command is the one in the packet's README. Home: asset revision stamp only (world-b8e49ad9d7). No other words changed on either page.",
+  "paths": {
+    "demos/crucible-cleanroom/index.html": "2467afcd70165c95395fc2f3c5255f461d96973bb6c4ad4be49204b6b398881d",
+    "index.html": "138967c6f9c07715c9747eae6f62dee4e6ba7ae7eec04d5c8c39d6a1756bef88"
+  }
+}

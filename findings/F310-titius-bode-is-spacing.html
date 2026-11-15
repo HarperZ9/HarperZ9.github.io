@@ -23,19 +23,19 @@
 <meta name="twitter:title" content="F310: Titius-Bode regularity in 122 exoplanet systems sits in gap sizes; their order adds nothing | Zain Dana Harper">
 <meta name="twitter:description" content="Exoplanet systems do look more regular than random gaps would make them, but shuffling each system's own gaps into a new order leaves that regularity in place. A planet's position is predicted better by its two neighbours than by a Titius-Bode fit.">
 <link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-38578d6674">
-<link rel="stylesheet" href="/studies/studies.css?v=world-38578d6674">
-<link rel="stylesheet" href="/world/site/depth.css?v=world-38578d6674">
-<script type="module" src="/world/ui/shell/shell.js?v=world-38578d6674"></script>
-<script type="module" src="/world/site/hand-scroll.js?v=world-38578d6674"></script>
+<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-b8e49ad9d7">
+<link rel="stylesheet" href="/studies/studies.css?v=world-b8e49ad9d7">
+<link rel="stylesheet" href="/world/site/depth.css?v=world-b8e49ad9d7">
+<script type="module" src="/world/ui/shell/shell.js?v=world-b8e49ad9d7"></script>
+<script type="module" src="/world/site/hand-scroll.js?v=world-b8e49ad9d7"></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"ScholarlyArticle","headline":"Titius-Bode regularity in 122 exoplanet systems sits in gap sizes; their order adds nothing","abstract":"Exoplanet systems do look more regular than random gaps would make them, but shuffling each system's own gaps into a new order leaves that regularity in place. A planet's position is predicted better by its two neighbours than by a Titius-Bode fit.","identifier":"F310","dateCreated":"2026-10-31","datePublished":"2026-11-09","author":{"@type":"Person","name":"Zain Dana Harper","url":"https://harperz9.github.io/"},"about":["physics-other","method"],"encoding":{"@type":"MediaObject","encodingFormat":"application/pdf","contentUrl":"https://harperz9.github.io/findings/papers/F310.pdf"},"isPartOf":{"@type":"CollectionPage","name":"Findings","url":"https://harperz9.github.io/findings/"}}</script>
-<link rel="stylesheet" href="/world/site/experiments.css?v=world-38578d6674">
-<link rel="stylesheet" href="/world/site/findings.css?v=world-38578d6674">
-<link rel="stylesheet" href="/world/site/depth.css?v=world-38578d6674">
-<link rel="stylesheet" href="/world/site/research.css?v=world-38578d6674">
-<script type="module" src="/world/site/research.js?v=world-38578d6674"></script>
-<link rel="stylesheet" href="/world/site/findings-figures.css?v=world-38578d6674">
-<script type="module" src="/world/site/findings-live.js?v=world-38578d6674"></script>
+<link rel="stylesheet" href="/world/site/experiments.css?v=world-b8e49ad9d7">
+<link rel="stylesheet" href="/world/site/findings.css?v=world-b8e49ad9d7">
+<link rel="stylesheet" href="/world/site/depth.css?v=world-b8e49ad9d7">
+<link rel="stylesheet" href="/world/site/research.css?v=world-b8e49ad9d7">
+<script type="module" src="/world/site/research.js?v=world-b8e49ad9d7"></script>
+<link rel="stylesheet" href="/world/site/findings-figures.css?v=world-b8e49ad9d7">
+<script type="module" src="/world/site/findings-live.js?v=world-b8e49ad9d7"></script>
 <meta name="citation_pdf_url" content="https://harperz9.github.io/findings/papers/F310.pdf">
 </head>
 <body class="reading">
@@ -189,6 +189,7 @@ new MutationObserver(s).observe(r,{attributes:true,attributeFilter:["data-theme"
 </div>
 <ul class="fc-legend"><li><span class="fc-lk"><svg class="fc-m s0" viewBox="0 0 14 14" width="14" height="14" aria-hidden="true" focusable="false"><path d="M7 .8 13.2 7 7 13.2 .8 7Z"/></svg></span><span>real score</span></li><li><span class="fc-lk"><i class="fc-k band"></i></span><span>control draws, 5th to 95th percentile</span></li><li><span class="fc-lk"><i class="fc-k tick"></i></span><span>control mean</span></li></ul>
 <dl class="fc-meta"><div><dt>n</dt><dd>122 systems with four or more planets (543 planets); 2,000 draws for the plain form's controls, 200 for the other two forms</dd></div><div><dt>Units</dt><dd>regularity score S: minus the median over systems of fit residual divided by mean gap, both in ln period; higher is more regular</dd></div><div><dt>Interval</dt><dd>5th to 95th percentile of the control draws</dd></div><div><dt>Baseline or control</dt><dd>Two controls: gaps drawn from all systems, and each system's own gaps in a shuffled order</dd></div><div><dt>Set in advance</dt><dd>Real score above the control's 95th percentile, fixed before the data were read</dd></div><div><dt>Planted check</dt><dd>Held: planted systems scored −0.050 against a bar of −0.190</dd></div><div><dt>Ruled out</dt><dd>A regular order of gaps beyond each system's own set of gaps: the real plain score −0.157 is below the order-shuffle 95th percentile −0.145 (p 0.85)</dd></div><div><dt>Supports</dt><dd><a href="#c1">claim 1</a>, <a href="#c4">claim 4</a></dd></div></dl>
+<p class="demo-form" data-demo="finding-f310-live" data-form="live"><b>Live.</b> This runs in your browser now, on what you give it.</p>
 <div class="fc-live" data-live="f310" data-src="/findings/results/F310/systems.json"><noscript><p>The live re-run needs JavaScript. The chart and table above hold the study's own numbers.</p></noscript></div>
 <details class="fc-data"><summary>Data behind chart 3 <span class="fc-rowsn">4 rows</span></summary>
 <div class="st-table" tabindex="0" role="region" aria-label="Data behind chart 3"><table><thead><tr><th scope="col">Form and control</th><th scope="col">Real score</th><th scope="col">Control mean</th><th scope="col">Control 5th pct</th><th scope="col">Control 95th pct</th><th scope="col">p</th><th scope="col">Draws</th></tr></thead>

@@ -200,3 +200,5 @@
   .fl-table .fl-n { grid-column: 1 / -1; overflow-wrap: anywhere; }
   .fl-table .fl-n::before { content: "this run "; color: var(--soft); } .fl-table .fl-n + .fl-n::before { content: "study file "; }
 }
+/* the form label of a live re-run sits between the chart's notes and the re-run, with room on both sides */
+.fc > .demo-form { margin: 18px 0 0; max-width: 64ch; }

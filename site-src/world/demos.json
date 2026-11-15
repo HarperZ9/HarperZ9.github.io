@@ -77,6 +77,12 @@
    "what": "The byte witness hashes the visitor's text or file and compares it with a stored target."
   },
   {
+   "id": "finding-f310-live",
+   "page": "/findings/F310-titius-bode-is-spacing.html",
+   "form": "live",
+   "what": "The finding's analysis run again in the browser from the study's data, with a seed the visitor can change; each number is set beside the study's own."
+  },
+  {
    "id": "crucible-workflow",
    "page": "/demo-crucible.html",
    "form": "captured",
@@ -143,12 +149,12 @@
    "what": "A picture of the Flywheel gateway page with its endpoint table.",
    "evidence": null,
    "needs": [
-    "command",
-    "sha256"
+    "command"
    ],
    "has": {
     "date": "2026-08-04",
-    "file": "media/demos/flywheel/flywheel-app-console.png"
+    "file": "media/demos/flywheel/flywheel-app-console.png",
+    "sha256": "ee3b4acb69de5495763aa7bd9cb00e7f4b689519f0f5d0b31f7f664d0b2cb95f"
    }
   },
   {
@@ -169,13 +175,13 @@
    "page": "/demos/crucible-cleanroom/",
    "form": "captured",
    "what": "A review packet for one thesis with a MATCH, a DRIFT and an UNVERIFIABLE verdict.",
-   "evidence": null,
-   "needs": [
-    "date",
-    "command"
-   ],
-   "has": {
-    "file": "demos/crucible-cleanroom/crucible-cleanroom-demo.zip"
+   "evidence": {
+    "date": "2026-07-09",
+    "command": "python -m crucible run examples/thesis-binary-search.json \\\n  --measurements examples/measurements-binary-search.json \\\n  --registry .crucible-demo-registry \\\n  --bundle .crucible-demo-bundle",
+    "file": "demos/crucible-cleanroom/crucible-cleanroom-demo.zip",
+    "sha256": "2d4e819e4032f07e3a54d35af2dc78161c1d2f04c43f89c26b56878d6377d1f1",
+    "commandIn": "demos/crucible-cleanroom/crucible-cleanroom-demo/README.md",
+    "note": "The date is the UTC day of registered_at in the packet's run.json. The command is the one the packet's README gives to regenerate it; run.json does not hold a command line."
    }
   },
   {
@@ -191,15 +197,11 @@
    "has": {
     "date": "2026-11-12",
     "command": "articulate check notes.md"
-   }
+   },
+   "why": "The page states Articulate 0.18.0. A rerun to publish the output file needs that release; the copy installed where the labels were made on 14 November 2026 was 0.15.1, so no file was produced."
   }
  ],
  "notYetLabelled": [
-  {
-   "page": "/findings/",
-   "what": "live figures and kernels on finding pages (F310's kernel among them)",
-   "why": "finding pages are being republished by another change; the labels land with the Research surface"
-  },
   {
    "page": "/",
    "what": "three recorded outputs in the home panels (buildc check, a Flywheel verdict, articulate check)",
