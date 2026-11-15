@@ -77,7 +77,7 @@ export async function initSlots() {
       const href = new URL(src, document.baseURI).href;
       const mod = await import(href);
       // the house face drives the lettering skeletons too, when the page is set in it
-      if (root.dataset.type === "house") {
+      if (root.dataset.type !== "hanken") {
         try { await (await import(new URL("houseface.mjs", href).href)).registerHouseFace(); }
         catch (e) { console.info("slots: house face not registered with the lettering library; Hanken skeletons stay", e.message); }
       }

@@ -9,10 +9,12 @@ script, and any data the document embeds or preloads. A module brought in by imp
 fetched after a press are not eager; the page states their size beside the press.
 
 The measure is strict on purpose. Moving a script behind an idle timer does not make it lazy: it
-still loads with no press, so it still counts. The shared shell and the hand's scroll script that
-every generated page loads come to 61,534 bytes, which is over the 61,440 allowed before a surface
-adds a line. The JavaScript budget therefore fails today for any surface on this shell, and this
-test says so; it is not loosened to pass. The test reports each total when it fails.
+still loads with no press, so it still counts. This file counts from the source, so it cannot see
+a script that another script fetches at load by a computed address. The shell did that for about
+77 KB until 14 November 2026 (menu ground, studio materials, focus film, the map band), on top of
+the 61,534 bytes counted here, which was already over the 61,440 allowed. The shell now runs a
+small core and fetches each part when it is used, and tests/shell-parts.cjs holds the same budget
+against what a real browser fetches before any press. The test reports each total when it fails.
 """
 
 from __future__ import annotations
@@ -85,13 +87,14 @@ def test_surface_is_inside_its_loading_budget(surface: str) -> None:
     totals = eager(PAGES[surface])
     over = {kind: f"{totals[kind]} bytes, budget {BUDGET[kind]}" for kind in BUDGET if totals[kind] > BUDGET[kind]}
     assert not over, f"{PAGES[surface]} is over budget: {over} (all totals: {totals})"
-    # the measure reads real files: the shell alone is tens of kilobytes of script and of CSS
-    assert totals["js"] > 40 * KB and totals["css"] > 40 * KB and totals["html"] > 8 * KB, totals
+    # the measure reads real files: the shell's core is over ten kilobytes of script, and its CSS tens
+    assert totals["js"] > 10 * KB and totals["css"] > 40 * KB and totals["html"] > 8 * KB, totals
 
 
 def test_the_measure_follows_static_imports_and_not_dynamic_ones() -> None:
-    shell = closure(ROOT / "world/ui/shell/shell.js", set())
-    assert len(shell) >= 5, "the shell's static imports were not followed"
+    shell = {p.relative_to(ROOT / "world/ui/shell").as_posix() for p in closure(ROOT / "world/ui/shell/shell.js", set())}
+    # the core is two files; a part that comes back into it as a static import is counted again, and shows here
+    assert shell == {"shell.js", "organic/organic.js"}, f"the shell's core is not the two files it should be: {sorted(shell)}"
     start = closure(ROOT / "world/site/surfaces/surface-start.js", set())
     names = {p.name for p in start}
     assert names == {"surface-start.js"}, f"the start script pulls in more than itself before a press: {names}"

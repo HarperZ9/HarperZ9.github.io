@@ -7794,8 +7794,15 @@
    "path": "world/ui/directions/common/base.js",
    "source": "2026-10-23-ui-direction/directions/common/base.js",
    "folder": "2026-10-23-ui-direction",
-   "bytes": 10460,
-   "sourceSha256": "11e1fa57aaa4aee9c093f1dbdbd2a5bf8132729016982c916bac2d8c12807c69"
+   "bytes": 6942,
+   "sourceSha256": "1092cc50b8ce4880fa91feb8e005b3574079303491a693f5ca6e1a8ec22ca7cc"
+  },
+  {
+   "path": "world/ui/directions/common/copy.js",
+   "source": "2026-10-23-ui-direction/directions/common/copy.js",
+   "folder": "2026-10-23-ui-direction",
+   "bytes": 735,
+   "sourceSha256": "1719e471249071ba2a2c5f5d5efed34a2de23048457e3a6e7ba32598aa8911b1"
   },
   {
    "path": "world/ui/directions/common/flow/display.js",
@@ -7854,25 +7861,67 @@
    "sourceSha256": "da7d5c62608a1604ac187da654d950b3f989ff4cf0ece0c8429297106cc12f5f"
   },
   {
+   "path": "world/ui/directions/common/organic/band.js",
+   "source": "2026-10-23-ui-direction/directions/common/organic/band.js",
+   "folder": "2026-10-23-ui-direction",
+   "bytes": 1117,
+   "sourceSha256": "0c1ce85085dbafcac60f140f5c9f134624d1a3a3bb2d544aae8e7fe8f82ba9e2"
+  },
+  {
+   "path": "world/ui/directions/common/organic/focus-film.js",
+   "source": "2026-10-23-ui-direction/directions/common/organic/focus-film.js",
+   "folder": "2026-10-23-ui-direction",
+   "bytes": 1157,
+   "sourceSha256": "39dd95bfc52b27ffd2ef8cf748fd05c7598d427bef7a8a12c271bc8ffe01a839"
+  },
+  {
+   "path": "world/ui/directions/common/organic/gen-util.js",
+   "source": "2026-10-23-ui-direction/directions/common/organic/gen-util.js",
+   "folder": "2026-10-23-ui-direction",
+   "bytes": 1369,
+   "sourceSha256": "c19f962386377864e02b2fed33ad5c68b277f645596ce2e16c65786e590f2073"
+  },
+  {
+   "path": "world/ui/directions/common/organic/made.js",
+   "source": "2026-10-23-ui-direction/directions/common/organic/made.js",
+   "folder": "2026-10-23-ui-direction",
+   "bytes": 5283,
+   "sourceSha256": "ffbd32fad31f3abf1bf94b91a23330b504417ee0f4198bdfb86dbefcd32e25e2"
+  },
+  {
+   "path": "world/ui/directions/common/organic/menu.js",
+   "source": "2026-10-23-ui-direction/directions/common/organic/menu.js",
+   "folder": "2026-10-23-ui-direction",
+   "bytes": 2547,
+   "sourceSha256": "4ef7c65ed19edf4d1a15b91f7a71b09a1d0e40649cc1a0a970a6e9ab9b882a94"
+  },
+  {
    "path": "world/ui/directions/common/organic/organic-gen.js",
    "source": "2026-10-23-ui-direction/directions/common/organic/organic-gen.js",
    "folder": "2026-10-23-ui-direction",
-   "bytes": 14035,
-   "sourceSha256": "3940366f47372151edcdbea58acfef2762c39ef0708cfdf9122d01fe65873ad7"
+   "bytes": 10843,
+   "sourceSha256": "3fa91f21a7599e01931f068fdcbef45c9ed8648b7ff32c610e8c5019de211f99"
   },
   {
    "path": "world/ui/directions/common/organic/organic.css",
    "source": "2026-10-23-ui-direction/directions/common/organic/organic.css",
    "folder": "2026-10-23-ui-direction",
-   "bytes": 11872,
-   "sourceSha256": "b3f562ef287c973adcfcb3c66a5004927a57f56cda7917be5060a626958ac444"
+   "bytes": 11938,
+   "sourceSha256": "c717eb5b63c08cc32bd107cc36f27a3c2a96dc04f4e9ee3592a314b653c839df"
   },
   {
    "path": "world/ui/directions/common/organic/organic.js",
    "source": "2026-10-23-ui-direction/directions/common/organic/organic.js",
    "folder": "2026-10-23-ui-direction",
-   "bytes": 11151,
-   "sourceSha256": "e01dc397636354c82ece46eff50896fded4d6266e98337ae7bf53e85a180050a"
+   "bytes": 7022,
+   "sourceSha256": "d1ecc768ef26d38df1a93105ced76c8c3d57b588e2a8ff312314bf53202b2b7b"
+  },
+  {
+   "path": "world/ui/directions/common/organic/palettes.js",
+   "source": "2026-10-23-ui-direction/directions/common/organic/palettes.js",
+   "folder": "2026-10-23-ui-direction",
+   "bytes": 471,
+   "sourceSha256": "90035adee1dd0643a04c089a802320cc690a392aae095f97708d18faa1995dd7"
   },
   {
    "path": "world/ui/directions/common/organic/root.js",
@@ -7882,18 +7931,32 @@
    "sourceSha256": "bf1347456ddabb594e728e89b388b22e88fa92c0246f7259855489e54cf660ec"
   },
   {
+   "path": "world/ui/directions/common/plates.js",
+   "source": "2026-10-23-ui-direction/directions/common/plates.js",
+   "folder": "2026-10-23-ui-direction",
+   "bytes": 3637,
+   "sourceSha256": "1c028d1d95078daf8729eadd3202a8353679fd7f781faf8664bf28d36dd9468b"
+  },
+  {
    "path": "world/ui/directions/common/slots.js",
    "source": "2026-10-23-ui-direction/directions/common/slots.js",
    "folder": "2026-10-23-ui-direction",
-   "bytes": 5061,
-   "sourceSha256": "a37f50f0ead267aa311790c5b55c55fc87db90730af8a89cc0510edba217cce5"
+   "bytes": 5062,
+   "sourceSha256": "482e7356f2f4c995e0ec180187d1597d95bec1896c01b47a6aee32f833354b70"
+  },
+  {
+   "path": "world/ui/directions/common/sound.js",
+   "source": "2026-10-23-ui-direction/directions/common/sound.js",
+   "folder": "2026-10-23-ui-direction",
+   "bytes": 2243,
+   "sourceSha256": "f7f775ecf33f73f2953cfad3b0c26464531da6f9fec3b9d431ca1b7ba81511f6"
   },
   {
    "path": "world/ui/directions/common/type.css",
    "source": "2026-10-23-ui-direction/directions/common/type.css",
    "folder": "2026-10-23-ui-direction",
-   "bytes": 3327,
-   "sourceSha256": "1fbbeba5dbf43bd9e64f0cf80678ab0776790fc96275efc8e973cb784bcea76f"
+   "bytes": 4112,
+   "sourceSha256": "6248160cc095ab101b4a065a89f4ebc15f120c4ebd397f92916b0547ce942f4b"
   },
   {
    "path": "world/ui/directions/cs-max/exhibit.html",
@@ -8064,6 +8127,13 @@
    "sourceSha256": "029a3523476ccdcf2798f4dbf4d15ade17a38877dd5eff63e5f8c73bb931f329"
   },
   {
+   "path": "world/ui/shell/copy.js",
+   "source": "2026-10-23-ui-direction/shell/copy.js",
+   "folder": "2026-10-23-ui-direction",
+   "bytes": 735,
+   "sourceSha256": "1719e471249071ba2a2c5f5d5efed34a2de23048457e3a6e7ba32598aa8911b1"
+  },
+  {
    "path": "world/ui/shell/fonts/accession/accession.css",
    "source": "2026-10-23-ui-direction/shell/fonts/accession/accession.css",
    "folder": "2026-10-23-ui-direction",
@@ -8225,6 +8295,13 @@
    "sourceSha256": "da7d5c62608a1604ac187da654d950b3f989ff4cf0ece0c8429297106cc12f5f"
   },
   {
+   "path": "world/ui/shell/organic/band.js",
+   "source": "2026-10-23-ui-direction/shell/organic/band.js",
+   "folder": "2026-10-23-ui-direction",
+   "bytes": 1117,
+   "sourceSha256": "0c1ce85085dbafcac60f140f5c9f134624d1a3a3bb2d544aae8e7fe8f82ba9e2"
+  },
+  {
    "path": "world/ui/shell/organic/data/elements.json",
    "source": "2026-10-23-ui-direction/shell/organic/data/elements.json",
    "folder": "2026-10-23-ui-direction",
@@ -8253,25 +8330,60 @@
    "sourceSha256": "e9b0a5efde08ec561568c52870a7a8588a2de22b4a8803131f19eabc9e6a7071"
   },
   {
+   "path": "world/ui/shell/organic/focus-film.js",
+   "source": "2026-10-23-ui-direction/shell/organic/focus-film.js",
+   "folder": "2026-10-23-ui-direction",
+   "bytes": 1157,
+   "sourceSha256": "39dd95bfc52b27ffd2ef8cf748fd05c7598d427bef7a8a12c271bc8ffe01a839"
+  },
+  {
+   "path": "world/ui/shell/organic/gen-util.js",
+   "source": "2026-10-23-ui-direction/shell/organic/gen-util.js",
+   "folder": "2026-10-23-ui-direction",
+   "bytes": 1369,
+   "sourceSha256": "c19f962386377864e02b2fed33ad5c68b277f645596ce2e16c65786e590f2073"
+  },
+  {
+   "path": "world/ui/shell/organic/made.js",
+   "source": "2026-10-23-ui-direction/shell/organic/made.js",
+   "folder": "2026-10-23-ui-direction",
+   "bytes": 5283,
+   "sourceSha256": "ffbd32fad31f3abf1bf94b91a23330b504417ee0f4198bdfb86dbefcd32e25e2"
+  },
+  {
+   "path": "world/ui/shell/organic/menu.js",
+   "source": "2026-10-23-ui-direction/shell/organic/menu.js",
+   "folder": "2026-10-23-ui-direction",
+   "bytes": 2547,
+   "sourceSha256": "4ef7c65ed19edf4d1a15b91f7a71b09a1d0e40649cc1a0a970a6e9ab9b882a94"
+  },
+  {
    "path": "world/ui/shell/organic/organic-gen.js",
    "source": "2026-10-23-ui-direction/shell/organic/organic-gen.js",
    "folder": "2026-10-23-ui-direction",
-   "bytes": 14035,
-   "sourceSha256": "3940366f47372151edcdbea58acfef2762c39ef0708cfdf9122d01fe65873ad7"
+   "bytes": 10843,
+   "sourceSha256": "3fa91f21a7599e01931f068fdcbef45c9ed8648b7ff32c610e8c5019de211f99"
   },
   {
    "path": "world/ui/shell/organic/organic.css",
    "source": "2026-10-23-ui-direction/shell/organic/organic.css",
    "folder": "2026-10-23-ui-direction",
-   "bytes": 11872,
-   "sourceSha256": "b3f562ef287c973adcfcb3c66a5004927a57f56cda7917be5060a626958ac444"
+   "bytes": 12176,
+   "sourceSha256": "c717eb5b63c08cc32bd107cc36f27a3c2a96dc04f4e9ee3592a314b653c839df"
   },
   {
    "path": "world/ui/shell/organic/organic.js",
    "source": "2026-10-23-ui-direction/shell/organic/organic.js",
    "folder": "2026-10-23-ui-direction",
-   "bytes": 11151,
-   "sourceSha256": "e01dc397636354c82ece46eff50896fded4d6266e98337ae7bf53e85a180050a"
+   "bytes": 7059,
+   "sourceSha256": "d1ecc768ef26d38df1a93105ced76c8c3d57b588e2a8ff312314bf53202b2b7b"
+  },
+  {
+   "path": "world/ui/shell/organic/palettes.js",
+   "source": "2026-10-23-ui-direction/shell/organic/palettes.js",
+   "folder": "2026-10-23-ui-direction",
+   "bytes": 471,
+   "sourceSha256": "90035adee1dd0643a04c089a802320cc690a392aae095f97708d18faa1995dd7"
   },
   {
    "path": "world/ui/shell/organic/parts.css",
@@ -8309,6 +8421,13 @@
    "sourceSha256": "4c15f204626fdd59ebcbc20c927eda29586556b6b9156a3888ba5b864302bd47"
   },
   {
+   "path": "world/ui/shell/plates.js",
+   "source": "2026-10-23-ui-direction/shell/plates.js",
+   "folder": "2026-10-23-ui-direction",
+   "bytes": 3637,
+   "sourceSha256": "1c028d1d95078daf8729eadd3202a8353679fd7f781faf8664bf28d36dd9468b"
+  },
+  {
    "path": "world/ui/shell/shell.css",
    "source": "2026-10-23-ui-direction/shell/shell.css",
    "folder": "2026-10-23-ui-direction",
@@ -8319,8 +8438,8 @@
    "path": "world/ui/shell/shell.js",
    "source": "2026-10-23-ui-direction/shell/shell.js",
    "folder": "2026-10-23-ui-direction",
-   "bytes": 10460,
-   "sourceSha256": "11e1fa57aaa4aee9c093f1dbdbd2a5bf8132729016982c916bac2d8c12807c69"
+   "bytes": 6942,
+   "sourceSha256": "1092cc50b8ce4880fa91feb8e005b3574079303491a693f5ca6e1a8ec22ca7cc"
   },
   {
    "path": "world/ui/shell/slots.js",
@@ -8328,6 +8447,13 @@
    "folder": "2026-10-23-ui-direction",
    "bytes": 5061,
    "sourceSha256": "a37f50f0ead267aa311790c5b55c55fc87db90730af8a89cc0510edba217cce5"
+  },
+  {
+   "path": "world/ui/shell/sound.js",
+   "source": "2026-10-23-ui-direction/shell/sound.js",
+   "folder": "2026-10-23-ui-direction",
+   "bytes": 2243,
+   "sourceSha256": "f7f775ecf33f73f2953cfad3b0c26464531da6f9fec3b9d431ca1b7ba81511f6"
   },
   {
    "path": "world/ui/shell/template.html",
@@ -8340,8 +8466,8 @@
    "path": "world/ui/shell/type.css",
    "source": "2026-10-23-ui-direction/shell/type.css",
    "folder": "2026-10-23-ui-direction",
-   "bytes": 3243,
-   "sourceSha256": "3d5bdb7d47eb49fcc19113d9789a5c1a5f6cc892dcfed32a1005bce67156f20c"
+   "bytes": 4020,
+   "sourceSha256": "39030567923ad070ee211a6bfb954179aed4450e78e8693d8db178b38dcc7ec8"
   },
   {
    "path": "world/universe/lib/camera.js",
@@ -10542,10 +10668,51 @@
    "sourceSha256": "096ffb594b7dc75a2017aad71ff4d54d1455f0656d71a2225a299f454198eb0b"
   }
  ],
- "assetRevision": "world-5d4d803b42",
+ "assetRevision": "world-6826b089e2",
  "assetRevisionScope": [
   "world/",
   "studies/",
   "system/fonts/accession/"
+ ],
+ "partialImports": [
+  {
+   "at": "2026-11-15T05:49:33+00:00",
+   "why": "shell diet (six-surfaces step 4): the shell's core and its on-use parts, with the site's own edits to slots.js and type.css ported into the workshop first; the rest of the workshop's drift since 2026-10-26 is not taken",
+   "prefixes": [
+    "world/ui/shell/",
+    "world/ui/directions/common/"
+   ],
+   "files": [
+    "world/ui/directions/common/base.js",
+    "world/ui/directions/common/copy.js",
+    "world/ui/directions/common/organic/band.js",
+    "world/ui/directions/common/organic/focus-film.js",
+    "world/ui/directions/common/organic/gen-util.js",
+    "world/ui/directions/common/organic/made.js",
+    "world/ui/directions/common/organic/menu.js",
+    "world/ui/directions/common/organic/organic-gen.js",
+    "world/ui/directions/common/organic/organic.css",
+    "world/ui/directions/common/organic/organic.js",
+    "world/ui/directions/common/organic/palettes.js",
+    "world/ui/directions/common/plates.js",
+    "world/ui/directions/common/slots.js",
+    "world/ui/directions/common/sound.js",
+    "world/ui/directions/common/type.css",
+    "world/ui/shell/copy.js",
+    "world/ui/shell/organic/band.js",
+    "world/ui/shell/organic/focus-film.js",
+    "world/ui/shell/organic/gen-util.js",
+    "world/ui/shell/organic/made.js",
+    "world/ui/shell/organic/menu.js",
+    "world/ui/shell/organic/organic-gen.js",
+    "world/ui/shell/organic/organic.css",
+    "world/ui/shell/organic/organic.js",
+    "world/ui/shell/organic/palettes.js",
+    "world/ui/shell/plates.js",
+    "world/ui/shell/shell.js",
+    "world/ui/shell/sound.js",
+    "world/ui/shell/type.css"
+   ]
+  }
  ]
 }

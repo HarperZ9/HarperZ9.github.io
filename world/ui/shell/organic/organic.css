@@ -3,8 +3,8 @@
 /* ---------- material regions ---------- */
 [data-material]{--m-ground:var(--card,#e8e2d4);--m-ink:var(--ink);--m-accent:var(--drift)}
 
-/* ---------- focus: thin-film light (organic-gen.js sets the colours from thinfilm.mjs) ---------- */
-:root{--o-film-a:#c58a2a;--o-film-b:#4f7fc4}
+/* ---------- focus: thin-film light (focus-film.js drifts the colours from thinfilm.mjs; these two are the film at rest, filmRgb8(420) and filmRgb8(560)) ---------- */
+:root{--o-film-a:#cb57ff;--o-film-b:#d09fd8}
 :focus-visible{outline:3px solid var(--o-film-a);outline-offset:3px;box-shadow:0 0 0 6px color-mix(in srgb,var(--o-film-b) 55%,transparent)}
 @media (forced-colors:active){:focus-visible{outline:3px solid Highlight;box-shadow:none}}
 

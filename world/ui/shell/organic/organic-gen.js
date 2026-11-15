@@ -1,5 +1,6 @@
-// organic-gen: UI components powered by our own generators. Each one calls the original module (no copied
-// code) and keeps a real control underneath. If a generator cannot load, the component keeps the procedural
+// organic-gen: UI components powered by our own generators, fetched through made.js on a page that holds one.
+// The focus rings live in focus-film.js and the menu ground in menu.js, each fetched when first used.
+// Each one calls the original module (no copied code) and keeps a real control underneath. If a generator cannot load, the component keeps the procedural
 // shape from organic.js and logs why. Reduced motion and plain view get the generator's finished, still state.
 //
 //   focus rings      thin-film light           substrate/lib/thinfilm.mjs   filmRgb8
@@ -10,34 +11,7 @@
 //   hover ripple     water surface             glass/liquid.js              Water
 //   any ground       any super-framework node  superframe/lib/graph.mjs     evaluate (data-o-node)
 //   loading, labels  lettering library         lettering (through shell display slots)
-const root = document.documentElement;
-const reduced = matchMedia("(prefers-reduced-motion: reduce)");
-const still = () => reduced.matches || root.classList.contains("plain");
-import { workspaceRoot } from "./root.js";
-const WS = (() => { try { return new URL(workspaceRoot()); } catch (e) { console.info(e.message); return null; } })();
-const load = (p) => (WS ? import(new URL(p, WS).href) : Promise.reject(new Error("workspace root unknown, " + p + " skipped")));
-const clock = (f) => window.UIShell?.clock?.subscribe?.(f) ?? (() => {});
-const DPR = () => Math.min(devicePixelRatio || 1, 2);
-const css = (el, k) => getComputedStyle(el).getPropertyValue(k).trim();
-const hexRgb = (h) => { const c = document.createElement("canvas").getContext("2d"); c.fillStyle = h; const v = c.fillStyle; return v.startsWith("#") ? [1, 3, 5].map((i) => parseInt(v.slice(i, i + 2), 16)) : (v.match(/\d+/g) || [0, 0, 0]).slice(0, 3).map(Number); };
-function canvasIn(el, cls) {
-  let cv = el.querySelector(`:scope > canvas.${cls}`);
-  if (!cv) { cv = document.createElement("canvas"); cv.className = cls; cv.setAttribute("aria-hidden", "true"); cv.dataset.art = ""; el.prepend(cv); }
-  return cv;
-}
-
-// ---- focus rings in thin-film light. The film thickness drifts slowly while something has focus.
-async function focusFilm() {
-  const { filmRgb8, hex } = await load("substrate/lib/thinfilm.mjs");
-  let d = 420, off = null;
-  const set = () => {
-    root.style.setProperty("--o-film-a", hex(filmRgb8(d)));
-    root.style.setProperty("--o-film-b", hex(filmRgb8(d + 140)));
-  };
-  set();
-  document.addEventListener("focusin", () => { if (off || still()) return; off = clock((t) => { d = 380 + 160 * (0.5 + 0.5 * Math.sin(t * 0.7)); set(); }); });
-  document.addEventListener("focusout", () => { setTimeout(() => { if (!document.activeElement || document.activeElement === document.body) { off?.(); off = null; } }, 0); });
-}
+import { still, load, clock, DPR, css, hexRgb, canvasIn } from "./gen-util.js";
 
 // ---- panel grounds painted with the brush engine, in the region's material colour.
 async function brushPanels(els) {
@@ -66,27 +40,6 @@ async function brushPanels(els) {
     };
     try { paint(); } catch (e) { console.warn("organic: brush panel failed; procedural edge kept", e); }
   }
-}
-
-// ---- the menu ground: sand thrown onto a plate settles into its nodal lines when the menu opens.
-async function sandMenu(dlg) {
-  const C = await load("feed-22/build/chladni.js");
-  const cv = canvasIn(dlg, "o-sand"), g = cv.getContext("2d", { colorSpace: "display-p3" });
-  let field = null, sand = null, off = null;
-  const draw = () => {
-    const w = cv.width, h = cv.height, s = DPR();
-    g.clearRect(0, 0, w, h); g.fillStyle = getComputedStyle(dlg).color;
-    for (let i = 0; i < sand.n; i++) { const x = (sand.x[i] + 1) / 2 * w, y = (sand.y[i] + 1) / 2 * h; g.globalAlpha = 0.35 + 0.5 * sand.tone[i]; g.fillRect(x, y, s * sand.size[i] * 1.4, s * sand.size[i] * 1.4); }
-    g.globalAlpha = 1;
-  };
-  dlg.addEventListener("toggle", () => {
-    if (!dlg.open) { off?.(); off = null; return; }
-    const r = dlg.getBoundingClientRect(); cv.width = Math.round(r.width * DPR()); cv.height = Math.round(r.height * DPR());
-    field = C.membraneAmplitude(3, 5, 40, 96); sand = new C.Sand(2600, { seed: 9 });
-    if (still()) { for (let i = 0; i < 260; i++) sand.step(field); draw(); return; }
-    let n = 0;
-    off = clock(() => { for (let k = 0; k < 3; k++) sand.step(field); draw(); if (++n > 120) { off?.(); off = null; } });
-  });
 }
 
 // ---- switch: the "on" state develops like a print in the tray (H and D density over time).
@@ -193,9 +146,7 @@ async function nodeGrounds(els) {
 export async function initGenerators() {
   const q = (s) => [...document.querySelectorAll(s)];
   const jobs = [
-    focusFilm(),
     brushPanels(q('[data-o="panel"][data-brush], [data-o="panel"][data-material="ink-brush"]')),
-    ...q('dialog[data-o="menu"]').map(sandMenu),
     developSwitches(q('[data-o="switch"]')),
     ropeRanges(q('input[type="range"][data-o="range"]')),
     ripples(q('[data-o="ripple"], [data-o-ripple]')),
