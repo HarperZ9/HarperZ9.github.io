@@ -39,6 +39,15 @@
    ]
   },
   {
+   "id": "playground-shader",
+   "page": "/playground/#shader",
+   "form": "live",
+   "what": "The shader room compiles the visitor's fragment shader in the browser and runs it on the visitor's graphics card.",
+   "modules": [
+    "shader"
+   ]
+  },
+  {
    "id": "bench",
    "page": "/elements.html",
    "form": "live",

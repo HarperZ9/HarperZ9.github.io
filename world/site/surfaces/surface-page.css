@@ -46,3 +46,5 @@ body.sx-body .gw-backdrop::before { content: ""; position: absolute; inset: 0; z
 .snd-book { list-style: none; margin: 0; padding: 0; display: grid; gap: .7rem; }
 .snd-book li { display: grid; gap: .15rem; }
 .snd-book code { overflow-wrap: anywhere; font-size: .92em; }
+/* The shader room's still: its first shader as written. */
+.shd-still { margin: 0; max-height: 16rem; overflow: auto; font: 13px/1.5 ui-monospace, "Cascadia Mono", "SF Mono", Menlo, Consolas, monospace; white-space: pre; tab-size: 2; }

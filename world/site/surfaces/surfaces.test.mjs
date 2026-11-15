@@ -126,7 +126,7 @@ test('the registry: every tool folder has a row, every surface keeps the contrac
   assert.equal(TOOLS.find((t) => t.id === 'world/feed-23').mounted, 'well'); assert.equal(LOOSE.filter((t) => t.overlap).length, 1, 'one overlap with bench code is named (the fibre sheet now uses the fibre module itself)');
   assert.deepEqual(chain('elements', 'png'), ['well']); assert.deepEqual(chain('elements', 'type'), ['blend', 'lettering']); assert.deepEqual(chain('elements', 'palette'), ['blend']);
   assert.deepEqual(chain('settings', 'json'), ['recipe']); assert.deepEqual(chain('elements', 'motion'), ['blend', 'motion']); assert.deepEqual(chain('elements', 'wav'), ['blend', 'sound'], 'a blend reaches a sound file through the sound room');
-  assert.equal(chain('elements', 'gcode'), null); assert.deepEqual(chain('palette', 'png'), ['plot']);
+  assert.deepEqual(chain('elements', 'gcode'), ['well', 'shader'], 'the well’s picture reaches plotter moves through the shader room'); assert.deepEqual(chain('palette', 'png'), ['plot']);
 });
 
 test('an element says which tools draw it and which pages use it', () => {
