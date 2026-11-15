@@ -1,0 +1,14 @@
+{
+  "date": "2026-11-14",
+  "note": "Findings wave 2, first part: six tier B findings join the Findings section (F28, F33, F38, F204, F209, F210), each reread and every number on it checked against its result file before publishing. The Findings listing now says thirty-six findings, twelve of them honest nulls, in the publications page, the feeds and the publication index; the sitemap, the route registry and the site index gain the six pages; the build receipt follows. The Superframe page's version fact changed from 0.2.0 to 0.3.0 (GitHub release v0.3.0, published 14 November 2026, read with gh).",
+  "paths": {
+    "feed.json": "b4d4bf63b59492554108ad91f8c9f4874eff6ef9f56e2fd7d08b42a538715e8a",
+    "feed.xml": "ced2b73365d058989788bf234fb19fe8d5a7702923d94813de5d831e89c2ffbf",
+    "publications.html": "6d0f988e001e6d726fedc4e5f4ed2efbbf1077ec00db1ffebec2a542ca24837e",
+    "publications/build.json": "cdda25c365fd5ff209096f9f498b9afd719f9b15c448a89f73e87daba645981f",
+    "publications/data/index.json": "9d51c8dea4b8b9e00cd247f225aa6ed344a1b524bb8b433a75161a84c2053c60",
+    "site-index.html": "a9abad6cab15c9bb103ed6ae58a65132834dcdaf307da40f7c7619f0fcad3b1e",
+    "sitemap.xml": "818339cc5dd04c485f4a0a045e65692a264eddb41c51764be4d561d4cc9e2138",
+    "system/routes.js": "9727a790a9d15b3ec5402e92f208bd974815e8deb0243d0a29c8309184e7c67d"
+  }
+}

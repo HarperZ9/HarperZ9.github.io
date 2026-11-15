@@ -1,0 +1,65 @@
+{
+ "schema": "buildlang.buildtex-receipt/v0",
+ "source": {
+  "path": "F204.bld",
+  "sha256": "8f6780ed2395b6effc32112547819976d7b615dab647d2a63559dbdd778c8e9f"
+ },
+ "ir_sha256": "865260ce6a830dfcad41b26850d44470a776a5ae62e93d8e871702c623c42096",
+ "theme": "paper",
+ "overrides": [],
+ "outputs": {
+  "F204.pdf": "620e36d626e7a7aca2972baae35689c16571ca48763fe4c8d37bd45fce53439c"
+ },
+ "pdf_metadata": {
+  "pdfa": false,
+  "creation_date": "D:20261109000000Z"
+ },
+ "facts": {
+  "pages": 9,
+  "pages_layout": 9,
+  "overfull": [],
+  "underfull": 0,
+  "missing_glyphs": [],
+  "glyph_fallbacks": [],
+  "math_errors": [],
+  "fonts": [
+   {
+    "name": "CKEJHD+NotoSansMath-Regular",
+    "embedded": true
+   },
+   {
+    "name": "EKACMO+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "HOEKLH+AccessionDisplay-Master",
+    "embedded": true
+   },
+   {
+    "name": "ICKCFK+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "KIOIMC+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "NHGELB+HankenGrotesk-Regular",
+    "embedded": true
+   }
+  ],
+  "images": 3,
+  "blind_text_runs": 0,
+  "reading_order": true,
+  "blocks_missing_from_text": [],
+  "pdf_bytes": 531643
+ },
+ "failed": [],
+ "notes": [
+  "buildc run F204.bld -> F204.doc.tsv",
+  "press: relief 1275x444 px at 150 dpi; 0 blind line(s); foil colour source: fallback constant"
+ ],
+ "external_programs": [
+  "buildc"
+ ]
+}

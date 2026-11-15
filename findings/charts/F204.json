@@ -1,0 +1,262 @@
+{
+ "finding": "F204",
+ "sources": [
+  {
+   "id": "result",
+   "name": "result.json (second run)",
+   "sha256_original": "2aca513516dbd12215b2e93776406f8916982172d2ba044997877a1a46000387",
+   "sha256_copy": "d183ef6401c9447bb096a716afe98e132988030976ab087bac3a6cbbd8046c60",
+   "href": "/findings/results/F204/result.json",
+   "run": "20261031T110819Z"
+  }
+ ],
+ "charts": [
+  {
+   "key": "design",
+   "form": "flow",
+   "at": "controls",
+   "claims": [
+    "c1",
+    "c3"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "How faults were planted and which tests were asked to catch them.",
+   "takeaway": "Of 47 single faults that passed one calibration point, the backward and contrary checks caught 39 and a wide forward test caught 29; 7 passed every test.",
+   "n": "200 single faults planted, 52 crashed a test, 148 scored, 9 equivalent, 47 passed the calibration point",
+   "steps": [
+    {
+     "kind": "planted",
+     "label": "Planted: 200 single faults",
+     "detail": "One arithmetic slip at a time at every arithmetic site of eight small instrument models. Everything here is simulated."
+    },
+    {
+     "kind": "data",
+     "label": "47 quiet faults",
+     "detail": "Faults that change the output and still pass one calibration point with a known answer."
+    },
+    {
+     "kind": "measure",
+     "label": "Three-way: backward and contrary checks",
+     "detail": "Run the model backward against itself and against its contrary. Neither needs a known answer."
+    },
+    {
+     "kind": "control",
+     "label": "Comparison: a wide forward test",
+     "detail": "Many forward reference points with known answers, written before any fault was scored."
+    },
+    {
+     "kind": "verdict",
+     "holds": false,
+     "no": "forecast failed",
+     "label": "Forecast: the wide test wins. It caught 29, the checks 39",
+     "detail": "11 faults fell only to the backward and contrary checks and 1 only to the wide test. A model that is wrong in a self-consistent way passes both."
+    }
+   ]
+  },
+  {
+   "key": "instruments",
+   "form": "bars",
+   "at": "results",
+   "claims": [
+    "c2"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "Quiet faults caught by each test, instrument by instrument.",
+   "takeaway": "One instrument, the Radon projector, supplies 23 of the 47 faults, and in three instruments the backward and contrary checks caught none.",
+   "units": "single faults caught, out of those that passed the calibration point in that instrument (the stored share times the stored count)",
+   "n": "47 single faults that passed the calibration point, in eight instrument models",
+   "interval": null,
+   "no_interval": "The result file holds counts per instrument with no interval; the study's sign-flip p for the totals is 0.003.",
+   "baseline": "The wide forward test on the same faults",
+   "threshold": "No bar per instrument; the preregistered verdicts are on the totals",
+   "series_names": [
+    "Backward and contrary checks",
+    "Wide forward test"
+   ],
+   "axis": {
+    "label": "single faults caught",
+    "min": 0
+   },
+   "rows": [
+    {
+     "label": "Wide forward test",
+     "group": "Thin film: 6 quiet faults",
+     "value": 4,
+     "series": 1,
+     "note": "4 of 6"
+    },
+    {
+     "label": "Backward and contrary checks",
+     "group": "Thin film: 6 quiet faults",
+     "value": 6,
+     "series": 0,
+     "note": "6 of 6"
+    },
+    {
+     "label": "Wide forward test",
+     "group": "Angular spectrum: 3 quiet faults",
+     "value": 0,
+     "series": 1,
+     "note": "0 of 3"
+    },
+    {
+     "label": "Backward and contrary checks",
+     "group": "Angular spectrum: 3 quiet faults",
+     "value": 0,
+     "series": 0,
+     "note": "0 of 3"
+    },
+    {
+     "label": "Wide forward test",
+     "group": "Wave, leapfrog: 1 quiet fault",
+     "value": 0,
+     "series": 1,
+     "note": "0 of 1"
+    },
+    {
+     "label": "Backward and contrary checks",
+     "group": "Wave, leapfrog: 1 quiet fault",
+     "value": 0,
+     "series": 0,
+     "note": "0 of 1"
+    },
+    {
+     "label": "Wide forward test",
+     "group": "Blur: 0 quiet faults",
+     "value": 0,
+     "series": 1,
+     "note": "0 of 0"
+    },
+    {
+     "label": "Backward and contrary checks",
+     "group": "Blur: 0 quiet faults",
+     "value": 0,
+     "series": 0,
+     "note": "0 of 0"
+    },
+    {
+     "label": "Wide forward test",
+     "group": "Radon projector: 23 quiet faults",
+     "value": 17,
+     "series": 1,
+     "note": "17 of 23"
+    },
+    {
+     "label": "Backward and contrary checks",
+     "group": "Radon projector: 23 quiet faults",
+     "value": 23,
+     "series": 0,
+     "note": "23 of 23"
+    },
+    {
+     "label": "Wide forward test",
+     "group": "Heat diffusion: 3 quiet faults",
+     "value": 0,
+     "series": 1,
+     "note": "0 of 3"
+    },
+    {
+     "label": "Backward and contrary checks",
+     "group": "Heat diffusion: 3 quiet faults",
+     "value": 0,
+     "series": 0,
+     "note": "0 of 3"
+    },
+    {
+     "label": "Wide forward test",
+     "group": "Ray matrices: 4 quiet faults",
+     "value": 4,
+     "series": 1,
+     "note": "4 of 4"
+    },
+    {
+     "label": "Backward and contrary checks",
+     "group": "Ray matrices: 4 quiet faults",
+     "value": 4,
+     "series": 0,
+     "note": "4 of 4"
+    },
+    {
+     "label": "Wide forward test",
+     "group": "Stokes analyzer: 7 quiet faults",
+     "value": 4,
+     "series": 1,
+     "note": "4 of 7"
+    },
+    {
+     "label": "Backward and contrary checks",
+     "group": "Stokes analyzer: 7 quiet faults",
+     "value": 6,
+     "series": 0,
+     "note": "6 of 7"
+    }
+   ],
+   "columns": [
+    "Instrument",
+    "Quiet faults",
+    "Caught by the wide forward test",
+    "Caught by backward and contrary checks"
+   ],
+   "table": [
+    [
+     "Thin film",
+     "6",
+     "4",
+     "6"
+    ],
+    [
+     "Angular spectrum",
+     "3",
+     "0",
+     "0"
+    ],
+    [
+     "Wave, leapfrog",
+     "1",
+     "0",
+     "0"
+    ],
+    [
+     "Blur",
+     "0",
+     "0",
+     "0"
+    ],
+    [
+     "Radon projector",
+     "23",
+     "17",
+     "23"
+    ],
+    [
+     "Heat diffusion",
+     "3",
+     "0",
+     "0"
+    ],
+    [
+     "Ray matrices",
+     "4",
+     "4",
+     "4"
+    ],
+    [
+     "Stokes analyzer",
+     "7",
+     "4",
+     "6"
+    ],
+    [
+     "All eight",
+     "47",
+     "29",
+     "39"
+    ]
+   ]
+  }
+ ]
+}

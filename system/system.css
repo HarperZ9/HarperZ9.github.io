@@ -3145,7 +3145,7 @@ section.mv{
 /* ============================================================================
    Zain Dana Harper site-wide shell (2026-07-19)
    Late layer that remaps the historical static-page contract to the approved
-   Zentropy material without breaking older page selectors.
+   site material without breaking older page selectors.
    ============================================================================ */
 :root{
   --zentropy-void:var(--ground-instrument);
