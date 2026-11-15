@@ -81,7 +81,7 @@ export default function EmetWitness() {
       <p className="emet-foot mono">
         Only three verdicts exist. There is no <span className="emet-strike">TRUSTED</span>, no{" "}
         <span className="emet-strike">APPROVED</span>, no <span className="emet-strike">SAFE</span>. By construction.{" "}
-        Re-run it anywhere: <a href="https://github.com/HarperZ9/emet" rel="noopener">github.com/HarperZ9/emet</a>.
+        Re-run it anywhere: <a href="https://github.com/HarperZ9/flywheel/tree/main/packages/emet" rel="noopener">github.com/HarperZ9/flywheel/tree/main/packages/emet</a>.
       </p>
     </div>
   );

@@ -82,7 +82,7 @@ export default function GateDemo() {
       </div>
       <p className="demo-note">
         This is the real decision logic, the same default-deny that ships in{" "}
-        <a href="https://github.com/HarperZ9/proof-surface" rel="noopener">proof-surface</a>. Honest
+        <a href="https://github.com/HarperZ9/flywheel/tree/main/packages/proof-surface" rel="noopener">proof-surface</a>. Honest
         limit: the gate recommends; the program around it enforces.
       </p>
     </div>

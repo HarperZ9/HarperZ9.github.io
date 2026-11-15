@@ -7,7 +7,7 @@
       "name": "EMET",
       "purpose": "EMET checks whether the bytes that reach a model, reviewer or pipeline still match their source. It anchors content, compares it later, neutralizes instructions embedded in it, and writes a verdict file that its Python, Rust, Node and Go implementations all read the same way.",
       "maturity": "shipped",
-      "source": "https://github.com/HarperZ9/emet",
+      "source": "https://github.com/HarperZ9/flywheel/tree/main/packages/emet",
       "installOrEntry": "python -m pip install emet==1.3.0",
       "verificationCommand": "emet selftest; emet check receipt.json",
       "limitations": [
@@ -21,7 +21,7 @@
       "name": "Proof Surface",
       "purpose": "Proof Surface is a Python library and telos-proof CLI that validates records of AI workflow steps, authorizations, delegations and finished work, and returns allow, deny or needs-human recommendations. It never runs the action itself.",
       "maturity": "active",
-      "source": "https://github.com/HarperZ9/proof-surface",
+      "source": "https://github.com/HarperZ9/flywheel/tree/main/packages/proof-surface",
       "installOrEntry": null,
       "verificationCommand": null,
       "limitations": [
@@ -50,7 +50,7 @@
       "name": "behavior-transform.io",
       "purpose": "behavior-transform.io is a local Python wrapper and hook layer for file reads and writes, subprocesses, HTTP fetches, user input and MCP traffic. Given a request, a mode and local text rules, it passes the content through or transforms it, and returns the result with hashes and substitution counts.",
       "maturity": "active",
-      "source": "https://github.com/HarperZ9/behavior-transform.io",
+      "source": "https://github.com/HarperZ9/flywheel/tree/main/packages/behavior-transform.io",
       "installOrEntry": null,
       "verificationCommand": null,
       "limitations": [
@@ -162,7 +162,7 @@
       "name": "Accountable Surface",
       "purpose": "Accountable Surface lets an AI agent take only the file, command, web or browser actions a person has approved. It checks each request, blocks or pauses when needed, checks the outcome, rolls back reversible failures, and keeps a hash-chained journal of decisions and outcomes.",
       "maturity": "active",
-      "source": "https://github.com/HarperZ9/accountable-surface",
+      "source": "https://github.com/HarperZ9/flywheel/tree/main/packages/accountable-surface",
       "installOrEntry": "python -m pip install accountable-surface==0.3.1",
       "verificationCommand": "From a source checkout at tag v0.3.1: python -m pip install -e \".[test]\"; python examples/demo.py; python -m pytest",
       "limitations": [
@@ -177,7 +177,7 @@
       "name": "Public Surface Sweeper",
       "purpose": "Public Surface Sweeper checks a repository or local portfolio before you publish it: missing public files, unclear README handoff, credential-like strings, release metadata, proof-packet readiness and drift across a workspace.",
       "maturity": "shipped",
-      "source": "https://github.com/HarperZ9/public-surface-sweeper",
+      "source": "https://github.com/HarperZ9/flywheel/tree/main/packages/public-surface-sweeper",
       "installOrEntry": "python -m pip install public-surface-sweeper==0.1.3; public-surface-sweeper <workspace> --workspace --json",
       "verificationCommand": "Verify GitHub or PyPI v0.1.3 download hashes; public-surface-sweeper . --summary; public-surface-sweeper <workspace> --workspace --json",
       "limitations": [
@@ -192,7 +192,7 @@
       "name": "Model Provenance Validator",
       "purpose": "Model Provenance Validator checks JSON records that link a model or release claim to its sources and retrieval dates, redacts credential-like values from its output, and can emit a Proof Surface packet.",
       "maturity": "shipped",
-      "source": "https://github.com/HarperZ9/model-provenance-validator",
+      "source": "https://github.com/HarperZ9/flywheel/tree/main/packages/model-provenance-validator",
       "installOrEntry": "python -m pip install model-provenance-validator; model-provenance-validator examples/envelopes/release.provenance.json",
       "verificationCommand": "python -m pip install -e \".[test]\"; model-provenance-validator examples/envelopes/release.provenance.json; python -m pytest",
       "limitations": [
@@ -206,7 +206,7 @@
       "name": "Secret Redact IO",
       "purpose": "Secret Redact IO is a Python library that redacts secrets from file, fetch, write and subprocess output.",
       "maturity": "shipped",
-      "source": "https://github.com/HarperZ9/secret-redact-io",
+      "source": "https://github.com/HarperZ9/flywheel/tree/main/packages/secret-redact-io",
       "installOrEntry": "python -m pip install https://github.com/HarperZ9/secret-redact-io/releases/download/v0.1.0/io_guardrails-0.1.0-py3-none-any.whl; io-guard read README.md --json",
       "verificationCommand": "python -m pip install -e \".[dev]\"; python -m pytest",
       "limitations": [
@@ -220,7 +220,7 @@
       "name": "Agent Hook Pack",
       "purpose": "Agent Hook Pack installs hooks for secret checks, branch guards, environment synchronization and repository hygiene.",
       "maturity": "shipped",
-      "source": "https://github.com/HarperZ9/agent-hook-pack",
+      "source": "https://github.com/HarperZ9/flywheel/tree/main/packages/agent-hook-pack",
       "installOrEntry": "python -m pip install -e .; agent-hook-pack audit; agent-hook-pack list",
       "verificationCommand": "python -m pip install -e \".[test]\"; agent-hook-pack audit; python -m pytest",
       "limitations": [
@@ -234,7 +234,7 @@
       "name": "Repo Proof Index",
       "purpose": "Repo Proof Index scans the proof packets, receipts and contracts in a repository and builds a reviewer index with the type, status, summary and path of each file.",
       "maturity": "shipped",
-      "source": "https://github.com/HarperZ9/repo-proof-index",
+      "source": "https://github.com/HarperZ9/flywheel/tree/main/packages/repo-proof-index",
       "installOrEntry": "python -m pip install repo-proof-index==0.2.0; repo-proof-index contracts/*.json --summary",
       "verificationCommand": "python -m pip install -e \".[test]\"; repo-proof-index examples/contracts/*.json --summary; python -m pytest",
       "limitations": [

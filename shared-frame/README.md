@@ -4,7 +4,7 @@
 
 A single self-contained page where a model and a human look at the **same** generated frame
 through their two native apertures — you see an image, the model sees witnessed structure — bound
-by a [coherence-membrane](https://github.com/HarperZ9/coherence-membrane) `Certificate` you can
+by a [coherence-membrane](https://github.com/HarperZ9/flywheel/tree/main/packages/coherence-membrane) `Certificate` you can
 re-derive in your own browser. Proof, not assertion.
 
 ## What you're looking at

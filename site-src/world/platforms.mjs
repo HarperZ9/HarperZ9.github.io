@@ -90,7 +90,7 @@ const ROWS = {
   articulate: { hue: "artiql8", product: "Articulate", name: "ARTICULATE", mark: "ARTIQL8",
     try: "#w-articulate", what: "Names each writing pattern in your prose with the line it is on, on your own computer.",
     see: ["/repo-explainers/articulate.html", "How it works, animated"], more: ["/articulate.html", "Articulate"],
-    run: "pip install articulate-writing", then: "articulate check notes.md", repo: "https://github.com/HarperZ9/articulate" },
+    run: "pip install articulate-writing", then: "articulate check notes.md", repo: "https://github.com/HarperZ9/flywheel/tree/main/packages/articulate" },
   research: { hue: "rsrch", product: "Essays and papers", name: "RESEARCH", mark: "RSRCH",
     try: "#w-writing", what: "Essays, papers and the experiments behind them, each written down before it ran, nulls included.",
     see: ["/experiments/", "Every experiment, nulls included"], more: ["/research.html", "Papers and essays"] },

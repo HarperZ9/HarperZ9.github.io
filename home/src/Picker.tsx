@@ -26,7 +26,7 @@ const PICKS: Pick[] = [
     cmd: "cargo install buildlang", href: "https://crates.io/crates/buildlang" },
   { problem: "Actually learn the material", engine: "learn",
     line: "Turns your own notes into a course: spaced repetition, retrieval practice, honest grading.",
-    cmd: "git clone https://github.com/HarperZ9/learn", href: "https://github.com/HarperZ9/learn" },
+    cmd: "git clone https://github.com/HarperZ9/learn", href: "https://github.com/HarperZ9/flywheel/tree/main/packages/learn" },
   { problem: "The whole workbench", engine: "telos",
     line: "Shared human/model workspace: durable state, senses, actuation, and proof packets. Honestly early.",
     cmd: "git clone https://github.com/HarperZ9/telos", href: "https://github.com/HarperZ9/telos" },

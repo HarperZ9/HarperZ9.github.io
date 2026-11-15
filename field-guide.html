@@ -57,10 +57,10 @@
     <div class="repo-list" aria-label="Zain Dana Harper public links">
       <a href="https://harperz9.github.io">Main site</a>
       <a href="https://github.com/HarperZ9">GitHub profile</a>
-      <a href="https://github.com/HarperZ9/gather">gather</a>
-      <a href="https://github.com/HarperZ9/index">index</a>
-      <a href="https://github.com/HarperZ9/forum">forum</a>
-      <a href="https://github.com/HarperZ9/crucible">crucible</a>
+      <a href="https://github.com/HarperZ9/flywheel/tree/main/packages/gather">gather</a>
+      <a href="https://github.com/HarperZ9/flywheel/tree/main/packages/index">index</a>
+      <a href="https://github.com/HarperZ9/flywheel/tree/main/packages/forum">forum</a>
+      <a href="https://github.com/HarperZ9/flywheel/tree/main/packages/crucible">crucible</a>
       <a href="https://github.com/HarperZ9/telos">the telos engine</a>
     </div>
   </div>
@@ -88,7 +88,7 @@
     <article class="field-card">
       <span class="tag">Doctor / clinical admin</span>
       <h3>Can a summary keep its uncertainty attached?</h3>
-      <p><b>Demo:</b> take a de-identified intake note, a clinic policy excerpt, and a reviewer note. Use <a href="https://github.com/HarperZ9/gather">gather</a> to preserve source fragments and receipts, then use <a href="https://github.com/HarperZ9/forum">forum</a> to route the review steps into a causal ledger.</p>
+      <p><b>Demo:</b> take a de-identified intake note, a clinic policy excerpt, and a reviewer note. Use <a href="https://github.com/HarperZ9/flywheel/tree/main/packages/gather">gather</a> to preserve source fragments and receipts, then use <a href="https://github.com/HarperZ9/flywheel/tree/main/packages/forum">forum</a> to route the review steps into a causal ledger.</p>
       <p><b>Proof to inspect:</b> every sentence in the summary should point back to an intake fragment, policy line, reviewer/tool handoff, or an explicit <span translate="no">UNVERIFIABLE</span> limit.</p>
       <ul>
         <li><span>Break test:</span> remove one source fragment and see whether the digest or ledger still catches the missing support.</li>
@@ -114,14 +114,14 @@
       <p><b>Proof to inspect:</b> each published sentence should map to a witnessed source, a conflict note, an editorial decision, or <span translate="no">UNVERIFIABLE</span>. The model should not be the only witness to its own source check.</p>
       <ul>
         <li><span>Break test:</span> swap one quote or image source after the review and see whether the check catches drift.</li>
-        <li><span>Repos:</span> <a href="https://github.com/HarperZ9/gather">gather</a>, <a href="https://github.com/HarperZ9/forum">forum</a>, and <a href="https://github.com/HarperZ9/crucible">crucible</a>.</li>
+        <li><span>Repos:</span> <a href="https://github.com/HarperZ9/flywheel/tree/main/packages/gather">gather</a>, <a href="https://github.com/HarperZ9/flywheel/tree/main/packages/forum">forum</a>, and <a href="https://github.com/HarperZ9/flywheel/tree/main/packages/crucible">crucible</a>.</li>
       </ul>
     </article>
 
     <article class="field-card">
       <span class="tag">Token economy / routing</span>
       <h3>Can the ledger show where model calls bought evidence?</h3>
-      <p><b>Demo:</b> route a multi-step agent task through <a href="https://github.com/HarperZ9/forum">forum</a>. Keep the deterministic routing, budget stop, escalation, and delivery pass in the ledger. Use <a href="https://github.com/HarperZ9/index">index</a> to map the workspace before asking a stronger model to reason over it.</p>
+      <p><b>Demo:</b> route a multi-step agent task through <a href="https://github.com/HarperZ9/flywheel/tree/main/packages/forum">forum</a>. Keep the deterministic routing, budget stop, escalation, and delivery pass in the ledger. Use <a href="https://github.com/HarperZ9/flywheel/tree/main/packages/index">index</a> to map the workspace before asking a stronger model to reason over it.</p>
       <p><b>Proof to inspect:</b> expensive model calls should have a reason: evidence coverage, route uncertainty, intent verification, or a specific unresolved question. Confident prose without a ledger reason is waste.</p>
       <ul>
         <li><span>Break test:</span> force a cheap route where escalation is needed, or escalate every step, then compare ledger quality and token spend.</li>
@@ -132,7 +132,7 @@
     <article class="field-card wide">
       <span class="tag">Reasoning / public claims</span>
       <h3>Can the final authority live outside the model?</h3>
-      <p><b>Demo:</b> write a thesis with measurable claims, falsification conditions, and source substrate. Use <a href="https://github.com/HarperZ9/crucible">Crucible</a> to steelman the claim, measure what holds, report <span translate="no">MATCH</span>, <span translate="no">DRIFT</span>, or <span translate="no">UNVERIFIABLE</span>, then refine the weakest axis.</p>
+      <p><b>Demo:</b> write a thesis with measurable claims, falsification conditions, and source substrate. Use <a href="https://github.com/HarperZ9/flywheel/tree/main/packages/crucible">Crucible</a> to steelman the claim, measure what holds, report <span translate="no">MATCH</span>, <span translate="no">DRIFT</span>, or <span translate="no">UNVERIFIABLE</span>, then refine the weakest axis.</p>
       <p><b>Proof to inspect:</b> the answer should not be "the model thinks this is right." The answer should be a record a person can inspect: what claim was tested, what evidence supported it, what refuted it, what drifted, and what remained unverified.</p>
       <ul>
         <li><span>Break test:</span> make one claim too vague to measure and require the system to say <span translate="no">UNVERIFIABLE</span> rather than rescue it.</li>

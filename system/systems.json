@@ -788,7 +788,7 @@
         "large-workspace router jobs with progress and result recovery"
       ],
       "href": "index-graph.html",
-      "sourceHref": "https://github.com/HarperZ9/index",
+      "sourceHref": "https://github.com/HarperZ9/flywheel/tree/main/packages/index",
       "domains": [
         "developer-infrastructure",
         "evaluation-verification"
@@ -944,7 +944,7 @@
         "corpus verification and pilot evidence bundles"
       ],
       "href": "gather.html",
-      "sourceHref": "https://github.com/HarperZ9/gather",
+      "sourceHref": "https://github.com/HarperZ9/flywheel/tree/main/packages/gather",
       "domains": [
         "research-education",
         "developer-infrastructure"
@@ -1166,7 +1166,7 @@
         "route-preflight checks before model execution"
       ],
       "href": "forum.html",
-      "sourceHref": "https://github.com/HarperZ9/forum",
+      "sourceHref": "https://github.com/HarperZ9/flywheel/tree/main/packages/forum",
       "domains": [
         "agent-systems",
         "developer-infrastructure",
@@ -1346,7 +1346,7 @@
         "verdict-regression CI and oracle replay"
       ],
       "href": "crucible.html",
-      "sourceHref": "https://github.com/HarperZ9/crucible",
+      "sourceHref": "https://github.com/HarperZ9/flywheel/tree/main/packages/crucible",
       "domains": [
         "evaluation-verification",
         "research-education"
@@ -1467,7 +1467,7 @@
         "cross-implementation conformance"
       ],
       "href": "emet.html",
-      "sourceHref": "https://github.com/HarperZ9/emet",
+      "sourceHref": "https://github.com/HarperZ9/flywheel/tree/main/packages/emet",
       "domains": [
         "evaluation-verification",
         "security-privacy",
@@ -1681,7 +1681,7 @@
         "course logistics with hard human handoffs"
       ],
       "href": "learn.html",
-      "sourceHref": "https://github.com/HarperZ9/learn",
+      "sourceHref": "https://github.com/HarperZ9/flywheel/tree/main/packages/learn",
       "domains": [
         "research-education",
         "agent-systems"
@@ -1724,7 +1724,7 @@
           "id": "learn-public-source",
           "type": "source",
           "label": "Learn public source",
-          "href": "https://github.com/HarperZ9/learn",
+          "href": "https://github.com/HarperZ9/flywheel/tree/main/packages/learn",
           "date": "2026-08-27",
           "status": "verified",
           "summary": "The public repository identifies Learn 1.6.0 package source; no GitHub release is claimed."
@@ -1772,7 +1772,7 @@
         "reviewable tool execution"
       ],
       "href": "systems/relay.html",
-      "sourceHref": "https://github.com/HarperZ9/relay",
+      "sourceHref": "https://github.com/HarperZ9/flywheel/tree/main/packages/relay",
       "domains": [
         "agent-systems",
         "developer-infrastructure"
@@ -1887,7 +1887,7 @@
           "id": "relay-public-source",
           "type": "source",
           "label": "Relay source, August 2026",
-          "href": "https://github.com/HarperZ9/relay",
+          "href": "https://github.com/HarperZ9/flywheel/tree/main/packages/relay",
           "date": "2026-08-28",
           "status": "verified",
           "summary": "In August 2026 the source metadata named the package relay-agent 0.1.0; Relay now publishes on PyPI as flywheel-relay, and the PyPI name relay-agent belongs to another publisher. The README then described a permission-checked tool loop, hash-chained ledger, MCP surface, failover routes, and acceptance checks; no GitHub release tag was returned at that time."
@@ -1940,7 +1940,7 @@
         "inspectable pipeline planning"
       ],
       "href": "systems/plexus.html",
-      "sourceHref": "https://github.com/HarperZ9/plexus",
+      "sourceHref": "https://github.com/HarperZ9/flywheel/tree/main/packages/plexus",
       "domains": [
         "agent-systems",
         "developer-infrastructure"
@@ -2001,7 +2001,7 @@
           "id": "plexus-public-source",
           "type": "source",
           "label": "Plexus public source",
-          "href": "https://github.com/HarperZ9/plexus",
+          "href": "https://github.com/HarperZ9/flywheel/tree/main/packages/plexus",
           "date": "2026-08-28",
           "status": "verified",
           "summary": "The public source metadata identifies plexus-mesh 0.2.0, and the README describes manifest discovery, wiring plans, route scripts, graphs, MCP exposure, and explicit lane probe commands; no GitHub release tag was returned."
@@ -2049,7 +2049,7 @@
         "source imports partitioned by user and session"
       ],
       "href": "systems/mneme.html",
-      "sourceHref": "https://github.com/HarperZ9/mneme",
+      "sourceHref": "https://github.com/HarperZ9/flywheel/tree/main/packages/mneme",
       "domains": [
         "agent-systems",
         "evaluation-verification"
@@ -2192,7 +2192,7 @@
         "agent instruction surface drift checks"
       ],
       "href": "canon.html",
-      "sourceHref": "https://github.com/HarperZ9/canon",
+      "sourceHref": "https://github.com/HarperZ9/flywheel/tree/main/packages/canon",
       "domains": [
         "agent-systems",
         "developer-infrastructure",
@@ -2332,7 +2332,7 @@
         "reaching a shared board without an account"
       ],
       "href": "systems/bulletin.html",
-      "sourceHref": "https://github.com/HarperZ9/bulletin",
+      "sourceHref": "https://github.com/HarperZ9/flywheel/tree/main/packages/bulletin",
       "domains": [
         "agent-systems"
       ],
@@ -2522,7 +2522,7 @@
         "ICC and LUT generation"
       ],
       "href": "build-color.html",
-      "sourceHref": "https://github.com/HarperZ9/build-color",
+      "sourceHref": "https://github.com/HarperZ9/superframe/tree/main/packages/colour/build-color",
       "domains": [
         "graphics-media"
       ],
@@ -2822,7 +2822,7 @@
         "agent workflow review"
       ],
       "href": "proof-surface.html",
-      "sourceHref": "https://github.com/HarperZ9/proof-surface",
+      "sourceHref": "https://github.com/HarperZ9/flywheel/tree/main/packages/proof-surface",
       "domains": [
         "security-privacy",
         "evaluation-verification",
@@ -2858,7 +2858,7 @@
           "id": "proof-surface-public-source-0-2-0",
           "type": "source",
           "label": "Proof Surface public source 0.2.0",
-          "href": "https://github.com/HarperZ9/proof-surface",
+          "href": "https://github.com/HarperZ9/flywheel/tree/main/packages/proof-surface",
           "date": "2026-08-27",
           "status": "verified",
           "summary": "Public source identifies version 0.2.0; no release claim is made."
@@ -3298,7 +3298,7 @@
         "session and action auditing"
       ],
       "href": "systems/behavior-transform.html",
-      "sourceHref": "https://github.com/HarperZ9/behavior-transform.io",
+      "sourceHref": "https://github.com/HarperZ9/flywheel/tree/main/packages/behavior-transform.io",
       "domains": [
         "security-privacy",
         "agent-systems",
@@ -3326,7 +3326,7 @@
           "id": "behavior-transform-public-source",
           "type": "source",
           "label": "behavior-transform.io public source",
-          "href": "https://github.com/HarperZ9/behavior-transform.io",
+          "href": "https://github.com/HarperZ9/flywheel/tree/main/packages/behavior-transform.io",
           "date": "2026-08-27",
           "status": "verified",
           "summary": "A public main branch exists; no tagged release, supported install command, or production adoption is claimed."
@@ -3875,7 +3875,7 @@
         "action journal review"
       ],
       "href": "accountable-surface.html",
-      "sourceHref": "https://github.com/HarperZ9/accountable-surface",
+      "sourceHref": "https://github.com/HarperZ9/flywheel/tree/main/packages/accountable-surface",
       "domains": [
         "security-privacy",
         "evaluation-verification",
@@ -3930,7 +3930,7 @@
           "id": "accountable-surface-public-source",
           "type": "source",
           "label": "Accountable Surface source 0.1.0",
-          "href": "https://github.com/HarperZ9/accountable-surface",
+          "href": "https://github.com/HarperZ9/flywheel/tree/main/packages/accountable-surface",
           "date": "2026-09-14",
           "status": "verified",
           "summary": "The public repository and v0.1.0 release notes identify source 0.1.0. The source setup includes sibling source dependencies; self-authored tests are not independent review."
@@ -3979,7 +3979,7 @@
         "proof-packet readiness"
       ],
       "href": "public-surface-sweeper-sample.html",
-      "sourceHref": "https://github.com/HarperZ9/public-surface-sweeper",
+      "sourceHref": "https://github.com/HarperZ9/flywheel/tree/main/packages/public-surface-sweeper",
       "domains": [
         "security-privacy",
         "developer-infrastructure"
@@ -4074,7 +4074,7 @@
         "redacted validation output"
       ],
       "href": "security-toolkit.html#model-provenance-validator",
-      "sourceHref": "https://github.com/HarperZ9/model-provenance-validator",
+      "sourceHref": "https://github.com/HarperZ9/flywheel/tree/main/packages/model-provenance-validator",
       "domains": [
         "security-privacy",
         "evaluation-verification"
@@ -4142,7 +4142,7 @@
         "redacted file and fetch output"
       ],
       "href": "security-toolkit.html#secret-redact-io",
-      "sourceHref": "https://github.com/HarperZ9/secret-redact-io",
+      "sourceHref": "https://github.com/HarperZ9/flywheel/tree/main/packages/secret-redact-io",
       "domains": [
         "security-privacy",
         "developer-infrastructure"
@@ -4207,7 +4207,7 @@
         "agent environment checks"
       ],
       "href": "security-toolkit.html#agent-hook-pack",
-      "sourceHref": "https://github.com/HarperZ9/agent-hook-pack",
+      "sourceHref": "https://github.com/HarperZ9/flywheel/tree/main/packages/agent-hook-pack",
       "domains": [
         "security-privacy",
         "developer-infrastructure"
@@ -4273,7 +4273,7 @@
         "reviewer-ready evidence summaries"
       ],
       "href": "security-toolkit.html#repo-proof-index",
-      "sourceHref": "https://github.com/HarperZ9/repo-proof-index",
+      "sourceHref": "https://github.com/HarperZ9/flywheel/tree/main/packages/repo-proof-index",
       "domains": [
         "security-privacy",
         "evaluation-verification",
@@ -4358,7 +4358,7 @@
         "changed-source review before reusing a digest or release note"
       ],
       "href": "chorus.html",
-      "sourceHref": "https://github.com/HarperZ9/chorus",
+      "sourceHref": "https://github.com/HarperZ9/flywheel/tree/main/packages/chorus",
       "domains": [
         "research-education",
         "developer-infrastructure"
@@ -4439,7 +4439,7 @@
           "id": "chorus-public-source-0-1-0",
           "type": "source",
           "label": "Chorus source 0.1.0",
-          "href": "https://github.com/HarperZ9/chorus",
+          "href": "https://github.com/HarperZ9/flywheel/tree/main/packages/chorus",
           "date": "2026-08-28",
           "status": "verified",
           "summary": "The 2026-08-28 public source review identified weighted lexical theme clustering, controversy ranking, receipts, Gather-corpus input, and an optional separately-provenanced model overlay. This is retained as historical source evidence."
@@ -4652,7 +4652,7 @@
         "SARIF findings in code review"
       ],
       "href": "articulate.html",
-      "sourceHref": "https://github.com/HarperZ9/articulate",
+      "sourceHref": "https://github.com/HarperZ9/flywheel/tree/main/packages/articulate",
       "domains": [
         "evaluation-verification",
         "developer-infrastructure",
