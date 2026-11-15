@@ -1,0 +1,8 @@
+{
+  "date": "2026-11-15",
+  "note": "Step 2 of the six-surfaces plan adds one form label to two reviewed pages. flywheel.html: a Captured label above the output-check video, naming its record, media/flywheel-output-check-20260905/report-wrong.json, by SHA-256. demos/crucible-cleanroom/index.html: a Captured label saying the full record of the run is not published yet (no date and no capture command are on the page). No other bytes changed. Checked on 2026-11-15 by tests/test_demo_labels.py, which hashes the record file and finds the command in its README.",
+  "paths": {
+    "demos/crucible-cleanroom/index.html": "3b2ab3eaa883b3e859b97f051892f0b4daa0d1988439210822339a9926d66e8e",
+    "flywheel.html": "8fbe7c9a67f1676289336e750d63c80be5976d4d155b933c1b0d267dfa9d3f8d"
+  }
+}

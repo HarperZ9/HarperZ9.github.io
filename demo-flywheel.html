@@ -44,12 +44,14 @@
 
   <section>
     <h2>The surface</h2>
+    <p class="demo-form" data-demo="flywheel-surface" data-form="captured"><b>Captured.</b> Shown as recorded. Nothing on this page runs the tool. The full record of the run (date, command, file and hash) is not published with it yet.</p>
     <p class="lead">The gateway serves one page on one local origin. Below, captured 2026-08-04: the endpoint table reads 34 endpoints with 11 usable right now and records credential presence only, never a value. The prompt routes to a local model (<span translate="no">telos-coder-14b</span> through <span translate="no">ollama</span>) and the answer comes back with the sealed receipt's identifier beside it.</p>
     <img class="shot" src="media/demos/flywheel/flywheel-app-console.png" alt="Flywheel gateway page: an endpoint table reporting 34 endpoints with 11 usable, a prompt routed to a local model through ollama, and the answer shown with its sealed receipt identifier" width="1440" height="900">
   </section>
 
   <section>
     <h2>The tamper demonstration</h2>
+    <p class="demo-form" data-demo="flywheel-tamper" data-form="captured"><b>Captured.</b> Recorded on 4 August 2026 and shown as recorded. Nothing on this page runs the tool. The record is <a href="/artifacts/flywheel-tamper-demo-2026-08-04.txt">flywheel-tamper-demo-2026-08-04.txt</a>, SHA-256 <code>47cc1e7fda31e803</code>.</p>
     <p class="lead">Recorded terminal transcript, 2026-08-04, from the public repository at its default branch. Two chained tool-call receipts are sealed and verified, one byte of the second receipt's admission decision is corrupted, and the verifier answers <span translate="no">TAMPERED / SEAL_MISMATCH</span> with the recomputed hash named. The chain check refuses too. The verifier is Python standard library only: no key, no network, no dependency on the runtime that emitted the receipt.</p>
     <pre class="transcript">$ tamper-demo  (flywheel harness, stdlib only, offline)
 
