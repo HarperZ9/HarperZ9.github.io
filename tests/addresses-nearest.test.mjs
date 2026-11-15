@@ -52,3 +52,11 @@ test("the file has no imports, and the page carries its code as written", () => 
   assert.ok(page.includes(code), "404.html is out of date: run node scripts/build-addresses.mjs");
   assert.equal(new Function(`${code}; return nearest("/flywheel", ${JSON.stringify(rows)});`)().path, "/flywheel.html");
 });
+test("a moved row has no file and leads to its place, query and fragment kept", () => {
+  const more = [...rows, { path: "/night-school-attention.html", kind: "moved", to: "/night-school.html?lab=attention#lab" }, { path: "/night-school.html", kind: "leaf" },
+    { path: "/twice.html", kind: "moved", to: "/night-school-attention.html" }];
+  assert.deepEqual(nearest("/night-school-attention.html", more), { path: "/night-school.html?lab=attention#lab", why: "moved" });
+  assert.deepEqual(nearest("/twice.html", more), { path: "/night-school.html?lab=attention#lab", why: "moved" });
+  assert.deepEqual(nearest("/night-school-attention", more), { path: "/night-school.html?lab=attention#lab", why: "spelling" });
+  assert.notEqual(nearest("/night-school-attentoin.html", more)?.path, "/night-school-attention.html", "a moved address is never offered as a live one");
+});

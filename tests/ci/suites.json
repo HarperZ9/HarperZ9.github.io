@@ -5,6 +5,8 @@
       "tests": [["tests/font-original-preview.cjs", 14], ["tests/font-marketplace-reading.cjs", 14]] },
     "ident": { "server": "stock", "port": 8803, "env": { "BROWSER_CHANNEL": "chrome" },
       "tests": [["tests/ident-narrow-reading.cjs", 14]] },
+    "addresses": { "server": "stock", "port": 8812, "env": { "BROWSER_CHANNEL": "chrome" },
+      "tests": [["tests/addresses-moved.cjs", 10]] },
     "explainers": { "server": "tools", "port": 8804, "env": { "BROWSER_CHANNEL": "chrome" },
       "tests": [["tests/explainer-live.cjs", 9], ["tests/explainer-films-seek.cjs", 6]] },
     "gallery": { "server": "stock", "port": 8805, "env": { "BROWSER_CHANNEL": "chrome" },

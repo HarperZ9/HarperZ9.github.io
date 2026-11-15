@@ -2,8 +2,10 @@
 //
 // The ledger, site-src/world/addresses.json, has one row for every address the site has published. It is
 // append-only: a row is never removed and its path never changes, so an address that has been given out keeps
-// answering. A page that moves leaves a redirect stub at the old address; an address with no page any more is kept
-// as "gone", with the commit that removed it.
+// answering. A page that moved before 15 November 2026 left a redirect stub at the old address (kind "redirect").
+// Since then a page folded into another leaves no file: its row has kind "moved", its target in "to" (a page, with
+// an optional ?query and #place), and 404.html, which GitHub Pages serves for an address with no file, sends the
+// reader there. An address with no page any more is kept as "gone", with the commit that removed it.
 //
 // An address is the path a reader types after the host: "/" for the home, "/playground/" for a folder's index,
 // "/cmmns.html" for a page, and "/private-practice.html#gate" where the sitemap has listed a place inside a page.
@@ -27,7 +29,9 @@ export const SURFACES = [
   { id: "door", path: "/", name: "The home page", does: "the door to all six" },
 ];
 export const SITE_INDEX = "/site-index.html";
-export const KINDS = ["surface", "leaf", "record", "redirect", "gone"];
+export const KINDS = ["surface", "leaf", "record", "redirect", "moved", "gone"];
+export const leadsOn = (row) => row.kind === "redirect" || row.kind === "moved";
+const bare = (address) => address.split("#")[0].split("?")[0];
 export const SURFACE_IDS = [...SURFACES.map((s) => s.id), "unassigned"];
 
 // Other repositories publish their own pages under prefixes of the same host (GitHub Pages serves a project site
@@ -39,7 +43,7 @@ export const inProjectSite = (ledger, address) => (ledger.projectSites || []).so
 // A page may load part of itself after it opens (the index of the work fetches its later rows). "lateParts" in the
 // ledger's head names those files, so a place inside one counts as a place on the page.
 export function pageText(ledger, address, site = SITE) {
-  const page = address.split("#")[0], f = path.join(site, fileOf(page));
+  const page = bare(address), f = path.join(site, fileOf(page));
   if (!existsSync(f)) return null;
   return [f, ...(ledger.lateParts?.[page] || []).map((p) => path.join(site, p))].map((x) => readFileSync(x, "utf8")).join("\n");
 }
@@ -50,7 +54,7 @@ export const isServed = (file) => !NOT_SERVED.some((re) => re.test(file));
 
 export const addressOf = (file) => "/" + file.replace(/(^|\/)index\.html$/, "$1");
 export const fileOf = (address) => {
-  const p = address.split("#")[0].replace(/^\//, "");
+  const p = bare(address).replace(/^\//, "");
   return p === "" || p.endsWith("/") ? p + "index.html" : p;
 };
 // An absolute or relative link, seen on the page at `from`, as an address ("/x/index.html" reads as "/x/").
@@ -86,13 +90,13 @@ export function serialize(ledger) {
 // Where a row leads once every redirect is followed: { address } on this site, { project } in another
 // repository's pages, or { problem }.
 export function follow(row, byPath, ledger, hops = 0) {
-  if (row.kind !== "redirect") return { address: row.path };
+  if (!leadsOn(row)) return { address: row.path };
   if (hops > 5) return { problem: "redirect chain longer than five hops" };
   if (inProjectSite(ledger, row.to)) return { project: row.to };
-  const next = byPath.get(row.to) || byPath.get(row.to.split("#")[0]);
+  const next = byPath.get(row.to) || byPath.get(row.to.split("#")[0]) || byPath.get(bare(row.to));
   if (!next) return { problem: `redirect target ${row.to} has no row` };
   if (next.kind === "gone") return { problem: `redirect target ${row.to} is gone` };
-  return next.kind === "redirect" ? follow(next, byPath, ledger, hops + 1) : { address: row.to };
+  return leadsOn(next) ? follow(next, byPath, ledger, hops + 1) : { address: row.to };
 }
 
 // Every problem with the ledger against the pages on disk; empty means every address answers.
@@ -108,6 +112,13 @@ export function validate(ledger, site = SITE, pages = servedPages(site)) {
     if (!SURFACE_IDS.includes(r.surface)) problems.push(`${at}: surface ${r.surface} is not known`);
     if (!/^\d{4}-\d{2}-\d{2}$/.test(r.since || "")) problems.push(`${at}: since must be a date`);
     if (r.kind === "gone") { if (!r.removed) problems.push(`${at}: a gone row names the commit that removed it`); continue; }
+    if (r.kind === "moved") {
+      if (!r.to) problems.push(`${at}: a moved row names its target in "to"`);
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(r.moved || "")) problems.push(`${at}: a moved row has the date it moved in "moved"`);
+      if (at.includes("#")) problems.push(`${at}: a moved row is a page address, with no place in it`);
+      else if (existsSync(path.join(site, fileOf(r.path)))) problems.push(`${at}: a moved row has no file, and ${fileOf(r.path)} exists (delete the file, or give the row its kind back)`);
+      continue;
+    }
     const html = read(r.path);
     if (html === null) { problems.push(`${at}: no page at ${fileOf(r.path)}`); continue; }
     const frag = r.path.split("#")[1];
@@ -118,7 +129,7 @@ export function validate(ledger, site = SITE, pages = servedPages(site)) {
       else if (target !== r.to) problems.push(`${at}: the stub sends readers to ${target}, the row says ${r.to}`);
     } else if (target) problems.push(`${at}: the page is a redirect stub to ${target}, the row says ${r.kind}`);
   }
-  for (const r of ledger.rows.filter((x) => x.kind === "redirect" && x.to)) {
+  for (const r of ledger.rows.filter((x) => leadsOn(x) && x.to)) {
     const end = follow(r, byPath, ledger);
     if (end.problem) { problems.push(`${r.path}: ${end.problem}`); continue; }
     if (end.project) continue;

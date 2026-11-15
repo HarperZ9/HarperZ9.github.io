@@ -47,7 +47,7 @@ KNOWN_DEAD = {
     "/repo-explainers/calibrate-pro.html": "canonical link in tools/repo_explainers/pages/calibrate-pro.src.html; the explainer page has not been built",
 }
 
-KINDS = {"surface", "leaf", "record", "redirect", "gone"}
+KINDS = {"surface", "leaf", "record", "redirect", "moved", "gone"}
 SURFACES = {"playground", "commons", "flywheel", "articulate", "buildlang", "research", "door", "unassigned"}
 SIX_AND_THE_DOOR = {
     "/playground/": "playground", "/cmmns.html": "commons", "/flywheel.html": "flywheel",
@@ -59,13 +59,13 @@ NOT_SERVED = re.compile(r"^(?:home|tests|docs)/|^img/og/_card\.html$|(?:^|/)[_.]
 
 
 def file_of(address: str) -> Path:
-    page = address.split("#")[0].lstrip("/")
+    page = address.split("#")[0].split("?")[0].lstrip("/")
     return ROOT / (page + "index.html" if page == "" or page.endswith("/") else page)
 
 
 def page_text(address: str) -> str | None:
     """The page at an address, with any part it loads after opening (the ledger's lateParts)."""
-    page = address.split("#")[0]
+    page = address.split("#")[0].split("?")[0]
     if not file_of(page).is_file():
         return None
     parts = [file_of(page)] + [ROOT / late for late in LEDGER.get("lateParts", {}).get(page, [])]
@@ -96,6 +96,7 @@ def dead_reason(address: str, hops: int = 0) -> str | None:
     if in_project_site(address):
         return None
     page, _, fragment = address.partition("#")
+    page = page.split("?")[0]
     text = page_text(page)
     if text is None:
         return f"no page at {page}"
@@ -113,6 +114,17 @@ def dead_reason(address: str, hops: int = 0) -> str | None:
     return None
 
 
+def moved_end(row: dict) -> str:
+    """Where a moved row leads once every moved row on the way is followed (five hops at most)."""
+    to = row["to"]
+    for _ in range(5):
+        onward = BY_PATH.get(to) or BY_PATH.get(to.split("#")[0]) or BY_PATH.get(to.split("#")[0].split("?")[0])
+        if onward is None or onward["kind"] != "moved":
+            return to
+        to = onward["to"]
+    return "/moved-chain-longer-than-five-hops"
+
+
 def served_pages() -> list[str]:
     listed = subprocess.run(["git", "ls-files", "--", "*.html"], cwd=ROOT, capture_output=True, text=True, check=True).stdout.split("\n")
     return sorted(name for name in listed if name and not NOT_SERVED.search(name) and name != "404.html" and (ROOT / name).is_file())
@@ -126,7 +138,10 @@ def test_ledger_rows_are_well_formed_and_unique() -> None:
         assert row["kind"] in KINDS, row
         assert row["surface"] in SURFACES, row
         assert re.fullmatch(r"\d{4}-\d{2}-\d{2}", row["since"]), row
-        assert ("to" in row) == (row["kind"] == "redirect"), f"{row['path']}: only a redirect row has a target"
+        assert ("to" in row) == (row["kind"] in ("redirect", "moved")), f"{row['path']}: only a redirect or a moved row has a target"
+        if row["kind"] == "moved":
+            assert re.fullmatch(r"\d{4}-\d{2}-\d{2}", row.get("moved", "")), f"{row['path']}: a moved row has the date it moved"
+            assert "#" not in row["path"], f"{row['path']}: a moved row is a page address"
         if row["kind"] == "gone":
             assert re.fullmatch(r"[0-9a-f]{7,40}", row.get("removed", "")), f"{row['path']}: a gone row names the commit that removed it"
     for path, surface in SIX_AND_THE_DOOR.items():
@@ -137,6 +152,14 @@ def test_every_ledger_address_answers() -> None:
     dead = []
     for row in ROWS:
         if row["kind"] == "gone":
+            continue
+        if row["kind"] == "moved":
+            # a folded page: no file at the old address, and the place it moved to answers, fragment included
+            if file_of(row["path"]).exists():
+                dead.append(f"{row['path']}: a moved row has no file, and one exists")
+            reason = dead_reason(moved_end(row))
+            if reason:
+                dead.append(f"{row['path']}: moved to {row['to']}: {reason}")
             continue
         reason = dead_reason(row["path"])
         if reason:
@@ -195,6 +218,8 @@ def link_problem(address: str) -> str | None:
     page = address.split("#")[0]
     row = BY_PATH.get(address) or BY_PATH.get(page)
     if row is not None:
+        if row["kind"] == "moved":
+            return f"the address moved to {row['to']}: link there"  # the 404 page would carry a reader, but the site's own links go straight
         return GONE if row["kind"] == "gone" else dead_reason(address)
     if not page.endswith((".html", "/")) and file_of(page).is_file():
         return None  # a file that is not a page (a PDF, an image, a data file) and is in the repository
@@ -231,6 +256,10 @@ def test_not_found_page_reads_without_scripts() -> None:
     plain = re.sub(r"<script\b.*?</script>", "", page, flags=re.S)
     for path in list(SIX_AND_THE_DOOR) + ["/site-index.html"]:
         assert f'href="{path}"' in plain, f"404.html does not list {path} without scripts"
+    # every moved address is listed with a plain link to the place it went, for a reader or a crawler without scripts
+    for row in ROWS:
+        if row["kind"] == "moved":
+            assert f'<li><code>{row["path"]}</code> is now at <a href="{moved_end(row).replace("&", "&amp;")}">' in plain, f"404.html does not list {row['path']} without scripts"
     assert f'fetch("/{LEDGER_PATH}")' in page
     assert '<meta name="robots" content="noindex">' in page
     # the page is served for any depth of address, so nothing on it may be relative
