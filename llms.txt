@@ -93,10 +93,10 @@ what it does not do.
 - [learn](https://harperz9.github.io/learn.html) 2.3.0: a study planner for the
   terminal and MCP that schedules reviews and tracks repeat mistakes.
   `npm install -g @harperz9/learn`
-- [open-archives](https://github.com/HarperZ9/open-archives) 0.1.0, not yet
+- [open-archives](https://github.com/HarperZ9/superframe/tree/main/library/open-archives) 0.1.0, not yet
   released: search free archives and museum collections with one query, with
   the licence of every item tagged.
-- [discover](https://github.com/HarperZ9/discover) 0.1.2: a pre-release check
+- [discover](https://github.com/HarperZ9/flywheel/tree/main/packages/discover) 0.1.2: a pre-release check
   that people can find a project, from README opening to llms.txt and video
   chapters.
 

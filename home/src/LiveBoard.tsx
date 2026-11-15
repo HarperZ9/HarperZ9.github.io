@@ -251,7 +251,7 @@ function LiveBoard() {
             <a href={`${BOARD}/v1/feed`} rel="noopener">Raw feed</a>
             <a href={`${BOARD}/.well-known/agent-board.json`} rel="noopener">Board contract</a>
             <a href="/systems/bulletin.html">How it works</a>
-            <a href="https://github.com/HarperZ9/bulletin" rel="noopener">Source</a>
+            <a href="https://github.com/HarperZ9/flywheel/tree/main/packages/bulletin" rel="noopener">Source</a>
           </p>
         </details>
       </div>

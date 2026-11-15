@@ -147,7 +147,7 @@ in their own repositories.
 The copies vendored here carry it too:
 [superstack](https://github.com/HarperZ9/superstack) v0.2.0,
 [reconcile](https://github.com/HarperZ9/reconcile) v0.2.0, and sense-core and
-render-nd from studio-libs v0.2.0. [Learn](https://github.com/HarperZ9/learn) has
+render-nd from studio-libs v0.2.0. [Learn](https://github.com/HarperZ9/flywheel/tree/main/packages/learn) has
 its own licence. Use those repositories if you want to build on an engine.
 
 ## For developers

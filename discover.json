@@ -38,7 +38,7 @@
       "package": "articulate-writing",
       "downloadUrl": "https://pypi.org/project/articulate-writing/",
       "install": "python -m pip install articulate-writing",
-      "license": "https://github.com/HarperZ9/articulate/blob/main/LICENSE",
+      "license": "https://github.com/HarperZ9/flywheel/blob/main/packages/articulate/LICENSE",
       "os": "Windows, macOS, Linux",
       "category": "DeveloperApplication"
     },
@@ -113,7 +113,7 @@
       "package": "@harperz9/learn",
       "downloadUrl": "https://www.npmjs.com/package/@harperz9/learn",
       "install": "npm install -g @harperz9/learn",
-      "license": "https://github.com/HarperZ9/learn/blob/main/LICENSE",
+      "license": "https://github.com/HarperZ9/flywheel/blob/main/packages/learn/LICENSE",
       "os": "Windows, macOS, Linux",
       "category": "EducationalApplication"
     },
@@ -121,7 +121,7 @@
       "name": "open-archives",
       "repo": "open-archives",
       "version": "0.1.0",
-      "downloadUrl": "https://github.com/HarperZ9/open-archives",
+      "downloadUrl": "https://github.com/HarperZ9/superframe/tree/main/library/open-archives",
       "license": "https://spdx.org/licenses/AGPL-3.0-only.html",
       "os": "Windows, macOS, Linux",
       "category": "MultimediaApplication"

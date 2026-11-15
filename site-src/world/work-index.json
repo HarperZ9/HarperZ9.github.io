@@ -34,7 +34,7 @@
    "version": "v1.0.1",
    "date": "2026-06-14",
    "years": "2026",
-   "repo": "https://github.com/HarperZ9/build-color",
+   "repo": "https://github.com/HarperZ9/superframe/tree/main/packages/colour/build-color",
    "release": "https://github.com/HarperZ9/build-color/releases/tag/v1.0.1",
    "pages": [
     "build-color.html"
@@ -315,7 +315,7 @@
    "version": "v1.3.1",
    "date": "2026-10-23",
    "years": "2026",
-   "repo": "https://github.com/HarperZ9/emet",
+   "repo": "https://github.com/HarperZ9/flywheel/tree/main/packages/emet",
    "release": "https://github.com/HarperZ9/emet/releases/tag/v1.3.1",
    "pages": [
     "emet.html",
@@ -341,7 +341,7 @@
    "version": "v0.1.0",
    "date": "2026-06-14",
    "years": "2026",
-   "repo": "https://github.com/HarperZ9/agent-routing-kit",
+   "repo": "https://github.com/HarperZ9/flywheel/tree/main/packages/agent-routing-kit",
    "release": "https://github.com/HarperZ9/agent-routing-kit/releases/tag/v0.1.0",
    "pages": [],
    "packages": [],
@@ -357,7 +357,7 @@
    "version": "v0.1.3",
    "date": "2026-09-07",
    "years": "2026",
-   "repo": "https://github.com/HarperZ9/public-surface-sweeper",
+   "repo": "https://github.com/HarperZ9/flywheel/tree/main/packages/public-surface-sweeper",
    "release": "https://github.com/HarperZ9/public-surface-sweeper/releases/tag/v0.1.3",
    "pages": [
     "repo-explainers/public-surface-sweeper.html"
@@ -382,7 +382,7 @@
    "version": "v0.2.0",
    "date": "2026-09-13",
    "years": "2026",
-   "repo": "https://github.com/HarperZ9/repo-proof-index",
+   "repo": "https://github.com/HarperZ9/flywheel/tree/main/packages/repo-proof-index",
    "release": "https://github.com/HarperZ9/repo-proof-index/releases/tag/v0.2.0",
    "pages": [
     "repo-explainers/repo-proof-index.html"
@@ -407,7 +407,7 @@
    "version": "v0.1.1",
    "date": "2026-06-14",
    "years": "2026",
-   "repo": "https://github.com/HarperZ9/model-provenance-validator",
+   "repo": "https://github.com/HarperZ9/flywheel/tree/main/packages/model-provenance-validator",
    "release": "https://github.com/HarperZ9/model-provenance-validator/releases/tag/v0.1.1",
    "pages": [
     "repo-explainers/model-provenance-validator.html"
@@ -432,7 +432,7 @@
    "version": null,
    "date": null,
    "years": "2026",
-   "repo": "https://github.com/HarperZ9/anomaly-kernels",
+   "repo": "https://github.com/HarperZ9/superframe/tree/main/packages/kernels/anomaly-kernels",
    "release": null,
    "pages": [],
    "packages": [],
@@ -448,7 +448,7 @@
    "version": "v1.1.0",
    "date": "2026-10-04",
    "years": "2026",
-   "repo": "https://github.com/HarperZ9/signal-kernels",
+   "repo": "https://github.com/HarperZ9/superframe/tree/main/packages/kernels/signal-kernels",
    "release": "https://github.com/HarperZ9/signal-kernels/releases/tag/v1.1.0",
    "pages": [
     "repo-explainers/signal-kernels.html"
@@ -466,7 +466,7 @@
    "version": "v0.1.0",
    "date": "2026-06-13",
    "years": "2026",
-   "repo": "https://github.com/HarperZ9/agent-hook-pack",
+   "repo": "https://github.com/HarperZ9/flywheel/tree/main/packages/agent-hook-pack",
    "release": "https://github.com/HarperZ9/agent-hook-pack/releases/tag/v0.1.0",
    "pages": [],
    "packages": [],
@@ -482,7 +482,7 @@
    "version": "v2.16.0",
    "date": "2026-10-03",
    "years": "2026",
-   "repo": "https://github.com/HarperZ9/index",
+   "repo": "https://github.com/HarperZ9/flywheel/tree/main/packages/index",
    "release": "https://github.com/HarperZ9/index/releases/tag/v2.16.0",
    "pages": [
     "index-graph.html"
@@ -513,7 +513,7 @@
    "version": "v0.1.0",
    "date": "2026-06-14",
    "years": "2026",
-   "repo": "https://github.com/HarperZ9/workflow-harness-lite",
+   "repo": "https://github.com/HarperZ9/flywheel/tree/main/packages/workflow-harness-lite",
    "release": "https://github.com/HarperZ9/workflow-harness-lite/releases/tag/v0.1.0",
    "pages": [
     "repo-explainers/workflow-harness-lite.html"
@@ -531,7 +531,7 @@
    "version": "v0.2.0",
    "date": "2026-10-04",
    "years": "2026",
-   "repo": "https://github.com/HarperZ9/gpu-trace-validator",
+   "repo": "https://github.com/HarperZ9/superframe/tree/main/packages/quality/gpu-trace-validator",
    "release": "https://github.com/HarperZ9/gpu-trace-validator/releases/tag/v0.2.0",
    "pages": [
     "repo-explainers/gpu-trace-validator.html"
@@ -549,7 +549,7 @@
    "version": "v0.2.0",
    "date": "2026-09-18",
    "years": "2026",
-   "repo": "https://github.com/HarperZ9/context-curator-lite",
+   "repo": "https://github.com/HarperZ9/flywheel/tree/main/packages/context-curator-lite",
    "release": "https://github.com/HarperZ9/context-curator-lite/releases/tag/v0.2.0",
    "pages": [
     "repo-explainers/context-curator-lite.html"
@@ -633,7 +633,7 @@
    "version": "v0.1.0",
    "date": "2026-06-16",
    "years": "2026",
-   "repo": "https://github.com/HarperZ9/secret-redact-io",
+   "repo": "https://github.com/HarperZ9/flywheel/tree/main/packages/secret-redact-io",
    "release": "https://github.com/HarperZ9/secret-redact-io/releases/tag/v0.1.0",
    "pages": [
     "repo-explainers/secret-redact-io.html"
@@ -651,7 +651,7 @@
    "version": "0.1.0",
    "date": "2026-06-18",
    "years": "2026",
-   "repo": "https://github.com/HarperZ9/proof-surface",
+   "repo": "https://github.com/HarperZ9/flywheel/tree/main/packages/proof-surface",
    "release": "https://github.com/HarperZ9/proof-surface/releases/tag/0.1.0",
    "pages": [
     "proof-surface.html",
@@ -677,7 +677,7 @@
    "version": null,
    "date": null,
    "years": "2026",
-   "repo": "https://github.com/HarperZ9/proof-surface-report",
+   "repo": "https://github.com/HarperZ9/flywheel/tree/main/packages/proof-surface-report",
    "release": null,
    "pages": [
     "repo-explainers/proof-surface-report.html"
@@ -695,7 +695,7 @@
    "version": "v0.2.0",
    "date": "2026-10-04",
    "years": "2026",
-   "repo": "https://github.com/HarperZ9/coherence-membrane",
+   "repo": "https://github.com/HarperZ9/flywheel/tree/main/packages/coherence-membrane",
    "release": "https://github.com/HarperZ9/coherence-membrane/releases/tag/v0.2.0",
    "pages": [
     "coherence-membrane.html",
@@ -721,7 +721,7 @@
    "version": null,
    "date": null,
    "years": "2026",
-   "repo": "https://github.com/HarperZ9/behavior-transform.io",
+   "repo": "https://github.com/HarperZ9/flywheel/tree/main/packages/behavior-transform.io",
    "release": null,
    "pages": [
     "systems/behavior-transform.html"
@@ -739,7 +739,7 @@
    "version": "v0.2.0",
    "date": "2026-09-18",
    "years": "2026",
-   "repo": "https://github.com/HarperZ9/accountable-surface",
+   "repo": "https://github.com/HarperZ9/flywheel/tree/main/packages/accountable-surface",
    "release": "https://github.com/HarperZ9/accountable-surface/releases/tag/v0.2.0",
    "pages": [
     "accountable-surface.html"
@@ -764,7 +764,7 @@
    "version": null,
    "date": null,
    "years": "2026",
-   "repo": "https://github.com/HarperZ9/accountable-engine",
+   "repo": "https://github.com/HarperZ9/flywheel/tree/main/packages/accountable-engine",
    "release": null,
    "pages": [
     "accountable-engine.html"
@@ -873,7 +873,7 @@
    "version": "v1.17.0",
    "date": "2026-10-03",
    "years": "2026",
-   "repo": "https://github.com/HarperZ9/forum",
+   "repo": "https://github.com/HarperZ9/flywheel/tree/main/packages/forum",
    "release": "https://github.com/HarperZ9/forum/releases/tag/v1.17.0",
    "pages": [
     "forum.html",
@@ -925,7 +925,7 @@
    "version": "v2.5.0",
    "date": "2026-11-03",
    "years": "2026",
-   "repo": "https://github.com/HarperZ9/gather",
+   "repo": "https://github.com/HarperZ9/flywheel/tree/main/packages/gather",
    "release": "https://github.com/HarperZ9/gather/releases/tag/v2.5.0",
    "pages": [
     "gather.html",
@@ -951,7 +951,7 @@
    "version": "v1.6.0",
    "date": "2026-10-23",
    "years": "2026",
-   "repo": "https://github.com/HarperZ9/crucible",
+   "repo": "https://github.com/HarperZ9/flywheel/tree/main/packages/crucible",
    "release": "https://github.com/HarperZ9/crucible/releases/tag/v1.6.0",
    "pages": [
     "crucible.html",
@@ -993,7 +993,7 @@
    "version": "v2.3.0",
    "date": "2026-10-03",
    "years": "2026",
-   "repo": "https://github.com/HarperZ9/learn",
+   "repo": "https://github.com/HarperZ9/flywheel/tree/main/packages/learn",
    "release": "https://github.com/HarperZ9/learn/releases/tag/v2.3.0",
    "pages": [
     "learn.html",
@@ -1056,7 +1056,7 @@
    "version": "v0.7.0",
    "date": "2026-10-03",
    "years": "2026",
-   "repo": "https://github.com/HarperZ9/mneme",
+   "repo": "https://github.com/HarperZ9/flywheel/tree/main/packages/mneme",
    "release": "https://github.com/HarperZ9/mneme/releases/tag/v0.7.0",
    "pages": [
     "systems/mneme.html",
@@ -1082,7 +1082,7 @@
    "version": "v0.4.0",
    "date": "2026-10-03",
    "years": "2026",
-   "repo": "https://github.com/HarperZ9/plexus",
+   "repo": "https://github.com/HarperZ9/flywheel/tree/main/packages/plexus",
    "release": "https://github.com/HarperZ9/plexus/releases/tag/v0.4.0",
    "pages": [
     "systems/plexus.html",
@@ -1108,7 +1108,7 @@
    "version": "v0.7.0",
    "date": "2026-10-03",
    "years": "2026",
-   "repo": "https://github.com/HarperZ9/relay",
+   "repo": "https://github.com/HarperZ9/flywheel/tree/main/packages/relay",
    "release": "https://github.com/HarperZ9/relay/releases/tag/v0.7.0",
    "pages": [
     "systems/relay.html",
@@ -1228,7 +1228,7 @@
    "version": "v0.3.0",
    "date": "2026-09-07",
    "years": "2026",
-   "repo": "https://github.com/HarperZ9/chorus",
+   "repo": "https://github.com/HarperZ9/flywheel/tree/main/packages/chorus",
    "release": "https://github.com/HarperZ9/chorus/releases/tag/v0.3.0",
    "pages": [
     "chorus.html",
@@ -1388,7 +1388,7 @@
    "version": null,
    "date": null,
    "years": "2026",
-   "repo": "https://github.com/HarperZ9/terminal-state-fixtures",
+   "repo": "https://github.com/HarperZ9/flywheel/tree/main/packages/terminal-state-fixtures",
    "release": null,
    "pages": [
     "repo-explainers/terminal-state-fixtures.html"
@@ -1422,7 +1422,7 @@
    "version": "v0.7.0",
    "date": "2026-10-23",
    "years": "2026",
-   "repo": "https://github.com/HarperZ9/canon",
+   "repo": "https://github.com/HarperZ9/flywheel/tree/main/packages/canon",
    "release": "https://github.com/HarperZ9/canon/releases/tag/v0.7.0",
    "pages": [
     "canon.html",
@@ -1467,7 +1467,7 @@
    "version": "v0.5.0",
    "date": "2026-09-14",
    "years": "2026",
-   "repo": "https://github.com/HarperZ9/bulletin",
+   "repo": "https://github.com/HarperZ9/flywheel/tree/main/packages/bulletin",
    "release": "https://github.com/HarperZ9/bulletin/releases/tag/v0.5.0",
    "pages": [
     "bulletin.html",
@@ -1487,7 +1487,7 @@
    "version": "v0.18.0",
    "date": "2026-11-05",
    "years": "2026",
-   "repo": "https://github.com/HarperZ9/articulate",
+   "repo": "https://github.com/HarperZ9/flywheel/tree/main/packages/articulate",
    "release": "https://github.com/HarperZ9/articulate/releases/tag/v0.18.0",
    "pages": [
     "articulate.html",
@@ -1599,7 +1599,7 @@
    "version": null,
    "date": null,
    "years": "2026",
-   "repo": "https://github.com/HarperZ9/seal-watch",
+   "repo": "https://github.com/HarperZ9/flywheel/tree/main/packages/seal-watch",
    "release": null,
    "pages": [],
    "packages": [],
@@ -1633,7 +1633,7 @@
    "version": null,
    "date": null,
    "years": "2026",
-   "repo": "https://github.com/HarperZ9/open-archives",
+   "repo": "https://github.com/HarperZ9/superframe/tree/main/library/open-archives",
    "release": null,
    "pages": [],
    "packages": [],
@@ -1649,7 +1649,7 @@
    "version": "v0.1.2",
    "date": "2026-10-23",
    "years": "2026",
-   "repo": "https://github.com/HarperZ9/discover",
+   "repo": "https://github.com/HarperZ9/flywheel/tree/main/packages/discover",
    "release": "https://github.com/HarperZ9/discover/releases/tag/v0.1.2",
    "pages": [],
    "packages": [],

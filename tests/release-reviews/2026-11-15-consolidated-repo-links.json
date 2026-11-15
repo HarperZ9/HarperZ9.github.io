@@ -1,0 +1,29 @@
+{
+  "date": "2026-11-15",
+  "note": "Links to repositories whose content moved into a flagship repository now point at the folder that holds it: fourteen Flywheel tools and the sixteen small tools at HarperZ9/flywheel/tree/main/packages/<name>, and signal-kernels, anomaly-kernels, gpu-trace-validator, build-color and open-archives at their folders in HarperZ9/superframe. Root links and default-branch file links moved; release, tag, advisory, issue, pinned-commit and install links stayed. Checked on 2026-11-15: every new URL is present in the target repository's file tree at its default branch, and git diff shows only link targets and link text changed.",
+  "paths": {
+    "accountable-surface.html": "1bd934278adaa449adda431b0ae4da2bfd8e135a3e2b6a5bd6c1955748ac73e5",
+    "bulletin.html": "9f7e0ad123b7c0d337ae18118569fbfa0fb7db452f02dae750ea88904247bdcf",
+    "canon.html": "d1210a4c2a07dc8fc15511a04f65e2036fdcd215126d486a38c7b7c69a3af0c3",
+    "catalog.html": "290c6956551ecbd0f424e6aa3b67d9e6690a76a983c973769bdb6b61e87e6734",
+    "figures/system-capability-map.html": "d93546ba1d59d379821277c97a33977357b964e4f1026dc9433ba5d8c48bc38e",
+    "index-graph.html": "a60deb30119f57a12a79535fc4131b1a319aac186dded6b24cfae87bbb029eda",
+    "index.html": "4961d26ef06cfee7c8de9f1b3f9db38e52153fe2d55f3f2e3662339178f53bf8",
+    "join.html": "a252f4b71f26b22aba40371d59f2626dd5173f1a304710ac8042d16036bec2d4",
+    "overview.html": "2b7c30f805b833e6977e469ae8c4ac85ff4e9fac213f9674c17d091b3ed4ca53",
+    "proof-surface-sample.html": "bac7455e93ff11d736ed0512536c2dc995145d4c2d3410ca1c12a5f1297758c7",
+    "public-surface-sweeper-sample.html": "46cc7bd4219b07f0ed6b28281ba55a68d17c8ec7de5cb7740b8dbf915f932459",
+    "publications.html": "30c538c2e948dda47a0bc1ba09577dfb94447b7edaefae8d302db0f44f726f11",
+    "publications/build.json": "4713e0bb233adfeb8b24fd91c3a5f7073b56070429ed68d0eb451d63c955eac0",
+    "research.html": "f75ca2d1f462d3b7e04fde9b068feed25abcef16c4de4ae035f5e1d62785dbea",
+    "security-toolkit.html": "b5ca66f126f729731c8957684e7fbb800fc337b6127d9961b324ac6c2ade7f18",
+    "security-tools.json": "a52ff90f32fb6656d3ad564c26ed27edebeda6833360062a3c409d0522968bfc",
+    "system/systems.js": "a734e287b825a809b9e7b03b668e834847f4d7724323c4c43408d9bf62c5eb5a",
+    "system/systems.json": "3c7bb45517c5cc59a4a0063155d986728abd61184e873dacef16cb8972a0c16c",
+    "systems/behavior-transform.html": "170f267e00b8e33a040a29082a9e405c8fa541f5ca55c85d77a1e0072308b469",
+    "systems/bulletin.html": "21f6e6b5f697ce8e129e69ad4f5c4c8446c54a8c2c052d6f7eefce1b852e8719",
+    "systems/mneme.html": "a4bd71bf62e188d3b6f5485930bafb8831fc2c6f2aa4348ad719ac15f6f983d5",
+    "systems/plexus.html": "9bdc41d142e24a46f4c2bacdaf51f5ed0e3bc853f7f488fbbd069253885c872b",
+    "systems/relay.html": "a81ecb2b5147a578d0557cc14dccc14977c06c4f196192aada990475031f13dd"
+  }
+}
