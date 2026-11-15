@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "note": "Every address this site has published. Append-only: a row is never removed and its path never changes. Kinds: surface, leaf, record, redirect (with its target in \"to\"), gone (with the commit that removed it). scripts/build-addresses.mjs checks it and adds a row for a new page; tests/test_no_dead_address.py fails if an address stops answering.",
+ "note": "Every address this site has published. Append-only: a row is never removed and its path never changes. Kinds: surface, leaf, record, redirect (a stub file at the address, with its target in \"to\"), moved (no file; 404.html sends the reader to \"to\", which may carry a ?query and a #place), gone (with the commit that removed it). scripts/build-addresses.mjs checks it and adds a row for a new page; tests/test_no_dead_address.py fails if an address stops answering.",
  "projectSitesNote": "Other repositories publish their own pages under these prefixes of this host. They are live and none of their files are in this repository, so a link or a redirect into one is accepted without a row. /cmmns/ and /flywheel/ answered on 2026-11-13; /buildlang/ answered with a page that sends readers to /buildlang.html.",
  "projectSites": [
   "/cmmns/",
@@ -30,7 +30,7 @@
   {"path":"/demonstrations.html","kind":"redirect","surface":"flywheel","to":"/floor.html","since":"2026-06-20"},
   {"path":"/overview.html","kind":"leaf","surface":"unassigned","since":"2026-06-20"},
   {"path":"/presentation.html","kind":"leaf","surface":"unassigned","since":"2026-06-20"},
-  {"path":"/quanta-color.html","kind":"redirect","surface":"playground","to":"/build-color.html","since":"2026-06-20"},
+  {"path":"/quanta-color.html","kind":"moved","surface":"playground","to":"/build-color.html","since":"2026-06-20","moved":"2026-11-15"},
   {"path":"/raw.html","kind":"leaf","surface":"playground","since":"2026-06-20"},
   {"path":"/research.html","kind":"surface","surface":"research","since":"2026-06-20"},
   {"path":"/resume.html","kind":"record","surface":"door","since":"2026-06-20"},

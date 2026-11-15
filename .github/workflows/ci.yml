@@ -162,6 +162,11 @@ jobs:
       - name: Advisory IDs and package names on narrow screens
         if: ${{ !cancelled() }}
         run: node tests/ci/run-suite.mjs ident
+      # A moved address (a page folded into another, with no file left behind) lands on its new place through
+      # 404.html, with scripts and without, and an address that was never published is still not found.
+      - name: Moved addresses land through the not-found page
+        if: ${{ !cancelled() }}
+        run: node tests/ci/run-suite.mjs addresses
       # Every Gallery plate on screen at desktop and phone widths, and Plate 14 drawn. A reading
       # rule hid all 43 until 3 October 2026; tests/test_gallery_plates_visible.py is its static twin.
       - name: Gallery plates on screen
