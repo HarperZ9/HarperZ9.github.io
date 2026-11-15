@@ -85,7 +85,7 @@ const ROWS = {
     see: ["#p-light", "The places"], more: ["/world/universe/proto/index.html", "The map"], repo: "https://github.com/HarperZ9/HarperZ9.github.io" },
   cmmns: { hue: "thecmmns", product: "CMMNS", name: "THE COMMONS", mark: "THECMMNS",
     try: "#w-commons", what: "A browser extension that shows where a reply comes from, how it argues, and whether a fact-checker has looked at the claim.",
-    see: ["/cmmns.html#try", "Try it on your own words"], more: ["/daylight-commons/how-it-works.html", "How each sign is read"],
+    see: ["/cmmns.html#try", "Try it on your own words"], more: ["https://harperz9.github.io/cmmns/how-it-works.html", "How each sign is read"],
     run: "Download cmmns-chrome-{v}.zip, then Load unpacked", runIsProse: true, repo: "https://github.com/HarperZ9/cmmns" },
   articulate: { hue: "artiql8", product: "Articulate", name: "ARTICULATE", mark: "ARTIQL8",
     try: "#w-articulate", what: "Names each writing pattern in your prose with the line it is on, on your own computer.",
