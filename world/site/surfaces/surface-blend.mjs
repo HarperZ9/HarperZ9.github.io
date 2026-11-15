@@ -65,7 +65,9 @@ export function mount(host, input, ctx) {
     for (const c of host.querySelectorAll('.bl-glazes canvas')) { const t = P.get(c.dataset.top), u = P.get(c.dataset.under); if (t && u) { paintGlaze(c, t, u, c.dataset.on); c.dataset.painted = '1'; } } }, 60); }
   const onInput = (ev) => { const r = ev.target.closest('input[data-w]'); if (!r) return;
     const w = [...host.querySelectorAll('input[data-w]')].map((x) => +x.value / 100); r.nextElementSibling.textContent = r.value + '%'; state.weights = w; ctx.onWeights?.(w, { live: true }); };
-  const onChange = (ev) => { if (ev.target.closest('input[data-w]')) { render(); ctx.onWeights?.(state.weights, { live: false }); } };
+  // the table is drawn again on a change; a share moved by keyboard keeps the focus, so the next arrow key still lands on it
+  const onChange = (ev) => { const r = ev.target.closest('input[data-w]'); if (!r) return; const i = r.dataset.w, had = document.activeElement === r;
+    render(); if (had) host.querySelector(`input[data-w="${i}"]`)?.focus(); ctx.onWeights?.(state.weights, { live: false }); };
   const onClick = (ev) => { const x = ev.target.closest('[data-remove]'); if (x) ctx.onRemove?.(x.dataset.remove); };
   host.addEventListener('input', onInput); host.addEventListener('change', onChange); host.addEventListener('click', onClick);
   render();

@@ -22,7 +22,7 @@ function hand(here = "") {
 }
 
 // page({ path, title, description, body, robots, extraHead, jsonld }) -> the whole document
-export function page({ path, title, description, body, robots = "", extraHead = "", jsonld = null, css = "/studies/studies.css", htmlAttrs = "", bodyClass = "reading", backdrop = true, live = false }) {
+export function page({ path, title, description, body, robots = "", extraHead = "", jsonld = null, css = "/studies/studies.css", htmlAttrs = "", bodyClass = "reading", backdrop = true, live = false, handScroll = true }) {
   const url = `${ORIGIN}/${path.replace(/index\.html$/, "")}`, full = `${title} | Zain Dana Harper`;
   return `<!doctype html>
 <html lang="en" data-type="stock"${htmlAttrs ? " " + htmlAttrs : ""}>
@@ -48,8 +48,7 @@ ${robots ? `<meta name="robots" content="${esc(robots)}">\n` : ""}<link rel="can
 <link rel="stylesheet" href="${css}">
 <link rel="stylesheet" href="/world/site/depth.css">
 <script type="module" src="/world/ui/shell/shell.js"></script>
-<script type="module" src="/world/site/hand-scroll.js"></script>
-${jsonld ? `<script type="application/ld+json">${JSON.stringify(jsonld)}</script>\n` : ""}${extraHead}</head>
+${handScroll ? '<script type="module" src="/world/site/hand-scroll.js"></script>\n' : ""}${jsonld ? `<script type="application/ld+json">${JSON.stringify(jsonld)}</script>\n` : ""}${extraHead}</head>
 <body class="${bodyClass}">
 ${backdrop ? fieldBackdrop({ live }) : ""}
 ${hand("/" + path.replace(/index\.html$/, ""))}

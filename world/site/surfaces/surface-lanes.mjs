@@ -3,6 +3,7 @@
 //   mount_lettering  the studio's type lane into the lettering library (world/lettering): the blend's name, drawn
 //                    in the technique of its leading part and inked in the blended colour
 //   mount_plot       a pen study from the drawing instruments (system/instruments), its pens inked with the parts
+//                    or with a palette it was handed: update({ palette: { inks: ['#rrggbb', ...] } })
 // Each takes { elements, weights, settings } and reads the blended studio material from surface-blend.mjs.
 import { studioBlend } from './surface-blend.mjs';
 import { motion } from '../../studio/lib/lanes/motion.mjs';
@@ -55,7 +56,11 @@ export function mount_plot(host, input, ctx) {
     if (ctx.plain) { host.innerHTML = `<p class="ln-note">The pen study is a drawing; plain view leaves it out.</p>`; return; }
     try { lib = lib || await import('../../../system/instruments/wave8-plotter-density.js'); } catch (e) { console.info('pen study: the instrument did not load:', e.message); return; }
     if (mine !== run) return;
-    const sb = studioBlend(ctx.ix, ids, state.weights, state.settings), inks = [...sb.parts.map((p) => p.hex), sb.palette.mix, sb.palette.mix].slice(0, 3).map(rgb);
+    if (!lib.WAVE8_PLOTTER[state.piece]) state.piece = 'flow-comb';   // a study name from an address that the instrument does not have
+    // a palette handed over through the bus (bus.mjs) inks the pens; without one the study blends the parts itself
+    const given = state.palette?.inks?.filter((h) => /^#[0-9a-f]{6}$/i.test(h)) ?? [];
+    const sb = given.length ? null : studioBlend(ctx.ix, ids, state.weights, state.settings);
+    const inks = (given.length ? [...given, given.at(-1), given.at(-1)] : [...sb.parts.map((p) => p.hex), sb.palette.mix, sb.palette.mix]).slice(0, 3).map(rgb);
     if (!host.querySelector('canvas')) host.innerHTML = `<canvas class="pl" width="900" height="600" role="img"></canvas><label class="pl-pick">Study <select>${lib.WAVE8_PLOTTER_META.map((m) => `<option value="${esc(m.name)}">${esc(m.name.replace(/-/g, ' '))}</option>`).join('')}</select></label><button type="button" data-save-plot>Save this study</button><p class="ln-note"></p>`;
     const c = host.querySelector('canvas'), x = c.getContext('2d'), k = c.height / 300, meta = lib.WAVE8_PLOTTER_META.find((m) => m.name === state.piece);
     host.querySelector('select').value = state.piece;

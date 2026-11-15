@@ -1,0 +1,29 @@
+/* surface-page.css: what a surface page shows before any module loads: the still, the start press and the line that
+   says what was handed over. The modules bring bench.css with them. The field is held under the bench's ceiling from
+   the start, so light words read at AA contrast anywhere on it and nothing darkens when the modules arrive. */
+body.sx-body .gw-backdrop::before { content: ""; position: absolute; inset: 0; z-index: 1; background: rgb(66, 88, 120); mix-blend-mode: darken; }
+.sx { margin: clamp(36px, 5vw, 72px) 0; padding-top: clamp(20px, 3vw, 36px); border-top: 1px solid var(--line, rgba(244, 239, 230, .3)); }
+.sx > h2 { margin-top: 0; }
+.sx > p { max-width: 68ch; }
+.sx .demo-form { font-size: .92em; }
+.sx-still { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 17em), 1fr)); gap: clamp(18px, 3vw, 48px); align-items: start; margin: 24px 0; max-width: 1100px; }
+.sx-still figure { margin: 0; }
+.sx-still figcaption, .sx-as { font-size: .92em; max-width: 60ch; }
+.sx-pal { list-style: none; padding: 0; margin: 0 0 10px; display: grid; gap: 8px; }
+.sx-pal li { display: flex; align-items: center; gap: 10px; }
+.sx-pal i { width: 34px; height: 34px; flex: none; border: 1px solid rgba(244, 239, 230, .55); }
+.sx-pal code, .sx-say code { font-family: var(--face-utility, monospace); font-size: .92em; }
+.sx-word { font: 800 clamp(26px, 3vw, 44px)/1.05 var(--face-display, inherit); letter-spacing: -.02em; margin: 0 0 10px; overflow-wrap: anywhere; }
+.sx-curve { width: 100%; max-width: 320px; height: auto; display: block; margin-bottom: 10px; }
+.sx-curve polyline { fill: none; stroke: currentColor; stroke-width: 1.6; vector-effect: non-scaling-stroke; }
+.sx-curve path { fill: none; stroke: currentColor; opacity: .45; vector-effect: non-scaling-stroke; }
+.sx-go { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 20px; margin: 20px 0; }
+.sx button { font: inherit; font-weight: 700; color: inherit; background: none; border: 1px solid currentColor; padding: .6em 1.1em; min-height: 44px; cursor: pointer; }
+.sx button:hover:not([disabled]) { background: rgba(244, 239, 230, .14); }
+.sx button:focus-visible, #sx-hosts:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+.sx button[disabled] { cursor: default; opacity: .75; }
+.sx-say { scroll-margin-top: 120px; min-height: 3em; max-width: 80ch; font-size: .92em; margin: 14px 0; }
+#sx-hosts h3 { font-size: 18px; margin: 0 0 .5em; }
+#sx-hosts[data-surface] { margin: 20px 0; }
+#sx-hosts .sf-wide { grid-column: 1 / -1; }
+.sx [hidden] { display: none !important; }

@@ -1,6 +1,7 @@
 #!/usr/bin/env node
-// Build the Playground's front page and Distill (world/site/distill/): a page that takes any file, archive or
-// folder apart in the reader's browser and shows what it is made of.
+// Build Distill (world/site/distill/): a page that takes any file, archive or
+// folder apart in the reader's browser and shows what it is made of. The Playground's front page is a surface,
+// built by scripts/build-surfaces.mjs from site-src/world/surfaces/playground.mjs.
 //
 //   node scripts/build-distill.mjs
 import { mkdirSync, writeFileSync } from "node:fs";
@@ -39,30 +40,7 @@ ${labelFor("distill")}
 </article>
 <script type="module" src="/world/site/distill/page.js"></script>`;
 
-const PARTS = [
-  ["/raw.html", "The native renderer", "Renders frames in C++ on Direct3D 12, Vulkan and WebGPU, and checks each one against a reference. Released as raw-native."],
-  ["/superframe.html", "Superframe, the core", "One seeded recipe rendered as picture, line, surface, type and sound."],
-  ["/low-water.html", "Low Water", "The game made with The Playground."],
-];
-const PLACES = [
-  ["/playground/distill.html", "Distill", "Take any file, archive or folder apart and read what it is made of."],
-  ["/studio.html", "The Studio", "A live media instrument for picture and sound."],
-  ["/elements.html", "Elements", "Pigment, water, glass and paper on one bench, with state changes."],
-  ["/glass-water.html", "Glass and water", "Glass lettering over a live sea in four spaces."],
-  ["/world/sound/sound.html", "Sound", "Instruments and scores made in the browser."],
-  ["/swatches.html", "Swatches", "Colour as measured material."],
-  ["/accession.html", "Accession", "The type family and its living forms."],
-];
-const hub = `<article class="ds">
-<h1>The Playground</h1>
-<p class="ds-lede">The Playground is a rendering engine that turns one description into picture, type and sound. It has four parts: the <a href="/raw.html">native renderer</a>, <a href="/superframe.html">Superframe</a> at the core, the <a href="#instruments">instruments and study tools</a>, and <a href="/low-water.html">Low Water</a>, the game made with it.</p>
-<ul class="pg-list">${PARTS.map(([href, name, say]) => `<li><a href="${href}">${name}</a><p>${say}</p></li>`).join("")}</ul>
-<h2 id="instruments">Instruments and study tools</h2>
-<ul class="pg-list">${PLACES.map(([href, name, say]) => `<li><a href="${href}">${name}</a><p>${say}</p></li>`).join("")}</ul>
-</article>`;
-
 mkdirSync(path.join(site, "playground"), { recursive: true });
 const head = '<link rel="stylesheet" href="/world/site/distill/distill.css">';
 writeFileSync(path.join(site, "playground/distill.html"), page({ path: "playground/distill.html", title: "Distill", description: "Take any file, archive or folder apart in your browser: every part, where it sits, and how much of the file the parts account for. Nothing is uploaded.", body: distill, bodyClass: "reading ds-body", extraHead: head }));
-writeFileSync(path.join(site, "playground/index.html"), page({ path: "playground/index.html", title: "The Playground", description: "The Playground is a rendering engine that turns one description into picture, type and sound: the native renderer, Superframe, the instruments and study tools, and Low Water.", body: hub, bodyClass: "reading ds-body", extraHead: head }));
-console.log(`playground: 2 pages, ${PARTS.length + PLACES.length} places`);
+console.log("playground: distill.html");
