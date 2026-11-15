@@ -3,7 +3,7 @@ import { SECONDARY_GROUPS } from "./routes.js?v=20260925-void-plates";
 
 // The home app (built from home/) renders its final copy natively, so this
 // module no longer rewrites hero text. It keeps the shared-site menu and
-// anchor behavior, while the approved Zentropy art plate owns the visual
+// anchor behavior, while the approved home art plate owns the visual
 // identity. A second full-page field would compete with that artwork.
 
 function wireDetailsMenu(doc, details, summary, listSelector, abortKey) {

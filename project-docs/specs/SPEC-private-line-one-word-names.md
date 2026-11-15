@@ -1,7 +1,7 @@
 # Spec: Private-Line One-Word Names
 
 ## Objective
-Present the private-line Zentropy Labs tools with one-word names that describe
+Present Zain Dana Harper's private-line tools with one-word names that describe
 what they do, while avoiding a repo, package, CLI, or import rename in this
 change.
 

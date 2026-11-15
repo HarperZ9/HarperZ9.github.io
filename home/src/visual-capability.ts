@@ -1,5 +1,5 @@
 /**
- * The Zentropy artwork is complete without GPU rendering. Keep WebGL as a
+ * The home artwork is complete without GPU rendering. Keep WebGL as a
  * desktop enhancement only, where a fine pointer and ample viewport make the
  * extra motion useful rather than costly.
  */
