@@ -73,6 +73,7 @@
 
 <section class="mv" id="live" aria-labelledby="live-h">
   <h2 id="live-h" class="reveal">Render it here.</h2>
+  <p class="demo-form" data-demo="raw-render" data-form="live"><b>Live.</b> This runs in your browser now, on what you give it.</p>
   <p class="body-text reveal">This is the 0.4.0 browser build of the renderer, running on this page. The latest release is 0.8.0, and the downloads below are from it. Pick a camera and it draws the frame, lights it both ways and writes the certificate, the same as the command line. If your browser has WebGPU, the frame is drawn on your GPU, and the same camera is drawn again on the CPU to check it: a second certificate says whether the two agree. Without WebGPU, the CPU build draws the frame on one thread, and the status lines say why. Your browser checks each module against its published SHA-256 before running it.</p>
   <div class="rn-live reveal">
     <canvas id="rn-canvas" width="768" height="768" role="img" aria-label="The live render: a box on a ground plane, drawn by raw-native in this browser."></canvas>

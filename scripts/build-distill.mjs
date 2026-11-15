@@ -7,6 +7,7 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { page } from "./studies-shell.mjs";
+import { labelFor } from "./demo-labels.mjs";
 
 const site = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const KEY = [["header", "Header or signature"], ["chunk", "Named block"], ["table", "Index or table"], ["data", "Packed or raw data"], ["file", "File inside"], ["section", "Section of text"], ["gap", "Not accounted for"]];
@@ -15,6 +16,7 @@ const READS = "PNG, JPEG, GIF, WebP, WAV, AVI, MP4, MOV, HEIC, AVIF, FLAC, MP3 t
 const distill = `<article class="ds" data-distill>
 <h1>Distill</h1>
 <p class="ds-lede">Distill is one of the study tools in <a href="/playground/">The Playground</a>. Give it a file, an archive or a whole folder. Distill takes it apart and shows what it is made of: every part, where it sits, how large it is, and how much of the file the parts account for.</p>
+${labelFor("distill")}
 <div class="ds-drop">
 <p>Drop files or a folder here, or choose them. Everything is read in this tab. Nothing is uploaded, and nothing in a file is run.</p>
 <div class="ds-pick">
