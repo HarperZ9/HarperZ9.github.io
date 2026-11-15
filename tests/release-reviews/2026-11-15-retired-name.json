@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-15",
+  "note": "Retired name pass (author, 2026-11-15: no organization; the tool's name or Zain Dana Harper). media/retro-systems-lab/evidence-manifest.json: hierarchy.studio now reads Zain Dana Harper. system/doc.css, system/system.css and system/home-art.js: one comment line each no longer names the retired brand. Checked on 2026-11-15: git diff shows one changed line per file, no rule, selector, variable or statement changed.",
+  "paths": {
+    "media/retro-systems-lab/evidence-manifest.json": "b313e7bba2c3533b0abe9f876b64c8a54d8c7c5da55107b60b253b2b226807a7",
+    "system/doc.css": "8b3c3f75ea656f512d9e4c4900b192f4aa02c6dc207e3eeadb7f8af658ce3acc",
+    "system/home-art.js": "5569dfb869aba502e7d0664a1e5663d7386276505da54f5a92874d6011d94214",
+    "system/system.css": "cdd79f0b4a56acb84a7f21254560e1d662715c4d9a137908dfd49ec0281dea94"
+  }
+}

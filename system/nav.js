@@ -553,7 +553,7 @@ if (typeof document !== "undefined") {
     wireScrollRegions(document, window);
     mountRouteHeader(document);
     // The React home owns its own restrained desktop field and its static
-    // Zentropy mobile treatment. Static pages retain the shared enhancement.
+    // mobile treatment. Static pages retain the shared enhancement.
     if (document.documentElement.dataset.homeShell !== "react" && shouldMountAmbientField(document)) {
       mountAmbient(document);
       import("./cursor-field.js").then((m) => m.mountCursorField()).catch(() => {});
