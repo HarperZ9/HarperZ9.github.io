@@ -4,7 +4,10 @@ Each paper has one entry there. `version_doi` is the record of the edition the P
 page carry, and it feeds the deposit line, the footer on every PDF page, the .tex header
 and the build receipt. `concept_doi` resolves to every version of the record and never goes
 stale; it prints beside the deposit line when `all_versions` is true. `edition_note` is
-appended to the edition label of the PDF.
+appended to the edition label of the PDF. `replaces` names the earlier Zenodo version of the
+same edition and the file's `verified` entry is the Verified line; the page prints both and
+the PDF prints neither, since the PDF is the deposited file and cannot report on its own
+deposit.
 
 A build for a version that Zenodo has reserved and not yet published must not change the
 committed file. It passes the reserved DOI through the environment instead:
@@ -42,11 +45,14 @@ def parse(pairs: str) -> dict[str, str]:
 
 def load(pairs: str | None = None) -> dict[str, dict]:
     """The deposits table, with any reserved version DOIs applied."""
-    papers = json.loads(PATH.read_text(encoding="utf-8"))["papers"]
+    table = json.loads(PATH.read_text(encoding="utf-8"))
+    papers = {name: {**entry, "verified": table.get("verified")} for name, entry in table["papers"].items()}
     for name, doi in parse(os.environ.get(ENV, "") if pairs is None else pairs).items():
         if name not in papers:
             raise SystemExit(f"{ENV}: no paper named {name!r} in papers/deposits.json")
-        papers[name] = {**papers[name], "version_doi": doi, "all_versions": True, "edition_note": TYPESET_NOTE}
+        # a reserved version is not checked yet, and it replaces whatever the table calls current
+        papers[name] = {**papers[name], "version_doi": doi, "all_versions": True, "edition_note": TYPESET_NOTE,
+                        "verified": None, "replaces": None}
     return papers
 
 
@@ -65,4 +71,8 @@ def spec_fields(name: str) -> dict[str, str]:
         out["concept_doi"] = entry["concept_doi"]
     if entry.get("edition_note"):
         out["edition_note"] = entry["edition_note"]
+    if entry.get("replaces"):
+        out["replaces"] = (entry["replaces"]["doi"], entry["replaces"]["label"])
+    if entry.get("verified"):
+        out["verified"] = (entry["verified"]["date"], entry["verified"]["text"])
     return out

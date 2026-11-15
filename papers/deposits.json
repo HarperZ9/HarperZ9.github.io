@@ -1,29 +1,49 @@
 {
-  "about": "One entry per deposited paper. version_doi is the Zenodo record of the edition the PDF and page carry; concept_doi resolves to every version. Set all_versions to true to print the concept DOI beside the deposit line. edition_note is appended to the edition label of the PDF. tools/deposits.py reads this file.",
+  "about": "One entry per deposited paper. version_doi is the Zenodo record of the version the PDF and page carry; concept_doi resolves to every version. Set all_versions to true to print the concept DOI beside the deposit line. edition_note is appended to the edition label of the PDF. replaces names the earlier Zenodo version of the same edition, which the page lists and the PDF does not. verified is the page's Verified line for the current versions. tools/deposits.py reads this file.",
+  "verified": {
+    "date": "15 November 2026",
+    "text": "the PDF and the LaTeX file on this site have the same MD5 checksums as the files Zenodo lists for this version, read from the Zenodo records API and compared by script, and both DOIs resolve to this paper's Zenodo record, checked by HTTP request to doi.org."
+  },
   "papers": {
     "arity-gap": {
-      "version_doi": "10.5281/zenodo.23126117",
+      "version_doi": "10.5281/zenodo.24238724",
       "concept_doi": "10.5281/zenodo.22768628",
-      "all_versions": false,
-      "edition_note": ""
+      "all_versions": true,
+      "edition_note": ", LaTeX typeset",
+      "replaces": {
+        "doi": "10.5281/zenodo.23126117",
+        "label": "the PDF printed from this page on 3 October 2026"
+      }
     },
     "forcing-argument": {
-      "version_doi": "10.5281/zenodo.23126357",
+      "version_doi": "10.5281/zenodo.24238743",
       "concept_doi": "10.5281/zenodo.22768808",
-      "all_versions": false,
-      "edition_note": ""
+      "all_versions": true,
+      "edition_note": ", LaTeX typeset",
+      "replaces": {
+        "doi": "10.5281/zenodo.23126357",
+        "label": "the PDF printed from this page on 3 October 2026"
+      }
     },
     "self-given": {
-      "version_doi": "10.5281/zenodo.23126458",
+      "version_doi": "10.5281/zenodo.24238749",
       "concept_doi": "10.5281/zenodo.22768918",
-      "all_versions": false,
-      "edition_note": ""
+      "all_versions": true,
+      "edition_note": ", LaTeX typeset",
+      "replaces": {
+        "doi": "10.5281/zenodo.23126458",
+        "label": "the PDF printed from this page on 3 October 2026"
+      }
     },
     "conservation-of-faithfulness": {
-      "version_doi": "10.5281/zenodo.23126484",
+      "version_doi": "10.5281/zenodo.24238755",
       "concept_doi": "10.5281/zenodo.23126483",
-      "all_versions": false,
-      "edition_note": ""
+      "all_versions": true,
+      "edition_note": ", LaTeX typeset",
+      "replaces": {
+        "doi": "10.5281/zenodo.23126484",
+        "label": "the PDF printed from this page on 3 October 2026"
+      }
     }
   }
 }

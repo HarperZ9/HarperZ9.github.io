@@ -4,6 +4,9 @@ version DOI changes only the lines that name the deposit.
 15 November 2026: the LaTeX typeset of each paper is prepared as a new Zenodo version. Zenodo
 reserves the version DOI before publication, so the build takes it from the command line and
 leaves the committed PDFs, sources and receipts alone until the version is published.
+
+The four versions were published that day and papers/deposits.json names them, with the
+version each one replaces and the Verified line the pages print.
 """
 
 from __future__ import annotations
@@ -38,6 +41,8 @@ def test_a_reserved_doi_turns_on_the_all_versions_line_and_the_typeset_label() -
     entry = deposits.load(f"self-given={PENDING}")["self-given"]
     assert entry["version_doi"] == PENDING and entry["all_versions"] is True
     assert entry["edition_note"] == ", LaTeX typeset"
+    # a reserved version has not been checked, so it carries no Verified line and no replaced version
+    assert entry["verified"] is None and entry["replaces"] is None
     assert deposits.load(f"self-given={PENDING}")["arity-gap"] == deposits.load("")["arity-gap"]
     for bad in ("self-given", "self-given=10.1234/other.1", f"no-such-paper={PENDING}"):
         with pytest.raises(SystemExit):
@@ -56,11 +61,12 @@ def test_a_version_build_changes_only_the_lines_that_name_the_deposit(tmp_path: 
     old = (ROOT / "papers" / "tex" / f"{name}.tex").read_text(encoding="utf-8").split("\n")
     assert len(new) == len(old)
     changed = [(a, b) for a, b in zip(old, new) if a != b]
-    # the header comment, the footer definition, the edition label and the revision note
-    assert len(changed) == 4
+    # The header comment, the footer definition and the revision note. Until 15 November 2026
+    # the edition label changed too and the all-versions line was added; since the four
+    # versions were published the committed source carries both, so only the DOI differs.
+    assert len(changed) == 3
     for before, after in changed:
-        restored = after.replace("zenodo.PENDING", old_doi.rsplit("/", 1)[1]).replace(", LaTeX typeset", "")
-        assert restored.replace(rf" All versions: \url{{https://doi.org/{concept}}}.", "") == before
+        assert after.replace("zenodo.PENDING", old_doi.rsplit("/", 1)[1]) == before
     text = "\n".join(new)
     assert old_doi.rsplit("/", 1)[1] not in text
     # the footer breaks the DOI after its slash, so count the record part

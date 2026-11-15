@@ -113,6 +113,12 @@ def revision(spec: dict, note: str) -> str:
         parts.append(f"This edition is deposited at Zenodo, {doi_link(spec['doi'])}.")
     if "concept_doi" in spec:
         parts.append(f"All versions: {doi_link(spec['concept_doi'])}.")
+    if spec.get("edition_note") == ", LaTeX typeset":
+        parts.append("This version is the LaTeX typeset of the edition of 3 October 2026, with the text unchanged.")
+    if "replaces" in spec:
+        doi, label = spec["replaces"]
+        parts.append(f"The earlier version of this edition, {label}, stays citable at its Zenodo record, "
+                     f"{doi_link(doi)}.")
     if "supplement" in spec:
         doi, label = spec["supplement"]
         parts.append(f"It builds on {label}, which stays citable at its own Zenodo record, {doi_link(doi)}.")
@@ -125,7 +131,12 @@ def revision(spec: dict, note: str) -> str:
     if "related" in spec:
         doi, label, route = spec["related"]
         parts.append(f'This paper argues from <a class="inline" href="{route}">{label}</a>, {doi_link(doi)}.')
-    return f'  <aside class="revision-note" id="revision"><p class="entry-note">{" ".join(parts)}</p></aside>\n'
+    verified = ""
+    if "verified" in spec:
+        when, text = spec["verified"]
+        verified = f'<p class="entry-note"><b>Verified</b> {when}: {html.escape(text, quote=False)}</p>'
+    return (f'  <aside class="revision-note" id="revision"><p class="entry-note">{" ".join(parts)}</p>'
+            f'{verified}</aside>\n')
 
 
 def corrections(notes: list[str]) -> str:

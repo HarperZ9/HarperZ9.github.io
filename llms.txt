@@ -155,16 +155,16 @@ reviewed. The label after each title says what kind of record it is.
   Trust](https://doi.org/10.5281/zenodo.20778927): Archived corpus, 2026-06-20.
   PDF: https://harperz9.github.io/papers/witnessing-spine.pdf
 - [Sourcehood Without a Source: The Arity Gap and the Free Will
-  Debate](https://doi.org/10.5281/zenodo.23126117): Philosophy paper,
+  Debate](https://doi.org/10.5281/zenodo.24238724): Philosophy paper,
   2026-10-03 edition. Page: https://harperz9.github.io/research-arity-gap.html
 - [The Seam That Holds While It Is
-  Crossed](https://doi.org/10.5281/zenodo.23126357): Philosophy paper,
+  Crossed](https://doi.org/10.5281/zenodo.24238743): Philosophy paper,
   2026-10-03 edition. Page:
   https://harperz9.github.io/research-forcing-argument.html
-- [Self-Given Is Not Self-Grounding](https://doi.org/10.5281/zenodo.23126458):
+- [Self-Given Is Not Self-Grounding](https://doi.org/10.5281/zenodo.24238749):
   Philosophy paper, 2026-10-03 edition. Page:
   https://harperz9.github.io/research-self-given.html
-- [The Conservation of Faithfulness](https://doi.org/10.5281/zenodo.23126484):
+- [The Conservation of Faithfulness](https://doi.org/10.5281/zenodo.24238755):
   Working paper, 2026-10-03 edition. It builds on the formal note at
   https://doi.org/10.5281/zenodo.22768398. Page:
   https://harperz9.github.io/research-conservation-of-faithfulness.html
