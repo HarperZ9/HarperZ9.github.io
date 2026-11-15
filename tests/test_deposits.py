@@ -67,3 +67,13 @@ def test_a_version_build_changes_only_the_lines_that_name_the_deposit(tmp_path: 
     assert text.count("zenodo.PENDING") == 3 and text.count(concept) == 1 and text.count("LaTeX typeset") == 1
     assert sorted(p.name for p in (tmp_path / name).iterdir()) == [
         "SHA256SUMS", f"{name}.html", f"{name}.md", f"{name}.receipt.json", f"{name}.tex"]
+
+
+def test_converter_sets_the_prime_and_nested_quotes_as_the_source_has_them() -> None:
+    """15 November 2026: the difference read against the October deposit found the prime set
+    as an opening quote mark, and nested quotes closing or opening in the wrong order."""
+    from tools.paper_latex import escape
+
+    assert escape("Call it C′. (O′) stays") == r"Call it C\ensuremath{'}. (O\ensuremath{'}) stays"
+    assert escape("""of "such causal 'aseity'" (1994)""") == "of ``such causal `aseity'{}'' (1994)"
+    assert escape("""the same: "'Another' is 'a holder'", which""") == "the same: ```Another' is `a holder'{}'', which"

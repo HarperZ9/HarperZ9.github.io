@@ -21,8 +21,9 @@ URL = re.compile(r"https?://[^\s<>\]]+?(?=[.,;:)]?(?:\s|$))")
 SPECIAL = {"\\": r"\textbackslash{}", "{": r"\{", "}": r"\}", "$": r"\$", "&": r"\&", "#": r"\#",
            "^": r"\textasciicircum{}", "_": r"\_", "~": r"\textasciitilde{}", "%": r"\%",
            # The Latin Modern text faces lack these four, so they are set from the math fonts.
-           "′": r"\ensuremath{'}", "φ": r"\ensuremath{\varphi}", "ρ": r"\ensuremath{\rho}",
+           "′": "\x00", "φ": r"\ensuremath{\varphi}", "ρ": r"\ensuremath{\rho}",
            "≈": r"\ensuremath{\approx}"}
+PRIME = ("\x00", r"\ensuremath{'}")  # held as a mark until the quotes are set, so it is not read as one
 
 BREAKABLE_SLASH = r"/\allowbreak{}"  # a long path or bare domain may wrap after a slash
 
@@ -51,9 +52,10 @@ def escape(text: str) -> str:
     out = "".join(SPECIAL.get(ch, ch) for ch in text)
     out = out.replace("--", "-{}-")
     out = re.sub(r'(^|[\s(\[{/])"', r"\1``", out)
+    out = out.replace("'\"", "'{}''")  # a closing single quote, then the closing double quote
     out = out.replace('"', "''")
-    out = re.sub(r"(^|[\s(\[{/])'", r"\1`", out)
-    return out
+    out = re.sub(r"(^|[\s(\[{/`])'", r"\1`", out)  # the backtick: a single quote opening inside a double
+    return out.replace(*PRIME)
 
 
 def inline(text: str) -> str:
