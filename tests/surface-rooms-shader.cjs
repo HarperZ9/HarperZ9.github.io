@@ -146,6 +146,8 @@ const step = (words) => { if (process.env.STEPS) console.log(words); };
       const { ctx, page, errors } = await open(browser, '/playground/?room=shader&shp=bands#shader');
       await page.waitForSelector(LIVE);
       assert.equal((await value(page)).palette, 0); assert.match(await page.textContent('#shader .shd-in'), /No colours have been handed in/);
+      // the room hands its own frame on first, as it does on a slow connection; the pen study's picture must still reach it
+      await page.waitForFunction(() => window.__rooms.bus.log().some((l) => l.ok && l.medium === 'image' && l.from === 'shader'));
       await page.click('#sx-start'); await page.waitForSelector('html[data-surface-page-ready]');
       await page.waitForFunction(() => +document.querySelector('#shader .rm-host').dataset.palette >= 2);
       assert.match(await page.textContent('#shader .shd-in'), /Its colours come from the blend/);
