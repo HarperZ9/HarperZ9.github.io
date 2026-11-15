@@ -1,0 +1,527 @@
+{
+ "schema": "research-record/1",
+ "built": "2026-11-14 by scripts/record-findings.mjs from paper.txt, the register row and the findings ledger",
+ "document": {
+  "id": "F109",
+  "kind": "finding",
+  "title": "Hexagonal sampling kept its textbook saving on synthetic fields; three forecasts about why failed",
+  "standfirst": "Three forecasts about hexagonal grids failed on synthetic signals: the densest packing lattice lost in three dimensions, the sphere test failed its jitter control, and hexagonal sampling scored 0.43 dB below square on 30 synthetic images. The textbook savings held as instrument checks; tests on private images and a voice recording are left out.",
+  "date_found": "2026-10-30",
+  "fields": [
+   "information-theory",
+   "physics-other",
+   "rendering"
+  ],
+  "tier": "B",
+  "tier_reason": "A preregistration with working lattice controls, but the theory gains are textbook, the published arms are synthetic, the border explanation was formed after the result and the sound gain mixes lattice and window.",
+  "rung": "hypothesis",
+  "rung_reason": "A preregistration with pass-or-fail rules is on file, which this rung needs. The next rung needs a named rival reading beaten by a decisive observation, and none is on file.",
+  "outcome": "mixed",
+  "bound": "Failed: face-centred cubic needed 0.770 of the cubic count against 0.707 for body-centred; the geodesic advantage of 1.00 log10 units sat below the jittered control's 95th percentile of 1.10; the zonal forecast missed by -0.08 (-0.18 to +0.03); hexagonal sampling lost 0.43 dB (-0.85 to -0.12) on 30 synthetic images. All seven image verdicts failed on a pool that included private images.",
+  "objection": "Everything here is synthetic. The fields have Gaussian isotropic spectra, and the synthetic images are constructed patterns. Results on natural images, recorded sound or measured volumes may differ.",
+  "objection_source": "the paper's first stated limitation; our register records no separate objection",
+  "would_change": "A fresh preregistration of the border effect on a licensed open image set with padded or periodic scoring, and sparse coding with lattice and window separated.",
+  "sections": [
+   {
+    "id": "reader",
+    "title": "What this means for a reader",
+    "role": "lead",
+    "paragraphs": [
+     "The hexagon's advantage is a statement about ideal signals with no edges, and it is smaller in practice than the famous 13.4 percent: 8 to 9 percent for a smooth spectrum at matched error. On a sphere most of the gain over a latitude-longitude grid comes from covering the surface evenly, and our test could not credit the regular hexagonal arrangement beyond that. In a rectangular image at equal sample count, the hexagonal grid lost on our synthetic set. Anyone choosing a grid should test it on bounded data of the kind they will store."
+    ]
+   },
+   {
+    "id": "abstract",
+    "title": "Abstract",
+    "role": "argument",
+    "paragraphs": [
+     "A hexagonal grid covers the plane more evenly than a square one, and sampling theory says it needs fewer samples for the same signal. We asked whether that idea carries beyond the plane, to volumes, the sphere and sound, and why it works where it does. Three forecasts failed. {c1}In three dimensions the forecast that the densest packing lattice samples best failed: the body-centred cubic lattice needed 0.707 of the cubic sample count at the strict limit against 0.770 for the face-centred lattice.{/c1} {c2}On the sphere a geodesic grid had a tenth of the error of a latitude-longitude grid at 1,000 samples (1.00 log10 units, 95% interval 0.99 to 1.02), but a jittered geodesic grid reached 0.83 on average and 1.10 at its 95th percentile, so the test failed its control.{/c2} The forecast that the sphere gain would shrink for fields aligned with the grid axis also failed. {c3}On 30 synthetic test images at 4,096 samples, hexagonal sampling scored 0.43 dB below square sampling (interval -0.85 to -0.12).{/c3} The textbook results held as instrument checks. {c4}In the plane the hexagonal lattice needed 0.866 of the square count for strictly band-limited fields and 0.905 to 0.922 at matched error for a Gaussian spectrum.{/c4} {c5}A first-order field inside each cell beat a constant cell at equal parameter count in every draw: by 0.26 log10 units in three dimensions and 0.54 on the sphere.{/c5} The study's tests on real images and a voice recording used private material and are left out; all seven image verdicts failed."
+    ]
+   },
+   {
+    "id": "intro",
+    "title": "Introduction",
+    "role": "argument",
+    "paragraphs": [
+     "Petersen and Middleton showed in 1962 that a signal whose spectrum is confined to a disc can be sampled on a hexagonal lattice with 13.4 percent fewer samples than on a square one {cite:r1}. The same argument in three dimensions favours the body-centred cubic lattice, because the best {g:sampling-lattice}sampling lattice{/g} is the one whose reciprocal lattice packs spheres most densely {cite:r2}. A later analysis reports that this holds near the strict sampling limit and that another lattice can win at low sampling rates {cite:r3}. In time-frequency analysis, Strohmer and Beaver conjectured that the hexagonal lattice gives the best-conditioned Gabor frame for a Gaussian window, with a condition number near 1.26 at redundancy 2 against the square lattice's 1.41 {cite:r4,r5}. We know these sources through search summaries and abstracts.",
+     "The study began from a 2026 preprint on rendering scenes with soft hexagonal patches that each carry a first-order colour field {cite:r6}. That design has two ingredients, a hexagonal layout and a field that varies inside each cell. The question was whether either ingredient pays in other media, and the decision it informed was which grid and which kind of cell our own tools use to store sampled images, volumes, spherical fields and sound."
+    ]
+   },
+   {
+    "id": "prereg",
+    "title": "Preregistration and design",
+    "role": "argument",
+    "paragraphs": [
+     "The {g:preregistration}preregistration{/g} was hash-locked on 30 October 2026 (UTC), before the full run. It was not blind. Small trial runs of every part had been seen, and the preregistration lists what they showed and what was changed after them. The forecast for fast sweeps in sound was written after a trial run had shown the direction.",
+     "The study scored 21 {g:verdict}verdict{/g}s: 10 passed and 11 failed. This paper reports the 11 that rest on synthetic signals alone, of which 8 passed and 3 failed. It leaves out the rest:",
+     "- Seven verdicts on images were scored on a pool of 60 images, half of them one person's saved pictures. That material is private. All seven failed on the pool, including the main forecast that hexagonal sampling would beat square sampling. We report the synthetic half only, as a subset that was not the preregistered test.",
+     "- Two verdicts on sound pooled synthetic clips with a recording of a voice, which is also private. One passed and one failed.",
+     "- One exploratory verdict on musical intervals used a consonance ranking entered from memory and should not be cited.",
+     "A first full run with the same seed was stopped by the run harness's tamper guard when two compiled-code cache files appeared in the library folder during the run. Their origin is unknown. The run was repeated unchanged, and all 1,454 numeric values in the two result files agree."
+    ]
+   },
+   {
+    "id": "data",
+    "title": "Data and provenance",
+    "role": "argument",
+    "paragraphs": [
+     "Every signal in this paper was generated by the study's code from a fixed seed: random fields with a Gaussian isotropic spectrum in two and three dimensions, random spherical-harmonic fields to degree 40, 30 synthetic test images (isotropic noise at two slopes, random discs, axis-aligned blocks, grids and text, the same rotated by 30 and 45 degrees, smooth gradients, and gradients cut by straight edges), and three kinds of synthetic sound (a slow chirp, chords with vibrato and glides, and fast frequency sweeps). No external dataset is used."
+    ]
+   },
+   {
+    "id": "methods",
+    "title": "Methods",
+    "role": "argument",
+    "paragraphs": [
+     "## Sampling in the plane and in three dimensions",
+     "A field with power {m:\\exp(-k^2 / 2)} at spatial frequency {m:k} was sampled on a lattice and rebuilt with that lattice's ideal low-pass filter; the error is exact by Parseval's theorem. The strict test used a flat disc (or ball) spectrum and found the lowest density with no {g:aliasing}aliasing{/g}. For the plane, theory gives the ratio of hexagonal to square density as",
+     "$$ \\frac{\\rho_{hex}}{\\rho_{sq}} = \\frac{\\sqrt{3}}{2} {eq:hex}",
+     "which is 0.866, and for the {g:bcc}body-centred cubic lattice{/g} against the cubic lattice {m:1 / \\sqrt{2}}, which is 0.707. The matched-error test found the density at which the expected relative error crosses 0.01, 0.001 and 0.0001, by Monte Carlo over one million frequencies. The paired advantage of lattice {m:b} over lattice {m:a} on one field is",
+     "$$ D = \\log_{10} \\frac{e_a}{e_b} {eq:adv}",
+     "with {m:e} the relative squared error. In the plane it was measured at a density of 36 samples per unit area on 200 fields.",
+     "## The sphere",
+     "Fields were sampled at the points of a {g:geodesic-grid}geodesic grid{/g}, of a latitude-longitude grid sampled at cell centres, and of a Fibonacci spiral, and rebuilt by least squares in spherical harmonics. Errors were interpolated to 1,000 samples on 40 fields. Isotropic fields spread power evenly over orders; zonal fields vary with latitude only.",
+     "## Images",
+     "Each 256-pixel grey image was smoothed, sampled at exactly 4,096 points on a square or a hexagonal lattice, and rebuilt with a Gaussian kernel. The two kernel widths were tuned per lattice on 8 held-out tuning images, 4 of them private, then frozen. The score is the difference in {g:psnr}PSNR{/g} over all pixels.",
+     "## Cells with a field inside",
+     "A volume or a spherical field was stored as cells at a budget of 1,500 numbers: one number per constant cell, or a value and its gradient per first-order cell (4 numbers in three dimensions, 3 on the sphere). The field effect is eq. {ref:eq:adv} for first-order against constant cells, and the grid effect is the same for body-centred against cubic cells or geodesic against latitude-longitude cells, on 6 random smooth fields.",
+     "## Time-frequency lattices",
+     "For a signal of 960 samples, a rectangular lattice of time-frequency points was compared with a hexagonal one at the same number of points. The {g:frame-condition}frame condition number{/g} {m:B / A} of the {g:gabor-frame}Gabor frame{/g} was computed for the best of 41 Gaussian window widths at five redundancies. Sound segments were then approximated by 120 numbers with a greedy sparse solver, using atoms of fixed frequency (3 numbers each) or chirplets whose frequency changes linearly inside the atom (4 numbers).",
+     "## Intervals and correction",
+     "Each {g:interval-95}95% interval{/g} comes from 2,000 bootstrap resamples over fields, images or segments. One-sided p values were corrected with the {g:benjamini-hochberg}Benjamini-Hochberg correction{/g} {cite:r7} over the study's 24 tests, which include the tests left out here."
+    ]
+   },
+   {
+    "id": "controls",
+    "title": "Controls and planted checks",
+    "role": "argument",
+    "paragraphs": [
+     "The {g:control}control{/g} for a lattice claim is the same lattice with each point moved at random by 0.15 of a spacing. A jittered lattice keeps the even coverage and loses the regular arrangement. A lattice result passes only if the regular lattice's advantage exceeds the 95th percentile of the jittered lattice's advantage over the same reference, across 40 control draws.",
+     "The strict density ratios serve as the {g:planted-check}planted check{/g}: they are known from geometry, and the code had to reproduce them without being given them. Those values, and the frame condition numbers, are deterministic. They could not have come out otherwise if the code is right, so they test the instrument and are not findings."
+    ]
+   },
+   {
+    "id": "results",
+    "title": "Results",
+    "role": "argument",
+    "paragraphs": [
+     "## What failed",
+     "{c1}In three dimensions the forecast that the densest packing lattice samples best failed: the body-centred cubic lattice needed 0.707 of the cubic sample count at the strict limit against 0.770 for the face-centred lattice.{/c1} The counter-forecast, that the winner is the lattice whose reciprocal packs densest, passed. Table {ref:tab:counts} gives the counts. At matched error the body-centred lattice also needed fewer samples than the face-centred one, but only by 1 percent at an error of 0.01 and 0.3 percent at 0.001, and the result file holds no interval for these counts. We do not claim a difference between those two lattices away from the strict limit.",
+     "::table tab:counts cols=0.28,0.18,0.18,0.18,0.18 Samples per unit area or volume needed by each lattice, with the ratio to the square or cubic lattice. Strict: no aliasing of a disc or ball spectrum. Matched: Gaussian spectrum at the stated relative error.\nLattice ¦ Strict ¦ Error 0.01 ¦ Error 0.001 ¦ Error 0.0001\nSquare ¦ 4.00 ¦ 36.6 ¦ 53.7 ¦ 70.3\nHexagonal ¦ 3.46 (0.866) ¦ 33.7 (0.922) ¦ 48.7 (0.905) ¦ 64.5 (0.918)\nCubic ¦ 8.00 ¦ 248.7 ¦ 421.1 ¦ not run\nBody-centred cubic ¦ 5.66 (0.707) ¦ 205.4 (0.826) ¦ 343.9 (0.817) ¦ not run\nFace-centred cubic ¦ 6.16 (0.770) ¦ 207.3 (0.834) ¦ 344.8 (0.819) ¦ not run\n::end",
+     "{c2}On the sphere a geodesic grid had a tenth of the error of a latitude-longitude grid at 1,000 samples (1.00 log10 units, 95% interval 0.99 to 1.02), but a jittered geodesic grid reached 0.83 on average and 1.10 at its 95th percentile, so the test failed its control.{/c2} Figure {ref:fig:controls} shows the plane and the sphere side by side. The regular geodesic grid is above the jittered grid's average and inside its spread. To reach a relative error of 0.01 the geodesic grid needed 680 samples, the Fibonacci spiral 742 and the latitude-longitude grid 1,124. The geodesic grid's error was below the Fibonacci spiral's by 0.24 log10 units (0.22 to 0.25). The reading that fits these numbers is that even coverage carries the gain over latitude and longitude, and that the test could not show the hexagonal arrangement adds to it.",
+     "![fig:controls width=0.8 alt=Two rows. In the plane the hexagonal advantage of 0.18 sits well to the right of the jittered control band. On the sphere the geodesic advantage of 1.00 sits inside the jittered control band, which runs from 0.68 to 1.10](fig-controls.png) Advantage of the regular lattice over the reference grid (diamond, with 95% interval) against the same advantage for a jittered copy of the lattice (grey band from the 5th to the 95th percentile, tick at the mean). Plane: hexagonal against square. Sphere: geodesic against latitude-longitude. Drawn from the run's result file.",
+     "The third failure is a transfer forecast. If the hexagon's gain came from treating all directions alike, the geodesic advantage should be smaller for zonal fields, which line up with the latitude-longitude grid. It was not: the advantage was 1.08 for zonal fields against 1.00 for isotropic ones, a difference of -0.08 (-0.18 to +0.03) in the direction opposite to the forecast.",
+     "{c3}On 30 synthetic test images at 4,096 samples, hexagonal sampling scored 0.43 dB below square sampling (interval -0.85 to -0.12).{/c3} This is a subset of the preregistered pool and so carries no verdict. A check made after the run scored only pixels two sample spacings or more from the image edge; there the difference on the same 30 images was +0.09 dB (-0.13 to +0.39). That fits a loss at the border, where a square lattice tiles a rectangle exactly and a hexagonal one leaves ragged margins, but the check was chosen after the result was seen and its interval includes zero.",
+     "## What held",
+     "{c4}In the plane the hexagonal lattice needed 0.866 of the square count for strictly band-limited fields and 0.905 to 0.922 at matched error for a Gaussian spectrum.{/c4} The saving at matched error is 8 to 9 percent. The hexagonal lattice's expected error was lower at every density tested, and at a density of 36 its advantage was 0.178 log10 units (0.174 to 0.181, 200 fields) against a jittered-lattice 95th percentile of 0.031.",
+     "Hexagonal time-frequency lattices had the lower frame condition number at all five redundancies (Table {ref:tab:cond}). Our value at redundancy 2 is 1.262, close to the 1.26 reported in the literature for the continuous case.",
+     "::table tab:cond cols=0.34,0.33,0.33 Frame condition number B/A for the best Gaussian window, 960-sample periodic signals. Lower is better; 1 is ideal.\nRedundancy ¦ Rectangular ¦ Hexagonal\n1.25 ¦ 2.385 ¦ 2.160\n1.5 ¦ 1.732 ¦ 1.590\n2 ¦ 1.414 ¦ 1.262\n3 ¦ 1.075 ¦ 1.041\n4 ¦ 1.015 ¦ 1.007\n::end",
+     "{c5}A first-order field inside each cell beat a constant cell at equal parameter count in every draw: by 0.26 log10 units in three dimensions and 0.54 on the sphere.{/c5} The grid effect at the same budget was smaller: 0.04 for body-centred against cubic cells and 0.18 for geodesic against latitude-longitude cells, also with the same sign in all 6 fields. Figure {ref:fig:cells} shows every draw.",
+     "![fig:cells width=0.74 alt=Four rows of six dots each. Field effects cluster near 0.26 in three dimensions and 0.54 on the sphere; grid effects cluster near 0.04 and 0.18](fig-cells.png) Field effect (first-order against constant cells) and grid effect (body-centred against cubic, geodesic against latitude-longitude) at 1,500 parameters, one dot per random field, in log10 units of error. Drawn from the run's result file.",
+     "In sound, the first-order idea paid only where the frequency moves fast. On fast sweeps chirplets beat fixed atoms by 1.86 dB (0.89 to 2.76, 16 segments), which passed. On the slow chirp they lost 2.53 dB (-2.83 to -2.23) and on synthetic chords 0.68 dB (-0.80 to -0.56). The gain rose with sweep rate at a rank correlation of 0.52 (-0.01 to 0.77), which did not survive correction (corrected p 0.054). On six smooth synthetic images a first-order colour field gained 0.38 dB (0.08 to 0.72) at equal parameter count; this is a subset with no verdict.",
+     "With fixed atoms, the hexagonal time-frequency lattice beat the rectangular one on each synthetic clip: by 3.29 dB on the slow chirp, 0.72 dB on chords and 1.03 dB on fast sweeps. This comparison mixes two things. At redundancy 2 the hexagonal lattice's best window is 1.8 times wider than the rectangular lattice's (20.6 against 11.3 samples), so the gain cannot be assigned to the lattice alone."
+    ]
+   },
+   {
+    "id": "discussion",
+    "title": "Discussion",
+    "role": "argument",
+    "paragraphs": [
+     "The forecasts that failed share one assumption: that the hexagon wins because it is the most even or most isotropic arrangement, and that this reason travels. In three dimensions the lattice with the best packing lost to the lattice whose reciprocal has the best packing, which is the textbook result and which our literal forecast had ignored. On the sphere, isotropy did not predict where the gain was largest, and jittering the grid did not remove the gain. On bounded images the lattice's interior efficiency was outweighed by something else, plausibly the border.",
+     "The ingredient that did transfer is the first-order field, and only where the signal is smooth across a cell: volumes, spherical fields, smooth images and fast sweeps. It lost on slowly changing sound, where a fixed atom already fits.",
+     "For our own tools the result set these rules: store volumes on the body-centred lattice and spherical fields on a geodesic or Fibonacci grid, keep the square grid for bounded images unless a fresh test with padded or periodic borders says otherwise, and give cells a first-order field where the signal is smooth at the cell scale."
+    ]
+   },
+   {
+    "id": "limits",
+    "title": "Limitations",
+    "role": "argument",
+    "paragraphs": [
+     "- Everything here is synthetic. The fields have Gaussian isotropic spectra, and the synthetic images are constructed patterns. Results on natural images, recorded sound or measured volumes may differ.",
+     "- The image result is a subset of a preregistered pool whose other half is private, so it carries no verdict. The kernel widths were tuned on 8 images that included 4 private ones.",
+     "- The border explanation for the image loss was formed after the result was seen, and its supporting check has an interval that includes zero.",
+     "- The sphere test used one jitter size (0.15 of a spacing) and 40 control draws. A smaller advantage of the regular arrangement over jitter is not excluded; the averages differ by 0.17 log10 units.",
+     "- Matched-error sample counts have no intervals in the result file. The body-centred and face-centred lattices differ there by 1 percent or less.",
+     "- The cell tests used 6 fields and one budget.",
+     "- The lattice gain in sparse coding of sound is confounded with window width.",
+     "- The strict ratios and the frame condition numbers are deterministic checks of the code and add nothing new to the literature.",
+     "- The comparison says nothing about hexagonal patches whose positions and shapes are optimised, as in the preprint that prompted the study; its claims were not tested here.",
+     "- The study was not blind: trial runs were seen before the lock. Scoring was by our own code."
+    ]
+   },
+   {
+    "id": "appendix",
+    "title": "Appendix A. The preregistered verdicts",
+    "role": "evidence",
+    "paragraphs": [
+     "Verdicts as scored by the run. \"Synthetic\" marks the verdicts this paper stands on. \"Pooled\" marks verdicts scored on data that included private material; their values are not reported.",
+     "::table tab:verdicts cols=0.3,0.4,0.15,0.15 All 21 verdicts of the study.\nVerdict ¦ What it asked ¦ Data ¦ Outcome\nPlane instrument ¦ strict ratio, matched ratio, advantage above jitter ¦ synthetic ¦ passed\nHexagonal beats square on images ¦ mean PSNR difference above 0 ¦ pooled ¦ failed\nIsotropy predicts the image gain ¦ negative rank correlation ¦ pooled ¦ failed\nRotation test on images ¦ rotated lattice keeps and changes as forecast ¦ pooled ¦ failed\nHexagonal disc layout ¦ beats square layout after correction ¦ pooled ¦ failed\nAdaptive discs ¦ beat both fixed layouts ¦ pooled ¦ failed\nHexagon shape ¦ beats Gaussian shape at equal parameters ¦ pooled ¦ failed\nDirection of a preprint's image claim ¦ both directions agree ¦ pooled ¦ failed\nFrame condition ¦ hexagonal below rectangular at every redundancy ¦ synthetic ¦ passed\nRebuild under noise ¦ hexagonal above rectangular ¦ pooled ¦ passed\nChirplets on fast sweeps ¦ field effect above 0 ¦ synthetic ¦ passed\nIsotropy in time-frequency ¦ negative rank correlation ¦ pooled ¦ failed\nPitch geometry (exploratory) ¦ ranking from memory ¦ not cited ¦ passed\nDensest packing wins in 3-D ¦ face-centred needs fewest samples ¦ synthetic ¦ failed\nReciprocal packing wins in 3-D ¦ body-centred needs fewest samples ¦ synthetic ¦ passed\nGeodesic sphere grid ¦ advantage above 0 and above jitter's 95th percentile ¦ synthetic ¦ failed\nZonal fields on the sphere ¦ smaller geodesic advantage ¦ synthetic ¦ failed\nField in 3-D cells ¦ first-order better in every field ¦ synthetic ¦ passed\nField in sphere cells ¦ first-order better in every field ¦ synthetic ¦ passed\nGrid in 3-D cells ¦ body-centred better in every field ¦ synthetic ¦ passed\nGrid in sphere cells ¦ geodesic better in every field ¦ synthetic ¦ passed\n::end"
+    ]
+   }
+  ]
+ },
+ "claims": [
+  {
+   "id": "c1",
+   "text": "In three dimensions the forecast that the densest packing lattice samples best failed: the body-centred cubic lattice needed 0.707 of the cubic sample count at the strict limit against 0.770 for the face-centred lattice.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e1"
+   ]
+  },
+  {
+   "id": "c2",
+   "text": "On the sphere a geodesic grid had a tenth of the error of a latitude-longitude grid at 1,000 samples (1.00 log10 units, 95% interval 0.99 to 1.02), but a jittered geodesic grid reached 0.83 on average and 1.10 at its 95th percentile, so the test failed its control.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e2"
+   ]
+  },
+  {
+   "id": "c3",
+   "text": "On 30 synthetic test images at 4,096 samples, hexagonal sampling scored 0.43 dB below square sampling (interval -0.85 to -0.12).",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e3"
+   ]
+  },
+  {
+   "id": "c4",
+   "text": "In the plane the hexagonal lattice needed 0.866 of the square count for strictly band-limited fields and 0.905 to 0.922 at matched error for a Gaussian spectrum.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e4"
+   ]
+  },
+  {
+   "id": "c5",
+   "text": "A first-order field inside each cell beat a constant cell at equal parameter count in every draw: by 0.26 log10 units in three dimensions and 0.54 on the sphere.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e5"
+   ]
+  }
+ ],
+ "evidence": [
+  {
+   "id": "e1",
+   "kind": "number",
+   "label": "The numbers in claim 1",
+   "value": "0.707; 0.770",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-14",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e2",
+   "kind": "number",
+   "label": "The numbers in claim 2",
+   "value": "1,000; 1.00; 10; 95; 0.99; 1.02; 0.83; 1.10",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-14",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e3",
+   "kind": "number",
+   "label": "The numbers in claim 3",
+   "value": "30; 4,096; 0.43; -0.85; -0.12",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-14",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e4",
+   "kind": "number",
+   "label": "The numbers in claim 4",
+   "value": "0.866; 0.905; 0.922",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-14",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e5",
+   "kind": "number",
+   "label": "The numbers in claim 5",
+   "value": "0.26; 10; 0.54",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-14",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e6",
+   "kind": "number",
+   "label": "Sample",
+   "value": "30 synthetic images at 4,096 samples; synthetic clips; fields in three dimensions and on the sphere",
+   "check": {
+    "by": "our publication register",
+    "result": "not_checked",
+    "note": "as recorded in the publication register"
+   }
+  },
+  {
+   "id": "e7",
+   "kind": "number",
+   "label": "Main estimate and interval",
+   "value": "hexagonal minus square on 30 synthetic images -0.43 dB (-0.85 to -0.12); pixels away from the border, chosen after the run, +0.09 dB (-0.13 to +0.39)",
+   "check": {
+    "by": "our publication register",
+    "result": "not_checked",
+    "note": "as recorded in the publication register"
+   }
+  },
+  {
+   "id": "e8",
+   "kind": "number",
+   "label": "Forecast against outcome",
+   "value": "Did not hold: the densest packing lattice sampling best in three dimensions, the sphere test against its jitter control, and the zonal forecast (-0.08, opposite to the forecast)",
+   "check": {
+    "by": "our publication register",
+    "result": "not_checked",
+    "note": "as recorded in the publication register"
+   }
+  },
+  {
+   "id": "e9",
+   "kind": "control",
+   "label": "Known-answer check",
+   "value": "hexagonal over square density 0.866; body-centred 0.707 and face-centred 0.770 of cubic",
+   "check": {
+    "by": "our publication register",
+    "result": "not_checked",
+    "note": "as recorded in the publication register"
+   }
+  }
+ ],
+ "references": [
+  {
+   "id": "r1",
+   "key": "Petersen 1962",
+   "kind": "paper",
+   "title": "Petersen, D. P. and Middleton, D. (1962). Sampling and reconstruction of wave-number-limited functions in N-dimensional Euclidean spaces. Information and Control 5(4), 279-323.",
+   "access": "snippet",
+   "access_note": "search snippets and abstracts; full text not read",
+   "accessed": "2026-11-14"
+  },
+  {
+   "id": "r2",
+   "key": "Entezari, A., Van De Ville, D",
+   "kind": "paper",
+   "title": "Entezari, A., Van De Ville, D. and Möller, T. Practical box splines for reconstruction on the body centered cubic lattice. IEEE Transactions on Visualization and Computer Graphics.",
+   "access": "snippet",
+   "access_note": "search snippets and abstracts; full text not read",
+   "accessed": "2026-11-14"
+  },
+  {
+   "id": "r3",
+   "key": "agrell",
+   "kind": "paper",
+   "title": "Multidimensional sampling of isotropically bandlimited signals. arXiv:1703.00471",
+   "access": "snippet",
+   "target": "https://arxiv.org/abs/1703.00471",
+   "access_note": "search snippets and abstracts; full text not read",
+   "accessed": "2026-11-14"
+  },
+  {
+   "id": "r4",
+   "key": "Strohmer 2003",
+   "kind": "paper",
+   "title": "Strohmer, T. and Beaver, S. (2003). Optimal OFDM design for time-frequency dispersive channels. IEEE Transactions on Communications 51(7), 1111-1122. doi:10.1109/TCOMM.2003.814200",
+   "access": "snippet",
+   "target": "https://doi.org/10.1109/TCOMM.2003.814200",
+   "access_note": "search snippets and abstracts; full text not read",
+   "accessed": "2026-11-14"
+  },
+  {
+   "id": "r5",
+   "key": "Faulhuber 2019",
+   "kind": "paper",
+   "title": "Faulhuber, M. (2019). The Strohmer and Beaver conjecture for Gaussian Gabor systems: a deep mathematical problem (?). arXiv:1905.05051",
+   "access": "snippet",
+   "target": "https://arxiv.org/abs/1905.05051",
+   "access_note": "search snippets and abstracts; full text not read",
+   "accessed": "2026-11-14"
+  },
+  {
+   "id": "r6",
+   "key": "Kaushik 2026",
+   "kind": "paper",
+   "title": "Kaushik, Paul and Yuille (2026). Honeycomb-Surfels: compact hexagonal primitives for efficient scene rendering and reconstruction. arXiv:2610.37668",
+   "access": "snippet",
+   "target": "https://arxiv.org/abs/2610.37668",
+   "access_note": "search snippets and abstracts; full text not read",
+   "accessed": "2026-11-14"
+  },
+  {
+   "id": "r7",
+   "key": "Benjamini 1995",
+   "kind": "paper",
+   "title": "Benjamini, Y. and Hochberg, Y. (1995). Controlling the false discovery rate: a practical and powerful approach to multiple testing. Journal of the Royal Statistical Society, Series B 57, 289-300.",
+   "access": "snippet",
+   "access_note": "search snippets and abstracts; full text not read",
+   "accessed": "2026-11-14"
+  }
+ ],
+ "relations": [],
+ "corrections": [
+  {
+   "id": "x1",
+   "date": "2026-11-14",
+   "target": "document",
+   "type": "scope",
+   "after": "The ledger entry's image results pool 30 synthetic images with 30 private ones, and its sound results include a private voice recording; those pooled values, a comparison with a preprint's image claims that used the same pool, and an exploratory test on musical intervals are left out. The ledger's statement that hexagonal sampling loses 0.21 dB on images is replaced here by the synthetic subset, -0.43 dB on 30 images.",
+   "reason": "Narrowed to the synthetic arms.",
+   "found_by": "the publication pass"
+  },
+  {
+   "id": "x2",
+   "date": "2026-11-14",
+   "target": "document",
+   "type": "wording",
+   "after": "This paper states that its margin over the face-centred lattice at matched error is 1 percent or less with no interval, and limits the claim to the strict limit.",
+   "reason": "The ledger says the body-centred lattice \"wins every test\".",
+   "found_by": "the publication pass"
+  }
+ ],
+ "versions": [
+  {
+   "n": 1,
+   "date": "2026-10-30",
+   "what": "entered in the findings ledger"
+  },
+  {
+   "n": 2,
+   "date": "2026-11-14",
+   "what": "paper version 1.0, first published",
+   "hash": "03d01d9f92944c7ed52499ee8e708a62757c2d29142f1be6f7fc7005ee188b06"
+  }
+ ],
+ "grade": {
+  "lowers": [
+   {
+    "domain": "blinding",
+    "text": "Not blind. Trial runs were seen before the lock.",
+    "from": "our publication register, on blinding"
+   },
+   {
+    "domain": "failed check",
+    "text": "Controls: mixed: jitter worked in the plane; on the sphere a jittered grid reached the same margin, so that test failed its control.",
+    "from": "our publication register, on controls"
+   },
+   {
+    "domain": "novelty",
+    "text": "Nearby work exists; novelty is not shown.",
+    "from": "our publication register, on the literature"
+   },
+   {
+    "domain": "depth of reading",
+    "text": "The cited literature was read at the level of search snippets and abstracts; full texts were not read.",
+    "from": "the Verified section"
+   }
+  ],
+  "holds": [
+   {
+    "domain": "scoring",
+    "text": "Scored by code against rules fixed in advance.",
+    "from": "our publication register, on who scored it"
+   },
+   {
+    "domain": "preregistration",
+    "text": "Preregistered and hash-locked before the run (sha256 9096a776).",
+    "from": "the Reproduce section"
+   },
+   {
+    "domain": "open data",
+    "text": "Part of the data is public and part is not; the data licence line under Reproduce says which.",
+    "from": "our publication register, on the data licence"
+   }
+  ]
+ },
+ "reproduce": {
+  "data": [],
+  "prereg": {
+   "hash": "9096a776ae17fca5796129d41ea87482afbf78134ca658cd3e3917ae56cd9014",
+   "plan": "d0d9b88ba4aabac9f6bcd0fde4559e09f2cd01e77b427a4e143bc19c2a9920e0"
+  },
+  "cost": "the analysis took 8,854 s on one desktop computer, including the parts left out here.",
+  "steps": [
+   "Data: none external. Every signal is synthetic and generated by the study's code from the seed 2026102961; nothing is licensed from a third party.",
+   "Plane and three dimensions: sample fields with power {m:\\exp(-k^2 / 2)} on each lattice, rebuild with the ideal low-pass of the lattice, and find the strict and matched densities; check eq. {ref:eq:hex}.",
+   "Sphere: sample spherical-harmonic fields to degree 40 on geodesic, latitude-longitude, Fibonacci and jittered geodesic grids, rebuild by least squares, and compute eq. {ref:eq:adv} at 1,000 samples.",
+   "Images: sample each synthetic image at 4,096 points on square and hexagonal lattices with tuned Gaussian prefilter and rebuild kernel, and take the PSNR difference.",
+   "Cells and sound: as in the Methods, at 1,500 and 120 parameters.",
+   "Preregistration SHA-256: 9096a776ae17fca5796129d41ea87482afbf78134ca658cd3e3917ae56cd9014. Plan SHA-256: d0d9b88ba4aabac9f6bcd0fde4559e09f2cd01e77b427a4e143bc19c2a9920e0. Run 20261030T073040Z."
+  ],
+  "not_rerun": "The study was not re-run for this paper, and the agreement of the blocked first run with the second was taken from the ledger and not recounted."
+ },
+ "verified": {
+  "date": "2026-11-14",
+  "checks": [
+   {
+    "what": "On 14 November 2026 the strict densities and matched counts in the plane and in three dimensions, the plane advantage with its interval and control, the sphere advantages, intervals, sample counts and jitter control, the zonal difference, the synthetic image difference and its interval, the five pairs of frame condition numbers and window widths, the cell effects and all 24 per-field values, the per-clip sound effects and intervals, the corrected p values and the 21 verdicts with their rules were re-read from the run's result file.",
+    "by": "the paper's Verified pass",
+    "result": "match"
+   },
+   {
+    "what": "They match the {g:findings-ledger}findings ledger{/g}.",
+    "by": "the paper's Verified pass",
+    "result": "match"
+   },
+   {
+    "what": "The interior image check was re-read from the post hoc file.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   },
+   {
+    "what": "The preregistration's SHA-256 matches the hash in the result file and in the lock file.",
+    "by": "the paper's Verified pass",
+    "result": "match"
+   },
+   {
+    "what": "The ratios in Table 1 at matched error for three dimensions were computed for this paper from the counts in the result file.",
+    "by": "the paper's Verified pass",
+    "result": "match"
+   },
+   {
+    "what": "All three figures were drawn by a script that reads only the result file.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   },
+   {
+    "what": "The Benjamini and Hochberg paper is cited for the method only.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   }
+  ],
+  "not_checked": [
+   "The study was not re-run for this paper, and the agreement of the blocked first run with the second was taken from the ledger and not recounted.",
+   "The literature was found by two searches run on 14 November 2026 and read at the level of search snippets and abstracts; the full texts were not read.",
+   "The preprint on hexagonal patches is cited as the preregistration records it and was not read for this paper."
+  ]
+ }
+}

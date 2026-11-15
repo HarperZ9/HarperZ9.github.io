@@ -1,0 +1,178 @@
+---
+id: F94
+title: A hidden-variable finder failed its red-noise control; two fixes cut false finds to 1 table in 60
+subtitle: Two preregistered rounds of a tool that looks for hidden variables in tables: planted variables, pure noise, red noise, and two public datasets with known structure
+version: 1.0
+date: 14 November 2026
+line: Finding F94 in the findings ledger. Tier B. Synthetic, tree-ring and body-signal arms only.
+pdf_author: Zain Dana Harper
+subject: Two preregistered rounds testing a tool for finding latent variables in tables against planted latents, white and red noise, North American tree-ring chronologies and the WESAD stress dataset
+footer: F94, a hidden-variable finder and its red-noise failure, version 1.0
+---
+# abstract
+We built a tool that looks for hidden variables in a table of measurements and tested it on tables where the answer is known. The first preregistered round failed. {c1}On 30 tables of independent red noise the tool reported a hidden variable in 5 (0.167, 95% interval 0.073 to 0.336) against a bar of 0.10, which fired the kill rule and withdrew every real-data result of that round.{/c1} Two causes were found and fixed: the tool always fitted one variable or more, and two of its methods that share a subspace were allowed to confirm each other. A second round with fresh synthetic draws passed every rule. {c2}After the fixes, 1 of 60 red-noise tables (0.017, interval 0.003 to 0.089) and 0 of 90 pure-noise tables (interval 0 to 0.041) gave a hidden variable.{/c2} {c3}Planted variables were recovered in full at a noise share of 0.5, and at a noise share of 0.75 with 1,000 rows the tool recovered 13 of 24 against 7 of 12 for the best linear predictor.{/c3} {c4}On tree-ring chronologies the best surviving variable tracks summer drought at r 0.83 (null 95th percentile 0.40), and on the WESAD body-signal data the best follows the scripted states at eta squared 0.87 (0.23).{/c4} Round two is not blind: the fixes and the real-data statistics came after round one was seen. A third real table is private and is left out.
+
+# section What this means for a reader {sec:reader}
+A method that finds hidden factors will find them in slowly drifting noise unless it is made able to say "nothing here". Ours could not say that at first, and its own control caught it. Before trusting a factor found in a time series, ask what the method reports on drifting noise with no shared structure, and whether its agreeing methods are independent of each other.
+
+# section Introduction {sec:intro}
+A {g:latent-variable}latent variable{/g} is a quantity nobody measured that would explain why several measured columns of a table move together. Tools that extract such variables have a standard weakness: they return an answer for any table. The usual way to count how many variables are present, Horn's {g:parallel-analysis}parallel analysis{/g}, compares the data's eigenvalues with those of random data built with independent entries. A search summary of the literature notes that when parallel analysis errs it tends to keep too many components, and that its reference data keep no dependence between rows {cite:dobriban2019,saccenti2017}. Rows of a time series do depend on each other. Our searches returned no paper that measures the false-find rate on red noise for a pipeline like this one; that is what one search returned, and it does not show that none exists.
+
+We wanted one tool to stand behind every claim of a hidden variable in our other studies, so the decision was whether to adopt it. The test was fixed before the run: recover planted variables, stay silent on noise, and stay silent on {g:red-noise}red noise{/g}, which drifts slowly and is the closest thing to a time series with nothing in it.
+
+# section Preregistration and design {sec:prereg}
+Each round had its own {g:preregistration}preregistration{/g}, hash-locked before its run on 30 October 2026 (UTC). Round one's lock was written after the tool had been tested on synthetic tables and after a smoke run on scrambled real tables; no statistic of an unscrambled real table had been computed.
+
+The {g:kill-condition}kill condition{/g} of both rounds: if more than 0.05 of pure-noise tables or more than 0.10 of red-noise tables give a hidden variable, the tool does not control false discovery, and no real-data result of that run is reported as a finding.
+
+Round two was written after round one was seen in full. Its preregistration lists five changes: the two fixes to the tool, a corrected definition of a false find, recovery targets set against what is recoverable in principle, and 60 red-noise tables in place of 30. It states that the round is not blind. The synthetic draws of round two are new; the real tables and their check statistics had been seen.
+
+The study ran three real tables. Two are public and are reported here. The third is a table of measured properties of one person's saved images; it is private, and its two verdicts per round are left out of this paper.
+
+# section Data and provenance {sec:data}
+The synthetic tables are generated by the study's code from a fixed seed.
+
+The tree-ring table comes from the International Tree-Ring Data Bank {cite:itrdb}, open data held by the NOAA National Centers for Environmental Information: every North American site with a gap-free standard chronology from 1700 to 1980, which gives 281 years by 698 sites. The drought record is the summer (June to August) Palmer Drought Severity Index by climate division from NOAA's nClimDiv dataset {cite:nclimdiv}, 1895 to 1980, a public United States government product.
+
+The body-signal table comes from WESAD {cite:schmidt2018}: 15 people recorded with a chest sensor through five scripted states (baseline, amusement, a stress test and two meditations). WESAD is released for scientific non-commercial use with credit. We used 75 rows (15 people by 5 states) of 41 variables, 11 chest features and the self-report items, each centred within person, and we report statistics only.
+
+# section Methods {sec:methods}
+## The tool
+The count of hidden variables comes from parallel analysis, with a phase-randomised reference for tables whose rows are ordered in time, and from held-out probabilistic PCA when a separate test confirms an interior optimum. The count is capped at 12. The table is then decomposed by up to four methods: {g:pca}principal component analysis{/g}, {g:ica}independent component analysis{/g}, non-negative matrix factorisation when no value is negative, and a {g:sparse-autoencoder}sparse autoencoder{/g}. No table in this study was non-negative, so the third never ran.
+
+A candidate variable is {i:found} when shuffling its held-out scores worsens the prediction of columns hidden from it, with the {g:benjamini-hochberg}Benjamini-Hochberg correction{/g} {cite:bh1995} over all candidates. It is {i:stable} when the found variables of another method predict its scores with a cross-validated R2 of 0.5 or more and above a row-shuffle bar. A {i:survivor} is found and stable.
+
+Every run on real data carries two controls of its own: planted linear variables at the data's size, noise share and autocorrelation, which must be recovered at a rate of 0.8 or more, and a scramble of each column, which must give no survivor. A run whose controls fail is marked invalid.
+
+## The two fixes
+In round one the fitted count was forced to be 1 or more, and principal and independent component analysis could confirm each other. Those two methods span the same subspace, so with one variable fitted their agreement is automatic. In round two the tool fits nothing when no count beats its null, and a variable is stable only when a method of another family reaches it.
+
+## Synthetic tables
+Planted tables have 24 columns built from 3 hidden variables by linear, sparse or nonlinear mixing, with a {g:noise-share}noise share{/g} of 0.5, 0.75 or 0.9 and 100, 300 or 1,000 rows, 4 tables per cell and 108 in all. A planted variable counts as recovered when the survivors predict it at a cross-validated R2 of 0.7 or more. Pure-noise tables are Gaussian, 30 at each of the three row counts. Red-noise tables have 250 rows and 16 independent columns, each following
+$$ x_t = \phi x_{t-1} + e_t {eq:ar1}
+with {m:\phi} = 0.8 and {m:e_t} white noise.
+
+The {g:oracle-share}oracle share{/g} is the share of planted variables that the best linear predictor from all columns recovers at the same 0.7 threshold, computed on separate large tables. It is the ceiling for any linear method. A survivor on planted data is a false find, in round two, when the planted variables predict its scores at an R2 below 0.25 with both a linear and a nearest-neighbour decoder. Round one used a linear R2 below 0.5.
+
+## Checks on real tables
+The outside labels never enter the tool. For trees, each survivor's yearly scores are correlated with the drought index weighted by that survivor's own site loadings; the statistic is the largest absolute correlation over survivors, and the null repeats it 999 times with a phase-randomised drought index. For WESAD the statistic is the largest {g:eta-squared}eta squared{/g} of the five states over survivors,
+$$ \eta^2 = \frac{S_{between}}{S_{total}} {eq:eta}
+the share of a variable's variance that lies between states, and the null permutes states within person 999 times. With 999 draws the smallest possible p value is 0.001.
+
+# section Controls and planted checks {sec:controls}
+The noise and red-noise tables are the {g:control}control{/g}s for false finds, and the planted tables are the {g:planted-check}planted check{/g} for recovery. The rates in the next section carry Wilson 95% intervals.
+
+In round one the control built into the tree-ring run also failed: the phase-scrambled tree table produced one survivor, so that run was invalid. In round two the scrambled tree table produced none, and the planted variables in each real run were recovered: 5 of 5 in the tree table, with R2 from 0.978 to 0.984, and 3 of 3 in the WESAD table, from 0.950 to 0.956.
+
+Before the round two lock, an exploratory check on 30 fresh red-noise tables gave 1 table with a survivor under the new rules and 6 under the round one rules. Those tables were not reused.
+
+# section Results {sec:results}
+## Round one failed
+{c1}On 30 tables of independent red noise the tool reported a hidden variable in 5 (0.167, 95% interval 0.073 to 0.336) against a bar of 0.10, which fired the kill rule and withdrew every real-data result of that round.{/c1} Pure noise passed, with 2 of 90 tables (0.022). Five of the ten verdicts on public and synthetic data failed: both recovery targets (0.81 against 0.9), the red-noise rate, the false-find proportion on planted data (0.32 against 0.10 under the round one definition) and the validity of the tree-ring run.
+
+## Round two
+{c2}After the fixes, 1 of 60 red-noise tables (0.017, interval 0.003 to 0.089) and 0 of 90 pure-noise tables (interval 0 to 0.041) gave a hidden variable.{/c2} Figure {ref:fig:false} sets the two rounds side by side. The upper end of the red-noise interval, 0.089, is below the bar of 0.10 by a small margin.
+
+![fig:false width=0.74 alt=Four points with intervals: pure noise at 0.022 then 0, red noise at 0.167 in round one, above its dotted bar of 0.10, then 0.017 in round two](fig-false.png) Share of structureless tables in which the tool reported a hidden variable, with Wilson 95% intervals and the number of tables. Dotted lines are the preregistered bars, 0.05 for pure noise and 0.10 for red noise. Drawn from the two runs' result files.
+
+{c3}Planted variables were recovered in full at a noise share of 0.5, and at a noise share of 0.75 with 1,000 rows the tool recovered 13 of 24 against 7 of 12 for the best linear predictor.{/c3} Table {ref:tab:recovery} gives every linear and sparse cell. Two things in it need saying plainly. Recovery at a noise share of 0.5 was already complete in round one; that verdict passed in round two because its rule was redrawn to cover only that noise level. And at a noise share of 0.9 the ceiling is zero, so the zero recovery there could not have come out otherwise. The oracle share within the run rests on 12 planted variables and is coarse; at 300 rows the sparse cell sits above it.
+
+::table tab:recovery cols=0.2,0.16,0.16,0.16,0.16,0.16 Round two: share of planted variables recovered, mean of 4 tables of 3 variables each, linear and sparse mixing. Oracle: share the best linear predictor recovers.
+Noise share ¦ Rows ¦ Linear ¦ Sparse ¦ Oracle ¦ Count exact
+0.5 ¦ 100 ¦ 1.00 ¦ 1.00 ¦ 1.00 ¦ 8 of 8
+0.5 ¦ 300 ¦ 1.00 ¦ 1.00 ¦ 1.00 ¦ 8 of 8
+0.5 ¦ 1,000 ¦ 1.00 ¦ 1.00 ¦ 1.00 ¦ 8 of 8
+0.75 ¦ 100 ¦ 0.42 ¦ 0.33 ¦ 0.58 ¦ 7 of 8
+0.75 ¦ 300 ¦ 0.50 ¦ 0.67 ¦ 0.58 ¦ 8 of 8
+0.75 ¦ 1,000 ¦ 0.58 ¦ 0.50 ¦ 0.58 ¦ 8 of 8
+0.9 ¦ 100 ¦ 0.00 ¦ 0.00 ¦ 0.00 ¦ 0 of 8
+0.9 ¦ 300 ¦ 0.00 ¦ 0.00 ¦ 0.00 ¦ 6 of 8
+0.9 ¦ 1,000 ¦ 0.00 ¦ 0.00 ¦ 0.00 ¦ 8 of 8
+::end
+
+The fixes cost some recovery in hard conditions. At a noise share of 0.75 and 1,000 rows, round one recovered 0.75 (linear) and 0.67 (sparse) of planted variables, against 0.58 and 0.50 in round two. The tables differ between rounds and each cell holds 12 variables, so this difference is suggestive only. Figure {ref:fig:recovery} shows both rounds.
+
+![fig:recovery width=0.8 alt=Three panels for linear, sparse and nonlinear mixing showing recovery at 1,000 rows falling from 1.0 at noise 0.5 to 0 at noise 0.9, with the oracle share as a stepped line and round one as hollow markers](fig-recovery.png) Recovery of planted variables at 1,000 rows against noise share, by mixing. Filled: round two. Hollow: round one. Grey line: the oracle share from round two. Drawn from the two runs' result files.
+
+The mean false-find proportion on linear and sparse planted tables was 0.043 against a bar of 0.10. This number is not comparable with round one's 0.32, because the definition changed between rounds. Nonlinear mixing is weak: recovery was 0.12 over all nonlinear cells and 0.50 at a noise share of 0.5 with 300 or 1,000 rows, equal to its oracle share, with a false-find proportion of 0.21.
+
+## Two public tables
+{c4}On tree-ring chronologies the best surviving variable tracks summer drought at r 0.83 (null 95th percentile 0.40), and on the WESAD body-signal data the best follows the scripted states at eta squared 0.87 (0.23).{/c4} Both p values are 0.001, the smallest the 999 draws allow.
+
+::table tab:real cols=0.26,0.37,0.37 Round two on the two public tables. Survivors by method: principal components, independent components, autoencoder.
+Quantity ¦ Tree rings ¦ WESAD
+Table ¦ 281 years by 698 sites ¦ 75 rows by 41 variables
+Count by parallel analysis ¦ 21, capped at 12 ¦ 3
+Survivors ¦ 23 (10, 12, 1) ¦ 9 (2, 3, 4)
+Scrambled table, survivors ¦ 0 ¦ 0
+Planted variables recovered ¦ 5 of 5 ¦ 3 of 3
+Outside check, best survivor ¦ r 0.829 with drought ¦ eta squared 0.869 for state
+Null: mean, 95th percentile ¦ 0.303, 0.401 ¦ 0.143, 0.226
+::end
+
+In the tree table the cap of 12 binds, so the count is a lower bound. In WESAD the first principal component separates the stress test from the other states (state mean 7.4 against -0.8 to -2.8) and correlates with self-reported arousal at 0.88 and with mean heart rate at 0.85. The autoencoder unit with the highest eta squared is high in the two meditations (3.7 and 4.1) and near zero elsewhere (0.0 to 0.3).
+
+Both links were known before the study: ring width in dry regions follows drought, and the WESAD protocol was designed to separate these states. The check statistics were also seen in round one, where the tree value was the same 0.83 in an invalid run. What round two adds is that the same values now come from runs whose noise and planted controls hold.
+
+# section Discussion {sec:discussion}
+The failure has a plain mechanism. Red noise has a few large eigenvalues by chance, because slow drifts in independent columns line up over a short record. A pipeline that must fit one variable or more will fit that drift, and two decompositions of the same subspace will then agree about it. Neither part is exotic, and both were in a tool whose individual units had each passed their own tests. The red-noise table was the control that exposed the combination.
+
+Round two shows the fixes work on fresh noise. Whether the tool finds new structure in real data is untested, because its real-data checks repeat known links that had already been seen. By the rule written before round two, the tool was adopted for our own later studies, with the cost visible in Table {ref:tab:recovery}: it now misses weak variables it found before.
+
+# section Limitations {sec:limits}
+- Round two is not blind. The fixes were chosen after seeing which tables failed, the false-find definition and the recovery rule were redrawn after round one, and the real-data statistics had been seen. Only the synthetic draws are fresh.
+- The red-noise rate after the fixes rests on 60 tables of one size and one autocorrelation (0.8). Its interval reaches 0.089 against a bar of 0.10. Other drift strengths, table shapes and coloured noise with shared structure were not tested.
+- The planted variables are mostly linear. Nonlinear recovery is weak (0.12 overall), and its false-find proportion is 0.21.
+- The count cap of 12 binds in the tree table. Non-negative factorisation never ran, so the autoencoder carried every cross-family confirmation.
+- A surviving variable is a stable pattern in a table and no more. The drought and state checks show association with one label each, on links already known.
+- Each synthetic cell holds 4 tables and 12 planted variables, so cell-level shares are coarse, and the oracle share within the run is noisy.
+- WESAD is 15 young adults in a scripted laboratory protocol.
+- A third real table, private to one person, was part of both rounds and is left out here. The correction over the three real-data p values included it; all three were 0.001.
+- Scoring was by our own code and was not blind.
+
+# section Verified {sec:verified}
+Verified: on 14 November 2026 the noise and red-noise counts, rates and intervals of both rounds, every cell of the recovery table, the oracle shares, the false-find proportions, the round one recovery values, the table sizes, counts, survivor numbers, control outcomes, planted recoveries, check statistics and null summaries for the tree and WESAD tables, the state means and correlations quoted for WESAD, and the verdicts of both rounds were re-read from the two runs' result files. They match the {g:findings-ledger}findings ledger{/g}. The rerun's survivor counts and check values were re-read from the rerun's result file. Both preregistration SHA-256 values match the hashes in the result files and lock files. The exploratory 1 of 30 and 6 of 30 were read from the round two preregistration. Both figures were drawn by a script that reads only the two result files. No study was re-run for this paper, and the per-site and per-survivor reports were not reopened. The literature was found by two searches run on 14 November 2026 and read at the level of search snippets and abstracts; the full texts were not read. The Benjamini and Hochberg paper is cited for the method only and was not searched or read for this paper.
+
+# section Corrections {sec:corrections}
+- 30 October 2026: round one fired its kill rule on red noise. Its real-data results were withdrawn, the tool was changed in two places, and the false-find definition and the recovery targets were redrawn, all disclosed in the round two preregistration.
+- 30 October 2026: a unit the tool calls to confirm an interior optimum was found to give a false positive on a curve that falls to an exact floor. The tool was changed to call a guarded version, and the ledger noted that the round two survivors had not yet been recomputed.
+- 30 October 2026: round two was replayed with the guarded version, the same parameters and the same seed. Every survivor held (23 of 23 for trees, 9 of 9 for WESAD) and the check statistics and synthetic summaries were unchanged. One held-out R2 for the tree table moved in the fourth decimal, unexplained. This supersedes the line above.
+- 14 November 2026: narrowed to the synthetic, tree-ring and WESAD arms, because the third real table is private. The ledger title also names that table.
+- 14 November 2026: first published version.
+
+# section Reproduction {sec:repro}
+- Data: International Tree-Ring Data Bank standard chronologies, North America (NOAA NCEI, open access, https://www.ncei.noaa.gov/products/paleoclimatology/tree-ring); NOAA nClimDiv divisional Palmer Drought Severity Index (United States government data, public domain); WESAD (scientific non-commercial use with credit, doi:10.24432/C57K5T).
+- Build the planted, pure-noise and red-noise tables as in the Methods, with eq. {ref:eq:ar1} for red noise.
+- Run the tool on each table and count tables with any survivor; score planted recovery at a cross-validated R2 of 0.7.
+- For trees, keep sites with a gap-free chronology from 1700 to 1980 and correlate each survivor with loading-weighted summer drought, 1895 to 1980, against 999 phase-randomised indices. For WESAD, compute eq. {ref:eq:eta} over the five states against 999 within-person permutations.
+- Preregistration SHA-256: a665fc427ee08932fe902c7dc6d3aeb5eeb551be0d1ba932dec5b3ea17672277. Plan SHA-256: 7b9ca2d6487cda8adf399fba645cafff619e97b12f6145814a6f2bd2fcb543e1. Run 20261030T030922Z.
+- The hashes above are round two's. Round one, for the record: preregistration hash bdcc8000617ee05e3f729b7119e5efd93c57fa69018a409ef5f079f24e39ca5a, plan hash 7fcd5c62051af30401b6f49ce4e554576a54cefecd8b9bfb8529f5bd1cc18b2c, run 20261030T021920Z.
+- Cost: the analysis took 2,017 s in round one and 1,579 s in round two on one desktop CPU, with the private table included; the replay took 3,119 s.
+
+::pagebreak
+# section Appendix A. The preregistered verdicts {sec:appendix}
+Each verdict is a rule written before its round. Values are read from the two result files. The two verdicts on the private table are left out; they passed in both rounds. The recovery rules differ between rounds, as the table states.
+
+::table tab:verdicts cols=0.24,0.34,0.21,0.21 Verdicts on synthetic and public data in both rounds.
+Verdict ¦ Rule ¦ Round one ¦ Round two
+Linear recovery ¦ round one: 0.9 or more at noise up to 0.75, 300 rows or more ¦ 0.81, fails ¦ rule replaced
+Sparse recovery ¦ round one: the same for sparse mixing ¦ 0.81, fails ¦ rule replaced
+Recovery at noise 0.5 ¦ round two: 0.9 or more, linear and sparse ¦ no such rule ¦ 1.00, passes
+Recovery near ceiling ¦ round two: oracle minus recovery 0.15 or less at noise 0.75, 1,000 rows ¦ no such rule ¦ 0.04, passes
+Pure noise ¦ share of tables with a survivor 0.05 or less ¦ 0.022, passes ¦ 0.000, passes
+Red noise ¦ share of tables with a survivor 0.10 or less ¦ 0.167, fails ¦ 0.017, passes
+False finds on planted data ¦ mean proportion 0.10 or less (definition differs by round) ¦ 0.32, fails ¦ 0.043, passes
+Tree run valid ¦ its planted and scramble controls pass ¦ fails ¦ passes
+WESAD run valid ¦ its planted and scramble controls pass ¦ passes ¦ passes
+Trees and drought ¦ statistic above null 95th percentile, corrected p below 0.05 ¦ 0.829 against 0.391, passes in an invalid run ¦ 0.829 against 0.401, passes
+WESAD and states ¦ statistic above null 95th percentile, corrected p below 0.05 ¦ 0.846 against 0.220, passes ¦ 0.869 against 0.226, passes
+Nonlinear below linear ¦ nonlinear recovery under linear recovery ¦ 0.11 under 0.49, passes ¦ 0.12 under 0.50, passes
+::end
+
+# references
+[itrdb] International Tree-Ring Data Bank. NOAA National Centers for Environmental Information, World Data Service for Paleoclimatology. Standard chronologies, North America. https://www.ncei.noaa.gov/products/paleoclimatology/tree-ring
+[nclimdiv] NOAA National Centers for Environmental Information. nClimDiv climate division data, Palmer Drought Severity Index. Retrieved 29 October 2026.
+[schmidt2018] Schmidt, P., Reiss, A., Duerichen, R., Marberger, C. and Van Laerhoven, K. (2018). Introducing WESAD, a multimodal dataset for wearable stress and affect detection. Proceedings of the 20th ACM International Conference on Multimodal Interaction (ICMI 2018). doi:10.1145/3242969.3242985. Data: UCI Machine Learning Repository, doi:10.24432/C57K5T; scientific non-commercial use with credit.
+[dobriban2019] Dobriban, E. and Owen, A. B. Deterministic parallel analysis: an improved method for selecting factors and principal components. arXiv:1711.04155
+[saccenti2017] Saccenti, E. and Timmerman, M. E. (2017). Considering Horn's parallel analysis from a random matrix theory point of view. Psychometrika.
+[bh1995] Benjamini, Y. and Hochberg, Y. (1995). Controlling the false discovery rate: a practical and powerful approach to multiple testing. Journal of the Royal Statistical Society, Series B 57, 289-300.

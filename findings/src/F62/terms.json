@@ -1,0 +1,23 @@
+{
+ "_about": "Field terms for F62, same shape as papers/glossary.json.",
+ "terms": {
+  "memorability": {"term": "memorability", "field": "vision science and memory research",
+   "definition": "the share of viewers who correctly recognise a photograph as a repeat when it comes round again in a stream of images, corrected for false alarms; it is a property measured per image across many viewers",
+   "excludes": "how well one person remembers, memory over days or years, and how much viewers like the image"},
+  "oklab-lightness": {"term": "lightness (OKLab L)", "field": "colour science",
+   "definition": "how light or dark a colour appears on a scale built to match human judgement, here averaged over every pixel of the image",
+   "excludes": "physical light intensity, and contrast between parts of the image"},
+  "chroma": {"term": "chroma", "field": "colour science",
+   "definition": "how far a colour is from grey at the same lightness, here the mean distance from the grey axis in OKLab over the image; our measure of saturation",
+   "excludes": "hue, which says which colour it is, and lightness"},
+  "cct": {"term": "correlated colour temperature", "field": "colour science and lighting",
+   "definition": "the temperature in kelvin of the glowing body whose colour is closest to a given colour; low values look warm and orange, high values look cool and blue. Here it is computed from the image's mean colour",
+   "excludes": "the temperature of anything in the scene, and the white balance setting of the camera"},
+  "held-out-r2": {"term": "held-out R2", "field": "statistics and machine learning",
+   "definition": "the share of the variation in a quantity that a model predicts on data it was not fitted to; 1 is perfect, 0 is no better than predicting the average, and it can fall below 0",
+   "excludes": "R2 computed on the same data used to fit the model, which rises whenever a variable is added"},
+  "benjamini-hochberg": {"term": "Benjamini-Hochberg correction", "field": "statistics",
+   "definition": "an adjustment of a set of p values that holds the expected share of false discoveries among the results called significant at a chosen level",
+   "excludes": "a guarantee that no result in the set is a false discovery"}
+ }
+}

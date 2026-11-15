@@ -1,0 +1,65 @@
+{
+ "schema": "buildlang.buildtex-receipt/v0",
+ "source": {
+  "path": "F109.bld",
+  "sha256": "3d77c988f7c0228cc135d4f91cc15fd364b2e96027738cdeb352ce8b9713156e"
+ },
+ "ir_sha256": "f9e86481723da5308fb2a61ef5558158ba3d3aa1ae5832e9552f954fbef0193f",
+ "theme": "paper",
+ "overrides": [],
+ "outputs": {
+  "F109.pdf": "03d01d9f92944c7ed52499ee8e708a62757c2d29142f1be6f7fc7005ee188b06"
+ },
+ "pdf_metadata": {
+  "pdfa": false,
+  "creation_date": "D:20261109000000Z"
+ },
+ "facts": {
+  "pages": 9,
+  "pages_layout": 9,
+  "overfull": [],
+  "underfull": 0,
+  "missing_glyphs": [],
+  "glyph_fallbacks": [],
+  "math_errors": [],
+  "fonts": [
+   {
+    "name": "FIELGD+NotoSansMath-Regular",
+    "embedded": true
+   },
+   {
+    "name": "GEOHID+AccessionDisplay-Master",
+    "embedded": true
+   },
+   {
+    "name": "GJBDJB+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "LAEILB+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "MPPDIP+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "NNHAPF+HankenGrotesk-Regular",
+    "embedded": true
+   }
+  ],
+  "images": 3,
+  "blind_text_runs": 0,
+  "reading_order": true,
+  "blocks_missing_from_text": [],
+  "pdf_bytes": 507829
+ },
+ "failed": [],
+ "notes": [
+  "buildc run F109.bld -> F109.doc.tsv",
+  "press: relief 1275x475 px at 150 dpi; 0 blind line(s); foil colour source: fallback constant"
+ ],
+ "external_programs": [
+  "buildc"
+ ]
+}

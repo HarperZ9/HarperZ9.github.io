@@ -1,0 +1,29 @@
+{
+ "_about": "Field terms for F109, same shape as papers/glossary.json.",
+ "terms": {
+  "sampling-lattice": {"term": "sampling lattice", "field": "signal processing",
+   "definition": "a regular arrangement of points at which a continuous signal is measured; square, hexagonal, cubic and body-centred cubic are examples, and each can represent signals up to a limit of fineness set by its geometry",
+   "excludes": "irregular or adaptive sample placements, and the pixel shape of a display"},
+  "aliasing": {"term": "aliasing", "field": "signal processing",
+   "definition": "the error made when a signal holds detail finer than the samples can represent, so that the fine detail is rebuilt as false coarse detail",
+   "excludes": "noise in the measurement, and blur from the rebuilding filter"},
+  "bcc": {"term": "body-centred cubic lattice", "field": "crystallography and sampling theory",
+   "definition": "the cubic lattice with one more point at the centre of every cube; the face-centred cubic lattice instead adds a point at the centre of every face, and each of the two is the reciprocal of the other",
+   "excludes": "a claim about any material's crystal structure"},
+  "geodesic-grid": {"term": "geodesic grid", "field": "geometry and climate modelling",
+   "definition": "a set of points on a sphere made by subdividing the faces of an icosahedron and pushing the points out to the surface; each point has six near-equal neighbours except twelve that have five, so the layout is close to hexagonal everywhere",
+   "excludes": "a latitude-longitude grid, whose points crowd together at the poles"},
+  "psnr": {"term": "PSNR", "field": "image processing",
+   "definition": "peak signal-to-noise ratio, a measure in decibels of how closely a rebuilt image matches the original; higher is closer, and 1 dB is a change of about 21 percent in mean squared error",
+   "excludes": "a measure of how good the image looks to a viewer"},
+  "gabor-frame": {"term": "Gabor frame", "field": "time-frequency analysis",
+   "definition": "a set of copies of one short window, shifted in time and in frequency onto a lattice of points, such that any signal can be rebuilt stably from how strongly it matches each copy",
+   "excludes": "a basis; a frame has more members than strictly needed, by a factor called the redundancy"},
+  "frame-condition": {"term": "frame condition number", "field": "time-frequency analysis",
+   "definition": "the ratio B/A of a frame's upper and lower bounds, which says how much rebuilding can amplify errors in the coefficients; 1 is ideal",
+   "excludes": "a measure of how few coefficients a signal needs"},
+  "benjamini-hochberg": {"term": "Benjamini-Hochberg correction", "field": "statistics",
+   "definition": "an adjustment of a set of p values that holds the expected share of false discoveries among the results called significant at a chosen level",
+   "excludes": "a guarantee that no result in the set is a false discovery"}
+ }
+}

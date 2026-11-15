@@ -229,7 +229,7 @@
       "collection": "research",
       "kind": "Findings",
       "published_at": "2026-11-09",
-      "updated_at": "2026-11-13"
+      "updated_at": "2026-11-14"
     },
     {
       "id": "frontier-safety-openai-hugging-face-incident",
@@ -374,7 +374,7 @@
       "title": "Findings",
       "kind": "Findings",
       "published_at": "2026-11-09",
-      "summary": "What our experiments found, one finding per page: the result with its numbers and limits, the strongest objection, and the steps to repeat it. Thirty findings as of November 2026, twelve of them honest nulls: tests that failed, claims that did not hold, and errors of our own that we found and fixed."
+      "summary": "What our experiments found, one finding per page: the result with its numbers and limits, the strongest objection, and the steps to repeat it. Thirty-nine findings as of November 2026, twelve of them honest nulls: tests that failed, claims that did not hold, and errors of our own that we found and fixed."
     },
     {
       "id": "who-kept-the-books",

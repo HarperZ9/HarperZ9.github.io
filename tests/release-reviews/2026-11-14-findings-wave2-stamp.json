@@ -1,0 +1,7 @@
+{
+  "date": "2026-11-14",
+  "note": "The world asset revision moved to world-7840cce0c4 after the Superframe page's version fact changed from 0.2.0 to 0.3.0 (GitHub release v0.3.0, published 14 November 2026, read with gh) and the address table gained the nine wave 2 findings pages. The home page changed only in its asset revision stamps.",
+  "paths": {
+    "index.html": "87ae2efc6299551287c3ffa96d42ee0692e45cdf192da15125d5fe2e52979ce0"
+  }
+}
