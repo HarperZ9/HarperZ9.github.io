@@ -57,7 +57,7 @@
    "state": "ready",
    "weight": "heavy",
    "plain": "/elements.html",
-   "bytes": 1205580,
+   "bytes": 1205774,
    "files": 163
   },
   "well": {
@@ -93,7 +93,7 @@
    "state": "ready",
    "weight": "light",
    "plain": null,
-   "bytes": 391801,
+   "bytes": 391995,
    "files": 51
   },
   "lettering": {
@@ -102,7 +102,7 @@
    "state": "ready",
    "weight": "light",
    "plain": null,
-   "bytes": 391801,
+   "bytes": 391995,
    "files": 51
   },
   "plot": {
@@ -111,7 +111,7 @@
    "state": "ready",
    "weight": "light",
    "plain": null,
-   "bytes": 391801,
+   "bytes": 391995,
    "files": 51
   },
   "plate": {
@@ -176,6 +176,15 @@
    "plain": null,
    "bytes": 348174,
    "files": 44
+  },
+  "forge": {
+   "home": "playground",
+   "form": "live",
+   "state": "ready",
+   "weight": "light",
+   "plain": null,
+   "bytes": 74159,
+   "files": 9
   },
   "sound": {
    "home": "playground",

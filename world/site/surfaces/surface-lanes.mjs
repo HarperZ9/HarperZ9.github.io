@@ -1,7 +1,8 @@
 // surface-lanes.mjs: three small surfaces that take the blend onward, each an existing tool behind the contract.
 //   mount_motion     the studio's motion lane (world/studio/lib/lanes/motion.mjs): the blend's timing curve, drawn
 //   mount_lettering  the studio's type lane into the lettering library (world/lettering): the blend's name, drawn
-//                    in the technique of its leading part and inked in the blended colour
+//                    in the technique of its leading part and inked in the blended colour; update({ text }) letters
+//                    a line it was handed in place of the name
 //   mount_plot       a pen study from the drawing instruments (system/instruments), its pens inked with the parts
 //                    or with a palette it was handed: update({ palette: { inks: ['#rrggbb', ...] } })
 // Each takes { elements, weights, settings } and reads the blended studio material from surface-blend.mjs.
@@ -31,9 +32,9 @@ export function mount_lettering(host, input, ctx) {
     const ids = ready(ctx.ix, state), mine = ++run;
     handle?.destroy?.(); handle = null;
     if (!ids.length) { host.innerHTML = ''; return; }
-    const sb = studioBlend(ctx.ix, ids, state.weights, state.settings), word = sb.parts.map((p) => p.name).join(' + ');
+    const sb = studioBlend(ctx.ix, ids, state.weights, state.settings), given = (state.text || '').trim().slice(0, 48), word = given || sb.parts.map((p) => p.name).join(' + ');
     const tech = sb.material.hints.type.technique;
-    host.innerHTML = `<p class="lt-word" data-technique="${esc(tech)}" style="color:${esc(sb.palette.ink)}">${esc(word)}</p><p class="ln-note">The words “${esc(word)}”, lettered as ${esc(tech)}, the technique of the leading part's nearest studio material, in the blended colour.</p>`;
+    host.innerHTML = `<p class="lt-word" data-technique="${esc(tech)}" style="color:${esc(sb.palette.ink)}">${esc(word)}</p><p class="ln-note">The words “${esc(word)}”${given ? ', handed on by the type forge' : ''}, lettered as ${esc(tech)}, the technique of the leading part's nearest studio material, in the blended colour.</p>`;
     if (ctx.plain) return;
     try {
       const [lettering, glyph, lane] = await Promise.all([import('../../lettering/lib/letter.mjs'), import('../../lettering/lib/glyph.mjs'), import('../../studio/lib/lanes/type.mjs')]);

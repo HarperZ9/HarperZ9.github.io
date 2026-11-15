@@ -5,12 +5,14 @@
 // the registry, joined to one bus, and every hand-over is written under them in words.
 //
 // The address holds the state: ?e= the element ids, w= their shares in percent, study= the pen study, start to open
-// running. The address is replaced as the state changes, so a copied link opens the same blend and Back leaves the page.
+// running. Rooms keep their own fields beside these (rooms.mjs). The address is replaced as the state changes, so a copied link opens the same blend and Back leaves the page.
 import registry from './registry.mjs';
-import { createBus } from './bus.mjs';
+import { page } from './rooms.mjs';
 
 const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const WIDE = new Set(['blend', 'well']);
+// What each module's adapter acts on here. The registry says what a module can take; this is what its mounted adapter reads.
+const MOUNTED_TAKES = { lettering: ['blend', 'text'], motion: ['blend'], plot: ['palette'], well: ['blend'] };
 const list = (names) => (names.length < 2 ? names.join('') : `${names.slice(0, -1).join(', ')} and ${names.at(-1)}`);
 
 // What the address asks for, read against the element table: unknown ids are dropped, shares must match the ids.
@@ -35,9 +37,9 @@ export async function start() {
   const manifest = JSON.parse(document.getElementById('sx-manifest').textContent), root = document.getElementById('sx-hosts'), say = document.getElementById('sx-say'), rec = document.getElementById('sx-rec');
   const css = document.createElement('link'); css.rel = 'stylesheet'; css.href = manifest.css;
   await new Promise((done) => { css.onload = css.onerror = done; document.head.append(css); });
-  const ix = await registry.elements(), bus = createBus({ surface: manifest.surface });
+  const ix = await registry.elements(), shared = page(manifest.surface), bus = shared.bus;
   const asked = readAddress(location.search, ix, manifest.elements);
-  const state = { elements: asked.elements, weights: asked.weights, settings: {}, study: asked.study, ground: null }, handles = {};
+  const state = { elements: asked.elements, weights: asked.weights, settings: {}, study: asked.study, ground: null }, handles = shared.handles;
   const name = (id) => registry.SURFACES[id].name;
 
   root.innerHTML = manifest.modules.map((n) => `<div data-part="${n}"${WIDE.has(n) ? ' class="sf-wide"' : ''}><h3>${esc(name(n))}</h3><div></div></div>`).join('');
@@ -52,7 +54,7 @@ export async function start() {
     const values = { blend: { elements: state.elements, weights: recipe.weights, settings: state.settings }, palette: { mix: v.palette.mix, ground: v.palette.ground, inks: [v.palette.mix, ...byShare] } };
     let id = null;
     for (const [from, medium] of manifest.sends) {
-      const out = bus.send(from, medium, values[medium], { refs: state.elements, recipe });
+      const out = shared.send(from, medium, values[medium], { refs: state.elements, recipe });
       if (!out.ok) { console.error(`surface: ${medium} was refused: ${out.why}`); say.textContent = `The ${medium} was not handed on: ${out.why}.`; return; }
       id = out.id; heard.push(`${medium === 'blend' ? 'its blend' : `a ${medium}`} to ${list(out.heard.map(name))}`);
     }
@@ -74,11 +76,16 @@ export async function start() {
   const hear = {
     blend: (n) => (env) => handles[n].update({ elements: env.value.elements, weights: env.value.weights, settings: env.value.settings }),
     palette: (n) => (env) => handles[n].update({ elements: env.refs.filter((r) => ix.byId.has(r)), palette: env.value }),
+    // a line of text from a room (the type forge): the lettering letters it in place of the blend's name
+    text: (n) => (env) => { handles[n].update({ text: env.value.text }); say.textContent = `${name(n)} took the text from ${name(env.from.module).toLowerCase()}.`; },
   };
   async function join(n) {
     handles[n] = await registry.mount(hostOf(n), n, n === sender ? { ...state } : { elements: [], ...(n === 'plot' && state.study ? { piece: state.study } : {}) }, ctx);
     if (n === sender) return;
-    for (const medium of ['blend', 'palette']) if (registry.SURFACES[n].takes.includes(medium)) { bus.join(n, hear[medium](n)); break; }
+    const takes = ['blend', 'palette', 'text'].filter((medium) => MOUNTED_TAKES[n]?.includes(medium));
+    if (takes.length) bus.join(n, (env) => { if (takes.includes(env.medium)) hear[env.medium](n)(env); });
+    // a room opened before this module may already have sent a line of text
+    if (takes.includes('text') && shared.last.text) hear.text(n)(shared.last.text);
   }
   for (const n of manifest.modules) await join(n);
   root.addEventListener('change', (ev) => { if (ev.target.matches('.pl-pick select')) { state.study = ev.target.value; writeAddress(state); } });
