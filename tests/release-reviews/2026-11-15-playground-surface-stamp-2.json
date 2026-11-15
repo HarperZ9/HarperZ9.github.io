@@ -1,0 +1,7 @@
+{
+  "date": "2026-11-15",
+  "note": "Step 4, second pass: the Playground page loads the hand's scroll script the way every page does, so the asset revision moves to world-b1df79e56b. index.html changes only in the ?v= stamps on its world stylesheets and scripts. Checked on 2026-11-15 with git diff.",
+  "paths": {
+    "index.html": "2bd35d4b5591cf36f5e06512e8603898ab045774779f023c840f3e9e3e993431"
+  }
+}

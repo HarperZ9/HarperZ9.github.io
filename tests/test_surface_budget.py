@@ -8,8 +8,11 @@ script it names, every module those scripts import statically (followed to the e
 script, and any data the document embeds or preloads. A module brought in by import() and a file
 fetched after a press are not eager; the page states their size beside the press.
 
-The shared shell every generated page loads takes 59.6 KB of the 60 KB of JavaScript on its own,
-so a surface has under 2 KB of eager script to spend. The test reports each total when it fails.
+The measure is strict on purpose. Moving a script behind an idle timer does not make it lazy: it
+still loads with no press, so it still counts. The shared shell and the hand's scroll script that
+every generated page loads come to 61,534 bytes, which is over the 61,440 allowed before a surface
+adds a line. The JavaScript budget therefore fails today for any surface on this shell, and this
+test says so; it is not loosened to pass. The test reports each total when it fails.
 """
 
 from __future__ import annotations

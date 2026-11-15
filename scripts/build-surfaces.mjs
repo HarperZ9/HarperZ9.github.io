@@ -86,7 +86,7 @@ ${exchange(m)}
 <ul class="pg-list">${m.places.map(row).join("")}</ul>
 </article>
 <script type="module" src="/world/site/surfaces/surface-start.js"></script>`;
-  return page({ path: m.file, title: m.title, description: m.description, body, bodyClass: "reading ds-body sx-body", handScroll: false,
+  return page({ path: m.file, title: m.title, description: m.description, body, bodyClass: "reading ds-body sx-body",
     extraHead: '<link rel="stylesheet" href="/world/site/distill/distill.css">\n<link rel="stylesheet" href="/world/site/surfaces/surface-page.css">' });
 }
 
