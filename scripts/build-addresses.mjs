@@ -13,8 +13,8 @@
 //      it lists every moved address beside a link to its new place, then the six surfaces, the home and the index.
 //
 //   node scripts/build-addresses.mjs           add rows, check, write 404.html
-//   node scripts/build-addresses.mjs --check   check only; write nothing
-import { readFileSync, writeFileSync } from "node:fs";
+//   node scripts/build-addresses.mjs --check   check only (404.html must equal what would be written); write nothing
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { LEDGER, SITE, SITE_INDEX, SURFACES, addressOf, follow, loadLedger, serialize, servedPages, validate } from "./addresses-lib.mjs";
 import { classifier } from "./addresses-classify.mjs";
@@ -43,11 +43,24 @@ if (problems.length) {
 }
 if (!checkOnly) {
   if (added.length) writeFileSync(path.join(SITE, LEDGER), serialize(ledger));
-  writeFileSync(path.join(SITE, "404.html"), notFound());
+  writeFileSync(path.join(SITE, "404.html"), stamped(notFound()));
+} else if (readFileSync(path.join(SITE, "404.html"), "utf8").replace(/\r\n/g, "\n") !== stamped(notFound())) {
+  // the committed page is exactly what this script writes, cache stamps included
+  console.error("addresses: 404.html differs from what the ledger builds. Run node scripts/build-addresses.mjs and commit 404.html.");
+  process.exit(1);
 }
 const count = (kind) => ledger.rows.filter((r) => r.kind === kind).length;
 console.log(`addresses: ${ledger.rows.length} rows (${count("redirect")} redirects, ${count("moved")} moved, ${count("gone")} gone), ${added.length} added${checkOnly ? "" : "; 404.html written"}`);
 for (const r of added.filter((x) => x.surface === "unassigned")) console.log(`  unassigned: ${r.path}`);
+
+// The page carries the cache revision already recorded in world/IMPORT.json, so this script's output passes the
+// site's cache rule by itself. The revision is read, never computed here: scripts/world-asset-revision.mjs owns it.
+function stamped(html) {
+  const record = path.join(SITE, "world/IMPORT.json");
+  const rev = existsSync(record) ? JSON.parse(readFileSync(record, "utf8")).assetRevision : null;
+  if (!rev) return html;
+  return html.replace(/\b(href|src)="(\/(?:world|studies|system\/fonts\/accession)\/[^"#:?]+\.(?:css|js))(?:\?v=[^"]*)?"/g, (m, a, t) => `${a}="${t}?v=${rev}"`);
+}
 
 // The page's script: the ledger is fetched once, and the guess is the same code the tests call, set in as written
 // (its opening comment and the word "export" left out).

@@ -2,6 +2,8 @@
 .gitattributes text eol=lf
 *.py text eol=lf
 *.html text eol=lf
+# Page fragments under world/site are hashed into the world asset revision, so their bytes must not vary by checkout.
+*.htm text eol=lf
 *.svg text eol=lf
 *.css text eol=lf
 *.js text eol=lf
