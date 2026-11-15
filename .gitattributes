@@ -75,3 +75,5 @@ vendor/cmmns/** -text
 *.bld text eol=lf
 # Published result copies are hashed under each figure, so Git must store the exact bytes.
 findings/results/** -text
+# The bus kernel and its expected output are hashed into the asset revision, so their bytes stay the same everywhere.
+world/site/surfaces/src/* text eol=lf

@@ -8,7 +8,7 @@ These tests fail when:
 - a replay or a captured demonstration has no evidence record (date, command, file, sha256), the
   file is missing, its hash differs, or the command is not written in the record it names;
 - a page that mounts a registry module, or a demo page, has no row;
-- a module in world/site/surfaces/registry.mjs has no form.
+- a module in world/site/surfaces/registry.mjs has no form, or a recorded one has no evidence.
 
 A captured demonstration whose record is incomplete is pinned in NEEDS_EVIDENCE with the fields it
 lacks. Its label says the record is not published. The list can only shrink.
@@ -90,8 +90,18 @@ def registry_modules() -> tuple[set[str], set[str]]:
     block = source[source.index("export const SURFACES") :]
     block = block[: block.index("\n});") ]
     loaded = set(re.findall(r"^\s+(\w+): S\('", block, re.M))
-    empty = set(re.findall(r"^\s+(\w+): Object\.freeze\(\{[^\n]*load: null", block, re.M))
+    empty = set(re.findall(r"^\s+(\w+): Object\.freeze\(\{", block, re.M))
     return loaded, empty
+
+
+def registry_rows() -> dict[str, dict]:
+    """The registry's rows as the module itself exports them (needs node)."""
+    node = shutil.which("node")
+    if node is None:
+        pytest.skip("node is not installed")
+    dump = "import('./world/site/surfaces/registry.mjs').then((m) => console.log(JSON.stringify(m.SURFACES)))"
+    done = subprocess.run([node, "-e", dump], cwd=ROOT, capture_output=True, text=True, encoding="utf-8", check=True)
+    return json.loads(done.stdout)
 
 
 def test_ledger_is_well_formed() -> None:
@@ -191,12 +201,20 @@ def test_pages_that_show_a_demonstration_have_a_row() -> None:
 def test_every_registry_module_has_a_form() -> None:
     loaded, empty = registry_modules()
     assert len(loaded) >= 14 and "sound" in empty, "the registry did not parse"
-    assert set(LEDGER["modules"]) == loaded, "the ledger's modules and the registry's differ"
-    assert set(LEDGER["modulesWithoutDemo"]) == empty
-    assert set(LEDGER["modules"].values()) <= set(FORMS)
+    rows = registry_rows()
+    assert set(rows) == loaded | empty, "the source and the exported rows differ"
+    for module in loaded:
+        row = rows[module]
+        assert row["form"] in FORMS, f"{module} has no form"
+        if row["form"] in RECORDED:
+            assert evidence_problem(row) is None, f"{module}: {evidence_problem(row)}"
+        else:
+            assert row["evidence"] is None, f"{module}: a live module has no evidence record"
+    for module in empty:
+        assert rows[module]["form"] is None and rows[module]["state"] == "placeholder", f"{module} has nothing behind it and no form"
     for row in ROWS:
         for module in row.get("modules", []):
-            assert LEDGER["modules"][module] == row["form"], f"{row['id']}: {module} is {LEDGER['modules'][module]}, the row says {row['form']}"
+            assert rows[module]["form"] == row["form"], f"{row['id']}: {module} is {rows[module]['form']} in the registry, the row says {row['form']}"
 
 
 def test_label_script_agrees() -> None:

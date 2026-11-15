@@ -1,0 +1,7 @@
+{
+  "date": "2026-11-15",
+  "note": "Step 3 of the six-surfaces plan changes world/site/surfaces (registry row fields, the exchange bus and its kernel, the census), so the asset revision moves from world-60c8bc4b9e to world-83a8c6761c. index.html changes only in the ?v= stamps on its world stylesheets and scripts. Checked on 2026-11-15: git diff shows no other line changed, and tests/test_zentropy_sitewide_contract.py reads the same revision from world/IMPORT.json.",
+  "paths": {
+    "index.html": "72ada398bcfad80d25e87d277774e9a0b64024c050dc16eff53787257558a71c"
+  }
+}

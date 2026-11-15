@@ -1,31 +1,12 @@
 {
  "format": "site.demos/1",
- "about": "Every demonstration on the site and the form it takes. scripts/demo-labels.mjs writes each row's label onto its page; tests/test_demo_labels.py checks the labels and the evidence records.",
+ "about": "Every demonstration on the site and the form it takes. scripts/demo-labels.mjs writes each row's label onto its page; tests/test_demo_labels.py checks the labels and the evidence records. The form of each registry module is in its row in world/site/surfaces/registry.mjs.",
  "forms": {
   "live": "The code runs in the visitor's browser now, on what the visitor gives it.",
   "replay": "A recorded run, stepped through or checked again in the visitor's browser. Needs an evidence record.",
   "captured": "Output recorded once and shown as recorded. Nothing on the page runs the tool. Needs an evidence record."
  },
  "evidence": "date (ISO day of the run), command (as written in the record), file (the committed record), sha256 (of that file). commandIn names another committed file when the command is written there.",
- "modules": {
-  "bench": "live",
-  "well": "live",
-  "chart": "live",
-  "blend": "live",
-  "motion": "live",
-  "lettering": "live",
-  "plot": "live",
-  "plate": "live",
-  "glass": "live",
-  "living": "live",
-  "loom": "live",
-  "ridges": "live",
-  "voxels": "live",
-  "recipe": "live"
- },
- "modulesWithoutDemo": {
-  "sound": "a named place in the registry with nothing mounted behind it"
- },
  "rows": [
   {
    "id": "bench",
