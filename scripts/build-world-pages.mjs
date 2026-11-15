@@ -76,7 +76,7 @@ ${section("site", "Pages, writing and tools", sitePages())}
 // lead: a sentence under the heading. after: markup below the mounted part (a registry surface, for one).
 // bench: the page sits on the bench's calm ground and loads its stylesheet.
 function mountPage(file, title, description, heading, script, { lead = "", after = "", bench = false } = {}) {
-  const body = `<article class="parts-page"><h1>${esc(heading)}</h1><h2 class="sr-only">${esc(title)}</h2>${lead ? `<p class="parts-lead">${esc(lead)}</p>` : ""}${bench ? labelFor("bench") : ""}<div class="parts" id="parts"></div>${after}</article>
+  const body = `<article class="parts-page"><h1>${esc(heading)}</h1><h2 class="sr-only">${esc(title)}</h2>${lead ? `<p class="parts-lead">${esc(lead)}</p>` : ""}<div class="parts" id="parts"></div>${bench ? labelFor("bench") : ""}${after}</article>
 <script type="module">${script}</script>
 <script type="module" src="/world/alive/alive.js"></script>`;
   return write(file, page({ path: file, title, description, body, htmlAttrs: 'data-alive-grain="off" data-lettering="/world/lettering/lib/letter.mjs"', bodyClass: bench || after ? "parts-body bench-body" : "parts-body",
