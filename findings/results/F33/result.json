@@ -1,0 +1,661 @@
+{
+ "study": "tree-decline-r2-cedar-water",
+ "run_id": "20261029T150625Z",
+ "date": "2026-10-29",
+ "prereg": {
+  "path": "PREREG-R2.txt",
+  "sha256": "c7064ebb39decd2d892e6820af67d00a502160b5fe20addb9eb4c98a005d1624",
+  "anchors": [
+   "sidecar",
+   "lock"
+  ],
+  "plan_sha256": "1acea23f395c37e4b73c5cf2ad61279adaf5e64cd41c313ccb9f1f8d8d07776e",
+  "locked_at": "2026-10-29T15:06:16+00:00"
+ },
+ "hashes": {
+  "project_88444_slim.jsonl": "3e66a2e7b3c44ee5e0450f1ab8ea893c0a6561e659e0981c1987e93080aa4711",
+  "project_164816_slim.jsonl": "4eeb1004b965851129934a7c3e26afb0171d0d7dccf2e493465e3579025c4fce",
+  "observations-10.10.22.csv": "83a091932f2de84c37d568e998b9d6ed7a0760fdf9a2a42c0dcdc8ea7e0b6ea7",
+  "observations-223649.csv": "6d309c586d5e6b65dbd41d9f8f36ef4eb75b62cd8491f9d3ab224b307b63dadc",
+  "observations-9.19.21.csv": "9c693609384a7f46d6cac7ce72f8c5d0dc33c89eb2356d8e64b446ac91984dca",
+  "gps plus DEM and TOPO data.csv": "fc94178f746d59d24bf4c21e871fcc7b4f399857462be6c38e392c5f9a02cc10",
+  "layer0_plots.json": "cb698fb33711180bf62a18788114f10aa4f74e77eb61b61610575002432cb61d",
+  "layer1_visits.json": "41651f8cc166296b69200ae5b3b36319cadae0122fc5b10f5686fddb99b4e370",
+  "layer2_trees.json": "3d08fcc4a5c9d6512ca64973dc7bcae39ea8aff9acc7b2a779e769e874661eaf",
+  "r2_units.py": "ea6d69d4a4b0a8544a2f0877b9018430285d194a5ee3b66a0f1487749b6691f6",
+  "r2_data.py": "9b690cc88336ffc508fe0e10c427e16971890e280921f38217f51db886219685"
+ },
+ "analysis": {
+  "n_cedar_inat": 4184,
+  "n_cedar_inat_decl": 1427,
+  "n_maple_inat": 349,
+  "n_cedar_gsp": 1545,
+  "n_maple_gsp": 3651,
+  "n_cedar_gsp_stressed": 47,
+  "n_maple_gsp_stressed": 380,
+  "inat": {
+   "hyd": {
+    "n": 912,
+    "n_wet": 169,
+    "n_dry": 743,
+    "n_decl_wet": 87,
+    "n_decl_dry": 347,
+    "covariates": [
+     "urban",
+     "suburban",
+     "sitetype_missing",
+     "disturb_heavy",
+     "disturb_medium",
+     "disturb_low",
+     "disturb_missing",
+     "year2021",
+     "year2022"
+    ],
+    "decl_share_wet": 0.514792899408284,
+    "decl_share_dry": 0.4670255720053836,
+    "risk_diff": 0.047767327402900406,
+    "adj_logor": 0.10848693492879667,
+    "adj_or": 1.1145903462409765,
+    "adj_ci": [
+     -0.4316184565776683,
+     0.5577610981778484
+    ],
+    "n_boot": 1000,
+    "mh_logor": -0.05433682716667734,
+    "n_sites": 294
+   },
+   "slope": {
+    "n": 967,
+    "n_wet": 100,
+    "n_dry": 867,
+    "n_decl_wet": 49,
+    "n_decl_dry": 424,
+    "covariates": [
+     "urban",
+     "suburban",
+     "sitetype_missing",
+     "disturb_heavy",
+     "disturb_medium",
+     "disturb_low",
+     "disturb_missing",
+     "year2021",
+     "year2022"
+    ],
+    "decl_share_wet": 0.49,
+    "decl_share_dry": 0.48904267589388695,
+    "risk_diff": 0.0009573241061130444,
+    "adj_logor": -0.12154777415236909,
+    "adj_or": 0.885548745997555,
+    "adj_ci": [
+     -0.7128073479451499,
+     0.4637153951034113
+    ],
+    "n_boot": 1000,
+    "mh_logor": 0.10344033734282095,
+    "n_sites": 295
+   },
+   "acc": {
+    "n": 876,
+    "n_wet": 207,
+    "n_dry": 669,
+    "n_decl_wet": 61,
+    "n_decl_dry": 258,
+    "covariates": [
+     "urban",
+     "suburban",
+     "sitetype_missing",
+     "disturb_heavy",
+     "disturb_medium",
+     "disturb_low",
+     "disturb_missing",
+     "year2021",
+     "year2022",
+     "year2023",
+     "year2024",
+     "year2025plus"
+    ],
+    "decl_share_wet": 0.2946859903381642,
+    "decl_share_dry": 0.38565022421524664,
+    "risk_diff": -0.09096423387708241,
+    "adj_logor": -0.3075647393167061,
+    "adj_or": 0.7352352673781878,
+    "adj_ci": [
+     -1.25699427822248,
+     0.25595495082341646
+    ],
+    "n_boot": 1000,
+    "mh_logor": -0.42135593914797714,
+    "n_sites": 160
+   },
+   "hyd_elev": {
+    "n": 530,
+    "n_wet": 114,
+    "n_dry": 416,
+    "n_decl_wet": 59,
+    "n_decl_dry": 207,
+    "covariates": [
+     "urban",
+     "suburban",
+     "sitetype_missing",
+     "disturb_heavy",
+     "disturb_medium",
+     "disturb_low",
+     "disturb_missing",
+     "year2021",
+     "elev_100m"
+    ],
+    "decl_share_wet": 0.5175438596491229,
+    "decl_share_dry": 0.49759615384615385,
+    "risk_diff": 0.019947705802969007,
+    "adj_logor": -0.018928281181406558,
+    "adj_or": 0.9812497337909463,
+    "adj_ci": [
+     -0.5357642074959604,
+     0.4573547224596837
+    ],
+    "n_boot": 1000,
+    "mh_logor": 0.14007465776371814,
+    "n_sites": 206
+   },
+   "maple_acc": {
+    "n": 108,
+    "n_wet": 36,
+    "n_dry": 72,
+    "n_decl_wet": 16,
+    "n_decl_dry": 40,
+    "covariates": [
+     "year2023",
+     "year2024",
+     "year2025plus"
+    ],
+    "decl_share_wet": 0.4444444444444444,
+    "decl_share_dry": 0.5555555555555556,
+    "risk_diff": -0.11111111111111116,
+    "adj_logor": -0.6673089875631035,
+    "adj_or": 0.5130874463776012,
+    "adj_ci": [
+     -1.53594005845561,
+     0.3782097684316145
+    ],
+    "n_boot": 1000,
+    "mh_logor": -0.27698678333503296,
+    "n_sites": 22
+   }
+  },
+  "gsp": {
+   "cedar_flag": {
+    "n": 1545,
+    "n_wet": 318,
+    "n_dry": 1227,
+    "n_decl_wet": 7,
+    "n_decl_dry": 40,
+    "covariates": [
+     "logdbh",
+     "dbh_missing",
+     "edge",
+     "canopy_hi",
+     "canopy_lo",
+     "compact",
+     "year2017plus"
+    ],
+    "decl_share_wet": 0.0220125786163522,
+    "decl_share_dry": 0.032599837000814993,
+    "risk_diff": -0.010587258384462794,
+    "adj_logor": -0.3001893269964462,
+    "adj_or": 0.7406779770694535,
+    "adj_ci": [
+     -1.6483066504904675,
+     0.5915218150497356
+    ],
+    "n_boot": 1000,
+    "mh_logor": -0.3761528440775405,
+    "n_sites": 62
+   },
+   "cedar_wetsoil": {
+    "n": 1545,
+    "n_wet": 225,
+    "n_dry": 1320,
+    "n_decl_wet": 9,
+    "n_decl_dry": 38,
+    "covariates": [
+     "logdbh",
+     "dbh_missing",
+     "edge",
+     "canopy_hi",
+     "canopy_lo",
+     "compact",
+     "year2017plus"
+    ],
+    "decl_share_wet": 0.04,
+    "decl_share_dry": 0.02878787878787879,
+    "risk_diff": 0.011212121212121211,
+    "adj_logor": 0.35978448611881064,
+    "adj_or": 1.4330205454591705,
+    "adj_ci": [
+     -0.6542468746913436,
+     1.4427645775400673
+    ],
+    "n_boot": 1000,
+    "mh_logor": 0.6925239791654179,
+    "n_sites": 62
+   },
+   "maple_flag": {
+    "n": 3651,
+    "n_wet": 463,
+    "n_dry": 3188,
+    "n_decl_wet": 27,
+    "n_decl_dry": 353,
+    "covariates": [
+     "logdbh",
+     "dbh_missing",
+     "edge",
+     "canopy_hi",
+     "canopy_lo",
+     "compact",
+     "year2017plus"
+    ],
+    "decl_share_wet": 0.058315334773218146,
+    "decl_share_dry": 0.11072772898368884,
+    "risk_diff": -0.05241239421047069,
+    "adj_logor": -0.8757890459592075,
+    "adj_or": 0.4165332261200071,
+    "adj_ci": [
+     -1.754564941729612,
+     -0.13168069156727474
+    ],
+    "n_boot": 1000,
+    "mh_logor": -1.0775383725813474,
+    "n_sites": 73
+   },
+   "maple_wetsoil": {
+    "n": 3651,
+    "n_wet": 198,
+    "n_dry": 3453,
+    "n_decl_wet": 19,
+    "n_decl_dry": 361,
+    "covariates": [
+     "logdbh",
+     "dbh_missing",
+     "edge",
+     "canopy_hi",
+     "canopy_lo",
+     "compact",
+     "year2017plus"
+    ],
+    "decl_share_wet": 0.09595959595959595,
+    "decl_share_dry": 0.10454677092383435,
+    "risk_diff": -0.0085871749642384,
+    "adj_logor": -0.1712062835756629,
+    "adj_or": 0.8426477311548222,
+    "adj_ci": [
+     -1.5335606226600615,
+     0.6932047431826371
+    ],
+    "n_boot": 1000,
+    "mh_logor": 0.010172629409358775,
+    "n_sites": 73
+   }
+  },
+  "over": {
+   "hyd_share_wet_all": 0.18530701754385964,
+   "hyd_share_wet_decl": 0.20046082949308755,
+   "hyd_share_wet_healthy": 0.17154811715481172,
+   "hyd_fill_decl": 0.6450276243093923,
+   "hyd_fill_healthy": 0.5218718209562564,
+   "hyd_fill_absdiff": 0.12315580335313592,
+   "hyd_n_decl_known": 434,
+   "acc_share_wet_all": 0.2363013698630137,
+   "acc_share_wet_decl": 0.19122257053291536,
+   "acc_share_wet_healthy": 0.2621184919210054,
+   "acc_fill_decl": 0.2235459004905396,
+   "acc_fill_healthy": 0.20203119332607908,
+   "acc_fill_absdiff": 0.021514707164460523,
+   "acc_n_decl_known": 319,
+   "gsp_cedar_share_on_water_plots": 0.2058252427184466,
+   "gsp_maple_share_on_water_plots": 0.126814571350315,
+   "gsp_cedar_share_blank_features": 0.3766990291262136
+  },
+  "explore": {
+   "symptoms_decl_wet": {
+    "thinning canopy": 25,
+    "browning canopy": 7,
+    "old dead top (needles already gone)": 21,
+    "branch dieback or 'flagging'": 7,
+    "new dead top (red or brown needles still attached)": 5,
+    "yellowing canopy": 5,
+    "tree is dead": 12,
+    "multiple symptoms (please list in notes)": 5
+   },
+   "heat_yes_or_maybe_share_wet": 0.3225806451612903,
+   "heat_n_answered_wet": 31,
+   "other_factors_yes_share_wet": 0.06547619047619048,
+   "other_factors_n_wet": 168,
+   "symptoms_decl_dry": {
+    "new dead top (red or brown needles still attached)": 33,
+    "yellowing canopy": 15,
+    "old dead top (needles already gone)": 71,
+    "thinning canopy": 103,
+    "browning canopy": 19,
+    "tree is dead": 48,
+    "multiple symptoms (please list in notes)": 14,
+    "branch dieback or 'flagging'": 44
+   },
+   "heat_yes_or_maybe_share_dry": 0.31906614785992216,
+   "heat_n_answered_dry": 257,
+   "other_factors_yes_share_dry": 0.10646900269541779,
+   "other_factors_n_dry": 742
+  }
+ },
+ "controls": {
+  "C1": {
+   "n": 1000,
+   "usable": true,
+   "mean": 0.009730870809542675,
+   "q95": 0.49092894723835956,
+   "q05": -0.49237195575862935,
+   "p_ge": 0.5874125874125874,
+   "compare": "analysis.inat.hyd.mh_logor",
+   "description": "iNat cedar: health shuffled within 5 km site; null of MH log OR on site hydrology",
+   "meta": {
+    "strata": 294,
+    "n_requested": 1000
+   }
+  },
+  "C1b": {
+   "n": 1000,
+   "usable": true,
+   "mean": -0.007441210754812547,
+   "q95": 0.6555593311594458,
+   "q05": -0.6464666987366046,
+   "p_ge": 0.4565434565434565,
+   "compare": "analysis.inat.slope.mh_logor",
+   "description": "iNat cedar: health shuffled within site; null of MH log OR on slope position",
+   "meta": {
+    "strata": 295,
+    "n_requested": 1000
+   }
+  },
+  "C1c": {
+   "n": 1000,
+   "usable": true,
+   "mean": -0.007774625394306622,
+   "q95": 0.38110096731801363,
+   "q05": -0.3719848897869681,
+   "p_ge": 0.967032967032967,
+   "compare": "analysis.inat.acc.mh_logor",
+   "description": "iNat cedar: health shuffled within site; null of MH log OR on access to water",
+   "meta": {
+    "strata": 160,
+    "n_requested": 1000
+   }
+  },
+  "C3": {
+   "n": 1000,
+   "usable": true,
+   "mean": -0.03993730979743997,
+   "q95": 1.022620197625679,
+   "q05": -1.201536719159842,
+   "p_ge": 0.6823176823176823,
+   "compare": "analysis.gsp.cedar_flag.mh_logor",
+   "description": "GSP cedar: health shuffled within park; null of MH log OR on water flag",
+   "meta": {
+    "strata": 62,
+    "n_requested": 1000
+   }
+  },
+  "C2a": {
+   "n": 1000,
+   "usable": true,
+   "mean": -0.8956701551606452,
+   "q95": -0.2482142206970994,
+   "q05": -1.6028509447945418,
+   "p_ge": 0.07392607392607392,
+   "compare": "analysis.gsp.cedar_flag.adj_logor",
+   "description": "GSP maple: plot bootstrap of adjusted log OR on water flag",
+   "meta": {
+    "what": "GSP maple adj log OR, plot bootstrap"
+   }
+  },
+  "C2b": {
+   "n": 1000,
+   "usable": true,
+   "mean": -0.6241959696661505,
+   "q95": 0.16968348647862522,
+   "q05": -1.326601538128467,
+   "p_ge": 0.23276723276723277,
+   "compare": "analysis.inat.acc.adj_logor",
+   "description": "iNat maple: site bootstrap of adjusted log OR on access to water",
+   "meta": {
+    "what": "iNat maple adj log OR, site bootstrap"
+   }
+  },
+  "C4": {
+   "n": 1000,
+   "usable": true,
+   "mean": 0.185463133640553,
+   "q95": 0.2073732718894009,
+   "q05": 0.16359447004608296,
+   "p_ge": 0.14085914085914086,
+   "compare": "analysis.over.hyd_share_wet_decl",
+   "description": "wet share among random draws from all cedar observations, size of the declining set"
+  }
+ },
+ "timing_s": {
+  "analysis": 13.03547050000634,
+  "C1": 17.741695100005018,
+  "C1b": 15.449089500005357,
+  "C1c": 8.453820700000506,
+  "C3": 5.02344770001946,
+  "C2a": 0.000902600004337728,
+  "C2b": 0.0007330999942496419,
+  "C4": 0.031917300017084926
+ },
+ "verdicts": {
+  "AUTHOR_hyd": {
+   "verdict": "FAIL",
+   "rules": [
+    {
+     "rule": "analysis.inat.hyd.adj_ci.0 > 0",
+     "left": -0.4316184565776683,
+     "right": 0,
+     "holds": false
+    },
+    {
+     "rule": "analysis.inat.hyd.mh_logor > controls.C1.q95",
+     "left": -0.05433682716667734,
+     "right": 0.49092894723835956,
+     "holds": false
+    },
+    {
+     "rule": "analysis.inat.hyd.n_decl_wet >= 20",
+     "left": 87,
+     "right": 20,
+     "holds": true
+    }
+   ]
+  },
+  "DROUGHT_hyd": {
+   "verdict": "FAIL",
+   "rules": [
+    {
+     "rule": "analysis.inat.hyd.adj_ci.1 < 0",
+     "left": 0.5577610981778484,
+     "right": 0,
+     "holds": false
+    },
+    {
+     "rule": "analysis.inat.hyd.mh_logor < controls.C1.q05",
+     "left": -0.05433682716667734,
+     "right": -0.49237195575862935,
+     "holds": false
+    }
+   ]
+  },
+  "AUTHOR_slope": {
+   "verdict": "FAIL",
+   "rules": [
+    {
+     "rule": "analysis.inat.slope.adj_ci.0 > 0",
+     "left": -0.7128073479451499,
+     "right": 0,
+     "holds": false
+    },
+    {
+     "rule": "analysis.inat.slope.mh_logor > controls.C1b.q95",
+     "left": 0.10344033734282095,
+     "right": 0.6555593311594458,
+     "holds": false
+    },
+    {
+     "rule": "analysis.inat.slope.n_decl_wet >= 20",
+     "left": 49,
+     "right": 20,
+     "holds": true
+    }
+   ]
+  },
+  "DROUGHT_slope": {
+   "verdict": "FAIL",
+   "rules": [
+    {
+     "rule": "analysis.inat.slope.adj_ci.1 < 0",
+     "left": 0.4637153951034113,
+     "right": 0,
+     "holds": false
+    },
+    {
+     "rule": "analysis.inat.slope.mh_logor < controls.C1b.q05",
+     "left": 0.10344033734282095,
+     "right": -0.6464666987366046,
+     "holds": false
+    }
+   ]
+  },
+  "AUTHOR_acc": {
+   "verdict": "FAIL",
+   "rules": [
+    {
+     "rule": "analysis.inat.acc.adj_ci.0 > 0",
+     "left": -1.25699427822248,
+     "right": 0,
+     "holds": false
+    },
+    {
+     "rule": "analysis.inat.acc.mh_logor > controls.C1c.q95",
+     "left": -0.42135593914797714,
+     "right": 0.38110096731801363,
+     "holds": false
+    },
+    {
+     "rule": "analysis.inat.acc.n_decl_wet >= 20",
+     "left": 61,
+     "right": 20,
+     "holds": true
+    }
+   ]
+  },
+  "DROUGHT_acc": {
+   "verdict": "FAIL",
+   "rules": [
+    {
+     "rule": "analysis.inat.acc.adj_ci.1 < 0",
+     "left": 0.25595495082341646,
+     "right": 0,
+     "holds": false
+    },
+    {
+     "rule": "analysis.inat.acc.mh_logor < controls.C1c.q05",
+     "left": -0.42135593914797714,
+     "right": -0.3719848897869681,
+     "holds": true
+    }
+   ]
+  },
+  "AUTHOR_gsp": {
+   "verdict": "FAIL",
+   "rules": [
+    {
+     "rule": "analysis.gsp.cedar_flag.adj_ci.0 > 0",
+     "left": -1.6483066504904675,
+     "right": 0,
+     "holds": false
+    },
+    {
+     "rule": "analysis.gsp.cedar_flag.mh_logor > controls.C3.q95",
+     "left": -0.3761528440775405,
+     "right": 1.022620197625679,
+     "holds": false
+    },
+    {
+     "rule": "analysis.gsp.cedar_flag.n_decl_wet >= 10",
+     "left": 7,
+     "right": 10,
+     "holds": false
+    }
+   ]
+  },
+  "DROUGHT_gsp": {
+   "verdict": "FAIL",
+   "rules": [
+    {
+     "rule": "analysis.gsp.cedar_flag.adj_ci.1 < 0",
+     "left": 0.5915218150497356,
+     "right": 0,
+     "holds": false
+    },
+    {
+     "rule": "analysis.gsp.cedar_flag.mh_logor < controls.C3.q05",
+     "left": -0.3761528440775405,
+     "right": -1.201536719159842,
+     "holds": false
+    }
+   ]
+  },
+  "SPECIFIC_gsp": {
+   "verdict": "FAIL",
+   "rules": [
+    {
+     "rule": "analysis.gsp.cedar_flag.adj_logor > controls.C2a.q95",
+     "left": -0.3001893269964462,
+     "right": -0.2482142206970994,
+     "holds": false
+    }
+   ]
+  },
+  "SPECIFIC_acc": {
+   "verdict": "FAIL",
+   "rules": [
+    {
+     "rule": "analysis.inat.acc.adj_logor > controls.C2b.q95",
+     "left": -0.3075647393167061,
+     "right": 0.16968348647862522,
+     "holds": false
+    }
+   ]
+  },
+  "S_FILL_hyd": {
+   "verdict": "FAIL",
+   "rules": [
+    {
+     "rule": "analysis.over.hyd_fill_absdiff < 0.05",
+     "left": 0.12315580335313592,
+     "right": 0.05,
+     "holds": false
+    }
+   ]
+  },
+  "S_FILL_acc": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.over.acc_fill_absdiff < 0.05",
+     "left": 0.021514707164460523,
+     "right": 0.05,
+     "holds": true
+    }
+   ]
+  }
+ },
+ "reproduce": null,
+ "status": "scored"
+}
