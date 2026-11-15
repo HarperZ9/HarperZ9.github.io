@@ -6,15 +6,17 @@
 //   1. adds a row for each served page that has none yet (kind and surface from scripts/addresses-classify.mjs,
 //      "since" today), at the end of the ledger, and leaves every existing row as it is;
 //   2. checks every row: a live row has its page, a redirect row has a stub that leads where the row says and ends
-//      at a page, a gone row names the commit that removed it; any problem stops the build;
+//      at a page, a moved row has no file and ends at a page that has the place it names, a gone row names the
+//      commit that removed it; any problem stops the build;
 //   3. writes 404.html, the page GitHub Pages serves for an address with no file. It reads the ledger and offers
-//      the nearest live address. Without scripts it is a list of the six surfaces, the home and the index.
+//      the nearest live address, and takes a reader on a moved address straight to its new place. Without scripts
+//      it lists every moved address beside a link to its new place, then the six surfaces, the home and the index.
 //
 //   node scripts/build-addresses.mjs           add rows, check, write 404.html
 //   node scripts/build-addresses.mjs --check   check only; write nothing
 import { readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
-import { LEDGER, SITE, SITE_INDEX, SURFACES, addressOf, loadLedger, serialize, servedPages, validate } from "./addresses-lib.mjs";
+import { LEDGER, SITE, SITE_INDEX, SURFACES, addressOf, follow, loadLedger, serialize, servedPages, validate } from "./addresses-lib.mjs";
 import { classifier } from "./addresses-classify.mjs";
 import { page } from "./studies-shell.mjs";
 
@@ -44,7 +46,7 @@ if (!checkOnly) {
   writeFileSync(path.join(SITE, "404.html"), notFound());
 }
 const count = (kind) => ledger.rows.filter((r) => r.kind === kind).length;
-console.log(`addresses: ${ledger.rows.length} rows (${count("redirect")} redirects, ${count("gone")} gone), ${added.length} added${checkOnly ? "" : "; 404.html written"}`);
+console.log(`addresses: ${ledger.rows.length} rows (${count("redirect")} redirects, ${count("moved")} moved, ${count("gone")} gone), ${added.length} added${checkOnly ? "" : "; 404.html written"}`);
 for (const r of added.filter((x) => x.surface === "unassigned")) console.log(`  unassigned: ${r.path}`);
 
 // The page's script: the ledger is fetched once, and the guess is the same code the tests call, set in as written
@@ -72,10 +74,23 @@ fetch("/${LEDGER}").then((r) => { if (!r.ok) throw new Error("address ledger: HT
   a.href = found.path + (found.path.includes("#") ? "" : location.hash);
   a.textContent = found.path;
   near.replaceChildren(WHY[found.why] + " ", a, ".");
+  // A moved row is the site's own record of where this address went, so the reader is taken there. A guess is only offered.
+  if (found.why === "moved") location.replace(a.href);
 }).catch((error) => {
   console.error(error);
   near.textContent = "The list of addresses did not load, so no nearest address can be offered. The six parts of the site and the index are listed below.";
 });`;
+}
+
+// Without scripts the page cannot read the address that was asked for, so every moved address is listed with a
+// plain link to where it went. Crawlers read the same list.
+function moved() {
+  const byPath = new Map(ledger.rows.map((r) => [r.path, r])), esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+  const items = ledger.rows.filter((r) => r.kind === "moved").map((r) => {
+    const end = follow(r, byPath, ledger), to = end.address || end.project;
+    return `<li><code>${esc(r.path)}</code> is now at <a href="${esc(to)}">${esc(to)}</a></li>`;
+  });
+  return items.length ? ["<noscript>", "<h2>Addresses that moved</h2>", '<ul id="nf-moved">', ...items, "</ul>", "</noscript>", ""].join(String.fromCharCode(10)) : "";
 }
 
 function notFound() {
@@ -84,7 +99,7 @@ function notFound() {
 <h1>No page at this address</h1>
 <p hidden>You asked for <code id="nf-asked"></code>.</p>
 <p id="nf-near" role="status" aria-live="polite"></p>
-<h2>The site</h2>
+${moved()}<h2>The site</h2>
 <ul>
 ${rows}
 <li><a href="${SITE_INDEX}">The index</a>: the site's pages, listed by kind of work.</li>
@@ -95,5 +110,5 @@ ${rows}
 ${finder()}
 </script>`;
   return page({ path: "404.html", title: "No page at this address", robots: "noindex",
-    description: "No page is at this address. This page offers the nearest live address and lists the six parts of the site, the home and the index.", body });
+    description: "No page is at this address. This page takes a moved address to its new place, offers the nearest live address and lists the six parts of the site.", body });
 }
