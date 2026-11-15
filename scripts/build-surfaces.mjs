@@ -69,6 +69,7 @@ ${labelFor(x.demo)}
 <p class="sx-go"><button type="button" id="sx-start" hidden>Start the blend</button><span>Loads ${size(startBytes)}: the element table and ${x.modules.length} modules. Nothing loads before the press.</span></p>
 </div>
 <p class="sx-say" id="sx-say" role="status" aria-live="polite">When it runs, ${esc(registry.SURFACES[x.sends[0][0]].name.toLowerCase())} hands ${list(x.sends.map(([, medium]) => `${medium === "blend" ? "its blend" : `a ${medium}`} to ${takers(medium)}`))}, and this line says so each time.</p>
+<details class="sx-rec" id="sx-rec" hidden><summary>This value's record</summary><dl></dl></details>
 <div id="sx-hosts" data-surface="${x.modules.join(" ")}" data-elements="${x.elements.join(" ")}" tabindex="-1" role="group" aria-label="${esc(x.heading)}" hidden></div>
 <div id="sx-more" hidden>${press.map((p) => `<p class="sx-go"><button type="button" data-sx-press="${p.id}">Add ${esc(p.name.toLowerCase())}</button><span>Loads ${size(p.bytes)} more. It stirs the same blend.</span></p>`).join("")}</div>
 <script type="application/json" id="sx-manifest">${JSON.stringify(manifest).replace(/</g, "\\u003c")}</script>

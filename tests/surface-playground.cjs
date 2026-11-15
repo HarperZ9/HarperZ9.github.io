@@ -35,6 +35,7 @@ const reading = () => ({
   shares: [...document.querySelectorAll('#sx-hosts input[data-w]')].map((i) => +i.value),
   parts: [...document.querySelectorAll('#sx-hosts .bl-part')].map((e) => e.textContent.replace(/^\d+/, '').trim()),
   say: document.getElementById('sx-say').textContent,
+  id: document.getElementById('sx-rec').dataset.id ?? null,
   sent: +document.getElementById('sx-hosts').dataset.sent,
 });
 
@@ -59,7 +60,11 @@ const reading = () => ({
       const first = await page.evaluate(reading);
       assert.deepEqual(first.parts, ['ink', 'glass', 'type']); assert.equal(first.word, 'ink + glass + type');
       assert.match(first.say, /The blend table handed its blend to Lettering and Motion curve and a palette to Pen study\./);
-      assert.match(first.say, /session\.[0-9a-f]{16}/);
+      // the id is internal detail: the line says who heard what, and the id waits behind its own control
+      assert.doesNotMatch(first.say, /session\./, 'the hand-over line shows a raw id');
+      assert.match(first.id, /^session\.[0-9a-f]{16}$/);
+      assert.equal(await page.evaluate(() => document.getElementById('sx-rec').open), false, 'the record is closed until asked for');
+      assert.equal(await page.evaluate(() => document.querySelector('#sx-rec dl').checkVisibility()), false, 'the id shows before the record is opened');
       // the listeners got their first reading from the bus alone: each was mounted with no elements
       const log = await page.evaluate(() => window.__surface.bus.log());
       assert.deepEqual(log.filter((l) => l.ok).map((l) => [l.medium, l.from, l.heard.sort()]), [['blend', 'blend', ['lettering', 'motion']], ['palette', 'blend', ['plot']]]);
@@ -74,7 +79,21 @@ const reading = () => ({
       const second = await page.evaluate(reading);
       assert.notEqual(second.curve, first.curve, 'the motion curve followed the new shares');
       assert.notEqual(second.inks, first.inks, 'the pen study took the new palette');
-      assert.notEqual(second.say.match(/session\.[0-9a-f]{16}/)[0], first.say.match(/session\.[0-9a-f]{16}/)[0], 'a new value has a new id');
+      assert.match(second.id, /^session\.[0-9a-f]{16}$/); assert.notEqual(second.id, first.id, 'a new value has a new id');
+      // the record opens from the keyboard and shows the id and the shares
+      await page.locator('#sx-rec summary').focus(); await page.keyboard.press('Enter');
+      const rec = await page.evaluate(() => ({ open: document.getElementById('sx-rec').open, text: document.querySelector('#sx-rec dl').innerText }));
+      assert.ok(rec.open && rec.text.includes(second.id) && /ink \d+%, glass \d+%, type \d+%/.test(rec.text), 'the record does not show the id and the shares');
+      // every numbered mark reads at AA: the digit against the mark's own colour, measured from the page
+      const marks = await page.evaluate(() => { const lum = (c) => { const [r, g, b] = c.match(/[\d.]+/g).slice(0, 3).map((v) => { v /= 255; return v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; }); return 0.2126 * r + 0.7152 * g + 0.0722 * b; };
+        return [...document.querySelectorAll('#sx-hosts :is(.bl-n, .bl-dot)')].map((e) => { const cs = getComputedStyle(e), a = lum(cs.color), b = lum(cs.backgroundColor), r = e.getBoundingClientRect(); return { ratio: (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05), px: parseFloat(cs.fontSize), w: r.width, track: e.classList.contains('bl-dot') }; }); });
+      assert.ok(marks.length >= 20, 'the numbered marks were found');
+      assert.deepEqual(marks.filter((m) => m.ratio < 4.5).map((m) => +m.ratio.toFixed(2)), [], 'a numbered mark is under 4.5 to 1');
+      assert.ok(marks.filter((m) => m.track).every((m) => m.w >= 24 && m.px >= 14), 'a mark on a mix line is smaller than 24 px or its digit than 14 px');
+      out.marks = { n: marks.length, lowest: +Math.min(...marks.map((m) => m.ratio)).toFixed(2) };
+      // the Mix column's explanation sits above the table, not inside its header cell
+      const head = await page.evaluate(() => ({ th: document.querySelector('#sx-hosts .bl-mixh').textContent.trim(), note: document.querySelector('#sx-hosts .bl-how').getBoundingClientRect().width }));
+      assert.ok(head.th.length < 20 && head.note > 400, 'the Mix explanation is cramped into the header cell again');
       assert.match(page.url(), /[?&]e=ink,glass,type/); assert.match(page.url(), /[?&]w=\d+,\d+,\d+/); assert.match(page.url(), /[?&]start(&|$|#)/);
       // the pen study's first pen is the mix the blend table shows
       const mix = await page.evaluate(() => document.querySelector('#sx-hosts .bl-mixc').dataset.hex);

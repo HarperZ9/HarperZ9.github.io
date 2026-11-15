@@ -20,9 +20,19 @@ body.sx-body .gw-backdrop::before { content: ""; position: absolute; inset: 0; z
 .sx-go { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 20px; margin: 20px 0; }
 .sx button { font: inherit; font-weight: 700; color: inherit; background: none; border: 1px solid currentColor; padding: .6em 1.1em; min-height: 44px; cursor: pointer; }
 .sx button:hover:not([disabled]) { background: rgba(244, 239, 230, .14); }
-.sx button:focus-visible, #sx-hosts:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+.sx button:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+/* focus is moved to the group when it appears, so reading and Tab continue from it. The group is not a control and
+   is not in the Tab order; a ring round all of it would box the page in, so it draws none. The status line above
+   says what happened. */
+#sx-hosts:focus-visible { outline: 0 !important; box-shadow: none !important; }
 .sx button[disabled] { cursor: default; opacity: .75; }
-.sx-say { scroll-margin-top: 120px; min-height: 3em; max-width: 80ch; font-size: .92em; margin: 14px 0; }
+.sx-say { scroll-margin-top: 120px; min-height: 3em; max-width: 80ch; font-size: .92em; margin: 14px 0 4px; }
+.sx-rec { font-size: .92em; margin: 0 0 14px; max-width: 80ch; }
+.sx-rec summary { cursor: pointer; display: inline-block; min-height: 44px; line-height: 44px; text-decoration: underline; text-underline-offset: .25em; }
+.sx-rec summary:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+.sx-rec dl { display: grid; grid-template-columns: max-content 1fr; gap: 4px 18px; margin: 0 0 8px; }
+.sx-rec dt { font-weight: 700; } .sx-rec dd { margin: 0; overflow-wrap: anywhere; }
+.sx-rec code { font-family: var(--face-utility, monospace); }
 #sx-hosts h3 { font-size: 18px; margin: 0 0 .5em; }
 #sx-hosts[data-surface] { margin: 20px 0; }
 #sx-hosts .sf-wide { grid-column: 1 / -1; }

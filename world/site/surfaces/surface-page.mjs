@@ -32,7 +32,7 @@ export function writeAddress(state) {
 }
 
 export async function start() {
-  const manifest = JSON.parse(document.getElementById('sx-manifest').textContent), root = document.getElementById('sx-hosts'), say = document.getElementById('sx-say');
+  const manifest = JSON.parse(document.getElementById('sx-manifest').textContent), root = document.getElementById('sx-hosts'), say = document.getElementById('sx-say'), rec = document.getElementById('sx-rec');
   const css = document.createElement('link'); css.rel = 'stylesheet'; css.href = manifest.css;
   await new Promise((done) => { css.onload = css.onerror = done; document.head.append(css); });
   const ix = await registry.elements(), bus = createBus({ surface: manifest.surface });
@@ -56,7 +56,11 @@ export async function start() {
       if (!out.ok) { console.error(`surface: ${medium} was refused: ${out.why}`); say.textContent = `The ${medium} was not handed on: ${out.why}.`; return; }
       id = out.id; heard.push(`${medium === 'blend' ? 'its blend' : `a ${medium}`} to ${list(out.heard.map(name))}`);
     }
-    say.textContent = `${name(sender)} handed ${list(heard)}. Made here from ${list(state.elements.map((e) => ix.byId.get(e).name))}; its id in this tab is ${id}.`;
+    const made = state.elements.map((e) => ix.byId.get(e).name);
+    say.textContent = `${name(sender)} handed ${list(heard)}. Made here from ${list(made)}.`;
+    // the value's record sits behind its own control: the id is internal detail, kept for whoever wants to check it
+    if (rec) { rec.hidden = false; rec.dataset.id = id;
+      rec.querySelector('dl').innerHTML = `<dt>Shares</dt><dd>${esc(made.map((n, i) => `${n} ${Math.round(recipe.weights[i] * 100)}%`).join(', '))}</dd><dt>Id in this tab</dt><dd><code>${esc(id)}</code></dd><dt>Kept</dt><dd>Only in this tab. The address carries the blend, so a link opens the same one.</dd>`; }
     root.dataset.sent = String(bus.log().filter((l) => l.ok).length);
     writeAddress(state);
   }
