@@ -11,6 +11,18 @@ import { paintOf, glazeOf, orderGap, paintGlaze } from './glaze.mjs';
 import { GROUNDS, RULES, groundFor, isNight } from './grounds.mjs';
 
 const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+// Marks that would cover one another on a mix line (closer than NEAR percent of the line, about one mark's width)
+// are set side by side as one group at their mean place, so every part's number stays readable. The exact values
+// are in the row's cells.
+const NEAR = 12;
+function together(marks) {
+  const out = [];
+  for (const m of [...marks].sort((a, b) => a.x - b.x)) { const g = out[out.length - 1]; if (g && m.x - g[g.length - 1].x < NEAR) g.push(m); else out.push([m]); }
+  return out;
+}
+// the digit on a numbered mark: white or black, whichever reads better on the mark's colour. The better of the
+// two is never under 4.58 to 1, so every digit passes AA
+const digit = (hex) => (!hex || contrast(hex, '#ffffff') >= contrast(hex, '#000000') ? '#ffffff' : '#000000');
 
 // The elements as studio materials, blended by the studio. Returns the blended material and its palette.
 export function studioBlend(ix, ids, weights, settings = {}) {
@@ -29,19 +41,21 @@ export function mount(host, input, ctx) {
     if (ids.length < 2) { host.innerHTML = `<p class="bl-empty">Choose two to four elements to blend them. Each element lists the ones it was found beside; any of those is a good second.</p>`; return; }
     const t = blendTable(ix, ids, state.weights), els = ids.map((id) => ix.byId.get(id)), sb = studioBlend(ix, ids, t.weights, state.settings);
     const sheetColour = (e) => ix.sheets.find((s) => s.id === e.sheet)?.colour;
-    const head = els.map((e, i) => `<th scope="col"><span class="bl-part"><i class="bl-n" style="background:${esc(e.colour?.hex)}">${i + 1}</i>${mark(e.sheet, sheetColour(e))}${esc(e.name)}</span>` +
+    const head = els.map((e, i) => `<th scope="col"><span class="bl-part"><i class="bl-n" style="background:${esc(e.colour?.hex)};color:${digit(e.colour?.hex)}">${i + 1}</i>${mark(e.sheet, sheetColour(e))}${esc(e.name)}</span>` +
       `<label class="bl-w"><span class="sr-only">Share of ${esc(e.name)} in the blend</span><input type="range" min="2" max="100" step="1" value="${Math.round(t.weights[i] * 100)}" data-w="${i}"><output>${Math.round(t.weights[i] * 100)}%</output></label>` +
       `<button type="button" class="bl-x" data-remove="${esc(e.id)}">Remove<span class="sr-only"> ${esc(e.name)}</span></button></th>`).join('');
-    // each row drawn on the table's own range for that property: the parts as numbered marks, the mix as an open ring
+    // each row drawn on the table's own range for that property: the parts as numbered marks, the mix as a pointer above them
     const where = (r) => { const sp = ix.spread.get(r.name); return `<span class="pc-track" role="img" aria-label="${esc(r.name)}: the parts and the computed mix on the table's range">` +
-      r.parts.map((p, i) => (p ? `<i class="bl-dot" style="left:${pos(sp, p.value)}%;background:${esc(els[i].colour?.hex)}">${i + 1}</i>` : '')).join('') + `<i class="pc-set" style="left:${pos(sp, r.computed.value)}%"></i></span>`; };
+      together(r.parts.map((p, i) => (p ? { i, x: +pos(sp, p.value) } : null)).filter(Boolean)).map((g) => `<span class="bl-grp" style="left:${(g.reduce((a, m) => a + m.x, 0) / g.length).toFixed(2)}%">` +
+        g.map((m) => `<i class="bl-dot" style="background:${esc(els[m.i].colour?.hex)};color:${digit(els[m.i].colour?.hex)}">${m.i + 1}</i>`).join('') + '</span>').join('') + `<i class="pc-set" style="left:${pos(sp, r.computed.value)}%"></i></span>`; };
     const cell = (p) => (p ? `<td><b>${fmt(p.value)}</b><small>${p.iqr ? `${fmt(p.iqr[0])} to ${fmt(p.iqr[1])}` : 'no interval'}, n ${p.n ?? '?'}</small></td>` : `<td class="is-un">not measured</td>`);
     const body = t.rows.map((r) => `<tr data-prop="${esc(r.name)}"><th scope="row">${term(r.name)}<small>${esc(r.name)}</small></th>${r.parts.map(cell).join('')}` +
       `<td class="bl-mix" data-value="${r.computed.value}"><b>${fmt(r.computed.value)}</b><small>computed from ${r.computed.of} of ${ids.length}: ${RULE_WORD[r.computed.rule]}</small>${where(r)}</td></tr>`).join('');
     const link = (l) => (l ? `${l.weight} <small>${esc(l.label)}</small>` : '<span class="is-un">no link recorded</span>');
     const links = t.links.map((l) => `<li data-pair="${esc(l.a)}|${esc(l.b)}"><span>${esc(ix.byId.get(l.a).name)} to ${esc(ix.byId.get(l.b).name)}: ${link(l.ab)}</span><span>${esc(ix.byId.get(l.b).name)} to ${esc(ix.byId.get(l.a).name)}: ${link(l.ba)}</span></li>`).join('');
-    host.innerHTML = `<div class="bl-scroll" tabindex="0" role="region" aria-label="Blend table"><table class="bl"><caption class="sr-only">The parts side by side, and the computed mix</caption>
-      <thead><tr><th scope="col">Property</th>${head}<th scope="col">Mix <small>computed, not measured. Each row names its rule: an angle takes a circular mean, a ratio a geometric mean, the rest a weighted mean. On the line: the numbered parts and a ring for the mix, across the table's range</small></th></tr></thead><tbody>${body}</tbody></table></div>
+    host.innerHTML = `<p class="bl-note bl-how">The Mix column is computed, not measured. Each row names its rule: an angle takes a circular mean, a ratio a geometric mean, the rest a weighted mean. The line under each mix runs across the table's range for that property, with the numbered parts on it and a pointer above them at the mix.</p>
+      <div class="bl-scroll" tabindex="0" role="region" aria-label="Blend table"><table class="bl"><caption class="sr-only">The parts side by side, and the computed mix</caption>
+      <thead><tr><th scope="col">Property</th>${head}<th scope="col" class="bl-mixh">Mix <small>computed</small></th></tr></thead><tbody>${body}</tbody></table></div>
       <h4>Links between the parts</h4><p class="bl-note">A link counts the studies in which two elements were found together. It is measured, and it is recorded in each direction.</p><ul class="bl-links">${links}</ul>
       <h4>Glazes</h4><p class="bl-note">${term('glaze')}: each pair as two washes, one laid over the other, in both orders, on the well's ground. The ground now is <b>${esc(GROUNDS[gid()].name)}</b>, where the rule is ${esc(RULES[GROUNDS[gid()].rule].word)}. The swatches are painted by that rule at full strength (the rules are under Words). Computed.</p>
       <ul class="bl-glazes">${glazes(els)}</ul>
@@ -65,7 +79,9 @@ export function mount(host, input, ctx) {
     for (const c of host.querySelectorAll('.bl-glazes canvas')) { const t = P.get(c.dataset.top), u = P.get(c.dataset.under); if (t && u) { paintGlaze(c, t, u, c.dataset.on); c.dataset.painted = '1'; } } }, 60); }
   const onInput = (ev) => { const r = ev.target.closest('input[data-w]'); if (!r) return;
     const w = [...host.querySelectorAll('input[data-w]')].map((x) => +x.value / 100); r.nextElementSibling.textContent = r.value + '%'; state.weights = w; ctx.onWeights?.(w, { live: true }); };
-  const onChange = (ev) => { if (ev.target.closest('input[data-w]')) { render(); ctx.onWeights?.(state.weights, { live: false }); } };
+  // the table is drawn again on a change; a share moved by keyboard keeps the focus, so the next arrow key still lands on it
+  const onChange = (ev) => { const r = ev.target.closest('input[data-w]'); if (!r) return; const i = r.dataset.w, had = document.activeElement === r;
+    render(); if (had) host.querySelector(`input[data-w="${i}"]`)?.focus(); ctx.onWeights?.(state.weights, { live: false }); };
   const onClick = (ev) => { const x = ev.target.closest('[data-remove]'); if (x) ctx.onRemove?.(x.dataset.remove); };
   host.addEventListener('input', onInput); host.addEventListener('change', onChange); host.addEventListener('click', onClick);
   render();

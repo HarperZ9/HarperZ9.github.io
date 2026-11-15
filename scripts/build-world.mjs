@@ -54,6 +54,7 @@ node("record-findings.mjs");
 node("build-findings.mjs");
 node("build-glass-water.mjs");
 node("build-distill.mjs");
+node("build-surfaces.mjs");  // the six surfaces, each from its manifest in site-src/world/surfaces/
 node("build-world-home.mjs");
 node("build-product-pages.mjs");
 node("build-world-pages.mjs");

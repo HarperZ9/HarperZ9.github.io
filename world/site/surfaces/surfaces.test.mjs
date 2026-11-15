@@ -134,7 +134,7 @@ test('an element says which tools draw it and which pages use it', () => {
   assert.ok(water.includes('world/studio') && water.includes('world/lettering') && water.includes('system/instruments'));
   assert.ok(bare.some((t) => /only its colour/.test(t.why)));
   const uses = JSON.parse(readFileSync(new URL('world/site/surfaces/uses.json', root), 'utf8'));
-  assert.deepEqual(pagesFor('pigment', uses).map((p) => p.path), ['swatches.html']); assert.deepEqual(pagesFor('ink', uses).map((p) => p.path).sort(), ['accession.html', 'swatches.html']);
+  assert.deepEqual(pagesFor('pigment', uses).map((p) => p.path), ['swatches.html']); assert.deepEqual(pagesFor('ink', uses).map((p) => p.path).sort(), ['accession.html', 'playground/index.html', 'swatches.html']);
   assert.deepEqual(uses.benches, ['elements.html']); assert.ok(registry.mount && registry.unmountAll);
 });
 

@@ -9,6 +9,18 @@
  "evidence": "date (ISO day of the run), command (as written in the record), file (the committed record), sha256 (of that file). commandIn names another committed file when the command is written there.",
  "rows": [
   {
+   "id": "playground-exchange",
+   "page": "/playground/#m-exchange",
+   "form": "live",
+   "what": "The blend table hands its blend and its palette to the lettering, the motion curve and the pen study through the bus.",
+   "modules": [
+    "blend",
+    "lettering",
+    "motion",
+    "plot"
+   ]
+  },
+  {
    "id": "bench",
    "page": "/elements.html",
    "form": "live",

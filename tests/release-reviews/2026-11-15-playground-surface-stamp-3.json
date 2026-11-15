@@ -1,0 +1,7 @@
+{
+  "date": "2026-11-15",
+  "note": "Step 4 merged with main after findings wave 2 and the retired-name change: the asset revision is world-5d4d803b42. index.html changes only in the ?v= stamps on its world stylesheets and scripts. Checked on 2026-11-15 with git diff.",
+  "paths": {
+    "index.html": "df7dc5819a26d84d2c9994351b55c868226519e07bf4315bf1f2b983e86570af"
+  }
+}

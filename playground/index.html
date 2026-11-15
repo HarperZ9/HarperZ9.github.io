@@ -23,13 +23,14 @@
 <meta name="twitter:title" content="The Playground | Zain Dana Harper">
 <meta name="twitter:description" content="The Playground is a rendering engine that turns one description into picture, type and sound: the native renderer, Superframe, the instruments and study tools, and Low Water.">
 <link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-05f022430b">
-<link rel="stylesheet" href="/studies/studies.css?v=world-05f022430b">
-<link rel="stylesheet" href="/world/site/depth.css?v=world-05f022430b">
-<script type="module" src="/world/ui/shell/shell.js?v=world-05f022430b"></script>
-<script type="module" src="/world/site/hand-scroll.js?v=world-05f022430b"></script>
-<link rel="stylesheet" href="/world/site/distill/distill.css?v=world-05f022430b"></head>
-<body class="reading ds-body">
+<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-38578d6674">
+<link rel="stylesheet" href="/studies/studies.css?v=world-38578d6674">
+<link rel="stylesheet" href="/world/site/depth.css?v=world-38578d6674">
+<script type="module" src="/world/ui/shell/shell.js?v=world-38578d6674"></script>
+<script type="module" src="/world/site/hand-scroll.js?v=world-38578d6674"></script>
+<link rel="stylesheet" href="/world/site/distill/distill.css?v=world-38578d6674">
+<link rel="stylesheet" href="/world/site/surfaces/surface-page.css?v=world-38578d6674"></head>
+<body class="reading ds-body sx-body">
 <div class="gw-backdrop" aria-hidden="true">
   <picture>
     <source data-s="night" data-m="(orientation: portrait)" media="(orientation: portrait) and (prefers-color-scheme: dark)" type="image/avif" srcset="/media/world/glass-water/field-night-portrait-828.avif 828w, /media/world/glass-water/field-night-portrait-1242.avif 1242w" sizes="100vw">
@@ -79,9 +80,29 @@ new MutationObserver(s).observe(r,{attributes:true,attributeFilter:["data-theme"
 <h1>The Playground</h1>
 <p class="ds-lede">The Playground is a rendering engine that turns one description into picture, type and sound. It has four parts: the <a href="/raw.html">native renderer</a>, <a href="/superframe.html">Superframe</a> at the core, the <a href="#instruments">instruments and study tools</a>, and <a href="/low-water.html">Low Water</a>, the game made with it.</p>
 <ul class="pg-list"><li><a href="/raw.html">The native renderer</a><p>Renders frames in C++ on Direct3D 12, Vulkan and WebGPU, and checks each one against a reference. Released as raw-native.</p></li><li><a href="/superframe.html">Superframe, the core</a><p>One seeded recipe rendered as picture, line, surface, type and sound.</p></li><li><a href="/low-water.html">Low Water</a><p>The game made with The Playground.</p></li></ul>
+<section class="sx" id="m-exchange" aria-labelledby="m-exchange-h">
+<h2 id="m-exchange-h">One blend, read three ways</h2>
+<p>Three materials from the element table are blended by share. The blend table works out the mix and hands it on. The lettering sets the blend's name in the technique of its leading part, the motion curve draws the timing the blend moves on, and the pen study inks its pens with the blend's colours. Change a share and all three follow.</p>
+<p class="demo-form" data-demo="playground-exchange" data-form="live"><b>Live.</b> This runs in your browser now, on what you give it.</p>
+<div id="sx-before">
+<div class="sx-still">
+<figure><ul class="sx-pal"><li><i style="background:#557e7d"></i>ink <code>#557e7d</code></li><li><i style="background:#8a6f60"></i>glass <code>#8a6f60</code></li><li><i style="background:#ebe19b"></i>type <code>#ebe19b</code></li><li><i style="background:#88937e"></i>The mix <code>#88937e</code></li></ul><figcaption>The blend table: ink, glass and type in equal shares, and the colour of the mix.</figcaption></figure>
+<figure><p class="sx-word">ink + glass + type</p><figcaption>Lettering: the blend's name, to be lettered as painted.</figcaption></figure>
+<figure><svg class="sx-curve" viewBox="0 0 200 80" role="img" aria-label="Timing curve: progress against time"><path d="M4 76H196M4 76V4"/><polyline points="4.0,76.0 8.0,76.0 12.0,75.9 16.0,75.8 20.0,75.6 24.0,75.4 28.0,75.1 32.0,74.8 36.0,74.4 40.0,73.5 44.0,72.6 48.0,71.6 52.0,68.7 56.0,65.9 60.0,62.5 64.0,58.9 68.0,55.4 72.0,51.9 76.0,48.5 80.0,45.1 84.0,41.8 88.0,39.1 92.0,36.6 96.0,34.1 100.0,31.7 104.0,29.4 108.0,27.2 112.0,25.0 116.0,22.9 120.0,20.8 124.0,18.9 128.0,17.0 132.0,15.1 136.0,13.4 140.0,12.2 144.0,11.2 148.0,10.3 152.0,9.4 156.0,8.6 160.0,7.8 164.0,7.1 168.0,6.5 172.0,6.0 176.0,5.5 180.0,5.1 184.0,4.7 188.0,4.4 192.0,4.2 196.0,4.0"/></svg><figcaption>Motion curve: progress against time. One build takes 2.7 s at 24 frames a second.</figcaption></figure>
+</div>
+<p class="sx-as">Shown as built, from the same code the page runs. With scripts off this is the whole reading; <a href="/elements.html">Elements</a> has every module on one bench.</p>
+<p class="sx-go"><button type="button" id="sx-start" hidden>Start the blend</button><span>Loads 1.0 MB: the element table and 4 modules. Nothing loads before the press.</span></p>
+</div>
+<p class="sx-say" id="sx-say" role="status" aria-live="polite">When it runs, the blend table hands its blend to Lettering and Motion curve and a palette to Pen study, and this line says so each time.</p>
+<details class="sx-rec" id="sx-rec" hidden><summary>This value's record</summary><dl></dl></details>
+<div id="sx-hosts" data-surface="blend lettering motion plot" data-elements="ink glass type" tabindex="-1" role="group" aria-label="One blend, read three ways" hidden></div>
+<div id="sx-more" hidden><p class="sx-go"><button type="button" data-sx-press="well">Add the well</button><span>Loads 132 KB more. It stirs the same blend.</span></p></div>
+<script type="application/json" id="sx-manifest">{"surface":"playground","elements":["ink","glass","type"],"modules":["blend","lettering","motion","plot"],"sends":[["blend","blend"],["blend","palette"]],"css":"/world/site/surfaces/bench.css"}</script>
+</section>
 <h2 id="instruments">Instruments and study tools</h2>
 <ul class="pg-list"><li><a href="/playground/distill.html">Distill</a><p>Take any file, archive or folder apart and read what it is made of.</p></li><li><a href="/studio.html">The Studio</a><p>A live media instrument for picture and sound.</p></li><li><a href="/elements.html">Elements</a><p>Pigment, water, glass and paper on one bench, with state changes.</p></li><li><a href="/glass-water.html">Glass and water</a><p>Glass lettering over a live sea in four spaces.</p></li><li><a href="/world/sound/sound.html">Sound</a><p>Instruments and scores made in the browser.</p></li><li><a href="/swatches.html">Swatches</a><p>Colour as measured material.</p></li><li><a href="/accession.html">Accession</a><p>The type family and its living forms.</p></li></ul>
 </article>
+<script type="module" src="/world/site/surfaces/surface-start.js?v=world-38578d6674"></script>
 </main>
 </body>
 </html>

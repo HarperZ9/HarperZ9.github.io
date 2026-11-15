@@ -1,8 +1,11 @@
 // Shared behaviours for the direction prototypes. Dependency-free.
-import { initLettering } from "./lettering.js";
-import { initReceipts } from "./media.js";
-import { initSlots } from "./slots.js";
-import { initNegatives } from "./negative.js";
+//
+// This file is what every page runs before anyone touches it: the theme, plain view, demo choices, the shared
+// clock and the hand (organic/organic.js). Everything else is a part in its own file, fetched only
+//   - on a page that holds its markup (plates.js, slots.js, lettering.js, negative.js, media.js), or
+//   - on the first press of its control (sound.js, copy.js).
+// A page without the markup, and a visitor who never presses, never download the part. Each import below names
+// its file as a plain string so tools that follow references can find it.
 import { initOrganic } from "./organic/organic.js";
 // Every control here is a native button; every state it changes is visible without it.
 const root = document.documentElement;
@@ -65,112 +68,34 @@ function initChoices() {
   }
 }
 
-// Sound: off until pressed. A room tone, filtered noise under two low sines, faded in and out.
-function initSound() {
-  let ctx = null, out = null;
-  const start = () => {
-    ctx = new AudioContext();
-    out = ctx.createGain();
-    out.gain.value = 0;
-    const analyser = ctx.createAnalyser(); analyser.fftSize = 512;
-    out.connect(analyser); analyser.connect(ctx.destination);
-    window.UIShell = Object.assign(window.UIShell || {}, { audio: { ctx, analyser } });
-    const len = ctx.sampleRate * 2, buf = ctx.createBuffer(1, len, ctx.sampleRate), d = buf.getChannelData(0);
-    let last = 0;
-    for (let i = 0; i < len; i++) { last = (last + 0.02 * (Math.random() * 2 - 1)) / 1.02; d[i] = last * 3.5; }
-    const noise = ctx.createBufferSource(); noise.buffer = buf; noise.loop = true;
-    const lp = ctx.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 420;
-    noise.connect(lp).connect(out); noise.start();
-    for (const [f, g] of [[55, 0.05], [82.4, 0.025]]) {
-      const o = ctx.createOscillator(), og = ctx.createGain();
-      o.frequency.value = f; og.gain.value = g; o.connect(og).connect(out); o.start();
-    }
-    out.gain.linearRampToValueAtTime(0.5, ctx.currentTime + 0.6);
-  };
-  const stop = () => {
-    if (!ctx) return;
-    const c = ctx; out.gain.linearRampToValueAtTime(0, c.currentTime + 0.3);
-    setTimeout(() => c.close().catch((e) => console.warn("sound: close failed", e)), 400);
-    ctx = null;
-    if (window.UIShell) window.UIShell.audio = null;
-  };
-  for (const b of document.querySelectorAll("[data-sound]")) {
-    b.hidden = false;
-    b.addEventListener("click", () => {
-      const on = b.getAttribute("aria-pressed") !== "true";
-      try { on ? start() : stop(); } catch (e) { console.warn("sound: Web Audio unavailable", e); return; }
-      document.querySelectorAll("[data-sound]").forEach((x) => x.setAttribute("aria-pressed", String(on)));
-      root.classList.toggle("sound-on", on);
-    });
-  }
-}
-
-// Drift: art layers move against the scroll at their own rate. Off under reduced motion.
-function initDrift() {
-  const layers = [...document.querySelectorAll("[data-drift]")];
-  if (!layers.length) return;
-  let ticking = false;
-  const apply = () => {
-    ticking = false;
-    if (reduced.matches) { layers.forEach((l) => { l.style.transform = ""; }); return; }
-    const y = scrollY;
-    layers.forEach((l) => {
-      const d = (y * Number(l.dataset.drift)).toFixed(1);
-      l.style.transform = l.dataset.axis === "x" ? `translate3d(${d}px, -50%, 0)` : `translate3d(0, ${d}px, 0)`;
+// A control whose code arrives with its first press. The button shows at once; the press that fetched the code
+// is repeated once the part has wired the button, so the first press does what every later press does.
+function onFirstPress(sel, load) {
+  const all = [...document.querySelectorAll(sel)];
+  const first = (e) => {
+    const b = e.currentTarget;
+    all.forEach((x) => x.removeEventListener("click", first));
+    load().then((m) => { m.default(); b.click(); }).catch((err) => {
+      console.warn("shell: the code for a control did not load; press again to retry", sel, err);
+      all.forEach((x) => x.addEventListener("click", first));
     });
   };
-  addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(apply); } }, { passive: true });
-  reduced.addEventListener("change", apply);
-  apply();
+  all.forEach((b) => { b.hidden = false; b.addEventListener("click", first); });
 }
 
-// Halftone: an archival photograph re-screened as dots whose size follows the tone, drawn in
-// the colour of its container. The <img> stays in the markup for no-JS and plain view.
-function halftone(img) {
-  const draw = () => {
-    const box = img.parentElement, r = box.getBoundingClientRect();
-    if (!r.width || !img.naturalWidth) return;
-    const cell = Number(img.dataset.halftone) || 6, dpr = Math.min(devicePixelRatio || 1, 2);
-    let c = box.querySelector("canvas.ht");
-    if (!c) { c = document.createElement("canvas"); c.className = "ht"; c.setAttribute("aria-hidden", "true"); c.dataset.art = ""; box.appendChild(c); }
-    c.width = Math.round(r.width * dpr); c.height = Math.round(r.height * dpr);
-    const cols = Math.ceil(r.width / cell), rows = Math.ceil(r.height / cell);
-    const s = document.createElement("canvas"); s.width = cols; s.height = rows;
-    const sx = s.getContext("2d", { willReadFrequently: true });
-    const k = Math.max(cols / img.naturalWidth, rows / img.naturalHeight);
-    const w = img.naturalWidth * k, h = img.naturalHeight * k;
-    // data-halftone-y picks the vertical focus (0 top, 1 bottom) when the plate is taller than its slab
-    const fy = img.dataset.halftoneY !== undefined ? Number(img.dataset.halftoneY) : 0.5;
-    sx.drawImage(img, (cols - w) / 2, (rows - h) * fy, w, h);
-    const px = sx.getImageData(0, 0, cols, rows).data;
-    const g = c.getContext("2d", { colorSpace: "display-p3" }) || c.getContext("2d"); g.scale(dpr, dpr);
-    g.fillStyle = getComputedStyle(c).color;
-    const invert = img.dataset.halftoneInvert !== undefined;
-    for (let y = 0; y < rows; y++) for (let x = 0; x < cols; x++) {
-      const i = (y * cols + x) * 4, lum = (0.2126 * px[i] + 0.7152 * px[i + 1] + 0.0722 * px[i + 2]) / 255;
-      const t = invert ? lum : 1 - lum, rad = (cell / 2) * Math.sqrt(Math.min(1, t * 1.15));
-      if (rad < 0.35) continue;
-      g.beginPath(); g.arc(x * cell + cell / 2 + (y % 2 ? cell / 2 : 0), y * cell + cell / 2, rad, 0, 6.2832); g.fill();
-    }
-    box.classList.add("ht-on");
-  };
-  if (img.complete) draw(); else img.addEventListener("load", draw, { once: true });
-  let t; addEventListener("resize", () => { clearTimeout(t); t = setTimeout(draw, 150); });
-  new MutationObserver(() => setTimeout(draw, 30)).observe(root, { attributes: true, attributeFilter: ["data-theme"] });
-  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", draw);
-}
-
-// Copy buttons: [data-copy] copies the text of the element its value names.
-function initCopy() {
-  for (const b of document.querySelectorAll("[data-copy]")) {
-    b.hidden = false;
-    b.addEventListener("click", async () => {
-      const src = document.getElementById(b.dataset.copy);
-      try { await navigator.clipboard.writeText(src.textContent.trim()); b.textContent = "Copied"; }
-      catch (e) { console.warn("copy: clipboard refused", e); b.textContent = "Select and copy"; }
-      setTimeout(() => { b.textContent = "Copy"; }, 1600);
-    });
-  }
+// Parts that draw at load, each fetched only where the page holds its markup.
+function initParts() {
+  const has = (sel) => document.querySelector(sel) !== null;
+  const part = (name, run) => run().catch((e) => console.warn(`shell: ${name} did not load; the page stays as built`, e));
+  if (has("img[data-halftone], [data-drift]")) part("plates", async () => (await import("./plates.js")).initPlates());
+  if (has("[data-receipt]")) part("receipts", async () => (await import("./media.js")).initReceipts());
+  // display slots hand their technique to the lettering, so the lettering follows the slots
+  const slots = !!root.dataset.lettering || has("[data-display]");
+  const letters = slots || has("[data-letter], [data-play-letter]"), negatives = has("[data-negative]");
+  if (letters || negatives) part("lettering", async () => {
+    const [s, l, n] = await Promise.all([slots && import("./slots.js"), letters && import("./lettering.js"), negatives && import("./negative.js")]);
+    try { if (s) await s.initSlots(); } finally { if (l) l.initLettering(); if (n) n.initNegatives(); }
+  });
 }
 
 // The shared clock. One rAF for every living thing on the page; it stops when the tab is hidden and
@@ -189,16 +114,15 @@ window.UIShell = Object.assign(window.UIShell || {}, {
   clock: makeClock(),
   setClock(c) { if (!c || typeof c.subscribe !== "function") throw new TypeError("UIShell.setClock needs { subscribe(fn) }"); this.clock = c; },
   livingSlots: () => [...document.querySelectorAll("[data-alive]")],
+  // slots.js replaces this when it loads; a script that registers a renderer on a page with no slots brings it in
+  registerLettering(fn) { import("./slots.js").then(() => window.UIShell.registerLettering(fn)).catch((e) => console.warn("shell: slots did not load", e)); },
 });
 
 initTheme();
-initCopy();
-document.querySelectorAll("img[data-halftone]").forEach(halftone);
 initPlain();
 initChoices();
-initSound();
-initDrift();
-initSlots().finally(() => { initLettering(); initNegatives(); });
+onFirstPress("[data-copy]", () => import("./copy.js"));
+onFirstPress("[data-sound]", () => import("./sound.js"));
+initParts();
 initOrganic().catch((e) => console.warn("organic: init failed", e));
-initReceipts();
 requestAnimationFrame(() => root.classList.add("ready"));

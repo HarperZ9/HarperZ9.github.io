@@ -142,8 +142,14 @@ body.parts-body.bench-body:has(.bn) main { max-width: min(2800px, 96vw); }
 .bl thead th { vertical-align: bottom; border-bottom-color: var(--b-line); } .bl td b { font: 700 var(--b2)/1.2 var(--face-utility, monospace); display: block; } .bl td small { display: block; }
 .bl-part { display: flex; gap: .4em; align-items: baseline; font-weight: 700; font-size: var(--b2); } .bl-w { display: flex; gap: .5em; align-items: center; } .bl-w input { width: 6.5em; accent-color: var(--b-ink); min-height: 44px; }
 .bl-mix { min-width: 13em !important; width: 26%; } .bl-mix .pc-track { margin: .3em 1em 0 .9em; } .bl-mix .pc-set { display: block; }
-.bl-dot, .bl-n { display: inline-grid; place-items: center; width: 1.5em; height: 1.5em; font: 700 .78em/1 var(--face-utility, monospace); font-style: normal; color: #fff; text-shadow: 0 0 2px #000, 0 0 2px #000, 0 0 1px #000; box-shadow: 0 0 0 1.5px var(--b-ink); flex: none; }
-.pc-track .bl-dot { margin: -.75em 0 0 -.75em; }
+/* numbered marks: the digit's colour is chosen per mark for AA contrast on the mark's own colour (surface-blend.mjs) */
+.bl-dot, .bl-n { display: inline-grid; place-items: center; width: 1.5em; height: 1.5em; font: 700 .78em/1 var(--face-utility, monospace); font-style: normal; color: #fff; box-shadow: 0 0 0 1.5px var(--b-ink); flex: none; }
+.pc-track .bl-grp { position: absolute; top: 50%; display: flex; gap: 2px; transform: translate(-50%, -50%); }
+.pc-track .bl-grp .bl-dot { position: static; width: 24px; height: 24px; font-size: 14px; }
+.bl-mix .pc-track { height: 44px; } /* the mix on its line: a pointer above the marks, so it never covers a part's number */
+.bl-mix .pc-track .pc-set { top: 0; width: 0; height: 0; margin: 0 0 0 -8px; border: 0 solid transparent; border-width: 10px 8px 0; border-top-color: var(--b-ink); border-radius: 0; }
+.bl-mix .pc-track .bl-grp { top: 26px; } .bl-mix .pc-track::before { top: 26px; }
+.bl-how { max-width: 76ch; margin: 0 0 .8em; } .bl-mixh small { display: block; }
 .bl-mix { border-left: 1px dashed var(--b-line); padding-left: 1em !important; }
 .bl-links li { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16em), 1fr)); gap: 0 2em; padding: .35em 0; border-bottom: 1px solid var(--b-faint); }
 .bl-pal { display: flex; flex-wrap: wrap; gap: .6em 2em; } .bl-pal li { display: flex; gap: .5em; align-items: center; } .bl-note, .ln-note, .tk-note { font-size: var(--b1); color: var(--b-soft); }
