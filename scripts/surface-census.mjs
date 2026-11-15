@@ -33,7 +33,8 @@ if (existsSync(regFile)) {
   const reg = (await import(pathToFileURL(regFile).href)).default, src = readFileSync(regFile, "utf8");
   for (const s of Object.values(reg.SURFACES)) {
     const m = src.match(new RegExp(`S\\('${s.id}'[^\\n]*'(\\./[\\w.-]+)'\\)`));
-    surfaces[s.id] = { tools: s.tools, file: m ? path.posix.normalize(path.posix.join("world/site/surfaces", m[1])) : null };
+    const own = s.file || m?.[1];   // the row names its adapter file; older trees are read from the source
+    surfaces[s.id] = { tools: s.tools, file: own ? path.posix.normalize(path.posix.join("world/site/surfaces", own)) : null, row: s };
   }
 }
 const MOUNT = /\bmount\(\s*[^,()]*(?:\([^()]*\))?[^,()]*,\s*["'](\w+)["']/g;
@@ -68,6 +69,13 @@ for (const page of tracked.filter((f) => f.endsWith(".html"))) {
     pages.push({ path: page, title: (html.match(/<title>([^<|]*)/)?.[1] || page).trim(), surfaces: [...named].sort(), elements: [...new Set(ids)], all: named.has("bench") });
   }
 }
+// Each module in the registry: where it stands (home, form, state, weight, its own page) and what it costs to load.
+// `bytes` is every file its adapter reaches, imports followed to the end, as tracked; `files` is how many.
+const modules = Object.fromEntries(Object.entries(surfaces).map(([id, s]) => {
+  const all = s.file && files.has(s.file) ? [...reach(s.file)].filter((f) => files.has(f)).sort() : [];
+  const { home = null, form = null, state = null, weight = null, plain = null } = s.row || {};
+  return [id, { home, form, state, weight, plain, bytes: all.reduce((n, f) => n + readFileSync(path.join(site, f)).length, 0), files: all.length }];
+}));
 const folders = [...new Set(tracked.map(toolOf).filter(Boolean))].sort();
 const tools = Object.fromEntries(folders.map((f) => [f, { direct: direct[f]?.size ?? 0, reach: reached[f]?.size ?? 0 }]));
 if (args.includes("--table")) {
@@ -75,6 +83,6 @@ if (args.includes("--table")) {
   for (const f of folders) console.log(`| ${f} | ${tools[f].direct} | ${tools[f].reach} |`);
 } else console.log(JSON.stringify({ pages: pages.length, unreached: folders.filter((f) => !tools[f].reach).length, folders: folders.length }));
 if (args.includes("--write")) {
-  const doc = { format: "surfaces.uses/1", from: "scripts/surface-census.mjs", pages: pages.filter((p) => !p.all).map(({ all, ...p }) => p), benches: pages.filter((p) => p.all).map((p) => p.path), tools };
+  const doc = { format: "surfaces.uses/2", from: "scripts/surface-census.mjs", pages: pages.filter((p) => !p.all).map(({ all, ...p }) => p), benches: pages.filter((p) => p.all).map((p) => p.path), modules, tools };
   writeFileSync(path.join(site, "world/site/surfaces/uses.json"), JSON.stringify(doc, null, 1) + "\n");
 }

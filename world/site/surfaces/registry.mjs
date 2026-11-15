@@ -10,6 +10,16 @@
 //     load()    imports the adapter module, only when a page asks for it
 //   and its adapter exports
 //     mount(host, input, ctx) -> { update(input), value(), destroy() }
+//   A row also says where the module stands on the site:
+//     home      the surface it lives on, from HOMES: one of the six platform pages, or the door
+//     form      live, replay or captured (FORMS); null when nothing is mounted behind the row
+//     evidence  { date, command, file, sha256 } for a replay or a captured module; null for a live one
+//     plain     the page where the module stands alone, which is also how it reads without scripts; null if none yet
+//     weight    'light' (its imports come to 400 KB or less) or 'heavy' (starts on a press, with its size stated);
+//               scripts/surface-census.mjs measures the bytes and writes them to uses.json
+//     state     'ready' (an adapter loads) or 'placeholder' (a named place with nothing behind it)
+//   Modules hand values to each other through bus.mjs, in one envelope:
+//     { medium, refs, value, from: { module, surface, form, at, recipe } }
 //   input is { elements: [ids], weights, settings }; ctx is { ix, reduced, plain, registry }.
 //
 //   mount(host, 'well', { elements: ['water', 'ink'] })   mount one surface by element ids
@@ -102,18 +112,24 @@ export const LOOSE = Object.freeze([
 ]);
 export const EMPTY = Object.freeze(CAPABILITIES.filter((c) => ![...TOOLS, ...LOOSE].some((t) => t.offers.includes(c))));
 
-const S = (id, name, tools, offers, takes, gives, file) => Object.freeze({ id, name, tools, offers, takes, gives, load: () => import(file) });
+// The six surfaces and the door (site-src/world/addresses.json uses the same words), the three forms a
+// demonstration takes (site-src/world/demos.json), and the limit a light module's imports stay under.
+export const HOMES = Object.freeze(['playground', 'commons', 'flywheel', 'articulate', 'buildlang', 'research', 'door']);
+export const FORMS = Object.freeze(['live', 'replay', 'captured']);
+export const LIGHT_BYTES = 400 * 1024;
+const S = (id, name, tools, offers, takes, gives, file, more = {}) => Object.freeze({ id, name, tools, offers, takes, gives,
+  home: 'playground', form: 'live', evidence: null, plain: null, weight: 'light', state: 'ready', ...more, file, load: () => import(file) });
 export const SURFACES = Object.freeze({
-  bench: S('bench', 'The front bench', ['world/site', 'world/studio', 'system/graph'], ['well', 'chart', 'blend', 'export'], ['elements', 'settings'], ['blend', 'palette', 'png', 'json'], './bench.mjs'),
-  well: S('well', 'The well', ['world/studio', 'world/techniques', 'world/feed-23', 'world/superframe', 'world/glass', 'world/sound'], ['well', 'simulation', 'field', 'paint'], ['elements', 'settings', 'blend'], ['image', 'png'], './surface-well.mjs'),
+  bench: S('bench', 'The front bench', ['world/site', 'world/studio', 'system/graph'], ['well', 'chart', 'blend', 'export'], ['elements', 'settings'], ['blend', 'palette', 'png', 'json'], './bench.mjs', { plain: '/elements.html', weight: 'heavy' }),
+  well: S('well', 'The well', ['world/studio', 'world/techniques', 'world/feed-23', 'world/superframe', 'world/glass', 'world/sound'], ['well', 'simulation', 'field', 'paint'], ['elements', 'settings', 'blend'], ['image', 'png'], './surface-well.mjs', { weight: 'heavy' }),
   chart: S('chart', 'Property charts', ['world/studio'], ['chart'], ['elements', 'settings'], ['numbers'], './surface-chart.mjs'),
   blend: S('blend', 'The blend table', ['world/studio'], ['blend', 'chart'], ['elements'], ['blend', 'material', 'palette'], './surface-blend.mjs'),
   motion: S('motion', 'Motion curve', ['world/studio', 'world/substrate', 'world/techniques'], ['motion', 'chart'], ['blend', 'material'], ['motion'], './surface-lanes.mjs'),
   lettering: S('lettering', 'Lettering', ['world/studio', 'world/lettering'], ['lettering', 'type'], ['blend', 'material', 'text'], ['type', 'image'], './surface-lanes.mjs'),
   plot: S('plot', 'Pen study', ['system/instruments'], ['plot', 'poster', 'geometry'], ['palette'], ['image', 'png'], './surface-lanes.mjs'),
-  plate: S('plate', 'Plate', ['world/studio', 'world/feed-25', 'world/techniques'], ['render', 'paint', 'poster'], ['blend', 'material'], ['image', 'png'], './surface-more.mjs'),
-  glass: S('glass', 'Through glass', ['world/glass', 'world/studio'], ['render', 'physics'], ['blend', 'image'], ['image', 'png'], './surface-more.mjs'),
-  living: S('living', 'Living type', ['world/typeengine'], ['type', 'render'], ['elements', 'text', 'numbers'], ['image', 'png'], './surface-more.mjs'),
+  plate: S('plate', 'Plate', ['world/studio', 'world/feed-25', 'world/techniques'], ['render', 'paint', 'poster'], ['blend', 'material'], ['image', 'png'], './surface-more.mjs', { weight: 'heavy' }),
+  glass: S('glass', 'Through glass', ['world/glass', 'world/studio'], ['render', 'physics'], ['blend', 'image'], ['image', 'png'], './surface-more.mjs', { weight: 'heavy' }),
+  living: S('living', 'Living type', ['world/typeengine'], ['type', 'render'], ['elements', 'text', 'numbers'], ['image', 'png'], './surface-more.mjs', { weight: 'heavy' }),
   loom: S('loom', 'Loom', ['world/site'], ['weave', 'render'], ['image', 'palette'], ['image', 'png'], './surface-studio.mjs'),
   ridges: S('ridges', 'Plot map', ['world/site'], ['plot', 'geometry'], ['image', 'palette'], ['image'], './surface-studio.mjs'),
   voxels: S('voxels', 'Cubes', ['world/site'], ['fabricate', 'render', 'geometry'], ['image', 'palette'], ['image', 'vox'], './surface-studio.mjs'),
@@ -123,7 +139,8 @@ export const SURFACES = Object.freeze({
   // setLevel(0..1) and setMood(id), where setMood also takes an element id through a map of moods. When that
   // lands, the adapter here calls setMood with the leading element's id (moods.json is the map, a proposal for
   // the author to edit), never calls start() itself, and hands the music's score on to world/visualizer.
-  sound: Object.freeze({ id: 'sound', name: 'Sound layer (not built yet)', tools: ['world/sound', 'world/dataviz', 'world/visualizer'], offers: ['sound'], takes: ['elements', 'blend', 'score'], gives: ['score', 'wav'], load: null,
+  sound: Object.freeze({ id: 'sound', name: 'Sound layer (not built yet)', tools: ['world/sound', 'world/dataviz', 'world/visualizer'], offers: ['sound'], takes: ['elements', 'blend', 'score'], gives: ['score', 'wav'],
+    home: 'playground', form: null, evidence: null, plain: null, weight: null, state: 'placeholder', file: null, load: null,
     wants: Object.freeze(['start', 'stop', 'setLevel', 'setMood']), moods: './moods.json' }),
 });
 
@@ -184,5 +201,5 @@ export function toolsFor(el) {
 // Which pages use an element: read from the census (scripts/surface-census.mjs writes uses.json).
 export const pagesFor = (id, uses) => (uses?.pages || []).filter((p) => (p.elements || []).includes(id)).map((p) => ({ path: p.path, title: p.title, surfaces: p.surfaces }));
 
-const api = { CAPABILITIES, MEDIA, TOOLS, LOOSE, EMPTY, SURFACES, mount, unmount, unmountAll, mounted, chain, toolsFor, pagesFor, elements, prefs };
+const api = { CAPABILITIES, MEDIA, HOMES, FORMS, LIGHT_BYTES, TOOLS, LOOSE, EMPTY, SURFACES, mount, unmount, unmountAll, mounted, chain, toolsFor, pagesFor, elements, prefs };
 export default api;

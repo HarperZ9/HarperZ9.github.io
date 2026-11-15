@@ -1,5 +1,5 @@
 {
- "format": "surfaces.uses/1",
+ "format": "surfaces.uses/2",
  "from": "scripts/surface-census.mjs",
  "pages": [
   {
@@ -35,14 +35,159 @@
  "benches": [
   "elements.html"
  ],
+ "modules": {
+  "bench": {
+   "home": "playground",
+   "form": "live",
+   "state": "ready",
+   "weight": "heavy",
+   "plain": "/elements.html",
+   "bytes": 1203601,
+   "files": 163
+  },
+  "well": {
+   "home": "playground",
+   "form": "live",
+   "state": "ready",
+   "weight": "heavy",
+   "plain": null,
+   "bytes": 428718,
+   "files": 51
+  },
+  "chart": {
+   "home": "playground",
+   "form": "live",
+   "state": "ready",
+   "weight": "light",
+   "plain": null,
+   "bytes": 274254,
+   "files": 38
+  },
+  "blend": {
+   "home": "playground",
+   "form": "live",
+   "state": "ready",
+   "weight": "light",
+   "plain": null,
+   "bytes": 284121,
+   "files": 39
+  },
+  "motion": {
+   "home": "playground",
+   "form": "live",
+   "state": "ready",
+   "weight": "light",
+   "plain": null,
+   "bytes": 389822,
+   "files": 51
+  },
+  "lettering": {
+   "home": "playground",
+   "form": "live",
+   "state": "ready",
+   "weight": "light",
+   "plain": null,
+   "bytes": 389822,
+   "files": 51
+  },
+  "plot": {
+   "home": "playground",
+   "form": "live",
+   "state": "ready",
+   "weight": "light",
+   "plain": null,
+   "bytes": 389822,
+   "files": 51
+  },
+  "plate": {
+   "home": "playground",
+   "form": "live",
+   "state": "ready",
+   "weight": "heavy",
+   "plain": null,
+   "bytes": 979988,
+   "files": 143
+  },
+  "glass": {
+   "home": "playground",
+   "form": "live",
+   "state": "ready",
+   "weight": "heavy",
+   "plain": null,
+   "bytes": 979988,
+   "files": 143
+  },
+  "living": {
+   "home": "playground",
+   "form": "live",
+   "state": "ready",
+   "weight": "heavy",
+   "plain": null,
+   "bytes": 979988,
+   "files": 143
+  },
+  "loom": {
+   "home": "playground",
+   "form": "live",
+   "state": "ready",
+   "weight": "light",
+   "plain": null,
+   "bytes": 134006,
+   "files": 10
+  },
+  "ridges": {
+   "home": "playground",
+   "form": "live",
+   "state": "ready",
+   "weight": "light",
+   "plain": null,
+   "bytes": 134006,
+   "files": 10
+  },
+  "voxels": {
+   "home": "playground",
+   "form": "live",
+   "state": "ready",
+   "weight": "light",
+   "plain": null,
+   "bytes": 134006,
+   "files": 10
+  },
+  "recipe": {
+   "home": "playground",
+   "form": "live",
+   "state": "ready",
+   "weight": "light",
+   "plain": null,
+   "bytes": 348174,
+   "files": 44
+  },
+  "sound": {
+   "home": "playground",
+   "form": null,
+   "state": "placeholder",
+   "weight": null,
+   "plain": null,
+   "bytes": 0,
+   "files": 0
+  }
+ },
  "tools": {
+  "system/bulletin": {
+   "direct": 1,
+   "reach": 1
+  },
   "system/discovery": {
    "direct": 0,
-   "reach": 229
+   "reach": 228
+  },
+  "system/ear": {
+   "direct": 0,
+   "reach": 0
   },
   "system/engine": {
    "direct": 0,
-   "reach": 230
+   "reach": 229
   },
   "system/explainer": {
    "direct": 3,
@@ -58,7 +203,7 @@
   },
   "system/instruments": {
    "direct": 0,
-   "reach": 231
+   "reach": 230
   },
   "system/kit": {
    "direct": 0,
@@ -70,15 +215,15 @@
   },
   "system/lib": {
    "direct": 2,
-   "reach": 229
+   "reach": 228
   },
   "system/media": {
    "direct": 0,
-   "reach": 230
+   "reach": 229
   },
   "system/media-engine": {
    "direct": 1,
-   "reach": 231
+   "reach": 230
   },
   "system/school": {
    "direct": 32,
@@ -86,11 +231,15 @@
   },
   "system/showcase": {
    "direct": 0,
-   "reach": 229
+   "reach": 228
+  },
+  "system/site-music": {
+   "direct": 0,
+   "reach": 0
   },
   "system/type-forge": {
    "direct": 1,
-   "reach": 229
+   "reach": 228
   },
   "system/vendor": {
    "direct": 0,
@@ -169,12 +318,12 @@
    "reach": 125
   },
   "world/site": {
-   "direct": 11,
-   "reach": 11
+   "direct": 48,
+   "reach": 48
   },
   "world/sound": {
    "direct": 0,
-   "reach": 8
+   "reach": 9
   },
   "world/studio": {
    "direct": 0,
@@ -201,8 +350,8 @@
    "reach": 7
   },
   "world/ui": {
-   "direct": 165,
-   "reach": 165
+   "direct": 202,
+   "reach": 202
   },
   "world/universe": {
    "direct": 0,
