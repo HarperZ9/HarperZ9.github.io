@@ -1,0 +1,176 @@
+{
+ "finding": "F38",
+ "sources": [
+  {
+   "id": "time",
+   "name": "ns_mood_time.json (timescales and the sampling simulation)",
+   "sha256_original": "0bf1b5011f1592df582403c06eda927b187d69da09da10a0fa0d884e7132bdca",
+   "sha256_copy": "fb319718baaca412404f9c857d32b79c3f8e248acf10fdcb5cd3e6b061261191",
+   "href": "/findings/results/F38/ns_mood_time.json"
+  }
+ ],
+ "charts": [
+  {
+   "key": "design",
+   "form": "flow",
+   "at": "controls",
+   "claims": [
+    "c6"
+   ],
+   "source": [
+    "time"
+   ],
+   "title": "How the sampling floor was sized by simulation.",
+   "takeaway": "Simulated people whose mood relaxes in 5, 15 or 30 minutes were fitted at the floor or as noise in 89, 98 and 89 percent of runs, against a bar of 90 percent, so the prediction missed at two of three values.",
+   "n": "100 simulated people for each of 7 true time constants; five prompts a day for 20 days, no measurement noise",
+   "steps": [
+    {
+     "kind": "planted",
+     "label": "Planted: a known time constant",
+     "detail": "Each simulated mood relaxes toward its mean with a time constant set by us, from 5 minutes to 48 hours."
+    },
+    {
+     "kind": "measure",
+     "label": "The same fit as on real people",
+     "detail": "A time constant and a noise share are fitted to the five-a-day prompts. A fit is at the floor when the time constant is shorter than the gap between prompts."
+    },
+    {
+     "kind": "rule",
+     "label": "Rule: 90 percent at the floor or as noise",
+     "detail": "For true time constants of 5, 15 and 30 minutes, at least 90 percent of runs had to be fitted at the floor or with a noise share of 0.8 or more."
+    },
+    {
+     "kind": "verdict",
+     "holds": false,
+     "no": "missed the bar",
+     "label": "89, 98 and 89 percent",
+     "detail": "Two of the three values fell one run short. At a true time constant of 3 hours the share is 22 percent, and at 12 and 48 hours it is 0."
+    }
+   ]
+  },
+  {
+   "key": "aliasing",
+   "form": "bars",
+   "at": "results",
+   "claims": [
+    "c6"
+   ],
+   "source": [
+    "time"
+   ],
+   "title": "Simulated people fitted at the sampling floor or as noise, by how fast their mood really changes.",
+   "takeaway": "With five prompts a day, mood that turns over in an hour or less is read as noise about 9 times in 10; at 3 hours the share falls to 22 percent.",
+   "units": "percent of 100 simulated people fitted at the sampling floor or with a noise share of 0.8 or more",
+   "n": "100 simulated people for each true time constant; five prompts a day for 20 days",
+   "interval": null,
+   "no_interval": "The result file holds one share per time constant from 100 runs, with no interval.",
+   "baseline": "A schedule that could see the process would put no simulated person at the floor, as at 12 and 48 hours",
+   "threshold": "Preregistered bar: 90 percent or more at 5, 15 and 30 minutes",
+   "axis": {
+    "label": "simulated people at the floor or read as noise (percent)",
+    "min": 0,
+    "max": 100,
+    "refs": [
+     {
+      "value": 90,
+      "label": "bar set in advance, 90%"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "label": "True time constant 5 minutes",
+     "value": 89.0,
+     "series": 0,
+     "note": "89%; lag-1 r +0.04"
+    },
+    {
+     "label": "True time constant 15 minutes",
+     "value": 98.0,
+     "series": 0,
+     "note": "98%; lag-1 r -0.02"
+    },
+    {
+     "label": "True time constant 30 minutes",
+     "value": 89.0,
+     "series": 0,
+     "note": "89%; lag-1 r +0.01"
+    },
+    {
+     "label": "True time constant 1 hour",
+     "value": 89.0,
+     "series": 0,
+     "note": "89%; lag-1 r +0.09"
+    },
+    {
+     "label": "True time constant 3 hours",
+     "value": 22.0,
+     "series": 0,
+     "note": "22%; lag-1 r +0.32"
+    },
+    {
+     "label": "True time constant 12 hours",
+     "value": 0.0,
+     "series": 0,
+     "note": "0%; lag-1 r +0.66"
+    },
+    {
+     "label": "True time constant 48 hours",
+     "value": 0.0,
+     "series": 0,
+     "note": "0%; lag-1 r +0.87"
+    }
+   ],
+   "columns": [
+    "True time constant",
+    "At the floor or as noise (%)",
+    "Median fitted time constant (hours)",
+    "Median lag-1 correlation"
+   ],
+   "table": [
+    [
+     "5 minutes",
+     "89",
+     "0.71",
+     "+0.04"
+    ],
+    [
+     "15 minutes",
+     "98",
+     "0.48",
+     "-0.02"
+    ],
+    [
+     "30 minutes",
+     "89",
+     "0.81",
+     "+0.01"
+    ],
+    [
+     "1 hour",
+     "89",
+     "1.20",
+     "+0.09"
+    ],
+    [
+     "3 hours",
+     "22",
+     "3.47",
+     "+0.32"
+    ],
+    [
+     "12 hours",
+     "0",
+     "11.52",
+     "+0.66"
+    ],
+    [
+     "48 hours",
+     "0",
+     "37.61",
+     "+0.87"
+    ]
+   ]
+  }
+ ]
+}

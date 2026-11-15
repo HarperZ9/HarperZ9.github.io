@@ -644,6 +644,12 @@
   {"path":"/findings/glossary.html","kind":"record","surface":"research","since":"2026-11-09"},
   {"path":"/playground/","kind":"surface","surface":"playground","since":"2026-11-11"},
   {"path":"/playground/distill.html","kind":"leaf","surface":"playground","since":"2026-11-11"},
-  {"path":"/system/site-music/","kind":"leaf","surface":"unassigned","since":"2026-11-11"}
+  {"path":"/system/site-music/","kind":"leaf","surface":"unassigned","since":"2026-11-11"},
+  {"path":"/findings/F204-backward-and-contrary-checks.html","kind":"record","surface":"research","since":"2026-11-15"},
+  {"path":"/findings/F209-dead-shoot-on-a-lever.html","kind":"record","surface":"research","since":"2026-11-15"},
+  {"path":"/findings/F210-stepped-luneburg-lens-shells.html","kind":"record","surface":"research","since":"2026-11-15"},
+  {"path":"/findings/F28-self-rated-expertise-and-skipping.html","kind":"record","surface":"research","since":"2026-11-15"},
+  {"path":"/findings/F33-cedar-decline-and-water.html","kind":"record","surface":"research","since":"2026-11-15"},
+  {"path":"/findings/F38-forecasts-drift-mood-moves-sampling-floor.html","kind":"record","surface":"research","since":"2026-11-15"}
  ]
 }

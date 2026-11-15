@@ -1,0 +1,512 @@
+{
+ "schema": "research-record/1",
+ "built": "2026-11-14 by scripts/record-findings.mjs from paper.txt, the register row and the findings ledger",
+ "document": {
+  "id": "F210",
+  "kind": "finding",
+  "title": "In a 2D wave simulation, a stepped Luneburg lens keeps its focus with shells one wavelength thick",
+  "standfirst": "In a two-dimensional wave simulation, a Luneburg lens built from shells one wavelength thick keeps 0.97 to 0.99 of the focal peak of the ideal graded lens, and shells 1.67 wavelengths thick keep 0.84 to 0.97 depending on size. An earlier claim that the rim index is the harder limit did not hold: the loss came from clipping the profile, and a refitted profile keeps 0.41 of the peak at a rim index of 1.3. No sphere and no hardware were tested.",
+  "date_found": "2026-10-31",
+  "fields": [
+   "optics-photonics",
+   "physics-optics"
+  ],
+  "tier": "B",
+  "tier_reason": "A clean known answer for the ideal lens, in two dimensions only; the result is likely known in antenna engineering.",
+  "rung": "lead",
+  "rung_reason": "An observation with a source. No prediction with a kill condition was on file before the run, which the next rung needs.",
+  "outcome": "mixed",
+  "bound": "The statement that the rim index is the harder limit did not hold. Clipping the profile keeps 0.31 of the peak at a rim index of 1.1 and 0.035 at 1.3; a quadratic profile refitted to the rim keeps 0.53 and 0.41. The forecast of a factor of 50 for a uniform cylinder missed (factor of 7), and the forecast of 50 shells for a lens 1,000 wavelengths in radius was not tested at that size.",
+  "objection": "This is a simulation in two dimensions with a scalar field. A sphere, the other polarisation, absorption and scattering at rough shell boundaries were not modelled.",
+  "objection_source": "the paper's first stated limitation; our register records no separate objection",
+  "would_change": "A solver for the full sphere, then a measurement on a stepped lens at microwave wavelengths.",
+  "sections": [
+   {
+    "id": "reader",
+    "title": "What this means for a reader",
+    "role": "lead",
+    "paragraphs": [
+     "A lens whose index must vary smoothly sounds impossible to make, and for decades that was the stated obstacle. In this simulation the smoothness matters much less than it looks: shells about one wavelength thick focus almost as well as a perfect gradient, and thicker shells lose the focus by degrees. The second lesson is about our own first reading. A lens whose outer layers cannot reach an index of 1 looked ruined, and it was only ruined because we cut the ideal profile off and did not redesign it. A solver for the full sphere, and then a measurement on a stepped lens at microwave wavelengths, would test both results."
+    ]
+   },
+   {
+    "id": "abstract",
+    "title": "Abstract",
+    "role": "argument",
+    "paragraphs": [
+     "A Luneburg lens focuses a plane wave to a point on its far surface, and needs a refractive index that falls smoothly from 1.41 at the centre to 1 at the rim. Built lenses approximate that with shells of constant index. We asked how thick the shells can be. The study is a simulation: a scalar wave solution for a layered cylinder in two dimensions, with no sphere, no absorption and no measurement. {c1}At a radius of 50 wavelengths, 30 equal shells, each 1.67 wavelengths thick, keep 0.93 of the continuous lens's focal peak; 50 shells keep 0.99 and 10 shells keep 0.54.{/c1} {c2}With shells 1.67 wavelengths thick the share is 0.84 at a radius of 25 wavelengths and 0.97 at 100; with shells 1 wavelength thick it is 0.97 and 0.99.{/c2} {c3}Clipping the Luneburg profile at a minimum index destroys the focus quickly: a floor of 1.05 keeps 0.76 of the peak, 1.1 keeps 0.31, 1.2 keeps 0.09 and 1.3 keeps 0.035.{/c3} We first read that as a hard limit set by the rim index. A second run the same day showed otherwise. {c4}That loss belongs to the clipping: a quadratic profile refitted to the rim index keeps 0.53 at 1.1, 0.41 at 1.3 and 0.38 at 1.5.{/c4}"
+    ]
+   },
+   {
+    "id": "intro",
+    "title": "Introduction",
+    "role": "argument",
+    "paragraphs": [
+     "The {g:luneburg-lens}Luneburg lens{/g} is a sphere, or in two dimensions a cylinder, whose refractive index {m:n} depends on the distance {m:r} from the centre as",
+     "$$ n = \\sqrt{2 - \\frac{r^2}{R^2}} {eq:luneburg}",
+     "where {m:R} is the radius. It is the best known {g:gradient-index}gradient-index{/g} lens, an optical element that bends light by a smooth change of index inside the material; a conventional lens, which bends light only at its surfaces, is the contrasting case. Every direction is an optical axis, so the lens has no off-axis aberration, which is why it is used as a wide-angle antenna at microwave frequencies.",
+     "No material offers that profile directly. The usual answer is the stepped lens: concentric shells, each of one index. Stepped lenses arose because graded materials were not available, and built examples often have 4 to 10 layers. Fuchs and colleagues treated the choice of shell number, thickness and index as an optimisation problem, and work citing them reports that directivity stops improving beyond a certain shell count {cite:r2}. A ray-tracing study of an optical all-sky lens considers up to 40 glass layers {cite:r3}. On the rim index, Gutman's modified Luneburg lens of 1954 moves the focus inside the sphere {cite:r4}, and a later generalised profile carries the edge index as an explicit parameter, with a silicon example at an edge index of 2.2 {cite:r5}.",
+     "So both of our questions have long histories in antenna engineering, and we claim nothing new. The study began from a census of instruments that were proposed and then set aside, where a 1989 patent text named the manufacture of graded material as the obstacle for gradient lenses {cite:r1}. The decision it informed was small and practical: which controls a teaching model of the lens should expose, and what numbers to put beside them. The questions were how coarse the shells can be before the focus fails, whether that depends on the size of the lens, and what happens when the outer index cannot go down to 1."
+    ]
+   },
+   {
+    "id": "prereg",
+    "title": "Preregistration and design",
+    "role": "argument",
+    "paragraphs": [
+     "There was no {g:preregistration}preregistration{/g}, meaning no dated plan locked by a hash before the run, and no {g:kill-condition}kill condition{/g}, an outcome fixed in advance that would end the claim. Forecasts were written to a file on 31 October 2026 before any simulation ran, and the file says so in its own first line. Three of them concern this paper: that a lens 1,000 wavelengths in radius would need 50 shells to reach the diffraction limit, that a uniform ball would be worse by a factor of 50, and that an index floor of 1.3 would break the lens (probability 0.8).",
+     "The first pass used a ray trace and gave an answer the wave solver then overturned, as the results section describes. The check of other lens sizes and the refitted rim profile were both added after the first numbers were seen. The refit had its own forecasts written before it ran: 0.6 of the peak at a rim index of 1.1 and 0.25 at 1.3."
+    ]
+   },
+   {
+    "id": "data",
+    "title": "Data and provenance",
+    "role": "argument",
+    "paragraphs": [
+     "There is no external dataset. The inputs are the index profiles defined in the methods and three lens sizes. The numbers come from three result files written by the study's own Python code on 31 October 2026: the main run at a radius of 50 wavelengths, the size check at 25 and 100, and the refitted rim profile at 50."
+    ]
+   },
+   {
+    "id": "methods",
+    "title": "Methods",
+    "role": "argument",
+    "paragraphs": [
+     "## The wave solution",
+     "The model is a cylinder of radius {m:R} in vacuum, uniform along its axis, lit by a plane wave of unit amplitude with its electric field along the axis. This is a scalar problem in two dimensions. The field is written as a sum of angular orders {m:m}, and for each order the radial part {m:u} obeys",
+     "$$ \\frac{d^2 u}{d r^2} + \\frac{1}{r} \\frac{d u}{d r} + (k^2 n^2 - \\frac{m^2}{r^2}) u = 0 {eq:radial}",
+     "with {m:k} the wavenumber in vacuum and {m:n} the index at radius {m:r}. The code integrates eq. {ref:eq:radial} outward from near the axis with a fourth-order Runge-Kutta scheme, 120 steps per wavelength of radius, and matches the result at the surface to the incident wave plus an outgoing wave. This is the standard {g:partial-wave}partial-wave{/g} treatment of scattering by a cylinder, in which each angular order is solved by itself and the orders are summed; it includes every reflection between shells, and it is exact up to the numerical integration. Orders up to {m:1.1 k R + 25} are kept.",
+     "## What is read off",
+     "The intensity is computed along the rear surface of the cylinder, within 0.3 radian of the point opposite the source (0.2 radian in the size check), on a grid of 0.001 radian. Two numbers are read: the {g:focal-peak}focal peak{/g}, which is the largest intensity on that arc, and the width of the peak at half its height, in wavelengths of arc. Every lens is reported as its focal peak divided by the focal peak of the continuous lens of eq. {ref:eq:luneburg} at the same size.",
+     "## The lenses",
+     "- Continuous: eq. {ref:eq:luneburg}.",
+     "- Stepped: {m:N} shells of equal thickness {m:R / N}, each with the index eq. {ref:eq:luneburg} gives at the middle of the shell.",
+     "- Clipped: eq. {ref:eq:luneburg} with every index below a floor raised to the floor, for floors of 1.05, 1.1, 1.2, 1.3 and 1.4. This stands for a material that cannot be made lighter than the floor.",
+     "- Refitted: a profile of the same quadratic form with the rim index fixed and the centre index free,",
+     "$$ n^2 = n_c^2 - (n_c^2 - n_r^2) \\frac{r^2}{R^2} {eq:refit}",
+     "where {m:n_r} is the rim index and {m:n_c} the centre index. For each rim index the centre index was chosen with a ray trace so that rays meet at the rear surface, and the wave solver then scored the result. The centre indices came out between 1.45 and 1.72.",
+     "- Uniform: a cylinder of index 2 throughout, whose paraxial focus also falls on its rear surface.",
+     "## The ray trace",
+     "The first pass traced 25 rays through stepped spheres with Snell's law at every shell boundary, for a lens taken to be 1,000 wavelengths in radius, and measured how far each ray lands from the focal point. It is reported because its answer was wrong in an instructive way."
+    ]
+   },
+   {
+    "id": "controls",
+    "title": "Controls and planted checks",
+    "role": "argument",
+    "paragraphs": [
+     "The known-answer check is an empty cylinder. With an index of 1 everywhere there is no lens, and the field on the surface must equal the incident plane wave, with magnitude 1. The solver returned a mean magnitude of 0.996 and a largest deviation of 0.026. That bounds the solver's error at about 2.6 percent in amplitude, or about 5 percent in intensity, at a radius of 50 wavelengths.",
+     "The continuous lens is a second check: its peak falls at the point opposite the source, as the theory requires, with a width of 0.40 wavelength. The ray tracer was checked the same way; rays through the continuous profile met the focal point within 4e-7 of the radius.",
+     "No {g:control}control{/g} in the statistical sense applies, because the calculation has no random element."
+    ]
+   },
+   {
+    "id": "results",
+    "title": "Results",
+    "role": "argument",
+    "paragraphs": [
+     "## Shell thickness",
+     "{c1}At a radius of 50 wavelengths, 30 equal shells, each 1.67 wavelengths thick, keep 0.93 of the continuous lens's focal peak; 50 shells keep 0.99 and 10 shells keep 0.54.{/c1} Table {ref:tab:shells} gives all nine shell counts. The peak keeps its width of 0.40 wavelength from 10 shells upward; with fewer shells it also broadens.",
+     "::table tab:shells cols=0.22,0.28,0.25,0.25 Stepped lenses at a radius of 50 wavelengths. The continuous lens has a peak share of 1 and a width of 0.40 wavelength.\nShells ¦ Thickness, wavelengths ¦ Peak share ¦ Width, wavelengths\n4 ¦ 12.5 ¦ 0.10 ¦ 1.2\n6 ¦ 8.33 ¦ 0.20 ¦ 0.9\n8 ¦ 6.25 ¦ 0.40 ¦ 0.5\n10 ¦ 5.0 ¦ 0.54 ¦ 0.4\n15 ¦ 3.33 ¦ 0.70 ¦ 0.4\n20 ¦ 2.5 ¦ 0.76 ¦ 0.4\n30 ¦ 1.67 ¦ 0.93 ¦ 0.4\n50 ¦ 1.0 ¦ 0.99 ¦ 0.4\n100 ¦ 0.5 ¦ 1.00 ¦ 0.4\n::end",
+     "{c2}With shells 1.67 wavelengths thick the share is 0.84 at a radius of 25 wavelengths and 0.97 at 100; with shells 1 wavelength thick it is 0.97 and 0.99.{/c2} Thickness in wavelengths is therefore a fair first guide and is not the whole rule: at a fixed thickness the larger lens does better. With shells 2.5 wavelengths thick the shares are 0.64, 0.76 and 0.87 at radii of 25, 50 and 100 wavelengths, and with shells 5 wavelengths thick they are 0.53, 0.54 and 0.60. Figure {ref:fig:shells} shows the three sizes.",
+     "![fig:shells width=0.8 alt=Three falling curves of focal peak share against shell thickness on a logarithmic axis, all near 1 at a thickness of one wavelength and near 0.55 at five wavelengths, with the largest lens highest in between](fig-shells.png) Focal peak of stepped lenses as a share of the continuous lens, against shell thickness, at three lens sizes. Drawn from the main result file and the size-check file.",
+     "Table {ref:tab:scale} lists the size check, with the nearest rows of Table {ref:tab:shells} in its middle column.",
+     "::table tab:scale cols=0.28,0.24,0.24,0.24 Peak share of stepped lenses at three radii, by shell thickness.\nThickness, wavelengths ¦ Radius 25 ¦ Radius 50 ¦ Radius 100\n5.0 ¦ 0.53 (5 shells) ¦ 0.54 (10 shells) ¦ 0.60 (20 shells)\n2.5 ¦ 0.64 (10 shells) ¦ 0.76 (20 shells) ¦ 0.87 (40 shells)\n1.67 ¦ 0.84 (15 shells) ¦ 0.93 (30 shells) ¦ 0.97 (60 shells)\n1.0 ¦ 0.97 (25 shells) ¦ 0.99 (50 shells) ¦ 0.99 (100 shells)\n::end",
+     "The ray trace had pointed the other way. For a lens 1,000 wavelengths in radius it found no shell count up to 1,000 that brought the rays within the diffraction radius: at 1,000 shells the root-mean-square miss was 0.0098 of the radius against a diffraction radius of 0.00061. At that size 1,000 shells are 1 wavelength thick, which is where the wave solution keeps 0.97 to 0.99 of the peak at the three sizes it was run. Tracing rays through layers about one wavelength thick is outside the range where ray optics holds. The wave solver was not run at a radius of 1,000 wavelengths, so the forecast of 50 shells at that size was not tested at its own size.",
+     "{c5}A uniform cylinder of index 2 at the same size reaches 0.14 of the peak.{/c5} That is a factor of 7 below the continuous lens, against a forecast factor of 50.",
+     "::pagebreak",
+     "## The rim index",
+     "{c3}Clipping the Luneburg profile at a minimum index destroys the focus quickly: a floor of 1.05 keeps 0.76 of the peak, 1.1 keeps 0.31, 1.2 keeps 0.09 and 1.3 keeps 0.035.{/c3} At a floor of 1.3 the peak is 5.3 wavelengths wide. At 1.4 the largest intensity is no longer opposite the source.",
+     "{c4}That loss belongs to the clipping: a quadratic profile refitted to the rim index keeps 0.53 at 1.1, 0.41 at 1.3 and 0.38 at 1.5.{/c4} The refitted lenses keep a narrow focus, 0.4 to 0.6 wavelength wide. Table {ref:tab:rim} and Figure {ref:fig:rim} set the two side by side. The refitted profile still loses about half the peak once the rim index reaches 1.1, so a raised rim has a cost; it is a far smaller one than the clipped numbers suggested.",
+     "::table tab:rim cols=0.16,0.21,0.21,0.21,0.21 Focal peak and width at a radius of 50 wavelengths when the rim index is above 1: the Luneburg profile clipped at that index, and a quadratic profile refitted to it.\nRim index ¦ Clipped, peak share ¦ Clipped, width ¦ Refitted, peak share ¦ Refitted, width\n1.05 ¦ 0.76 ¦ 0.4 ¦ 0.91 ¦ 0.4\n1.1 ¦ 0.31 ¦ 0.7 ¦ 0.53 ¦ 0.5\n1.2 ¦ 0.09 ¦ 2.0 ¦ 0.57 ¦ 0.5\n1.3 ¦ 0.035 ¦ 5.3 ¦ 0.41 ¦ 0.6\n1.5 ¦ 0.05 ¦ 19.8 ¦ 0.38 ¦ 0.6\n::end",
+     "![fig:rim width=0.8 alt=Two curves of focal peak share against rim index from 1.05 to 1.5: the clipped profile falls from 0.76 to about 0.04, the refitted profile from 0.91 to 0.38](fig-rim.png) Focal peak against rim index for the clipped and the refitted profile, at a radius of 50 wavelengths. Drawn from the refit's result file."
+    ]
+   },
+   {
+    "id": "discussion",
+    "title": "Discussion",
+    "role": "argument",
+    "paragraphs": [
+     "The shell result has a plain physical reading. A wave averages over structure finer than its wavelength, so steps about a wavelength thick act much like the gradient they replace, and the focus degrades smoothly as the steps grow. A ray has no wavelength and sees every step as a prism, which is why the ray trace kept reporting failure. For a lens tens of wavelengths across, the number of shells that matters is set by the wavelength and to a lesser degree by the size.",
+     "The rim result is a correction to ourselves. The first entry in our ledger said the rim index was the harder limit, on the strength of the clipped profile. Clipping leaves the inner part of the lens designed for a rim that is no longer there. Refitting the same simple form to the new rim recovers a sharp focus at about 0.4 to 0.6 of the peak for rim indices of 1.1 and above, with no optimisation at the wave level. The literature we found afterwards treats lenses with a rim index above 1 as a known family, so the refit rediscovers a small part of it.",
+     "For the teaching model the outcome was two controls: a shell count, and an edge index that redesigns the profile and does not cut it."
+    ]
+   },
+   {
+    "id": "limits",
+    "title": "Limitations",
+    "role": "argument",
+    "paragraphs": [
+     "- This is a simulation in two dimensions with a scalar field. A sphere, the other polarisation, absorption and scattering at rough shell boundaries were not modelled.",
+     "- The field was read only on the rear surface. A stepped or refitted lens may focus slightly inside or outside that surface, and the peak share would then understate it.",
+     "- The solver's own error is about 2.6 percent in amplitude by the empty-cylinder check, so peak shares closer than about 0.05 to each other should not be ranked.",
+     "- Widths are read on a grid of 0.05 wavelength and are coarse.",
+     "- Shells have equal thickness and mid-shell indices. No shell design was optimised, so a designed lens with the same count could do better.",
+     "- The refitted centre index was chosen by a ray trace at one size, and only one size was run for the rim results.",
+     "- The size check and the refit were added after first results were seen, and there was no preregistration.",
+     "- The ray trace and the wave solver were run at different lens sizes, so their disagreement is argued from shell thickness and was not shown at one size.",
+     "- The literature was read at the level of search snippets, and the results are likely to be known in antenna engineering.",
+     "- Scoring was by our own code and was not blind. Nobody outside the project has checked it."
+    ]
+   },
+   {
+    "id": "appendix",
+    "title": "Appendix A. Forecasts against outcomes",
+    "role": "evidence",
+    "paragraphs": [
+     "The forecasts were written to files before each run. The first three come from the main forecast file and the last two from the forecast file of the refit.",
+     "::table tab:forecast cols=0.36,0.22,0.42 Forecasts written before each run against what it gave.\nQuantity ¦ Forecast ¦ Outcome\nShells for the diffraction limit, radius 1,000 wavelengths ¦ 50 ¦ not tested at that size; 30 shells keep 0.93 at radius 50\nUniform cylinder against the Luneburg lens ¦ worse by a factor of 50 ¦ worse by a factor of 7 at radius 50\nA floor of 1.3 breaks the lens ¦ probability 0.8 ¦ clipped 0.035; refitted 0.41\nRefitted profile, rim 1.1 ¦ 0.6 ¦ 0.53\nRefitted profile, rim 1.3 ¦ 0.25 ¦ 0.41\n::end"
+    ]
+   }
+  ]
+ },
+ "claims": [
+  {
+   "id": "c1",
+   "text": "At a radius of 50 wavelengths, 30 equal shells, each 1.67 wavelengths thick, keep 0.93 of the continuous lens's focal peak; 50 shells keep 0.99 and 10 shells keep 0.54.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e1"
+   ]
+  },
+  {
+   "id": "c2",
+   "text": "With shells 1.67 wavelengths thick the share is 0.84 at a radius of 25 wavelengths and 0.97 at 100; with shells 1 wavelength thick it is 0.97 and 0.99.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e2"
+   ]
+  },
+  {
+   "id": "c3",
+   "text": "Clipping the Luneburg profile at a minimum index destroys the focus quickly: a floor of 1.05 keeps 0.76 of the peak, 1.1 keeps 0.31, 1.2 keeps 0.09 and 1.3 keeps 0.035.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e3"
+   ]
+  },
+  {
+   "id": "c4",
+   "text": "That loss belongs to the clipping: a quadratic profile refitted to the rim index keeps 0.53 at 1.1, 0.41 at 1.3 and 0.38 at 1.5.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e4"
+   ]
+  },
+  {
+   "id": "c5",
+   "text": "A uniform cylinder of index 2 at the same size reaches 0.14 of the peak.",
+   "section": "results",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e5"
+   ]
+  }
+ ],
+ "evidence": [
+  {
+   "id": "e1",
+   "kind": "number",
+   "label": "The numbers in claim 1",
+   "value": "50; 30; 1.67; 0.93; 0.99; 10; 0.54",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-14",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e2",
+   "kind": "number",
+   "label": "The numbers in claim 2",
+   "value": "1.67; 0.84; 25; 0.97; 100; 1; 0.99",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-14",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e3",
+   "kind": "number",
+   "label": "The numbers in claim 3",
+   "value": "1.05; 0.76; 1.1; 0.31; 1.2; 0.09; 1.3; 0.035",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-14",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e4",
+   "kind": "number",
+   "label": "The numbers in claim 4",
+   "value": "0.53; 1.1; 0.41; 1.3; 0.38; 1.5",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-14",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e5",
+   "kind": "number",
+   "label": "The numbers in claim 5",
+   "value": "2; 0.14",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-14",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e6",
+   "kind": "number",
+   "label": "Sample",
+   "value": "9 shell counts at a radius of 50 wavelengths, with radii of 25 and 100 as a size check",
+   "check": {
+    "by": "our publication register",
+    "result": "not_checked",
+    "note": "as recorded in the publication register"
+   }
+  },
+  {
+   "id": "e7",
+   "kind": "number",
+   "label": "Main estimate and interval",
+   "value": "none; the solver's own error is about 2.6 percent in amplitude",
+   "check": {
+    "by": "our publication register",
+    "result": "not_checked",
+    "note": "as recorded in the publication register"
+   }
+  },
+  {
+   "id": "e8",
+   "kind": "number",
+   "label": "Forecast against outcome",
+   "value": "Missed: a factor of 50 for a uniform cylinder (the run gave 7). Withdrawn: the rim index as the harder limit, after a refitted profile kept 0.41 of the peak at a rim index of 1.3",
+   "check": {
+    "by": "our publication register",
+    "result": "not_checked",
+    "note": "as recorded in the publication register"
+   }
+  },
+  {
+   "id": "e9",
+   "kind": "control",
+   "label": "Known-answer check",
+   "value": "an empty cylinder, which the solver reproduces within 2.6 percent in amplitude",
+   "check": {
+    "by": "our publication register",
+    "result": "not_checked",
+    "note": "as recorded in the publication register"
+   }
+  }
+ ],
+ "references": [
+  {
+   "id": "r1",
+   "key": "Suzuki 1989",
+   "kind": "paper",
+   "title": "Suzuki, M. and Hattori, J. (1989). Gradient index lens. United States Patent 4,848,882.",
+   "access": "snippet",
+   "access_note": "search snippets; full text not read",
+   "accessed": "2026-11-14"
+  },
+  {
+   "id": "r2",
+   "key": "Fuchs, Le Coq, Lafond, Rondineau and Himdi",
+   "kind": "paper",
+   "title": "Fuchs, Le Coq, Lafond, Rondineau and Himdi. Design optimization of multishell Luneburg lenses. IEEE Transactions on Antennas and Propagation.",
+   "access": "snippet",
+   "access_note": "search snippets; full text not read",
+   "accessed": "2026-11-14"
+  },
+  {
+   "id": "r3",
+   "key": "allsky2018",
+   "kind": "paper",
+   "title": "Modeling of a stepped Luneburg lens for all-sky surveys (2018). arXiv:1806.05661.",
+   "access": "snippet",
+   "target": "https://arxiv.org/abs/1806.05661",
+   "access_note": "search snippets; full text not read",
+   "accessed": "2026-11-14"
+  },
+  {
+   "id": "r4",
+   "key": "Gutman 1954",
+   "kind": "paper",
+   "title": "Gutman, A. S. (1954). Modified Luneburg lens. Journal of Applied Physics 25, 855-859.",
+   "access": "snippet",
+   "access_note": "search snippets; full text not read",
+   "accessed": "2026-11-14"
+  },
+  {
+   "id": "r5",
+   "key": "taper2019",
+   "kind": "paper",
+   "title": "Ultrashort waveguide tapers based on Luneburg lens (2019). arXiv:1910.11281.",
+   "access": "snippet",
+   "target": "https://arxiv.org/abs/1910.11281",
+   "access_note": "search snippets; full text not read",
+   "accessed": "2026-11-14"
+  }
+ ],
+ "relations": [
+  {
+   "from": "F303",
+   "to": "F210",
+   "type": "narrowed",
+   "scope": "the rim index claim, at a radius of 50 wavelengths in two dimensions",
+   "date": "2026-10-31",
+   "note": "A quadratic profile refitted to the rim index keeps 0.53 of the focal peak at rim 1.1, 0.41 at 1.3 and 0.38 at 1.5, where clipping keeps 0.31, 0.035 and 0.05, so the rim limit in F210 came from the clipping.",
+   "record": "findings ledger, F303"
+  }
+ ],
+ "corrections": [
+  {
+   "id": "x1",
+   "date": "2026-10-31",
+   "target": "document",
+   "type": "wording",
+   "after": "The wave solution replaced it the same day.",
+   "reason": "A first pass by ray trace found that no shell count up to 1,000 reached the diffraction limit.",
+   "found_by": "the study itself, before publication"
+  },
+  {
+   "id": "x2",
+   "date": "2026-10-31",
+   "target": "document",
+   "type": "retraction",
+   "after": "A refitted quadratic profile keeps 0.53 of the peak at a rim index of 1.1 and 0.41 at 1.3, where clipping keeps 0.31 and 0.035. The statement that the rim index is the harder limit was withdrawn.",
+   "reason": "A later ledger entry, F303, found that the loss at a raised rim index came from clipping the profile.",
+   "found_by": "the study itself, before publication"
+  },
+  {
+   "id": "x3",
+   "date": "2026-11-14",
+   "target": "document",
+   "type": "scope",
+   "after": "Narrowed the claim to shell thickness and to the clipped profile as a design error, because the rim limit in the ledger title did not survive the refit.",
+   "reason": "Dated in the paper's Corrections section; found by the publication pass.",
+   "found_by": "the publication pass"
+  },
+  {
+   "id": "x4",
+   "date": "2026-11-14",
+   "target": "document",
+   "type": "scope",
+   "after": "The ledger entry's figure for the field angle at which a parabola's coma reaches the diffraction limit is left out, because it rests on a formula entered from memory.",
+   "reason": "Dated in the paper's Corrections section; found by the publication pass.",
+   "found_by": "the publication pass"
+  },
+  {
+   "id": "x5",
+   "date": "2026-11-14",
+   "target": "document",
+   "type": "wording",
+   "after": "The word \"exact\" in the ledger title is replaced by a description of the solver with its measured error.",
+   "reason": "Dated in the paper's Corrections section; found by the publication pass.",
+   "found_by": "the publication pass"
+  }
+ ],
+ "versions": [
+  {
+   "n": 1,
+   "date": "2026-10-31",
+   "what": "entered in the findings ledger"
+  },
+  {
+   "n": 2,
+   "date": "2026-11-14",
+   "what": "paper version 1.0, first published",
+   "hash": "7b8033f38c7c24d8af173b73bbe3a91e22323f9cd937e3c52b1278d143fe1c3c"
+  }
+ ],
+ "grade": {
+  "lowers": [
+   {
+    "domain": "blinding",
+    "text": "Not blind. No preregistration; the size check and the refit were added after first results were seen.",
+    "from": "our publication register, on blinding"
+   },
+   {
+    "domain": "depth of reading",
+    "text": "The cited literature was read at the level of search snippets; full texts were not read.",
+    "from": "the Verified section"
+   }
+  ],
+  "holds": [
+   {
+    "domain": "scoring",
+    "text": "Scored by code against rules fixed in advance.",
+    "from": "our publication register, on who scored it"
+   },
+   {
+    "domain": "control",
+    "text": "Controls: none beyond the empty-cylinder known-answer check.",
+    "from": "our publication register, on controls"
+   }
+  ]
+ },
+ "reproduce": {
+  "data": [],
+  "cost": "the main run, ray trace included, took about 18 s on one desktop CPU.",
+  "steps": [
+   "Data: no external dataset. The inputs are the index profiles in the Methods section; the simulation code is not yet in a public repository.",
+   "For each angular order up to {m:1.1 k R + 25}, integrate eq. {ref:eq:radial} from 0.001 of the radius to the surface with 120 Runge-Kutta steps per wavelength of radius, and match to Bessel and Hankel functions outside.",
+   "Sum the orders on the rear surface, take the largest intensity and its width at half height, and divide the peak by that of eq. {ref:eq:luneburg}.",
+   "Repeat for stepped profiles of 4 to 100 shells at a radius of 50 wavelengths, for thicknesses of 5, 2.5, 1.67 and 1 wavelengths at radii of 25 and 100, for clipped profiles, for eq. {ref:eq:refit}, for an index of 2 and for an index of 1.",
+   "No preregistration exists, so there is no preregistration hash, plan hash or run id. The forecast files carry a written date and no hash. The wave calculation uses no random numbers."
+  ],
+  "not_rerun": "The simulation was not re-run for this paper."
+ },
+ "verified": {
+  "date": "2026-11-14",
+  "checks": [
+   {
+    "what": "On 14 November 2026 every peak share and width in the three tables, the empty-cylinder check, the continuous lens's width, the uniform cylinder's share and the ray-trace misses were re-read from the main result file; the shares at radii of 25 and 100 wavelengths from the size-check file; and the clipped and refitted shares, widths and centre indices from the refit's result file.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   },
+   {
+    "what": "They match the {g:findings-ledger}findings ledger{/g} and its later entry on the refit.",
+    "by": "the paper's Verified pass",
+    "result": "match"
+   },
+   {
+    "what": "The forecasts were re-read from the two forecast files.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   },
+   {
+    "what": "The solver's equations, step counts and grids were read from its source code.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   },
+   {
+    "what": "Both figures were drawn by a script that reads only those result files.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   }
+  ],
+  "not_checked": [
+   "The simulation was not re-run for this paper.",
+   "The literature was found by two searches on 14 November 2026 and read at the level of search snippets; the full texts were not read, and the reference to Fuchs and colleagues is given without year or volume because the search results did not show them."
+  ]
+ }
+}

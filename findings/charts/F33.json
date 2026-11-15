@@ -1,0 +1,252 @@
+{
+ "finding": "F33",
+ "sources": [
+  {
+   "id": "result",
+   "name": "result.json",
+   "sha256_original": "be022ec37e9de1722232d553b0d721d5060480768bc8848454b94ec14b668b3b",
+   "sha256_copy": "296496d6b98798e24f5f52c11a52b5b7ee391c0aff46c0125ce564115a56f332",
+   "href": "/findings/results/F33/result.json",
+   "run": "20261029T150625Z"
+  }
+ ],
+ "charts": [
+  {
+   "key": "design",
+   "form": "flow",
+   "at": "controls",
+   "claims": [
+    "c1",
+    "c3"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "How the water question was put to observers' site calls, and how it came out.",
+   "takeaway": "Decline was about as common on wet sites as on dry ones: adjusted odds ratio 1.11 (0.65 to 1.75). Neither direction passed, so the result is undecided.",
+   "n": "912 cedars with a site description, 169 on wet sites and 743 on upland sites, in 294 cells of 5 km",
+   "steps": [
+    {
+     "kind": "data",
+     "label": "912 cedars with a site call",
+     "detail": "Community observations with a hydrology answer, 2020 to 2022: 87 of 169 declining on wet sites, 347 of 743 on upland sites."
+    },
+    {
+     "kind": "measure",
+     "label": "Odds ratio, wet against dry",
+     "detail": "Adjusted for site type, disturbance and year. A value of 1 means the same odds of decline on wet and dry sites."
+    },
+    {
+     "kind": "control",
+     "label": "Control: labels shuffled within site",
+     "detail": "Health labels shuffled inside each 5 km cell, 1,000 times. The within-cell odds ratio of 0.95 sits inside the shuffle's 5th to 95th percentile range, 0.61 to 1.63."
+    },
+    {
+     "kind": "rule",
+     "label": "Rule: one direction must pass",
+     "detail": "Supported if wet sites show more decline on the primary measure with its observer check; opposed if they show less; otherwise undecided."
+    },
+    {
+     "kind": "verdict",
+     "holds": null,
+     "na": "undecided",
+     "label": "Neither direction passed",
+     "detail": "The interval leaves an odds ratio of 1.5 open either way, and declining observations answered the water question 12.3 points more often than healthy ones, against a limit of 5."
+    }
+   ]
+  },
+  {
+   "key": "odds",
+   "form": "interval",
+   "at": "results",
+   "claims": [
+    "c1",
+    "c5"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "Odds of decline or stress on wet sites against dry ones, every measure.",
+   "takeaway": "Every cedar interval crosses 1. Only maple on water-flagged park plots lies wholly below 1, and maple's second water measure does not.",
+   "units": "adjusted odds ratio, wet against dry (1 means the same odds; above 1 means more decline or stress on wet sites)",
+   "n": "912 cedars on the primary measure (169 wet); the number of wet-site trees for each measure is in the table",
+   "interval": "95% cluster-bootstrap interval, the exponential of the stored log values",
+   "baseline": "An odds ratio of 1: the same odds on wet and dry sites",
+   "threshold": "A direction passes only when the interval excludes 1 and the within-site estimate lies beyond its shuffle range",
+   "ruled_out": "On the primary measure, odds ratios below 0.65 or above 1.75",
+   "series_names": [
+    "Western redcedar",
+    "Bigleaf maple"
+   ],
+   "axis": {
+    "label": "adjusted odds ratio, wet against dry",
+    "log": true,
+    "min": 0.1,
+    "max": 10,
+    "refs": [
+     {
+      "value": 1,
+      "label": "same odds, 1"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "label": "Cedar, site hydrology (primary)",
+     "group": "Cedar",
+     "value": 1.1145903462409765,
+     "lo": 0.649457125513,
+     "hi": 1.7467573009541382,
+     "series": 0,
+     "note": "1.11 (0.65 to 1.75)"
+    },
+    {
+     "label": "Cedar, slope position",
+     "group": "Cedar",
+     "value": 0.885548745997555,
+     "lo": 0.4902659166955246,
+     "hi": 1.589970392680983,
+     "series": 0,
+     "note": "0.89 (0.49 to 1.59)"
+    },
+    {
+     "label": "Cedar, access to water",
+     "group": "Cedar",
+     "value": 0.7352352673781878,
+     "lo": 0.2845078941860059,
+     "hi": 1.291694536853701,
+     "series": 0,
+     "note": "0.74 (0.28 to 1.29)"
+    },
+    {
+     "label": "Cedar, park plots, water flag",
+     "group": "Cedar",
+     "value": 0.7406779770694535,
+     "lo": 0.19237539173988782,
+     "hi": 1.8067358421253938,
+     "series": 0,
+     "note": "0.74 (0.19 to 1.81)"
+    },
+    {
+     "label": "Cedar, park plots, wet soil",
+     "group": "Cedar",
+     "value": 1.4330205454591705,
+     "lo": 0.5198334149009314,
+     "hi": 4.232380401884152,
+     "series": 0,
+     "note": "1.43 (0.52 to 4.23)"
+    },
+    {
+     "label": "Maple, park plots, water flag",
+     "group": "Bigleaf maple, the comparison species",
+     "value": 0.4165332261200071,
+     "lo": 0.1729824833834282,
+     "hi": 0.8766208628287333,
+     "series": 1,
+     "note": "0.42 (0.17 to 0.88)"
+    },
+    {
+     "label": "Maple, park plots, wet soil",
+     "group": "Bigleaf maple, the comparison species",
+     "value": 0.8426477311548222,
+     "lo": 0.21576603650781484,
+     "hi": 2.0001151285589027,
+     "series": 1,
+     "note": "0.84 (0.22 to 2.00)"
+    },
+    {
+     "label": "Maple, access to water",
+     "group": "Bigleaf maple, the comparison species",
+     "value": 0.5130874463776012,
+     "lo": 0.21525324539578805,
+     "hi": 1.4596691032617495,
+     "series": 1,
+     "note": "0.51 (0.22 to 1.46)"
+    }
+   ],
+   "columns": [
+    "Measure",
+    "Wet, n",
+    "Share wet (%)",
+    "Share dry (%)",
+    "Odds ratio",
+    "Low",
+    "High"
+   ],
+   "table": [
+    [
+     "Cedar, site hydrology (primary)",
+     "169",
+     "51.5",
+     "46.7",
+     "1.11",
+     "0.65",
+     "1.75"
+    ],
+    [
+     "Cedar, slope position",
+     "100",
+     "49.0",
+     "48.9",
+     "0.89",
+     "0.49",
+     "1.59"
+    ],
+    [
+     "Cedar, access to water",
+     "207",
+     "29.5",
+     "38.6",
+     "0.74",
+     "0.28",
+     "1.29"
+    ],
+    [
+     "Cedar, park plots, water flag",
+     "318",
+     "2.2",
+     "3.3",
+     "0.74",
+     "0.19",
+     "1.81"
+    ],
+    [
+     "Cedar, park plots, wet soil",
+     "225",
+     "4.0",
+     "2.9",
+     "1.43",
+     "0.52",
+     "4.23"
+    ],
+    [
+     "Maple, park plots, water flag",
+     "463",
+     "5.8",
+     "11.1",
+     "0.42",
+     "0.17",
+     "0.88"
+    ],
+    [
+     "Maple, park plots, wet soil",
+     "198",
+     "9.6",
+     "10.5",
+     "0.84",
+     "0.22",
+     "2.00"
+    ],
+    [
+     "Maple, access to water",
+     "36",
+     "44.4",
+     "55.6",
+     "0.51",
+     "0.22",
+     "1.46"
+    ]
+   ]
+  }
+ ]
+}

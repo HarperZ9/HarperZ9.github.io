@@ -1,0 +1,38 @@
+{
+ "continuous_peak": 279.1605793781388,
+ "1.05": {
+  "refit_peak_ratio": 0.9056335927970866,
+  "clip_peak_ratio": 0.762950432201415,
+  "refit_fwhm_lambda": 0.40000000000000036,
+  "clip_fwhm_lambda": 0.40000000000000036,
+  "centre_index": 1.45
+ },
+ "1.1": {
+  "refit_peak_ratio": 0.5338053110244594,
+  "clip_peak_ratio": 0.31143813514107727,
+  "refit_fwhm_lambda": 0.5000000000000004,
+  "clip_fwhm_lambda": 0.7000000000000006,
+  "centre_index": 1.4866068747318506
+ },
+ "1.2": {
+  "refit_peak_ratio": 0.5655329530632286,
+  "clip_peak_ratio": 0.09190270269886484,
+  "refit_fwhm_lambda": 0.5000000000000004,
+  "clip_fwhm_lambda": 1.999999999999999,
+  "centre_index": 1.5459624833740306
+ },
+ "1.3": {
+  "refit_peak_ratio": 0.40703645230431895,
+  "clip_peak_ratio": 0.03519418365890251,
+  "refit_fwhm_lambda": 0.6000000000000005,
+  "clip_fwhm_lambda": 5.299999999999999,
+  "centre_index": 1.6093476939431082
+ },
+ "1.5": {
+  "refit_peak_ratio": 0.3758554574301461,
+  "clip_peak_ratio": 0.050949461805469276,
+  "refit_fwhm_lambda": 0.6000000000000005,
+  "clip_fwhm_lambda": 19.8,
+  "centre_index": 1.7175564037317668
+ }
+}

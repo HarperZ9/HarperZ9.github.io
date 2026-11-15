@@ -1,0 +1,65 @@
+{
+ "schema": "buildlang.buildtex-receipt/v0",
+ "source": {
+  "path": "F33.bld",
+  "sha256": "223b35934bdf20f07afa3ea9a97944d615e030de9226dbd8f59fb924d3573953"
+ },
+ "ir_sha256": "20e42eb233a153410dff6f48031d90fb9f19db656c11c419fb08793a9f43b191",
+ "theme": "paper",
+ "overrides": [],
+ "outputs": {
+  "F33.pdf": "7cc45d9baabcd44b044fb65457a72a5a55954b4115611dc53dcb81ce769b5f06"
+ },
+ "pdf_metadata": {
+  "pdfa": false,
+  "creation_date": "D:20261109000000Z"
+ },
+ "facts": {
+  "pages": 8,
+  "pages_layout": 8,
+  "overfull": [],
+  "underfull": 0,
+  "missing_glyphs": [],
+  "glyph_fallbacks": [],
+  "math_errors": [],
+  "fonts": [
+   {
+    "name": "MGGOIB+NotoSansMath-Regular",
+    "embedded": true
+   },
+   {
+    "name": "NDHGFI+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "NMIKBI+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "ODDHGM+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "PABOJB+AccessionDisplay-Master",
+    "embedded": true
+   },
+   {
+    "name": "PNILOK+HankenGrotesk-Regular",
+    "embedded": true
+   }
+  ],
+  "images": 3,
+  "blind_text_runs": 0,
+  "reading_order": true,
+  "blocks_missing_from_text": [],
+  "pdf_bytes": 482605
+ },
+ "failed": [],
+ "notes": [
+  "buildc run F33.bld -> F33.doc.tsv",
+  "press: relief 1275x424 px at 150 dpi; 0 blind line(s); foil colour source: fallback constant"
+ ],
+ "external_programs": [
+  "buildc"
+ ]
+}

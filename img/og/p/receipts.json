@@ -2387,6 +2387,114 @@
     "t": 0
    }
   },
+  "findings--F204-backward-and-contrary-checks.jpg": {
+   "backend": "chrome-157.0.8103.40-skia-2x-lanczos",
+   "content_sha256": "e3939fb0922510b2685c36dd3683ebab7dead879118718c32b9c7d66368e3dd6",
+   "does_not_prove": [
+    "It does not show the figure's numbers come from a real run, except where the alt text quotes a README result.",
+    "It does not show the PNG bytes are the same under another Chrome build; the SVG and the scene are the portable record.",
+    "It does not show the artwork meets the brand rules; that is a human review against ART-DIRECTION.md."
+   ],
+   "media": {
+    "format": "rgb8",
+    "height": 630,
+    "kind": "image",
+    "transfer": "srgb",
+    "width": 1200
+   },
+   "outputs": {
+    "findings--F204-backward-and-contrary-checks.jpg": "c3caff6329cc2cb25dc391905c9cabe439a8109f433a5d4f89e7d16131b69c8a",
+    "findings--F204-backward-and-contrary-checks.svg": "31db5206a227b3805e750feb43460763eb36fa6f47f06b3a06f0d10bedd54316"
+   },
+   "producer": {
+    "name": "harperz9.repo-art",
+    "version": "0.1.0"
+   },
+   "receipt_sha256": "96eaeb7ce58c87d4e9ed9d081f96fe063c6ba032ffbe407b5bf5146c133336bb",
+   "reconcile": null,
+   "scene_sha256": "308230c4229efa31d8a5d6ca802c70580284cc85a4664c06c634d03ac9a16920",
+   "schema": "superstack.receipt/1",
+   "seed": "findings--F204-backward-and-contrary-checks",
+   "seed_rule": "xmur3-mulberry32/1",
+   "seed_u32": 525291468,
+   "time": {
+    "base": "flicks",
+    "per_second": 705600000,
+    "t": 0
+   }
+  },
+  "findings--F209-dead-shoot-on-a-lever.jpg": {
+   "backend": "chrome-157.0.8103.40-skia-2x-lanczos",
+   "content_sha256": "90ae0959442a1ab590ea022e6ff43c1a23046b8caf846c7ed5df4ad38ece89e8",
+   "does_not_prove": [
+    "It does not show the figure's numbers come from a real run, except where the alt text quotes a README result.",
+    "It does not show the PNG bytes are the same under another Chrome build; the SVG and the scene are the portable record.",
+    "It does not show the artwork meets the brand rules; that is a human review against ART-DIRECTION.md."
+   ],
+   "media": {
+    "format": "rgb8",
+    "height": 630,
+    "kind": "image",
+    "transfer": "srgb",
+    "width": 1200
+   },
+   "outputs": {
+    "findings--F209-dead-shoot-on-a-lever.jpg": "0f99738c39827fb14de73b162926d1d71b0667f36209d74f91ef5a5cf63ba366",
+    "findings--F209-dead-shoot-on-a-lever.svg": "bd472fef1650eaa3951d3381a19a77d3fec99ba10c0bae6d5ef99608f54a4848"
+   },
+   "producer": {
+    "name": "harperz9.repo-art",
+    "version": "0.1.0"
+   },
+   "receipt_sha256": "99f77464a1145220900af92f2c9e7b119d0e65f80ec3b31b97e88880e4a99e83",
+   "reconcile": null,
+   "scene_sha256": "6372bf0e25862512cc51fb3886766809934bbd9cc8840a3d547f478ef5cb1f8f",
+   "schema": "superstack.receipt/1",
+   "seed": "findings--F209-dead-shoot-on-a-lever",
+   "seed_rule": "xmur3-mulberry32/1",
+   "seed_u32": 625769590,
+   "time": {
+    "base": "flicks",
+    "per_second": 705600000,
+    "t": 0
+   }
+  },
+  "findings--F210-stepped-luneburg-lens-shells.jpg": {
+   "backend": "chrome-157.0.8103.40-skia-2x-lanczos",
+   "content_sha256": "5f20e73ca122e78d3463d437fbc4aa292aeb1511ad786f0a47fe4ade721d028a",
+   "does_not_prove": [
+    "It does not show the figure's numbers come from a real run, except where the alt text quotes a README result.",
+    "It does not show the PNG bytes are the same under another Chrome build; the SVG and the scene are the portable record.",
+    "It does not show the artwork meets the brand rules; that is a human review against ART-DIRECTION.md."
+   ],
+   "media": {
+    "format": "rgb8",
+    "height": 630,
+    "kind": "image",
+    "transfer": "srgb",
+    "width": 1200
+   },
+   "outputs": {
+    "findings--F210-stepped-luneburg-lens-shells.jpg": "0c277734fb1250d4b112b3676bf55bc9897e483fa3d24ce2c90768a17c32fd21",
+    "findings--F210-stepped-luneburg-lens-shells.svg": "5d90bd319d079ebab6e4b3294d8c4a126466052b6faef70ee9f09de766255c49"
+   },
+   "producer": {
+    "name": "harperz9.repo-art",
+    "version": "0.1.0"
+   },
+   "receipt_sha256": "d2e02205d983a7f5c1d21b454fa51c93f324ae86ac180dce090da2b2fd58357f",
+   "reconcile": null,
+   "scene_sha256": "a75fad392a7ea2fcb9e1f07721950347077ce6ea0452f538eb976454d820b386",
+   "schema": "superstack.receipt/1",
+   "seed": "findings--F210-stepped-luneburg-lens-shells",
+   "seed_rule": "xmur3-mulberry32/1",
+   "seed_u32": 4255046071,
+   "time": {
+    "base": "flicks",
+    "per_second": 705600000,
+    "t": 0
+   }
+  },
   "findings--F23-forest-hubs-cedar-decay-wind.jpg": {
    "backend": "chrome-156.0.8078.75-skia",
    "content_sha256": "88ab6d02bdb3b718d736869d37b735beb866d3700c8bbcd2ede083ee4958d6b4",
@@ -2453,6 +2561,42 @@
    "seed": "findings--F27-emotional-inertia-and-recovery",
    "seed_rule": "xmur3-mulberry32/1",
    "seed_u32": 1594401991,
+   "time": {
+    "base": "flicks",
+    "per_second": 705600000,
+    "t": 0
+   }
+  },
+  "findings--F28-self-rated-expertise-and-skipping.jpg": {
+   "backend": "chrome-157.0.8103.40-skia-2x-lanczos",
+   "content_sha256": "957926daf32b827ffed0676cb03fea20ca5dd93c53fa2feb291555ee5bde2b65",
+   "does_not_prove": [
+    "It does not show the figure's numbers come from a real run, except where the alt text quotes a README result.",
+    "It does not show the PNG bytes are the same under another Chrome build; the SVG and the scene are the portable record.",
+    "It does not show the artwork meets the brand rules; that is a human review against ART-DIRECTION.md."
+   ],
+   "media": {
+    "format": "rgb8",
+    "height": 630,
+    "kind": "image",
+    "transfer": "srgb",
+    "width": 1200
+   },
+   "outputs": {
+    "findings--F28-self-rated-expertise-and-skipping.jpg": "57d69718e3f401b9b37e68d4981f27561683141d9bed05176e4a75538bc0a071",
+    "findings--F28-self-rated-expertise-and-skipping.svg": "521645b158e1dd2a0545a529061b2f345ad9e33fa35b18c335af1c7763b7a1fb"
+   },
+   "producer": {
+    "name": "harperz9.repo-art",
+    "version": "0.1.0"
+   },
+   "receipt_sha256": "3b124e50a742003edf3f39da8991ee90f14e50e7fb92db4710a036a7ff309e0e",
+   "reconcile": null,
+   "scene_sha256": "5cfdce3d7f1454ea73da702a510043f144cab292b536a088b3ec1955a314cb9b",
+   "schema": "superstack.receipt/1",
+   "seed": "findings--F28-self-rated-expertise-and-skipping",
+   "seed_rule": "xmur3-mulberry32/1",
+   "seed_u32": 1077737455,
    "time": {
     "base": "flicks",
     "per_second": 705600000,
@@ -2675,6 +2819,42 @@
     "t": 0
    }
   },
+  "findings--F33-cedar-decline-and-water.jpg": {
+   "backend": "chrome-157.0.8103.40-skia-2x-lanczos",
+   "content_sha256": "f6a2358740740d68591abc6f7e0b126c79209e9ea17a3c027c1cd34c47909033",
+   "does_not_prove": [
+    "It does not show the figure's numbers come from a real run, except where the alt text quotes a README result.",
+    "It does not show the PNG bytes are the same under another Chrome build; the SVG and the scene are the portable record.",
+    "It does not show the artwork meets the brand rules; that is a human review against ART-DIRECTION.md."
+   ],
+   "media": {
+    "format": "rgb8",
+    "height": 630,
+    "kind": "image",
+    "transfer": "srgb",
+    "width": 1200
+   },
+   "outputs": {
+    "findings--F33-cedar-decline-and-water.jpg": "1b69e14bd178cfe3c7e2d556088b4189e7a7dcd2e6568ccd8635346c42dc482b",
+    "findings--F33-cedar-decline-and-water.svg": "7b4d6effb1c15b1aaf642290dec3ddc1306af7f07598c1c1ec5b917cde9261b4"
+   },
+   "producer": {
+    "name": "harperz9.repo-art",
+    "version": "0.1.0"
+   },
+   "receipt_sha256": "dd58a04c90e5f1aef1ee19e954dbb2530018eda3d5a4873573f29868b5ccccdb",
+   "reconcile": null,
+   "scene_sha256": "702e82d998f21422d1a85b4cc1e57fa2a0894ad3c0f3a8721eb12d6f4e6dba28",
+   "schema": "superstack.receipt/1",
+   "seed": "findings--F33-cedar-decline-and-water",
+   "seed_rule": "xmur3-mulberry32/1",
+   "seed_u32": 2718298249,
+   "time": {
+    "base": "flicks",
+    "per_second": 705600000,
+    "t": 0
+   }
+  },
   "findings--F344-auger-cubic-null.jpg": {
    "backend": "chrome-156.0.8078.75-skia",
    "content_sha256": "2eaddc90c03388a4161c9a150a5ba87b4058bced939b788b36eb0999cd71bf63",
@@ -2741,6 +2921,42 @@
    "seed": "findings--F362-stated-uncertainty-tails",
    "seed_rule": "xmur3-mulberry32/1",
    "seed_u32": 3474538193,
+   "time": {
+    "base": "flicks",
+    "per_second": 705600000,
+    "t": 0
+   }
+  },
+  "findings--F38-forecasts-drift-mood-moves-sampling-floor.jpg": {
+   "backend": "chrome-157.0.8103.40-skia-2x-lanczos",
+   "content_sha256": "5f412c2afeaf994172b91e47615ce3502cc02e3ff0b5fd5c304a138c51dfede1",
+   "does_not_prove": [
+    "It does not show the figure's numbers come from a real run, except where the alt text quotes a README result.",
+    "It does not show the PNG bytes are the same under another Chrome build; the SVG and the scene are the portable record.",
+    "It does not show the artwork meets the brand rules; that is a human review against ART-DIRECTION.md."
+   ],
+   "media": {
+    "format": "rgb8",
+    "height": 630,
+    "kind": "image",
+    "transfer": "srgb",
+    "width": 1200
+   },
+   "outputs": {
+    "findings--F38-forecasts-drift-mood-moves-sampling-floor.jpg": "a87a2960e7c8f8eb369e32be62ab30069308cdd7dbaac41b113600b4c638ac10",
+    "findings--F38-forecasts-drift-mood-moves-sampling-floor.svg": "ba0c60e6ffb2439c8fc1d0285d1adefa9580497756a513d1d023f48a0049b7cc"
+   },
+   "producer": {
+    "name": "harperz9.repo-art",
+    "version": "0.1.0"
+   },
+   "receipt_sha256": "725d0861071cb62c1238a67c832acb7c80004f88c797b2be2c7d70ea0b4e55d7",
+   "reconcile": null,
+   "scene_sha256": "856fa2f89928678f55b680fac6ff63923f158c4a4e404194f942d38073619940",
+   "schema": "superstack.receipt/1",
+   "seed": "findings--F38-forecasts-drift-mood-moves-sampling-floor",
+   "seed_rule": "xmur3-mulberry32/1",
+   "seed_u32": 1537888158,
    "time": {
     "base": "flicks",
     "per_second": 705600000,

@@ -1,0 +1,519 @@
+{
+ "schema": "research-record/1",
+ "built": "2026-11-14 by scripts/record-findings.mjs from paper.txt, the register row and the findings ledger",
+ "document": {
+  "id": "F33",
+  "kind": "finding",
+  "title": "Cedar decline and water: observer site calls show no pattern either way",
+  "standfirst": "Among 912 western redcedars whose observer described the site, decline was about as common on wet ground as on dry: odds ratio 1.11, with an interval from 0.65 to 1.75 that leaves either direction open. Every water measure is a person's call at the tree, and people recording a declining tree answered the question more often, so the result is undecided.",
+  "date_found": "2026-10-29",
+  "fields": [
+   "biology-plant-forest-pathology",
+   "ecology-climate"
+  ],
+  "tier": "B",
+  "tier_reason": "Undecided, and not a powered null: the primary field is selected on health and the interval reaches 1.75. The question is open and the next step is named. No signal yet for cedar.",
+  "rung": "hypothesis",
+  "rung_reason": "A preregistration with pass-or-fail rules is on file, which this rung needs. The next rung needs a named rival reading beaten by a decisive observation, and none is on file.",
+  "outcome": "inconclusive",
+  "bound": "Neither direction passed on any of four cedar measures. The primary interval runs from 0.65 to 1.75, so an odds ratio of 1.5 either way is not ruled out. The primary field failed its observer check: declining observations answered it 12.3 points more often than healthy ones, against a limit of 5. The maple result (odds ratio 0.42, interval 0.17 to 0.88) holds on one of two water measures; the other gives 0.84 (0.22 to 2.00).",
+  "objection": "Every water measure is an observer's or a crew's call at the tree or plot. No distance to a mapped stream was computed.",
+  "objection_source": "the paper's first stated limitation; our register records no separate objection",
+  "would_change": "Mapped water layers and an elevation model for all 4,184 located cedars, with each declining cedar paired to the nearest healthy one of similar size.",
+  "sections": [
+   {
+    "id": "reader",
+    "title": "What this means for a reader",
+    "role": "lead",
+    "paragraphs": [
+     "People who record sick and healthy cedars also note whether the tree stands on a wet site. Those notes show cedars declining about as often on wet ground as on dry, with a range wide enough to hide a real difference of up to about 75 percent higher odds or 35 percent lower. This is an undecided result from a weak instrument. It does not show that cedar decline ignores water, because every water measure here is a person's judgement at the tree, and people who saw a sick tree filled in that judgement more often."
+    ]
+   },
+   {
+    "id": "abstract",
+    "title": "Abstract",
+    "role": "argument",
+    "paragraphs": [
+     "Western redcedar is dying back across the Pacific Northwest, and a field observation by the author holds that the decline follows waterways. A drought reading predicts that water nearby protects a tree. We tested both directions with a plan fixed in advance, on 4,184 located cedar observations from a community science project and 1,545 cedar records from monitored park plots in Seattle. {c1}On the primary measure, 87 of 169 cedars on wet sites were declining (51.5 percent) against 347 of 743 on upland sites (46.7 percent), an adjusted odds ratio of 1.11 (95 percent interval 0.65 to 1.75).{/c1} {c2}Compared only with cedars in the same 5 km cell the odds ratio was 0.95, inside the shuffle range of 0.61 to 1.63.{/c2} {c3}By the rule fixed in advance the result is undecided: neither direction passed on any of the four cedar measures.{/c3} {c4}Declining observations answered the hydrology question more often than healthy ones, 64.5 against 52.2 percent, so the primary field is selected on health.{/c4} {c5}Bigleaf maple on water-flagged park plots was stressed in 27 of 463 records (5.8 percent) against 353 of 3,188 (11.1 percent), an adjusted odds ratio of 0.42 (0.17 to 0.88); on the second water measure, wet soil or wetland canopy, the maple odds ratio was 0.84 (0.22 to 2.00).{/c5} The cedar question stays open, and the paper names the mapped data that would settle it."
+    ]
+   },
+   {
+    "id": "intro",
+    "title": "Introduction",
+    "role": "argument",
+    "paragraphs": [
+     "Western redcedar (Thuja plicata) has been dying back in Washington and Oregon in recent years. A 2022 report by the Washington Department of Natural Resources with state and federal partners {cite:r5} mapped dieback sites and, in the search summaries we read, found them concentrated at low elevation in the urban corridors of western Washington and northwestern Oregon, with low spring precipitation as snow the leading climate predictor on the west side and no site factor tied to worse crown condition in individual trees. A forest health alert issued the same year {cite:r6} says cedars are dying in shaded places beside streams and links that to higher temperatures and reduced stream flow.",
+     "Those two statements pull in different directions for anyone standing at a stream. If drought is the cause, a tree with water nearby should fare better. If trees beside streams are dying, something about wet sites may add risk: a shallow root system that cannot follow a falling water table, or root disease in wet soil. The author recorded the field observation that cedar decline \"follows waterways\". An earlier round of this study, ledger entry F25, could not test it: the national forest inventory it used holds no waterway field.",
+     "This round asks the narrower question that public data can reach. Among recorded cedars, is decline more common, or less common, on sites an observer called wet? The decision it informs is whether the waterway hypothesis is worth the cost of mapped stream and elevation layers. Our searches returned agency reports and a graduate thesis on topography and drought {cite:r7}, and no study of decline against distance to water; that is what the searches returned and no proof that none exists."
+    ]
+   },
+   {
+    "id": "prereg",
+    "title": "Preregistration and design",
+    "role": "argument",
+    "paragraphs": [
+     "The {g:preregistration}preregistration{/g}, a dated plan fixed and hash-locked before any result is seen, was locked at 15:06:16 UTC on 29 October 2026. Before it was written we had seen field names, counts per field level and the total number of records in each health class. The code had been run once with health labels shuffled at random. No real health label had been crossed with any water field.",
+     "The plan records a prior for the primary measure: probability 0.25 that decline is detectably higher on wet sites, 0.40 that it is detectably lower, and 0.35 that these data can detect no difference. It names twelve {g:verdict}verdicts{/g}, each a rule set read off by code as pass or fail. An \"author\" verdict passes when wet sites show more decline and a \"drought\" verdict when they show less. The overall reading was fixed in advance: supported if the author verdict passes on the primary measure with its observer check and no drought verdict passes elsewhere, opposed if the drought verdict passes on the primary measure, and otherwise undecided."
+    ]
+   },
+   {
+    "id": "data",
+    "title": "Data and provenance",
+    "role": "argument",
+    "paragraphs": [
+     "Three public sources were used, fetched on 29 October 2026. We report counts and statistics only. No observer name, login, note or photo was read, and records with obscured or private coordinates, 18 in all, were left out.",
+     "- The Western Redcedar Dieback Map {cite:r1}, a {g:community-science}community science{/g} project on iNaturalist in which volunteers record a cedar with its location and canopy symptoms; people choose which trees to report, so shares of declining trees are not population rates. Each observation keeps its own licence, mostly CC BY-NC, with about a third all rights reserved. It gave 4,184 usable cedar observations, 1,427 of them declining.",
+     "- The Maple Health Watch project on iNaturalist {cite:r2}, same terms, with 349 usable bigleaf maple observations.",
+     "- Hulbert's public redcedar repository {cite:r3}, CC0 1.0 for his own work, which holds 2021 and 2022 exports of the cedar project. The current project no longer carries the site hydrology and slope position fields; these exports hold them for earlier observations, so the primary test covers 2020 to 2022.",
+     "- Green Seattle Partnership Forest Monitoring {cite:r4}, tree records from plots placed in Seattle parks: 1,545 western redcedar records with 47 rated stressed, and 3,651 bigleaf maple records with 380 stressed. The service names no licence and carries a City of Seattle disclaimer. Trees are not tagged across visits, so one tree can appear twice.",
+     "No stream map and no elevation model were available to the study, so distance to water was not computed."
+    ]
+   },
+   {
+    "id": "methods",
+    "title": "Methods",
+    "role": "argument",
+    "paragraphs": [
+     "## Outcome and water measures",
+     "A cedar observation is healthy when its canopy field says so and declining when it reports thinning, a dead top, branch dieback, browning, yellowing, multiple symptoms or a dead tree. Four cedar measures sort trees into wet and dry:",
+     "- Site hydrology, the primary measure: wet is \"seasonally flooded area\" or \"wetland, lots of water\"; dry is \"upland or well drained\".",
+     "- Slope position: wet is riverbank, floodplain or valley bottom; dry is every other position.",
+     "- Access to water: wet is year-round access, which includes trees watered in summer; dry is no typical access in summer.",
+     "- For park plots, a water flag: the visit's features text names a stream, seep, wetland, lake, spring, creek, pond or wet spot.",
+     "## Estimates",
+     "The main estimate is an {g:odds-ratio}odds ratio{/g} from {g:logistic-regression}logistic regression{/g}. With {m:\\pi} the probability that a tree is declining, {m:w} equal to 1 on a wet site and 0 on a dry one, and covariates {m:x_j},",
+     "$$ \\ln \\frac{\\pi}{1 - \\pi} = \\beta_0 + \\beta_w w + \\sum_j \\beta_j x_j {eq:logit}",
+     "and the adjusted odds ratio is the exponential of {m:\\beta_w}. A value of 1 means the same odds on wet and dry sites; an odds ratio is a ratio of odds and says nothing of cause. Covariates for community observations are site type, disturbance level and observation year; for park plots, stem diameter, edge features, canopy cover, soil compaction and visit period. Each {g:interval-95}95 percent interval{/g} is the middle 95 percent of a {g:cluster-bootstrap}cluster bootstrap{/g}: 1,000 refits on whole sites, or whole plots, drawn with replacement, so trees from one place stay together.",
+     "The second estimate compares trees only with their neighbours. A site is a grid cell of 0.05 degrees of latitude by 0.075 of longitude, about 5.5 km square, or a park. The {g:mantel-haenszel}Mantel-Haenszel odds ratio{/g} pools the wet-against-dry comparison across sites:",
+     "$$ OR_{MH} = \\frac{\\sum_s a_s d_s / n_s}{\\sum_s b_s c_s / n_s} {eq:mh}",
+     "where in site {m:s}, {m:a_s} and {m:b_s} are the declining and healthy trees on wet ground, {m:c_s} and {m:d_s} the declining and healthy trees on dry ground, and {m:n_s} the site's total. Only sites holding both wet and dry trees contribute, so regional differences between cells cannot drive it."
+    ]
+   },
+   {
+    "id": "controls",
+    "title": "Controls and planted checks",
+    "role": "argument",
+    "paragraphs": [
+     "Each {g:control}control{/g} is the data with one link broken, scored by the same code.",
+     "- Health labels shuffled within site, 1,000 times per measure, give the {g:null-distribution}null distribution{/g} of the Mantel-Haenszel estimate. Its 5th and 95th percentiles are the bars for the drought and author verdicts.",
+     "- Bigleaf maple is the comparison species: the same estimate on the same plots and the same access field. A cedar effect counts as specific to cedar only if it lies beyond the 95th percentile of maple's bootstrap.",
+     "- Observer draws: the wet share among declining cedars against random draws of the same size from all cedars with hydrology known.",
+     "- {g:fill-rate}Fill rate{/g}: the share of declining and of healthy observations whose observer answered the optional water question. A gap of 5 points or more means the field is selected on health. This check can show observer bias, which the draws cannot, since they are tied to the main effect by arithmetic.",
+     "This study has no planted check, a run on data with a known built-in effect. The shuffle nulls all centred on an odds ratio of 1, with log means within 0.04 of zero."
+    ]
+   },
+   {
+    "id": "results",
+    "title": "Results",
+    "role": "argument",
+    "paragraphs": [
+     "{c1}On the primary measure, 87 of 169 cedars on wet sites were declining (51.5 percent) against 347 of 743 on upland sites (46.7 percent), an adjusted odds ratio of 1.11 (95 percent interval 0.65 to 1.75).{/c1} {c2}Compared only with cedars in the same 5 km cell the odds ratio was 0.95, inside the shuffle range of 0.61 to 1.63.{/c2} On the 530 observations with an elevation, adding elevation gave 0.98 (0.59 to 1.58). Table {ref:tab:measures} and Figure {ref:fig:or} give every measure.",
+     "::table tab:measures cols=0.3,0.12,0.19,0.21,0.18 Declining or stressed share on wet against dry sites, the adjusted odds ratio with its 95 percent interval, and the within-site odds ratio with the shuffle's 5th to 95th percentile range.\nMeasure ¦ Wet, n ¦ Share wet, dry ¦ Adjusted odds ratio ¦ Within site\nCedar, site hydrology (primary) ¦ 169 ¦ 51.5, 46.7 percent ¦ 1.11 (0.65 to 1.75) ¦ 0.95 (0.61 to 1.63)\nCedar, slope position ¦ 100 ¦ 49.0, 48.9 ¦ 0.89 (0.49 to 1.59) ¦ 1.11 (0.52 to 1.93)\nCedar, access to water ¦ 207 ¦ 29.5, 38.6 ¦ 0.74 (0.28 to 1.29) ¦ 0.66 (0.69 to 1.46)\nCedar, park plots, water flag ¦ 318 ¦ 2.2, 3.3 ¦ 0.74 (0.19 to 1.81) ¦ 0.69 (0.30 to 2.78)\nCedar, park plots, wet soil ¦ 225 ¦ 4.0, 2.9 ¦ 1.43 (0.52 to 4.23) ¦ not scored\nMaple, park plots, water flag ¦ 463 ¦ 5.8, 11.1 ¦ 0.42 (0.17 to 0.88) ¦ not scored\nMaple, park plots, wet soil ¦ 198 ¦ 9.6, 10.5 ¦ 0.84 (0.22 to 2.00) ¦ not scored\nMaple, access to water ¦ 36 ¦ 44.4, 55.6 ¦ 0.51 (0.22 to 1.46) ¦ not scored\n::end",
+     "![fig:or width=0.9 alt=Eight odds ratios with interval bars on a log axis; every cedar interval crosses 1 and only the maple water-flag interval lies wholly below 1](fig-odds.png) Adjusted odds ratios of decline or stress on wet against dry sites, with 95 percent cluster-bootstrap intervals, on a log axis. Navy marks are cedar and ochre marks are maple. Drawn from the run's result file.",
+     "{c3}By the rule fixed in advance the result is undecided: neither direction passed on any of the four cedar measures.{/c3} The access field came nearest. Its within-site odds ratio of 0.66 fell below the shuffle's 5th percentile of 0.69, but the adjusted interval crosses 1, so the drought verdict failed there too, and the field counts a watered garden tree as having access to water. On park plots only 7 stressed cedars stood on water-flagged plots against a required 10, and the features text that carries the flag is blank on 37.7 percent of cedar records. Figure {ref:fig:within} sets each within-site estimate against its shuffle range.",
+     "![fig:within width=0.86 alt=Four diamonds for within-site odds ratios over grey shuffle bands; three sit inside their bands and the access-to-water diamond sits just left of its band](fig-within.png) Within-site Mantel-Haenszel odds ratios for the four scored cedar measures (diamonds) against the 5th to 95th percentile range of 1,000 within-site shuffles of the health labels (grey bands). Drawn from the run's result file.",
+     "{c4}Declining observations answered the hydrology question more often than healthy ones, 64.5 against 52.2 percent, so the primary field is selected on health.{/c4} The gap is 12.3 points against a limit of 5. For the access field the gap was 2.2 points (22.4 against 20.2 percent), which passed. The observer draws found the wet share among declining cedars at 20.0 percent, against 18.5 percent among all cedars with a hydrology answer and a 95th percentile of 20.7 percent in random draws (p 0.14). Park plots, which a programme placed, put 20.6 percent of cedar records on water-flagged plots, close to the 18.5 percent wet share in volunteers' answers.",
+     "{c5}Bigleaf maple on water-flagged park plots was stressed in 27 of 463 records (5.8 percent) against 353 of 3,188 (11.1 percent), an adjusted odds ratio of 0.42 (0.17 to 0.88); on the second water measure, wet soil or wetland canopy, the maple odds ratio was 0.84 (0.22 to 2.00).{/c5} The water-flag interval is the only one in the study that excludes 1, and it is one of nine intervals reported here. Cedar's estimate on the same plots, 0.74, is not beyond the 95th percentile of maple's bootstrap, 0.78, so cedar's response to water is not shown to differ from maple's.",
+     "Two exploratory descriptions were planned and not scored. Observers reported heat damage, yes or maybe, on 32 percent of declining cedars on wet sites (31 answers) and 32 percent on dry sites (257 answers). They reported other factors such as insects or disease on 6.5 percent of wet-site cedars (168) against 10.6 percent of dry-site cedars (742). A root disease favoured by wet soil would predict more such reports on wet sites."
+    ]
+   },
+   {
+    "id": "discussion",
+    "title": "Discussion",
+    "role": "argument",
+    "paragraphs": [
+     "The outcome fell in the third of the three prior cases, the one given probability 0.35: no difference these data can detect. With 169 wet-site cedars the primary interval runs from 0.65 to 1.75. A real odds ratio of 1.5 in either direction fits inside it. The field observation that decline follows waterways is neither supported nor refuted, and the drought reading is in the same position.",
+     "Three features of the instrument limit what any result from it could mean. A wet site is a judgement made by a person at the tree, and it carries no distance to a stream. People recording a declining tree described the site more often, and the direction of the bias that puts into a wet-against-dry comparison is unknown. The hydrology field stopped being collected in 2022, so a pattern that formed later, or one that exists only within a few tens of metres of a channel, would not appear.",
+     "The maple result is suggestive and no more. Maple near streams, seeps and wetlands in Seattle parks was stressed about half as often on one measure, which is the direction a drought reading predicts. The second water measure on the same trees shows no clear difference, so the maple result depends on which definition of wet is used.",
+     "What would settle the cedar question is a mapped water layer and an elevation model, so that all 4,184 located cedars get a distance to water with no observer call, and a paired design that matches each declining cedar to the nearest healthy one of similar size. The agency work cited above {cite:r5,r6} suggests where to look first: low elevations, and stream corridors with reduced summer flow."
+    ]
+   },
+   {
+    "id": "limits",
+    "title": "Limitations",
+    "role": "argument",
+    "paragraphs": [
+     "- Every water measure is an observer's or a crew's call at the tree or plot. No distance to a mapped stream was computed.",
+     "- The primary field is selected on health: declining observations answered it 12.3 points more often than healthy ones.",
+     "- The interval on the primary measure reaches 1.75 and falls to 0.65, so this is an undecided result and no evidence of absence.",
+     "- Community observations are opportunistic and the project asks for declining trees. The declining shares are not rates in the forest.",
+     "- The hydrology field covers observations from 2020 to 2022 only.",
+     "- \"Access to water\" mixes summer watering with natural water.",
+     "- Park plots cover forested Seattle parks only and rated 47 cedars stressed; 7 of them were on water-flagged plots.",
+     "- The maple result holds on one of two water measures and is the single interval excluding 1 among nine.",
+     "- There was no planted check.",
+     "- Scoring was done by our own code on observers' calls and was not blind."
+    ]
+   },
+   {
+    "id": "appendix",
+    "title": "Appendix A. The preregistered verdicts",
+    "role": "evidence",
+    "paragraphs": [
+     "Each verdict is a set of rules written before the run and passes only when every rule holds. Odds ratios are shown in place of the stored log values. An \"author\" verdict needs the interval's lower bound above 1, the within-site estimate above the shuffle's 95th percentile, and a minimum count of declining wet trees. A \"drought\" verdict needs the upper bound below 1 and the within-site estimate below the shuffle's 5th percentile.",
+     "::table tab:verdicts cols=0.3,0.5,0.2 The twelve preregistered verdicts with their deciding values.\nVerdict ¦ Deciding values ¦ Holds\nAuthor, site hydrology ¦ lower bound 0.65; within site 0.95 against 1.63; 87 declining wet ¦ fail\nDrought, site hydrology ¦ upper bound 1.75; within site 0.95 against 0.61 ¦ fail\nAuthor, slope position ¦ lower bound 0.49; within site 1.11 against 1.93; 49 declining wet ¦ fail\nDrought, slope position ¦ upper bound 1.59; within site 1.11 against 0.52 ¦ fail\nAuthor, access to water ¦ lower bound 0.28; within site 0.66 against 1.46; 61 declining wet ¦ fail\nDrought, access to water ¦ upper bound 1.29; within site 0.66 against 0.69 (this rule held) ¦ fail\nAuthor, park plots ¦ lower bound 0.19; within park 0.69 against 2.78; 7 stressed wet, 10 needed ¦ fail\nDrought, park plots ¦ upper bound 1.81; within park 0.69 against 0.30 ¦ fail\nCedar beyond maple, park plots ¦ cedar 0.74 against maple 95th percentile 0.78 ¦ fail\nCedar beyond maple, access ¦ cedar 0.74 against maple 95th percentile 1.18 ¦ fail\nFill rate, site hydrology ¦ gap 12.3 points, limit 5 ¦ fail\nFill rate, access to water ¦ gap 2.2 points, limit 5 ¦ pass\n::end"
+    ]
+   }
+  ]
+ },
+ "claims": [
+  {
+   "id": "c1",
+   "text": "On the primary measure, 87 of 169 cedars on wet sites were declining (51.5 percent) against 347 of 743 on upland sites (46.7 percent), an adjusted odds ratio of 1.11 (95 percent interval 0.65 to 1.75).",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e1"
+   ]
+  },
+  {
+   "id": "c2",
+   "text": "Compared only with cedars in the same 5 km cell the odds ratio was 0.95, inside the shuffle range of 0.61 to 1.63.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e2"
+   ]
+  },
+  {
+   "id": "c3",
+   "text": "By the rule fixed in advance the result is undecided: neither direction passed on any of the four cedar measures.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": []
+  },
+  {
+   "id": "c4",
+   "text": "Declining observations answered the hydrology question more often than healthy ones, 64.5 against 52.2 percent, so the primary field is selected on health.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e3"
+   ]
+  },
+  {
+   "id": "c5",
+   "text": "Bigleaf maple on water-flagged park plots was stressed in 27 of 463 records (5.8 percent) against 353 of 3,188 (11.1 percent), an adjusted odds ratio of 0.42 (0.17 to 0.88); on the second water measure, wet soil or wetland canopy, the maple odds ratio was 0.84 (0.22 to 2.00).",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e4"
+   ]
+  }
+ ],
+ "evidence": [
+  {
+   "id": "e1",
+   "kind": "number",
+   "label": "The numbers in claim 1",
+   "value": "87; 169; 51.5; 347; 743; 46.7; 1.11; 95; 0.65; 1.75",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-14",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e2",
+   "kind": "number",
+   "label": "The numbers in claim 2",
+   "value": "5; 0.95; 0.61; 1.63",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-14",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e3",
+   "kind": "number",
+   "label": "The numbers in claim 4",
+   "value": "64.5; 52.2",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-14",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e4",
+   "kind": "number",
+   "label": "The numbers in claim 5",
+   "value": "27; 463; 5.8; 353; 3,188; 11.1; 0.42; 0.17; 0.88; 0.84; 0.22; 2.00",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-14",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e5",
+   "kind": "number",
+   "label": "Sample",
+   "value": "912 cedars with a site description, 169 of them on wet sites; 4,184 located cedars",
+   "check": {
+    "by": "our publication register",
+    "result": "not_checked",
+    "note": "as recorded in the publication register"
+   }
+  },
+  {
+   "id": "e6",
+   "kind": "number",
+   "label": "Main estimate and interval",
+   "value": "odds ratio 1.11 (0.65 to 1.75); maple on water-flagged plots 0.42 (0.17 to 0.88)",
+   "check": {
+    "by": "our publication register",
+    "result": "not_checked",
+    "note": "as recorded in the publication register"
+   }
+  },
+  {
+   "id": "e7",
+   "kind": "number",
+   "label": "Forecast against outcome",
+   "value": "Neither the waterways forecast nor the drought forecast passed on any cedar measure. The fill-rate check for the access field passed",
+   "check": {
+    "by": "our publication register",
+    "result": "not_checked",
+    "note": "as recorded in the publication register"
+   }
+  },
+  {
+   "id": "e8",
+   "kind": "control",
+   "label": "Known-answer check",
+   "value": "none",
+   "check": {
+    "by": "our publication register",
+    "result": "not_checked",
+    "note": "as recorded in the publication register"
+   }
+  }
+ ],
+ "references": [
+  {
+   "id": "r1",
+   "key": "iNaturalist",
+   "kind": "dataset",
+   "title": "iNaturalist. Western Redcedar Dieback Map, project 88444. Observations read through the public API on 29 October 2026. Per-observation licences, mostly CC BY-NC. https://www.inaturalist.org/projects/western-redcedar-dieback-map",
+   "access": "run",
+   "target": "https://www.inaturalist.org/projects/western-redcedar-dieback-map",
+   "licence": "iNaturalist per-observation licences, mostly CC BY-NC (non-commercial) with about a third all rights reserved; Hulbert repository CC0; the park service names no licence. Statistics only, no record redistributed"
+  },
+  {
+   "id": "r2",
+   "key": "iNaturalist",
+   "kind": "dataset",
+   "title": "iNaturalist. Maple Health Watch, project 164816. Observations read through the public API on 29 October 2026. Per-observation licences, mostly CC BY-NC.",
+   "access": "run",
+   "licence": "iNaturalist per-observation licences, mostly CC BY-NC (non-commercial) with about a third all rights reserved; Hulbert repository CC0; the park service names no licence. Statistics only, no record redistributed"
+  },
+  {
+   "id": "r3",
+   "key": "Hulbert, J",
+   "kind": "dataset",
+   "title": "Hulbert, J. M. Redcedar: data and analysis for the western redcedar dieback project. Public repository, CC0 1.0. https://github.com/jmhulbert/redcedar",
+   "access": "run",
+   "target": "https://github.com/jmhulbert/redcedar",
+   "licence": "iNaturalist per-observation licences, mostly CC BY-NC (non-commercial) with about a third all rights reserved; Hulbert repository CC0; the park service names no licence. Statistics only, no record redistributed"
+  },
+  {
+   "id": "r4",
+   "key": "Green Seattle Partnership",
+   "kind": "dataset",
+   "title": "Green Seattle Partnership. Forest Monitoring: plots, visits and trees. Public feature service of the City of Seattle; no named licence.",
+   "access": "run",
+   "licence": "iNaturalist per-observation licences, mostly CC BY-NC (non-commercial) with about a third all rights reserved; Hulbert repository CC0; the park service names no licence. Statistics only, no record redistributed"
+  },
+  {
+   "id": "r5",
+   "key": "dnr2022",
+   "kind": "paper",
+   "title": "Washington Department of Natural Resources and partners (2022). Final report, August 2022, with a title beginning \"Investigating the extent and possible causes of western\"; the search result cut the title short.",
+   "access": "snippet",
+   "access_note": "search snippets; full text not read",
+   "accessed": "2026-11-14"
+  },
+  {
+   "id": "r6",
+   "key": "alert2022",
+   "kind": "paper",
+   "title": "Washington Department of Natural Resources and Oregon Department of Forestry (2022). Western redcedar dieback in the Northwest. Cooperative forest health alert, September 2022.",
+   "access": "snippet",
+   "access_note": "search snippets; full text not read",
+   "accessed": "2026-11-14"
+  },
+  {
+   "id": "r7",
+   "key": "Washington State University graduate thesis",
+   "kind": "paper",
+   "title": "Washington State University graduate thesis. Title beginning \"Hot, dry, then die: the future\"; the record we hold cuts the title short. Research Exchange record 99900883438501842.",
+   "access": "snippet",
+   "access_note": "search snippets; full text not read",
+   "accessed": "2026-11-14"
+  }
+ ],
+ "relations": [],
+ "corrections": [
+  {
+   "id": "x1",
+   "date": "2026-10-31",
+   "target": "document",
+   "type": "wording",
+   "after": "The result file exists and was read in full for this paper.",
+   "reason": "A review of our ledger noted that the entry named its preregistration and data record and no result file.",
+   "found_by": "a review of our findings ledger"
+  },
+  {
+   "id": "x2",
+   "date": "2026-11-14",
+   "target": "document",
+   "type": "scope",
+   "after": "The ledger says maple near water is stressed about half as often; that holds on the water-flag measure (odds ratio 0.42, interval 0.17 to 0.88) and does not hold on the wet-soil measure (0.84, interval 0.22 to 2.00), which the ledger entry does not mention.",
+   "reason": "Narrowed the maple statement.",
+   "found_by": "the publication pass"
+  }
+ ],
+ "versions": [
+  {
+   "n": 1,
+   "date": "2026-10-29",
+   "what": "entered in the findings ledger"
+  },
+  {
+   "n": 2,
+   "date": "2026-10-31",
+   "what": "dated correction, 1 item"
+  },
+  {
+   "n": 3,
+   "date": "2026-11-14",
+   "what": "paper version 1.0, first published",
+   "hash": "7cc45d9baabcd44b044fb65457a72a5a55954b4115611dc53dcb81ce769b5f06"
+  }
+ ],
+ "grade": {
+  "lowers": [
+   {
+    "domain": "blinding",
+    "text": "Not blind: the analyst saw the data's shape before the lock.",
+    "from": "our publication register, on blinding"
+   },
+   {
+    "domain": "missing control",
+    "text": "No positive control.",
+    "from": "our publication register, on the known-answer check"
+   },
+   {
+    "domain": "depth of reading",
+    "text": "The cited literature was read at the level of search snippets; full texts were not read.",
+    "from": "the Verified section"
+   }
+  ],
+  "holds": [
+   {
+    "domain": "scoring",
+    "text": "Scored by code against rules fixed in advance.",
+    "from": "our publication register, on who scored it"
+   },
+   {
+    "domain": "preregistration",
+    "text": "Preregistered and hash-locked before the run (sha256 c7064ebb).",
+    "from": "the Reproduce section"
+   },
+   {
+    "domain": "control",
+    "text": "Controls: the within-site shuffle worked; the fill-rate check found selection on health in the primary field.",
+    "from": "our publication register, on controls"
+   },
+   {
+    "domain": "open data",
+    "text": "Public data under non-commercial terms.",
+    "from": "our publication register, on the data licence"
+   }
+  ]
+ },
+ "reproduce": {
+  "data": [
+   {
+    "name": "iNaturalist",
+    "licence": "iNaturalist per-observation licences, mostly CC BY-NC (non-commercial) with about a third all rights reserved; Hulbert repository CC0; the park service names no licence. Statistics only, no record redistributed",
+    "url": "https://www.inaturalist.org/projects/western-redcedar-dieback-map"
+   },
+   {
+    "name": "iNaturalist",
+    "licence": "iNaturalist per-observation licences, mostly CC BY-NC (non-commercial) with about a third all rights reserved; Hulbert repository CC0; the park service names no licence. Statistics only, no record redistributed",
+    "url": ""
+   },
+   {
+    "name": "Hulbert, J",
+    "licence": "iNaturalist per-observation licences, mostly CC BY-NC (non-commercial) with about a third all rights reserved; Hulbert repository CC0; the park service names no licence. Statistics only, no record redistributed",
+    "url": "https://github.com/jmhulbert/redcedar"
+   },
+   {
+    "name": "Green Seattle Partnership",
+    "licence": "iNaturalist per-observation licences, mostly CC BY-NC (non-commercial) with about a third all rights reserved; Hulbert repository CC0; the park service names no licence. Statistics only, no record redistributed",
+    "url": ""
+   }
+  ],
+  "prereg": {
+   "hash": "c7064ebb39decd2d892e6820af67d00a502160b5fe20addb9eb4c98a005d1624",
+   "plan": "1acea23f395c37e4b73c5cf2ad61279adaf5e64cd41c313ccb9f1f8d8d07776e"
+  },
+  "cost": "about 13 seconds for the analysis and 47 seconds for the controls on one desktop computer.",
+  "steps": [
+   "Data: iNaturalist projects Western Redcedar Dieback Map (project 88444, https://www.inaturalist.org/projects/western-redcedar-dieback-map) and Maple Health Watch (project 164816), per-observation licences, mostly CC BY-NC with about a third all rights reserved; the redcedar data folder at https://github.com/jmhulbert/redcedar (CC0 1.0); Green Seattle Partnership Forest Monitoring feature service (no named licence, City of Seattle disclaimer).",
+   "Keep located, unobscured observations of each species. Code health and the four water measures as in the methods.",
+   "Fit eq. {ref:eq:logit} with a small ridge penalty (1e-4) and take a 1,000-draw cluster bootstrap over 5 km cells or plots.",
+   "Compute eq. {ref:eq:mh} over cells or parks, and repeat it on 1,000 within-site shuffles of the health labels.",
+   "Compute the fill rates and the observer draws.",
+   "Seed 20261029 (numpy generator, consumed in the preregistered order).",
+   "Preregistration SHA-256: c7064ebb39decd2d892e6820af67d00a502160b5fe20addb9eb4c98a005d1624. Plan SHA-256: 1acea23f395c37e4b73c5cf2ad61279adaf5e64cd41c313ccb9f1f8d8d07776e. Run 20261029T150625Z."
+  ],
+  "not_rerun": "The study was not re-run for this paper."
+ },
+ "verified": {
+  "date": "2026-11-14",
+  "checks": [
+   {
+    "what": "On 14 November 2026 every count, share, odds ratio, interval, shuffle percentile, fill rate and verdict rule in this paper was re-read from the run's result file, with odds ratios taken as exponentials of the stored log values.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   },
+   {
+    "what": "They match the {g:findings-ledger}findings ledger{/g}, our append-only dated list of recorded results.",
+    "by": "the paper's Verified pass",
+    "result": "match"
+   },
+   {
+    "what": "The preregistration's SHA-256 was recomputed from the locked file and matches the hash in the result file and the lock record.",
+    "by": "the paper's Verified pass",
+    "result": "match"
+   },
+   {
+    "what": "The priors, the definitions and the licence notes were read from the preregistration and the download record.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   },
+   {
+    "what": "Both figures were drawn by a script that reads only the result file.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   }
+  ],
+  "not_checked": [
+   "The study was not re-run for this paper.",
+   "The licence terms of each iNaturalist observation and of the park service were not re-checked at their sources.",
+   "The literature was found by two searches run on 14 November 2026 and read at the level of search snippets; the reports themselves were not opened."
+  ]
+ }
+}
