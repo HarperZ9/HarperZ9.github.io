@@ -1,0 +1,25 @@
+{
+  "date": "2026-11-15",
+  "note": "Four new Zenodo versions were published on 2026-11-15 (the LaTeX typeset of the edition of 3 October 2026): 10.5281/zenodo.24238724, .24238743, .24238749 and .24238755. The CV in every format, published-work.html, publications.html and its data now cite those version DOIs; publications.html adds the all-versions links, one sentence on the versions and a Verified line. The career receipts and the designed build receipts follow the new source hash; the five designed resume PDFs rebuilt to the same bytes. index.html changes only in the ?v= stamps: world/site/floor-rows.htm changed, so the asset revision moves to the value in world/IMPORT.json. Checked on 2026-11-15: each site PDF and .tex has the MD5 Zenodo lists for its version, and git diff shows no other line changed in these files.",
+  "paths": {
+    "career/Zain-Dana-Harper-CV.docx": "d83a83f276efc750d8373c9d63bd6c0a7ff2d22eeb57637f94cec0f46c8782c4",
+    "career/Zain-Dana-Harper-CV.pdf": "bc045a633914a6772e6f59a527525351cd7433eaeaf1cf4da713e4630deb3d11",
+    "career/career-artifacts.json": "3de1dabb0dd0a3cecc5c1b9daff733afcdbc870b56260ea0576e215241741d3b",
+    "career/career-build-receipt.json": "58755509adbdb35331349354b4144384533ea7710db736f3dc61f6cc4d3cf15f",
+    "career/designed/Zain-Dana-Harper-CV.buildtex.json": "586cedc8461bfb32ff3532316932e0c407ab048587e020400677e5a6c7128592",
+    "career/designed/Zain-Dana-Harper-CV.pdf": "a7b8b4dd4d4b0ac3045e53f085afd0ed153539ff5878adabcf701ed78ed0df9a",
+    "career/designed/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.buildtex.json": "7f9fd5c92bedb8c9c704cc06e8e1c09d9cb97eef7ebc7d95c53b0c36170d4686",
+    "career/designed/Zain-Dana-Harper-Resume-Graphics-Developer-Tools.buildtex.json": "428e44d5a3b685e5c4beb2a6bea5a3a37331b7f677b5ab4ab29cc9fd9b4a0e9a",
+    "career/designed/Zain-Dana-Harper-Resume-Grounds.buildtex.json": "1a072c93561579fa847d2f2e4673356ea737ef1c07733a868ef02d4c7b1d672a",
+    "career/designed/Zain-Dana-Harper-Resume-Public-Operations.buildtex.json": "e7aaaedc9f21a905cfe1f8a2d2f4b09ba5d09922471509fd59c89ae51bade13c",
+    "career/designed/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.buildtex.json": "1c4783440939d218f912d48ec3250323a91c209587d6cb75d3c6f6efa7f622b2",
+    "career/published-work.json": "dc35a85bf5548e391f32744ba4e83eb95e2fce765dfbdf524ec2b67545171c3d",
+    "cv.html": "e09ca9e4482058bd082782b42935d72cd0735c25df9359d9284dc4cd1d089e59",
+    "cv.md": "bd3638c9dc6dfaea4fc162fde134bf24d1a42a4cde535a355a082cbb78f01cd9",
+    "index.html": "a445994f9d5e115bb5c1e2eb36712aeea9317b6448bd73c6389b31dca37d294f",
+    "publications.html": "474e3cec2a68e4ffafe48a7f8b7bb58dfb4081601b704b3fc1bf293ebc691298",
+    "publications/build.json": "7205edecb1e1e9d50ab760314c3369e35e84931fd9575902666bf4dc7f06570c",
+    "publications/data/papers.json": "ff76c2d7b2e7d9c10d8ab94e74bcc936aeb96ca5a610fab9e1ef72b01ce7ddd4",
+    "published-work.html": "a3d76bc9f910a43bb4133e3f50cca3e40e5c1611ad448a733ca109d0962d6474"
+  }
+}

@@ -17,6 +17,8 @@ from __future__ import annotations
 import re
 from datetime import date
 
+from tools.deposits import version_doi
+
 AUTHOR = "Zain Dana Harper"
 YEAR = "2026"
 LICENSE = "CC BY 4.0"
@@ -34,10 +36,12 @@ RECORDS: dict[str, tuple[str | None, str, str, str | None]] = {
     "faithfulness-conserved-quantity": ("10.5281/zenodo.22768398", "2026-09-15", "Zenodo, first version", None),
     "conferred-existence": ("10.5281/zenodo.20773724", "2026-06-20", "Zenodo, first version", None),
     "witnessing-spine": ("10.5281/zenodo.20778927", "2026-06-20", "Zenodo, first version", None),
-    "arity-gap": ("10.5281/zenodo.23126117", "2026-09-15", "Zenodo, first version (10.5281/zenodo.22768629)", None),
-    "forcing-argument": ("10.5281/zenodo.23126357", "2026-09-15", "Zenodo, first version (10.5281/zenodo.22768809)", None),
-    "self-given": ("10.5281/zenodo.23126458", "2026-09-15", "Zenodo, first version (10.5281/zenodo.22768919)", None),
-    "conservation-of-faithfulness": ("10.5281/zenodo.23126484", "2026-06-30",
+    # The four October editions take their version DOI from papers/deposits.json (tools/deposits.py).
+    "arity-gap": (version_doi("arity-gap"), "2026-09-15", "Zenodo, first version (10.5281/zenodo.22768629)", None),
+    "forcing-argument": (version_doi("forcing-argument"), "2026-09-15",
+                         "Zenodo, first version (10.5281/zenodo.22768809)", None),
+    "self-given": (version_doi("self-given"), "2026-09-15", "Zenodo, first version (10.5281/zenodo.22768919)", None),
+    "conservation-of-faithfulness": (version_doi("conservation-of-faithfulness"), "2026-06-30",
                                      "site commit 450a8c4d, research-conservation-of-faithfulness.html", None),
     "conferred-existence-paper": (None, "2026-06-30", "site commit 450a8c4d, research-conferred-existence.html",
                                   "research-conferred-existence.html"),

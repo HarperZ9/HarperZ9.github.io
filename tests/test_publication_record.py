@@ -31,17 +31,27 @@ RECORD = {
     # records first deposited 15 September 2026). Since that day the record holds thirteen
     # DOI records, one per Zenodo concept, read from the Zenodo API and from
     # system/scholarly-records.json.
-    "10.5281/zenodo.23126117": "philosophy paper",
-    "10.5281/zenodo.23126357": "philosophy paper",
-    "10.5281/zenodo.23126458": "philosophy paper",
-    "10.5281/zenodo.23126484": "working paper",
+    # 15 November 2026: each of the four records took a new version, the LaTeX typeset of the
+    # same edition, and the site cites that version. The four DOIs below changed for that
+    # reason; the record still holds thirteen, one per concept.
+    "10.5281/zenodo.24238724": "philosophy paper",
+    "10.5281/zenodo.24238743": "philosophy paper",
+    "10.5281/zenodo.24238749": "philosophy paper",
+    "10.5281/zenodo.24238755": "working paper",
+}
+# The all-versions (concept) DOI of each October paper, printed beside its version DOI.
+ALL_VERSIONS = {
+    "10.5281/zenodo.24238724": "10.5281/zenodo.22768628",
+    "10.5281/zenodo.24238743": "10.5281/zenodo.22768808",
+    "10.5281/zenodo.24238749": "10.5281/zenodo.22768918",
+    "10.5281/zenodo.24238755": "10.5281/zenodo.23126483",
 }
 # Each October edition is also cited by its own landing page.
 OCTOBER_EDITIONS = {
-    "10.5281/zenodo.23126117": "research-arity-gap.html",
-    "10.5281/zenodo.23126357": "research-forcing-argument.html",
-    "10.5281/zenodo.23126458": "research-self-given.html",
-    "10.5281/zenodo.23126484": "research-conservation-of-faithfulness.html",
+    "10.5281/zenodo.24238724": "research-arity-gap.html",
+    "10.5281/zenodo.24238743": "research-forcing-argument.html",
+    "10.5281/zenodo.24238749": "research-self-given.html",
+    "10.5281/zenodo.24238755": "research-conservation-of-faithfulness.html",
 }
 STATUS_PHRASE = {
     "systems paper": "systems paper",
@@ -64,11 +74,22 @@ def dois(source: str) -> set[str]:
 
 def test_publications_lists_the_whole_record() -> None:
     src = read("publications.html")
-    assert dois(src) == set(RECORD), "publications.html and the deposited record disagree"
+    assert dois(src) == set(RECORD) | set(ALL_VERSIONS.values()), "publications.html and the deposited record disagree"
     scholarly = json.loads(read("system/scholarly-records.json"))["records"]
     assert {r["doi"] for r in scholarly} == set(RECORD), "scholarly-records.json and the record disagree"
+    deposits = json.loads(read("papers/deposits.json"))["papers"]
+    assert {d["version_doi"]: d["concept_doi"] for d in deposits.values()} == ALL_VERSIONS
+    by_doi = {r["doi"]: r for r in scholarly}
+    rows = re.findall(r'<div class="index-row" role="listitem".*?</div>', src, re.S)
+    for version, concept in ALL_VERSIONS.items():
+        assert by_doi[version]["concept_doi"] == concept
+        row = next(r for r in rows if version in r)
+        assert f'href="https://doi.org/{concept}"' in row, f"{version}: its row has no all-versions link"
     for doi, page in OCTOBER_EDITIONS.items():
         assert f'<meta name="citation_doi" content="{doi}">' in read(page), page
+        landing = read(page).split('id="revision"', 1)[1].split("</aside>", 1)[0]
+        assert f"doi.org/{doi}" in landing and f"doi.org/{ALL_VERSIONS[doi]}" in landing, page
+        assert "LaTeX typeset of the edition of 3 October 2026" in landing and "<b>Verified</b>" in landing, page
 
 
 def test_each_doi_keeps_its_exact_record_status() -> None:

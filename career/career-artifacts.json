@@ -121,24 +121,24 @@
       "sha256": "836df880dbead89087b48e29b63f938dd06e3988095c72458402f6d3198e49ca"
     },
     {
-      "byte_length": 22930,
-      "extraction_sha256": "6eae7ee5d8964aa90aafab54ed6b69e126ed6131541c1cf14cbbfabfd20fe45b",
+      "byte_length": 22927,
+      "extraction_sha256": "e51fa71905eb774e8b62495b5a1116b221d8815a597004081ab37114dd62b9eb",
       "format": "pdf",
       "lane_id": "page:cv",
       "mime_type": "application/pdf",
       "page_count": 7,
       "path": "career/Zain-Dana-Harper-CV.pdf",
-      "sha256": "844af609e05734af8ff36b952f426b333e8a65377fc4ac0f80267698c819f127"
+      "sha256": "bc045a633914a6772e6f59a527525351cd7433eaeaf1cf4da713e4630deb3d11"
     },
     {
-      "byte_length": 48284,
-      "extraction_sha256": "e9e16ed94677de28f5e4fa4ae9c8bc090e2d277f2e0fac97e72cfee3dd3e8787",
+      "byte_length": 48285,
+      "extraction_sha256": "70cadaa343e3b92592c5e0cdc552e1bcc544cea8659c34554d5b3776f31d1cf8",
       "format": "docx",
       "lane_id": "page:cv",
       "mime_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
       "page_count": null,
       "path": "career/Zain-Dana-Harper-CV.docx",
-      "sha256": "d67c10fe8ee69cb29b15d59ff716430f2579c933bd5469f0d3e808354f3ad24e"
+      "sha256": "41cac6bcee43e983d1fda72922776f6d2cb775c2fb452954107aba1887ffbcfe"
     },
     {
       "byte_length": 4387,
@@ -205,13 +205,13 @@
     },
     {
       "byte_length": 36968,
-      "extraction_sha256": "e9e16ed94677de28f5e4fa4ae9c8bc090e2d277f2e0fac97e72cfee3dd3e8787",
+      "extraction_sha256": "70cadaa343e3b92592c5e0cdc552e1bcc544cea8659c34554d5b3776f31d1cf8",
       "format": "html",
       "lane_id": "page:cv",
       "mime_type": "text/html; charset=utf-8",
       "page_count": null,
       "path": "cv.html",
-      "sha256": "8d5fa32081918543cbbdb677135c0e8b17da1795355a3715ddae17be8b08160f"
+      "sha256": "e09ca9e4482058bd082782b42935d72cd0735c25df9359d9284dc4cd1d089e59"
     },
     {
       "byte_length": 4650,

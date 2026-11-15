@@ -132,7 +132,14 @@ def test_publications_keeps_eight_doi_records_and_adds_the_briefing() -> None:
     publications = read("publications.html")
     # Thirteen DOI records: the eight from June and July 2026, the formal note of 15 September
     # 2026 and the four October 2026 editions (3 October 2026).
-    assert len(set(re.findall(r"10\.5281/zenodo\.\d+", publications))) == 13
+    # 15 November 2026: each of the four October papers took a new Zenodo version, and its row
+    # now also links the all-versions DOI. The page still lists thirteen records; the four
+    # all-versions DOIs are counted apart so that a fourteenth record cannot hide among them.
+    found = set(re.findall(r"10\.5281/zenodo\.\d+", publications))
+    all_versions = {"10.5281/zenodo.22768628", "10.5281/zenodo.22768808", "10.5281/zenodo.22768918",
+                    "10.5281/zenodo.23126483"}
+    assert all_versions <= found
+    assert len(found - all_versions) == 13
     assert 'href="/briefings/2026-08-26-openai-hugging-face-incident/"' in publications
     assert 'href="briefings/"' in publications
     assert 'href="feed.xml"' in publications

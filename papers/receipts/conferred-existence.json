@@ -13,7 +13,7 @@
     "site_inputs": {
       "tools/corpus_latex.py": "487dcec591aedf980b3649f836604b2a44e2f45ab9f14fe8a7d2ae99ee2d25b8",
       "tools/corpus_corrections.py": "2ae9bacf2883fdaabdcd19c2ac7f127ca7e47ebbaa8070b733d924f30be68d52",
-      "tools/attribution.py": "8fc3857ed71e7c0d7ca10cfc2d1a0a758e572c16b61242d1f2c6a4b8233bac00"
+      "tools/attribution.py": "7476110106580ef384eb28882aa8510a64adac214f7a3f423b0003476a40d0f7"
     }
   },
   "engine": {
