@@ -49,7 +49,7 @@ export function pageText(ledger, address, site = SITE) {
 }
 
 // Tracked folders and files that GitHub Pages does not serve (_config.yml), so they are not addresses.
-const NOT_SERVED = [/^home\//, /^tests\//, /^docs\//, /^img\/og\/_card\.html$/, /(^|\/)[_.][^/]*/, /(^|\/)node_modules\//];
+const NOT_SERVED = [/^home\//, /^tests\//, /^docs\//, /^tools\//,/^img\/og\/_card\.html$/, /(^|\/)[_.][^/]*/, /(^|\/)node_modules\//];
 export const isServed = (file) => !NOT_SERVED.some((re) => re.test(file));
 
 export const addressOf = (file) => "/" + file.replace(/(^|\/)index\.html$/, "$1");
@@ -116,7 +116,7 @@ export function validate(ledger, site = SITE, pages = servedPages(site)) {
       if (!r.to) problems.push(`${at}: a moved row names its target in "to"`);
       if (!/^\d{4}-\d{2}-\d{2}$/.test(r.moved || "")) problems.push(`${at}: a moved row has the date it moved in "moved"`);
       if (at.includes("#")) problems.push(`${at}: a moved row is a page address, with no place in it`);
-      else if (existsSync(path.join(site, fileOf(r.path)))) problems.push(`${at}: a moved row has no file, and ${fileOf(r.path)} exists (delete the file, or give the row its kind back)`);
+      else if (isServed(fileOf(r.path)) && existsSync(path.join(site, fileOf(r.path)))) problems.push(`${at}: a moved row has no file, and ${fileOf(r.path)} exists (delete the file, or give the row its kind back)`);
       continue;
     }
     const html = read(r.path);
