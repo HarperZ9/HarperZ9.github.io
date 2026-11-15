@@ -105,6 +105,8 @@ export const LOOSE = Object.freeze([
   loose('system/loom-studio.js', 'The loom: an image to threading, tie-up and treadling', ['weave'], 'runs on the loom page and inside the Studio; the bench reaches its engine and renderer, not its page controller'),
   loose('system/exporters-disciplines.js', 'Exports by discipline: plotter, knitting chart, palette, relief', ['plot', 'fabricate', 'export'], 'its palette writer, under Take it with you (take-files.mjs)', 'recipe'),
   loose('system/relief-stl.js', 'Watertight STL from a height map', ['fabricate'], 'the well leaves as a relief to print, under Take it with you', 'recipe'),
+  loose('system/shader-runner.js', 'Live GLSL sandbox: a fragment shader compiled and run on a canvas, errors by line', ['render', 'field'], 'the shader room on The Playground is built on it', 'shader'),
+  loose('system/shader-presets.js', 'Shader preset library: 254 fragment shaders in 38 groups', ['render', 'field'], 'offered in the shader room on a press of its own', 'shader'),
   loose('system/plotter.js', 'Pen plotter: a picture to pen lines, SVG and G-code', ['plot', 'export'], 'the well leaves as a plot and as plotter moves, under Take it with you, with the bench’s own header', 'recipe'),
   loose('system/plot-maps.js', 'Plot maps: terrain and ridgelines for a pen', ['plot', 'geometry'], 'the Plot map lane reads the well as terrain', 'ridges'),
   loose('system/voxel-forge.js', 'Voxel scenes and files', ['fabricate', 'render'], 'the Cubes lane paints the well in cubes and saves a .vox file (with system/voxel.js)', 'voxels'),
@@ -138,6 +140,8 @@ export const SURFACES = Object.freeze({
   recipe: S('recipe', 'Recipe', ['system/graph', 'world/studio'], ['export', 'math'], ['elements', 'settings', 'blend'], ['graph', 'json'], './recipe.mjs'),
   // Rooms: a folded page as one module. A room opens on its own press (rooms.mjs) and reads no element table.
   forge: S('forge', 'The type forge', ['system/type-forge'], ['type'], ['palette'], ['text', 'font', 'svg'], './room-forge.mjs', { table: false, room: 'type' }),
+  // The shader room: the live GLSL sandbox (system/shader-runner.js) with a text area around it. It reads no element table.
+  shader: S('shader', 'The shader', ['world/site'], ['render', 'field', 'plot', 'fabricate', 'export'], ['palette', 'image'], ['image', 'png', 'svg', 'gcode'], './room-shader.mjs', { table: false, room: 'shader' }),
   // The sound room: the site music (system/site-music) played and rendered in the tab. Its instruments run in a worker
   // (worker.js, piece.worker.js), which the room names by address; the census follows that address, so the row is heavy.
   sound: S('sound', 'Sound', ['system/site-music', 'world/sound'], ['sound', 'export'], ['blend', 'text'], ['score', 'wav'], './room-sound.mjs', { table: false, room: 'sound', weight: 'heavy' }),

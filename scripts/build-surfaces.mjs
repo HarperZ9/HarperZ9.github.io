@@ -16,6 +16,7 @@ import { labelFor } from "./demo-labels.mjs";
 import registry from "../world/site/surfaces/registry.mjs";
 import { indexElements } from "../world/site/surfaces/elements-data.mjs";
 import { studioBlend } from "../world/site/surfaces/surface-blend.mjs";
+import { FILES } from "../world/site/surfaces/take-files.mjs";
 import { motion } from "../world/studio/lib/lanes/motion.mjs";
 
 const site = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
@@ -54,9 +55,14 @@ function exchange(m) {
   const sb = studioBlend(ix, x.elements, null), mo = motion(sb.material), pts = mo.samples(48), names = sb.parts.map((p) => p.name);
   const technique = sb.material.hints.type.technique;
   // what the press loads: the page controller, the modules' files, the element table and the modules' stylesheet
-  const first = reach("world/site/surfaces/surface-page.mjs"); for (const id of x.modules) reach(adapter(id), first);
+  // the file writers (take-files.mjs) are brought in by the first file that needs them, so they are not part of this press
+  const TAKE = "world/site/surfaces/take-files.mjs", first = reach("world/site/surfaces/surface-page.mjs", new Set([TAKE])); first.delete(TAKE);
+  for (const id of x.modules) reach(adapter(id), first);
   const startBytes = bytes(first) + readFileSync(path.join(site, TABLE)).length + readFileSync(path.join(site, BENCH_CSS)).length;
   const press = x.press.map((id) => { const more = [...reach(adapter(id))].filter((f) => !first.has(f)); return { id, name: registry.SURFACES[id].name, bytes: bytes(more) }; });
+  // the picture last handed on leaves as files; the writers load on the first file that needs them
+  const takeBytes = bytes([...reach(TAKE)].filter((f) => !first.has(f)));
+  const takes = [["png", "Picture (.png)"], ...FILES.filter((f) => f.kind !== "palette-gpl").map((f) => [f.kind, `${f.label} (.${f.ext.split(".").pop()})`])];
   const manifest = { surface: m.id, elements: x.elements, modules: x.modules, sends: x.sends, css: `/${BENCH_CSS}` };
   const takers = (medium) => list(x.modules.filter((id) => id !== x.sends[0][0] && registry.SURFACES[id].takes.includes(medium)).map((id) => registry.SURFACES[id].name));
   return `<section class="sx" id="${x.anchor}" aria-labelledby="${x.anchor}-h">
@@ -75,7 +81,8 @@ ${labelFor(x.demo)}
 <p class="sx-say" id="sx-say" role="status" aria-live="polite">When it runs, ${esc(registry.SURFACES[x.sends[0][0]].name.toLowerCase())} hands ${list(x.sends.map(([, medium]) => `${medium === "blend" ? "its blend" : `a ${medium}`} to ${takers(medium)}`))}, and this line says so each time.</p>
 <details class="sx-rec" id="sx-rec" hidden><summary>This value's record</summary><dl></dl></details>
 <div id="sx-hosts" data-surface="${x.modules.join(" ")}" data-elements="${x.elements.join(" ")}" tabindex="-1" role="group" aria-label="${esc(x.heading)}" hidden></div>
-<div id="sx-more" hidden>${press.map((p) => `<p class="sx-go"><button type="button" data-sx-press="${p.id}">Add ${esc(p.name.toLowerCase())}</button><span>Loads ${size(p.bytes)} more. It stirs the same blend.</span></p>`).join("")}</div>
+<div id="sx-more" hidden>${press.map((p) => `<p class="sx-go"><button type="button" data-sx-press="${p.id}">Add ${esc(p.name.toLowerCase())}</button><span>Loads ${size(p.bytes)} more. ${registry.SURFACES[p.id].takes.includes("image") ? "That is the most it costs; the loom, the plot map and the cubes share their files. It draws the last picture handed on." : "It stirs the same blend."}</span></p>`).join("")}</div>
+<p class="sx-go" id="sx-take" hidden><span id="sx-take-of"></span>${takes.map(([kind, label]) => `<button type="button" data-sx-file="${kind}">${esc(label)}</button>`).join("")}<span data-take-bytes="${takeBytes}">The picture is saved as it stands. Pen lines, plotter moves and a relief load ${size(takeBytes)} the first time.</span></p>
 <script type="application/json" id="sx-manifest">${JSON.stringify(manifest).replace(/</g, "\\u003c")}</script>
 </section>`;
 }
