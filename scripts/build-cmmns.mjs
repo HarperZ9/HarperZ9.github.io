@@ -12,6 +12,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { esc } from "./studies-markdown.mjs";
 import { page } from "./studies-shell.mjs";
+import { labelFor } from "./demo-labels.mjs";
 
 const site = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const tool = JSON.parse(readFileSync(path.join(site, "discover.json"), "utf8")).tools.find((t) => t.name === "CMMNS");
@@ -38,6 +39,7 @@ const body = `<article class="tool">
 
 <section id="try" class="ct" data-commons-try aria-labelledby="h-try">
 <h2 id="h-try">Try it on your own words</h2>
+${labelFor("cmmns-try")}
 <p>Paste a post or a passage and CMMNS reads its wording here, in this browser. Each finding is marked in your text and explained beside it: what it shows, how it was reached and what it does not show. Nothing you paste or pick is sent anywhere.</p>
 <label class="ct-label-for" for="ct-text">Text to read</label>
 <textarea id="ct-text" rows="5" spellcheck="false" placeholder="Paste a post, a reply or a paragraph"></textarea>

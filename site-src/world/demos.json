@@ -1,0 +1,236 @@
+{
+ "format": "site.demos/1",
+ "about": "Every demonstration on the site and the form it takes. scripts/demo-labels.mjs writes each row's label onto its page; tests/test_demo_labels.py checks the labels and the evidence records.",
+ "forms": {
+  "live": "The code runs in the visitor's browser now, on what the visitor gives it.",
+  "replay": "A recorded run, stepped through or checked again in the visitor's browser. Needs an evidence record.",
+  "captured": "Output recorded once and shown as recorded. Nothing on the page runs the tool. Needs an evidence record."
+ },
+ "evidence": "date (ISO day of the run), command (as written in the record), file (the committed record), sha256 (of that file). commandIn names another committed file when the command is written there.",
+ "modules": {
+  "bench": "live",
+  "well": "live",
+  "chart": "live",
+  "blend": "live",
+  "motion": "live",
+  "lettering": "live",
+  "plot": "live",
+  "plate": "live",
+  "glass": "live",
+  "living": "live",
+  "loom": "live",
+  "ridges": "live",
+  "voxels": "live",
+  "recipe": "live"
+ },
+ "modulesWithoutDemo": {
+  "sound": "a named place in the registry with nothing mounted behind it"
+ },
+ "rows": [
+  {
+   "id": "bench",
+   "page": "/elements.html",
+   "form": "live",
+   "what": "The front bench: an element runs in the well from its own measurements.",
+   "modules": [
+    "bench"
+   ]
+  },
+  {
+   "id": "swatches-well",
+   "page": "/swatches.html",
+   "form": "live",
+   "what": "Pigment, ink and paper share one well, with the plate and the chart beside it.",
+   "modules": [
+    "well",
+    "plate",
+    "chart"
+   ]
+  },
+  {
+   "id": "accession-type",
+   "page": "/accession.html",
+   "form": "live",
+   "what": "Type, ink and paper blended: living type, lettering, the timing curve and a well.",
+   "modules": [
+    "living",
+    "lettering",
+    "motion",
+    "well"
+   ]
+  },
+  {
+   "id": "distill",
+   "page": "/playground/distill.html",
+   "form": "live",
+   "what": "Distill takes a file, an archive or a folder apart in the tab."
+  },
+  {
+   "id": "cmmns-try",
+   "page": "/cmmns.html#try",
+   "form": "live",
+   "what": "CMMNS reads the wording of a pasted passage in the browser."
+  },
+  {
+   "id": "raw-render",
+   "page": "/raw.html#live-h",
+   "form": "live",
+   "what": "The 0.4.0 browser build of the native renderer draws a frame and writes its certificate."
+  },
+  {
+   "id": "emet-witness",
+   "page": "/demo-emet.html#try-h",
+   "form": "live",
+   "what": "The byte witness hashes the visitor's text or file and compares it with a stored target."
+  },
+  {
+   "id": "crucible-workflow",
+   "page": "/demo-crucible.html",
+   "form": "captured",
+   "what": "Crucible measures a draft, the draft is refined, and the same thesis is measured again.",
+   "evidence": {
+    "date": "2026-07-12",
+    "command": "python -m crucible run thesis.json --substrate substrate-draft.json --registry registry-draft --bundle bundle-draft",
+    "file": "media/demos/crucible/transcript.txt",
+    "sha256": "70e41be8880f9dd9d43099b1e5b5190ff03c8d5a02804e764ee17691f214d407"
+   }
+  },
+  {
+   "id": "forum-workflow",
+   "page": "/demo-forum.html",
+   "form": "captured",
+   "what": "Forum routes one request, runs it in waves against an offline fixture and verifies its ledger.",
+   "evidence": {
+    "date": "2026-07-12",
+    "command": "forum ledger verify --ledger <DEMO_DIR>/ledger",
+    "file": "media/demos/forum/transcript.txt",
+    "sha256": "507a167629f1ce7c0604a8c8503c4e009231ab72da300179759782d6b32e1a8a"
+   }
+  },
+  {
+   "id": "gather-workflow",
+   "page": "/demo-gather.html",
+   "form": "captured",
+   "what": "Gather extracts a page, stores it by content hash and verifies the corpus.",
+   "evidence": {
+    "date": "2026-07-12",
+    "command": "python -m gather corpus verify <DEMO_DIR>/corpus --json",
+    "file": "media/demos/gather/transcript.txt",
+    "sha256": "4f5d0f46fd7258ca55ea33534080d02cfbfe4e4327ab820575b55651be8a5f74"
+   }
+  },
+  {
+   "id": "index-workflow",
+   "page": "/demo-index.html",
+   "form": "captured",
+   "what": "Index maps three repositories and verifies one dependency claim.",
+   "evidence": {
+    "date": "2026-07-12",
+    "command": "python -m index_graph verify --root .\\workspace --depends \"operator-console -> routing-service\"",
+    "file": "media/demos/index/raw-terminal-sanitized.txt",
+    "sha256": "487784968077e8f8c208b35861be1c0a5ca101a98f30e1af288fd1e77c0d8da3"
+   }
+  },
+  {
+   "id": "flywheel-tamper",
+   "page": "/demo-flywheel.html",
+   "form": "captured",
+   "what": "Two chained receipts are sealed and verified, one byte is changed, and the verifier refuses.",
+   "evidence": {
+    "date": "2026-08-04",
+    "command": "tamper-demo",
+    "file": "artifacts/flywheel-tamper-demo-2026-08-04.txt",
+    "sha256": "47cc1e7fda31e803b8bab3536fe9c8ce7762822b6be2ab9480cec5cf94dc4e78"
+   }
+  },
+  {
+   "id": "flywheel-surface",
+   "page": "/demo-flywheel.html",
+   "form": "captured",
+   "what": "A picture of the Flywheel gateway page with its endpoint table.",
+   "evidence": null,
+   "needs": [
+    "command",
+    "sha256"
+   ],
+   "has": {
+    "date": "2026-08-04",
+    "file": "media/demos/flywheel/flywheel-app-console.png"
+   }
+  },
+  {
+   "id": "flywheel-output-check",
+   "page": "/flywheel.html#demo",
+   "form": "captured",
+   "what": "Flywheel checks three prepared answers against a record: one held as wrong, one released, one held as uncited.",
+   "evidence": {
+    "date": "2026-09-05",
+    "command": "python PATH_TO_FLYWHEEL/scripts/run_output_check.py --contract task.contract.json --answer answer-wrong.json --json",
+    "file": "media/flywheel-output-check-20260905/report-wrong.json",
+    "sha256": "0fd1badaffe43387f9edc52bd4bd60269d9c76b9188eee76f280e87c95d8a45c",
+    "commandIn": "media/flywheel-output-check-20260905/README.md"
+   }
+  },
+  {
+   "id": "crucible-cleanroom",
+   "page": "/demos/crucible-cleanroom/",
+   "form": "captured",
+   "what": "A review packet for one thesis with a MATCH, a DRIFT and an UNVERIFIABLE verdict.",
+   "evidence": null,
+   "needs": [
+    "date",
+    "command"
+   ],
+   "has": {
+    "file": "demos/crucible-cleanroom/crucible-cleanroom-demo.zip"
+   }
+  },
+  {
+   "id": "articulate-output",
+   "page": "/articulate.html#example-title",
+   "form": "captured",
+   "what": "Articulate's findings on one sample sentence and on its rewrite.",
+   "evidence": null,
+   "needs": [
+    "file",
+    "sha256"
+   ],
+   "has": {
+    "date": "2026-11-12",
+    "command": "articulate check notes.md"
+   }
+  }
+ ],
+ "notYetLabelled": [
+  {
+   "page": "/findings/",
+   "what": "live figures and kernels on finding pages (F310's kernel among them)",
+   "why": "finding pages are being republished by another change; the labels land with the Research surface"
+  },
+  {
+   "page": "/",
+   "what": "three recorded outputs in the home panels (buildc check, a Flywheel verdict, articulate check)",
+   "why": "lands with the door"
+  },
+  {
+   "page": "/night-school.html",
+   "what": "the night school labs, 32 pages of live lessons",
+   "why": "not inventoried in this pass"
+  },
+  {
+   "page": "/studio.html",
+   "what": "the Studio and the tool pages beside it (loom, type forge, gallery, glass and water, the sound page, site music)",
+   "why": "not inventoried in this pass"
+  },
+  {
+   "page": "/explainers.html",
+   "what": "explainer films and repository explainers",
+   "why": "not inventoried in this pass"
+  },
+  {
+   "page": "/emet-sample.html",
+   "what": "sample report pages (emet, proof index, proof surface, public surface sweeper)",
+   "why": "not inventoried in this pass"
+  }
+ ]
+}
