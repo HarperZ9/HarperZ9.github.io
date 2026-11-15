@@ -6,7 +6,7 @@
 // world/site/work.js turns them into one panel at a time, chosen from the list or the dial, with deep links (/#w-engine).
 
 import { readFileSync } from "node:fs";
-import { differenceWords, partsWords, barOf } from "../../world/site/distill/picture.mjs";
+import { differenceWords, partsWords, onPicture } from "../../world/site/distill/picture.mjs";
 
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const pic = (base, w, h, alt, cls = "") =>
@@ -26,12 +26,6 @@ const BOW = JSON.parse(readFileSync(new URL("./distill-bow.json", import.meta.ur
 const lum = (hex) => { const c = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255); return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]; };
 const strip = () => `<ol class="w-strip" aria-label="The swatches, by share of the picture">${BOW.swatches.map(({ hex, share }) =>
   `<li style="--c:${hex};--s:${share || 0.1};--on:${lum(hex) > 0.4 ? "#0d0b12" : "#f4f2f8"}"><span class="w-chip" aria-hidden="true"></span><code>${hex}</code> <span>${share.toFixed(1)}%</span></li>`).join("")}</ol>`;
-// the hue circle as bars: drawn here from the record, redrawn on a canvas by picture-panel.js after a live run
-const spectrum = () => {
-  const n = BOW.spectrum.length, w = 720 / n, lead = BOW.spectrum.reduce((a, b) => (b.weight > a.weight ? b : a));
-  return `<svg viewBox="0 0 720 120" role="img" aria-label="Where the colour sits around the hue circle, in ${n} steps. The strongest step is at ${lead.hue} degrees.">${BOW.spectrum.map((s, i) => (s.weight ? `<rect x="${(i * w + 1).toFixed(1)}" y="${(120 - Math.max(2, barOf(s.weight) * 116)).toFixed(1)}" width="${(w - 2).toFixed(1)}" height="${Math.max(2, barOf(s.weight) * 116).toFixed(1)}" fill="${s.hex}"/>` : "")).join("")}</svg>`;
-};
-
 // Distill, inside The Playground: one picture followed through four stages, each named on the stage itself.
 const distill = () => `<div class="ds4" id="w-distill" data-distill-picture data-example="/media/world/work/bow-source-640.webp">
           <p class="ds4-what"><b>Distill</b> breaks a thing into its original pieces, so it can be digested, studied, reproduced, and used as the input for something new. Here it takes a picture apart by colour.</p>
@@ -40,16 +34,15 @@ const distill = () => `<div class="ds4" id="w-distill" data-distill-picture data
               <div data-slot="source">${pic("/media/world/work/bow-source", 1651, 929, "A rainbow over a grey ground: the render Distill takes apart.")}</div>
               <p data-words="source">A rendered rainbow, read at ${BOW.width} by ${BOW.height} pixels.</p></li>
             <li><h3><span class="w-num" aria-hidden="true">2</span> Its pieces</h3>
-              <div data-slot="spectrum" class="ds4-spectrum">${spectrum()}</div>
-              <p>Where its colour sits around the hue circle, red at the left through green and blue to red again: a taller bar means more of that hue.</p>
-              ${strip()}
-              <p data-words="parts">${esc(partsWords(BOW))}</p></li>
+              <div class="ds4-on"><div data-slot="onpicture">${pic("/media/world/work/bow-source", 1651, 929, `The picture with what Distill took out laid on it: a core of its colours along the centre line, and its ${BOW.swatches.length} swatches across it by share.`)}</div><span data-overlay>${onPicture(BOW)}</span></div>
+              <p data-words="parts">${esc(partsWords(BOW))}</p>
+              ${strip()}</li>
             <li><h3><span class="w-num" aria-hidden="true">3</span> Rebuilt from the pieces</h3>
               <div class="w-pair"><figure><div data-slot="original">${pic("/media/world/work/bow-source", 1651, 929, "The original picture.")}</div><figcaption>Original</figcaption></figure>
-              <figure><div data-slot="rebuilt"><img src="/media/world/work/bow-rebuilt-640.png" width="${BOW.width}" height="${BOW.height}" loading="lazy" decoding="async" alt="The same rainbow rebuilt from its ${BOW.swatches.length} swatches alone: flat bands where the original shades smoothly."></div><figcaption>From the swatches alone</figcaption></figure></div>
+              <figure><div data-slot="rebuilt"><img src="/media/world/work/bow-rebuilt-640.webp" width="${BOW.width}" height="${BOW.height}" loading="lazy" decoding="async" alt="The same rainbow rebuilt from its ${BOW.swatches.length} swatches alone: flat bands where the original shades smoothly."></div><figcaption>From the swatches alone</figcaption></figure></div>
               <p data-words="difference">${esc(differenceWords(BOW.difference, BOW.swatches.length))}</p></li>
             <li><h3><span class="w-num" aria-hidden="true">4</span> Used for something new</h3>
-              <div data-slot="cloth"><img src="/media/world/work/bow-cloth-720.webp" width="${BOW.cloth.width}" height="${BOW.cloth.height}" loading="lazy" decoding="async" alt="The rainbow as woven cloth: a jacquard draft in the picture's own colours."></div>
+              <div data-slot="cloth"><img src="/media/world/work/bow-cloth-480.webp" width="${BOW.cloth.width}" height="${BOW.cloth.height}" loading="lazy" decoding="async" alt="The rainbow as woven cloth: a jacquard draft in the picture's own colours."></div>
               <p>The pieces go on to another medium. The Loom weaves the picture's light and dark as a jacquard draft, ${BOW.cloth.ends} warp ends by ${BOW.cloth.picks} weft rows, in the picture's own colours.</p></li>
           </ol>
           <div class="ds4-own">

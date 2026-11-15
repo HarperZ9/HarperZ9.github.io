@@ -78,18 +78,20 @@ const clipOf = (page, id) => page.evaluate((id) => getComputedStyle(document.que
       swatches: [...document.querySelectorAll('#w-distill .w-strip li')].map((li) => li.textContent.replace(/\s+/g, ' ').trim()),
       parts: document.querySelector('#w-distill [data-words="parts"]').textContent, difference: document.querySelector('#w-distill [data-words="difference"]').textContent,
     }));
-    const shipped = await read();
+    const shipped = await read(), overlayShipped = await page.$eval('#w-distill [data-overlay]', (e) => e.innerHTML);
     assert.ok(shipped.swatches.length >= 2 && /^#[0-9a-f]{6} \d+\.\d%$/.test(shipped.swatches[0]), `swatch rows read as hex and share: ${shipped.swatches[0]}`);
     await page.click('#w-distill [data-run]');
     await page.waitForFunction(() => document.querySelector('#w-distill').dataset.ran === 'example', null, { timeout: 30000 });
     assert.deepEqual(await read(), shipped, 'a live run on the example changed the words the page shipped');
-    const drawn = await page.evaluate(() => Object.fromEntries(['source', 'spectrum', 'original', 'rebuilt', 'cloth'].map((n) => {
+    const drawn = await page.evaluate(() => Object.fromEntries(['source', 'onpicture', 'original', 'rebuilt', 'cloth'].map((n) => {
       const c = document.querySelector(`#w-distill [data-slot="${n}"] canvas`); if (!c) return [n, null];
       const d = c.getContext('2d').getImageData(0, 0, c.width, c.height).data; const seen = new Set(); for (let i = 0; i < d.length; i += 4 * 97) seen.add((d[i] << 16) | (d[i + 1] << 8) | d[i + 2]);
       return [n, { w: c.width, h: c.height, colours: seen.size, label: c.getAttribute('aria-label') }];
     })));
     for (const [n, c] of Object.entries(drawn)) { assert.ok(c && c.w > 0 && c.h > 0, `${n} was not drawn`); assert.ok(c.colours > 1, `${n} is one flat colour`); assert.ok(c.label, `${n} has no text alternative`); }
     assert.ok(drawn.rebuilt.colours <= shipped.swatches.length, 'the rebuild holds a colour that is not a swatch');
+    assert.equal(await page.$$eval('#w-distill [data-overlay] .ds4-shares i', (e) => e.length), shipped.swatches.length, 'one share on the picture for each swatch');
+    assert.equal(await page.$eval('#w-distill [data-overlay]', (e) => e.innerHTML), overlayShipped, 'a live run changed what is laid on the picture');
     assert.match(await page.$eval('#w-distill [data-status]', (e) => e.textContent), /ran in this tab in \d+ milliseconds on the example\. Nothing was uploaded\./);
 
     // 4. a visitor's own picture: two flat colours give two swatches of half each and a rebuild with no difference

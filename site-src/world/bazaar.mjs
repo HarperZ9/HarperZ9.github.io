@@ -15,7 +15,7 @@
 export const PLACES = [
   {
     id: "light", title: "Light and glass", walk: ["aperture", { blades: 7 }], caption: "Glass letters in calm water at a low sun. It opens like an iris.", form: "grain", medium: "thin", living: ["ink", "engraved", "ink"],
-    lead: { kind: "image", src: "/media/world/glass-water/close-1920.webp", w: 1920, h: 1080, alt: "Glass letters spelling light, standing in calm water at a low sun; the horizon bends through them." },
+    lead: { kind: "image", src: "/media/world/glass-water/close-1920.webp", srcset: "/media/world/glass-water/close-960.webp 960w, /media/world/glass-water/close-1920.webp 1920w, /media/world/glass-water/close-3840.webp 3840w", w: 1920, h: 1080, alt: "Glass letters spelling light, standing in calm water at a low sun; the horizon bends through them." },
     laws: ["law-snell", "law-thin-film", "law-beer-absorption"],
     ways: [["/glass-water.html", "Glass and water, live"], ["/world/glass/index.html", "Glass, liquid and tube"], ["/world/playbook/examples/caustic.html", "Caustic"], ["/world/ui/directions/cs-max/flywheel.html", "Flywheel in light"]],
   },
@@ -51,13 +51,13 @@ export const PLACES = [
   },
   {
     id: "motion", title: "Motion and film", walk: ["filmGate", { frames: 3 }], caption: "Muybridge’s cockatoo, 1887, held as a living still. It is pulled into the gate a frame at a time.", form: "stroke", medium: "medium", living: ["ink", "charcoal", "ink"],
-    lead: { kind: "living", src: "/world/ui/assets/muybridge-758-720.webp", srcset: "/world/ui/assets/muybridge-758-720.webp 720w, /world/ui/assets/muybridge-758-1600.webp 1600w", w: 720, h: 402, alt: "Muybridge's cockatoo in flight, Animal Locomotion plate 758 (1887), held as a living still." },
+    lead: { kind: "living", src: "/world/ui/assets/muybridge-758-720.webp", w: 720, h: 402, alt: "Muybridge's cockatoo in flight, Animal Locomotion plate 758 (1887), held as a living still." },
     laws: ["rule-imperfection-alive", "rule-colour-grade-in-post"],
     ways: [["/explainers.html", "Films"], ["/world/playbook/examples/cadence.html", "Weather, on twos"], ["/night-school.html", "Night School"]],
   },
   {
     id: "exhibit", title: "The exhibit", walk: ["curtain", {}], caption: "Goya, Nobody knows himself. It is unmasked from the centre.", form: "grain", medium: "viscous", living: ["engraved", "ink", "charcoal"],
-    lead: { kind: "living", src: "/world/ui/assets/goya-nobody-720.webp", srcset: "/world/ui/assets/goya-nobody-720.webp 720w, /world/ui/assets/goya-nobody-1600.webp 1600w", w: 720, h: 1137, alt: "Goya's Nobody knows himself: masked figures, held as a living still." },
+    lead: { kind: "living", src: "/world/ui/assets/goya-nobody-720.webp", w: 720, h: 1137, alt: "Goya's Nobody knows himself: masked figures, held as a living still." },
     laws: ["rule-argument-movements", "rule-depth-planes-have-jobs"],
     ways: [["/world/exhibit/index.html", "We are here"], ["/world/exhibit/balance.html", "The false balance"], ["/world/ui/directions/cs-max/exhibit.html", "The Baron's room"]],
   },

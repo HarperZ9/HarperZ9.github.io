@@ -16,7 +16,7 @@
     "night-school": { "server": "stock", "port": 8810, "env": { "BROWSER_CHANNEL": "chrome", "NS_MODES": "2d", "NS_WORKERS": "3" },
       "tests": [["tests/night-school.cjs", 240]] },
     "surfaces": { "server": "lib", "port": 8811, "env": { "BROWSER_CHANNEL": "chrome" },
-      "tests": [["tests/surfaces-bench.cjs", 400], ["tests/surfaces-states.cjs", 250], ["tests/surfaces-bench-paint.cjs", 145], ["tests/surfaces-place.cjs", 150], ["tests/surface-playground.cjs", 40], ["tests/shell-parts.cjs", 45]] },
+      "tests": [["tests/surfaces-bench.cjs", 400], ["tests/surfaces-states.cjs", 250], ["tests/surfaces-bench-paint.cjs", 145], ["tests/surfaces-place.cjs", 150], ["tests/surface-playground.cjs", 40], ["tests/shell-parts.cjs", 45], ["tests/distill-front.cjs", 30]] },
     "fractal": { "server": "stock", "port": 8809, "env": { "BROWSER_CHANNEL": "chrome" },
       "tests": [["tests/fractal-deep.cjs", 20], ["tests/studio-fractal-deep.cjs", 158], ["tests/studio-fractal-formulas.cjs", 86], ["tests/studio-fractal-colour.cjs", 76],
         ["tests/studio-fractal-still.cjs", 22], ["tests/studio-fractal3d.cjs", 78], ["tests/studio-fractal-flight.cjs", 82]] },

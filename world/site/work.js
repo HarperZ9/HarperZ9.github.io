@@ -221,7 +221,7 @@ if (work) {
       x.putImageData(d, 0, 0);
     };
     img.onerror = (e) => console.warn("work: the engraving did not load; the dial shows without it", e);
-    img.src = "/media/front-door/astrolabe-met-1462-640.webp";
+    img.src = "/media/front-door/astrolabe-met-1462-400.webp";   // the engraving is drawn 400 pixels wide
   }
   const later = () => ("requestIdleCallback" in window ? requestIdleCallback(engrave, { timeout: 2500 }) : setTimeout(engrave, 600));
   if (document.readyState === "complete") later(); else addEventListener("load", later, { once: true });

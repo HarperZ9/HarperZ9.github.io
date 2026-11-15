@@ -395,6 +395,10 @@ jobs:
         if: ${{ !cancelled() }}
         working-directory: media/raw-native/web-4edf976
         run: sha256sum -c --strict SHA256SUMS
+      - name: The Playground's Motion and study palette at e025300, taken for the front page, match their SHA256SUMS
+        if: ${{ !cancelled() }}
+        working-directory: media/raw-native/pick-e025300
+        run: sha256sum -c --strict SHA256SUMS
       - name: raw-native web host, Motion and the explainer guides at c6b114d match their SHA256SUMS
         if: ${{ !cancelled() }}
         working-directory: media/raw-native/tree-c6b114d

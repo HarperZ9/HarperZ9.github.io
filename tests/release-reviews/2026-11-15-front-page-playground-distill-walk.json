@@ -1,0 +1,7 @@
+{
+  "date": "2026-11-15",
+  "note": "The front page changes on purpose: the dial lists The Playground first with Distill inside it (seven other pillars follow), the Distill stages are the recorded run of world/site/distill/picture.mjs, each of the ten places gains a caption and a Motion transition, and the ?v= stamps move with the asset revision. Checked on 2026-11-15: tests/distill-front.cjs passes against a local server, the scripted scroll shows no long task in the walk, and the home's head (title, description, cards, structured data) is unchanged apart from the stamps.",
+  "paths": {
+    "index.html": "9a4937d2dbcf7b0839a22347067a9338618a80b453bb833159453836203f730a"
+  }
+}

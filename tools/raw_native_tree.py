@@ -46,7 +46,7 @@ def vendor(repo: Path, sha: str, only: list[str] | None = None) -> Path:
     out = ROOT / "media" / "raw-native" / f"{'pick' if only else 'tree'}-{full[:7]}"
     if out.exists():
         sys.exit(f"{out} exists; a vendored commit is never rewritten in place")
-    tar = subprocess.run(["git", "-C", str(repo), "archive", "--format=tar", full, *(only or PATHS)], capture_output=True, check=True).stdout
+    tar = subprocess.run(["git", "-C", str(repo), "-c", "core.autocrlf=false", "archive", "--format=tar", full, *(only or PATHS)], capture_output=True, check=True).stdout
     sums = []
     with tarfile.open(fileobj=io.BytesIO(tar)) as t:
         for m in t.getmembers():

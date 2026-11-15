@@ -10,6 +10,7 @@ import { rgb8ToLab, lch, dE76, hex } from "../../../media/raw-native/pick-e02530
 export const READ_WIDTH = 640;        // a larger picture is read at this width
 export const STEP = 2.3;              // delta E (CIE76) of about one just noticeable difference
 export const HUE_BINS = 36;
+export const CORE = 48;                // samples along the centre line, top to bottom
 // a bar's height for a hue's weight: the square root, so a thin band of strong colour still shows beside a large
 // field of one hue; a taller bar always means more of that hue
 export const barOf = (weight) => (weight > 0 ? Math.sqrt(weight) : 0);
@@ -32,10 +33,14 @@ export function study(rgba, w, h, { k = 10 } = {}) {
     const [, C, hue] = lch(lab), b = Math.min(HUE_BINS - 1, Math.floor((((hue % 360) + 360) % 360) / (360 / HUE_BINS)));
     hueW[b] += C; chroma += C; const t = hueRgb[b]; t[0] += R * C; t[1] += G * C; t[2] += B * C;
   }
+  // the core: the picture's colours along its centre line, top to bottom, like a core drawn through layers
+  const core = [], cx = Math.floor(w / 2);
+  for (let i = 0; i < CORE; i++) { const p = 4 * (Math.min(h - 1, Math.floor(((i + 0.5) * h) / CORE)) * w + cx); core.push(hex([rgba[p], rgba[p + 1], rgba[p + 2]])); }
   const top = Math.max(...hueW, 1e-9);
   return {
     width: w, height: h, pixels: opaque,
     swatches: pal.swatches.map((s) => ({ hex: s.hex, share: r1(s.share * 100) })),
+    core,
     spectrum: [...hueW].map((v, b) => ({ hue: b * (360 / HUE_BINS), weight: r3(v / top), share: r3(chroma ? v / chroma : 0), hex: v ? hex(hueRgb[b].map((c) => Math.round(c / v))) : "#808080" })),
     difference: opaque ? { mean: r1(sum / opaque), within: r1((within / opaque) * 100), far: r1((far / opaque) * 100), max: r1(max) } : null,
     rebuilt,
@@ -48,7 +53,14 @@ export function differenceWords(d, count = 10) {
   const size = d.mean <= STEP ? "smaller than the smallest step most people can see" : d.mean <= 5 ? "a step you can see when the two sit side by side" : d.mean <= 10 ? "a clear change of colour" : "a large change of colour";
   return `${count === 10 ? "Ten" : count} swatches bring back ${d.within} percent of the picture to within the smallest step most people can see. Across the whole picture the average miss is ${d.mean} (delta E, where ${STEP} is about that smallest step): ${size}. ${d.far === 0 ? "No part" : `${d.far} percent`} of the picture is off by more than 10, and that is the colour ${count === 10 ? "ten" : count} swatches cannot carry.`;
 }
+// What Distill took out, laid on the picture it came from: the core beside its centre line, and the swatches across
+// it, each as wide as its share (the smallest are widened to stay visible). Markup from numbers this file made.
+export function onPicture(s) {
+  const stops = s.core.map((c, i) => `${c} ${((i / s.core.length) * 100).toFixed(2)}% ${(((i + 1) / s.core.length) * 100).toFixed(2)}%`).join(", ");
+  return `<span class="ds4-line" aria-hidden="true"></span><span class="ds4-core" aria-hidden="true" style="background:linear-gradient(to bottom, ${stops})"></span>` +
+    `<span class="ds4-shares" aria-hidden="true">${s.swatches.map((x) => `<i style="background:${x.hex};flex-grow:${Math.max(x.share, 2.5)}"></i>`).join("")}</span>`;
+}
 export function partsWords(s) {
   const lead = s.swatches[0];
-  return `${s.swatches.length} swatches. The largest, ${lead.hex}, covers ${lead.share} percent of the picture.`;
+  return `On the picture: its colours along the centre line, drawn out as a core at the right edge, and its ${s.swatches.length} swatches laid across it, each as wide as its share. The largest, ${lead.hex}, covers ${lead.share} percent of the picture.`;
 }
