@@ -4,6 +4,17 @@
 // page's grid, in order. A band filter keeps the ordering (the page's order, narrowed to the band).
 // Choosing an order never changes the work on the canvas. Desktop and phone; no page or console
 // errors. The pages draw with 2D canvases only, so no GPU is involved.
+//
+// Why the chips are pressed from the keyboard (15 November 2026). Choosing a material is a making action, so the
+// Studio folds its readings panel and opens it again after 4 s of quiet (QUIET_MS in system/studio-readings.js).
+// On a phone-sized page that fold is about 1,400 px of page height, and the stage is sticky over the controls. The
+// test used to sleep 1.5 s and then click each chip with the pointer, which sat inside that 4 s window: on a loaded
+// runner the catalogue took longer to fill, the first click met the panel opening, the page's geometry changed
+// between Playwright's hit test and the press, the press landed off the chip, and the wait for aria-pressed ran
+// out (Firefox, phone, main run 43679620109; passed unchanged on a rerun). The order of the list is what this test
+// holds, so it now waits for the readings to be open again (the named signal the sleep stood in for) and presses
+// each chip with focus and Enter, which reaches the same handler through a real key press and does not depend on
+// where the chip is on the screen.
 const assert = require('node:assert/strict');
 const browserLib = require('./lib/browser.cjs');   // BROWSER=firefox runs this file in Firefox
 
@@ -18,6 +29,7 @@ const pageIds = (page) => page.evaluate(() => [...document.querySelectorAll('[da
   .map((im) => (/(w\d{3})/.exec(im.getAttribute('src')) || [])[1]));
 const studioIds = (page) => page.evaluate(() => [...document.querySelectorAll('#plot-work option')].map((o) => o.value));
 const chosen = (page) => page.evaluate(() => document.getElementById('plot-work').value);
+const press = async (page, chip) => { await chip.focus(); await page.keyboard.press('Enter'); };
 
 (async () => {
   // 2D canvases only: keep the browser off the GPU.
@@ -52,11 +64,12 @@ const chosen = (page) => page.evaluate(() => document.getElementById('plot-work'
       await page.waitForFunction(() => window.__studioActiveSource === 'plotmaps', null, { timeout: 60000 });
       const mat = page.locator('[data-plot-material="archive"]'); await mat.scrollIntoViewIfNeeded(); await mat.click();
       await page.waitForFunction(() => document.querySelectorAll('#plot-work option').length > 100, null, { timeout: 60000 });
-      await page.waitForTimeout(1500);
+      // the material click folded the readings; they open again once the page has been quiet, and the layout is then at rest
+      await page.waitForFunction(() => document.getElementById('studio-panel').dataset.readings === 'open');
       const first = await chosen(page);
       for (const [key] of ORDERS) {
         const chip = page.locator(`[data-plot-order="${key}"]`);
-        await chip.scrollIntoViewIfNeeded(); await chip.click();
+        await press(page, chip);
         await page.waitForFunction((k) => document.querySelector(`[data-plot-order="${k}"]`).getAttribute('aria-pressed') === 'true', key);
         const got = await studioIds(page);
         assert.equal(got.length, want[key].length, `${tag} ${key}: the picker lists every work`);
@@ -68,10 +81,11 @@ const chosen = (page) => page.evaluate(() => document.getElementById('plot-work'
       assert.notDeepEqual(want.colour, want.tone);
       // A band narrows the ordering: By light within Warm is the page's By light, warm works only.
       const warm = new Set(works.works.filter((w) => w.measure.family === 'warm').map((w) => w.id));
-      await page.locator('[data-plot-order="spectrum"]').click();
-      const band = page.locator('[data-plot-band="warm"]'); await band.scrollIntoViewIfNeeded(); await band.click();
+      await press(page, page.locator('[data-plot-order="spectrum"]'));
+      await page.waitForFunction(() => document.querySelector('[data-plot-order="spectrum"]').getAttribute('aria-pressed') === 'true');
+      // the picker rebuilds its list and marks the band in one step, so the band's mark means the list is the new one
+      await press(page, page.locator('[data-plot-band="warm"]'));
       await page.waitForFunction(() => document.querySelector('[data-plot-band="warm"]').classList.contains('active'));
-      await page.waitForTimeout(300);
       assert.deepEqual(await studioIds(page), want.spectrum.filter((id) => warm.has(id)), `${tag} warm by light`);
       assert.deepEqual(errors, [], `${tag} no page or console errors`);
       await ctx.close();
