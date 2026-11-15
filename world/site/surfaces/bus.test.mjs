@@ -60,6 +60,10 @@ test('the output of one module is accepted by the takes of another, and by no mo
 
 test('a malformed envelope is refused, with the reason, and nobody hears it', () => {
   assert.equal(refusal(good()), null);
+  // a named place with nothing behind it cannot give a value; no row is a placeholder since the sound room was built, so one is made here
+  const later = { MEDIA, HOMES, FORMS, SURFACES: { ...SURFACES, later: { ...SURFACES.forge, id: 'later', state: 'placeholder', form: null, load: null, gives: ['palette'] } } };
+  const empty = { ...good(), from: { ...good().from, module: 'later' } }, lb = createBus({ reg: later, now: () => AT }), none = []; lb.join('plot', (e) => none.push(e));
+  assert.match(refusal(empty, later), /nothing behind it/); assert.match(lb.deliver(empty).why, /nothing behind it/); assert.equal(none.length, 0);
   const cases = [
     [null, /an envelope is an object/], [[], /an envelope is an object/],
     [{ ...good(), extra: 1 }, /no field named extra/],
@@ -71,7 +75,6 @@ test('a malformed envelope is refused, with the reason, and nobody hears it', ()
     [{ ...good(), from: null }, /who made/],
     [{ ...good(), from: (({ recipe, ...f }) => f)(good().from) }, /from lacks recipe/],
     [{ ...good(), from: { ...good().from, module: 'nobody' } }, /no module named/],
-    [{ ...good(), from: { ...good().from, module: 'sound' } }, /nothing behind it/],
     [{ ...good(), medium: 'wav' }, /does not give wav/],
     [{ ...good(), from: { ...good().from, surface: 'basement' } }, /not one of the surfaces/],
     [{ ...good(), from: { ...good().from, form: 'staged' } }, /not a form/],

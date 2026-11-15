@@ -213,7 +213,7 @@ def test_pages_that_show_a_demonstration_have_a_row() -> None:
 
 def test_every_registry_module_has_a_form() -> None:
     loaded, empty = registry_modules()
-    assert len(loaded) >= 14 and "sound" in empty, "the registry did not parse"
+    assert len(loaded) >= 15 and "sound" in loaded, "the registry did not parse"
     rows = registry_rows()
     assert set(rows) == loaded | empty, "the source and the exported rows differ"
     for module in loaded:

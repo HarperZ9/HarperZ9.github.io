@@ -9,7 +9,8 @@
 //   FILES                              what is offered: kind, label, ext, mime, and one plain line saying what it is
 //   makeFile(kind, pixels, palette, name, about)   { name part, mime, body (a string or an ArrayBuffer), facts } from
 //                                      pixels { data: RGBA bytes, w, h } and palette [{ name, hex }]; about is the recipe in
-//                                      words ({ recipe, graph }), written into the plot and G-code files' own header
+//                                      words ({ recipe, graph, by }), written into the plot and G-code files' own header;
+//                                      by names another maker than the bench (the shader room passes its own line)
 //   headerLines(kind, about)           that header: what made the file, from which recipe, and its units
 //
 // THE HEADER. The shared plot writer stamps its own comment lines, written for another tool, naming that tool. The bench
@@ -37,7 +38,7 @@ export function lumaGrid({ data, w, h }, gw, gh) {
 }
 export function headerLines(kind, about = {}) {
   const what = kind === 'plot-gcode' ? `units: millimetres (G21), absolute moves (G90), ${PLOT_MM} mm wide; the pen is lifted with M3 S40 and lowered with M3 S90` : 'units: pixels of the picture, scaled to fit; single strokes, no fills';
-  return [`made by the element bench (harperz9.github.io/elements.html) from the picture in its well`, `recipe: ${about.recipe || 'not given'}${about.graph ? `, graph ${about.graph}` : ''}`,
+  return [about.by || `made by the element bench (harperz9.github.io/elements.html) from the picture in its well`, `recipe: ${about.recipe || 'not given'}${about.graph ? `, graph ${about.graph}` : ''}`,
     'pen lines by hatching, darker parts closer together (system/plotter.js, hatchFromLuma)', what].map((l) => l.replace(/-{2,}/g, '-'));
 }
 function neutral(kind, body, about) { const h = headerLines(kind, about);
