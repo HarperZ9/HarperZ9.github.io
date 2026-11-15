@@ -1,4 +1,5 @@
-// work.js: the astrolabe. One choice, three ways to make it: the list (keys and screen readers, a tab list),
+// work.js: the astrolabe. The Playground is its hub and opens first; the other pillars are its moons.
+// One choice, three ways to make it: the list (keys and screen readers, a tab list),
 // the dial (pointer: click a moon, or turn the rete and let go), and the address (/#w-engine).
 // The open pillar's moon turns to the index at the top, under the one light; the moving moon leaves a frame-offset
 // echo at k = 3, 5 and 8 frames (superframe lib/stack). The engraving is the 1462 astrolabe through a two-ink 4x4
@@ -40,7 +41,7 @@ if (work) {
       const held = states[i]?.querySelector("[data-held]"); if (held) live(held);
     };
     group.addEventListener("click", (e) => { const b = e.target.closest("button[data-show]"); if (b) show(+b.dataset.show); });
-    show(0);
+    fig.__show = show; show(0);
   }
   // the wipe between the ray-traced reference and the shortcut
   for (const w of work.querySelectorAll(".w-wipe")) {
@@ -58,6 +59,20 @@ if (work) {
       held.classList.toggle("b", n % 2 === 0); n++;
       if (n > 72 || !held.offsetParent) { clearInterval(t); held.classList.remove("b"); delete held.dataset.running; }
     }, 1000 / 12);
+  }
+
+  // ---- Distill: the stages run here on a press, a chosen file or a dropped one; the code arrives with the first ----
+  const dp = work.querySelector("[data-distill-picture]");
+  if (dp) {
+    const part = () => import("/world/site/distill/picture-panel.js").then((m) => m.mount(dp));
+    const fail = (e) => { console.error("distill: the stages did not load", e); dp.querySelector("[data-status]").textContent = "The live run did not load. The recorded run above stays."; };
+    for (const e of dp.querySelectorAll(".ds4-own [hidden]")) e.hidden = false;
+    dp.querySelector("[data-run]").addEventListener("click", () => part().then((d) => d.runExample()).catch(fail));
+    const file = dp.querySelector("[data-file]");
+    file.addEventListener("change", () => { const f = file.files[0]; if (f) part().then((d) => d.runFile(f)).catch(fail); });
+    dp.addEventListener("dragover", (e) => { if ([...(e.dataTransfer?.types || [])].includes("Files")) { e.preventDefault(); dp.classList.add("over"); } });
+    dp.addEventListener("dragleave", () => dp.classList.remove("over"));
+    dp.addEventListener("drop", (e) => { const f = e.dataTransfer?.files[0]; if (!f) return; e.preventDefault(); dp.classList.remove("over"); part().then((d) => d.runFile(f)).catch(fail); });
   }
 
   // ---- the dial ----
@@ -175,8 +190,14 @@ if (work) {
   dial.addEventListener("pointercancel", () => { drag = null; });
 
   // the address: /#w-engine opens the engine; the browser's back and forward follow
-  const fromHash = () => { const m = location.hash.match(/^#w-([a-z-]+)$/); return m && panels.has(m[1]) ? m[1] : null; };
-  addEventListener("hashchange", () => { const id = fromHash(); if (id) go(id); });
+  // a part inside a pillar has its own address: /#w-distill opens The Playground on Distill
+  const INSIDE = { distill: ["engine", 0] };
+  const fromHash = () => {
+    const m = location.hash.match(/^#w-([a-z-]+)$/); if (!m) return null;
+    const part = INSIDE[m[1]]; if (part) { panels.get(part[0])?.querySelector(".w-demo")?.__show?.(part[1]); return part[0]; }
+    return panels.has(m[1]) ? m[1] : null;
+  };
+  addEventListener("hashchange", () => { const id = fromHash(); if (!id) return; go(id); const r = work.getBoundingClientRect(); if (r.top < -40 || r.top > innerHeight * 0.6) work.scrollIntoView({ block: "start" }); });
   const first = fromHash();
   go(first || ids[0], { announce: false });
   if (first) work.scrollIntoView({ block: "start" });

@@ -75,10 +75,12 @@
 .w-prose mark { background: color-mix(in srgb, var(--drift) 22%, transparent); color: inherit; padding: 0 .1em; }
 .w-code, .w-out { margin: 0; padding: 12px 14px; overflow-x: auto; font: 400 .9rem/1.5 var(--w-mono); background: var(--wall-2); color: var(--ink); white-space: pre; }
 .w-out { border-left: 2px solid var(--line); }
-.w-strip { margin: 0; padding: 0; list-style: none; display: flex; height: 40px; border: 1px solid var(--line); }
-.w-strip li { position: relative; flex: var(--s) 1 0; min-width: 3px; background: var(--c); }
-.w-strip li code, .w-strip li span:not(.w-chip) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-.w-strip li:nth-child(-n+3) code { position: static; width: auto; height: auto; clip-path: none; display: block; padding: 4px 6px; font: 400 .78rem/1 var(--w-mono); color: #0d0b12; }
+/* the swatches: one row each, its hex, its share of the picture, and a bar as long as the share */
+.w-strip { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 4px 18px; font: 400 .82rem/1.2 var(--w-mono); }
+.w-strip li { display: grid; grid-template-columns: 7.5ch 6ch minmax(0, 1fr); align-items: center; gap: 6px; color: var(--ink); }
+.w-strip li code { font: inherit; order: 1; }
+.w-strip li span:not(.w-chip) { order: 2; text-align: right; }
+.w-strip .w-chip { order: 3; height: 14px; width: max(4px, calc(var(--s) * 1%)); background: var(--c); box-shadow: 0 0 0 1px var(--line); }
 .w-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .w-tiles { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .w-tiles li { display: grid; gap: 4px; font: 400 .85rem/1.3 var(--face-text); }
@@ -99,6 +101,43 @@
 .w-go a:focus-visible, .w-list-plain a:focus-visible, .w-note a:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
 .ident { display: inline-block; max-width: 100%; overflow-wrap: anywhere; }
 
+/* The Playground: its account, Distill's four stages, and what is inside. The stages are a numbered run with a
+   hairline between them and no boxes; each names itself on the stage. */
+/* the panel's words sit on the moving field: the same halo the places' words carry holds them readable over it */
+.w-panel { text-shadow: 0 0 14px var(--halo), 0 0 4px var(--halo), 0 0 1px var(--halo), 0 0 22px var(--halo); }
+.w-panel :is(button, .w-try, .ds4-pick, pre, code, mark, .w-verdict) { text-shadow: none; }
+.w-lede { margin: 0; font: 400 var(--fs-3, 1.0625rem)/1.5 var(--face-text); max-width: 68ch; }
+.ds4 { display: grid; gap: 16px; }
+.ds4.over { outline: 2px dashed var(--ink); outline-offset: 8px; }
+.ds4-what { margin: 0; font: 400 var(--fs-3, 1.0625rem)/1.5 var(--face-text); max-width: 68ch; }
+.ds4-stages { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 22px 28px; }
+.ds4-stages > li { display: grid; gap: 8px; align-content: start; min-width: 0; padding-top: 10px; border-top: 1px solid var(--line); }
+.ds4-stages h3 { margin: 0; display: flex; align-items: baseline; gap: 10px; font: 700 var(--fs-3, 1.0625rem)/1.2 var(--face-text); }
+.ds4-stages h3 .w-num { font: 700 .95em/1 var(--w-mono); color: var(--ink); }
+.ds4-stages p, .ds4-also, .ds4-how, .ds4-status { margin: 0; font: 400 var(--fs-2, .95rem)/1.5 var(--face-text); color: var(--ink); }
+.ds4-stages img, .ds4-stages canvas, .ds4-stages svg { display: block; width: 100%; height: auto; background: var(--wall-2); }
+.ds4-spectrum svg, .ds4-spectrum canvas { background: none; border-bottom: 1px solid var(--line); }
+.ds4-stages figure { margin: 0; display: grid; gap: 4px; }
+.ds4-stages figcaption { font: 600 .85rem/1.3 var(--face-text); }
+.ds4-own { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
+.ds4-own button, .ds4-pick { min-height: 44px; padding: 0 16px; display: inline-flex; align-items: center; border: 1.5px solid var(--ink); background: var(--ink); color: var(--wall); font: 600 var(--fs-2, .95rem)/1 var(--face-text); cursor: pointer; }
+.ds4-pick { background: var(--wall); color: var(--ink); position: relative; }
+.ds4-pick input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+.ds4-own button:focus-visible, .ds4-pick:focus-within { outline: 2px solid var(--ink); outline-offset: 3px; }
+.ds4-own [hidden] { display: none; }
+.ds4-status { flex-basis: 100%; min-height: 1.5em; }
+.ds4-also a, .w-io a { color: var(--ink); text-underline-offset: .18em; }
+.ds4-also a:focus-visible, .w-io a:focus-visible, .w-inside summary:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+.w-inside { font: 400 var(--fs-2, .95rem)/1.5 var(--face-text); }
+.w-inside summary { min-height: 44px; display: flex; align-items: center; gap: 8px; cursor: pointer; font-weight: 600; text-decoration: underline; text-underline-offset: .2em; }
+.w-inside ul { margin: 4px 0 0; padding: 0 0 0 1.1em; display: grid; gap: 6px; max-width: 70ch; }
+/* with The Playground open the panel takes the wider share, so its four stages read two by two */
+@media (min-width: 1101px) {
+  .work.w-live:has(#w-engine.open) { grid-template-columns: minmax(170px, 210px) minmax(260px, .62fr) minmax(480px, 1.38fr); }
+  .work.w-live:has(#w-engine.open) .w-panels { align-self: start; }
+  .work.w-live:has(#w-engine.open) .w-list { position: sticky; top: 96px; align-self: start; }
+  .work.w-live:has(#w-engine.open) .w-dial { position: sticky; top: 96px; align-self: start; }
+}
 @media (max-width: 1100px) {
   .work { grid-template-columns: minmax(180px, 240px) minmax(0, 1fr); grid-template-areas: "list dial" "panel panel"; }
 }
@@ -108,6 +147,8 @@
   .w-list ol { grid-template-columns: 1fr 1fr; column-gap: 16px; }
   .w-list li:nth-child(2) a { border-top: 1px solid var(--line); }
   .w-pair { grid-template-columns: 1fr; }
+  .ds4-stages { grid-template-columns: 1fr; }
+  .w-strip { grid-template-columns: 1fr; }
 }
 @media (prefers-reduced-motion: reduce) { .w-svg .echo { display: none; } }
 @media (forced-colors: active) {

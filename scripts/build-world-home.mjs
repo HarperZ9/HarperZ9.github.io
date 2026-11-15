@@ -71,15 +71,15 @@ function lead(pl) {
   if (L.kind === "loop") return `<video class="lead" muted loop playsinline preload="none" data-poster="${L.src}" width="1280" height="720" aria-label="${esc(L.alt)}" data-loop>
       ${sources(L.src)}</video>`;
   if (L.kind === "hum") return `<div class="lead hum"><canvas class="hum-wave" aria-hidden="true"></canvas><button type="button" class="hum-press" data-hum aria-pressed="false" aria-describedby="hum-what">Hum v4</button><span id="hum-what" class="sr-only">${esc(L.alt)}</span></div>`;
-  if (L.kind === "living") return `<div class="lead" data-alive="livestill"><img src="${L.src}" width="${L.w}" height="${L.h}" alt="${esc(L.alt)}" loading="lazy" decoding="async"></div>`;
-  return `<img class="lead" src="${L.src}"${L.srcset ? ` srcset="${L.srcset}" sizes="(max-width: 860px) 100vw, 60vw"` : ""} width="${L.w}" height="${L.h}" alt="${esc(L.alt)}" loading="lazy" decoding="async" data-uncover>`;
+  if (L.kind === "living") return `<div class="lead" data-alive="livestill"><img src="${L.src}"${L.srcset ? ` srcset="${L.srcset}" sizes="(max-width: 860px) 100vw, 60vw"` : ""} width="${L.w}" height="${L.h}" alt="${esc(L.alt)}" loading="lazy" decoding="async"></div>`;
+  return `<img class="lead" src="${L.src}"${L.srcset ? ` srcset="${L.srcset}" sizes="(max-width: 860px) 100vw, 60vw"` : ""} width="${L.w}" height="${L.h}" alt="${esc(L.alt)}" loading="lazy" decoding="async">`;
 }
 // each place on the front door states its first law; the rest live in the place itself, so the home reads as media first
 function bazaar(rules) {
   return PLACES.map((pl, i) => `
   <article class="place" id="p-${pl.id}" data-place="${pl.id}" data-form="${pl.form}" data-medium="${pl.medium}" aria-labelledby="hp-${pl.id}">
     <div class="place-in">
-      <figure class="lead-box">${lead(pl)}</figure>
+      <figure class="lead-box"><div class="lead-gate"><div class="lead-piece" data-walk="${pl.walk[0]}" data-walk-o="${esc(JSON.stringify(pl.walk[1]))}">${lead(pl)}</div></div><figcaption class="lead-cap">${esc(pl.caption)}</figcaption></figure>
       <div class="place-words">
         <h3 id="hp-${pl.id}">${esc(pl.title)}</h3>
         ${lawsOf(pl.laws.slice(0, 1), rules)}
