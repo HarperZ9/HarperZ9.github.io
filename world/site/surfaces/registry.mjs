@@ -85,7 +85,7 @@ export const TOOLS = Object.freeze([
   row('system/lib', 'Shared system library', ['math'], ['numbers'], ['numbers'], null, ''),
   row('system/bulletin', 'Bulletin: compose and sign a post', ['write', 'export'], ['text'], ['text', 'json'], null, ''),
   row('system/ear', 'The ear: measures of a sound', ['sound', 'math'], ['numbers'], ['numbers', 'json'], null, 'checks what the site music plays; nothing on the bench reaches sound yet'),
-  row('system/site-music', 'Site music: voices and five meditations', ['sound'], ['score', 'numbers'], ['numbers'], null, ''),
+  row('system/site-music', 'Site music: voices and five meditations', ['sound'], ['score', 'numbers'], ['numbers'], 'sound', 'the sound room on The Playground: five pieces played in the tab and saved as a .wav file'),
   row('system/explainer', 'Live explainer stage', ['render', 'write'], ['numbers'], ['image'], null, ''),
   row('system/school', 'Night school labs', ['write', 'chart', 'simulation'], ['numbers'], ['image', 'text'], null, ''),
   row('world/site', 'The site’s own parts, this registry among them', ['well', 'chart', 'blend', 'field', 'export'], ['elements', 'settings'], ['blend', 'palette', 'png', 'json'], 'bench', ''),
@@ -138,14 +138,9 @@ export const SURFACES = Object.freeze({
   recipe: S('recipe', 'Recipe', ['system/graph', 'world/studio'], ['export', 'math'], ['elements', 'settings', 'blend'], ['graph', 'json'], './recipe.mjs'),
   // Rooms: a folded page as one module. A room opens on its own press (rooms.mjs) and reads no element table.
   forge: S('forge', 'The type forge', ['system/type-forge'], ['type'], ['palette'], ['text', 'font', 'svg'], './room-forge.mjs', { table: false, room: 'type' }),
-  // A named place for the sound layer. Nothing is mounted behind it in this version and nothing plays.
-  // It is shaped to the site music interface being built apart from this work: an object with start(), stop(),
-  // setLevel(0..1) and setMood(id), where setMood also takes an element id through a map of moods. When that
-  // lands, the adapter here calls setMood with the leading element's id (moods.json is the map, a proposal for
-  // the author to edit), never calls start() itself, and hands the music's score on to world/visualizer.
-  sound: Object.freeze({ id: 'sound', name: 'Sound layer (not built yet)', tools: ['world/sound', 'world/dataviz', 'world/visualizer'], offers: ['sound'], takes: ['elements', 'blend', 'score'], gives: ['score', 'wav'],
-    home: 'playground', form: null, evidence: null, plain: null, weight: null, state: 'placeholder', file: null, load: null,
-    wants: Object.freeze(['start', 'stop', 'setLevel', 'setMood']), moods: './moods.json' }),
+  // The sound room: the site music (system/site-music) played and rendered in the tab. Its instruments run in a worker
+  // (worker.js, piece.worker.js), which the room names by address; the census follows that address, so the row is heavy.
+  sound: S('sound', 'Sound', ['system/site-music', 'world/sound'], ['sound', 'export'], ['blend', 'text'], ['score', 'wav'], './room-sound.mjs', { table: false, room: 'sound', weight: 'heavy' }),
 });
 
 const live = new Set();

@@ -24,14 +24,18 @@ const TABLE = "world/ui/shell/organic/data/elements.json", BENCH_CSS = "world/si
 const list = (names) => (names.length < 2 ? names.join("") : `${names.slice(0, -1).join(", ")} and ${names.at(-1)}`);
 const size = (bytes) => (bytes >= 1000 * 1024 ? `${(bytes / 1024 / 1024).toFixed(1)} MB` : `${Math.round(bytes / 1024)} KB`);
 
-// Every file a module file reaches through its imports, static or not, followed to the end.
+// Every file a module file reaches through its imports, static or not, followed to the end. A worker is named by
+// address (new URL("./worker.js", import.meta.url)) and loads when the page first needs it, so it is followed only
+// when asked: a room states the worker's files beside the press that starts it.
 const IMPORT = /(?:\bfrom\s*|\bimport\s*\(\s*|\bimport\s+)["']([^"']+\.m?js)(?:\?[^"']*)?["']/g;
-function reach(file, seen = new Set()) {
+const WORKER = /new URL\(\s*["']([^"']+\.m?js)["']\s*,\s*import\.meta\.url\s*\)/g;
+function reach(file, seen = new Set(), workers = false) {
   if (seen.has(file) || !existsSync(path.join(site, file))) return seen;
   seen.add(file);
-  for (const m of readFileSync(path.join(site, file), "utf8").matchAll(IMPORT)) {
+  const src = readFileSync(path.join(site, file), "utf8");
+  for (const m of [...src.matchAll(IMPORT), ...(workers ? src.matchAll(WORKER) : [])]) {
     if (/^[a-z]+:/i.test(m[1])) continue;
-    reach(m[1].startsWith("/") ? m[1].slice(1) : path.posix.normalize(path.posix.join(path.posix.dirname(file), m[1])), seen);
+    reach(m[1].startsWith("/") ? m[1].slice(1) : path.posix.normalize(path.posix.join(path.posix.dirname(file), m[1])), seen, workers);
   }
   return seen;
 }
@@ -90,6 +94,12 @@ async function room(m, r) {
   const TABLE_CODE = "world/site/surfaces/elements-data.mjs", files = reach("world/site/surfaces/rooms.mjs", new Set(row.table === false ? [TABLE_CODE] : []));
   reach(adapter(r.id), files); if (row.table === false) files.delete(TABLE_CODE);
   const css = r.css ? readFileSync(path.join(site, r.css)).length : 0;
+  // what the room fetches after it is open, on the press that first needs it: each worker the room's files name, with
+  // everything the worker imports. A worker reads its own copy of a module the page already has, so nothing is taken off.
+  const started = new Set();
+  if (r.later) for (const f of reach(adapter(r.id))) for (const w of readFileSync(path.join(site, f), "utf8").matchAll(WORKER)) reach(path.posix.normalize(path.posix.join(path.posix.dirname(f), w[1])), started, true);
+  const more = bytes(started);
+  if (r.later && !more) throw new Error(`build-surfaces: the room "${r.id}" says "${r.later}" and names no worker`);
   return `<section class="sx rm" id="${r.anchor}" data-room="${r.id}" data-home="${m.id}"${r.css ? ` data-css="/${r.css}"` : ""} aria-labelledby="${r.anchor}-h">
 <h2 id="${r.anchor}-h">${esc(r.heading)}</h2>
 <p>${esc(r.say)}</p>
@@ -97,7 +107,7 @@ ${labelFor(r.demo)}
 <div class="rm-before">
 <figure class="rm-still">${still.html}<figcaption>${esc(still.caption)}</figcaption></figure>
 <p class="sx-as">Shown as built, from the same code the room runs. With scripts off this is the whole reading.</p>
-<p class="sx-go"><button type="button" data-room-open hidden>${esc(r.open)}</button><span>Loads ${size(bytes(files) + css)} at most. Nothing loads before the press.</span></p>
+<p class="sx-go"><button type="button" data-room-open hidden>${esc(r.open)}</button><span>Loads ${size(bytes(files) + css)} at most. Nothing loads before the press.${more ? ` <span data-later="${more}">${esc(r.later.replace("{size}", size(more)))}</span>` : ""}</span></p>
 </div>
 <p class="sx-say rm-say" role="status" aria-live="polite">${esc(r.exchange)}</p>
 <div class="rm-host" role="group" aria-label="${esc(r.heading)}" hidden></div>
