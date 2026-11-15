@@ -7,6 +7,7 @@
 // chart file, which an extractor wrote from the study's result file.
 import { esc } from "./studies-markdown.mjs";
 import { FORMS, marker, xySlots } from "./findings-chart-forms.mjs";
+import { labelFor } from "./demo-labels.mjs";
 
 export const FORM_NAMES = Object.keys(FORMS);
 const FLOW_NEED = ["key", "form", "title", "takeaway", "claims", "source", "steps"];
@@ -101,7 +102,9 @@ export function chartHtml(ch, n, src, id) {
   meta.push(["Supports", ch.claims.map((c) => `<a href="#${c}">claim ${c.slice(1)}</a>`).join(", ")]);
   const flow = ch.form === "flow", word = flow ? "Diagram" : "Chart";
   const shapes = ch.form === "matrix" || ch.form === "rules" || flow ? "" : " Marks differ by shape and by colour.";
-  const live = ch.live ? `<div class="fc-live" data-live="${esc(ch.live.kind)}" data-src="${esc(ch.live.data)}"><noscript><p>The live re-run needs JavaScript. The chart and table above hold the study's own numbers.</p></noscript></div>` : "";
+  // a live re-run is a demonstration: it carries its form label, and the build stops when the ledger has no row for it
+  const live = ch.live ? `${labelFor(`finding-${String(id).toLowerCase()}-live`)}
+<div class="fc-live" data-live="${esc(ch.live.kind)}" data-src="${esc(ch.live.data)}"><noscript><p>The live re-run needs JavaScript. The chart and table above hold the study's own numbers.</p></noscript></div>` : "";
   return `<figure class="fc fk-${ch.form}" id="ch-${esc(ch.key)}" data-finding="${esc(id)}">
 <figcaption><b>${word} ${n}.</b> ${esc(ch.title)} <span class="fc-take">${esc(ch.takeaway)}</span></figcaption>
 <div class="fc-draw" role="group" aria-label="${word} ${n}: ${esc(ch.takeaway)}${shapes}${flow ? "" : " The same numbers are in the table below."}">

@@ -39,8 +39,7 @@ FIELDS = ("date", "command", "file", "sha256")
 # Captured demonstrations whose evidence record is incomplete today, with the fields each lacks.
 # A row leaves this list when its record is complete; a new entry is a reviewed change.
 NEEDS_EVIDENCE = {
-    "flywheel-surface": ["command", "sha256"],
-    "crucible-cleanroom": ["date", "command"],
+    "flywheel-surface": ["command"],
     "articulate-output": ["file", "sha256"],
 }
 
@@ -158,6 +157,20 @@ def test_a_recorded_demonstration_has_its_evidence() -> None:
         row = BY_ID[demo]
         assert row.get("evidence") is None and row["needs"] == lacks, f"{demo}: the row and this list disagree on what is missing"
         assert not set(row.get("has", {})) & set(lacks), f"{demo}: a field is both held and missing"
+
+
+def test_a_live_figure_on_a_finding_page_carries_its_label() -> None:
+    """The findings generator places the label; this reads the pages, so a fault there cannot hide a bare figure."""
+    blocks = 0
+    for name in tracked("findings/*.html"):
+        text = (ROOT / name).read_text(encoding="utf-8")
+        for at in re.finditer(r'<div class="fc-live" data-live="', text):
+            blocks += 1
+            before = text[: at.start()].rstrip()
+            found = LABEL.findall(before[-600:])
+            assert found and before.endswith("</p>") and found[-1][1] == "live", f"{name}: a live figure has no label directly above it"
+            assert file_of(BY_ID[found[-1][0]]["page"]) == ROOT / name, f"{name}: the label above the live figure belongs to another page"
+    assert blocks >= 1, "no live figure was found on any finding page; the pattern or the pages moved"
 
 
 def test_the_check_refuses_a_made_up_record(tmp_path: Path) -> None:
