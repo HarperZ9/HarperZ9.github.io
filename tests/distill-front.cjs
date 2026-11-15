@@ -37,6 +37,7 @@ const clipOf = (page, id) => page.evaluate((id) => getComputedStyle(document.que
     const page = await ctx.newPage(), errors = [], asked = [];
     page.on('pageerror', (e) => errors.push(e.message));
     page.on('request', (r) => asked.push({ url: new URL(r.url()).pathname, method: r.method() }));
+    const pending = new Set(); page.on('request', (r) => pending.add(r.url())); page.on('requestfinished', (r) => pending.delete(r.url())); page.on('requestfailed', (r) => pending.delete(r.url()));
     // films are not part of this test, and a local server with six connections would queue scripts behind them
     await page.route(/\.(mp4|webm|m4a|mp3)(\?|$)/, (r) => r.abort());
     await page.goto(`${base}/`, { waitUntil: 'load' });
@@ -81,7 +82,8 @@ const clipOf = (page, id) => page.evaluate((id) => getComputedStyle(document.que
     const shipped = await read(), overlayShipped = await page.$eval('#w-distill [data-overlay]', (e) => e.innerHTML);
     assert.ok(shipped.swatches.length >= 2 && /^#[0-9a-f]{6} \d+\.\d%$/.test(shipped.swatches[0]), `swatch rows read as hex and share: ${shipped.swatches[0]}`);
     await page.click('#w-distill [data-run]');
-    await page.waitForFunction(() => document.querySelector('#w-distill').dataset.ran === 'example', null, { timeout: 30000 });
+    await page.waitForFunction(() => document.querySelector('#w-distill').dataset.ran === 'example', null, { timeout: 30000 })
+      .catch(async (e) => { console.error('still waiting on: ' + [...pending].join(' | ') + ' ; status: ' + await page.$eval('#w-distill [data-status]', (x) => x.textContent)); throw e; });
     assert.deepEqual(await read(), shipped, 'a live run on the example changed the words the page shipped');
     const drawn = await page.evaluate(() => Object.fromEntries(['source', 'onpicture', 'original', 'rebuilt', 'cloth'].map((n) => {
       const c = document.querySelector(`#w-distill [data-slot="${n}"] canvas`); if (!c) return [n, null];
