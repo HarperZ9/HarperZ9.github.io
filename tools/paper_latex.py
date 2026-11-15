@@ -180,11 +180,14 @@ def document(source: str, spec: dict, corrections: list[str], source_path: str) 
     subtitle = fields.get("subtitle", "").strip().strip("*")
     if subtitle:
         head += [r"{\large\emph{" + inline(subtitle) + r"}\par}", r"\medskip"]
-    head += [r"Zain Dana Harper\par", r"{\small " + spec["kind"] + " \u00b7 edition of 3 October 2026\\par}",
+    head += [r"Zain Dana Harper\par", r"{\small " + spec["kind"] + " \u00b7 edition of 3 October 2026"
+             + spec.get("edition_note", "") + "\\par}",
              r"{\small " + inline(fields["byline"]) + r"\par}", r"\end{center}", ""]
     note = [r"\textbf{Revised 3 October 2026.} " + inline(fields["revision_note"])]
     if "doi" in spec:
         note.append(rf"This edition is deposited at Zenodo, \url{{https://doi.org/{spec['doi']}}}.")
+    if "concept_doi" in spec:
+        note.append(rf"All versions: \url{{https://doi.org/{spec['concept_doi']}}}.")
     if "supplement" in spec:
         doi, label = spec["supplement"]
         note.append(f"It builds on {inline(label)}, which stays citable at its own Zenodo record, "

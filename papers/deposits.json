@@ -1,0 +1,29 @@
+{
+  "about": "One entry per deposited paper. version_doi is the Zenodo record of the edition the PDF and page carry; concept_doi resolves to every version. Set all_versions to true to print the concept DOI beside the deposit line. edition_note is appended to the edition label of the PDF. tools/deposits.py reads this file.",
+  "papers": {
+    "arity-gap": {
+      "version_doi": "10.5281/zenodo.23126117",
+      "concept_doi": "10.5281/zenodo.22768628",
+      "all_versions": false,
+      "edition_note": ""
+    },
+    "forcing-argument": {
+      "version_doi": "10.5281/zenodo.23126357",
+      "concept_doi": "10.5281/zenodo.22768808",
+      "all_versions": false,
+      "edition_note": ""
+    },
+    "self-given": {
+      "version_doi": "10.5281/zenodo.23126458",
+      "concept_doi": "10.5281/zenodo.22768918",
+      "all_versions": false,
+      "edition_note": ""
+    },
+    "conservation-of-faithfulness": {
+      "version_doi": "10.5281/zenodo.23126484",
+      "concept_doi": "10.5281/zenodo.23126483",
+      "all_versions": false,
+      "edition_note": ""
+    }
+  }
+}

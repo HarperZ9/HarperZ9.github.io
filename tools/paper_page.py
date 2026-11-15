@@ -111,6 +111,8 @@ def revision(spec: dict, note: str) -> str:
     parts = [f"<b>Revised 3 October 2026.</b> {html.escape(note, quote=False)}"]
     if "doi" in spec:
         parts.append(f"This edition is deposited at Zenodo, {doi_link(spec['doi'])}.")
+    if "concept_doi" in spec:
+        parts.append(f"All versions: {doi_link(spec['concept_doi'])}.")
     if "supplement" in spec:
         doi, label = spec["supplement"]
         parts.append(f"It builds on {label}, which stays citable at its own Zenodo record, {doi_link(doi)}.")
