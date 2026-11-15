@@ -55,10 +55,20 @@ function media(id) {
     ? `<li class="wi-drift"><picture><source type="image/avif" srcset="media/work/${x.still}-960.avif 960w, media/work/${x.still}-1920.avif 1920w" sizes="(max-width: 860px) 92vw, 60vw"><img src="media/work/${x.still}-960.webp" srcset="media/work/${x.still}-960.webp 960w, media/work/${x.still}-1920.webp 1920w" sizes="(max-width: 860px) 92vw, 60vw" width="960" height="540" alt="${esc(x.alt)}" loading="lazy" decoding="async"></picture><span class="wi-cap">${esc(x.cap)}</span></li>`
     : `<li class="wi-drift wi-film"><video${x.sound ? "" : " muted"} playsinline preload="none" data-poster="media/work/${x.film}-poster-960.webp" width="1920" height="1080" aria-label="${esc(x.alt)}"><source src="media/work/${x.film}-1080.mp4" type="video/mp4"></video><button type="button" class="wi-play" aria-label="Play the film: ${esc(x.alt)}${x.sound ? " With sound." : ""}" data-alt="${esc(x.alt)}"><span class="wi-play-form" aria-hidden="true"></span><span class="wi-play-word" aria-hidden="true">Play</span></button><span class="wi-play-time" aria-hidden="true"></span><span class="wi-cap">${esc(x.cap)}</span></li>`).join("")}</ul>`;
 }
-// a page's destination, following a redirect stub to its target; null when the file is not in the site
+// a page's destination, following a redirect stub or a moved row of the address ledger to its target; null when the
+// file is not in the site and the ledger does not say where it went
+let movedRows = null;
+function movedTo(p) {
+  movedRows ??= new Map(JSON.parse(readFileSync(path.join(site, "site-src/world/addresses.json"), "utf8")).rows
+    .filter((r) => r.kind === "moved" && r.to).map((r) => [r.path, r.to]));
+  const to = movedRows.get("/" + p);
+  // a target on another project's pages (/cmmns/, /flywheel/) is no file of this site
+  return to && to.startsWith("/") ? to.slice(1).split(/[?#]/)[0] || "index.html" : null;
+}
 function resolve(p) {
   for (let hop = 0; hop < 4; hop++) {
-    const f = path.join(site, p); if (!existsSync(f)) return null;
+    let f = path.join(site, p);
+    if (!existsSync(f)) { p = movedTo(p); if (!p) return null; f = path.join(site, p); if (!existsSync(f)) return null; }
     const m = readFileSync(f, "utf8").match(/http-equiv="refresh" content="0; url=([^"]+)"/);
     if (!m) return p === "floor.html" ? null : p;  // a link back to this index is no link
     p = m[1].replace(/^\//, "").split("#")[0] || "index.html";
@@ -163,4 +173,15 @@ watch(); document.addEventListener("wi:ready", watch);</script>`;
   return { html: lazy + `<nav class="wi-jump" aria-label="Platforms">${PLATFORMS.map(([k, n]) => `<a href="#${k.toLowerCase()}">${esc(n)}</a>`).join("")}</nav>
 ${head}
 ${hydrate}`, rest: `<!-- the rows of the index of the work below its first screen; floor.html loads this file -->\n${more}`, restPath: REST.slice(1), count:data.entries.filter((r) => by.has(r.platform)).length };
+}
+
+// node scripts/work-index.mjs --check: write nothing; exit 1 when the rows scripts/build-world-pages.mjs would write
+// differ from world/site/floor-rows.htm, or the first screen's rows are not in floor.html as rendered here.
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url) && process.argv.includes("--check")) {
+  const wi = workIndex(), faults = [];
+  const lf = (t) => t.replace(/\r\n/g, "\n");
+  if (lf(readFileSync(path.join(site, wi.restPath), "utf8")) !== lf(wi.rest)) faults.push(`${wi.restPath} differs from the rendered rows`);
+  if (!lf(readFileSync(path.join(site, "floor.html"), "utf8")).includes(lf(wi.html))) faults.push("floor.html does not hold the rendered first rows");
+  if (faults.length) { console.error(`work index: ${faults.join("; ")}. Run node scripts/build-world-pages.mjs and the steps it names, and commit the result.`); process.exit(1); }
+  console.log(`work index: ${wi.count} entries; floor.html and ${wi.restPath} agree with site-src/world/work-index.json`);
 }
