@@ -1,0 +1,7 @@
+{
+  "date": "2026-11-15",
+  "note": "Step 4 of the six-surfaces plan adds the Playground surface's page controller, start script and stylesheet under world/site/surfaces, and lets the pen study take a palette, so the asset revision moves to world-9de4109f3a. index.html changes only in the ?v= stamps on its world stylesheets and scripts. Checked on 2026-11-15: git diff shows no other line changed in index.html.",
+  "paths": {
+    "index.html": "a2bd6db19e1edba309045b50ff815f6a97f3d97a51c519a7ff62a02fad9386f6"
+  }
+}
