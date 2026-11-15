@@ -76,7 +76,10 @@ accessible, and honest about maturity; private systems stay bounded off-page.
   `writing/papers/*.md`, converted to `papers/tex/` by `tools/paper_latex.py`;
   seven start from LaTeX in a private research repository at a pinned commit.
   `python tools/build_latex_papers.py --check` confirms every receipt still
-  matches its source and PDF. The two corpus PDFs are printed from their pages
+  matches its source and PDF. The Zenodo DOIs of the four deposited philosophy
+  papers live in `papers/deposits.json`; `tools/build_zenodo_versions.py`
+  builds the files for a new Zenodo version from a reserved version DOI
+  without changing the committed PDFs. The two corpus PDFs are printed from their pages
   by `tools/print_documents.py`.
 - `overview.html` -- the compact product map, grouped by primary domain.
 - `catalog.html` -- the detailed evidence registry, including secondary-domain

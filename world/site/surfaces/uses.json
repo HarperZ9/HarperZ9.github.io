@@ -57,7 +57,7 @@
    "state": "ready",
    "weight": "heavy",
    "plain": "/elements.html",
-   "bytes": 1204402,
+   "bytes": 1205580,
    "files": 163
   },
   "well": {
@@ -84,7 +84,7 @@
    "state": "ready",
    "weight": "light",
    "plain": null,
-   "bytes": 284390,
+   "bytes": 285568,
    "files": 39
   },
   "motion": {
@@ -93,7 +93,7 @@
    "state": "ready",
    "weight": "light",
    "plain": null,
-   "bytes": 390623,
+   "bytes": 391801,
    "files": 51
   },
   "lettering": {
@@ -102,7 +102,7 @@
    "state": "ready",
    "weight": "light",
    "plain": null,
-   "bytes": 390623,
+   "bytes": 391801,
    "files": 51
   },
   "plot": {
@@ -111,7 +111,7 @@
    "state": "ready",
    "weight": "light",
    "plain": null,
-   "bytes": 390623,
+   "bytes": 391801,
    "files": 51
   },
   "plate": {
@@ -120,7 +120,7 @@
    "state": "ready",
    "weight": "heavy",
    "plain": null,
-   "bytes": 980257,
+   "bytes": 981435,
    "files": 143
   },
   "glass": {
@@ -129,7 +129,7 @@
    "state": "ready",
    "weight": "heavy",
    "plain": null,
-   "bytes": 980257,
+   "bytes": 981435,
    "files": 143
   },
   "living": {
@@ -138,7 +138,7 @@
    "state": "ready",
    "weight": "heavy",
    "plain": null,
-   "bytes": 980257,
+   "bytes": 981435,
    "files": 143
   },
   "loom": {
