@@ -21,6 +21,15 @@
    ]
   },
   {
+   "id": "playground-type-forge",
+   "page": "/playground/#type",
+   "form": "live",
+   "what": "The type forge mints Zain Mint from six numbers in the browser, sets the visitor's text in it and builds the font file there.",
+   "modules": [
+    "forge"
+   ]
+  },
+  {
    "id": "bench",
    "page": "/elements.html",
    "form": "live",

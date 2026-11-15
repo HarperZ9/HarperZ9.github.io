@@ -76,13 +76,42 @@ ${labelFor(x.demo)}
 </section>`;
 }
 
-function build(m) {
+// A room: a folded page as one section. Words and a still made by the room's own module (its still()), then one press
+// that loads the room, with the bytes stated. The bytes are the room's files, its stylesheet and rooms.mjs with what it
+// reaches; a page that already runs the exchange has part of that loaded, so the figure is the most the press costs.
+// tests/surface-rooms.cjs measures the press in a browser and holds it to the stated figure.
+async function room(m, r) {
+  const row = registry.SURFACES[r.id];
+  if (!row?.load || row.room !== r.anchor) throw new Error(`build-surfaces: ${m.id} names the room "${r.id}" at #${r.anchor}; the registry has no such room`);
+  if (row.weight !== "light" && !r.heavy) throw new Error(`build-surfaces: the room "${r.id}" is heavy; say so in the manifest`);
+  for (const medium of [...(r.takes || []), ...(r.gives || [])]) if (![...row.takes, ...row.gives].includes(medium)) throw new Error(`build-surfaces: the room "${r.id}" does not take or give ${medium}`);
+  const mod = await import(pathToFileURL(path.join(site, adapter(r.id))).href), still = mod.still();
+  // a room that never reads the element table does not load the table or the code that indexes it (registry.mjs, table: false)
+  const TABLE_CODE = "world/site/surfaces/elements-data.mjs", files = reach("world/site/surfaces/rooms.mjs", new Set(row.table === false ? [TABLE_CODE] : []));
+  reach(adapter(r.id), files); if (row.table === false) files.delete(TABLE_CODE);
+  const css = r.css ? readFileSync(path.join(site, r.css)).length : 0;
+  return `<section class="sx rm" id="${r.anchor}" data-room="${r.id}" data-home="${m.id}"${r.css ? ` data-css="/${r.css}"` : ""} aria-labelledby="${r.anchor}-h">
+<h2 id="${r.anchor}-h">${esc(r.heading)}</h2>
+<p>${esc(r.say)}</p>
+${labelFor(r.demo)}
+<div class="rm-before">
+<figure class="rm-still">${still.html}<figcaption>${esc(still.caption)}</figcaption></figure>
+<p class="sx-as">Shown as built, from the same code the room runs. With scripts off this is the whole reading.</p>
+<p class="sx-go"><button type="button" data-room-open hidden>${esc(r.open)}</button><span>Loads ${size(bytes(files) + css)} at most. Nothing loads before the press.</span></p>
+</div>
+<p class="sx-say rm-say" role="status" aria-live="polite">${esc(r.exchange)}</p>
+<div class="rm-host" role="group" aria-label="${esc(r.heading)}" hidden></div>
+</section>`;
+}
+
+async function build(m) {
   const row = ([href, name, say]) => `<li><a href="${href}">${name}</a><p>${say}</p></li>`;
   const body = `<article class="ds">
 <h1>${esc(m.title)}</h1>
-<p class="ds-lede">${m.lede}</p>
+<p class="ds-lede">${m.lede}</p>${m.make ? `\n<p>${m.make}</p>` : ""}
 <ul class="pg-list">${m.parts.map(row).join("")}</ul>
 ${exchange(m)}
+${(await Promise.all((m.rooms || []).map((r) => room(m, r)))).join("\n")}
 <h2 id="instruments">${esc(m.placesHeading)}</h2>
 <ul class="pg-list">${m.places.map(row).join("")}</ul>
 </article>
@@ -94,9 +123,9 @@ ${exchange(m)}
 const main = (html) => html.slice(html.indexOf('<main id="main"'), html.indexOf("</main>")).replace(/\?v=world-[0-9a-f]+/g, "");
 const dir = path.join(site, "site-src/world/surfaces"), check = process.argv.includes("--check"), stale = [];
 for (const f of readdirSync(dir).filter((n) => n.endsWith(".mjs")).sort()) {
-  const m = (await import(pathToFileURL(path.join(dir, f)).href)).default, html = build(m), out = path.join(site, m.file);
+  const m = (await import(pathToFileURL(path.join(dir, f)).href)).default, html = await build(m), out = path.join(site, m.file);
   if (check) { if (!existsSync(out) || main(readFileSync(out, "utf8")) !== main(html)) stale.push(m.file); }
   else writeFileSync(out, html);
-  console.log(`surface ${m.id}: ${m.file}, ${m.exchange.modules.length} modules on the press, ${m.exchange.press.length} heavy`);
+  console.log(`surface ${m.id}: ${m.file}, ${m.exchange.modules.length} modules on the press, ${m.exchange.press.length} heavy, ${(m.rooms || []).length} rooms`);
 }
 if (stale.length) { console.error(`stale: ${stale.join(", ")}; run node scripts/build-surfaces.mjs, then the revision stamp`); process.exit(1); }

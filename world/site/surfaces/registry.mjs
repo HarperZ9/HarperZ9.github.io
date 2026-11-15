@@ -18,6 +18,8 @@
 //     weight    'light' (its imports come to 400 KB or less) or 'heavy' (starts on a press, with its size stated);
 //               scripts/surface-census.mjs measures the bytes and writes them to uses.json
 //     state     'ready' (an adapter loads) or 'placeholder' (a named place with nothing behind it)
+//     table     false when the module never reads the element table, so mounting it does not fetch the table
+//     room      the anchor of its section on its home page, for a module that is a room (opened by rooms.mjs)
 //   Modules hand values to each other through bus.mjs, in one envelope:
 //     { medium, refs, value, from: { module, surface, form, at, recipe } }
 //   input is { elements: [ids], weights, settings }; ctx is { ix, reduced, plain, registry }.
@@ -77,7 +79,7 @@ export const TOOLS = Object.freeze([
   row('system/vendor', 'Tutor practice functions', ['write'], ['text'], ['json'], null, ''),
   row('system/kit', 'Kit for standalone tool pages', ['type'], [], [], null, ''),
   row('system/media-engine', 'Media engine: plotter, poster, voxels, fractal', ['plot', 'poster', 'render', 'geometry', 'sound'], ['numbers', 'palette'], ['image', 'svg', 'png'], null, 'its plotter and poster plugins are the next way out to print'),
-  row('system/type-forge', 'Type forge: mint a face', ['type'], ['text', 'numbers'], ['font'], null, 'a minted font file is the nearest thing to a made object on the site'),
+  row('system/type-forge', 'Type forge: mint a face', ['type'], ['text', 'numbers'], ['font'], 'forge', 'the forge room on The Playground: a face minted from six numbers, saved as a font file'),
   row('world/typeface', 'Accession, the type family', ['type'], ['text'], ['font'], null, ''),
   row('system/lessons', 'Lessons on a page', ['write', 'chart'], ['numbers'], ['text'], null, ''),
   row('system/lib', 'Shared system library', ['math'], ['numbers'], ['numbers'], null, ''),
@@ -134,6 +136,8 @@ export const SURFACES = Object.freeze({
   ridges: S('ridges', 'Plot map', ['world/site'], ['plot', 'geometry'], ['image', 'palette'], ['image'], './surface-studio.mjs'),
   voxels: S('voxels', 'Cubes', ['world/site'], ['fabricate', 'render', 'geometry'], ['image', 'palette'], ['image', 'vox'], './surface-studio.mjs'),
   recipe: S('recipe', 'Recipe', ['system/graph', 'world/studio'], ['export', 'math'], ['elements', 'settings', 'blend'], ['graph', 'json'], './recipe.mjs'),
+  // Rooms: a folded page as one module. A room opens on its own press (rooms.mjs) and reads no element table.
+  forge: S('forge', 'The type forge', ['system/type-forge'], ['type'], ['palette'], ['text', 'font', 'svg'], './room-forge.mjs', { table: false, room: 'type' }),
   // A named place for the sound layer. Nothing is mounted behind it in this version and nothing plays.
   // It is shaped to the site music interface being built apart from this work: an object with start(), stop(),
   // setLevel(0..1) and setMood(id), where setMood also takes an element id through a map of moods. When that
@@ -160,7 +164,7 @@ export async function mount(host, id, input = {}, ctx = {}) {
   const s = SURFACES[id];
   if (!s) throw new Error(`surfaces: no surface named "${id}" (there are ${Object.keys(SURFACES).join(', ')})`);
   if (!s.load) throw new Error(`surfaces: "${id}" has a place in the registry and nothing behind it yet`);
-  const ix = ctx.ix || await elements(), mod = await s.load();
+  const ix = ctx.ix || (s.table === false ? null : await elements()), mod = await s.load();
   const fn = mod[`mount_${id}`] || mod.mount;
   const inner = await fn(host, { elements: [], weights: null, settings: {}, ...input }, { ...prefs(), ...ctx, ix, registry: api });
   const handle = { id, host, update: (next) => inner.update?.(next), value: () => inner.value?.(), destroy() { if (!live.delete(handle)) return; inner.destroy?.(); host.removeAttribute('data-surface-live'); } };
