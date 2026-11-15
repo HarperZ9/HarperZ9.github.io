@@ -5,9 +5,9 @@ has kind "moved" and 404.html sends the reader on. The writing index, its three 
 two retired brand canvases, the toolkit, the product list and the start page went that way,
 and the fragment map writing.html carried is now "places" on its row.
 
-Four pages stay here until the pages that link to them are folded: demonstrations.html (the
-Demonstrations fold), tour.html and typeface.html (The Playground's rooms), and
-work-with-me.html (the map's pages name it).
+Two pages stay here until the pages that link to them are folded: typeface.html (The
+Playground's rooms) and work-with-me.html (the map's pages name it). demonstrations.html and
+tour.html closed on 15 November 2026 once their inbound links were repointed.
 
     python tools/redirect_stubs.py          # write the stubs
     python tools/redirect_stubs.py --check  # fail if any stub differs from this source
@@ -26,14 +26,8 @@ SITE_URL = "https://harperz9.github.io/"
 STUBS: dict[str, dict] = {}
 
 # Consolidation of 2 November 2026 (the author: "I think that the non-destructive rules should start being favored
-# less than consolidation and reintegration."). The list pages fold into the one index of the work on floor.html;
-# the type pages into the Accession page; the second contact page into Work. Git history keeps every retired page.
-_INDEX = "The site's list pages are now one index of all the work, current and past, by platform."
-for _page, _target in {
-    "demonstrations.html": "/floor.html",
-    "tour.html": "/floor.html",
-}.items():
-    STUBS[_page] = {"target": _target, "note": _INDEX, "title": "Moved to the index of the work", "link": "Open the index", "fragments": {}, "keep_hash": "#" not in _target}
+# less than consolidation and reintegration."). The list pages folded into the one index of the work on floor.html
+# (their addresses are moved rows now); the type pages into the Accession page; the second contact page into Work. Git history keeps every retired page.
 for _page in ("typeface.html",):
     STUBS[_page] = {"target": "/accession.html", "note": "The site's type now lives on one page: Accession and the faces the site draws on.", "title": "Moved to the Accession page", "link": "Open the Accession page", "fragments": {}}
 STUBS["work-with-me.html"] = {"target": "/hire.html", "note": "Working with me is now on the Work page.", "title": "Moved to the Work page", "link": "Open the Work page", "fragments": {}, "keep_hash": True}

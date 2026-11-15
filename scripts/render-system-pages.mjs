@@ -201,7 +201,7 @@ const OVERVIEW_POSTER = `<header class="system-hero sys-poster"><h1>Products, gr
 `;
 const ROUTES = [
   ["catalog.html", "Open the evidence catalog"],
-  ["demonstrations.html", "See recorded workflows"],
+  ["floor.html", "See recorded workflows"],
   ["analytics/portfolio-source-inventory.html", "Inspect the source inventory"],
   ["private-practice.html#private-system-index", "Review controlled-private boundary pages"],
   ["hire.html", "Hire or collaborate"],
