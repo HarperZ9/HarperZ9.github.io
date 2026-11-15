@@ -37,3 +37,7 @@ body.sx-body .gw-backdrop::before { content: ""; position: absolute; inset: 0; z
 #sx-hosts[data-surface] { margin: 20px 0; }
 #sx-hosts .sf-wide { grid-column: 1 / -1; }
 .sx [hidden] { display: none !important; }
+/* A room's still: the picture its own module made at build time. */
+.rm-still { margin: 1rem 0; }
+.rm-still svg { display: block; width: 100%; height: auto; max-height: 9rem; }
+.rm-host:focus { outline: none; }

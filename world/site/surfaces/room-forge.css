@@ -1,0 +1,28 @@
+/* room-forge.css: the type forge room on The Playground, loaded on its press. The page's own text stays in the site's
+   faces; only the proof is set in the minted face (--fg-family), with the site's sans as the fallback. */
+.fg .fg-desk { display: grid; grid-template-columns: minmax(14rem, 19rem) minmax(0, 1fr); gap: clamp(1.25rem, 4vw, 3rem); align-items: start; margin-top: 1rem; }
+.fg fieldset { border: 0; border-top: 1px solid currentColor; margin: 0 0 1.25rem; padding: .75rem 0 0; min-width: 0; }
+.fg legend { font-weight: 600; padding: 0; margin-bottom: .4rem; }
+.fg .fg-controls label { display: flex; justify-content: space-between; gap: 1rem; margin-top: .6rem; }
+.fg output { font-variant-numeric: tabular-nums; }
+.fg input[type="range"] { width: 100%; min-height: 32px; margin: .2rem 0 0; accent-color: currentColor; }
+.fg select { width: 100%; min-height: 44px; font: inherit; margin-top: .3rem; }
+.fg .fg-weights { display: grid; grid-template-columns: repeat(2, 1fr); gap: .5rem; margin-top: 1rem; }
+.fg .fg-weights button { min-height: 44px; font: inherit; border: 1px solid currentColor; background: transparent; color: inherit; cursor: pointer; }
+.fg .fg-proof { min-width: 0; }
+.fg .fg-proof > label { display: block; font-weight: 600; margin-bottom: .4rem; }
+.fg textarea { width: 100%; box-sizing: border-box; font: inherit; font-size: 1.125rem; padding: .6rem .7rem; border: 1px solid currentColor; background: transparent; color: inherit; resize: vertical; }
+.fg .fg-missing { min-height: 1.5em; margin: .4rem 0 0; }
+.fg .fg-sample, .fg .fg-alphabet p { font-family: var(--fg-family, "Hanken Grotesk"), "Hanken Grotesk", sans-serif; overflow-wrap: anywhere; max-width: none; }
+.fg .fg-sample { font-size: clamp(2.2rem, 6vw, 4.75rem); line-height: 1.3; margin: 1rem 0 .5rem; min-height: 1.3em; }
+.fg .fg-alphabet p { font-size: clamp(1.3rem, 3vw, 2.2rem); line-height: 1.45; margin: .3rem 0; letter-spacing: .02em; }
+.fg.fg-refused .fg-sample, .fg.fg-refused .fg-alphabet { opacity: .3; }
+.fg .fg-file { overflow-wrap: anywhere; margin: 1rem 0 .5rem; }
+.fg .fg-take { display: flex; flex-wrap: wrap; gap: .75rem 1.5rem; margin: 0 0 .75rem; }
+.fg .fg-take a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 .9rem; border: 1px solid currentColor; color: inherit; text-decoration: none; font-weight: 600; }
+.fg .fg-take a:hover { text-decoration: underline; }
+.fg :focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+/* The proof comes first on a phone, so the face is on screen before the sliders that change it. */
+.fg .fg-controls { grid-column: 1; grid-row: 1; }
+.fg .fg-proof { grid-column: 2; grid-row: 1; }
+@media (max-width: 760px) { .fg .fg-desk { grid-template-columns: minmax(0, 1fr); } .fg .fg-controls, .fg .fg-proof { grid-column: 1; grid-row: auto; } }

@@ -10,6 +10,7 @@ export default {
   title: "The Playground",
   description: "The Playground is a rendering engine that turns one description into picture, type and sound: the native renderer, Superframe, the instruments and study tools, and Low Water.",
   lede: 'The Playground is a rendering engine that turns one description into picture, type and sound. It has four parts: the <a href="/raw.html">native renderer</a>, <a href="/superframe.html">Superframe</a> at the core, the <a href="#instruments">instruments and study tools</a>, and <a href="/low-water.html">Low Water</a>, the game made with it.',
+  make: 'It is also a place to make things. Blend materials and watch one blend become colour, lettering, timing and pen lines. Mint a typeface and save the font file. More rooms are being moved onto this page from the pages listed under <a href="#instruments">instruments and study tools</a>.',
   parts: [
     ["/raw.html", "The native renderer", "Renders frames in C++ on Direct3D 12, Vulkan and WebGPU, and checks each one against a reference. Released as raw-native."],
     ["/superframe.html", "Superframe, the core", "One seeded recipe rendered as picture, line, surface, type and sound."],
@@ -27,6 +28,13 @@ export default {
     press: ["well"],
     plain: "/elements.html",
   },
+  // Rooms: creative pages folded into this one. Each is a registry module with a `room` anchor; rooms.mjs opens it.
+  rooms: [
+    { id: "forge", anchor: "type", demo: "playground-type-forge", heading: "Type: mint a face", open: "Open the forge", css: "world/site/surfaces/room-forge.css",
+      say: "Zain Mint is a typeface drawn by rule. Six numbers set the pen and the proportions, the forge traces the alphabet again in your browser, and your own text is set in the result. Save the face as a font file or the line as an SVG. A weight too heavy to keep a counter open is refused by name, and no file is made.",
+      exchange: "When the blend above is running, its colour inks the proof and the lettering letters your line, and this line says so each time.",
+      takes: ["palette"], gives: ["text", "font", "svg"] },
+  ],
   placesHeading: "Instruments and study tools",
   places: [
     ["/playground/distill.html", "Distill", "Take any file, archive or folder apart and read what it is made of."],
