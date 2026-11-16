@@ -75,6 +75,8 @@ html.ready dialog[data-o="menu"][open]{animation:o-menu-in var(--dur-slow) var(-
 .o-menu-foot{max-width:1320px;margin:40px auto 0;display:flex;flex-wrap:wrap;gap:16px 28px;align-items:center;font-size:var(--fs-2,15px)}
 .o-menu-foot a,.o-menu-foot button{color:inherit}
 .o-close{font:600 var(--fs-2,15px) var(--face-text,sans-serif);background:none;color:inherit;border:2px solid currentColor;border-radius:0;padding:10px 16px;min-height:44px;cursor:pointer}
+.o-ptr{font:600 var(--fs-2,15px) var(--face-text,sans-serif);background:none;color:inherit;border:0;padding:10px 0;min-height:44px;cursor:pointer;text-decoration:underline;text-underline-offset:.3em}
+.o-ptr[aria-pressed="false"]{text-decoration-style:dotted}
 
 /* ---------- the hand: live controls that come to hand, no permanent bar ---------- */
 .o-hand{position:fixed;z-index:40;right:clamp(10px,2vw,24px);top:clamp(10px,2vw,24px);display:flex;gap:6px;align-items:center;
