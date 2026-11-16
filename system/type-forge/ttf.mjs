@@ -70,8 +70,11 @@ function cmap(map) {
   return concat(pack("HHHHL", 0, 1, 3, 1, 12), sub);
 }
 
-function nameTable(family, style) {
-  const recs = [[1, family], [2, style], [3, `${family} ${style}`], [4, `${family} ${style}`], [6, family.replace(/ /g, "") + "-" + style.replace(/ /g, "")]];
+// extra: more [nameID, text] records (copyright 0, licence 13, licence address 14); the records are written in
+// nameID order, as the format asks
+function nameTable(family, style, extra = []) {
+  const recs = [[1, family], [2, style], [3, `${family} ${style}`], [4, `${family} ${style}`], [6, family.replace(/ /g, "") + "-" + style.replace(/ /g, "")], ...extra]
+    .sort((a, b) => a[0] - b[0]);
   const entries = new Bytes(), stored = new Bytes();
   for (const [id, s] of recs) {
     const enc = new Uint8Array(s.length * 2);
@@ -102,8 +105,8 @@ function sfnt(tables) {
   return font;
 }
 
-// A minted face to TrueType font bytes (Uint8Array).
-export function toTTF(face, family = "Zain Mint", style = "Regular") {
+// A minted face to TrueType font bytes (Uint8Array). Without extra name records the bytes equal the Python engine's.
+export function toTTF(face, family = "Zain Mint", style = "Regular", extra = []) {
   const src = face.glyphs, names = Object.keys(src).sort();
   const order = [".notdef", "space", ...names];
   const cmapMap = { 32: 1 };
@@ -138,7 +141,7 @@ export function toTTF(face, family = "Zain Mint", style = "Regular") {
     new Uint8Array(10), pack("LLLL", 1, 0, 0, 0), tagBytes("ZLAB"),
     pack("HHHhhhHH", 0x40, 32, 115, ascent, descent, 0, ascent, -descent),
     pack("LLhhHHH", 1, 0, xh, 0, 0, 32, 1));
-  const tables = { cmap: cmap(cmapMap), glyf: glyf.u8(), head, hhea, hmtx: hmtxB, loca: locaB, maxp, name: nameTable(family, style), post, "OS/2": os2 };
+  const tables = { cmap: cmap(cmapMap), glyf: glyf.u8(), head, hhea, hmtx: hmtxB, loca: locaB, maxp, name: nameTable(family, style, extra), post, "OS/2": os2 };
   const gid = Object.fromEntries(names.map((ch, i) => [ch, 2 + i]));
   const pairs = [];
   for (const [pr, v] of Object.entries(face.kerning || {})) {

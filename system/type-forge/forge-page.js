@@ -3,7 +3,7 @@
 // tied to the mint, and shows the receipt. Nothing leaves the page.
 
 import { mint, DEFAULTS } from "./forge.mjs";
-import { toTTF } from "./ttf.mjs";
+import { mintedTTF } from "./licence.mjs";
 import { digest } from "../media-engine/receipt.mjs";
 import { markRisk, riskOf, RISK_LABELS } from "../media-engine/colour.mjs";
 
@@ -51,7 +51,7 @@ async function remint() {
     status([["Mint", "REFUSED", face.refusals.join(" ")], ["Font file", "UNVERIFIABLE", "no outlines were drawn"]]);
     return;
   }
-  const bytes = toTTF(face, "Zain Mint", "Regular");
+  const { bytes, family: named } = mintedTTF(face, p);
   const sha = await digest(bytes);
   if (my !== token) return;
   const family = "ZainMint-" + sha.slice(0, 12);
@@ -76,7 +76,7 @@ async function remint() {
   status([
     ["Mint", "OK", Object.keys(face.glyphs).length + " glyphs, " + Object.keys(face.kerning).length + " kerning pairs"],
     ["Font file", "OK", bytes.length.toLocaleString("en") + " bytes, sha-256 " + sha.slice(0, 16)],
-    ["Release", "PENDING", "in progress; not for sale or download"],
+    ["Licence", "OK", "SIL Open Font License 1.1, copyright 2026 Zain Dana Harper; the file is named " + named + " and carries the licence"],
   ]);
 }
 
