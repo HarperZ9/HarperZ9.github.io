@@ -11,7 +11,7 @@
 //   4. A visitor's own picture runs the same stages in the tab, and no request leaves for it.
 //   5. Distill's code and Motion are not fetched before they are used.
 //   6. The walk: a place's piece is clipped while it arrives, whole when settled, and the same going back up.
-//      Under reduced motion nothing is bound and every piece shows whole.
+//      Under reduced motion, and on a weak device, nothing is bound and every piece shows whole.
 //   8. With scripts off (a plain fetch of the page) the HTML holds The Playground account, the Distill sentence, the
 //      four stage captions, every place caption, the title and the description.
 //   7. A press at the earliest possible moment is answered. Run is pressed as soon as it can be pressed, with the
@@ -36,6 +36,10 @@ const place = (page, id, prog) => page.evaluate(([id, prog]) => {
   const f = document.querySelector(`#p-${id} .lead-box`), r = f.getBoundingClientRect();
   scrollTo(0, r.top + scrollY - innerHeight + prog * (innerHeight + r.height));
 }, [id, prog]);
+// The site steps down on a weak device (world/site/budget.js: four or fewer cores, under 4 GB, or Save-Data): the walk
+// is not bound and the backdrop keeps its plate. Most CI runners are such devices, so the contexts that test the walk and
+// the backdrop present a device with eight cores and 8 GB; the weak device has its own check at the end.
+const strong = (ctx) => ctx.addInitScript(() => { for (const [k, v] of [['hardwareConcurrency', 8], ['deviceMemory', 8]]) Object.defineProperty(Navigator.prototype, k, { get: () => v, configurable: true }); });
 const clipOf = (page, id) => page.evaluate((id) => getComputedStyle(document.querySelector(`#p-${id} .lead-piece`)).clipPath, id);
 
 (async () => {
@@ -44,6 +48,7 @@ const clipOf = (page, id) => page.evaluate((id) => getComputedStyle(document.que
     // 7. first, in a browser whose driver has compiled nothing yet: the earliest press
     {
       const early = await browser.newContext({ viewport: { width: 1280, height: 800 } }), p0 = await early.newPage(), said = [], fetched = [];
+      await strong(early);
       p0.on('console', (m) => said.push(m.text())); p0.on('request', (r) => fetched.push(new URL(r.url()).pathname));
       await p0.route(/\.(mp4|webm|m4a|mp3)(\?|$)/, (r) => r.abort());
       // the longest time the page went without running a 20 ms timer, and what the status line said as the press landed
@@ -66,6 +71,7 @@ const clipOf = (page, id) => page.evaluate((id) => getComputedStyle(document.que
     }
 
     const ctx = await browser.newContext({ viewport: { width: 1280, height: 800 } });
+    await strong(ctx);
     const page = await ctx.newPage(), errors = [], asked = [];
     page.on('pageerror', (e) => errors.push(e.message));
     page.on('request', (r) => asked.push({ url: new URL(r.url()).pathname, method: r.method() }));
@@ -187,10 +193,21 @@ const clipOf = (page, id) => page.evaluate((id) => getComputedStyle(document.que
 
     // reduced motion: nothing bound, every piece whole
     const calm = await browser.newContext({ viewport: { width: 1280, height: 800 }, reducedMotion: 'reduce' });
+    await strong(calm);
     const p2 = await calm.newPage(); await p2.route(/\.(mp4|webm|m4a|mp3)(\?|$)/, (r) => r.abort()); await p2.goto(`${base}/`, { waitUntil: 'load' });
     await place(p2, 'mosaic', 0.2); await p2.waitForTimeout(1200);
     assert.deepEqual(await p2.$$eval('.place .lead-piece', (es) => es.map((e) => e.getAnimations().length + (getComputedStyle(e).clipPath === 'none' ? 0 : 1))), Array(10).fill(0));
     await calm.close();
+    // a weak device: the page marks itself, nothing is bound, every piece whole, and Motion is never fetched
+    const weak = await browser.newContext({ viewport: { width: 1280, height: 800 } });
+    await weak.addInitScript(() => Object.defineProperty(Navigator.prototype, 'hardwareConcurrency', { get: () => 2, configurable: true }));
+    const p3 = await weak.newPage(), got = []; p3.on('request', (q) => got.push(new URL(q.url()).pathname));
+    await p3.route(/\.(mp4|webm|m4a|mp3)(\?|$)/, (q) => q.abort()); await p3.goto(`${base}/`, { waitUntil: 'load' });
+    assert.ok(await p3.evaluate(() => document.documentElement.classList.contains('weak')), 'a two-core device is not marked weak');
+    await place(p3, 'mosaic', 0.2); await p3.waitForTimeout(1200);
+    assert.deepEqual(await p3.$$eval('.place .lead-piece', (es) => es.map((e) => e.getAnimations().length + (getComputedStyle(e).clipPath === 'none' ? 0 : 1))), Array(10).fill(0));
+    assert.ok(!got.some((u) => /web\/motion\//.test(u)), 'a weak device fetched Motion');
+    await weak.close();
     console.log('distill-front: ok');
   } finally { await browser.close(); }
 })().catch((e) => { console.error(e); process.exit(1); });
