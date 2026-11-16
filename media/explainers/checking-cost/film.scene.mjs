@@ -15,7 +15,7 @@ import * as s4 from "./scene/s4-spread.mjs";
 import * as s5 from "./scene/s5-rerun.mjs";
 import * as s6 from "./scene/s6-close.mjs";
 
-const FRAMES = 5324, FPS = 30;
+const FRAMES = 5665, FPS = 30;
 const WORLD = Object.freeze({ x: 960, y: 722, zoom: 0.8 });
 
 export default {

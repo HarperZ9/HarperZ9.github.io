@@ -150,5 +150,5 @@ export function draw(t, A, T, items, zoom) {
   scr(Q.years, C.ink, yearsA);
   // A claim tag in drift beside the total (storyboard fix 7): it is an estimate.
   if (yearsA > 0) scr(text("estimate", { atlas: A.mono, size: 28, x: 960 + Q.yearsW / 2 + 30, y: 236 }).shape, C.hot, yearsA);
-  scr(S.caveat, C.unv, window(t, T.caveat, T.exit, 0.6, 0.4));
+  // Remaster 2026-10-24: the caveat sentence is spoken; its on-screen copy is dropped (show, not signal).
 }

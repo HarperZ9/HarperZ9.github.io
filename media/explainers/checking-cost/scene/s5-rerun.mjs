@@ -30,7 +30,7 @@ export function prepare(A) {
     helped: text("with the authors' help: 5 to 25, and weeks of waiting", { atlas: A.sans, size: 28, x: X(5 * H), y: Y + 182 }).shape,
     missed: text("13 of 35: a number not reproduced", { atlas: A.sans, size: 28, x: GRID.x + GRID.cols * GRID.s + 6, y: GRID.y + 4 * GRID.s + 22 }).shape,
     none: text("none of those misses clearly changed a conclusion", { atlas: A.sans, size: 30, x: 960, y: 760, anchor: "center" }).shape,
-    est: text("hours: the authors' estimates, not measurements", { atlas: A.sans, size: 22, x: X0, y: Y + 120 }).shape,
+    est: text("hours: the authors' estimates", { atlas: A.sans, size: 22, x: X0, y: Y + 120 }).shape,
   };
   for (let d = L0; d < L1; d++) for (let k = 2; k < 10; k++) { const x = X(k * Math.pow(10, d)); if (x < X1) A.s5.minor.push(contour([x, Y - 6, x, Y + 6], false)); }
 }

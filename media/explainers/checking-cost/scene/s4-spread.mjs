@@ -126,7 +126,7 @@ export function draw(t, A, T, items) {
     scr(S.one, C.hot, raceA * span(grow(0), 0.98, 1));
     scr(S.six, C.ink, raceA * span(grow(1), 0.98, 1));
     scr(S.axis, C.ink2, raceA);
-    scr(S.illus, C.dim, raceA);
+    // Remaster 2026-10-24: the 'drawn for illustration' tag is dropped; the numbers carry the claim.
   }
   scr(S.retweet, C.ink, window(t, T.race + 0.4, T.bots - 0.1, 0.5, 0.4), true);
   scr(S.bots, C.ink, window(t, T.bots, T.spread - 0.1, 0.5, 0.4), true);
