@@ -114,10 +114,14 @@ html.plain canvas.o-brush,html.plain canvas.o-node,html.plain canvas.o-ripple,ht
 html.plain [data-o="panel"]{background:var(--m-ground);clip-path:none!important;-webkit-mask:none;mask:none}
 @media (forced-colors:active){[data-o="panel"]{clip-path:none!important;border:1px solid CanvasText}}
 
-/* on phones the hand sits at the bottom edge, in the thumb's reach, clear of every title */
+/* on phones the hand spans the top edge; the page keeps that row for it, so at the top nothing sits under a control
+   (a 44 px control, 4 px of padding each side, and 22 px more for the labels under the controls). A reading page
+   keeps the row in its own main (field.css, studies.css). */
 @media (max-width:860px){
   .o-hand{top:max(6px,env(safe-area-inset-top));right:10px;left:10px;justify-content:space-between}
   body:has(.o-hand){padding-top:8px}
+  body:has(.o-hand):not(.reading){padding-top:calc(max(6px,env(safe-area-inset-top)) + 60px)}
+  body:has(.o-hand.o-said):not(.reading){padding-top:calc(max(6px,env(safe-area-inset-top)) + 82px)}
 }
 
 /* the survey band: the universe's "we are here", carried in the hand; the link names it for readers */
