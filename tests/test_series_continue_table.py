@@ -21,7 +21,8 @@ from tools.series_table import BEGIN, END, carrier_routes, reading_minutes, seri
 
 SERIES = json.loads((ROOT / "publications/data/series/who-knew-first.json").read_text(encoding="utf-8"))
 EXPECTED_CARRIERS = ["who-knew-first.html", "who-pays-the-referees.html", "the-terms-for-telling.html",
-                     "who-knew-first-series.html"]
+                     "who-kept-the-books.html", "the-maker-is-part-of-the-story.html",
+                     "a-check-it-cannot-predict.html", "who-knew-first-series.html"]
 
 
 def text(value: str) -> str:

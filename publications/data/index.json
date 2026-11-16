@@ -169,6 +169,15 @@
       "updated_at": "2026-08-27"
     },
     {
+      "id": "a-check-it-cannot-predict",
+      "route": "a-check-it-cannot-predict.html",
+      "title": "A Check It Cannot Predict",
+      "collection": "series",
+      "kind": "Series piece",
+      "published_at": "2026-10-01",
+      "updated_at": "2026-10-01"
+    },
+    {
       "id": "a-witness-should-not-become-a-ruler",
       "route": "a-witness-should-not-become-a-ruler.html",
       "title": "A witness should not become a ruler",
@@ -259,6 +268,15 @@
       "updated_at": "2026-07-24"
     },
     {
+      "id": "the-maker-is-part-of-the-story",
+      "route": "the-maker-is-part-of-the-story.html",
+      "title": "The Maker Is Part of the Story",
+      "collection": "series",
+      "kind": "Series piece",
+      "published_at": "2026-10-01",
+      "updated_at": "2026-10-01"
+    },
+    {
       "id": "the-summary-is-not-the-record",
       "route": "the-summary-is-not-the-record.html",
       "title": "The Summary Is Not the Record",
@@ -284,6 +302,15 @@
       "kind": "Essay",
       "published_at": "2026-06-20",
       "updated_at": "2026-06-20"
+    },
+    {
+      "id": "who-kept-the-books",
+      "route": "who-kept-the-books.html",
+      "title": "Who Kept the Books",
+      "collection": "series",
+      "kind": "Series piece",
+      "published_at": "2026-10-01",
+      "updated_at": "2026-10-01"
     },
     {
       "id": "who-knew-first",
@@ -332,20 +359,20 @@
       "summary": "Every party that checks frontier AI depends on the labs it checks for access, compute, money or the right to publish. A ledger of which of those terms are public, party by party, with Anthropic first."
     },
     {
+      "id": "who-kept-the-books",
+      "route": "who-kept-the-books.html",
+      "title": "Who Kept the Books",
+      "kind": "Series piece",
+      "published_at": "2026-10-01",
+      "summary": "In every money case it reads, from Hispaniola in 1514 to the Iran-Contra inquiry, the party that controlled the money wrote the first account, and the record moved only when someone outside that party obtained it."
+    },
+    {
       "id": "the-terms-for-telling",
       "route": "the-terms-for-telling.html",
       "title": "The Terms for Telling",
       "kind": "Series piece",
       "published_at": "2026-10-01",
       "summary": "The party that holds a record also writes the terms for the people inside who could tell. In the cases checked, telling was protected where a forum outside the employer reached the merits, or public pressure forced a reversal."
-    },
-    {
-      "id": "the-number-has-a-vintage",
-      "route": "the-number-has-a-vintage.html",
-      "title": "The Number Has a Vintage",
-      "kind": "Atlas essay",
-      "published_at": "2026-10-01",
-      "summary": "An official jobs estimate changes as later data arrive. Each version answers a different question, and a fair comparison names which one it uses."
     }
   ]
 }

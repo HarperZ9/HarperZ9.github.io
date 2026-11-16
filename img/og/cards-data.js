@@ -681,6 +681,27 @@ window.CARD_DATA = {
     "word": "Telling",
     "headline": "The Terms for Telling"
   },
+  "who-kept-the-books": {
+    "publication": true,
+    "editorial": true,
+    "role": "EVIDENCE ESSAY",
+    "word": "Books",
+    "headline": "Who Kept the Books"
+  },
+  "the-maker-is-part-of-the-story": {
+    "publication": true,
+    "editorial": true,
+    "role": "ESSAY",
+    "word": "Makers",
+    "headline": "The Maker Is Part of the Story"
+  },
+  "a-check-it-cannot-predict": {
+    "publication": true,
+    "editorial": true,
+    "role": "EDITORIAL ANALYSIS",
+    "word": "Checks",
+    "headline": "A Check It Cannot Predict"
+  },
   "the-number-has-a-vintage": {
     "publication": true,
     "editorial": true,

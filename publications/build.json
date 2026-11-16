@@ -14,6 +14,7 @@
     "publications/data/records/the-timestamp-is-not-the-order.json": "12529cbb04a624ac9c181cb08fa4ce3ff4d8659fa3af205ab593b0ce887db456",
     "publications/data/records/what-the-formula-counts.json": "12024430370cc7a85874281daa3a62a0e188f941f1d7c6b2a8af2b8c1c5d4441",
     "publications/data/records/what-the-label-changes.json": "5069e1af88b2ad61afd27833d7a9ae199c43d0b76d6bc93e8e7af286ffcef2ea",
+    "publications/data/listings/a-check-it-cannot-predict.json": "a0dd2a82538c94769101130abce6529f34b033f1b8efdbf6364db91ab182edd4",
     "publications/data/listings/a-witness-should-not-become-a-ruler.json": "6bd068bef16ef3fdf3473844937b77392b60093e7ea107f2e33868fcb987703b",
     "publications/data/listings/checking-the-machines.json": "61734c3d8c9912061defbd0e561152a0f15668703e780fd912fed950bf6b81e8",
     "publications/data/listings/conferred-existence-essay.json": "105dde65e6e9d2efd098bb94b64a7c876452f51efc4feb08cf76acf48c6f7a9b",
@@ -25,9 +26,11 @@
     "publications/data/listings/no-receipt-no-accept.json": "1db2979cd178c0203ef09fa140d0c05e389bb334317783e2c891d59f4c874e28",
     "publications/data/listings/openai-hugging-face-incident.json": "5d71240cfde86ec9617d84861bcc59c276746dfe392e6c0dc7edbd60ae72e1dc",
     "publications/data/listings/pick-the-lock-for-everyone.json": "14d2b69e0894fbb1241ef5806b4d9fb76d0fb028970615593c9e97aa4affc160",
+    "publications/data/listings/the-maker-is-part-of-the-story.json": "65aa2295286f77b64faa980caa2751de8f7037a4733602ecf23dd4117c84a648",
     "publications/data/listings/the-summary-is-not-the-record.json": "9481f76634b17570e7fdef3b66d42f6466a3f2c445a24c073bf4d0ee346907c5",
     "publications/data/listings/the-terms-for-telling.json": "211bf400d2cdaf2bd7a3af9487c1a5e275daf35e5dc5183b604ca83f3882aa06",
     "publications/data/listings/verified-is-not-trustworthy.json": "df7a1711de5453bf50f1eb72ffc01276d62785b59a53b25358caea7698f2825e",
+    "publications/data/listings/who-kept-the-books.json": "98828cdbde7cf4677413183b3d7560d5681209653ee4db8dd4a4ee67c759feec",
     "publications/data/listings/who-knew-first.json": "2bfdf43af1a3632cead6a01409393dc39875f7c4c7198e9e5e25e519fe5ed810",
     "publications/data/listings/who-pays-the-referees.json": "07679345cb93fb7af2ffc7794549d3272c1fc428f6507be11749d4289ddd803b",
     "publications/data/listings/why.json": "12c48883dc8e92bf1a89e2e9e7ab24da52c7ca1dd7231fc887779d74ad246728",
@@ -36,8 +39,8 @@
   "outputs": {
     "availability-is-not-reach.html": "72824c62f58f802af4eba28bbf8b1fe48372bd26c17855f612fa232d7757fb6d",
     "borrowed-ground.html": "b631319d4f124f714db3a2b3054b8900d0f6d067bc932fc34e76a58ecbfc34ef",
-    "feed.json": "145aaee0a8a4fbd3ddebd29f513a58c42148fdedb19f44bbbb86e79c672788dd",
-    "feed.xml": "d486a15d4b716c7eed82ac139465154050f89f4d77fd1bd927ba12e6be40117d",
+    "feed.json": "32a4d265ef1bc6ae586f597dfd0e7d8bf43d7d5a13a245b6a2398f05582bb9a3",
+    "feed.xml": "9c9b7b74ae20b5e975d25bb366f9b0db9c2d83dc4c2199f19ec0681bbdb5ac1c",
     "figures/availability-is-not-reach.html": "5a58ed0154f5fc8e53e356aedadec0826c4c64c0bc6c6d25d9224366e7a091c0",
     "figures/availability-is-not-reach.json": "9b8e9dc1ee240d0055042c5b705019b68adda99f9bdf305a07242bbc673982cd",
     "figures/availability-is-not-reach.svg": "56b7ba92be77b156c6df1122de0642da2ef2fff1e679740c27709223d59f9b06",
@@ -61,9 +64,9 @@
     "figures/vintage-like-for-like-check.svg": "114b69736c470a02cf1821aa87f25dc070bd5173e9d2124b12a807cccb20673d",
     "growth-needs-a-before.html": "16f64a0fd8a571f1f8b057476423ddcc5ee0c755873a7ab71684e750bc99fe2d",
     "ltj-bukem-the-man-behind-the-atmosphere.html": "e11bb54828582ad28b46ba795fae7a31364e92c666310100d2b8a332318124e1",
-    "publications.html": "4bdadfa0cf9d2367790154bb9071eb3016d06bd970c9fc9252a6cd5f12a6ac6b",
-    "publications/data/index.json": "17e2636de3aebe4da06d5eee565f0856f61c1058d4a26ba2ab97851cadfd8215",
-    "sitemap.xml": "1705b9cf1b135168b4f9b7e4905f99cb279cd36787f73a740abe3cae0e2a1c74",
+    "publications.html": "2224fd24c41c327205d24f4b53acebd28087904f5e798b10bb3822247a7a4db0",
+    "publications/data/index.json": "26db340c5e284fc29123d33f52a0ff9d49c15e0e8d1582a702e82aa1d1e00fa5",
+    "sitemap.xml": "f568ca47c6bb420b4eb0f0ed055a6ba156c5bf966a429f62eb10ae4a59571824",
     "support-has-more-than-one-record.html": "6d1a49de6e6a343cce7d258a4ece277d4da952e3062750606cd9eedf58f250b0",
     "the-number-has-a-vintage.html": "70e3860cb04bf42d2c7700600871c19097a7da9302d297b52c271f3e1a9d0346",
     "the-sandbox-was-never-just-a-box.html": "ee4567dd9add7b37d8d15221770e6936d3ca7b2aafd4a04f17fa9a9127d843df",
@@ -72,6 +75,6 @@
     "the-timestamp-is-not-the-order.html": "2afe21a8756e749e6964092db50030abc51ee0a582cab86ee0f83a9dcb314179",
     "what-the-formula-counts.html": "dd36fa78dce5f939233ea3b954bdd4ad89e6bd303a021cb5802453bc90a73eb2",
     "what-the-label-changes.html": "188be66181a5855be379e84ee83a7e6bee5863426563373923f31282e08c4123",
-    "who-knew-first-series.html": "79c2b225791d627e48e084fd831781b2c57fb5340851144989b0f14d734cc7ca"
+    "who-knew-first-series.html": "11b27aaca6b8f9269f19e2addfd5ca1d16fe7370b10ad36c54008f749eb345bb"
   }
 }

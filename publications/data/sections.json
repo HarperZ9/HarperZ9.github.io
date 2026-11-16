@@ -9,6 +9,9 @@
       "more": "More investigations",
       "explainer": "Long investigations from public records, and the series that follows Who Knew First.",
       "members": [
+        {"id": "a-check-it-cannot-predict", "kind": "Series piece", "topic": "oversight and evaluation", "series": {"id": "who-knew-first", "part": 5}},
+        {"id": "the-maker-is-part-of-the-story", "kind": "Series piece", "topic": "stories and makers", "series": {"id": "who-knew-first", "part": 4}},
+        {"id": "who-kept-the-books", "kind": "Series piece", "topic": "money and records", "series": {"id": "who-knew-first", "part": 3}},
         {"id": "the-terms-for-telling", "kind": "Series piece", "topic": "whistleblowers and disclosure", "series": {"id": "who-knew-first", "part": 2}},
         {"id": "who-pays-the-referees", "kind": "Series piece", "topic": "AI evaluation", "series": {"id": "who-knew-first", "part": 1}},
         {"id": "who-knew-first", "kind": "Investigation", "topic": "AI incidents", "series": {"id": "who-knew-first", "part": 0}},

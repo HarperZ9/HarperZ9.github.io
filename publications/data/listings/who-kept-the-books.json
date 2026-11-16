@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "id": "who-kept-the-books",
+  "route": "who-kept-the-books.html",
+  "form": "evidence essay",
+  "category": "evidence-public-life",
+  "title": "Who Kept the Books",
+  "summary": "In every money case it reads, from Hispaniola in 1514 to the Iran-Contra inquiry, the party that controlled the money wrote the first account, and the record moved only when someone outside that party obtained it.",
+  "published_at": "2026-10-01",
+  "updated_at": "2026-10-01",
+  "date_source": null,
+  "topics": [
+    "money",
+    "records",
+    "accountability"
+  ],
+  "ai_assistance": "AI-assisted, author-directed, source-bounded"
+}

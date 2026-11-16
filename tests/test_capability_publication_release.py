@@ -13,6 +13,16 @@ from xml.etree import ElementTree
 ROOT = Path(__file__).resolve().parents[1]
 
 RELEASE_PATHS = (
+    "assets/index-DFmWuVrc.js",
+    "who-kept-the-books.html",
+    "publications/data/listings/who-kept-the-books.json",
+    "img/og/who-kept-the-books.png",
+    "the-maker-is-part-of-the-story.html",
+    "publications/data/listings/the-maker-is-part-of-the-story.json",
+    "img/og/the-maker-is-part-of-the-story.png",
+    "a-check-it-cannot-predict.html",
+    "publications/data/listings/a-check-it-cannot-predict.json",
+    "img/og/a-check-it-cannot-predict.png",
     "assets/index-FBDE3rFM.js",
     "assets/index-BkvbD78Z.js",
     "work-with-me.html",
@@ -536,6 +546,11 @@ RELEASE_PATHS = (
 # route registry, site index and home bundle (index-FBDE3rFM.js) are regenerated; the
 # re-render also picks up the Continue the series text from #286.
 # index-BkvbD78Z.js stays as retained history.
+# October 1, 2026: series pieces 3 to 5 (Who Kept the Books, The Maker Is Part of the Story,
+# A Check It Cannot Predict) are published with listings and cards; the series panels on pieces
+# 1 and 2 gain a dated correction, the series hub, every Continue the series table, the Writing
+# hub, feeds, sitemap, build receipt, route registry, site index and home bundle
+# (index-DFmWuVrc.js) are regenerated. index-FBDE3rFM.js stays as retained history.
 REVIEWED_RELEASE_SHA256 = "85e8b147248954a685515e52d8b8b7684b654e4f581b555736f12a3ae2fcce4c"
 
 BRIEFING_FIGURES = (
@@ -715,7 +730,14 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     # October 1, 2026: the typefaces are renamed Zain Editorial and Zain Mono, so the
     # bundle rebuilt from the registry is index-FBDE3rFM.js with the same sheet.
     # index-BkvbD78Z.js stays as retained history.
-    current_js = "index-FBDE3rFM.js"
+    # October 1, 2026: series pieces 3 to 5 join the Who Knew First routes, so the bundle
+    # rebuilt from the registry is index-DFmWuVrc.js with the same sheet.
+    # index-FBDE3rFM.js stays as retained history.
+    current_js = "index-DFmWuVrc.js"
+    previous_typeface_js = "index-FBDE3rFM.js"
+    assert previous_typeface_js not in source
+    assert (ROOT / "assets" / previous_typeface_js).is_file()
+    assert f"assets/{previous_typeface_js}" in RELEASE_PATHS
     previous_work_js = "index-BkvbD78Z.js"
     assert previous_work_js not in source
     assert (ROOT / "assets" / previous_work_js).is_file()

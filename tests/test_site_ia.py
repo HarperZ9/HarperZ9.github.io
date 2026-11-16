@@ -23,12 +23,15 @@ SERIES = json.loads((ROOT / "publications/data/series/who-knew-first.json").read
 INDEX = json.loads((ROOT / "publications/data/index.json").read_text(encoding="utf-8"))
 
 # The hub text of PUBLICATION-PLAN section 5, which the series hub carries verbatim.
+# 1 October 2026: narrowed to what Who Knew First supports. That page infers the point from its
+# structure and on 25 September corrected its own stronger line about the label and the clock.
 PLAN_INTRO = (
     "Who Knew First is a record of nine 2026 incidents in which an AI agent crossed a boundary. "
-    "It argues one thing: whoever holds an incident's logs gets to name it, and the name decides "
-    "how fast anyone else hears about it. The pieces below each test one question that argument "
-    "raises. They stand alone, and each says how it connects."
+    "It infers, from its structure, that whoever holds an incident's logs also names it, and that "
+    "the name can decide which notice clock applies. The pieces below each test one question that "
+    "argument raises. They stand alone, and each says how it connects."
 )
+OVERSTATED = "the name decides how fast anyone else hears"
 PLAN_CLOSING = (
     "Every piece lists its sources, the confidence of each claim, what each claim does not prove "
     "and the threads still open for anyone to pick up. An Anthropic-built model helped compile all "
@@ -103,6 +106,8 @@ def test_series_hub_carries_the_plan_text_and_links_only_published_parts() -> No
     body = text(page)
     assert PLAN_INTRO in body
     assert PLAN_CLOSING in body
+    for route in ["who-knew-first-series.html"] + [f'{part["id"]}.html' for part in SERIES["parts"]]:
+        assert OVERSTATED not in read(route), route
     parts = re.findall(r"<li value=\"\d\">(.*?)</li>", page, re.S)
     assert len(parts) == 5
     for part, definition in zip(parts, SERIES["parts"]):
@@ -120,7 +125,9 @@ def test_series_hub_carries_the_plan_text_and_links_only_published_parts() -> No
 def test_series_parts_match_the_aside_on_each_published_piece() -> None:
     """The hub and the aside on every published part name the same five questions and statuses."""
     published = [part for part in SERIES["parts"] if part["id"]]
-    assert [part["id"] for part in published] == ["who-pays-the-referees", "the-terms-for-telling"]
+    assert [part["id"] for part in published] == [
+        "who-pays-the-referees", "the-terms-for-telling", "who-kept-the-books",
+        "the-maker-is-part-of-the-story", "a-check-it-cannot-predict"]
     for page_part in published:
         aside = re.search(r'<aside class="wpr-series".*?</aside>', read(f'{page_part["id"]}.html'), re.S).group(0)
         items = re.findall(r"<li[^>]*><strong>(.*?)\.</strong> <span class=\"wpr-label\">([^<]*)</span> (.*?)</li>", aside)
