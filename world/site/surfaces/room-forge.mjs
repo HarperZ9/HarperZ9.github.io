@@ -9,7 +9,7 @@
 //           svg       the line set in the minted outlines
 // Nothing leaves the tab: the font is built in memory and handed to the browser as a local file.
 import { mint, setText } from '../../../system/type-forge/forge.mjs';
-import { toTTF } from '../../../system/type-forge/ttf.mjs';
+import { mintedTTF } from '../../../system/type-forge/licence.mjs';
 
 export const KEYS = ['weight', 'contrast', 'width', 'x_height', 'roundness', 'aperture'];
 // key: [min, max, step, digits shown, name, default]; the defaults are the forge's own (forge.mjs DEFAULTS)
@@ -56,7 +56,8 @@ export function mount(host, input, ctx) {
 <div class="fg-alphabet" translate="no"><p>abcdefghijklmnopqrstuvwxyz</p><p>ABCDEFGHIJKLMNOPQRSTUVWXYZ</p><p>0123456789 . , -</p></div>
 <p class="fg-file" role="status" aria-live="polite"></p>
 <p class="fg-take"><a class="fg-ttf" download hidden>Save the font (.ttf)</a> <a class="fg-svg" download hidden>Save this line (.svg)</a></p>
-<p class="fg-terms">Both files are built in this tab and saved by your browser; nothing is sent anywhere. Zain Mint is unfinished: it covers a to z, A to Z, 0 to 9, the period, the comma and the hyphen, and the family has no release or licence yet, so treat the file as a proof to try.</p>
+<p class="fg-terms">Both files are built in this tab and saved by your browser; nothing is sent anywhere. Zain Mint covers a to z, A to Z, 0 to 9, the period, the comma and the hyphen. It is released under the <a href="/system/type-forge/OFL.txt">SIL Open Font License 1.1</a>, copyright 2026 Zain Dana Harper, and each saved file carries that licence.</p>
+<p class="fg-name" role="status" aria-live="polite"></p>
 </div>
 <form class="fg-controls" aria-label="Typeface parameters">
 <fieldset><legend>Pen</legend>${['weight', 'contrast'].map(slider).join('')}</fieldset>
@@ -65,7 +66,7 @@ export function mount(host, input, ctx) {
 <div class="fg-weights" role="group" aria-label="Named weights">${NAMED.map(([n, w]) => `<button type="button" data-weight="${w}">${n}</button>`).join('')}</div></fieldset>
 </form></div>`;
   function slider(k) { const [lo, hi, step, , name] = RANGE[k]; return `<label for="fg-${k}">${name} <output for="fg-${k}"></output></label><input type="range" id="fg-${k}" data-k="${k}" min="${lo}" max="${hi}" step="${step}" value="${state[k]}">`; }
-  const $ = (s) => host.querySelector(s), sample = $('.fg-sample'), file = $('.fg-file'), missingEl = $('.fg-missing'), ttf = $('.fg-ttf'), svg = $('.fg-svg');
+  const $ = (s) => host.querySelector(s), sample = $('.fg-sample'), file = $('.fg-file'), missingEl = $('.fg-missing'), ttf = $('.fg-ttf'), svg = $('.fg-svg'), nameEl = $('.fg-name');
   const link = (a, key, blob, name) => { if (urls[key]) URL.revokeObjectURL(urls[key]); urls[key] = URL.createObjectURL(blob); a.href = urls[key]; a.download = name; a.hidden = false; };
   const params = () => { const p = {}; for (const k of KEYS) p[k] = +state[k]; if (state.caps) p.style = state.caps; return p; };
 
@@ -86,7 +87,7 @@ export function mount(host, input, ctx) {
       file.textContent = `Refused, so no file is made and the last face that passed stays greyed: ${made.refusals.join(' ')}`;
       return;
     }
-    const bytes = toTTF(made, 'Zain Mint', 'Regular'), sha = await sha256(bytes);
+    const { bytes, family: named, derived } = mintedTTF(made, p), sha = await sha256(bytes);
     if (my !== token) return;
     const family = `ZainMint-${sha.slice(0, 12)}`;
     try {
@@ -97,8 +98,9 @@ export function mount(host, input, ctx) {
     face = made; host.classList.remove('fg-refused'); host.style.setProperty('--fg-family', `"${family}"`); host.dataset.sha = sha;
     const set = setText(made, state.text);
     missingEl.textContent = set.missing.length ? `Not in the face yet, so shown in the fallback and left out of the SVG: ${set.missing.join(' ')}` : '';
+    nameEl.textContent = derived ? `With the sliders moved, the face is a modified version, so the file is named ${named}: the licence keeps the name Zain Mint for the original.` : '';
     file.textContent = `Minted ${Object.keys(made.glyphs).length} glyphs and ${Object.keys(made.kerning).length} kerning pairs. The font file is ${bytes.length.toLocaleString('en')} bytes, sha-256 ${sha.slice(0, 16)}.`;
-    link(ttf, 'ttf', new Blob([bytes], { type: 'font/ttf' }), `zain-mint-${sha.slice(0, 8)}.ttf`);
+    link(ttf, 'ttf', new Blob([bytes], { type: 'font/ttf' }), `${named.toLowerCase().replace(/ /g, '-')}-${sha.slice(0, 8)}.ttf`);
     link(svg, 'svg', new Blob([set.svg.replace('<svg ', `<svg color="${colour() ? ink : '#151310'}" `)], { type: 'image/svg+xml' }), `zain-mint-line-${sha.slice(0, 8)}.svg`);
     ctx.address?.(writeState(state));
   }
