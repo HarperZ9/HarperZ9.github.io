@@ -1,0 +1,211 @@
+{
+ "about": "Written by scripts/build-pointer.cjs; do not edit by hand.",
+ "size": 32,
+ "scales": [
+  1,
+  2
+ ],
+ "states": {
+  "rest": {
+   "hot": [
+    6,
+    6
+   ]
+  },
+  "give": {
+   "hot": [
+    6,
+    6
+   ]
+  },
+  "pressed": {
+   "hot": [
+    6,
+    6
+   ]
+  },
+  "reach": {
+   "hot": [
+    6,
+    6
+   ]
+  },
+  "hold": {
+   "hot": [
+    6,
+    6
+   ]
+  },
+  "text": {
+   "hot": [
+    16,
+    16
+   ]
+  },
+  "busy": {
+   "hot": [
+    6,
+    6
+   ],
+   "frames": 4
+  }
+ },
+ "settings": {
+  "day": {
+   "states": [
+    "rest",
+    "give",
+    "pressed",
+    "reach",
+    "hold",
+    "text",
+    "busy"
+   ],
+   "made_of": {
+    "light": "D65",
+    "nib": "rhodium",
+    "ferrule": "rhodium",
+    "tip": "iridium",
+    "barrel": "rhodamine_6g dye layer 1.1e-7 m under a pmma coat",
+    "grip_pads": "lamp_black under a matte pmma coat"
+   }
+  },
+  "night": {
+   "states": [
+    "rest",
+    "give",
+    "pressed",
+    "reach",
+    "hold",
+    "text",
+    "busy"
+   ],
+   "made_of": {
+    "light": "A",
+    "nib": "gold",
+    "ferrule": "gold",
+    "tip": "iridium",
+    "barrel": "lamp_black dye layer 2.2e-7 m under a pmma coat",
+    "grip_pads": "lamp_black under a matte pmma coat"
+   }
+  },
+  "sky": {
+   "states": [
+    "rest",
+    "give",
+    "pressed",
+    "reach",
+    "hold",
+    "text",
+    "busy"
+   ],
+   "made_of": {
+    "light": "D65",
+    "nib": "silver",
+    "ferrule": "silver",
+    "tip": "iridium",
+    "barrel": "pedot_pss dye layer 0.000003 m under a pmma coat",
+    "grip_pads": "lamp_black under a matte pmma coat"
+   }
+  },
+  "bldlng": {
+   "states": [
+    "rest",
+    "give",
+    "pressed"
+   ],
+   "made_of": {
+    "light": "D65",
+    "nib": "rhodium",
+    "ferrule": "rhodium",
+    "tip": "iridium",
+    "barrel": "the site's colour token oklch(0.74 0.1 288) as the dye colour under a pmma coat; not a measured dye",
+    "grip_pads": "lamp_black under a matte pmma coat"
+   }
+  },
+  "theflywheel": {
+   "states": [
+    "rest",
+    "give",
+    "pressed"
+   ],
+   "made_of": {
+    "light": "D65",
+    "nib": "rhodium",
+    "ferrule": "rhodium",
+    "tip": "iridium",
+    "barrel": "the site's colour token oklch(0.8 0.095 65) as the dye colour under a pmma coat; not a measured dye",
+    "grip_pads": "lamp_black under a matte pmma coat"
+   }
+  },
+  "theplygrnd": {
+   "states": [
+    "rest",
+    "give",
+    "pressed"
+   ],
+   "made_of": {
+    "light": "D65",
+    "nib": "rhodium",
+    "ferrule": "rhodium",
+    "tip": "iridium",
+    "barrel": "the site's colour token oklch(0.8 0.1 186) as the dye colour under a pmma coat; not a measured dye",
+    "grip_pads": "lamp_black under a matte pmma coat"
+   }
+  },
+  "thecmmns": {
+   "states": [
+    "rest",
+    "give",
+    "pressed"
+   ],
+   "made_of": {
+    "light": "D65",
+    "nib": "rhodium",
+    "ferrule": "rhodium",
+    "tip": "iridium",
+    "barrel": "the site's colour token oklch(0.8 0.105 118) as the dye colour under a pmma coat; not a measured dye",
+    "grip_pads": "lamp_black under a matte pmma coat"
+   }
+  },
+  "artiql8": {
+   "states": [
+    "rest",
+    "give",
+    "pressed"
+   ],
+   "made_of": {
+    "light": "D65",
+    "nib": "rhodium",
+    "ferrule": "rhodium",
+    "tip": "iridium",
+    "barrel": "the site's colour token oklch(0.74 0.1 250) as the dye colour under a pmma coat; not a measured dye",
+    "grip_pads": "lamp_black under a matte pmma coat"
+   }
+  },
+  "rsrch": {
+   "states": [
+    "rest",
+    "give",
+    "pressed"
+   ],
+   "made_of": {
+    "light": "D65",
+    "nib": "rhodium",
+    "ferrule": "rhodium",
+    "tip": "iridium",
+    "barrel": "the site's colour token oklch(0.77 0.1 349) as the dye colour under a pmma coat; not a measured dye",
+    "grip_pads": "lamp_black under a matte pmma coat"
+   }
+  }
+ },
+ "records": {
+  "repo": "HarperZ9/superframe",
+  "commit": "f768ef98fe7af948b2a3063b9b9dd792c9d3d6ce",
+  "files": {
+   "packages/materials/data/materials.json": "f45fa8ed775907ec8f23bb8e960a6ea08f0362a38476beaadebd1bf6c4142437",
+   "packages/materials/data/cie/CIE_xyz_1931_2deg.csv": "bd7973e895a97e543815614b19c51ceff552ae9910a424724ae04ed89bd863a3",
+   "packages/materials/data/cie/CIE_std_illum_D65.csv": "cbd596f14e50307a398e262698c5b46b2c48f0b091234ac3ffc6a9c88afdf1cc"
+  }
+ }
+}

@@ -125,4 +125,7 @@ onFirstPress("[data-copy]", () => import("./copy.js"));
 onFirstPress("[data-sound]", () => import("./sound.js"));
 initParts();
 initOrganic().catch((e) => console.warn("organic: init failed", e));
+// the drawn pointer (pointer.js): fetched only for a mouse or trackpad outside forced colours; touch, pen and forced
+// colours keep the system pointer and never download it
+if (matchMedia("(pointer: fine) and (forced-colors: none)").matches) import("./pointer.js").catch((e) => console.warn("shell: the drawn pointer did not load; the system pointer stays", e));
 requestAnimationFrame(() => root.classList.add("ready"));
