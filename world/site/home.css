@@ -177,6 +177,8 @@ html.plain
 
 /* the dial sits in the field: no wall of its own, so the water runs from the arrival through the dial to the end of
    the page; the words keep the field's halo */
+/* the dial's panel is the one run of words that reaches the right edge: it stays clear of the day field's Sun (field.css) */
+@media (min-width: 861px) { .world-home .work { padding-right: max(clamp(16px, 4vw, 56px), var(--sun-clear, 0px)); } }
 .world-home .work { background: none; text-shadow: 0 0 14px var(--halo), 0 0 4px var(--halo), 0 0 1px var(--halo), 0 0 22px var(--halo); }
 .world-home .work :is(button, .w-try, .w-out, pre, figure img) { text-shadow: none; }
 .lm-def { margin: 0 0 4px; max-width: 62ch; font: 500 var(--fs-3)/1.45 var(--face-text); color: var(--ink); text-shadow: 0 0 14px var(--halo), 0 0 4px var(--halo), 0 0 1px var(--halo); }
