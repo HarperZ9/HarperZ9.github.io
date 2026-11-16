@@ -42,9 +42,9 @@ PROJECT_SITES = ("/cmmns/", "/flywheel/", "/buildlang/")
 # Absolute links that lead nowhere today and are not small fixes. Each entry is a link target and
 # the reason it is still dead. An entry that starts answering fails the test below, so this list
 # can only shrink.
-KNOWN_DEAD = {
-    "/repo-explainers/buildlang.html": "canonical link in tools/repo_explainers/pages/buildlang.src.html; the explainer page has not been built",
-    "/repo-explainers/calibrate-pro.html": "canonical link in tools/repo_explainers/pages/calibrate-pro.src.html; the explainer page has not been built",
+KNOWN_DEAD: dict[str, str] = {
+    # Empty since 15 November 2026: the two entries were canonical links in generator source pages under tools/,
+    # which GitHub Pages no longer serves.
 }
 
 KINDS = {"surface", "leaf", "record", "redirect", "moved", "gone"}
@@ -55,7 +55,7 @@ SIX_AND_THE_DOOR = {
 }
 REFRESH = re.compile(r'<meta[^>]+http-equiv="refresh"[^>]+content="\s*\d+\s*;\s*url=([^"]+)"', re.I)
 # Tracked files GitHub Pages does not serve (_config.yml): they are not addresses.
-NOT_SERVED = re.compile(r"^(?:home|tests|docs)/|^img/og/_card\.html$|(?:^|/)[_.][^/]*|(?:^|/)node_modules/")
+NOT_SERVED = re.compile(r"^(?:home|tests|docs|tools)/|^img/og/_card\.html$|(?:^|/)[_.][^/]*|(?:^|/)node_modules/")
 
 
 def file_of(address: str) -> Path:
@@ -155,7 +155,8 @@ def test_every_ledger_address_answers() -> None:
             continue
         if row["kind"] == "moved":
             # a folded page: no file at the old address, and the place it moved to answers, fragment included
-            if file_of(row["path"]).exists():
+            # (a file GitHub Pages does not serve, such as a generator's source page under tools/, is not at the address)
+            if file_of(row["path"]).exists() and not NOT_SERVED.search(row["path"].lstrip("/")):
                 dead.append(f"{row['path']}: a moved row has no file, and one exists")
             reason = dead_reason(moved_end(row))
             if reason:

@@ -19,13 +19,16 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
 const ROOT = path.resolve(__dirname, '..');
 const TYPES = { '.html': 'text/html; charset=utf-8', '.htm': 'text/html; charset=utf-8', '.json': 'application/json', '.js': 'text/javascript', '.mjs': 'text/javascript', '.css': 'text/css', '.svg': 'image/svg+xml', '.woff2': 'font/woff2', '.webp': 'image/webp', '.avif': 'image/avif', '.jpg': 'image/jpeg', '.png': 'image/png' };
 
+// Folders the Pages build leaves out (_config.yml): a file there is not at any address.
+const served = (p) => !/^\/(?:home|tests|docs|tools)\//.test(p);
+
 function pagesLike() {
   return http.createServer((req, res) => {
     let p = decodeURIComponent(new URL(req.url, 'http://x').pathname);
     if (p.endsWith('/')) p += 'index.html';
     const file = path.join(ROOT, p);
     const send = (status, f) => { res.writeHead(status, { 'content-type': TYPES[path.extname(f)] || 'application/octet-stream', 'cache-control': 'no-store' }); fs.createReadStream(f).pipe(res); };
-    if (file.startsWith(ROOT) && fs.existsSync(file) && fs.statSync(file).isFile()) return send(200, file);
+    if (file.startsWith(ROOT) && served(p) && fs.existsSync(file) && fs.statSync(file).isFile()) return send(200, file);
     send(404, path.join(ROOT, '404.html'));
   });
 }
@@ -63,7 +66,7 @@ function endOf(row, byPath) {
       const target = endOf(row, byPath);
       if (projectSites.some((p) => target.startsWith(p))) continue; // another repository's pages: not served here
       const file = path.join(ROOT, row.path.endsWith('/') ? row.path + 'index.html' : row.path);
-      if (fs.existsSync(file)) { failures.push(`${row.path}: a moved row has no file, and one exists`); continue; }
+      if (served(row.path) && fs.existsSync(file)) { failures.push(`${row.path}: a moved row has no file, and one exists`); continue; }
 
       const page = await scripted.newPage();
       const first = await page.goto(base + row.path, { waitUntil: 'domcontentloaded' });
