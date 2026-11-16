@@ -7,12 +7,13 @@
 //   SITE_BASE_URL=http://127.0.0.1:8811 node scripts/distill-picture-record.cjs --check  fail if a fresh run differs
 //
 // Writes site-src/world/distill-example.json, media/world/work/distill-example-rebuilt-640.webp and
-// media/world/work/distill-example-cloth-480.webp. The example is the site's own render of five inks as tinted glass
-// (glass-water.html), chosen for its wide palette.
+// media/world/work/distill-example-cloth-480.webp. The example is The Playground's material gallery, rendered by the
+// engine (raw-native 0.8.0 at 7621c1d, `raw_native_cli material-gallery --size 1280 --spp 8`, the GPU pass), read at 640;
+// chosen among three engine frames for its wide palette.
 const fs = require("node:fs"), path = require("node:path");
 const { chromium } = require(process.env.PLAYWRIGHT_MODULE || "playwright");
 const site = path.dirname(__dirname), base = process.env.SITE_BASE_URL || "http://127.0.0.1:8811";
-const EXAMPLE = "/media/world/crossover/overprint-day-640.webp", RECORD = path.join(site, "site-src/world/distill-example.json");
+const EXAMPLE = "/media/world/work/distill-engine-640.webp", RECORD = path.join(site, "site-src/world/distill-example.json");
 
 async function run() {
   const browser = await chromium.launch({ channel: process.env.BROWSER_CHANNEL || undefined, headless: true });
