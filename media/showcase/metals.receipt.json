@@ -1,0 +1,16 @@
+{
+ "scene": "metals",
+ "W": 15360,
+ "H": 8640,
+ "megapixels": 132.7,
+ "samples_per_pixel": 4,
+ "wavelengths": 81,
+ "render_s": 7.0,
+ "render_J": 411.7,
+ "grade_s": 1.41,
+ "grade_J": 67.8,
+ "device": "NVIDIA GeForce RTX 4090",
+ "torch": "2.11.0+cu128",
+ "python": "3.12.10",
+ "u8_sha256": "32daa0fb880bb6bf6a05bc080e3030147e2c199014a32a0a4560ef77d683bc23"
+}

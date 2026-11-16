@@ -1,0 +1,48 @@
+{
+ "angle": "d3d11",
+ "when": "2026-10-30T11:39:56.188Z",
+ "optics": {
+  "renderer": "WebKit WebGL",
+  "F0": 0.04216430336236954,
+  "film0": 0.04238423332571983,
+  "bare550": 0.04238423705101013,
+  "quarter": 0.012710964307188988,
+  "offB": 0.10954391211271286,
+  "offR": 0.10610215365886688,
+  "grazing": 1,
+  "f05": 0.08918671309947968
+ },
+ "live": {
+  "state": "live",
+  "tier": 1,
+  "N": 8,
+  "scale": 1,
+  "frameMs": 16.7,
+  "gpuMs": 0.262144,
+  "ladder": [],
+  "size": [
+   1280,
+   720
+  ],
+  "lamp": "sodium",
+  "firstFrameMs": 2048,
+  "fps": 59.9,
+  "gpuMedianMs": 0.231,
+  "glOn": true
+ },
+ "reduced": {
+  "state": "still: reduced motion",
+  "tier": 3,
+  "N": 3,
+  "scale": 1,
+  "frameMs": null,
+  "gpuMs": 0.032768,
+  "ladder": [],
+  "size": [
+   390,
+   293
+  ],
+  "lamp": "sun",
+  "firstFrameMs": 953
+ }
+}

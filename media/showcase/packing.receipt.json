@@ -1,0 +1,16 @@
+{
+ "scene": "packing",
+ "W": 15360,
+ "H": 8640,
+ "megapixels": 132.7,
+ "samples_per_pixel": 4,
+ "wavelengths": 81,
+ "render_s": 89.19,
+ "render_J": 7598.7,
+ "grade_s": 1.84,
+ "grade_J": 98.4,
+ "device": "NVIDIA GeForce RTX 4090",
+ "torch": "2.11.0+cu128",
+ "python": "3.12.10",
+ "u8_sha256": "5c2783949f37990eaf55c21ac42b52cc5629a1b68d07de4a2ae814098870a79a"
+}

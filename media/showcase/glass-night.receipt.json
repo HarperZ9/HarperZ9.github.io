@@ -1,0 +1,16 @@
+{
+ "scene": "glass-night",
+ "W": 15360,
+ "H": 8640,
+ "megapixels": 132.7,
+ "samples_per_pixel": 4,
+ "wavelengths": 81,
+ "render_s": 124.48,
+ "render_J": 7866.9,
+ "grade_s": 1.82,
+ "grade_J": 96.0,
+ "device": "NVIDIA GeForce RTX 4090",
+ "torch": "2.11.0+cu128",
+ "python": "3.12.10",
+ "u8_sha256": "85bcbf955aa33f1c9afa43474caae3b5242930add09d8636b6b7d583505fcf01"
+}
