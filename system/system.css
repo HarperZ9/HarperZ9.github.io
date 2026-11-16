@@ -3635,7 +3635,7 @@ body.inner-clean:not(.studio-page):not(.studio-app)::before,
 body.inner-clean:not(.studio-page):not(.studio-app)::after,
 body.inner-clean:not(.studio-page):not(.studio-app) .frame::before,
 body.inner-clean:not(.studio-page):not(.studio-app) .frame::after,
-body.inner-clean:not(.studio-page):not(.studio-app) .plate:has(canvas[data-specimen]),
+body.inner-clean:not(.studio-page):not(.studio-app):not(.instrument-surface) .plate:has(canvas[data-specimen]),
 body.inner-clean:not(.studio-page):not(.studio-app) .publication-spectrum {display:none}
 /* The generative renderer sets display inline after initialization. */
 body.inner-clean:not(.studio-page):not(.studio-app) > #gl,
