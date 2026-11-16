@@ -12,6 +12,14 @@
 //   5. Distill's code and Motion are not fetched before they are used.
 //   6. The walk: a place's piece is clipped while it arrives, whole when settled, and the same going back up.
 //      Under reduced motion nothing is bound and every piece shows whole.
+//   8. With scripts off (a plain fetch of the page) the HTML holds The Playground account, the Distill sentence, the
+//      four stage captions, every place caption, the title and the description.
+//   7. A press at the earliest possible moment is answered. Run is pressed as soon as it can be pressed, with the
+//      page still loading: the status line answers in the same task, the stages follow, and the page never stops
+//      answering for a second while the backdrop's shaders compile. Before 15 November 2026 the backdrop asked the
+//      driver whether its shaders had compiled and the page waited for the answer, 21 seconds on a cold Direct3D
+//      driver, so a press made in that time did nothing. On a software renderer (most CI runners) the backdrop
+//      keeps its still plate and compiles nothing, so there the stall check has nothing to catch.
 const assert = require('node:assert/strict');
 const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
 const base = process.env.SITE_BASE_URL || 'http://127.0.0.1:8811';
@@ -33,6 +41,30 @@ const clipOf = (page, id) => page.evaluate((id) => getComputedStyle(document.que
 (async () => {
   const browser = await chromium.launch({ channel: process.env.BROWSER_CHANNEL || undefined, headless: true });
   try {
+    // 7. first, in a browser whose driver has compiled nothing yet: the earliest press
+    {
+      const early = await browser.newContext({ viewport: { width: 1280, height: 800 } }), p0 = await early.newPage(), said = [], fetched = [];
+      p0.on('console', (m) => said.push(m.text())); p0.on('request', (r) => fetched.push(new URL(r.url()).pathname));
+      await p0.route(/\.(mp4|webm|m4a|mp3)(\?|$)/, (r) => r.abort());
+      // the longest time the page went without running a 20 ms timer, and what the status line said as the press landed
+      await p0.addInitScript(() => {
+        window.__stall = 0; let last = performance.now();
+        setInterval(() => { const n = performance.now(); window.__stall = Math.max(window.__stall, n - last); last = n; }, 20);
+        addEventListener('click', (e) => { if (e.target.closest?.('[data-run]')) window.__answer = document.querySelector('#w-distill [data-status]').textContent; });   // on the way up, after the button's own handler
+      });
+      await p0.goto(`${base}/`, { waitUntil: 'commit' });
+      await p0.click('#w-distill [data-run]');          // waits only for the button to be shown, which is when its handler is bound
+      assert.equal(await p0.evaluate(() => window.__answer), 'Loading the stages.', 'the press was not answered in the task it landed in');
+      await p0.waitForFunction(() => document.querySelector('#w-distill').dataset.ran === 'example', null, { timeout: 30000 })
+        .catch(async (e) => { console.error('earliest press: status: ' + await p0.$eval('#w-distill [data-status]', (x) => x.textContent) + ' ; longest stall ' + Math.round(await p0.evaluate(() => window.__stall)) + ' ms'); throw e; });
+      // the press was also the visitor's first move, which starts the backdrop: watch the page until it is live, or kept its plate
+      const t0 = Date.now(), settled = () => p0.evaluate(() => !!window.__homeField).then((live) => live || said.some((t) => /^home field: /.test(t)) || (Date.now() - t0 > 5000 && !fetched.includes('/world/site/field/field.js')));
+      while (!(await settled())) { assert.ok(Date.now() - t0 < 90000, 'the backdrop neither started nor gave up in 90 seconds'); await p0.waitForTimeout(250); }
+      const stall = Math.round(await p0.evaluate(() => window.__stall));
+      assert.ok(stall < 1000, `the page stopped answering for ${stall} ms while it loaded and the backdrop started`);
+      await early.close();
+    }
+
     const ctx = await browser.newContext({ viewport: { width: 1280, height: 800 } });
     const page = await ctx.newPage(), errors = [], asked = [];
     page.on('pageerror', (e) => errors.push(e.message));
@@ -61,6 +93,34 @@ const clipOf = (page, id) => page.evaluate((id) => getComputedStyle(document.que
     await page.keyboard.press('Home');
     assert.equal(await page.evaluate(() => document.activeElement.dataset.pillar), 'engine');
     assert.equal(await page.$eval('#w-engine .w-choices button[aria-pressed="true"]', (b) => b.textContent), 'Distill');
+
+    // 8. the words are in the HTML itself: a plain fetch, scripts never run, as a crawler or an agent reads the page
+    {
+      const flat = (t) => t.replace(/\s+/g, ' ').trim();
+      const seen = await page.evaluate(() => ({
+        account: document.querySelector('#w-engine .w-lede').textContent,
+        distill: document.querySelector('#w-distill .ds4-what').textContent,
+        stages: [...document.querySelectorAll('#w-distill .ds4-stages > li')].map((li) => [li.querySelector('h3').textContent, ...[...li.querySelectorAll(':scope > p')].map((p) => p.textContent)]),
+        places: [...document.querySelectorAll('.place .lead-cap')].map((c) => c.textContent),
+        title: document.title, description: document.querySelector('meta[name="description"]').content,
+      }));
+      const html = await (await fetch(`${base}/`)).text();
+      const entity = { amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", nbsp: ' ' };
+      const text = flat(html.replace(/<script\b[\s\S]*?<\/script>/gi, ' ').replace(/<style\b[\s\S]*?<\/style>/gi, ' ').replace(/<[^>]+>/g, '')
+        .replace(/&#(\d+);/g, (_, n) => String.fromCodePoint(+n)).replace(/&#x([0-9a-f]+);/gi, (_, n) => String.fromCodePoint(parseInt(n, 16))).replace(/&([a-z]+);/g, (m, n) => entity[n] ?? m));
+      const has = (words, what) => assert.ok(text.includes(flat(words)), `${what} is not in the HTML without scripts: ${flat(words).slice(0, 80)}`);
+      assert.match(flat(seen.account), /^The Playground is the rendering engine and the creative suite built on it\./);
+      has(seen.account, 'The Playground account');
+      assert.match(flat(seen.distill), /^Distill breaks a thing into its original pieces/);
+      has(seen.distill, 'the Distill sentence');
+      assert.equal(seen.stages.length, 4, 'four Distill stages');
+      seen.stages.forEach((s, i) => { assert.ok(s.length >= 2 && flat(s[1]).length > 20, `stage ${i + 1} has no caption`); s.forEach((w) => has(w, `stage ${i + 1}`)); });
+      assert.equal(seen.places.length, 10, 'ten place captions');
+      seen.places.forEach((w, i) => { assert.ok(flat(w).length > 20, `place ${i + 1} has no caption`); has(w, `the caption of place ${i + 1}`); });
+      assert.equal((html.match(/<title>([^<]*)<\/title>/) || [])[1], seen.title, 'the title is in the HTML');
+      assert.equal(seen.title, 'Zain Dana Harper');
+      assert.ok(seen.description.length >= 80 && seen.description.length <= 170 && html.includes(`<meta name="description" content="${seen.description.replace(/&/g, '&amp;').replace(/"/g, '&quot;')}">`), 'the description is in the HTML, one or two sentences long');
+    }
 
     // 2. addresses
     await page.evaluate(() => { document.querySelector('#w-engine .w-choices button[data-show="2"]').click(); location.hash = '#w-flywheel'; });

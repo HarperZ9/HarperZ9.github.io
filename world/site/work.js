@@ -64,8 +64,10 @@ if (work) {
   // ---- Distill: the stages run here on a press, a chosen file or a dropped one; the code arrives with the first ----
   const dp = work.querySelector("[data-distill-picture]");
   if (dp) {
-    const part = () => import("/world/site/distill/picture-panel.js").then((m) => m.mount(dp));
-    const fail = (e) => { console.error("distill: the stages did not load", e); dp.querySelector("[data-status]").textContent = "The live run did not load. The recorded run above stays."; };
+    const status = dp.querySelector("[data-status]");
+    // a press is answered in the same task, before the code it asks for has arrived
+    const part = () => { if (!dp.__distill) status.textContent = "Loading the stages."; return import("/world/site/distill/picture-panel.js").then((m) => m.mount(dp)); };
+    const fail = (e) => { console.error("distill: the stages did not load", e); status.textContent = "The live run did not load. The recorded run above stays."; };
     for (const e of dp.querySelectorAll(".ds4-own [hidden]")) e.hidden = false;
     dp.querySelector("[data-run]").addEventListener("click", () => part().then((d) => d.runExample()).catch(fail));
     const file = dp.querySelector("[data-file]");

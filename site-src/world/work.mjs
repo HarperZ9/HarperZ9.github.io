@@ -19,30 +19,30 @@ function choose(label, states, extra = "") {
       <div class="w-states">${states.map((s, i) => `<div class="w-state" data-state="${i}">${s.html}</div>`).join("")}</div>${extra}`;
 }
 
-// The bow study as Distill ran it: site-src/world/distill-bow.json, written by scripts/distill-picture-record.cjs from a
+// The example as Distill ran it (the name BOW is from the first example, a rainbow): site-src/world/distill-example.json, written by scripts/distill-picture-record.cjs from a
 // run of world/site/distill/picture.mjs in a browser on the shipped picture. Every number in the Distill stages is
 // read from that record, and tests/distill-front.cjs runs the same code again and compares.
-const BOW = JSON.parse(readFileSync(new URL("./distill-bow.json", import.meta.url), "utf8"));
+const BOW = JSON.parse(readFileSync(new URL("./distill-example.json", import.meta.url), "utf8"));
 const lum = (hex) => { const c = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255); return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]; };
 const strip = () => `<ol class="w-strip" aria-label="The swatches, by share of the picture">${BOW.swatches.map(({ hex, share }) =>
   `<li style="--c:${hex};--s:${share || 0.1};--on:${lum(hex) > 0.4 ? "#0d0b12" : "#f4f2f8"}"><span class="w-chip" aria-hidden="true"></span><code>${hex}</code> <span>${share.toFixed(1)}%</span></li>`).join("")}</ol>`;
 // Distill, inside The Playground: one picture followed through four stages, each named on the stage itself.
-const distill = () => `<div class="ds4" id="w-distill" data-distill-picture data-example="/media/world/work/bow-source-640.webp">
+const distill = () => `<div class="ds4" id="w-distill" data-distill-picture data-example="/media/world/crossover/overprint-day-640.webp">
           <p class="ds4-what"><b>Distill</b> breaks a thing into its original pieces, so it can be digested, studied, reproduced, and used as the input for something new. Here it takes a picture apart by colour.</p>
           <ol class="ds4-stages">
             <li><h3><span class="w-num" aria-hidden="true">1</span> The picture</h3>
-              <div data-slot="source">${pic("/media/world/work/bow-source", 1651, 929, "A rainbow over a grey ground: the render Distill takes apart.")}</div>
-              <p data-words="source">A rendered rainbow, read at ${BOW.width} by ${BOW.height} pixels.</p></li>
+              <div data-slot="source">${pic("/media/world/crossover/overprint-day", 1280, 720, "Five inks as sheets of tinted glass on warm paper, red, cyan, yellow, green and black, crossing: the render Distill takes apart.")}</div>
+              <p data-words="source">One of the site's own renders, five inks as tinted glass, read at ${BOW.width} by ${BOW.height} pixels.</p></li>
             <li><h3><span class="w-num" aria-hidden="true">2</span> Its pieces</h3>
-              <div class="ds4-on"><div data-slot="onpicture">${pic("/media/world/work/bow-source", 1651, 929, `The picture with what Distill took out laid on it: a core of its colours along the centre line, and its ${BOW.swatches.length} swatches across it by share.`)}</div><span data-overlay>${onPicture(BOW)}</span></div>
+              <div class="ds4-on"><div data-slot="onpicture">${pic("/media/world/crossover/overprint-day", 1280, 720, `The picture with what Distill took out laid on it: a core of its colours along the centre line, and its ${BOW.swatches.length} swatches across it by share.`)}</div><span data-overlay>${onPicture(BOW)}</span></div>
               <p data-words="parts">${esc(partsWords(BOW))}</p>
               ${strip()}</li>
             <li><h3><span class="w-num" aria-hidden="true">3</span> Rebuilt from the pieces</h3>
-              <div class="w-pair"><figure><div data-slot="original">${pic("/media/world/work/bow-source", 1651, 929, "The original picture.")}</div><figcaption>Original</figcaption></figure>
-              <figure><div data-slot="rebuilt"><img src="/media/world/work/bow-rebuilt-640.webp" width="${BOW.width}" height="${BOW.height}" loading="lazy" decoding="async" alt="The same rainbow rebuilt from its ${BOW.swatches.length} swatches alone: flat bands where the original shades smoothly."></div><figcaption>From the swatches alone</figcaption></figure></div>
+              <div class="w-pair"><figure><div data-slot="original">${pic("/media/world/crossover/overprint-day", 1280, 720, "The original picture.")}</div><figcaption>Original</figcaption></figure>
+              <figure><div data-slot="rebuilt"><img src="/media/world/work/distill-example-rebuilt-640.webp" width="${BOW.width}" height="${BOW.height}" loading="lazy" decoding="async" alt="The same picture rebuilt from its ${BOW.swatches.length} swatches alone: flat colour where the original shades smoothly."></div><figcaption>From the swatches alone</figcaption></figure></div>
               <p data-words="difference">${esc(differenceWords(BOW.difference, BOW.swatches.length))}</p></li>
             <li><h3><span class="w-num" aria-hidden="true">4</span> Used for something new</h3>
-              <div data-slot="cloth"><img src="/media/world/work/bow-cloth-480.webp" width="${BOW.cloth.width}" height="${BOW.cloth.height}" loading="lazy" decoding="async" alt="The rainbow as woven cloth: a jacquard draft in the picture's own colours."></div>
+              <div data-slot="cloth"><img src="/media/world/work/distill-example-cloth-480.webp" width="${BOW.cloth.width}" height="${BOW.cloth.height}" loading="lazy" decoding="async" alt="The picture as woven cloth: a jacquard draft in the picture's own colours."></div>
               <p>The pieces go on to another medium. The Loom weaves the picture's light and dark as a jacquard draft, ${BOW.cloth.ends} warp ends by ${BOW.cloth.picks} weft rows, in the picture's own colours.</p></li>
           </ol>
           <div class="ds4-own">

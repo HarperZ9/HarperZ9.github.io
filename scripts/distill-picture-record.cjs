@@ -6,11 +6,13 @@
 //   SITE_BASE_URL=http://127.0.0.1:8811 node scripts/distill-picture-record.cjs          write the record and pictures
 //   SITE_BASE_URL=http://127.0.0.1:8811 node scripts/distill-picture-record.cjs --check  fail if a fresh run differs
 //
-// Writes site-src/world/distill-bow.json, media/world/work/bow-rebuilt-640.webp and media/world/work/bow-cloth-480.webp.
+// Writes site-src/world/distill-example.json, media/world/work/distill-example-rebuilt-640.webp and
+// media/world/work/distill-example-cloth-480.webp. The example is the site's own render of five inks as tinted glass
+// (glass-water.html), chosen for its wide palette.
 const fs = require("node:fs"), path = require("node:path");
 const { chromium } = require(process.env.PLAYWRIGHT_MODULE || "playwright");
 const site = path.dirname(__dirname), base = process.env.SITE_BASE_URL || "http://127.0.0.1:8811";
-const EXAMPLE = "/media/world/work/bow-source-640.webp", RECORD = path.join(site, "site-src/world/distill-bow.json");
+const EXAMPLE = "/media/world/crossover/overprint-day-640.webp", RECORD = path.join(site, "site-src/world/distill-example.json");
 
 async function run() {
   const browser = await chromium.launch({ channel: process.env.BROWSER_CHANNEL || undefined, headless: true });
@@ -31,12 +33,12 @@ const bytes = (dataUrl) => Buffer.from(dataUrl.split(",")[1], "base64");
   const got = await run(), text = JSON.stringify(got.record, null, 1) + "\n";
   if (process.argv.includes("--check")) {
     const have = fs.readFileSync(RECORD, "utf8").replace(/\r\n/g, "\n");
-    if (have !== text) { console.error("distill record: a fresh run differs from site-src/world/distill-bow.json; run the script without --check and rebuild the home"); process.exit(1); }
+    if (have !== text) { console.error("distill record: a fresh run differs from site-src/world/distill-example.json; run the script without --check and rebuild the home"); process.exit(1); }
     console.log("distill record: a fresh run gives the committed record"); process.exit(0);
   }
   fs.writeFileSync(RECORD, text);
-  fs.writeFileSync(path.join(site, "media/world/work/bow-rebuilt-640.webp"), bytes(got.rebuilt));
-  fs.writeFileSync(path.join(site, "media/world/work/bow-cloth-480.webp"), bytes(got.cloth));
+  fs.writeFileSync(path.join(site, "media/world/work/distill-example-rebuilt-640.webp"), bytes(got.rebuilt));
+  fs.writeFileSync(path.join(site, "media/world/work/distill-example-cloth-480.webp"), bytes(got.cloth));
   console.log(`distill record: ${got.record.swatches.length} swatches, mean difference ${got.record.difference.mean}, cloth ${got.record.cloth.width} by ${got.record.cloth.height}`);
   process.exit(0);
 })().catch((e) => { console.error(e); process.exit(1); });

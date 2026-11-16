@@ -1,0 +1,111 @@
+{
+ "source": "/media/world/crossover/overprint-day-640.webp",
+ "width": 640,
+ "height": 360,
+ "pixels": 230400,
+ "swatches": [
+  {
+   "hex": "#f9f4e8",
+   "share": 38.3
+  },
+  {
+   "hex": "#e24f32",
+   "share": 18.4
+  },
+  {
+   "hex": "#2bb1d6",
+   "share": 12.3
+  },
+  {
+   "hex": "#329149",
+   "share": 12.3
+  },
+  {
+   "hex": "#5e4024",
+   "share": 4
+  },
+  {
+   "hex": "#2e282a",
+   "share": 3.9
+  },
+  {
+   "hex": "#d84102",
+   "share": 3.8
+  },
+  {
+   "hex": "#f6c42d",
+   "share": 3.6
+  },
+  {
+   "hex": "#afcdbb",
+   "share": 2.4
+  },
+  {
+   "hex": "#7c972b",
+   "share": 1
+  }
+ ],
+ "core": [
+  "#f9f4e8",
+  "#f9f4e8",
+  "#f9f4e8",
+  "#f9f4e8",
+  "#f9f4e8",
+  "#f9f4e8",
+  "#f9f4e8",
+  "#f9f4e8",
+  "#f9f4e8",
+  "#f9f4e8",
+  "#f8f5e8",
+  "#fcf4ee",
+  "#72c5d9",
+  "#6cc3df",
+  "#24b1dc",
+  "#24b1dc",
+  "#3a9b86",
+  "#5a8e41",
+  "#5b8c3e",
+  "#5b8c3e",
+  "#5b8c3e",
+  "#5a8b3d",
+  "#5a8b3d",
+  "#5a8b3d",
+  "#5a8b3d",
+  "#5a8b3d",
+  "#5a8b3d",
+  "#5a8b3d",
+  "#5a8b3d",
+  "#5a8b3d",
+  "#55a13c",
+  "#63a12f",
+  "#3aa332",
+  "#2ea63b",
+  "#25aa44",
+  "#25aa44",
+  "#25aa44",
+  "#25aa44",
+  "#28b342",
+  "#b3e1b4",
+  "#f7f8e6",
+  "#f9f4e8",
+  "#f9f4e8",
+  "#f9f4e8",
+  "#f9f4e8",
+  "#f9f4e8",
+  "#f9f4e8",
+  "#f9f4e8"
+ ],
+ "difference": {
+  "mean": 5.4,
+  "within": 43.7,
+  "far": 23.4,
+  "max": 40.9
+ },
+ "cloth": {
+  "width": 480,
+  "height": 360,
+  "ends": 96,
+  "picks": 72,
+  "weft": 9
+ }
+}
