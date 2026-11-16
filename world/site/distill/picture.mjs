@@ -4,8 +4,8 @@
 // always give the same swatches. This file adds the three things the panel shows beside it: where the colour sits
 // around the hue circle, the picture rebuilt from the swatches alone, and how far the rebuild is from the original.
 // Pure: no DOM. It takes pixels (RGBA bytes) and returns numbers and pixels.
-import { palette, binOf } from "../../../media/raw-native/pick-e025300/superframe/lib/study/palette.mjs";
-import { rgb8ToLab, lch, dE76, hex } from "../../../media/raw-native/pick-e025300/superframe/lib/study/cmath.mjs";
+import { palette, binOf } from "../../../media/raw-native/pick-dc350a1/superframe/lib/study/palette.mjs";
+import { rgb8ToLab, lch, dE76, hex } from "../../../media/raw-native/pick-dc350a1/superframe/lib/study/cmath.mjs";
 
 export const READ_WIDTH = 640;        // a larger picture is read at this width
 export const STEP = 2.3;              // delta E (CIE76) of about one just noticeable difference

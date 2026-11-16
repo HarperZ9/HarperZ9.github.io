@@ -50,7 +50,7 @@ const bazaar = document.querySelector(".bazaar");
 if (bazaar) new IntersectionObserver(([e]) => document.body.classList.toggle("past-road", e.boundingClientRect.top < innerHeight * 0.5), { threshold: [0, 0.05, 0.2] }).observe(bazaar);
 
 // ---- the walk: Motion's transitions, bound to each piece as the bazaar comes near ----
-const MOTION = "/media/raw-native/pick-e025300/native/web/motion/";
+const MOTION = "/media/raw-native/pick-dc350a1/native/web/motion/";
 const pieces = [...document.querySelectorAll("[data-walk]")];
 let unbind = [];
 async function bindWalk() {
