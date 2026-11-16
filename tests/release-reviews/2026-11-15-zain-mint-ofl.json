@@ -1,0 +1,9 @@
+{
+  "date": "2026-11-15",
+  "note": "Zain Mint under SIL OFL 1.1: licence records in minted files, derived name for a moved face; restamp.",
+  "paths": {
+    "index.html": "412e3155b0ac407c9507e60427bbbaaf7ac420d4e978d23a7f70b8d9b8e54d72",
+    "system/type-forge/forge-page.js": "a6bd0bfd7f95c8e90ee6a18ae7b37f59efb7935ecf7f5593ad0d2b228342966f",
+    "system/type-forge/ttf.mjs": "65160e81eb9616daf8ccf6111f97a092ddcbd3323f6e3274e5c8a71eb4c3ea0b"
+  }
+}
