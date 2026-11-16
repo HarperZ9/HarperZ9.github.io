@@ -1,0 +1,11 @@
+{
+  "date": "2026-11-15",
+  "note": "demonstrations.html and tour.html close: their addresses are moved rows to /floor.html. Links to demonstrations.html on overview, presentation, research and the Crucible clean-room demo now name floor.html directly; the gallery drops its line about the recorded tour, a page retired on 2 November 2026.",
+  "paths": {
+    "demos/crucible-cleanroom/index.html": "149f7985e00f75ebe9a9b370c66a7ca213203d58412e3c83f63cee71f0832f97",
+    "gallery.html": "6724bd708639cf9ba9f0bfb1f46f0e8a77a9dee7521febf1940dbc0309b732d1",
+    "overview.html": "c55d7a878e71843c7d636c57f8d689b64f152fa53bb58720114ecdfee6645352",
+    "presentation.html": "fe5ac823d68d01fe7e148fd7fba6dec781ee53997a8c85a611963b73140a5ee0",
+    "research.html": "c8f0a93dbcb7ab1a0d112778621e9614053758b6bf088ce4a591cd9cb5a53b79"
+  }
+}

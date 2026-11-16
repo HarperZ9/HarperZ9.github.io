@@ -245,10 +245,15 @@ test('the Writing hub carries its own path and the old writing index redirects t
   const source = readFileSync(new URL('../publications.html', import.meta.url), 'utf8');
   assert.match(source, /<nav\b[^>]*class="research-lane-crumb masthead-path"[^>]*aria-label="Breadcrumb"/);
   assert.match(htmlText(source), /Home \/ Writing/);
-  const stub = readFileSync(new URL('../writing.html', import.meta.url), 'utf8');
-  assert.match(stub, /<meta name="robots" content="noindex,follow">/);
-  assert.match(stub, /<link rel="canonical" href="https:\/\/harperz9\.github\.io\/publications\.html">/);
-  assert.match(stub, /<meta http-equiv="refresh" content="0; url=publications\.html">/);
+  // writing.html was a redirect page until 15 November 2026. Its address is now a moved row in the address ledger,
+  // with no file, and the not-found page lists it beside a plain link to the Writing hub.
+  const ledger = JSON.parse(readFileSync(new URL('../site-src/world/addresses.json', import.meta.url), 'utf8'));
+  const row = ledger.rows.find((r) => r.path === '/writing.html');
+  assert.equal(row.kind, 'moved');
+  assert.equal(row.to, '/publications.html');
+  assert.throws(() => readFileSync(new URL('../writing.html', import.meta.url), 'utf8'), /ENOENT/);
+  const notFound = readFileSync(new URL('../404.html', import.meta.url), 'utf8');
+  assert.match(notFound, /<code>\/writing\.html<\/code> is now at <a href="\/publications\.html">/);
 });
 
 test('route renderer classifies sitemap articles from the Writing hub under Writing', () => {

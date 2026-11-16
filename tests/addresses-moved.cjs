@@ -98,6 +98,27 @@ function endOf(row, byPath) {
       await quiet.close();
     }
 
+    // A row may map the places its old page had: each one lands on that place's new address.
+    let placed = 0;
+    for (const row of moved.filter((r) => r.places)) {
+      for (const [place, to] of Object.entries(row.places).slice(0, 3)) {
+        const tab = await scripted.newPage();
+        await tab.goto(`${base}${row.path}#${place}`, { waitUntil: 'domcontentloaded' });
+        try { await tab.waitForURL((u) => u.pathname + u.search + u.hash === to, { timeout: 8000 }); placed += 1; }
+        catch { failures.push(`${row.path}#${place}: the browser stayed at ${tab.url()}, the row's places lead to ${to}`); }
+        await tab.close();
+      }
+    }
+    // The query and the place a reader asked for travel with them when the new address names neither.
+    const carried = moved.find((r) => !/[?#]/.test(endOf(r, byPath)) && endOf(r, byPath) !== '/' && !r.places && !projectSites.some((p) => endOf(r, byPath).startsWith(p)));
+    if (carried) {
+      const tab = await scripted.newPage(), want = endOf(carried, byPath) + '?from=old#top';
+      await tab.goto(`${base}${carried.path}?from=old#top`, { waitUntil: 'domcontentloaded' });
+      try { await tab.waitForURL((u) => u.pathname + u.search + u.hash === want, { timeout: 8000 }); }
+      catch { failures.push(`${carried.path}?from=old#top: the browser stayed at ${tab.url()}, expected ${want}`); }
+      await tab.close();
+    }
+
     const page = await scripted.newPage();
     const unknown = '/an-address-this-site-never-published-7c1e.html';
     assert.equal(byPath.has(unknown), false);
@@ -107,7 +128,7 @@ function endOf(row, byPath) {
     if (new URL(page.url()).pathname !== unknown) failures.push(`unknown address: the browser left for ${page.url()}`);
     if (!/No page at this address/.test(await page.locator('h1').first().textContent())) failures.push('unknown address: the not-found heading is missing');
     if (!/No address on the site is close/.test(await page.locator('#nf-near').textContent())) failures.push(`unknown address: the page offered ${await page.locator('#nf-near').textContent()}`);
-    console.log(`addresses-moved: ${sample.length} of ${moved.length} moved rows opened with and without scripts; one unknown address checked`);
+    console.log(`addresses-moved: ${sample.length} of ${moved.length} moved rows opened with and without scripts; ${placed} mapped places and ${carried ? 'one' : 'no'} carried query checked; one unknown address checked`);
   } finally {
     await browser.close();
     server.closeAllConnections();

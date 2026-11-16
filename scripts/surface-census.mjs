@@ -39,6 +39,8 @@ if (existsSync(regFile)) {
 }
 const MOUNT = /\bmount\(\s*[^,()]*(?:\([^()]*\))?[^,()]*,\s*["'](\w+)["']/g;
 const IMPORT = /(?:\bfrom\s*|\bimport\s*\(\s*|\bimport\s+)["']([^"']+\.m?js(?:\?[^"']*)?)["']/g;
+// a worker is named by address, new URL("./worker.js", import.meta.url); a registry module's cost counts it
+const WORKER = /new URL\(\s*["']([^"']+\.m?js)["']\s*,\s*import\.meta\.url\s*\)/g;
 const seen = new Map();
 // every file a module reaches: its imports, and the surfaces it mounts by name
 function reach(file) {
@@ -71,8 +73,17 @@ for (const page of tracked.filter((f) => f.endsWith(".html"))) {
 }
 // Each module in the registry: where it stands (home, form, state, weight, its own page) and what it costs to load.
 // `bytes` is every file its adapter reaches, imports followed to the end, as tracked; `files` is how many.
+// what a module costs to load: what it reaches, and the workers it or its imports start, with what they import
+function cost(file, out = new Set()) {
+  for (const f of reach(file)) {
+    if (out.has(f)) continue; out.add(f);
+    let src = ""; try { src = read(f); } catch { continue; }
+    for (const m of src.matchAll(WORKER)) { const t = resolve(f, m[1]); if (t) cost(t, out); }
+  }
+  return out;
+}
 const modules = Object.fromEntries(Object.entries(surfaces).map(([id, s]) => {
-  const all = s.file && files.has(s.file) ? [...reach(s.file)].filter((f) => files.has(f)).sort() : [];
+  const all = s.file && files.has(s.file) ? [...cost(s.file)].filter((f) => files.has(f)).sort() : [];
   const { home = null, form = null, state = null, weight = null, plain = null } = s.row || {};
   return [id, { home, form, state, weight, plain, bytes: all.reduce((n, f) => n + readFileSync(path.join(site, f)).length, 0), files: all.length }];
 }));

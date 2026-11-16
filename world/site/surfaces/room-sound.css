@@ -1,0 +1,28 @@
+/* room-sound.css: the sound room on The Playground, loaded on its press. Nothing here moves. */
+.snd .snd-pieces { list-style: none; margin: .75rem 0 1.5rem; padding: 0; display: grid; gap: 0; }
+.snd .snd-pieces li { display: grid; grid-template-columns: minmax(11rem, 14rem) minmax(0, 1fr); gap: .5rem 1.5rem; align-items: start; padding: .7rem 0 .3rem; border-top: 1px solid currentColor; }
+.snd .snd-pieces p { margin: 0; max-width: 62ch; }
+.snd .snd-pieces summary { min-height: 44px; display: flex; align-items: center; cursor: pointer; font-size: .92em; }
+.snd .snd-pieces details p { margin: 0 0 .4rem; }
+.snd button { min-height: 44px; padding: 0 .9rem; font: inherit; font-weight: 600; border: 1px solid currentColor; background: transparent; color: inherit; cursor: pointer; text-align: left; }
+/* the piece that is playing: a heavier frame, and the button's own word changes to Stop */
+.snd .snd-pieces li[data-on] button { box-shadow: inset 0 0 0 3px currentColor; }
+.snd .snd-now { font-variant-numeric: tabular-nums; font-weight: 600; margin: 1rem 0 0; min-height: 1.5em; }
+.snd .snd-set { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1.25rem, 4vw, 3rem); align-items: start; }
+.snd fieldset { border: 0; border-top: 1px solid currentColor; margin: 0; padding: .75rem 0 0; min-width: 0; }
+.snd legend { font-weight: 600; padding: 0; margin-bottom: .4rem; }
+.snd label { display: flex; justify-content: space-between; gap: 1rem; margin-top: .7rem; }
+.snd output { font-variant-numeric: tabular-nums; }
+.snd input[type="range"] { width: 100%; min-height: 32px; margin: .2rem 0 0; accent-color: currentColor; }
+.snd select, .snd input[type="number"] { width: 100%; box-sizing: border-box; min-height: 44px; font: inherit; margin-top: .3rem; padding: 0 .6rem; border: 1px solid currentColor; background: transparent; color: inherit; }
+.snd ::placeholder { color: inherit; opacity: .85; }
+.snd fieldset p { margin: .5rem 0 0; font-size: .92em; }
+.snd fieldset button { margin-top: 1rem; }
+.snd .snd-mood, .snd .snd-file { margin: 1rem 0 0; overflow-wrap: anywhere; }
+.snd .snd-mood:empty, .snd .snd-file:empty { display: none; }
+.snd .snd-take { margin: .75rem 0; }
+.snd .snd-take a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 .9rem; border: 1px solid currentColor; color: inherit; text-decoration: none; font-weight: 600; }
+.snd .snd-take a:hover { text-decoration: underline; }
+.snd .snd-terms { font-size: .92em; max-width: 62ch; }
+.snd :focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+@media (max-width: 760px) { .snd .snd-pieces li, .snd .snd-set { grid-template-columns: minmax(0, 1fr); } }

@@ -57,7 +57,7 @@
    "state": "ready",
    "weight": "heavy",
    "plain": "/elements.html",
-   "bytes": 1205774,
+   "bytes": 1205907,
    "files": 163
   },
   "well": {
@@ -147,7 +147,7 @@
    "state": "ready",
    "weight": "light",
    "plain": null,
-   "bytes": 134006,
+   "bytes": 134377,
    "files": 10
   },
   "ridges": {
@@ -156,7 +156,7 @@
    "state": "ready",
    "weight": "light",
    "plain": null,
-   "bytes": 134006,
+   "bytes": 134377,
    "files": 10
   },
   "voxels": {
@@ -165,7 +165,7 @@
    "state": "ready",
    "weight": "light",
    "plain": null,
-   "bytes": 134006,
+   "bytes": 134377,
    "files": 10
   },
   "recipe": {
@@ -174,7 +174,7 @@
    "state": "ready",
    "weight": "light",
    "plain": null,
-   "bytes": 348174,
+   "bytes": 348307,
    "files": 44
   },
   "forge": {
@@ -186,14 +186,23 @@
    "bytes": 74159,
    "files": 9
   },
+  "shader": {
+   "home": "playground",
+   "form": "live",
+   "state": "ready",
+   "weight": "light",
+   "plain": null,
+   "bytes": 106796,
+   "files": 10
+  },
   "sound": {
    "home": "playground",
-   "form": null,
-   "state": "placeholder",
-   "weight": null,
+   "form": "live",
+   "state": "ready",
+   "weight": "heavy",
    "plain": null,
-   "bytes": 0,
-   "files": 0
+   "bytes": 450359,
+   "files": 33
   }
  },
  "tools": {
@@ -247,7 +256,7 @@
   },
   "system/media-engine": {
    "direct": 1,
-   "reach": 230
+   "reach": 231
   },
   "system/school": {
    "direct": 32,
@@ -347,7 +356,7 @@
   },
   "world/sound": {
    "direct": 0,
-   "reach": 10
+   "reach": 9
   },
   "world/studio": {
    "direct": 0,

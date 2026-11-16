@@ -81,10 +81,14 @@ const asked = document.getElementById("nf-asked"), near = document.getElementByI
 asked.textContent = location.pathname;
 asked.parentElement.hidden = false;
 fetch("/${LEDGER}").then((r) => { if (!r.ok) throw new Error("address ledger: HTTP " + r.status); return r.json(); }).then((ledger) => {
-  const found = nearest(location.pathname, ledger.rows, ledger.projectSites || []);
+  const found = nearest(location.pathname, ledger.rows, ledger.projectSites || [], location.hash);
   if (!found) { near.textContent = "No address on the site is close to this one. The six parts of the site and the index are listed below."; return; }
   const a = document.createElement("a");
-  a.href = found.path + (found.path.includes("#") ? "" : location.hash);
+  // the query and the place the reader asked for travel with them, unless the new address names its own
+  const to = new URL(found.path, location.origin);
+  if (!to.search) to.search = location.search;
+  if (!to.hash && !found.placed) to.hash = location.hash;
+  a.href = to.pathname + to.search + to.hash;
   a.textContent = found.path;
   near.replaceChildren(WHY[found.why] + " ", a, ".");
   // A moved row is the site's own record of where this address went, so the reader is taken there. A guess is only offered.

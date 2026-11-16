@@ -165,6 +165,8 @@ def test_released_route_is_discoverable_in_both_feeds_and_public_listings(slug: 
     entries = [item for item in atom.findall("a:entry", ns) if item.findtext("a:id", namespaces=ns) == url]
     assert len(entries) == 1
     assert entries[0].findtext("a:title", namespaces=ns) == payload["title"]
-    for listing in ("publications.html", "writing.html"):
-        assert f'href="{slug}.html"' in (ROOT / listing).read_text(encoding="utf-8")
+    assert f'href="{slug}.html"' in (ROOT / "publications.html").read_text(encoding="utf-8")
+    # writing.html listed every piece until 15 November 2026; its address is now a moved row whose places lead on
+    ledger = json.loads((ROOT / "site-src/world/addresses.json").read_text(encoding="utf-8"))["rows"]
+    assert next(r for r in ledger if r["path"] == "/writing.html")["places"][slug] == f"/{slug}.html"
     assert f"<loc>{url}</loc>" in (ROOT / "sitemap.xml").read_text(encoding="utf-8")

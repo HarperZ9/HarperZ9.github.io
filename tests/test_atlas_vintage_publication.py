@@ -130,6 +130,9 @@ def test_released_route_is_discoverable_in_feeds_listings_and_site_index() -> No
     ns = {"a": "http://www.w3.org/2005/Atom"}
     entries = [item for item in atom.findall("a:entry", ns) if item.findtext("a:id", namespaces=ns) == url]
     assert len(entries) == 1
-    for listing in ("publications.html", "writing.html", "site-index.html"):
+    for listing in ("publications.html", "site-index.html"):
         assert f'href="{SLUG}.html"' in (ROOT / listing).read_text(encoding="utf-8")
+    # writing.html listed every piece until 15 November 2026; its address is now a moved row whose places lead on
+    ledger = json.loads((ROOT / "site-src/world/addresses.json").read_text(encoding="utf-8"))["rows"]
+    assert next(r for r in ledger if r["path"] == "/writing.html")["places"][SLUG] == f"/{SLUG}.html"
     assert f"<loc>{url}</loc>" in (ROOT / "sitemap.xml").read_text(encoding="utf-8")

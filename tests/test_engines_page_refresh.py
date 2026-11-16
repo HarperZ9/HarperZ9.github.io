@@ -81,7 +81,7 @@ def test_engines_page_routes_to_products_evidence_and_work() -> None:
         "retro.html",
         "engine-revival.html",
         "brender-archival.html",
-        "demonstrations.html",
+        "floor.html",
         "analytics/portfolio-source-inventory.html",
         "private-practice.html#private-system-index",
         "catalog.html",

@@ -40,4 +40,11 @@ body.sx-body .gw-backdrop::before { content: ""; position: absolute; inset: 0; z
 /* A room's still: the picture its own module made at build time. */
 .rm-still { margin: 1rem 0; }
 .rm-still svg { display: block; width: 100%; height: auto; max-height: 9rem; }
-.rm-host:focus { outline: none; }
+/* focus is moved into an opened room so a reader lands in it; the room itself is not a control and takes no ring */
+.sx .rm-host:focus, .sx .rm-host:focus-visible { outline: none; box-shadow: none; }
+/* The sound room's still: the five pieces as written. */
+.snd-book { list-style: none; margin: 0; padding: 0; display: grid; gap: .7rem; }
+.snd-book li { display: grid; gap: .15rem; }
+.snd-book code { overflow-wrap: anywhere; font-size: .92em; }
+/* The shader room's still: its first shader as written. */
+.shd-still { margin: 0; max-height: 16rem; overflow: auto; font: 13px/1.5 ui-monospace, "Cascadia Mono", "SF Mono", Menlo, Consolas, monospace; white-space: pre; tab-size: 2; }

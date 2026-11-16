@@ -66,8 +66,10 @@ const reading = () => ({
       assert.equal(await page.evaluate(() => document.getElementById('sx-rec').open), false, 'the record is closed until asked for');
       assert.equal(await page.evaluate(() => document.querySelector('#sx-rec dl').checkVisibility()), false, 'the id shows before the record is opened');
       // the listeners got their first reading from the bus alone: each was mounted with no elements
+      await page.waitForFunction(() => window.__surface.bus.log().some((l) => l.medium === 'image'));
       const log = await page.evaluate(() => window.__surface.bus.log());
-      assert.deepEqual(log.filter((l) => l.ok).map((l) => [l.medium, l.from, l.heard.sort()]), [['blend', 'blend', ['lettering', 'motion']], ['palette', 'blend', ['plot']]]);
+      assert.deepEqual(log.filter((l) => l.ok).map((l) => [l.medium, l.from, l.heard.sort()]), [['blend', 'blend', ['lettering', 'motion']], ['palette', 'blend', ['plot']], ['image', 'plot', []]]);
+      // the last row: the pen study hands its picture on once it has drawn, for a loom, a plot map, cubes or the shader room opened later
       // Tab to the first share and move it with the arrow keys
       tabs = 0;
       while (tabs < 20 && !(await page.evaluate(() => document.activeElement?.matches?.('#sx-hosts input[data-w]')))) { await page.keyboard.press('Tab'); tabs++; }
