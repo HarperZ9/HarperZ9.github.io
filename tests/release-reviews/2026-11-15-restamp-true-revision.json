@@ -1,0 +1,7 @@
+{
+  "date": "2026-11-15",
+  "note": "Restamp to the true revision, no content change. world/IMPORT.json recorded world-99965e3499 while the committed inputs hash to world-58dddf52a8; scripts/world-asset-revision.mjs was run once on a clean checkout of main. index.html changed by its stamp lines only (tools/stamp_only_diff.py: 260 files, 1320 lines, each identical once the revision is set aside).",
+  "paths": {
+    "index.html": "ee7c9895b591d525ec2a8c9f66850aab4ea1899d717210c656c3a3a3ab0f7983"
+  }
+}
