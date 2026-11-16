@@ -38,7 +38,7 @@ ${hues}
 ${R},${R} [data-hue]{cursor:var(--p-rest),auto}
 ${R} ${PRESS}{cursor:var(--p-give),pointer}
 ${R} ${PRESS}:active{cursor:var(--p-pressed),pointer}
-${R} :is(:disabled,[aria-disabled="true"]){cursor:var(--p-rest),not-allowed}
+${R} :is(:disabled,[aria-disabled="true"]),${R} ${PRESS}:is(:disabled,[aria-disabled="true"]){cursor:var(--p-rest),not-allowed}
 ${R} ${DRAG}{cursor:var(--p-reach),grab}
 ${R} ${DRAG}:active{cursor:var(--p-hold),grabbing}
 ${R} ${TEXT}{cursor:var(--p-text),text}

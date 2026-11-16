@@ -17,7 +17,7 @@ html.ptr:not(.plain) [data-hue="rsrch"]{--p-rest:-webkit-image-set(url(/world/ui
 html.ptr:not(.plain),html.ptr:not(.plain) [data-hue]{cursor:var(--p-rest),auto}
 html.ptr:not(.plain) :is(a[href],button,summary,label[for],select,[role="button"],[role="tab"],[role="switch"],[role="link"],input:is([type="checkbox"],[type="radio"],[type="button"],[type="submit"],[type="reset"],[type="file"],[type="color"])){cursor:var(--p-give),pointer}
 html.ptr:not(.plain) :is(a[href],button,summary,label[for],select,[role="button"],[role="tab"],[role="switch"],[role="link"],input:is([type="checkbox"],[type="radio"],[type="button"],[type="submit"],[type="reset"],[type="file"],[type="color"])):active{cursor:var(--p-pressed),pointer}
-html.ptr:not(.plain) :is(:disabled,[aria-disabled="true"]){cursor:var(--p-rest),not-allowed}
+html.ptr:not(.plain) :is(:disabled,[aria-disabled="true"]),html.ptr:not(.plain) :is(a[href],button,summary,label[for],select,[role="button"],[role="tab"],[role="switch"],[role="link"],input:is([type="checkbox"],[type="radio"],[type="button"],[type="submit"],[type="reset"],[type="file"],[type="color"])):is(:disabled,[aria-disabled="true"]){cursor:var(--p-rest),not-allowed}
 html.ptr:not(.plain) :is(input[type="range"],[data-drag]){cursor:var(--p-reach),grab}
 html.ptr:not(.plain) :is(input[type="range"],[data-drag]):active{cursor:var(--p-hold),grabbing}
 html.ptr:not(.plain) :is(input:is([type="text"],[type="search"],[type="email"],[type="url"],[type="number"],[type="password"],[type="tel"],:not([type])),textarea,[contenteditable="true"],[contenteditable=""]){cursor:var(--p-text),text}
