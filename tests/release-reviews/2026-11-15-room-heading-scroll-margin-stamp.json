@@ -1,0 +1,7 @@
+{
+  "date": "2026-11-15",
+  "note": "Restamp for one stylesheet change: world/site/surfaces/surface-page.css gives the Playground's sections a scroll margin, so a jump to a room lands its heading below the navigation. index.html changed by its stamp lines only (tools/stamp_only_diff.py: 260 files, 1320 lines).",
+  "paths": {
+    "index.html": "47cd5407538d7df56692e6304c8ea778b7f4126cb6d70ae18df49c3505618628"
+  }
+}

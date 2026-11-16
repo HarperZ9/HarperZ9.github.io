@@ -3,6 +3,7 @@ HarperZ9/telos-v2 CI against the built dist BEFORE it is deployed here;
 this repo receives build output, so its own gate checks only that the
 deploy is structurally intact."""
 
+import json
 import re
 from pathlib import Path
 
@@ -70,7 +71,7 @@ def test_papers_shipped_as_pdfs() -> None:
 def test_key_pages_exist() -> None:
     for page in (
         "overview.html", "studio.html", "gallery.html", "catalog.html",
-        "guide.html", "research.html", "publications.html", "writing.html",
+        "guide.html", "research.html", "publications.html",
         "demo-index.html", "cv.html", "typeface.html", "why.html",
         "frontier-safety.html",
     ):
@@ -78,8 +79,11 @@ def test_key_pages_exist() -> None:
 
 
 def test_legacy_engines_route_points_to_current_systems_catalog() -> None:
-    src = (ROOT / "engines.html").read_text(encoding="utf-8")
-    assert 'rel="canonical" href="https://harperz9.github.io/overview.html"' in src
-    assert 'http-equiv="refresh" content="0; url=overview.html"' in src
-    assert 'window.location.replace("overview.html")' in src
-    assert 'href="overview.html"' in src
+    # engines.html was a redirect page until 15 November 2026; the address ledger now carries it as a moved row
+    # and 404.html sends the reader on
+    rows = json.loads((ROOT / "site-src/world/addresses.json").read_text(encoding="utf-8"))["rows"]
+    row = next(r for r in rows if r["path"] == "/engines.html")
+    assert row["kind"] == "moved" and row["to"] == "/overview.html"
+    assert not (ROOT / "engines.html").exists()
+    assert (ROOT / "overview.html").is_file()
+    assert '<code>/engines.html</code> is now at <a href="/overview.html">' in (ROOT / "404.html").read_text(encoding="utf-8")

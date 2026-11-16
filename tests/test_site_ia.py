@@ -43,7 +43,10 @@ OLD_WRITING_ANCHORS = {
     "checking-the-machines", "a-witness-should-not-become-a-ruler", "growth-needs-a-before",
     "availability-is-not-reach",
 }
-STUBS = ("writing.html", "writing/index.html", "publications/index.html", "papers/index.html")
+# These four addresses were redirect pages until 15 November 2026. Each is now a moved row in the address ledger:
+# no file, and 404.html sends the reader on.
+MOVED = ("/writing.html", "/writing/", "/publications/", "/papers/")
+LEDGER = {row["path"]: row for row in json.loads((ROOT / "site-src/world/addresses.json").read_text(encoding="utf-8"))["rows"]}
 
 
 def read(rel: str) -> str:
@@ -137,21 +140,25 @@ def test_series_parts_match_the_aside_on_each_published_piece() -> None:
         assert 'href="who-knew-first-series.html"' in aside
 
 
-def test_redirect_stubs_cover_every_old_anchor_and_match_their_generator() -> None:
+def test_moved_rows_cover_every_old_anchor_and_lead_to_the_writing_page() -> None:
     result = subprocess.run([sys.executable, "tools/redirect_stubs.py", "--check"], cwd=ROOT,
                             capture_output=True, text=True)
     assert result.returncode == 0, result.stderr
-    stub = read("writing.html")
-    mapping = json.loads(re.search(r"var map=(\{.*?\});", stub).group(1))
-    assert set(mapping) == OLD_WRITING_ANCHORS
-    for anchor, target in mapping.items():
-        assert (ROOT / target).is_file(), f"writing.html#{anchor} points at a missing page"
-        assert f'href="{target}"' in stub, f"no-script reader cannot reach {target}"
-    for path in STUBS:
-        source = read(path)
-        assert '<meta name="robots" content="noindex,follow">' in source, path
-        assert '<link rel="canonical" href="https://harperz9.github.io/publications.html">' in source, path
-        assert '<meta http-equiv="refresh"' in source, path
+    writing = LEDGER["/writing.html"]
+    assert writing["kind"] == "moved" and writing["to"] == "/publications.html"
+    # an old link to writing.html#verified lands on the essay's own page
+    assert set(writing["places"]) == OLD_WRITING_ANCHORS
+    not_found = read("404.html")
+    for anchor, target in writing["places"].items():
+        assert target.startswith("/") and (ROOT / target.lstrip("/")).is_file(), f"writing.html#{anchor} points at a missing page"
+        assert LEDGER[target]["kind"] not in ("moved", "redirect", "gone"), f"writing.html#{anchor} points at an address that moved"
+    for address in MOVED:
+        row = LEDGER[address]
+        assert row["kind"] == "moved" and row["to"].split("#")[0] == "/publications.html", address
+        relative = address.lstrip("/")
+        assert not (ROOT / (relative + "index.html" if relative.endswith("/") else relative)).exists(), address
+        # the reader without scripts finds the address and its new place listed on the page that answers
+        assert f"<code>{address}</code> is now at <a href=\"{row['to']}\">" in not_found, address
 
 
 # Wording a dated correction changed on purpose; the page's Corrections section records it.
@@ -190,8 +197,8 @@ def test_sitemap_lists_every_piece_once_and_no_redirect_page() -> None:
         if route.endswith(".pdf"):
             continue  # a PDF is a file, not a page; the hub lists every one
         assert SITE + route in locs, f"{route} is missing from the sitemap"
-    for stub in STUBS:
-        assert SITE + stub not in locs and SITE + stub.replace("index.html", "") not in locs, stub
+    for address in MOVED:
+        assert SITE + address.lstrip("/") not in locs, address
 
 
 def test_every_piece_page_names_its_own_address_as_canonical() -> None:

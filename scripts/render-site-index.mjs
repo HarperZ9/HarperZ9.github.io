@@ -1,5 +1,5 @@
 // The full directory stays inspectable when scripts are unavailable.
-import { readFile, writeFile } from 'node:fs/promises';
+import { readFile, writeFile as writeToDisk } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { ROUTE_REGISTRY } from '../system/routes.js';
 import { existsSync, readFileSync } from 'node:fs';
@@ -77,12 +77,35 @@ ${cardTags("site-index.html").join(String.fromCharCode(10))}
 <p data-no-results hidden>No matching pages. Try a broader term or clear the search.</p>
 ${sections}
 <footer><p><a href="index.html">Home</a> · <a href="https://github.com/HarperZ9" rel="external noopener">Public source</a></p></footer></main></body></html>\n`;
+// node scripts/render-site-index.mjs --check writes nothing and exits 1 when site-index.html or sitemap.xml would
+// change. It reads system/routes.js from disk, so run the route registry's check first (its --check runs this one).
+const CHECK = process.argv.includes('--check');
+async function writeFile(file, text) {
+  if (!CHECK) return writeToDisk(file, text);
+  const onDisk = existsSync(file) ? (await readFile(file, 'utf8')).replace(/\r\n/g, '\n') : null;
+  if (onDisk !== text.replace(/\r\n/g, '\n')) {
+    console.error(`${file} differs from what scripts/render-site-index.mjs writes; run node scripts/render-route-registry.mjs and commit the result`);
+    process.exitCode = 1;
+  }
+}
 // Advisory IDs and package names in the summaries stay whole on narrow screens.
 const systems = JSON.parse(await readFile(root + 'system/systems.json', 'utf8'));
-await writeFile(root + 'site-index.html', markIdents(page, identPattern(packageNames(systems))));
+// The standing flag beside each link to a finding (scripts/finding-flags.mjs) is part of this page's bytes. Before
+// 15 November 2026 a rerun of this script wrote the page without its flags and a second tool had to put them back.
+// A test sandbox that copies this script alone has no findings and no flags tool, and renders without them.
+async function withFindingFlags(html) {
+  const tool = new URL('./finding-flags.mjs', import.meta.url);
+  const pagesFile = new URL('../findings/pages.json', import.meta.url), ledgerFile = new URL('../findings/data/ledger.json', import.meta.url);
+  if (![tool, pagesFile, ledgerFile].every((u) => existsSync(u))) return html;
+  const { standings, flagLinks } = await import(tool.href);
+  const pages = JSON.parse(readFileSync(pagesFile, 'utf8')).pages.filter((p) => p.id && !p.redirect);
+  const ledger = JSON.parse(readFileSync(ledgerFile, 'utf8'));
+  return flagLinks(html, standings(pages.map((p) => ({ id: p.id, href: `/${p.path}` })), ledger.relations));
+}
+await writeFile(root + 'site-index.html', await withFindingFlags(markIdents(page, identPattern(packageNames(systems)))));
 const sitemapPath = root + 'sitemap.xml';
 const sitemap = await readFile(sitemapPath, 'utf8');
 if (!sitemap.includes('https://harperz9.github.io/site-index.html')) {
   await writeFile(sitemapPath, sitemap.replace('</urlset>', '  <url><loc>https://harperz9.github.io/site-index.html</loc></url>\n</urlset>'));
 }
-console.log('rendered site-index.html from route registry');
+console.log(`${CHECK ? 'checked' : 'rendered'} site-index.html from route registry`);

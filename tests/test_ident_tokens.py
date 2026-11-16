@@ -18,7 +18,7 @@ SKIP = {"head", "script", "style", "svg", "title", "textarea"}
 VOID = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "source", "track", "wbr"}
 IDENT_RULE = ".ident{display:inline-block;max-width:100%;overflow-wrap:anywhere;text-decoration:inherit}"
 HAND_PAGES = (
-    "security.html", "gather.html", "forum.html", "crucible.html", "chorus.html", "toolkit.html",
+    "security.html", "gather.html", "forum.html", "crucible.html", "chorus.html",
     "proof-surface.html", "index-graph.html", "articulate.html", "flywheel.html",
     "security-toolkit.html", "workshop.html", "provenance-sensorium.html",
 )

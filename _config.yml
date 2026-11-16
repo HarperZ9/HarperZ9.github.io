@@ -16,6 +16,7 @@ exclude:
   - _HANDOFF.md        # session handoff — internal
   - docs/              # dev plans/specs — internal
   - tests/             # contract tests — internal
+  - tools/             # generators and their source pages; nothing the site loads lives here
   - "*.py"             # test/util scripts — internal
   - .repomap.toml      # repo-map tool config — internal
   - README.md          # repo context (visible on GitHub; not a site page)

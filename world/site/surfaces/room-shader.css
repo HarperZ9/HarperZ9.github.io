@@ -1,0 +1,40 @@
+/* room-shader.css: the shader room on The Playground, loaded on its press. The frame moves only while the shader runs;
+   Pause holds it, and under reduced motion it starts paused. */
+.shd .shd-desk { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(1.25rem, 3vw, 2.5rem); align-items: start; margin-top: 1rem; }
+.shd label { display: flex; justify-content: space-between; gap: 1rem; font-weight: 600; margin: .8rem 0 .3rem; }
+.shd select { width: 100%; box-sizing: border-box; min-height: 44px; font: inherit; padding: 0 .6rem; border: 1px solid currentColor; background: transparent; color: inherit; }
+.shd option, .shd optgroup { color: #151310; background: #f6f1e7; }
+.shd button, .shd .shd-take a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 .9rem; font: inherit; font-weight: 600; border: 1px solid currentColor; background: transparent; color: inherit; cursor: pointer; text-decoration: none; }
+.shd .shd-lib { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1rem; margin: .8rem 0 0; }
+.shd .shd-lib label { flex: 1 0 100%; margin: 0; }
+/* The text area and its line numbers share one face, size and line height, so a number sits beside its line. */
+.shd .shd-edit { display: grid; grid-template-columns: 3.2em minmax(0, 1fr); border: 1px solid currentColor; height: 26rem; background: rgb(8 12 18 / .72); color: #f4efe6; }
+.shd .shd-gutter, .shd textarea { font: 14px/1.5 ui-monospace, "Cascadia Mono", "SF Mono", Menlo, Consolas, monospace; padding: .6rem 0; margin: 0; }
+.shd .shd-gutter { overflow: hidden; text-align: right; border-right: 1px solid rgb(244 239 230 / .35); user-select: none; }
+.shd .shd-gutter span { display: block; padding: 0 .5em 0 0; color: #c9c2b4; }
+.shd .shd-gutter span.bad { background: #f4efe6; color: #8a1c10; font-weight: 700; }
+.shd textarea { width: 100%; height: 100%; box-sizing: border-box; padding-left: .7em; padding-right: .7em; border: 0; background: transparent; color: inherit; resize: none; white-space: pre; overflow: auto; tab-size: 2; }
+.shd .shd-err { min-height: 1.5em; margin: .5rem 0 0; }
+.shd .shd-err p { margin: 0 0 .3rem; font-weight: 600; }
+.shd .shd-err ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .3rem; }
+.shd .shd-err li { overflow-wrap: anywhere; }
+.shd .shd-err button { margin-right: .4rem; }
+.shd .shd-frame { display: block; width: 100%; height: auto; aspect-ratio: 8 / 5; background: #000; touch-action: none; }
+.shd .shd-run, .shd .shd-take { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1rem; margin: .75rem 0; }
+.shd .shd-clock, .shd output { font-variant-numeric: tabular-nums; }
+.shd .shd-knobs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 1rem; }
+.shd .shd-knobs .shd-knob-h { grid-row: 1; margin: 0; font-weight: 600; font-size: 1em; }
+.shd .shd-knobs label { grid-row: 2; margin-top: .2rem; font-weight: 400; }
+.shd .shd-knobs input { grid-row: 3; width: 100%; min-height: 32px; margin: 0; accent-color: currentColor; }
+.shd .shd-knobs p { grid-column: 1 / -1; margin: .3rem 0 0; font-size: .92em; }
+.shd .shd-in, .shd .shd-made { margin: .6rem 0 0; font-size: .92em; overflow-wrap: anywhere; }
+.shd .shd-made:empty, .shd .shd-knobs p:empty, .shd .shd-err:empty { display: none; }
+.shd .shd-inputs { margin-top: 1.25rem; border-top: 1px solid currentColor; }
+.shd .shd-inputs summary { min-height: 44px; display: flex; align-items: center; cursor: pointer; font-weight: 600; }
+.shd .shd-inputs dl { display: grid; grid-template-columns: minmax(12rem, max-content) minmax(0, 1fr); gap: .35rem 1.5rem; margin: 0 0 .8rem; }
+.shd .shd-inputs dt span { font-size: .92em; }
+.shd .shd-inputs dd { margin: 0; }
+.shd :focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+.shd textarea:focus-visible { outline-offset: -2px; outline-color: #f4efe6; }
+/* On a narrow screen the frame comes first and the text area sits right under it, so a change and its result share the screen. */
+@media (max-width: 900px) { .shd .shd-desk { grid-template-columns: minmax(0, 1fr); gap: 0; } .shd .shd-see { display: contents; } .shd .shd-frame { order: 1; } .shd .shd-run { order: 2; } .shd .shd-write { order: 3; } .shd .shd-knobs { order: 4; margin-top: 1rem; } .shd .shd-in { order: 5; } .shd .shd-take { order: 6; } .shd .shd-made { order: 7; } .shd .shd-edit { height: 20rem; grid-template-columns: 2.6em minmax(0, 1fr); } .shd .shd-inputs dl { grid-template-columns: minmax(0, 1fr); gap: 0; } .shd .shd-inputs dd { margin: 0 0 .5rem; } }

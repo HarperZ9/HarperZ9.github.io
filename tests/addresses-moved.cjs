@@ -19,13 +19,16 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
 const ROOT = path.resolve(__dirname, '..');
 const TYPES = { '.html': 'text/html; charset=utf-8', '.htm': 'text/html; charset=utf-8', '.json': 'application/json', '.js': 'text/javascript', '.mjs': 'text/javascript', '.css': 'text/css', '.svg': 'image/svg+xml', '.woff2': 'font/woff2', '.webp': 'image/webp', '.avif': 'image/avif', '.jpg': 'image/jpeg', '.png': 'image/png' };
 
+// Folders the Pages build leaves out (_config.yml): a file there is not at any address.
+const served = (p) => !/^\/(?:home|tests|docs|tools)\//.test(p);
+
 function pagesLike() {
   return http.createServer((req, res) => {
     let p = decodeURIComponent(new URL(req.url, 'http://x').pathname);
     if (p.endsWith('/')) p += 'index.html';
     const file = path.join(ROOT, p);
     const send = (status, f) => { res.writeHead(status, { 'content-type': TYPES[path.extname(f)] || 'application/octet-stream', 'cache-control': 'no-store' }); fs.createReadStream(f).pipe(res); };
-    if (file.startsWith(ROOT) && fs.existsSync(file) && fs.statSync(file).isFile()) return send(200, file);
+    if (file.startsWith(ROOT) && served(p) && fs.existsSync(file) && fs.statSync(file).isFile()) return send(200, file);
     send(404, path.join(ROOT, '404.html'));
   });
 }
@@ -63,7 +66,7 @@ function endOf(row, byPath) {
       const target = endOf(row, byPath);
       if (projectSites.some((p) => target.startsWith(p))) continue; // another repository's pages: not served here
       const file = path.join(ROOT, row.path.endsWith('/') ? row.path + 'index.html' : row.path);
-      if (fs.existsSync(file)) { failures.push(`${row.path}: a moved row has no file, and one exists`); continue; }
+      if (served(row.path) && fs.existsSync(file)) { failures.push(`${row.path}: a moved row has no file, and one exists`); continue; }
 
       const page = await scripted.newPage();
       const first = await page.goto(base + row.path, { waitUntil: 'domcontentloaded' });
@@ -95,6 +98,27 @@ function endOf(row, byPath) {
       await quiet.close();
     }
 
+    // A row may map the places its old page had: each one lands on that place's new address.
+    let placed = 0;
+    for (const row of moved.filter((r) => r.places)) {
+      for (const [place, to] of Object.entries(row.places).slice(0, 3)) {
+        const tab = await scripted.newPage();
+        await tab.goto(`${base}${row.path}#${place}`, { waitUntil: 'domcontentloaded' });
+        try { await tab.waitForURL((u) => u.pathname + u.search + u.hash === to, { timeout: 8000 }); placed += 1; }
+        catch { failures.push(`${row.path}#${place}: the browser stayed at ${tab.url()}, the row's places lead to ${to}`); }
+        await tab.close();
+      }
+    }
+    // The query and the place a reader asked for travel with them when the new address names neither.
+    const carried = moved.find((r) => !/[?#]/.test(endOf(r, byPath)) && endOf(r, byPath) !== '/' && !r.places && !projectSites.some((p) => endOf(r, byPath).startsWith(p)));
+    if (carried) {
+      const tab = await scripted.newPage(), want = endOf(carried, byPath) + '?from=old#top';
+      await tab.goto(`${base}${carried.path}?from=old#top`, { waitUntil: 'domcontentloaded' });
+      try { await tab.waitForURL((u) => u.pathname + u.search + u.hash === want, { timeout: 8000 }); }
+      catch { failures.push(`${carried.path}?from=old#top: the browser stayed at ${tab.url()}, expected ${want}`); }
+      await tab.close();
+    }
+
     const page = await scripted.newPage();
     const unknown = '/an-address-this-site-never-published-7c1e.html';
     assert.equal(byPath.has(unknown), false);
@@ -104,7 +128,7 @@ function endOf(row, byPath) {
     if (new URL(page.url()).pathname !== unknown) failures.push(`unknown address: the browser left for ${page.url()}`);
     if (!/No page at this address/.test(await page.locator('h1').first().textContent())) failures.push('unknown address: the not-found heading is missing');
     if (!/No address on the site is close/.test(await page.locator('#nf-near').textContent())) failures.push(`unknown address: the page offered ${await page.locator('#nf-near').textContent()}`);
-    console.log(`addresses-moved: ${sample.length} of ${moved.length} moved rows opened with and without scripts; one unknown address checked`);
+    console.log(`addresses-moved: ${sample.length} of ${moved.length} moved rows opened with and without scripts; ${placed} mapped places and ${carried ? 'one' : 'no'} carried query checked; one unknown address checked`);
   } finally {
     await browser.close();
     server.closeAllConnections();

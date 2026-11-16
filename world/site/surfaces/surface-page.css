@@ -37,7 +37,20 @@ body.sx-body .gw-backdrop::before { content: ""; position: absolute; inset: 0; z
 #sx-hosts[data-surface] { margin: 20px 0; }
 #sx-hosts .sf-wide { grid-column: 1 / -1; }
 .sx [hidden] { display: none !important; }
+/* A jump to a section (an address that ends in #shader, a link on the page) lands its heading below the hand, the
+   navigation fixed at the top of the screen. The hand is 78px tall; it sits clamp(10px, 2vw, 24px) from the top on a
+   wide screen and 6px, or the safe area, on a narrow one. tests/surface-rooms-anchor.cjs holds this margin to the
+   hand's measured box at 390, 580 and 1440 px. */
+.sx { scroll-margin-top: calc(clamp(10px, 2vw, 24px) + 90px); }
+@media (max-width: 860px) { .sx { scroll-margin-top: calc(max(6px, env(safe-area-inset-top, 0px)) + 90px); } }
 /* A room's still: the picture its own module made at build time. */
 .rm-still { margin: 1rem 0; }
 .rm-still svg { display: block; width: 100%; height: auto; max-height: 9rem; }
-.rm-host:focus { outline: none; }
+/* focus is moved into an opened room so a reader lands in it; the room itself is not a control and takes no ring */
+.sx .rm-host:focus, .sx .rm-host:focus-visible { outline: none; box-shadow: none; }
+/* The sound room's still: the five pieces as written. */
+.snd-book { list-style: none; margin: 0; padding: 0; display: grid; gap: .7rem; }
+.snd-book li { display: grid; gap: .15rem; }
+.snd-book code { overflow-wrap: anywhere; font-size: .92em; }
+/* The shader room's still: its first shader as written. */
+.shd-still { margin: 0; max-height: 16rem; overflow: auto; font: 13px/1.5 ui-monospace, "Cascadia Mono", "SF Mono", Menlo, Consolas, monospace; white-space: pre; tab-size: 2; }

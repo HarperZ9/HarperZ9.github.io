@@ -4,7 +4,7 @@
 // append-only: a row is never removed and its path never changes, so an address that has been given out keeps
 // answering. A page that moved before 15 November 2026 left a redirect stub at the old address (kind "redirect").
 // Since then a page folded into another leaves no file: its row has kind "moved", its target in "to" (a page, with
-// an optional ?query and #place), and 404.html, which GitHub Pages serves for an address with no file, sends the
+// an optional ?query and #place; "places" may map the old page's fragments to new addresses), and 404.html, which GitHub Pages serves for an address with no file, sends the
 // reader there. An address with no page any more is kept as "gone", with the commit that removed it.
 //
 // An address is the path a reader types after the host: "/" for the home, "/playground/" for a folder's index,
@@ -49,7 +49,7 @@ export function pageText(ledger, address, site = SITE) {
 }
 
 // Tracked folders and files that GitHub Pages does not serve (_config.yml), so they are not addresses.
-const NOT_SERVED = [/^home\//, /^tests\//, /^docs\//, /^img\/og\/_card\.html$/, /(^|\/)[_.][^/]*/, /(^|\/)node_modules\//];
+const NOT_SERVED = [/^home\//, /^tests\//, /^docs\//, /^tools\//,/^img\/og\/_card\.html$/, /(^|\/)[_.][^/]*/, /(^|\/)node_modules\//];
 export const isServed = (file) => !NOT_SERVED.some((re) => re.test(file));
 
 export const addressOf = (file) => "/" + file.replace(/(^|\/)index\.html$/, "$1");
@@ -116,7 +116,13 @@ export function validate(ledger, site = SITE, pages = servedPages(site)) {
       if (!r.to) problems.push(`${at}: a moved row names its target in "to"`);
       if (!/^\d{4}-\d{2}-\d{2}$/.test(r.moved || "")) problems.push(`${at}: a moved row has the date it moved in "moved"`);
       if (at.includes("#")) problems.push(`${at}: a moved row is a page address, with no place in it`);
-      else if (existsSync(path.join(site, fileOf(r.path)))) problems.push(`${at}: a moved row has no file, and ${fileOf(r.path)} exists (delete the file, or give the row its kind back)`);
+      else if (isServed(fileOf(r.path)) && existsSync(path.join(site, fileOf(r.path)))) problems.push(`${at}: a moved row has no file, and ${fileOf(r.path)} exists (delete the file, or give the row its kind back)`);
+      // "places" maps a fragment the old page answered to the address that now holds it
+      for (const [place, to] of Object.entries(r.places || {})) {
+        const [page, frag] = String(to).split("#"), html = inProjectSite(ledger, to) ? "" : read(page);
+        if (html === null) problems.push(`${at}: place ${place} leads to ${to}, which has no page`);
+        else if (frag && html && !hasFragment(html, frag)) problems.push(`${at}: place ${place} leads to ${to}, and the page has no place named ${frag}`);
+      }
       continue;
     }
     const html = read(r.path);

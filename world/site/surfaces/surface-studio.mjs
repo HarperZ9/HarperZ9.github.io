@@ -31,17 +31,17 @@ function save(name, blob) { const a = document.createElement('a'), url = URL.cre
 const colours = (ix, ids) => ids.map((id) => ix.byId.get(id)?.colour?.hex).filter(Boolean);
 
 const KINDS = {
-  loom: { says: 'The well woven on the Loom: a jacquard draft, where each crossing lifts more warp the brighter the picture is there.', save: 'Save the cloth',
+  loom: { says: (who) => `${who} woven on the Loom: a jacquard draft, where each crossing lifts more warp the brighter the picture is there.`, save: 'Save the cloth',
     draw(c, src, hexes) { const ends = 96, picks = 72, g = grid(src, ends, picks), d = computeDraft(g.L, ends, picks, 'jacquard', { toneDrive: 1 });
       const pal = weftPaletteFor(d, (p) => g.rows[p], hexes.length > 1 ? hexes.slice(1) : hexes), warpHex = hexes[0];
       renderCloth(c, d, { warpHex, weftHexAt: (p) => pal.hexes[pal.indexAt(p)] }, { maxWidth: 720, maxHeight: 540 }); return { ends, picks, warp: warpHex, weft: pal.hexes.length }; },
     file: (st) => ({ name: 'cloth.png', blob: null, canvas: st.canvas }) },
-  ridges: { says: 'The well as a plot map: its brightness read as height, drawn as ridgelines a pen could follow, the near rows hiding the far.',
+  ridges: { says: (who) => `${who} as a plot map: its brightness read as height, drawn as ridgelines a pen could follow, the near rows hiding the far.`,
     draw(c, src, hexes) { const w = 240, h = 180, g = grid(src, w, h), lines = ridgelines(g.L, w, h, { rows: 54, lift: 0.3, sampleStep: 2 }), x = c.getContext('2d');
       c.width = 720; c.height = 540; x.fillStyle = '#0c1620'; x.fillRect(0, 0, c.width, c.height); x.strokeStyle = hexes[0] || '#f4efe6'; x.lineWidth = 1.3; x.lineJoin = x.lineCap = 'round';
       for (const l of lines) { x.beginPath(); l.forEach(([px, py], i) => (i ? x.lineTo(px * c.width, py * c.height) : x.moveTo(px * c.width, py * c.height))); x.stroke(); }   // ridgelines are in shares of the sheet
       return { lines: lines.length, points: lines.reduce((s, l) => s + l.length, 0) }; } },
-  voxels: { says: 'The well raised in cubes: each column as tall as the picture is bright there, banded in the blend’s colours by height.', save: 'Save the cubes (.vox)',
+  voxels: { says: (who) => `${who} raised in cubes: each column as tall as the picture is bright there, banded in the blend’s colours by height.`, save: 'Save the cubes (.vox)',
     draw(c, src, hexes, st) { const w = 40, h = 30, g = grid(src, w, h), rows = Array.from({ length: h }, (_, y) => Array.from(g.L.subarray(y * w, (y + 1) * w)));
       const vox = voxelizeHeightGrid(rows, 16), mat = assignMaterials(vox, () => 0.5, null), cols = hexes.length ? hexes : ['#808080'];
       const palette = [[0, 0, 0], ...[0, 1, 2, 3, 4].map((i) => hexRgb(cols[Math.min(cols.length - 1, Math.floor(i * cols.length / 5))]))];
@@ -51,11 +51,14 @@ const KINDS = {
 };
 
 function mountKind(kind, host, input, ctx) {
+  // whose picture this is: the page names the maker when it can (the well, the pen study, a room); the bench has only its well
+  const who = () => ctx.pictureName?.() || 'The well';
   const K = KINDS[kind], st = { canvas: null, drawn: 0, facts: null, scene: null }; let state = { ...input }, timer = 0;
   host.classList.add('sf-studio', `sf-${kind}`);
-  host.innerHTML = `${ctx.plain ? '' : '<canvas class="pl" width="720" height="540"></canvas>'}<p class="ln-note">${esc(K.says)}</p>${K.save && !ctx.plain ? `<button type="button" data-studio-save>${esc(K.save)}</button>` : ''}`;
+  host.innerHTML = `${ctx.plain ? '' : '<canvas class="pl" width="720" height="540"></canvas>'}<p class="ln-note">${esc(K.says(who()))}</p>${K.save && !ctx.plain ? `<button type="button" data-studio-save>${esc(K.save)}</button>` : ''}`;
   st.canvas = host.querySelector('canvas');
-  const draw = () => { timer = 0; const src = ctx.picture?.(); if (!st.canvas || !src) return;
+  const note = host.querySelector('.ln-note');
+  const draw = () => { timer = 0; const src = ctx.picture?.(); note.textContent = src || ctx.plain ? K.says(who()) : 'No picture has been handed on yet, so nothing is drawn.'; if (!st.canvas || !src) return;
     try { st.facts = K.draw(st.canvas, src, colours(ctx.ix, state.elements || []), st); st.drawn++; st.canvas.dataset.drawn = st.drawn; } catch (e) { console.info(`${kind}: not drawn:`, e.message); } };
   const later = () => { clearTimeout(timer); timer = setTimeout(draw, ctx.reduced ? 0 : 400); };
   const onClick = (ev) => { if (!ev.target.closest('[data-studio-save]')) return; const stem = (state.elements || []).join('-') || 'bench';
