@@ -21,7 +21,8 @@ function overlaps() {
   // drawn on the screen: not hidden, not transparent, and not inside content the browser skips (a closed details)
   const vis = (el) => el.checkVisibility({ opacityProperty: true, visibilityProperty: true, contentVisibilityAuto: true });
   const controls = [];
-  for (const c of hand.querySelectorAll('*')) if (vis(c)) for (const r of c.getClientRects()) if (r.width > 1 && r.height > 1) controls.push(r);
+  // the skip link waits above the screen until it is focused, and the menu is a dialog of its own: neither is the hand on the page
+  for (const c of hand.querySelectorAll('*')) if (vis(c) && !c.closest('.skip, dialog')) for (const r of c.getClientRects()) if (r.width > 1 && r.height > 1 && r.bottom > 0) controls.push(r);
   const hits = [];
   const hit = (r, what) => { for (const c of controls) if (r.left < c.right && r.right > c.left && r.top < c.bottom && r.bottom > c.top) { hits.push(`${what.slice(0, 50)} at [${[r.left, r.top, r.width, r.height].map(Math.round)}] under a control at [${[c.left, c.top, c.width, c.height].map(Math.round)}]`); return; } };
   const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT), range = document.createRange();
