@@ -1,0 +1,8 @@
+{
+  "date": "2026-11-15",
+  "note": "The route registry and the site index, regenerated. One fact changes: the Playground's search text gains the headings of its three rooms (merged in 536, 540 and 541). No route is added, removed or reordered; the 19 standing flags on finding entries are the same.",
+  "paths": {
+    "site-index.html": "7e53fccbe31131ac2b139207f6576187d459ea2386f912392b472dd1efb6355c",
+    "system/routes.js": "461295d001c27e3a45e2f7b6d6cb105885fe727b286bfb37d251bbb5273a8366"
+  }
+}
