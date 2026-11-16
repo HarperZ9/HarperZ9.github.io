@@ -90,7 +90,19 @@ async function writeFile(file, text) {
 }
 // Advisory IDs and package names in the summaries stay whole on narrow screens.
 const systems = JSON.parse(await readFile(root + 'system/systems.json', 'utf8'));
-await writeFile(root + 'site-index.html', markIdents(page, identPattern(packageNames(systems))));
+// The standing flag beside each link to a finding (scripts/finding-flags.mjs) is part of this page's bytes. Before
+// 15 November 2026 a rerun of this script wrote the page without its flags and a second tool had to put them back.
+// A test sandbox that copies this script alone has no findings and no flags tool, and renders without them.
+async function withFindingFlags(html) {
+  const tool = new URL('./finding-flags.mjs', import.meta.url);
+  const pagesFile = new URL('../findings/pages.json', import.meta.url), ledgerFile = new URL('../findings/data/ledger.json', import.meta.url);
+  if (![tool, pagesFile, ledgerFile].every((u) => existsSync(u))) return html;
+  const { standings, flagLinks } = await import(tool.href);
+  const pages = JSON.parse(readFileSync(pagesFile, 'utf8')).pages.filter((p) => p.id && !p.redirect);
+  const ledger = JSON.parse(readFileSync(ledgerFile, 'utf8'));
+  return flagLinks(html, standings(pages.map((p) => ({ id: p.id, href: `/${p.path}` })), ledger.relations));
+}
+await writeFile(root + 'site-index.html', await withFindingFlags(markIdents(page, identPattern(packageNames(systems)))));
 const sitemapPath = root + 'sitemap.xml';
 const sitemap = await readFile(sitemapPath, 'utf8');
 if (!sitemap.includes('https://harperz9.github.io/site-index.html')) {
