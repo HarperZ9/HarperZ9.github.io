@@ -86,6 +86,9 @@ function drawWave() {
     x.lineTo(w, h / 2);
   }
   x.stroke();
+  // the line stops either side of the press, so the press's words never have the line behind them
+  const b = wave.parentElement.querySelector(".hum-press")?.getBoundingClientRect();
+  if (b) x.clearRect((b.left - r.left - 12) * dpr(), 0, (b.width + 24) * dpr(), h);
 }
 
 // the waveform redraws on the shared clock while the theme plays
