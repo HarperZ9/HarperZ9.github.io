@@ -1,0 +1,211 @@
+{
+ "schema": "explainer-evidence/1",
+ "explainer": "mmbu",
+ "read": "2026-10-17",
+ "sources": {
+  "mmbu-paper": {
+   "short": "The MMBU benchmark paper",
+   "citation": "D'Cunha et al., MMBU: A Massive Multi-modal Biomedical Understanding Benchmark to Probe the Perception Capabilities of Vision-Language Models, arXiv 2606.06696, 4 June 2026.",
+   "url": "https://arxiv.org/abs/2606.06696",
+   "read": "full text as saved on 2 October 2026",
+   "claims": [
+    "The benchmark curates 410 public datasets; each question pairs a biomedical image with a task; the paper's words for context fields (for example X-ray, Light Microscopy, specimen Human)."
+   ],
+   "n": "410 datasets.",
+   "interval": "None.",
+   "does_not_prove": "Anything about our models, or the hidden test set's contents."
+  },
+  "mmbu-brief": {
+   "short": "The MMBU Challenge site and brief",
+   "citation": "MMBU Challenge, organized by Stanford MARVL: challenge site and participant brief, read 2 to 9 October 2026.",
+   "url": "https://akiranishii.github.io/mmbu-challenge/",
+   "read": "full",
+   "claims": [
+    "One model, one pass per question, no tools or retrieval; answer (T) and context (C) scored, S = 0.8T + 0.2C; Track 3 for small models (the web page: at most 4B active and 12B total parameters; the brief of 9 October: a 4B model, counted as 4.66 billion total parameters), scaled by (4.66e9 / P)^0.1; training sources disclosed; deadline 31 December 2026, 23:30 Pacific (the organisers' Discord answer of 3 October)."
+   ],
+   "n": "None.",
+   "interval": "None.",
+   "does_not_prove": "How the organisers' judge scores a given reply, or the final leaderboard."
+  },
+  "mmbu-organiser": {
+   "short": "Organiser rulings",
+   "citation": "MMBU organiser answers on the challenge Discord, 3 to 14 October 2026, as recorded in our run notes.",
+   "url": "",
+   "read": "full",
+   "claims": [
+    "\"All datasets are acceptable as long as disclosed\" (9 October); the public dev questions are for evaluation only; the 4B limit counts the vision tower and the embeddings."
+   ],
+   "n": "None.",
+   "interval": "None.",
+   "does_not_prove": "Rulings after 14 October."
+  },
+  "mmbu-prereg": {
+   "short": "Our preregistrations",
+   "citation": "MMBU run records: train/PREREG.md and train/ft2 to ft8 PREREG-*.md, each fingerprinted into the prereg ledger.",
+   "url": "",
+   "read": "full",
+   "claims": [
+    "Each run names its comparison and bar before its result: a paired bootstrap (10,000 resamples, seed 20261002, percentile) on the public dev questions, lower bound above zero unless a non-inferiority margin is stated. Our answer scorer JP1 agreed with a blind re-grade of 180 earlier dev answers on 175, with no false accepts; the re-grade was done by the Claude session leading the work, the same model family as the official judge."
+   ],
+   "n": "3,091 dev questions for FT5 to FT7; FT4 was decided on 3,102 and re-scored on 3,091.",
+   "interval": "Per bar.",
+   "does_not_prove": "That the files were written before the results; see the ledger source."
+  },
+  "mmbu-ft4": {
+   "short": "FT4 results",
+   "citation": "MMBU run records, train/ft4/bars_ft4_excl12.json (SHA-256 ca54d77a73c6); the run's preregistration, train/ft4/PREREG-FT4.md.",
+   "url": "",
+   "read": "full",
+   "claims": [
+    "FT4 added 20 public sources, 17 of them inferred MMBU sources (tier Q2) and 3 more (RIVA_PAP, DERM12345, FDG_PET_CT), plus 1,039 format copies: 29,421 rows. H1, dev answers FT4_4B minus FT3A_4B: -0.007 [-0.018, 0.004], not met (decided on 3,102 rows; the same verdict on 3,091 after the 12-row exclusion). The format copies arrived with the new sources, so the result cannot separate them."
+   ],
+   "n": "3,091 dev questions.",
+   "interval": "95% paired bootstrap.",
+   "does_not_prove": "That those sources could not help with a different recipe."
+  },
+  "mmbu-ft5": {
+   "short": "FT5 results",
+   "citation": "MMBU run records, train/ft5/bars_ft5.json (SHA-256 b367b9703d49).",
+   "url": "",
+   "read": "full",
+   "claims": [
+    "K1, one more epoch from FT3A_4B over FT3A's rows plus the format copies: +0.001 [-0.007, 0.009], not met."
+   ],
+   "n": "3,091.",
+   "interval": "95% paired bootstrap.",
+   "does_not_prove": "Anything about longer schedules or other learning rates."
+  },
+  "mmbu-baselines": {
+   "short": "Baselines",
+   "citation": "MMBU run records, diag/baselines.json (SHA-256 d135ae4f7f0a); FT7_4B's dev answer score from train/ft7/bars_ft7.json (SHA-256 221bd716e8c9).",
+   "url": "",
+   "read": "full",
+   "claims": [
+    "Chance among the judge's options 0.2074; the most common answer per question family, left one out (an oracle the model cannot use), 0.2368; FT7_4B 0.2294 (JP1)."
+   ],
+   "n": "3,091.",
+   "interval": "None for the baselines.",
+   "does_not_prove": "What the official judge would score."
+  },
+  "mmbu-audit": {
+   "short": "Blank-image audit",
+   "citation": "MMBU run records, diag/image_audit.json (SHA-256 6944a2c19847) (FT4_4B).",
+   "url": "",
+   "read": "full",
+   "claims": [
+    "Real images 0.2087; mean-colour blank images 0.0819; real minus blank +0.127 [0.113, 0.141]; 74.7% of answers change."
+   ],
+   "n": "3,091.",
+   "interval": "95% paired bootstrap.",
+   "does_not_prove": "That the model uses the image well, only that it uses it."
+  },
+  "mmbu-prior": {
+   "short": "Where the model loses to the oracle",
+   "citation": "MMBU run records, diag/prior_gap.json (SHA-256 fcf37e9b3fd6) (FT4_4B).",
+   "url": "",
+   "read": "full",
+   "claims": [
+    "51% of answers name no option; chest radiograph regions, 82 rows: model right 2 times, the oracle 40; surgical instrument tips, 54 rows: 7 against 31."
+   ],
+   "n": "3,091.",
+   "interval": "None.",
+   "does_not_prove": "Why the model words its answers off the option list."
+  },
+  "mmbu-option": {
+   "short": "Option-scoring readout",
+   "citation": "MMBU run records, diag/option_readout_FT5_4B.json (SHA-256 6aca907696fe); the rule was fixed in ledger entry 64 before the run.",
+   "url": "",
+   "read": "full",
+   "claims": [
+    "FT5_4B on 2,654 single-label rows: its top-scored option right 0.414, its generated answer right 0.197, difference +0.217 [0.198, 0.236]; the rule chose answer-vocabulary rows. The readout calls the gap wording and label recall, partly inferred, since picking from a closed list is easier than open generation."
+   ],
+   "n": "2,654.",
+   "interval": "95% paired bootstrap.",
+   "does_not_prove": "That option scoring could be used in the contest; it is an evaluation-only readout, since the rules allow one generated reply."
+  },
+  "mmbu-ft6": {
+   "short": "FT6 results",
+   "citation": "MMBU run records, train/ft6/bars_ft6.json (SHA-256 5fc665673356).",
+   "url": "",
+   "read": "full",
+   "claims": [
+    "M2, region-question answers, FT6_4B minus FT5_4B on 860 rows: +0.026 [0.008, 0.044], met; M5, Pass 2 replies valid 0.9984 against a bar of 0.999, not met; M6, 3,090 of 3,091 Pass 1 replies hold an answer, not met."
+   ],
+   "n": "3,091.",
+   "interval": "95% paired bootstrap; Wilson intervals for rates.",
+   "does_not_prove": "Held-out behaviour beyond bar M4."
+  },
+  "mmbu-amend2": {
+   "short": "FT7 amendment 2",
+   "citation": "MMBU run records, train/ft7/PREREG-FT7-AMENDMENT-2.md (SHA-256 a8663983c53b), ledger entry 79: signed 07:13:43Z on 16 October 2026, while FT7 was at step 20 and no FT7 output existed.",
+   "url": "",
+   "read": "full",
+   "claims": [
+    "The absolute format bars also rejected the standing candidate, FT3A_4B (Pass 2 valid 0.9958, 3,089 of 3,091). The new rule, for later runs: replace the candidate when every answer bar is met and the format is no worse than the candidate's."
+   ],
+   "n": "None.",
+   "interval": "None.",
+   "does_not_prove": "The signing time, beyond our own record; see the ledger source."
+  },
+  "mmbu-ft7": {
+   "short": "FT7 results",
+   "citation": "MMBU run records, train/ft7/bars_ft7.json (SHA-256 221bd716e8c9).",
+   "url": "",
+   "read": "full",
+   "claims": [
+    "N4, adjusted S, FT7_4B minus FT3A_4B: +0.043 [0.035, 0.050], met; N5, held-out answers: +0.021 [0.007, 0.036] (non-inferiority, margin 0.02), met; FT7_4B became the candidate."
+   ],
+   "n": "3,091 dev; 1,293 held-out rows in 732 clusters.",
+   "interval": "95% paired bootstrap; held-out by cluster.",
+   "does_not_prove": "The hidden test set's result."
+  },
+  "mmbu-vocab": {
+   "short": "Held-out vocabulary re-score",
+   "citation": "MMBU run records, train/heldout_vocab/heldout_vocab_ft7.json (SHA-256 6cb68387f23b); preregistration train/heldout_vocab/PREREG-HELDOUT-VOCAB.md; ledger entries 87 and 88.",
+   "url": "",
+   "read": "full",
+   "claims": [
+    "FT7 minus FT6 held-out context: -0.089 [-0.103, -0.076] under the sources' own labels, +0.152 [0.135, 0.172] under labels rewritten to the paper's words (light microscopy 400 rows, X-ray 150, ultrasound 101, specimen 250). Post hoc for FT6 and FT7; preregistered for FT8 only."
+   ],
+   "n": "1,006 rows in 732 clusters.",
+   "interval": "95% cluster bootstrap.",
+   "does_not_prove": "Which key is right; neither is neutral."
+  },
+  "mmbu-survival": {
+   "short": "The survival record",
+   "citation": "MMBU status notes (STATUS-2026-10-15.md) and ledger entries 54, 73 to 76 and 84.",
+   "url": "",
+   "read": "full",
+   "claims": [
+    "Checkpoints every 50 steps; FT7 saved step 665 in 0.53 s on a shutdown and resumed about 6.2 hours later with no step lost; the FT5_4B init_lora crash idled the GPU about 10 hours; a duplicate trainer after an app restart cost 40 steps and about 30 minutes; the liveness check now fails closed; FT8 stopped at step 500 of 1,918 when the author paused the work on 16 October 2026."
+   ],
+   "n": "None.",
+   "interval": "None.",
+   "does_not_prove": "That no other failure mode remains."
+  },
+  "mmbu-ledger": {
+   "short": "The prereg ledger",
+   "citation": "HarperZ9/prereg-ledger, ATTESTATIONS.md, read with git on 17 October 2026: entries to 89 in the local file; the remote holds entries to 27, last pushed 4 October 2026; the repository is private.",
+   "url": "",
+   "read": "full",
+   "claims": [
+    "All 19 preregistration and amendment files match the ledger, 16 to a full SHA-256 and 3 to the 8-character prefix the ledger recorded (re-hashed 17 October 2026). Entries 28 to 89 were never committed or pushed, so no outside timestamp backs their order, and a file and its local fingerprint line could have been changed together."
+   ],
+   "n": "Entries numbered 1 to 89 (92 headings; the duplicates and a missing 36 are recorded in the ledger itself).",
+   "interval": "None.",
+   "does_not_prove": "When entries 28 to 89 were written."
+  },
+  "ns-recompute": {
+   "short": "Night School's re-derivation",
+   "citation": "media/school/mmbu/facts.json, written by tools/school/fill_mmbu.mjs: numpy's SeedSequence, PCG64 and integers ported to JavaScript (system/school/mmbu-rng.mjs, checked against numpy), and the scorers' bootstraps re-run on the published per-row scores (media/school/mmbu/data/).",
+   "url": "https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/mmbu",
+   "read": "full",
+   "claims": [
+    "K1, M1, N1, N3, N4, N5 and both held-out vocabulary intervals reproduce to the printed digits."
+   ],
+   "n": "3,091 dev rows; 1,006 and 1,293 held-out rows in 732 clusters.",
+   "interval": "As published.",
+   "does_not_prove": "That the per-row scores are right; they come from our local scorers."
+  }
+ }
+}

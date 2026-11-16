@@ -3,730 +3,547 @@
   "segment": 0,
   "line": 0,
   "sentence": 0,
-  "start": 5.466,
-  "end": 5.994,
+  "start": 4.6,
+  "end": 5.421,
   "text": "Gradients.",
-  "syllables": 2,
-  "seconds": 0.528,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 0,
   "line": 0,
   "sentence": 1,
-  "start": 6.776,
-  "end": 8.359,
+  "start": 5.741,
+  "end": 7.446,
   "text": "Which way is downhill.",
-  "syllables": 6,
-  "seconds": 1.583,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 0,
   "line": 1,
   "sentence": 0,
-  "start": 9.826,
-  "end": 11.673,
+  "start": 8.046,
+  "end": 9.899,
   "text": "Tonight the hill is in fog.",
-  "syllables": 7,
-  "seconds": 1.847,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 0,
   "line": 1,
   "sentence": 1,
-  "start": 12.455,
-  "end": 14.302,
+  "start": 10.219,
+  "end": 11.44,
   "text": "I can't see the bottom.",
-  "syllables": 7,
-  "seconds": 1.847,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 0,
   "line": 1,
   "sentence": 2,
-  "start": 15.084,
-  "end": 18.514,
+  "start": 11.76,
+  "end": 14.665,
   "text": "All I can do is feel the ground under my flippers.",
-  "syllables": 13,
-  "seconds": 3.43,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 1,
   "line": 0,
   "sentence": 0,
-  "start": 21.447,
-  "end": 26.46,
+  "start": 15.865,
+  "end": 19.865,
   "text": "Put one flipper a little to the east and feel how much higher the ground is there.",
-  "syllables": 19,
-  "seconds": 5.013,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 1,
   "line": 0,
   "sentence": 1,
-  "start": 27.242,
-  "end": 28.825,
+  "start": 20.185,
+  "end": 21.995,
   "text": "That's the slope going east.",
-  "syllables": 6,
-  "seconds": 1.583,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 1,
   "line": 1,
   "sentence": 0,
-  "start": 30.292,
-  "end": 31.611,
+  "start": 22.596,
+  "end": 24.406,
   "text": "Do the same going north.",
-  "syllables": 5,
-  "seconds": 1.319,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 1,
   "line": 1,
   "sentence": 1,
-  "start": 32.393,
-  "end": 36.087,
+  "start": 24.726,
+  "end": 28.347,
   "text": "Two slopes, written as a list: that list is the gradient.",
-  "syllables": 14,
-  "seconds": 3.694,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 1,
   "line": 2,
   "sentence": 0,
-  "start": 37.554,
-  "end": 40.192,
+  "start": 28.947,
+  "end": 31.052,
   "text": "The gradient points the steepest way up.",
-  "syllables": 10,
-  "seconds": 2.639,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 1,
   "line": 2,
   "sentence": 1,
-  "start": 40.974,
-  "end": 43.877,
+  "start": 31.372,
+  "end": 33.541,
   "text": "So to go down, step the opposite way.",
-  "syllables": 11,
-  "seconds": 2.902,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 1,
   "line": 2,
   "sentence": 2,
-  "start": 44.659,
-  "end": 45.978,
+  "start": 33.861,
+  "end": 35.798,
   "text": "Feel, step, feel again.",
-  "syllables": 5,
-  "seconds": 1.319,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 1,
   "line": 2,
   "sentence": 3,
-  "start": 46.76,
-  "end": 48.343,
+  "start": 36.118,
+  "end": 37.36,
   "text": "That's gradient descent.",
-  "syllables": 6,
-  "seconds": 1.583,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 1,
   "line": 2,
   "sentence": 4,
-  "start": 49.125,
-  "end": 54.139,
+  "start": 37.68,
+  "end": 40.837,
   "text": "Augustin Cauchy wrote it down in 1847.",
-  "syllables": 19,
-  "seconds": 5.013,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 0,
   "sentence": 0,
-  "start": 57.071,
-  "end": 65.251,
+  "start": 42.038,
+  "end": 47.89,
   "text": "Here is a bowl, steep one way and gentle the other: the steep way curves 8 times as sharply as the gentle way.",
-  "syllables": 31,
-  "seconds": 8.179,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 1,
   "sentence": 0,
-  "start": 66.717,
-  "end": 70.411,
+  "start": 48.49,
+  "end": 51.711,
   "text": "Bigger steps should get me down faster, so let's double mine.",
-  "syllables": 14,
-  "seconds": 3.694,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "predict": 0,
-  "start": 71.878,
-  "end": 75.308,
+  "start": 52.311,
+  "end": 55.153,
   "text": "If I double my step, do I get down twice as fast?",
-  "syllables": 13,
-  "seconds": 3.43,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 2,
   "sentence": 0,
-  "start": 77.808,
-  "end": 78.863,
+  "start": 57.653,
+  "end": 58.706,
   "text": "Over the edge.",
-  "syllables": 4,
-  "seconds": 1.055,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 2,
   "sentence": 1,
-  "start": 79.645,
-  "end": 87.297,
+  "start": 59.026,
+  "end": 66.521,
   "text": "On this bowl, any step longer than two divided by the steep way's curvature, 4, overshoots further each time.",
-  "syllables": 29,
-  "seconds": 7.652,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 2,
   "sentence": 2,
-  "start": 88.079,
-  "end": 92.565,
+  "start": 66.841,
+  "end": 71.156,
   "text": "That edge is 0.5, and running the bowl puts it exactly there.",
-  "syllables": 17,
-  "seconds": 4.485,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 3,
   "sentence": 0,
-  "start": 94.031,
-  "end": 95.878,
+  "start": 71.756,
+  "end": 74.072,
   "text": "Half that step gets down smoothly.",
-  "syllables": 7,
-  "seconds": 1.847,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 3,
   "sentence": 1,
-  "start": 96.66,
-  "end": 99.035,
+  "start": 74.392,
+  "end": 76.897,
   "text": "Just under the edge, I zigzag and crawl.",
-  "syllables": 9,
-  "seconds": 2.375,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 3,
   "sentence": 2,
-  "start": 99.817,
-  "end": 102.192,
+  "start": 77.217,
+  "end": 80.017,
   "text": "Just over it, I zigzag outwards.",
-  "syllables": 9,
-  "seconds": 2.375,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 3,
   "sentence": 3,
-  "start": 102.974,
-  "end": 106.668,
+  "start": 80.337,
+  "end": 84.906,
   "text": "At twice it, the loss passes a trillion in just 12 steps.",
-  "syllables": 14,
-  "seconds": 3.694,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 3,
   "line": 0,
   "sentence": 0,
-  "start": 109.601,
-  "end": 113.558,
+  "start": 86.106,
+  "end": 89.748,
   "text": "Now a valley that is steep across and almost flat along.",
-  "syllables": 15,
-  "seconds": 3.958,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 3,
   "line": 0,
   "sentence": 1,
-  "start": 114.34,
-  "end": 121.992,
+  "start": 90.068,
+  "end": 95.415,
   "text": "At the bottom, the steep way curves about 2,508 times as sharply as the flat way.",
-  "syllables": 29,
-  "seconds": 7.652,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 3,
   "line": 1,
   "sentence": 0,
-  "start": 123.459,
-  "end": 128.472,
+  "start": 96.015,
+  "end": 100.499,
   "text": "The steep way sets the largest safe step, so along the flat way I creep.",
-  "syllables": 19,
-  "seconds": 5.013,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 3,
   "line": 1,
   "sentence": 1,
-  "start": 129.254,
-  "end": 139.016,
+  "start": 100.819,
+  "end": 108.904,
   "text": "It takes 3,925 steps to get the loss under a hundredth, and 15,068 to get it under a millionth.",
-  "syllables": 37,
-  "seconds": 9.763,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 4,
   "line": 0,
   "sentence": 0,
-  "start": 141.949,
-  "end": 145.379,
+  "start": 110.104,
+  "end": 113.619,
   "text": "One more hill, with two valleys and a ridge between them.",
-  "syllables": 13,
-  "seconds": 3.43,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 4,
   "line": 0,
   "sentence": 1,
-  "start": 146.162,
-  "end": 149.328,
+  "start": 113.939,
+  "end": 117.203,
   "text": "I start just left of the ridge, then just right of it.",
-  "syllables": 12,
-  "seconds": 3.166,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 4,
   "predict": 0,
-  "start": 150.794,
-  "end": 153.697,
+  "start": 117.803,
+  "end": 120.287,
   "text": "Do the two starts end in the same valley?",
-  "syllables": 11,
-  "seconds": 2.902,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 4,
   "line": 1,
   "sentence": 0,
-  "start": 156.197,
-  "end": 157.78,
+  "start": 122.787,
+  "end": 124.197,
   "text": "Different valleys.",
-  "syllables": 6,
-  "seconds": 1.583,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 4,
   "line": 1,
   "sentence": 1,
-  "start": 158.562,
-  "end": 161.464,
+  "start": 124.517,
+  "end": 127.001,
   "text": "The right one is not even the lower one.",
-  "syllables": 11,
-  "seconds": 2.902,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 4,
   "line": 1,
   "sentence": 2,
-  "start": 162.246,
-  "end": 167.523,
+  "start": 127.321,
+  "end": 132.606,
   "text": "Gradient descent finds a bottom near where it starts, not the lowest bottom there is.",
-  "syllables": 20,
-  "seconds": 5.277,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 5,
   "line": 0,
   "sentence": 0,
-  "start": 170.456,
-  "end": 177.053,
+  "start": 133.806,
+  "end": 139.006,
   "text": "The language model from the attention lesson has 20,864 numbers.",
-  "syllables": 25,
-  "seconds": 6.596,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 5,
   "line": 0,
   "sentence": 1,
-  "start": 177.835,
-  "end": 187.861,
+  "start": 139.326,
+  "end": 146.463,
   "text": "Its loss is a hill with 20,864 directions, and its gradient is a list of 20,864 slopes.",
-  "syllables": 38,
-  "seconds": 10.026,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 5,
   "line": 1,
   "sentence": 0,
-  "start": 189.328,
-  "end": 193.285,
+  "start": 147.063,
+  "end": 150.705,
   "text": "Before training, the length of that list was 1.87.",
-  "syllables": 15,
-  "seconds": 3.958,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 5,
   "line": 1,
   "sentence": 1,
-  "start": 194.067,
-  "end": 200.4,
+  "start": 151.025,
+  "end": 156.161,
   "text": "After training it is 0.12: the ground under the trained model is much flatter.",
-  "syllables": 24,
-  "seconds": 6.332,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 5,
   "line": 2,
   "sentence": 0,
-  "start": 201.866,
-  "end": 211.629,
+  "start": 156.761,
+  "end": 165.056,
   "text": "To see any of it, we cut a slice through the trained point along two random directions, the way Li and colleagues did in 2018.",
-  "syllables": 37,
-  "seconds": 9.763,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 5,
   "line": 2,
   "sentence": 1,
-  "start": 212.411,
-  "end": 219.007,
+  "start": 165.376,
+  "end": 170.976,
   "text": "The loss is 0.70 in the middle and climbs to 13.99 at one corner.",
-  "syllables": 25,
-  "seconds": 6.596,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 5,
   "line": 3,
   "sentence": 0,
-  "start": 220.474,
-  "end": 221.265,
+  "start": 171.576,
+  "end": 172.545,
   "text": "One warning.",
-  "syllables": 3,
-  "seconds": 0.792,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 5,
   "line": 3,
   "sentence": 1,
-  "start": 222.047,
-  "end": 231.018,
+  "start": 172.865,
+  "end": 182.022,
   "text": "In a hill with 20,864 directions, two random ones are almost at right angles to the steepest one.",
-  "syllables": 34,
-  "seconds": 8.971,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 5,
   "line": 3,
   "sentence": 2,
-  "start": 231.8,
-  "end": 236.55,
+  "start": 182.342,
+  "end": 186.448,
   "text": "This slice shows that the model sits in a dip along these two directions.",
-  "syllables": 18,
-  "seconds": 4.749,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 5,
   "line": 3,
   "sentence": 3,
-  "start": 237.332,
-  "end": 239.443,
+  "start": 186.768,
+  "end": 188.41,
   "text": "It cannot show the whole hill.",
-  "syllables": 8,
-  "seconds": 2.111,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 6,
   "line": 0,
   "sentence": 0,
-  "start": 242.376,
-  "end": 245.014,
+  "start": 189.61,
+  "end": 191.883,
   "text": "So let's follow one direction we choose.",
-  "syllables": 10,
-  "seconds": 2.639,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 6,
   "line": 0,
   "sentence": 1,
-  "start": 245.796,
-  "end": 251.073,
+  "start": 192.203,
+  "end": 197.572,
   "text": "Freeze every number, and add one dial that turns the model's last matrix up or down.",
-  "syllables": 20,
-  "seconds": 5.277,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 6,
   "line": 0,
   "sentence": 2,
-  "start": 251.855,
-  "end": 254.494,
+  "start": 197.892,
+  "end": 200.144,
   "text": "At one, it's the model as trained.",
-  "syllables": 10,
-  "seconds": 2.639,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 6,
   "line": 1,
   "sentence": 0,
-  "start": 255.96,
-  "end": 266.515,
+  "start": 200.744,
+  "end": 209.65,
   "text": "On sentences it never trained on, the bottom of this one-way slice is at 0.92, not at one, though the loss there is only a hair lower.",
-  "syllables": 40,
-  "seconds": 10.554,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 6,
   "line": 1,
   "sentence": 1,
-  "start": 267.297,
-  "end": 273.365,
+  "start": 209.97,
+  "end": 215.485,
   "text": "Turning the dial down makes the model a little less sure of itself, and new text likes that.",
-  "syllables": 23,
-  "seconds": 6.069,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 6,
   "line": 2,
   "sentence": 0,
-  "start": 274.832,
-  "end": 279.845,
+  "start": 216.085,
+  "end": 221.664,
   "text": "Start the dial near zero, feel the slope with the model's own arithmetic, and step.",
-  "syllables": 19,
-  "seconds": 5.013,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 6,
   "line": 2,
   "sentence": 1,
-  "start": 280.627,
-  "end": 285.112,
+  "start": 221.984,
+  "end": 226.258,
   "text": "With small steps, forty of them walk the dial up to 0.84.",
-  "syllables": 17,
-  "seconds": 4.485,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 6,
   "line": 2,
   "sentence": 2,
-  "start": 285.895,
-  "end": 291.699,
+  "start": 226.578,
+  "end": 232.431,
   "text": "A step too big for the steep ground near zero overshoots to well past one, and has to walk back.",
-  "syllables": 22,
-  "seconds": 5.805,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 7,
   "line": 0,
   "sentence": 0,
-  "start": 294.632,
-  "end": 298.326,
+  "start": 233.631,
+  "end": 236.557,
   "text": "This model's training never feels the whole hill at once.",
-  "syllables": 14,
-  "seconds": 3.694,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 7,
   "line": 0,
   "sentence": 1,
-  "start": 299.108,
-  "end": 305.177,
+  "start": 236.877,
+  "end": 242.33,
   "text": "Each step feels the slope on 16 short stretches of text, so every step is a little off.",
-  "syllables": 23,
-  "seconds": 6.069,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 7,
   "line": 1,
   "sentence": 0,
-  "start": 306.643,
-  "end": 319.572,
+  "start": 242.93,
+  "end": 251.793,
   "text": "And I haven't said how a model with 20,864 numbers works out 20,864 slopes at once without feeling each one separately.",
-  "syllables": 49,
-  "seconds": 12.929,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 7,
   "line": 1,
   "sentence": 1,
-  "start": 320.354,
-  "end": 322.201,
+  "start": 252.113,
+  "end": 253.734,
   "text": "That's the bucket chain, next.",
-  "syllables": 7,
-  "seconds": 1.847,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 8,
   "line": 0,
   "sentence": 0,
-  "start": 325.134,
-  "end": 327.509,
+  "start": 254.934,
+  "end": 257.081,
   "text": "The gradient is the list of slopes.",
-  "syllables": 9,
-  "seconds": 2.375,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 8,
   "line": 0,
   "sentence": 1,
-  "start": 328.291,
-  "end": 331.457,
+  "start": 257.401,
+  "end": 260.748,
   "text": "Step the other way, not too far, and you go down.",
-  "syllables": 12,
-  "seconds": 3.166,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 8,
   "line": 0,
   "sentence": 2,
-  "start": 332.239,
-  "end": 334.878,
+  "start": 261.068,
+  "end": 262.984,
   "text": "Where you end up depends on where you start.",
-  "syllables": 10,
-  "seconds": 2.639,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 8,
   "line": 1,
   "sentence": 0,
-  "start": 336.344,
-  "end": 338.983,
+  "start": 263.584,
+  "end": 267.016,
   "text": "Next along the hill: blame, passed backwards.",
-  "syllables": 10,
-  "seconds": 2.639,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 8,
   "line": 1,
   "sentence": 1,
-  "start": 339.765,
-  "end": 340.293,
+  "start": 267.336,
+  "end": 268.178,
   "text": "Goodnight.",
-  "syllables": 2,
-  "seconds": 0.528,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  }
 ]

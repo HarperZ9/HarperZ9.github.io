@@ -3,371 +3,278 @@
   "segment": 0,
   "line": 0,
   "sentence": 0,
-  "start": 5.571,
-  "end": 6.363,
+  "start": 4.6,
+  "end": 5.796,
   "text": "Embeddings.",
-  "syllables": 3,
-  "seconds": 0.792,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 0,
   "line": 0,
   "sentence": 1,
-  "start": 7.201,
-  "end": 9.576,
+  "start": 6.116,
+  "end": 7.833,
   "text": "Every word gets coordinates.",
-  "syllables": 9,
-  "seconds": 2.375,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 0,
   "line": 1,
   "sentence": 0,
-  "start": 11.147,
-  "end": 16.424,
+  "start": 8.433,
+  "end": 13.085,
   "text": "Pylon showed you that a word in a model is a list of numbers, a place.",
-  "syllables": 20,
-  "seconds": 5.277,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 0,
   "line": 1,
   "sentence": 1,
-  "start": 17.262,
-  "end": 19.373,
+  "start": 13.405,
+  "end": 15.818,
   "text": "Tonight, where those places come from.",
-  "syllables": 8,
-  "seconds": 2.111,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 1,
   "line": 0,
   "sentence": 0,
-  "start": 22.516,
-  "end": 27.529,
+  "start": 17.018,
+  "end": 21.431,
   "text": "At the start, every word gets a list of 32 small random numbers.",
-  "syllables": 19,
-  "seconds": 5.013,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 1,
   "line": 0,
   "sentence": 1,
-  "start": 28.367,
-  "end": 30.214,
+  "start": 21.751,
+  "end": 23.556,
   "text": "The places mean nothing yet.",
-  "syllables": 7,
-  "seconds": 1.847,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 1,
   "line": 1,
   "sentence": 0,
-  "start": 31.786,
-  "end": 39.701,
+  "start": 24.156,
+  "end": 31.438,
   "text": "Check the neighbours: only 26 percent of words sit next to a word of the same kind, about what a shuffle gives.",
-  "syllables": 30,
-  "seconds": 7.916,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 0,
   "sentence": 0,
-  "start": 42.844,
-  "end": 44.691,
+  "start": 32.638,
+  "end": 34.399,
   "text": "The trick is a guessing game.",
-  "syllables": 7,
-  "seconds": 1.847,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 0,
   "sentence": 1,
-  "start": 45.529,
-  "end": 48.695,
+  "start": 34.719,
+  "end": 37.415,
   "text": "Take a word in a sentence, and the words around it.",
-  "syllables": 12,
-  "seconds": 3.166,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 1,
   "sentence": 0,
-  "start": 50.267,
-  "end": 56.599,
+  "start": 38.015,
+  "end": 43.58,
   "text": "Each word gets two lists: one for when it's the word in the middle, one for when it's a neighbour.",
-  "syllables": 24,
-  "seconds": 6.332,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 1,
   "sentence": 1,
-  "start": 57.437,
-  "end": 66.144,
+  "start": 43.9,
+  "end": 52.791,
   "text": "Nudge the lists so that the middle word's list and each real neighbour's neighbour-list get a bigger dot product, the measure from the vectors lesson.",
-  "syllables": 33,
-  "seconds": 8.707,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 2,
   "sentence": 0,
-  "start": 67.716,
-  "end": 75.895,
+  "start": 53.391,
+  "end": 60.108,
   "text": "And for every real neighbour, pick 5 words at random, common words more often than rare ones, and push those the other way.",
-  "syllables": 31,
-  "seconds": 8.179,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 2,
   "sentence": 1,
-  "start": 76.733,
-  "end": 82.802,
+  "start": 60.428,
+  "end": 66.559,
   "text": "Tomas Mikolov and his colleagues called it negative sampling, in 2013.",
-  "syllables": 23,
-  "seconds": 6.069,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 3,
   "line": 0,
   "sentence": 0,
-  "start": 85.945,
-  "end": 91.222,
+  "start": 67.759,
+  "end": 73.237,
   "text": "Run the game over the guides' sentences, 5 times through, and watch the places move.",
-  "syllables": 20,
-  "seconds": 5.277,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 3,
   "predict": 0,
-  "start": 92.793,
-  "end": 97.015,
+  "start": 73.837,
+  "end": 77.033,
   "text": "Will the neighbours keep getting tidier all the way through training?",
-  "syllables": 16,
-  "seconds": 4.222,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 3,
   "line": 1,
   "sentence": 0,
-  "start": 99.515,
-  "end": 110.333,
+  "start": 79.533,
+  "end": 87.902,
   "text": "Very early, by 5 percent of the way, the neighbours look their tidiest of any checkpoint: 72 percent of words sit next to a word of the same kind.",
-  "syllables": 41,
-  "seconds": 10.818,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 3,
   "line": 1,
   "sentence": 1,
-  "start": 111.171,
-  "end": 123.044,
+  "start": 88.222,
+  "end": 98.374,
   "text": "By the end, in this run, it has slipped back to 65, three words fewer out of 46, while the guessing game keeps getting better on sentences it never trained on.",
-  "syllables": 45,
-  "seconds": 11.873,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 3,
   "line": 2,
   "sentence": 0,
-  "start": 124.616,
-  "end": 128.573,
+  "start": 98.974,
+  "end": 101.801,
   "text": "Better at the game is not always tidier on the chart.",
-  "syllables": 15,
-  "seconds": 3.958,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 3,
   "line": 2,
   "sentence": 1,
-  "start": 129.411,
-  "end": 133.105,
+  "start": 102.121,
+  "end": 105.534,
   "text": "The game is the goal; the neat neighbours are a side effect.",
-  "syllables": 14,
-  "seconds": 3.694,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 4,
   "line": 0,
   "sentence": 0,
-  "start": 136.248,
-  "end": 149.968,
+  "start": 106.734,
+  "end": 118.081,
   "text": "Start from different random numbers, four more times, and you get different coordinates, but much the same neighbours: against the first run, 75 to 80 percent of each word's three nearest neighbours agree.",
-  "syllables": 52,
-  "seconds": 13.72,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 5,
   "line": 0,
   "sentence": 0,
-  "start": 153.111,
-  "end": 164.457,
+  "start": 119.281,
+  "end": 128.455,
   "text": "The language model from the attention lesson learned its word lists a different way: as a side effect of guessing the next word, through two layers of attention.",
-  "syllables": 43,
-  "seconds": 11.346,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 5,
   "line": 1,
   "sentence": 0,
-  "start": 166.028,
-  "end": 170.514,
+  "start": 129.055,
+  "end": 132.947,
   "text": "Its lists put 80 percent of words next to a word of the same kind.",
-  "syllables": 17,
-  "seconds": 4.485,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 5,
   "line": 1,
   "sentence": 1,
-  "start": 171.352,
-  "end": 177.684,
+  "start": 133.267,
+  "end": 138.353,
   "text": "And between the two tables, about 33 percent of each word's three nearest neighbours agree.",
-  "syllables": 24,
-  "seconds": 6.332,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 5,
   "line": 1,
   "sentence": 2,
-  "start": 178.522,
-  "end": 181.425,
+  "start": 138.673,
+  "end": 140.999,
   "text": "By chance it would be about 7 percent.",
-  "syllables": 11,
-  "seconds": 2.902,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 5,
   "line": 2,
   "sentence": 0,
-  "start": 182.996,
-  "end": 190.384,
+  "start": 141.599,
+  "end": 148.469,
   "text": "So the two methods agree on far more than chance, and far less than two runs of the same method agree with each other.",
-  "syllables": 28,
-  "seconds": 7.388,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 5,
   "line": 2,
   "sentence": 1,
-  "start": 191.222,
-  "end": 193.069,
+  "start": 148.789,
+  "end": 150.746,
   "text": "Neither one is the true map.",
-  "syllables": 7,
-  "seconds": 1.847,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 5,
   "line": 2,
   "sentence": 2,
-  "start": 193.907,
-  "end": 196.81,
+  "start": 151.066,
+  "end": 154.152,
   "text": "Each is a map of what its own game needed.",
-  "syllables": 11,
-  "seconds": 2.902,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 6,
   "line": 0,
   "sentence": 0,
-  "start": 199.952,
-  "end": 201.536,
+  "start": 155.352,
+  "end": 156.961,
   "text": "Nobody draws the chart.",
-  "syllables": 6,
-  "seconds": 1.583,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 6,
   "line": 0,
   "sentence": 1,
-  "start": 202.374,
-  "end": 206.595,
+  "start": 157.281,
+  "end": 161.173,
   "text": "A guessing game moves the cards, and words used alike end up close.",
-  "syllables": 16,
-  "seconds": 4.222,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 6,
   "line": 1,
   "sentence": 0,
-  "start": 208.167,
-  "end": 211.597,
+  "start": 161.773,
+  "end": 166.794,
   "text": "Next in the lighthouse: guessing the next word, and keeping score.",
-  "syllables": 13,
-  "seconds": 3.43,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 6,
   "line": 1,
   "sentence": 1,
-  "start": 212.435,
-  "end": 212.963,
+  "start": 167.114,
+  "end": 167.962,
   "text": "Goodnight.",
-  "syllables": 2,
-  "seconds": 0.528,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  }
 ]

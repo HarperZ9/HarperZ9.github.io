@@ -1,0 +1,329 @@
+{
+ "sources": {
+  "b4": {
+   "file": "train/b4/bars_b4_full.json",
+   "sha256": "0c6b9c9bea24186d9a9ad14d79d439095c3c041e29745fbb0acd0f6d3f19f632"
+  },
+  "ft3": {
+   "file": "train/ft3/bars_ft3.json",
+   "sha256": "8c418829143297f97bcdeec5b1815732444b1a6779a946bca3c258492cd456ae"
+  },
+  "ft4": {
+   "file": "train/ft4/bars_ft4_excl12.json",
+   "sha256": "ca54d77a73c660cf34c7b3e310d9258a967020117e26d802e4df9687932e9772"
+  },
+  "ft5": {
+   "file": "train/ft5/bars_ft5.json",
+   "sha256": "b367b9703d49dd1f55e1cd37f2ae89c87e334dea277a2d1d4b615dadf54c972d"
+  },
+  "ft6": {
+   "file": "train/ft6/bars_ft6.json",
+   "sha256": "5fc6656733567997d5f29b66be19bb26827bf7b01d563bd7bfeebea8e2d211d2"
+  },
+  "ft7": {
+   "file": "train/ft7/bars_ft7.json",
+   "sha256": "221bd716e8c9c1410a37554cdf6fa6371473402b2f7e0a4f18e7914a9948efaa"
+  },
+  "baselines": {
+   "file": "diag/baselines.json",
+   "sha256": "d135ae4f7f0a5c16971078ac5255857a0ac5c5b0ea6485faf64690ec48f4fab7"
+  },
+  "prior": {
+   "file": "diag/prior_gap.json",
+   "sha256": "fcf37e9b3fd6dfde573e039c63ec7c0ce989c2fb26ff3f1ef5ae6d617f700a01"
+  },
+  "option": {
+   "file": "diag/option_readout_FT5_4B.json",
+   "sha256": "6aca907696fef73805239bf42f8057954dc0876d0152ce3e2fedacabd97e8af5"
+  },
+  "audit": {
+   "file": "diag/image_audit.json",
+   "sha256": "6944a2c19847a542d0ab4d144bd7cf9e3a2adc12e12fd936c719af157b94e54d"
+  },
+  "vocab": {
+   "file": "train/heldout_vocab/heldout_vocab_ft7.json",
+   "sha256": "6cb68387f23bdc737e87d46f5714b77e74c236925a0a09cc4ca8c9c915dcecec"
+  }
+ },
+ "b4": {
+  "C8": {
+   "mean": 0.01472,
+   "lo": 0.00448,
+   "hi": 0.02463,
+   "met": true
+  },
+  "C9": {
+   "mean": 0.00458,
+   "lo": -0.00396,
+   "hi": 0.01272,
+   "met": false
+  }
+ },
+ "ft3": {
+  "G3": {
+   "mean": 0.0343,
+   "lo": 0.0232,
+   "hi": 0.0453,
+   "met": true
+  }
+ },
+ "ft4": {
+  "H1": {
+   "mean": -0.0074,
+   "lo": -0.0184,
+   "hi": 0.0036,
+   "met": false
+  }
+ },
+ "ft5": {
+  "K1": {
+   "mean": 0.001,
+   "lo": -0.0071,
+   "hi": 0.0091,
+   "met": false
+  },
+  "B2": {
+   "mean": 0.044,
+   "lo": 0.0329,
+   "hi": 0.0554,
+   "met": true
+  }
+ },
+ "ft6": {
+  "M1": {
+   "mean": 0.0113,
+   "lo": 0.0032,
+   "hi": 0.0197,
+   "met": true
+  },
+  "M2": {
+   "mean": 0.0256,
+   "lo": 0.0082,
+   "hi": 0.0439,
+   "met": true
+  },
+  "M3": {
+   "mean": 0.0123,
+   "lo": 0.0032,
+   "hi": 0.0217,
+   "met": true
+  },
+  "M4": {
+   "mean": 0.01856,
+   "lo": 0.00309,
+   "hi": 0.03481,
+   "met": true
+  },
+  "regionRows": 860,
+  "pass2": 0.9984,
+  "jsonFound": 3090
+ },
+ "ft7": {
+  "N1": {
+   "mean": 0.1577,
+   "lo": 0.1514,
+   "hi": 0.1636,
+   "met": true
+  },
+  "N3": {
+   "mean": 0.001,
+   "lo": -0.0061,
+   "hi": 0.0078,
+   "met": true
+  },
+  "N4": {
+   "mean": 0.0425,
+   "lo": 0.0354,
+   "hi": 0.0498,
+   "met": true
+  },
+  "N5": {
+   "mean": 0.02088,
+   "lo": 0.00702,
+   "hi": 0.03596,
+   "met": true
+  },
+  "T": {
+   "FT3A_4B": 0.2161,
+   "FT7_4B": 0.2294
+  },
+  "Tci": {
+   "FT3A_4B": {
+    "mean": 0.2161,
+    "lo": 0.2016,
+    "hi": 0.231
+   },
+   "FT7_4B": {
+    "mean": 0.2294,
+    "lo": 0.2142,
+    "hi": 0.2446
+   }
+  },
+  "C": {
+   "FT3A_4B": 0.3068,
+   "FT7_4B": 0.4658
+  },
+  "candidate": {
+   "pass2": 0.9958,
+   "jsonFound": 3089
+  },
+  "rows": 3091
+ },
+ "baselines": {
+  "chance": 0.2074,
+  "oracle": 0.2368,
+  "rows": 3091,
+  "excluded": 12
+ },
+ "prior": {
+  "model": 0.2087,
+  "offTaxonomy": 0.5134,
+  "chest": {
+   "rows": 82,
+   "model": 2,
+   "prior": 40
+  },
+  "tips": {
+   "rows": 54,
+   "model": 7,
+   "prior": 31
+  }
+ },
+ "option": {
+  "R1": 0.4137,
+  "G": 0.1967,
+  "diff": {
+   "mean": 0.217,
+   "lo": 0.1978,
+   "hi": 0.2362
+  },
+  "rows": 2654
+ },
+ "audit": {
+  "real": 0.2087,
+  "blank": 0.0819,
+  "changed": 0.7467,
+  "diff": {
+   "mean": 0.1268,
+   "lo": 0.1129,
+   "hi": 0.1411
+  }
+ },
+ "vocab": {
+  "changes": {
+   "modality": {
+    "X-Ray Imaging -> X-ray": 150,
+    "light microscopy -> Light Microscopy": 400,
+    "Ultrasound Imaging -> Ultrasound": 101
+   },
+   "specimen": {
+    "Formalin-Fixed Paraffin-Embedded Tissue Section -> Human (row quote)": 250
+   }
+  },
+  "ft7minusFt6": {
+   "original": {
+    "mean": -0.08946,
+    "lo": -0.1025,
+    "hi": -0.07628,
+    "n": 1006,
+    "clusters": 732
+   },
+   "harmonised": {
+    "mean": 0.15225,
+    "lo": 0.1349,
+    "hi": 0.17206,
+    "n": 1006,
+    "clusters": 732
+   }
+  },
+  "ft6": {
+   "original": {
+    "mean": 0.80583,
+    "lo": 0.78298,
+    "hi": 0.82996,
+    "n": 1006,
+    "clusters": 732
+   },
+   "harmonised": {
+    "mean": 0.69798,
+    "lo": 0.68242,
+    "hi": 0.71516,
+    "n": 1006,
+    "clusters": 732
+   }
+  },
+  "ft7": {
+   "original": {
+    "mean": 0.71637,
+    "lo": 0.6947,
+    "hi": 0.74018,
+    "n": 1006,
+    "clusters": 732
+   },
+   "harmonised": {
+    "mean": 0.85023,
+    "lo": 0.82983,
+    "hi": 0.87283,
+    "n": 1006,
+    "clusters": 732
+   }
+  }
+ },
+ "records": {
+  "challenge": {
+   "datasets": 410,
+   "sources": 86,
+   "deadline": "31 December 2026",
+   "pmax": 4.66,
+   "organiser": "Stanford MARVL",
+   "disclosedQuote": "All datasets are acceptable as long as disclosed.",
+   "judgeAgree": 175,
+   "judgeRows": 180
+  },
+  "models": {
+   "params2b": 2274069824,
+   "params4b": 4659865088,
+   "rank": 16
+  },
+  "ft4": {
+   "rows": 29421,
+   "newSources": 20,
+   "extraNamed": 3,
+   "formatCopies": 1039,
+   "likelySources": 17
+  },
+  "ledger": {
+   "fullMatch": 16,
+   "prefixMatch": 3,
+   "filesMatched": 19
+  },
+  "survival": {
+   "idleHours": 10,
+   "dupSteps": 40,
+   "dupMinutes": 30,
+   "saveStep": 665,
+   "downHours": 6.2,
+   "saveSeconds": 0.53,
+   "ft7Steps": 1864,
+   "ft5Steps": 1437,
+   "ft6Steps": 1736,
+   "checkpointEvery": 50,
+   "ft8Step": 500,
+   "ft8Steps": 1918,
+   "pauseQuote": "Pause the MMBU work for now."
+  },
+  "amend2": {
+   "step": 20
+  }
+ },
+ "ledger": {
+  "lastEntry": 89,
+  "lastPushedEntry": 27,
+  "firstUnpushed": 28,
+  "headings": 92,
+  "pushedHeadings": 30,
+  "lastPushDate": "2026-10-04",
+  "uncommitted": true,
+  "visibility": "private"
+ }
+}

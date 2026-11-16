@@ -1,0 +1,159 @@
+{
+ "schema": "explainer-film/1",
+ "slug": "mmbu",
+ "title": "Case study: our MMBU Challenge entry",
+ "page": "night-school-mmbu.html",
+ "seed": 20261051,
+ "voice": "tallow",
+ "draft": true,
+ "numbers_from": "media/school/mmbu/facts.json, computed by tools/school/fill_mmbu.mjs from the run records and media/school/mmbu/data/; tools/school/fill_script.mjs fills every double-brace token below from it",
+ "host": {
+  "guide": "tallow",
+  "style": "thriller",
+  "open": {
+   "seconds": 4.0,
+   "what": "The boatyard at night. A logbook lies open on the bench under Tallow's flame, each line a run, each run with a bar drawn across it before the ink of its result. Tallow turns back to the first page. No words."
+  },
+  "close": {
+   "seconds": 5.0,
+   "what": "Tallow closes the logbook with a pencil between two pages, the page where the last run stopped, and turns the lamp down."
+  }
+ },
+ "segments": [
+  {
+   "key": "title",
+   "layout": "title",
+   "heading": "Our MMBU Challenge entry",
+   "lines": [
+    "Case study: our MMBU Challenge entry.",
+    "For two weeks this boatyard fine-tuned a small model for a public contest, writing down every bar before the result it would judge."
+   ]
+  },
+  {
+   "key": "challenge",
+   "heading": "The contest",
+   "sources": [
+    "mmbu-paper",
+    "mmbu-brief",
+    "mmbu-organiser",
+    "mmbu-prereg"
+   ],
+   "lines": [
+    "MMBU is a biomedical image benchmark from {{records.challenge.organiser}}, built from {{records.challenge.datasets|int}} public datasets. A model answers each question about an image once, with no tools, and is scored on the answer and on context, such as what kind of image it is.",
+    "We trained small LoRA strips on two open Qwen 3.5 models, of {{records.models.params2b|bn1}} and {{records.models.params4b|bn1}} billion numbers, from {{records.challenge.sources|int}} sources across all the runs, every one listed in our disclosure. This is benchmark work, not a medical tool, and every score tonight is from our own scorers, not the contest's judge."
+   ]
+  },
+  {
+   "key": "bar",
+   "heading": "The bar comes first",
+   "sources": [
+    "mmbu-prereg",
+    "mmbu-ft4"
+   ],
+   "lines": [
+    "Before each result, we wrote down the comparison that would decide it and the bar it had to clear: usually, new model minus old on about 3,100 practice questions, with a bootstrap interval whose lower end sits above zero.",
+    "The fourth run added {{records.ft4.newSources|int}} public datasets, {{records.ft4.likelySources|int}} of them ones we believe the benchmark draws on."
+   ],
+   "predict": [
+    {
+     "after": [
+      1,
+      0
+     ],
+     "question": "Seventeen of the benchmark's likely sources. Did the practice answers go up?",
+     "hold": 2.5
+    }
+   ]
+  },
+  {
+   "key": "miss",
+   "heading": "A miss, kept",
+   "sources": [
+    "mmbu-ft4",
+    "mmbu-ft5"
+   ],
+   "lines": [
+    "No. The difference was {{ft4.H1.mean|f3}}, interval {{ft4.H1.lo|f3}} to {{ft4.H1.hi|f3}}. Zero sits inside, so by the rule those rows did not go forward.",
+    "The fifth run gave the champion a second pass over its own rows: up {{ft5.K1.mean|f3}}, interval {{ft5.K1.lo|f3}} to {{ft5.K1.hi|f3}}. Another miss, written down the same way a win is."
+   ]
+  },
+  {
+   "key": "prior",
+   "heading": "Between a guess and a cheat",
+   "sources": [
+    "mmbu-baselines",
+    "mmbu-audit",
+    "mmbu-prior"
+   ],
+   "lines": [
+    "Then a worrying number. The champion got {{ft7.T.FT3A_4B|pct1}} percent of the practice answers right. A guesser who could see the judge's options, which our model never sees, would average {{baselines.chance|pct1}}. A cheat giving each kind of question its most common answer, {{baselines.oracle|pct1}}.",
+    "Was it even looking? Given blank pictures, the fourth run fell from {{audit.real|pct1}} percent right to {{audit.blank|pct1}}. It uses the picture. And {{prior.offTaxonomy|pct}} percent of its answers named none of the options at all."
+   ]
+  },
+  {
+   "key": "knows",
+   "heading": "Better at picking than at saying",
+   "sources": [
+    "mmbu-option",
+    "mmbu-ft6"
+   ],
+   "lines": [
+    "So, for our eyes only, we showed the fifth run's model each option and measured how likely it found each one. Its favourite option was right {{option.R1|pct}} percent of the time; its written answer, {{option.G|pct}}.",
+    "Picking from a list is easier than writing, but much of the loss is in the words it writes. The rule chose the next step, training on the labels' own words, and on region questions the sixth run beat the fifth by {{ft6.M2.mean|f3}}, interval {{ft6.M2.lo|f3}} to {{ft6.M2.hi|f3}}."
+   ]
+  },
+  {
+   "key": "rule",
+   "heading": "The rule that turned away its own champion",
+   "sources": [
+    "mmbu-ft6",
+    "mmbu-amend2",
+    "mmbu-ft7"
+   ],
+   "lines": [
+    "The sixth run cleared every answer bar but missed a format bar: valid replies {{ft6.pass2|pct1}} percent of the time, against a bar of 99.9. The champion it would replace scored only {{ft7.candidate.pass2|pct1}}. As written, the bar turned away its own champion.",
+    "The verdict stood. For later runs we signed a new rule, while the seventh run was at step {{records.amend2.step|int}}: replace the champion when every answer bar is met and the format is no worse. The seventh run met it, up {{ft7.N4.mean|f3}} on our size-adjusted score, interval {{ft7.N4.lo|f3}} to {{ft7.N4.hi|f3}}."
+   ]
+  },
+  {
+   "key": "words",
+   "heading": "Whose words count",
+   "sources": [
+    "mmbu-vocab"
+   ],
+   "lines": [
+    "One number went the wrong way. On our held-out sources, the seventh run's context score fell {{vocab.ft7minusFt6.original.mean|abs3}} below the sixth run's.",
+    "It now answered in the benchmark paper's words, X-ray rather than X-ray imaging, while our answer key kept each source's old words. With the key rewritten in the paper's words, the same replies scored {{vocab.ft7minusFt6.harmonised.mean|f3}} higher. Neither key is neutral, and this re-score came after we saw the fall: a measurement, not a test."
+   ]
+  },
+  {
+   "key": "lights",
+   "heading": "Keeping the lamp lit",
+   "sources": [
+    "mmbu-survival"
+   ],
+   "lines": [
+    "Each run takes a lock on the shared graphics card, saves every {{records.survival.checkpointEvery|int}} steps, and has a watchdog. A shutdown mid-run lost nothing. Code that had never run idled the card for about {{records.survival.idleHours|int}} hours, and two trainers on one run cost {{records.survival.dupSteps|int}} steps; now, when a check cannot tell if a trainer is alive, it counts it as alive."
+   ]
+  },
+  {
+   "key": "ledger",
+   "heading": "What the logbook can prove",
+   "sources": [
+    "mmbu-ledger"
+   ],
+   "lines": [
+    "Every bar was fingerprinted into a ledger, and all {{records.ledger.filesMatched|int}} rule files still match it, {{records.ledger.fullMatch|int}} by full fingerprint and {{records.ledger.prefixMatch|int}} by the short prefix it kept. But the ledger was meant to be pushed to GitHub, which stamps the time, before each result. Only entries up to {{ledger.lastPushedEntry|int}} were, the last on 4 October, in a private repository.",
+    "Entries {{ledger.firstUnpushed|int}} to {{ledger.lastEntry|int}}, every run tonight, sit in our own file. So the claim that each bar came before its score rests on our word. A fingerprint proves the bytes, not the hour."
+   ]
+  },
+  {
+   "key": "close",
+   "heading": "Goodnight",
+   "lines": [
+    "The seventh run is the candidate; nothing has been submitted. The eighth stopped at step {{records.survival.ft8Step|int}} of {{records.survival.ft8Steps|int}} when the author paused the work. The contest runs to {{records.challenge.deadline|none}}.",
+    "In the lab, redo eight of the logbook's intervals, digit for digit. Goodnight."
+   ]
+  }
+ ]
+}

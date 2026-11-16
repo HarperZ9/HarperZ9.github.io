@@ -3,850 +3,637 @@
   "segment": 0,
   "line": 0,
   "sentence": 0,
-  "start": 5.275,
-  "end": 5.803,
+  "start": 4.6,
+  "end": 5.695,
   "text": "Vectors.",
-  "syllables": 2,
-  "seconds": 0.528,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 0,
   "line": 0,
   "sentence": 1,
-  "start": 6.483,
-  "end": 8.594,
+  "start": 6.015,
+  "end": 8.246,
   "text": "A list of numbers is a place.",
-  "syllables": 8,
-  "seconds": 2.111,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 0,
   "line": 1,
   "sentence": 0,
-  "start": 9.87,
-  "end": 11.716,
+  "start": 8.846,
+  "end": 10.762,
   "text": "I run the dock at Night School.",
-  "syllables": 7,
-  "seconds": 1.847,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 0,
   "line": 1,
   "sentence": 1,
-  "start": 12.397,
-  "end": 16.354,
+  "start": 11.082,
+  "end": 14.156,
   "text": "Every crate that comes in gets an address on my chart.",
-  "syllables": 15,
-  "seconds": 3.958,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 1,
   "line": 0,
   "sentence": 0,
-  "start": 18.905,
-  "end": 19.961,
+  "start": 15.356,
+  "end": 16.219,
   "text": "Here is a crate.",
-  "syllables": 4,
-  "seconds": 1.055,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 1,
   "line": 0,
   "sentence": 1,
-  "start": 20.641,
-  "end": 24.863,
+  "start": 16.539,
+  "end": 20.707,
   "text": "It sits four squares east of the corner and one and a half squares north.",
-  "syllables": 16,
-  "seconds": 4.222,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 1,
   "line": 1,
   "sentence": 0,
-  "start": 26.138,
-  "end": 29.04,
+  "start": 21.307,
+  "end": 25.328,
   "text": "Write that down as a list: four, then one and a half.",
-  "syllables": 11,
-  "seconds": 2.902,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 1,
   "line": 1,
   "sentence": 1,
-  "start": 29.721,
-  "end": 31.304,
+  "start": 25.648,
+  "end": 27.48,
   "text": "That list is a vector.",
-  "syllables": 6,
-  "seconds": 1.583,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 1,
   "line": 2,
   "sentence": 0,
-  "start": 32.579,
-  "end": 37.592,
+  "start": 28.08,
+  "end": 32.143,
   "text": "You can read it as a place, or as an arrow from the corner to the crate.",
-  "syllables": 19,
-  "seconds": 5.013,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 1,
   "line": 2,
   "sentence": 1,
-  "start": 38.272,
-  "end": 39.328,
+  "start": 32.463,
+  "end": 34.694,
   "text": "Same list, same thing.",
-  "syllables": 4,
-  "seconds": 1.055,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 0,
   "sentence": 0,
-  "start": 41.879,
-  "end": 42.67,
+  "start": 35.894,
+  "end": 37.284,
   "text": "Arrows add.",
-  "syllables": 3,
-  "seconds": 0.792,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 0,
   "sentence": 1,
-  "start": 43.35,
-  "end": 47.044,
+  "start": 37.604,
+  "end": 40.993,
   "text": "Walk the first one, then walk the second from where you stopped.",
-  "syllables": 14,
-  "seconds": 3.694,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 0,
   "sentence": 2,
-  "start": 47.725,
-  "end": 52.738,
+  "start": 41.313,
+  "end": 46.45,
   "text": "Where you end up is the sum, and its numbers are the two lists added place by place.",
-  "syllables": 19,
-  "seconds": 5.013,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 1,
   "sentence": 0,
-  "start": 54.013,
-  "end": 54.805,
+  "start": 47.05,
+  "end": 48.65,
   "text": "Arrows stretch.",
-  "syllables": 3,
-  "seconds": 0.792,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 1,
   "sentence": 1,
-  "start": 55.485,
-  "end": 58.651,
+  "start": 48.97,
+  "end": 52.044,
   "text": "Times two keeps the direction and doubles the length.",
-  "syllables": 12,
-  "seconds": 3.166,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 1,
   "sentence": 2,
-  "start": 59.331,
-  "end": 63.289,
+  "start": 52.364,
+  "end": 55.69,
   "text": "Times minus one turns it round to face the other way.",
-  "syllables": 15,
-  "seconds": 3.958,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 3,
   "line": 0,
   "sentence": 0,
-  "start": 65.84,
-  "end": 67.423,
+  "start": 56.89,
+  "end": 58.974,
   "text": "Now two crates, and a game.",
-  "syllables": 6,
-  "seconds": 1.583,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 3,
   "line": 0,
   "sentence": 1,
-  "start": 68.103,
-  "end": 71.797,
+  "start": 59.294,
+  "end": 63.863,
   "text": "Multiply their lists number by number, and add it all up.",
-  "syllables": 14,
-  "seconds": 3.694,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 3,
   "line": 1,
   "sentence": 0,
-  "start": 73.073,
-  "end": 77.294,
+  "start": 64.463,
+  "end": 67.537,
   "text": "I'll swing the second crate round the corner while the sum keeps count.",
-  "syllables": 16,
-  "seconds": 4.222,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 3,
   "predict": 0,
-  "start": 78.57,
-  "end": 82.264,
+  "start": 68.136,
+  "end": 71.8,
   "text": "As the second crate swings round, where will the sum hit zero?",
-  "syllables": 14,
-  "seconds": 3.694,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 3,
   "line": 2,
   "sentence": 0,
-  "start": 84.764,
-  "end": 85.291,
+  "start": 74.3,
+  "end": 75.542,
   "text": "Right there.",
-  "syllables": 2,
-  "seconds": 0.528,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 3,
   "line": 2,
   "sentence": 1,
-  "start": 85.971,
-  "end": 88.61,
+  "start": 75.862,
+  "end": 78.135,
   "text": "At a right angle, the sum is zero.",
-  "syllables": 10,
-  "seconds": 2.639,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 3,
   "line": 2,
   "sentence": 2,
-  "start": 89.29,
-  "end": 91.665,
+  "start": 78.455,
+  "end": 80.455,
   "text": "That sum is called the dot product.",
-  "syllables": 9,
-  "seconds": 2.375,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 3,
   "line": 2,
   "sentence": 3,
-  "start": 92.345,
-  "end": 101.052,
+  "start": 80.775,
+  "end": 87.638,
   "text": "It is big when two arrows point the same way, zero when they meet at a right angle, and below zero when they point apart.",
-  "syllables": 33,
-  "seconds": 8.707,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 4,
   "line": 0,
   "sentence": 0,
-  "start": 103.603,
-  "end": 105.45,
+  "start": 88.838,
+  "end": 90.481,
   "text": "The dot product has a catch.",
-  "syllables": 7,
-  "seconds": 1.847,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 4,
   "line": 0,
   "sentence": 1,
-  "start": 106.13,
-  "end": 111.671,
+  "start": 90.801,
+  "end": 95.495,
   "text": "Watch what happens if I push the second crate twice as far out, in the same direction.",
-  "syllables": 21,
-  "seconds": 5.541,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 4,
   "predict": 0,
-  "start": 112.946,
-  "end": 115.057,
+  "start": 96.095,
+  "end": 97.927,
   "text": "What happens to the dot product?",
-  "syllables": 8,
-  "seconds": 2.111,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 4,
   "line": 1,
   "sentence": 0,
-  "start": 117.557,
-  "end": 118.349,
+  "start": 100.427,
+  "end": 101.564,
   "text": "It doubles.",
-  "syllables": 3,
-  "seconds": 0.792,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 4,
   "line": 1,
   "sentence": 1,
-  "start": 119.029,
-  "end": 122.723,
+  "start": 101.884,
+  "end": 104.81,
   "text": "Nothing about the direction changed, but the score did.",
-  "syllables": 14,
-  "seconds": 3.694,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 4,
   "line": 2,
   "sentence": 0,
-  "start": 123.998,
-  "end": 125.845,
+  "start": 105.41,
+  "end": 107.473,
   "text": "So divide by the two lengths.",
-  "syllables": 7,
-  "seconds": 1.847,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 4,
   "line": 2,
   "sentence": 1,
-  "start": 126.526,
-  "end": 129.428,
+  "start": 107.793,
+  "end": 110.13,
   "text": "What is left depends only on the angle.",
-  "syllables": 11,
-  "seconds": 2.902,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 4,
   "line": 2,
   "sentence": 2,
-  "start": 130.108,
-  "end": 140.662,
+  "start": 110.45,
+  "end": 118.197,
   "text": "It is the cosine of the angle between the arrows: one when they point the same way, zero at a right angle, minus one when they point opposite.",
-  "syllables": 40,
-  "seconds": 10.554,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 4,
   "line": 2,
   "sentence": 3,
-  "start": 141.342,
-  "end": 144.509,
+  "start": 118.517,
+  "end": 121.191,
   "text": "It always stays between minus one and one.",
-  "syllables": 12,
-  "seconds": 3.166,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 5,
   "line": 0,
   "sentence": 0,
-  "start": 147.059,
-  "end": 149.434,
+  "start": 122.391,
+  "end": 124.959,
   "text": "My chart has two directions, east and north.",
-  "syllables": 9,
-  "seconds": 2.375,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 5,
   "line": 0,
   "sentence": 1,
-  "start": 150.114,
-  "end": 152.489,
+  "start": 125.279,
+  "end": 127.553,
   "text": "A list can be as long as you like.",
-  "syllables": 9,
-  "seconds": 2.375,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 5,
   "line": 1,
   "sentence": 0,
-  "start": 153.764,
-  "end": 161.416,
+  "start": 128.153,
+  "end": 133.774,
   "text": "In the little language model from the attention lesson, every word starts as a list of 32 numbers.",
-  "syllables": 29,
-  "seconds": 7.652,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 5,
   "line": 1,
   "sentence": 1,
-  "start": 162.096,
-  "end": 166.582,
+  "start": 134.094,
+  "end": 138.389,
   "text": "That makes each word a place in a space with 32 directions.",
-  "syllables": 17,
-  "seconds": 4.485,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 5,
   "line": 2,
   "sentence": 0,
-  "start": 167.857,
-  "end": 171.023,
+  "start": 138.989,
+  "end": 141.494,
   "text": "Nobody can picture 32 directions.",
-  "syllables": 12,
-  "seconds": 3.166,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 5,
   "line": 2,
   "sentence": 1,
-  "start": 171.704,
-  "end": 173.814,
+  "start": 141.814,
+  "end": 144.067,
   "text": "The arithmetic doesn't care.",
-  "syllables": 8,
-  "seconds": 2.111,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 5,
   "line": 2,
   "sentence": 2,
-  "start": 174.495,
-  "end": 181.355,
+  "start": 144.387,
+  "end": 150.787,
   "text": "The dot product is still multiply and add, now 32 times over, and the cosine is still a cosine.",
-  "syllables": 26,
-  "seconds": 6.86,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 6,
   "line": 0,
   "sentence": 0,
-  "start": 183.906,
-  "end": 186.28,
+  "start": 151.987,
+  "end": 153.987,
   "text": "Nobody set those numbers by hand.",
-  "syllables": 9,
-  "seconds": 2.375,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 6,
   "line": 0,
   "sentence": 1,
-  "start": 186.961,
-  "end": 193.557,
+  "start": 154.307,
+  "end": 159.401,
   "text": "Training moved them, a little at a time, until the model got better at guessing the next word.",
-  "syllables": 25,
-  "seconds": 6.596,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 6,
   "line": 1,
   "sentence": 0,
-  "start": 194.832,
-  "end": 197.471,
+  "start": 160.001,
+  "end": 162.338,
   "text": "So look at who ended up close to whom.",
-  "syllables": 10,
-  "seconds": 2.639,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 6,
   "line": 1,
   "sentence": 1,
-  "start": 198.151,
-  "end": 201.317,
+  "start": 162.658,
+  "end": 166.49,
   "text": "The nearest neighbours of kettle are map, shell and crate.",
-  "syllables": 12,
-  "seconds": 3.166,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 6,
   "line": 1,
   "sentence": 2,
-  "start": 201.997,
-  "end": 204.108,
+  "start": 166.81,
+  "end": 170.01,
   "text": "Tallow's are rerun, pylon and map.",
-  "syllables": 8,
-  "seconds": 2.111,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 6,
   "line": 2,
   "sentence": 0,
-  "start": 205.384,
-  "end": 216.202,
+  "start": 170.61,
+  "end": 181.515,
   "text": "Across all 46 words, 80 percent have a nearest neighbour of the same kind as themselves: names next to names, things next to things, doing words next to doing words.",
-  "syllables": 41,
-  "seconds": 10.818,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 6,
   "line": 2,
   "sentence": 1,
-  "start": 216.882,
-  "end": 221.367,
+  "start": 181.835,
+  "end": 186.151,
   "text": "Shuffle which word owns which list, and it drops to about 23 percent.",
-  "syllables": 17,
-  "seconds": 4.485,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 6,
   "line": 2,
   "sentence": 2,
-  "start": 222.047,
-  "end": 224.422,
+  "start": 186.471,
+  "end": 188.702,
   "text": "Before training it was 9 percent.",
-  "syllables": 9,
-  "seconds": 2.375,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 6,
   "line": 3,
   "sentence": 0,
-  "start": 225.698,
-  "end": 230.447,
+  "start": 189.302,
+  "end": 193.829,
   "text": "Trained on hundreds of millions of words, the same idea goes much further.",
-  "syllables": 18,
-  "seconds": 4.749,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 6,
   "line": 3,
   "sentence": 1,
-  "start": 231.127,
-  "end": 242.209,
+  "start": 194.149,
+  "end": 204.085,
   "text": "In 2013, researchers reported word lists where king, minus man, plus woman, landed closest to queen, once the three words in the question were left out of the search.",
-  "syllables": 42,
-  "seconds": 11.082,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 7,
   "line": 0,
   "sentence": 0,
-  "start": 244.76,
-  "end": 246.343,
+  "start": 205.285,
+  "end": 206.78,
   "text": "And then there's my cone.",
-  "syllables": 6,
-  "seconds": 1.583,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 7,
   "line": 1,
   "sentence": 0,
-  "start": 247.618,
-  "end": 248.937,
+  "start": 207.38,
+  "end": 208.622,
   "text": "A cone is cargo.",
-  "syllables": 5,
-  "seconds": 1.319,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 7,
   "line": 1,
   "sentence": 1,
-  "start": 249.618,
-  "end": 251.465,
+  "start": 208.942,
+  "end": 210.416,
   "text": "It should sit with the crates.",
-  "syllables": 7,
-  "seconds": 1.847,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 7,
   "line": 1,
   "sentence": 2,
-  "start": 252.145,
-  "end": 254.783,
+  "start": 210.736,
+  "end": 213.115,
   "text": "Its nearest neighbours are who, stood and mended.",
-  "syllables": 10,
-  "seconds": 2.639,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 7,
   "line": 2,
   "sentence": 0,
-  "start": 256.059,
-  "end": 261.336,
+  "start": 213.715,
+  "end": 219.041,
   "text": "In our sentences a cone only ever turns up in one phrase: put a cone on.",
-  "syllables": 20,
-  "seconds": 5.277,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 7,
   "line": 2,
   "sentence": 1,
-  "start": 262.016,
-  "end": 268.085,
+  "start": 219.361,
+  "end": 224.161,
   "text": "Nothing there marks it as cargo, so the model had no reason to park it with the crates.",
-  "syllables": 23,
-  "seconds": 6.069,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 7,
   "line": 2,
   "sentence": 2,
-  "start": 268.765,
-  "end": 272.195,
+  "start": 224.481,
+  "end": 226.944,
   "text": "Where it did park it is something we measured.",
-  "syllables": 13,
-  "seconds": 3.43,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 7,
   "line": 2,
   "sentence": 3,
-  "start": 272.875,
-  "end": 274.722,
+  "start": 227.264,
+  "end": 229.475,
   "text": "Why there, we can only guess.",
-  "syllables": 7,
-  "seconds": 1.847,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 7,
   "line": 3,
   "sentence": 0,
-  "start": 275.997,
-  "end": 283.121,
+  "start": 230.075,
+  "end": 235.675,
   "text": "Closeness in these lists comes from how words are used in the training sentences, not from what they mean.",
-  "syllables": 27,
-  "seconds": 7.124,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 7,
   "line": 3,
   "sentence": 1,
-  "start": 283.802,
-  "end": 289.079,
+  "start": 235.995,
+  "end": 240.858,
   "text": "Here, with 46 words, you can read every sentence the model learned from.",
-  "syllables": 20,
-  "seconds": 5.277,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 8,
   "line": 0,
   "sentence": 0,
-  "start": 291.63,
-  "end": 295.323,
+  "start": 242.058,
+  "end": 244.942,
   "text": "One warning about pictures, this lesson's included.",
-  "syllables": 14,
-  "seconds": 3.694,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 8,
   "line": 1,
   "sentence": 0,
-  "start": 296.599,
-  "end": 303.723,
+  "start": 245.542,
+  "end": 252.173,
   "text": "To lay the words out on my flat chart, I squash 32 directions down to the two that keep the most spread.",
-  "syllables": 27,
-  "seconds": 7.124,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 8,
   "line": 1,
   "sentence": 1,
-  "start": 304.403,
-  "end": 307.042,
+  "start": 252.493,
+  "end": 255.336,
   "text": "Those two keep 31 percent of it.",
-  "syllables": 10,
-  "seconds": 2.639,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 8,
   "line": 2,
   "sentence": 0,
-  "start": 308.317,
-  "end": 314.649,
+  "start": 255.936,
+  "end": 260.567,
   "text": "On the flat chart, only 52 percent of the words sit nearest to a word of the same kind.",
-  "syllables": 24,
-  "seconds": 6.332,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 8,
   "line": 2,
   "sentence": 1,
-  "start": 315.33,
-  "end": 318.496,
+  "start": 260.887,
+  "end": 263.519,
   "text": "In all 32 directions it was 80.",
-  "syllables": 12,
-  "seconds": 3.166,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 8,
   "line": 2,
   "sentence": 2,
-  "start": 319.176,
-  "end": 322.606,
+  "start": 263.839,
+  "end": 266.197,
   "text": "Flattening throws a lot of closeness away.",
-  "syllables": 13,
-  "seconds": 3.43,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 9,
   "line": 0,
   "sentence": 0,
-  "start": 325.157,
-  "end": 327.268,
+  "start": 267.397,
+  "end": 269.144,
   "text": "A list of numbers is a place.",
-  "syllables": 8,
-  "seconds": 2.111,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 9,
   "line": 0,
   "sentence": 1,
-  "start": 327.948,
-  "end": 336.655,
+  "start": 269.464,
+  "end": 276.622,
   "text": "The dot product mixes how much two places point the same way with how far out they are, and the cosine keeps only the direction.",
-  "syllables": 33,
-  "seconds": 8.707,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 9,
   "line": 1,
   "sentence": 0,
-  "start": 337.931,
-  "end": 340.041,
+  "start": 277.222,
+  "end": 279.58,
   "text": "Next along the coast is my crane.",
-  "syllables": 8,
-  "seconds": 2.111,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 9,
   "line": 1,
   "sentence": 1,
-  "start": 340.722,
-  "end": 345.207,
+  "start": 279.9,
+  "end": 284.342,
   "text": "It moves every place on the chart at once, and that is a matrix.",
-  "syllables": 17,
-  "seconds": 4.485,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 9,
   "line": 1,
   "sentence": 2,
-  "start": 345.887,
-  "end": 346.415,
+  "start": 284.662,
+  "end": 285.378,
   "text": "Goodnight.",
-  "syllables": 2,
-  "seconds": 0.528,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  }
 ]

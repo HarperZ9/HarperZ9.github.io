@@ -3,898 +3,673 @@
   "segment": 0,
   "line": 0,
   "sentence": 0,
-  "start": 5.246,
-  "end": 6.038,
+  "start": 4.6,
+  "end": 5.47,
   "text": "Attention.",
-  "syllables": 3,
-  "seconds": 0.792,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 0,
   "line": 0,
   "sentence": 1,
-  "start": 6.703,
-  "end": 9.869,
+  "start": 5.79,
+  "end": 8.029,
   "text": "How a language model decides what matters.",
-  "syllables": 12,
-  "seconds": 3.166,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 0,
   "line": 1,
   "sentence": 0,
-  "start": 11.116,
-  "end": 12.963,
+  "start": 8.629,
+  "end": 10.52,
   "text": "I keep the lamp at Night School.",
-  "syllables": 7,
-  "seconds": 1.847,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 0,
   "line": 1,
   "sentence": 1,
-  "start": 13.627,
-  "end": 15.738,
+  "start": 10.84,
+  "end": 12.666,
   "text": "Tonight the lamp is the lesson.",
-  "syllables": 8,
-  "seconds": 2.111,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 1,
   "line": 0,
   "sentence": 0,
-  "start": 18.231,
-  "end": 21.397,
+  "start": 13.866,
+  "end": 15.975,
   "text": "Here is a sentence with a hole at the end.",
-  "syllables": 12,
-  "seconds": 3.166,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 1,
   "line": 1,
   "sentence": 0,
-  "start": 22.644,
-  "end": 24.227,
+  "start": 16.575,
+  "end": 18.227,
   "text": "Rerun found a kettle.",
-  "syllables": 6,
-  "seconds": 1.583,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 1,
   "line": 1,
   "sentence": 1,
-  "start": 24.892,
-  "end": 26.739,
+  "start": 18.547,
+  "end": 20.873,
   "text": "Pylon put a cone on the...",
-  "syllables": 7,
-  "seconds": 1.847,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 1,
   "predict": 0,
-  "start": 27.985,
-  "end": 29.832,
+  "start": 21.473,
+  "end": 22.995,
   "text": "What word goes in the hole?",
-  "syllables": 7,
-  "seconds": 1.847,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 1,
   "line": 2,
   "sentence": 0,
-  "start": 32.332,
-  "end": 33.388,
+  "start": 25.495,
+  "end": 27.147,
   "text": "You said kettle.",
-  "syllables": 4,
-  "seconds": 1.055,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 1,
   "line": 2,
   "sentence": 1,
-  "start": 34.052,
-  "end": 36.691,
+  "start": 27.467,
+  "end": 29.619,
   "text": "And you did not read the sentence again.",
-  "syllables": 10,
-  "seconds": 2.639,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 1,
   "line": 2,
   "sentence": 2,
-  "start": 37.356,
-  "end": 41.577,
+  "start": 29.939,
+  "end": 34.026,
   "text": "You glanced back, past the full stop, to one word near the start, and took it.",
-  "syllables": 16,
-  "seconds": 4.222,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 0,
   "sentence": 0,
-  "start": 44.07,
-  "end": 46.973,
+  "start": 35.226,
+  "end": 37.813,
   "text": "A language model like this one does one job.",
-  "syllables": 11,
-  "seconds": 2.902,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 0,
   "sentence": 1,
-  "start": 47.637,
-  "end": 50.54,
+  "start": 38.133,
+  "end": 41.611,
   "text": "It reads the words so far and guesses the next one.",
-  "syllables": 11,
-  "seconds": 2.902,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 1,
   "sentence": 0,
-  "start": 51.786,
-  "end": 59.702,
+  "start": 42.211,
+  "end": 49.602,
   "text": "The first neural translation models squeezed the whole sentence into one fixed-length list of numbers, and worked from that.",
-  "syllables": 30,
-  "seconds": 7.916,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 2,
   "sentence": 0,
-  "start": 60.948,
-  "end": 64.642,
+  "start": 50.202,
+  "end": 52.637,
   "text": "Think of a message whispered down a line of people.",
-  "syllables": 14,
-  "seconds": 3.694,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 2,
   "sentence": 1,
-  "start": 65.307,
-  "end": 68.737,
+  "start": 52.957,
+  "end": 55.87,
   "text": "By the end of a long line, the message has worn thin.",
-  "syllables": 13,
-  "seconds": 3.43,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 3,
   "sentence": 0,
-  "start": 69.984,
-  "end": 81.065,
+  "start": 56.47,
+  "end": 66.34,
   "text": "In 2014, Bahdanau, Cho and Bengio let a translation model look at every word of the sentence while it wrote each new word, and weigh how much each one counts.",
-  "syllables": 42,
-  "seconds": 11.082,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 3,
   "sentence": 1,
-  "start": 81.73,
-  "end": 84.633,
+  "start": 66.66,
+  "end": 68.616,
   "text": "They called it an alignment model.",
-  "syllables": 11,
-  "seconds": 2.902,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 3,
   "sentence": 2,
-  "start": 85.297,
-  "end": 88.2,
+  "start": 68.936,
+  "end": 71.001,
   "text": "Today we call the idea attention.",
-  "syllables": 11,
-  "seconds": 2.902,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 3,
   "line": 0,
   "sentence": 0,
-  "start": 90.693,
-  "end": 92.54,
+  "start": 72.201,
+  "end": 74.267,
   "text": "Here is how the looking works.",
-  "syllables": 7,
-  "seconds": 1.847,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 3,
   "line": 0,
   "sentence": 1,
-  "start": 93.204,
-  "end": 95.051,
+  "start": 74.587,
+  "end": 76.565,
   "text": "Every word does three things.",
-  "syllables": 7,
-  "seconds": 1.847,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 3,
   "line": 1,
   "sentence": 0,
-  "start": 96.298,
-  "end": 97.617,
+  "start": 77.165,
+  "end": 78.513,
   "text": "It asks a question.",
-  "syllables": 5,
-  "seconds": 1.319,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 3,
   "line": 1,
   "sentence": 1,
-  "start": 98.282,
-  "end": 99.865,
+  "start": 78.833,
+  "end": 80.311,
   "text": "It holds up a label.",
-  "syllables": 6,
-  "seconds": 1.583,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 3,
   "line": 1,
   "sentence": 2,
-  "start": 100.53,
-  "end": 102.377,
+  "start": 80.631,
+  "end": 82.5,
   "text": "And it carries some cargo.",
-  "syllables": 7,
-  "seconds": 1.847,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 3,
   "line": 2,
   "sentence": 0,
-  "start": 103.623,
-  "end": 107.845,
+  "start": 83.1,
+  "end": 87.6,
   "text": "The word at the end shines its question back along the sentence.",
-  "syllables": 16,
-  "seconds": 4.222,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 3,
   "line": 2,
   "sentence": 1,
-  "start": 108.51,
-  "end": 111.148,
+  "start": 87.92,
+  "end": 90.464,
   "text": "Each earlier word answers with its label.",
-  "syllables": 10,
-  "seconds": 2.639,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 3,
   "line": 3,
   "sentence": 0,
-  "start": 112.395,
-  "end": 114.242,
+  "start": 91.064,
+  "end": 93.042,
   "text": "A good match gets a high score.",
-  "syllables": 7,
-  "seconds": 1.847,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 3,
   "line": 3,
   "sentence": 1,
-  "start": 114.907,
-  "end": 119.92,
+  "start": 93.362,
+  "end": 96.558,
   "text": "The scores are turned into shares that add up to one hundred percent.",
-  "syllables": 19,
-  "seconds": 5.013,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 3,
   "line": 4,
   "sentence": 0,
-  "start": 121.166,
-  "end": 128.29,
+  "start": 97.158,
+  "end": 103.571,
   "text": "Then the word takes a blend of the cargo of every word so far, itself included, in those shares.",
-  "syllables": 27,
-  "seconds": 7.124,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 3,
   "line": 4,
   "sentence": 1,
-  "start": 128.955,
-  "end": 131.33,
+  "start": 103.891,
+  "end": 106.152,
   "text": "That blend is what it carries forward.",
-  "syllables": 9,
-  "seconds": 2.375,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 4,
   "line": 0,
   "sentence": 0,
-  "start": 133.823,
-  "end": 135.406,
+  "start": 107.352,
+  "end": 109.091,
   "text": "Let's go inside the lamp.",
-  "syllables": 6,
-  "seconds": 1.583,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 4,
   "line": 1,
   "sentence": 0,
-  "start": 136.652,
-  "end": 140.346,
+  "start": 109.691,
+  "end": 112.452,
   "text": "Every word here is a list of 32 numbers.",
-  "syllables": 14,
-  "seconds": 3.694,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 4,
   "line": 1,
   "sentence": 1,
-  "start": 141.011,
-  "end": 142.594,
+  "start": 112.772,
+  "end": 114.489,
   "text": "One dot is one number.",
-  "syllables": 6,
-  "seconds": 1.583,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 4,
   "line": 2,
   "sentence": 0,
-  "start": 143.841,
-  "end": 149.645,
+  "start": 115.089,
+  "end": 121.458,
   "text": "A match is a dot product: multiply the two lists number by number, and add it all up.",
-  "syllables": 22,
-  "seconds": 5.805,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 4,
   "line": 3,
   "sentence": 0,
-  "start": 150.892,
-  "end": 158.544,
+  "start": 122.058,
+  "end": 129.189,
   "text": "Each head works on a shorter list of its own, 16 numbers here, and the score is divided by the square root of that length.",
-  "syllables": 29,
-  "seconds": 7.652,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 4,
   "line": 3,
   "sentence": 1,
-  "start": 159.208,
-  "end": 165.277,
+  "start": 129.509,
+  "end": 136.422,
   "text": "Without it, long lists give huge scores, the shares go all or nothing, and the model learns slowly.",
-  "syllables": 23,
-  "seconds": 6.069,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 4,
   "line": 4,
   "sentence": 0,
-  "start": 166.523,
-  "end": 170.481,
+  "start": 137.022,
+  "end": 140.283,
   "text": "This is a real model, trained on sentences from our coast.",
-  "syllables": 15,
-  "seconds": 3.958,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 4,
   "line": 4,
   "sentence": 1,
-  "start": 171.146,
-  "end": 177.742,
+  "start": 140.603,
+  "end": 145.798,
   "text": "It has 20,864 numbers in total, and nothing in it was set by hand.",
-  "syllables": 25,
-  "seconds": 6.596,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 4,
   "predict": 0,
-  "start": 178.989,
-  "end": 181.627,
+  "start": 146.398,
+  "end": 149.355,
   "text": "Which earlier word will get most of the light?",
-  "syllables": 10,
-  "seconds": 2.639,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 4,
   "line": 5,
   "sentence": 0,
-  "start": 184.127,
-  "end": 190.724,
+  "start": 151.855,
+  "end": 157.529,
   "text": "On this sentence, the word at the end gives more than 99 percent of its light to kettle.",
-  "syllables": 25,
-  "seconds": 6.596,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 5,
   "line": 0,
   "sentence": 0,
-  "start": 193.217,
-  "end": 195.327,
+  "start": 158.729,
+  "end": 161.185,
   "text": "One beam asks one kind of question.",
-  "syllables": 8,
-  "seconds": 2.111,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 5,
   "line": 0,
   "sentence": 1,
-  "start": 195.992,
-  "end": 199.95,
+  "start": 161.505,
+  "end": 165.288,
   "text": "A transformer runs several at once, and calls each one a head.",
-  "syllables": 15,
-  "seconds": 3.958,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 5,
   "line": 1,
   "sentence": 0,
-  "start": 201.196,
-  "end": 208.584,
+  "start": 165.888,
+  "end": 170.888,
   "text": "The base transformer in the 2017 paper had eight heads in every attention layer.",
-  "syllables": 28,
-  "seconds": 7.388,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 5,
   "line": 1,
   "sentence": 1,
-  "start": 209.249,
-  "end": 211.096,
+  "start": 171.208,
+  "end": 173.23,
   "text": "The larger one had sixteen.",
-  "syllables": 7,
-  "seconds": 1.847,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 5,
   "line": 2,
   "sentence": 0,
-  "start": 212.343,
-  "end": 215.245,
+  "start": 173.83,
+  "end": 176.721,
   "text": "Ours has 2 heads in each of 2 layers.",
-  "syllables": 11,
-  "seconds": 2.902,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 5,
   "line": 2,
   "sentence": 1,
-  "start": 215.91,
-  "end": 218.284,
+  "start": 177.041,
+  "end": 179.063,
   "text": "Nobody told them what to look for.",
-  "syllables": 9,
-  "seconds": 2.375,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 5,
   "line": 3,
   "sentence": 0,
-  "start": 219.531,
-  "end": 227.446,
+  "start": 179.663,
+  "end": 184.706,
   "text": "After training, a head in the second layer puts 71 percent of its light on the word to be copied.",
-  "syllables": 30,
-  "seconds": 7.916,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 5,
   "line": 4,
   "sentence": 0,
-  "start": 228.693,
-  "end": 237.928,
+  "start": 185.306,
+  "end": 193.675,
   "text": "In small attention-only models, researchers at Anthropic found pairs of heads, in different layers, that work together to copy.",
-  "syllables": 35,
-  "seconds": 9.235,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 5,
   "line": 4,
   "sentence": 1,
-  "start": 238.593,
-  "end": 243.078,
+  "start": 193.995,
+  "end": 197.452,
   "text": "The first writes into each word a note about the word before it.",
-  "syllables": 17,
-  "seconds": 4.485,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 5,
   "line": 4,
   "sentence": 2,
-  "start": 243.743,
-  "end": 250.867,
+  "start": 197.772,
+  "end": 203.837,
   "text": "The second uses that note to find an earlier copy of the current word, and reads the word that followed it.",
-  "syllables": 27,
-  "seconds": 7.124,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 5,
   "line": 4,
   "sentence": 3,
-  "start": 251.532,
-  "end": 253.906,
+  "start": 204.157,
+  "end": 205.962,
   "text": "They called them induction heads.",
-  "syllables": 9,
-  "seconds": 2.375,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 6,
   "line": 0,
   "sentence": 0,
-  "start": 256.399,
-  "end": 258.246,
+  "start": 207.162,
+  "end": 209.14,
   "text": "Here is the test that matters.",
-  "syllables": 7,
-  "seconds": 1.847,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 6,
   "line": 0,
   "sentence": 1,
-  "start": 258.911,
-  "end": 265.243,
+  "start": 209.46,
+  "end": 214.982,
   "text": "We trained the same model again with the lamp turned off, so each word could see only itself.",
-  "syllables": 24,
-  "seconds": 6.332,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 6,
   "line": 1,
   "sentence": 0,
-  "start": 266.49,
-  "end": 272.822,
+  "start": 215.582,
+  "end": 220.321,
   "text": "With attention, it filled the copy holes correctly 99 percent of the time.",
-  "syllables": 24,
-  "seconds": 6.332,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 6,
   "line": 2,
   "sentence": 0,
-  "start": 274.069,
-  "end": 277.499,
+  "start": 220.921,
+  "end": 224.768,
   "text": "With each word seeing only itself, 17 percent.",
-  "syllables": 13,
-  "seconds": 3.43,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 6,
   "line": 3,
   "sentence": 0,
-  "start": 278.745,
-  "end": 279.801,
+  "start": 225.368,
+  "end": 226.651,
   "text": "Then one more run.",
-  "syllables": 4,
-  "seconds": 1.055,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 6,
   "line": 3,
   "sentence": 1,
-  "start": 280.466,
-  "end": 286.798,
+  "start": 226.971,
+  "end": 232.384,
   "text": "Every word got an even share of light over everything before it, with no choosing.",
-  "syllables": 24,
-  "seconds": 6.332,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 6,
   "line": 3,
   "sentence": 2,
-  "start": 287.463,
-  "end": 289.838,
+  "start": 232.704,
+  "end": 235.03,
   "text": "That run reached 64 percent.",
-  "syllables": 9,
-  "seconds": 2.375,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 6,
   "line": 4,
   "sentence": 0,
-  "start": 291.084,
-  "end": 293.195,
+  "start": 235.63,
+  "end": 237.956,
   "text": "Knowing which words came before helps.",
-  "syllables": 8,
-  "seconds": 2.111,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 6,
   "line": 4,
   "sentence": 1,
-  "start": 293.86,
-  "end": 297.026,
+  "start": 238.276,
+  "end": 241.233,
   "text": "Choosing where to look is what finishes the job.",
-  "syllables": 12,
-  "seconds": 3.166,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 7,
   "line": 0,
   "sentence": 0,
-  "start": 299.519,
-  "end": 300.574,
+  "start": 242.433,
+  "end": 243.476,
   "text": "There's a bill.",
-  "syllables": 4,
-  "seconds": 1.055,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 7,
   "line": 0,
   "sentence": 1,
-  "start": 301.239,
-  "end": 305.725,
+  "start": 243.796,
+  "end": 247.47,
   "text": "Every word compares itself with every word before it.",
-  "syllables": 17,
-  "seconds": 4.485,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 7,
   "line": 1,
   "sentence": 0,
-  "start": 306.971,
-  "end": 311.72,
+  "start": 248.07,
+  "end": 252.57,
   "text": "In each head, a thousand words means about half a million comparisons.",
-  "syllables": 18,
-  "seconds": 4.749,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 7,
   "line": 1,
   "sentence": 1,
-  "start": 312.385,
-  "end": 316.607,
+  "start": 252.89,
+  "end": 256.542,
   "text": "Double the text, and the attention work goes up about four times.",
-  "syllables": 16,
-  "seconds": 4.222,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 7,
   "line": 2,
   "sentence": 0,
-  "start": 317.853,
-  "end": 322.075,
+  "start": 257.142,
+  "end": 260.642,
   "text": "That's why people build special machinery to do this fast.",
-  "syllables": 16,
-  "seconds": 4.222,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 7,
   "line": 2,
   "sentence": 1,
-  "start": 322.74,
-  "end": 326.961,
+  "start": 260.962,
+  "end": 264.114,
   "text": "We take it apart in the cannery, in a later lesson.",
-  "syllables": 16,
-  "seconds": 4.222,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 8,
   "line": 0,
   "sentence": 0,
-  "start": 329.454,
-  "end": 331.301,
+  "start": 265.314,
+  "end": 267.271,
   "text": "One warning before you go.",
-  "syllables": 7,
-  "seconds": 1.847,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 8,
   "line": 1,
   "sentence": 0,
-  "start": 332.548,
-  "end": 335.186,
+  "start": 267.871,
+  "end": 270.936,
   "text": "The light shows where a head is reading from.",
-  "syllables": 10,
-  "seconds": 2.639,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 8,
   "line": 1,
   "sentence": 1,
-  "start": 335.851,
-  "end": 340.6,
+  "start": 271.256,
+  "end": 275.126,
   "text": "It does not, on its own, tell you why the model answered what it did.",
-  "syllables": 18,
-  "seconds": 4.749,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 8,
   "line": 2,
   "sentence": 0,
-  "start": 341.847,
-  "end": 351.609,
+  "start": 275.726,
+  "end": 283.421,
   "text": "In 2019, researchers showed that in some text classifiers, very different attention patterns can give almost the same answer.",
-  "syllables": 37,
-  "seconds": 9.763,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 8,
   "line": 2,
   "sentence": 1,
-  "start": 352.274,
-  "end": 357.287,
+  "start": 283.741,
+  "end": 288.415,
   "text": "Others replied that it depends on what you mean by explain, and proposed tests.",
-  "syllables": 19,
-  "seconds": 5.013,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 8,
   "line": 2,
   "sentence": 2,
-  "start": 357.952,
-  "end": 360.063,
+  "start": 288.735,
+  "end": 291.54,
   "text": "Treat the light as a clue, and check it.",
-  "syllables": 8,
-  "seconds": 2.111,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 9,
   "line": 0,
   "sentence": 0,
-  "start": 362.556,
-  "end": 365.195,
+  "start": 292.74,
+  "end": 295.174,
   "text": "The lamp room is open below this film.",
-  "syllables": 10,
-  "seconds": 2.639,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 9,
   "line": 0,
   "sentence": 1,
-  "start": 365.859,
-  "end": 369.289,
+  "start": 295.494,
+  "end": 299.038,
   "text": "Train the model yourself, and watch the heads learn where to look.",
-  "syllables": 13,
-  "seconds": 3.43,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 9,
   "line": 1,
   "sentence": 0,
-  "start": 370.536,
-  "end": 373.966,
+  "start": 299.638,
+  "end": 302.92,
   "text": "My voice is synthesized, made from the author's voice.",
-  "syllables": 13,
-  "seconds": 3.43,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  }
 ]

@@ -3,539 +3,404 @@
   "segment": 0,
   "line": 0,
   "sentence": 0,
-  "start": 5.518,
-  "end": 6.046,
+  "start": 4.6,
+  "end": 5.547,
   "text": "Tokens.",
-  "syllables": 2,
-  "seconds": 0.528,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 0,
   "line": 0,
   "sentence": 1,
-  "start": 6.856,
-  "end": 8.703,
+  "start": 5.867,
+  "end": 7.488,
   "text": "Cutting text into crates.",
-  "syllables": 7,
-  "seconds": 1.847,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 0,
   "line": 1,
   "sentence": 0,
-  "start": 10.221,
-  "end": 15.234,
+  "start": 8.088,
+  "end": 12.215,
   "text": "Everything that comes through my customs shed goes into a standard crate.",
-  "syllables": 19,
-  "seconds": 5.013,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 0,
   "line": 1,
   "sentence": 1,
-  "start": 16.044,
-  "end": 19.474,
+  "start": 12.535,
+  "end": 15.629,
   "text": "Text too, before any language model can touch it.",
-  "syllables": 13,
-  "seconds": 3.43,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 1,
   "line": 0,
   "sentence": 0,
-  "start": 22.51,
-  "end": 25.149,
+  "start": 16.829,
+  "end": 18.808,
   "text": "A language model doesn't read letters.",
-  "syllables": 10,
-  "seconds": 2.639,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 1,
   "line": 0,
   "sentence": 1,
-  "start": 25.958,
-  "end": 30.972,
+  "start": 19.128,
+  "end": 23.318,
   "text": "It reads a list of pieces, each one a number from its vocabulary.",
-  "syllables": 19,
-  "seconds": 5.013,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 1,
   "line": 0,
   "sentence": 2,
-  "start": 31.781,
-  "end": 34.684,
+  "start": 23.638,
+  "end": 26.164,
   "text": "The question is how big to cut the pieces.",
-  "syllables": 11,
-  "seconds": 2.902,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 1,
   "line": 1,
   "sentence": 0,
-  "start": 36.202,
-  "end": 49.922,
+  "start": 26.764,
+  "end": 40.153,
   "text": "Cut by letter, with one extra mark for the end of each word, and the guides' sentences take about 4.39 pieces per word, counting each full stop and question mark as a word: tiny crates, a great many trips.",
-  "syllables": 52,
-  "seconds": 13.72,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 1,
   "line": 2,
   "sentence": 0,
-  "start": 51.44,
-  "end": 54.607,
+  "start": 40.753,
+  "end": 43.343,
   "text": "Cut by whole word, and every word is one piece.",
-  "syllables": 12,
-  "seconds": 3.166,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 1,
   "line": 2,
   "sentence": 1,
-  "start": 55.416,
-  "end": 59.374,
+  "start": 43.663,
+  "end": 47.347,
   "text": "But a word the model has never seen has no crate at all.",
-  "syllables": 15,
-  "seconds": 3.958,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 0,
   "sentence": 0,
-  "start": 62.41,
-  "end": 65.049,
+  "start": 48.547,
+  "end": 50.8,
   "text": "Byte-pair encoding meets in the middle.",
-  "syllables": 10,
-  "seconds": 2.639,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 0,
   "sentence": 1,
-  "start": 65.859,
-  "end": 67.442,
+  "start": 51.12,
+  "end": 53.436,
   "text": "Start from single letters.",
-  "syllables": 6,
-  "seconds": 1.583,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 0,
   "sentence": 2,
-  "start": 68.252,
-  "end": 71.945,
+  "start": 53.756,
+  "end": 56.913,
   "text": "Count every pair of neighbouring pieces, inside words.",
-  "syllables": 14,
-  "seconds": 3.694,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 0,
   "sentence": 3,
-  "start": 72.755,
-  "end": 75.658,
+  "start": 57.233,
+  "end": 59.718,
   "text": "The most common pair gets a crate of its own.",
-  "syllables": 11,
-  "seconds": 2.902,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 0,
   "sentence": 4,
-  "start": 76.467,
-  "end": 77.523,
+  "start": 60.038,
+  "end": 61.175,
   "text": "Then count again.",
-  "syllables": 4,
-  "seconds": 1.055,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 1,
   "sentence": 0,
-  "start": 79.041,
-  "end": 86.693,
+  "start": 61.775,
+  "end": 69.122,
   "text": "On the guides' sentences, the first merge joins an e to the end-of-word mark, so an e that ends a word gets one crate.",
-  "syllables": 29,
-  "seconds": 7.652,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 1,
   "sentence": 1,
-  "start": 87.502,
-  "end": 90.932,
+  "start": 69.442,
+  "end": 73.589,
   "text": "By the fifth merge, the whole word 'the' has its own crate.",
-  "syllables": 13,
-  "seconds": 3.43,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "predict": 0,
-  "start": 92.451,
-  "end": 96.408,
+  "start": 74.189,
+  "end": 76.947,
   "text": "After fifty merges, how many pieces does a word take?",
-  "syllables": 15,
-  "seconds": 3.958,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 2,
   "sentence": 0,
-  "start": 98.908,
-  "end": 104.449,
+  "start": 79.447,
+  "end": 83.679,
   "text": "After 50 merges, a word takes 1.80 pieces on average.",
-  "syllables": 21,
-  "seconds": 5.541,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 2,
   "sentence": 1,
-  "start": 105.259,
-  "end": 111.064,
+  "start": 83.999,
+  "end": 88.104,
   "text": "After 136, every one of the guides' words is a single piece.",
-  "syllables": 22,
-  "seconds": 5.805,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 3,
   "line": 0,
   "sentence": 0,
-  "start": 114.1,
-  "end": 117.266,
+  "start": 89.304,
+  "end": 92.146,
   "text": "Now a word that never came through the shed: lamplit.",
-  "syllables": 12,
-  "seconds": 3.166,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 3,
   "line": 0,
   "sentence": 1,
-  "start": 118.076,
-  "end": 119.659,
+  "start": 92.466,
+  "end": 93.897,
   "text": "There's no crate for it.",
-  "syllables": 6,
-  "seconds": 1.583,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 3,
   "line": 1,
   "sentence": 0,
-  "start": 121.177,
-  "end": 127.246,
+  "start": 94.497,
+  "end": 100.14,
   "text": "So it's cut into pieces that do have crates: l, am, p, and lit at the end of a word.",
-  "syllables": 23,
-  "seconds": 6.069,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 3,
   "line": 1,
   "sentence": 1,
-  "start": 128.056,
-  "end": 129.903,
+  "start": 100.46,
+  "end": 101.786,
   "text": "Nothing is thrown away.",
-  "syllables": 7,
-  "seconds": 1.847,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 3,
   "line": 1,
   "sentence": 2,
-  "start": 130.712,
-  "end": 137.836,
+  "start": 102.106,
+  "end": 110.106,
   "text": "Rico Sennrich and his colleagues used this method, in a 2016 paper, to translate rare words.",
-  "syllables": 27,
-  "seconds": 7.124,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 4,
   "line": 0,
   "sentence": 0,
-  "start": 140.873,
-  "end": 144.039,
+  "start": 111.306,
+  "end": 114.569,
   "text": "The guides only know 44 words and 2 marks.",
-  "syllables": 12,
-  "seconds": 3.166,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 4,
   "line": 0,
   "sentence": 1,
-  "start": 144.849,
-  "end": 153.292,
+  "start": 114.889,
+  "end": 121.731,
   "text": "So here's real English: the opening of Moby-Dick, about 599 words of it, to learn the merges from.",
-  "syllables": 32,
-  "seconds": 8.443,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 4,
   "line": 1,
   "sentence": 0,
-  "start": 154.81,
-  "end": 159.032,
+  "start": 122.331,
+  "end": 125.868,
   "text": "Then a page it never saw, the opening of Pride and Prejudice.",
-  "syllables": 16,
-  "seconds": 4.222,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 4,
   "line": 1,
   "sentence": 1,
-  "start": 159.841,
-  "end": 164.855,
+  "start": 126.188,
+  "end": 130.883,
   "text": "With 400 merges, the new page takes 2.14 pieces per word.",
-  "syllables": 19,
-  "seconds": 5.013,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 4,
   "line": 1,
   "sentence": 2,
-  "start": 165.664,
-  "end": 169.622,
+  "start": 131.203,
+  "end": 135.876,
   "text": "The word lighthouse, never seen, comes out as li, gh, thou and se.",
-  "syllables": 15,
-  "seconds": 3.958,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 5,
   "line": 0,
   "sentence": 0,
-  "start": 172.659,
-  "end": 174.769,
+  "start": 137.076,
+  "end": 138.992,
   "text": "Does it matter which pairs we merge?",
-  "syllables": 8,
-  "seconds": 2.111,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 5,
   "line": 0,
   "sentence": 1,
-  "start": 175.579,
-  "end": 186.133,
+  "start": 139.312,
+  "end": 149.396,
   "text": "Merge random pairs instead, the same number of times, and over ten tries the guides' words still take 1.32 to 1.67 pieces each, instead of one.",
-  "syllables": 40,
-  "seconds": 10.554,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 6,
   "line": 0,
   "sentence": 0,
-  "start": 189.17,
-  "end": 192.6,
+  "start": 150.596,
+  "end": 153.775,
   "text": "There's one more choice: what the very first pieces are.",
-  "syllables": 13,
-  "seconds": 3.43,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 6,
   "line": 0,
   "sentence": 1,
-  "start": 193.409,
-  "end": 194.992,
+  "start": 154.095,
+  "end": 155.59,
   "text": "Characters run out fast.",
-  "syllables": 6,
-  "seconds": 1.583,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 6,
   "line": 0,
   "sentence": 2,
-  "start": 195.802,
-  "end": 206.62,
+  "start": 155.91,
+  "end": 165.741,
   "text": "The page from Pride and Prejudice has curly quotation marks, and a capital D and E, that Moby-Dick never used, so with characters as the base, they have no crate.",
-  "syllables": 41,
-  "seconds": 10.818,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 6,
   "line": 1,
   "sentence": 0,
-  "start": 208.138,
-  "end": 210.249,
+  "start": 166.341,
+  "end": 168.762,
   "text": "GPT-2 starts from bytes instead.",
-  "syllables": 8,
-  "seconds": 2.111,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 6,
   "line": 1,
   "sentence": 1,
-  "start": 211.059,
-  "end": 217.127,
+  "start": 169.082,
+  "end": 173.84,
   "text": "There are only 256 of them, and any text at all is some list of bytes.",
-  "syllables": 23,
-  "seconds": 6.069,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 6,
   "line": 1,
   "sentence": 2,
-  "start": 217.937,
-  "end": 225.325,
+  "start": 174.16,
+  "end": 182.055,
   "text": "An a is one byte, an e with its accent built in is two, a curly apostrophe three, and a seal emoji four.",
-  "syllables": 28,
-  "seconds": 7.388,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 6,
   "line": 2,
   "sentence": 0,
-  "start": 226.843,
-  "end": 232.384,
+  "start": 182.655,
+  "end": 188.444,
   "text": "Start from bytes, and that new page has 0 pieces without a crate, instead of 16.",
-  "syllables": 21,
-  "seconds": 5.541,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 7,
   "line": 0,
   "sentence": 0,
-  "start": 235.42,
-  "end": 240.17,
+  "start": 189.644,
+  "end": 193.75,
   "text": "The little language model from the attention lesson skips all of this.",
-  "syllables": 18,
-  "seconds": 4.749,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 7,
   "line": 0,
   "sentence": 1,
-  "start": 240.979,
-  "end": 248.895,
+  "start": 194.07,
+  "end": 201.164,
   "text": "It has one crate per word, 46 of them counting the full stop and question mark, because its whole world is those 46.",
-  "syllables": 30,
-  "seconds": 7.916,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 7,
   "line": 1,
   "sentence": 0,
-  "start": 250.413,
-  "end": 265.981,
+  "start": 201.764,
+  "end": 212.543,
   "text": "Byte-pair encoding needs 136 merges, and a vocabulary of 160, to cut the same sentences into whole words, because every piece it made on the way stays in the vocabulary.",
-  "syllables": 59,
-  "seconds": 15.567,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 8,
   "line": 0,
   "sentence": 0,
-  "start": 269.017,
-  "end": 276.669,
+  "start": 213.743,
+  "end": 221.112,
   "text": "Common pairs get their own crates, rare words come apart into pieces, and bytes mean nothing is ever left on the dock.",
-  "syllables": 29,
-  "seconds": 7.652,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 8,
   "line": 1,
   "sentence": 0,
-  "start": 278.187,
-  "end": 281.353,
+  "start": 221.712,
+  "end": 224.596,
   "text": "Next: giving every crate a place on the chart.",
-  "syllables": 12,
-  "seconds": 3.166,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 8,
   "line": 1,
   "sentence": 1,
-  "start": 282.163,
-  "end": 282.69,
+  "start": 224.916,
+  "end": 225.653,
   "text": "Goodnight.",
-  "syllables": 2,
-  "seconds": 0.528,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  }
 ]

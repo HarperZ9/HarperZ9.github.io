@@ -3,526 +3,394 @@
   "segment": 0,
   "line": 0,
   "sentence": 0,
-  "start": 5.579,
-  "end": 6.634,
+  "start": 4.6,
+  "end": 5.884,
   "text": "The training loop.",
-  "syllables": 4,
-  "seconds": 1.055,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 0,
   "line": 0,
   "sentence": 1,
-  "start": 7.476,
-  "end": 9.323,
+  "start": 6.204,
+  "end": 8.204,
   "text": "Five steps, two thousand times.",
-  "syllables": 7,
-  "seconds": 1.847,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 0,
   "line": 1,
   "sentence": 0,
-  "start": 10.902,
-  "end": 14.86,
+  "start": 8.804,
+  "end": 11.646,
   "text": "Every lesson so far has a piece of training in it.",
-  "syllables": 15,
-  "seconds": 3.958,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 0,
   "line": 1,
   "sentence": 1,
-  "start": 15.702,
-  "end": 23.354,
+  "start": 11.966,
+  "end": 18.766,
   "text": "Tonight they go round together, and we watch the whole loop teach the attention model, from the first step to the last.",
-  "syllables": 29,
-  "seconds": 7.652,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 1,
   "line": 0,
   "sentence": 0,
-  "start": 26.512,
-  "end": 27.831,
+  "start": 19.966,
+  "end": 21.545,
   "text": "One lap goes like this.",
-  "syllables": 5,
-  "seconds": 1.319,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 1,
   "line": 0,
   "sentence": 1,
-  "start": 28.673,
-  "end": 31.839,
+  "start": 21.865,
+  "end": 24.96,
   "text": "Take a batch of 16 rows from the training text.",
-  "syllables": 12,
-  "seconds": 3.166,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 1,
   "line": 0,
   "sentence": 2,
-  "start": 32.681,
-  "end": 36.903,
+  "start": 25.28,
+  "end": 29.28,
   "text": "Run the model forward and score every next word: that is the loss.",
-  "syllables": 16,
-  "seconds": 4.222,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 1,
   "line": 1,
   "sentence": 0,
-  "start": 38.482,
-  "end": 45.87,
+  "start": 29.88,
+  "end": 35.754,
   "text": "Run backward to get the slope for every one of the model's 20,864 numbers.",
-  "syllables": 28,
-  "seconds": 7.388,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 1,
   "line": 1,
   "sentence": 1,
-  "start": 46.712,
-  "end": 49.878,
+  "start": 36.074,
+  "end": 38.81,
   "text": "Then the optimiser takes one step downhill.",
-  "syllables": 12,
-  "seconds": 3.166,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 1,
   "line": 1,
   "sentence": 2,
-  "start": 50.72,
-  "end": 51.776,
+  "start": 39.13,
+  "end": 40.436,
   "text": "That is one lap.",
-  "syllables": 4,
-  "seconds": 1.055,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 1,
   "line": 2,
   "sentence": 0,
-  "start": 53.354,
-  "end": 63.645,
+  "start": 41.036,
+  "end": 50.362,
   "text": "On one core of our test machine, with this lesson's own code, a lap takes about 21 milliseconds, and most of that is the backward pass: 14 of them.",
-  "syllables": 39,
-  "seconds": 10.29,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 0,
   "sentence": 0,
-  "start": 66.803,
-  "end": 74.982,
+  "start": 51.562,
+  "end": 58.53,
   "text": "The optimiser is Adam, with a little weight decay that shrinks most of the numbers slightly each step, as in AdamW.",
-  "syllables": 31,
-  "seconds": 8.179,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 0,
   "sentence": 1,
-  "start": 75.824,
-  "end": 78.99,
+  "start": 58.85,
+  "end": 62.24,
   "text": "The layer norms' gains and the biases are left out.",
-  "syllables": 12,
-  "seconds": 3.166,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 1,
   "sentence": 0,
-  "start": 80.569,
-  "end": 86.11,
+  "start": 62.84,
+  "end": 67.998,
   "text": "The step size starts tiny and grows over the first 30 laps to 0.01.",
-  "syllables": 21,
-  "seconds": 5.541,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 1,
   "sentence": 1,
-  "start": 86.952,
-  "end": 88.008,
+  "start": 68.318,
+  "end": 69.981,
   "text": "That is warmup.",
-  "syllables": 4,
-  "seconds": 1.055,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 2,
   "sentence": 0,
-  "start": 89.587,
-  "end": 98.294,
+  "start": 70.581,
+  "end": 76.812,
   "text": "And if the whole slope, all the numbers taken together, is ever longer than 1, it is shortened to 1 before the step.",
-  "syllables": 33,
-  "seconds": 8.707,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 2,
   "sentence": 1,
-  "start": 99.136,
-  "end": 100.191,
+  "start": 77.132,
+  "end": 78.459,
   "text": "That is clipping.",
-  "syllables": 4,
-  "seconds": 1.055,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 2,
   "sentence": 2,
-  "start": 101.033,
-  "end": 108.157,
+  "start": 78.779,
+  "end": 84.336,
   "text": "It fired on 76 of the 2,000 laps, 62 of them in the first 250.",
-  "syllables": 27,
-  "seconds": 7.124,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 3,
   "line": 0,
   "sentence": 0,
-  "start": 111.315,
-  "end": 112.107,
+  "start": 85.536,
+  "end": 86.463,
   "text": "Now run it.",
-  "syllables": 3,
-  "seconds": 0.792,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 3,
   "line": 0,
   "sentence": 1,
-  "start": 112.949,
-  "end": 117.17,
+  "start": 86.783,
+  "end": 91.751,
   "text": "At lap zero, the held-out loss is 3.84, a blind guess.",
-  "syllables": 16,
-  "seconds": 4.222,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 3,
   "line": 1,
   "sentence": 0,
-  "start": 118.749,
-  "end": 125.873,
+  "start": 92.351,
+  "end": 98.92,
   "text": "By lap 100 it is 0.97: the easy patterns, which word tends to follow which, come first.",
-  "syllables": 27,
-  "seconds": 7.124,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 3,
   "predict": 0,
-  "start": 127.452,
-  "end": 132.465,
+  "start": 99.52,
+  "end": 104.088,
   "text": "Will copying a word from far back be learned early, late, or bit by bit?",
-  "syllables": 19,
-  "seconds": 5.013,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 3,
   "line": 2,
   "sentence": 0,
-  "start": 134.965,
-  "end": 138.395,
+  "start": 106.588,
+  "end": 110.146,
   "text": "Copying a word from far back comes late, and then fast.",
-  "syllables": 13,
-  "seconds": 3.43,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 3,
   "line": 2,
   "sentence": 1,
-  "start": 139.238,
-  "end": 143.987,
+  "start": 110.466,
+  "end": 114.613,
   "text": "At lap 500, copying is right 43 percent of the time.",
-  "syllables": 18,
-  "seconds": 4.749,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 3,
   "line": 2,
   "sentence": 2,
-  "start": 144.829,
-  "end": 148.787,
+  "start": 114.933,
+  "end": 118.028,
   "text": "By lap 750, 97 percent.",
-  "syllables": 15,
-  "seconds": 3.958,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 3,
   "line": 3,
   "sentence": 0,
-  "start": 150.366,
-  "end": 160.392,
+  "start": 118.628,
+  "end": 127.617,
   "text": "We ran the loop again from the same seeds, and got the attention lesson's model back exactly: 29 of 29 weight tables, number for number.",
-  "syllables": 38,
-  "seconds": 10.026,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 4,
   "line": 0,
   "sentence": 0,
-  "start": 163.55,
-  "end": 167.508,
+  "start": 128.817,
+  "end": 132.965,
   "text": "Change one setting at a time, train for 1,000 laps, and compare.",
-  "syllables": 15,
-  "seconds": 3.958,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 4,
   "line": 0,
   "sentence": 1,
-  "start": 168.35,
-  "end": 182.334,
+  "start": 133.285,
+  "end": 144.211,
   "text": "First, the noise: the same recipe on two other sets of training rows ends at 0.70 and 0.70, and the original at 0.70, all three within a few thousandths.",
-  "syllables": 53,
-  "seconds": 13.984,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 4,
   "line": 0,
   "sentence": 2,
-  "start": 183.176,
-  "end": 187.398,
+  "start": 144.531,
+  "end": 148.047,
   "text": "A difference smaller than that cannot be told apart from luck.",
-  "syllables": 16,
-  "seconds": 4.222,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 4,
   "line": 1,
   "sentence": 0,
-  "start": 188.977,
-  "end": 196.628,
+  "start": 148.647,
+  "end": 155.257,
   "text": "A step size ten times smaller ends at 0.78, and copies right only 54 percent of the time.",
-  "syllables": 29,
-  "seconds": 7.652,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 4,
   "predict": 0,
-  "start": 197.47,
-  "end": 200.9,
+  "start": 155.577,
+  "end": 160.819,
   "text": "Make the step size ten times larger. Faster, or worse?",
-  "syllables": 13,
-  "seconds": 3.43,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 4,
   "line": 1,
   "sentence": 1,
-  "start": 203.4,
-  "end": 208.941,
+  "start": 163.319,
+  "end": 168.898,
   "text": "Ten times larger ends worse, at 0.95, copying 22 percent.",
-  "syllables": 21,
-  "seconds": 5.541,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 4,
   "line": 2,
   "sentence": 0,
-  "start": 210.52,
-  "end": 215.006,
+  "start": 169.498,
+  "end": 173.688,
   "text": "Without weight decay: 0.70, inside the noise.",
-  "syllables": 17,
-  "seconds": 4.485,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 4,
   "line": 2,
   "sentence": 1,
-  "start": 215.848,
-  "end": 220.597,
+  "start": 174.008,
+  "end": 178.092,
   "text": "On this small model, at this length, it makes no difference we can see.",
-  "syllables": 18,
-  "seconds": 4.749,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 4,
   "line": 3,
   "sentence": 0,
-  "start": 222.176,
-  "end": 229.3,
+  "start": 178.692,
+  "end": 185.239,
   "text": "Batches of 4 rows for the same number of laps see a quarter of the text, and end at 0.87.",
-  "syllables": 27,
-  "seconds": 7.124,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 4,
   "line": 3,
   "sentence": 1,
-  "start": 230.142,
-  "end": 236.211,
+  "start": 185.559,
+  "end": 190.759,
   "text": "Given the same text over four times the laps, they still end at 0.76.",
-  "syllables": 23,
-  "seconds": 6.069,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 5,
   "line": 0,
   "sentence": 0,
-  "start": 239.369,
-  "end": 240.952,
+  "start": 191.959,
+  "end": 193.749,
   "text": "Two broken loops, as checks.",
-  "syllables": 6,
-  "seconds": 1.583,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 5,
   "line": 0,
   "sentence": 1,
-  "start": 241.794,
-  "end": 247.071,
+  "start": 194.069,
+  "end": 198.848,
   "text": "With a step size of zero, nothing moves: the loss stays at 3.84.",
-  "syllables": 20,
-  "seconds": 5.277,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 5,
   "line": 1,
   "sentence": 0,
-  "start": 248.65,
-  "end": 253.927,
+  "start": 199.448,
+  "end": 204.753,
   "text": "Turn every slope around, so each step goes uphill, and the loss climbs to 68.",
-  "syllables": 20,
-  "seconds": 5.277,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 5,
   "line": 1,
   "sentence": 1,
-  "start": 254.769,
-  "end": 258.463,
+  "start": 205.073,
+  "end": 207.873,
   "text": "The loop only works because the slope points the right way.",
-  "syllables": 14,
-  "seconds": 3.694,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 6,
   "line": 0,
   "sentence": 0,
-  "start": 261.621,
-  "end": 263.468,
+  "start": 209.073,
+  "end": 211.599,
   "text": "Batch, forward, loss, backward, step.",
-  "syllables": 7,
-  "seconds": 1.847,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 6,
   "line": 0,
   "sentence": 1,
-  "start": 264.31,
-  "end": 268.795,
+  "start": 211.919,
+  "end": 216.109,
   "text": "Two thousand times, and a blind guess becomes a model that copies.",
-  "syllables": 17,
-  "seconds": 4.485,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 6,
   "line": 1,
   "sentence": 0,
-  "start": 270.374,
-  "end": 273.276,
+  "start": 216.709,
+  "end": 219.361,
   "text": "Next on the dock: what goes into the batches.",
-  "syllables": 11,
-  "seconds": 2.902,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 6,
   "line": 1,
   "sentence": 1,
-  "start": 274.119,
-  "end": 274.646,
+  "start": 219.681,
+  "end": 220.334,
   "text": "Goodnight.",
-  "syllables": 2,
-  "seconds": 0.528,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  }
 ]

@@ -3,634 +3,475 @@
   "segment": 0,
   "line": 0,
   "sentence": 0,
-  "start": 6.084,
-  "end": 7.139,
+  "start": 4.6,
+  "end": 6.143,
   "text": "Distillation.",
-  "syllables": 4,
-  "seconds": 1.055,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 0,
   "line": 0,
   "sentence": 1,
-  "start": 8.25,
-  "end": 10.361,
+  "start": 6.463,
+  "end": 9.159,
   "text": "A big teacher, a small student.",
-  "syllables": 8,
-  "seconds": 2.111,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 0,
   "line": 1,
   "sentence": 0,
-  "start": 12.445,
-  "end": 15.083,
+  "start": 9.759,
+  "end": 12.216,
   "text": "A big model is slow and costly to run.",
-  "syllables": 10,
-  "seconds": 2.639,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 0,
   "line": 1,
   "sentence": 1,
-  "start": 16.195,
-  "end": 23.319,
+  "start": 12.536,
+  "end": 18.188,
   "text": "One way to get a small one is to train it on what the big one says, instead of on the text alone.",
-  "syllables": 27,
-  "seconds": 7.124,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 0,
   "line": 1,
   "sentence": 2,
-  "start": 24.43,
-  "end": 30.498,
+  "start": 18.508,
+  "end": 24.573,
   "text": "Tonight the attention model teaches a student a fifth its size, and we find out when that helps.",
-  "syllables": 23,
-  "seconds": 6.069,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 1,
   "line": 0,
   "sentence": 0,
-  "start": 34.666,
-  "end": 42.054,
+  "start": 25.773,
+  "end": 31.751,
   "text": "After \"rerun knocked\", the rules that write the guides' sentences say \"on\" half the time and \"twice\" the other half.",
-  "syllables": 28,
-  "seconds": 7.388,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 1,
   "line": 1,
   "sentence": 0,
-  "start": 44.137,
-  "end": 46.776,
+  "start": 32.351,
+  "end": 34.895,
   "text": "The text itself only ever shows one.",
-  "syllables": 10,
-  "seconds": 2.639,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 1,
   "line": 1,
   "sentence": 1,
-  "start": 47.887,
-  "end": 57.386,
+  "start": 35.215,
+  "end": 43.062,
   "text": "A sentence says \"on\", and that is the answer the model is marked against: a hard label, one word, as if the other had been impossible.",
-  "syllables": 36,
-  "seconds": 9.499,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 1,
   "line": 1,
   "sentence": 2,
-  "start": 58.497,
-  "end": 61.927,
+  "start": 43.382,
+  "end": 46.513,
   "text": "Only across many sentences does the split show.",
-  "syllables": 13,
-  "seconds": 3.43,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 1,
   "line": 2,
   "sentence": 0,
-  "start": 64.011,
-  "end": 69.288,
+  "start": 47.113,
+  "end": 52.417,
   "text": "The teacher's own guess keeps the split: 54 percent \"twice\", 45 percent \"on\".",
-  "syllables": 20,
-  "seconds": 5.277,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 1,
   "line": 2,
   "sentence": 1,
-  "start": 70.399,
-  "end": 74.357,
+  "start": 52.737,
+  "end": 57.563,
   "text": "That is a soft target, the whole wheel instead of one slot.",
-  "syllables": 15,
-  "seconds": 3.958,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 1,
   "line": 3,
   "sentence": 0,
-  "start": 76.44,
-  "end": 78.815,
+  "start": 58.163,
+  "end": 60.424,
   "text": "Open choices like this are common.",
-  "syllables": 9,
-  "seconds": 2.375,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 1,
   "line": 3,
   "sentence": 1,
-  "start": 79.926,
-  "end": 87.578,
+  "start": 60.744,
+  "end": 67.592,
   "text": "On 40 percent of the words in our held-out text, the likeliest next word has no more than three quarters of the odds.",
-  "syllables": 29,
-  "seconds": 7.652,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 0,
   "sentence": 0,
-  "start": 91.745,
-  "end": 96.231,
+  "start": 68.792,
+  "end": 74.096,
   "text": "Hinton, Vinyals and Dean, in 2015, added one more trick.",
-  "syllables": 17,
-  "seconds": 4.485,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 0,
   "sentence": 1,
-  "start": 97.342,
-  "end": 104.466,
+  "start": 74.416,
+  "end": 79.525,
   "text": "Before the teacher's scores become shares, divide them by a number they called the temperature.",
-  "syllables": 27,
-  "seconds": 7.124,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 1,
   "sentence": 0,
-  "start": 106.55,
-  "end": 110.507,
+  "start": 80.125,
+  "end": 83.495,
   "text": "At a temperature of 1 the wheel is the teacher's own.",
-  "syllables": 15,
-  "seconds": 3.958,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 1,
   "sentence": 1,
-  "start": 111.619,
-  "end": 120.853,
+  "start": 83.815,
+  "end": 92.336,
   "text": "At 2 and 4 the big slots shrink and the slivers grow, so the student hears more about the words the teacher thinks are unlikely, and how unlikely.",
-  "syllables": 35,
-  "seconds": 9.235,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 2,
   "sentence": 0,
-  "start": 122.937,
-  "end": 128.478,
+  "start": 92.936,
+  "end": 97.893,
   "text": "The student matches the softened wheel with its own wheel, softened the same way.",
-  "syllables": 21,
-  "seconds": 5.541,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 2,
   "sentence": 1,
-  "start": 129.589,
-  "end": 138.56,
+  "start": 98.213,
+  "end": 104.952,
   "text": "The paper multiplies that loss by the temperature squared, so the push stays about the same size whatever the temperature.",
-  "syllables": 34,
-  "seconds": 8.971,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 3,
   "sentence": 0,
-  "start": 140.644,
-  "end": 154.1,
+  "start": 105.552,
+  "end": 118.095,
   "text": "Our student has 4,112 numbers, 20 percent of the teacher's 20,864: one floor instead of two, and lists of 16 numbers per word instead of 32.",
-  "syllables": 51,
-  "seconds": 13.456,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 3,
   "line": 0,
   "sentence": 0,
-  "start": 158.268,
-  "end": 167.239,
+  "start": 119.295,
+  "end": 128.73,
   "text": "First, give the student all the fresh text it wants: 2,000 steps, new sentences every step, three students of each kind with different seeds.",
-  "syllables": 34,
-  "seconds": 8.971,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 3,
   "predict": 0,
-  "start": 169.322,
-  "end": 175.391,
+  "start": 129.33,
+  "end": 135.591,
   "text": "With all the text it wants, does the student learn more from the teacher's wheel than from the text's own words?",
-  "syllables": 23,
-  "seconds": 6.069,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 3,
   "line": 1,
   "sentence": 0,
-  "start": 177.891,
-  "end": 183.168,
+  "start": 138.091,
+  "end": 143.178,
   "text": "Trained on the text's own words, the student's held-out loss is 0.72.",
-  "syllables": 20,
-  "seconds": 5.277,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 3,
   "line": 1,
   "sentence": 1,
-  "start": 184.279,
-  "end": 193.25,
+  "start": 143.498,
+  "end": 152.085,
   "text": "On the teacher's wheel: 0.70 at temperature 1, 0.74 at 2, 0.72 at 4.",
-  "syllables": 34,
-  "seconds": 8.971,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 3,
   "line": 1,
   "sentence": 2,
-  "start": 194.361,
-  "end": 198.055,
+  "start": 152.405,
+  "end": 155.687,
   "text": "None of those differences holds up across the three seeds.",
-  "syllables": 14,
-  "seconds": 3.694,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 3,
   "line": 1,
   "sentence": 3,
-  "start": 199.167,
-  "end": 205.235,
+  "start": 156.007,
+  "end": 161.66,
   "text": "Only temperature 8 is clearly different, and it is worse, by 0.04.",
-  "syllables": 23,
-  "seconds": 6.069,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 3,
   "line": 1,
   "sentence": 4,
-  "start": 206.346,
-  "end": 213.47,
+  "start": 161.98,
+  "end": 167.936,
   "text": "Some students never learned to look back, whichever way they were taught, and those runs swing the averages.",
-  "syllables": 27,
-  "seconds": 7.124,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 3,
   "line": 2,
   "sentence": 0,
-  "start": 215.554,
-  "end": 220.831,
+  "start": 168.536,
+  "end": 173.884,
   "text": "So with plenty of text, we saw no gain from the teacher that three seeds could confirm.",
-  "syllables": 20,
-  "seconds": 5.277,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 3,
   "line": 2,
   "sentence": 1,
-  "start": 221.942,
-  "end": 235.399,
+  "start": 174.204,
+  "end": 186.421,
   "text": "The teacher did make the student more like itself: at temperature 2, students taught by the wheel pick the teacher's top word 92 percent of the time, against 83 for students taught by the text.",
-  "syllables": 51,
-  "seconds": 13.456,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 4,
   "line": 0,
   "sentence": 0,
-  "start": 239.566,
-  "end": 248.537,
+  "start": 187.621,
+  "end": 195.73,
   "text": "Hinton and his colleagues made a stronger claim: soft targets carry what the teacher learned to a student that sees very little data.",
-  "syllables": 34,
-  "seconds": 8.971,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 4,
   "line": 1,
   "sentence": 0,
-  "start": 250.621,
-  "end": 258.8,
+  "start": 196.33,
+  "end": 203.917,
   "text": "So give the student only 32 rows of 24 words, and show it the same rows over and over, 1,000 times each.",
-  "syllables": 31,
-  "seconds": 8.179,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 4,
   "predict": 0,
-  "start": 260.884,
-  "end": 266.952,
+  "start": 204.517,
+  "end": 211.408,
   "text": "Now the student gets only 32 rows, over and over. The text's words, or the teacher's wheel?",
-  "syllables": 23,
-  "seconds": 6.069,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 4,
   "line": 2,
   "sentence": 0,
-  "start": 269.452,
-  "end": 273.146,
+  "start": 213.908,
+  "end": 218.082,
   "text": "Trained on those rows' own words, the student learns them by heart.",
-  "syllables": 14,
-  "seconds": 3.694,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 4,
   "line": 2,
   "sentence": 1,
-  "start": 274.258,
-  "end": 280.062,
+  "start": 218.402,
+  "end": 223.163,
   "text": "Its held-out loss was 1.72 at its best check and 4.80 by the end.",
-  "syllables": 22,
-  "seconds": 5.805,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 4,
   "line": 2,
   "sentence": 2,
-  "start": 281.174,
-  "end": 287.77,
+  "start": 223.483,
+  "end": 230.57,
   "text": "On the teacher's wheel for the same rows, its best check was 1.39, and it ended at 1.64.",
-  "syllables": 25,
-  "seconds": 6.596,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 4,
   "line": 2,
   "sentence": 3,
-  "start": 288.881,
-  "end": 291.52,
+  "start": 230.89,
+  "end": 233.303,
   "text": "Best against best, every seed agrees.",
-  "syllables": 10,
-  "seconds": 2.639,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 4,
   "line": 3,
   "sentence": 0,
-  "start": 293.603,
-  "end": 306.268,
+  "start": 233.903,
+  "end": 246.033,
   "text": "With 256 rows, the text's words give 0.90 at best and 1.28 by the end, and the teacher's wheel 0.73, close to the teacher's own 0.69.",
-  "syllables": 48,
-  "seconds": 12.665,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 4,
   "line": 4,
   "sentence": 0,
-  "start": 308.352,
-  "end": 309.143,
+  "start": 246.633,
+  "end": 247.742,
   "text": "One caution.",
-  "syllables": 3,
-  "seconds": 0.792,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 4,
   "line": 4,
   "sentence": 1,
-  "start": 310.255,
-  "end": 313.421,
+  "start": 248.062,
+  "end": 251.258,
   "text": "The teacher learned from far more text than these rows.",
-  "syllables": 12,
-  "seconds": 3.166,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 4,
   "line": 4,
   "sentence": 2,
-  "start": 314.532,
-  "end": 319.545,
+  "start": 251.578,
+  "end": 256.034,
   "text": "What crosses over is what the teacher already knew, carried in its wheel.",
-  "syllables": 19,
-  "seconds": 5.013,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 5,
   "line": 0,
   "sentence": 0,
-  "start": 323.713,
-  "end": 326.087,
+  "start": 257.234,
+  "end": 259.212,
   "text": "A teacher can fail in two ways.",
-  "syllables": 9,
-  "seconds": 2.375,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 5,
   "line": 0,
   "sentence": 1,
-  "start": 327.198,
-  "end": 331.684,
+  "start": 259.532,
+  "end": 263.967,
   "text": "Take only the teacher's top word, and train on it as if it were certain.",
-  "syllables": 17,
-  "seconds": 4.485,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 5,
   "line": 0,
   "sentence": 2,
-  "start": 332.795,
-  "end": 344.141,
+  "start": 264.287,
+  "end": 275.135,
   "text": "The student copies look-back words well, 95 percent right, but its held-out loss is 3.84, worse than just counting how often each word appears, 3.27.",
-  "syllables": 43,
-  "seconds": 11.346,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 5,
   "line": 0,
   "sentence": 3,
-  "start": 345.252,
-  "end": 353.168,
+  "start": 275.455,
+  "end": 282.281,
   "text": "Where the text could go more than one way, it is sure of one word, and pays heavily whenever the text picks another.",
-  "syllables": 30,
-  "seconds": 7.916,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 5,
   "line": 1,
   "sentence": 0,
-  "start": 355.251,
-  "end": 357.89,
+  "start": 282.881,
+  "end": 284.772,
   "text": "Or take a teacher that never trained.",
-  "syllables": 10,
-  "seconds": 2.639,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 5,
   "line": 1,
   "sentence": 1,
-  "start": 359.001,
-  "end": 364.806,
+  "start": 285.092,
+  "end": 290.853,
   "text": "Its wheel is close to even, and its student ends at 3.84, worse than counting words too.",
-  "syllables": 22,
-  "seconds": 5.805,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 5,
   "line": 2,
   "sentence": 0,
-  "start": 366.889,
-  "end": 376.124,
+  "start": 291.453,
+  "end": 299.953,
   "text": "And a perfect answer key, the rules' own odds, gives 0.69 with plenty of text, about what the teacher itself scores.",
-  "syllables": 35,
-  "seconds": 9.235,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 5,
   "line": 2,
   "sentence": 1,
-  "start": 377.236,
-  "end": 382.776,
+  "start": 300.273,
+  "end": 304.947,
   "text": "It beat the text alone in all three seeds, but by too little for three seeds to settle.",
-  "syllables": 21,
-  "seconds": 5.541,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 6,
   "line": 0,
   "sentence": 0,
-  "start": 386.944,
-  "end": 394.595,
+  "start": 306.147,
+  "end": 313.017,
   "text": "A small model can learn a lot from how a big one hesitates, most of all when there is little else to learn from.",
-  "syllables": 29,
-  "seconds": 7.652,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 6,
   "line": 0,
   "sentence": 1,
-  "start": 395.707,
-  "end": 399.928,
+  "start": 313.337,
+  "end": 318.293,
   "text": "For our student, with text that never ran out, the text was enough.",
-  "syllables": 16,
-  "seconds": 4.222,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 6,
   "line": 0,
   "sentence": 2,
-  "start": 401.04,
-  "end": 405.261,
+  "start": 318.613,
+  "end": 322.613,
   "text": "With a fixed training set, Hinton's team found a gain even then.",
-  "syllables": 16,
-  "seconds": 4.222,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 6,
   "line": 1,
   "sentence": 0,
-  "start": 407.345,
-  "end": 415.524,
+  "start": 323.213,
+  "end": 330.3,
   "text": "Next in the boatyard: teaching a trained model a new job by fitting a small rudder, instead of rebuilding the hull.",
-  "syllables": 31,
-  "seconds": 8.179,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 6,
   "line": 1,
   "sentence": 1,
-  "start": 416.636,
-  "end": 417.163,
+  "start": 330.62,
+  "end": 331.424,
   "text": "Goodnight.",
-  "syllables": 2,
-  "seconds": 0.528,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  }
 ]

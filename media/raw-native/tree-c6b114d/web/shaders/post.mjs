@@ -37,6 +37,9 @@ const srgb = (l) => (l <= 0.0031308 ? l * 12.92 : 1.055 * Math.pow(l, 1 / 2.4) -
 const SPLIT = (spec, keys) => Object.fromEntries(Object.entries(spec).filter(([k]) => k !== "pass" && !keys.includes(k)));
 
 // Encode a linear vec4 image buffer to display values in another buffer, after the effect.
+// 2026-10-17 (Night School render fix, local): a pass over n pixels in 64-wide groups, folded into two
+// dimensions so a 4K frame (129,600 groups) stays under WebGPU's 65,535 per dimension.
+const groups = (n) => { const g = Math.ceil(n / 64); return [Math.min(g, 32768), Math.ceil(g / 32768)]; };
 const ENCODE_WGSL = (tube) => /* wgsl */ `
 @group(0) @binding(0) var<storage, read> img: array<vec4f>;
 @group(0) @binding(1) var<storage, read_write> out: array<vec4f>;
@@ -47,10 +50,11 @@ fn enc(v: f32) -> f32 {
   if (l <= 0.0031308) { return l * 12.92; }
   return 1.055 * pow(l, 1.0 / 2.4) - 0.055;
 }
-@compute @workgroup_size(64) fn main(@builtin(global_invocation_id) g: vec3u) {
-  if (g.x >= arrayLength(&out)) { return; }
-  let c = img[g.x];
-  out[g.x] = vec4f(enc(c.x), enc(c.y), enc(c.z), 1.0);
+@compute @workgroup_size(64) fn main(@builtin(global_invocation_id) gid: vec3u) {
+  let i = gid.x + gid.y * 2097152u;
+  if (i >= arrayLength(&out)) { return; }
+  let c = img[i];
+  out[i] = vec4f(enc(c.x), enc(c.y), enc(c.z), 1.0);
 }`;
 
 async function encoder(host, tube, n, img, exposure) {
@@ -59,7 +63,7 @@ async function encoder(host, tube, n, img, exposure) {
   host.write(k, new Float32Array([exposure, 0, 0, 0]));
   const pipe = await host.compute(tube ? "crt encode" : "film encode", ENCODE_WGSL(tube));
   const g = host.graph(), ri = g.importBuffer("img", img), ro = g.importBuffer("out", out), rk = g.importBuffer("k", k);
-  g.addPass("encode", [[ri, Access.StorageRead], [rk, Access.StorageRead], [ro, Access.StorageWrite]], (c) => c.dispatch(pipe, [img, out, k], Math.ceil(n / 64)));
+  g.addPass("encode", [[ri, Access.StorageRead], [rk, Access.StorageRead], [ro, Access.StorageWrite]], (c) => c.dispatch(pipe, [img, out, k], ...groups(n)));
   g.markOutput(ro); g.compile();
   return { out, record: (enc) => host.record(g, enc, false), destroy() { out.destroy(); k.destroy(); } };
 }
@@ -139,28 +143,30 @@ const PACK_WGSL = /* wgsl */ `
 @group(0) @binding(0) var<storage, read> a: array<vec4f>;
 @group(0) @binding(1) var<storage, read_write> b: array<u32>;
 fn q(v: f32) -> u32 { return u32(floor(clamp(v, 0.0, 1.0) * 255.0 + 0.5)); }
-@compute @workgroup_size(64) fn main(@builtin(global_invocation_id) g: vec3u) {
-  if (g.x >= arrayLength(&b)) { return; }
-  let c = a[g.x];
-  b[g.x] = q(c.x) | (q(c.y) << 8u) | (q(c.z) << 16u) | (q(c.w) << 24u);
+@compute @workgroup_size(64) fn main(@builtin(global_invocation_id) gid: vec3u) {
+  let i = gid.x + gid.y * 2097152u;
+  if (i >= arrayLength(&b)) { return; }
+  let c = a[i];
+  b[i] = q(c.x) | (q(c.y) << 8u) | (q(c.z) << 16u) | (q(c.w) << 24u);
 }`;
 const UNPACK_WGSL = /* wgsl */ `
 @group(0) @binding(0) var<storage, read> a: array<u32>;
 @group(0) @binding(1) var<storage, read_write> b: array<vec4f>;
-@compute @workgroup_size(64) fn main(@builtin(global_invocation_id) g: vec3u) {
-  if (g.x >= arrayLength(&b)) { return; }
-  let w = a[g.x];
-  b[g.x] = vec4f(f32(w & 255u), f32((w >> 8u) & 255u), f32((w >> 16u) & 255u), 255.0) / 255.0;
+@compute @workgroup_size(64) fn main(@builtin(global_invocation_id) gid: vec3u) {
+  let i = gid.x + gid.y * 2097152u;
+  if (i >= arrayLength(&b)) { return; }
+  let w = a[i];
+  b[i] = vec4f(f32(w & 255u), f32((w >> 8u) & 255u), f32((w >> 16u) & 255u), 255.0) / 255.0;
 }`;
 async function plateEffect(host, width, height, inner) {
   const n = width * height, st = (bytes, label) => host.buffer({ size: bytes, usage: ["storage", "copy-src", "copy-dst"], label });
   const input = st(16 * n, "plate in"), output = st(16 * n, "plate out");
   const [pack, unpack] = await Promise.all([host.compute("plate pack", PACK_WGSL), host.compute("plate unpack", UNPACK_WGSL)]);
   const g = host.graph(), ri = g.importBuffer("in", input), rs = g.importBuffer("src", inner.src);
-  g.addPass("pack", [[ri, Access.StorageRead], [rs, Access.StorageWrite]], (c) => c.dispatch(pack, [input, inner.src], Math.ceil(n / 64)));
+  g.addPass("pack", [[ri, Access.StorageRead], [rs, Access.StorageWrite]], (c) => c.dispatch(pack, [input, inner.src], ...groups(n)));
   g.markOutput(rs); g.compile();
   const g2 = host.graph(), rp2 = g2.importBuffer("packed", inner.packed), ro2 = g2.importBuffer("out", output);
-  g2.addPass("unpack", [[rp2, Access.StorageRead], [ro2, Access.StorageWrite]], (c) => c.dispatch(unpack, [inner.packed, output], Math.ceil(n / 64)));
+  g2.addPass("unpack", [[rp2, Access.StorageRead], [ro2, Access.StorageWrite]], (c) => c.dispatch(unpack, [inner.packed, output], ...groups(n)));
   g2.markOutput(ro2); g2.compile();
   return { input, output, record(enc) { host.record(g, enc, false); inner.record(enc); host.record(g2, enc, false); },
     destroy() { input.destroy(); output.destroy(); inner.destroy(); } };

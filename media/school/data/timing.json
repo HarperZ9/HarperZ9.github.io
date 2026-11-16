@@ -3,514 +3,385 @@
   "segment": 0,
   "line": 0,
   "sentence": 0,
-  "start": 5.519,
-  "end": 6.047,
+  "start": 4.6,
+  "end": 5.358,
   "text": "Data.",
-  "syllables": 2,
-  "seconds": 0.528,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 0,
   "line": 0,
   "sentence": 1,
-  "start": 6.857,
-  "end": 8.44,
+  "start": 5.678,
+  "end": 7.278,
   "text": "What goes in comes out.",
-  "syllables": 6,
-  "seconds": 1.583,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 0,
   "line": 1,
   "sentence": 0,
-  "start": 9.959,
-  "end": 13.653,
+  "start": 7.878,
+  "end": 11.015,
   "text": "The loop from last time learns whatever is in the crates.",
-  "syllables": 14,
-  "seconds": 3.694,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 0,
   "line": 1,
   "sentence": 1,
-  "start": 14.463,
-  "end": 20.003,
+  "start": 11.335,
+  "end": 17.124,
   "text": "Tonight we change what goes in, train the same model the same way, and see what comes out.",
-  "syllables": 21,
-  "seconds": 5.541,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 1,
   "line": 0,
   "sentence": 0,
-  "start": 23.041,
-  "end": 26.735,
+  "start": 18.324,
+  "end": 21.482,
   "text": "The guides' sentences come in three kinds of episode.",
-  "syllables": 14,
-  "seconds": 3.694,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 1,
   "line": 0,
   "sentence": 1,
-  "start": 27.545,
-  "end": 32.294,
+  "start": 21.802,
+  "end": 26.223,
   "text": "In copy episodes, a thing found earlier has to come back later.",
-  "syllables": 18,
-  "seconds": 4.749,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 1,
   "line": 0,
   "sentence": 2,
-  "start": 33.105,
-  "end": 38.909,
+  "start": 26.543,
+  "end": 30.648,
   "text": "In who episodes, a question has to be answered with the guide who did the deed.",
-  "syllables": 22,
-  "seconds": 5.805,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 1,
   "line": 0,
   "sentence": 3,
-  "start": 39.719,
-  "end": 42.886,
+  "start": 30.968,
+  "end": 33.705,
   "text": "Plain episodes need no looking back at all.",
-  "syllables": 12,
-  "seconds": 3.166,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 1,
   "line": 1,
   "sentence": 0,
-  "start": 44.404,
-  "end": 49.154,
+  "start": 34.305,
+  "end": 37.716,
   "text": "In the usual mix, 80 percent of episodes need a look back.",
-  "syllables": 18,
-  "seconds": 4.749,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 1,
   "line": 1,
   "sentence": 1,
-  "start": 49.964,
-  "end": 55.505,
+  "start": 38.036,
+  "end": 42.878,
   "text": "Trained on that, the model gets look-back words right 99 percent of the time.",
-  "syllables": 21,
-  "seconds": 5.541,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 0,
   "sentence": 0,
-  "start": 58.542,
-  "end": 63.292,
+  "start": 44.078,
+  "end": 47.762,
   "text": "Now cut the look-back episodes down, and keep everything else the same.",
-  "syllables": 18,
-  "seconds": 4.749,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "predict": 0,
-  "start": 64.811,
-  "end": 71.671,
+  "start": 48.362,
+  "end": 53.688,
   "text": "Cut the look-back episodes from most of the crates to a twentieth. How much of the skill survives?",
-  "syllables": 26,
-  "seconds": 6.86,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 1,
   "sentence": 0,
-  "start": 74.171,
-  "end": 78.129,
+  "start": 56.188,
+  "end": 59.409,
   "text": "At 40 percent, it still gets 99 percent right.",
-  "syllables": 15,
-  "seconds": 3.958,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 1,
   "sentence": 1,
-  "start": 78.939,
-  "end": 81.049,
+  "start": 59.729,
+  "end": 61.814,
   "text": "At 20 percent, 56.",
-  "syllables": 8,
-  "seconds": 2.111,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 1,
   "sentence": 2,
-  "start": 81.859,
-  "end": 83.706,
+  "start": 62.134,
+  "end": 63.776,
   "text": "At 5 percent, 19.",
-  "syllables": 7,
-  "seconds": 1.847,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 2,
   "sentence": 0,
-  "start": 85.225,
-  "end": 92.085,
+  "start": 64.376,
+  "end": 70.67,
   "text": "And with none at all, the model is right 3 percent of the time, less than the untrained model's 7.",
-  "syllables": 26,
-  "seconds": 6.86,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 2,
   "sentence": 1,
-  "start": 92.896,
-  "end": 97.909,
+  "start": 70.99,
+  "end": 76.485,
   "text": "Its loss on unseen rows is 8.25, worse than before it was trained.",
-  "syllables": 19,
-  "seconds": 5.013,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 2,
   "line": 2,
   "sentence": 2,
-  "start": 98.719,
-  "end": 100.566,
+  "start": 76.805,
+  "end": 78.847,
   "text": "It learned to be sure, and wrong.",
-  "syllables": 7,
-  "seconds": 1.847,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 3,
   "line": 0,
   "sentence": 0,
-  "start": 103.603,
-  "end": 110.2,
+  "start": 80.047,
+  "end": 84.952,
   "text": "Take out only the copy episodes, and keep the who episodes, which also need a look back.",
-  "syllables": 25,
-  "seconds": 6.596,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 3,
   "line": 1,
   "sentence": 0,
-  "start": 111.719,
-  "end": 116.468,
+  "start": 85.552,
+  "end": 89.805,
   "text": "On who questions, the model is still right 100 percent of the time.",
-  "syllables": 18,
-  "seconds": 4.749,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 3,
   "line": 1,
   "sentence": 1,
-  "start": 117.278,
-  "end": 122.291,
+  "start": 90.125,
+  "end": 94.862,
   "text": "On copy episodes, a kind it never saw in training, 5 percent.",
-  "syllables": 19,
-  "seconds": 5.013,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 3,
   "line": 1,
   "sentence": 2,
-  "start": 123.101,
-  "end": 128.642,
+  "start": 95.182,
+  "end": 98.866,
   "text": "The looking back did not carry over to a kind of sentence it had never seen.",
-  "syllables": 21,
-  "seconds": 5.541,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 4,
   "line": 0,
   "sentence": 0,
-  "start": 131.68,
-  "end": 135.638,
+  "start": 100.066,
+  "end": 103.666,
   "text": "Now swap 10 percent of the training answers for random words.",
-  "syllables": 15,
-  "seconds": 3.958,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 4,
   "line": 1,
   "sentence": 0,
-  "start": 137.156,
-  "end": 142.697,
+  "start": 104.266,
+  "end": 110.161,
   "text": "Ordinary next words barely notice: still right 70 percent of the time.",
-  "syllables": 21,
-  "seconds": 5.541,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 4,
   "line": 1,
   "sentence": 1,
-  "start": 143.507,
-  "end": 151.951,
+  "start": 110.481,
+  "end": 117.449,
   "text": "But the look-back skill comes slower: after the same training it gets look-back words right only 76 percent of the time.",
-  "syllables": 32,
-  "seconds": 8.443,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 4,
   "line": 1,
   "sentence": 2,
-  "start": 152.761,
-  "end": 159.357,
+  "start": 117.769,
+  "end": 123.39,
   "text": "Copy episodes stay at 100 percent; the who questions take the loss, at 70.",
-  "syllables": 25,
-  "seconds": 6.596,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 4,
   "line": 1,
   "sentence": 3,
-  "start": 160.167,
-  "end": 163.861,
+  "start": 123.71,
+  "end": 127.121,
   "text": "At 30 percent noise, look-back words drop to 33.",
-  "syllables": 14,
-  "seconds": 3.694,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 5,
   "line": 0,
   "sentence": 0,
-  "start": 166.899,
-  "end": 173.495,
+  "start": 128.321,
+  "end": 133.689,
   "text": "Last, keep the amount of text the same, but draw it from a small pile of rows, used again and again.",
-  "syllables": 25,
-  "seconds": 6.596,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 5,
   "predict": 0,
-  "start": 175.014,
-  "end": 180.555,
+  "start": 134.289,
+  "end": 139.657,
   "text": "Same amount of text, but only 64 different rows. Better, worse, or the same?",
-  "syllables": 21,
-  "seconds": 5.541,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 5,
   "line": 1,
   "sentence": 0,
-  "start": 183.055,
-  "end": 192.29,
+  "start": 142.157,
+  "end": 150.642,
   "text": "With 64 rows, each seen 500 times, the model learns the pile by heart and fails on new rows: a held-out loss of 3.02.",
-  "syllables": 35,
-  "seconds": 9.235,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 5,
   "line": 1,
   "sentence": 1,
-  "start": 193.1,
-  "end": 199.96,
+  "start": 150.962,
+  "end": 157.593,
   "text": "Its held-out loss was lowest at the first check, step 100, and only got worse as it learned the pile.",
-  "syllables": 26,
-  "seconds": 6.86,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 5,
   "line": 2,
   "sentence": 0,
-  "start": 201.479,
-  "end": 205.173,
+  "start": 158.193,
+  "end": 162.046,
   "text": "With 1,024 rows: 0.71.",
-  "syllables": 14,
-  "seconds": 3.694,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 5,
   "line": 2,
   "sentence": 1,
-  "start": 205.983,
-  "end": 209.149,
+  "start": 162.366,
+  "end": 165.966,
   "text": "With fresh rows every step: 0.69.",
-  "syllables": 12,
-  "seconds": 3.166,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 6,
   "line": 0,
   "sentence": 0,
-  "start": 212.187,
-  "end": 212.978,
+  "start": 167.166,
+  "end": 168.387,
   "text": "One more crate.",
-  "syllables": 3,
-  "seconds": 0.792,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 6,
   "line": 0,
   "sentence": 1,
-  "start": 213.788,
-  "end": 219.593,
+  "start": 168.707,
+  "end": 173.254,
   "text": "Train a model on sentences where Rerun never does the deed in a who episode.",
-  "syllables": 22,
-  "seconds": 5.805,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 6,
   "line": 0,
   "sentence": 2,
-  "start": 220.403,
-  "end": 224.361,
+  "start": 173.574,
+  "end": 177.364,
   "text": "Then ask it who did something, when the answer is Rerun.",
-  "syllables": 15,
-  "seconds": 3.958,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 6,
   "line": 1,
   "sentence": 0,
-  "start": 225.88,
-  "end": 229.31,
+  "start": 177.964,
+  "end": 180.953,
   "text": "It names the right guide 0 percent of the time.",
-  "syllables": 13,
-  "seconds": 3.43,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 6,
   "line": 1,
   "sentence": 1,
-  "start": 230.12,
-  "end": 234.078,
+  "start": 181.273,
+  "end": 184.452,
   "text": "When the answer is Tallow or Pylon, 100 percent.",
-  "syllables": 15,
-  "seconds": 3.958,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 6,
   "line": 1,
   "sentence": 2,
-  "start": 234.888,
-  "end": 240.429,
+  "start": 184.772,
+  "end": 189.025,
   "text": "It has learned its crates faithfully, and its crates never showed Rerun doing it.",
-  "syllables": 21,
-  "seconds": 5.541,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 7,
   "line": 0,
   "sentence": 0,
-  "start": 243.466,
-  "end": 246.105,
+  "start": 190.225,
+  "end": 192.646,
   "text": "A model knows the world through its crates.",
-  "syllables": 10,
-  "seconds": 2.639,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 7,
   "line": 0,
   "sentence": 1,
-  "start": 246.915,
-  "end": 253.775,
+  "start": 192.966,
+  "end": 198.524,
   "text": "Whatever is rare in them is weak in the model, and whatever is missing from them is missing from it.",
-  "syllables": 26,
-  "seconds": 6.86,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 7,
   "line": 1,
   "sentence": 0,
-  "start": 255.294,
-  "end": 260.043,
+  "start": 199.124,
+  "end": 203.06,
   "text": "Next in the lighthouse: what happens when the model and the crates get bigger.",
-  "syllables": 18,
-  "seconds": 4.749,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  },
  {
   "segment": 7,
   "line": 1,
   "sentence": 1,
-  "start": 260.853,
-  "end": 261.381,
+  "start": 203.38,
+  "end": 203.991,
   "text": "Goodnight.",
-  "syllables": 2,
-  "seconds": 0.528,
-  "provisional": true,
-  "accepted": true
+  "provisional": false
  }
 ]
