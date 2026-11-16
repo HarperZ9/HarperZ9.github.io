@@ -36,8 +36,8 @@ export function prepare(A) {
     acc: t("accuracy down by as much as 36%, worst case", { atlas: A.mono, size: 32, x: 960, y: 680, anchor: "center" }),
     reads: t("It read as a reason. It was not the whole cause.", { atlas: A.sans, size: 32, x: 960, y: 742, anchor: "center" }),
     close: t("Read the reasoning, and trust the actions you can check.", { atlas: A.head, size: 44, x: 960, y: 140, anchor: "center" }),
-    voice: t("The voice is a synthesized version of the author's.", { atlas: A.sans, size: 26, x: 960, y: 200, anchor: "center" }),
-    sources: t("Every number on screen links to its source under the video.", { atlas: A.sans, size: 26, x: 960, y: 240, anchor: "center" }),
+    voice: t("The voice is synthetic: Cartesia Sonic, voice Heath.", { atlas: A.sans, size: 26, x: 960, y: 200, anchor: "center" }),
+    sources: t("Each number's source is linked under the video.", { atlas: A.sans, size: 26, x: 960, y: 240, anchor: "center" }),
     closeRibbon: curve(bezier([EYE.x + 60, EYE.y - 20], [1250, 260], [1500, 360], [1860, 250])),
     closeThread: curve(bezier([EYE.x + 60, EYE.y + 30], [1250, 640], [1500, 560], [1860, 660])),
   };

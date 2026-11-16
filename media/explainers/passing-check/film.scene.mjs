@@ -35,7 +35,7 @@ export default {
       p2: { enter: c.at(2, 0, 0), study: c.at(2, 1, 0), size: c.at(2, 2, 0), zero: c.at(2, 2, 1), advice: c.at(2, 3, 0), exit: c.at(3, 0, 0) },
       p3: { enter: c.at(3, 0, 0), named: c.at(3, 0, 1), just: c.at(3, 1, 0), coupled: c.at(3, 2, 0), none: c.at(3, 2, 1), exit: c.at(4, 0, 0) },
       p4: { enter: c.at(4, 0, 0), study: c.at(4, 1, 0), shares: c.at(4, 1, 1), earlier: c.at(4, 2, 0), third: c.at(4, 2, 1), preprints: c.at(4, 3, 0),
-        far: c.at(4, 3, 1), exit: c.at(5, 0, 0) },
+        far: c.word(4, 3, 0, "how far"), exit: c.at(5, 0, 0) },
       p5: { enter: c.at(5, 0, 0), passes: c.at(5, 1, 0), control: c.at(5, 1, 1), evidence: c.at(5, 2, 0), absence: c.at(5, 2, 1), close: c.at(6, 0, 0),
         voice: c.at(6, 1, 0), sources: c.at(6, 1, 1), end },
     };

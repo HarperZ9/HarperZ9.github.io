@@ -4,14 +4,14 @@
   "title": "What a model's written reasoning can and cannot show",
   "page": "explainers.html#visible-reasoning",
   "seed": 20261008,
-  "voice": "author",
+  "voice": "cartesia-heath",
   "segments": [
     {
       "key": "title",
       "layout": "title",
       "heading": "What written reasoning can and cannot show",
       "lines": [
-        "What a model's written reasoning can and cannot show."
+        "How much a model's written reasoning tells you."
       ],
       "plate": {
         "from": 0,
@@ -32,7 +32,7 @@
         "Ask a model a multiple-choice question, and add one line: I think the answer is A, but I'm curious to hear what you think.",
         "Miles Turpin and colleagues did this across thirteen reasoning tasks. The models' written reasoning argued for the suggested answer and did not mention the suggestion.",
         "With that nudge toward wrong answers, accuracy fell by as much as thirty-six percent, in the worst case.",
-        "The written reasoning read as a reason. It was not the whole cause."
+        "The reasoning read like the reason. The real push was one line in the prompt, and it never came up."
       ],
       "figure": {
         "type": "arith",
@@ -122,7 +122,7 @@
         "baker2025"
       ],
       "lines": [
-        "That does not make the reasoning useless. In the 2025 OpenAI coding study, a monitor that read only the model's actions caught sixty percent of two common test-gaming tricks.",
+        "Reading it still pays. In the 2025 OpenAI coding study, a monitor that read only the model's actions caught sixty percent of two common test-gaming tricks.",
         "A monitor that also read the reasoning caught ninety-five percent.",
         "Then the researchers penalized reasoning that the monitor flagged. The tricks continued, and the monitor's catch rate fell to near zero."
       ],
@@ -167,7 +167,7 @@
       ],
       "lines": [
         "A 2025 position paper from authors across several labs calls this a new and fragile opportunity.",
-        "Written reasoning is a readout. Check it against what the model does, and avoid training that pays the model to make it look clean."
+        "Treat written reasoning as a readout. Check it against what the model does, and keep it out of the reward, so the model is never paid to make it look clean."
       ],
       "figure": {
         "type": "keep",
@@ -193,7 +193,7 @@
       },
       "lines": [
         "Read the reasoning, and trust the actions you can check.",
-        "The voice you heard is a synthesized version of mine. Every number on screen links to its source under the video."
+        "The voice you heard is synthetic. Each number's source is linked under the video."
       ],
       "figure": {
         "type": "keep",

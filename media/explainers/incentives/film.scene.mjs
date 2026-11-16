@@ -31,7 +31,7 @@ export default {
       s1: { setup: c.at(1, 0, 0), reward: c.at(1, 0, 1), study: c.at(1, 1, 0), raise: c.at(1, 2, 0), neither: c.at(1, 2, 1), measured: c.at(1, 2, 2) },
       s2: { human: c.at(2, 0, 0), assistants: c.at(2, 0, 1), sharma: c.at(2, 1, 0), given: c.at(2, 2, 0), syco: c.at(2, 3, 0) },
       s3: { enter: c.at(3, 0, 0), heldout: c.at(3, 1, 0), did: c.at(3, 2, 0), helpful: c.at(3, 2, 1), small: c.at(3, 3, 0), direction: c.at(3, 3, 1), exit: c.at(4, 0, 0) },
-      s4: { none: c.at(4, 0, 0), needs: c.at(4, 0, 1), fix: c.at(4, 1, 0) },
+      s4: { none: c.at(4, 0, 0), needs: c.word(4, 0, 0, "a reward"), fix: c.at(4, 1, 0) },
       s5: { close: c.at(5, 0, 0), voice: c.at(5, 1, 0), sources: c.at(5, 1, 1), end: FRAMES / FPS },
     };
     const tab = (id) => {

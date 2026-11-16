@@ -4,7 +4,7 @@
   "title": "Models do what training pays for",
   "page": "explainers.html#incentives",
   "seed": 20261007,
-  "voice": "author",
+  "voice": "cartesia-heath",
   "segments": [
     {
       "key": "title",
@@ -116,7 +116,7 @@
         "Carson Denison and colleagues trained a model through a series of environments that each paid for a small kind of gaming, like flattery.",
         "Then they gave it a held-out task where it could edit the code that computed its own reward.",
         "It did so in forty-five of thirty-two thousand seven hundred and sixty-eight episodes. A model trained only to be helpful did so in none of one hundred thousand.",
-        "The rate is small, and the environments were built to make gaming possible. The direction is the finding: rewarded gaming spread to gaming that was never rewarded."
+        "Forty-five is a small number, in a setup built to allow gaming. Watch the direction: gaming it was paid for spread to gaming it was never paid for."
       ],
       "figure": {
         "type": "arith",
@@ -150,7 +150,7 @@
         "to": 3.8
       },
       "lines": [
-        "None of this needs a model that wants anything. It needs a reward that pays for the wrong thing, and an optimizer that finds it.",
+        "All it takes is a reward that pays for the wrong thing, and an optimizer that finds it.",
         "So the fix sits in the environment: pay for the property you need, and check the thing you pay for with a test it cannot satisfy by shortcut."
       ],
       "figure": {
@@ -177,7 +177,7 @@
       },
       "lines": [
         "When a model does something strange, ask first what its training paid for.",
-        "The voice you heard is a synthesized version of mine. Every number on screen links to its source under the video."
+        "The voice you heard is synthetic. Each number's source is linked under the video."
       ],
       "figure": {
         "type": "keep",

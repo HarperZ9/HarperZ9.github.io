@@ -4,7 +4,7 @@
   "title": "Re-derive it. Don't take it on trust.",
   "page": "explainers.html#rederive",
   "seed": 20261006,
-  "voice": "author",
+  "voice": "cartesia-heath",
   "segments": [
     {
       "key": "title",
@@ -58,7 +58,7 @@
         "In 2015, the Open Science Collaboration repeated one hundred psychology studies from three journals.",
         "Ninety-seven of the hundred originals had reported a positive result. Of those ninety-seven, thirty-five came back significant in the repeat.",
         "On average, the repeated effects were about half the size of the originals.",
-        "That does not show the other studies were wrong. A single repeat can miss a real effect. It shows how much a published result can rest on one run."
+        "One repeat can miss a real effect, so this is no list of wrong papers. It is a picture of how much a published result can rest on a single run."
       ],
       "figure": {
         "type": "dotgrid",
@@ -138,7 +138,7 @@
         "Web certificates are public records, so anyone can check them without asking the issuer.",
         "Deepak Kumar and colleagues wrote two hundred and twenty checks and ran them over two hundred and forty million certificates.",
         "In 2012, more than twelve percent of certificates had errors. By 2017 the share was two hundredths of one percent.",
-        "The paper does not show the checks caused that fall. It shows a public record can be re-checked by a stranger, at the scale of the whole web."
+        "Many things drove that drop. Look at who ran the check: strangers, asking nobody's permission, across the whole web."
       ],
       "figure": {
         "type": "race",
@@ -173,8 +173,8 @@
         "to": 5.0
       },
       "lines": [
-        "A result you can re-derive does not need your trust. Ask for the data, the code and a check you can run yourself.",
-        "The voice you heard is a synthesized version of mine. Every number on screen links to its source under the video."
+        "Ask for the data, the code and a check you can run yourself. Then you can see the result come back with your own eyes.",
+        "The voice you heard is synthetic. Each number's source is linked under the video."
       ],
       "figure": {
         "type": "keep",

@@ -42,8 +42,8 @@ export function prepare(A, ctx) {
     closeA: t("A result you can re-derive", { atlas: A.head, size: 50, x: 1300, y: 480, anchor: "center" }),
     closeB: t("does not need your trust.", { atlas: A.head, size: 50, x: 1300, y: 546, anchor: "center" }),
     ask: t("Ask for the data, the code and a check you can run yourself.", { atlas: A.sans, size: 28, x: 1300, y: 620, anchor: "center" }),
-    voice: t("The voice is a synthesized version of the author's.", { atlas: A.sans, size: 26, x: 1300, y: 690, anchor: "center" }),
-    sources: t("Every number on screen links to its source under the video.", { atlas: A.sans, size: 26, x: 1300, y: 728, anchor: "center" }),
+    voice: t("The voice is synthetic: Cartesia Sonic, voice Heath.", { atlas: A.sans, size: 26, x: 1300, y: 690, anchor: "center" }),
+    sources: t("Each number's source is linked under the video.", { atlas: A.sans, size: 26, x: 1300, y: 728, anchor: "center" }),
   };
   const gotIdx = [...A.d2.got].sort((a, b) => a - b), keep = spread(REPRO, GOT);
   A.d2.repro = new Set(gotIdx.filter((_, k) => keep.has(k)));

@@ -30,8 +30,8 @@ export function prepare(A) {
     plainPass: [t("pass", { atlas: A.mono, size: 34, x: GATES[0], y: GY + 190, anchor: "center" }), t("pass", { atlas: A.mono, size: 34, x: GATES[1], y: GY + 190, anchor: "center" })],
     closeA: t("A check earns trust", { atlas: A.head, size: 50, x: 960, y: 520, anchor: "center" }),
     closeB: t("by failing when it should.", { atlas: A.head, size: 50, x: 960, y: 586, anchor: "center" }),
-    voice: t("The voice is a synthesized version of the author's.", { atlas: A.sans, size: 26, x: 960, y: 680, anchor: "center" }),
-    sources: t("Every number on screen links to its source under the video.", { atlas: A.sans, size: 26, x: 960, y: 720, anchor: "center" }),
+    voice: t("The voice is synthetic: Cartesia Sonic, voice Heath.", { atlas: A.sans, size: 26, x: 960, y: 680, anchor: "center" }),
+    sources: t("Each number's source is linked under the video.", { atlas: A.sans, size: 26, x: 960, y: 720, anchor: "center" }),
   };
 }
 

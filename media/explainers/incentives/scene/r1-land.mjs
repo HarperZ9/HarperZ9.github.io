@@ -46,13 +46,13 @@ export function prepare(A) {
     beamR: t("truthful, standard", { atlas: A.sans, size: 26, x: 1230, y: 900 - BAL, anchor: "center" }),
     pref: t("preferred 95% of the time", { atlas: A.mono, size: 30, x: 960, y: 1004 - BAL, anchor: "center" }),
     syco: t("sycophancy, traced in part to the preference data", { atlas: A.sans, size: 30, x: 960, y: 120, anchor: "center" }),
-    wants: t("None of this needs a model that wants anything.", { atlas: A.head, size: 44, x: 960, y: 140, anchor: "center" }),
+    wants: t("All it takes is", { atlas: A.head, size: 44, x: 960, y: 140, anchor: "center" }),
     needs: t("a reward that pays for the wrong thing, and an optimizer that finds it", { atlas: A.sans, size: 30, x: 960, y: 196, anchor: "center" }),
     fix: t("pay for the property you need; check it with a test no shortcut satisfies", { atlas: A.sans, size: 30, x: 960, y: 252, anchor: "center" }),
     check: t("check", { atlas: A.mono, size: 24, x: P.solve[0], y: P.solve[1] - 150, anchor: "center" }),
     close: t("Ask what the training paid for.", { atlas: A.head, size: 50, x: 960, y: 140, anchor: "center" }),
-    voice: t("The voice is a synthesized version of the author's.", { atlas: A.sans, size: 26, x: 960, y: 214, anchor: "center" }),
-    sources: t("Every number on screen links to its source under the video.", { atlas: A.sans, size: 26, x: 960, y: 254, anchor: "center" }),
+    voice: t("The voice is synthetic: Cartesia Sonic, voice Heath.", { atlas: A.sans, size: 26, x: 960, y: 214, anchor: "center" }),
+    sources: t("Each number's source is linked under the video.", { atlas: A.sans, size: 26, x: 960, y: 254, anchor: "center" }),
   };
 }
 

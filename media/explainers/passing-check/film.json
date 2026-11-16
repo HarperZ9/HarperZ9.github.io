@@ -4,7 +4,7 @@
   "title": "A passing check can still be wrong",
   "page": "explainers.html#passing-check",
   "seed": 20261005,
-  "voice": "author",
+  "voice": "cartesia-heath",
   "segments": [
     {
       "key": "title",
@@ -28,7 +28,7 @@
       "lines": [
         "Here is a change to a program, and here are its tests. Every test passes.",
         "The change is still wrong. None of the tests ever runs the line that broke.",
-        "A pass tells you the check found nothing. It does not tell you the check could have found it."
+        "A pass means the check found nothing. Could it have caught this bug at all? The pass can't tell you."
       ],
       "figure": {
         "type": "arith",
@@ -69,7 +69,7 @@
         "inozemtseva2014"
       ],
       "lines": [
-        "A common stand-in for a good test suite is coverage: how much of the code the tests run.",
+        "Teams often grade a test suite by its coverage: how much of the code the tests run.",
         "Laura Inozemtseva and Reid Holmes built thirty-one thousand test suites for five large Java programs and measured how many planted faults each one caught.",
         "Once they allowed for the size of a suite, coverage was only weakly to moderately related to catching faults. In one program the link was essentially zero.",
         "Their advice: coverage should not be used as a quality target."
@@ -150,7 +150,7 @@
         "Coding benchmarks for AI count a task as solved when the patch passes the task's tests.",
         "A 2025 study re-examined patches from three tools on five hundred tasks. Seven point eight percent of the patches counted as solved failed the developers' own tests, and twenty-nine point six percent behaved differently from the real fix.",
         "An earlier study hand-checked two hundred and fifty-one passing patches from one agent. In about a third, the fix was already written in the task description, and about another third passed weak tests.",
-        "Both studies are preprints. They show how far a pass can sit from a fix, on these benchmarks."
+        "On these benchmarks, that is how far a pass can sit from a fix."
       ],
       "figure": {
         "type": "arith",
@@ -220,8 +220,8 @@
         "to": 5.0
       },
       "lines": [
-        "A check earns trust by failing on something it should fail on, and doing it on the record.",
-        "The voice you heard is a synthesized version of mine. Every number on screen links to its source under the video."
+        "A check earns trust by failing on something it should fail on.",
+        "The voice you heard is synthetic. Each number's source is linked under the video."
       ],
       "figure": {
         "type": "keep",
