@@ -18,7 +18,8 @@ function makeField(asked = false) {
   if (!canvas || root.classList.contains("plain") || (!asked && !able())) return Promise.resolve(null);
   making = (async () => {
     try {
-      const { createField, scaleCeiling } = await import("/world/site/field/field.js");
+      const { createField, scaleCeiling, prepareField } = await import("/world/site/field/field.js");
+      await prepareField(canvas);   // the driver compiles the shaders while the page keeps answering (field/programs.js)
       const reduced = reducedMotion();
       // the quality budget per device class: a desktop with eight or more cores renders above its pixel count (up to
       // twice) and steps down to hold 60 frames a second; a smaller machine holds the screen's own pixels, stepping
@@ -44,7 +45,8 @@ function makeField(asked = false) {
   return making;
 }
 // the live render (a large shader to compile, the lettering's distance field to build) starts at the visitor's first
-// move, scroll or key after load, so it never weighs on the first screen; until then the plate is the field
+// move, scroll or key after load, so it never weighs on the first screen; until then the plate is the field. The
+// shaders compile in the driver without the page waiting on them, so a press made meanwhile is answered
 const EV = ["pointermove", "pointerdown", "scroll", "keydown", "wheel"];
 const once = () => { for (const e of EV) removeEventListener(e, once); ("requestIdleCallback" in window ? requestIdleCallback(() => makeField(), { timeout: 1200 }) : setTimeout(() => makeField(), 200)); };
 const arm = () => { for (const e of EV) addEventListener(e, once, { passive: true }); };

@@ -79,3 +79,6 @@ vendor/cmmns/** -text
 findings/results/** -text
 # The bus kernel and its expected output are hashed into the asset revision, so their bytes stay the same everywhere.
 world/site/surfaces/src/* text eol=lf
+
+# The Playground files the front page takes at one commit (Motion, the study palette), pinned by SHA256SUMS: no EOL conversion.
+media/raw-native/pick-*/** -text

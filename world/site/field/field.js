@@ -2,8 +2,10 @@
 // word in the glass); moving between spaces eases them all along one path. createField renders live frames, or
 // accumulates jittered frames into one still (renderStill) for the 4K plates the reduced-motion tier shows.
 import { TRANS_FRAG, MS_FRAG, SKY_FRAG } from "./atmosphere.glsl.js";
-import { WAVE_FRAG, SCENE_FRAG, POST_FRAG, VERT } from "./scene.glsl.js";
+import { WAVE_FRAG, SCENE_FRAG, POST_FRAG } from "./scene.glsl.js";
 import { SETTLE_FRAG, UPSCALE_FRAG, SHARPEN_FRAG } from "./upscale.glsl.js";
+import { context, program } from "./programs.js";
+export { prepareField } from "./programs.js";
 import { cascadeWaves, glyphField, sellmeier, N_BK7, swellWaves, swellHeight } from "./ocean.js";
 import { effectiveFetch } from "../sky/weather.mjs";
 import { blueMask, MASK_N } from "./jitter.mjs";
@@ -30,13 +32,6 @@ const IOR = [680, 550, 440].map((l) => sellmeier(l, N_BK7));
 const ABS = [0.997, 0.997, 0.996].map((t) => -Math.log(t) / 0.025);
 const CASCADES = [{ tile: 233, kmin: 0.027, kmax: 0.27 }, { tile: 37, kmin: 0.17, kmax: 1.7 }, { tile: 5.3, kmin: 1.2, kmax: 40 }];
 
-function compile(gl, src, type) { const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(s)); return s; }
-function program(gl, frag) {
-  const p = gl.createProgram(); gl.attachShader(p, compile(gl, VERT, gl.VERTEX_SHADER)); gl.attachShader(p, compile(gl, frag, gl.FRAGMENT_SHADER));
-  gl.bindAttribLocation(p, 0, "a"); gl.linkProgram(p); if (!gl.getProgramParameter(p, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(p));
-  const u = new Proxy({}, { get: (c, n) => (n in c ? c[n] : (c[n] = gl.getUniformLocation(p, n))) });
-  return { p, u };
-}
 function target(gl, w, h, { mip = false, filter = true, format = gl.RGBA16F } = {}) {
   const t = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, t);
   gl.texStorage2D(gl.TEXTURE_2D, mip ? Math.floor(Math.log2(Math.max(w, h))) + 1 : 1, format, w, h);
@@ -88,12 +83,7 @@ export function scaleGovernor({ budgetMs = 16.7, minScale = 0.6 } = {}) {
 }
 
 export function createField(canvas, { space = "close", dprCap = 1.5, pixels = 0, sharpen = 0.14, reduced = false, budgetMs = 16.7, minScale = 0.6, history = 0 } = {}) {
-  const gl = canvas.getContext("webgl2", { antialias: false, alpha: false, preserveDrawingBuffer: true, powerPreference: "high-performance" });
-  if (!gl || !gl.getExtension("EXT_color_buffer_float")) throw new Error("glass-water field: WebGL2 with float targets is not available here");
-  // a software rasteriser (SwiftShader, llvmpipe, WARP) runs this shader on the CPU and blocks the page; such a
-  // device keeps the rendered plate. ?gpu=any lifts the check, for renders made on purpose (the 4K plates)
-  const dbg = gl.getExtension("WEBGL_debug_renderer_info"), who = dbg ? String(gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL)) : "";
-  if (/swiftshader|llvmpipe|softpipe|basic render|microsoft basic|warp/i.test(who) && new URLSearchParams(location.search).get("gpu") !== "any") throw new Error(`software renderer (${who})`);
+  const gl = context(canvas);   // refuses a software rasteriser and a device without float targets (programs.js)
   const aniso = gl.getExtension("EXT_texture_filter_anisotropic");
   const quad = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, quad); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
   gl.enableVertexAttribArray(0); gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);

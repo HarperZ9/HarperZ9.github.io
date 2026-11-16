@@ -12,10 +12,8 @@
 /* the road steps back once the places begin */
 .road, .strata, .carry { transition: opacity .6s ease; }
 body.past-road .road, body.past-road .strata, body.past-road .carry { opacity: 0; }
-.crossing { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 1; pointer-events: none; }
 .place-in { position: relative; z-index: 2; }
 .place-words h3, .laws li, .place-words, .arrival h1, .lm-word, .lm-floor { text-shadow: 0 0 14px var(--halo), 0 0 4px var(--halo), 0 0 1px var(--halo), 0 0 22px var(--halo); }
-html.plain .crossing, html.plain .uncover { display: none; }
 
 /* the places: motion first, then the place's name, its laws and the ways in */
 .bazaar { position: relative; padding: 12vh 0 6vh; }
@@ -23,11 +21,17 @@ html.plain .crossing, html.plain .uncover { display: none; }
 .place-in { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(20px, 4vw, 64px); align-items: center; max-width: 1360px; margin: 0 auto; width: 100%; }
 .place:nth-child(even) .place-in { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
 .place:nth-child(even) .lead-box { order: 2; }
-.lead-box { position: relative; margin: 0; -webkit-mask-image: radial-gradient(ellipse closest-side at 50% 50%, #000 70%, rgba(0,0,0,.6) 88%, transparent 100%); mask-image: radial-gradient(ellipse closest-side at 50% 50%, #000 70%, rgba(0,0,0,.6) 88%, transparent 100%); } /* no frame: each piece dissolves into the water from its centre out (the site is fluid, no boxes) */ html.plain .lead-box { -webkit-mask-image: none; mask-image: none; }
-/* pieces drawn on black give their ground to the night water: screen keeps the light of the work and drops the black */ :root[data-theme="dark"] :is(#p-type, #p-water) .lead-box { mix-blend-mode: screen; } @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) :is(#p-type, #p-water) .lead-box { mix-blend-mode: screen; } } html.plain .lead-box { mix-blend-mode: normal; }
-.lead-box .lead, .lead-box .lead img { display: block; width: 100%; height: auto; max-height: 78vh; object-fit: contain; }
+.lead-box { position: relative; margin: 0; display: grid; gap: 10px; }
+/* the gate: a piece that is pulled or pressed into place moves inside its own opening and never over its caption */
+.lead-gate { overflow: clip; min-width: 0; }
+/* no frame: each piece keeps its whole picture and gives only its outer edge to the water (the site is fluid, no boxes).
+   The piece is what the walk moves: world/site/home.js binds a Motion transition to it by its place in the viewport. */
+.lead-piece { position: relative; -webkit-mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent), linear-gradient(to bottom, transparent, #000 5%, #000 95%, transparent); -webkit-mask-composite: source-in; mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent), linear-gradient(to bottom, transparent, #000 5%, #000 95%, transparent); mask-composite: intersect; }
+html.plain .lead-piece { -webkit-mask-image: none; mask-image: none; }
+.lead-cap { margin: 0; padding: 0 2px 2px; max-width: 62ch; font: 400 var(--fs-2)/1.45 var(--face-text); color: var(--ink); text-shadow: 0 0 1px var(--halo), 0 0 3px var(--halo), 0 0 3px var(--halo), 0 0 8px var(--halo), 0 0 14px var(--halo), 0 0 22px var(--halo); }
+/* pieces drawn on black give their ground to the night water: screen keeps the light of the work and drops the black */ :root[data-theme="dark"] :is(#p-type, #p-water) .lead-piece { mix-blend-mode: screen; } @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) :is(#p-type, #p-water) .lead-piece { mix-blend-mode: screen; } } html.plain .lead-piece { mix-blend-mode: normal; }
+.lead-box .lead, .lead-box .lead img { display: block; width: 100%; height: auto; max-height: 82vh; object-fit: contain; }
 .lead-box video.lead { aspect-ratio: 16 / 9; object-fit: cover; background: var(--wall); }
-.lead-box .uncover { position: absolute; inset: 0; width: 100%; height: 100%; image-rendering: pixelated; transition: opacity .4s ease; }
 .place-words { display: grid; gap: 18px; align-content: start; }
 .place-words h3 { margin: 0; font: 800 var(--fs-6)/1.02 var(--face-display); letter-spacing: calc(-.035em * var(--display-track, 1)); color: var(--ink); text-wrap: balance; }
 .laws { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; max-width: 52ch; }
@@ -38,6 +42,9 @@ html.plain .crossing, html.plain .uncover { display: none; }
 .hum-wave { position: absolute; inset: 18% 6%; width: 88%; height: 64%; }
 .hum-press { position: relative; min-height: 64px; min-width: 64px; padding: 0 12px; border: 0; background: none; color: var(--ink); font: 700 var(--fs-4)/1 var(--face-display); cursor: pointer; text-decoration: underline transparent 2px; text-underline-offset: .3em; text-shadow: 0 0 14px var(--halo), 0 0 4px var(--halo), 0 0 1px var(--halo), 0 0 22px var(--halo); }
 .hum-press[aria-pressed="true"], .hum-press:hover { text-decoration-color: currentColor; }
+/* the press reads as a control without a box: a drawn triangle to play, two bars to stop */
+.hum-press::before { content: ""; display: inline-block; width: 0; height: 0; margin-right: .5em; border-left: .62em solid currentColor; border-top: .4em solid transparent; border-bottom: .4em solid transparent; vertical-align: -.02em; filter: drop-shadow(0 0 3px var(--halo)); }
+.hum-press[aria-pressed="true"]::before { width: .5em; height: .78em; border: 0; border-left: .18em solid currentColor; border-right: .18em solid currentColor; box-sizing: border-box; vertical-align: -.06em; }
 .hum-press:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
 
 /* living type: the painting sits exactly over the heading; the heading's own words stay under it */
@@ -55,8 +62,8 @@ html.plain .crossing, html.plain .uncover { display: none; }
   .place-in, .place:nth-child(even) .place-in { grid-template-columns: 1fr; }
   .place:nth-child(even) .lead-box { order: 0; }
 }
-@media (prefers-reduced-motion: reduce) { .road, .strata, .carry, .lead-box .uncover, .living-paint { transition: none; } }
-@media (forced-colors: active) { .crossing, .uncover, .living-paint { display: none; } .living-on { color: CanvasText !important; } }
+@media (prefers-reduced-motion: reduce) { .road, .strata, .carry, .living-paint { transition: none; } }
+@media (forced-colors: active) { .living-paint { display: none; } .living-on { color: CanvasText !important; } }
 /* the lit-sheet choice for living type in dark mode; hidden in light mode */
 .o-hand .o-sheet { min-height: 44px; padding: 0 6px; border: 0; background: none; color: var(--ink); font: 600 var(--fs-1)/1 var(--face-text); cursor: pointer; text-decoration: underline transparent 2px; text-underline-offset: .3em; }
 .o-hand .o-sheet[aria-pressed="true"] { text-decoration-color: currentColor; }
@@ -173,3 +180,16 @@ html.plain
 .world-home .work { background: none; text-shadow: 0 0 14px var(--halo), 0 0 4px var(--halo), 0 0 1px var(--halo), 0 0 22px var(--halo); }
 .world-home .work :is(button, .w-try, .w-out, pre, figure img) { text-shadow: none; }
 .lm-def { margin: 0 0 4px; max-width: 62ch; font: 500 var(--fs-3)/1.45 var(--face-text); color: var(--ink); text-shadow: 0 0 14px var(--halo), 0 0 4px var(--halo), 0 0 1px var(--halo); }
+
+/* the walk through the media: the piece takes the width the words leave and runs to the page's right edge, so the
+   picture is the larger half of every place; the words hold still beside it while the piece arrives and leaves */
+@media (min-width: 861px) {
+  .lm-site .place { padding-right: 0; }
+  .lm-site .place-in, .lm-site .place:nth-child(even) .place-in { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); }
+  .lm-site .lead-box { justify-items: end; }
+  .lm-site .lead-gate { width: 100%; }
+  .lm-site .lead-cap { justify-self: start; }
+  /* the tall Goya keeps its height and sits at the right edge */
+  .lm-site #p-exhibit .lead-gate { width: auto; justify-self: end; }
+  .lm-site #p-exhibit .lead img { width: auto; height: 82vh; max-width: 100%; }
+}

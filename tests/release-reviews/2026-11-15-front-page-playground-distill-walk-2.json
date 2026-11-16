@@ -1,0 +1,7 @@
+{
+  "date": "2026-11-15",
+  "note": "Same change as 2026-11-15-front-page-playground-distill-walk, recorded again after main was merged in and the asset revision moved to world-8db6778a5d. The front page changes on purpose: The Playground leads the dial with Distill inside it, the Distill stages are the recorded run of world/site/distill/picture.mjs, and each place has a caption and a Motion transition. Checked on 2026-11-15: tests/distill-front.cjs against a local server, and the home's head is unchanged apart from the stamps.",
+  "paths": {
+    "index.html": "4e2bb8a92363dfe44cbccfcb5d76d420cbb3d4c2b5d8aaeb043df2b02f9dd16d"
+  }
+}

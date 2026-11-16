@@ -1,9 +1,12 @@
-// work.mjs: the astrolabe after the arrival. Its hub is the study that distills one picture; its eight moons are
-// the pillars, and each pillar's panel opens in place on a real output: a study plate, a Flywheel verdict, an
+// work.mjs: the astrolabe after the arrival. Its hub is The Playground, which opens on Distill taking one picture
+// apart; its seven moons are the other pillars, and each panel opens in place on a real output: a Flywheel verdict, an
 // Articulate before and after, three CMMNS captures (taken under its earlier name, Daylight Commons), a BuildLang check, the engine's frames, a film.
 // The two videos use root-relative paths without a leading slash (index.html sits at the root), the form
 // tools/video_registry.py reads. Every panel is plain HTML first: without scripts they read top to bottom, each under its own heading.
 // world/site/work.js turns them into one panel at a time, chosen from the list or the dial, with deep links (/#w-engine).
+
+import { readFileSync } from "node:fs";
+import { differenceWords, partsWords, onPicture } from "../../world/site/distill/picture.mjs";
 
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const pic = (base, w, h, alt, cls = "") =>
@@ -16,25 +19,79 @@ function choose(label, states, extra = "") {
       <div class="w-states">${states.map((s, i) => `<div class="w-state" data-state="${i}">${s.html}</div>`).join("")}</div>${extra}`;
 }
 
-// The ten swatches of the bow study: hex, share of the picture (superframe study/bow/study.json, palette criterion).
-export const BOW_SWATCHES = [
-  ["#737f94", 54.5], ["#7f899e", 25.0], ["#96a0b3", 14.7], ["#829492", 2.1], ["#aebfe9", 1.8],
-  ["#bdf995", 0.5], ["#d67d90", 0.4], ["#fadd80", 0.4], ["#a6e6ce", 0.3], ["#ffa389", 0.2],
-];
-const strip = () => `<ol class="w-strip" aria-label="Ten swatches, by share of the picture">${BOW_SWATCHES.map(([hex, share]) =>
-  `<li style="--c:${hex};--s:${share}"><span class="w-chip" aria-hidden="true"></span><code>${hex}</code> <span>${share.toFixed(1)}%</span></li>`).join("")}</ol>`;
+// The example as Distill ran it (the name BOW is from the first example, a rainbow): site-src/world/distill-example.json, written by scripts/distill-picture-record.cjs from a
+// run of world/site/distill/picture.mjs in a browser on the shipped picture. Every number in the Distill stages is
+// read from that record, and tests/distill-front.cjs runs the same code again and compares.
+const BOW = JSON.parse(readFileSync(new URL("./distill-example.json", import.meta.url), "utf8"));
+const lum = (hex) => { const c = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255); return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]; };
+const strip = () => `<ol class="w-strip" aria-label="The swatches, by share of the picture">${BOW.swatches.map(({ hex, share }) =>
+  `<li style="--c:${hex};--s:${share || 0.1};--on:${lum(hex) > 0.4 ? "#0d0b12" : "#f4f2f8"}"><span class="w-chip" aria-hidden="true"></span><code>${hex}</code> <span>${share.toFixed(1)}%</span></li>`).join("")}</ol>`;
+// Distill, inside The Playground: one picture followed through four stages, each named on the stage itself.
+const distill = () => `<div class="ds4" id="w-distill" data-distill-picture data-example="/media/world/crossover/overprint-day-640.webp">
+          <p class="ds4-what"><b>Distill</b> breaks a thing into its original pieces, so it can be digested, studied, reproduced, and used as the input for something new. Here it takes a picture apart by colour.</p>
+          <ol class="ds4-stages">
+            <li><h3><span class="w-num" aria-hidden="true">1</span> The picture</h3>
+              <div data-slot="source">${pic("/media/world/crossover/overprint-day", 1280, 720, "Five inks as sheets of tinted glass on warm paper, red, cyan, yellow, green and black, crossing: the render Distill takes apart.")}</div>
+              <p data-words="source">One of the site's own renders, five inks as tinted glass, read at ${BOW.width} by ${BOW.height} pixels.</p></li>
+            <li><h3><span class="w-num" aria-hidden="true">2</span> Its pieces</h3>
+              <div class="ds4-on"><div data-slot="onpicture">${pic("/media/world/crossover/overprint-day", 1280, 720, `The picture with what Distill took out laid on it: a core of its colours along the centre line, and its ${BOW.swatches.length} swatches across it by share.`)}</div><span data-overlay>${onPicture(BOW)}</span></div>
+              <p data-words="parts">${esc(partsWords(BOW))}</p>
+              ${strip()}</li>
+            <li><h3><span class="w-num" aria-hidden="true">3</span> Rebuilt from the pieces</h3>
+              <div class="w-pair"><figure><div data-slot="original">${pic("/media/world/crossover/overprint-day", 1280, 720, "The original picture.")}</div><figcaption>Original</figcaption></figure>
+              <figure><div data-slot="rebuilt"><img src="/media/world/work/distill-example-rebuilt-640.webp" width="${BOW.width}" height="${BOW.height}" loading="lazy" decoding="async" alt="The same picture rebuilt from its ${BOW.swatches.length} swatches alone: flat colour where the original shades smoothly."></div><figcaption>From the swatches alone</figcaption></figure></div>
+              <p data-words="difference">${esc(differenceWords(BOW.difference, BOW.swatches.length))}</p></li>
+            <li><h3><span class="w-num" aria-hidden="true">4</span> Used for something new</h3>
+              <div data-slot="cloth"><img src="/media/world/work/distill-example-cloth-480.webp" width="${BOW.cloth.width}" height="${BOW.cloth.height}" loading="lazy" decoding="async" alt="The picture as woven cloth: a jacquard draft in the picture's own colours."></div>
+              <p>The pieces go on to another medium. The Loom weaves the picture's light and dark as a jacquard draft, ${BOW.cloth.ends} warp ends by ${BOW.cloth.picks} weft rows, in the picture's own colours.</p></li>
+          </ol>
+          <div class="ds4-own">
+            <button type="button" data-run hidden>Run it in this tab</button>
+            <label class="ds4-pick" hidden>Use your own picture<input type="file" accept="image/*" data-file></label>
+            <p class="ds4-how" hidden>Or drop a picture here. It is read in this tab and never uploaded.</p>
+            <p class="ds4-status" data-status role="status" aria-live="polite"></p>
+          </div>
+          <p class="ds4-also">The same taking-apart runs in three places. <a href="/playground/distill.html">Distill, the page</a>, takes any file, archive or folder apart by its bytes. <a href="/gather.html">Gather</a> takes a file apart into a tree of parts and rebuilds it byte for byte. <a href="/cmmns.html">CMMNS</a> saves a post as its parts: the media, the words and the replies.</p>
+        </div>`;
 
+// The Playground leads the dial. Distill is the first thing shown inside it; the engine's frames follow.
 export const HUB = {
-  id: "distill", title: "Distill",
-  html: `<figure class="w-demo">
-        ${choose("Picture", [
-          { button: "The picture", html: pic("/media/world/work/bow-source", 1651, 929, "A rainbow over a grey ground: the bow render the study takes apart.") },
-          { button: "Ten swatches", html: pic("/media/world/work/bow-ten-swatches", 1651, 929, "The same rainbow rebuilt from its ten swatches alone, each pixel painted with its nearest swatch.") },
+  id: "engine", title: "The Playground",
+  html: `<p class="w-lede">The Playground is the rendering engine and the creative suite built on it. One seed comes back as paint, living type, lines, carved material, sound and touch, and the renderer draws each frame twice, on a CPU reference and on the GPU, and says whether they agree.</p>
+      <figure class="w-demo">
+        ${choose("In The Playground", [
+          { button: "Distill", html: distill() },
+          { button: "Reference and shortcut", html: `<div class="w-wipe"><div class="w-wipe-frame">
+            <img src="/media/raw-native/default-ao_rt.png" width="512" height="512" loading="lazy" decoding="async" alt="Ray-traced ambient occlusion: a soft dark halo on the ground around a box.">
+            <img class="w-wipe-top" src="/media/raw-native/default-ao_ss.png" width="512" height="512" loading="lazy" decoding="async" alt="Screen-space ambient occlusion: almost all white, with a thin dark line along the box's bottom edges.">
+          </div><label class="w-wipe-control" hidden>Split <input type="range" min="0" max="100" value="50" aria-label="Split between the ray-traced reference and the shortcut"></label>
+          <p class="w-verdict" data-verdict="drift">Refuted: error 0.135 against a tolerance of 0.12</p></div>` },
+          { button: "One light", html: `<div class="w-pair">${pic("/media/world/work/dark-field-one-light", 1651, 1032, "Four spheres on grey stone in a near-black field, lit by one small warm lantern; 68.5% of the pixels fall below L* 25.")}${pic("/media/world/work/dark-field-control", 1651, 1032, "The control: the same spheres under an even surround of the same mean light, with no shadow and no dark field.")}</div>
+          <p class="w-io">One lantern: 68.5% of pixels below L* 25, and every pixel above 0.95 is a highlight. Even light: 0.0%.</p>` },
+          { button: "Era quantizer", html: `<ul class="w-tiles">
+            <li><img src="/media/world/work/era-rings-source.webp" width="594" height="334" loading="lazy" decoding="async" alt="Newton's rings rendered in 24-bit colour."><span>Source</span></li>
+            <li><img src="/media/world/work/era-rings-handheld-greens.webp" width="594" height="334" loading="lazy" decoding="async" alt="The rings in four greens through an ordered Bayer dither, like a handheld screen."><span>Four greens, Bayer</span></li>
+            <li><img src="/media/world/work/era-rings-one-bit-atkinson.webp" width="594" height="334" loading="lazy" decoding="async" alt="The rings in one bit, black and white, with Atkinson error diffusion."><span>One bit, Atkinson</span></li>
+            <li><img src="/media/world/work/era-rings-two-ink-overprint.webp" width="594" height="334" loading="lazy" decoding="async" alt="The rings printed in two inks that overprint, red and blue, in a halftone."><span>Two inks, overprint</span></li>
+          </ul>` },
+          { button: "Held frame", html: `<div class="w-held" data-held>${pic("/media/world/work/living-still-frame0", 1649, 928, "A gabled house at night with two lit windows between bare trees, in fine grain and rain.")}<img class="w-held-b" src="/media/world/work/living-still-frame2-1280.webp" width="1649" height="928" loading="lazy" decoding="async" alt=""></div>
+          <p class="w-io">The house holds; the grain and the rain re-roll on twos.</p>` },
         ])}
-        ${strip()}
-        <figcaption>Rebuilt from ten swatches, mean &Delta;E 1.8: the part of the colour the palette does not carry.</figcaption>
       </figure>
-      <p class="w-go"><a class="w-try" href="/studies/">Studies</a> <a href="/superframe.html">Superframe</a></p>`,
+      <details class="w-inside"><summary>What is inside The Playground</summary>
+        <ul>
+          <li><b>The core.</b> One seed, written in plain words, rendered in every medium; the same seed gives the same piece.</li>
+          <li><b>The native renderer.</b> C++ on Direct3D 12, Vulkan and WebGPU, moving to BuildLang a module at a time.</li>
+          <li><b>Motion.</b> Scenes as pure functions of time, for films and for pages. The walk through the places further down this page runs on it.</li>
+          <li><b>Type.</b> Living type, lettering, and the house typeface as static and variable fonts.</li>
+          <li><b>Sound.</b> Instruments built as physical models, a composer that writes from a seed, and measures that stand in for listening.</li>
+          <li><b>Study tools.</b> Distill; the palette, shape, geometry and rhythm of a picture; checks for image, motion and type.</li>
+          <li><b>Materials and measured data.</b> Spectral material records and physical constants, each with its source.</li>
+          <li><b>Makers.</b> Loom drafts, plotter sheets, voxels, fractals, and pictures reduced the way old hardware reduced them.</li>
+          <li><b>Low Water.</b> The game made with it, as its full-scale demonstration.</li>
+        </ul>
+      </details>
+      <p class="w-go"><a class="w-try" href="/playground/">Open The Playground</a> <a href="https://github.com/HarperZ9/superframe">Source</a></p>`,
 };
 
 // the pillars follow the landmarks' order (author, 2026-11-09: "BuildLang, Flywheel, Engine, Game, Site, Everything")
@@ -74,6 +131,7 @@ export const PILLARS = [
           { button: "Fact-check", html: `<img src="/media/daylight-commons/front-fact-check.webp" width="600" height="800" loading="lazy" decoding="async" alt="The panel showing that a fact-checker, Logically Facts, rated a matching claim False on 4 December 2024, with a link to the review.">` },
         ])}
       </figure>
+      <p class="w-io">A saved post is kept as its parts: the media, the words and the replies. That is the same taking-apart as <a href="#w-distill">Distill, in The Playground</a>.</p>
       <p class="w-go"><a class="w-try" href="/cmmns.html">CMMNS</a> <a href="https://github.com/HarperZ9/cmmns">Source</a></p>`,
   },
   {
@@ -89,36 +147,13 @@ export const PILLARS = [
       <p class="w-go"><a class="w-try" href="/articulate.html">Articulate</a> <a href="https://pypi.org/project/articulate-writing/">pip install <span class="ident" translate="no">articulate-writing</span></a></p>`,
   },
   {
-    id: "engine", title: "The engine",
-    html: `<figure class="w-demo">
-        ${choose("Frame", [
-          { button: "Reference and shortcut", html: `<div class="w-wipe"><div class="w-wipe-frame">
-            <img src="/media/raw-native/default-ao_rt.png" width="512" height="512" loading="lazy" decoding="async" alt="Ray-traced ambient occlusion: a soft dark halo on the ground around a box.">
-            <img class="w-wipe-top" src="/media/raw-native/default-ao_ss.png" width="512" height="512" loading="lazy" decoding="async" alt="Screen-space ambient occlusion: almost all white, with a thin dark line along the box's bottom edges.">
-          </div><label class="w-wipe-control" hidden>Split <input type="range" min="0" max="100" value="50" aria-label="Split between the ray-traced reference and the shortcut"></label>
-          <p class="w-verdict" data-verdict="drift">Refuted: error 0.135 against a tolerance of 0.12</p></div>` },
-          { button: "One light", html: `<div class="w-pair">${pic("/media/world/work/dark-field-one-light", 1651, 1032, "Four spheres on grey stone in a near-black field, lit by one small warm lantern; 68.5% of the pixels fall below L* 25.")}${pic("/media/world/work/dark-field-control", 1651, 1032, "The control: the same spheres under an even surround of the same mean light, with no shadow and no dark field.")}</div>
-          <p class="w-io">One lantern: 68.5% of pixels below L* 25, and every pixel above 0.95 is a highlight. Even light: 0.0%.</p>` },
-          { button: "Era quantizer", html: `<ul class="w-tiles">
-            <li><img src="/media/world/work/era-rings-source.webp" width="594" height="334" loading="lazy" decoding="async" alt="Newton's rings rendered in 24-bit colour."><span>Source</span></li>
-            <li><img src="/media/world/work/era-rings-handheld-greens.webp" width="594" height="334" loading="lazy" decoding="async" alt="The rings in four greens through an ordered Bayer dither, like a handheld screen."><span>Four greens, Bayer</span></li>
-            <li><img src="/media/world/work/era-rings-one-bit-atkinson.webp" width="594" height="334" loading="lazy" decoding="async" alt="The rings in one bit, black and white, with Atkinson error diffusion."><span>One bit, Atkinson</span></li>
-            <li><img src="/media/world/work/era-rings-two-ink-overprint.webp" width="594" height="334" loading="lazy" decoding="async" alt="The rings printed in two inks that overprint, red and blue, in a halftone."><span>Two inks, overprint</span></li>
-          </ul>` },
-          { button: "Held frame", html: `<div class="w-held" data-held>${pic("/media/world/work/living-still-frame0", 1649, 928, "A gabled house at night with two lit windows between bare trees, in fine grain and rain.")}<img class="w-held-b" src="/media/world/work/living-still-frame2-1280.webp" width="1649" height="928" loading="lazy" decoding="async" alt=""></div>
-          <p class="w-io">The house holds; the grain and the rain re-roll on twos.</p>` },
-        ])}
-      </figure>
-      <p class="w-go"><a class="w-try" href="/raw.html">raw-native</a> <a href="/superframe.html">Superframe</a> <a href="https://github.com/HarperZ9/raw-native">Source</a></p>`,
-  },
-  {
     id: "low-water", title: "Low Water",
     html: `<figure class="w-demo">
         <video class="w-loop" muted loop playsinline controls preload="none" width="480" height="360" poster="media/front-door/heavenly-boat-poster.jpg"><source src="media/front-door/heavenly-boat-480.mp4" type="video/mp4"></video>
         <figcaption>Low tide, from the film Heavenly Bodies (1920). Public domain, Prelinger Archives.</figcaption>
       </figure>
-      <p class="w-io">A narrative game in development, painted and played on the raw-native engine.</p>
-      <p class="w-go"><a class="w-try" href="/low-water.html">Low Water</a> <a href="/raw.html">The engine it runs on</a></p>`,
+      <p class="w-io">A narrative game in development, painted and played on The Playground.</p>
+      <p class="w-go"><a class="w-try" href="/low-water.html">Low Water</a> <a href="#w-engine">The Playground, the engine it runs on</a></p>`,
   },
   {
     id: "writing", title: "Essays and films",
