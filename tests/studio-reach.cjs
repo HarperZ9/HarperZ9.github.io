@@ -5,7 +5,8 @@
 // site menu and the Export menu at 375, 583, 1280 and 2560 px wide and, for every entry, scrolls it
 // to the top and to the bottom of what its scroller shows, reads which element a press at its centre
 // lands on, and fails when that is not the entry. Then it presses every source entry with the mouse
-// at that centre and checks the source and its panel come on stage. A planted bar over the bottom of
+// at that centre and checks the source and its panel come on stage. Every scroll is instant: the
+// page scrolls smoothly, and a read taken while a smooth scroll runs sees the old place. A planted bar over the bottom of
 // the window must make the same probe fail, so a probe that cannot see a cover cannot pass.
 const assert = require('node:assert/strict');
 const chromium = require('./lib/browser.cjs');   // BROWSER=firefox runs this file in Firefox
@@ -33,11 +34,12 @@ function probe(selector) {
     return `${n.tagName.toLowerCase()}${id}${cls}${txt ? ' "' + txt + '"' : ''}`;
   };
   const out = [];
-  const els = [...document.querySelectorAll(selector)];
+  // Only what is rendered: the site menu leaves its primary group to the bar on a wide screen.
+  const els = [...document.querySelectorAll(selector)].filter((e) => e.getClientRects().length > 0);
   for (const el of els) {
     const name = (el.dataset && el.dataset.source) || (el.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 40);
     for (const block of ['start', 'end']) {
-      el.scrollIntoView({ block, inline: 'nearest' });
+      el.scrollIntoView({ block, inline: 'nearest', behavior: 'instant' });
       const r = el.getBoundingClientRect();
       if (!r.width || !r.height) { out.push({ name, block, why: 'not shown' }); continue; }
       const x = r.left + r.width / 2, y = r.top + r.height / 2;
@@ -60,9 +62,14 @@ async function openNavMenu(page) {
   const s = page.locator('#site-nav .sn-more > summary'); await s.click();
   await until(page, () => !!document.querySelector('#site-nav .sn-more[open]'), null, 10000);
 }
+// A strip fixed over the window across the place a middle picker entry takes when scrolled to the
+// top of its scroller, the way the pinned bar sat over the entries at the bottom.
 const plant = (page) => page.evaluate(() => {
+  const el = document.querySelectorAll('#studio-source button[data-source]')[13];
+  el.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'instant' });
+  const r = el.getBoundingClientRect();
   const d = document.createElement('div'); d.id = 'planted-cover';
-  d.style.cssText = 'position:fixed;left:0;right:0;bottom:0;height:30vh;z-index:2147483647;background:rgba(255,0,0,.2)';
+  d.style.cssText = `position:fixed;left:0;right:0;top:${Math.max(0, r.top - 4)}px;height:${r.height + 8}px;z-index:2147483647;background:rgba(255,0,0,.2)`;
   document.body.appendChild(d);
 });
 const unplant = (page) => page.evaluate(() => { const d = document.getElementById('planted-cover'); if (d) d.remove(); });
@@ -118,7 +125,7 @@ const unplant = (page) => page.evaluate(() => { const d = document.getElementByI
           await openPicker(page);
           const at = await page.evaluate((s) => {
             const el = document.querySelector(`#studio-source button[data-source="${s}"]`);
-            el.scrollIntoView({ block: 'end', inline: 'nearest' });
+            el.scrollIntoView({ block: 'end', inline: 'nearest', behavior: 'instant' });
             const r = el.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
           }, source);
           await page.mouse.click(at.x, at.y);

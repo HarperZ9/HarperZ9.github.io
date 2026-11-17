@@ -30,17 +30,17 @@
         ["tests/studio-choosing.cjs", 15], ["tests/studio-palette.cjs", 17], ["tests/studio-export-project.cjs", 11], ["tests/studio-presets.cjs", 20], ["tests/studio-drag-drop.cjs", 24],
         ["tests/studio-layout.cjs", 10], ["tests/studio-timeline.cjs", 43], ["tests/studio-sound-engine.cjs", 11], ["tests/studio-ndim-gpu.cjs", 15], ["tests/studio-neural-gpu.cjs", 168],
         ["tests/studio-viewer.cjs", 14], ["tests/studio-music-attractor.cjs", 19], ["tests/studio-music-flow.cjs", 18], ["tests/studio-finish.cjs", 120], ["tests/studio-plot-order.cjs", 16],
-        ["tests/studio-reach.cjs", 150], ["tests/studio-selects.cjs", 120]] },
+        ["tests/studio-reach.cjs", 235], ["tests/studio-selects.cjs", 185]] },
     "studio-firefox": { "server": "lib", "port": 8817, "env": { "BROWSER": "firefox" },
       "select": { "dir": "tests", "pattern": "^studio-.*[.]cjs$", "contains": "lib/browser.cjs" },
       "secs": { "studio-bar": 202, "studio-bring": 45, "studio-choosing": 15, "studio-controls": 75, "studio-drag-drop": 27, "studio-engines": 59, "studio-entry": 59,
         "studio-export-project": 11, "studio-films-source": 42, "studio-films": 23, "studio-finish": 54, "studio-fractal-deep": 236, "studio-gallery": 39, "studio-instruments": 152,
         "studio-keep": 160, "studio-layout": 11, "studio-link-entry": 59, "studio-loom": 18, "studio-music-attractor": 78, "studio-music-flow": 79, "studio-ndim-gpu": 5,
-        "studio-neural-gpu": 173, "studio-palette": 18, "studio-plot-order": 13, "studio-reach": 160, "studio-selects": 130, "studio-plot": 83, "studio-presets": 22, "studio-retro": 12, "studio-shell": 150,
+        "studio-neural-gpu": 173, "studio-palette": 18, "studio-plot-order": 13, "studio-reach": 240, "studio-selects": 140, "studio-plot": 83, "studio-presets": 22, "studio-retro": 12, "studio-shell": 150,
         "studio-sound-engine": 9, "studio-spatial": 96, "studio-splats": 27, "studio-threads": 36, "studio-timeline": 40, "studio-type": 15, "studio-viewer": 16, "studio-worlds": 20 },
       "reportOnly": ["studio-entry", "studio-fractal-deep", "studio-gallery", "studio-loom", "studio-ndim-gpu", "studio-retro", "studio-spatial", "studio-splats",
-        "studio-sound-engine", "studio-music-attractor", "studio-music-flow"],
-      "reportOnlyWhy": "WebGL sources, the open sound finding of 10 October 2026 and the open Canvas2D finding of 14 October 2026, on Linux headless Firefox" }
+        "studio-sound-engine", "studio-music-attractor", "studio-music-flow", "studio-selects"],
+      "reportOnlyWhy": "WebGL sources (studio-selects drives the Retro Engine and RAW, which draw nothing in headless Firefox), the open sound finding of 10 October 2026 and the open Canvas2D finding of 14 October 2026, on Linux headless Firefox" }
   },
   "notInCi": {
     "why": "These browser tests were in no workflow step before 14 November 2026 and are in none now. Listing them keeps the check honest: a test that is in neither list fails the contracts job.",
