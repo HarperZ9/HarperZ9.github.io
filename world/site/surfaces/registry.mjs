@@ -141,7 +141,7 @@ export const SURFACES = Object.freeze({
   // Rooms: a folded page as one module. A room opens on its own press (rooms.mjs) and reads no element table.
   forge: S('forge', 'The type forge', ['system/type-forge'], ['type'], ['palette'], ['text', 'font', 'svg'], './room-forge.mjs', { table: false, room: 'type' }),
   // The shader room: the live GLSL sandbox (system/shader-runner.js) with a text area around it. It reads no element table.
-  shader: S('shader', 'The shader', ['world/site'], ['render', 'field', 'plot', 'fabricate', 'export'], ['palette', 'image'], ['image', 'png', 'svg', 'gcode'], './room-shader.mjs', { table: false, room: 'shader' }),
+  shader: S('shader', 'The shader', ['world/site'], ['render', 'field', 'plot', 'fabricate', 'export'], ['palette', 'image', 'text'], ['image', 'png', 'svg', 'gcode'], './room-shader.mjs', { table: false, room: 'shader' }),
   // The sound room: the site music (system/site-music) played and rendered in the tab. Its instruments run in a worker
   // (worker.js, piece.worker.js), which the room names by address; the census follows that address, so the row is heavy.
   sound: S('sound', 'Sound', ['system/site-music', 'world/sound'], ['sound', 'export'], ['blend', 'text'], ['score', 'wav'], './room-sound.mjs', { table: false, room: 'sound', weight: 'heavy' }),

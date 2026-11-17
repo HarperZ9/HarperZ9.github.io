@@ -1,0 +1,7 @@
+{
+  "date": "2026-11-16",
+  "note": "Asset revision stamp only: the shader room's layer stack changed modules under world/site/, so every world page's revision stamp moved.",
+  "paths": {
+    "index.html": "02006da7a00326c084ab55a0e1f1b263237c80c5025c4a310959c6b910b2ea3c"
+  }
+}

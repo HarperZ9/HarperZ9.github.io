@@ -7,13 +7,17 @@
 // numbers and error marks, the inputs, the files, the address and the hand-overs.
 //   takes   palette   the blend's colours arrive in the shader as iPalette[0..4], the lead first
 //           image     a picture from another module (the well, the pen study) arrives as the texture iChannel0
+//           text      a line of text (the type forge's) that a layer can letter across the frame
+// Layers: up to seven sit on the shader being edited, each a shader or another room's output with a blend and a mix
+// from 0 to 1 (shader-layers.mjs), drawn in one composite pass (system/shader-stack.js) and kept in the address as ly=.
 //   gives   image     the frame as it stands, which the loom weaves, the plot map draws and the cubes raise
 //           png       the frame as a file; the source as a .glsl file; the frame as a plot, plotter moves and a relief
 // The inputs every shader here receives are listed in INPUTS and shown in the room. Nothing leaves the tab.
-import { createShaderRunner } from '../../../system/shader-runner.js';
+import { createShaderStack } from '../../../system/shader-stack.js';
 import { makeFile, FILES } from './take-files.mjs';
 import { sessionHash } from './bus-kernel.mjs';
 import { STARTS, startOf } from './shader-starts.mjs';
+import { MAX_LAYERS, DEFAULT_LAYER, decodeLayers, encodeLayers, wantsLibrary, stackLayer, layerRow, moveLayer, nameOfSrc, propertiesOf } from './shader-layers.mjs';
 
 export const SIZE = [640, 400], LIBRARY = '/system/shader-presets.js';
 // What a shader in this room can read, and where each value comes from. The page shows this list as written.
@@ -62,7 +66,7 @@ export function still() {
 
 export async function mount(host, input, ctx) {
   const q = ctx.query || new URLSearchParams(), asked = q.get('sh') ? await decodeSource(q.get('sh')) : null;
-  const state = { start: startOf(q.get('shp'))?.id || STARTS[0].id, source: '', edited: false, knobs: knobsOf(q), running: !ctx.reduced, preset: '' };
+  const state = { start: startOf(q.get('shp'))?.id || STARTS[0].id, source: '', edited: false, knobs: knobsOf(q), running: !ctx.reduced, preset: '', layers: decodeLayers(q.get('ly')), text: '' };
   state.source = asked ?? startOf(state.start).glsl; state.edited = asked !== null && asked !== startOf(state.start).glsl;
   let timer = 0, raf = 0, t0 = 0, held = 0, sendTimer = 0, library = null, visible = true, hash = '', lastGood = '', picture = null, paletteFrom = '';
   const urls = new Set();
@@ -81,6 +85,7 @@ export async function mount(host, input, ctx) {
 <p class="shd-run"><button type="button" data-run aria-pressed="false">Pause</button> <button type="button" data-rewind>Start time again</button> <span class="shd-clock"></span></p>
 <form class="shd-knobs" aria-label="Sliders the shader can read"><p class="shd-knob-h">Sliders the shader reads</p>${['A', 'B', 'C'].map((k, i) => `<label for="shd-k${i}">${k} <output for="shd-k${i}"></output></label><input type="range" id="shd-k${i}" data-knob="${i}" aria-label="Slider ${k}" min="0" max="1" step="0.01" value="${state.knobs[i]}">`).join('')}
 <p class="shd-knob-say"></p></form>
+<div class="shd-layers"><p class="shd-layers-h">Layers on the shader <span class="shd-count"></span></p><ol class="shd-ls"></ol><p class="shd-l-add"><button type="button" data-l-add>Add a layer</button> <span>Up to ${MAX_LAYERS}, drawn in one pass over the shader.</span></p></div>
 <p class="shd-in" role="status" aria-live="polite"></p>
 <p class="shd-take"><a class="shd-glsl" download hidden>Save the source (.glsl)</a> <button type="button" data-png>Save this frame (.png)</button>${FILES.filter((f) => f.kind !== 'palette-gpl').map((f) => ` <button type="button" data-file="${f.kind}">${esc(f.label)}</button>`).join('')}</p>
 <p class="shd-made" role="status" aria-live="polite"></p>
@@ -88,10 +93,11 @@ export async function mount(host, input, ctx) {
 <details class="shd-inputs"><summary>What a shader here can read</summary><dl>${INPUTS.map(([n, t, w]) => `<dt><code>${esc(n)}</code> <span>${esc(t)}</span></dt><dd>${esc(w)}</dd>`).join('')}</dl>
 <p>Write <code>void mainImage(out vec4 colour, in vec2 pixel)</code>. The language is GLSL for WebGL 1. The shader runs on your own graphics card, in this tab, and nothing is sent anywhere.</p></details>`;
   const $ = (s) => host.querySelector(s), src = $('#shd-src'), gutter = $('.shd-gutter'), errBox = $('.shd-err'), canvas = $('.shd-frame'), inSay = $('.shd-in'), made = $('.shd-made'), glsl = $('.shd-glsl'), runB = $('[data-run]');
-  const runner = createShaderRunner(canvas, state.source);
+  const runner = createShaderStack(canvas, state.source), ls = $('.shd-ls');
+  let lastAt = 0, spans = [], textCanvas = null;
   if (!runner.gl) {
     // no WebGL: the room says so and stays a place to read and save the source
-    canvas.hidden = true; $('.shd-run').hidden = true; $('.shd-knobs').hidden = true;
+    canvas.hidden = true; $('.shd-run').hidden = true; $('.shd-knobs').hidden = true; $('.shd-layers').hidden = true;
     made.textContent = 'This browser has no WebGL, so the shader cannot run here. The source can still be edited and saved.';
   }
   src.value = state.source;
@@ -104,8 +110,12 @@ export async function mount(host, input, ctx) {
   const time = () => (state.running ? (performance.now() - t0) / 1000 : held);
   function frame() {
     raf = 0; if (!runner.gl) return;
-    const t = time(); runner.renderFrame(t); host.dataset.frames = String(+(host.dataset.frames || 0) + 1);
-    $('.shd-clock').textContent = `${t.toFixed(1)} s`;
+    const t = time(), now = performance.now(); runner.renderFrame(t); host.dataset.frames = String(+(host.dataset.frames || 0) + 1);
+    // the frame time is the mean gap between the last 30 frames drawn while running
+    if (lastAt && state.running) { spans.push(now - lastAt); if (spans.length > 30) spans.shift(); }
+    lastAt = state.running ? now : 0;
+    const ms = spans.length >= 10 ? spans.reduce((a, b) => a + b, 0) / spans.length : 0; if (ms) host.dataset.frameMs = ms.toFixed(2);
+    $('.shd-clock').textContent = `${t.toFixed(1)} s${ms ? `, ${ms.toFixed(1)} ms a frame` : ''}`;
     if (state.running && visible && !document.hidden) raf = requestAnimationFrame(frame);
   }
   const kick = () => { if (!raf && runner.gl) raf = requestAnimationFrame(frame); };
@@ -130,7 +140,7 @@ export async function mount(host, input, ctx) {
   }
   async function writeAddress() {
     const k = state.knobs.every((v) => v === 0.5) ? null : state.knobs.map((v) => +v.toFixed(2)).join(',');
-    ctx.address?.({ shp: state.edited || state.preset ? null : state.start, sh: state.edited || state.preset ? await encodeSource(state.source) : null, k });
+    ctx.address?.({ shp: state.edited || state.preset ? null : state.start, sh: state.edited || state.preset ? await encodeSource(state.source) : null, k, ly: encodeLayers(state.layers) });
   }
   // the frame goes to the other modules when a shader compiles and typing has paused; the recipe is what draws it again
   const hand = () => { clearTimeout(sendTimer); sendTimer = setTimeout(() => { if (!runner.gl) return; runner.renderFrame(time());
@@ -154,9 +164,64 @@ export async function mount(host, input, ctx) {
   }
   function save(name, blob, words) { const u = URL.createObjectURL(blob), a = document.createElement('a'); urls.add(u); a.href = u; a.download = name; host.append(a); a.click(); a.remove(); made.textContent = words; host.dataset.saved = name; }
 
+  // The handed line, lettered on a canvas of the frame's size: white letters on nothing, so the layer's mix shows them.
+  function letter() {
+    if (!state.text) return null;
+    if (!textCanvas) { textCanvas = document.createElement('canvas'); textCanvas.width = canvas.width; textCanvas.height = canvas.height; }
+    const x = textCanvas.getContext('2d'), w = textCanvas.width, h = textCanvas.height, face = getComputedStyle(host).fontFamily || 'sans-serif';
+    x.clearRect(0, 0, w, h); let size = h * 0.42; x.font = `700 ${size}px ${face}`;
+    const wide = x.measureText(state.text).width; if (wide > w * 0.9) { size *= (w * 0.9) / wide; x.font = `700 ${size}px ${face}`; }
+    x.fillStyle = '#ffffff'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText(state.text, w / 2, h / 2);
+    return textCanvas;
+  }
+  // what a layer's row says beside its number: why it shows nothing, if it does
+  function layerState(L, err) {
+    if (err) return `its shader did not compile (${errorsOf(err)[0]?.message || 'error'})`;
+    if (L.src === 'palette' && !+(host.dataset.palette || 0)) return 'no colours handed in yet';
+    if (L.src === 'text' && !state.text) return 'no line handed on yet; the type forge hands one on';
+    if (L.src.startsWith('pic:') && !ctx.pictureFrom?.(L.src.slice(4))) return 'that picture is not on the page yet';
+    if (L.src.startsWith('p:') && !library) return 'loading the preset library';
+    return nameOfSrc(L.src);
+  }
+  function pushLayers() {
+    if (!runner.gl) return [];
+    return runner.setLayers(state.layers.map((L) => stackLayer(L, { library, pictureOf: (id) => ctx.pictureFrom?.(id) || null, textCanvas: () => textCanvas, rows: ctx.registry?.SURFACES })));
+  }
+  // the words beside each layer's number, without redrawing the rows (a slider being dragged keeps its place)
+  function sayLayers(errs = pushLayers()) { state.layers.forEach((L, i) => { const el = host.querySelector(`[data-layer="${i}"] .shd-l-h span`); if (el) el.textContent = layerState(L, errs[i]); }); kick(); }
+  function paintLayers() {
+    const errs = pushLayers(), n = state.layers.length, focus = document.activeElement?.id;
+    ls.innerHTML = state.layers.map((L, i) => layerRow(L, i, n, { library, state: layerState(L, errs[i]) })).join('');
+    $('.shd-count').textContent = n ? `${n} of ${MAX_LAYERS}` : 'none yet';
+    $('[data-l-add]').disabled = n >= MAX_LAYERS; host.dataset.layers = String(n);
+    if (focus && host.querySelector(`#${focus}`)) host.querySelector(`#${focus}`).focus();
+    kick(); hand(); writeAddress();
+  }
+  async function loadLibrary(button) {
+    if (library) return library;
+    if (button) { button.disabled = true; button.textContent = 'Loading'; }
+    try {
+      library = (await import(LIBRARY)).SHADER_PRESETS;
+      const groups = new Map(); for (const p of library) (groups.get(p.group) ?? groups.set(p.group, []).get(p.group)).push(p);
+      $('.shd-lib').innerHTML = `<label for="shd-preset">Preset library, ${library.length} shaders</label><select id="shd-preset"><option value="">Choose a preset</option>${[...groups].map(([g, list]) => `<optgroup label="${esc(g)}">${list.map((p) => `<option>${esc(p.name)}</option>`).join('')}</optgroup>`).join('')}</select>`;
+      host.dataset.library = String(library.length); if (button) $('#shd-preset').focus();
+      paintLayers();
+    } catch (e) { console.error('shader: the preset library did not load', e); if (button) { button.disabled = false; button.textContent = 'Load the preset library'; } made.textContent = 'The preset library did not load.'; }
+    return library;
+  }
+  function onLayer(t) {
+    const i = +(t.dataset.lMix ?? t.dataset.lKey ?? t.dataset.lSrc ?? t.dataset.lBlend), L = state.layers[i]; if (!L) return false;
+    // the two sliders move the frame as they move, without drawing the rows again
+    const slid = t.dataset.lMix !== undefined ? 'mix' : t.dataset.lKey !== undefined ? 'key' : null;
+    if (slid) { L[slid] = +t.value; const o = host.querySelector(`output[for="${t.id}"]`); if (o) o.textContent = `${Math.round(L[slid] * 100)}%`; pushLayers(); kick(); hand(); writeAddress(); return true; }
+    if (t.dataset.lSrc !== undefined) L.src = t.value; else L.blend = t.value;
+    paintLayers(); return true;
+  }
+
   const onInput = (ev) => {
     const t = ev.target;
     if (t === src) { state.edited = true; number(); schedule(); }
+    else if (t.closest('.shd-ls')) onLayer(t);
     else if (t.dataset.knob) { state.knobs[+t.dataset.knob] = +t.value; paintKnobs(); kick(); hand(); writeAddress(); }
     else if (t.id === 'shd-start') load(startOf(t.value).glsl, { start: t.value });
     else if (t.id === 'shd-preset') { const p = library.find((x) => x.name === t.value); if (p) load(p.glsl, { preset: p.name }); }
@@ -166,21 +231,16 @@ export async function mount(host, input, ctx) {
     const t = ev.target.closest('button'); if (!t) return;
     if (t.dataset.run !== undefined) setRunning(!state.running);
     else if (t.dataset.rewind !== undefined) { t0 = performance.now(); held = 0; kick(); }
+    else if (t.dataset.lAdd !== undefined) { if (state.layers.length < MAX_LAYERS) { state.layers.push({ ...DEFAULT_LAYER }); paintLayers(); host.querySelector(`#shd-l${state.layers.length - 1}-src`)?.focus(); } }
+    else if (t.dataset.lRm !== undefined) { state.layers.splice(+t.dataset.lRm, 1); paintLayers(); $('[data-l-add]').focus(); }
+    else if (t.dataset.lLower !== undefined || t.dataset.lRaise !== undefined) { const i = +(t.dataset.lLower ?? t.dataset.lRaise), d = t.dataset.lLower !== undefined ? -1 : 1; state.layers = moveLayer(state.layers, i, d); paintLayers(); host.querySelector(`#shd-l${i + d}-mix`)?.focus(); }
     else if (t.dataset.line) { const lines = src.value.split('\n'), n = Math.min(+t.dataset.line, lines.length), at = lines.slice(0, n - 1).reduce((a, l) => a + l.length + 1, 0); src.focus(); src.setSelectionRange(at, at + lines[n - 1].length); }
     else if (t.dataset.png !== undefined) { runner.renderFrame(time()); canvas.toBlob((b) => b && save(`shader-${hash.slice(0, 8)}.png`, b, `Saved the frame at ${time().toFixed(1)} s: ${canvas.width} by ${canvas.height} pixels, ${b.size.toLocaleString('en')} bytes.`), 'image/png'); }
     else if (t.dataset.file) {
       const f = makeFile(t.dataset.file, pixels(), [], 'shader', { by: 'made by the shader room (harperz9.github.io/playground/#shader) from the frame of a shader', recipe: `shader ${hash}, at ${time().toFixed(1)} s` });
       const blob = new Blob([f.body], { type: f.mime });
       save(`shader-${hash.slice(0, 8)}.${f.ext}`, blob, `Saved ${f.label.toLowerCase()} of the frame: ${blob.size.toLocaleString('en')} bytes. ${f.says}`);
-    } else if (t.dataset.library !== undefined) {
-      t.disabled = true; t.textContent = 'Loading';
-      try {
-        library = (await import(LIBRARY)).SHADER_PRESETS;
-        const groups = new Map(); for (const p of library) (groups.get(p.group) ?? groups.set(p.group, []).get(p.group)).push(p);
-        t.closest('p').innerHTML = `<label for="shd-preset">Preset library, ${library.length} shaders</label><select id="shd-preset"><option value="">Choose a preset</option>${[...groups].map(([g, list]) => `<optgroup label="${esc(g)}">${list.map((p) => `<option>${esc(p.name)}</option>`).join('')}</optgroup>`).join('')}</select>`;
-        host.dataset.library = String(library.length); $('#shd-preset').focus();
-      } catch (e) { console.error('shader: the preset library did not load', e); t.disabled = false; t.textContent = 'Load the preset library'; made.textContent = 'The preset library did not load.'; }
-    }
+    } else if (t.dataset.library !== undefined) loadLibrary(t);
   };
   const onKey = (ev) => {
     // Tab leaves the text area, as everywhere else; two spaces are typed with the space bar. Escape then Tab is not needed.
@@ -202,21 +262,25 @@ export async function mount(host, input, ctx) {
   if (ctx.reduced) { runB.textContent = 'Run'; runB.setAttribute('aria-pressed', 'true'); made.textContent = 'Reduced motion is on, so the shader starts paused on its first frame. Run starts it.'; }
   t0 = performance.now(); ctx.offerPicture?.(() => (runner.gl && host.dataset.ok === 'true' ? canvas : null));
   paintKnobs(); says(); $('.shd-knob-say').textContent = !state.edited && startOf(state.start).knobs ? `In this shader: ${startOf(state.start).knobs}` : '';
-  build(); writeAddress(); kick();
+  build(); paintLayers(); if (wantsLibrary(state.layers)) loadLibrary(null);
+  // measure(width, frames): the time a whole frame takes with the stack as it stands, at that width (8:5), in ms
+  host.shaderMeasure = (width = 1280, frames = 30) => { if (!runner.gl) return null; const [w, h] = [canvas.width, canvas.height];
+    canvas.width = width; canvas.height = Math.round(width * 5 / 8); const ms = runner.measure(time(), frames); canvas.width = w; canvas.height = h; runner.renderFrame(time()); return ms; };
 
   return {
     update(next) {
       const env = next?.heard; if (!env || !runner.gl) return;
-      if (env.medium === 'palette') { const n = runner.setPalette(env.value?.inks || [env.value?.mix].filter(Boolean)); paletteFrom = n ? `the blend (${n} of them)` : ''; host.dataset.palette = String(n); says(); kick(); hand(); }
-      else if (env.medium === 'image' && env.from.module !== 'shader') { const c = ctx.pictureOf?.(env); if (c && runner.setPicture(c, { live: true })) { picture = ctx.nameOf?.(env.from.module) || env.from.module; host.dataset.picture = env.value.of; says(); kick(); hand(); } }
+      if (env.medium === 'palette') { const n = runner.setPalette(env.value?.inks || [env.value?.mix].filter(Boolean)); paletteFrom = n ? `the blend (${n} of them)` : ''; host.dataset.palette = String(n); says(); sayLayers(); hand(); }
+      else if (env.medium === 'text' && typeof env.value?.text === 'string') { state.text = env.value.text.slice(0, 80); letter(); sayLayers(); hand(); }
+      else if (env.medium === 'image' && env.from.module !== 'shader') { const c = ctx.pictureOf?.(env); if (c && runner.setPicture(c, { live: true })) { picture = ctx.nameOf?.(env.from.module) || env.from.module; host.dataset.picture = env.value.of; says(); sayLayers(); hand(); } }
     },
     value: () => ({ source: state.source, ok: host.dataset.ok === 'true', errors: errorsOf(host.dataset.errors || ''), hash, running: state.running, knobs: [...state.knobs], start: state.start, preset: state.preset, edited: state.edited,
-      palette: +(host.dataset.palette || 0), picture: host.dataset.picture || null, time: time() }),
+      palette: +(host.dataset.palette || 0), picture: host.dataset.picture || null, time: time(), layers: state.layers.map((L) => ({ ...L })), makers: state.layers.map((L) => propertiesOf(L.src, ctx.registry?.SURFACES).maker), text: state.text, frameMs: +(host.dataset.frameMs || 0) }),
     destroy() {
       clearTimeout(timer); clearTimeout(sendTimer); if (raf) cancelAnimationFrame(raf); watch?.disconnect(); document.removeEventListener('visibilitychange', onShow);
       host.removeEventListener('input', onInput); host.removeEventListener('click', onClick); host.removeEventListener('keydown', onKey); host.removeEventListener('submit', onSubmit);
       for (const u of urls) URL.revokeObjectURL(u);
-      runner.gl && runner.destroy(); host.innerHTML = ''; host.classList.remove('shd'); for (const k of Object.keys(host.dataset)) if (!/^surface/.test(k)) delete host.dataset[k];
+      delete host.shaderMeasure; runner.gl && runner.destroy(); host.innerHTML = ''; host.classList.remove('shd'); for (const k of Object.keys(host.dataset)) if (!/^surface/.test(k)) delete host.dataset[k];
     },
   };
 }
