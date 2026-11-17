@@ -136,3 +136,10 @@ test("the world pieces keep their words through the next import: every chart-wor
   // a source saved with CRLF still takes the patches (they were silently skipped before)
   assert.ok(read("scripts/import-mission-control.mjs").includes(String.raw`const eol = text.includes("\r\n")`), "the import applies LF patches to CRLF sources");
 });
+
+test("the copies of the describer in other repos pin this file's hash, so a change here cannot drift unseen", async () => {
+  const { createHash } = await import("node:crypto");
+  const pin = JSON.parse(read("system/chart-describe.vendored.json")), body = read("system/chart-describe.mjs").replace(/\r\n/g, "\n");
+  assert.equal(createHash("sha256").update(body).digest("hex"), pin.sha256, "system/chart-describe.mjs changed: carry it to every copy listed in system/chart-describe.vendored.json and update the pin there and here");
+  assert.ok(pin.copies.length >= 1);
+});
