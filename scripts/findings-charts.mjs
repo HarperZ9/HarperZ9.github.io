@@ -8,6 +8,7 @@
 import { esc } from "./studies-markdown.mjs";
 import { FORMS, marker, xySlots } from "./findings-chart-forms.mjs";
 import { labelFor } from "./demo-labels.mjs";
+import { describeCurve, describeMatrix, describeRows, describeScatter, sig } from "../system/chart-describe.mjs";
 
 export const FORM_NAMES = Object.keys(FORMS);
 const FLOW_NEED = ["key", "form", "title", "takeaway", "claims", "source", "steps"];
@@ -79,6 +80,33 @@ function legend(ch) {
   return it.length ? `<ul class="fc-legend">${it.map(([m, t]) => `<li><span class="fc-lk">${m}</span><span>${esc(t)}</span></li>`).join("")}</ul>` : "";
 }
 
+// What the chart's data does, computed from the rows and points it draws (system/chart-describe.mjs), so the
+// sentence stays true when the data changes. Matrix cells get their highest and lowest; a rules table and a flow
+// diagram are their own text and get none.
+const MAX_SERIES = 6;
+export function describeChart(ch) {
+  const fy = (axis) => ({ fmt: (v) => sig(v) + (axis && axis.percent ? "%" : "") });
+  if (["bars", "interval", "band", "dumbbell"].includes(ch.form)) {
+    return [describeRows(ch.rows, { ...fy(ch.axis), form: ch.form, aName: ch.a_name, bName: ch.b_name })];
+  }
+  if (ch.form === "matrix") return [describeMatrix(ch.rowLabels, ch.cols, ch.values, fy(null))];
+  if (ch.form !== "line" && ch.form !== "scatter") return [];
+  const panels = ch.panels || [{ title: "", series: ch.series }];
+  const all = panels.flatMap((p) => p.series.map((s) => ({ p, s })));
+  if (ch.form === "scatter" && all.every(({ s }) => s.points.length === 1)) {
+    return [describeRows(all.map(({ s }) => ({ label: s.name, value: s.points[0][1] })), { ...fy(ch.y), form: "bars" })];
+  }
+  const pick = all.length > MAX_SERIES ? panels.map((p) => ({ p, s: p.series[0] })) : all;
+  const out = pick.map(({ p, s }) => {
+    const name = [panels.length > 1 ? p.title : "", s.name].filter(Boolean).join(", ");
+    const o = { name, x: fy(ch.x), y: fy(ch.y) };
+    return ch.form === "scatter" ? describeScatter(s.points, o) : describeCurve(s.points, o);
+  });
+  if (pick.length < all.length) out.push({ text: `The other ${all.length - pick.length} series are in the table below.`, facts: null });
+  return out;
+}
+export const chartSaid = (ch) => describeChart(ch).map((d) => d.text).join(" ");
+
 const isNum = (c) => /^[-+−]?[\d.,]+(?:e[-+]?\d+)?%?$/i.test(String(c));
 function dataTable(ch, n) {
   return `<details class="fc-data"><summary>Data behind chart ${n} <span class="fc-rowsn">${ch.table.length} row${ch.table.length === 1 ? "" : "s"}</span></summary>
@@ -100,14 +128,14 @@ export function chartHtml(ch, n, src, id) {
   if (ch.planted) meta.push(["Planted check", ch.planted]);
   if (ch.ruled_out) meta.push(["Ruled out", ch.ruled_out]);
   meta.push(["Supports", ch.claims.map((c) => `<a href="#${c}">claim ${c.slice(1)}</a>`).join(", ")]);
-  const flow = ch.form === "flow", word = flow ? "Diagram" : "Chart";
+  const flow = ch.form === "flow", word = flow ? "Diagram" : "Chart", said = chartSaid(ch);
   const shapes = ch.form === "matrix" || ch.form === "rules" || flow ? "" : " Marks differ by shape and by colour.";
   // a live re-run is a demonstration: it carries its form label, and the build stops when the ledger has no row for it
   const live = ch.live ? `${labelFor(`finding-${String(id).toLowerCase()}-live`)}
 <div class="fc-live" data-live="${esc(ch.live.kind)}" data-src="${esc(ch.live.data)}"><noscript><p>The live re-run needs JavaScript. The chart and table above hold the study's own numbers.</p></noscript></div>` : "";
   return `<figure class="fc fk-${ch.form}" id="ch-${esc(ch.key)}" data-finding="${esc(id)}">
-<figcaption><b>${word} ${n}.</b> ${esc(ch.title)} <span class="fc-take">${esc(ch.takeaway)}</span></figcaption>
-<div class="fc-draw" role="group" aria-label="${word} ${n}: ${esc(ch.takeaway)}${shapes}${flow ? "" : " The same numbers are in the table below."}">
+<figcaption><b>${word} ${n}.</b> ${esc(ch.title)} <span class="fc-take">${esc(ch.takeaway)}</span>${said ? ` <span class="fc-said">${esc(said)}</span>` : ""}</figcaption>
+<div class="fc-draw" role="group" aria-label="${word} ${n}: ${esc(ch.takeaway)}${said ? ` ${esc(said)}` : ""}${shapes}${flow ? "" : " The same numbers are in the table below."}">
 ${FORMS[ch.form](ch)}
 </div>
 ${legend(ch)}
