@@ -57,12 +57,18 @@ test('sound is a room in the registry, heavy, and reads no element table', () =>
 });
 
 test("the sound room's address gives the same piece, band, seed and length back", () => {
+  const plain = { drums: 1, bass: 1, keys: 1, lead: 1, space: 1 };
   const s = sound.readState(new URLSearchParams('piece=clear-line&arr=alt&seed=4821&bars=32'));
-  assert.deepEqual(s, { piece: 'clear-line', named: true, arr: 'alt', seed: 4821, bars: 32 });
+  assert.deepEqual(s, { piece: 'clear-line', named: true, arr: 'alt', band: 1, seed: 4821, bars: 32, bpm: 120, semis: 0, density: 1, gains: plain });
   const again = sound.readState(new URLSearchParams(Object.entries(sound.writeState(s)).filter(([, v]) => v !== null)));
   assert.deepEqual(again, s);
-  const wild = sound.readState(new URLSearchParams('piece=polka&arr=third&seed=0&bars=7'), 'glass-hour');
-  assert.deepEqual(wild, { piece: 'glass-hour', named: false, arr: 'main', seed: null, bars: 16 });
+  const wild = sound.readState(new URLSearchParams('piece=polka&arr=third&seed=0&bars=7&bpm=900&key=9&dens=0&band=2&mix=1,2'), 'glass-hour');
+  assert.deepEqual(wild, { piece: 'glass-hour', named: false, arr: 'main', band: 0, seed: null, bars: 16, bpm: 100, semis: 0, density: 1, gains: plain });
+  // what a listener set while it played comes back from the address: a tempo, a key, fewer notes, a blend of bands, levels
+  const set = sound.readState(new URLSearchParams('piece=low-tide&band=0.35&bpm=84&key=-2&dens=0.4&mix=0.5,1,1.25,0,1'));
+  assert.deepEqual([set.band, set.arr, set.bpm, set.semis, set.density, set.gains], [0.35, 'main', 84, -2, 0.4, { drums: 0.5, bass: 1, keys: 1.25, lead: 0, space: 1 }]);
+  assert.deepEqual(sound.readState(new URLSearchParams(Object.entries(sound.writeState(set)).filter(([, v]) => v !== null))), set);
+  assert.deepEqual(Object.entries(sound.writeState(wild)).filter(([, v]) => v !== null).map(([k]) => k), ['piece'], 'the settings as written stay out of the address');
   assert.equal(sound.readState(new URLSearchParams('seed=100000')).seed, null, 'a seed past the range is not a seed');
   assert.equal(sound.writeState(wild).bars, null, 'the default length stays out of the address');
 });
@@ -91,6 +97,7 @@ test('the stated file size is the size of a 16-bit stereo file of that length', 
   const { TAIL } = await import('../../../system/site-music/render.js'), { LEAD_IN } = await import('../../../system/site-music/piece.js');
   assert.equal(sound.TAIL, TAIL); assert.equal(sound.LEAD_IN, LEAD_IN);
   assert.equal(sound.samples('glass-hour', 16), 3 * 48000 + 16 * 115200 + 12 * 48000);
+  assert.equal(sound.samples('glass-hour', 16, 120), 3 * 48000 + 16 * 96000 + 12 * 48000, 'a faster tempo makes a shorter file');
   const n = sound.samples('low-tide', 16), ch = [new Float32Array(n), new Float32Array(n)];
   const wav = encodeWav({ numberOfChannels: 2, length: n, sampleRate: sound.SR, getChannelData: (c) => ch[c] }), v = new DataView(wav);
   assert.equal(wav.byteLength, sound.wavBytes('low-tide', 16));

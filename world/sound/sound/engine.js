@@ -23,10 +23,11 @@ export class Engine {
     }
     this.analyser.connect(c.destination);
   }
-  // Live engine. Must be called from a click or key handler. Nothing is created before that.
-  static async live() {
+  // Live engine. Must be called from a click or key handler. Nothing is created before that. A page that has to wait for
+  // its code to load before it can start may make the AudioContext inside the press itself and pass it here.
+  static async live(given = null) {
     const AC = window.AudioContext || window.webkitAudioContext;
-    const ctx = new AC({ latencyHint: 'interactive' });
+    const ctx = given || new AC({ latencyHint: 'interactive' });
     const e = new Engine(ctx);
     await ctx.resume();
     await installWorklets(ctx); e.wire();

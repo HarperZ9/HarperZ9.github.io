@@ -30,7 +30,9 @@ const voiceDefs = {
   Noise: (t) => V.noise(E.ctx, E.out, t, { dur: 0.8, lp: 6000, hp: 300 }), Voice: (t) => V.voice(E.ctx, E.out, t, { note: 57, dur: 1.4 }),
 };
 const vbox = $('#voices');
-for (const [name, fn] of Object.entries(voiceDefs)) { const b = document.createElement('button'); b.type = 'button'; b.textContent = name; b.disabled = true; b.dataset.needs = 'engine'; b.onclick = () => fn(E.now + 0.02); vbox.append(b); }
+// every instrument on the page turns sound on from its own first press (soundbar.js ensure)
+const ready = async () => E || (await bar.ensure());
+for (const [name, fn] of Object.entries(voiceDefs)) { const b = document.createElement('button'); b.type = 'button'; b.textContent = name; b.onclick = async () => { if (await ready()) fn(E.now + 0.02); }; vbox.append(b); }
 
 // ---- sequencer
 const ROWS = [['808', 'k808'], ['Kick', 'kick'], ['Snare', 'snare'], ['Clap', 'clap'], ['Hat', 'hat']];
@@ -61,27 +63,27 @@ const patSong = () => ({
   },
 });
 function restartSeq() { if (seq) seq.stop(0.05); seq = new Sequencer(E, patSong()); seq.start(); $('#seqplay').textContent = 'Stop pattern'; }
-$('#seqplay').onclick = () => { if (seq && seq.running) { seq.stop(); $('#seqplay').textContent = 'Play pattern'; } else restartSeq(); };
+$('#seqplay').onclick = async () => { if (!(await ready())) return; if (seq && seq.running) { seq.stop(); $('#seqplay').textContent = 'Play pattern'; } else restartSeq(); };
 for (const id of ['bpm', 'swing']) $('#' + id).oninput = () => { $('#' + id + 'v').textContent = $('#' + id).value; if (seq && seq.running) { seq.bpm = +$('#bpm').value; seq.swing = +$('#swing').value / 100; } };
 
 // ---- motifs
 const mbox = $('#motifs');
 for (const [id, m] of Object.entries(MOTIFS)) {
   const card = document.createElement('div'); card.className = 'motif';
-  card.innerHTML = `<span class="fam">${m.meta.family}</span><h3>${m.meta.title}</h3><p>${m.meta.line}</p><div class="row"><button type="button" data-id="${id}" disabled data-needs="engine">Play</button><button type="button" data-stop="${id}" disabled data-needs="engine">Stop</button></div>`;
+  card.innerHTML = `<span class="fam">${m.meta.family}</span><h3>${m.meta.title}</h3><p>${m.meta.line}</p><div class="row"><button type="button" data-id="${id}">Play</button><button type="button" data-stop="${id}">Stop</button></div>`;
   mbox.append(card);
 }
-mbox.onclick = (ev) => { const b = ev.target.closest('button'); if (!b || !E) return; if (b.dataset.id) { motifHandles[b.dataset.id]?.stop(0.05); motifHandles[b.dataset.id] = MOTIFS[b.dataset.id].play(E); } else if (b.dataset.stop) { const r = motifHandles[b.dataset.stop]?.stop(); if (r === false) { b.textContent = 'Refused'; setTimeout(() => (b.textContent = 'Stop'), 900); } } };
+mbox.onclick = async (ev) => { const b = ev.target.closest('button'); if (!b) return; if (b.dataset.id && !(await ready())) return; if (!E) return; if (b.dataset.id) { motifHandles[b.dataset.id]?.stop(0.05); motifHandles[b.dataset.id] = MOTIFS[b.dataset.id].play(E); } else if (b.dataset.stop) { const r = motifHandles[b.dataset.stop]?.stop(); if (r === false) { b.textContent = 'Refused'; setTimeout(() => (b.textContent = 'Stop'), 900); } } };
 
 // ---- archive
 const abox = $('#arch');
 for (const [key, a] of Object.entries(ARCHIVE)) {
   const card = document.createElement('div'); card.className = 'motif';
-  card.innerHTML = `<h3>${a.title}</h3><p class="credit">${a.source}. ${a.licence}. Used for ${a.use}.</p><div class="row"><button type="button" data-a="${key}" disabled data-needs="engine">Play</button><button type="button" data-chop="${key}" disabled data-needs="engine">Chop 8</button></div>`;
+  card.innerHTML = `<h3>${a.title}</h3><p class="credit">${a.source}. ${a.licence}. Used for ${a.use}.</p><div class="row"><button type="button" data-a="${key}">Play</button><button type="button" data-chop="${key}">Chop 8</button></div>`;
   abox.append(card);
 }
 abox.onclick = async (ev) => {
-  const b = ev.target.closest('button'); if (!b || !E) return;
+  const b = ev.target.closest('button'); if (!b || !(await ready())) return;
   try {
     const key = b.dataset.a || b.dataset.chop, buf = await loadArchive(E.ctx, key), t = E.now + 0.03;
     if (b.dataset.a) playSlice(E.ctx, E.out, t, buf, { start: 0, dur: Math.min(buf.duration, 8), vel: 0.8 });
@@ -91,7 +93,7 @@ abox.onclick = async (ev) => {
 
 // ---- theme beat
 let humSeq = null;
-$('#humplay').onclick = () => { if (humSeq && humSeq.running) { humSeq.stop(); $('#humplay').textContent = 'Play Hum'; } else { humSeq = new Sequencer(E, hum); humSeq.start(); $('#humplay').textContent = 'Stop Hum'; } };
+$('#humplay').onclick = async () => { if (!(await ready())) return; if (humSeq && humSeq.running) { humSeq.stop(); $('#humplay').textContent = 'Play Hum'; } else { humSeq = new Sequencer(E, hum); humSeq.start(); $('#humplay').textContent = 'Stop Hum'; } };
 $('#humwav').onclick = async () => {
   const b = $('#humwav'); b.disabled = true; $('#humstat').textContent = 'Rendering…';
   const secs = hum.bars * (60 / hum.bpm) * 4 + 5, buf = await renderOffline(Engine, secs, (e) => { new Sequencer(e, hum).renderAll(0.05); }), st = bufferStats(buf);
@@ -101,7 +103,7 @@ $('#humwav').onclick = async () => {
 
 // ---- spectrogram view
 let live = null; const spec = $('#spec'), note = $('#specnote');
-$('#specLive').onclick = () => { if (live) { live.stop(); live = null; $('#specLive').textContent = 'Watch what plays'; return; } live = liveSpectrogram(spec, E); $('#specLive').textContent = 'Stop watching'; };
+$('#specLive').onclick = async () => { if (!live && !(await ready())) return; if (live) { live.stop(); live = null; $('#specLive').textContent = 'Watch what plays'; return; } live = liveSpectrogram(spec, E); $('#specLive').textContent = 'Stop watching'; };
 $('#specPic').onclick = async () => {
   live && $('#specLive').click(); note.textContent = 'Rendering the hidden picture…';
   const buf = await renderOffline(Engine, 7, (e) => { const b = e.ctx.createGain(); b.connect(e.out); picture.render(e.ctx, b, 0.2, { text: '6EQUJ5', duration: 6 }); });
@@ -125,7 +127,7 @@ draw();
 
 // ---- engine lifecycle
 const bar = mountSoundBar($('#bar'), { label: 'Sound', onEngine(e) {
-  E = e; document.querySelectorAll('[data-needs="engine"], #seqplay, #humplay').forEach((b) => (b.disabled = !e)); if (!e && live) { live.stop(); live = null; $('#specLive').textContent = 'Watch what plays'; }
+  E = e; if (!e && live) { live.stop(); live = null; $('#specLive').textContent = 'Watch what plays'; }
   if (!e) { seq && seq.stop(0.02); humSeq && humSeq.stop(0.02); $('#seqplay').textContent = 'Play pattern'; $('#humplay').textContent = 'Play Hum'; Object.values(motifHandles).forEach((h) => h && h.stop(0.02)); }
   if (reduce && e) { const loop = () => { draw(); if (E) setTimeout(loop, 250); }; loop(); }
 } });

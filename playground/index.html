@@ -13,23 +13,18 @@
 <meta property="og:title" content="The Playground | Zain Dana Harper">
 <meta property="og:description" content="The Playground is a rendering engine that turns one description into picture, type and sound: the native renderer, Superframe, the instruments and study tools, and Low Water.">
 <meta property="og:url" content="https://harperz9.github.io/playground/">
-<meta property="og:image" content="https://harperz9.github.io/img/og/p/playground.jpg?v=2c96139bee48">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="The Playground, by Zain Dana Harper. A record in flat colour with dark grooves, a cream wedge across them and an arm resting on it.">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/home.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://harperz9.github.io/img/og/p/playground.jpg?v=2c96139bee48">
-<meta name="twitter:image:alt" content="The Playground, by Zain Dana Harper. A record in flat colour with dark grooves, a cream wedge across them and an arm resting on it.">
 <meta name="twitter:title" content="The Playground | Zain Dana Harper">
 <meta name="twitter:description" content="The Playground is a rendering engine that turns one description into picture, type and sound: the native renderer, Superframe, the instruments and study tools, and Low Water.">
 <link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-7eb0d1986a">
-<link rel="stylesheet" href="/studies/studies.css?v=world-7eb0d1986a">
-<link rel="stylesheet" href="/world/site/depth.css?v=world-7eb0d1986a">
-<script type="module" src="/world/ui/shell/shell.js?v=world-7eb0d1986a"></script>
-<script type="module" src="/world/site/hand-scroll.js?v=world-7eb0d1986a"></script>
-<link rel="stylesheet" href="/world/site/distill/distill.css?v=world-7eb0d1986a">
-<link rel="stylesheet" href="/world/site/surfaces/surface-page.css?v=world-7eb0d1986a"></head>
+<link rel="stylesheet" href="/world/ui/shell/shell.css">
+<link rel="stylesheet" href="/studies/studies.css">
+<link rel="stylesheet" href="/world/site/depth.css">
+<script type="module" src="/world/ui/shell/shell.js"></script>
+<script type="module" src="/world/site/hand-scroll.js"></script>
+<link rel="stylesheet" href="/world/site/distill/distill.css">
+<link rel="stylesheet" href="/world/site/surfaces/surface-page.css"></head>
 <body class="reading ds-body sx-body">
 <div class="gw-backdrop" aria-hidden="true">
   <picture>
@@ -132,27 +127,27 @@ void mainImage(out vec4 O, in vec2 U){
   O = vec4(col, 1.0);
 }</code></pre><figcaption>The shader room: “Interference”, the shader the room opens with, as written. 13 lines of GLSL.</figcaption></figure>
 <p class="sx-as">Shown as built, from the same code the room runs. With scripts off this is the whole reading.</p>
-<p class="sx-go"><button type="button" data-room-open hidden>Open the shader room</button><span>Loads 175 KB at most. Nothing loads before the press.</span></p>
+<p class="sx-go"><button type="button" data-room-open hidden>Open the shader room</button><span>Loads 176 KB at most. Nothing loads before the press.</span></p>
 </div>
 <p class="sx-say rm-say" role="status" aria-live="polite">When the blend above is running, its colours reach the shader as iPalette, the well's picture reaches it as iChannel0, and the loom, the plot map and the cubes draw the shader's frame. This line says so each time.</p>
 <div class="rm-host" role="group" aria-label="Shaders: write one, watch it run" hidden></div>
 </section>
-<section class="sx rm" id="sound" data-room="sound" data-home="playground" data-css="/world/site/surfaces/room-sound.css" aria-labelledby="sound-h">
+<section class="sx rm" id="sound" data-room="sound" data-home="playground" data-css="/world/site/surfaces/room-sound.css" data-audio aria-labelledby="sound-h">
 <h2 id="sound-h">Sound: play a piece, keep the file</h2>
-<p>Five pieces of jazz over sea, wind and open air, composed and synthesized in your browser while they play. A seed sets the order of the sections, the piano's rhythm, the fills and how the lead develops its theme, so one piece has many performances and one seed always gives the same one. Choose a piece, a band and a length, and save the result as a sound file at a measured loudness. Nothing plays until you press Play.</p>
+<p>Five pieces of jazz over sea, wind and open air, composed and synthesized in your browser while they play. The notes show as they play. Drag across them to change the tempo and how many notes play, move the key, raise or lower each instrument, and blend the first band into the second. A seed sets the order of the sections, the piano's rhythm, the fills and how the lead develops its theme, so one seed always gives the same performance. Save what you hear as a sound file at a measured loudness. Nothing plays until you press.</p>
 <p class="demo-form" data-demo="playground-sound" data-form="live"><b>Live.</b> This runs in your browser now, on what you give it.</p>
 <div class="rm-before">
 <figure class="rm-still"><ol class="snd-book"><li><b>Low Tide</b> <span>D-flat major, 72 beats a minute. Ink and water.</span> <code>Ebm9 | Ab13 | Dbmaj9 | Bbm9 | Ebm9 | Absus13 | Dbmaj9 | Db6/9</code></li><li><b>Night School</b> <span>D dorian, 90 beats a minute. Night School.</span> <code>Dm9 | Dm9 | G13 | G13 | Dm11 | Dm11 | G13 | Gsus13</code></li><li><b>Glass Hour</b> <span>A major, 100 beats a minute. Light and glass.</span> <code>Amaj9 | F#m9 | Bm9 | E13 | Amaj9 | F#m11 | Bm9 | Esus13</code></li><li><b>Deep Current</b> <span>F minor, 172 beats a minute. The engine.</span> <code>Fm9 | Fm9 | Dbmaj9 | Dbmaj9 | Ebsus13 | Ebsus13 | Cm9 | Cm9</code></li><li><b>Clear Line</b> <span>E major, 120 beats a minute. Type and lettering.</span> <code>Emaj9 | C#m9 | F#m9 B13 | Emaj9 | Amaj9 | G#7alt C#m9 | F#m9 | Bsus13 B13</code></li></ol><figcaption>Sound: the five pieces as written, each with the eight bars that open it. One bar sits between two strokes; two chord symbols share a bar.</figcaption></figure>
 <p class="sx-as">Shown as built, from the same code the room runs. With scripts off this is the whole reading.</p>
-<p class="sx-go"><button type="button" data-room-open hidden>Open the sound room</button><span>Loads 95 KB at most. Nothing loads before the press. <span data-later="403067">The first Play or the first file loads 394 KB more at most: the instruments, which run apart from the page.</span></span></p>
+<p class="sx-go"><button type="button" data-room-open hidden>Play the music</button><span>Loads 129 KB at most. Nothing loads before the press. <span data-later="414282">The music starts with this press, which also loads 405 KB more at most: the instruments, which run apart from the page.</span></span></p>
 </div>
-<p class="sx-say rm-say" role="status" aria-live="polite">When the blend above is running, its leading part chooses the piece. When the type forge is open, its line sets the seed. This line says so each time.</p>
+<p class="sx-say rm-say" role="status" aria-live="polite">When the blend above is running, its leading part chooses the piece. When the type forge is open, its line sets the seed. While it plays, the shader room can take its levels as iAudio. This line says so each time.</p>
 <div class="rm-host" role="group" aria-label="Sound: play a piece, keep the file" hidden></div>
 </section>
 <h2 id="instruments">Instruments and study tools</h2>
 <ul class="pg-list"><li><a href="/playground/distill.html">Distill</a><p>Take any file, archive or folder apart and read what it is made of.</p></li><li><a href="/studio.html">The Studio</a><p>A live media instrument for picture and sound.</p></li><li><a href="/elements.html">Elements</a><p>Pigment, water, glass and paper on one bench, with state changes.</p></li><li><a href="/glass-water.html">Glass and water</a><p>Glass lettering over a live sea in four spaces.</p></li><li><a href="/world/sound/sound.html">Sound</a><p>Instruments and scores made in the browser.</p></li><li><a href="/swatches.html">Swatches</a><p>Colour as measured material.</p></li><li><a href="/accession.html">Accession</a><p>The type family and its living forms.</p></li></ul>
 </article>
-<script type="module" src="/world/site/surfaces/surface-start.js?v=world-7eb0d1986a"></script>
+<script type="module" src="/world/site/surfaces/surface-start.js"></script>
 </main>
 </body>
 </html>

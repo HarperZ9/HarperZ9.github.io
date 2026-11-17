@@ -13,7 +13,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="description" content="Synthesis voices, effects, a swing sequencer, archival sound and nine sonic motifs, all playable. Sound is off until you turn it on.">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="base.css?v=world-7eb0d1986a">
+<link rel="stylesheet" href="base.css?v=world-58cab5ffd2">
 <style>
   main { max-width: 72rem; margin: 0 auto; padding: 1.5rem clamp(1rem, 4vw, 2.5rem) 9rem; }
   h1 { font-size: clamp(2.6rem, 9vw, 6rem); line-height: 0.95; font-weight: 800; margin: 2rem 0 1rem; letter-spacing: -0.02em; }
@@ -42,12 +42,12 @@
 <main id="main">
   <p class="mono"><a href="theme/index.html">Theme demo</a> &nbsp; <a href="/">Site</a></p>
   <h1>Sound</h1>
-  <p class="lede">A WebAudio engine in our own code, with no dependencies. Synthesis voices, tape and vinyl, bitcrush, sidechain, a swing sequencer, archival sound and nine sonic motifs. Everything here is made in the browser. Turn sound on with the bar at the bottom.</p>
+  <p class="lede">A WebAudio engine in our own code, with no dependencies. Synthesis voices, tape and vinyl, bitcrush, sidechain, a swing sequencer, archival sound and nine sonic motifs. Everything here is made in the browser. The first press of any instrument turns sound on; the bar at the bottom mutes it or turns it off.</p>
   <p id="serve-note" class="credit" hidden>This page needs a local web server for its modules. Run <span class="mono">python -m http.server</span> in this folder and open it from there.</p>
 
   <section aria-labelledby="h-voices">
     <h2 id="h-voices">Voices</h2>
-    <p class="lede">Each voice is a function that schedules its own nodes. Press one.</p>
+    <p class="lede">Each voice is a function that schedules its own nodes. Press one and it sounds.</p>
     <div class="row" id="voices"></div>
     <div class="row">
       <label>808 note <select id="note808"></select></label>
@@ -63,7 +63,7 @@
     <p class="lede">Sixteen steps, swing and effects. Click steps to write a pattern. Swing delays the second sixteenth of every pair.</p>
     <div class="seq" id="grid"></div>
     <div class="row">
-      <button type="button" id="seqplay" disabled>Play pattern</button>
+      <button type="button" id="seqplay">Play pattern</button>
       <label>Tempo <input id="bpm" type="range" min="70" max="190" value="146"> <output id="bpmv">146</output></label>
       <label>Swing <input id="swing" type="range" min="50" max="72" value="58"> <output id="swv">58</output></label>
     </div>
@@ -85,7 +85,7 @@
   <section aria-labelledby="h-reveal">
     <h2 id="h-reveal">Spectrogram view</h2>
     <p class="lede">Some sounds hide their point in frequency against time. Watch what is playing, draw the picture hidden in the static of "Between stations", or draw the Shepard tone's stack of gliding partials. The last two are drawn without sound.</p>
-    <div class="row"><button type="button" id="specLive" data-needs="engine" disabled>Watch what plays</button><button type="button" id="specPic">Draw the hidden picture</button><button type="button" id="specShep">Draw the Shepard stack</button></div>
+    <div class="row"><button type="button" id="specLive">Watch what plays</button><button type="button" id="specPic">Draw the hidden picture</button><button type="button" id="specShep">Draw the Shepard stack</button></div>
     <canvas id="spec" width="1000" height="280" role="img" aria-label="Spectrogram: frequency up, time to the right" style="height:auto;aspect-ratio:1000/280"></canvas>
     <p class="credit" id="specnote" role="status">Frequency runs up the side, time runs left to right.</p>
   </section>
@@ -99,11 +99,11 @@
   <section aria-labelledby="h-beat">
     <h2 id="h-beat">The theme beat</h2>
     <p class="lede">"Hum" is an original beat written in this engine. 148 BPM, C# minor, 36 bars. Hear it here, render it to a WAV in your browser, or see it move the theme.</p>
-    <div class="row"><button type="button" id="humplay" disabled>Play Hum</button><button type="button" id="humwav">Render Hum to WAV</button><a href="theme/index.html">Open the theme</a></div>
+    <div class="row"><button type="button" id="humplay">Play Hum</button><button type="button" id="humwav">Render Hum to WAV</button><a href="theme/index.html">Open the theme</a></div>
     <p class="credit" id="humstat" role="status"></p>
   </section>
 </main>
 <div id="bar"></div>
-<script type="module" src="sound-demo.js?v=world-7eb0d1986a"></script>
+<script type="module" src="sound-demo.js?v=world-58cab5ffd2"></script>
 </body>
 </html>

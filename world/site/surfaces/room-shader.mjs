@@ -27,7 +27,7 @@ export const INPUTS = Object.freeze([
   ['iKnobA, iKnobB, iKnobC', 'float', 'the three sliders, 0 to 1'],
   ['iPalette[5], iPaletteSize', 'vec3, float', 'colours handed in by the blend, the lead first, and how many are set'],
   ['iChannel0, iChannelResolution', 'sampler2D, vec3', 'a picture handed in by another module, and its size'],
-  ['iAudio', 'vec4', 'bass, mid, treble and level of a sound; zero here until the sound room hands its level on'],
+  ['iAudio', 'vec4', 'bass, mid, treble and level of the music in the sound room while it plays, each 0 to 1; zero while it is silent'],
 ]);
 const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const b64 = (bytes) => { let s = ''; for (let i = 0; i < bytes.length; i += 0x8000) s += String.fromCharCode(...bytes.subarray(i, i + 0x8000)); return btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); };
@@ -110,6 +110,9 @@ export async function mount(host, input, ctx) {
   const time = () => (state.running ? (performance.now() - t0) / 1000 : held);
   function frame() {
     raf = 0; if (!runner.gl) return;
+    // sound as an input: the sound room's levels while it plays, read each frame; zero when it is silent or closed
+    const lv = ctx.levelsFrom?.('sound'), a = lv ? [lv.bass, lv.mid, lv.treble, lv.level] : [0, 0, 0, 0];
+    runner.setAudio(...a); host.dataset.audio = a.map((v) => v.toFixed(2)).join(' ');
     const t = time(), now = performance.now(); runner.renderFrame(t); host.dataset.frames = String(+(host.dataset.frames || 0) + 1);
     // the frame time is the mean gap between the last 30 frames drawn while running
     if (lastAt && state.running) { spans.push(now - lastAt); if (spans.length > 30) spans.shift(); }
