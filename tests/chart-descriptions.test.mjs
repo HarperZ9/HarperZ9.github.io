@@ -7,12 +7,15 @@ import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { checkDescription, describeCurve, describeRows, describeScatter, describeTiming } from "../system/chart-describe.mjs";
 import { chartHtml, describeChart } from "../scripts/findings-charts.mjs";
+import { checkFlow, checkRules } from "../system/chart-describe-flow.mjs";
 import { motion } from "../world/studio/lib/lanes/motion.mjs";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const specs = readdirSync(join(ROOT, "findings", "charts")).filter((f) => f.endsWith(".json")).map((f) => JSON.parse(readFileSync(join(ROOT, "findings", "charts", f), "utf8")));
 const unesc = (s) => s.replace(/&quot;/g, '"').replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&#39;/g, "'").replace(/&amp;/g, "&");
 const DATA_FORMS = ["line", "scatter", "bars", "interval", "band", "dumbbell", "matrix"];
+const ALL_FORMS = [...DATA_FORMS, "rules", "flow"];
+const check = (d) => (d.facts.kind === "flow" ? checkFlow(d.text, d.facts) : d.facts.kind === "rules" ? checkRules(d.text, d.facts) : checkDescription(d.text, d.facts));
 
 test("planted: a description that names only the axes fails", () => {
   const { facts } = describeCurve([[0, 0], [1, 0.4], [2, 0.9], [3, 1]]);
@@ -68,13 +71,13 @@ test("the published playground's timing curve describes the line it draws", () =
 test("every findings chart drawn from data carries a computed description that passes against its own data", () => {
   let charts = 0, sentences = 0;
   for (const spec of specs) for (const ch of spec.charts) {
-    if (!DATA_FORMS.includes(ch.form)) { assert.deepEqual(describeChart(ch), [], `${spec.finding} ${ch.key}`); continue; }
+    assert.ok(ALL_FORMS.includes(ch.form), `${spec.finding} ${ch.key}: form ${ch.form} has no describer`);
     const ds = describeChart(ch);
     assert.ok(ds.length > 0, `${spec.finding} ${ch.key} has no description`);
     charts++;
-    for (const d of ds) if (d.facts) { sentences++; assert.deepEqual(checkDescription(d.text, d.facts), [], `${spec.finding} ${ch.key}: ${d.text}`); }
+    for (const d of ds) if (d.facts) { sentences++; assert.deepEqual(check(d), [], `${spec.finding} ${ch.key}: ${d.text}`); }
   }
-  assert.ok(charts >= 100, `only ${charts} charts described`);
+  assert.ok(charts >= 148, `only ${charts} charts described`);
   assert.ok(sentences >= charts);
 });
 
@@ -82,12 +85,12 @@ test("each findings chart puts the description in its caption and its label, and
   for (const spec of specs) {
     const src = Object.fromEntries(spec.sources.map((s) => [s.id, s]));
     spec.charts.forEach((ch, i) => {
-      if (!DATA_FORMS.includes(ch.form)) return;
       const html = chartHtml(ch, i + 1, src, spec.finding), said = describeChart(ch).map((d) => d.text).join(" ");
       const label = unesc(html.match(/class="fc-draw" role="group" aria-label="([^"]*)"/)[1]);
       assert.ok(label.includes(said), `${spec.finding} ${ch.key}: label lacks the description`);
       assert.ok(unesc(html).includes(`<span class="fc-said">${said}</span>`), `${spec.finding} ${ch.key}: caption lacks the description`);
-      assert.match(html, /<table><thead><tr><th scope="col">/, `${spec.finding} ${ch.key}: data table lost its headers`);
+      if (ch.form !== "flow") assert.match(html, /<table><thead><tr><th scope="col">/, `${spec.finding} ${ch.key}: data table lost its headers`);
+      if (ch.form === "rules") assert.ok(unesc(html).indexOf(said) < unesc(html).indexOf("<table>"), `${spec.finding} ${ch.key}: the sentence must come before the table`);
     });
   }
 });
@@ -98,13 +101,13 @@ test("the published findings pages carry the same descriptions the build compute
   for (const spec of specs) {
     const page = pages.find((p) => p.startsWith(`${spec.finding}-`));
     const html = unesc(readFileSync(join(ROOT, "findings", page), "utf8"));
-    for (const ch of spec.charts) if (DATA_FORMS.includes(ch.form)) {
+    for (const ch of spec.charts) {
       const said = describeChart(ch).map((d) => d.text).join(" ");
       assert.ok(html.includes(`<span class="fc-said">${said}</span>`), `${page} ${ch.key} is stale; run node scripts/build-findings.mjs`);
       found++;
     }
   }
-  assert.ok(found >= 100);
+  assert.ok(found >= 148);
 });
 
 test("the live motion surface describes the curve it draws for a blend", async () => {

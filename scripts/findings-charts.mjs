@@ -9,6 +9,7 @@ import { esc } from "./studies-markdown.mjs";
 import { FORMS, marker, xySlots } from "./findings-chart-forms.mjs";
 import { labelFor } from "./demo-labels.mjs";
 import { describeCurve, describeMatrix, describeRows, describeScatter, sig } from "../system/chart-describe.mjs";
+import { describeFlow, describeRules } from "../system/chart-describe-flow.mjs";
 
 export const FORM_NAMES = Object.keys(FORMS);
 const FLOW_NEED = ["key", "form", "title", "takeaway", "claims", "source", "steps"];
@@ -81,8 +82,9 @@ function legend(ch) {
 }
 
 // What the chart's data does, computed from the rows and points it draws (system/chart-describe.mjs), so the
-// sentence stays true when the data changes. Matrix cells get their highest and lowest; a rules table and a flow
-// diagram are their own text and get none.
+// sentence stays true when the data changes. Matrix cells get their highest and lowest; a rules table says how many
+// rules held and failed, which failed and the closest call; a flow diagram says how it runs, from its own steps
+// (system/chart-describe-flow.mjs). Listing the cells or the steps is not a description of either.
 const MAX_SERIES = 6;
 export function describeChart(ch) {
   const fy = (axis) => ({ fmt: (v) => sig(v) + (axis && axis.percent ? "%" : "") });
@@ -90,6 +92,8 @@ export function describeChart(ch) {
     return [describeRows(ch.rows, { ...fy(ch.axis), form: ch.form, aName: ch.a_name, bName: ch.b_name })];
   }
   if (ch.form === "matrix") return [describeMatrix(ch.rowLabels, ch.cols, ch.values, fy(null))];
+  if (ch.form === "rules") return [describeRules(ch.rows)];
+  if (ch.form === "flow") return [describeFlow(ch.steps)];
   if (ch.form !== "line" && ch.form !== "scatter") return [];
   const panels = ch.panels || [{ title: "", series: ch.series }];
   const all = panels.flatMap((p) => p.series.map((s) => ({ p, s })));
