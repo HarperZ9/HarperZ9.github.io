@@ -9,6 +9,7 @@
 import { studioBlend } from './surface-blend.mjs';
 import { motion } from '../../studio/lib/lanes/motion.mjs';
 import { GROUND } from './charts.mjs';
+import { describeTiming } from '../../../system/chart-describe.mjs';
 
 const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const ready = (ix, st) => st.elements.filter((id) => ix.byId.has(id)).slice(0, 4);
@@ -18,9 +19,9 @@ export function mount_motion(host, input, ctx) {
   let state = { ...input };
   const draw = () => {
     const ids = ready(ctx.ix, state); if (!ids.length) { host.innerHTML = ''; return; }
-    const mo = motion(studioBlend(ctx.ix, ids, state.weights, state.settings).material), pts = mo.samples(48);
-    host.innerHTML = `<svg class="mo" viewBox="0 0 200 80" role="img" aria-label="Timing curve: progress against time"><path class="mo-axis" d="M4 76H196M4 76V4"/><polyline points="${pts.map(([u, v]) => `${(4 + u * 192).toFixed(1)},${(76 - v * 72).toFixed(1)}`).join(' ')}"/></svg>` +
-      `<p class="ln-note" data-curve="${esc(mo.curve)}">${esc(mo.curve)}. One build takes ${mo.durationS.toFixed(1)} s at ${mo.fps} frames a second. Computed from the parts by the studio's motion lane.</p>`;
+    const mo = motion(studioBlend(ctx.ix, ids, state.weights, state.settings).material), pts = mo.samples(48), said = describeTiming(pts, mo.durationS).text;
+    host.innerHTML = `<svg class="mo" viewBox="0 0 200 80" role="img" aria-label="Timing curve. ${esc(said)} Drawn as progress, up the side, against time, along the bottom."><path class="mo-axis" d="M4 76H196M4 76V4"/><polyline points="${pts.map(([u, v]) => `${(4 + u * 192).toFixed(1)},${(76 - v * 72).toFixed(1)}`).join(' ')}"/></svg>` +
+      `<p class="ln-note" data-curve="${esc(mo.curve)}">${esc(said)} ${esc(mo.curve)}. One build takes ${mo.durationS.toFixed(1)} s at ${mo.fps} frames a second. Computed from the parts by the studio's motion lane.</p>`;
   };
   const s = surface(host, 'sf-motion', draw); draw();
   return { update(next) { state = { ...state, ...next }; draw(); }, value: () => (ready(ctx.ix, state).length ? motion(studioBlend(ctx.ix, ready(ctx.ix, state), state.weights, state.settings).material).samples(48) : null), destroy: s.destroy };

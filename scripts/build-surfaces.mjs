@@ -18,6 +18,7 @@ import { indexElements } from "../world/site/surfaces/elements-data.mjs";
 import { studioBlend } from "../world/site/surfaces/surface-blend.mjs";
 import { FILES } from "../world/site/surfaces/take-files.mjs";
 import { motion } from "../world/studio/lib/lanes/motion.mjs";
+import { describeTiming } from "../system/chart-describe.mjs";
 
 const site = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
@@ -52,7 +53,7 @@ function exchange(m) {
     if (!x.modules.some((id) => id !== from && registry.SURFACES[id].takes.includes(medium))) throw new Error(`build-surfaces: no module on ${m.id} takes ${medium}`);
   }
   // the still: the same blend the page starts with, worked out by the modules' own code
-  const sb = studioBlend(ix, x.elements, null), mo = motion(sb.material), pts = mo.samples(48), names = sb.parts.map((p) => p.name);
+  const sb = studioBlend(ix, x.elements, null), mo = motion(sb.material), pts = mo.samples(48), said = describeTiming(pts, mo.durationS).text, names = sb.parts.map((p) => p.name);
   const technique = sb.material.hints.type.technique;
   // what the press loads: the page controller, the modules' files, the element table and the modules' stylesheet
   // the file writers (take-files.mjs) are brought in by the first file that needs them, so they are not part of this press
@@ -73,7 +74,7 @@ ${labelFor(x.demo)}
 <div class="sx-still">
 <figure><ul class="sx-pal">${sb.parts.map((p) => `<li><i style="background:${esc(p.hex)}"></i>${esc(p.name)} <code>${esc(p.hex)}</code></li>`).join("")}<li><i style="background:${esc(sb.palette.mix)}"></i>The mix <code>${esc(sb.palette.mix)}</code></li></ul><figcaption>${esc(registry.SURFACES.blend.name)}: ${esc(list(names))} in equal shares, and the colour of the mix.</figcaption></figure>
 <figure><p class="sx-word">${esc(names.join(" + "))}</p><figcaption>${esc(registry.SURFACES.lettering.name)}: the blend's name, to be lettered as ${esc(technique)}.</figcaption></figure>
-<figure><svg class="sx-curve" viewBox="0 0 200 80" role="img" aria-label="Timing curve: progress against time"><path d="M4 76H196M4 76V4"/><polyline points="${pts.map(([u, v]) => `${(4 + u * 192).toFixed(1)},${(76 - v * 72).toFixed(1)}`).join(" ")}"/></svg><figcaption>${esc(registry.SURFACES.motion.name)}: progress against time. One build takes ${mo.durationS.toFixed(1)} s at ${mo.fps} frames a second.</figcaption></figure>
+<figure><svg class="sx-curve" viewBox="0 0 200 80" role="img" aria-label="Timing curve. ${esc(said)} Drawn as progress, up the side, against time, along the bottom."><path d="M4 76H196M4 76V4"/><polyline points="${pts.map(([u, v]) => `${(4 + u * 192).toFixed(1)},${(76 - v * 72).toFixed(1)}`).join(" ")}"/></svg><figcaption>${esc(registry.SURFACES.motion.name)}. ${esc(said)} Drawn as progress against time. One build takes ${mo.durationS.toFixed(1)} s at ${mo.fps} frames a second.</figcaption></figure>
 </div>
 <p class="sx-as">Shown as built, from the same code the page runs. With scripts off this is the whole reading; <a href="${esc(x.plain)}">Elements</a> has every module on one bench.</p>
 <p class="sx-go"><button type="button" id="sx-start" hidden>Start the blend</button><span>Loads ${size(startBytes)}: the element table and ${x.modules.length} modules. Nothing loads before the press.</span></p>

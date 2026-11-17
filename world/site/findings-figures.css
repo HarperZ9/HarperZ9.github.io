@@ -20,6 +20,7 @@
 .fc::before { content: ""; position: absolute; top: 0; left: 0; width: 3.4rem; height: 4px; background: var(--ink); }
 .fc figcaption { font: 400 var(--fs-2, 1rem)/1.45 var(--face-text, inherit); margin: 0 0 22px; }
 .fc figcaption b { font-weight: 700; letter-spacing: .02em; }
+.fc .fc-said { display: block; margin-top: 8px; font-variant-numeric: tabular-nums; }
 .fc .fc-take { display: block; margin-top: 8px; font-weight: 650; font-size: 1.14em; line-height: 1.32; text-wrap: balance; }
 .fc :is(.fc-axl, .fc-note, .fc-lab, .fc-ticks, .fc-yt, .fc-xt, .fc-legend, .fc-meta, .fc-src, .fc-data summary, .fc-ptitle, .fc-group) { font: 400 var(--fs-1, .82rem)/1.4 var(--face-utility, inherit); }
 .fc :is(.fc-ticks, .fc-yt, .fc-xt, .fc-axl, .fc-note) { color: var(--soft); font-variant-numeric: tabular-nums; }

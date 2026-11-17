@@ -1,0 +1,7 @@
+{
+  "date": "2026-11-17",
+  "note": "Asset revision stamp only: world/site/surfaces/surface-lanes.mjs (the timing curve now says what it does) and world/site/findings-figures.css (the computed chart sentence) changed, so every world page's revision stamp moved. No words or layout on the home page changed.",
+  "paths": {
+    "index.html": "7440e7dee6c7d73432834ea4e7a2bc28733f7782e726c5bbe0b8338636fed0d5"
+  }
+}
