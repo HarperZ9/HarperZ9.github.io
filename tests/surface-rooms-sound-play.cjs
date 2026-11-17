@@ -51,7 +51,10 @@ async function firstPress(browser) {
 const FILE = new Set(['piece', 'bars', 'seed']);
 const reading = (page, kind) => page.evaluate((file) => { const v = window.__rooms.handles.sound.value(), r = v.probe.rendered;
   return JSON.stringify(file ? { cost: document.querySelector('#sound .snd-cost').textContent, address: location.search, piece: v.piece }
-    : { rendered: r && { bpm: r.bpm, semis: r.semis, density: r.density, bands: r.bands }, desk: v.probe.desk, band: v.probe.band, volume: v.probe.volume, piece: v.piece, playing: v.playing }); }, FILE.has(kind));
+    : { rendered: r && { bpm: r.bpm, semis: r.semis, density: r.density, bands: r.bands }, desk: v.probe.desk && Object.fromEntries(Object.entries(v.probe.desk).map(([g, x]) => [g, Math.round(x * 100) / 100])), band: v.probe.band && Object.fromEntries(Object.entries(v.probe.band).map(([b, x]) => [b, Math.round(x * 100) / 100])), volume: v.probe.volume, piece: v.piece, playing: v.playing }); }, FILE.has(kind));
+// a reading taken once the last change has settled: the same for a second and a half (a gain glides to its value, and a
+// change of tempo, key or notes lands on a later bar), so a control is judged by its own change alone
+async function settled(page, kind) { let last = await reading(page, kind), since = Date.now(); for (const until = Date.now() + 30000; Date.now() < until && Date.now() - since < 1500; await page.waitForTimeout(150)) { const r = await reading(page, kind); if (r !== last) { last = r; since = Date.now(); } } return last; }
 // drive one control to another value, as a visitor would: a range moved, a radio pressed, a number typed
 async function drive(page, el) {
   const kind = await el.evaluate((e) => (e.matches('fieldset') ? 'radios' : e.type));
@@ -65,7 +68,7 @@ async function everyControl(page) {
   const list = await page.$$eval('#sound .rm-host [data-ctl]', (els) => els.map((e) => ({ id: e.id, kind: e.dataset.ctl })));
   const dead = [], alive = [];
   for (const { id, kind } of list) {
-    const el = await page.$(id ? `#sound #${id}` : `#sound .rm-host [data-ctl="${kind}"]`), before = await reading(page, kind);
+    const el = await page.$(id ? `#sound #${id}` : `#sound .rm-host [data-ctl="${kind}"]`), before = await settled(page, kind);
     await drive(page, el);
     let moved = false; for (const until = Date.now() + 20000; !moved && Date.now() < until; await page.waitForTimeout(150)) moved = (await reading(page, kind)) !== before;
     (moved ? alive : dead).push(id ? id.replace(/^snd-/, '') : kind);
