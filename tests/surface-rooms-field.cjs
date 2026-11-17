@@ -52,7 +52,11 @@ const stated = (text) => { const m = /Loads (\d+) KB/.exec(text); return m ? +m[
       out.frame = { sceneMs: +budget.scene.toFixed(2), drawMs: +budget.draw.toFixed(2), workMs: +(budget.scene + budget.draw).toFixed(2), medianFrameGapMs: +medGap.toFixed(2), frames: gaps.length };
       assert.ok(budget.scene + budget.draw < 33, `the frame's work takes ${budget.scene + budget.draw} ms at the median`);
       assert.match(await page.textContent('#field .fd-frame'), /Frame: scene [\d.]+ ms and drawing [\d.]+ ms/);
-      if (process.env.SHOT) { await page.locator('#field').screenshot({ path: process.env.SHOT }); out.shot = process.env.SHOT; }
+      if (process.env.SHOT) {   // the whole width of the page around the field, the fixed navigation set aside so it does not cover the section
+        await page.addStyleTag({ content: 'header.o-hand{visibility:hidden}' }); await page.locator('#field .fd').scrollIntoViewIfNeeded();
+        const b = await page.locator('#field .fd').boundingBox(); await page.screenshot({ path: process.env.SHOT, clip: { x: 0, y: Math.max(0, b.y - 16), width: 1440, height: Math.min(900, b.height + 32) } }); out.shot = process.env.SHOT;
+        await page.addStyleTag({ content: 'header.o-hand{visibility:visible}' });
+      }
 
       // 3: a slider by keyboard
       const lens = '#field input[data-p="lens"]';

@@ -1,0 +1,9 @@
+{
+  "date": "2026-11-17",
+  "note": "The Playground gains the field section (#field). index.html changes only by the world asset revision stamp; site-index.html and system/routes.js carry the new section heading in the Playground's search text. Reviewed against the diff: no other change.",
+  "paths": {
+    "index.html": "24e27837ffc724e99e0f1bf841d506ec5960193b9a4dca21a10e31f2894e3174",
+    "site-index.html": "b2b906adae1af888c143baacaa0685638dd72a0161bb0d66c1504287de61ee88",
+    "system/routes.js": "39cd66791697b283234926ee240ff733a95ebab458538a9b85fcfe61bb528e1f"
+  }
+}

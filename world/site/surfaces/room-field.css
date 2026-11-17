@@ -10,10 +10,11 @@
 .fd .fd-who { display: flex; flex-wrap: wrap; gap: .25rem 1rem; }
 .fd .fd-pick { display: inline-flex; align-items: center; gap: .4rem; min-height: 44px; cursor: pointer; }
 .fd .fd-pick i { width: .8rem; height: .8rem; border-radius: 50%; border: 1px solid currentColor; }
-.fd .fd-w { display: grid; grid-template-columns: 1fr 3.2rem; align-items: center; column-gap: .5rem; margin-top: .35rem; }
+.fd .fd-w { display: grid; grid-template-columns: minmax(0, 1fr) 3.6rem; align-items: center; column-gap: .5rem; margin-top: .35rem; }
 .fd .fd-w span { grid-column: 1 / -1; }
 .fd .fd-w input[type="range"] { width: 100%; min-height: 32px; margin: 0; accent-color: currentColor; }
-.fd output { font-variant-numeric: tabular-nums; text-align: right; }
+.fd output { font-variant-numeric: tabular-nums; text-align: right; padding-inline-end: .35rem; }
+.fd .fd-desk { min-width: 0; padding-inline-end: .25rem; }
 .fd .fd-run { min-height: 44px; padding: 0 1rem; font: inherit; font-weight: 600; border: 1px solid currentColor; background: transparent; color: inherit; cursor: pointer; }
 .fd h3 { font-size: 1rem; margin: 1rem 0 .3rem; }
 .fd .fd-read { display: grid; grid-template-columns: auto 1fr; gap: .15rem .8rem; margin: 0; font-variant-numeric: tabular-nums; }
