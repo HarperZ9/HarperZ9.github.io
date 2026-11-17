@@ -44,13 +44,14 @@ async function firstPress(browser) {
 }
 
 // The output of the room as a reading. A control that plays is read where the sound is made: what the worker last
-// rendered (tempo, key, notes, bands, chords), the desk's gains and band shares in the audio graph, the engine's volume.
+// rendered with (tempo, key, notes, bands), the desk's gains and band shares in the audio graph, the engine's volume.
 // A control of the file is read in the file the room states and the address that makes it. Bar, levels and frames move
-// by themselves and are left out.
+// by themselves and are left out, and so are the chords of the last bars rendered, which change with every chunk (the
+// planted control caught that on the first CI run).
 const FILE = new Set(['piece', 'bars', 'seed']);
 const reading = (page, kind) => page.evaluate((file) => { const v = window.__rooms.handles.sound.value(), r = v.probe.rendered;
   return JSON.stringify(file ? { cost: document.querySelector('#sound .snd-cost').textContent, address: location.search, piece: v.piece }
-    : { rendered: r && { bpm: r.bpm, semis: r.semis, density: r.density, bands: r.bands, chords: r.chords }, desk: v.probe.desk, band: v.probe.band, volume: v.probe.volume, piece: v.piece, playing: v.playing }); }, FILE.has(kind));
+    : { rendered: r && { bpm: r.bpm, semis: r.semis, density: r.density, bands: r.bands }, desk: v.probe.desk, band: v.probe.band, volume: v.probe.volume, piece: v.piece, playing: v.playing }); }, FILE.has(kind));
 // drive one control to another value, as a visitor would: a range moved, a radio pressed, a number typed
 async function drive(page, el) {
   const kind = await el.evaluate((e) => (e.matches('fieldset') ? 'radios' : e.type));
