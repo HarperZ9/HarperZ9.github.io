@@ -1,0 +1,7 @@
+{
+  "date": "2026-11-17",
+  "note": "Asset revision stamp only: the sound room's modules under world/site/ changed, so every world page's revision stamp moved.",
+  "paths": {
+    "index.html": "6326ee8f1b595fa812c78d433517ce0915aa627389dc302aeff6ab1958a9328f"
+  }
+}
