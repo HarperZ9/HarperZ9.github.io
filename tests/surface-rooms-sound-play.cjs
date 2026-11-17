@@ -143,6 +143,9 @@ async function shaderHears(browser) {
   await page.waitForSelector('#shader[data-room-live]');
   const silent = await page.$eval('#shader .rm-host', (h) => h.dataset.audio);
   await page.click('#sound [data-room-open]'); await page.waitForSelector(LIVE); await sounding(page);
+  // the press scrolled the page to the sound room; the shader draws (and reads iAudio) only while its canvas is on
+  // screen, so look at it again, as a visitor would while the music plays
+  await page.$eval('#shader .shd-frame', (c) => c.scrollIntoView({ block: 'center' }));
   await page.waitForFunction(() => { const a = (document.querySelector('#shader .rm-host').dataset.audio || '').split(' ').map(Number); return a.length === 4 && a[3] > 0.05; }, null, { timeout: 20000 });
   const heardBy = await page.$eval('#shader .rm-host', (h) => h.dataset.audio);
   out.shaderAudio = { silent, playing: heardBy };
