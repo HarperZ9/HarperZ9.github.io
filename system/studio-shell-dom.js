@@ -37,22 +37,8 @@ function setOpen(ctx, open, focusMenu) {
   ctx.sw.setAttribute("aria-expanded", String(open));
   if (open && focusMenu && ctx.menu) {
     const sel = ctx.menu.querySelector('[aria-selected="true"]') || ctx.menu.querySelector("button");
-    if (sel) {
-      // The source on stage is in view and clear of the pinned bar as the picker opens (the
-      // page's scroll-padding keeps it above the bar on a narrow screen).
-      try { sel.focus({ preventScroll: true }); } catch (_) { sel.focus(); }
-      if (typeof sel.scrollIntoView === "function") sel.scrollIntoView({ block: "nearest", inline: "nearest" });
-    }
+    if (sel) sel.focus();
   }
-}
-// The bar's height as --studio-bar-h on the root, so the page's scroll-padding matches the bar the
-// visitor sees (it grows with the text size and the phone's safe area).
-function watchBar(ctx) {
-  const bar = ctx.bar, root = ctx.doc.documentElement, view = ctx.doc.defaultView;
-  if (!bar || !root || !view || typeof view.ResizeObserver !== "function") return;
-  const set = () => { const h = bar.getBoundingClientRect().height; if (h > 0) root.style.setProperty("--studio-bar-h", Math.ceil(h) + "px"); };
-  new view.ResizeObserver(set).observe(bar);
-  set();
 }
 function wireSwitch(ctx) {
   if (ctx.sw) ctx.sw.addEventListener("click", () => setOpen(ctx, ctx.rail.dataset.sources !== "open", true));
@@ -345,7 +331,6 @@ export function mountShell({ doc = globalThis.document, rail, getSource, contrac
     sw: $("source-switch"), menu: $("studio-source"), head: $("inspector-head"), bar: $("inspector-actions"),
     history: createHistory(), store: createStore({ storage, maxBytes }), presets: createPresets({ storage }), kept: new Map(), resumed: new Set(), restoring: false, stageExports, projectExtras, timers: new Map() };
   wireSwitch(ctx);
-  watchBar(ctx);
   wireKeys(ctx);
   markBarTargets(ctx);
   paintHead(ctx, getSource());

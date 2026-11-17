@@ -111,12 +111,7 @@ html body.studio-page #viewport-stage .stage-empty[hidden]{display:none}
   html body.studio-page #studio-rail .inspector-actions .ia-primary{margin-right:0}
   html body.studio-page #studio-rail .ia-export-list{top:auto;bottom:calc(100% + .3rem);right:0;left:auto}
   html body.studio-page:has(#studio-rail[data-inspector="unified"]){padding-bottom:4.5rem}
-  /* Whatever is scrolled into view (a source in the picker, a focused control) stops above the
-     pinned bar, not under it. studio-shell-dom.js keeps --studio-bar-h at the bar's height. */
-  html:has(body.studio-page #inspector-actions:not([hidden])){scroll-padding-bottom:calc(var(--studio-bar-h,4.5rem) + .75rem)}
 }
-/* The site menu opens over the Studio's action bar, never under it (both sat at z-index 40). */
-html body.studio-page #site-nav.site-nav:has(.sn-more[open]){z-index:45}
 
 @media (forced-colors:active){
   html body.studio-page #studio-rail .source-switch{forced-color-adjust:none;background:Highlight;color:HighlightText}

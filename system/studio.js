@@ -26,7 +26,7 @@ import { buildCertificate, structuralOracle, cognitiveOracle } from "../shared-f
 import { renderCertificate } from "../shared-frame/certificate-panel.js";
 import { openLog, normaliseEntry, orderEntries } from "../shared-frame/audit-log.js";
 import { openLog as openFidelityLog } from "../shared-frame/fidelity-log.js";
-import { mountShell } from "./studio-shell-dom.js?v=20261116-studio-reach";
+import { mountShell } from "./studio-shell-dom.js?v=20261010-flush-steps";
 import { SOURCE_GUIDE } from "./studio-shell.js?v=20261012-viewer";
 import { mountPalette } from "./studio-palette.js?v=20261009-timeline";
 import { mountDnd } from "./studio-dnd.js?v=20261009-drag-drop";
@@ -3328,13 +3328,6 @@ async function renderPreset() {
   );
   startMeterLoop();   // refresh the measurimeter, then self-idle (static fractal)
 }
-
-// Choosing a preset draws it (16 November 2026). The preset menu only set the value, so the stage
-// kept the old view until Render, the same gap the set chips had until 9 October.
-fractalPresetEl.addEventListener("change", () => {
-  if (activeSource !== "fractal") return;
-  renderPreset().catch(err => console.error("[studio] the fractal preset failed to draw:", err));
-});
 
 // Wire type chips: filter presets by type when chip is clicked
 document.querySelectorAll("[data-ftype]").forEach(btn => {
