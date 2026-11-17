@@ -33,8 +33,11 @@ const VISITS = [
 const SETTLE_MS = 8000;
 const NO_GPU = /no WebGPU|needs WebGPU|does not offer/i;
 
+// The stage as pixels: a clip of the window at the stage box, so a stage that moves (an orbiting
+// 3D fractal) is read as it is instead of waited on until it holds still.
 async function stage(page) {
-  const png = await page.locator('#viewport-stage').screenshot({ animations: 'disabled' });
+  const box = await page.evaluate(() => { const r = document.getElementById('viewport-stage').getBoundingClientRect(); return { x: Math.max(0, r.left), y: Math.max(0, r.top), width: Math.max(1, Math.min(r.width, innerWidth - Math.max(0, r.left))), height: Math.max(1, Math.min(r.height, innerHeight - Math.max(0, r.top))) }; });
+  const png = await page.screenshot({ clip: box, animations: 'disabled' });
   return crypto.createHash('sha256').update(png).digest('hex').slice(0, 16);
 }
 // What the source says about itself: its live regions, status lines, outputs, route rows, the film
@@ -104,6 +107,7 @@ const ddsOf = (page) => page.evaluate(() => {
       try { await ready(page, source, 45000); } catch (e) { fail(`${source}: did not come on stage: ${e.message.slice(0, 160)}`); continue; }
       for (const sel of visit.pre || []) { const b = page.locator(`.src-block:not([hidden]) ${sel}`).first(); await b.scrollIntoViewIfNeeded(); await b.click(); await sleep(1500); }
       await sleep(800);
+      console.log(`${source}${visit.pre ? ' after ' + visit.pre.join(', ') : ''}: on stage`);
       const selects = await selectsOf(page, !!visit.shared);
       for (const s of selects) {
         await page.locator('#' + s.id).scrollIntoViewIfNeeded();
