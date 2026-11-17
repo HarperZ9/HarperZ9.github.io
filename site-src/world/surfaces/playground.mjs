@@ -43,6 +43,10 @@ export default {
       say: "Five pieces of jazz over sea, wind and open air, composed and synthesized in your browser while they play. The notes show as they play. Drag across them to change the tempo and how many notes play, move the key, raise or lower each instrument, and blend the first band into the second. A seed sets the order of the sections, the piano's rhythm, the fills and how the lead develops its theme, so one seed always gives the same performance. Save what you hear as a sound file at a measured loudness. Nothing plays until you press.",
       exchange: "When the blend above is running, its leading part chooses the piece. When the type forge is open, its line sets the seed. While it plays, the shader room can take its levels as iAudio. This line says so each time.",
       takes: ["blend", "text"], gives: ["score", "wav"] },
+    { id: "field", anchor: "field", demo: "playground-field", heading: "The field: light, flow, measure and shape in one place", open: "Open the field", css: "world/site/surfaces/room-field.css",
+      say: "Light crosses a Luneburg glass and a body of stirred water. Neither is a room: refraction, flow, measurement, shape, a voice, a map and a circuit are properties, and every element here can carry every one of them at any weight from 0 to 1. Each element's edge is a gradient, so where the glass meets the water the light bends by both at once. Choose an element, move its sliders, drag it or move it with the arrow keys. The probe reads the water and the CAD rule dimensions it, with a tolerance on every number. Every reading is simulated and says so.",
+      exchange: "When the blend above is running, its mix colours the dye. After each change the field hands its readings on as numbers. This line says so each time.",
+      takes: ["palette"], gives: ["numbers", "image"] },
   ],
   placesHeading: "Instruments and study tools",
   places: [

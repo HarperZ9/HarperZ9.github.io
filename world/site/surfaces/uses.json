@@ -203,6 +203,15 @@
    "plain": null,
    "bytes": 450359,
    "files": 33
+  },
+  "field": {
+   "home": "playground",
+   "form": "live",
+   "state": "ready",
+   "weight": "light",
+   "plain": null,
+   "bytes": 95586,
+   "files": 3
   }
  },
  "tools": {

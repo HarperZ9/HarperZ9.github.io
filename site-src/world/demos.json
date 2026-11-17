@@ -39,6 +39,15 @@
    ]
   },
   {
+   "id": "playground-field",
+   "page": "/playground/#field",
+   "form": "live",
+   "what": "The field steps flow, dye and a sound wave in the browser, traces light through them and reads and dimensions what the visitor gives those properties.",
+   "modules": [
+    "field"
+   ]
+  },
+  {
    "id": "playground-shader",
    "page": "/playground/#shader",
    "form": "live",

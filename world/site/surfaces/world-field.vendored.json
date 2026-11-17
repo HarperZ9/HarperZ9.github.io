@@ -1,0 +1,7 @@
+{
+ "comment": "world-field.mjs is carried unchanged from HarperZ9/superframe, built there by packages/world/bundle.mjs. world/site/surfaces/field.test.mjs fails when the copy and this pin disagree: carry a new build and change the pin together.",
+ "repo": "HarperZ9/superframe",
+ "path": "packages/world/dist/world-field.mjs",
+ "commit": "98d9ee37",
+ "sha256": "f629eebb9aa9be5b745a909949c93ae51578706fa517c327f55d475d60f7e37f"
+}
