@@ -1,0 +1,48 @@
+{
+  "about": "Every control and behaviour of the sound room as it stood on origin/main 5d42a483e (16 November 2026), and of the two sound pages under /world/sound, against where it is now. tests/surface-rooms-sound-play.cjs opens each place and checks every selector under now is there. A control the room gains is listed under added, so a control nobody recorded fails the check too. Nothing here is missing.",
+  "room": {
+    "before": {
+      "button[data-play] x5": { "now": "button.snd-pad[data-play]", "count": 5, "how": "the five pieces are large pads; the first press of the room's own button plays one already" },
+      "details summary x5 (Why it sounds this way)": { "now": ".snd-pieces details summary", "count": 5 },
+      "input#snd-level": { "now": "#snd-level" },
+      "select#snd-arr (first or second arrangement)": { "now": "#snd-band", "how": "a slider that blends the first band into the second at equal power; either end is the old choice" },
+      "input#snd-seed": { "now": "#snd-seed" },
+      "select#snd-piece (the file's piece)": { "now": "input[name=\"snd-piece\"]", "count": 5, "how": "a strip of the five pieces; it changes the piece without starting sound, as the select did" },
+      "select#snd-bars (the file's length)": { "now": "input[name=\"snd-bars\"]", "count": 3, "how": "a strip of 16, 32 and 48 bars" },
+      "button[data-render] (Make the file, Stop rendering)": { "now": "button[data-render]" },
+      "a.snd-wav (Save the piece)": { "now": "a.snd-wav" }
+    },
+    "behaviours": {
+      "the line of the bar and its chords": { "now": ".snd-now" },
+      "the band named in words": { "now": ".snd-band" },
+      "the file's length and size before rendering": { "now": ".snd-cost" },
+      "the seed said in words": { "now": ".snd-seed-say" },
+      "the blend's choice said in words": { "now": ".snd-mood" },
+      "the file's measured loudness said in words": { "now": ".snd-file" },
+      "the hand-over line": { "now": ".rm-say", "outside": true },
+      "the five pieces with scripts off": { "now": ".rm-still .snd-book li", "count": 5, "outside": true }
+    },
+    "added": {
+      "the live view: notes, bars, chords and the bar a change lands on, dragged for tempo and notes": ".snd-view",
+      "tempo": "#snd-tempo",
+      "how many notes play": "#snd-density",
+      "key, a strip of thirteen": "input[name=\"snd-key\"]",
+      "drums level over its meter": "#snd-g-drums",
+      "bass level over its meter": "#snd-g-bass",
+      "keys and pad level over its meter": "#snd-g-keys",
+      "lead level over its meter": "#snd-g-lead",
+      "sea and room level over its meter": "#snd-g-space",
+      "where a change lands, in words": ".snd-landing"
+    }
+  },
+  "pages": {
+    "/world/sound/sound.html": {
+      "how": "kept in place; every instrument now turns sound on from its own first press instead of waiting, disabled, for the bar",
+      "now": { "#voices button": 14, "#note808": 1, "#drive808": 1, "#glide808": 1, "#clip808": 1, "#scope": 1, "#grid button": 80, "#seqplay": 1, "#bpm": 1, "#swing": 1, "[data-fx]": 5, "#motifs button[data-id]": 1, "#motifs button[data-stop]": 1, "#specLive": 1, "#specPic": 1, "#specShep": 1, "#arch button[data-a]": 1, "#arch button[data-chop]": 1, "#humplay": 1, "#humwav": 1, "#bar [data-on]": 1, "#bar [data-mute]": 1, "#bar [data-vol]": 1 }
+    },
+    "/world/sound/theme/": {
+      "how": "kept in place; a motif's own first press turns sound on for that motif",
+      "now": { "#beatbtn": 1, "#wanderbtn": 1, "#famboxes input": 1, "#namebtn": 1, "#motifgrid button[data-id]": 1, "#motifgrid button[data-stop]": 1, "#bar [data-on]": 1, "#bar [data-mute]": 1, "#bar [data-vol]": 1 }
+    }
+  }
+}

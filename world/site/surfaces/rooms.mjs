@@ -9,8 +9,12 @@
 //                     canvas as it stands, and a taker asks for it with pictureOf(envelope). picture() is the last one
 //                     handed on, with the maker's name, or null. watch holds functions told of every value sent.
 //                     A room may also ask for one maker's picture as it stands (ctx.pictureFrom), handed on or not.
-//   open(id, section) mount the room's module from the registry, join it to the bus, hand it what was sent before,
-//                     and write each hand-over under it in words
+//   levels            sound as an input: a room that plays sound keeps a function here (ctx.offerLevels) that returns
+//                     { bass, mid, treble, level }, each 0 to 1, or null while it is silent; any other room reads it
+//                     every frame with ctx.levelsFrom(id). Levels are read, not sent, so nothing is sealed sixty times a second.
+//   open(id, section, { press }) mount the room's module from the registry, join it to the bus, hand it what was sent
+//                     before, and write each hand-over under it in words. press is set when a visitor's press opened the
+//                     room (not an address): a room may act on it, and press.audio is an AudioContext made in that press.
 //
 // The address holds the open rooms (room=type,sound) beside each room's own state, so a link opens the same piece.
 import registry from './registry.mjs';
@@ -27,7 +31,7 @@ let made = null;
 export function page(surface = 'playground') {
   if (!made) {
     const bus = createBus({ surface }), last = {};
-    made = { bus, last, handles: {}, pictures: {}, watch: new Set(),
+    made = { bus, last, handles: {}, pictures: {}, levels: {}, watch: new Set(),
       pictureOf(env) { const canvas = env?.medium === 'image' ? made.pictures[env.value?.of]?.() : null; return canvas && canvas.width && canvas.height ? canvas : null; },
       picture() { const env = last.image, canvas = made.pictureOf(env); return canvas ? { canvas, of: env.value.of, name: name(env.value.of) } : null; },
       send(from, medium, value, opts) { const out = bus.send(from, medium, value, opts); if (out.ok) { last[medium] = bus.derived(out.id); for (const fn of made.watch) fn(medium, last[medium]); } return out; } };
@@ -49,7 +53,7 @@ function styles(href) {
   return new Promise((done) => { css.onload = css.onerror = done; document.head.append(css); });
 }
 
-export async function open(id, sec) {
+export async function open(id, sec, { press = null } = {}) {
   const row = registry.SURFACES[id], p = page(sec.dataset.home || 'playground'), host = sec.querySelector('.rm-host'), say = sec.querySelector('.rm-say');
   if (!row?.load) throw new Error(`rooms: "${id}" has no module behind it`);
   if (p.handles[id]) return p.handles[id];
@@ -58,7 +62,8 @@ export async function open(id, sec) {
   const told = { took: '', gave: '' }, tell = () => { say.textContent = [told.took, told.gave].filter(Boolean).join(' '); };
   const ctx = { query: new URLSearchParams(location.search), address, pictureOf: (env) => p.pictureOf(env), offerPicture(fn) { p.pictures[id] = fn; },
     // the picture a module shows as it stands, asked for by the module's id; a room's own picture is not lent back to it
-    pictureFrom(of) { const c = of === id ? null : p.pictures[of]?.(); return c && c.width && c.height ? c : null; }, nameOf: (module) => { const n = lower(name(module)); return n.startsWith('the ') ? n : `the ${n}`; },
+    pictureFrom(of) { const c = of === id ? null : p.pictures[of]?.(); return c && c.width && c.height ? c : null; },
+    offerLevels(fn) { if (fn) p.levels[id] = fn; else delete p.levels[id]; }, levelsFrom: (of) => (of === id ? null : p.levels[of]?.() ?? null), press, nameOf: (module) => { const n = lower(name(module)); return n.startsWith('the ') ? n : `the ${n}`; },
     send(medium, value, opts) {
       const out = p.send(id, medium, value, opts);
       told.gave = !out.ok ? `The ${word(medium)} was not handed on: ${out.why}.`

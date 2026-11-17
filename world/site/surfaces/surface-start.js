@@ -15,9 +15,13 @@ if (b) {
 }
 for (const r of document.querySelectorAll("[data-room-open]")) {
   const sec = r.closest("[data-room]"), words = r.textContent;
-  const go = () => {
+  // a room that plays sound on its press makes the audio device inside the press, before its code has loaded, because
+  // a browser lets sound start only from inside a press; an address that opens the room makes none and plays nothing
+  const audio = () => { if (!sec.hasAttribute("data-audio")) return null; try { const AC = window.AudioContext || window.webkitAudioContext, a = new AC({ latencyHint: "interactive" }); a.resume().catch((e) => console.error("surface: the audio device did not resume", e)); return a; } catch (e) { console.error("surface: no audio device", e); return null; } };
+  const go = (ev) => {
+    const press = ev ? { audio: audio() } : null;
     r.disabled = true; r.textContent = "Opening";
-    import("./rooms.mjs").then((m) => m.open(sec.dataset.room, sec)).catch((e) => {
+    import("./rooms.mjs").then((m) => m.open(sec.dataset.room, sec, { press })).catch((e) => {
       console.error("surface: the room did not open", e);
       r.disabled = false; r.textContent = words; sec.querySelector(".rm-say").textContent = "The room did not load. The reading above stays as built.";
     });

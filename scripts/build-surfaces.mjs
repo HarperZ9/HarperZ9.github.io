@@ -107,7 +107,7 @@ async function room(m, r) {
   if (r.later) for (const f of reach(adapter(r.id))) for (const w of readFileSync(path.join(site, f), "utf8").matchAll(WORKER)) reach(path.posix.normalize(path.posix.join(path.posix.dirname(f), w[1])), started, true);
   const more = bytes(started);
   if (r.later && !more) throw new Error(`build-surfaces: the room "${r.id}" says "${r.later}" and names no worker`);
-  return `<section class="sx rm" id="${r.anchor}" data-room="${r.id}" data-home="${m.id}"${r.css ? ` data-css="/${r.css}"` : ""} aria-labelledby="${r.anchor}-h">
+  return `<section class="sx rm" id="${r.anchor}" data-room="${r.id}" data-home="${m.id}"${r.css ? ` data-css="/${r.css}"` : ""}${r.audio ? " data-audio" : ""} aria-labelledby="${r.anchor}-h">
 <h2 id="${r.anchor}-h">${esc(r.heading)}</h2>
 <p>${esc(r.say)}</p>
 ${labelFor(r.demo)}

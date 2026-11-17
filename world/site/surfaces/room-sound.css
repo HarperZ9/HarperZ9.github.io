@@ -1,23 +1,53 @@
-/* room-sound.css: the sound room on The Playground, loaded on its press. Nothing here moves. */
-.snd .snd-pieces { list-style: none; margin: .75rem 0 1.5rem; padding: 0; display: grid; gap: 0; }
-.snd .snd-pieces li { display: grid; grid-template-columns: minmax(11rem, 14rem) minmax(0, 1fr); gap: .5rem 1.5rem; align-items: start; padding: .7rem 0 .3rem; border-top: 1px solid currentColor; }
-.snd .snd-pieces p { margin: 0; max-width: 62ch; }
+/* room-sound.css: the sound room on The Playground, loaded on its press. The live view and the meters move while music
+   plays; with reduced motion the view redraws once a second and nothing here animates. */
+.snd { --snd-gap: clamp(1rem, 3vw, 2.25rem); }
+.snd .snd-pieces { list-style: none; margin: .75rem 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 11.5rem), 1fr)); gap: .6rem; }
+.snd .snd-pieces li { display: grid; align-content: start; gap: .2rem; min-width: 0; }
+.snd .snd-pad { display: grid; gap: .25rem; width: 100%; min-height: 6rem; padding: .8rem .9rem; text-align: left; align-content: start; }
+.snd .snd-pad b { font-size: 1.15em; }
+.snd .snd-pad span { font-weight: 400; font-size: .9em; }
+.snd .snd-pad em { font-style: normal; font-weight: 700; margin-top: auto; }
+/* the piece that is playing: a heavier frame, and the pad's own word changes to Stop */
+.snd .snd-pieces li[data-on] .snd-pad { box-shadow: inset 0 0 0 3px currentColor; }
 .snd .snd-pieces summary { min-height: 44px; display: flex; align-items: center; cursor: pointer; font-size: .92em; }
-.snd .snd-pieces details p { margin: 0 0 .4rem; }
-.snd button { min-height: 44px; padding: 0 .9rem; font: inherit; font-weight: 600; border: 1px solid currentColor; background: transparent; color: inherit; cursor: pointer; text-align: left; }
-/* the piece that is playing: a heavier frame, and the button's own word changes to Stop */
-.snd .snd-pieces li[data-on] button { box-shadow: inset 0 0 0 3px currentColor; }
-.snd .snd-now { font-variant-numeric: tabular-nums; font-weight: 600; margin: 1rem 0 0; min-height: 1.5em; }
-.snd .snd-set { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1.25rem, 4vw, 3rem); align-items: start; }
-.snd fieldset { border: 0; border-top: 1px solid currentColor; margin: 0; padding: .75rem 0 0; min-width: 0; }
-.snd legend { font-weight: 600; padding: 0; margin-bottom: .4rem; }
-.snd label { display: flex; justify-content: space-between; gap: 1rem; margin-top: .7rem; }
-.snd output { font-variant-numeric: tabular-nums; }
-.snd input[type="range"] { width: 100%; min-height: 32px; margin: .2rem 0 0; accent-color: currentColor; }
-.snd select, .snd input[type="number"] { width: 100%; box-sizing: border-box; min-height: 44px; font: inherit; margin-top: .3rem; padding: 0 .6rem; border: 1px solid currentColor; background: transparent; color: inherit; }
+.snd .snd-pieces details p { margin: 0 0 .4rem; font-size: .92em; }
+.snd button { min-height: 44px; padding: 0 .9rem; font: inherit; font-weight: 600; border: 1px solid currentColor; background: transparent; color: inherit; cursor: pointer; text-align: left; touch-action: manipulation; }
+.snd .snd-now { font-variant-numeric: tabular-nums; font-weight: 600; margin: 1rem 0 .5rem; min-height: 1.5em; overflow-wrap: anywhere; }
+/* the stage: the view with its two axes beside it, the key strip under it */
+.snd .snd-stage { display: grid; grid-template-columns: minmax(0, 1fr) minmax(12rem, 18rem); gap: .75rem var(--snd-gap); align-items: start; border-top: 1px solid currentColor; padding-top: .75rem; }
+.snd .snd-view { display: block; width: 100%; height: clamp(11rem, 26vw, 20rem); touch-action: none; cursor: crosshair; color: inherit; }
+.snd .snd-axes { display: grid; gap: 0; }
+.snd .snd-keys, .snd .snd-landing { grid-column: 1 / -1; }
+.snd .snd-landing { margin: 0; min-height: 1.4em; font-size: .92em; }
+.snd fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
+.snd legend { font-weight: 600; padding: 0; margin-bottom: .35rem; }
+.snd label { display: flex; justify-content: space-between; gap: .5rem 1rem; flex-wrap: wrap; margin-top: .6rem; }
+.snd output { font-variant-numeric: tabular-nums; font-weight: 400; }
+.snd input[type="range"] { width: 100%; min-height: 44px; margin: 0; accent-color: currentColor; touch-action: none; }
+/* strips: radio choices laid side by side, each one a press target */
+.snd .snd-strip { display: flex; flex-wrap: wrap; gap: 0; border-top: 1px solid currentColor; border-left: 1px solid currentColor; }
+.snd .snd-strip label { position: relative; margin: 0; flex: 1 1 3rem; min-height: 44px; display: flex; align-items: center; justify-content: center; border-right: 1px solid currentColor; border-bottom: 1px solid currentColor; cursor: pointer; padding: 0 .4rem; font-variant-numeric: tabular-nums; }
+.snd .snd-strip input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.snd .snd-strip input:checked + span { font-weight: 700; text-decoration: underline; text-underline-offset: .25em; text-decoration-thickness: 2px; }
+.snd .snd-strip label:has(input:checked) { box-shadow: inset 0 0 0 2px currentColor; }
+.snd .snd-strip label:has(input:focus-visible) { outline: 2px solid currentColor; outline-offset: -5px; }
+/* the instruments: each level slider runs over its own meter (--lv, 0 to 1, set while the music plays) */
+.snd .snd-desk { margin-top: 1.25rem; border-top: 1px solid currentColor; padding-top: .75rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr)); gap: 0 var(--snd-gap); }
+.snd .snd-desk legend, .snd .snd-desk-say { grid-column: 1 / -1; }
+.snd .snd-desk-say { margin: 0; font-size: .92em; }
+.snd .snd-track { position: relative; display: block; }
+.snd .snd-lv { position: absolute; left: 0; top: 50%; height: .7rem; width: calc(var(--lv, 0) * 100%); transform: translateY(-50%); background: currentColor; opacity: .28; pointer-events: none; }
+.snd .snd-track input { position: relative; }
+.snd .snd-mix { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 0 var(--snd-gap); margin-top: 1rem; border-top: 1px solid currentColor; padding-top: .25rem; }
+.snd .snd-ends { display: flex; justify-content: space-between; gap: 1rem; font-size: .9em; margin-top: .3rem; }
+.snd .snd-ends span:last-child { text-align: right; }
+.snd .snd-band { margin: .2rem 0 0; font-size: .92em; }
+.snd .snd-fileset { margin-top: 1.25rem; border-top: 1px solid currentColor; padding-top: .75rem; display: grid; gap: .25rem; }
+.snd .snd-strip-set { margin-top: .5rem; }
+.snd input[type="number"] { width: 100%; box-sizing: border-box; min-height: 44px; font: inherit; padding: 0 .6rem; border: 1px solid currentColor; background: transparent; color: inherit; }
 .snd ::placeholder { color: inherit; opacity: .85; }
-.snd fieldset p { margin: .5rem 0 0; font-size: .92em; }
-.snd fieldset button { margin-top: 1rem; }
+.snd .snd-fileset p { margin: .4rem 0 0; font-size: .92em; }
+.snd .snd-fileset button { margin-top: .75rem; justify-self: start; }
 .snd .snd-mood, .snd .snd-file { margin: 1rem 0 0; overflow-wrap: anywhere; }
 .snd .snd-mood:empty, .snd .snd-file:empty { display: none; }
 .snd .snd-take { margin: .75rem 0; }
@@ -25,4 +55,5 @@
 .snd .snd-take a:hover { text-decoration: underline; }
 .snd .snd-terms { font-size: .92em; max-width: 62ch; }
 .snd :focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
-@media (max-width: 760px) { .snd .snd-pieces li, .snd .snd-set { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 760px) { .snd .snd-stage, .snd .snd-mix { grid-template-columns: minmax(0, 1fr); } }
+@media (prefers-reduced-motion: reduce) { .snd * { transition: none !important; animation: none !important; } }

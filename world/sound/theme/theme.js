@@ -17,7 +17,7 @@ let E = null, seq = null, gen = null;  // seq: the Hum v4 master player (or the 
 $('#hero-credit').textContent = credit({ families: ['scale', 'crowd'], word: 'Hum' });
 $('#piecelist').innerHTML = PIECES.map((p) => `<li><h3>${p.word}</h3><p class="credit mono">${credit(p)}</p><p>${p.line}</p>${p.built ? `<a href="${p.href}">Open ${p.word}</a>` : `<span class="soon">Sound exists in the engine. The exhibit is still to make.</span>`}</li>`).join('');
 $('#famboxes').innerHTML = Object.entries(FAMILIES).map(([k, v]) => `<label><input type="checkbox" value="${k}" ${k === 'scale' || k === 'crowd' ? 'checked' : ''}> ${v}</label>`).join('');
-$('#motifgrid').innerHTML = Object.entries(MOTIFS).map(([id, m]) => `<div class="motif"><span class="fam">${m.meta.family}</span><h3>${m.meta.title}</h3><p>${m.meta.line}</p><div class="row"><button type="button" data-id="${id}" data-needs="engine" disabled>Play</button><button type="button" data-stop="${id}" data-needs="engine" disabled>Stop</button></div></div>`).join('');
+$('#motifgrid').innerHTML = Object.entries(MOTIFS).map(([id, m]) => `<div class="motif"><span class="fam">${m.meta.family}</span><h3>${m.meta.title}</h3><p>${m.meta.line}</p><div class="row"><button type="button" data-id="${id}">Play</button><button type="button" data-stop="${id}">Stop</button></div></div>`).join('');
 
 // ---- title generator
 const taken = new Set(PIECES.map((p) => p.word)); let counter = 0;
@@ -31,8 +31,10 @@ $('#namebtn').onclick = () => {
 
 // ---- motif buttons
 const handles = {};
-$('#motifgrid').onclick = (ev) => {
-  const b = ev.target.closest('button'); if (!b || !E) return;
+$('#motifgrid').onclick = async (ev) => {
+  const b = ev.target.closest('button'); if (!b) return;
+  if (!E && b.dataset.id) await bar.ensure('motif');
+  if (!E) return;
   if (b.dataset.id) { handles[b.dataset.id]?.stop(0.05); handles[b.dataset.id] = MOTIFS[b.dataset.id].play(E); }
   else if (b.dataset.stop) { const r = handles[b.dataset.stop]?.stop(); if (r === false) { b.textContent = 'Refused'; setTimeout(() => (b.textContent = 'Stop'), 900); } }
 };
@@ -91,9 +93,11 @@ function setWander(on) {
   if (on) { setBeat(false); gen = gen || new Generative(E, { onmood: (m) => { readout.textContent = `Wandering: ${m}`; } }); gen.start(); wanderbtn.setAttribute('aria-pressed', 'true'); }
   else if (gen) { gen.stop(); wanderbtn.setAttribute('aria-pressed', 'false'); readout.textContent = 'Beat is paused.'; }
 }
-mountSoundBar($('#bar'), { label: 'Sound', onEngine(e) {
-  E = e; document.querySelectorAll('[data-needs="engine"]').forEach((b) => (b.disabled = !e));
-  if (e) setBeat(true); else { seq && seq.stop(0.02); seq = null; gen && gen.dispose(); gen = null; wanderbtn.setAttribute('aria-pressed', 'false'); clearInterval(ro); Object.values(handles).forEach((h) => h && h.stop(0.02)); beatbtn.textContent = 'Turn sound on to hear it'; readout.textContent = 'Beat is off.'; }
+// a motif's own press turns sound on for that motif alone; the bar and the beat button start the beat as well
+const bar = mountSoundBar($('#bar'), { label: 'Sound', onEngine(e, _, how = {}) {
+  E = e;
+  if (e) { if (how.via !== 'motif') setBeat(true); } else { seq && seq.stop(0.02); seq = null; gen && gen.dispose(); gen = null; wanderbtn.setAttribute('aria-pressed', 'false'); clearInterval(ro); Object.values(handles).forEach((h) => h && h.stop(0.02)); beatbtn.textContent = 'Turn sound on to hear it'; readout.textContent = 'Beat is off.'; }
 } });
+window.__bar = bar;
 beatbtn.onclick = () => { if (!E) document.querySelector('[data-on]').click(); else setBeat(!(seq && seq.running)); };
 wanderbtn.onclick = () => { if (!E) { document.querySelector('[data-on]').click(); return; } setWander(!(gen && gen.running)); };

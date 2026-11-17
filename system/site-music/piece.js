@@ -5,6 +5,7 @@ import { compose } from './score.js';
 import { renderBars, mixStems, timeline, STEMS } from './render.js';
 import { createAmbience } from './ambience.js';
 import { arranged } from './pieces.js';
+import { tuned, thin, settle, transposeOf } from './live.js';
 
 export const LEAD_IN = 3;   // seconds of sea and wind before the first chord
 
@@ -34,8 +35,13 @@ export function master(L, R, sr, { target = -14, ceilingDb = -1.8, gainDb = null
 }
 
 // Render a piece. Returns the mastered mix, the layers at the same gain (for the ear), and the score in seconds.
-export function renderPiece(id, { seed = 1, bars = 48, sr = 48000, defects = {}, masterOpts = {}, ambienceDb = 0, responsive = true, arrangement = 'main' } = {}) {
-  const P0 = arranged(id, arrangement), piece = defects.mix ? { ...P0, mix: { ...P0.mix, ...Object.fromEntries(Object.entries(defects.mix).map(([k, v]) => [k, P0.mix[k] + v])) } } : P0, score = compose(id, { seed, bars, staged: defects.staged !== false, loop: !!defects.loop }), r = renderBars(score.bars, piece, { sr, seed, origin: LEAD_IN, defects }), lead = Math.round(LEAD_IN * sr) - r.pre, total = lead + r.length;
+// live: what a listener set while it played (live.js: tempo, key, density and each group's level), so the file is what
+// was heard. Without it the piece renders as written.
+export function renderPiece(id, { seed = 1, bars = 48, sr = 48000, defects: given = {}, masterOpts = {}, ambienceDb = 0, responsive = true, arrangement = 'main', live = null } = {}) {
+  const P0 = arranged(id, arrangement), P1 = given.mix ? { ...P0, mix: { ...P0.mix, ...Object.fromEntries(Object.entries(given.mix).map(([k, v]) => [k, P0.mix[k] + v])) } } : P0;
+  const L1 = live ? settle(P1, live) : null, piece = L1 ? tuned(P1, L1) : P1, defects = L1?.semis ? { ...given, transpose: { ...transposeOf(L1.semis), ...given.transpose } } : given;
+  const score = compose(id, { seed, bars, staged: defects.staged !== false, loop: !!defects.loop }); if (L1 && L1.density < 1) score.bars = score.bars.map((b) => thin(b, L1.density, seed));
+  const r = renderBars(score.bars, piece, { sr, seed, origin: LEAD_IN, defects }), lead = Math.round(LEAD_IN * sr) - r.pre, total = lead + r.length;
   const place = (x) => { const L = new Float32Array(total), R = new Float32Array(total); L.set(x.L, lead); R.set(x.R, lead); return [L, R]; };
   const tl = timeline(score.bars, piece, { t0: LEAD_IN, drift: defects.drift || 0, sr }), sea = createAmbience({ seed, sr, ...piece.ambience, responsive });
   sea.cue({ rests: tl.rests, lead: tl.lead.map((n) => [n.t0 - 0.09, n.t1]) });
