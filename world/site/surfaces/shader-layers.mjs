@@ -15,7 +15,6 @@
 // comma between. The key is left out at 0, so links made before it existed still open.
 import { STARTS, startOf } from './shader-starts.mjs';
 import { BLENDS, MAX_LAYERS } from '../../../system/shader-stack.js';
-import registry from './registry.mjs';
 
 export { BLENDS, MAX_LAYERS };
 // The pictures another module can lend a layer, by the module's registry id, in the order the list shows them.
@@ -60,8 +59,8 @@ export function decodeLayers(text) {
 export const wantsLibrary = (layers) => layers.some((L) => L.src.startsWith('p:'));
 
 // What the stack draws for one layer. pictureOf(id) returns a module's canvas or null; textCanvas is the room's lettering.
-export function stackLayer(L, { library, pictureOf, textCanvas }) {
-  const base = { blend: L.blend, mix: L.mix, key: L.key || 0, props: propertiesOf(L.src) };
+export function stackLayer(L, { library, pictureOf, textCanvas, rows = null }) {
+  const base = { blend: L.blend, mix: L.mix, key: L.key || 0, props: propertiesOf(L.src, rows) };
   if (L.src === 'palette') return { ...base, kind: 'shader', glsl: PALETTE_GLSL };
   if (L.src === 'text') return { ...base, kind: 'picture', source: () => textCanvas() };
   if (L.src.startsWith('pic:')) { const id = L.src.slice(4); return { ...base, kind: 'picture', source: () => pictureOf(id) }; }
@@ -77,8 +76,9 @@ export function maker(src) {
   if (src.startsWith('pic:')) return src.slice(4);
   return 'shader';
 }
-export function propertiesOf(src) {
-  const id = maker(src), row = registry.SURFACES[id];
+// rows is the registry's SURFACES, handed in by the caller (a room gets it as ctx.registry), so this file stays light.
+export function propertiesOf(src, rows = null) {
+  const id = maker(src), row = rows?.[id];
   return Object.freeze({ maker: id, name: row?.name || id, medium: src === 'palette' ? 'palette' : src === 'text' ? 'text' : src.startsWith('pic:') ? 'image' : 'shader',
     offers: row ? [...row.offers] : [], gives: row ? [...row.gives] : [] });
 }

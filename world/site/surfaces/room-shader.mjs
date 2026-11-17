@@ -185,7 +185,7 @@ export async function mount(host, input, ctx) {
   }
   function pushLayers() {
     if (!runner.gl) return [];
-    return runner.setLayers(state.layers.map((L) => stackLayer(L, { library, pictureOf: (id) => ctx.pictureFrom?.(id) || null, textCanvas: () => textCanvas })));
+    return runner.setLayers(state.layers.map((L) => stackLayer(L, { library, pictureOf: (id) => ctx.pictureFrom?.(id) || null, textCanvas: () => textCanvas, rows: ctx.registry?.SURFACES })));
   }
   // the words beside each layer's number, without redrawing the rows (a slider being dragged keeps its place)
   function sayLayers(errs = pushLayers()) { state.layers.forEach((L, i) => { const el = host.querySelector(`[data-layer="${i}"] .shd-l-h span`); if (el) el.textContent = layerState(L, errs[i]); }); kick(); }
@@ -275,7 +275,7 @@ export async function mount(host, input, ctx) {
       else if (env.medium === 'image' && env.from.module !== 'shader') { const c = ctx.pictureOf?.(env); if (c && runner.setPicture(c, { live: true })) { picture = ctx.nameOf?.(env.from.module) || env.from.module; host.dataset.picture = env.value.of; says(); sayLayers(); hand(); } }
     },
     value: () => ({ source: state.source, ok: host.dataset.ok === 'true', errors: errorsOf(host.dataset.errors || ''), hash, running: state.running, knobs: [...state.knobs], start: state.start, preset: state.preset, edited: state.edited,
-      palette: +(host.dataset.palette || 0), picture: host.dataset.picture || null, time: time(), layers: state.layers.map((L) => ({ ...L })), makers: state.layers.map((L) => propertiesOf(L.src).maker), text: state.text, frameMs: +(host.dataset.frameMs || 0) }),
+      palette: +(host.dataset.palette || 0), picture: host.dataset.picture || null, time: time(), layers: state.layers.map((L) => ({ ...L })), makers: state.layers.map((L) => propertiesOf(L.src, ctx.registry?.SURFACES).maker), text: state.text, frameMs: +(host.dataset.frameMs || 0) }),
     destroy() {
       clearTimeout(timer); clearTimeout(sendTimer); if (raf) cancelAnimationFrame(raf); watch?.disconnect(); document.removeEventListener('visibilitychange', onShow);
       host.removeEventListener('input', onInput); host.removeEventListener('click', onClick); host.removeEventListener('keydown', onKey); host.removeEventListener('submit', onSubmit);

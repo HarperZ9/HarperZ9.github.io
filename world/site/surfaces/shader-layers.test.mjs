@@ -58,10 +58,10 @@ test('a layer\'s own light steers its weight as far as its key asks', () => {
 });
 
 test('every source is an element with properties: the registry row of the module that makes it', () => {
-  assert.deepEqual(propertiesOf('palette'), { maker: 'blend', name: 'The blend table', medium: 'palette', offers: [...registry.SURFACES.blend.offers], gives: [...registry.SURFACES.blend.gives] });
-  assert.equal(propertiesOf('text').maker, 'forge'); assert.equal(propertiesOf('pic:loom').medium, 'image'); assert.equal(propertiesOf('s:bands').maker, 'shader');
-  for (const [id] of PICTURE_MAKERS) assert.ok(propertiesOf(`pic:${id}`).offers.length > 0, id);
-  assert.deepEqual(stackLayer({ src: 'palette', blend: 'add', mix: 1, key: 0.5 }, { library: null, pictureOf: () => null, textCanvas: () => null }).props, propertiesOf('palette'));
+  assert.deepEqual(propertiesOf('palette', registry.SURFACES), { maker: 'blend', name: 'The blend table', medium: 'palette', offers: [...registry.SURFACES.blend.offers], gives: [...registry.SURFACES.blend.gives] });
+  assert.equal(propertiesOf('text', registry.SURFACES).maker, 'forge'); assert.equal(propertiesOf('pic:loom', registry.SURFACES).medium, 'image'); assert.equal(propertiesOf('s:bands', registry.SURFACES).maker, 'shader');
+  for (const [id] of PICTURE_MAKERS) assert.ok(propertiesOf(`pic:${id}`, registry.SURFACES).offers.length > 0, id);
+  assert.deepEqual(stackLayer({ src: 'palette', blend: 'add', mix: 1, key: 0.5 }, { library: null, pictureOf: () => null, textCanvas: () => null, rows: registry.SURFACES }).props, propertiesOf('palette', registry.SURFACES));
 });
 
 test('layers move one place at a time and the ends hold', () => {
@@ -71,8 +71,8 @@ test('layers move one place at a time and the ends hold', () => {
 });
 
 test('every source is drawn as a shader or a picture with its blend and mix kept', () => {
-  const canvas = { width: 4, height: 4 }, ctx = { library: [{ name: 'X', glsl: 'void mainImage(out vec4 O, in vec2 U){O=vec4(1.0);}' }], pictureOf: (id) => (id === 'well' ? canvas : null), textCanvas: () => canvas };
-  assert.deepEqual(stackLayer({ src: 'palette', blend: 'add', mix: 0.2 }, ctx), { kind: 'shader', glsl: PALETTE_GLSL, blend: 'add', mix: 0.2, key: 0, props: propertiesOf('palette') });
+  const canvas = { width: 4, height: 4 }, ctx = { library: [{ name: 'X', glsl: 'void mainImage(out vec4 O, in vec2 U){O=vec4(1.0);}' }], pictureOf: (id) => (id === 'well' ? canvas : null), textCanvas: () => canvas, rows: registry.SURFACES };
+  assert.deepEqual(stackLayer({ src: 'palette', blend: 'add', mix: 0.2 }, ctx), { kind: 'shader', glsl: PALETTE_GLSL, blend: 'add', mix: 0.2, key: 0, props: propertiesOf('palette', registry.SURFACES) });
   assert.equal(stackLayer({ src: 'pic:well', blend: 'screen', mix: 1 }, ctx).source(), canvas);
   assert.equal(stackLayer({ src: 'pic:loom', blend: 'screen', mix: 1 }, ctx).source(), null, 'a picture that is not there yet draws nothing');
   assert.equal(stackLayer({ src: 'text', blend: 'normal', mix: 1 }, ctx).source(), canvas);
