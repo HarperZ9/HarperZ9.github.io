@@ -19,7 +19,7 @@
       "the seed said in words": { "now": ".snd-seed-say" },
       "the blend's choice said in words": { "now": ".snd-mood" },
       "the file's measured loudness said in words": { "now": ".snd-file" },
-      "the hand-over line": { "now": ".rm-say" },
+      "the hand-over line": { "now": ".rm-say", "outside": true },
       "the five pieces with scripts off": { "now": ".rm-still .snd-book li", "count": 5, "outside": true }
     },
     "added": {

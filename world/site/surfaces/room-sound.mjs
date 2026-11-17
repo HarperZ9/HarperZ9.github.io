@@ -71,6 +71,8 @@ export function mount(host, input, ctx) {
   const make = (st) => createSiteMusic({ seed: st.seed, band: st.band, params: { bpm: st.bpm, semis: st.semis, density: st.density }, gains: st.gains });
   let music = make(asked), madeSeed = asked.seed;
   const state = readState(q, music.mood);
+  // the address named no piece, so the music's own remembered piece is the one; its tempo is that piece's own
+  music.set({ bpm: state.bpm, semis: state.semis, density: state.density }); music.setBand(state.band);
   let off = null, worker = null, url = null, file = null, call = 0, heardBlend = null, heardText = null, sentFor = '', view = null;
   const reduce = !!globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
   host.classList.add('snd');
