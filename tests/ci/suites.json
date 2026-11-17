@@ -30,7 +30,7 @@
         ["tests/studio-choosing.cjs", 15], ["tests/studio-palette.cjs", 17], ["tests/studio-export-project.cjs", 11], ["tests/studio-presets.cjs", 20], ["tests/studio-drag-drop.cjs", 24],
         ["tests/studio-layout.cjs", 10], ["tests/studio-timeline.cjs", 43], ["tests/studio-sound-engine.cjs", 11], ["tests/studio-ndim-gpu.cjs", 15], ["tests/studio-neural-gpu.cjs", 168],
         ["tests/studio-viewer.cjs", 14], ["tests/studio-music-attractor.cjs", 19], ["tests/studio-music-flow.cjs", 18], ["tests/studio-finish.cjs", 120], ["tests/studio-plot-order.cjs", 16],
-        ["tests/studio-reach.cjs", 235], ["tests/studio-selects.cjs", 185]] },
+        ["tests/studio-reach.cjs", 235], ["tests/studio-selects.cjs", 300]] },
     "studio-firefox": { "server": "lib", "port": 8817, "env": { "BROWSER": "firefox" },
       "select": { "dir": "tests", "pattern": "^studio-.*[.]cjs$", "contains": "lib/browser.cjs" },
       "secs": { "studio-bar": 202, "studio-bring": 45, "studio-choosing": 15, "studio-controls": 75, "studio-drag-drop": 27, "studio-engines": 59, "studio-entry": 59,
