@@ -1,0 +1,7 @@
+{
+  "date": "2026-11-16",
+  "note": "Studio: the source picker and the site menu clear the action bar pinned to a narrow screen; studio.js and studio-shell.css take a new stamp.",
+  "paths": {
+    "studio.html": "333004faa64fc13a4e69971df83a7fc39be8f7b483bfd1c9989204d7a7343668"
+  }
+}
