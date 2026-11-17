@@ -110,7 +110,7 @@ test("the bus carries the blend and the forge's line to sound, and sound gives a
 test('the shader room is a room in the registry, light, and reads no element table', async () => {
   const row = registry.SURFACES.shader;
   assert.equal(row.room, 'shader'); assert.equal(row.table, false); assert.equal(row.weight, 'light'); assert.equal(row.form, 'live');
-  assert.deepEqual(row.takes, ['palette', 'image']); assert.ok(row.gives.includes('image') && row.gives.includes('png'));
+  assert.deepEqual(row.takes, ['palette', 'image', 'text']); assert.ok(row.gives.includes('image') && row.gives.includes('png'));
   for (const id of ['system/shader-runner.js', 'system/shader-presets.js']) assert.equal(registry.LOOSE.find((t) => t.id === id).mounted, 'shader');
   for (const taker of ['loom', 'ridges', 'voxels']) assert.ok(registry.SURFACES[taker].takes.includes('image'), `${taker} takes a picture`);
 });

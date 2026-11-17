@@ -31,10 +31,28 @@
 .shd .shd-made:empty, .shd .shd-knobs p:empty, .shd .shd-err:empty { display: none; }
 .shd .shd-inputs { margin-top: 1.25rem; border-top: 1px solid currentColor; }
 .shd .shd-inputs summary { min-height: 44px; display: flex; align-items: center; cursor: pointer; font-weight: 600; }
-.shd .shd-inputs dl { display: grid; grid-template-columns: minmax(12rem, max-content) minmax(0, 1fr); gap: .35rem 1.5rem; margin: 0 0 .8rem; }
+.shd .shd-inputs dl { display: grid; grid-template-columns: minmax(min(12rem, 40%), max-content) minmax(0, 1fr); gap: .35rem 1.5rem; margin: 0 0 .8rem; }
 .shd .shd-inputs dt span { font-size: .92em; }
 .shd .shd-inputs dd { margin: 0; }
 .shd :focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
 .shd textarea:focus-visible { outline-offset: -2px; outline-color: #f4efe6; }
+/* The layer list: one row per layer, its number and state, then source, blend, mix and the moves. A row is a plain block
+   with a rule above it, so the list reads as a stack. */
+.shd .shd-layers { margin-top: 1rem; }
+.shd .shd-layers-h { margin: 0; font-weight: 600; }
+.shd .shd-count { font-weight: 400; font-variant-numeric: tabular-nums; }
+.shd .shd-ls { list-style: none; margin: .4rem 0 0; padding: 0; display: grid; gap: .6rem; }
+.shd .shd-ls li { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: .2rem .8rem; align-items: center; padding-top: .5rem; border-top: 1px solid rgb(244 239 230 / .35); }
+.shd .shd-ls .shd-l-h, .shd .shd-ls .shd-l-do { grid-column: 1 / -1; margin: 0; }
+.shd .shd-ls .shd-l-h span { font-weight: 400; }
+.shd .shd-ls label { margin: 0; font-weight: 400; }
+.shd .shd-ls input[type="range"] { width: 100%; min-height: 32px; margin: 0; accent-color: currentColor; }
+.shd .shd-l-do, .shd .shd-l-add { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1rem; }
+.shd .shd-l-add { margin: .6rem 0 0; }
+.shd .shd-l-add span { font-size: .92em; }
+/* Nothing in the room may run past the right edge: long words wrap, and a button's words wrap inside it. */
+.shd { min-width: 0; max-width: 100%; }
+.shd p, .shd label, .shd li, .shd dd, .shd dt, .shd summary { overflow-wrap: anywhere; }
+.shd button, .shd .shd-take a { max-width: 100%; white-space: normal; text-align: start; }
 /* On a narrow screen the frame comes first and the text area sits right under it, so a change and its result share the screen. */
-@media (max-width: 900px) { .shd .shd-desk { grid-template-columns: minmax(0, 1fr); gap: 0; } .shd .shd-see { display: contents; } .shd .shd-frame { order: 1; } .shd .shd-run { order: 2; } .shd .shd-write { order: 3; } .shd .shd-knobs { order: 4; margin-top: 1rem; } .shd .shd-in { order: 5; } .shd .shd-take { order: 6; } .shd .shd-made { order: 7; } .shd .shd-edit { height: 20rem; grid-template-columns: 2.6em minmax(0, 1fr); } .shd .shd-inputs dl { grid-template-columns: minmax(0, 1fr); gap: 0; } .shd .shd-inputs dd { margin: 0 0 .5rem; } }
+@media (max-width: 900px) { .shd .shd-desk { grid-template-columns: minmax(0, 1fr); gap: 0; } .shd .shd-see { display: contents; } .shd .shd-frame { order: 1; } .shd .shd-run { order: 2; } .shd .shd-write { order: 3; } .shd .shd-knobs { order: 4; margin-top: 1rem; } .shd .shd-in { order: 5; } .shd .shd-layers { order: 5; } .shd .shd-take { order: 6; } .shd .shd-made { order: 7; } .shd .shd-edit { height: 20rem; grid-template-columns: 2.6em minmax(0, 1fr); } .shd .shd-inputs dl { grid-template-columns: minmax(0, 1fr); gap: 0; } .shd .shd-inputs dd { margin: 0 0 .5rem; } }

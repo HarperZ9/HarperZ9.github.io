@@ -183,8 +183,8 @@
    "state": "ready",
    "weight": "light",
    "plain": null,
-   "bytes": 74159,
-   "files": 9
+   "bytes": 76959,
+   "files": 10
   },
   "shader": {
    "home": "playground",
@@ -192,8 +192,8 @@
    "state": "ready",
    "weight": "light",
    "plain": null,
-   "bytes": 106796,
-   "files": 10
+   "bytes": 587879,
+   "files": 64
   },
   "sound": {
    "home": "playground",
@@ -388,7 +388,7 @@
   },
   "world/universe": {
    "direct": 0,
-   "reach": 1
+   "reach": 0
   },
   "world/visualizer": {
    "direct": 0,

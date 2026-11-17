@@ -108,7 +108,7 @@ jobs:
           node --test tests/telos-track-a/*.test.mjs system/sense.test.mjs system/sense-parity.test.mjs system/audio-perceptual.test.mjs system/vision-biomimetic.test.mjs system/exporters.test.mjs system/importers.test.mjs system/media/ir.test.mjs shared-frame/tests/certificate.test.mjs shared-frame/tests/fidelity-log.test.mjs
       - name: Surfaces registry in node
         if: ${{ !cancelled() }}
-        run: node --test world/site/surfaces/surfaces.test.mjs world/site/surfaces/states.test.mjs world/site/surfaces/grounds-more.test.mjs world/site/surfaces/take-brush.test.mjs world/site/surfaces/bus.test.mjs world/site/surfaces/rooms.test.mjs
+        run: node --test world/site/surfaces/surfaces.test.mjs world/site/surfaces/states.test.mjs world/site/surfaces/grounds-more.test.mjs world/site/surfaces/take-brush.test.mjs world/site/surfaces/bus.test.mjs world/site/surfaces/rooms.test.mjs world/site/surfaces/shader-layers.test.mjs
       # The drawn pointer: its images match a fresh render from the material records, and each state's image sits
       # on its hot spot with an edge that holds 3 to 1 on five grounds.
       - name: Pointer images

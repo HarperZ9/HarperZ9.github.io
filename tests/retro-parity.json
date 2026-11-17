@@ -1,0 +1,55 @@
+{
+  "about": "Every control of the Retro Studio (retro.html and the controls system/retro-studio.js builds while it runs) against the shader room of The Playground. A control is either mapped to the room control that does its job (tests/retro-parity.cjs opens the room and checks it is there) or listed under missing with the issue that tracks it. retro.html may not redirect to the room while missing is not empty.",
+  "issue": "https://github.com/HarperZ9/HarperZ9.github.io/issues/553",
+  "mapped": {
+    "data-src=shader": { "room": ".shd-frame", "how": "the room is the studio's shader source" },
+    "re-preset": { "room": "#shd-preset", "how": "the preset library, after its press" },
+    "re-code": { "room": "#shd-src" },
+    "re-run": { "room": "#shd-src", "how": "the room compiles as the visitor types, after a quarter second's pause" },
+    "re-animate": { "room": "[data-run]", "how": "Pause and Run" },
+    "re-knobA": { "room": "#shd-k0" },
+    "re-knobB": { "room": "#shd-k1" },
+    "re-knobC": { "room": "#shd-k2" },
+    "re-save-shader": { "room": ".shd-glsl", "how": "the source saved as a .glsl file" },
+    "re-slayer-add": { "room": "[data-l-add]" },
+    "dyn:layer-blend": { "room": "[data-l-blend]" },
+    "dyn:layer-opacity": { "room": "[data-l-mix]" },
+    "dyn:layer-remove": { "room": "[data-l-rm]" },
+    "re-save": { "room": "[data-png]" },
+    "re-relief": { "room": "[data-file=\"relief-stl\"]" },
+    "re-send-loom": { "room": ".rm-say", "how": "the room hands its frame on the page's bus; an open loom weaves it" }
+  },
+  "missing": [
+    "re-fullscreen", "data-src=plate", "data-src=upload", "data-src=draw", "data-src=scope",
+    "re-seed", "re-layers", "re-reseed", "re-file",
+    "re-brush", "re-ink", "re-brushmode", "re-erase", "re-undo-draw", "re-clear-draw", "re-sym",
+    "re-scope-persist", "re-beam-draw", "re-beam-clear",
+    "re-preset-filter", "re-prev", "re-next", "re-lucky", "re-sheet-toggle", "dyn:sheet-cell",
+    "re-share",
+    "re-palette", "data-pal=0", "data-pal=1", "data-pal=2", "data-pal=3", "data-pal=4", "data-pal=5", "re-pal-adopt",
+    "re-tw", "re-dither", "re-dstr", "re-gam", "re-scan", "re-mask", "re-maskamt", "re-bloom", "re-hal", "re-curv", "re-abr", "re-vig", "re-sdf",
+    "re-fxamount", "re-fxseed", "re-fxanim", "re-randomize", "dyn:fx-chip", "dyn:fx-amount", "dyn:vibe",
+    "re-src-instr", "re-src-mic", "re-src-file", "re-play-pic", "re-audio-file",
+    "data-react=shader", "data-react=effects", "data-react=pixel", "data-react=bloom", "re-react",
+    "re-mod-src", "re-mod-tgt", "re-mod-add", "dyn:mod-depth", "dyn:mod-remove",
+    "re-fb", "re-fb-clear", "re-fb-amt", "re-fb-zoom", "re-fb-rot",
+    "re-midi", "re-midi-clear",
+    "re-save-1x", "re-undo", "re-fresh", "re-clip", "re-send-studio", "re-spin", "re-strip",
+    "re-rec", "re-rec-play", "re-rec-midi", "re-pic-midi",
+    "re-save-patch", "re-share-patch", "re-patches"
+  ],
+  "dynamic": {
+    "about": "The controls retro-studio.js makes with document.createElement while it runs, each found by a line of its code. creates is how many createElement calls of a button, input or select that entry accounts for; the test holds their sum to the file's count, so a new run-time control fails the test until it is listed.",
+    "entries": {
+      "dyn:fx-chip": { "find": "b.className = \"re-chip\"; b.type = \"button\"; b.textContent = m.label;", "creates": 1 },
+      "dyn:fx-amount": { "find": "sl.setAttribute(\"aria-label\", m.label + \" amount\");", "creates": 1 },
+      "dyn:vibe": { "find": "b.className = \"re-vibe\";", "creates": 1 },
+      "dyn:sheet-cell": { "find": "const cell = document.createElement(\"button\");", "creates": 1 },
+      "dyn:layer-blend": { "find": "bl.className = \"re-in re-blend\";", "creates": 1 },
+      "dyn:layer-opacity": { "find": "op.className = \"re-op\"; op.title = \"layer opacity\";", "creates": 1 },
+      "dyn:layer-remove": { "find": "rm.className = \"re-chip re-rm\";", "creates": 1 },
+      "dyn:mod-depth": { "find": "sl.type = \"range\"; sl.min = \"-100\"; sl.max = \"100\";", "creates": 1 },
+      "dyn:mod-remove": { "find": "rm.className = \"re-btn re-rm\";", "creates": 1 }
+    }
+  }
+}

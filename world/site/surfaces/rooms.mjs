@@ -8,6 +8,7 @@
 //                     { width, height, of: the maker's module id }, the maker keeps a function here that returns its
 //                     canvas as it stands, and a taker asks for it with pictureOf(envelope). picture() is the last one
 //                     handed on, with the maker's name, or null. watch holds functions told of every value sent.
+//                     A room may also ask for one maker's picture as it stands (ctx.pictureFrom), handed on or not.
 //   open(id, section) mount the room's module from the registry, join it to the bus, hand it what was sent before,
 //                     and write each hand-over under it in words
 //
@@ -55,7 +56,9 @@ export async function open(id, sec) {
   await styles(sec.dataset.css);
   // the line under the room keeps the last thing it took and the last thing it gave
   const told = { took: '', gave: '' }, tell = () => { say.textContent = [told.took, told.gave].filter(Boolean).join(' '); };
-  const ctx = { query: new URLSearchParams(location.search), address, pictureOf: (env) => p.pictureOf(env), offerPicture(fn) { p.pictures[id] = fn; }, nameOf: (module) => { const n = lower(name(module)); return n.startsWith('the ') ? n : `the ${n}`; },
+  const ctx = { query: new URLSearchParams(location.search), address, pictureOf: (env) => p.pictureOf(env), offerPicture(fn) { p.pictures[id] = fn; },
+    // the picture a module shows as it stands, asked for by the module's id; a room's own picture is not lent back to it
+    pictureFrom(of) { const c = of === id ? null : p.pictures[of]?.(); return c && c.width && c.height ? c : null; }, nameOf: (module) => { const n = lower(name(module)); return n.startsWith('the ') ? n : `the ${n}`; },
     send(medium, value, opts) {
       const out = p.send(id, medium, value, opts);
       told.gave = !out.ok ? `The ${word(medium)} was not handed on: ${out.why}.`

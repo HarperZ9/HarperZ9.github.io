@@ -123,6 +123,8 @@ export async function start() {
     handles[n] = await registry.mount(hostOf(n), n, n === sender ? { ...state } : { elements: [], ...(n === 'plot' && state.study ? { piece: state.study } : {}) }, ctx);
     if (n === sender) return;
     if (n === 'well') shared.pictures.well = () => handles.well?.value()?.canvas || null;
+    // the loom's weave, once it has woven something: a room may take it as it stands (the shader room lays it as a layer)
+    if (n === 'loom') shared.pictures.loom = () => { const v = handles.loom?.value(); return v?.drawn ? v.canvas : null; };
     if (n === 'plot') {
       shared.pictures.plot = () => hostOf('plot')?.querySelector('canvas.pl') || null;
       // the pen study draws a moment after it mounts; its picture is handed on once it is there, while no other picture has been
