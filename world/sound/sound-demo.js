@@ -8,6 +8,8 @@ import { MOTIFS } from './sound/motifs/index.js';
 import { song as hum } from './sound/songs/hum.js';
 import { renderOffline, encodeWav, bufferStats } from './sound/wav.js';
 import { liveSpectrogram, bufferSpectrogram } from './sound/reveal.js';
+import { describeSpectrum } from '../../system/chart-describe-sound.mjs';
+import { liveDescription } from '../../system/live-describe.mjs';
 import * as picture from './sound/motifs/spectrogram-picture.js';
 import * as shepard from './sound/motifs/shepard.js';
 
@@ -118,9 +120,16 @@ $('#specShep').onclick = () => {
 
 // ---- scope
 const cv = $('#scope'), g = cv.getContext('2d');
+// The scope's words, from the 64 bars it draws (bar i is analyser bin 2i), every 2 s while sound runs.
+const scopeWords = liveDescription(cv, { axes: 'Spectrum of what is playing: level up, frequency to the right.' });
 function draw() {
   const css = getComputedStyle(document.documentElement); g.clearRect(0, 0, cv.width, cv.height);
-  if (E) { const d = E.levels(), w = cv.width / 64; g.fillStyle = css.getPropertyValue('--ink'); for (let i = 0; i < 64; i++) { const h = (d[i * 2] / 255) * cv.height; g.fillRect(i * w + 1, cv.height - h, w - 2, h); } }
+  if (E) {
+    const d = E.levels(), w = cv.width / 64, binHz = E.ctx.sampleRate / E.analyser.fftSize, bars = new Array(64);
+    g.fillStyle = css.getPropertyValue('--ink');
+    for (let i = 0; i < 64; i++) { bars[i] = d[i * 2] / 255; const h = bars[i] * cv.height; g.fillRect(i * w + 1, cv.height - h, w - 2, h); }
+    scopeWords.update(() => describeSpectrum(bars, (i) => Math.max(binHz / 2, i * 2 * binHz)));
+  }
   if (!reduce) requestAnimationFrame(draw);
 }
 draw();

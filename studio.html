@@ -1730,7 +1730,8 @@
             <div class="mm-swatches" id="mm-swatches" role="list" aria-label="Dominant colour swatches"></div>
             <div class="mm-clab" style="margin-top:.75rem">motion <span class="mm-hint">frame-to-frame delta</span></div>
             <canvas id="mm-motion" class="mm-motion" width="220" height="40"
-              role="img" aria-label="Sparkline showing frame-to-frame perceptual motion over time"></canvas>
+              role="img" aria-label="Motion: nothing measured yet. Frame-to-frame change in the perceptual hash, 0 to 64 bits, over the last 96 measured frames."></canvas>
+            <p id="mm-motion-live" aria-live="polite" style="position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap"></p>
           </div>
           <div class="mm-col mm-col-meters">
             <div class="mm-clab">visual channels</div>
