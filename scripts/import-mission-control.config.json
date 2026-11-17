@@ -384,6 +384,96 @@
       "find": "addEventListener('scroll', () => { target = clamp(scrollY / stepPx(), 0, N); kick(); clearTimeout(idleT); idleT = setTimeout(() => { const n = Math.round(target); if (Math.abs(target - n) > .01) goStep(n); }, 200); }, { passive: true });",
       "replace": "// the scroll is the reader's: the scale follows it and never pulls the page to a step on its own (site scroll audit,\n// 2026-11-09); the buttons and keys still go step by step\naddEventListener('scroll', () => { target = clamp(scrollY / stepPx(), 0, N); kick(); }, { passive: true });",
       "why": "site scroll audit 2026-11-09: no idle snap; the page moves only when the reader moves it"
+    },
+    {
+      "file": "2026-10-23-sound/sound/reveal.js",
+      "find": "    g.drawImage(canvas, -pxPerFrame, 0);\n",
+      "replace": "    const now = performance.now(); if (tPrev) dt = dt * 0.9 + Math.min(0.25, (now - tPrev) / 1000) * 0.1; tPrev = now;\n    cols.push(column(buf, engine.ctx.sampleRate / an.fftSize, 0, fMax)); if (cols.length > keep) cols.shift();\n    words.update(() => describeColumns(cols, { stepS: dt, quiet: floor, t0: -(cols.length - 1) * dt, x: AGO }));\n    g.drawImage(canvas, -pxPerFrame, 0);\n",
+      "why": "chart words: the spectrogram says what it drew (how loudness moves, where the loudest frequency goes), computed from the same frames by system/chart-describe-sound.mjs; the live view updates its label every 2 s from the columns on screen"
+    },
+    {
+      "file": "2026-10-23-sound/sound/reveal.js",
+      "find": "  const prevSmooth = an.smoothingTimeConstant; an.smoothingTimeConstant = 0.2; an.fftSize = 4096;\n",
+      "replace": "  // one summary per drawn column, as many as fit on the canvas: what the words are computed from, every 2 s\n  const cols = [], keep = Math.floor(W / pxPerFrame), words = liveDescription(canvas, { axes: axes(0, fMax, false) });\n  let tPrev = 0, dt = 1 / 60;\n  const prevSmooth = an.smoothingTimeConstant; an.smoothingTimeConstant = 0.2; an.fftSize = 4096;\n",
+      "why": "chart words: the spectrogram says what it drew (how loudness moves, where the loudest frequency goes), computed from the same frames by system/chart-describe-sound.mjs; the live view updates its label every 2 s from the columns on screen"
+    },
+    {
+      "file": "2026-10-23-sound/sound/reveal.js",
+      "find": "\nexport function liveSpectrogram(canvas, engine, { fMax = 10000, floor = -90, ceil = -25, pxPerFrame = 2 } = {}) {\n",
+      "replace": "\n// time before now, for the scrolling view: its right edge is now\nconst AGO = { fmt: Object.assign((t) => (Math.abs(t) < 0.05 ? 'now' : `${Number((-t).toFixed(1))} s ago`), { at: (t) => (Math.abs(t) < 0.05 ? 'now' : `${Number((-t).toFixed(1))} s ago`) }) };\n\nexport function liveSpectrogram(canvas, engine, { fMax = 10000, floor = -90, ceil = -25, pxPerFrame = 2 } = {}) {\n",
+      "why": "chart words: the spectrogram says what it drew (how loudness moves, where the loudest frequency goes), computed from the same frames by system/chart-describe-sound.mjs; the live view updates its label every 2 s from the columns on screen"
+    },
+    {
+      "file": "2026-10-23-sound/sound/reveal.js",
+      "find": "  g.putImageData(img, 0, 0); return S;\n",
+      "replace": "  g.putImageData(img, 0, 0);\n  // the description of what was drawn: the same frames, the same band\n  const d = describeSpectrogram(S.frames, { binHz: S.binHz, hopS: S.hopSec, fMin, fMax: Math.min(fMax, sr / 2), quiet: floor });\n  S.description = d.text; canvas.setAttribute('aria-label', `${d.text} ${axes(fMin, Math.min(fMax, sr / 2), log)}`);\n  return S;\n",
+      "why": "chart words: the spectrogram says what it drew (how loudness moves, where the loudest frequency goes), computed from the same frames by system/chart-describe-sound.mjs; the live view updates its label every 2 s from the columns on screen"
+    },
+    {
+      "file": "2026-10-23-sound/sound/reveal.js",
+      "find": "\n// A colour ramp from near-black through ink to one warm tone. The spectrum is evidence here, so it stays monochrome plus one hot end.\n",
+      "replace": "import { column, describeColumns, describeSpectrogram, hz } from '../../../system/chart-describe-sound.mjs';\nimport { liveDescription } from '../../../system/live-describe.mjs';\n\n// The words go first, then the axes, both from the numbers this view drew.\nconst axes = (fMin, fMax, log) => `Spectrogram: frequency up, ${log ? 'log' : 'linear'} from ${hz(Math.max(fMin, 1))} to ${hz(fMax)}; time to the right.`;\n\n// A colour ramp from near-black through ink to one warm tone. The spectrum is evidence here, so it stays monochrome plus one hot end.\n",
+      "why": "chart words: the spectrogram says what it drew (how loudness moves, where the loudest frequency goes), computed from the same frames by system/chart-describe-sound.mjs; the live view updates its label every 2 s from the columns on screen"
+    },
+    {
+      "file": "2026-10-23-sound/sound-demo.js",
+      "find": "  if (E) { const d = E.levels(), w = cv.width / 64; g.fillStyle = css.getPropertyValue('--ink'); for (let i = 0; i < 64; i++) { const h = (d[i * 2] / 255) * cv.height; g.fillRect(i * w + 1, cv.height - h, w - 2, h); } }\n",
+      "replace": "  if (E) {\n    const d = E.levels(), w = cv.width / 64, binHz = E.ctx.sampleRate / E.analyser.fftSize, bars = new Array(64);\n    g.fillStyle = css.getPropertyValue('--ink');\n    for (let i = 0; i < 64; i++) { bars[i] = d[i * 2] / 255; const h = bars[i] * cv.height; g.fillRect(i * w + 1, cv.height - h, w - 2, h); }\n    scopeWords.update(() => describeSpectrum(bars, (i) => Math.max(binHz / 2, i * 2 * binHz)));\n  }\n",
+      "why": "chart words: the scope says where the spectrum it draws is loudest, where half its energy lies and its shape, from the 64 bars, every 2 s (system/chart-describe-sound.mjs)"
+    },
+    {
+      "file": "2026-10-23-sound/sound-demo.js",
+      "find": "function draw() {\n",
+      "replace": "// The scope's words, from the 64 bars it draws (bar i is analyser bin 2i), every 2 s while sound runs.\nconst scopeWords = liveDescription(cv, { axes: 'Spectrum of what is playing: level up, frequency to the right.' });\nfunction draw() {\n",
+      "why": "chart words: the scope says where the spectrum it draws is loudest, where half its energy lies and its shape, from the 64 bars, every 2 s (system/chart-describe-sound.mjs)"
+    },
+    {
+      "file": "2026-10-23-sound/sound-demo.js",
+      "find": "import * as picture from './sound/motifs/spectrogram-picture.js';\n",
+      "replace": "import { describeSpectrum } from '../../system/chart-describe-sound.mjs';\nimport { liveDescription } from '../../system/live-describe.mjs';\nimport * as picture from './sound/motifs/spectrogram-picture.js';\n",
+      "why": "chart words: the scope says where the spectrum it draws is loudest, where half its energy lies and its shape, from the 64 bars, every 2 s (system/chart-describe-sound.mjs)"
+    },
+    {
+      "file": "2026-10-23-phase-design/pieces/deep/listen.js",
+      "find": "  pic.setAttribute('aria-label', 'Spectrogram. ' + label); D.reveal('l2');\n",
+      "replace": "  pic.setAttribute('aria-label', 'Spectrogram. ' + label + (said ? ' ' + said : '')); D.reveal('l2');\n",
+      "why": "chart words: the spectrogram label keeps the sentence bufferSpectrogram computed from the frames it drew"
+    },
+    {
+      "file": "2026-10-23-phase-design/pieces/deep/listen.js",
+      "find": "    motifs[id].play(E, opts); const buf = await E.ctx.startRendering(); reveal.bufferSpectrogram(pic, buf.getChannelData(0), buf.sampleRate, { fMax, ...look });\n",
+      "replace": "    motifs[id].play(E, opts); const buf = await E.ctx.startRendering(); said = reveal.bufferSpectrogram(pic, buf.getChannelData(0), buf.sampleRate, { fMax, ...look }).description || '';\n",
+      "why": "chart words: the spectrogram label keeps the sentence bufferSpectrogram computed from the frames it drew"
+    },
+    {
+      "file": "2026-10-23-phase-design/pieces/deep/listen.js",
+      "find": "  out.textContent = 'Drawing.'; try {\n",
+      "replace": "  out.textContent = 'Drawing.'; let said = ''; try {\n",
+      "why": "chart words: the spectrogram label keeps the sentence bufferSpectrogram computed from the frames it drew"
+    },
+    {
+      "file": "2026-10-24-visualizer/web/app.js",
+      "find": "  updateHud(drawInk(t));\n",
+      "replace": "  const M = drawInk(t); updateHud(M); describeInk(M);\n",
+      "why": "chart words: the overlay canvas is hidden from readers, so what its spectrum and loudness line do is written into #inkwords from the same numbers every 2 s"
+    },
+    {
+      "file": "2026-10-24-visualizer/web/app.js",
+      "find": "function updateHud(M) {\n",
+      "replace": "// The overlay canvas is hidden from readers; what its spectrum (or series) and loudness line do is written into\n// #inkwords from the same numbers, every 2 s, and read when the visitor reaches it.\nconst inkWords = liveDescription($('inkwords'), { as: 'text' });\nfunction describeInk(M) {\n  inkWords.update(() => {\n    const br = M.corners.br, db = { fmt: (v) => `${sig(v)} dB` };\n    const now = br.kind === 'spectrum'\n      ? describeSpectrum(br.row, (i) => br.lo * (br.hi / br.lo) ** ((i + 0.5) / br.row.length), { db: true, quiet: -84, name: 'the spectrum now', y: db })\n      : describeCurve(br.values.map((v, i) => [i, v]), { name: 'the series', x: { fmt: (i) => String(F.labels?.[Math.round(i)] ?? i) } });\n    const loud = timeline ? describeSeries(timeline, F.duration / 399, { name: 'short-term loudness over the track', y: { fmt: (v) => `${sig(v)} LUFS` } }) : null;\n    return { text: loud ? `${now.text} ${loud.text}` : now.text, facts: now.facts };\n  });\n}\n\nfunction updateHud(M) {\n",
+      "why": "chart words: the overlay canvas is hidden from readers, so what its spectrum and loudness line do is written into #inkwords from the same numbers every 2 s"
+    },
+    {
+      "file": "2026-10-24-visualizer/web/app.js",
+      "find": "\nconst $ = id => document.getElementById(id);\n",
+      "replace": "import { describeCurve, describeSeries, sig } from '../../../system/chart-describe.mjs';\nimport { describeSpectrum } from '../../../system/chart-describe-sound.mjs';\nimport { liveDescription } from '../../../system/live-describe.mjs';\n\nconst $ = id => document.getElementById(id);\n",
+      "why": "chart words: the overlay canvas is hidden from readers, so what its spectrum and loudness line do is written into #inkwords from the same numbers every 2 s"
+    },
+    {
+      "file": "2026-10-24-visualizer/web/index.html",
+      "find": "    <div class=\"bands\" id=\"bands\" role=\"group\" aria-label=\"How strongly each band drives the picture\"></div>\n",
+      "replace": "    <p id=\"inkwords\" class=\"vh\">What the spectrum and the loudness line do is written here while a track plays.</p>\n    <div class=\"bands\" id=\"bands\" role=\"group\" aria-label=\"How strongly each band drives the picture\"></div>\n",
+      "why": "chart words: the text element the visualizer writes its spectrum and loudness words into"
     }
   ]
 }

@@ -116,8 +116,11 @@ function copyAll(files) {
       if (r.endsWith(".html") && /<title>/.test(text)) text = discoverySet(text, `world/${sub}`, cfg.descriptions?.[sub]);
       // site-side fixes for findings in the pieces themselves (config "patches", each with its reason); a patch
       // whose text is gone upstream is reported, so a fixed piece drops its patch instead of being patched twice
+      // patches are written with LF; a source saved with CRLF gets them in CRLF, or no multi-line patch would apply
+      const eol = text.includes("\r\n") ? (s) => s.replace(/\r?\n/g, "\r\n") : (s) => s;
       for (const pt of (cfg.patches || []).filter((x) => x.file === r)) {
-        if (text.includes(pt.find)) text = text.replace(pt.find, pt.replace); else console.warn(`import: patch for ${r} no longer applies (${pt.why})`);
+        const find = eol(pt.find), rep = eol(pt.replace);
+        if (text.includes(find)) text = text.replace(find, () => rep); else console.warn(`import: patch for ${r} no longer applies (${pt.why})`);
       }
       for (const l of findLocalPaths(text)) leaks.push(`${short}/${r.slice(top.length + 1)}: ${l}`);
       buf = Buffer.from(text, "utf8");

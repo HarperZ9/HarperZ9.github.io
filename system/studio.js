@@ -18,6 +18,8 @@ import { sourceIsAnimated, shouldHaltOnStatic, fullscreenMaxBacking } from "./st
 import { buildModelHeaders } from "./studio-model.js";
 import { oklchToSrgbByte } from "./lib/sense-core/colour-perceptual.mjs";
 import { createPerceptionWorker } from "./studio-perception-client.js";
+import { motionDescription, spectrumDescription, bandDescription } from "./studio-describe.mjs";
+import { liveDescription } from "./live-describe.mjs";
 import { probeCapability } from "./engine/capability.js";
 import { makeHardwareRenderPlan } from "./engine/render-plan.js";
 import { IR_SCHEMA, CANONICAL_MEDIA_KINDS } from "./media/ir.js";
@@ -5113,6 +5115,11 @@ try {
   new MutationObserver(resetInk).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
 } catch (e) { console.error("[studio] theme watch unavailable; the sparkline keeps its first ink:", e); }
 
+const motionWords = liveDescription(typeof document !== "undefined" ? document.getElementById("mm-motion") : null, {
+  axes: "Frame-to-frame change in the perceptual hash, 0 to 64 bits, over the last 96 measured frames.",
+  live: typeof document !== "undefined" ? document.getElementById("mm-motion-live") : null,
+  key: (f) => (f.hi * 64 >= 2 ? "moving" : "still"),
+});
 // ── motion sparkline: push the latest frame-to-frame Δ (hamming/64), draw the history ──
 function pushMotion(deltaFrac) {
   motionHist.push(deltaFrac); motionHist.shift();
@@ -5128,6 +5135,9 @@ function pushMotion(deltaFrac) {
     if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
   }
   ctx.stroke();
+  // The canvas says what the line does, from the same history, every 2 s; the live line speaks only when
+  // the frame goes from still to moving or back.
+  motionWords.update(() => motionDescription(motionHist));
 }
 
 // ── measure(): the rich readout for a frame already read into `px`. Called from perceive() and the
@@ -5341,7 +5351,7 @@ function buildAudioMeters() {
   // spectrum
   const sp = document.createElement("div"); sp.className = "mm-meter";
   const sn = document.createElement("span"); sn.className = "mm-mname"; sn.textContent = "spectrum";
-  const sb = document.createElement("span"); sb.className = "mm-spectrum"; sb.id = "mm-au-spectrum";
+  const sb = document.createElement("span"); sb.className = "mm-spectrum"; sb.id = "mm-au-spectrum"; sb.setAttribute("role", "img"); sb.setAttribute("aria-label", "Spectrum: no sound yet.");
   for (let i = 0; i < 32; i++) { const b = document.createElement("span"); b.className = "mm-bar"; sb.appendChild(b); }
   const sv = document.createElement("span"); sv.className = "mm-mval"; sv.textContent = "";
   sp.appendChild(sn); sp.appendChild(sb); sp.appendChild(sv); host.appendChild(sp);
@@ -5407,6 +5417,7 @@ function pollAudio() {
   const bars = spectrumBands(audioFreqBuf, 32);
   const sp = $("mm-au-spectrum");
   if (sp) { const els = sp.querySelectorAll(".mm-bar"); bars.forEach((b, i) => { if (els[i]) els[i].style.height = Math.max(2, b * 100) + "%"; }); }
+  spectrumWords(sp).update(() => spectrumDescription(bars, audioCtx.sampleRate / 2 / bars.length));
   // Pitch is the YIN f0 of the time-domain buffer, the same value the model gets.
   const hz = pitchFromTimeBytes(audioTimeBuf, audioCtx.sampleRate).f0;
   const pf = $("mm-au-pitch"), pv = $("mm-au-pitch-v");
@@ -5436,6 +5447,12 @@ function _musicSpectrumBars(features, n) {
   }
   return out;
 }
+// The spectrum strip's words: one describer per strip element, rebuilt when the strip is.
+let _spWords = null, _spEl = null;
+function spectrumWords(el) {
+  if (el !== _spEl) { _spEl = el; _spWords = liveDescription(el, { axes: "Level by frequency band, 0 to 1." }); }
+  return _spWords;
+}
 function studioReactiveAudioBridge(features) {
   if (!features) return;
   buildAudioMeters();
@@ -5450,6 +5467,9 @@ function studioReactiveAudioBridge(features) {
     const els = sp.querySelectorAll(".mm-bar");
     const bars = _musicSpectrumBars(features, els.length || 32);
     bars.forEach((b, i) => { if (els[i]) els[i].style.height = Math.max(2, b * 100) + "%"; });
+    // The strip here is built from three band levels and chroma, not from frequency bins, so its words
+    // name the three bands it is built from.
+    spectrumWords(sp).update(() => bandDescription(features));
   }
   // pitch: the dominant chroma class mapped to its frequency in a mid octave (A4=440 reference).
   // This reports the detected dominant pitch class, derived from the real chroma vector.

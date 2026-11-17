@@ -1,0 +1,8 @@
+{
+  "date": "2026-11-17",
+  "note": "studio.html: the motion sparkline's fixed label is replaced by a description computed from the motion history it draws, and a polite live line is added that speaks only when the frame goes from still to moving or back. index.html: asset revision stamp only, because the world import patches changed; no words or layout on the home page changed.",
+  "paths": {
+    "index.html": "c8a8cce869a7d25644e0e9b8ea07006a0a357af1b1520e1f6feb8d7aa3411ec0",
+    "studio.html": "069202fa586c979b7680c64a8ff650ef2d531f5f5b74a6dbd4899a3648e95490"
+  }
+}

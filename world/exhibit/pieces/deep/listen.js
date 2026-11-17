@@ -56,12 +56,12 @@ let mods = null, live = null;
 async function engineMods() { if (mods) return mods; mods = Promise.all(['engine.js', 'reveal.js', 'motifs/index.js'].map(f => import(new URL(f, ENGINE)))).then(([e, r, m]) => ({ Engine: e.Engine, reveal: r, motifs: m.MOTIFS })); try { return await mods; } catch (e) { mods = null; throw e; } }
 // Draw a motif with no sound: render it offline with the engine, then draw the buffer. Falls back to a model drawn here.
 async function drawOffline(id, opts, fMax, label, fallback, look = {}) {
-  out.textContent = 'Drawing.'; try {
+  out.textContent = 'Drawing.'; let said = ''; try {
     const { Engine, reveal, motifs } = await engineMods(), secs = (opts.duration || 6) + 0.5, E = await Engine.offline(secs, { sampleRate: 22050, channels: 1 });
-    motifs[id].play(E, opts); const buf = await E.ctx.startRendering(); reveal.bufferSpectrogram(pic, buf.getChannelData(0), buf.sampleRate, { fMax, ...look });
+    motifs[id].play(E, opts); const buf = await E.ctx.startRendering(); said = reveal.bufferSpectrogram(pic, buf.getChannelData(0), buf.sampleRate, { fMax, ...look }).description || '';
     out.textContent = label;
   } catch (e) { console.warn('engine not reachable from this server, drawing the model here instead', e.message); fallback(); out.textContent = label + ' Drawn from the same model in this page, because the sound engine is not reachable from this server.'; }
-  pic.setAttribute('aria-label', 'Spectrogram. ' + label); D.reveal('l2');
+  pic.setAttribute('aria-label', 'Spectrogram. ' + label + (said ? ' ' + said : '')); D.reveal('l2');
 }
 function shepModel() { const g = pic.getContext('2d'), W = 640, H = 220; g.fillStyle = '#0c0a11'; g.fillRect(0, 0, W, H);
   for (let i = 0; i < 8; i++) for (let px = 0; px < W; px++) { const t = px / W * 20, pos = ((i + t / 10) % 8 + 8) % 8, a = .5 - .5 * Math.cos(2 * Math.PI * pos / 8), y = H - pos / 8 * H; g.fillStyle = `rgba(255,225,190,${a})`; g.fillRect(px, y - 1, 1, 3); } }

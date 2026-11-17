@@ -5,6 +5,7 @@
 //   describeRows(rows, opts)      labelled values (bars, intervals, bands, before-and-after pairs): highest, lowest,
 //                                 the range, and what stands out (values below zero, intervals across zero, values
 //                                 outside their control range, which way the pairs move)
+//   describeSeries(values, stepS) a series sampled at a fixed step (an envelope, a vibration pattern, a meter's history)
 //   checkDescription(text, facts) the errors a description has against the facts it was made from: no trend word,
 //                                 no extremum or shape, or a direction the data does not take
 //
@@ -246,4 +247,11 @@ export function describeMatrix(rowLabels, cols, values, opts = {}) {
   if (!cells.length) return { text: "The grid has no values.", facts: { kind: "rows", trend: "none" } };
   const top = cells.reduce((m, c) => (c.v > m.v ? c : m)), bot = cells.reduce((m, c) => (c.v < m.v ? c : m));
   return { text: `Across ${cells.length} cells the highest is ${top.at} at ${fy(top.v)} and the lowest ${bot.at} at ${fy(bot.v)}, a range of ${fy(top.v - bot.v)}.`, facts: { kind: "rows", n: cells.length, hi: top.v, lo: bot.v, top: top.at, trend: "rank" } };
+}
+
+const secs = { fmt: (s) => `${Number(s.toFixed(1))} s` };
+
+// A series sampled every stepS seconds: a loudness envelope, a vibration pattern, a meter's history.
+export function describeSeries(values, stepS, opts = {}) {
+  return describeCurve(Array.from(values, (v, i) => [i * stepS, v]), { name: opts.name, x: opts.x || secs, y: opts.y });
 }

@@ -19,6 +19,9 @@ import { compileDrives } from '../lib/drive.mjs';
 import { barGeometry } from '../render/meter.mjs';
 import { hudModel } from '../render/hud-model.mjs';
 import { infoToggle } from './info.js';
+import { describeCurve, describeSeries, sig } from '../../../system/chart-describe.mjs';
+import { describeSpectrum } from '../../../system/chart-describe-sound.mjs';
+import { liveDescription } from '../../../system/live-describe.mjs';
 
 const $ = id => document.getElementById(id);
 const STILL = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -236,6 +239,20 @@ function drawInk(t) {
   return M;
 }
 
+// The overlay canvas is hidden from readers; what its spectrum (or series) and loudness line do is written into
+// #inkwords from the same numbers, every 2 s, and read when the visitor reaches it.
+const inkWords = liveDescription($('inkwords'), { as: 'text' });
+function describeInk(M) {
+  inkWords.update(() => {
+    const br = M.corners.br, db = { fmt: (v) => `${sig(v)} dB` };
+    const now = br.kind === 'spectrum'
+      ? describeSpectrum(br.row, (i) => br.lo * (br.hi / br.lo) ** ((i + 0.5) / br.row.length), { db: true, quiet: -84, name: 'the spectrum now', y: db })
+      : describeCurve(br.values.map((v, i) => [i, v]), { name: 'the series', x: { fmt: (i) => String(F.labels?.[Math.round(i)] ?? i) } });
+    const loud = timeline ? describeSeries(timeline, F.duration / 399, { name: 'short-term loudness over the track', y: { fmt: (v) => `${sig(v)} LUFS` } }) : null;
+    return { text: loud ? `${now.text} ${loud.text}` : now.text, facts: now.facts };
+  });
+}
+
 function updateHud(M) {
   const key = JSON.stringify([M.corners.tr, M.corners.bl, M.corners.br.readout ?? M.corners.br.caption]);
   if (key === lastHud) return; lastHud = key;
@@ -255,7 +272,7 @@ function frame() {
   const v = driveAt(t);
   requestWater(t); requestBody(v, t);
   if (K) { figureLayer(t); drawGL(t, v); }
-  updateHud(drawInk(t));
+  const M = drawInk(t); updateHud(M); describeInk(M);
 }
 
 // ---------- controls made of the media

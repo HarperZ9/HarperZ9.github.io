@@ -1,0 +1,7 @@
+{
+  "comment": "Copies of system/chart-describe.mjs kept in other repos, unchanged, and the SHA-256 they pin (of the file with LF line ends). tests/live-descriptions.test.mjs fails when this file changes and the pin does not: change the copies and the pin together.",
+  "sha256": "5d418f6458413dfc1c92fb296b3d3d68f516358c5e46cd87ea6043e26798ab1b",
+  "copies": [
+    { "repo": "HarperZ9/superframe", "path": "superframe/lib/vendor/chart-describe.mjs", "check": "superframe/tests/study-alt.test.mjs" }
+  ]
+}
