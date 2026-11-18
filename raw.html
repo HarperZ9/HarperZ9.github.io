@@ -1,81 +1,147 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-type="stock">
 <head>
 <meta charset="utf-8">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>The Playground native renderer: render the frame, then check it</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<title>The Playground native renderer | Zain Dana Harper</title>
 <meta name="description" content="The native renderer is the part of The Playground that renders frames in C++ on Direct3D 12, Vulkan and WebGPU, formerly released as raw-native. It also draws each scene on a CPU reference path, checks its fast screen-space ambient occlusion against a ray-traced reference, and writes a JSON certificate saying whether the shortcut held.">
 <link rel="canonical" href="https://harperz9.github.io/raw.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zain Dana Harper">
-<meta property="og:title" content="The Playground native renderer: render the frame, then check it">
+<meta property="og:title" content="The Playground native renderer | Zain Dana Harper">
 <meta property="og:description" content="The native renderer is the part of The Playground that renders frames in C++ on Direct3D 12, Vulkan and WebGPU, formerly released as raw-native. It also draws each scene on a CPU reference path, checks its fast screen-space ambient occlusion against a ray-traced reference, and writes a JSON certificate saying whether the shortcut held.">
 <meta property="og:url" content="https://harperz9.github.io/raw.html">
 <meta property="og:image" content="https://harperz9.github.io/img/og/p/raw.jpg?v=04dda7d90eae">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="The Playground native renderer: render the frame, then check it, by Zain Dana Harper. A ring of coloured steps, with one or two cream steps drawn out of the ring and casting a shadow on it.">
+<meta property="og:image:alt" content="The Playground native renderer, by Zain Dana Harper. A ring of coloured steps, with one or two cream steps drawn out of the ring and casting a shadow on it.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/p/raw.jpg?v=04dda7d90eae">
-<meta name="twitter:image:alt" content="The Playground native renderer: render the frame, then check it, by Zain Dana Harper. A ring of coloured steps, with one or two cream steps drawn out of the ring and casting a shadow on it.">
-<meta name="twitter:title" content="The Playground native renderer: render the frame, then check it">
+<meta name="twitter:image:alt" content="The Playground native renderer, by Zain Dana Harper. A ring of coloured steps, with one or two cream steps drawn out of the ring and casting a shadow on it.">
+<meta name="twitter:title" content="The Playground native renderer | Zain Dana Harper">
 <meta name="twitter:description" content="The native renderer is the part of The Playground that renders frames in C++ on Direct3D 12, Vulkan and WebGPU, formerly released as raw-native. It also draws each scene on a CPU reference path, checks its fast screen-space ambient occlusion against a ray-traced reference, and writes a JSON certificate saying whether the shortcut held.">
-<meta name="color-scheme" content="dark">
-<link rel="stylesheet" href="system/system.css?v=20260927-copy-pass">
-<style>
-.rn-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(.5rem,1.2vw,.9rem);margin:0 0 1rem;max-width:60rem}
-.rn-grid figure{margin:0}
-.rn-grid img{display:block;width:100%;height:auto;aspect-ratio:1/1;border:1px solid var(--hairline);border-radius:2px;background:#000;image-rendering:auto}
-.rn-grid figcaption{font-family:var(--font-sans);font-size:.8rem;line-height:1.4;color:var(--muted);margin-top:.45rem}
-.rn-verdict{font-family:var(--font-mono);font-size:.85rem}
-.rn-ok{color:var(--match)}
-.rn-bad{color:var(--drift)}
-.rn-table{border-collapse:collapse;font-family:var(--font-mono);font-size:clamp(.72rem,1vw,.82rem);color:var(--bone);margin-top:1rem;width:100%;max-width:60rem}
-.rn-table th,.rn-table td{text-align:left;padding:.45rem .7rem .45rem 0;border-bottom:1px solid var(--hairline);vertical-align:top}
-.rn-table th{font-family:var(--font-sans);font-weight:600;color:var(--muted)}
-.rn-table td.num{text-align:right;padding-right:1.2rem}
-.rn-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}
-.rn-limits{max-width:44rem;margin:1rem 0 0;padding-left:1.1rem;color:var(--bone);font-family:var(--font-sans);line-height:1.6}
-.rn-limits li{margin:.35rem 0}
-@media (max-width:640px){.rn-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-.rn-live{display:grid;grid-template-columns:minmax(0,32rem) minmax(0,1fr);gap:clamp(1rem,2.5vw,2rem);align-items:start;max-width:60rem;margin-top:1rem}
-.rn-live canvas{display:block;width:100%;height:auto;aspect-ratio:1/1;border:1px solid var(--hairline);border-radius:2px;background:#000}
-.rn-controls{display:grid;gap:.8rem;font-family:var(--font-sans);font-size:.85rem;color:var(--muted)}
-.rn-controls label{display:grid;gap:.3rem}
-.rn-controls select{font:inherit;color:var(--bone);background:transparent;border:1px solid var(--hairline);border-radius:2px;padding:.4rem .5rem;min-height:2.5rem}
-.rn-status{list-style:none;margin:0;padding:0;display:grid;gap:.5rem;font-family:var(--font-mono);font-size:.78rem;line-height:1.5;color:var(--bone)}
-.rn-status b{font-weight:600}
-@media (max-width:760px){.rn-live{grid-template-columns:minmax(0,1fr)}}
-</style>
+<link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-2c91a118f7">
+<link rel="stylesheet" href="/studies/studies.css?v=world-2c91a118f7">
+<link rel="stylesheet" href="/world/site/depth.css?v=world-2c91a118f7">
+<script type="module" src="/world/ui/shell/shell.js?v=world-2c91a118f7"></script>
+<script type="module" src="/world/site/hand-scroll.js?v=world-2c91a118f7"></script>
+<link rel="stylesheet" href="/world/site/landmark.css?v=world-2c91a118f7">
+<script type="module" src="/world/site/home-field.js?v=world-2c91a118f7"></script>
+<script type="module" src="/world/site/sound.js?v=world-2c91a118f7"></script>
+<script type="module" src="/world/site/explore/engine.js?v=world-2c91a118f7"></script>
 <!-- structured-data:begin (tools/structured_data.py) -->
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareSourceCode","@id":"https://harperz9.github.io/raw.html#software","name":"The Playground: native renderer","description":"The native renderer is the part of The Playground that renders frames in C++ on Direct3D 12, Vulkan and WebGPU, formerly released as raw-native. It also draws each scene on a CPU reference path, checks its fast screen-space ambient occlusion against a ray-traced reference, and writes a JSON certificate saying whether the shortcut held.","url":"https://harperz9.github.io/raw.html","codeRepository":"https://github.com/HarperZ9/raw-native","author":{"@id":"https://harperz9.github.io/#person","@type":"Person","name":"Zain Dana Harper"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://harperz9.github.io/"},{"@type":"ListItem","position":2,"name":"Catalog","item":"https://harperz9.github.io/catalog.html"},{"@type":"ListItem","position":3,"name":"The Playground: native renderer","item":"https://harperz9.github.io/raw.html"}]},{"@type":"SoftwareApplication","@id":"https://harperz9.github.io/raw.html#application","name":"raw-native","url":"https://harperz9.github.io/raw.html","softwareVersion":"0.8.0","applicationCategory":"MultimediaApplication","operatingSystem":"Windows, Linux, WebAssembly","downloadUrl":"https://github.com/HarperZ9/raw-native/releases/latest","license":"https://github.com/HarperZ9/raw-native/blob/main/LICENSE","author":{"@id":"https://harperz9.github.io/#person","@type":"Person","name":"Zain Dana Harper"},"isAccessibleForFree":true,"sameAs":"https://github.com/HarperZ9/raw-native"}]}</script>
 <!-- structured-data:end -->
 </head>
-<body class="inner-clean">
-<a class="skip-link" href="#main">Skip to content</a>
-
-<div id="site-nav" class="site-nav"></div>
-<noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="cv.html">About</a></nav></noscript>
-<script type="module" src="system/nav.js?v=20260909-pillar-navigation"></script>
-
-<div class="frame">
-  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">The Playground &middot; native renderer</span></div>
-  <div class="mid">
-    <h1>Render the frame. <span class="g">Then check it.</span></h1>
-    <p class="lede" data-canonical-purpose="raw">The native renderer is the part of The Playground that renders frames in C++ on Direct3D 12, Vulkan and WebGPU, formerly released as raw-native. It also draws each scene on a CPU reference path, checks its fast screen-space ambient occlusion against a ray-traced reference, and writes a JSON certificate saying whether the shortcut held.</p>
-    <p class="close">It lights the frame twice, once with the cheap method real-time engines use and once with a ray-traced reference, and tells you how far the cheap one drifted. You get the picture and the evidence for it from the same run.</p>
-  </div>
-  <div class="seal"><span translate="no">raw-native</span> 0.8.0 &middot; C++23 &middot; CPU, WebAssembly and WebGPU &middot; no dependencies &middot; FSL-1.1-MIT</div>
+<body class="reading landmark">
+<div class="gw-backdrop" aria-hidden="true">
+  <picture>
+    <source data-s="night" data-m="(orientation: portrait)" media="(orientation: portrait) and (prefers-color-scheme: dark)" type="image/avif" srcset="/media/world/glass-water/field-night-portrait-828.avif 828w, /media/world/glass-water/field-night-portrait-1242.avif 1242w" sizes="100vw">
+    <source data-s="night" data-m="(orientation: portrait)" media="(orientation: portrait) and (prefers-color-scheme: dark)" type="image/webp" srcset="/media/world/glass-water/field-night-portrait-828.webp 828w, /media/world/glass-water/field-night-portrait-1242.webp 1242w" sizes="100vw">
+    <source data-s="night" data-m="" media="(prefers-color-scheme: dark)" type="image/avif" srcset="/media/world/glass-water/field-night-1280.avif 1280w, /media/world/glass-water/field-night-1920.avif 1920w, /media/world/glass-water/field-night-2560.avif 2560w, /media/world/glass-water/field-night-3840.avif 3840w" sizes="100vw">
+    <source data-s="night" data-m="" media="(prefers-color-scheme: dark)" type="image/webp" srcset="/media/world/glass-water/field-night-1280.webp 1280w, /media/world/glass-water/field-night-1920.webp 1920w, /media/world/glass-water/field-night-2560.webp 2560w, /media/world/glass-water/field-night-3840.webp 3840w" sizes="100vw">
+    <source data-s="day" data-m="(orientation: portrait)" media="(orientation: portrait) and (prefers-color-scheme: light)" type="image/avif" srcset="/media/world/glass-water/field-day-portrait-828.avif 828w, /media/world/glass-water/field-day-portrait-1242.avif 1242w" sizes="100vw">
+    <source data-s="day" data-m="(orientation: portrait)" media="(orientation: portrait) and (prefers-color-scheme: light)" type="image/webp" srcset="/media/world/glass-water/field-day-portrait-828.webp 828w, /media/world/glass-water/field-day-portrait-1242.webp 1242w" sizes="100vw">
+    <source data-s="day" data-m="" media="(prefers-color-scheme: light)" type="image/avif" srcset="/media/world/glass-water/field-day-1280.avif 1280w, /media/world/glass-water/field-day-1920.avif 1920w, /media/world/glass-water/field-day-2560.avif 2560w, /media/world/glass-water/field-day-3840.avif 3840w" sizes="100vw">
+    <source data-s="day" data-m="" media="(prefers-color-scheme: light)" type="image/webp" srcset="/media/world/glass-water/field-day-1280.webp 1280w, /media/world/glass-water/field-day-1920.webp 1920w, /media/world/glass-water/field-day-2560.webp 2560w, /media/world/glass-water/field-day-3840.webp 3840w" sizes="100vw">
+    <img src="/media/world/glass-water/field-day-1920.webp" width="1920" height="1080" alt="" decoding="async" fetchpriority="low">
+  </picture>
+  <canvas class="gw-live"></canvas>
+  <i class="gw-dither"></i>
 </div>
-
-<main id="main">
-
-<section class="mv" id="live" aria-labelledby="live-h">
-  <h2 id="live-h" class="reveal">Render it here.</h2>
+<script>(function(){var r=document.documentElement,q=matchMedia("(prefers-color-scheme: dark)");
+function s(){var t=r.dataset.theme;if(!t)return;var d=t==="dark",p=document.querySelector(".gw-backdrop picture");if(!p)return;
+p.querySelectorAll("source[data-s]").forEach(function(x){var on=x.dataset.s===(d?"night":"day");x.media=x.dataset.m+(x.dataset.m?" and ":"")+(on?"all":"not all");});}
+new MutationObserver(s).observe(r,{attributes:true,attributeFilter:["data-theme"]});s();})();</script>
+<header class="o-hand o-said" aria-label="Site">
+  <a class="skip" href="#main">Skip to the page</a>
+  <a class="o-home" href="/">Zain Dana Harper</a>
+  <a data-o="band" href="/world/universe/proto/index.html"><span class="o-name">Map</span></a>
+  <button type="button" data-o="fold" aria-controls="o-menu" aria-keyshortcuts="m" aria-expanded="false" hidden><span class="o-name">Places</span><i></i><i></i><i></i></button>
+  <button type="button" data-o="lamp" data-theme-toggle aria-pressed="true"><span class="o-name">Day</span></button>
+  <span class="o-cell"><button type="button" data-o="peel" data-plain-toggle aria-pressed="false"><span class="o-name">Plain</span></button><span class="o-under" aria-hidden="true">Plain</span></span>
+</header>
+<dialog id="o-menu" data-o="menu" data-material="chladni" aria-label="Places">
+  <nav aria-label="Places">
+    <ul class="o-places">
+      <li><a href="/buildlang.html"><span class="o-word" data-display-on-open="glyphcell">BuildLang</span></a></li>
+      <li><a href="/flywheel.html"><span class="o-word" data-display-on-open="light">Flywheel</span></a><small class="o-sub"><a href="/cmmns.html">CMMNS</a> <a href="/articulate.html">Articulate</a></small></li>
+      <li><a href="/playground/"><span class="o-word" data-display-on-open="nightlights">The Playground</span></a><small class="o-sub"><a href="/raw.html" aria-current="page">Native renderer</a> <a href="/superframe.html">Superframe, the core</a> <a href="/playground/#instruments">Instruments and study tools</a> <a href="/low-water.html">Low Water, the game</a></small></li>
+      <li><a href="/low-water.html"><span class="o-word" data-display-on-open="chladni">Game</span></a></li>
+      <li><a href="/#site"><span class="o-word" data-display-on-open="swarm">Site</span></a></li>
+      <li><a href="/floor.html"><span class="o-word" data-display-on-open="rope">Everything</span></a></li>
+      <li><a href="/world/universe/proto/index.html"><span class="o-word" data-display-on-open="rope">Map</span></a></li>
+      <li><a href="/publications.html"><span class="o-word" data-display-on-open="swarm">Writing</span></a></li>
+      <li><a href="/explainers.html"><span class="o-word" data-display-on-open="sound">Films</span></a></li>
+      <li><a href="/hire.html"><span class="o-word" data-display-on-open="rope">Work</span></a></li>
+      <li><a href="/cv.html"><span class="o-word" data-display-on-open="rope">CV</span></a></li>
+    </ul>
+  </nav>
+  <p class="o-menu-foot"><a href="/elements.html">Elements</a> <a href="/swatches.html">Swatches</a> <a href="/studies/">Studies</a> <a href="/site-index.html">Site index</a> <button type="button" class="o-close" onclick="this.closest('dialog').close()">Close (Esc)</button></p>
+</dialog>
+<main id="main" tabindex="-1">
+<article class="lp" data-landmark="playground" data-hue="playground">
+<header class="lp-head">
+<h1><span class="d-3d">The native renderer</span></h1>
+<p class="lp-lede lp-lede-1">The Playground's renderer, live at the size of your window. The engine's own ambient occlusion, reflections and anti-aliasing run on its own scenes, beside a path-traced reference, and the page measures what each pass gets wrong while you watch.</p>
+<p class="lp-purpose" data-canonical-purpose="raw">The native renderer is the part of The Playground that renders frames in C++ on Direct3D 12, Vulkan and WebGPU, formerly released as raw-native. It also draws each scene on a CPU reference path, checks its fast screen-space ambient occlusion against a ray-traced reference, and writes a JSON certificate saying whether the shortcut held.</p>
+<p class="lp-note">It needs a browser with WebGPU. Without it, the pictures below are frames from the same page, and the certificate check further down still runs on your CPU.</p>
+<nav class="lp-ways" aria-label="On this page"><a href="#live">Render it here</a><a href="#measured">What each pass does</a><a href="#runs">What runs, and whose it is</a><a href="#engine">In the engine, not yet in your browser</a><a href="#certificate-live">The certificate, live</a><a href="#run">Run it now</a></nav>
+</header>
+<section class="lp-sec" id="live" aria-labelledby="h-live">
+<h2 id="h-live"><span class="d-3d">Render it here</span></h2>
+<p class="lp-lede">Pick a scene. It opens full-window and draws every frame on your GPU: the engine's GTAO, SSR and TAA passes, sun and sky, light in the air, and a tilted lens. Hold the camera still and two references gather behind it, a ray-traced one for occlusion and mirrors and a path-traced one for the whole frame. Each pass in the panel says how far the frame is from the reference with that pass on and with it off.</p>
+<div class="lw-walk" data-toy="engine" data-live="/media/raw-native/live/index.html">
+<ul class="lw-doors"><li class="lw-door"><figure><img src="/media/raw-native/live-stills/hall-nave-1600.webp" srcset="/media/raw-native/live-stills/hall-nave-800.webp 800w, /media/raw-native/live-stills/hall-nave-1600.webp 1600w" sizes="(max-width: 860px) 92vw, 1100px" width="1600" height="900" decoding="async" alt="A long hall of fluted columns under round arches, red drapery in the gallery, lanterns on the piers, a chequered stone floor in sun and shade, the sky open above.">
+<figcaption>The hall from the nave: 586,424 triangles, 12 bays, a gallery, drapery and an open atrium. The engine's own asset.</figcaption></figure>
+<p class="lw-go" hidden><button type="button" class="toy-btn" data-start="scene=hall" data-bytes="15034614">Open the hall (15.0 MB)</button></p></li>
+<li class="lw-door"><figure><img src="/media/raw-native/live-stills/hero-1600.webp" srcset="/media/raw-native/live-stills/hero-800.webp 800w, /media/raw-native/live-stills/hero-1600.webp 1600w" sizes="(max-width: 860px) 92vw, 540px" width="1600" height="900" decoding="async" alt="A metal helmet shell with a dark visor on a pale ground, its shadow cast long to the left.">
+<figcaption>The hero asset on the test ground: a clearcoated metal shell, a visor and vents, 111,136 triangles.</figcaption></figure>
+<p class="lw-go" hidden><button type="button" class="toy-btn" data-start="scene=hero" data-bytes="2713508">Open the hero (2.7 MB)</button></p></li></ul>
+<p class="lw-go" hidden><button type="button" class="toy-btn" data-start="scene=test" data-bytes="0">Open the test scene</button> <span class="rn-aside">The engine's test scene: a ground plane and a box, the scene its certificates are written for.</span></p>
+<p class="lp-limit lw-walk-state" aria-live="polite">With scripts and WebGPU on, each picture opens the renderer full-window. A scene downloads only when you press.</p>
+<dialog class="lw-walk-frame" aria-label="The native renderer, live"></dialog>
+</div>
+<p class="lp-limit">Drag to look. W A S D or the arrows move, Q and E sink and rise, the wheel goes forward, Shift is faster. The panel at the right sets the scene, the camera, what is shown, each pass, the sun, the air, the lens, the display transform and the pixel count. Esc, or Back to the page, leaves.</p>
+<p class="lp-source">The pictures are the renderer's own canvas, drawn on an RTX 4090 at 1600 x 900 from the code and scenes this page loads.</p>
+</section>
+<section class="lp-sec" id="measured" aria-labelledby="h-measured">
+<h2 id="h-measured"><span class="d-3d">What each pass does</span></h2>
+<p class="lp-lede">The hall from the nave at 1280 x 800, after 497 reference samples a pixel, on an RTX 4090.</p>
+<ul class="lw-doors"><li class="lw-door"><figure><img src="/media/raw-native/live-stills/hall-split-1600.webp" srcset="/media/raw-native/live-stills/hall-split-800.webp 800w, /media/raw-native/live-stills/hall-split-1600.webp 1600w" sizes="(max-width: 860px) 92vw, 1100px" width="1600" height="900" loading="lazy" decoding="async" alt="The hall split down the middle: on the left the real-time frame, cool and blue in the shade; on the right the path-traced frame, warm where light bounces from the sunlit floor."><figcaption>The same frame of the hall, with the real-time image on the left and the path-traced reference on the right, after 761 samples a pixel. The reference carries the light that bounces off the sunlit floor and walls; the real-time sky light comes from the sky alone, so its shade stays blue.</figcaption></figure></li>
+<li class="lw-door"><figure><img src="/media/raw-native/live-stills/hall-error-1600.webp" srcset="/media/raw-native/live-stills/hall-error-800.webp 800w, /media/raw-native/live-stills/hall-error-1600.webp 1600w" sizes="(max-width: 860px) 92vw, 540px" width="1600" height="900" loading="lazy" decoding="async" alt="A dark frame of the hall where the columns, the arches and the far wall glow violet to gold, brightest in the shade the bounce light fills in the reference."><figcaption>The error between them, each pixel the mean distance in display values, from black (none) through violet to pale gold (a quarter of the full scale or more).</figcaption></figure></li>
+<li class="lw-door"><figure><img src="/media/raw-native/live-stills/hero-1600.webp" srcset="/media/raw-native/live-stills/hero-800.webp 800w, /media/raw-native/live-stills/hero-1600.webp 1600w" sizes="(max-width: 860px) 92vw, 540px" width="1600" height="900" loading="lazy" decoding="async" alt="A metal helmet shell with a dark visor on a pale ground, its shadow cast long to the left."><figcaption>The hero, real time.</figcaption></figure></li></ul>
+<div class="rn-wrap"><table class="rn-table"><caption>The frame's RMSE against the path-traced reference, in display values from 0 to 1, with each pass on and off. Lower is closer.</caption>
+<thead><tr><th scope="col">Pass</th><th scope="col" class="num">On</th><th scope="col" class="num">Off</th></tr></thead><tbody><tr><th scope="row">GTAO, the engine's</th><td class="num">0.122</td><td class="num">0.133</td></tr><tr><th scope="row">SSR, the engine's</th><td class="num">0.122</td><td class="num">0.142</td></tr><tr><th scope="row">TAA, the engine's</th><td class="num">0.122</td><td class="num">0.129</td></tr><tr><th scope="row">Sky light, ambient cube</th><td class="num">0.122</td><td class="num">0.120</td></tr><tr><th scope="row">Light in the air</th><td class="num">0.122</td><td class="num">0.148</td></tr></tbody></table></div>
+<p class="lp-limit">Every row is the same frame with one pass turned on or off, measured against the same path-traced reference. Four passes bring the frame closer. The sky light makes it slightly worse, because its ambient cube has no idea the hall has a roof; the reference does.</p>
+<p class="lp-limit">GTAO against ray-traced occlusion within the same 1.2 m: RMSE 0.064, inside the engine's 0.12 tolerance; with no occlusion at all, 0.150. SSR against the traced mirror over 343,183 pixels: 0.107; the sky probe alone: 0.207.</p>
+<p class="lp-limit">On the same card the real-time passes took 4.3 ms of GPU time a frame at 1280 x 800, 12.7 ms at 2560 x 1440 and 33.9 ms at 3840 x 2160, where the engine's GTAO took 12.4 ms and its SSR 10.4 ms. The references only run while the camera holds still: at 4K one sample of each costs another 65 ms.</p>
+</section>
+<section class="lp-sec" id="runs" aria-labelledby="h-runs">
+<h2 id="h-runs"><span class="d-3d">What runs, and whose it is</span></h2>
+<h3 class="lp-h3">The engine's</h3>
+<ul class="lw-make"><li>GTAO, mirror SSR and the TAA resolve: the engine's WGSL (post.wgsl), the GPU forms of the passes its CPU reference checks.</li><li>Every ray: the engine's watertight triangle test and its BVH walk (passes.wgsl), on the engine's node layout.</li><li>The display transform: the engine's colour pipeline (colour.wgsl) with its ACES 2.0 tables, or AgX, PBR Neutral or clip.</li><li>The sky: the engine's Preetham clear sky and sun, ported line for line from sky.cpp.</li><li>The scenes: raw-hall and raw-hero, the engine's owned assets, byte for byte as its exporter writes them.</li></ul>
+<h3 class="lp-h3">Written for this page</h3>
+<ul class="lw-make"><li>The G-buffer: the browser's rasterizer draws it. The engine's own raster pass walks every triangle per pixel, which is too slow to move through 586,424 triangles at window size.</li><li>The sun and sky shading, the light in the air, the tilt-shift blur, the tree build and both references are written for this page.</li><li>Transmission is not refracted on either side: the hero's visor is drawn as dark glass.</li></ul>
+<p class="lp-limit">Each engine file is carried unchanged from superframe at commit cac34166 and checked against its SHA-256 before it compiles; each scene is checked against the hash the engine commits for it. A file that does not match stops the page.</p>
+</section>
+<section class="lp-sec" id="engine" aria-labelledby="h-engine">
+<h2 id="h-engine"><span class="d-3d">In the engine, not yet in your browser</span></h2>
+<p class="lp-lede">The engine draws more than this page can carry yet. These are its own frames, with the record each came from.</p>
+<ul class="lw-stills"><li><figure><img src="/media/raw-native/engine-tiltshift/town-plain-960.webp" srcset="/media/raw-native/engine-tiltshift/town-plain-480.webp 480w, /media/raw-native/engine-tiltshift/town-plain-960.webp 960w" sizes="(max-width: 860px) 92vw, 460px" width="960" height="540" loading="lazy" decoding="async" alt="A painted town from above: boxy buildings along a street in late light, lamps and people, everything equally sharp."><figcaption>The town, painted with no lens.</figcaption></figure></li>
+<li><figure><img src="/media/raw-native/engine-tiltshift/town-ours-960.webp" srcset="/media/raw-native/engine-tiltshift/town-ours-480.webp 480w, /media/raw-native/engine-tiltshift/town-ours-960.webp 960w" sizes="(max-width: 860px) 92vw, 460px" width="960" height="540" loading="lazy" decoding="async" alt="The same town where the street and its people stay crisp and the roofs near and far dissolve into broader paint."><figcaption>The same frame through the engine's tilt-shift lens: the plane of focus tilted in the world to follow the street, and out of focus repainted coarser rather than blurred.</figcaption></figure></li>
+<li><figure><img src="/media/raw-native/engine-tiltshift/town-look-night-960.webp" srcset="/media/raw-native/engine-tiltshift/town-look-night-480.webp 480w, /media/raw-native/engine-tiltshift/town-look-night-960.webp 960w" sizes="(max-width: 860px) 92vw, 460px" width="960" height="540" loading="lazy" decoding="async" alt="The town at night under the same lens: dark blue paint, lamps glowing along the street."><figcaption>The night look over the same lens.</figcaption></figure></li></ul>
+<p class="lp-source">960 x 540 frames from the CPU stage of the engine's tilt-shift lens, evidence/tiltshift at superframe commit c1f85d50. The GPU chain costs about 0.86 ms at 1080p on an RTX 4090 (Direct3D 12 median; Vulkan about 0.85 ms). Two of its checks are recorded misses: out of focus the ink does not fall off as far as the bound asks (1.32 against at most 0.5), and the art scene's measure is 0.474 against at least 0.5.</p>
+<p class="lp-limit">Also in the engine and not on this page: ReSTIR direct lighting over many lights (unbiased against the exact tracer on two scenes, its records in evidence/restir-di), the material model with clearcoat, sheen, anisotropy, iridescence and transmission (checked against a float64 reference), and the Direct3D 12 and Vulkan paths.</p>
+</section>
+<section class="lp-sec" id="certificate-live" aria-labelledby="live-h">
+  <h2 id="live-h"><span class="d-3d">The certificate, live</span></h2>
   <p class="demo-form" data-demo="raw-render" data-form="live"><b>Live.</b> This runs in your browser now, on what you give it.</p>
-  <p class="body-text reveal">This is the 0.4.0 browser build of the renderer, running on this page. The latest release is 0.8.0, and the downloads below are from it. Pick a camera and it draws the frame, lights it both ways and writes the certificate, the same as the command line. If your browser has WebGPU, the frame is drawn on your GPU, and the same camera is drawn again on the CPU to check it: a second certificate says whether the two agree. Without WebGPU, the CPU build draws the frame on one thread, and the status lines say why. Your browser checks each module against its published SHA-256 before running it.</p>
-  <div class="rn-live reveal">
+  <p class="lp-lede">The renderer's first check, still running here on your CPU: one camera on the test scene, its occlusion lit twice, once with the cheap method and once ray-traced, and a JSON certificate saying whether the cheap one held. This is the 0.4.0 browser build; the release is 0.8.0, and the downloads below are from it.</p>
+  <div class="rn-live">
     <canvas id="rn-canvas" width="768" height="768" role="img" aria-label="The live render: a box on a ground plane, drawn by raw-native in this browser."></canvas>
     <div class="rn-controls">
       <label>View <select id="rn-view"><option value="default">default</option><option value="high">high</option><option value="low">low</option><option value="close">close</option><option value="wide">wide</option></select></label>
@@ -84,12 +150,12 @@
       <ul class="rn-status" id="rn-status" aria-live="polite"><li>Needs JavaScript and WebAssembly.</li></ul>
     </div>
   </div>
-  <pre class="artifact reveal" id="rn-cert" translate="no" hidden></pre>
-  <p class="artifact-cap reveal" id="rn-cert-cap" hidden>The certificate from this render. <a id="rn-cert-link" download="certificate.json" href="#">Save it</a> to keep the full record, including the SHA-256 of every file the render wrote.</p>
+  <pre class="artifact" id="rn-cert" translate="no" hidden></pre>
+  <p class="artifact-cap" id="rn-cert-cap" hidden>The certificate from this render. <a id="rn-cert-link" download="certificate.json" href="#">Save it</a> to keep the full record, including the SHA-256 of every file the render wrote.</p>
 </section>
 <script type="module">
-import { usePlugin } from "./system/media-engine/page.mjs";
-import "./system/media-engine/raw-register.mjs";
+import { usePlugin } from "/system/media-engine/page.mjs";
+import "/system/media-engine/raw-register.mjs";
 const canvas = document.getElementById("rn-canvas"), status = document.getElementById("rn-status");
 const pick = { view: document.getElementById("rn-view"), size: document.getElementById("rn-size"), channel: document.getElementById("rn-channel") };
 const cert = document.getElementById("rn-cert"), cap = document.getElementById("rn-cert-cap"), link = document.getElementById("rn-cert-link");
@@ -124,11 +190,11 @@ try {
 }
 </script>
 
-<section class="mv" id="run" aria-labelledby="run-h">
-  <h2 id="run-h" class="reveal">Run it now.</h2>
-  <p class="body-text reveal"><a href="repo-explainers/raw-native.html">See how it works, step by step</a>: both occlusion estimators, the reconcile against the tolerance and the verifier, animated with values from the repository.</p>
-  <p class="body-text reveal">Download the binary for your system from the <a href="https://github.com/HarperZ9/raw-native/releases/tag/v0.8.0">0.8.0 release</a>, check it against the published hashes, and point it at an empty folder. A 256 by 256 frame takes about a quarter of a second. The release is still named raw-native. It ships the CPU, Direct3D 12 and WebGPU builds; the Vulkan path is in <a href="https://github.com/HarperZ9/superframe/tree/main/native">The Playground&rsquo;s source</a> and was added after 0.8.0.</p>
-  <div class="channels reveal">
+<section class="lp-sec" id="run" aria-labelledby="run-h">
+  <h2 id="run-h"><span class="d-3d">Run it now.</span></h2>
+  <p class="lp-limit"><a href="/repo-explainers/raw-native.html">See how it works, step by step</a>: both occlusion estimators, the reconcile against the tolerance and the verifier, animated with values from the repository.</p>
+  <p class="lp-limit">Download the binary for your system from the <a href="https://github.com/HarperZ9/raw-native/releases/tag/v0.8.0">0.8.0 release</a>, check it against the published hashes, and point it at an empty folder. A 256 by 256 frame takes about a quarter of a second. The release is still named raw-native. It ships the CPU, Direct3D 12 and WebGPU builds; the Vulkan path is in <a href="https://github.com/HarperZ9/superframe/tree/main/native">The Playground&rsquo;s source</a> and was added after 0.8.0.</p>
+  <div class="channels">
     <span class="g">Windows x64</span>: <a href="https://github.com/HarperZ9/raw-native/releases/download/v0.8.0/raw-native-0.8.0-windows-x64.zip" translate="no">raw-native-0.8.0-windows-x64.zip</a>
     &nbsp;&middot;&nbsp;
     <span class="g">Linux x64</span>: <a href="https://github.com/HarperZ9/raw-native/releases/download/v0.8.0/raw-native-0.8.0-linux-x64.tar.gz" translate="no">raw-native-0.8.0-linux-x64.tar.gz</a> (glibc 2.38 or newer)
@@ -137,7 +203,7 @@ try {
     &nbsp;&middot;&nbsp;
     <a href="https://github.com/HarperZ9/raw-native/releases/download/v0.8.0/SHA256SUMS" translate="no">SHA256SUMS</a>
   </div>
-  <pre class="artifact reveal" translate="no"><span class="cmt"># check the download, then render the default view</span>
+  <pre class="artifact" translate="no"><span class="cmt"># check the download, then render the default view</span>
 sha256sum -c SHA256SUMS
 raw_native_cli --out ./out
 raw_native_cli verify ./out    <span class="cmt"># recompute the error from the written files</span>
@@ -152,19 +218,19 @@ cmake --build build --config Release
 ctest --test-dir build -C Release --output-on-failure</pre>
 </section>
 
-<section class="proof" id="renders" aria-labelledby="renders-h">
-  <div class="proof-head">
-    <h2 id="renders-h" class="reveal">Two views of one scene, and what each certificate says.</h2>
-    <p class="body-text reveal">Every image here came out of the 0.2.0 command line at 512 by 512. The scene is a box on a ground plane under one light. The first panel is the shaded frame. The next two are the reference and the shortcut, where white means open sky and dark means occluded. The last is the error between them.</p>
+<section class="lp-sec" id="renders" aria-labelledby="renders-h">
+  <div>
+    <h2 id="renders-h"><span class="d-3d">Two views of one scene, and what each certificate says.</span></h2>
+    <p class="lp-limit">Every image here came out of the 0.2.0 command line at 512 by 512. The scene is a box on a ground plane under one light. The first panel is the shaded frame. The next two are the reference and the shortcut, where white means open sky and dark means occluded. The last is the error between them.</p>
   </div>
 
-  <div class="exhibit reveal">
+  <div class="exhibit">
     <div class="exhibit-tag"><span class="ord">Exhibit I</span> <span class="what">the default view &middot; <span class="rn-verdict rn-bad">refuted</span></span></div>
     <div class="rn-grid">
-      <figure><img src="media/raw-native/default-frame.png" width="512" height="512" loading="lazy" alt="A red box on a grey ground plane, seen from above and to the side, with soft darkening where the box meets the ground."><figcaption>Shaded frame</figcaption></figure>
-      <figure><img src="media/raw-native/default-ao_rt.png" width="512" height="512" loading="lazy" alt="Ray-traced ambient occlusion: a soft dark halo on the ground around the box and grey shading on its sides."><figcaption>Ray-traced AO, the reference</figcaption></figure>
-      <figure><img src="media/raw-native/default-ao_ss.png" width="512" height="512" loading="lazy" alt="Screen-space ambient occlusion: almost all white, with only a thin dark line along the box's bottom edges."><figcaption>Screen-space AO, the shortcut</figcaption></figure>
-      <figure><img src="media/raw-native/default-ao_error.png" width="512" height="512" loading="lazy" alt="Error map on black: the halo and box sides glow where the shortcut missed occlusion the reference found."><figcaption>Error map</figcaption></figure>
+      <figure><img src="/media/raw-native/default-frame.png" width="512" height="512" loading="lazy" alt="A red box on a grey ground plane, seen from above and to the side, with soft darkening where the box meets the ground."><figcaption>Shaded frame</figcaption></figure>
+      <figure><img src="/media/raw-native/default-ao_rt.png" width="512" height="512" loading="lazy" alt="Ray-traced ambient occlusion: a soft dark halo on the ground around the box and grey shading on its sides."><figcaption>Ray-traced AO, the reference</figcaption></figure>
+      <figure><img src="/media/raw-native/default-ao_ss.png" width="512" height="512" loading="lazy" alt="Screen-space ambient occlusion: almost all white, with only a thin dark line along the box's bottom edges."><figcaption>Screen-space AO, the shortcut</figcaption></figure>
+      <figure><img src="/media/raw-native/default-ao_error.png" width="512" height="512" loading="lazy" alt="Error map on black: the halo and box sides glow where the shortcut missed occlusion the reference found."><figcaption>Error map</figcaption></figure>
     </div>
     <pre class="artifact" translate="no">{"claim":"screen-space AO matches ray-traced ground truth within tolerance",
  "verdict":<span class="rn-bad">"refuted"</span>, "oracle":"raw-rt-ao-v1",
@@ -173,28 +239,28 @@ ctest --test-dir build -C Release --output-on-failure</pre>
     <p class="artifact-cap">The shortcut misses the soft halo almost entirely. Its error is 0.135 RMSE against a tolerance of 0.12, so the certificate says <b>refuted</b>. That is the check working: a picture that looks fine at a glance came back with a measured reason not to trust its shading.</p>
   </div>
 
-  <div class="exhibit reveal">
+  <div class="exhibit">
     <div class="exhibit-tag"><span class="ord">Exhibit II</span> <span class="what">the high view &middot; <span class="rn-verdict rn-ok">verified</span></span></div>
     <div class="rn-grid">
-      <figure><img src="media/raw-native/high-frame.png" width="512" height="512" loading="lazy" alt="The same red box seen from nearly straight above, its top face filling the centre of a grey ground plane."><figcaption>Shaded frame</figcaption></figure>
-      <figure><img src="media/raw-native/high-ao_rt.png" width="512" height="512" loading="lazy" alt="Ray-traced ambient occlusion from above: a soft dark ring on the ground around a white square."><figcaption>Ray-traced AO, the reference</figcaption></figure>
-      <figure><img src="media/raw-native/high-ao_ss.png" width="512" height="512" loading="lazy" alt="Screen-space ambient occlusion from above: white, with a thin line along one edge of the box."><figcaption>Screen-space AO, the shortcut</figcaption></figure>
-      <figure><img src="media/raw-native/high-ao_error.png" width="512" height="512" loading="lazy" alt="Error map from above: a faint ring around the box on black."><figcaption>Error map</figcaption></figure>
+      <figure><img src="/media/raw-native/high-frame.png" width="512" height="512" loading="lazy" alt="The same red box seen from nearly straight above, its top face filling the centre of a grey ground plane."><figcaption>Shaded frame</figcaption></figure>
+      <figure><img src="/media/raw-native/high-ao_rt.png" width="512" height="512" loading="lazy" alt="Ray-traced ambient occlusion from above: a soft dark ring on the ground around a white square."><figcaption>Ray-traced AO, the reference</figcaption></figure>
+      <figure><img src="/media/raw-native/high-ao_ss.png" width="512" height="512" loading="lazy" alt="Screen-space ambient occlusion from above: white, with a thin line along one edge of the box."><figcaption>Screen-space AO, the shortcut</figcaption></figure>
+      <figure><img src="/media/raw-native/high-ao_error.png" width="512" height="512" loading="lazy" alt="Error map from above: a faint ring around the box on black."><figcaption>Error map</figcaption></figure>
     </div>
     <pre class="artifact" translate="no">{"claim":"screen-space AO matches ray-traced ground truth within tolerance",
  "verdict":<span class="rn-ok">"verified"</span>, "oracle":"raw-rt-ao-v1",
  "evidence":[["pixels","239854"],["rmse","0.0827"],["maxError","0.6250"],["tolerance","0.1200"]],
  "channels":{"ao_fidelity":0.923585,"motion_coherence":1,"hdr_headroom":0.875542}}</pre>
-    <p class="artifact-cap">From above, most covered pixels are open ground where both methods agree, so the average error drops to 0.083 and the same check passes. The worst pixel is still off by 0.63. The certificate carries both numbers, so you can see that a pass on the average does not mean every pixel is right. Raw certificates: <a href="media/raw-native/default-certificate.json">default</a>, <a href="media/raw-native/high-certificate.json">high</a>.</p>
+    <p class="artifact-cap">From above, most covered pixels are open ground where both methods agree, so the average error drops to 0.083 and the same check passes. The worst pixel is still off by 0.63. The certificate carries both numbers, so you can see that a pass on the average does not mean every pixel is right. Raw certificates: <a href="/media/raw-native/default-certificate.json">default</a>, <a href="/media/raw-native/high-certificate.json">high</a>.</p>
   </div>
 </section>
 
-<section class="mv" id="certificate" aria-labelledby="cert-h">
-  <h2 id="cert-h" class="reveal">The certificate</h2>
-  <p class="body-text reveal">A certificate is a JSON file with a claim, a verdict, the oracle that judged it and the numbers behind the verdict. The verdict is <b>verified</b>, <b>refuted</b> or <b>unverifiable</b>. A channel with no data is written as null.</p>
-  <p class="body-text reveal">You can check one in two ways. From 0.3.0 the run writes its ambient occlusion as 32-bit floats beside a coverage mask, and <code translate="no">raw_native_cli verify</code> recomputes the error from those files alone. Or run the same command yourself, because the output is deterministic: the default frame and its certificate hash the same with MSVC 19.50 on Windows, with GCC 13.3 on Ubuntu and from the WebAssembly build, locally and on GitHub&rsquo;s build runners. The renderer also measures exactly how many bytes the frame needs, renders again inside that budget, and refuses any allocation past it. A second certificate records whether the budget held.</p>
-  <p class="body-text reveal">The same scene gives different verdicts from different cameras:</p>
-  <div class="rn-wrap reveal">
+<section class="lp-sec" id="certificate" aria-labelledby="cert-h">
+  <h2 id="cert-h"><span class="d-3d">The certificate</span></h2>
+  <p class="lp-limit">A certificate is a JSON file with a claim, a verdict, the oracle that judged it and the numbers behind the verdict. The verdict is <b>verified</b>, <b>refuted</b> or <b>unverifiable</b>. A channel with no data is written as null.</p>
+  <p class="lp-limit">You can check one in two ways. From 0.3.0 the run writes its ambient occlusion as 32-bit floats beside a coverage mask, and <code translate="no">raw_native_cli verify</code> recomputes the error from those files alone. Or run the same command yourself, because the output is deterministic: the default frame and its certificate hash the same with MSVC 19.50 on Windows, with GCC 13.3 on Ubuntu and from the WebAssembly build, locally and on GitHub&rsquo;s build runners. The renderer also measures exactly how many bytes the frame needs, renders again inside that budget, and refuses any allocation past it. A second certificate records whether the budget held.</p>
+  <p class="lp-limit">The same scene gives different verdicts from different cameras:</p>
+  <div class="rn-wrap">
     <table class="rn-table">
       <thead><tr><th scope="col">View</th><th scope="col">Camera flags</th><th scope="col" class="num">Covered pixels</th><th scope="col" class="num">RMSE</th><th scope="col">Verdict</th></tr></thead>
       <tbody>
@@ -206,12 +272,12 @@ ctest --test-dir build -C Release --output-on-failure</pre>
       </tbody>
     </table>
   </div>
-  <p class="body-text reveal">512 by 512, tolerance 0.12 RMSE. Each row is one run of the 0.2.0 binary with the flags shown.</p>
+  <p class="lp-limit">512 by 512, tolerance 0.12 RMSE. Each row is one run of the 0.2.0 binary with the flags shown.</p>
 </section>
 
-<section class="mv" id="limits" aria-labelledby="limits-h">
-  <h2 id="limits-h" class="reveal">Scope and speed</h2>
-  <ul class="rn-limits reveal">
+<section class="lp-sec" id="limits" aria-labelledby="limits-h">
+  <h2 id="limits-h"><span class="d-3d">Scope and speed</span></h2>
+  <ul class="rn-limits">
     <li>There is one built-in test scene and no model loader yet.</li>
     <li>The ray-traced reference uses 64 samples per pixel, so it shows visible grain.</li>
     <li>The screen-space method is a simple one, which is why most views come back refuted.</li>
@@ -223,29 +289,26 @@ ctest --test-dir build -C Release --output-on-failure</pre>
   </ul>
 </section>
 
-<section class="mv" id="lineage" aria-labelledby="lineage-h">
-  <h2 id="lineage-h" class="reveal">Where it came from.</h2>
-  <p class="body-text reveal">The name comes from <span translate="no">RAW</span>, a Direct3D 11 effects platform I wrote for Skyrim SE: a proxy library that took over a closed game&rsquo;s frame and added its own lighting passes mid-picture. That taught me how a frame is built and how quickly an effect can look right while being wrong. The native renderer keeps the lesson and drops the game. It owns its whole frame, and every frame carries a check against a reference. The Skyrim code stays public. Work on it is paused, and I plan to return to it.</p>
+<section class="lp-sec" id="lineage" aria-labelledby="lineage-h">
+  <h2 id="lineage-h"><span class="d-3d">Where it came from.</span></h2>
+  <p class="lp-limit">The name comes from <span translate="no">RAW</span>, a Direct3D 11 effects platform I wrote for Skyrim SE: a proxy library that took over a closed game&rsquo;s frame and added its own lighting passes mid-picture. That taught me how a frame is built and how quickly an effect can look right while being wrong. The native renderer keeps the lesson and drops the game. It owns its whole frame, and every frame carries a check against a reference. The Skyrim code stays public. Work on it is paused, and I plan to return to it.</p>
 </section>
 
-<section class="mv" id="repo" aria-labelledby="repo-h">
-  <h2 id="repo-h" class="reveal">Read the source.</h2>
-  <p class="body-text reveal">C++23, built from the standard library and its own headers. The rasterizer, both ambient occlusion methods, the reconcile step, the certificate writer, the verifier and the bounded memory arena each have their own tests, 32 in all. From 0.3.0 the license is FSL-1.1-MIT, and each version becomes MIT two years after its release. Version 0.2.0 stays MIT, as released.</p>
-  <div class="channels reveal">
+<section class="lp-sec" id="repo" aria-labelledby="repo-h">
+  <h2 id="repo-h"><span class="d-3d">Read the source.</span></h2>
+  <p class="lp-limit">C++23, built from the standard library and its own headers. The rasterizer, both ambient occlusion methods, the reconcile step, the certificate writer, the verifier and the bounded memory arena each have their own tests, 32 in all. From 0.3.0 the license is FSL-1.1-MIT, and each version becomes MIT two years after its release. Version 0.2.0 stays MIT, as released.</p>
+  <div class="channels">
     <span class="g">GitHub</span>: <a href="https://github.com/HarperZ9/raw-native" translate="no">HarperZ9/raw-native</a>
     &nbsp;&middot;&nbsp;
     <span class="g">Paused</span>: <a href="https://github.com/HarperZ9/raw" translate="no">HarperZ9/raw</a> (the Skyrim SE platform)
     &nbsp;&middot;&nbsp;
-    <a href="overview.html">&larr; the map</a> &nbsp;&middot;&nbsp; <a href="catalog.html">the index</a>
+    <a href="/overview.html">&larr; the map</a> &nbsp;&middot;&nbsp; <a href="/catalog.html">the index</a>
   </div>
 </section>
 
+<p class="lp-ways-end"><a href="/playground/">The Playground</a> <a href="/superframe.html">Superframe, the core</a> <a href="/low-water.html">Low Water</a> <a href="https://github.com/HarperZ9/superframe/tree/main/native">The source</a></p>
+<p class="lp-verified"><b>Verified</b> 14 November 2026: the measures and frame times read from this page's renderer on an RTX 4090 with the scenes and code it loads; the engine files and scenes by SHA-256 against superframe commit cac34166 and the hashes in its evidence/m3-assets.json; the tilt-shift figures from the engine's evidence/tiltshift-runs.json and gpu-rtx4090.json. The certificate exhibits and downloads are as the 0.2.0 and 0.8.0 releases wrote them.</p>
+</article>
 </main>
-
-<footer class="footer-seal" role="contentinfo">
-  <p class="seal">One frame, lit two ways, with a verdict on whether the fast way held.</p>
-</footer>
-
-<script src="system/reveal.js?v=20260902-creative-chassis" defer></script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-/* landmark.css: a landmark's own page (buildlang.html, low-water.html) in the field. Words sit on the water with the
+/* landmark.css: a landmark's own page (buildlang.html, low-water.html, raw.html) in the field. Words sit on the water with the
    shell's halo; nothing is boxed. A figure is a number in display weight that opens in place to its source (a native
    <details>, so focus, Enter, Space and a tap all open it, and nothing depends on hover). */
 body.landmark main { max-width: 1180px; padding-inline: clamp(16px, 4vw, 56px); }
@@ -128,3 +128,36 @@ body.landmark main { max-width: 1180px; padding-inline: clamp(16px, 4vw, 56px); 
 .lw-walk-frame iframe { display: block; width: 100%; height: 100%; border: 0; }
 html.lw-walking { overflow: hidden; }
 @media (max-width: 640px) { .lw-doors { grid-template-columns: minmax(0, 1fr); } }
+
+/* raw.html: the measures table and the certificate sections carried from the page as it was (scripts/product-raw.mjs) */
+.rn-wrap { overflow-x: auto; max-width: 100%; }
+.rn-table { border-collapse: collapse; font: 400 var(--fs-2)/1.45 var(--face-utility); color: var(--ink); width: 100%; max-width: 60rem; }
+.rn-table caption { text-align: left; font: 400 var(--fs-3)/1.5 var(--face-text); color: var(--soft); padding-bottom: 8px; max-width: 66ch; }
+.rn-table th, .rn-table td { text-align: left; padding: 6px 14px 6px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+.rn-table thead th { font: 600 var(--fs-2)/1.4 var(--face-text); color: var(--soft); }
+.rn-table .num { text-align: right; }
+.rn-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(8px, 1.2vw, 14px); margin: 0; max-width: 60rem; }
+.rn-grid figure { margin: 0; }
+.rn-grid img { display: block; width: 100%; height: auto; aspect-ratio: 1 / 1; border: 1px solid var(--line); background: #000; }
+.rn-grid figcaption { font: 400 var(--fs-2)/1.4 var(--face-text); color: var(--soft); margin-top: 6px; }
+.lp .rn-ok { color: var(--verified); }
+.lp .rn-bad { color: var(--drift); }
+.rn-verdict { font-family: var(--face-utility); }
+.rn-limits { max-width: 66ch; margin: 0; padding-left: 1.2em; display: grid; gap: 6px; font: 400 var(--fs-3)/1.55 var(--face-text); color: var(--ink); }
+.rn-live { display: grid; grid-template-columns: minmax(0, 32rem) minmax(0, 1fr); gap: clamp(16px, 2.5vw, 32px); align-items: start; max-width: 60rem; }
+.rn-live canvas { display: block; width: 100%; height: auto; aspect-ratio: 1 / 1; border: 1px solid var(--line); background: #000; }
+.rn-controls { display: grid; gap: 12px; font: 400 var(--fs-3)/1.4 var(--face-text); color: var(--soft); }
+.rn-controls label { display: grid; gap: 4px; }
+.rn-controls select { font: inherit; color: var(--ink); background: transparent; border: 1px solid var(--line); padding: 6px 8px; min-height: 44px; }
+.rn-status { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; font: 400 var(--fs-2)/1.5 var(--face-utility); color: var(--ink); }
+.lp .exhibit { display: grid; gap: 12px; }
+.lp .exhibit-tag { font: 600 var(--fs-3)/1.4 var(--face-text); color: var(--ink); }
+.lp .exhibit-tag .ord { font-family: var(--face-utility); margin-right: .6em; }
+.lp pre.artifact { margin: 0; max-width: 100%; overflow-x: auto; white-space: pre; font: 400 var(--fs-2)/1.5 var(--face-utility); color: var(--ink); padding-left: 1.1em; border-left: 1px solid var(--line); }
+.lp pre.artifact .cmt { color: var(--soft); }
+.lp p.artifact-cap, .lp p.demo-form { font: 400 var(--fs-3)/1.55 var(--face-text); color: var(--soft); max-width: 66ch; }
+.lp .channels { font: 400 var(--fs-3)/1.8 var(--face-text); color: var(--ink); max-width: 66ch; }
+.lp .channels .g { color: var(--soft); }
+@media (max-width: 760px) { .rn-live { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 640px) { .rn-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.lp .rn-aside { font: 400 var(--fs-3)/1.55 var(--face-text); color: var(--soft); }

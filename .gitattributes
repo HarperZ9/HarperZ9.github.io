@@ -86,3 +86,7 @@ media/raw-native/pick-*/** -text
 world/ui/shell/pointer/** -text
 # The Low Water walk and its world, carried from superframe and pinned by SHA256SUMS in its directory: no EOL conversion.
 media/low-water/world-*/** -text
+
+# The engine's owned assets are pinned by SHA-256 as the engine exported them; no line-ending change.
+media/raw-native/assets/** -text
+media/raw-native/live/engine-*/** -text
