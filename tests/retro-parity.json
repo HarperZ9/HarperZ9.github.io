@@ -1,55 +1,588 @@
 {
-  "about": "Every control of the Retro Studio (retro.html and the controls system/retro-studio.js builds while it runs) against the shader room of The Playground. A control is either mapped to the room control that does its job (tests/retro-parity.cjs opens the room and checks it is there) or listed under missing with the issue that tracks it. retro.html may not redirect to the room while missing is not empty.",
-  "issue": "https://github.com/HarperZ9/HarperZ9.github.io/issues/553",
-  "mapped": {
-    "data-src=shader": { "room": ".shd-frame", "how": "the room is the studio's shader source" },
-    "re-preset": { "room": "#shd-preset", "how": "the preset library, after its press" },
-    "re-code": { "room": "#shd-src" },
-    "re-run": { "room": "#shd-src", "how": "the room compiles as the visitor types, after a quarter second's pause" },
-    "re-animate": { "room": "[data-run]", "how": "Pause and Run" },
-    "re-knobA": { "room": "#shd-k0" },
-    "re-knobB": { "room": "#shd-k1" },
-    "re-knobC": { "room": "#shd-k2" },
-    "re-save-shader": { "room": ".shd-glsl", "how": "the source saved as a .glsl file" },
-    "re-slayer-add": { "room": "[data-l-add]" },
-    "dyn:layer-blend": { "room": "[data-l-blend]" },
-    "dyn:layer-opacity": { "room": "[data-l-mix]" },
-    "dyn:layer-remove": { "room": "[data-l-rm]" },
-    "re-save": { "room": "[data-png]" },
-    "re-relief": { "room": "[data-file=\"relief-stl\"]" },
-    "re-send-loom": { "room": ".rm-say", "how": "the room hands its frame on the page's bus; an open loom weaves it" }
+ "about": "Every control of the Retro Studio (retro.html and the controls system/retro-studio.js builds while it runs) against the shader room of The Playground. A control is either mapped to the room control that does its job (tests/retro-parity.cjs opens the room and checks it is there) or listed under missing with the issue that tracks it. retro.html may not redirect to the room while missing is not empty.",
+ "issue": "https://github.com/HarperZ9/HarperZ9.github.io/issues/553",
+ "mapped": {
+  "re-animate": {
+   "room": "[data-run]",
+   "how": "Pause and Run",
+   "act": {
+    "do": "click",
+    "sees": "state",
+    "after": [
+     [
+      "click",
+      "[data-run]"
+     ]
+    ]
+   }
   },
-  "missing": [
-    "re-fullscreen", "data-src=plate", "data-src=upload", "data-src=draw", "data-src=scope",
-    "re-seed", "re-layers", "re-reseed", "re-file",
-    "re-brush", "re-ink", "re-brushmode", "re-erase", "re-undo-draw", "re-clear-draw", "re-sym",
-    "re-scope-persist", "re-beam-draw", "re-beam-clear",
-    "re-preset-filter", "re-prev", "re-next", "re-lucky", "re-sheet-toggle", "dyn:sheet-cell",
-    "re-share",
-    "re-palette", "data-pal=0", "data-pal=1", "data-pal=2", "data-pal=3", "data-pal=4", "data-pal=5", "re-pal-adopt",
-    "re-tw", "re-dither", "re-dstr", "re-gam", "re-scan", "re-mask", "re-maskamt", "re-bloom", "re-hal", "re-curv", "re-abr", "re-vig", "re-sdf",
-    "re-fxamount", "re-fxseed", "re-fxanim", "re-randomize", "dyn:fx-chip", "dyn:fx-amount", "dyn:vibe",
-    "re-src-instr", "re-src-mic", "re-src-file", "re-play-pic", "re-audio-file",
-    "data-react=shader", "data-react=effects", "data-react=pixel", "data-react=bloom", "re-react",
-    "re-mod-src", "re-mod-tgt", "re-mod-add", "dyn:mod-depth", "dyn:mod-remove",
-    "re-fb", "re-fb-clear", "re-fb-amt", "re-fb-zoom", "re-fb-rot",
-    "re-midi", "re-midi-clear",
-    "re-save-1x", "re-undo", "re-fresh", "re-clip", "re-send-studio", "re-spin", "re-strip",
-    "re-rec", "re-rec-play", "re-rec-midi", "re-pic-midi",
-    "re-save-patch", "re-share-patch", "re-patches"
-  ],
-  "dynamic": {
-    "about": "The controls retro-studio.js makes with document.createElement while it runs, each found by a line of its code. creates is how many createElement calls of a button, input or select that entry accounts for; the test holds their sum to the file's count, so a new run-time control fails the test until it is listed.",
-    "entries": {
-      "dyn:fx-chip": { "find": "b.className = \"re-chip\"; b.type = \"button\"; b.textContent = m.label;", "creates": 1 },
-      "dyn:fx-amount": { "find": "sl.setAttribute(\"aria-label\", m.label + \" amount\");", "creates": 1 },
-      "dyn:vibe": { "find": "b.className = \"re-vibe\";", "creates": 1 },
-      "dyn:sheet-cell": { "find": "const cell = document.createElement(\"button\");", "creates": 1 },
-      "dyn:layer-blend": { "find": "bl.className = \"re-in re-blend\";", "creates": 1 },
-      "dyn:layer-opacity": { "find": "op.className = \"re-op\"; op.title = \"layer opacity\";", "creates": 1 },
-      "dyn:layer-remove": { "find": "rm.className = \"re-chip re-rm\";", "creates": 1 },
-      "dyn:mod-depth": { "find": "sl.type = \"range\"; sl.min = \"-100\"; sl.max = \"100\";", "creates": 1 },
-      "dyn:mod-remove": { "find": "rm.className = \"re-btn re-rm\";", "creates": 1 }
-    }
+  "data-src=shader": {
+   "room": ".shd-frame",
+   "how": "the room is the studio's shader source; its starts pick the shader",
+   "act": {
+    "do": "set",
+    "target": "#shd-start",
+    "value": "bands"
+   }
+  },
+  "re-preset": {
+   "room": "#shd-preset",
+   "how": "the preset library, after its press",
+   "act": {
+    "do": "set",
+    "value": "Gold Ground, Lamp Moving"
+   }
+  },
+  "re-code": {
+   "room": "#shd-src",
+   "act": {
+    "do": "type",
+    "value": "void mainImage(out vec4 O, in vec2 U){ O = vec4(U.x / iResolution.x, 0.3, 0.6, 1.0); }"
+   }
+  },
+  "re-run": {
+   "room": "#shd-src",
+   "how": "the room compiles as the visitor types, after a quarter second's pause",
+   "act": {
+    "do": "type",
+    "value": "void mainImage(out vec4 O, in vec2 U){ O = vec4(0.2, U.y / iResolution.y, 0.5, 1.0); }"
+   }
+  },
+  "re-knobA": {
+   "room": "#shd-k0",
+   "act": {
+    "do": "set",
+    "target": "#shd-k0",
+    "value": 0.9,
+    "sees": [
+     "frame",
+     "state"
+    ]
+   }
+  },
+  "re-knobB": {
+   "room": "#shd-k1",
+   "act": {
+    "do": "set",
+    "value": 0.1,
+    "sees": [
+     "frame",
+     "state"
+    ]
+   }
+  },
+  "re-knobC": {
+   "room": "#shd-k2",
+   "act": {
+    "do": "set",
+    "value": 0.8,
+    "sees": [
+     "frame",
+     "state"
+    ]
+   }
+  },
+  "re-save-shader": {
+   "room": ".shd-glsl",
+   "how": "the source saved as a .glsl file",
+   "act": {
+    "do": "click",
+    "sees": "saved"
+   }
+  },
+  "re-slayer-add": {
+   "room": "[data-l-add]",
+   "act": {
+    "do": "click"
+   }
+  },
+  "dyn:layer-blend": {
+   "room": "[data-l-blend]",
+   "act": {
+    "do": "set",
+    "value": "difference"
+   }
+  },
+  "dyn:layer-opacity": {
+   "room": "[data-l-mix]",
+   "act": {
+    "do": "set",
+    "value": 0.95
+   }
+  },
+  "dyn:layer-remove": {
+   "room": "[data-l-rm]",
+   "act": {
+    "do": "click"
+   }
+  },
+  "re-save": {
+   "room": "[data-png]",
+   "act": {
+    "do": "click",
+    "sees": "saved"
+   }
+  },
+  "re-relief": {
+   "room": "[data-file=\"relief-stl\"]",
+   "act": {
+    "do": "click",
+    "sees": "saved"
+   }
+  },
+  "re-send-loom": {
+   "room": "[data-send=\"loom\"]",
+   "how": "the frame goes to the Loom as the studio sent it; the room also hands it on the page's bus",
+   "act": {
+    "do": "click",
+    "sees": "stored"
+   }
+  },
+  "re-send-studio": {
+   "room": "[data-send=\"studio\"]",
+   "act": {
+    "do": "click",
+    "sees": "stored"
+   }
+  },
+  "re-palette": {
+   "room": "#shd-pal",
+   "how": "the picture rack; a change while the rack is out brings it in",
+   "act": {
+    "do": "set",
+    "value": "nes",
+    "before": [
+     [
+      "open",
+      "picture"
+     ]
+    ]
+   }
+  },
+  "re-pal-adopt": {
+   "room": "#shd-pal-adopt",
+   "how": "keeps the colours the frame resolved to as your six",
+   "act": {
+    "do": "click",
+    "sees": "state"
+   }
+  },
+  "data-pal=0": {
+   "room": "#shd-pal-0",
+   "act": {
+    "do": "set",
+    "value": "#ff0000"
+   }
+  },
+  "data-pal=1": {
+   "room": "#shd-pal-1",
+   "act": {
+    "do": "set",
+    "value": "#00ff00"
+   }
+  },
+  "data-pal=2": {
+   "room": "#shd-pal-2",
+   "act": {
+    "do": "set",
+    "value": "#0000ff"
+   }
+  },
+  "data-pal=3": {
+   "room": "#shd-pal-3",
+   "act": {
+    "do": "set",
+    "value": "#ffff00"
+   }
+  },
+  "data-pal=4": {
+   "room": "#shd-pal-4",
+   "act": {
+    "do": "set",
+    "value": "#00ffff"
+   }
+  },
+  "data-pal=5": {
+   "room": "#shd-pal-5",
+   "act": {
+    "do": "set",
+    "value": "#ff00ff"
+   }
+  },
+  "re-tw": {
+   "room": "#shd-rt-tw",
+   "act": {
+    "do": "set",
+    "value": 120
+   }
+  },
+  "re-dither": {
+   "room": "#shd-dith",
+   "act": {
+    "do": "set",
+    "value": "bayer2"
+   }
+  },
+  "re-dstr": {
+   "room": "#shd-rt-dstr",
+   "act": {
+    "do": "set",
+    "value": 20
+   }
+  },
+  "re-gam": {
+   "room": "#shd-rt-gam",
+   "act": {
+    "do": "set",
+    "value": 170
+   }
+  },
+  "re-scan": {
+   "room": "#shd-rt-scan",
+   "act": {
+    "do": "set",
+    "value": 85
+   }
+  },
+  "re-mask": {
+   "room": "#shd-mask",
+   "act": {
+    "do": "set",
+    "value": "dot"
+   }
+  },
+  "re-maskamt": {
+   "room": "#shd-rt-maskA",
+   "act": {
+    "do": "set",
+    "value": 95
+   }
+  },
+  "re-bloom": {
+   "room": "#shd-rt-bloom",
+   "act": {
+    "do": "set",
+    "value": 85
+   }
+  },
+  "re-hal": {
+   "room": "#shd-rt-hal",
+   "act": {
+    "do": "set",
+    "value": 85
+   }
+  },
+  "re-curv": {
+   "room": "#shd-rt-curv",
+   "act": {
+    "do": "set",
+    "value": 70
+   }
+  },
+  "re-abr": {
+   "room": "#shd-rt-abr",
+   "act": {
+    "do": "set",
+    "value": 80
+   }
+  },
+  "re-vig": {
+   "room": "#shd-rt-vig",
+   "act": {
+    "do": "set",
+    "value": 90
+   }
+  },
+  "re-sdf": {
+   "room": "#shd-sdf",
+   "act": {
+    "do": "check",
+    "value": true
+   }
+  },
+  "re-save-1x": {
+   "room": "[data-one]",
+   "how": "the pixel grid, one image pixel per cell, no tube",
+   "act": {
+    "do": "click",
+    "sees": "saved"
+   }
+  },
+  "dyn:fx-chip": {
+   "room": "[data-fx]",
+   "act": {
+    "do": "click",
+    "target": "[data-fx=\"slice\"]",
+    "sees": [
+     "frame",
+     "pressed"
+    ],
+    "before": [
+     [
+      "open",
+      "fx"
+     ]
+    ]
+   }
+  },
+  "dyn:fx-amount": {
+   "room": "[data-fx-amt]",
+   "act": {
+    "do": "set",
+    "value": 95
+   }
+  },
+  "re-fxamount": {
+   "room": "#shd-fx-amount",
+   "act": {
+    "do": "set",
+    "value": 15
+   }
+  },
+  "re-fxseed": {
+   "room": "#shd-fx-seed",
+   "act": {
+    "do": "type",
+    "value": "another-seed"
+   }
+  },
+  "re-fxanim": {
+   "room": "#shd-fx-anim",
+   "act": {
+    "do": "check",
+    "value": true,
+    "after": [
+     [
+      "check",
+      "#shd-fx-anim",
+      false
+     ]
+    ]
+   }
+  },
+  "dyn:vibe": {
+   "room": "[data-vibe]",
+   "act": {
+    "do": "click",
+    "target": "[data-vibe=\"5\"]"
+   }
+  },
+  "re-randomize": {
+   "room": "#shd-fx-random",
+   "act": {
+    "do": "click",
+    "sees": [
+     "frame",
+     "state"
+    ],
+    "after": [
+     [
+      "click",
+      "[data-vibe=\"1\"]"
+     ],
+     [
+      "check",
+      "#shd-fx-anim",
+      false
+     ]
+    ]
+   }
+  },
+  "re-mod-src": {
+   "room": "#shd-mod-src",
+   "act": {
+    "do": "set",
+    "value": "lfo-tri",
+    "sees": "state",
+    "before": [
+     [
+      "open",
+      "motion"
+     ]
+    ]
+   }
+  },
+  "re-mod-tgt": {
+   "room": "#shd-mod-tgt",
+   "act": {
+    "do": "set",
+    "value": "curv",
+    "sees": "state"
+   }
+  },
+  "re-mod-add": {
+   "room": "#shd-mod-add",
+   "act": {
+    "do": "click",
+    "sees": [
+     "frame",
+     "state"
+    ]
+   }
+  },
+  "dyn:mod-depth": {
+   "room": "[data-mod-depth]",
+   "act": {
+    "do": "set",
+    "value": 100,
+    "sees": [
+     "frame",
+     "state"
+    ]
+   }
+  },
+  "dyn:mod-remove": {
+   "room": "[data-mod-rm]",
+   "act": {
+    "do": "click",
+    "sees": [
+     "frame",
+     "state"
+    ]
+   }
+  },
+  "re-fb": {
+   "room": "#shd-fb",
+   "how": "video feedback; while it is on every frame differs, so the feedback controls are checked against state and frame",
+   "act": {
+    "do": "check",
+    "value": true,
+    "sees": [
+     "frame",
+     "state"
+    ]
+   }
+  },
+  "re-fb-amt": {
+   "room": "#shd-fb-amt",
+   "act": {
+    "do": "set",
+    "value": 90,
+    "sees": "state"
+   }
+  },
+  "re-fb-zoom": {
+   "room": "#shd-fb-zoom",
+   "act": {
+    "do": "set",
+    "value": -40,
+    "sees": "state"
+   }
+  },
+  "re-fb-rot": {
+   "room": "#shd-fb-rot",
+   "act": {
+    "do": "set",
+    "value": 25,
+    "sees": "state"
+   }
+  },
+  "re-fb-clear": {
+   "room": "#shd-fb-flush",
+   "act": {
+    "do": "click",
+    "sees": "said",
+    "after": [
+     [
+      "check",
+      "#shd-fb",
+      false
+     ]
+    ]
+   }
   }
+ },
+ "missing": [
+  "re-fullscreen",
+  "data-src=plate",
+  "data-src=upload",
+  "data-src=draw",
+  "data-src=scope",
+  "re-seed",
+  "re-layers",
+  "re-reseed",
+  "re-file",
+  "re-brush",
+  "re-ink",
+  "re-brushmode",
+  "re-erase",
+  "re-undo-draw",
+  "re-clear-draw",
+  "re-sym",
+  "re-scope-persist",
+  "re-beam-draw",
+  "re-beam-clear",
+  "re-preset-filter",
+  "re-prev",
+  "re-next",
+  "re-lucky",
+  "re-sheet-toggle",
+  "dyn:sheet-cell",
+  "re-share",
+  "re-src-instr",
+  "re-src-mic",
+  "re-src-file",
+  "re-play-pic",
+  "re-audio-file",
+  "data-react=shader",
+  "data-react=effects",
+  "data-react=pixel",
+  "data-react=bloom",
+  "re-react",
+  "re-midi",
+  "re-midi-clear",
+  "re-undo",
+  "re-fresh",
+  "re-clip",
+  "re-spin",
+  "re-strip",
+  "re-rec",
+  "re-rec-play",
+  "re-rec-midi",
+  "re-pic-midi",
+  "re-save-patch",
+  "re-share-patch",
+  "re-patches"
+ ],
+ "dynamic": {
+  "about": "The controls retro-studio.js makes with document.createElement while it runs, each found by a line of its code. creates is how many createElement calls of a button, input or select that entry accounts for; the test holds their sum to the file's count, so a new run-time control fails the test until it is listed.",
+  "entries": {
+   "dyn:fx-chip": {
+    "find": "b.className = \"re-chip\"; b.type = \"button\"; b.textContent = m.label;",
+    "creates": 1
+   },
+   "dyn:fx-amount": {
+    "find": "sl.setAttribute(\"aria-label\", m.label + \" amount\");",
+    "creates": 1
+   },
+   "dyn:vibe": {
+    "find": "b.className = \"re-vibe\";",
+    "creates": 1
+   },
+   "dyn:sheet-cell": {
+    "find": "const cell = document.createElement(\"button\");",
+    "creates": 1
+   },
+   "dyn:layer-blend": {
+    "find": "bl.className = \"re-in re-blend\";",
+    "creates": 1
+   },
+   "dyn:layer-opacity": {
+    "find": "op.className = \"re-op\"; op.title = \"layer opacity\";",
+    "creates": 1
+   },
+   "dyn:layer-remove": {
+    "find": "rm.className = \"re-chip re-rm\";",
+    "creates": 1
+   },
+   "dyn:mod-depth": {
+    "find": "sl.type = \"range\"; sl.min = \"-100\"; sl.max = \"100\";",
+    "creates": 1
+   },
+   "dyn:mod-remove": {
+    "find": "rm.className = \"re-btn re-rm\";",
+    "creates": 1
+   }
+  }
+ }
 }
