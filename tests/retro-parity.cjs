@@ -60,10 +60,17 @@ async function step(page, [what, sel, value]) {
   else if (what === 'click') { await loc.scrollIntoViewIfNeeded(); await loc.click(); await page.mouse.move(1, 1); }
   else if (what === 'set' || what === 'type') await loc.evaluate((el, v) => { el.value = String(v); el.dispatchEvent(new Event('input', { bubbles: true })); el.dispatchEvent(new Event('change', { bubbles: true })); }, value);
   else if (what === 'check') await loc.evaluate((el, v) => { el.checked = v === undefined || v === null ? !el.checked : !!v; el.dispatchEvent(new Event('input', { bubbles: true })); el.dispatchEvent(new Event('change', { bubbles: true })); }, value);
-  else throw new Error(`no step called ${what}`);
+  else if (what === 'wait') await page.waitForTimeout(value);
+  else if (what === 'file') await loc.setInputFiles(path.join(root, value));
+  else if (what === 'draw') {   // a stroke across the shown frame, held at the page's corner after
+    await page.locator('#shader .shd-stage').scrollIntoViewIfNeeded(); const box = await page.locator('#shader .shd-stage').boundingBox(); await page.mouse.move(box.x + box.width * 0.2, box.y + box.height * 0.3); await page.mouse.down();
+    for (let i = 1; i <= 24; i++) await page.mouse.move(box.x + box.width * (0.2 + i * 0.025), box.y + box.height * (0.3 + 0.4 * Math.sin(i / 4)));
+    await page.mouse.up(); await page.mouse.move(1, 1);
+  } else throw new Error(`no step called ${what}`);
 }
-const settle = (page) => page.evaluate(() => new Promise((done) => setTimeout(() => requestAnimationFrame(() => requestAnimationFrame(done)), 350)));
-const redraw = async (page) => { await page.evaluate(() => document.querySelector('#shader .rm-host').shaderDraw(1)); await settle(page); };
+const settle = (page) => page.evaluate(() => new Promise((done) => setTimeout(() => requestAnimationFrame(() => requestAnimationFrame(done)), 150)));
+// a redraw is synchronous in the page (shaderDraw), so two animation frames are enough for the canvas to be read back
+const redraw = (page) => page.evaluate(() => { document.querySelector('#shader .rm-host').shaderDraw(1); return new Promise((done) => requestAnimationFrame(() => requestAnimationFrame(done))); });
 
 // Drive one control and say what changed. sees lists what must change; the frame must also hold still without it.
 async function acts(page, key, sel, act, saved) {
@@ -75,10 +82,15 @@ async function acts(page, key, sel, act, saved) {
   for (let i = 0; i < 12 && same < 2; i++) { await redraw(page); const p = await print(page, target); same = a && a.frame === p.frame ? same + 1 : 0; a = p; }
   if (sees.includes('frame')) assert.equal(same, 2, `${key}: the frame moved with no control touched, so a frame check here proves nothing`);
   a.saved = String(saved.n);
-  await step(page, [act.do, target, act.value]); await settle(page);
-  if (sees.includes('saved')) for (let i = 0; i < 30 && String(saved.n) === a.saved; i++) await page.waitForTimeout(100);
-  const b = await print(page, target); b.saved = String(saved.n);
-  const changed = Object.keys(a).filter((k) => a[k] !== b[k]);
+  // after the step, the room is read until one of the named parts changes, or until the entry's wait (1.5 s, or longer
+  // for a source that loads or a file that is written) runs out; a dead control is read for the whole wait
+  await step(page, [act.do, target, act.value]);
+  let b = null, changed = [];
+  for (const until = Date.now() + (act.wait || 1500); ;) {
+    await page.waitForTimeout(60); b = await print(page, target); b.saved = String(saved.n);
+    changed = Object.keys(a).filter((k) => a[k] !== b[k]);
+    if (sees.some((x) => changed.includes(x)) || Date.now() > until) break;
+  }
   for (const s of act.after || []) { await step(page, s); await settle(page); }
   return { changed, ok: sees.some((s) => changed.includes(s)) };
 }
@@ -93,7 +105,8 @@ async function acts(page, key, sel, act, saved) {
   for (const [k, v] of Object.entries(parity.mapped)) { assert.ok(v.act && v.act.do, `${k}: a mapped control says how to drive it`); for (const s of [].concat(v.act.sees || 'frame')) assert.ok(SEES.has(s), `${k}: sees ${s}?`); }
   if (missing.length) assert.match(parity.issue, /^https:\/\/github\.com\/HarperZ9\/HarperZ9\.github\.io\/issues\/\d+$/, 'the missing list names its issue');
 
-  const browser = await chromium.launch({ ...(process.env.BROWSER_CHANNEL ? { channel: process.env.BROWSER_CHANNEL } : {}) });
+  // a fake microphone and an allowed prompt, so the Microphone control can be driven headless
+  const browser = await chromium.launch({ ...(process.env.BROWSER_CHANNEL ? { channel: process.env.BROWSER_CHANNEL } : {}), args: ['--use-fake-ui-for-media-stream', '--use-fake-device-for-media-stream', '--autoplay-policy=no-user-gesture-required'] });
   const dead = [], report = {};
   try {
     const ctx = await browser.newContext({ viewport: { width: 1280, height: 800 }, acceptDownloads: true });
@@ -120,7 +133,7 @@ async function acts(page, key, sel, act, saved) {
     for (const [k, v] of Object.entries(parity.mapped)) {
       for (const s of v.act.before || []) { await step(page, s); await settle(page); }
       if (!(await page.locator(`#shader ${v.room}`).count())) { absent.push(`${k} (${v.room})`); continue; }
-      const r = await acts(page, k, v.room, { ...v.act, before: [] }, saved); report[k] = r.changed.join(' ');
+      const t0 = Date.now(), r = await acts(page, k, v.room, { ...v.act, before: [] }, saved); report[k] = `${r.changed.join(' ')} (${Date.now() - t0} ms)`;
       if (!r.ok) dead.push(`${k} (${v.act.target || v.room}: wanted ${[].concat(v.act.sees || 'frame').join('/')}, saw ${r.changed.join(', ') || 'nothing'})`);
     }
     assert.deepEqual(absent, [], 'every mapped control is in the opened room');

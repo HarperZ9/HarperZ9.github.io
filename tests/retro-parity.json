@@ -16,15 +16,6 @@
     ]
    }
   },
-  "data-src=shader": {
-   "room": ".shd-frame",
-   "how": "the room is the studio's shader source; its starts pick the shader",
-   "act": {
-    "do": "set",
-    "target": "#shd-start",
-    "value": "bands"
-   }
-  },
   "re-preset": {
    "room": "#shd-preset",
    "how": "the preset library, after its press",
@@ -87,7 +78,8 @@
    "how": "the source saved as a .glsl file",
    "act": {
     "do": "click",
-    "sees": "saved"
+    "sees": "saved",
+    "wait": 15000
    }
   },
   "re-slayer-add": {
@@ -120,14 +112,16 @@
    "room": "[data-png]",
    "act": {
     "do": "click",
-    "sees": "saved"
+    "sees": "saved",
+    "wait": 15000
    }
   },
   "re-relief": {
    "room": "[data-file=\"relief-stl\"]",
    "act": {
     "do": "click",
-    "sees": "saved"
+    "sees": "saved",
+    "wait": 15000
    }
   },
   "re-send-loom": {
@@ -143,6 +137,249 @@
    "act": {
     "do": "click",
     "sees": "stored"
+   }
+  },
+  "data-src=plate": {
+   "room": "[data-src-tab=\"plate\"]",
+   "how": "the source tabs: the plate is the base, and the layers and the rack work on it",
+   "act": {
+    "do": "click",
+    "wait": 4000
+   }
+  },
+  "re-seed": {
+   "room": "#shd-plate-seed",
+   "act": {
+    "do": "type",
+    "value": "a-new-seed",
+    "wait": 4000
+   }
+  },
+  "re-layers": {
+   "room": "#shd-plate-kind",
+   "how": "the plate instrument",
+   "act": {
+    "do": "set",
+    "value": "clifford",
+    "wait": 4000
+   }
+  },
+  "re-reseed": {
+   "room": "#shd-plate-reseed",
+   "act": {
+    "do": "click",
+    "wait": 4000
+   }
+  },
+  "data-src=upload": {
+   "room": "[data-src-tab=\"upload\"]",
+   "act": {
+    "do": "click"
+   }
+  },
+  "re-file": {
+   "room": "#shd-up-file",
+   "act": {
+    "do": "file",
+    "value": "img/og/p/retro.jpg",
+    "wait": 4000
+   }
+  },
+  "data-src=draw": {
+   "room": "[data-src-tab=\"draw\"]",
+   "act": {
+    "do": "click"
+   }
+  },
+  "re-brush": {
+   "room": "#shd-brush",
+   "act": {
+    "do": "set",
+    "value": 40,
+    "sees": "state"
+   }
+  },
+  "re-ink": {
+   "room": "#shd-ink",
+   "act": {
+    "do": "set",
+    "value": "#ff3300",
+    "sees": "state"
+   }
+  },
+  "re-brushmode": {
+   "room": "#shd-brush-mode",
+   "act": {
+    "do": "set",
+    "value": "wet",
+    "sees": "state"
+   }
+  },
+  "re-erase": {
+   "room": "#shd-erase",
+   "act": {
+    "do": "check",
+    "value": true,
+    "sees": "state",
+    "after": [
+     [
+      "check",
+      "#shd-erase",
+      false
+     ]
+    ]
+   }
+  },
+  "re-sym": {
+   "room": "#shd-sym",
+   "act": {
+    "do": "set",
+    "value": "quad",
+    "sees": "state"
+   }
+  },
+  "re-undo-draw": {
+   "room": "#shd-draw-undo",
+   "how": "one stroke back",
+   "act": {
+    "do": "click",
+    "before": [
+     [
+      "draw"
+     ]
+    ]
+   }
+  },
+  "re-clear-draw": {
+   "room": "#shd-draw-clear",
+   "act": {
+    "do": "click",
+    "before": [
+     [
+      "draw"
+     ]
+    ]
+   }
+  },
+  "data-src=scope": {
+   "room": "[data-src-tab=\"scope\"]",
+   "act": {
+    "do": "click",
+    "wait": 4000
+   }
+  },
+  "re-scope-persist": {
+   "room": "#shd-persist",
+   "act": {
+    "do": "set",
+    "value": 10,
+    "sees": "state"
+   }
+  },
+  "re-beam-draw": {
+   "room": "#shd-beam",
+   "act": {
+    "do": "check",
+    "value": true,
+    "sees": "state"
+   }
+  },
+  "re-beam-clear": {
+   "room": "#shd-beam-free",
+   "how": "the drawn figure released; the beam idles again",
+   "act": {
+    "do": "click",
+    "before": [
+     [
+      "draw"
+     ]
+    ]
+   }
+  },
+  "data-src=shader": {
+   "room": "[data-src-tab=\"shader\"]",
+   "how": "back to the shader being written",
+   "act": {
+    "do": "click"
+   }
+  },
+  "re-preset-filter": {
+   "room": "#shd-pre-filter",
+   "act": {
+    "do": "type",
+    "value": "gold",
+    "sees": "said",
+    "after": [
+     [
+      "type",
+      "#shd-pre-filter",
+      ""
+     ]
+    ]
+   }
+  },
+  "re-prev": {
+   "room": "#shd-pre-prev",
+   "act": {
+    "do": "click"
+   }
+  },
+  "re-next": {
+   "room": "#shd-pre-next",
+   "act": {
+    "do": "click"
+   }
+  },
+  "re-lucky": {
+   "room": "#shd-pre-lucky",
+   "act": {
+    "do": "click",
+    "sees": [
+     "frame",
+     "state"
+    ],
+    "after": [
+     [
+      "set",
+      "#shd-preset",
+      "Gold Ground, Lamp Moving"
+     ]
+    ]
+   },
+   "how": "a random preset; the test then sets a still one again, since some presets move with the frame count"
+  },
+  "re-sheet-toggle": {
+   "room": "#shd-sheet-toggle",
+   "act": {
+    "do": "click",
+    "sees": "said"
+   }
+  },
+  "dyn:sheet-cell": {
+   "room": "[data-sheet]",
+   "act": {
+    "do": "click",
+    "target": "[data-sheet=\"7\"]"
+   }
+  },
+  "re-share": {
+   "room": "#shd-share",
+   "act": {
+    "do": "click",
+    "sees": "said"
+   }
+  },
+  "re-fullscreen": {
+   "room": "#shd-full",
+   "act": {
+    "do": "click",
+    "sees": "pressed",
+    "after": [
+     [
+      "click",
+      "[data-full-leave]"
+     ]
+    ]
    }
   },
   "re-palette": {
@@ -305,7 +542,8 @@
    "how": "the pixel grid, one image pixel per cell, no tube",
    "act": {
     "do": "click",
-    "sees": "saved"
+    "sees": "saved",
+    "wait": 15000
    }
   },
   "dyn:fx-chip": {
@@ -490,60 +728,283 @@
      ]
     ]
    }
+  },
+  "re-src-instr": {
+   "room": "#shd-snd-instr",
+   "how": "the studio's instrument; every edit is a note while it plays",
+   "act": {
+    "do": "click",
+    "sees": [
+     "pressed",
+     "said"
+    ],
+    "before": [
+     [
+      "open",
+      "sound"
+     ]
+    ],
+    "after": [
+     [
+      "click",
+      "#shd-snd-instr"
+     ]
+    ]
+   }
+  },
+  "re-src-mic": {
+   "room": "#shd-snd-mic",
+   "act": {
+    "do": "click",
+    "sees": [
+     "pressed",
+     "said"
+    ],
+    "after": [
+     [
+      "click",
+      "#shd-snd-mic"
+     ]
+    ]
+   }
+  },
+  "re-src-file": {
+   "room": "#shd-snd-file",
+   "how": "opens the file picker, as the studio's button did",
+   "act": {
+    "do": "click",
+    "sees": "said"
+   }
+  },
+  "re-audio-file": {
+   "room": "#shd-snd-audio",
+   "act": {
+    "do": "file",
+    "value": "world/exhibit/assets/audio/clink.opus",
+    "sees": "said",
+    "wait": 4000
+   }
+  },
+  "re-play-pic": {
+   "room": "#shd-snd-pic",
+   "act": {
+    "do": "click",
+    "sees": [
+     "pressed",
+     "said"
+    ],
+    "wait": 4000,
+    "after": [
+     [
+      "click",
+      "#shd-snd-pic"
+     ]
+    ]
+   }
+  },
+  "data-react=shader": {
+   "room": "[data-react=\"shader\"]",
+   "how": "where sound reaches into the picture",
+   "act": {
+    "do": "click",
+    "sees": [
+     "state",
+     "pressed"
+    ]
+   }
+  },
+  "data-react=effects": {
+   "room": "[data-react=\"effects\"]",
+   "act": {
+    "do": "click",
+    "sees": [
+     "state",
+     "pressed"
+    ]
+   }
+  },
+  "data-react=pixel": {
+   "room": "[data-react=\"pixel\"]",
+   "act": {
+    "do": "click",
+    "sees": [
+     "state",
+     "pressed"
+    ]
+   }
+  },
+  "data-react=bloom": {
+   "room": "[data-react=\"bloom\"]",
+   "act": {
+    "do": "click",
+    "sees": [
+     "state",
+     "pressed"
+    ]
+   }
+  },
+  "re-react": {
+   "room": "#shd-react",
+   "act": {
+    "do": "set",
+    "value": 20,
+    "sees": "state"
+   }
+  },
+  "re-midi": {
+   "room": "#shd-midi",
+   "act": {
+    "do": "click",
+    "sees": [
+     "pressed",
+     "said"
+    ],
+    "after": [
+     [
+      "click",
+      "#shd-midi"
+     ]
+    ]
+   }
+  },
+  "re-midi-clear": {
+   "room": "#shd-midi-clear",
+   "act": {
+    "do": "click",
+    "sees": "said"
+   }
+  },
+  "re-rec": {
+   "room": "#shd-rec",
+   "how": "the playing recorded as a score",
+   "act": {
+    "do": "click",
+    "sees": [
+     "pressed",
+     "said"
+    ]
+   }
+  },
+  "re-rec-play": {
+   "room": "#shd-rec-play",
+   "act": {
+    "do": "click",
+    "sees": "said",
+    "wait": 4000
+   }
+  },
+  "re-rec-midi": {
+   "room": "#shd-rec-midi",
+   "act": {
+    "do": "click",
+    "sees": "saved",
+    "after": [
+     [
+      "click",
+      "#shd-rec"
+     ]
+    ],
+    "wait": 15000
+   }
+  },
+  "re-pic-midi": {
+   "room": "#shd-pic-midi",
+   "act": {
+    "do": "click",
+    "sees": "saved",
+    "wait": 15000
+   }
+  },
+  "re-save-patch": {
+   "room": "#shd-patch-save",
+   "how": "the whole setup, kept in this browser",
+   "act": {
+    "do": "click",
+    "sees": "said",
+    "before": [
+     [
+      "open",
+      "keep"
+     ]
+    ]
+   }
+  },
+  "re-share-patch": {
+   "room": "#shd-patch-link",
+   "act": {
+    "do": "click",
+    "sees": "said"
+   }
+  },
+  "re-undo": {
+   "room": "#shd-undo",
+   "act": {
+    "do": "click",
+    "sees": [
+     "frame",
+     "state"
+    ],
+    "before": [
+     [
+      "set",
+      "#shd-k1",
+      0.05
+     ],
+     [
+      "wait",
+      null,
+      500
+     ]
+    ]
+   }
+  },
+  "re-fresh": {
+   "room": "#shd-fresh",
+   "act": {
+    "do": "click",
+    "sees": [
+     "frame",
+     "state"
+    ]
+   }
+  },
+  "re-patches": {
+   "room": "#shd-patches",
+   "act": {
+    "do": "set",
+    "value": "0",
+    "sees": [
+     "frame",
+     "state"
+    ]
+   }
+  },
+  "re-clip": {
+   "room": "#shd-clip",
+   "act": {
+    "do": "click",
+    "sees": "saved",
+    "wait": 15000
+   }
+  },
+  "re-spin": {
+   "room": "#shd-spin",
+   "act": {
+    "do": "click",
+    "sees": "saved",
+    "wait": 15000
+   }
+  },
+  "re-strip": {
+   "room": "#shd-strip",
+   "act": {
+    "do": "click",
+    "sees": "saved",
+    "wait": 15000
+   }
   }
  },
- "missing": [
-  "re-fullscreen",
-  "data-src=plate",
-  "data-src=upload",
-  "data-src=draw",
-  "data-src=scope",
-  "re-seed",
-  "re-layers",
-  "re-reseed",
-  "re-file",
-  "re-brush",
-  "re-ink",
-  "re-brushmode",
-  "re-erase",
-  "re-undo-draw",
-  "re-clear-draw",
-  "re-sym",
-  "re-scope-persist",
-  "re-beam-draw",
-  "re-beam-clear",
-  "re-preset-filter",
-  "re-prev",
-  "re-next",
-  "re-lucky",
-  "re-sheet-toggle",
-  "dyn:sheet-cell",
-  "re-share",
-  "re-src-instr",
-  "re-src-mic",
-  "re-src-file",
-  "re-play-pic",
-  "re-audio-file",
-  "data-react=shader",
-  "data-react=effects",
-  "data-react=pixel",
-  "data-react=bloom",
-  "re-react",
-  "re-midi",
-  "re-midi-clear",
-  "re-undo",
-  "re-fresh",
-  "re-clip",
-  "re-spin",
-  "re-strip",
-  "re-rec",
-  "re-rec-play",
-  "re-rec-midi",
-  "re-pic-midi",
-  "re-save-patch",
-  "re-share-patch",
-  "re-patches"
- ],
+ "missing": [],
  "dynamic": {
   "about": "The controls retro-studio.js makes with document.createElement while it runs, each found by a line of its code. creates is how many createElement calls of a button, input or select that entry accounts for; the test holds their sum to the file's count, so a new run-time control fails the test until it is listed.",
   "entries": {
