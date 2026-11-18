@@ -108,3 +108,23 @@ body.landmark main { max-width: 1180px; padding-inline: clamp(16px, 4vw, 56px); 
 .lp .pair .pair-buttons { border: 0; }
 .lp .pair .pair-frames { border: 0; padding: 0; }
 .lp .pair { grid-template-columns: minmax(0, 1fr); }
+/* Low Water, the island (world/site/explore/walk.js): three pictures, each a way into the walk, then the plate and the stills */
+.lw-doors { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 22px 26px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.lw-door:first-child { grid-column: 1 / -1; }
+.lw-door figure, .lw-plate, .lw-stills figure { margin: 0; display: grid; gap: 8px; }
+.lw-door img, .lw-plate img, .lw-stills img { display: block; width: 100%; height: auto; background: #101418; }
+.lw-door figcaption, .lw-plate figcaption, .lw-stills figcaption { font: 400 var(--fs-3)/1.5 var(--face-text); color: var(--soft); max-width: 66ch; }
+.lw-stills figcaption b { display: block; color: var(--ink); font-weight: 700; }
+.lp p.lw-go { margin: 2px 0 0; }
+.lp p.lw-walk-state { margin-top: 14px; color: var(--ink); }
+.lw-plate { max-width: 900px; }
+.lw-plate a { display: block; }
+.lw-plate a:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+.lw-stills { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 22px 22px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); }
+.lw-verdict { font-weight: 700; color: var(--ink); }
+.lw-make { margin: 4px 0 0; padding-left: 1.4em; display: grid; gap: 4px; max-width: 70ch; font: 400 var(--fs-3)/1.55 var(--face-text); color: var(--ink); }
+.lw-walk-frame { position: fixed; inset: 0; width: 100vw; height: 100vh; height: 100dvh; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: #07090c; }
+.lw-walk-frame::backdrop { background: #07090c; }
+.lw-walk-frame iframe { display: block; width: 100%; height: 100%; border: 0; }
+html.lw-walking { overflow: hidden; }
+@media (max-width: 640px) { .lw-doors { grid-template-columns: minmax(0, 1fr); } }

@@ -1,0 +1,14 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Low Water: the drawn cards</title>
+<style>body { margin: 0; background: #8d8a84; } canvas { display: block; width: 1024px; height: 1024px; }</style>
+<canvas id="c" width="2048" height="2048"></canvas>
+<script type="module">
+import { drawAtlas, SHEET } from "./atlas.mjs";
+const a = drawAtlas(), l = a.levels[0], ctx = document.getElementById("c").getContext("2d");
+const img = new ImageData(new Uint8ClampedArray(l.data), SHEET, SHEET);
+// show what the alpha test keeps
+for (let i = 3; i < img.data.length; i += 4) img.data[i] = img.data[i] > 100 ? 255 : 0;
+ctx.putImageData(img, 0, 0);
+document.title = "ready";
+</script>

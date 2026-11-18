@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Low Water, walk the island | Zain Dana Harper</title>
+<link rel="canonical" href="https://harperz9.github.io/low-water.html#island">
+<!-- The site's frame round the walk. The walk itself (world-cac3416/walk/) is carried unchanged from
+     HarperZ9/superframe games/low-water/world at commit cac34166 and pinned by world-cac3416/SHA256SUMS.
+     Its one import outside its own folder, the engine's web GPU host, is mapped here to the pinned copy. -->
+<script type="importmap">{ "imports": { "/rn/web/raw-gpu.mjs": "/media/raw-native/web-sf-cac3416/raw-gpu.mjs" } }</script>
+<link rel="stylesheet" href="/system/kit/kit.css">
+<style>
+  html, body { margin: 0; height: 100%; background: #07090c; background-image: none; overflow: hidden; }
+  #view { position: fixed; inset: 0; width: 100%; height: 100%; display: block; cursor: crosshair; }
+  #view:focus-visible { outline: 2px solid rgba(233, 226, 208, .55); outline-offset: -2px; }
+  /* the walk's own plate: a paper label with a hairline, low and left, so the picture keeps the frame */
+  #hud { position: fixed; left: 16px; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); color: #1d1a16; background: rgba(233, 226, 208, .92);
+    border: 1px solid #1d1a16; padding: 8px 12px 7px; max-width: min(560px, calc(100vw - 56px)); font-family: var(--face-still, "Hanken Grotesk", system-ui, sans-serif); }
+  #hud .place { font-size: 17px; letter-spacing: .14em; text-transform: uppercase; font-weight: 600; }
+  #hud .air { font-size: 13px; font-style: italic; margin-top: 1px; }
+  #hud .where { font-family: "Conso", ui-monospace, monospace; font-size: 11px; margin-top: 5px; padding-top: 4px; border-top: 1px solid rgba(29, 26, 22, .5); white-space: pre-wrap; }
+  #hud .keys { font-size: 12px; line-height: 1.4; margin-top: 4px; color: #3d372e; }
+  #note { position: fixed; left: 50%; top: 46%; transform: translate(-50%, -50%); color: #e9e2d0; font: 500 16px/1.45 var(--face-still, "Hanken Grotesk", system-ui, sans-serif);
+    letter-spacing: .04em; text-align: center; max-width: min(34rem, calc(100vw - 48px)); text-shadow: 0 1px 2px #000; }
+  .lw-leave { position: fixed; top: calc(12px + env(safe-area-inset-top, 0px)); right: 16px; margin: 0; }
+  .lw-leave button { color: #1d1a16; background: rgba(233, 226, 208, .92); border: 1px solid #1d1a16; min-height: 44px; padding: 0 14px; }
+  .lw-leave button:focus-visible { outline: 3px solid #e9e2d0; outline-offset: 2px; }
+  .lw-said { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<canvas id="view" tabindex="0" aria-label="A view of the island of Low Water, drawn live. W A S D move, the mouse looks after a click. Where you stand is said in words below."></canvas>
+<div id="hud" role="status" aria-live="off">
+  <div class="place"></div>
+  <div class="air"></div>
+  <div class="where"></div>
+  <div class="keys">W A S D move. Click, then the mouse looks. Shift runs. F flies. Space and C rise and sink. 1 to 9, 0 and the minus key go to a region. The wheel turns the clock. T holds it. H hides this plate. Esc lets the mouse go; Esc again leaves.</div>
+</div>
+<div id="note" role="alert">Starting</div>
+<p class="lw-leave"><button type="button" id="leave">Back to the page</button></p>
+<p class="lw-said" id="said" aria-live="polite"></p>
+<script type="module" src="/media/low-water/walk-frame.mjs"></script>
+<script type="module" src="/media/low-water/world-cac3416/walk/walk.mjs"></script>
+</body>
+</html>

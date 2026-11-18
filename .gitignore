@@ -8,6 +8,8 @@ __pycache__/
 node_modules/
 dist/
 build/
+# the Low Water walk carries a source folder named build (the snow town and the works), pinned by its SHA256SUMS
+!media/low-water/world-*/walk/build/
 *.log
 *.tmp
 .worktrees/

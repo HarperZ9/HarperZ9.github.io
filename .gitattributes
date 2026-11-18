@@ -84,3 +84,5 @@ world/site/surfaces/src/* text eol=lf
 media/raw-native/pick-*/** -text
 # the pointer build compares its output byte for byte with these files
 world/ui/shell/pointer/** -text
+# The Low Water walk and its world, carried from superframe and pinned by SHA256SUMS in its directory: no EOL conversion.
+media/low-water/world-*/** -text

@@ -132,6 +132,44 @@ ${sections}
     extraHead: HEAD("effects,registry"), live: true });
 }
 
+// The island: the walk, started on a press from one of three pictures, with the plate, the fifteen stills and their
+// read, and how the island is made. Nothing heavy loads before the press: the pictures are WebP stills, and the walk
+// (the engine's code and the island's tiles) loads into a full-window frame only when a start is pressed
+// (world/site/explore/walk.js). The words for a browser without WebGPU are in that script.
+const WALK = "/media/low-water/walk.html", WORLD = "../media/low-water/world-cac3416/out/20261118";
+function island() {
+  const I = LW.ISLAND, img = (base, w, h, alt, sizes, lazy) => `<img src="${base}-${w}.webp" srcset="${base}-${w / 2}.webp ${w / 2}w, ${base}-${w}.webp ${w}w" sizes="${sizes}" width="${w}" height="${h}"${lazy ? ' loading="lazy"' : ""} decoding="async" alt="${esc(alt)}">`;
+  const doors = I.starts.map((d, i) => `<li class="lw-door"><figure>${img(`/media/low-water/walk-${d.id}`, 1600, 900, d.alt, i ? "(max-width: 860px) 92vw, 540px" : "(max-width: 860px) 92vw, 1100px", false)}
+<figcaption>${esc(d.cap)}</figcaption></figure>
+<p class="lw-go" hidden><button type="button" class="toy-btn" data-start="${esc(d.q)}">${esc(d.go)}</button></p></li>`).join("\n");
+  const stills = I.stills.map(([f, place, verdict, read]) => `<li><figure><img src="/media/low-water/stills/${f}-640.webp" width="640" height="360" loading="lazy" decoding="async" alt="${esc(`The engine's still of ${place}.`)}">
+<figcaption><b>${esc(place)}</b> <span class="lw-verdict">${esc(verdict)}.</span> ${esc(read)}</figcaption></figure></li>`).join("\n");
+  return `<section class="lp-sec" id="island" aria-labelledby="h-island">
+<h2 id="h-island"><span class="d-3d">${esc(I.title)}</span></h2>
+<p class="lp-lede">${esc(I.lede)}</p>
+<p class="lp-note">${esc(I.progress)}</p>
+<div class="lw-walk" data-toy="walk" data-walk="${WALK}" data-world="${WORLD}" data-bytes="${LW.WALK_BYTES}">
+<ul class="lw-doors">${doors}</ul>
+<p class="lp-limit lw-walk-state" aria-live="polite">With scripts and WebGPU on, each picture opens onto the island, drawn live. The walk downloads ${(LW.WALK_BYTES / 1e6).toFixed(1)} MB when you press, and nothing before.</p>
+<dialog class="lw-walk-frame" aria-label="Walking the island of Low Water"></dialog>
+</div>
+<p class="lp-limit">${esc(I.keys)}</p>
+<p class="lp-limit">${esc(LW.FRAMES)}</p>
+<p class="lp-source">${esc(I.postersSource)}</p>
+<h3 class="lp-h3">The plate</h3>
+<figure class="lw-plate"><a href="/media/low-water/plate-20261118-1500.webp">${img("/media/low-water/plate-20261118", 1500, 1183, "The island of Low Water as a hand-lettered, hachured map: a long range down the middle, rivers to the sea, towns joined by roads, every name in an engraver's hand.", "(max-width: 860px) 92vw, 900px", true)}</a>
+<figcaption>${esc(I.plateCap)}</figcaption></figure>
+<p class="lp-source">${I.plateSource}</p>
+<h3 class="lp-h3">Fifteen stills, read plainly</h3>
+<p class="lp-lede">${esc(I.stillsLede)}</p>
+<ul class="lw-stills">${stills}</ul>
+<p class="lp-source">${I.stillsSource}</p>
+<h3 class="lp-h3">How the island is made</h3>
+<ol class="lw-make">${I.make.map((m) => `<li>${esc(m)}</li>`).join("")}</ol>
+<p class="lp-limit">${I.makeNote}</p>
+</section>`;
+}
+
 function lowWater() {
   const eras = `<ol class="lw-eras">${LW.ERAS.map(([n, m], i) => `<li><span class="lw-n">${i + 1}</span> <b>${esc(n)}</b> <span class="lp-v">${m} minutes</span></li>`).join("")}</ol>`;
   const total = LW.ERAS.reduce((a, [, m]) => a + m, 0);
@@ -150,8 +188,9 @@ ${figs(s.figs)}${s.next ? `<p class="lp-limit">${esc(s.next)}</p>` : ""}${s.toy 
 <h1><span class="d-3d">${esc(LW.INTRO.title)}</span></h1>
 <p class="lp-lede lp-lede-1">${esc(LW.INTRO.lede)}</p>
 <p class="lp-note">${esc(LW.INTRO.note)}</p>
-${sectionsNav([{ id: "story", title: st.title }, ...LW.SECTIONS])}
+${sectionsNav([{ id: "island", title: LW.ISLAND.title }, { id: "story", title: st.title }, ...LW.SECTIONS])}
 </header>
+${island()}
 <section class="lp-sec" id="story" aria-labelledby="h-story">
 <h2 id="h-story"><span class="d-3d">${esc(st.title)}</span></h2>
 <p class="lp-lede">${esc(st.lede)}</p>
@@ -168,10 +207,10 @@ ${eras}
 ${sections}
 <p class="lp-limit">${esc(LW.FOOTAGE)}</p>
 <p class="lp-ways-end"><a href="/raw.html">The engine</a> <a href="/buildlang.html">BuildLang</a> <a href="https://github.com/HarperZ9/raw-native">raw-native source</a></p>
-<p class="lp-verified"><b>Verified</b> ${esc(CHECKED)}: ${esc(st.verified)} The merge state of every linked pull request from GitHub on the same day, and each figure from the body of the pull request it links.</p>
+<p class="lp-verified"><b>Verified</b> ${esc(CHECKED)}: ${esc(st.verified)} ${esc(LW.ISLAND.verified.replace(/^./, (c) => c.toUpperCase()))} The merge state of every linked pull request from GitHub on the same day, and each figure from the body of the pull request it links.</p>
 </article>`;
   return page({ path: "low-water.html", title: "Low Water", description: LW.INTRO.description, body, bodyClass: "reading landmark",
-    extraHead: HEAD("tell,pair"), live: true });
+    extraHead: HEAD("walk,tell,pair"), live: true });
 }
 
 // every landmark page: the field, the one sound layer, and the page's own toy
