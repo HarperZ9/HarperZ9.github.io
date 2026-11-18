@@ -19,54 +19,15 @@ import { sessionHash } from './bus-kernel.mjs';
 import { STARTS, startOf } from './shader-starts.mjs';
 import { MAX_LAYERS, DEFAULT_LAYER, decodeLayers, encodeLayers, wantsLibrary, stackLayer, layerRow, moveLayer, nameOfSrc, propertiesOf } from './shader-layers.mjs';
 
-export const SIZE = [640, 400], LIBRARY = '/system/shader-presets.js';
-// What a shader in this room can read, and where each value comes from. The page shows this list as written.
-export const INPUTS = Object.freeze([
-  ['iResolution', 'vec3', 'the frame in pixels'], ['iTime', 'float', 'seconds since the shader started'], ['iFrame', 'int', 'frames drawn'],
-  ['iMouse', 'vec4', 'the pointer over the frame in pixels; z is 1 while pressed'],
-  ['iKnobA, iKnobB, iKnobC', 'float', 'the three sliders, 0 to 1'],
-  ['iPalette[5], iPaletteSize', 'vec3, float', 'colours handed in by the blend, the lead first, and how many are set'],
-  ['iChannel0, iChannelResolution', 'sampler2D, vec3', 'a picture handed in by another module, and its size'],
-  ['iAudio', 'vec4', 'bass, mid, treble and level of the music in the sound room while it plays, each 0 to 1; zero while it is silent'],
-]);
+export { SIZE, LIBRARY, INPUTS, encodeSource, decodeSource, errorsOf, knobsOf, still } from './shader-text.mjs';
+import { SIZE, LIBRARY, INPUTS, encodeSource, decodeSource, errorsOf, knobsOf } from './shader-text.mjs';
+import { createPost, decodePost, encodePost, postActive } from './shader-post.mjs';
+import { rackHtml, wireRack } from './shader-post-ui.mjs';
 const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-const b64 = (bytes) => { let s = ''; for (let i = 0; i < bytes.length; i += 0x8000) s += String.fromCharCode(...bytes.subarray(i, i + 0x8000)); return btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); };
-const unb64 = (s) => Uint8Array.from(atob(s.replace(/-/g, '+').replace(/_/g, '/')), (c) => c.charCodeAt(0));
-const pipe = async (bytes, stream) => new Uint8Array(await new Response(new Blob([bytes]).stream().pipeThrough(stream)).arrayBuffer());
-
-// The source in the address: "z." and the deflated text where the browser can deflate, "b." and the plain text where
-// it cannot, both in URL-safe base64. A link made in one browser opens in any other that can inflate.
-export async function encodeSource(text) {
-  const raw = new TextEncoder().encode(text);
-  if (typeof CompressionStream === 'function') { try { return 'z.' + b64(await pipe(raw, new CompressionStream('deflate-raw'))); } catch { /* fall through to the plain form */ } }
-  return 'b.' + b64(raw);
-}
-export async function decodeSource(packed) {
-  try {
-    const kind = packed.slice(0, 2), bytes = unb64(packed.slice(2));
-    if (kind === 'b.') return new TextDecoder().decode(bytes);
-    if (kind === 'z.' && typeof DecompressionStream === 'function') return new TextDecoder().decode(await pipe(bytes, new DecompressionStream('deflate-raw')));
-  } catch { /* a damaged link opens the first start instead */ }
-  return null;
-}
-// The runner's error text is "line N: message" per line; this gives [{ line, message }], in order, without repeats.
-export function errorsOf(text) {
-  const out = [], seen = new Set();
-  for (const row of String(text || '').split('\n')) { const m = /line (\d+):\s*(.*)$/.exec(row); const e = m ? { line: +m[1], message: m[2].trim() } : (row.trim() ? { line: 0, message: row.trim() } : null);
-    if (e && !seen.has(`${e.line}|${e.message}`)) { seen.add(`${e.line}|${e.message}`); out.push(e); } }
-  return out;
-}
-export const knobsOf = (q) => { const k = (q.get('k') || '').split(',').map(Number); return k.length === 3 && k.every((v) => v >= 0 && v <= 1) ? k : [0.5, 0.5, 0.5]; };
-
-// The still the page is built with, and the reading with scripts off: the first shader as written.
-export function still() {
-  const s = STARTS[0];
-  return { html: `<pre class="shd-still" tabindex="0" aria-label="The first shader, as written"><code>${esc(s.glsl)}</code></pre>`, caption: `The shader room: “${s.name}”, the shader the room opens with, as written. ${s.glsl.split('\n').length} lines of GLSL.` };
-}
 
 export async function mount(host, input, ctx) {
   const q = ctx.query || new URLSearchParams(), asked = q.get('sh') ? await decodeSource(q.get('sh')) : null;
-  const state = { start: startOf(q.get('shp'))?.id || STARTS[0].id, source: '', edited: false, knobs: knobsOf(q), running: !ctx.reduced, preset: '', layers: decodeLayers(q.get('ly')), text: '' };
+  const state = { start: startOf(q.get('shp'))?.id || STARTS[0].id, source: '', edited: false, knobs: knobsOf(q), running: !ctx.reduced, preset: '', layers: decodeLayers(q.get('ly')), text: '', post: decodePost(q.get('rp')) };
   state.source = asked ?? startOf(state.start).glsl; state.edited = asked !== null && asked !== startOf(state.start).glsl;
   let timer = 0, raf = 0, t0 = 0, held = 0, sendTimer = 0, library = null, visible = true, hash = '', lastGood = '', picture = null, paletteFrom = '';
   const urls = new Set();
@@ -79,21 +40,24 @@ export async function mount(host, input, ctx) {
 <label for="shd-src">The shader</label>
 <div class="shd-edit"><div class="shd-gutter" aria-hidden="true"></div><textarea id="shd-src" spellcheck="false" autocapitalize="off" autocomplete="off" wrap="off" aria-describedby="shd-err"></textarea></div>
 <div id="shd-err" class="shd-err" role="status" aria-live="polite"></div>
+${rackHtml(state.post)}
 </div>
 <div class="shd-see">
-<canvas class="shd-frame" width="${SIZE[0]}" height="${SIZE[1]}" role="img" aria-label="The shader's frame"></canvas>
+<div class="shd-stage"><canvas class="shd-frame" width="${SIZE[0]}" height="${SIZE[1]}" role="img" aria-label="The shader's frame"></canvas><canvas class="shd-out" hidden role="img" aria-label="The shader's frame through the picture rack"></canvas></div>
 <p class="shd-run"><button type="button" data-run aria-pressed="false">Pause</button> <button type="button" data-rewind>Start time again</button> <span class="shd-clock"></span></p>
 <form class="shd-knobs" aria-label="Sliders the shader can read"><p class="shd-knob-h">Sliders the shader reads</p>${['A', 'B', 'C'].map((k, i) => `<label for="shd-k${i}">${k} <output for="shd-k${i}"></output></label><input type="range" id="shd-k${i}" data-knob="${i}" aria-label="Slider ${k}" min="0" max="1" step="0.01" value="${state.knobs[i]}">`).join('')}
 <p class="shd-knob-say"></p></form>
 <div class="shd-layers"><p class="shd-layers-h">Layers on the shader <span class="shd-count"></span></p><ol class="shd-ls"></ol><p class="shd-l-add"><button type="button" data-l-add>Add a layer</button> <span>Up to ${MAX_LAYERS}, drawn in one pass over the shader.</span></p></div>
 <p class="shd-in" role="status" aria-live="polite"></p>
-<p class="shd-take"><a class="shd-glsl" download hidden>Save the source (.glsl)</a> <button type="button" data-png>Save this frame (.png)</button>${FILES.filter((f) => f.kind !== 'palette-gpl').map((f) => ` <button type="button" data-file="${f.kind}">${esc(f.label)}</button>`).join('')}</p>
+<p class="shd-take"><a class="shd-glsl" download hidden>Save the source (.glsl)</a> <button type="button" data-png>Save this frame (.png)</button> <button type="button" data-one>Save the pixel grid, one pixel a cell (.png)</button> <button type="button" data-send="studio">Send to the Studio</button> <button type="button" data-send="loom">Send to the Loom</button>${FILES.filter((f) => f.kind !== 'palette-gpl').map((f) => ` <button type="button" data-file="${f.kind}">${esc(f.label)}</button>`).join('')}</p>
 <p class="shd-made" role="status" aria-live="polite"></p>
 </div></div>
 <details class="shd-inputs"><summary>What a shader here can read</summary><dl>${INPUTS.map(([n, t, w]) => `<dt><code>${esc(n)}</code> <span>${esc(t)}</span></dt><dd>${esc(w)}</dd>`).join('')}</dl>
 <p>Write <code>void mainImage(out vec4 colour, in vec2 pixel)</code>. The language is GLSL for WebGL 1. The shader runs on your own graphics card, in this tab, and nothing is sent anywhere.</p></details>`;
   const $ = (s) => host.querySelector(s), src = $('#shd-src'), gutter = $('.shd-gutter'), errBox = $('.shd-err'), canvas = $('.shd-frame'), inSay = $('.shd-in'), made = $('.shd-made'), glsl = $('.shd-glsl'), runB = $('[data-run]');
-  const runner = createShaderStack(canvas, state.source), ls = $('.shd-ls');
+  const runner = createShaderStack(canvas, state.source), ls = $('.shd-ls'), outC = $('.shd-out'), post = createPost(outC), P = state.post;
+  // what the room shows and hands on: the rack's canvas while the rack is in, the stack's own frame otherwise
+  const shown = () => (outC.hidden ? canvas : outC);
   let lastAt = 0, spans = [], textCanvas = null;
   if (!runner.gl) {
     // no WebGL: the room says so and stays a place to read and save the source
@@ -101,6 +65,9 @@ export async function mount(host, input, ctx) {
     made.textContent = 'This browser has no WebGL, so the shader cannot run here. The source can still be edited and saved.';
   }
   src.value = state.source;
+  const stage = $('.shd-stage');
+  // a rack change: the address, the frame and the hand-over follow; feedback draws twice so its memory shows
+  const rack = wireRack(host, P, post, { changed(kind) { if (kind !== 'pending') { again(kind === 'fb' || kind === 'flush' ? 2 : 1); hand(); } writeAddress(); } });
 
   function number() {
     const n = src.value.split('\n').length, bad = new Set(errorsOf(host.dataset.errors || '').map((e) => e.line));
@@ -113,7 +80,7 @@ export async function mount(host, input, ctx) {
     // sound as an input: the sound room's levels while it plays, read each frame; zero when it is silent or closed
     const lv = ctx.levelsFrom?.('sound'), a = lv ? [lv.bass, lv.mid, lv.treble, lv.level] : [0, 0, 0, 0];
     runner.setAudio(...a); host.dataset.audio = a.map((v) => v.toFixed(2)).join(' ');
-    const t = time(), now = performance.now(); runner.renderFrame(t); host.dataset.frames = String(+(host.dataset.frames || 0) + 1);
+    const t = time(), now = performance.now(); draw(t, a); host.dataset.frames = String(+(host.dataset.frames || 0) + 1);
     // the frame time is the mean gap between the last 30 frames drawn while running
     if (lastAt && state.running) { spans.push(now - lastAt); if (spans.length > 30) spans.shift(); }
     lastAt = state.running ? now : 0;
@@ -122,6 +89,17 @@ export async function mount(host, input, ctx) {
     if (state.running && visible && !document.hidden) raf = requestAnimationFrame(frame);
   }
   const kick = () => { if (!raf && runner.gl) raf = requestAnimationFrame(frame); };
+  // One frame: the routes move the knobs, the stack draws, and the rack (when it is in) draws the stack's frame again.
+  function draw(t, a = [0, 0, 0, 0]) {
+    Object.assign(post.au, { bass: a[0], mid: a[1], treble: a[2], level: a[3] });
+    const k = post.modulate(P, t, state.knobs); runner.setKnobs(...(k || state.knobs));
+    runner.renderFrame(t);
+    const on = postActive(P) && post.loaded;
+    if (on) rack.strip(post.render(P, canvas, t, null));
+    if (outC.hidden === on) { outC.hidden = !on; canvas.style.visibility = on ? 'hidden' : ''; }
+  }
+  // Feedback needs two frames to show: the first fills its memory. Paused, the room draws both at once.
+  const again = (n = 1) => { if (state.running) return kick(); for (let i = 0; i < n; i++) draw(time()); };
   function setRunning(on) {
     if (on === state.running) return;
     if (on) t0 = performance.now() - held * 1000; else held = time();
@@ -143,11 +121,11 @@ export async function mount(host, input, ctx) {
   }
   async function writeAddress() {
     const k = state.knobs.every((v) => v === 0.5) ? null : state.knobs.map((v) => +v.toFixed(2)).join(',');
-    ctx.address?.({ shp: state.edited || state.preset ? null : state.start, sh: state.edited || state.preset ? await encodeSource(state.source) : null, k, ly: encodeLayers(state.layers) });
+    ctx.address?.({ shp: state.edited || state.preset ? null : state.start, sh: state.edited || state.preset ? await encodeSource(state.source) : null, k, ly: encodeLayers(state.layers), rp: encodePost(P) });
   }
   // the frame goes to the other modules when a shader compiles and typing has paused; the recipe is what draws it again
-  const hand = () => { clearTimeout(sendTimer); sendTimer = setTimeout(() => { if (!runner.gl) return; runner.renderFrame(time());
-    ctx.send?.('image', { width: canvas.width, height: canvas.height, of: 'shader' }, { recipe: { shader: hash, knobs: state.knobs.map((v) => +v.toFixed(2)) } }); }, 500); };
+  const hand = () => { clearTimeout(sendTimer); sendTimer = setTimeout(() => { if (!runner.gl) return; draw(time()); const f = shown();
+    ctx.send?.('image', { width: f.width, height: f.height, of: 'shader' }, { recipe: { shader: hash, knobs: state.knobs.map((v) => +v.toFixed(2)), rack: encodePost(P) } }); }, 500); };
   const schedule = () => { clearTimeout(timer); timer = setTimeout(() => { build(); writeAddress(); }, 250); };
   function load(text, { start = null, preset = '' } = {}) {
     src.value = text; state.edited = false; state.preset = preset; if (start) state.start = start;
@@ -161,8 +139,8 @@ export async function mount(host, input, ctx) {
     inSay.textContent = `${p} ${i}`;
   }
   function pixels() {
-    runner.renderFrame(time());
-    const c = document.createElement('canvas'); c.width = canvas.width; c.height = canvas.height; const x = c.getContext('2d', { willReadFrequently: true }); x.drawImage(canvas, 0, 0);
+    draw(time()); const f = shown();
+    const c = document.createElement('canvas'); c.width = f.width; c.height = f.height; const x = c.getContext('2d', { willReadFrequently: true }); x.drawImage(f, 0, 0);
     return { data: x.getImageData(0, 0, c.width, c.height).data, w: c.width, h: c.height };
   }
   function save(name, blob, words) { const u = URL.createObjectURL(blob), a = document.createElement('a'); urls.add(u); a.href = u; a.download = name; host.append(a); a.click(); a.remove(); made.textContent = words; host.dataset.saved = name; }
@@ -223,6 +201,7 @@ export async function mount(host, input, ctx) {
 
   const onInput = (ev) => {
     const t = ev.target;
+    if (rack.onInput(ev)) return;
     if (t === src) { state.edited = true; number(); schedule(); }
     else if (t.closest('.shd-ls')) onLayer(t);
     else if (t.dataset.knob) { state.knobs[+t.dataset.knob] = +t.value; paintKnobs(); kick(); hand(); writeAddress(); }
@@ -232,17 +211,25 @@ export async function mount(host, input, ctx) {
   function paintKnobs() { state.knobs.forEach((v, i) => { $(`output[for="shd-k${i}"]`).textContent = v.toFixed(2); }); runner.gl && runner.setKnobs(...state.knobs); }
   const onClick = async (ev) => {
     const t = ev.target.closest('button'); if (!t) return;
+    if (rack.onClick(ev)) return;
     if (t.dataset.run !== undefined) setRunning(!state.running);
     else if (t.dataset.rewind !== undefined) { t0 = performance.now(); held = 0; kick(); }
     else if (t.dataset.lAdd !== undefined) { if (state.layers.length < MAX_LAYERS) { state.layers.push({ ...DEFAULT_LAYER }); paintLayers(); host.querySelector(`#shd-l${state.layers.length - 1}-src`)?.focus(); } }
     else if (t.dataset.lRm !== undefined) { state.layers.splice(+t.dataset.lRm, 1); paintLayers(); $('[data-l-add]').focus(); }
     else if (t.dataset.lLower !== undefined || t.dataset.lRaise !== undefined) { const i = +(t.dataset.lLower ?? t.dataset.lRaise), d = t.dataset.lLower !== undefined ? -1 : 1; state.layers = moveLayer(state.layers, i, d); paintLayers(); host.querySelector(`#shd-l${i + d}-mix`)?.focus(); }
     else if (t.dataset.line) { const lines = src.value.split('\n'), n = Math.min(+t.dataset.line, lines.length), at = lines.slice(0, n - 1).reduce((a, l) => a + l.length + 1, 0); src.focus(); src.setSelectionRange(at, at + lines[n - 1].length); }
-    else if (t.dataset.png !== undefined) { runner.renderFrame(time()); canvas.toBlob((b) => b && save(`shader-${hash.slice(0, 8)}.png`, b, `Saved the frame at ${time().toFixed(1)} s: ${canvas.width} by ${canvas.height} pixels, ${b.size.toLocaleString('en')} bytes.`), 'image/png'); }
+    else if (t.dataset.png !== undefined) { draw(time()); const f = shown(); f.toBlob((b) => b && save(`shader-${hash.slice(0, 8)}.png`, b, `Saved the frame at ${time().toFixed(1)} s: ${f.width} by ${f.height} pixels, ${b.size.toLocaleString('en')} bytes.`), 'image/png'); }
+    else if (t.dataset.one !== undefined) { await post.ready(); draw(time()); const one = post.oneToOne(P, canvas, null);
+      one.toBlob((b) => b && save(`shader-${hash.slice(0, 8)}-grid-${one.width}x${one.height}.png`, b, `Saved the pixel grid: ${one.width} by ${one.height}, one pixel a cell, ${b.size.toLocaleString('en')} bytes.`), 'image/png'); }
     else if (t.dataset.file) {
       const f = makeFile(t.dataset.file, pixels(), [], 'shader', { by: 'made by the shader room (harperz9.github.io/playground/#shader) from the frame of a shader', recipe: `shader ${hash}, at ${time().toFixed(1)} s` });
       const blob = new Blob([f.body], { type: f.mime });
       save(`shader-${hash.slice(0, 8)}.${f.ext}`, blob, `Saved ${f.label.toLowerCase()} of the frame: ${blob.size.toLocaleString('en')} bytes. ${f.says}`);
+    } else if (t.dataset.send) {
+      // the studio's hand-over: the frame as a PNG in this tab's session storage, then the page that takes it opens
+      draw(time()); const { sendPiece } = await import('../../../system/workbench.js'), name = state.preset || (state.edited ? 'your shader' : startOf(state.start).name);
+      if (!sendPiece(t.dataset.send, shown().toDataURL('image/png'), { surface: 'retro', label: `${name}${state.layers.length ? ` +${state.layers.length}` : ''}, ${postActive(P) ? P.pal : 'no rack'}` })) made.textContent = 'The frame is too large to hand over in this tab.';
+      else { made.textContent = `Opening ${t.dataset.send === 'loom' ? 'the Loom' : 'the Studio'} with this frame.`; host.dataset.sentTo = t.dataset.send; }
     } else if (t.dataset.library !== undefined) loadLibrary(t);
   };
   const onKey = (ev) => {
@@ -251,22 +238,25 @@ export async function mount(host, input, ctx) {
       if (pad) { ev.preventDefault(); src.setRangeText('\n' + pad, at, src.selectionEnd, 'end'); src.dispatchEvent(new Event('input', { bubbles: true })); } }
   };
   const onScroll = () => { gutter.scrollTop = src.scrollTop; };
-  const onPointer = (ev) => { if (!runner.gl) return; const r = canvas.getBoundingClientRect(); runner.setMouse((ev.clientX - r.left) / r.width * canvas.width, (1 - (ev.clientY - r.top) / r.height) * canvas.height, ev.buttons > 0, ev.type === 'pointerdown'); kick(); };
+  const onPointer = (ev) => { if (!runner.gl) return; const r = shown().getBoundingClientRect(); post.mouse.x = (ev.clientX - r.left) / r.width; post.mouse.y = (ev.clientY - r.top) / r.height; runner.setMouse((ev.clientX - r.left) / r.width * canvas.width, (1 - (ev.clientY - r.top) / r.height) * canvas.height, ev.buttons > 0, ev.type === 'pointerdown'); kick(); };
   const onLeave = () => { runner.gl && runner.setMouse(0, 0, false, false); kick(); };
   const onSubmit = (ev) => ev.preventDefault();
   const onShow = () => kick();
   host.addEventListener('input', onInput); host.addEventListener('click', onClick); host.addEventListener('keydown', onKey); host.addEventListener('submit', onSubmit);
-  src.addEventListener('scroll', onScroll); canvas.addEventListener('pointermove', onPointer); canvas.addEventListener('pointerdown', onPointer); canvas.addEventListener('pointerleave', onLeave);
+  src.addEventListener('scroll', onScroll); stage.addEventListener('pointermove', onPointer); stage.addEventListener('pointerdown', onPointer); stage.addEventListener('pointerleave', onLeave, true); host.addEventListener('toggle', rack.onToggle, true);
   document.addEventListener('visibilitychange', onShow);
   const watch = typeof IntersectionObserver === 'function' ? new IntersectionObserver((es) => { visible = es[es.length - 1].isIntersecting; if (visible) kick(); }) : null;
   watch?.observe(canvas);
 
   $('#shd-start').value = state.start;
   if (ctx.reduced) { runB.textContent = 'Run'; runB.setAttribute('aria-pressed', 'true'); made.textContent = 'Reduced motion is on, so the shader starts paused on its first frame. Run starts it.'; }
-  t0 = performance.now(); ctx.offerPicture?.(() => (runner.gl && host.dataset.ok === 'true' ? canvas : null));
+  t0 = performance.now(); ctx.offerPicture?.(() => (runner.gl && host.dataset.ok === 'true' ? shown() : null));
+  if (postActive(P)) rack.fill();
   paintKnobs(); says(); $('.shd-knob-say').textContent = !state.edited && startOf(state.start).knobs ? `In this shader: ${startOf(state.start).knobs}` : '';
   build(); paintLayers(); if (wantsLibrary(state.layers)) loadLibrary(null);
   // measure(width, frames): the time a whole frame takes with the stack as it stands, at that width (8:5), in ms
+  // draw(n): n frames now, for a test that holds the room paused and compares frames
+  host.shaderDraw = (n = 1) => again(n);
   host.shaderMeasure = (width = 1280, frames = 30) => { if (!runner.gl) return null; const [w, h] = [canvas.width, canvas.height];
     canvas.width = width; canvas.height = Math.round(width * 5 / 8); const ms = runner.measure(time(), frames); canvas.width = w; canvas.height = h; runner.renderFrame(time()); return ms; };
 
@@ -278,12 +268,13 @@ export async function mount(host, input, ctx) {
       else if (env.medium === 'image' && env.from.module !== 'shader') { const c = ctx.pictureOf?.(env); if (c && runner.setPicture(c, { live: true })) { picture = ctx.nameOf?.(env.from.module) || env.from.module; host.dataset.picture = env.value.of; says(); sayLayers(); hand(); } }
     },
     value: () => ({ source: state.source, ok: host.dataset.ok === 'true', errors: errorsOf(host.dataset.errors || ''), hash, running: state.running, knobs: [...state.knobs], start: state.start, preset: state.preset, edited: state.edited,
-      palette: +(host.dataset.palette || 0), picture: host.dataset.picture || null, time: time(), layers: state.layers.map((L) => ({ ...L })), makers: state.layers.map((L) => propertiesOf(L.src, ctx.registry?.SURFACES).maker), text: state.text, frameMs: +(host.dataset.frameMs || 0) }),
+      palette: +(host.dataset.palette || 0), picture: host.dataset.picture || null, time: time(), layers: state.layers.map((L) => ({ ...L })), makers: state.layers.map((L) => propertiesOf(L.src, ctx.registry?.SURFACES).maker), text: state.text, frameMs: +(host.dataset.frameMs || 0), post: JSON.parse(JSON.stringify(P)), rack: postActive(P) && post.loaded }),
     destroy() {
       clearTimeout(timer); clearTimeout(sendTimer); if (raf) cancelAnimationFrame(raf); watch?.disconnect(); document.removeEventListener('visibilitychange', onShow);
       host.removeEventListener('input', onInput); host.removeEventListener('click', onClick); host.removeEventListener('keydown', onKey); host.removeEventListener('submit', onSubmit);
+      host.removeEventListener('toggle', rack.onToggle, true); post.dispose();
       for (const u of urls) URL.revokeObjectURL(u);
-      delete host.shaderMeasure; runner.gl && runner.destroy(); host.innerHTML = ''; host.classList.remove('shd'); for (const k of Object.keys(host.dataset)) if (!/^surface/.test(k)) delete host.dataset[k];
+      delete host.shaderMeasure; delete host.shaderDraw; runner.gl && runner.destroy(); host.innerHTML = ''; host.classList.remove('shd'); for (const k of Object.keys(host.dataset)) if (!/^surface/.test(k)) delete host.dataset[k];
     },
   };
 }

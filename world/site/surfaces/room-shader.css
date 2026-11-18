@@ -55,4 +55,37 @@
 .shd p, .shd label, .shd li, .shd dd, .shd dt, .shd summary { overflow-wrap: anywhere; }
 .shd button, .shd .shd-take a { max-width: 100%; white-space: normal; text-align: start; }
 /* On a narrow screen the frame comes first and the text area sits right under it, so a change and its result share the screen. */
-@media (max-width: 900px) { .shd .shd-desk { grid-template-columns: minmax(0, 1fr); gap: 0; } .shd .shd-see { display: contents; } .shd .shd-frame { order: 1; } .shd .shd-run { order: 2; } .shd .shd-write { order: 3; } .shd .shd-knobs { order: 4; margin-top: 1rem; } .shd .shd-in { order: 5; } .shd .shd-layers { order: 5; } .shd .shd-take { order: 6; } .shd .shd-made { order: 7; } .shd .shd-edit { height: 20rem; grid-template-columns: 2.6em minmax(0, 1fr); } .shd .shd-inputs dl { grid-template-columns: minmax(0, 1fr); gap: 0; } .shd .shd-inputs dd { margin: 0 0 .5rem; } }
+@media (max-width: 900px) { .shd .shd-desk { grid-template-columns: minmax(0, 1fr); gap: 0; } .shd .shd-see { display: contents; } .shd .shd-stage { order: 1; } .shd .shd-run { order: 2; } .shd .shd-write { order: 3; } .shd .shd-knobs { order: 4; margin-top: 1rem; } .shd .shd-in { order: 5; } .shd .shd-layers { order: 5; } .shd .shd-take { order: 6; } .shd .shd-made { order: 7; } .shd .shd-edit { height: 20rem; grid-template-columns: 2.6em minmax(0, 1fr); } .shd .shd-inputs dl { grid-template-columns: minmax(0, 1fr); gap: 0; } .shd .shd-inputs dd { margin: 0 0 .5rem; } }
+/* The stage holds the stack's frame and the rack's canvas in one cell, so the frame keeps its place when the rack comes in. */
+.shd .shd-stage { display: grid; position: relative; }
+.shd .shd-stage > canvas { grid-area: 1 / 1; }
+.shd .shd-out { display: block; width: 100%; height: auto; aspect-ratio: 8 / 5; background: #000; touch-action: none; image-rendering: pixelated; }
+.shd .shd-out[hidden] { display: none; }
+/* The racks: the picture, the effects and the motion. Each is a details with its controls in a two-column grid. */
+.shd .shd-rack { margin-top: .9rem; border-top: 1px solid currentColor; }
+.shd .shd-rack summary { min-height: 44px; display: flex; align-items: center; gap: .6rem; cursor: pointer; font-weight: 600; }
+.shd .shd-rack summary span { font-weight: 400; font-variant-numeric: tabular-nums; }
+.shd .shd-rack-body { display: grid; grid-template-columns: minmax(0, 1fr); gap: .1rem; padding-bottom: .6rem; }
+.shd .shd-rack-body label { margin: .5rem 0 .1rem; font-weight: 400; }
+.shd .shd-rack-body input[type="range"] { width: 100%; min-height: 32px; margin: 0; accent-color: currentColor; }
+.shd .shd-rack-body input[type="text"] { min-height: 44px; font: inherit; padding: 0 .6rem; border: 1px solid currentColor; background: transparent; color: inherit; }
+.shd .shd-rack-say:empty, .shd .shd-measure:empty { display: none; }
+.shd .shd-rack-say, .shd .shd-measure, .shd .shd-rack-note, .shd .shd-strip-say { margin: .3rem 0; font-size: .92em; }
+.shd .shd-yours { display: flex; flex-wrap: wrap; gap: .4rem; border: 0; padding: 0; margin: .6rem 0 0; }
+.shd .shd-yours legend { padding: 0; margin-bottom: .3rem; }
+.shd .shd-yours input { width: 44px; height: 44px; padding: 0; border: 1px solid currentColor; background: transparent; }
+.shd .shd-strip-row, .shd .shd-row, .shd .shd-vibes, .shd .shd-fx-group, .shd .shd-check { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem .6rem; margin: .5rem 0 0; }
+.shd .shd-strip { display: inline-flex; min-height: 1.2rem; }
+.shd .shd-strip i { display: inline-block; width: 1.2rem; height: 1.2rem; }
+.shd .shd-check input { width: 22px; height: 22px; margin: 0; accent-color: currentColor; }
+.shd .shd-check label { margin: 0; }
+.shd .shd-fx-group span { flex: 1 0 100%; font-weight: 600; }
+.shd [aria-pressed="true"]:not([data-run]) { background: #f4efe6; color: #151310; border-color: #f4efe6; }
+.shd .shd-vibes-h { margin: .7rem 0 0; font-weight: 600; }
+.shd .shd-mod-rows { list-style: none; margin: .4rem 0 0; padding: 0; display: grid; gap: .4rem; }
+.shd .shd-mod-rows li { display: grid; grid-template-columns: minmax(0, 1fr) max-content; gap: .2rem .6rem; align-items: center; }
+.shd .shd-mod-rows label { grid-column: 1 / -1; }
+/* With the racks open the editor column runs long, so the frame stays in view beside the controls that change it. */
+@media (min-width: 901px) and (min-height: 640px) { .shd .shd-see { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 4.5rem); max-height: calc(100vh - 5.5rem); overflow-y: auto; overscroll-behavior: contain; } }
+@media (max-width: 900px) { .shd .shd-stage { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 2; } }
+.shd label output { flex: none; white-space: nowrap; overflow-wrap: normal; }
