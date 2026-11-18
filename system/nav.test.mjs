@@ -42,7 +42,8 @@ test("active section is derived from the route registry", () => {
   assert.equal(navActive("/catalog"), "Systems");
   assert.equal(navActive("/raw.html"), "Studio");
   assert.equal(navActive("/hire#engineering-path"), "Work");
-  assert.equal(navActive("http://127.0.0.1:8765/retro"), "Studio");
+  // /retro moved into the shader room (issue 553); the Loom still lights the Studio pillar by its bare address
+  assert.equal(navActive("http://127.0.0.1:8765/loom"), "Studio");
 });
 
 function navFixture(pathname, search = "", hash = "") {
