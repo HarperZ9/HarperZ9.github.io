@@ -192,8 +192,8 @@
    "state": "ready",
    "weight": "light",
    "plain": null,
-   "bytes": 174295,
-   "files": 16
+   "bytes": 230138,
+   "files": 22
   },
   "sound": {
    "home": "playground",
