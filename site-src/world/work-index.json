@@ -2305,7 +2305,7 @@
    "name": "Retro Engine",
    "platform": "THEPLYGRND",
    "kind": "instrument",
-   "summary": "A browser studio that applies pixelation, hardware palettes, dithering, early-3D shading and CRT looks to your images.",
+   "summary": "A browser studio that applies pixelation, hardware palettes, dithering, early-3D shading and CRT looks to your images. It now lives in the shader room of The Playground, with the shader's layers.",
    "state": "released",
    "version": null,
    "date": null,
@@ -2313,7 +2313,7 @@
    "repo": null,
    "release": null,
    "pages": [
-    "retro.html"
+    "playground/index.html"
    ],
    "packages": [],
    "note": null

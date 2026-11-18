@@ -8,7 +8,7 @@ import { dirname, extname, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const PUBLIC_ROOT = existsSync(resolve(ROOT, "retro.html")) ? ROOT : resolve(ROOT, "public");
+const PUBLIC_ROOT = existsSync(resolve(ROOT, "system/retro-panel.htm")) ? ROOT : resolve(ROOT, "public");
 const DEFAULT_CHROME_PARTS = ["C:", "Program Files", "Google", "Chrome", "Application", "chrome.exe"];
 const CHROME = process.env.CHROME_PATH || DEFAULT_CHROME_PARTS.join("\\");
 
@@ -74,7 +74,7 @@ async function startServer() {
     const pathname = decodeURIComponent(requestUrl.pathname);
     try {
       if (pathname === "/retro-share-test.html") {
-        const html = await readFile(resolve(PUBLIC_ROOT, "retro.html"), "utf8");
+        const html = await readFile(resolve(PUBLIC_ROOT, "system/retro-panel.htm"), "utf8");
         response.writeHead(200, { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store" });
         response.end(harnessHtml(html));
         return;

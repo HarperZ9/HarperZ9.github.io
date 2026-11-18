@@ -40,14 +40,15 @@ async function pick(page, source) {
       page.on('pageerror', (e) => errors.push(String(e.message || e)));
       page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); });
 
-      await page.goto(`${base}/retro.html`); await wait(page, 4000);
+      // the engine page itself moved into the shader room (issue 553); its markup, which the Studio mounts, is the panel file
+      await page.goto(`${base}/system/retro-panel.htm`); await wait(page, 4000);
       const want = [...new Set(await page.evaluate(controls, '#engine'))];
-      assert.ok(want.length > 120, `${tag} retro.html has its engine controls (${want.length})`);
+      assert.ok(want.length > 120, `${tag} the retro panel has its engine controls (${want.length})`);
 
       await page.goto(`${base}/studio.html?source=retro`); await wait(page, 6000);
       const got = new Set([...(await page.evaluate(controls, '#retro-mount')), ...(await page.evaluate(controls, '.studio-retro-preview'))]);
       const missing = want.filter((k) => !got.has(k));
-      assert.deepEqual(missing, [], `${tag} every retro.html engine control is in the Studio`);
+      assert.deepEqual(missing, [], `${tag} every engine control of the retro panel is in the Studio`);
       const presets = await page.evaluate(() => document.querySelectorAll('#re-preset optgroup:not([data-yours]) option').length);
       assert.ok(presets >= 254, `${tag} the whole shader shelf is in the Studio (${presets})`);
       assert.equal(await page.evaluate(() => document.getElementById('studio-canvas').dataset.retro !== undefined), true, `${tag} the stage shows the engine's own output`);

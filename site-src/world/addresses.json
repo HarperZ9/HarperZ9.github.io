@@ -100,7 +100,7 @@
   {"path":"/models-propose-oracles-dispose.html","kind":"record","surface":"research","since":"2026-07-29"},
   {"path":"/demo-flywheel.html","kind":"leaf","surface":"flywheel","since":"2026-08-03"},
   {"path":"/session-archive.html","kind":"leaf","surface":"playground","since":"2026-08-05"},
-  {"path":"/retro.html","kind":"leaf","surface":"playground","since":"2026-08-10"},
+  {"path":"/retro.html","kind":"redirect","surface":"playground","to":"/playground/#shader","since":"2026-08-10"},
   {"path":"/loom.html","kind":"leaf","surface":"playground","since":"2026-08-11"},
   {"path":"/conferred-existence.html","kind":"record","surface":"research","since":"2026-08-13"},
   {"path":"/dossier.html","kind":"record","surface":"door","since":"2026-08-13"},

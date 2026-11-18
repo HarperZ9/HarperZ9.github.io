@@ -68,7 +68,9 @@ def test_route_registry_is_the_union_of_hiring_capability_and_legacy_routes() ->
     routes = [route for family in families.values() for route in family["routes"]]
     assert not any(route["href"].startswith("writing.html") for route in routes)
     assert "writing.html" in hrefs["Writing"]
-    assert {"studio.html", "gallery.html", "retro.html", "loom.html", "session-archive.html"} <= hrefs["Studio"]
+    # 18 November 2026: retro.html moved into the shader room of The Playground (issue 553) and is a redirect.
+    assert {"studio.html", "gallery.html", "loom.html", "session-archive.html"} <= hrefs["Studio"]
+    assert "retro.html" not in hrefs["Studio"]
 
     assert "systems/" in families["Systems"].get("prefixes", [])
     assert "security-" in families["Security"].get("prefixes", [])
@@ -118,7 +120,7 @@ def test_font_marketplace_cache_stamp_covers_the_sitewide_navigation_chain() -> 
 def test_sitemap_keeps_legacy_routes_and_adds_capability_publication_routes() -> None:
     sitemap = read("sitemap.xml")
     for route in (
-        "models-propose-oracles-dispose.html", "retro.html", "loom.html", "frontier-safety.html",
+        "models-propose-oracles-dispose.html", "loom.html", "frontier-safety.html",
         "frontier-safety/archive/2026-08-24.html", "session-archive.html", "security-toolkit.html",
         "phantom.html", "private-practice.html", "briefings/",
         "briefings/2026-08-26-openai-hugging-face-incident/", "systems/relay.html",
@@ -126,6 +128,8 @@ def test_sitemap_keeps_legacy_routes_and_adds_capability_publication_routes() ->
         "engine-revival.html", "brender-archival.html",
     ):
         assert f"https://harperz9.github.io/{route}" in sitemap, route
+    # retro.html is a redirect into the shader room since 18 November 2026 (issue 553), so it leaves the sitemap
+    assert "https://harperz9.github.io/retro.html" not in sitemap
 
 
 def test_publications_keeps_eight_doi_records_and_adds_the_briefing() -> None:

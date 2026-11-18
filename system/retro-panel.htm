@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<base href="/">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Retro Engine &middot; Zain Dana Harper</title>
+<meta name="description" content="Retro Engine is an embedded browser studio for images, drawing, GLSL, and audio traces. It applies pixelation, hardware palettes, ordered dithering, early-3D shading, CRT processing, and stackable effects, then exports images, patches, MIDI, relief or disc data, and Loom handoffs.">
+<link rel="canonical" href="https://harperz9.github.io/playground/?room=shader">
+<meta name="robots" content="noindex">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Retro Engine &middot; Zain Dana Harper">
+<meta property="og:description" content="Retro Engine is an embedded browser studio for images, drawing, GLSL, and audio traces. It applies pixelation, hardware palettes, ordered dithering, early-3D shading, CRT processing, and stackable effects, then exports images, patches, MIDI, relief or disc data, and Loom handoffs.">
+<meta property="og:url" content="https://harperz9.github.io/retro.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/retro.jpg?v=de981c12f56d">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Retro Engine, by Zain Dana Harper. A bright core inside a ring that breaks into offset slices, like a glitching signal.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/p/retro.jpg?v=de981c12f56d">
+<meta name="twitter:image:alt" content="Retro Engine, by Zain Dana Harper. A bright core inside a ring that breaks into offset slices, like a glitching signal.">
+<meta name="twitter:title" content="Retro Engine">
+<meta name="twitter:description" content="Retro Engine is an embedded browser studio for images, drawing, GLSL, and audio traces. It applies pixelation, hardware palettes, ordered dithering, early-3D shading, CRT processing, and stackable effects, then exports images, patches, MIDI, relief or disc data, and Loom handoffs.">
+<meta name="color-scheme" content="dark light">
+<script>document.documentElement.classList.add('js')</script>
+<link rel="preload" href="system/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="system/system.css?v=20260927-copy-pass">
+<link rel="stylesheet" href="system/instrument.css?v=20260902-creative-chassis">
+<link rel="stylesheet" href="system/instrument-forms.css?v=20260925-void-plates">
+<link rel="stylesheet" href="system/retro-systems-lab.css?v=20260902-creative-chassis">
+<style>
+  /* the contact sheet: every shader as a small live thumbnail, so the shelf can
+     be browsed by eye instead of one dropdown load at a time */
+  .re-sheet{display:grid;grid-template-columns:repeat(auto-fill,minmax(84px,1fr));gap:.4rem;
+    max-height:20rem;overflow-y:auto;margin-top:.5rem;padding:.35rem;scrollbar-width:thin}
+  .re-sheet button{position:relative;padding:0;border:1px solid var(--hairline);border-radius:0;
+    background:#000;cursor:pointer;aspect-ratio:1;overflow:hidden}
+  .re-sheet button:hover,.re-sheet button:focus-visible{border-color:var(--bone);outline:none}
+  .re-sheet button[aria-pressed="true"]{border-color:var(--bone);box-shadow:inset 0 0 0 1px var(--bone)}
+  .re-sheet canvas{width:100%;height:100%;display:block}
+  /* the ghost of a modulated value: a thin mark riding the track while the
+     real thumb stays where the user put it */
+  /* the palette a frame actually resolved to, adoptable in one press */
+  .re-palstrip{display:flex;flex-wrap:wrap;gap:2px;margin:.15rem 0 .35rem}
+  .re-palstrip i{display:block;width:1.15rem;height:1.15rem;border:1px solid var(--hairline)}
+  .re-modmark{position:absolute;bottom:.15rem;width:2px;height:.85rem;
+    background:var(--bone);opacity:.85;pointer-events:none;transform:translateX(-1px);
+    box-shadow:0 0 0 1px color-mix(in oklab,var(--void) 70%,transparent)}
+  @media (prefers-reduced-motion:reduce){.re-modmark{transition:none}}
+  .re-sheet .sh-name{position:absolute;left:0;right:0;bottom:0;font-family:var(--mono);
+    font-size:.44rem;line-height:1.25;padding:.15em .25em;color:var(--bone);
+    background:color-mix(in oklab,var(--void) 82%,transparent);text-align:left;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+</style>
+<style>
+  /* the retro engine's own racks; the shared chassis lives in instrument.css */
+  .re-preview canvas{image-rendering:pixelated;cursor:crosshair;touch-action:none}
+  html:not(.js) #engine{display:none}
+  .retro-nojs-notice{margin:.75rem 1rem;padding:.75rem 1rem;border:1px solid var(--hairline);color:var(--bone)}
+  input[type=color].re-color{width:2.1rem;height:2.1rem;border:1px solid var(--hairline);border-radius:6px;
+    background:transparent;padding:.1rem;cursor:pointer}
+  input[type=color].re-color:focus-visible{outline:2px solid var(--ember);outline-offset:2px}
+  .re-sources{display:flex;gap:.4rem}
+  .re-tab{flex:1;font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--muted);background:transparent;border:1px solid var(--hairline);border-radius:999px;
+    padding:.5em .4em;cursor:pointer;transition:color .15s,border-color .15s}
+  .re-tab[aria-selected="true"]{color:var(--bone);border-color:var(--orange)}
+  .re-tab:focus-visible{outline:2px solid var(--ember);outline-offset:2px}
+  .re-srcpanel{display:flex;flex-direction:column;gap:.5rem}
+  .re-srcpanel[hidden]{display:none}
+  textarea.re-in{font-family:var(--mono);font-size:.76rem;letter-spacing:.04em;color:var(--bone);
+    background:color-mix(in oklab, var(--void) 86%, black);border:1px solid var(--hairline);
+    border-radius:8px;padding:.55em .7em;width:100%}
+  textarea.re-code{min-height:12rem;resize:vertical;line-height:1.5;font-size:.72rem;white-space:pre;tab-size:2}
+  .re-controls{border:1px solid var(--hairline);border-radius:10px;padding:.9rem;display:grid;
+    grid-template-columns:1fr 1fr;gap:.7rem .9rem;margin:0}
+  .re-controls .re-wide{grid-column:1/-1}
+  .re-fxchips{display:flex;flex-wrap:wrap;gap:.35rem;margin:.1rem 0 .5rem}
+  .re-fs-hud{position:absolute;left:0;right:0;bottom:0;z-index:4;display:none;pointer-events:none;
+    font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--bone);
+    background:linear-gradient(to top,rgba(5,5,10,.82),transparent);padding:2.2rem 1.2rem .9rem;text-align:center}
+  .re-preview:fullscreen .re-fs-hud{display:block;animation:re-hud-fade 3.4s ease forwards}
+  @keyframes re-hud-fade{0%,72%{opacity:1}100%{opacity:0}}
+  @media (prefers-reduced-motion:reduce){.re-preview:fullscreen .re-fs-hud{animation:none}}
+  .re-browse{margin-top:.15rem}
+  .re-browse .re-btn{padding:.4em .7em;font-size:.55rem}
+  .re-knobs{display:flex;flex-direction:column;gap:.35rem;border-top:1px solid var(--hairline);padding-top:.6rem;margin-top:.2rem}
+  .re-prow{display:grid;grid-template-columns:5.4rem 1fr 2.2rem;gap:.4rem;align-items:center;margin:.18rem 0}
+  .re-prow span{font-size:.55rem;letter-spacing:.08em;text-transform:uppercase;color:var(--bone);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .re-prow b{font-family:var(--mono);font-size:.55rem;color:var(--orange);font-weight:400;text-align:right}
+  .re-meters{display:flex;gap:.5rem;margin-top:.4rem}
+  .re-meter{flex:1;display:flex;flex-direction:column;gap:.2rem}
+  .re-meter i{display:block;height:3px;border-radius:2px;background:color-mix(in oklab,var(--orange) 22%,transparent);
+    position:relative;overflow:hidden}
+  .re-meter i::after{content:"";position:absolute;top:0;bottom:0;left:0;right:var(--m,100%);background:var(--orange);transition:right .08s linear}
+  .re-meter b{font-family:var(--mono);font-size:.48rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:400}
+  .re-fxgroup{display:flex;flex-wrap:wrap;align-items:center;gap:.3rem;margin:.1rem 0}
+  .re-fxgrouplab{font-size:.5rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);opacity:.7;width:100%;margin-top:.2rem}
+  .re-vibes{display:flex;flex-wrap:wrap;gap:.35rem;margin:.1rem 0 .3rem}
+  .re-vibe{font-family:var(--mono);font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;color:var(--bone);
+    background:color-mix(in oklab,var(--orange) 10%,transparent);border:1px solid var(--hairline);border-radius:999px;padding:.4em .8em;cursor:pointer;transition:border-color .15s,color .15s}
+  .re-vibe:hover{border-color:var(--orange)}
+  .re-vibe:focus-visible{outline:2px solid var(--ember);outline-offset:2px}
+  .re-stack{display:flex;flex-direction:column;gap:.5rem;border-top:1px solid var(--hairline);padding-top:.7rem}
+  .re-layerrow{display:grid;grid-template-columns:1fr auto 4.2rem auto;gap:.4rem;align-items:center}
+  .re-layername{font-size:.62rem;letter-spacing:.04em;color:var(--bone);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  select.re-blend{font-size:.6rem;padding:.35em .5em;width:auto}
+  input.re-op{width:4.2rem}
+  .re-rm{padding:.3em .6em;line-height:1}
+</style>
+<link rel="stylesheet" href="system/instrument-editorial.css?v=20260925-void-plates">
+<!-- structured-data:begin (tools/structured_data.py) -->
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareSourceCode","@id":"https://harperz9.github.io/retro.html#software","name":"Retro Engine","description":"Retro Engine is an embedded browser studio for images, drawing, GLSL, and audio traces. It applies pixelation, hardware palettes, ordered dithering, early-3D shading, CRT processing, and stackable effects, then exports images, patches, MIDI, relief or disc data, and Loom handoffs.","url":"https://harperz9.github.io/retro.html","codeRepository":"https://github.com/HarperZ9/HarperZ9.github.io/blob/main/system/retro-engine.js","author":{"@id":"https://harperz9.github.io/#person","@type":"Person","name":"Zain Dana Harper"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://harperz9.github.io/"},{"@type":"ListItem","position":2,"name":"Catalog","item":"https://harperz9.github.io/catalog.html"},{"@type":"ListItem","position":3,"name":"Retro Engine","item":"https://harperz9.github.io/retro.html"}]}]}</script>
+<!-- structured-data:end -->
+</head>
+<body class="inner-clean frame-compact instrument-surface" data-defer-generative-field="true">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div id="site-nav" class="site-nav"></div>
+<noscript>
+  <nav class="site-nav"><a href="studio.html">Studio</a> <a href="gallery.html">Gallery</a> <a href="overview.html">Engines</a> <a href="engine-revival.html">Engine Revival</a> <a href="brender-archival.html">BRender Archival</a> <a href="catalog.html">Catalog</a> <a href="cv.html">About</a></nav>
+  <p class="retro-nojs-notice" role="status">The interactive renderer requires JavaScript. The static Retro Systems Lab evidence and companion routes remain available below.</p>
+</noscript>
+<script type="module" src="system/hero-aperture.js?v=20260902-creative-chassis"></script>
+<script type="module" src="system/nav.js?v=20260909-pillar-navigation"></script>
+
+<div class="frame">
+  <figure class="art hero-plate" aria-hidden="true"><canvas class="hero-aperture" data-aperture="retro"></canvas></figure>
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">Retro Engine</span></div>
+  <div class="mid">
+    <h1>Bring the engine back <span class="g">as a live retro renderer.</span></h1>
+    <p class="lede" data-canonical-purpose="retro-engine">Retro Engine is an embedded browser studio for images, drawing, GLSL, and audio traces. It applies pixelation, hardware palettes, ordered dithering, early-3D shading, CRT processing, and stackable effects, then exports images, patches, MIDI, relief or disc data, and Loom handoffs.</p>
+  </div>
+  <div class="seal">source &rarr; pixelate &middot; palette &middot; dither &middot; CRT &middot; nothing leaves your browser</div>
+</div>
+
+<main id="main">
+<section class="mv" id="engine" aria-labelledby="engine-h">
+  <h2 id="engine-h" class="visually-hidden">The Retro Engine</h2>
+  <div class="re-stage">
+    <div class="re-preview" id="re-stage-preview">
+      <canvas id="re-out" role="img" aria-label="Retro-rendered output of the current source"></canvas>
+      <button class="re-fs" id="re-fullscreen" type="button" aria-pressed="false"
+        title="Full screen (F). Double-click the picture too." aria-label="View the picture full screen">&#10530;</button>
+      <div class="re-fs-hud" id="re-fs-hud" aria-hidden="true"></div>
+    </div>
+
+    <div class="re-panel">
+      <div class="re-sources" role="tablist" aria-label="Source">
+        <button class="re-tab" role="tab" data-src="plate" aria-selected="false">Plate</button>
+        <button class="re-tab" role="tab" data-src="upload" aria-selected="false">Upload</button>
+        <button class="re-tab" role="tab" data-src="shader" aria-selected="true">Shader</button>
+        <button class="re-tab" role="tab" data-src="draw" aria-selected="false">Draw</button>
+        <button class="re-tab" role="tab" data-src="scope" aria-selected="false">Scope</button>
+      </div>
+
+      <div class="re-srcpanel" data-panel="plate" hidden>
+        <div class="re-field"><span class="re-lab">Seed</span><input type="text" class="re-in" id="re-seed" value="folded-light" spellcheck="false"></div>
+        <div class="re-field"><span class="re-lab">Instrument</span>
+          <select class="re-in" id="re-layers" aria-label="Plate instrument">
+            <option value="showpiece-veil">Folded light (veil)</option>
+            <option value="showpiece-burst">Obsidian burst</option>
+            <option value="riso-moire,dendrite">Dendrite over riso</option>
+            <option value="clifford">Clifford attractor</option>
+            <option value="phyllotaxis">Phyllotaxis</option>
+            <option value="voronoi-glass">Voronoi stained glass</option>
+          </select>
+        </div>
+        <button class="re-btn" id="re-reseed">New seed</button>
+      </div>
+
+      <div class="re-srcpanel" data-panel="upload" hidden>
+        <div class="re-field"><span class="re-lab">Your image</span><input type="file" class="re-in" id="re-file" accept="image/*"></div>
+        <p class="re-privacy">Read locally in your browser. Nothing is uploaded.</p>
+      </div>
+
+      <div class="re-srcpanel" data-panel="draw" hidden>
+        <p class="re-hint">Draw straight into the pipeline: your marks come back paletted, dithered, and scanned as you make them. Symmetry folds your hand into mandalas, and the drawing travels like any piece: weave it, play it, print it.</p>
+        <div class="re-field"><span class="re-lab">Brush <span class="re-val" id="re-brush-v">14</span></span>
+          <input type="range" id="re-brush" min="2" max="60" value="14" aria-label="Brush size"></div>
+        <div class="re-field"><span class="re-lab">Ink</span>
+          <div class="re-actions">
+            <input type="color" id="re-ink" value="#f2e9dc" class="re-color" aria-label="Brush color">
+            <select class="re-in" id="re-brushmode" style="flex:1;min-width:6rem" aria-label="Brush character">
+              <option value="round">Round</option>
+              <option value="wet">Wet</option>
+            </select>
+            <label class="re-toggle"><input type="checkbox" id="re-erase">Erase</label>
+          </div></div>
+        <div class="re-actions">
+          <button class="re-btn" id="re-undo-draw" title="Step back one stroke (Ctrl+Z)">Undo</button>
+          <button class="re-btn" id="re-clear-draw">Clear</button>
+        </div>
+        <div class="re-field"><span class="re-lab">Symmetry</span>
+          <select class="re-in" id="re-sym" aria-label="Stroke symmetry">
+            <option value="none">None</option>
+            <option value="mirror">Mirror</option>
+            <option value="quad">Quad</option>
+            <option value="radial6">Radial 6</option>
+          </select></div>
+      </div>
+
+      <div class="re-srcpanel" data-panel="scope" hidden>
+        <p class="re-hint">Sound that draws. Whatever is connected under Sound (the instrument, your microphone, your own audio) traces the beam of an XY oscilloscope, and that trace is the picture. With nothing connected the beam idles on a figure the knobs steer: A and B set the frequency ratio, C turns the phase.</p>
+        <div class="re-field"><span class="re-lab">Persistence <span class="re-val" id="re-scope-persist-v">70</span></span>
+          <input type="range" id="re-scope-persist" min="0" max="100" value="70" aria-label="Phosphor persistence"></div>
+        <div class="re-actions">
+          <label class="re-toggle"><input type="checkbox" id="re-beam-draw">Draw the beam</label>
+          <button class="re-btn" id="re-beam-clear">Release the figure</button>
+        </div>
+        <p class="re-hint">Draw a closed shape on the screen and lift: the shape becomes looping sound whose left channel is X and right is Y, and the beam traces your hand forever. Knob A sets the retrace pitch at the moment you lift.</p>
+        <p class="re-privacy">Analysed in your browser. Nothing is recorded or uploaded.</p>
+      </div>
+
+      <div class="re-srcpanel" data-panel="shader">
+        <div class="re-field"><span class="re-lab">Preset <span class="re-hint" id="re-preset-count"></span></span>
+          <input type="text" class="re-in" id="re-preset-filter" placeholder="filter: eva, psx, ink, audio..." spellcheck="false" autocomplete="off" aria-label="Filter the shader shelf">
+          <select class="re-in" id="re-preset" aria-label="Shader preset shelf"><option value="">&middot; custom &middot;</option></select>
+          <div class="re-actions re-browse">
+            <button class="re-btn" id="re-prev" type="button" aria-label="Previous shader">&#9664;</button>
+            <button class="re-btn" id="re-next" type="button" aria-label="Next shader">&#9654;</button>
+            <button class="re-btn" id="re-lucky" type="button" aria-label="Jump to a random shader">surprise me &#9860;</button>
+            <button class="re-btn" id="re-sheet-toggle" type="button" aria-expanded="false"
+              aria-controls="re-sheet" aria-label="Show the contact sheet of every shader">contact sheet</button>
+          </div>
+          <div class="re-sheet" id="re-sheet" hidden role="group" aria-label="Shader contact sheet"></div></div>
+        <div class="re-field"><span class="re-lab">Fragment shader<span class="re-val" id="re-shader-live"></span></span>
+          <textarea class="re-in re-code" id="re-code" aria-label="Shader source code, GLSL" spellcheck="false" autocapitalize="off"></textarea></div>
+        <div class="re-actions"><button class="re-btn" id="re-run">Run shader</button>
+          <label class="re-toggle"><input type="checkbox" id="re-animate" checked> Animate</label></div>
+        <div class="re-knobs">
+          <div class="re-lab">Knobs <span class="re-hint" id="re-knob-help">iKnobA / B / C in your code</span></div>
+          <div class="re-field"><span class="re-lab">A <span class="re-val" id="re-knobA-v">0.50</span></span><input type="range" id="re-knobA" min="0" max="100" value="50" aria-label="Shader knob A"></div>
+          <div class="re-field"><span class="re-lab">B <span class="re-val" id="re-knobB-v">0.50</span></span><input type="range" id="re-knobB" min="0" max="100" value="50" aria-label="Shader knob B"></div>
+          <div class="re-field"><span class="re-lab">C <span class="re-val" id="re-knobC-v">0.50</span></span><input type="range" id="re-knobC" min="0" max="100" value="50" aria-label="Shader knob C"></div>
+        </div>
+        <div class="re-actions"><button class="re-btn" id="re-save-shader">Save to yours</button>
+          <button class="re-btn" id="re-share">Copy link</button></div>
+        <p class="re-privacy">Write your own GLSL and read <span translate="no">iAudio</span> (bass, mid, treble, level), <span translate="no">iKnobA/B/C</span>, <span translate="no">iMouse</span> and <span translate="no">iTime</span>. Save it to your shelf or copy a link that carries it. Kept in this browser; nothing uploads.</p>
+        <div class="re-stack">
+          <div class="re-lab">Shader stack<span class="re-val" id="re-stack-count">1 layer</span></div>
+          <div class="re-field"><span class="re-lab">Stack another shader, blended</span>
+            <select class="re-in" id="re-slayer-add" aria-label="Add a shader layer to the stack"><option value="">add a shader as a layer</option></select></div>
+          <div id="re-slayers"></div>
+        </div>
+      </div>
+
+      <details class="re-group" id="re-rack-picture" open>
+        <summary><span class="re-lab">Picture <span class="re-hint">palette, grid, tube</span></span></summary>
+      <fieldset class="re-controls">
+        <div class="re-field re-wide"><span class="re-lab">Palette</span>
+          <select class="re-in" id="re-palette" aria-label="Hardware palette">
+            <option value="outrun">Outrun (custom)</option>
+            <option value="gameboy">Game Boy DMG</option>
+            <option value="nes">NES</option>
+            <option value="c64">Commodore 64</option>
+            <option value="zx">ZX Spectrum</option>
+            <option value="ega">EGA 16</option>
+            <option value="cga">CGA 4</option>
+            <option value="teletext">Teletext 8</option>
+            <option value="pico8">PICO-8</option>
+            <option value="vboy">Virtual Boy (red)</option>
+            <option value="amber">Amber phosphor</option>
+            <option value="mono1">1-bit mono</option>
+            <option value="aurora">Aurora (custom)</option>
+            <option value="auto">Auto (from image)</option>
+            <option value="yours">Your palette</option>
+          </select></div>
+        <div class="re-field" id="re-yourpal" hidden><span class="re-lab">Your colors <span class="re-hint">these six become the hardware</span></span>
+          <div class="re-actions" id="re-yourpal-row">
+            <input type="color" class="re-color" data-pal="0" value="#0a0612" aria-label="Palette color 1">
+            <input type="color" class="re-color" data-pal="1" value="#3a2a5a" aria-label="Palette color 2">
+            <input type="color" class="re-color" data-pal="2" value="#c86a44" aria-label="Palette color 3">
+            <input type="color" class="re-color" data-pal="3" value="#7de3ea" aria-label="Palette color 4">
+            <input type="color" class="re-color" data-pal="4" value="#ff4ea0" aria-label="Palette color 5">
+            <input type="color" class="re-color" data-pal="5" value="#f4ecff" aria-label="Palette color 6">
+          </div></div>
+        <div class="re-field" id="re-palstrip-field"><span class="re-lab">In the picture <span class="re-hint" id="re-palstrip-note">the colours this frame is actually made of</span></span>
+          <div class="re-palstrip" id="re-palstrip" role="img" aria-label="The palette this frame resolved to"></div>
+          <div class="re-actions">
+            <button class="re-btn" id="re-pal-adopt" type="button"
+              title="Copy these into Your colors so you can edit them"
+              aria-label="Adopt this palette into your own colours">Adopt these</button>
+          </div></div>
+        <div class="re-field"><span class="re-lab">Pixel size <span class="re-val" id="re-tw-v">240</span></span><input type="range" id="re-tw" min="24" max="360" value="240" aria-label="Pixel size: target width of the pixel grid"></div>
+        <div class="re-field"><span class="re-lab">Dither</span>
+          <select class="re-in" id="re-dither" aria-label="Dither pattern"><option value="bayer8">Bayer 8</option><option value="bayer4">Bayer 4</option><option value="bayer2">Bayer 2</option><option value="noise">Noise</option><option value="diffusion">Diffusion</option><option value="none">None</option></select></div>
+        <div class="re-field"><span class="re-lab">Dither strength <span class="re-val" id="re-dstr-v">0.80</span></span><input type="range" id="re-dstr" aria-label="Dither strength" min="0" max="100" value="80"></div>
+        <div class="re-field"><span class="re-lab">Gamma <span class="re-val" id="re-gam-v">1.0</span></span><input type="range" id="re-gam" aria-label="Gamma" min="40" max="220" value="100"></div>
+        <div class="re-field"><span class="re-lab">Scanlines <span class="re-val" id="re-scan-v">0.35</span></span><input type="range" id="re-scan" aria-label="Scanline strength" min="0" max="90" value="35"></div>
+        <div class="re-field"><span class="re-lab">Phosphor mask</span>
+          <select class="re-in" id="re-mask" aria-label="Phosphor mask"><option value="grille">Aperture grille</option><option value="slot">Slot mask</option><option value="dot">Dot triad</option><option value="none">None</option></select></div>
+        <div class="re-field"><span class="re-lab">Mask strength <span class="re-val" id="re-maskamt-v">0.30</span></span><input type="range" id="re-maskamt" aria-label="Phosphor mask strength" min="0" max="100" value="30"></div>
+        <div class="re-field"><span class="re-lab">Bloom <span class="re-val" id="re-bloom-v">0.18</span></span><input type="range" id="re-bloom" aria-label="Bloom" min="0" max="100" value="18"></div>
+        <div class="re-field"><span class="re-lab">Halation <span class="re-val" id="re-hal-v">0.20</span></span><input type="range" id="re-hal" aria-label="Halation: the glow of the whole frame through the glass" min="0" max="100" value="20"></div>
+        <div class="re-field"><span class="re-lab">Curvature <span class="re-val" id="re-curv-v">0.12</span></span><input type="range" id="re-curv" aria-label="CRT curvature" min="0" max="100" value="12"></div>
+        <div class="re-field"><span class="re-lab">Colour fringe <span class="re-val" id="re-abr-v">0.10</span></span><input type="range" id="re-abr" aria-label="Colour fringe: radial separation of the colour channels" min="0" max="100" value="10"></div>
+        <div class="re-field"><span class="re-lab">Vignette <span class="re-val" id="re-vig-v">0.25</span></span><input type="range" id="re-vig" aria-label="Vignette" min="0" max="100" value="25"></div>
+        <label class="re-toggle re-wide"><input type="checkbox" id="re-sdf"> Depth-shade (early 3D)</label>
+      </fieldset>
+      </details>
+
+      <details class="re-group" id="re-rack-fx" open>
+        <summary><span class="re-lab">Effects rack<span class="re-val" id="re-fx-count">0 on</span></span></summary>
+      <fieldset class="re-controls">
+        <div class="re-vibes re-wide" id="re-vibes"></div>
+        <div class="re-fxchips re-wide" id="re-fxchips"></div>
+        <div class="re-field re-wide"><span class="re-lab">Amount <span class="re-hint">sets every active effect</span> <span class="re-val" id="re-fxamount-v">0.50</span></span><input type="range" id="re-fxamount" min="0" max="100" value="50" aria-label="Master effect amount"></div>
+        <div class="re-wide" id="re-fxparams"></div>
+        <div class="re-field"><span class="re-lab">Glitch seed</span><input type="text" class="re-in" id="re-fxseed" aria-label="Effects seed" value="glitch-1" spellcheck="false"></div>
+        <div class="re-field"><span class="re-lab">&nbsp;</span><label class="re-toggle"><input type="checkbox" id="re-fxanim"> Animate</label></div>
+        <button class="re-btn re-wide" id="re-randomize">Randomize &#9860;</button>
+      </fieldset>
+      </details>
+
+      <details class="re-group" id="re-rack-sound">
+        <summary><span class="re-lab">Sound <span class="re-val" id="re-audio-state">off</span></span></summary>
+      <fieldset class="re-controls">
+        <p class="re-hint re-wide">Every edit plays a note, the shader sings its own math, and sound feeds back into the picture. Nothing is recorded or uploaded.</p>
+        <div class="re-fxchips re-wide" id="re-audio-src" role="group" aria-label="Sound source">
+          <button class="re-chip" type="button" id="re-src-instr" aria-pressed="false">Instrument</button>
+          <button class="re-chip" type="button" id="re-src-mic" aria-pressed="false">Microphone</button>
+          <button class="re-chip" type="button" id="re-src-file" aria-pressed="false">Your audio</button>
+          <button class="re-chip" type="button" id="re-play-pic" aria-pressed="false"
+            title="The ANS mapping: image rows are frequencies, the scan is time, brightness is loudness. The picture plays in the instrument's own scale, and the scope can draw it.">Play picture</button>
+        </div>
+        <input type="file" class="re-in re-wide" id="re-audio-file" accept="audio/*" hidden>
+        <div class="re-lab re-wide">Sound drives <span class="re-val" id="re-react-v">0.60</span></div>
+        <div class="re-fxchips re-wide" id="re-react-targets" role="group" aria-label="What the sound drives">
+          <button class="re-chip" type="button" data-react="shader" aria-pressed="true">Shader</button>
+          <button class="re-chip" type="button" data-react="effects" aria-pressed="false">Effects</button>
+          <button class="re-chip" type="button" data-react="pixel" aria-pressed="false">Pixel size</button>
+          <button class="re-chip" type="button" data-react="bloom" aria-pressed="false">Bloom</button>
+        </div>
+        <div class="re-field re-wide"><span class="re-lab">Reactivity</span><input type="range" id="re-react" min="0" max="100" value="60" aria-label="How strongly sound drives the picture"></div>
+        <div class="re-meters re-wide" id="re-meters" aria-hidden="true">
+          <span class="re-meter"><i id="re-m-bass"></i><b>bass</b></span>
+          <span class="re-meter"><i id="re-m-mid"></i><b>mid</b></span>
+          <span class="re-meter"><i id="re-m-treb"></i><b>treble</b></span>
+        </div>
+      </fieldset>
+      </details>
+
+      <details class="re-group" id="re-rack-motion">
+        <summary><span class="re-lab">Motion <span class="re-hint">patch anything into anything</span></span></summary>
+      <fieldset class="re-controls">
+        <div class="re-actions re-wide">
+          <select class="re-in" id="re-mod-src" style="flex:1" aria-label="Modulation source"></select>
+          <select class="re-in" id="re-mod-tgt" style="flex:1" aria-label="Modulation target"></select>
+          <button class="re-btn" id="re-mod-add" title="Patch the source into the target; each route gets its own depth dial">Patch</button>
+        </div>
+        <div class="re-wide" id="re-mod-rows"></div>
+        <div class="re-lab re-wide">Feedback <span class="re-hint">the last frame folded back in</span></div>
+        <div class="re-actions re-wide">
+          <label class="re-toggle"><input type="checkbox" id="re-fb">On</label>
+          <button class="re-btn" id="re-fb-clear" title="Flush the feedback buffer">Flush</button>
+        </div>
+        <div class="re-field"><span class="re-lab">Decay <span class="re-val" id="re-fb-amt-v">55</span></span>
+          <input type="range" id="re-fb-amt" min="0" max="95" value="55" aria-label="How much of the last frame survives"></div>
+        <div class="re-field"><span class="re-lab">Zoom <span class="re-val" id="re-fb-zoom-v">1.5</span></span>
+          <input type="range" id="re-fb-zoom" min="-50" max="50" value="15" aria-label="Feedback zoom per frame, tenths of a percent"></div>
+        <div class="re-field re-wide"><span class="re-lab">Rotate <span class="re-val" id="re-fb-rot-v">0.4</span></span>
+          <input type="range" id="re-fb-rot" min="-30" max="30" value="4" aria-label="Feedback rotation per frame, tenths of a degree"></div>
+        <div class="re-actions re-wide">
+          <button class="re-btn" id="re-midi" aria-pressed="false" title="Map a hardware controller: press Learn, move a slider on screen, then turn a knob on your device">MIDI learn</button>
+          <button class="re-btn" id="re-midi-clear" title="Forget every MIDI binding">Unmap all</button>
+          <span class="re-hint" id="re-midi-state">no device</span>
+        </div>
+      </fieldset>
+      </details>
+
+      <details class="re-group" id="re-rack-output" open>
+        <summary><span class="re-lab">Save, send, make it physical</span></summary>
+        <div class="re-body">
+      <div class="re-actions">
+        <button class="re-btn" id="re-save">Save PNG</button>
+        <button class="re-btn" id="re-save-1x" title="Save the pixel grid itself, one image pixel per cell, with no upscaling">Save 1x</button>
+        <button class="re-btn" id="re-undo" title="Step back through your last twenty changes (Ctrl+Z)" aria-label="Undo the last change">Undo</button>
+        <button class="re-btn" id="re-fresh" title="Clear the restored session and start from the default patch" aria-label="Start fresh">Start fresh</button>
+        <button class="re-btn" id="re-clip" title="Record six seconds of the moving picture as a WebM clip">Record clip</button>
+        <button class="re-btn" id="re-send-studio">Send to Studio &rarr;</button>
+        <button class="re-btn" id="re-send-loom">Send to Loom &rarr;</button>
+      </div>
+      <div class="re-field"><span class="re-lab">Make it physical</span></div>
+      <div class="re-actions">
+        <button class="re-btn" id="re-relief" title="A 3D-printable relief of this frame: bright prints thin, light shines through">Relief STL</button>
+        <button class="re-btn" id="re-spin" title="Twelve frames of the animation on a printable disc: cut, pin, spin in front of a mirror">Spin disc</button>
+        <button class="re-btn" id="re-strip" title="The zoetrope sibling: a printable strip you roll into a drum, tape, and spin">Spin strip</button>
+      </div>
+      <div class="re-field"><span class="re-lab">Performance score <span class="re-hint">every edit you make is a note</span></span></div>
+      <div class="re-actions">
+        <button class="re-btn" id="re-rec" aria-pressed="false" title="Record your edits as a score: every chip, slider, and knob move becomes a timed note">Record</button>
+        <button class="re-btn" id="re-rec-play" title="Hear the recorded performance back (sound must be on)">Play</button>
+        <button class="re-btn" id="re-rec-midi" title="Save the performance as a standard MIDI file for any DAW">Save MIDI</button>
+        <button class="re-btn" id="re-pic-midi" title="The current picture transcribed as MIDI: rows are pitches on the scale, bright runs are notes">Picture as MIDI</button>
+      </div>
+      <div class="re-actions">
+        <button class="re-btn" id="re-save-patch">Save patch</button>
+        <button class="re-btn" id="re-share-patch">Copy patch link</button>
+        <select class="re-in" id="re-patches" aria-label="Your saved patches"><option value="">your patches</option></select>
+      </div>
+        </div>
+      </details>
+      <p class="re-privacy">A patch is the whole setup: shader, stack, palette, every effect and its amount, and the sound routing. Save it, or copy a link that carries all of it. Send to Studio hands the render to the pen surface as a plot map, then on to SVG or G-code. Everything stays in your browser.</p>
+      <div class="re-status" id="re-status" role="status"></div>
+    </div>
+  </div>
+  <p class="re-keys" id="re-measure" aria-live="off"></p>
+  <p class="re-keys" id="re-flow"></p>
+  <p class="re-keys"><b>Keys</b> <kbd>F</kbd> full screen &middot; <kbd>R</kbd> randomize &middot; <kbd>S</kbd> save PNG &middot; <kbd>space</kbd> animate &middot; <kbd>[</kbd> <kbd>]</kbd> amount. Double-click the picture for full screen. Drag on the picture to move the light in most shaders.</p>
+  <p class="seal-line">The renderer is ordinary readable JavaScript: <span translate="no">system/retro-engine.js</span>, <span translate="no">system/retro-palettes.js</span>, <span translate="no">system/shader-runner.js</span>. Palettes and the OKLab math match the coherence-membrane <span translate="no">retro.py</span> pipeline. The dither picks between the two nearest palette colours, and the tube stage adds a shaped beam, a phosphor mask, halation, and a bezel. Its scanline rows keep the <span translate="no">retro.py</span> row mean, so a browser render and an offline render agree in tone.</p>
+</section>
+
+<section class="retro-lab-section retro-lab-shell" id="retro-systems-lab" aria-labelledby="retro-lab-h">
+  <h2 id="retro-lab-h">Related retro products.</h2>
+  <div class="retro-lab-links" aria-label="Related retro products">
+    <a href="engine-revival.html">Engine Revival</a>
+    <a href="brender-archival.html">BRender Archival</a>
+    <a href="elder-enb.html">Elder ENB</a>
+    <a href="truth-enb.html">Truth ENB</a>
+    <a href="enb-runtime-core.html">ENB Runtime Core</a>
+    <a href="skyrimbridge.html">SkyrimBridge</a>
+    <a href="studio.html?source=retro">Retro Engine in the Studio</a>
+    <a href="overview.html">Systems registry</a>
+    <a href="https://github.com/HarperZ9/HarperZ9.github.io/blob/main/system/retro-engine.js" rel="noopener">Inspect public Retro Engine source</a>
+  </div>
+  <p class="boundary-note">Each route maintains its own definition and evidence record. Follow its product page for current scope and proof.</p>
+</section>
+</main>
+
+<footer class="footer-seal" role="contentinfo">
+  <p>Zain Dana Harper &middot; <a href="index.html">home</a></p>
+</footer>
+
+<script type="module" src="system/retro-studio.js?v=20261009-studio-bar"></script>
+</body>
+</html>

@@ -72,6 +72,11 @@ def test_product_and_retro_pillar_routes_resolve_with_reciprocal_navigation() ->
         page = ROOT / relative
         assert page.is_file(), relative
         source = page.read_text(encoding="utf-8")
+        if relative == "retro.html":
+            # 18 November 2026: the Retro Engine moved into the shader room of The Playground (issue 553); the old
+            # address is a redirect there, and the other lab pages still link to it.
+            assert 'http-equiv="refresh" content="0; url=/playground/?room=shader#shader"' in source
+            continue
         parser = _References()
         parser.feed(source)
 
