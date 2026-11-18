@@ -1,0 +1,7 @@
+{
+  "date": "2026-11-18",
+  "note": "Asset revision stamp only: the shader room gained the Retro Studio's picture rack (shader-post.mjs, shader-post-ui.mjs, shader-text.mjs under world/site/), so every world page's revision stamp moved.",
+  "paths": {
+    "index.html": "56c92c46541573b3715ab4e14e26a51d78f65dfcfe57d62f3f42ae8445ba56ab"
+  }
+}
