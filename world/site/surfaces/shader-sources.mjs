@@ -161,5 +161,12 @@ export function wireSources(host, S, room) {
     if (!url) return false;
     const img = new Image(); img.onload = () => { uploaded = img; choose('upload').then(() => say('The picture you sent over is the source.')); }; img.onerror = () => say('The picture sent over could not be read.'); img.src = url; return true;
   }
-  return { onInput, onClick, onKey, onPointer, tick, choose, undoStroke, takeHandoff, canvas, get drawing() { return S.mode === 'draw'; }, start() { if (S.mode !== 'shader') choose(S.mode); } };
+  // every control back to the state, after a patch or an undo
+  function sync() {
+    const set = (id, v) => { const el = $(`#${id}`); if (el) { if (el.type === 'checkbox') el.checked = !!v; else el.value = String(v); } };
+    set('shd-plate-seed', S.seed); set('shd-plate-kind', S.plate); set('shd-brush', S.brush); set('shd-ink', S.ink); set('shd-brush-mode', S.brushMode); set('shd-erase', S.erase); set('shd-sym', S.sym); set('shd-persist', S.persist); set('shd-beam', S.beam);
+    for (const id of ['shd-brush', 'shd-persist']) { const o = host.querySelector(`output[for="${id}"]`); if (o) o.textContent = $(`#${id}`).value; }
+    dirty = true;
+  }
+  return { onInput, onClick, onKey, onPointer, tick, choose, undoStroke, takeHandoff, canvas, sync, get drawing() { return S.mode === 'draw'; }, start() { if (S.mode !== 'shader') choose(S.mode); } };
 }

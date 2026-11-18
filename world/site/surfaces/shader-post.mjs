@@ -29,7 +29,7 @@ export const VIBES = Object.freeze([['Dreamy', ['soften', 'sparkle', 'starry'], 
 
 export function defaultPost() {
   const P = { amount: 0, pal: 'outrun', yours: [...YOURS], dith: 'bayer8', mask: 'grille', sdf: false,
-    fx: [], amts: {}, master: 50, fxseed: 'glitch-1', fxanim: false, fb: { on: false, amt: 55, zoom: 15, rot: 4 }, mod: [], pending: { src: 'lfo-sine', tgt: 'bloom' } };
+    fx: [], amts: {}, master: 50, fxseed: 'glitch-1', fxanim: false, fb: { on: false, amt: 55, zoom: 15, rot: 4 }, mod: [], pending: { src: 'lfo-sine', tgt: 'bloom' }, react: ['shader'], reactAmt: 60 };
   for (const [k, , , , d] of SLIDERS) P[k] = d;
   return P;
 }
@@ -63,6 +63,8 @@ export function mergePost(P, got) {
   if (typeof got.fxseed === 'string') P.fxseed = got.fxseed.slice(0, 40); if (got.fxanim != null) P.fxanim = !!got.fxanim;
   if (got.fb && typeof got.fb === 'object') P.fb = { on: !!got.fb.on, amt: clamp(+got.fb.amt || 0, 0, 95), zoom: clamp(+got.fb.zoom || 0, -50, 50), rot: clamp(+got.fb.rot || 0, -30, 30) };
   if (Array.isArray(got.mod)) P.mod = got.mod.filter((r) => r && typeof r.src === 'string' && MOD_TARGETS.some(([k]) => k === r.tgt)).slice(0, 12).map((r) => ({ src: r.src, tgt: r.tgt, depth: clamp(+r.depth || 0, -1, 1) }));
+  if (Array.isArray(got.react)) P.react = got.react.filter((k) => ['shader', 'effects', 'pixel', 'bloom'].includes(k));
+  if (Number.isFinite(+got.reactAmt)) P.reactAmt = clamp(+got.reactAmt, 0, 100);
   return P;
 }
 export const postActive = (P) => P.amount > 0 || P.fx.length > 0 || P.fb.on;

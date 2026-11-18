@@ -724,34 +724,281 @@
      ]
     ]
    }
+  },
+  "re-src-instr": {
+   "room": "#shd-snd-instr",
+   "how": "the studio's instrument; every edit is a note while it plays",
+   "act": {
+    "do": "click",
+    "sees": [
+     "pressed",
+     "said"
+    ],
+    "before": [
+     [
+      "open",
+      "sound"
+     ]
+    ],
+    "after": [
+     [
+      "click",
+      "#shd-snd-instr"
+     ]
+    ]
+   }
+  },
+  "re-src-mic": {
+   "room": "#shd-snd-mic",
+   "act": {
+    "do": "click",
+    "sees": [
+     "pressed",
+     "said"
+    ],
+    "after": [
+     [
+      "click",
+      "#shd-snd-mic"
+     ]
+    ]
+   }
+  },
+  "re-src-file": {
+   "room": "#shd-snd-file",
+   "how": "opens the file picker, as the studio's button did",
+   "act": {
+    "do": "click",
+    "sees": "said"
+   }
+  },
+  "re-audio-file": {
+   "room": "#shd-snd-audio",
+   "act": {
+    "do": "file",
+    "value": "world/exhibit/assets/audio/clink.opus",
+    "sees": "said",
+    "wait": 800
+   }
+  },
+  "re-play-pic": {
+   "room": "#shd-snd-pic",
+   "act": {
+    "do": "click",
+    "sees": [
+     "pressed",
+     "said"
+    ],
+    "wait": 600,
+    "after": [
+     [
+      "click",
+      "#shd-snd-pic"
+     ]
+    ]
+   }
+  },
+  "data-react=shader": {
+   "room": "[data-react=\"shader\"]",
+   "how": "where sound reaches into the picture",
+   "act": {
+    "do": "click",
+    "sees": [
+     "state",
+     "pressed"
+    ]
+   }
+  },
+  "data-react=effects": {
+   "room": "[data-react=\"effects\"]",
+   "act": {
+    "do": "click",
+    "sees": [
+     "state",
+     "pressed"
+    ]
+   }
+  },
+  "data-react=pixel": {
+   "room": "[data-react=\"pixel\"]",
+   "act": {
+    "do": "click",
+    "sees": [
+     "state",
+     "pressed"
+    ]
+   }
+  },
+  "data-react=bloom": {
+   "room": "[data-react=\"bloom\"]",
+   "act": {
+    "do": "click",
+    "sees": [
+     "state",
+     "pressed"
+    ]
+   }
+  },
+  "re-react": {
+   "room": "#shd-react",
+   "act": {
+    "do": "set",
+    "value": 20,
+    "sees": "state"
+   }
+  },
+  "re-midi": {
+   "room": "#shd-midi",
+   "act": {
+    "do": "click",
+    "sees": [
+     "pressed",
+     "said"
+    ],
+    "after": [
+     [
+      "click",
+      "#shd-midi"
+     ]
+    ]
+   }
+  },
+  "re-midi-clear": {
+   "room": "#shd-midi-clear",
+   "act": {
+    "do": "click",
+    "sees": "said"
+   }
+  },
+  "re-rec": {
+   "room": "#shd-rec",
+   "how": "the playing recorded as a score",
+   "act": {
+    "do": "click",
+    "sees": [
+     "pressed",
+     "said"
+    ]
+   }
+  },
+  "re-rec-play": {
+   "room": "#shd-rec-play",
+   "act": {
+    "do": "click",
+    "sees": "said",
+    "wait": 500
+   }
+  },
+  "re-rec-midi": {
+   "room": "#shd-rec-midi",
+   "act": {
+    "do": "click",
+    "sees": "saved",
+    "after": [
+     [
+      "click",
+      "#shd-rec"
+     ]
+    ]
+   }
+  },
+  "re-pic-midi": {
+   "room": "#shd-pic-midi",
+   "act": {
+    "do": "click",
+    "sees": "saved"
+   }
+  },
+  "re-save-patch": {
+   "room": "#shd-patch-save",
+   "how": "the whole setup, kept in this browser",
+   "act": {
+    "do": "click",
+    "sees": "said",
+    "before": [
+     [
+      "open",
+      "keep"
+     ]
+    ]
+   }
+  },
+  "re-share-patch": {
+   "room": "#shd-patch-link",
+   "act": {
+    "do": "click",
+    "sees": "said"
+   }
+  },
+  "re-undo": {
+   "room": "#shd-undo",
+   "act": {
+    "do": "click",
+    "sees": [
+     "frame",
+     "state"
+    ],
+    "before": [
+     [
+      "set",
+      "#shd-k1",
+      0.05
+     ],
+     [
+      "wait",
+      null,
+      500
+     ]
+    ]
+   }
+  },
+  "re-fresh": {
+   "room": "#shd-fresh",
+   "act": {
+    "do": "click",
+    "sees": [
+     "frame",
+     "state"
+    ]
+   }
+  },
+  "re-patches": {
+   "room": "#shd-patches",
+   "act": {
+    "do": "set",
+    "value": "0",
+    "sees": [
+     "frame",
+     "state"
+    ]
+   }
+  },
+  "re-clip": {
+   "room": "#shd-clip",
+   "act": {
+    "do": "click",
+    "sees": "saved",
+    "wait": 7500
+   }
+  },
+  "re-spin": {
+   "room": "#shd-spin",
+   "act": {
+    "do": "click",
+    "sees": "saved",
+    "wait": 1500
+   }
+  },
+  "re-strip": {
+   "room": "#shd-strip",
+   "act": {
+    "do": "click",
+    "sees": "saved",
+    "wait": 1500
+   }
   }
  },
- "missing": [
-  "re-src-instr",
-  "re-src-mic",
-  "re-src-file",
-  "re-play-pic",
-  "re-audio-file",
-  "data-react=shader",
-  "data-react=effects",
-  "data-react=pixel",
-  "data-react=bloom",
-  "re-react",
-  "re-midi",
-  "re-midi-clear",
-  "re-undo",
-  "re-fresh",
-  "re-clip",
-  "re-spin",
-  "re-strip",
-  "re-rec",
-  "re-rec-play",
-  "re-rec-midi",
-  "re-pic-midi",
-  "re-save-patch",
-  "re-share-patch",
-  "re-patches"
- ],
+ "missing": [],
  "dynamic": {
   "about": "The controls retro-studio.js makes with document.createElement while it runs, each found by a line of its code. creates is how many createElement calls of a button, input or select that entry accounts for; the test holds their sum to the file's count, so a new run-time control fails the test until it is listed.",
   "entries": {

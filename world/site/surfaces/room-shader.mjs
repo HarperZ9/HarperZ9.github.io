@@ -10,22 +10,25 @@ import { createShaderStack } from '../../../system/shader-stack.js';
 import { makeFile, FILES } from './take-files.mjs';
 import { sessionHash } from './bus-kernel.mjs';
 import { STARTS, startOf } from './shader-starts.mjs';
-import { MAX_LAYERS, DEFAULT_LAYER, decodeLayers, encodeLayers, wantsLibrary, stackLayer, layerRow, moveLayer, nameOfSrc, propertiesOf } from './shader-layers.mjs';
+import { MAX_LAYERS, DEFAULT_LAYER, decodeLayers, encodeLayers, wantsLibrary, stackLayer, layerRow, moveLayer, propertiesOf, layerSays } from './shader-layers.mjs';
 
 export { SIZE, LIBRARY, INPUTS, encodeSource, decodeSource, errorsOf, knobsOf, still } from './shader-text.mjs';
-import { SIZE, LIBRARY, INPUTS, encodeSource, decodeSource, errorsOf, knobsOf } from './shader-text.mjs';
+import { SIZE, LIBRARY, INPUTS, encodeSource, decodeSource, errorsOf, knobsOf, letterOn } from './shader-text.mjs';
 import { createPost, decodePost, encodePost, postActive } from './shader-post.mjs';
 import { rackHtml, wireRack } from './shader-post-ui.mjs';
 import { sourceHtml, wireSources, readSource, sourceAddress } from './shader-sources.mjs';
 import { shelfHtml, shelfOptions, wireShelf } from './shader-shelf.mjs';
 import { studioKey, fullScreen } from './shader-keys.mjs';
+import { soundHtml, wireSound } from './shader-sound.mjs';
+import { keepHtml, wireKeep } from './shader-keep.mjs';
+import { patchOf, applyPatch, asked as addressAsks } from './shader-patch.mjs';
 const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
 export async function mount(host, input, ctx) {
   const q = ctx.query || new URLSearchParams(), asked = q.get('sh') ? await decodeSource(q.get('sh')) : null;
   const state = { start: startOf(q.get('shp'))?.id || STARTS[0].id, source: '', edited: false, knobs: knobsOf(q), running: !ctx.reduced, preset: '', layers: decodeLayers(q.get('ly')), text: '', post: decodePost(q.get('rp')), from: readSource(q) };
   state.source = asked ?? startOf(state.start).glsl; state.edited = asked !== null && asked !== startOf(state.start).glsl;
-  let base = null, handed = null, shelf = null, timer = 0, raf = 0, t0 = 0, held = 0, sendTimer = 0, library = null, visible = true, hash = '', lastGood = '', picture = null, paletteFrom = '';
+  let lastLevels = { bass: 0, mid: 0, treble: 0, level: 0 }, base = null, handed = null, shelf = null, timer = 0, raf = 0, t0 = 0, held = 0, sendTimer = 0, library = null, visible = true, hash = '', lastGood = '', picture = null, paletteFrom = '';
   const urls = new Set();
   host.classList.add('shd');
   host.innerHTML = `<div class="shd-desk">
@@ -37,6 +40,8 @@ export async function mount(host, input, ctx) {
 <div class="shd-edit"><div class="shd-gutter" aria-hidden="true"></div><textarea id="shd-src" spellcheck="false" autocapitalize="off" autocomplete="off" wrap="off" aria-describedby="shd-err"></textarea></div>
 <div id="shd-err" class="shd-err" role="status" aria-live="polite"></div>
 ${rackHtml(state.post)}
+${soundHtml(state.post)}
+${keepHtml()}
 </div>
 <div class="shd-see">
 <div class="shd-stage"><canvas class="shd-frame" width="${SIZE[0]}" height="${SIZE[1]}" role="img" aria-label="The shader's frame"></canvas><canvas class="shd-out" hidden role="img" aria-label="The shader's frame through the picture rack"></canvas><p class="shd-fs-hud"><span>F or Escape leaves. R rolls the rack, space pauses, [ and ] set the effects' amount.</span> <button type="button" data-full-leave>Leave full screen</button></p></div>
@@ -69,10 +74,14 @@ ${sourceHtml(state.from)}
     setBase(glsl) { base = glsl; build(); },
     // a picture source is the base's iChannel0; back on the shader, the picture another room handed in returns
     setPicture(c) { if (!runner.gl) return; if (c) runner.setPicture(c, { live: true }); else { const blank = document.createElement('canvas'); blank.width = blank.height = 1; runner.setPicture(handed || blank, { live: !!handed }); } },
-    knobs: () => state.knobs, time: () => time(), seed: () => P.fxseed, audio: async () => null,
+    knobs: () => state.knobs, time: () => time(), seed: () => P.fxseed, audio: () => sound.audio(), stopLoop: () => sound.stopLoop(),
     toUpload() { if (P.pal !== 'auto' && P.pal !== 'yours') { P.pal = 'auto'; rack.sync(); } },
   });
-  const rack = wireRack(host, P, post, { changed(kind) { if (kind !== 'pending') { again(kind === 'fb' || kind === 'flush' ? 2 : 1); hand(); } writeAddress(); } });
+  function changed(kind) { if (kind !== 'pending') { again(kind === 'fb' || kind === 'flush' ? 2 : 1); hand(); } writeAddress(); }
+  const sound = wireSound(host, { P, shown: () => shown(), seed: () => P.fxseed, knobs: () => state.knobs, save: (n, b, w) => save(n, b, w), changed });
+  const keep = wireKeep(host, { patch: () => patchOf(state, P), apply: (p) => applyPatch(p, roomParts()), draw: (t) => { draw(t ?? time()); return shown(); }, shown: () => shown(), save: (n, b, w) => save(n, b, w),
+    setRunning: (on) => setRunning(on), running: () => state.running, fresh: () => { applyPatch(null, roomParts()); made.textContent = 'A fresh start: the first shader, no layers, the rack out.'; } });
+  const rack = wireRack(host, P, post, { changed });
 
   function number() {
     const n = src.value.split('\n').length, bad = new Set(errorsOf(host.dataset.errors || '').map((e) => e.line));
@@ -83,7 +92,7 @@ ${sourceHtml(state.from)}
   function frame() {
     raf = 0; if (!runner.gl) return;
     // sound as an input: the sound room's levels while it plays, read each frame; zero when it is silent or closed
-    const lv = ctx.levelsFrom?.('sound'), a = lv ? [lv.bass, lv.mid, lv.treble, lv.level] : [0, 0, 0, 0];
+    const lv = lastLevels = sound.levels(ctx.levelsFrom?.('sound')), r = !P.react.includes('shader') ? 0 : lv.own ? P.reactAmt / 100 : 1, a = [lv.bass * r, lv.mid * r, lv.treble * r, lv.level * r];
     runner.setAudio(...a); host.dataset.audio = a.map((v) => v.toFixed(2)).join(' ');
     const t = time(), now = performance.now(); draw(t, a); host.dataset.frames = String(+(host.dataset.frames || 0) + 1);
     // the frame time is the mean gap between the last 30 frames drawn while running
@@ -96,12 +105,13 @@ ${sourceHtml(state.from)}
   const kick = () => { if (!raf && runner.gl) raf = requestAnimationFrame(frame); };
   // One frame: the routes move the knobs, the stack draws, and the rack (when it is in) draws the stack's frame again.
   function draw(t, a = [0, 0, 0, 0]) {
-    Object.assign(post.au, { bass: a[0], mid: a[1], treble: a[2], level: a[3] });
+    Object.assign(post.au, lastLevels);
     const k = post.modulate(P, t, state.knobs); runner.setKnobs(...(k || state.knobs));
-    sources.tick(t, null);
+    sources.tick(t, sound.waveform());
     runner.renderFrame(t);
     const on = postActive(P) && post.loaded;
-    if (on) rack.strip(post.render(P, canvas, t, null));
+    if (on) rack.strip(post.render(P, canvas, t, { on: new Set(P.react), amt: P.reactAmt / 100 }));
+    sound.feed();
     if (outC.hidden === on) { outC.hidden = !on; canvas.style.visibility = on ? 'hidden' : ''; }
   }
   // Feedback needs two frames to show: the first fills its memory. Paused, the room draws both at once.
@@ -150,26 +160,9 @@ ${sourceHtml(state.from)}
     return { data: x.getImageData(0, 0, c.width, c.height).data, w: c.width, h: c.height };
   }
   function save(name, blob, words) { const u = URL.createObjectURL(blob), a = document.createElement('a'); urls.add(u); a.href = u; a.download = name; host.append(a); a.click(); a.remove(); made.textContent = words; host.dataset.saved = name; }
-
-  // The handed line, lettered on a canvas of the frame's size: white letters on nothing, so the layer's mix shows them.
-  function letter() {
-    if (!state.text) return null;
-    if (!textCanvas) { textCanvas = document.createElement('canvas'); textCanvas.width = canvas.width; textCanvas.height = canvas.height; }
-    const x = textCanvas.getContext('2d'), w = textCanvas.width, h = textCanvas.height, face = getComputedStyle(host).fontFamily || 'sans-serif';
-    x.clearRect(0, 0, w, h); let size = h * 0.42; x.font = `700 ${size}px ${face}`;
-    const wide = x.measureText(state.text).width; if (wide > w * 0.9) { size *= (w * 0.9) / wide; x.font = `700 ${size}px ${face}`; }
-    x.fillStyle = '#ffffff'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText(state.text, w / 2, h / 2);
-    return textCanvas;
-  }
-  // what a layer's row says beside its number: why it shows nothing, if it does
-  function layerState(L, err) {
-    if (err) return `its shader did not compile (${errorsOf(err)[0]?.message || 'error'})`;
-    if (L.src === 'palette' && !+(host.dataset.palette || 0)) return 'no colours handed in yet';
-    if (L.src === 'text' && !state.text) return 'no line handed on yet; the type forge hands one on';
-    if (L.src.startsWith('pic:') && !ctx.pictureFrom?.(L.src.slice(4))) return 'that picture is not on the page yet';
-    if (L.src.startsWith('p:') && !library) return 'loading the preset library';
-    return nameOfSrc(L.src);
-  }
+  function letter() { if (!state.text) return null; textCanvas = textCanvas || Object.assign(document.createElement('canvas'), { width: canvas.width, height: canvas.height }); return letterOn(textCanvas, state.text, getComputedStyle(host).fontFamily || 'sans-serif'); }
+  // what a layer's row says beside its number
+  const layerState = (L, err) => layerSays(L, err ? errorsOf(err)[0]?.message || 'error' : null, { palette: +(host.dataset.palette || 0), text: state.text, picture: (id) => ctx.pictureFrom?.(id), library });
   function pushLayers() {
     if (!runner.gl) return [];
     return runner.setLayers(state.layers.map((L) => stackLayer(L, { library, pictureOf: (id) => ctx.pictureFrom?.(id) || null, textCanvas: () => textCanvas, rows: ctx.registry?.SURFACES })));
@@ -208,7 +201,8 @@ ${sourceHtml(state.from)}
   }
 
   const onInput = (ev) => {
-    const t = ev.target;
+    const t = ev.target; sound.gesture(ev); sound.learnFrom(ev);
+    if (sound.onInput(ev) || keep.onInput(ev)) return;
     if (rack.onInput(ev) || sources.onInput(ev) || shelf?.onInput(ev)) return;
     if (t === src) { state.edited = true; number(); schedule(); }
     else if (t.closest('.shd-ls')) onLayer(t);
@@ -216,9 +210,13 @@ ${sourceHtml(state.from)}
     else if (t.id === 'shd-start') load(startOf(t.value).glsl, { start: t.value });
     else if (t.id === 'shd-preset') { const p = library.find((x) => x.name === t.value); if (p) load(p.glsl, { preset: p.name }); }
   };
+  function roomParts() {
+    return { state, P, src, load, build, paintLayers, paintKnobs, writeAddress, sources, rack, sound, setKnob: (i, v) => { $(`#shd-k${i}`).value = String(v); }, startOf, first: STARTS[0].id };
+  }
   function paintKnobs() { state.knobs.forEach((v, i) => { $(`output[for="shd-k${i}"]`).textContent = v.toFixed(2); }); runner.gl && runner.setKnobs(...state.knobs); }
   const onClick = async (ev) => {
-    const t = ev.target.closest('button'); if (!t) return;
+    const t = ev.target.closest('button'); if (!t) return; sound.gesture(ev);
+    if (sound.onClick(ev) || keep.onClick(ev)) return;
     if (rack.onClick(ev) || sources.onClick(ev) || (shelf && await shelf.onClick(ev))) return;
     if (t.id === 'shd-full' || t.dataset.fullLeave !== undefined) return fs.toggle();
     if (t.dataset.run !== undefined) setRunning(!state.running);
@@ -266,11 +264,14 @@ ${sourceHtml(state.from)}
   $('#shd-start').value = state.start;
   if (ctx.reduced) { runB.textContent = 'Run'; runB.setAttribute('aria-pressed', 'true'); made.textContent = 'Reduced motion is on, so the shader starts paused on its first frame. Run starts it.'; }
   t0 = performance.now(); ctx.offerPicture?.(() => (runner.gl && host.dataset.ok === 'true' ? shown() : null));
+  const session = !addressAsks(q) && keep.session();
+  if (session) { applyPatch(session, roomParts()); made.textContent = 'Picked up where you left off. Start fresh clears it.'; }
   if (postActive(P)) rack.fill();
   sources.start(); if (q.get('import') === 'plate') sources.takeHandoff();
   paintKnobs(); says(); $('.shd-knob-say').textContent = !state.edited && startOf(state.start).knobs ? `In this shader: ${startOf(state.start).knobs}` : '';
   build(); paintLayers(); if (wantsLibrary(state.layers)) loadLibrary(null);
   // measure(width, frames): the time a whole frame takes with the stack as it stands, at that width (8:5), in ms
+  keep.snapshot();
   // draw(n): n frames now, for a test that holds the room paused and compares frames
   host.shaderDraw = (n = 1) => again(n);
   host.shaderMeasure = (width = 1280, frames = 30) => { if (!runner.gl) return null; const [w, h] = [canvas.width, canvas.height];
@@ -288,7 +289,7 @@ ${sourceHtml(state.from)}
     destroy() {
       clearTimeout(timer); clearTimeout(sendTimer); if (raf) cancelAnimationFrame(raf); watch?.disconnect(); document.removeEventListener('visibilitychange', onShow);
       host.removeEventListener('input', onInput); host.removeEventListener('click', onClick); host.removeEventListener('keydown', onKey); host.removeEventListener('submit', onSubmit);
-      host.removeEventListener('toggle', rack.onToggle, true); post.dispose(); shelf?.destroy(); fs.destroy();
+      host.removeEventListener('toggle', rack.onToggle, true); post.dispose(); sound.destroy(); keep.destroy(); shelf?.destroy(); fs.destroy();
       for (const u of urls) URL.revokeObjectURL(u);
       delete host.shaderMeasure; delete host.shaderDraw; runner.gl && runner.destroy(); host.innerHTML = ''; host.classList.remove('shd'); for (const k of Object.keys(host.dataset)) if (!/^surface/.test(k)) delete host.dataset[k];
     },

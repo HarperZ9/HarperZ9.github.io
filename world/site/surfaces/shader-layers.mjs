@@ -115,3 +115,12 @@ export function moveLayer(layers, i, d) {
   const j = i + d; if (j < 0 || j >= layers.length) return layers;
   const out = [...layers]; [out[i], out[j]] = [out[j], out[i]]; return out;
 }
+// What a layer's row says beside its number: why it shows nothing, if it does. err is its compile message or null.
+export function layerSays(L, err, { palette = 0, text = '', picture = () => null, library = null } = {}) {
+  if (err) return `its shader did not compile (${err})`;
+  if (L.src === 'palette' && !palette) return 'no colours handed in yet';
+  if (L.src === 'text' && !text) return 'no line handed on yet; the type forge hands one on';
+  if (L.src.startsWith('pic:') && !picture(L.src.slice(4))) return 'that picture is not on the page yet';
+  if (L.src.startsWith('p:') && !library) return 'loading the preset library';
+  return nameOfSrc(L.src);
+}

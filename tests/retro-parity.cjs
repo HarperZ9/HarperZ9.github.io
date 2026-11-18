@@ -60,6 +60,7 @@ async function step(page, [what, sel, value]) {
   else if (what === 'click') { await loc.scrollIntoViewIfNeeded(); await loc.click(); await page.mouse.move(1, 1); }
   else if (what === 'set' || what === 'type') await loc.evaluate((el, v) => { el.value = String(v); el.dispatchEvent(new Event('input', { bubbles: true })); el.dispatchEvent(new Event('change', { bubbles: true })); }, value);
   else if (what === 'check') await loc.evaluate((el, v) => { el.checked = v === undefined || v === null ? !el.checked : !!v; el.dispatchEvent(new Event('input', { bubbles: true })); el.dispatchEvent(new Event('change', { bubbles: true })); }, value);
+  else if (what === 'wait') await page.waitForTimeout(value);
   else if (what === 'file') await loc.setInputFiles(path.join(root, value));
   else if (what === 'draw') {   // a stroke across the shown frame, held at the page's corner after
     await page.locator('#shader .shd-stage').scrollIntoViewIfNeeded(); const box = await page.locator('#shader .shd-stage').boundingBox(); await page.mouse.move(box.x + box.width * 0.2, box.y + box.height * 0.3); await page.mouse.down();
@@ -98,7 +99,8 @@ async function acts(page, key, sel, act, saved) {
   for (const [k, v] of Object.entries(parity.mapped)) { assert.ok(v.act && v.act.do, `${k}: a mapped control says how to drive it`); for (const s of [].concat(v.act.sees || 'frame')) assert.ok(SEES.has(s), `${k}: sees ${s}?`); }
   if (missing.length) assert.match(parity.issue, /^https:\/\/github\.com\/HarperZ9\/HarperZ9\.github\.io\/issues\/\d+$/, 'the missing list names its issue');
 
-  const browser = await chromium.launch({ ...(process.env.BROWSER_CHANNEL ? { channel: process.env.BROWSER_CHANNEL } : {}) });
+  // a fake microphone and an allowed prompt, so the Microphone control can be driven headless
+  const browser = await chromium.launch({ ...(process.env.BROWSER_CHANNEL ? { channel: process.env.BROWSER_CHANNEL } : {}), args: ['--use-fake-ui-for-media-stream', '--use-fake-device-for-media-stream', '--autoplay-policy=no-user-gesture-required'] });
   const dead = [], report = {};
   try {
     const ctx = await browser.newContext({ viewport: { width: 1280, height: 800 }, acceptDownloads: true });

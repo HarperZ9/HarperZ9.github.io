@@ -10,7 +10,7 @@ export const INPUTS = Object.freeze([
   ['iKnobA, iKnobB, iKnobC', 'float', 'the three sliders, 0 to 1'],
   ['iPalette[5], iPaletteSize', 'vec3, float', 'colours handed in by the blend, the lead first, and how many are set'],
   ['iChannel0, iChannelResolution', 'sampler2D, vec3', 'a picture handed in by another module, and its size'],
-  ['iAudio', 'vec4', 'bass, mid, treble and level of the music in the sound room while it plays, each 0 to 1; zero while it is silent'],
+  ['iAudio', 'vec4', 'bass, mid, treble and level, each 0 to 1: of this room’s own sound while it plays (the instrument, a microphone, a file of yours), scaled by its reach; else of the music in the sound room; zero while both are silent'],
 ]);
 const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const b64 = (bytes) => { let s = ''; for (let i = 0; i < bytes.length; i += 0x8000) s += String.fromCharCode(...bytes.subarray(i, i + 0x8000)); return btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); };
@@ -45,4 +45,12 @@ export const knobsOf = (q) => { const k = (q.get('k') || '').split(',').map(Numb
 export function still() {
   const s = STARTS[0];
   return { html: `<pre class="shd-still" tabindex="0" aria-label="The first shader, as written"><code>${esc(s.glsl)}</code></pre>`, caption: `The shader room: “${s.name}”, the shader the room opens with, as written. ${s.glsl.split('\n').length} lines of GLSL.` };
+}
+// The handed line, lettered on a canvas of the frame's size: white letters on nothing, so the layer's mix shows them.
+export function letterOn(c, text, face) {
+  const x = c.getContext('2d'), w = c.width, h = c.height;
+  x.clearRect(0, 0, w, h); let size = h * 0.42; x.font = `700 ${size}px ${face}`;
+  const wide = x.measureText(text).width; if (wide > w * 0.9) { size *= (w * 0.9) / wide; x.font = `700 ${size}px ${face}`; }
+  x.fillStyle = '#ffffff'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText(text, w / 2, h / 2);
+  return c;
 }
