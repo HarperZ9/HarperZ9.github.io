@@ -1,0 +1,24 @@
+/* room-field.css: the field on The Playground, loaded on its press. The picture first, the desk beside it on a wide
+   screen and under it on a phone. Ink on the page's ground; the picture paints its own calm ground. */
+.fd { display: grid; grid-template-columns: minmax(0, 1fr) minmax(15rem, 20rem); gap: clamp(1.25rem, 4vw, 2.5rem); align-items: start; margin-top: 1rem; }
+.fd .fd-stage { min-width: 0; }
+.fd .fd-canvas { display: block; width: 100%; height: auto; aspect-ratio: 5 / 3; touch-action: none; cursor: grab; border: 1px solid currentColor; }
+.fd .fd-canvas:active { cursor: grabbing; }
+.fd .fd-said { margin: .6rem 0 0; max-width: none; }
+.fd fieldset { border: 0; border-top: 1px solid currentColor; margin: 0 0 1rem; padding: .6rem 0 0; min-width: 0; }
+.fd legend { font-weight: 600; padding: 0; margin-bottom: .3rem; }
+.fd .fd-who { display: flex; flex-wrap: wrap; gap: .25rem 1rem; }
+.fd .fd-pick { display: inline-flex; align-items: center; gap: .4rem; min-height: 44px; cursor: pointer; }
+.fd .fd-pick i { width: .8rem; height: .8rem; border-radius: 50%; border: 1px solid currentColor; }
+.fd .fd-w { display: grid; grid-template-columns: minmax(0, 1fr) 3.6rem; align-items: center; column-gap: .5rem; margin-top: .35rem; }
+.fd .fd-w span { grid-column: 1 / -1; }
+.fd .fd-w input[type="range"] { width: 100%; min-height: 32px; margin: 0; accent-color: currentColor; }
+.fd output { font-variant-numeric: tabular-nums; text-align: right; padding-inline-end: .35rem; }
+.fd .fd-desk { min-width: 0; padding-inline-end: .25rem; }
+.fd .fd-run { min-height: 44px; padding: 0 1rem; font: inherit; font-weight: 600; border: 1px solid currentColor; background: transparent; color: inherit; cursor: pointer; }
+.fd h3 { font-size: 1rem; margin: 1rem 0 .3rem; }
+.fd .fd-read { display: grid; grid-template-columns: auto 1fr; gap: .15rem .8rem; margin: 0; font-variant-numeric: tabular-nums; }
+.fd .fd-read dt { font-weight: 600; } .fd .fd-read dd { margin: 0; }
+.fd .fd-state, .fd .fd-frame, .fd .fd-move { font-size: .875rem; }
+.fd :focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+@media (max-width: 860px) { .fd { grid-template-columns: minmax(0, 1fr); } }

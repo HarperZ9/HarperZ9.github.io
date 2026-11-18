@@ -145,6 +145,9 @@ export const SURFACES = Object.freeze({
   // The sound room: the site music (system/site-music) played and rendered in the tab. Its instruments run in a worker
   // (worker.js, piece.worker.js), which the room names by address; the census follows that address, so the row is heavy.
   sound: S('sound', 'Sound', ['system/site-music', 'world/sound'], ['sound', 'export'], ['blend', 'text'], ['score', 'wav'], './room-sound.mjs', { table: false, room: 'sound', weight: 'heavy' }),
+  // The field: light, flow, measurement, shape, voice, territory and circuitry as properties any element carries at a weight,
+  // in one scene (world-field.mjs, built in superframe packages/world from the rooms, medium, CAD and instrument cores).
+  field: S('field', 'The field', ['world/site', 'world/superframe'], ['field', 'physics', 'simulation', 'geometry', 'render'], ['palette'], ['numbers', 'image'], './room-field.mjs', { table: false, room: 'field' }),
 });
 
 const live = new Set();
