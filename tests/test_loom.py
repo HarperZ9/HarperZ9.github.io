@@ -41,7 +41,9 @@ def test_loom_is_reachable() -> None:
     assert r'\"href\": \"loom.html\"' in routes
     sitemap = SITEMAP.read_text(encoding="utf-8")
     assert "https://harperz9.github.io/loom.html" in sitemap
-    assert "https://harperz9.github.io/retro.html" in sitemap
+    # retro.html redirects into the shader room since 18 November 2026 (issue 553); the room is on the Playground page
+    assert "https://harperz9.github.io/retro.html" not in sitemap
+    assert "https://harperz9.github.io/playground/" in sitemap
 
 
 def test_loom_surfaces_carry_no_dashes() -> None:

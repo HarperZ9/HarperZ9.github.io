@@ -1,5 +1,5 @@
 {
- "about": "Every control of the Retro Studio (retro.html and the controls system/retro-studio.js builds while it runs) against the shader room of The Playground. A control is either mapped to the room control that does its job (tests/retro-parity.cjs opens the room and checks it is there) or listed under missing with the issue that tracks it. retro.html may not redirect to the room while missing is not empty.",
+ "about": "Every control of the Retro Studio (its markup, system/retro-panel.htm, which was /retro.html until the page moved into the room and which the Studio still mounts, and the controls system/retro-studio.js builds while it runs) against the shader room of The Playground. A control is mapped to the room control that does its job, with an act: how tests/retro-parity.cjs drives it and what must change. While missing has entries /retro.html stays; with it empty /retro.html redirects into the room.",
  "issue": "https://github.com/HarperZ9/HarperZ9.github.io/issues/553",
  "mapped": {
   "re-animate": {

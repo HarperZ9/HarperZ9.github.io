@@ -8,7 +8,8 @@
 // the deck's exports and the hand-offs read the engine's frames. Leaving parks it, pauses the
 // engine's loop and gives the id back.
 
-const RETRO_PAGE = "retro.html?v=20261004-retro-hub";
+// The engine's markup lives in system/retro-panel.htm since /retro.html moved into the shader room (issue 553).
+const RETRO_PAGE = "system/retro-panel.htm?v=20261118-room";
 let hub = null;          // { preview, out, studioCanvas }
 let loading = null;
 
@@ -19,7 +20,7 @@ function adopt(doc, sel) {
 
 async function build(mount, stage) {
   const res = await fetch(RETRO_PAGE, { credentials: "same-origin" });
-  if (!res.ok) throw new Error("retro.html answered " + res.status);
+  if (!res.ok) throw new Error("the retro panel answered " + res.status);
   const doc = new DOMParser().parseFromString(await res.text(), "text/html");
   // The page's own racks: its two inline style blocks, scoped to .re-* classes.
   for (const st of doc.querySelectorAll("head style")) {
@@ -31,7 +32,7 @@ async function build(mount, stage) {
   }
   const panel = adopt(doc, ".re-panel");
   const preview = adopt(doc, ".re-preview");
-  if (!panel || !preview) throw new Error("retro.html has no engine panel or preview");
+  if (!panel || !preview) throw new Error("the retro panel has no engine panel or preview");
   mount.replaceChildren(panel);
   for (const sel of ["#re-measure", "#re-flow"]) { const n = adopt(doc, sel); if (n) mount.append(n); }
   preview.classList.add("studio-retro-preview");

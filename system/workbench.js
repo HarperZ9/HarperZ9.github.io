@@ -9,7 +9,7 @@ const PIECE_KEY = "wb.piece.v1";
 const TRAIL_CAP = 12;
 
 export const SURFACES = {
-  retro: { label: "Retro Engine", href: "retro.html?import=plate", legacyKey: "re.retro.handoff" },
+  retro: { label: "The shader room", href: "/playground/?room=shader&import=plate#shader", legacyKey: "re.retro.handoff" },
   loom: { label: "The Loom", href: "loom.html?import=render", legacyKey: "re.loom.handoff" },
   studio: { label: "The Studio", href: "studio.html?source=plotmaps&import=retro", legacyKey: "re.studio.handoff" },
   // Display-only: the Gallery originates pieces but is not a send target.

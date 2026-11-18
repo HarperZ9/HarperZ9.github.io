@@ -1,0 +1,12 @@
+{
+  "date": "2026-11-18",
+  "note": "retro.html becomes a redirect into the shader room (issue 553, all 106 studio controls mapped and acting); its markup moves to system/retro-panel.htm for the Studio. routes.js, site-index.html and sitemap.xml drop the old page; index.html moves only by the world asset revision stamp.",
+  "paths": {
+    "index.html": "6f73ee500a860b585c38147756d39d0667b6337bce665ae8c71b4b7ac92e6dd5",
+    "publications/build.json": "554db4d20b0134a7ce933a3f44566f03f4a4e63671092cfd9711ea114d3baa8a",
+    "retro.html": "087ad9bccd9416c8198ec43074fb0a897de1996c281ce24b4d29389df0c6cd86",
+    "site-index.html": "1b80c182af390bae59973965458cba4210cfc225547e1e96c99afe4463e38d68",
+    "sitemap.xml": "9586c5bae5921b5a4632db2e5c8f7b8b75380122f309a0d030162cc2f9e90b67",
+    "system/routes.js": "0d98a408910a01b647a1e96d156ee6a8a7986815f5b62231646480244762f297"
+  }
+}

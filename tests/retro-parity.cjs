@@ -4,7 +4,8 @@
 //
 // tests/retro-parity.json maps each studio control to the room control that does its job, or lists it as missing with
 // the issue that tracks it. This test fails when:
-//   - a control of retro.html, or one retro-studio.js builds while it runs, is in neither list (a new studio control);
+//   - a control of the studio's markup (system/retro-panel.htm, which /retro.html was until it moved into the room and
+//     which the Studio still mounts), or one retro-studio.js builds while it runs, is in neither list;
 //   - a listed control is no longer in the studio (the list has gone stale);
 //   - a mapped control is not in the opened room (the room lost something);
 //   - a mapped control does not act: the room is held paused, the control is driven as its entry's act says, and the
@@ -13,8 +14,8 @@
 //     since a frame check against a moving frame proves nothing;
 //   - the planted controls (a button and a select with no handler, put into the room by this test) are not reported dead;
 //   - the missing list is not empty and names no issue.
-// The missing list is the expected failure: it is counted, printed, and tied to the issue, and /retro.html may not
-// redirect to the room while it has entries (REDIRECTS.tsv).
+//   - /retro.html redirects while the missing list has entries, or does not redirect into the room once it is empty;
+//     with the list empty, the old address (with the hand-over query) must land in the room.
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
@@ -26,7 +27,7 @@ const SEES = new Set(['frame', 'state', 'saved', 'stored', 'said', 'pressed', 'a
 
 // The studio's controls, by id, or by the data attribute that tells same-tagged controls apart.
 function studioControls() {
-  const html = fs.readFileSync(path.join(root, 'retro.html'), 'utf8'), keys = [];
+  const html = fs.readFileSync(path.join(root, 'system/retro-panel.htm'), 'utf8'), keys = [];
   for (const m of html.matchAll(/<(input|select|button|textarea)\b([^>]*)>/g)) {
     const id = /\bid="([^"]+)"/.exec(m[2]), data = /\bdata-(src|pal|react)="([^"]+)"/.exec(m[2]);
     assert.ok(id || data, `a studio control with no id and no telling data attribute: ${m[0]}`);
@@ -103,6 +104,8 @@ async function acts(page, key, sel, act, saved) {
   assert.deepEqual(keys.filter((k) => !mapped.includes(k) && !missing.includes(k)), [], 'every studio control is mapped or listed as missing');
   assert.deepEqual([...mapped, ...missing].filter((k) => !keys.includes(k)), [], 'every listed control is still in the studio');
   for (const [k, v] of Object.entries(parity.mapped)) { assert.ok(v.act && v.act.do, `${k}: a mapped control says how to drive it`); for (const s of [].concat(v.act.sees || 'frame')) assert.ok(SEES.has(s), `${k}: sees ${s}?`); }
+  const stub = fs.readFileSync(path.join(root, 'retro.html'), 'utf8'), moved = /http-equiv="refresh"[^>]*url=\/playground\/\?room=shader#shader/.test(stub);
+  assert.equal(moved, missing.length === 0, missing.length ? '/retro.html may not redirect while controls are missing' : '/retro.html redirects into the shader room');
   if (missing.length) assert.match(parity.issue, /^https:\/\/github\.com\/HarperZ9\/HarperZ9\.github\.io\/issues\/\d+$/, 'the missing list names its issue');
 
   // a fake microphone and an allowed prompt, so the Microphone control can be driven headless
@@ -139,6 +142,9 @@ async function acts(page, key, sel, act, saved) {
     assert.deepEqual(absent, [], 'every mapped control is in the opened room');
     assert.deepEqual(dead, [], 'every mapped control acts on the room');
     assert.deepEqual(errors, []);
+    if (!missing.length) {   // the old address, with the Gallery's hand-over query, lands in the room and keeps the query
+      const go = await ctx.newPage(); await go.goto(`${base}/retro.html?import=plate`); await go.waitForURL(/\/playground\/\?room=shader&import=plate#shader$/); await go.waitForSelector('#shader[data-room-live]'); await go.close();
+    }
     await page.evaluate(() => window.__rooms?.handles.shader?.destroy()).catch(() => {}); await page.waitForTimeout(800); await ctx.close();
   } finally { await browser.close(); }
   if (process.env.PARITY_REPORT) console.log(JSON.stringify(report, null, 1));
