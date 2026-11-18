@@ -10,10 +10,10 @@ subject: A preregistered optimiser benchmark whose first headline came from a bu
 footer: F183, fixing our CMA-ES bug reversed the headline, version 1.0
 ---
 # abstract
-Optimisers named after slime moulds, wolves, bees and ants are often reported to beat standard methods. Our first preregistered benchmark seemed to agree: the biologically labelled group had the better mean rank, 5.04 against 6.20. Tracing a poor CMA-ES score showed a bug in our own code, and several other methods had a related fault. We kept that run, fixed the box handling for every method, wrote a new preregistration and ran again on seven test functions in 10 dimensions. {c1}After the fix, CMA-ES ranked first on the shifted functions with a mean rank of 2.00, and the best method with a biological label, ACOR, ranked second at 3.14.{/c1} {c2}Moving the optimum away from the centre cost the slime mould method 12.1 and the grey wolf method 13.6 decades of median error, while ACOR, IWO and PSO lost 0.0006, 0.07 and 0.42 decades.{/c2} {c3}Without random search the plain group's mean rank was 3.98 against 5.54 for the biologically labelled group; with random search counted as plain the groups were 5.45 and 5.54, a gap that sat inside the label-permutation range (p 0.45).{/c3} The group contest does not settle much in either direction. The method-level results do.
+Optimisers named after slime moulds, wolves, bees and ants are often reported to beat standard methods. Our first preregistered benchmark seemed to agree: the biologically labelled group had the better mean rank, 5.04 against 6.20. Tracing a poor CMA-ES score showed a bug in our own code, and several other methods had a related fault. We kept that run, fixed the box handling for every method, wrote a new preregistration and ran again on seven test functions in 10 dimensions. {c1}After the fix, CMA-ES ranked first on the shifted functions with a mean rank of 2.00, and the best method with a biological label, ACOR, ranked second at 3.14.{/c1} {c2}Moving the optimum away from the centre cost the slime mould method 12.1 and the grey wolf method 13.6 decades of median error, while ACOR, IWO and PSO lost 0.0006, 0.07 and 0.42 decades.{/c2} {c3}Without random search the plain group's mean rank was 3.98 against 5.54 for the biologically labelled group; with random search counted as plain the groups were 5.45 and 5.54, a gap that sat inside the label-permutation range (p 0.45).{/c3} The group contest does not settle much in either direction. The method-level results do. On 18 November 2026 we scored the same grid again with a success target of the optimum plus 1e-8, ranking methods by successes and then by evaluations spent. {c5}Under the fixed target, CMA-ES stayed first at a mean rank of 2.71 against 3.86 for L-BFGS, and it was first in all 2,000 bootstrap resamples.{/c5}
 
 # section What this means for a reader {sec:reader}
-When a benchmark says a new nature-inspired optimiser wins, check two things: whether the test functions have their best point at the centre of the search box, and whether the standard methods it beat were run correctly. Our own first run failed the second check, and the result looked like a win for the nature-inspired group. Two popular methods in that group did well only when the answer sat at the centre. A good result on centred test functions can come from a method that guesses the centre.
+When a benchmark says a new nature-inspired optimiser wins, check two things: whether the test functions have their best point at the centre of the search box, and whether the standard methods it beat were run correctly. Our own first run failed the second check, and the result looked like a win for the nature-inspired group. Two popular methods in that group did well only when the answer sat at the centre. A good result on centred test functions can come from a method that guesses the centre. A stricter score, which counts a run only when it gets within 1e-8 of the optimum and then asks how fast it got there, keeps CMA-ES first and moves L-BFGS up to second.
 
 # section Introduction {sec:intro}
 A {g:metaheuristic}metaheuristic{/g} is a general recipe for searching a function for its minimum by sampling and updating candidate points. Sörensen {cite:sorensen2015} described a flood of "novel" metaheuristics built on metaphors of natural or man-made processes and argued that the trend threatens to lead the field away from scientific rigour. Camacho-Villalón, Dorigo and Stützle {cite:camacho2023} took six widely used metaphor-based methods for continuous problems apart into components, the grey wolf optimiser among them, and reported that none of them proposes a new idea; one section of their paper is titled "The grey wolf optimizer is PSO".
@@ -32,7 +32,7 @@ The second (the rerun) was hash-locked on 31 October 2026 after the first run ha
 Both preregistrations' SHA-256 hashes are in the reproduction section.
 
 # section Data and provenance {sec:data}
-No external data were used. All results come from our own implementations of ten optimisers and seven standard test functions, run on one desktop computer. The method update rules were written from their published descriptions with default settings and no tuning. Every number in this paper is read from the two runs' result files.
+No external data were used. All results come from our own implementations of ten optimisers and seven standard test functions, run on one desktop computer. The method update rules were written from their published descriptions with default settings and no tuning. Every number in this paper is read from the two runs' result files, apart from the fixed-target scoring, whose numbers are read from its own analysis file. That scoring's code, all 1,260 runs, its analysis and its preregistration addendum are published in the site's repository beside this page, under the repository's licence, which lets anyone read and review them {cite:f183code}.
 
 # section Methods {sec:methods}
 ## Methods compared
@@ -116,6 +116,78 @@ No-free-lunch tie on distinct cells ¦ p above 0.01 ¦ p 0.74
 L-BFGS in the top two on smooth functions ¦ yes ¦ not scored
 ::end
 
+## Second scoring: a fixed target and average runtime {sec:target}
+On 18 November 2026 we scored the shifted arm again under a rule Nikolaus Hansen suggested to us in correspondence: a {g:fixed-target}fixed target{/g} of the optimum plus 1e-8, with methods ranked by how many runs reach it and then by how many evaluations they spend. He has not reviewed this rerun, and the result and any error in it are ours. The first rule floors errors at {m:10^{-12}}, so every method below the floor ties and speed counts for nothing; five methods tied on the sphere.
+
+The runs were repeated with the same code, checked by its SHA-256 before any run, the same seed (20261054) and so the same shifts, rotations and method seeds, the same budget of 20,000 evaluations and the same 15 repeats. With ten methods and two CMA-ES variants on seven functions that is 1,260 runs. A wrapper counts every evaluation. A run succeeds at its first evaluated value of 1e-8 or less, and its runtime {m:t_i} is that evaluation's index; a failed run's runtime is the evaluations it used, 20,000 here. The {g:art}average runtime{/g} is the measure defined in section 4 of the COCO performance-assessment paper {cite:hansen2016},
+$$ aRT = \frac{1}{N_s} \sum_i t_i {eq:art}
+where the sum runs over all 15 runs and {m:N_s} is the number of successful runs. With no success it is infinite. On each function methods are ranked by successes, more first, then by aRT, smaller first, and methods equal on both share their average rank. The fixed-target mean rank is the mean over the seven functions, as in eq. {ref:eq:rank}.
+
+Intervals are 95 percent: a {g:wilson}Wilson interval{/g} on each success rate, and a {g:bootstrap}bootstrap interval{/g} from 2,000 resamples of the 15 paired repeats on aRT and on mean rank. The mean-rank interval covers run-to-run noise only. It says nothing about which seven functions were chosen, and with seven functions that is the larger uncertainty. An addendum to the rerun's preregistration was hash-locked before these runs started, with forecasts and a kill condition: if the runs failed to reproduce the 31 October rerun, the study stopped before any ranking.
+
+Reproduction held. Every median best error in the new runs equals the 31 October rerun's exactly (largest relative difference 0), and the first rule applied to the new runs gives the ranks in Table {ref:tab:ranks}.
+
+::table tab:target cols=0.26,0.12,0.12,0.19,0.12,0.19 Mean rank on the shifted arm under the first rule (median error, floored at 1e-12) and under the fixed target (successes, then aRT), with bootstrap 95 percent intervals over the 15 repeats. 1 is best.
+Method ¦ Group ¦ First rule ¦ Interval ¦ Fixed target ¦ Interval
+CMA-ES ¦ plain ¦ 2.00 ¦ 1.93 to 2.29 ¦ 2.71 ¦ 2.57 to 2.71
+L-BFGS ¦ plain ¦ 4.57 ¦ 4.36 to 4.93 ¦ 3.86 ¦ 3.86 to 4.00
+ACOR (ant colony) ¦ labelled ¦ 3.14 ¦ 2.86 to 3.86 ¦ 4.50 ¦ 4.50 to 5.00
+PSO (particle swarm) ¦ labelled ¦ 4.57 ¦ 3.79 to 5.00 ¦ 5.36 ¦ 5.29 to 5.36
+ABC (bee colony) ¦ labelled ¦ 5.86 ¦ 5.29 to 6.36 ¦ 6.07 ¦ 6.00 to 6.07
+Differential evolution ¦ plain ¦ 5.36 ¦ 5.14 to 5.71 ¦ 6.50 ¦ 6.43 to 6.50
+IWO (invasive weed) ¦ labelled ¦ 4.43 ¦ 4.21 to 5.00 ¦ 6.50 ¦ 6.43 to 6.50
+SMA (slime mould) ¦ labelled ¦ 6.36 ¦ 5.64 to 6.71 ¦ 6.50 ¦ 6.43 to 6.50
+GWO (grey wolf) ¦ labelled ¦ 8.86 ¦ 8.43 to 8.86 ¦ 6.50 ¦ 6.43 to 6.50
+Random search ¦ plain ¦ 9.86 ¦ 9.86 to 9.86 ¦ 6.50 ¦ 6.43 to 6.50
+::end
+
+{c5}Under the fixed target, CMA-ES stayed first at a mean rank of 2.71 against 3.86 for L-BFGS, and it was first in all 2,000 bootstrap resamples.{/c5} The order behind it moved. L-BFGS rose from tied fourth to second, ACOR fell from second to third, and IWO fell from third to the tied bottom. The best plain method still leads the best labelled one, 2.71 against 4.50 for ACOR. Table {ref:tab:cells} gives every function and method with at least one success.
+
+::table tab:cells cols=0.17,0.17,0.14,0.16,0.14,0.22 Successes out of 15 and aRT in evaluations on the shifted arm, with Wilson and bootstrap 95 percent intervals. Every cell not listed had 0 of 15 (Wilson 0.00 to 0.20) and infinite aRT. No method reached the target on Rastrigin or Schaffer F7.
+Function ¦ Method ¦ Successes ¦ Wilson 95 percent ¦ aRT ¦ Bootstrap 95 percent
+sphere ¦ L-BFGS ¦ 15 ¦ 0.80 to 1.00 ¦ 34 ¦ 34 to 34
+sphere ¦ CMA-ES ¦ 15 ¦ 0.80 to 1.00 ¦ 1,921 ¦ 1,885 to 1,962
+sphere ¦ ACOR ¦ 15 ¦ 0.80 to 1.00 ¦ 3,989 ¦ 3,897 to 4,075
+sphere ¦ PSO ¦ 15 ¦ 0.80 to 1.00 ¦ 8,817 ¦ 8,536 to 9,060
+sphere ¦ ABC ¦ 15 ¦ 0.80 to 1.00 ¦ 15,383 ¦ 14,933 to 15,835
+ellipsoid ¦ CMA-ES ¦ 15 ¦ 0.80 to 1.00 ¦ 6,456 ¦ 6,277 to 6,636
+Rosenbrock ¦ L-BFGS ¦ 15 ¦ 0.80 to 1.00 ¦ 1,489 ¦ 1,248 to 1,760
+Rosenbrock ¦ CMA-ES ¦ 15 ¦ 0.80 to 1.00 ¦ 9,772 ¦ 8,170 to 11,666
+Ackley ¦ CMA-ES ¦ 15 ¦ 0.80 to 1.00 ¦ 3,052 ¦ 2,985 to 3,125
+Ackley ¦ ACOR ¦ 15 ¦ 0.80 to 1.00 ¦ 6,356 ¦ 6,249 to 6,463
+Ackley ¦ PSO ¦ 7 ¦ 0.25 to 0.70 ¦ 37,560 ¦ 22,009 to 94,497
+Griewank ¦ L-BFGS ¦ 15 ¦ 0.80 to 1.00 ¦ 4,851 ¦ 2,942 to 7,239
+Griewank ¦ CMA-ES ¦ 15 ¦ 0.80 to 1.00 ¦ 6,909 ¦ 5,116 to 8,763
+Griewank ¦ ACOR ¦ 2 ¦ 0.04 to 0.38 ¦ 136,373 ¦ 46,276 to infinite
+::end
+
+Three things moved the ranks. The floor hid speed: L-BFGS reaches the target on the sphere in 34 evaluations and CMA-ES in 1,921, which the first rule scored as a tie. L-BFGS wins the sphere, Rosenbrock and Griewank on speed; CMA-ES alone solves the ellipsoid, wins Ackley outright and is second on the other three. Near misses now count as misses: IWO's median errors of about 1e-6 on the sphere and 4e-4 on Ackley earned it third place under the first rule, and none of its runs reached 1e-8. Differential evolution falls the same way. Last, no method reached the target on Rastrigin or Schaffer F7, so all ten tie at 5.5 on both. The first rule still told those two apart (CMA-ES best on Rastrigin with a median error of 6.96, ACOR best on Schaffer F7 at 0.031). The two all-tie functions squeeze every mean rank toward 5.5, and they are why GWO and random search climb: they tied, they did not improve. The intervals are narrow because success counts are mostly 0 or 15, so resampling runs barely moves a rank.
+
+## Bound handling {sec:bounds}
+Our CMA-ES evaluates each sample clipped to the box and updates its distribution with the unclipped sample plus the penalty of eq. {ref:eq:pen}. We ran two alternatives on the same seeds. Variant B repairs the sample: it clips, evaluates and updates with the clipped step. Variant C evaluates the unclipped point and updates as A does. About 2.5 percent of CMA-ES samples in A fell outside the box, from 1.2 percent on Rosenbrock to 3.7 percent on Rastrigin, and no run's best point lay outside it.
+
+::table tab:bounds cols=0.20,0.12,0.11,0.11,0.12,0.11,0.12,0.11 Three ways for CMA-ES to handle the box, on the same seeds. aRT in evaluations; the Rosenbrock and Griewank columns give successes out of 15, then aRT. The mean rank is the CMA-ES fixed-target rank with the other nine methods unchanged.
+Variant ¦ Successes of 105 ¦ Sphere aRT ¦ Ellipsoid aRT ¦ Rosenbrock ¦ Ackley aRT ¦ Griewank ¦ Mean rank
+A, as published ¦ 75 ¦ 1,921 ¦ 6,456 ¦ 15, 9,772 ¦ 3,052 ¦ 15, 6,909 ¦ 2.71
+B, repair ¦ 73 ¦ 1,865 ¦ 6,220 ¦ 15, 8,702 ¦ 3,011 ¦ 13, 6,754 ¦ 2.71
+C, evaluate unclipped ¦ 72 ¦ 1,890 ¦ 6,320 ¦ 14, 9,787 ¦ 3,040 ¦ 13, 7,928 ¦ 2.71
+::end
+
+The choice changes no rank. B is 3 to 4 percent faster on the sphere and the ellipsoid, at the edge of the run-to-run intervals. B and C each lose two Griewank runs and C one Rosenbrock run, differences that 15 runs cannot separate; the variants share seeds but drift apart after the first sample outside the box, so part of each difference is noise. The optima sit at most 70 from the centre of a box of half-width 100, so CMA-ES spends little time at the bounds once it has found the basin. This set-up does not test bound handling hard. A problem with its optimum on the boundary would.
+
+Table {ref:tab:target-forecast} sets the addendum's forecasts against the outcome. The forecast of a mean rank of 1.8 or better missed, because of the two functions no method solved and because L-BFGS is faster on three smooth functions.
+
+::table tab:target-forecast cols=0.52,0.24,0.24 Forecasts in the preregistration addendum, written before the fixed-target runs, against what they gave.
+Quantity ¦ Forecast ¦ Outcome
+Medians reproduce the 31 October rerun ¦ to 1e-9 relative ¦ exact
+CMA-ES rank under the fixed target ¦ first ¦ first in 2,000 of 2,000 resamples
+CMA-ES fixed-target mean rank ¦ at most 1.8 ¦ 2.71, missed
+L-BFGS second ¦ yes ¦ yes, 3.86
+ACOR drops at least one place ¦ yes ¦ yes, second to third
+Rastrigin and Schaffer F7 ¦ few successes ¦ none for any method
+Variants A, B and C ¦ within 0.5 in CMA-ES mean rank ¦ identical, 2.71
+::end
+
 # section Discussion {sec:discussion}
 The first run is a record of how a benchmark goes wrong in the direction of a popular story. CMA-ES was the strongest plain method we had, and our implementation of it was broken in a way that did not crash: it returned numbers, just bad ones. The labelled group won that run, and the error showed only because one score, 14 million on the ellipsoid, looked wrong. The rerun's preregistration was written after reading the first run, so the rerun is not blind to it; what keeps it honest is that its forecasts and kill condition were fixed before it ran.
 
@@ -131,15 +203,20 @@ The group result is weak. With random search counted as plain, the two groups' m
 - The methods were written from published descriptions by us, and the first run shows how such code can be wrong without crashing. Other bugs may remain.
 - PSO's biological label is thin: it is a velocity rule with a metaphor, and it predates the recent flood of such methods.
 - Scoring was done by our own code and checked by the same analyst who wrote it.
+- The fixed-target scoring uses one dimension, one budget and one target. COCO's practice is many targets and runtime distributions; a single target at 1e-8 throws away everything a method did on Rastrigin and Schaffer F7, where every method ties.
+- Our CMA-ES is our own code, not pycma: default population, plain restarts and no IPOP, the population-doubling restart of Auger and Hansen {cite:auger2005}. That is the most likely reason it fails Rastrigin in our runs.
+- L-BFGS uses finite-difference gradients, and every evaluation they spend is counted.
+- The fixed-target scoring covers the shifted arm only. The centred arm, the centre cheat and the no-free-lunch check were not run again.
 
 # section Verified {sec:verified}
-Verified: on 9 November 2026 every mean rank, group mean, gap, shift penalty, planted-check value, label-permutation mean, percentile and p value, and both no-free-lunch p values in this paper were re-read from the two runs' result files. The rerun's values match the findings ledger. The function count, dimension, budget, repeats, box, shift range and rank rules were read from the study's code and build files. Both preregistrations' SHA-256 hashes were recomputed from the locked files and match the hashes recorded in the result files. The first run left two result files with identical analysis values; this paper cites the later one. Both figures were drawn by a script that reads only the two result files. The study was not re-run for this paper. The literature in the introduction was found by searches run on 9 November 2026 and read at the level of abstracts and publisher pages; the full texts of the cited papers were not read.
+Verified: on 9 November 2026 every mean rank, group mean, gap, shift penalty, planted-check value, label-permutation mean, percentile and p value, and both no-free-lunch p values in this paper were re-read from the two runs' result files. The rerun's values match the findings ledger. The function count, dimension, budget, repeats, box, shift range and rank rules were read from the study's code and build files. Both preregistrations' SHA-256 hashes were recomputed from the locked files and match the hashes recorded in the result files. The first run left two result files with identical analysis values; this paper cites the later one. Both figures were drawn by a script that reads only the two result files. The study was not re-run for this paper, apart from the fixed-target scoring. On 18 November 2026 the fixed-target runs were checked as follows. The run script compared the code's SHA-256 with the study's manifest before any run: it matched. The analysis script compared the new runs' medians with the 31 October rerun's result file: largest relative difference 0, and the first rule's ranks identical. The published code and data were run again from the copies served with this page, in a clean folder: all 1,260 runs and every number in the analysis file came out identical, apart from wall-clock times. Every number in the fixed-target subsections was read from that analysis file. The aRT definition was read in section 4 of the COCO paper on 18 November 2026; the IPOP paper was not re-read. The literature in the introduction was found by searches run on 9 November 2026 and read at the level of abstracts and publisher pages; the full texts of the cited papers were not read.
 
 # section Corrections {sec:corrections}
 - 31 October 2026: the first run's headline, that the labelled group beat the plain group, came partly from a bug in our CMA-ES code and in the box handling of four other methods. The run is kept as it ran, and the rerun replaces its ranking.
 - 9 November 2026: the first run's preregistration voids its ranking when the no-free-lunch check fails to tie, and it failed. Our ledger entry did not say so; this paper does.
 - 9 November 2026: our ledger and write-up did not report that the group gap with random search sat inside the label-permutation range in both runs, nor that the rerun's forecast of PSO in the top three failed. This paper reports both.
 - 9 November 2026: first published version.
+- 18 November 2026: A second scoring of the shifted runs with a fixed target, suggested by Nikolaus Hansen, was added as two new subsections of the results. CMA-ES stays first under it (mean rank 2.71 against 3.86 for L-BFGS), the order behind it changes, and the first scoring is kept as it was.
 - 14 November 2026: A review of the published page found the title wider than the result. It said plain optimisers beat nature-inspired ones; the rerun's group contest gave a mean rank gap of 0.09, inside the label-permutation range (p 0.45), and two nature-inspired methods ranked second and third. The title and the summary now name what the method-level ranks show: CMA-ES first at 2.00, and the slime-mould and grey-wolf methods losing their lead when the optimum leaves the centre.
 
 # section Reproduction {sec:repro}
@@ -149,6 +226,7 @@ Verified: on 9 November 2026 every mean rank, group mean, gap, shift penalty, pl
 - Permute method labels within each function 2,000 times for the null distribution of the gap.
 - Rerun preregistration SHA-256: dbf3b21010c50808e984aa422ad15639f3fd93af28409e44eb4ca34c8cc53a54. Plan SHA-256: 234b69bfb9702c86b356344553e6e8de24169a843d994fdac870bbc0575bef39. Run 20261031T085324Z, seed 20261054.
 - First run preregistration SHA-256: 43edb85abe56495fcd70d726ef7b6f224917033ac10fefbd56fa9d1f2aa559c0. Plan SHA-256: e6fab72152c93c516de1f03d02999c1bcd691360bbef5123781902484f1059ba. Run 20261031T083319Z, seed 20261041.
+- Fixed-target scoring, 18 November 2026: addendum SHA-256 f647ed79dcd3a841fc1785c45adf23f6ce8190d6895bca90e72521292a8bf7a5, locked at 16:07 UTC before the runs. Seed 20261054. The code, every run and the analysis are published with this page {cite:f183code}; run python -I rerun.py 8 and then python -I analyse.py in that folder. The two scripts differ from the copies that ran only in the line that says where units.py and the 31 October result file sit. The 1,260 runs took 55 seconds on 8 worker processes of one desktop CPU.
 - Cost: the rerun's timing record gives 1,179 seconds for the analysis on one desktop CPU.
 
 # section Appendix A. The preregistered verdicts {sec:appendix}
@@ -188,3 +266,5 @@ Plain methods unbiased ¦ CMA-ES and differential evolution penalty below 0.5 ¦
 [kudela2022] Kudela, J. (2022). A critical problem in benchmarking and analysis of evolutionary computation methods. Nature Machine Intelligence 4, 1238-1245. doi:10.1038/s42256-022-00579-0
 [wolpert1997] Wolpert, D. H. and Macready, W. G. (1997). No free lunch theorems for optimization. IEEE Transactions on Evolutionary Computation 1(1), 67-82. doi:10.1109/4235.585893
 [auger2005] Auger, A. and Hansen, N. (2005). A restart CMA evolution strategy with increasing population size. Proceedings of the IEEE Congress on Evolutionary Computation 2005, 1769-1776. doi:10.1109/CEC.2005.1554902
+[hansen2016] Hansen, N., Auger, A., Brockhoff, D., Tušar, D. and Tušar, T. (2016). COCO: Performance Assessment. arXiv:1605.03560. doi:10.48550/arXiv.1605.03560
+[f183code] Harper, Z. D. (2026). F183 fixed-target scoring: code, runs, analysis and preregistration addendum, with SHA256SUMS. https://github.com/HarperZ9/HarperZ9.github.io/tree/main/findings/results/F183/fixed-target

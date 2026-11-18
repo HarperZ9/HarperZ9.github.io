@@ -1,0 +1,8 @@
+{
+  "date": "2026-11-18",
+  "note": "F183 page gains the fixed-target scoring (success at the optimum plus 1e-8, ranked by successes then aRT), its chart, and the published code and runs; route registry and site index text regenerated from the new standfirst.",
+  "paths": {
+    "site-index.html": "831b1f93eb59f8542cf9063b38c96cba49ead6484bb2af538415d76abf62aa12",
+    "system/routes.js": "b4377933f93ef8be9b1b9e2812579e9c4648ed8c1cd86e319e0509668de8d2a7"
+  }
+}

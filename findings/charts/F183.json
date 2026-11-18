@@ -16,6 +16,14 @@
    "sha256_copy": "855cee724aff05f768731f5fc6809bf4a2380f72f25c11aa6b953926843f5c8d",
    "href": "/findings/results/F183/rerun-result.json",
    "run": "20261031T085324Z"
+  },
+  {
+   "id": "fixed",
+   "name": "fixed-target/analysis.json",
+   "sha256_original": "5c6fb46f3a6659826c7bdacf9ce3f1d108f0188c031777e252fb7dce319157a0",
+   "sha256_copy": "5c6fb46f3a6659826c7bdacf9ce3f1d108f0188c031777e252fb7dce319157a0",
+   "href": "/findings/results/F183/fixed-target/analysis.json",
+   "run": "2026-11-18, seed 20261054"
   }
  ],
  "charts": [
@@ -603,6 +611,193 @@
      "1.56",
      "not computed",
      "not computed"
+    ]
+   ]
+  },
+  {
+   "key": "target",
+   "form": "dumbbell",
+   "at": "results",
+   "claims": [
+    "c5"
+   ],
+   "source": [
+    "fixed"
+   ],
+   "title": "Mean rank of each method on the shifted functions, first rule against the fixed target.",
+   "takeaway": "CMA-ES stays first under the fixed target, 2.71 against 3.86 for L-BFGS, and is first in 2,000 of 2,000 bootstrap resamples. L-BFGS rises to second, ACOR falls to third and IWO to the tied bottom.",
+   "units": "mean rank: each method is ranked on every function and the ranks are averaged over the 7 functions; 1 is best. The first rule ranks by median best error floored at 1e-12. The fixed target ranks by how many of 15 runs reach the optimum plus 1e-8, then by average runtime in evaluations.",
+   "n": "10 methods on 7 shifted and rotated test functions in 10 dimensions, 15 repeats each, 20,000 function evaluations per repeat; the same runs scored both ways",
+   "interval": "Bootstrap 95 percent intervals from 2,000 resamples of the 15 paired repeats are in the table. They cover run-to-run noise only, not the choice of the seven functions.",
+   "a_name": "first rule, median error",
+   "b_name": "fixed target, successes then aRT",
+   "baseline": "Random search: 9.86 under the first rule and 6.50 under the fixed target, where it ties with every method that never reaches the target.",
+   "threshold": "No method reached the target on Rastrigin or Schaffer F7, so all ten tie at 5.5 on both and every fixed-target mean rank is pulled toward 5.5.",
+   "axis": {
+    "label": "mean rank on the shifted functions, 1 is best",
+    "min": 1,
+    "max": 10
+   },
+   "columns": [
+    "Method",
+    "Group",
+    "First rule",
+    "Interval",
+    "Fixed target",
+    "Interval"
+   ],
+   "rows": [
+    {
+     "label": "CMA-ES",
+     "group": "Plain methods",
+     "a": 2.0,
+     "b": 2.7142857142857144,
+     "note": "2.00 under the first rule, 2.71 under the fixed target"
+    },
+    {
+     "label": "L-BFGS",
+     "group": "Plain methods",
+     "a": 4.571428571428571,
+     "b": 3.857142857142857,
+     "note": "4.57 under the first rule, 3.86 under the fixed target"
+    },
+    {
+     "label": "Differential evolution",
+     "group": "Plain methods",
+     "a": 5.357142857142857,
+     "b": 6.5,
+     "note": "5.36 under the first rule, 6.50 under the fixed target"
+    },
+    {
+     "label": "Random search",
+     "group": "Plain methods",
+     "a": 9.857142857142858,
+     "b": 6.5,
+     "note": "9.86 under the first rule, 6.50 under the fixed target"
+    },
+    {
+     "label": "ACOR (ant colony)",
+     "group": "Biologically labelled methods",
+     "a": 3.142857142857143,
+     "b": 4.5,
+     "note": "3.14 under the first rule, 4.50 under the fixed target"
+    },
+    {
+     "label": "PSO (particle swarm)",
+     "group": "Biologically labelled methods",
+     "a": 4.571428571428571,
+     "b": 5.357142857142857,
+     "note": "4.57 under the first rule, 5.36 under the fixed target"
+    },
+    {
+     "label": "ABC (bee colony)",
+     "group": "Biologically labelled methods",
+     "a": 5.857142857142857,
+     "b": 6.071428571428571,
+     "note": "5.86 under the first rule, 6.07 under the fixed target"
+    },
+    {
+     "label": "IWO (invasive weed)",
+     "group": "Biologically labelled methods",
+     "a": 4.428571428571429,
+     "b": 6.5,
+     "note": "4.43 under the first rule, 6.50 under the fixed target"
+    },
+    {
+     "label": "SMA (slime mould)",
+     "group": "Biologically labelled methods",
+     "a": 6.357142857142857,
+     "b": 6.5,
+     "note": "6.36 under the first rule, 6.50 under the fixed target"
+    },
+    {
+     "label": "GWO (grey wolf)",
+     "group": "Biologically labelled methods",
+     "a": 8.857142857142858,
+     "b": 6.5,
+     "note": "8.86 under the first rule, 6.50 under the fixed target"
+    }
+   ],
+   "table": [
+    [
+     "CMA-ES",
+     "plain",
+     "2.00",
+     "1.93 to 2.29",
+     "2.71",
+     "2.57 to 2.71"
+    ],
+    [
+     "L-BFGS",
+     "plain",
+     "4.57",
+     "4.36 to 4.93",
+     "3.86",
+     "3.86 to 4.00"
+    ],
+    [
+     "ACOR (ant colony)",
+     "labelled",
+     "3.14",
+     "2.86 to 3.86",
+     "4.50",
+     "4.50 to 5.00"
+    ],
+    [
+     "PSO (particle swarm)",
+     "labelled",
+     "4.57",
+     "3.79 to 5.00",
+     "5.36",
+     "5.29 to 5.36"
+    ],
+    [
+     "ABC (bee colony)",
+     "labelled",
+     "5.86",
+     "5.29 to 6.36",
+     "6.07",
+     "6.00 to 6.07"
+    ],
+    [
+     "Differential evolution",
+     "plain",
+     "5.36",
+     "5.14 to 5.71",
+     "6.50",
+     "6.43 to 6.50"
+    ],
+    [
+     "Random search",
+     "plain",
+     "9.86",
+     "9.86 to 9.86",
+     "6.50",
+     "6.43 to 6.50"
+    ],
+    [
+     "IWO (invasive weed)",
+     "labelled",
+     "4.43",
+     "4.21 to 5.00",
+     "6.50",
+     "6.43 to 6.50"
+    ],
+    [
+     "SMA (slime mould)",
+     "labelled",
+     "6.36",
+     "5.64 to 6.71",
+     "6.50",
+     "6.43 to 6.50"
+    ],
+    [
+     "GWO (grey wolf)",
+     "labelled",
+     "8.86",
+     "8.43 to 8.86",
+     "6.50",
+     "6.43 to 6.50"
     ]
    ]
   }

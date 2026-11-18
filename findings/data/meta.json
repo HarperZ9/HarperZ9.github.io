@@ -311,7 +311,7 @@
   "F183": {
    "slug": "shifted-optima-plain-beats-bio-optimisers",
    "title": "After we fixed our own bug, CMA-ES ranked first and two nature-inspired optimisers proved centre-biased",
-   "standfirst": "Our first benchmark said optimisers named after slime moulds, wolves, bees and ants beat the standard methods. The win came partly from a bug in our own CMA-ES code. Fixed, CMA-ES ranked first on the shifted tests, and two popular nature-inspired methods turned out to work well only when the answer sits at the centre of the search box. As groups, plain and nature-inspired methods did not differ (mean rank gap 0.09, p 0.45).",
+   "standfirst": "Scored with a fixed target of the optimum plus 1e-8, ranked by successes and then by evaluations spent, CMA-ES comes first at a mean rank of 2.71 against 3.86 for L-BFGS, and first in all 2,000 bootstrap resamples. Our first benchmark had said optimisers named after slime moulds, wolves, bees and ants beat the standard methods; that win came partly from a bug in our own CMA-ES code. Two popular nature-inspired methods work well only when the answer sits at the centre of the search box, and as groups plain and nature-inspired methods did not differ (mean rank gap 0.09, p 0.45).",
    "fields": [
     "cs-systems",
     "method"
