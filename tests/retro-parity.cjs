@@ -60,7 +60,12 @@ async function step(page, [what, sel, value]) {
   else if (what === 'click') { await loc.scrollIntoViewIfNeeded(); await loc.click(); await page.mouse.move(1, 1); }
   else if (what === 'set' || what === 'type') await loc.evaluate((el, v) => { el.value = String(v); el.dispatchEvent(new Event('input', { bubbles: true })); el.dispatchEvent(new Event('change', { bubbles: true })); }, value);
   else if (what === 'check') await loc.evaluate((el, v) => { el.checked = v === undefined || v === null ? !el.checked : !!v; el.dispatchEvent(new Event('input', { bubbles: true })); el.dispatchEvent(new Event('change', { bubbles: true })); }, value);
-  else throw new Error(`no step called ${what}`);
+  else if (what === 'file') await loc.setInputFiles(path.join(root, value));
+  else if (what === 'draw') {   // a stroke across the shown frame, held at the page's corner after
+    await page.locator('#shader .shd-stage').scrollIntoViewIfNeeded(); const box = await page.locator('#shader .shd-stage').boundingBox(); await page.mouse.move(box.x + box.width * 0.2, box.y + box.height * 0.3); await page.mouse.down();
+    for (let i = 1; i <= 24; i++) await page.mouse.move(box.x + box.width * (0.2 + i * 0.025), box.y + box.height * (0.3 + 0.4 * Math.sin(i / 4)));
+    await page.mouse.up(); await page.mouse.move(1, 1);
+  } else throw new Error(`no step called ${what}`);
 }
 const settle = (page) => page.evaluate(() => new Promise((done) => setTimeout(() => requestAnimationFrame(() => requestAnimationFrame(done)), 350)));
 const redraw = async (page) => { await page.evaluate(() => document.querySelector('#shader .rm-host').shaderDraw(1)); await settle(page); };
@@ -75,7 +80,7 @@ async function acts(page, key, sel, act, saved) {
   for (let i = 0; i < 12 && same < 2; i++) { await redraw(page); const p = await print(page, target); same = a && a.frame === p.frame ? same + 1 : 0; a = p; }
   if (sees.includes('frame')) assert.equal(same, 2, `${key}: the frame moved with no control touched, so a frame check here proves nothing`);
   a.saved = String(saved.n);
-  await step(page, [act.do, target, act.value]); await settle(page);
+  await step(page, [act.do, target, act.value]); await settle(page); if (act.wait) { await page.waitForTimeout(act.wait); await settle(page); }
   if (sees.includes('saved')) for (let i = 0; i < 30 && String(saved.n) === a.saved; i++) await page.waitForTimeout(100);
   const b = await print(page, target); b.saved = String(saved.n);
   const changed = Object.keys(a).filter((k) => a[k] !== b[k]);

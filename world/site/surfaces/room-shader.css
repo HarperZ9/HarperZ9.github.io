@@ -89,3 +89,27 @@
 @media (min-width: 901px) and (min-height: 640px) { .shd .shd-see { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 4.5rem); max-height: calc(100vh - 5.5rem); overflow-y: auto; overscroll-behavior: contain; } }
 @media (max-width: 900px) { .shd .shd-stage { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 2; } }
 .shd label output { flex: none; white-space: nowrap; overflow-wrap: normal; }
+/* What the room draws from: five tabs, then the chosen source's own controls. */
+.shd .shd-sources { margin: .4rem 0 .6rem; }
+.shd .shd-src-h { margin: 0 0 .3rem; font-weight: 600; }
+.shd .shd-tabs { display: flex; flex-wrap: wrap; gap: .4rem; }
+.shd .shd-tabs [aria-selected="true"] { background: #f4efe6; color: #151310; border-color: #f4efe6; }
+.shd .shd-srcpanel { display: grid; grid-template-columns: minmax(0, 1fr); margin-top: .4rem; }
+.shd .shd-srcpanel[hidden] { display: none; }
+.shd .shd-srcpanel label { font-weight: 400; margin: .5rem 0 .1rem; }
+.shd .shd-srcpanel input[type="range"] { width: 100%; min-height: 32px; margin: 0; accent-color: currentColor; }
+.shd .shd-srcpanel input[type="text"], .shd .shd-lib input[type="text"] { min-height: 44px; font: inherit; padding: 0 .6rem; border: 1px solid currentColor; background: transparent; color: inherit; }
+.shd .shd-srcpanel input[type="color"] { width: 44px; height: 44px; padding: 0; border: 1px solid currentColor; background: transparent; }
+.shd .shd-src-say:empty, .shd .shd-pre-count:empty { display: none; }
+.shd .shd-src-say, .shd .shd-pre-count { margin: .3rem 0 0; font-size: .92em; }
+.shd .shd-lib input[type="text"] { flex: 1 0 100%; }
+/* The contact sheet: every preset as a still, in a scrolling grid of buttons. */
+.shd .shd-sheet { flex: 1 0 100%; display: grid; grid-template-columns: repeat(auto-fill, minmax(6.5rem, 1fr)); gap: .4rem; max-height: 26rem; overflow-y: auto; }
+.shd .shd-sheet[hidden] { display: none; }
+.shd .shd-sheet button { display: grid; gap: .2rem; padding: .3rem; min-height: 0; font-size: .8em; font-weight: 400; }
+.shd .shd-sheet canvas { width: 100%; height: auto; aspect-ratio: 1; background: #000; }
+.shd .shd-stage:fullscreen { display: grid; place-items: center; background: #000; }
+.shd .shd-stage:fullscreen > canvas { width: min(100vw, 160vh); }
+.shd .shd-fs-hud { display: none; }
+.shd .shd-stage:fullscreen .shd-fs-hud { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1rem; position: absolute; left: 1rem; right: 1rem; bottom: calc(env(safe-area-inset-bottom, 0px) + 1rem); margin: 0; padding: .5rem .8rem; background: rgb(8 12 18 / .78); color: #f4efe6; }
+@media (max-width: 900px) { .shd .shd-sources { order: 2; } }

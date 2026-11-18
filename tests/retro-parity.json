@@ -16,15 +16,6 @@
     ]
    }
   },
-  "data-src=shader": {
-   "room": ".shd-frame",
-   "how": "the room is the studio's shader source; its starts pick the shader",
-   "act": {
-    "do": "set",
-    "target": "#shd-start",
-    "value": "bands"
-   }
-  },
   "re-preset": {
    "room": "#shd-preset",
    "how": "the preset library, after its press",
@@ -143,6 +134,249 @@
    "act": {
     "do": "click",
     "sees": "stored"
+   }
+  },
+  "data-src=plate": {
+   "room": "[data-src-tab=\"plate\"]",
+   "how": "the source tabs: the plate is the base, and the layers and the rack work on it",
+   "act": {
+    "do": "click",
+    "wait": 2500
+   }
+  },
+  "re-seed": {
+   "room": "#shd-plate-seed",
+   "act": {
+    "do": "type",
+    "value": "a-new-seed",
+    "wait": 1500
+   }
+  },
+  "re-layers": {
+   "room": "#shd-plate-kind",
+   "how": "the plate instrument",
+   "act": {
+    "do": "set",
+    "value": "clifford",
+    "wait": 1500
+   }
+  },
+  "re-reseed": {
+   "room": "#shd-plate-reseed",
+   "act": {
+    "do": "click",
+    "wait": 1500
+   }
+  },
+  "data-src=upload": {
+   "room": "[data-src-tab=\"upload\"]",
+   "act": {
+    "do": "click"
+   }
+  },
+  "re-file": {
+   "room": "#shd-up-file",
+   "act": {
+    "do": "file",
+    "value": "img/og/p/retro.jpg",
+    "wait": 800
+   }
+  },
+  "data-src=draw": {
+   "room": "[data-src-tab=\"draw\"]",
+   "act": {
+    "do": "click"
+   }
+  },
+  "re-brush": {
+   "room": "#shd-brush",
+   "act": {
+    "do": "set",
+    "value": 40,
+    "sees": "state"
+   }
+  },
+  "re-ink": {
+   "room": "#shd-ink",
+   "act": {
+    "do": "set",
+    "value": "#ff3300",
+    "sees": "state"
+   }
+  },
+  "re-brushmode": {
+   "room": "#shd-brush-mode",
+   "act": {
+    "do": "set",
+    "value": "wet",
+    "sees": "state"
+   }
+  },
+  "re-erase": {
+   "room": "#shd-erase",
+   "act": {
+    "do": "check",
+    "value": true,
+    "sees": "state",
+    "after": [
+     [
+      "check",
+      "#shd-erase",
+      false
+     ]
+    ]
+   }
+  },
+  "re-sym": {
+   "room": "#shd-sym",
+   "act": {
+    "do": "set",
+    "value": "quad",
+    "sees": "state"
+   }
+  },
+  "re-undo-draw": {
+   "room": "#shd-draw-undo",
+   "how": "one stroke back",
+   "act": {
+    "do": "click",
+    "before": [
+     [
+      "draw"
+     ]
+    ]
+   }
+  },
+  "re-clear-draw": {
+   "room": "#shd-draw-clear",
+   "act": {
+    "do": "click",
+    "before": [
+     [
+      "draw"
+     ]
+    ]
+   }
+  },
+  "data-src=scope": {
+   "room": "[data-src-tab=\"scope\"]",
+   "act": {
+    "do": "click",
+    "wait": 1200
+   }
+  },
+  "re-scope-persist": {
+   "room": "#shd-persist",
+   "act": {
+    "do": "set",
+    "value": 10,
+    "sees": "state"
+   }
+  },
+  "re-beam-draw": {
+   "room": "#shd-beam",
+   "act": {
+    "do": "check",
+    "value": true,
+    "sees": "state"
+   }
+  },
+  "re-beam-clear": {
+   "room": "#shd-beam-free",
+   "how": "the drawn figure released; the beam idles again",
+   "act": {
+    "do": "click",
+    "before": [
+     [
+      "draw"
+     ]
+    ]
+   }
+  },
+  "data-src=shader": {
+   "room": "[data-src-tab=\"shader\"]",
+   "how": "back to the shader being written",
+   "act": {
+    "do": "click"
+   }
+  },
+  "re-preset-filter": {
+   "room": "#shd-pre-filter",
+   "act": {
+    "do": "type",
+    "value": "gold",
+    "sees": "said",
+    "after": [
+     [
+      "type",
+      "#shd-pre-filter",
+      ""
+     ]
+    ]
+   }
+  },
+  "re-prev": {
+   "room": "#shd-pre-prev",
+   "act": {
+    "do": "click"
+   }
+  },
+  "re-next": {
+   "room": "#shd-pre-next",
+   "act": {
+    "do": "click"
+   }
+  },
+  "re-lucky": {
+   "room": "#shd-pre-lucky",
+   "act": {
+    "do": "click",
+    "sees": [
+     "frame",
+     "state"
+    ],
+    "after": [
+     [
+      "set",
+      "#shd-preset",
+      "Gold Ground, Lamp Moving"
+     ]
+    ]
+   },
+   "how": "a random preset; the test then sets a still one again, since some presets move with the frame count"
+  },
+  "re-sheet-toggle": {
+   "room": "#shd-sheet-toggle",
+   "act": {
+    "do": "click",
+    "sees": "said"
+   }
+  },
+  "dyn:sheet-cell": {
+   "room": "[data-sheet]",
+   "act": {
+    "do": "click",
+    "target": "[data-sheet=\"7\"]"
+   }
+  },
+  "re-share": {
+   "room": "#shd-share",
+   "act": {
+    "do": "click",
+    "sees": "said"
+   }
+  },
+  "re-fullscreen": {
+   "room": "#shd-full",
+   "act": {
+    "do": "click",
+    "sees": "pressed",
+    "after": [
+     [
+      "click",
+      "[data-full-leave]"
+     ]
+    ]
    }
   },
   "re-palette": {
@@ -493,32 +727,6 @@
   }
  },
  "missing": [
-  "re-fullscreen",
-  "data-src=plate",
-  "data-src=upload",
-  "data-src=draw",
-  "data-src=scope",
-  "re-seed",
-  "re-layers",
-  "re-reseed",
-  "re-file",
-  "re-brush",
-  "re-ink",
-  "re-brushmode",
-  "re-erase",
-  "re-undo-draw",
-  "re-clear-draw",
-  "re-sym",
-  "re-scope-persist",
-  "re-beam-draw",
-  "re-beam-clear",
-  "re-preset-filter",
-  "re-prev",
-  "re-next",
-  "re-lucky",
-  "re-sheet-toggle",
-  "dyn:sheet-cell",
-  "re-share",
   "re-src-instr",
   "re-src-mic",
   "re-src-file",
