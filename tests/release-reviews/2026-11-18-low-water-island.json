@@ -1,0 +1,9 @@
+{
+  "date": "2026-11-18",
+  "note": "Low Water gains the island section (#island): the walk from superframe cac34166 opened on a press, the plate, the fifteen stills and their read. index.html changes only by the world asset revision stamp; site-index.html and system/routes.js carry the four new headings (The island, The plate, Fifteen stills, read plainly, How the island is made) in the Low Water search text. Reviewed against the word diff: no other change. A press downloads 3,912,228 bytes in 94 requests (stated on the page as 4.0 MB), measured by tests/low-water-walk.cjs in installed Chrome on an RTX 4090. Frame times, two runs, 18 November 2026, GPU shared with other jobs (43 to 89 percent busy by nvidia-smi): rAF gap over 300 frames, median 8.3 ms at 1280x720 and 2560x1440 in the forest and the town, worst 41.7 ms (1280) and 33.4 ms (2560); GPU time for 120 frames back to back, forest 2.16 and 3.91 ms at 1280x720, 6.71 and 7.33 ms at 2560x1440.",
+  "paths": {
+    "index.html": "3bbab83bf40b1f06cc92988f0754665377c82edc2d3ba509bc17b6f8a0370565",
+    "site-index.html": "6ea2ce4ff2f0cc879c302d2e67d3e181a348e7bcf39650c3225c67865cb3f104",
+    "system/routes.js": "d74c16e189ca31e1af6b4989202abe29ad46334c94b5181bf4613556d38a47be"
+  }
+}
