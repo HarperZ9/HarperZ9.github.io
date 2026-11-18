@@ -1,0 +1,15 @@
+<!-- writing-profile: research -->
+# PREREG O4b addendum A1: fixed-target rerun for F183 (written 2026-11-18, before the rerun)
+
+Why. The reply sent to Nikolaus Hansen on 2026-11-17 promised a ranking with a success threshold of f_opt + 1e-8 and ties broken by evaluations to reach it. O4b ranked methods on rounded log10 median error floored at 1e-12, so every method under 1e-12 tied and speed counted for nothing.
+
+Seen before this lock: all O4b results (result.json of run 20261031T085324Z). Nothing of the rerun.
+
+Same as O4b. Code units.py at sha256 4d84c04e68709f3bf77e3fea7c713681b569b08a7308979fb9bc403b25b7f798, loaded read-only. Seed 20261054 through numpy default_rng, the same draw order, so the shifted grid has the same shifts, rotations and method seeds. d 10, budget 20,000, 15 repeats, seven shifted and rotated functions, ten methods. f_opt is 0 on every function.
+
+New. Each evaluation is counted. A run succeeds when an evaluated value reaches 1e-8 or less; its runtime is the count at that evaluation. A failed run's runtime is its total evaluations. Per function and method: successes out of 15 and aRT (COCO, Hansen et al. 2016, section 4: all evaluations in failed runs plus runtimes of successful runs, divided by the number of successes; infinite with no success). Per function, rank by successes (more is better), then aRT (less is better), equal pairs averaged. Mean over the seven functions. Intervals: Wilson 95% on success rate; 95% percentile bootstrap (2,000 resamples of the 15 paired repeats) on aRT and mean rank.
+
+Clipping. Run CMA-ES three ways: A as in O4b (evaluate the clipped point, update with the unclipped sample plus quadratic penalty); B repair (evaluate the clipped point and update with it, no penalty term active); C evaluate the unclipped point, update as A. Count how many CMA-ES samples fall outside the box.
+
+Forecasts. Reproduction: rerun medians match O4b to 1e-9 relative, and the old rank rule gives the O4b ranks. CMA-ES ranks first under the new rule, mean rank at most 1.8. L-BFGS second. ACOR drops at least one place, since its zeros on sphere and ackley tie with CMA-ES under the floor and lose on speed. Rastrigin and Schaffer have no successes for most methods. A and C differ by less than 0.5 in CMA-ES mean rank; B is slower on functions whose optimum sits near the box edge, and none does here (shifts within 70), so B is within 0.5 too.
+Kill. If reproduction fails, stop and report that before any ranking.

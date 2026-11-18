@@ -5,7 +5,7 @@
   "id": "F183",
   "kind": "finding",
   "title": "After we fixed our own bug, CMA-ES ranked first and two nature-inspired optimisers proved centre-biased",
-  "standfirst": "Our first benchmark said optimisers named after slime moulds, wolves, bees and ants beat the standard methods. The win came partly from a bug in our own CMA-ES code. Fixed, CMA-ES ranked first on the shifted tests, and two popular nature-inspired methods turned out to work well only when the answer sits at the centre of the search box. As groups, plain and nature-inspired methods did not differ (mean rank gap 0.09, p 0.45).",
+  "standfirst": "Scored with a fixed target of the optimum plus 1e-8, ranked by successes and then by evaluations spent, CMA-ES comes first at a mean rank of 2.71 against 3.86 for L-BFGS, and first in all 2,000 bootstrap resamples. Our first benchmark had said optimisers named after slime moulds, wolves, bees and ants beat the standard methods; that win came partly from a bug in our own CMA-ES code. Two popular nature-inspired methods work well only when the answer sits at the centre of the search box, and as groups plain and nature-inspired methods did not differ (mean rank gap 0.09, p 0.45).",
   "date_found": "2026-10-31",
   "fields": [
    "cs-systems",
@@ -35,7 +35,7 @@
     "title": "What this means for a reader",
     "role": "lead",
     "paragraphs": [
-     "When a benchmark says a new nature-inspired optimiser wins, check two things: whether the test functions have their best point at the centre of the search box, and whether the standard methods it beat were run correctly. Our own first run failed the second check, and the result looked like a win for the nature-inspired group. Two popular methods in that group did well only when the answer sat at the centre. A good result on centred test functions can come from a method that guesses the centre."
+     "When a benchmark says a new nature-inspired optimiser wins, check two things: whether the test functions have their best point at the centre of the search box, and whether the standard methods it beat were run correctly. Our own first run failed the second check, and the result looked like a win for the nature-inspired group. Two popular methods in that group did well only when the answer sat at the centre. A good result on centred test functions can come from a method that guesses the centre. A stricter score, which counts a run only when it gets within 1e-8 of the optimum and then asks how fast it got there, keeps CMA-ES first and moves L-BFGS up to second."
     ]
    },
    {
@@ -43,7 +43,7 @@
     "title": "Abstract",
     "role": "argument",
     "paragraphs": [
-     "Optimisers named after slime moulds, wolves, bees and ants are often reported to beat standard methods. Our first preregistered benchmark seemed to agree: the biologically labelled group had the better mean rank, 5.04 against 6.20. Tracing a poor CMA-ES score showed a bug in our own code, and several other methods had a related fault. We kept that run, fixed the box handling for every method, wrote a new preregistration and ran again on seven test functions in 10 dimensions. {c1}After the fix, CMA-ES ranked first on the shifted functions with a mean rank of 2.00, and the best method with a biological label, ACOR, ranked second at 3.14.{/c1} {c2}Moving the optimum away from the centre cost the slime mould method 12.1 and the grey wolf method 13.6 decades of median error, while ACOR, IWO and PSO lost 0.0006, 0.07 and 0.42 decades.{/c2} {c3}Without random search the plain group's mean rank was 3.98 against 5.54 for the biologically labelled group; with random search counted as plain the groups were 5.45 and 5.54, a gap that sat inside the label-permutation range (p 0.45).{/c3} The group contest does not settle much in either direction. The method-level results do."
+     "Optimisers named after slime moulds, wolves, bees and ants are often reported to beat standard methods. Our first preregistered benchmark seemed to agree: the biologically labelled group had the better mean rank, 5.04 against 6.20. Tracing a poor CMA-ES score showed a bug in our own code, and several other methods had a related fault. We kept that run, fixed the box handling for every method, wrote a new preregistration and ran again on seven test functions in 10 dimensions. {c1}After the fix, CMA-ES ranked first on the shifted functions with a mean rank of 2.00, and the best method with a biological label, ACOR, ranked second at 3.14.{/c1} {c2}Moving the optimum away from the centre cost the slime mould method 12.1 and the grey wolf method 13.6 decades of median error, while ACOR, IWO and PSO lost 0.0006, 0.07 and 0.42 decades.{/c2} {c3}Without random search the plain group's mean rank was 3.98 against 5.54 for the biologically labelled group; with random search counted as plain the groups were 5.45 and 5.54, a gap that sat inside the label-permutation range (p 0.45).{/c3} The group contest does not settle much in either direction. The method-level results do. On 18 November 2026 we scored the same grid again with a success target of the optimum plus 1e-8, ranking methods by successes and then by evaluations spent. {c5}Under the fixed target, CMA-ES stayed first at a mean rank of 2.71 against 3.86 for L-BFGS, and it was first in all 2,000 bootstrap resamples.{/c5}"
     ]
    },
    {
@@ -72,7 +72,7 @@
     "title": "Data and provenance",
     "role": "argument",
     "paragraphs": [
-     "No external data were used. All results come from our own implementations of ten optimisers and seven standard test functions, run on one desktop computer. The method update rules were written from their published descriptions with default settings and no tuning. Every number in this paper is read from the two runs' result files."
+     "No external data were used. All results come from our own implementations of ten optimisers and seven standard test functions, run on one desktop computer. The method update rules were written from their published descriptions with default settings and no tuning. Every number in this paper is read from the two runs' result files, apart from the fixed-target scoring, whose numbers are read from its own analysis file. That scoring's code, all 1,260 runs, its analysis and its preregistration addendum are published in the site's repository beside this page, under the repository's licence, which lets anyone read and review them {cite:r7}."
     ]
    },
    {
@@ -126,7 +126,24 @@
      "::table tab:groups cols=0.3,0.14,0.14,0.12,0.3 Group mean ranks on the shifted arm and the label-permutation control, 2,000 draws per run. The interval is the 5th to 95th percentile of the permuted gaps.\nComparison ¦ Plain ¦ Labelled ¦ Gap ¦ Permuted interval, p\nFirst run, random counted as plain ¦ 6.20 ¦ 5.04 ¦ -1.16 ¦ -1.19 to 1.19, p 0.95\nRerun, random counted as plain ¦ 5.45 ¦ 5.54 ¦ 0.09 ¦ -1.22 to 1.16, p 0.45\nRerun, random left out ¦ 3.98 ¦ 5.54 ¦ 1.56 ¦ not computed\n::end",
      "{c4}In the first run the labelled group's lead of 1.16 ranks came partly from our bug and partly from counting random search as plain, and it sat inside its own label-permutation range.{/c4} The first run's preregistration had a kill condition we did not apply when we first read it: if the no-free-lunch check fails to tie, the ranking is void. That check failed (p 0.0015), so by its own rule the first run's ranking was {g:void}void{/g}. In the rerun the methods tied on that function, at p 0.13 on the best value and p 0.74 on the best of the first 500 distinct cells. The rerun's preregistration traced the first run's failure to converged methods revisiting the same cells, which the theorem does not count; in the rerun IWO visited a median of 2,870 distinct cells in 5,000 evaluations, against 5,000 for random search and ACOR.",
      "Table {ref:tab:forecast} sets the rerun's forecasts against its outcomes.",
-     "::table tab:forecast cols=0.52,0.24,0.24 Forecasts in the rerun's preregistration against what the rerun gave.\nQuantity ¦ Forecast ¦ Outcome\nCMA-ES mean rank ¦ at most 3 ¦ 2.00\nPSO among the top three ¦ yes ¦ no, 4.57\nPlain mean rank, random left out ¦ 3.8 ¦ 3.98\nLabelled mean rank ¦ 5.0 ¦ 5.54\nBest plain ahead of best labelled ¦ at least 0.3 ranks ¦ 1.14 ranks\nSMA and GWO shift penalty ¦ above 3 decades ¦ 12.06 and 13.56\nNo-free-lunch tie on distinct cells ¦ p above 0.01 ¦ p 0.74\nL-BFGS in the top two on smooth functions ¦ yes ¦ not scored\n::end"
+     "::table tab:forecast cols=0.52,0.24,0.24 Forecasts in the rerun's preregistration against what the rerun gave.\nQuantity ¦ Forecast ¦ Outcome\nCMA-ES mean rank ¦ at most 3 ¦ 2.00\nPSO among the top three ¦ yes ¦ no, 4.57\nPlain mean rank, random left out ¦ 3.8 ¦ 3.98\nLabelled mean rank ¦ 5.0 ¦ 5.54\nBest plain ahead of best labelled ¦ at least 0.3 ranks ¦ 1.14 ranks\nSMA and GWO shift penalty ¦ above 3 decades ¦ 12.06 and 13.56\nNo-free-lunch tie on distinct cells ¦ p above 0.01 ¦ p 0.74\nL-BFGS in the top two on smooth functions ¦ yes ¦ not scored\n::end",
+     "## Second scoring: a fixed target and average runtime {sec:target}",
+     "On 18 November 2026 we scored the shifted arm again under a rule Nikolaus Hansen suggested to us in correspondence: a {g:fixed-target}fixed target{/g} of the optimum plus 1e-8, with methods ranked by how many runs reach it and then by how many evaluations they spend. He has not reviewed this rerun, and the result and any error in it are ours. The first rule floors errors at {m:10^{-12}}, so every method below the floor ties and speed counts for nothing; five methods tied on the sphere.",
+     "The runs were repeated with the same code, checked by its SHA-256 before any run, the same seed (20261054) and so the same shifts, rotations and method seeds, the same budget of 20,000 evaluations and the same 15 repeats. With ten methods and two CMA-ES variants on seven functions that is 1,260 runs. A wrapper counts every evaluation. A run succeeds at its first evaluated value of 1e-8 or less, and its runtime {m:t_i} is that evaluation's index; a failed run's runtime is the evaluations it used, 20,000 here. The {g:art}average runtime{/g} is the measure defined in section 4 of the COCO performance-assessment paper {cite:r6},",
+     "$$ aRT = \\frac{1}{N_s} \\sum_i t_i {eq:art}",
+     "where the sum runs over all 15 runs and {m:N_s} is the number of successful runs. With no success it is infinite. On each function methods are ranked by successes, more first, then by aRT, smaller first, and methods equal on both share their average rank. The fixed-target mean rank is the mean over the seven functions, as in eq. {ref:eq:rank}.",
+     "Intervals are 95 percent: a {g:wilson}Wilson interval{/g} on each success rate, and a {g:bootstrap}bootstrap interval{/g} from 2,000 resamples of the 15 paired repeats on aRT and on mean rank. The mean-rank interval covers run-to-run noise only. It says nothing about which seven functions were chosen, and with seven functions that is the larger uncertainty. An addendum to the rerun's preregistration was hash-locked before these runs started, with forecasts and a kill condition: if the runs failed to reproduce the 31 October rerun, the study stopped before any ranking.",
+     "Reproduction held. Every median best error in the new runs equals the 31 October rerun's exactly (largest relative difference 0), and the first rule applied to the new runs gives the ranks in Table {ref:tab:ranks}.",
+     "::table tab:target cols=0.26,0.12,0.12,0.19,0.12,0.19 Mean rank on the shifted arm under the first rule (median error, floored at 1e-12) and under the fixed target (successes, then aRT), with bootstrap 95 percent intervals over the 15 repeats. 1 is best.\nMethod ¦ Group ¦ First rule ¦ Interval ¦ Fixed target ¦ Interval\nCMA-ES ¦ plain ¦ 2.00 ¦ 1.93 to 2.29 ¦ 2.71 ¦ 2.57 to 2.71\nL-BFGS ¦ plain ¦ 4.57 ¦ 4.36 to 4.93 ¦ 3.86 ¦ 3.86 to 4.00\nACOR (ant colony) ¦ labelled ¦ 3.14 ¦ 2.86 to 3.86 ¦ 4.50 ¦ 4.50 to 5.00\nPSO (particle swarm) ¦ labelled ¦ 4.57 ¦ 3.79 to 5.00 ¦ 5.36 ¦ 5.29 to 5.36\nABC (bee colony) ¦ labelled ¦ 5.86 ¦ 5.29 to 6.36 ¦ 6.07 ¦ 6.00 to 6.07\nDifferential evolution ¦ plain ¦ 5.36 ¦ 5.14 to 5.71 ¦ 6.50 ¦ 6.43 to 6.50\nIWO (invasive weed) ¦ labelled ¦ 4.43 ¦ 4.21 to 5.00 ¦ 6.50 ¦ 6.43 to 6.50\nSMA (slime mould) ¦ labelled ¦ 6.36 ¦ 5.64 to 6.71 ¦ 6.50 ¦ 6.43 to 6.50\nGWO (grey wolf) ¦ labelled ¦ 8.86 ¦ 8.43 to 8.86 ¦ 6.50 ¦ 6.43 to 6.50\nRandom search ¦ plain ¦ 9.86 ¦ 9.86 to 9.86 ¦ 6.50 ¦ 6.43 to 6.50\n::end",
+     "{c5}Under the fixed target, CMA-ES stayed first at a mean rank of 2.71 against 3.86 for L-BFGS, and it was first in all 2,000 bootstrap resamples.{/c5} The order behind it moved. L-BFGS rose from tied fourth to second, ACOR fell from second to third, and IWO fell from third to the tied bottom. The best plain method still leads the best labelled one, 2.71 against 4.50 for ACOR. Table {ref:tab:cells} gives every function and method with at least one success.",
+     "::table tab:cells cols=0.17,0.17,0.14,0.16,0.14,0.22 Successes out of 15 and aRT in evaluations on the shifted arm, with Wilson and bootstrap 95 percent intervals. Every cell not listed had 0 of 15 (Wilson 0.00 to 0.20) and infinite aRT. No method reached the target on Rastrigin or Schaffer F7.\nFunction ¦ Method ¦ Successes ¦ Wilson 95 percent ¦ aRT ¦ Bootstrap 95 percent\nsphere ¦ L-BFGS ¦ 15 ¦ 0.80 to 1.00 ¦ 34 ¦ 34 to 34\nsphere ¦ CMA-ES ¦ 15 ¦ 0.80 to 1.00 ¦ 1,921 ¦ 1,885 to 1,962\nsphere ¦ ACOR ¦ 15 ¦ 0.80 to 1.00 ¦ 3,989 ¦ 3,897 to 4,075\nsphere ¦ PSO ¦ 15 ¦ 0.80 to 1.00 ¦ 8,817 ¦ 8,536 to 9,060\nsphere ¦ ABC ¦ 15 ¦ 0.80 to 1.00 ¦ 15,383 ¦ 14,933 to 15,835\nellipsoid ¦ CMA-ES ¦ 15 ¦ 0.80 to 1.00 ¦ 6,456 ¦ 6,277 to 6,636\nRosenbrock ¦ L-BFGS ¦ 15 ¦ 0.80 to 1.00 ¦ 1,489 ¦ 1,248 to 1,760\nRosenbrock ¦ CMA-ES ¦ 15 ¦ 0.80 to 1.00 ¦ 9,772 ¦ 8,170 to 11,666\nAckley ¦ CMA-ES ¦ 15 ¦ 0.80 to 1.00 ¦ 3,052 ¦ 2,985 to 3,125\nAckley ¦ ACOR ¦ 15 ¦ 0.80 to 1.00 ¦ 6,356 ¦ 6,249 to 6,463\nAckley ¦ PSO ¦ 7 ¦ 0.25 to 0.70 ¦ 37,560 ¦ 22,009 to 94,497\nGriewank ¦ L-BFGS ¦ 15 ¦ 0.80 to 1.00 ¦ 4,851 ¦ 2,942 to 7,239\nGriewank ¦ CMA-ES ¦ 15 ¦ 0.80 to 1.00 ¦ 6,909 ¦ 5,116 to 8,763\nGriewank ¦ ACOR ¦ 2 ¦ 0.04 to 0.38 ¦ 136,373 ¦ 46,276 to infinite\n::end",
+     "Three things moved the ranks. The floor hid speed: L-BFGS reaches the target on the sphere in 34 evaluations and CMA-ES in 1,921, which the first rule scored as a tie. L-BFGS wins the sphere, Rosenbrock and Griewank on speed; CMA-ES alone solves the ellipsoid, wins Ackley outright and is second on the other three. Near misses now count as misses: IWO's median errors of about 1e-6 on the sphere and 4e-4 on Ackley earned it third place under the first rule, and none of its runs reached 1e-8. Differential evolution falls the same way. Last, no method reached the target on Rastrigin or Schaffer F7, so all ten tie at 5.5 on both. The first rule still told those two apart (CMA-ES best on Rastrigin with a median error of 6.96, ACOR best on Schaffer F7 at 0.031). The two all-tie functions squeeze every mean rank toward 5.5, and they are why GWO and random search climb: they tied, they did not improve. The intervals are narrow because success counts are mostly 0 or 15, so resampling runs barely moves a rank.",
+     "## Bound handling {sec:bounds}",
+     "Our CMA-ES evaluates each sample clipped to the box and updates its distribution with the unclipped sample plus the penalty of eq. {ref:eq:pen}. We ran two alternatives on the same seeds. Variant B repairs the sample: it clips, evaluates and updates with the clipped step. Variant C evaluates the unclipped point and updates as A does. About 2.5 percent of CMA-ES samples in A fell outside the box, from 1.2 percent on Rosenbrock to 3.7 percent on Rastrigin, and no run's best point lay outside it.",
+     "::table tab:bounds cols=0.2,0.12,0.11,0.11,0.12,0.11,0.12,0.11 Three ways for CMA-ES to handle the box, on the same seeds. aRT in evaluations; the Rosenbrock and Griewank columns give successes out of 15, then aRT. The mean rank is the CMA-ES fixed-target rank with the other nine methods unchanged.\nVariant ¦ Successes of 105 ¦ Sphere aRT ¦ Ellipsoid aRT ¦ Rosenbrock ¦ Ackley aRT ¦ Griewank ¦ Mean rank\nA, as published ¦ 75 ¦ 1,921 ¦ 6,456 ¦ 15, 9,772 ¦ 3,052 ¦ 15, 6,909 ¦ 2.71\nB, repair ¦ 73 ¦ 1,865 ¦ 6,220 ¦ 15, 8,702 ¦ 3,011 ¦ 13, 6,754 ¦ 2.71\nC, evaluate unclipped ¦ 72 ¦ 1,890 ¦ 6,320 ¦ 14, 9,787 ¦ 3,040 ¦ 13, 7,928 ¦ 2.71\n::end",
+     "The choice changes no rank. B is 3 to 4 percent faster on the sphere and the ellipsoid, at the edge of the run-to-run intervals. B and C each lose two Griewank runs and C one Rosenbrock run, differences that 15 runs cannot separate; the variants share seeds but drift apart after the first sample outside the box, so part of each difference is noise. The optima sit at most 70 from the centre of a box of half-width 100, so CMA-ES spends little time at the bounds once it has found the basin. This set-up does not test bound handling hard. A problem with its optimum on the boundary would.",
+     "Table {ref:tab:target-forecast} sets the addendum's forecasts against the outcome. The forecast of a mean rank of 1.8 or better missed, because of the two functions no method solved and because L-BFGS is faster on three smooth functions.",
+     "::table tab:target-forecast cols=0.52,0.24,0.24 Forecasts in the preregistration addendum, written before the fixed-target runs, against what they gave.\nQuantity ¦ Forecast ¦ Outcome\nMedians reproduce the 31 October rerun ¦ to 1e-9 relative ¦ exact\nCMA-ES rank under the fixed target ¦ first ¦ first in 2,000 of 2,000 resamples\nCMA-ES fixed-target mean rank ¦ at most 1.8 ¦ 2.71, missed\nL-BFGS second ¦ yes ¦ yes, 3.86\nACOR drops at least one place ¦ yes ¦ yes, second to third\nRastrigin and Schaffer F7 ¦ few successes ¦ none for any method\nVariants A, B and C ¦ within 0.5 in CMA-ES mean rank ¦ identical, 2.71\n::end"
     ]
    },
    {
@@ -150,7 +167,11 @@
      "- Errors are floored at {m:10^{-12}} before ranking, so methods that reach that level tie, and a shift penalty measured from a centred error of 0 counts from {m:10^{-12}}. The 12 and 13.6 decades for SMA and GWO are bounded by that floor.",
      "- The methods were written from published descriptions by us, and the first run shows how such code can be wrong without crashing. Other bugs may remain.",
      "- PSO's biological label is thin: it is a velocity rule with a metaphor, and it predates the recent flood of such methods.",
-     "- Scoring was done by our own code and checked by the same analyst who wrote it."
+     "- Scoring was done by our own code and checked by the same analyst who wrote it.",
+     "- The fixed-target scoring uses one dimension, one budget and one target. COCO's practice is many targets and runtime distributions; a single target at 1e-8 throws away everything a method did on Rastrigin and Schaffer F7, where every method ties.",
+     "- Our CMA-ES is our own code, not pycma: default population, plain restarts and no IPOP, the population-doubling restart of Auger and Hansen {cite:r5}. That is the most likely reason it fails Rastrigin in our runs.",
+     "- L-BFGS uses finite-difference gradients, and every evaluation they spend is counted.",
+     "- The fixed-target scoring covers the shifted arm only. The centred arm, the centre cheat and the no-free-lunch check were not run again."
     ]
    },
    {
@@ -205,6 +226,16 @@
    "evidence": [
     "e4"
    ]
+  },
+  {
+   "id": "c5",
+   "text": "Under the fixed target, CMA-ES stayed first at a mean rank of 2.71 against 3.86 for L-BFGS, and it was first in all 2,000 bootstrap resamples.",
+   "section": "abstract",
+   "basis": "observed",
+   "refs": [],
+   "evidence": [
+    "e5"
+   ]
   }
  ],
  "evidence": [
@@ -249,6 +280,18 @@
    "kind": "number",
    "label": "The numbers in claim 4",
    "value": "1.16",
+   "check": {
+    "by": "re-read from the run's result file in the paper's Verified pass",
+    "date": "2026-11-09",
+    "result": "match",
+    "note": "per the Verified section, which lists the values re-read"
+   }
+  },
+  {
+   "id": "e5",
+   "kind": "number",
+   "label": "The numbers in claim 5",
+   "value": "2.71; 3.86; 2,000",
    "check": {
     "by": "re-read from the run's result file in the paper's Verified pass",
     "date": "2026-11-09",
@@ -307,6 +350,25 @@
    "target": "https://doi.org/10.1109/CEC.2005.1554902",
    "access_note": "abstracts and publisher pages; full text not read",
    "accessed": "2026-11-09"
+  },
+  {
+   "id": "r6",
+   "key": "Hansen 2016",
+   "kind": "paper",
+   "title": "Hansen, N., Auger, A., Brockhoff, D., Tušar, D. and Tušar, T. (2016). COCO: Performance Assessment. arXiv:1605.03560. doi:10.48550/arXiv.1605.03560",
+   "access": "snippet",
+   "target": "https://doi.org/10.48550/arXiv.1605.03560",
+   "access_note": "abstracts and publisher pages; full text not read",
+   "accessed": "2026-11-09"
+  },
+  {
+   "id": "r7",
+   "key": "Harper 2026",
+   "kind": "dataset",
+   "title": "Harper, Z. D. (2026). F183 fixed-target scoring: code, runs, analysis and preregistration addendum, with SHA256SUMS. https://github.com/HarperZ9/HarperZ9.github.io/tree/main/findings/results/F183/fixed-target",
+   "access": "run",
+   "target": "https://github.com/HarperZ9/HarperZ9.github.io/tree/main/findings/results/F183/fixed-target",
+   "licence": "as stated in the paper's data section"
   }
  ],
  "relations": [],
@@ -340,6 +402,15 @@
   },
   {
    "id": "x4",
+   "date": "2026-11-18",
+   "target": "document",
+   "type": "wording",
+   "after": "CMA-ES stays first under it (mean rank 2.71 against 3.86 for L-BFGS), the order behind it changes, and the first scoring is kept as it was.",
+   "reason": "A second scoring of the shifted runs with a fixed target, suggested by Nikolaus Hansen, was added as two new subsections of the results.",
+   "found_by": "a check after publication"
+  },
+  {
+   "id": "x5",
    "date": "2026-11-14",
    "target": "document",
    "type": "number",
@@ -363,6 +434,11 @@
   {
    "n": 3,
    "date": "2026-11-14",
+   "what": "this page corrected, 1 item; the PDF and its BuildTeX source are still paper version 1.0"
+  },
+  {
+   "n": 4,
+   "date": "2026-11-18",
    "what": "this page corrected, 1 item; the PDF and its BuildTeX source are still paper version 1.0"
   }
  ],
@@ -388,7 +464,13 @@
   ]
  },
  "reproduce": {
-  "data": [],
+  "data": [
+   {
+    "name": "Harper 2026",
+    "licence": "as stated in the paper's data section",
+    "url": "https://github.com/HarperZ9/HarperZ9.github.io/tree/main/findings/results/F183/fixed-target"
+   }
+  ],
   "prereg": {
    "hash": "dbf3b21010c50808e984aa422ad15639f3fd93af28409e44eb4ca34c8cc53a54",
    "plan": "234b69bfb9702c86b356344553e6e8de24169a843d994fdac870bbc0575bef39"
@@ -400,9 +482,10 @@
    "Rank methods per function by the median best error, floored at {m:10^{-12}} and taken as a base-10 logarithm rounded to two decimals, and average the ranks, eq. {ref:eq:rank}. Compute eqs. {ref:eq:delta} and {ref:eq:gap}.",
    "Permute method labels within each function 2,000 times for the null distribution of the gap.",
    "Rerun preregistration SHA-256: dbf3b21010c50808e984aa422ad15639f3fd93af28409e44eb4ca34c8cc53a54. Plan SHA-256: 234b69bfb9702c86b356344553e6e8de24169a843d994fdac870bbc0575bef39. Run 20261031T085324Z, seed 20261054.",
-   "First run preregistration SHA-256: 43edb85abe56495fcd70d726ef7b6f224917033ac10fefbd56fa9d1f2aa559c0. Plan SHA-256: e6fab72152c93c516de1f03d02999c1bcd691360bbef5123781902484f1059ba. Run 20261031T083319Z, seed 20261041."
+   "First run preregistration SHA-256: 43edb85abe56495fcd70d726ef7b6f224917033ac10fefbd56fa9d1f2aa559c0. Plan SHA-256: e6fab72152c93c516de1f03d02999c1bcd691360bbef5123781902484f1059ba. Run 20261031T083319Z, seed 20261041.",
+   "Fixed-target scoring, 18 November 2026: addendum SHA-256 f647ed79dcd3a841fc1785c45adf23f6ce8190d6895bca90e72521292a8bf7a5, locked at 16:07 UTC before the runs. Seed 20261054. The code, every run and the analysis are published with this page {cite:r7}; run python -I rerun.py 8 and then python -I analyse.py in that folder. The two scripts differ from the copies that ran only in the line that says where units.py and the 31 October result file sit. The 1,260 runs took 55 seconds on 8 worker processes of one desktop CPU."
   ],
-  "not_rerun": "The study was not re-run for this paper."
+  "not_rerun": "The study was not re-run for this paper, apart from the fixed-target scoring."
  },
  "verified": {
   "date": "2026-11-09",
@@ -436,10 +519,36 @@
     "what": "Both figures were drawn by a script that reads only the two result files.",
     "by": "the paper's Verified pass",
     "result": "as stated"
+   },
+   {
+    "what": "On 18 November 2026 the fixed-target runs were checked as follows.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   },
+   {
+    "what": "The run script compared the code's SHA-256 with the study's manifest before any run: it matched.",
+    "by": "the paper's Verified pass",
+    "result": "match"
+   },
+   {
+    "what": "The analysis script compared the new runs' medians with the 31 October rerun's result file: largest relative difference 0, and the first rule's ranks identical.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   },
+   {
+    "what": "The published code and data were run again from the copies served with this page, in a clean folder: all 1,260 runs and every number in the analysis file came out identical, apart from wall-clock times.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
+   },
+   {
+    "what": "Every number in the fixed-target subsections was read from that analysis file.",
+    "by": "the paper's Verified pass",
+    "result": "as stated"
    }
   ],
   "not_checked": [
-   "The study was not re-run for this paper.",
+   "The study was not re-run for this paper, apart from the fixed-target scoring.",
+   "The aRT definition was read in section 4 of the COCO paper on 18 November 2026; the IPOP paper was not re-read.",
    "The literature in the introduction was found by searches run on 9 November 2026 and read at the level of abstracts and publisher pages; the full texts of the cited papers were not read."
   ]
  }
