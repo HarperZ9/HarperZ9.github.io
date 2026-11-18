@@ -2571,6 +2571,38 @@
    "excludes": "any real optimiser"
   },
   {
+   "key": "fixed-target",
+   "scope": "F183",
+   "term": "fixed target",
+   "field": "optimiser benchmarking, as in the COCO platform",
+   "definition": "a value of the function, here the optimum plus 1e-8, that a run must reach to count as a success; the time to reach it, counted in function evaluations, is the run's runtime",
+   "excludes": "scores built from the final error alone, which ignore how long a method took"
+  },
+  {
+   "key": "art",
+   "scope": "F183",
+   "term": "average runtime (aRT)",
+   "field": "optimiser benchmarking, as defined in the COCO platform",
+   "definition": "the evaluations spent by every run, successful runs counted up to their first success and failed runs in full, divided by the number of successful runs; infinite when no run succeeds",
+   "excludes": "the plain mean of the successful runs' runtimes, which ignores the cost of failures"
+  },
+  {
+   "key": "bootstrap",
+   "scope": "F183",
+   "term": "bootstrap interval",
+   "field": "statistics",
+   "definition": "an interval read from the spread of a statistic recomputed on many resamples, drawn with replacement, of the data; here 2,000 resamples of the 15 paired repeats, and the 2.5th and 97.5th percentiles",
+   "excludes": "uncertainty from choices the resampling does not repeat, such as which test functions were picked"
+  },
+  {
+   "key": "wilson",
+   "scope": "F183",
+   "term": "Wilson interval",
+   "field": "statistics",
+   "definition": "a 95 percent interval for a success rate that stays inside 0 to 1 and behaves well when the count is 0 or all",
+   "excludes": "the plain normal approximation, which gives an interval of zero width at 0 of 15"
+  },
+  {
    "key": "public-good",
    "scope": "F190",
    "term": "public good",

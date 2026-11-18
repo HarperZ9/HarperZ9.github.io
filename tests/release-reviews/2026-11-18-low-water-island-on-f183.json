@@ -1,0 +1,8 @@
+{
+  "date": "2026-11-18",
+  "note": "After merging main at 5f2e0ce10 (the F183 fixed-target rerun): site-index.html and system/routes.js are main's bytes plus the Low Water section headings (The island, The plate, Fifteen stills, read plainly, How the island is made) in the search text, as in review 2026-11-18-low-water-island. Reviewed against the word diff: no other change.",
+  "paths": {
+    "site-index.html": "36dcdd7e8a4612e6e184fc3c6d8d09af7a6bae70df180db8e163689bef4f3a55",
+    "system/routes.js": "cf923cdf52db22574f22ed566a3bb4ada349985d30e163e3c85c469e680bd5d0"
+  }
+}
