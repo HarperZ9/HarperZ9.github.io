@@ -1,0 +1,169 @@
+<!-- raw.html's certificate sections, carried from the page as it was on 18 November 2026; scripts/product-raw.mjs fills CERT_TITLE and CERT_LEDE. -->
+<section class="lp-sec" id="certificate-live" aria-labelledby="live-h">
+  <h2 id="live-h"><span class="d-3d">${CERT_TITLE}</span></h2>
+  <p class="demo-form" data-demo="raw-render" data-form="live"><b>Live.</b> This runs in your browser now, on what you give it.</p>
+  <p class="lp-lede">${CERT_LEDE}</p>
+  <div class="rn-live">
+    <canvas id="rn-canvas" width="768" height="768" role="img" aria-label="The live render: a box on a ground plane, drawn by raw-native in this browser."></canvas>
+    <div class="rn-controls">
+      <label>View <select id="rn-view"><option value="default">default</option><option value="high">high</option><option value="low">low</option><option value="close">close</option><option value="wide">wide</option></select></label>
+      <label>Size <select id="rn-size"><option value="256">256 x 256</option><option value="384" selected>384 x 384</option><option value="512">512 x 512</option></select></label>
+      <label>Show <select id="rn-channel"><option value="frame">shaded frame</option><option value="ao_rt">ray-traced AO, the reference</option><option value="ao_ss">screen-space AO, the shortcut</option><option value="ao_error">error map</option></select></label>
+      <ul class="rn-status" id="rn-status" aria-live="polite"><li>Needs JavaScript and WebAssembly.</li></ul>
+    </div>
+  </div>
+  <pre class="artifact" id="rn-cert" translate="no" hidden></pre>
+  <p class="artifact-cap" id="rn-cert-cap" hidden>The certificate from this render. <a id="rn-cert-link" download="certificate.json" href="#">Save it</a> to keep the full record, including the SHA-256 of every file the render wrote.</p>
+</section>
+<script type="module">
+import { usePlugin } from "/system/media-engine/page.mjs";
+import "/system/media-engine/raw-register.mjs";
+const canvas = document.getElementById("rn-canvas"), status = document.getElementById("rn-status");
+const pick = { view: document.getElementById("rn-view"), size: document.getElementById("rn-size"), channel: document.getElementById("rn-channel") };
+const cert = document.getElementById("rn-cert"), cap = document.getElementById("rn-cert-cap"), link = document.getElementById("rn-cert-link");
+const params = () => ({ view: pick.view.value, size: +pick.size.value, channel: pick.channel.value });
+const hot = { MATCH: "rn-ok", DRIFT: "rn-bad" };
+try {
+  const engine = await usePlugin("raw");
+  const handle = engine.mount(canvas, "raw", { params: params() });
+  const inst = handle.instance;
+  const paint = (result) => {
+    status.replaceChildren(...inst.status().map((s) => {
+      const li = document.createElement("li"), b = document.createElement("b");
+      b.textContent = s.label + ": " + s.verdict.toLowerCase();
+      if (s.label === "AO certificate" && hot[s.verdict]) b.className = hot[s.verdict];
+      li.append(b, " " + s.detail);
+      return li;
+    }));
+    if (!result || !result.certificate) return;
+    const c = result.certificate;
+    const shown = { claim: c.claim, verdict: c.verdict, oracle: c.oracle, schema: c.schema, renderer: c.renderer, evidence: c.evidence, samples: c.samples, exact: c.exact };
+    cert.textContent = "{" + Object.entries(shown).map(([k, v]) => JSON.stringify(k) + ":" + JSON.stringify(v)).join(",\n ") + "}";
+    if (link.href.startsWith("blob:")) URL.revokeObjectURL(link.href);
+    link.href = URL.createObjectURL(new Blob([JSON.stringify(c)], { type: "application/json" }));
+    cert.hidden = cap.hidden = false;
+  };
+  inst.onResult(paint);
+  paint(inst.result);
+  for (const n of Object.values(pick)) n.addEventListener("change", () => handle.setParams(params()));
+} catch (e) {
+  console.error("[raw.html] live render failed:", e);
+  status.textContent = "The live render could not start here: " + (e.message || e) + ". The downloads below run the same renderer.";
+}
+</script>
+
+<section class="lp-sec" id="run" aria-labelledby="run-h">
+  <h2 id="run-h"><span class="d-3d">Run it now.</span></h2>
+  <p class="lp-limit"><a href="/repo-explainers/raw-native.html">See how it works, step by step</a>: both occlusion estimators, the reconcile against the tolerance and the verifier, animated with values from the repository.</p>
+  <p class="lp-limit">Download the binary for your system from the <a href="https://github.com/HarperZ9/raw-native/releases/tag/v0.8.0">0.8.0 release</a>, check it against the published hashes, and point it at an empty folder. A 256 by 256 frame takes about a quarter of a second. The release is still named raw-native. It ships the CPU, Direct3D 12 and WebGPU builds; the Vulkan path is in <a href="https://github.com/HarperZ9/superframe/tree/main/native">The Playground&rsquo;s source</a> and was added after 0.8.0.</p>
+  <div class="channels">
+    <span class="g">Windows x64</span>: <a href="https://github.com/HarperZ9/raw-native/releases/download/v0.8.0/raw-native-0.8.0-windows-x64.zip" translate="no">raw-native-0.8.0-windows-x64.zip</a>
+    &nbsp;&middot;&nbsp;
+    <span class="g">Linux x64</span>: <a href="https://github.com/HarperZ9/raw-native/releases/download/v0.8.0/raw-native-0.8.0-linux-x64.tar.gz" translate="no">raw-native-0.8.0-linux-x64.tar.gz</a> (glibc 2.38 or newer)
+    &nbsp;&middot;&nbsp;
+    <span class="g">WebAssembly</span>: <a href="https://github.com/HarperZ9/raw-native/releases/download/v0.8.0/raw-native-0.8.0-wasm.zip" translate="no">raw-native-0.8.0-wasm.zip</a>
+    &nbsp;&middot;&nbsp;
+    <a href="https://github.com/HarperZ9/raw-native/releases/download/v0.8.0/SHA256SUMS" translate="no">SHA256SUMS</a>
+  </div>
+  <pre class="artifact" translate="no"><span class="cmt"># check the download, then render the default view</span>
+sha256sum -c SHA256SUMS
+raw_native_cli --out ./out
+raw_native_cli verify ./out    <span class="cmt"># recompute the error from the written files</span>
+
+<span class="cmt"># move the camera; a previous camera adds motion vectors</span>
+raw_native_cli --out ./out --width 512 --height 512 --eye 0,9,3 --target 0,0.5,0
+raw_native_cli --out ./out --prev-eye 4.3,4,5.7
+
+<span class="cmt"># or build it: CMake 3.24+ and any C++23 compiler</span>
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build --config Release
+ctest --test-dir build -C Release --output-on-failure</pre>
+</section>
+
+<section class="lp-sec" id="renders" aria-labelledby="renders-h">
+  <div>
+    <h2 id="renders-h"><span class="d-3d">Two views of one scene, and what each certificate says.</span></h2>
+    <p class="lp-limit">Every image here came out of the 0.2.0 command line at 512 by 512. The scene is a box on a ground plane under one light. The first panel is the shaded frame. The next two are the reference and the shortcut, where white means open sky and dark means occluded. The last is the error between them.</p>
+  </div>
+
+  <div class="exhibit">
+    <div class="exhibit-tag"><span class="ord">Exhibit I</span> <span class="what">the default view &middot; <span class="rn-verdict rn-bad">refuted</span></span></div>
+    <div class="rn-grid">
+      <figure><img src="/media/raw-native/default-frame.png" width="512" height="512" loading="lazy" alt="A red box on a grey ground plane, seen from above and to the side, with soft darkening where the box meets the ground."><figcaption>Shaded frame</figcaption></figure>
+      <figure><img src="/media/raw-native/default-ao_rt.png" width="512" height="512" loading="lazy" alt="Ray-traced ambient occlusion: a soft dark halo on the ground around the box and grey shading on its sides."><figcaption>Ray-traced AO, the reference</figcaption></figure>
+      <figure><img src="/media/raw-native/default-ao_ss.png" width="512" height="512" loading="lazy" alt="Screen-space ambient occlusion: almost all white, with only a thin dark line along the box's bottom edges."><figcaption>Screen-space AO, the shortcut</figcaption></figure>
+      <figure><img src="/media/raw-native/default-ao_error.png" width="512" height="512" loading="lazy" alt="Error map on black: the halo and box sides glow where the shortcut missed occlusion the reference found."><figcaption>Error map</figcaption></figure>
+    </div>
+    <pre class="artifact" translate="no">{"claim":"screen-space AO matches ray-traced ground truth within tolerance",
+ "verdict":<span class="rn-bad">"refuted"</span>, "oracle":"raw-rt-ao-v1",
+ "evidence":[["pixels","151984"],["rmse","0.1349"],["maxError","0.6406"],["tolerance","0.1200"]],
+ "channels":{"ao_fidelity":0.881125,"motion_coherence":1,"hdr_headroom":0.875542}}</pre>
+    <p class="artifact-cap">The shortcut misses the soft halo almost entirely. Its error is 0.135 RMSE against a tolerance of 0.12, so the certificate says <b>refuted</b>. That is the check working: a picture that looks fine at a glance came back with a measured reason not to trust its shading.</p>
+  </div>
+
+  <div class="exhibit">
+    <div class="exhibit-tag"><span class="ord">Exhibit II</span> <span class="what">the high view &middot; <span class="rn-verdict rn-ok">verified</span></span></div>
+    <div class="rn-grid">
+      <figure><img src="/media/raw-native/high-frame.png" width="512" height="512" loading="lazy" alt="The same red box seen from nearly straight above, its top face filling the centre of a grey ground plane."><figcaption>Shaded frame</figcaption></figure>
+      <figure><img src="/media/raw-native/high-ao_rt.png" width="512" height="512" loading="lazy" alt="Ray-traced ambient occlusion from above: a soft dark ring on the ground around a white square."><figcaption>Ray-traced AO, the reference</figcaption></figure>
+      <figure><img src="/media/raw-native/high-ao_ss.png" width="512" height="512" loading="lazy" alt="Screen-space ambient occlusion from above: white, with a thin line along one edge of the box."><figcaption>Screen-space AO, the shortcut</figcaption></figure>
+      <figure><img src="/media/raw-native/high-ao_error.png" width="512" height="512" loading="lazy" alt="Error map from above: a faint ring around the box on black."><figcaption>Error map</figcaption></figure>
+    </div>
+    <pre class="artifact" translate="no">{"claim":"screen-space AO matches ray-traced ground truth within tolerance",
+ "verdict":<span class="rn-ok">"verified"</span>, "oracle":"raw-rt-ao-v1",
+ "evidence":[["pixels","239854"],["rmse","0.0827"],["maxError","0.6250"],["tolerance","0.1200"]],
+ "channels":{"ao_fidelity":0.923585,"motion_coherence":1,"hdr_headroom":0.875542}}</pre>
+    <p class="artifact-cap">From above, most covered pixels are open ground where both methods agree, so the average error drops to 0.083 and the same check passes. The worst pixel is still off by 0.63. The certificate carries both numbers, so you can see that a pass on the average does not mean every pixel is right. Raw certificates: <a href="/media/raw-native/default-certificate.json">default</a>, <a href="/media/raw-native/high-certificate.json">high</a>.</p>
+  </div>
+</section>
+
+<section class="lp-sec" id="certificate" aria-labelledby="cert-h">
+  <h2 id="cert-h"><span class="d-3d">The certificate</span></h2>
+  <p class="lp-limit">A certificate is a JSON file with a claim, a verdict, the oracle that judged it and the numbers behind the verdict. The verdict is <b>verified</b>, <b>refuted</b> or <b>unverifiable</b>. A channel with no data is written as null.</p>
+  <p class="lp-limit">You can check one in two ways. From 0.3.0 the run writes its ambient occlusion as 32-bit floats beside a coverage mask, and <code translate="no">raw_native_cli verify</code> recomputes the error from those files alone. Or run the same command yourself, because the output is deterministic: the default frame and its certificate hash the same with MSVC 19.50 on Windows, with GCC 13.3 on Ubuntu and from the WebAssembly build, locally and on GitHub&rsquo;s build runners. The renderer also measures exactly how many bytes the frame needs, renders again inside that budget, and refuses any allocation past it. A second certificate records whether the budget held.</p>
+  <p class="lp-limit">The same scene gives different verdicts from different cameras:</p>
+  <div class="rn-wrap">
+    <table class="rn-table">
+      <thead><tr><th scope="col">View</th><th scope="col">Camera flags</th><th scope="col" class="num">Covered pixels</th><th scope="col" class="num">RMSE</th><th scope="col">Verdict</th></tr></thead>
+      <tbody>
+        <tr><td>Default</td><td translate="no">none</td><td class="num">151,984</td><td class="num">0.1349</td><td><span class="rn-verdict rn-bad">refuted</span></td></tr>
+        <tr><td>High</td><td translate="no">--eye 0,9,3 --target 0,0.5,0</td><td class="num">239,854</td><td class="num">0.0827</td><td><span class="rn-verdict rn-ok">verified</span></td></tr>
+        <tr><td>Low</td><td translate="no">--eye 6,1.5,2 --target 0,1,0</td><td class="num">140,838</td><td class="num">0.1659</td><td><span class="rn-verdict rn-bad">refuted</span></td></tr>
+        <tr><td>Close</td><td translate="no">--eye 2,2.5,3 --target 0,0.8,0 --fovy 0.7</td><td class="num">214,043</td><td class="num">0.2167</td><td><span class="rn-verdict rn-bad">refuted</span></td></tr>
+        <tr><td>Wide</td><td translate="no">--eye 5,5,8 --target 0,0.5,0 --fovy 1.2</td><td class="num">88,869</td><td class="num">0.0882</td><td><span class="rn-verdict rn-ok">verified</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="lp-limit">512 by 512, tolerance 0.12 RMSE. Each row is one run of the 0.2.0 binary with the flags shown.</p>
+</section>
+
+<section class="lp-sec" id="limits" aria-labelledby="limits-h">
+  <h2 id="limits-h"><span class="d-3d">Scope and speed</span></h2>
+  <ul class="rn-limits">
+    <li>There is one built-in test scene and no model loader yet.</li>
+    <li>The ray-traced reference uses 64 samples per pixel, so it shows visible grain.</li>
+    <li>The screen-space method is a simple one, which is why most views come back refuted.</li>
+    <li>The default tolerance is 0.12 RMSE. <code translate="no">--tolerance</code> changes it, and the certificate records the value used.</li>
+    <li>A full render with the ray-traced reference takes about 0.26 seconds at 256 by 256 and 1 second at 512 by 512 on one thread of an Intel Core i7-13700KF, natively or in WebAssembly. Times on this page depend on your machine.</li>
+    <li>On an NVIDIA RTX 4090 in Chrome, the GPU draws a 512 by 512 frame with every channel in about 14 milliseconds, and all 16 GPU certificates in the release evidence say verified. The CPU reference that checks each GPU frame still takes its full time, so a GPU render on this page is not faster end to end.</li>
+    <li>Without WebGPU this page runs the single-threaded CPU build. The threaded WebAssembly build ran about eight times faster on the same machine, but browsers allow it only on pages sent with cross-origin isolation headers, and GitHub Pages cannot send them.</li>
+    <li>Matching hashes were checked on x86-64 with two compilers and the WebAssembly build. Other processors and compilers are untested.</li>
+  </ul>
+</section>
+
+<section class="lp-sec" id="lineage" aria-labelledby="lineage-h">
+  <h2 id="lineage-h"><span class="d-3d">Where it came from.</span></h2>
+  <p class="lp-limit">The name comes from <span translate="no">RAW</span>, a Direct3D 11 effects platform I wrote for Skyrim SE: a proxy library that took over a closed game&rsquo;s frame and added its own lighting passes mid-picture. That taught me how a frame is built and how quickly an effect can look right while being wrong. The native renderer keeps the lesson and drops the game. It owns its whole frame, and every frame carries a check against a reference. The Skyrim code stays public. Work on it is paused, and I plan to return to it.</p>
+</section>
+
+<section class="lp-sec" id="repo" aria-labelledby="repo-h">
+  <h2 id="repo-h"><span class="d-3d">Read the source.</span></h2>
+  <p class="lp-limit">C++23, built from the standard library and its own headers. The rasterizer, both ambient occlusion methods, the reconcile step, the certificate writer, the verifier and the bounded memory arena each have their own tests, 32 in all. From 0.3.0 the license is FSL-1.1-MIT, and each version becomes MIT two years after its release. Version 0.2.0 stays MIT, as released.</p>
+  <div class="channels">
+    <span class="g">GitHub</span>: <a href="https://github.com/HarperZ9/raw-native" translate="no">HarperZ9/raw-native</a>
+    &nbsp;&middot;&nbsp;
+    <span class="g">Paused</span>: <a href="https://github.com/HarperZ9/raw" translate="no">HarperZ9/raw</a> (the Skyrim SE platform)
+    &nbsp;&middot;&nbsp;
+    <a href="/overview.html">&larr; the map</a> &nbsp;&middot;&nbsp; <a href="/catalog.html">the index</a>
+  </div>
+</section>

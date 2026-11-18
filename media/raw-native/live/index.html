@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>The native renderer, live | Zain Dana Harper</title>
+<link rel="canonical" href="https://harperz9.github.io/raw.html#live">
+<!-- The site's frame round the engine. The engine's passes (engine-sf-cac3416/) and its web GPU host
+     (/media/raw-native/web-sf-cac3416/) are carried unchanged from HarperZ9/superframe at commit cac34166 and
+     pinned by SHA256SUMS; the scenes are the engine's owned assets, pinned by the hashes the engine commits. -->
+<link rel="stylesheet" href="/system/kit/kit.css">
+<link rel="stylesheet" href="/media/raw-native/live/live.css">
+</head>
+<body>
+<canvas id="view" tabindex="0" aria-label="The engine's live render. Drag to look, W A S D to move. What each pass measures is said in words in the panel."></canvas>
+<div id="note" role="status" aria-live="polite">Starting</div>
+<header class="rl-top">
+  <p class="rl-name"><b>The native renderer</b> <span id="rl-scene">live</span></p>
+  <p class="rl-stat" id="rl-stat" aria-live="off"></p>
+  <p class="rl-leave"><button type="button" id="rl-hide" aria-controls="rl-panel" aria-expanded="true">Hide the panel</button> <button type="button" id="leave">Back to the page</button></p>
+</header>
+<aside class="rl-panel" id="rl-panel" aria-label="Scene, passes and measures">
+  <details open>
+    <summary>Scene and view</summary>
+    <label>Scene <select id="rl-pick-scene"><option value="hall">The hall, 586,424 triangles (15.0 MB)</option><option value="hero">The hero, 111,136 triangles (2.7 MB)</option><option value="test">The test scene, 12 triangles</option></select></label>
+    <label>Camera <select id="rl-pick-view"></select></label>
+    <label>Show <select id="rl-show">
+      <option value="0">Real time</option>
+      <option value="1">Real time, left; path-traced reference, right</option>
+      <option value="2">Path-traced reference</option>
+      <option value="3">Error against the reference</option>
+      <option value="4">GTAO, left; ray-traced AO, right</option>
+      <option value="5">SSR, left; traced mirror, right</option>
+    </select></label>
+    <label class="rl-split" hidden>Divide at <input type="range" id="rl-split" min="5" max="95" value="50"></label>
+    <p class="rl-keys">Drag to look. W A S D or the arrows move, Q and E sink and rise, the wheel goes forward, Shift is faster. Hold still and the references gather.</p>
+  </details>
+  <details open>
+    <summary>Passes, and what each one costs</summary>
+    <ul class="rl-passes" id="rl-passes">
+      <li data-bit="1"><label><input type="checkbox" checked> <b>GTAO</b> <i>the engine's</i></label><span class="rl-m" data-m="ao"></span></li>
+      <li data-bit="2"><label><input type="checkbox" checked> <b>SSR</b> <i>the engine's</i></label><span class="rl-m" data-m="ssr"></span></li>
+      <li data-bit="4"><label><input type="checkbox" checked> <b>TAA</b> <i>the engine's</i></label><span class="rl-m" data-m="taa"></span></li>
+      <li data-bit="8"><label><input type="checkbox" checked> <b>Sky light</b> <i>Preetham, ambient cube</i></label><span class="rl-m" data-m="sky"></span></li>
+      <li data-bit="16"><label><input type="checkbox" checked> <b>Light in the air</b> <i>shadowed march</i></label><span class="rl-m" data-m="fog"></span></li>
+      <li data-bit="32"><label><input type="checkbox"> <b>Tilt-shift lens</b> <i>gathered blur</i></label><span class="rl-m" data-m="tilt"></span></li>
+    </ul>
+    <p class="rl-frame-err" id="rl-frame-err" aria-live="polite">The measures start once the camera holds still.</p>
+    <label>Reference <select id="rl-ref"><option value="1">gather while still</option><option value="0">off</option></select></label>
+    <label>GTAO quality <select id="rl-gtao"><option value="4x8">4 slices, 8 steps</option><option value="8x12">8 slices, 12 steps</option><option value="16x16">16 slices, 16 steps, the engine's checked setting</option></select></label>
+  </details>
+  <details>
+    <summary>Light, air and lens</summary>
+    <label>Sun, around <input type="range" id="rl-az" min="0" max="360" value="200"><output></output></label>
+    <label>Sun, height <input type="range" id="rl-el" min="2" max="88" value="58"><output></output></label>
+    <label>Exposure <input type="range" id="rl-ev" min="8" max="17" step="0.25" value="11.5"><output></output></label>
+    <label>Air <input type="range" id="rl-air" min="0" max="3" step="0.05" value="1"><output></output></label>
+    <label>Lens aperture <input type="range" id="rl-ap" min="0" max="1" step="0.01" value="0"><output></output></label>
+    <label>Lens tilt <input type="range" id="rl-tilt" min="0" max="0.9" step="0.01" value="0.4"><output></output></label>
+    <label>Focus <input type="range" id="rl-focus" min="0.5" max="40" step="0.1" value="10"><output></output></label>
+    <label>Display <select id="rl-display"><option value="aces2-sdr/srgb">ACES 2.0, SDR, sRGB</option><option value="agx/srgb">AgX, sRGB</option><option value="pbr-neutral/srgb">PBR Neutral, sRGB</option><option value="clip/srgb">Clip, sRGB</option></select></label>
+    <label>Pixels <select id="rl-pixels"><option value="1">Full window</option><option value="0.75">Three quarters</option><option value="0.5">Half</option></select></label>
+  </details>
+  <details>
+    <summary>GPU time per pass</summary>
+    <ul class="rl-times" id="rl-times"></ul>
+    <p class="rl-small" id="rl-adapter"></p>
+  </details>
+  <details>
+    <summary>Where this comes from</summary>
+    <p class="rl-small" id="rl-receipt"></p>
+  </details>
+</aside>
+<p class="rl-said" id="rl-said" aria-live="polite"></p>
+<script type="module" src="/media/raw-native/live/main.mjs"></script>
+</body>
+</html>

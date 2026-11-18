@@ -1,0 +1,7 @@
+{
+  "date": "2026-11-18",
+  "note": "The native renderer page (raw.html) moves into the landmark shell and gains the live renderer. world/site/landmark.css gains the raw.html rules, so the world asset revision moves; index.html changes only by that revision stamp on its stylesheet and script links.",
+  "paths": {
+    "index.html": "957fe0161ae975ae7cace04a6f9d1711b3ecc4afa92413033971d21f6b428993"
+  }
+}

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Build the landmark pages that carry their own figures: buildlang.html and low-water.html. Words come from
+// Build the landmark pages that carry their own figures: buildlang.html, low-water.html and raw.html (scripts/product-raw.mjs). Words come from
 // site-src/world/buildlang.mjs and low-water.mjs; versions and merge states come from site-src/world/releases.json
 // (scripts/fetch-releases.mjs), so a figure says "first released in 1.11.0" (the first release whose tag holds the change), "on main" or "open" as GitHub said on the day of the
 // fetch. Every figure opens in place to its source: the pull request or file it was read from.
@@ -12,6 +12,8 @@ import { page } from "./studies-shell.mjs";
 import { CHECKED, longDate } from "../site-src/world/platforms.mjs";
 import * as BL from "../site-src/world/buildlang.mjs";
 import * as LW from "../site-src/world/low-water.mjs";
+import { rawPage } from "./product-raw.mjs";
+import { CERT } from "../site-src/world/raw.mjs";
 
 const site = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const R = JSON.parse(readFileSync(path.join(site, "site-src/world/releases.json"), "utf8"));
@@ -219,8 +221,16 @@ function HEAD(toy) {
     '<script type="module" src="/world/site/sound.js"></script>', ...toy.split(",").map((t) => `<script type="module" src="/world/site/explore/${t}.js"></script>`)].join("\n");
 }
 
-for (const [file, html] of [["buildlang.html", buildlang()], ["low-water.html", lowWater()]]) {
+// raw.html: the live renderer first, then the certificate sections carried from the page as it was
+function raw() {
+  const purpose = JSON.parse(readFileSync(path.join(site, "system/systems.json"), "utf8")).systems.find((x) => x.id === "raw").purpose;
+  const old = readFileSync(path.join(site, "site-src/world/raw-certificate.htm"), "utf8").replace(/^<!--[^]*?-->\s*/, "")
+    .replace("${CERT_TITLE}", esc(CERT.title)).replace("${CERT_LEDE}", esc(CERT.lede));
+  return rawPage({ page, esc, HEAD, CHECKED, purpose, old });
+}
+
+for (const [file, html] of [["buildlang.html", buildlang()], ["low-water.html", lowWater()], ["raw.html", raw()]]) {
   if (/[A-Za-z]:[\\/](?:dev|Users|Downloads)/.test(html) || html.includes("—")) throw new Error(`${file}: a local path or an em dash reached the page`);
   writeFileSync(path.join(site, file), html);
 }
-console.log("product pages: buildlang.html, low-water.html");
+console.log("product pages: buildlang.html, low-water.html, raw.html");

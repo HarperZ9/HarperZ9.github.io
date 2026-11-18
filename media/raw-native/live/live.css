@@ -1,0 +1,50 @@
+/* The live renderer's frame: the picture fills the window; a paper panel with a hairline sits at the right, low
+   enough in weight that the frame stays the picture's. Ink on paper for every word: AA contrast over any frame. */
+html, body { margin: 0; height: 100%; background: #07090c; background-image: none; overflow: hidden; color: #1d1a16; }
+#view { position: fixed; inset: 0; width: 100%; height: 100%; display: block; cursor: grab; touch-action: none; }
+#view:active { cursor: grabbing; }
+#view:focus-visible { outline: 2px solid rgba(233, 226, 208, .55); outline-offset: -2px; }
+.rl-top, .rl-panel { font-family: var(--face-still, "Hanken Grotesk", system-ui, sans-serif); }
+.rl-top { position: fixed; left: 16px; top: calc(12px + env(safe-area-inset-top, 0px)); right: 16px; display: flex; gap: 12px; align-items: flex-start; pointer-events: none; }
+.rl-top > * { pointer-events: auto; margin: 0; }
+.rl-name, .rl-stat { background: rgba(233, 226, 208, .92); border: 1px solid #1d1a16; padding: 6px 10px 5px; }
+.rl-name { font-size: 14px; letter-spacing: .06em; }
+.rl-name span { font-style: italic; letter-spacing: 0; margin-left: .4em; }
+.rl-stat { font-family: "Conso", ui-monospace, monospace; font-size: 11px; line-height: 1.45; white-space: pre-wrap; max-width: 30rem; }
+.rl-stat:empty { display: none; }
+.rl-leave { margin-left: auto !important; display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+.rl-leave button { color: #1d1a16; background: rgba(233, 226, 208, .92); border: 1px solid #1d1a16; min-height: 44px; padding: 0 14px; font: inherit; font-size: 14px; cursor: pointer; }
+.rl-leave button:focus-visible, .rl-panel :focus-visible { outline: 3px solid #e9e2d0; outline-offset: 2px; box-shadow: 0 0 0 5px #1d1a16; }
+.rl-panel { position: fixed; right: 16px; top: calc(68px + env(safe-area-inset-top, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); width: min(23rem, calc(100vw - 32px));
+  overflow-y: auto; overscroll-behavior: contain; background: rgba(233, 226, 208, .94); border: 1px solid #1d1a16; padding: 4px 12px 10px; font-size: 13px; line-height: 1.4; }
+.rl-panel details { border-bottom: 1px solid rgba(29, 26, 22, .35); padding: 6px 0; }
+.rl-panel details:last-child { border-bottom: 0; }
+.rl-panel summary { cursor: pointer; font-weight: 600; letter-spacing: .04em; min-height: 32px; display: flex; align-items: center; }
+.rl-panel label { display: grid; grid-template-columns: 7.5rem minmax(0, 1fr) auto; gap: 8px; align-items: center; margin: 6px 0; }
+.rl-panel label output { font-family: "Conso", ui-monospace, monospace; font-size: 11px; min-width: 3.4rem; text-align: right; }
+.rl-panel select, .rl-panel input[type="range"] { width: 100%; min-width: 0; }
+.rl-panel select { font: inherit; font-size: 13px; color: #1d1a16; background: #f4efe3; border: 1px solid #1d1a16; min-height: 36px; padding: 0 6px; grid-column: 2 / 4; }
+.rl-panel input[type="range"] { accent-color: #1d1a16; min-height: 28px; }
+.rl-passes { list-style: none; margin: 0; padding: 0; }
+.rl-passes li { border-top: 1px solid rgba(29, 26, 22, .2); padding: 4px 0 6px; }
+.rl-passes li:first-child { border-top: 0; }
+.rl-passes label { display: flex; gap: 6px; margin: 2px 0; min-height: 32px; }
+.rl-passes input[type="checkbox"] { width: 20px; height: 20px; accent-color: #1d1a16; margin: 0; }
+.rl-passes i { font-size: 12px; color: #4a4237; }
+.rl-passes li[aria-disabled="true"] label { color: #6a6155; }
+.rl-m { display: block; font-family: "Conso", ui-monospace, monospace; font-size: 11px; line-height: 1.45; color: #2a251f; padding-left: 26px; white-space: pre-wrap; }
+.rl-m:empty { display: none; }
+.rl-frame-err, .rl-keys, .rl-small { font-size: 12px; color: #3d372e; margin: 6px 0; }
+.rl-times { list-style: none; margin: 4px 0; padding: 0; font-family: "Conso", ui-monospace, monospace; font-size: 11px; }
+.rl-times li { display: flex; justify-content: space-between; gap: 8px; border-top: 1px dotted rgba(29, 26, 22, .3); padding: 2px 0; }
+.rl-times .bar { flex: 1; align-self: center; height: 4px; background: linear-gradient(90deg, #1d1a16 var(--w, 0%), transparent var(--w, 0%)); }
+#note { position: fixed; left: 50%; top: 46%; transform: translate(-50%, -50%); color: #e9e2d0; font: 500 16px/1.45 var(--face-still, "Hanken Grotesk", system-ui, sans-serif);
+  letter-spacing: .04em; text-align: center; max-width: min(34rem, calc(100vw - 48px)); text-shadow: 0 1px 2px #000, 0 0 12px #000; pointer-events: none; }
+#note:empty { display: none; }
+.rl-said { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+@media (max-width: 760px) {
+  .rl-panel { top: auto; height: 46vh; width: auto; left: 16px; }
+  .rl-stat { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+[hidden] { display: none !important; }
