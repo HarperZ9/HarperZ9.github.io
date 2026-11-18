@@ -69,8 +69,9 @@ async function step(page, [what, sel, value]) {
     await page.mouse.up(); await page.mouse.move(1, 1);
   } else throw new Error(`no step called ${what}`);
 }
-const settle = (page) => page.evaluate(() => new Promise((done) => setTimeout(() => requestAnimationFrame(() => requestAnimationFrame(done)), 350)));
-const redraw = async (page) => { await page.evaluate(() => document.querySelector('#shader .rm-host').shaderDraw(1)); await settle(page); };
+const settle = (page) => page.evaluate(() => new Promise((done) => setTimeout(() => requestAnimationFrame(() => requestAnimationFrame(done)), 150)));
+// a redraw is synchronous in the page (shaderDraw), so two animation frames are enough for the canvas to be read back
+const redraw = (page) => page.evaluate(() => { document.querySelector('#shader .rm-host').shaderDraw(1); return new Promise((done) => requestAnimationFrame(() => requestAnimationFrame(done))); });
 
 // Drive one control and say what changed. sees lists what must change; the frame must also hold still without it.
 async function acts(page, key, sel, act, saved) {
@@ -82,10 +83,15 @@ async function acts(page, key, sel, act, saved) {
   for (let i = 0; i < 12 && same < 2; i++) { await redraw(page); const p = await print(page, target); same = a && a.frame === p.frame ? same + 1 : 0; a = p; }
   if (sees.includes('frame')) assert.equal(same, 2, `${key}: the frame moved with no control touched, so a frame check here proves nothing`);
   a.saved = String(saved.n);
-  await step(page, [act.do, target, act.value]); await settle(page); if (act.wait) { await page.waitForTimeout(act.wait); await settle(page); }
-  if (sees.includes('saved')) for (let i = 0; i < 30 && String(saved.n) === a.saved; i++) await page.waitForTimeout(100);
-  const b = await print(page, target); b.saved = String(saved.n);
-  const changed = Object.keys(a).filter((k) => a[k] !== b[k]);
+  // after the step, the room is read until one of the named parts changes, or until the entry's wait (1.5 s, or longer
+  // for a source that loads or a file that is written) runs out; a dead control is read for the whole wait
+  await step(page, [act.do, target, act.value]);
+  let b = null, changed = [];
+  for (const until = Date.now() + (act.wait || 1500); ;) {
+    await page.waitForTimeout(60); b = await print(page, target); b.saved = String(saved.n);
+    changed = Object.keys(a).filter((k) => a[k] !== b[k]);
+    if (sees.some((x) => changed.includes(x)) || Date.now() > until) break;
+  }
   for (const s of act.after || []) { await step(page, s); await settle(page); }
   return { changed, ok: sees.some((s) => changed.includes(s)) };
 }
@@ -130,7 +136,7 @@ async function acts(page, key, sel, act, saved) {
     for (const [k, v] of Object.entries(parity.mapped)) {
       for (const s of v.act.before || []) { await step(page, s); await settle(page); }
       if (!(await page.locator(`#shader ${v.room}`).count())) { absent.push(`${k} (${v.room})`); continue; }
-      const r = await acts(page, k, v.room, { ...v.act, before: [] }, saved); report[k] = r.changed.join(' ');
+      const t0 = Date.now(), r = await acts(page, k, v.room, { ...v.act, before: [] }, saved); report[k] = `${r.changed.join(' ')} (${Date.now() - t0} ms)`;
       if (!r.ok) dead.push(`${k} (${v.act.target || v.room}: wanted ${[].concat(v.act.sees || 'frame').join('/')}, saw ${r.changed.join(', ') || 'nothing'})`);
     }
     assert.deepEqual(absent, [], 'every mapped control is in the opened room');

@@ -78,7 +78,8 @@
    "how": "the source saved as a .glsl file",
    "act": {
     "do": "click",
-    "sees": "saved"
+    "sees": "saved",
+    "wait": 15000
    }
   },
   "re-slayer-add": {
@@ -111,14 +112,16 @@
    "room": "[data-png]",
    "act": {
     "do": "click",
-    "sees": "saved"
+    "sees": "saved",
+    "wait": 15000
    }
   },
   "re-relief": {
    "room": "[data-file=\"relief-stl\"]",
    "act": {
     "do": "click",
-    "sees": "saved"
+    "sees": "saved",
+    "wait": 15000
    }
   },
   "re-send-loom": {
@@ -141,7 +144,7 @@
    "how": "the source tabs: the plate is the base, and the layers and the rack work on it",
    "act": {
     "do": "click",
-    "wait": 2500
+    "wait": 4000
    }
   },
   "re-seed": {
@@ -149,7 +152,7 @@
    "act": {
     "do": "type",
     "value": "a-new-seed",
-    "wait": 1500
+    "wait": 4000
    }
   },
   "re-layers": {
@@ -158,14 +161,14 @@
    "act": {
     "do": "set",
     "value": "clifford",
-    "wait": 1500
+    "wait": 4000
    }
   },
   "re-reseed": {
    "room": "#shd-plate-reseed",
    "act": {
     "do": "click",
-    "wait": 1500
+    "wait": 4000
    }
   },
   "data-src=upload": {
@@ -179,7 +182,7 @@
    "act": {
     "do": "file",
     "value": "img/og/p/retro.jpg",
-    "wait": 800
+    "wait": 4000
    }
   },
   "data-src=draw": {
@@ -262,7 +265,7 @@
    "room": "[data-src-tab=\"scope\"]",
    "act": {
     "do": "click",
-    "wait": 1200
+    "wait": 4000
    }
   },
   "re-scope-persist": {
@@ -539,7 +542,8 @@
    "how": "the pixel grid, one image pixel per cell, no tube",
    "act": {
     "do": "click",
-    "sees": "saved"
+    "sees": "saved",
+    "wait": 15000
    }
   },
   "dyn:fx-chip": {
@@ -778,7 +782,7 @@
     "do": "file",
     "value": "world/exhibit/assets/audio/clink.opus",
     "sees": "said",
-    "wait": 800
+    "wait": 4000
    }
   },
   "re-play-pic": {
@@ -789,7 +793,7 @@
      "pressed",
      "said"
     ],
-    "wait": 600,
+    "wait": 4000,
     "after": [
      [
       "click",
@@ -886,7 +890,7 @@
    "act": {
     "do": "click",
     "sees": "said",
-    "wait": 500
+    "wait": 4000
    }
   },
   "re-rec-midi": {
@@ -899,14 +903,16 @@
       "click",
       "#shd-rec"
      ]
-    ]
+    ],
+    "wait": 15000
    }
   },
   "re-pic-midi": {
    "room": "#shd-pic-midi",
    "act": {
     "do": "click",
-    "sees": "saved"
+    "sees": "saved",
+    "wait": 15000
    }
   },
   "re-save-patch": {
@@ -978,7 +984,7 @@
    "act": {
     "do": "click",
     "sees": "saved",
-    "wait": 7500
+    "wait": 15000
    }
   },
   "re-spin": {
@@ -986,7 +992,7 @@
    "act": {
     "do": "click",
     "sees": "saved",
-    "wait": 1500
+    "wait": 15000
    }
   },
   "re-strip": {
@@ -994,7 +1000,7 @@
    "act": {
     "do": "click",
     "sees": "saved",
-    "wait": 1500
+    "wait": 15000
    }
   }
  },
