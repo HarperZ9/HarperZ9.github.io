@@ -30,8 +30,12 @@ jobs:
         run: |
           nproc; lscpu | grep -E "Model name|^CPU\(s\)"
           python tests/lib/serve.py 8811 . & sleep 2
-          for v in pr main pr; do
-            cp tests/_fluid-$v.mjs world/studio/lib/fluid.mjs
+          cp tests/_bench-timed.cjs /tmp/bt.cjs
+          git fetch -q --depth=1 origin main
+          for v in main pr; do
+            if [ $v = main ]; then git checkout -q FETCH_HEAD -- world tests/lib elements.html; else git checkout -q HEAD -- world tests/lib elements.html; fi
+            git status --short | wc -l
+            cp /tmp/bt.cjs tests/_bench-timed.cjs
             echo "== $v"; s=$(date +%s)
             node tests/_bench-timed.cjs > /dev/null || echo "bench failed"
             echo "== $v total $(( $(date +%s) - s )) s"
