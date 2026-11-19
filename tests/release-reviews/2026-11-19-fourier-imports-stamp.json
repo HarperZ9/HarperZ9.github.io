@@ -1,0 +1,7 @@
+{
+  "date": "2026-11-19",
+  "note": "The superframe Fourier lettering files are recorded in world/IMPORT.json, which moves the world asset revision; index.html changes only by that revision stamp on its stylesheet and script links.",
+  "paths": {
+    "index.html": "43cea560a44ba56678fdf5c4a876d679998a96591a153e77cc8db95c0967cd91"
+  }
+}
