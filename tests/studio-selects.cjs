@@ -110,7 +110,9 @@ const ddsOf = (page) => page.evaluate(() => {
       console.log(`${source}${visit.pre ? ' after ' + visit.pre.join(', ') : ''}: on stage`);
       const selects = await selectsOf(page, !!visit.shared);
       for (const s of selects) {
-        await page.locator('#' + s.id).scrollIntoViewIfNeeded();
+        // into view without waiting for the select to hold still: a source whose stage moves (3D Fractal) shifts the
+        // rail by a pixel each frame, and Playwright's stability wait then times out (CI, 18 November 2026)
+        await page.$eval('#' + s.id, (el) => el.scrollIntoView({ block: 'center' }));
         const rest = await atRest(page); const text = await readout(page);
         const values = await page.$eval('#' + s.id, (el) => ({ cur: el.value, all: [...el.options].filter((o) => !o.disabled).map((o) => o.value) }));
         const next = values.all.find((v) => v !== values.cur);
