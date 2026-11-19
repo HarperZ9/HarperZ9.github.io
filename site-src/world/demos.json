@@ -89,6 +89,12 @@
    ]
   },
   {
+   "id": "playground-fourier",
+   "page": "/playground/fourier.html",
+   "form": "live",
+   "what": "The Fourier room letters a word as Fourier series of the font's outlines, in the tab."
+  },
+  {
    "id": "distill",
    "page": "/playground/distill.html",
    "form": "live",

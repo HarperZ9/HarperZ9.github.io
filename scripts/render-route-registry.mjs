@@ -558,7 +558,7 @@ if (hrefExists("studies/") && !findRouteByHref("studies/")) {
 // The Playground is one engine with parts (author, 2026-11-11: "the playground is the rendering engine. It's the
 // engine."). The index lists the whole first and its parts under it, each label saying which part it is.
 const playgroundParts = [["playground/", "The Playground"], ["raw.html", null], ["superframe.html", "The Playground: Superframe, the core"],
-  ["playground/distill.html", "The Playground: Distill, a study tool"], ["low-water.html", "Low Water, the game made with The Playground"]];
+  ["playground/distill.html", "The Playground: Distill, a study tool"], ["playground/fourier.html", "The Playground: Fourier lettering, letters as turning circles"], ["low-water.html", "Low Water, the game made with The Playground"]];
 let afterPart = "studio.html";
 for (const [href, label] of playgroundParts) {
   if (!findRouteByHref(href)) continue;
