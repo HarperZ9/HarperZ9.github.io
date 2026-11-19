@@ -1036,6 +1036,13 @@
    "sourceSha256": "289aa5eaa9a5778084c9326576ab98ae906cf7ee58280cb623354b710b3efd50"
   },
   {
+   "path": "world/lettering/fonts/hanken-grotesk-bold.ttf",
+   "source": "2026-10-23-lettering/fonts/hanken-grotesk-bold.ttf",
+   "folder": "2026-10-23-lettering",
+   "bytes": 32156,
+   "sourceSha256": "4ca80ac105e80a582f892b3bbdd67dba26905f8bdefc837cb8a8908ad7be7fc9"
+  },
+  {
    "path": "world/lettering/fonts/hanken-grotesk.woff2",
    "source": "2026-10-23-lettering/fonts/hanken-grotesk.woff2",
    "folder": "2026-10-23-lettering",
@@ -1048,6 +1055,62 @@
    "folder": "2026-10-23-lettering",
    "bytes": 7599,
    "sourceSha256": "70e4585de0f4be29e05d12deeabf7ed2aa96361a0b4351c3e78dadd904add367"
+  },
+  {
+   "path": "world/lettering/lib/fourier/band.mjs",
+   "source": "2026-10-23-lettering/lib/fourier/band.mjs",
+   "folder": "2026-10-23-lettering",
+   "bytes": 3015,
+   "sourceSha256": "1c302be427bcaf55d40d89ca43bed1d9a3e04fa273700447c9800d143737422b"
+  },
+  {
+   "path": "world/lettering/lib/fourier/fft.mjs",
+   "source": "2026-10-23-lettering/lib/fourier/fft.mjs",
+   "folder": "2026-10-23-lettering",
+   "bytes": 1084,
+   "sourceSha256": "72846910b78b7361509c09c404a9a4550429aecf7287bb734598cc63796cc1fa"
+  },
+  {
+   "path": "world/lettering/lib/fourier/gpu.mjs",
+   "source": "2026-10-23-lettering/lib/fourier/gpu.mjs",
+   "folder": "2026-10-23-lettering",
+   "bytes": 5128,
+   "sourceSha256": "e383e811e0d51d51512f3d40b451c27e7897eaf10462f7577a50cf2d7c689594"
+  },
+  {
+   "path": "world/lettering/lib/fourier/kernel.mjs",
+   "source": "2026-10-23-lettering/lib/fourier/kernel.mjs",
+   "folder": "2026-10-23-lettering",
+   "bytes": 7701,
+   "sourceSha256": "6f8551e40205e25d6ea581a057add071359d7e28dc62a1c4f875cc8c6a432dd8"
+  },
+  {
+   "path": "world/lettering/lib/fourier/measure.mjs",
+   "source": "2026-10-23-lettering/lib/fourier/measure.mjs",
+   "folder": "2026-10-23-lettering",
+   "bytes": 2298,
+   "sourceSha256": "f55a9bba67c58ab01659e981d303990dde77e3e2bd69ad9aadb5e936d20e7068"
+  },
+  {
+   "path": "world/lettering/lib/fourier/shape.mjs",
+   "source": "2026-10-23-lettering/lib/fourier/shape.mjs",
+   "folder": "2026-10-23-lettering",
+   "bytes": 6371,
+   "sourceSha256": "dad112ae3405761745101f9745175a42d91fd0d993f9f1ba8be9c5a07c8c40f9"
+  },
+  {
+   "path": "world/lettering/lib/fourier/ttf.mjs",
+   "source": "2026-10-23-lettering/lib/fourier/ttf.mjs",
+   "folder": "2026-10-23-lettering",
+   "bytes": 7919,
+   "sourceSha256": "d7fa54a03df8901513e7465dfd25b5fe8e40d66aec3e9a9a1d64001404da43ed"
+  },
+  {
+   "path": "world/lettering/lib/fourier/xy.mjs",
+   "source": "2026-10-23-lettering/lib/fourier/xy.mjs",
+   "folder": "2026-10-23-lettering",
+   "bytes": 2507,
+   "sourceSha256": "fc6f237a4765f51107ce9e647582c4cd651a031e8495e4b0171d9dfac36390e7"
   },
   {
    "path": "world/lettering/lib/glyph.mjs",
@@ -1067,8 +1130,8 @@
    "path": "world/lettering/lib/letter.mjs",
    "source": "2026-10-23-lettering/lib/letter.mjs",
    "folder": "2026-10-23-lettering",
-   "bytes": 13533,
-   "sourceSha256": "b2cfdee7570a4ef32472ea9fbf715e13f4751e469f55696c0f4eb6312617b5c4"
+   "bytes": 13544,
+   "sourceSha256": "3eecf082f56fb5c38d32ec45b7a6258a3ec1b62a6ea523ac347da983c140fdb6"
   },
   {
    "path": "world/lettering/lib/paint.mjs",
@@ -1118,6 +1181,13 @@
    "folder": "2026-10-23-lettering",
    "bytes": 4747,
    "sourceSha256": "505029f04d20bd72d5a764c77d0ab2b38f484ecad1d43d63734a25552dd80fdf"
+  },
+  {
+   "path": "world/lettering/lib/techniques/fourier.mjs",
+   "source": "2026-10-23-lettering/lib/techniques/fourier.mjs",
+   "folder": "2026-10-23-lettering",
+   "bytes": 14855,
+   "sourceSha256": "8a9287be11caed4912579837fbe474b2cc80e3c9a706700b16af24a0aa208117"
   },
   {
    "path": "world/lettering/lib/techniques/glyphcell.mjs",
@@ -10668,7 +10738,7 @@
    "sourceSha256": "096ffb594b7dc75a2017aad71ff4d54d1455f0656d71a2225a299f454198eb0b"
   }
  ],
- "assetRevision": "world-b9455dc200",
+ "assetRevision": "world-9bcf1f3b5c",
  "assetRevisionScope": [
   "world/",
   "studies/",
