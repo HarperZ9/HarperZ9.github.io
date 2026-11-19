@@ -23,4 +23,4 @@ jobs:
           SITE_BASE_URL: http://127.0.0.1:8811
         run: |
           python tests/lib/serve.py 8811 . & sleep 2
-          for v in main new main new; do cp tests/_well-$v.mjs world/site/surfaces/well.mjs; echo "== $v"; BROWSER_CHANNEL=chrome node tests/frame-times.cjs 2>&1 | grep -E "frame-times: well|AssertionError" || true; done
+          for v in main new main; do cp tests/_well-$v.mjs world/site/surfaces/well.mjs; cp tests/_fluid-$v.mjs world/studio/lib/fluid.mjs; cp tests/_pg-$v.html playground/index.html; echo "== $v"; BROWSER_CHANNEL=chrome node tests/frame-times.cjs 2>&1 | grep -E "frame-times: well|AssertionError" || true; done
