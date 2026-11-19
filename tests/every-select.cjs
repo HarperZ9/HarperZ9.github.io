@@ -46,7 +46,14 @@ async function acts(page, id, then) {
     await page.waitForTimeout(300); const now = await words(page); calm = now === last ? calm + 300 : 0; last = now;
   }
   page.__esChooser = false;
-  const a = await picture(page, id), said0 = await words(page); await page.waitForTimeout(REST); const b = await picture(page, id);
+  // wait (up to 10 s) for two equal pictures REST apart before judging: on a slow CI runner the first draw is often
+  // still landing at this point, and one gap would mark the page as moving and drop its picture check
+  const said0 = await words(page);
+  let a = await picture(page, id), b = a;
+  for (const end = Date.now() + 10000; ; a = b) {
+    await page.waitForTimeout(REST); b = await picture(page, id);
+    if (a === b || Date.now() > end) break;
+  }
   const still = a === b, said = await words(page), quiet = said === said0;
   // one option can show the same as the last (a colour theme from "system" to "light" in a light browser), so up to
   // three other options are tried before the select is called dead
