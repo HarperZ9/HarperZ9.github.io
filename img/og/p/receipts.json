@@ -6239,6 +6239,42 @@
     "t": 0
    }
   },
+  "playground--fourier.jpg": {
+   "backend": "chrome-157.0.8103.80-skia-2x-lanczos",
+   "content_sha256": "27e4f30ff64f03f82066e98ceb0eda5a068ca4eaa0af2eea2b3d1728031304ef",
+   "does_not_prove": [
+    "It does not show the figure's numbers come from a real run, except where the alt text quotes a README result.",
+    "It does not show the PNG bytes are the same under another Chrome build; the SVG and the scene are the portable record.",
+    "It does not show the artwork meets the brand rules; that is a human review against ART-DIRECTION.md."
+   ],
+   "media": {
+    "format": "rgb8",
+    "height": 630,
+    "kind": "image",
+    "transfer": "srgb",
+    "width": 1200
+   },
+   "outputs": {
+    "playground--fourier.jpg": "a54cac366c1d1f7ed8d8b1b9f56e55125487561fc43eb68792289ad576128726",
+    "playground--fourier.svg": "30741c1fbb061dd11a323c2d9b4f223dfc9aeb3d5aa5c697791d5e18a383a3bd"
+   },
+   "producer": {
+    "name": "harperz9.repo-art",
+    "version": "0.1.0"
+   },
+   "receipt_sha256": "a8044a6bb7ae7391ad5714980cea98724ba31b3ceea209378d76d729ddbd20c2",
+   "reconcile": null,
+   "scene_sha256": "bd0012221881f093f0b82a4aba5155b6ae02333c75f1405c309be497d277b8b2",
+   "schema": "superstack.receipt/1",
+   "seed": "playground--fourier",
+   "seed_rule": "xmur3-mulberry32/1",
+   "seed_u32": 2890565072,
+   "time": {
+    "base": "flicks",
+    "per_second": 705600000,
+    "t": 0
+   }
+  },
   "playground.jpg": {
    "backend": "chrome-157.0.8103.40-skia-2x-lanczos",
    "content_sha256": "c3fa2cf6da33a5d812bec0e70c6fb0948d5e12644a9f93d35ce11b4ab8c7741f",

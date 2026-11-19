@@ -32,7 +32,7 @@ const WORLD_STAMP = `
 import sys
 sys.path.insert(0, ".")
 from tools.repo_art.site_cards import plan, stamp, write_manifest, SOURCES, ROOT
-own = ("index.html", "workshop.html", "floor.html", "elements.html", "swatches.html", "accession.html", "credits.html", "cmmns.html", "experiments/index.html", "glass-water.html", "playground/index.html", "playground/distill.html", "buildlang.html", "low-water.html", "raw.html")
+own = ("index.html", "workshop.html", "floor.html", "elements.html", "swatches.html", "accession.html", "credits.html", "cmmns.html", "experiments/index.html", "glass-water.html", "playground/index.html", "playground/distill.html", "playground/fourier.html", "buildlang.html", "low-water.html", "raw.html")
 cards = [c for c in plan() if c["rel"].startswith(("world/", "studies/", "findings/")) or c["rel"] in own]
 print(sum(stamp(c) for c in cards), "of", len(cards), "world pages stamped")
 for c in cards:
@@ -54,6 +54,7 @@ node("record-findings.mjs");
 node("build-findings.mjs");
 node("build-glass-water.mjs");
 node("build-distill.mjs");
+node("build-fourier.mjs");
 node("build-surfaces.mjs");  // the six surfaces, each from its manifest in site-src/world/surfaces/
 node("build-world-home.mjs");
 node("build-product-pages.mjs");

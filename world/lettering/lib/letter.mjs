@@ -13,7 +13,7 @@
 import { glyphFromElement, glyphFromText, ensureFont } from './glyph.mjs';
 import { rng, hashString } from './paint.mjs';
 
-export const TECHNIQUES = ['engraved', 'torn', 'rope', 'raked', 'developed', 'light', 'glyphcell', 'swarm', 'chladni', 'nightlights', 'sound', 'data', 'sprayed', 'painted'];
+export const TECHNIQUES = ['engraved', 'torn', 'rope', 'raked', 'developed', 'light', 'glyphcell', 'swarm', 'chladni', 'nightlights', 'sound', 'data', 'sprayed', 'painted', 'fourier'];
 const mods = {};
 // Techniques that live outside this folder register a loader here (feed set 30 does, from its own build). The
 // loader returns a module with the same { meta, create } shape; letter() and upgrade() then accept the id.

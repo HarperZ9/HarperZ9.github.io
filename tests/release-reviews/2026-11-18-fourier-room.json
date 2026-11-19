@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-18",
+  "note": "The Playground gains the Fourier room (playground/fourier.html): the sitemap, the site index and the route registry list the new page.",
+  "paths": {
+    "publications/build.json": "f63fa032f80363f4f8269bb27093b3b8bd0270a878b35f46ac05063799d19287",
+    "site-index.html": "d048f10eb736d078f56d374cc011d85eb8f748d5ccadc25d107048af2443646d",
+    "sitemap.xml": "f3952bf703ae6c0b31a7bccfd35ff23cab46c3878ed812807fa5a1b11f01a903",
+    "system/routes.js": "66d2ed34e4ba730231cc8615aa753f2edafa3ffd2bfad0269a2d6d1b4f781d71"
+  }
+}
