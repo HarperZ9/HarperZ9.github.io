@@ -52,7 +52,7 @@ export function createWell(canvas, { reduced = false, ground = 'paper' } = {}) {
 
   const sim = createSim({ reduced }), n = NX * NY, bDye = new Uint8Array(n * 4), bDisp = new Uint8Array(n * 4), bProd = new Uint8Array(RX * RY);
   const gain = [1, 1, 1, 1, 1], time = { sim: 0, gap: 0, frames: 0 };
-  let catchAll = 0, loom = cleanLoom(null), heard = null, heardKey = '', wove = '', more = '', raf = 0, last = 0, dead = false, idleAt = 0, soft = 0.1, strength = 0, flat = null, next = null, written = false, tl = [0, 0], done = null, layer = null, tick = 0, pane = null, paneWant = '', refract = 1;
+  let owed = false, catchAll = 0, loom = cleanLoom(null), heard = null, heardKey = '', wove = '', more = '', raf = 0, last = 0, dead = false, idleAt = 0, soft = 0.1, strength = 0, flat = null, next = null, written = false, tl = [0, 0], done = null, layer = null, tick = 0, pane = null, paneWant = '', refract = 1;
   // the pane's refraction map, from the site's glass renderer; asked for when a clear ground is first shown
   function paneFor(id) { const g = GROUNDS[id]; if (!g || g.med !== 3) return; const kind = g.v ? 'ice' : 'glass'; if (paneWant === kind) return; paneWant = kind;
     import('./glass-ground.mjs').then((m) => m.glassMap(kind)).then((m) => { if (dead || paneWant !== kind) return; gl.activeTexture(gl.TEXTURE5); gl.bindTexture(gl.TEXTURE_2D, tGlass);
@@ -118,8 +118,14 @@ export function createWell(canvas, { reduced = false, ground = 'paper' } = {}) {
     gl.uniform4f(U('uFx'), g.med, sim.dry, soft, strength); gl.uniform4fv(U('uGain'), gain.slice(0, 4)); gl.uniform4f(U('uEnv'), g.v, tl[0], tl[1], 0); gl.uniform4f(U('uTo'), g2.med, g2.v, next ? OPS[next.op] || 1 : 0, next ? 1 : 0); gl.uniform4f(U('uInk'), 0, 0, 0, written ? 1 : 0); gl.uniform4f(U('uBr'), layer?.box && gain[4] ? 1 : 0, catchAll, 0, 0);
     gl.uniform4f(U('uGl'), pane && pane.kind === paneWant ? refract : 0, pane ? pane.reach[0] : 0, pane ? pane.reach[1] : 0, 0); gl.uniform4f(U('uGs'), pane ? pane.spread.r : 1, pane ? pane.spread.b : 1, 0, 0);
     moreUniforms(g); gl.uniform1f(U('uFlatOn'), flat ? 1 : 0); gl.uniform4fv(U('uFlat'), flat || [0, 0, 0, 0]);
-    gl.drawArrays(gl.TRIANGLES, 0, 3);
+    if (!reduced) { gl.drawArrays(gl.TRIANGLES, 0, 3); return; }
+    if (!owed) { owed = true; queueMicrotask(paint); }
   }
+  // Under reduced motion one act can call draw() three times in a row (a ground, the parts, the still), and each draw
+  // fills the whole canvas. So the state is set at once but the canvas is filled once, after the act, from the state
+  // the last draw() set: the picture is the one the last draw would have made. Every change to that state under
+  // reduced motion is followed by a draw(), so nothing changes between the last draw() and the fill; a read fills first.
+  function paint() { if (!owed) return; owed = false; if (!dead) gl.drawArrays(gl.TRIANGLES, 0, 3); }
   function size() {
     const r = Math.min(devicePixelRatio || 1, 2), w = Math.max(2, Math.round(canvas.clientWidth * r)), h = Math.max(2, Math.round(canvas.clientHeight * r));
     if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; }
@@ -167,17 +173,17 @@ export function createWell(canvas, { reduced = false, ground = 'paper' } = {}) {
     changing: () => (next ? { to: next.id, op: next.op, f: sim.changing?.f ?? 1 } : null),
     write(mask, w = CW, h = CH) { written = !!mask; for (let y = 0; y < CH; y++) for (let x = 0; x < CW; x++) wb[(y * CW + x) * 4] = mask ? clamp(mask[Math.floor(y * h / CH) * w + Math.floor(x * w / CW)], 0, 1) * 255 : 0;
       gl.activeTexture(gl.TEXTURE3); gl.bindTexture(gl.TEXTURE_2D, tWrite); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, CW, CH, 0, gl.RGBA, gl.UNSIGNED_BYTE, wb); draw(); return api; },
-    brush() { if (!layer) { layer = createLayer(); gl.activeTexture(gl.TEXTURE4); gl.bindTexture(gl.TEXTURE_2D, tBrush); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, FX, FY, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array(FX * FY * 4)); } return layer; },
+    brush() { if (!layer) { paint(); layer = createLayer(); gl.activeTexture(gl.TEXTURE4); gl.bindTexture(gl.TEXTURE_2D, tBrush); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, FX, FY, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array(FX * FY * 4)); } return layer; },
     brushed: () => (layer ? held(layer) : [0, 0, 0, 0]),   // the brushed paint still in the layer, per pigment, in the unit of amounts()
     fade(slot, share) { if (sim.parts[slot]) { sim.parts[slot].fade = share; uniforms(); draw(); } return api; },
     // for checks: each of granulation, rim, tooth and product can be switched off (0) to see what it adds
     gain(g = {}) { ['granulation', 'rim', 'tooth', 'product', 'brush'].forEach((k, i) => { if (typeof g[k] === 'number') gain[i] = g[k]; }); if (typeof g.refract === 'number') refract = g.refract; if (typeof g.catch === 'number') catchAll = g.catch; draw(); return api; },   // catch 1: every brush's paint gated by the tooth, as before the catch map
     pane: () => (pane && pane.kind === paneWant ? { kind: pane.kind, spread: pane.spread, reach: pane.reach } : null),   // the refraction map in use, once it has come
     // for checks: the shader's answer for flat layers of these thicknesses on untextured paper, as [r, g, b] on 0 to 255
-    optics(d) { flat = new Float32Array(4); flat.set(d.slice(0, 4)); draw(); const px = new Uint8Array(4); gl.readPixels(canvas.width >> 1, canvas.height >> 1, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px); flat = null; draw(); return [px[0], px[1], px[2]]; },
+    optics(d) { flat = new Float32Array(4); flat.set(d.slice(0, 4)); draw(); paint(); const px = new Uint8Array(4); gl.readPixels(canvas.width >> 1, canvas.height >> 1, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px); flat = null; draw(); return [px[0], px[1], px[2]]; },
     // the picture as it stands, drawn now
-    still() { draw(); return canvas; },
-    read(w = 48, h = 36) { draw(); const c = document.createElement('canvas'); c.width = w; c.height = h; const x = c.getContext('2d'); x.drawImage(canvas, 0, 0, w, h); return x.getImageData(0, 0, w, h).data; },
+    still() { draw(); paint(); return canvas; },
+    read(w = 48, h = 36) { draw(); paint(); const c = document.createElement('canvas'); c.width = w; c.height = h; const x = c.getContext('2d'); x.drawImage(canvas, 0, 0, w, h); return x.getImageData(0, 0, w, h).data; },
     // mean milliseconds per frame spent in the simulation, and between frames, since the last call
     timing() { const o = { frames: time.frames, sim: time.frames ? time.sim / time.frames : 0, frame: time.frames ? time.gap / time.frames : 0 }; time.sim = time.gap = time.frames = 0; return o; },
     energy: () => sim.energy(), product: () => sim.product(), amounts: () => sim.amounts(),

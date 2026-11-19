@@ -613,6 +613,10 @@ $ ctest --test-dir build -C Release --output-on-failure</code></pre></li>
       status.textContent = "Could not load or run the build here (" + (err && err.message ? err.message : "unknown error") + "). The release binaries do the same thing locally.";
     }).then(function () { go.disabled = false; });
   });
+  // after the first render, a new view or size renders at once: the selects change the picture, not only the next press
+  ["live-view", "live-size"].forEach(function (id) {
+    document.getElementById(id).addEventListener("change", function () { if (rawP && !go.disabled) go.click(); });
+  });
 })();
 </script>
 </body>
