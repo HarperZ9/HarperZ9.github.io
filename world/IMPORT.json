@@ -5526,8 +5526,8 @@
    "path": "world/studio/lib/fluid.mjs",
    "source": "2026-10-23-studio/lib/fluid.mjs",
    "folder": "2026-10-23-studio",
-   "bytes": 4903,
-   "sourceSha256": "1a9dc6c30af4cdca2fbc148fb84fb57fc139aa226ff7def31b0b08fcef84eca7"
+   "bytes": 5714,
+   "sourceSha256": "b76d2b9925c9be48a11024c8122863c12c012e20ee16038f5ad7c39f0d95ea65"
   },
   {
    "path": "world/studio/lib/lanes/image.mjs",
@@ -10668,7 +10668,7 @@
    "sourceSha256": "096ffb594b7dc75a2017aad71ff4d54d1455f0656d71a2225a299f454198eb0b"
   }
  ],
- "assetRevision": "world-2c91a118f7",
+ "assetRevision": "world-f432ac1737",
  "assetRevisionScope": [
   "world/",
   "studies/",

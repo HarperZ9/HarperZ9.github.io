@@ -615,7 +615,7 @@ html.plain *{animation:none!important;transition:none!important}
       </fieldset>
       <fieldset><legend>Field</legend>
         <label for="f1">Seed</label><br><input id="f1" value="1337"><br>
-        <label for="f2">Mode</label><br><select id="f2"><option>Diffuse</option><option>Advect</option></select>
+        <label for="f2">Mode</label><br><select id="f2"><option>Diffuse</option><option>Advect</option></select> <output id="f2-said" for="f2" aria-live="polite">Diffuse</output>
       </fieldset>
       <fieldset><legend>Fader</legend>
         <label for="r1">Gain</label><input id="r1" type="range" min="0" max="1" step="0.01" value="0.4">
@@ -644,5 +644,6 @@ const c=document.getElementById("c"),g=c.getContext("2d");
 function draw(){const s=getComputedStyle(document.documentElement);g.clearRect(0,0,800,200);g.strokeStyle=s.getPropertyValue("--s1");g.lineWidth=2;g.beginPath();for(let x=0;x<800;x++)g.lineTo(x,100+60*Math.sin(x/40));g.stroke();}
 draw();Kit.on(draw);
 </script>
+<script>document.getElementById("f2").addEventListener("change", (e) => { document.getElementById("f2-said").textContent = e.target.value; });</script>
 </body>
 </html>

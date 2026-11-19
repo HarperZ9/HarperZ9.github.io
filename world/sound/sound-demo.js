@@ -34,6 +34,8 @@ const voiceDefs = {
 const vbox = $('#voices');
 // every instrument on the page turns sound on from its own first press (soundbar.js ensure)
 const ready = async () => E || (await bar.ensure());
+// choosing an 808 note is playing the 808: it sounds at once (and turns sound on, as any instrument's first press does)
+$('#note808').addEventListener('change', async () => { if (await ready()) voiceDefs['808'](E.now + 0.02); });
 for (const [name, fn] of Object.entries(voiceDefs)) { const b = document.createElement('button'); b.type = 'button'; b.textContent = name; b.onclick = async () => { if (await ready()) fn(E.now + 0.02); }; vbox.append(b); }
 
 // ---- sequencer
