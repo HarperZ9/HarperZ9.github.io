@@ -1,7 +1,7 @@
 {
   "date": "2026-11-18",
-  "note": "The fluid solver's pressure projection reads its clamped neighbours without a call per read (same bits, hash checked), so the world asset revision moves; index.html changes only by that revision stamp on its stylesheet and script links.",
+  "note": "The fluid solver's pressure projection runs two sweeps side by side and the well fills its canvas once per act under reduced motion (same bits, hash checked), so the world asset revision moves; index.html changes only by that revision stamp on its stylesheet and script links.",
   "paths": {
-    "index.html": "b818bb111b76dbf389429a5da3af9f851ed1ffa09370f51a53e1da26d3eb653f"
+    "index.html": "3f535b9896dcca63298823772dd3f4be0758ced40f54a307721126525e7aa3be"
   }
 }
