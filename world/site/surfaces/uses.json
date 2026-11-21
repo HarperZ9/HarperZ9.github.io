@@ -57,8 +57,8 @@
    "state": "ready",
    "weight": "heavy",
    "plain": "/elements.html",
-   "bytes": 1205907,
-   "files": 163
+   "bytes": 1227766,
+   "files": 164
   },
   "well": {
    "home": "playground",
@@ -66,7 +66,7 @@
    "state": "ready",
    "weight": "heavy",
    "plain": null,
-   "bytes": 428718,
+   "bytes": 432257,
    "files": 51
   },
   "chart": {
@@ -75,7 +75,7 @@
    "state": "ready",
    "weight": "light",
    "plain": null,
-   "bytes": 274254,
+   "bytes": 277088,
    "files": 38
   },
   "blend": {
@@ -84,35 +84,35 @@
    "state": "ready",
    "weight": "light",
    "plain": null,
-   "bytes": 285568,
+   "bytes": 288402,
    "files": 39
   },
   "motion": {
    "home": "playground",
    "form": "live",
    "state": "ready",
-   "weight": "light",
+   "weight": "heavy",
    "plain": null,
-   "bytes": 391995,
-   "files": 51
+   "bytes": 412990,
+   "files": 52
   },
   "lettering": {
    "home": "playground",
    "form": "live",
    "state": "ready",
-   "weight": "light",
+   "weight": "heavy",
    "plain": null,
-   "bytes": 391995,
-   "files": 51
+   "bytes": 412990,
+   "files": 52
   },
   "plot": {
    "home": "playground",
    "form": "live",
    "state": "ready",
-   "weight": "light",
+   "weight": "heavy",
    "plain": null,
-   "bytes": 391995,
-   "files": 51
+   "bytes": 412990,
+   "files": 52
   },
   "plate": {
    "home": "playground",
@@ -120,7 +120,7 @@
    "state": "ready",
    "weight": "heavy",
    "plain": null,
-   "bytes": 981435,
+   "bytes": 984428,
    "files": 143
   },
   "glass": {
@@ -129,7 +129,7 @@
    "state": "ready",
    "weight": "heavy",
    "plain": null,
-   "bytes": 981435,
+   "bytes": 984428,
    "files": 143
   },
   "living": {
@@ -138,7 +138,7 @@
    "state": "ready",
    "weight": "heavy",
    "plain": null,
-   "bytes": 981435,
+   "bytes": 984428,
    "files": 143
   },
   "loom": {
@@ -174,7 +174,7 @@
    "state": "ready",
    "weight": "light",
    "plain": null,
-   "bytes": 348307,
+   "bytes": 351141,
    "files": 44
   },
   "forge": {
@@ -192,7 +192,7 @@
    "state": "ready",
    "weight": "light",
    "plain": null,
-   "bytes": 230138,
+   "bytes": 230162,
    "files": 22
   },
   "sound": {
@@ -201,8 +201,8 @@
    "state": "ready",
    "weight": "heavy",
    "plain": null,
-   "bytes": 450359,
-   "files": 33
+   "bytes": 488222,
+   "files": 38
   },
   "field": {
    "home": "playground",
@@ -210,8 +210,17 @@
    "state": "ready",
    "weight": "light",
    "plain": null,
-   "bytes": 95586,
+   "bytes": 96696,
    "files": 3
+  },
+  "estuary": {
+   "home": "playground",
+   "form": "live",
+   "state": "ready",
+   "weight": "light",
+   "plain": "/estuary.html",
+   "bytes": 46162,
+   "files": 4
   }
  },
  "tools": {
@@ -221,7 +230,7 @@
   },
   "system/discovery": {
    "direct": 0,
-   "reach": 228
+   "reach": 227
   },
   "system/ear": {
    "direct": 0,
@@ -229,7 +238,7 @@
   },
   "system/engine": {
    "direct": 0,
-   "reach": 229
+   "reach": 228
   },
   "system/explainer": {
    "direct": 3,
@@ -245,7 +254,7 @@
   },
   "system/instruments": {
    "direct": 0,
-   "reach": 231
+   "reach": 230
   },
   "system/kit": {
    "direct": 0,
@@ -257,15 +266,15 @@
   },
   "system/lib": {
    "direct": 2,
-   "reach": 228
+   "reach": 227
   },
   "system/media": {
    "direct": 0,
-   "reach": 229
+   "reach": 228
   },
   "system/media-engine": {
    "direct": 1,
-   "reach": 231
+   "reach": 230
   },
   "system/school": {
    "direct": 32,
@@ -273,7 +282,7 @@
   },
   "system/showcase": {
    "direct": 0,
-   "reach": 228
+   "reach": 227
   },
   "system/site-music": {
    "direct": 0,
@@ -281,7 +290,7 @@
   },
   "system/type-forge": {
    "direct": 1,
-   "reach": 228
+   "reach": 227
   },
   "system/vendor": {
    "direct": 0,
@@ -344,8 +353,8 @@
    "reach": 0
   },
   "world/lettering": {
-   "direct": 0,
-   "reach": 11
+   "direct": 1,
+   "reach": 12
   },
   "world/library": {
    "direct": 0,
@@ -360,8 +369,8 @@
    "reach": 125
   },
   "world/site": {
-   "direct": 54,
-   "reach": 54
+   "direct": 57,
+   "reach": 57
   },
   "world/sound": {
    "direct": 0,
@@ -381,7 +390,7 @@
   },
   "world/techniques": {
    "direct": 0,
-   "reach": 14
+   "reach": 15
   },
   "world/typeengine": {
    "direct": 0,
@@ -392,8 +401,8 @@
    "reach": 7
   },
   "world/ui": {
-   "direct": 208,
-   "reach": 208
+   "direct": 210,
+   "reach": 210
   },
   "world/universe": {
    "direct": 0,

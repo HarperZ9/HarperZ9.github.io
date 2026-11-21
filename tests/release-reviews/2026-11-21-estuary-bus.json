@@ -1,0 +1,7 @@
+{
+  "date": "2026-11-21",
+  "note": "Register estuary surface in registry.mjs via room-estuary.mjs, wire live bus.mjs adapter, update surface census",
+  "paths": {
+    "index.html": "9a06c501c75d2bd29ef549624899d8776cce5de0bb896a385fadf57d0cf4e6fd"
+  }
+}
