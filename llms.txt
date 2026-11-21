@@ -60,12 +60,12 @@ Current versions as of 2026-10-23. [llms-full.txt](https://harperz9.github.io/ll
 gives each one in plain terms: what it does, who it is for, how to try it, and
 what it does not do.
 
-- [Flywheel](https://harperz9.github.io/flywheel.html) 1.9.0: a self-hosted
+- [Flywheel](https://harperz9.github.io/flywheel.html) 2.0.0: a self-hosted
   AI workstation and coding harness. It runs any hosted or local model behind
   one interface, with a desktop assistant, a coding agent and connected tools
   for research, memory and writing. Every run leaves a record that can be
   rechecked offline. `python -m pip install flywheel-verify`
-- [Articulate](https://harperz9.github.io/articulate.html) 0.18.0: a prose checker
+- [Articulate](https://harperz9.github.io/articulate.html) 0.19.1: a prose checker
   that runs on your computer and names each writing pattern and the line it is
   on. `python -m pip install articulate-writing`
 - [CMMNS](https://harperz9.github.io/cmmns.html) 3.10.0 (formerly Daylight Commons): a
