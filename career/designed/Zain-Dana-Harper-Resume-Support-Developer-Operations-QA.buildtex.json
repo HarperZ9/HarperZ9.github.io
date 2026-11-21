@@ -3,9 +3,9 @@
  "source": {
   "path": "career/resume-source.json",
   "document": "support-operations-qa",
-  "sha256": "b4c1be9fdef1d0bf73ff2f632055d43356f090893796f4afa5f5c521d1129a02"
+  "sha256": "cd5da70cf0b9b2233bac2e1c53da6f6dcebd609707795e2c2fa2cb207d93e356"
  },
- "ir_sha256": "afc3f556c27a9d6401af5ac1c9d5cc619fde172499981bfc6f862b5978d39cb9",
+ "ir_sha256": "864a1eca6748c635c1cccf280195736c2952b948b8b590994e989940c0a32dfd",
  "theme": "press-resume",
  "overrides": [
   "base.size=10.0",
@@ -13,7 +13,7 @@
   "emboss.deboss_finish=inked"
  ],
  "outputs": {
-  "Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.pdf": "f78a878f70259c1a0e7b26995bfd1c9eadb213bcb21b2b90c031894e560d2e86"
+  "Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.pdf": "c7265838ff4393084535e22a1ae5c173474437ffe86da1a4cb2ae864cae524b4"
  },
  "pdf_metadata": {
   "pdfa": false,
@@ -33,15 +33,15 @@
     "embedded": true
    },
    {
-    "name": "BMOHBC+HankenGrotesk-Regular",
+    "name": "EBEDCN+HankenGrotesk-Regular",
     "embedded": true
    },
    {
-    "name": "JNOKPB+HankenGrotesk-Regular",
+    "name": "FDCNKF+HankenGrotesk-Regular",
     "embedded": true
    },
    {
-    "name": "KOCACB+HankenGrotesk-Regular",
+    "name": "LDKCPG+HankenGrotesk-Regular",
     "embedded": true
    }
   ],
@@ -49,7 +49,7 @@
   "blind_text_runs": 0,
   "reading_order": true,
   "blocks_missing_from_text": [],
-  "pdf_bytes": 225973
+  "pdf_bytes": 226407
  },
  "failed": [],
  "notes": [

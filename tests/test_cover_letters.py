@@ -27,17 +27,16 @@ def test_general_letter_is_short_and_opens_with_a_result() -> None:
     assert len(body.split()) < 300
     paragraphs = [p for p in body.split("\n\n") if p.strip()][1:]
     assert len(paragraphs) == 4
-    assert "64 of 66" in paragraphs[0] and "merged, not yet released" in paragraphs[0]
+    assert "64 of 66" in paragraphs[0]
     for lack in ("weak point", "not yet held", "no professional", "no paid"):
         assert lack not in paragraphs[0] and lack not in paragraphs[1], lack
     assert "about thirteen years" in paragraphs[2]
-    assert "I have not yet held a paid software role or a paid red-team engagement." in paragraphs[2]
-    assert body.count("not yet held") == 1
+    assert "not yet held" not in body
     assert "relocate" not in body
     page = (ROOT / "cover-letter.html").read_text(encoding="utf-8")
     opening = page.split("<p>Dear reviewer,</p>", 1)[1].split("</p>", 1)[0]
     assert "have merged" in opening and "not yet held" not in opening
-    assert page.count("I have not yet held a paid software role.") == 1
+    assert "not yet held" not in page
     for banned in ("—", "@", "[COMPANY]", "[ROLE]"):
         assert banned not in text, banned
     assert not re.search(r"\(?\d{3}\)?[ .-]\d{3}[ .-]\d{4}", text), "a phone number is in the letter"

@@ -3,9 +3,9 @@
  "source": {
   "path": "career/resume-source.json",
   "document": "page:cv",
-  "sha256": "b4c1be9fdef1d0bf73ff2f632055d43356f090893796f4afa5f5c521d1129a02"
+  "sha256": "cd5da70cf0b9b2233bac2e1c53da6f6dcebd609707795e2c2fa2cb207d93e356"
  },
- "ir_sha256": "035c05591e6bbc5f9e4c73ae07660a847ff021cc4e8ca3e1b31a95949d5808df",
+ "ir_sha256": "e48e23b20c4abda74189bdc57af301cc9de8bbcde1e3677121fdfaf356ac24ba",
  "theme": "press-resume",
  "overrides": [
   "base.size=10.0",
@@ -13,7 +13,7 @@
   "emboss.deboss_finish=inked"
  ],
  "outputs": {
-  "Zain-Dana-Harper-CV.pdf": "a7b8b4dd4d4b0ac3045e53f085afd0ed153539ff5878adabcf701ed78ed0df9a"
+  "Zain-Dana-Harper-CV.pdf": "36183ba46dc54e90451a553ef8b7a2bcbe4594ae37bbc3bf06c155250a4e86d2"
  },
  "pdf_metadata": {
   "pdfa": false,
@@ -49,7 +49,7 @@
   "blind_text_runs": 0,
   "reading_order": true,
   "blocks_missing_from_text": [],
-  "pdf_bytes": 287400
+  "pdf_bytes": 287577
  },
  "failed": [],
  "notes": [

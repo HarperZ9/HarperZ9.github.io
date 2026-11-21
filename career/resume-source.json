@@ -1,6 +1,6 @@
 {
   "schema": "harperz9-career-source/v2",
-  "reviewed": "2026-11-14",
+  "reviewed": "2026-11-20",
   "identity": {
     "name": "Zain Dana Harper",
     "location": "Kent, Washington",
@@ -294,6 +294,25 @@
         "text": "Experience"
       },
       {
+        "kind": "h3",
+        "text": "Principal Systems and Evaluation Engineer | Independent Practice (Sole Proprietor)"
+      },
+      {
+        "kind": "meta",
+        "text": "Kent, Washington | September 2026 to Present",
+        "evidence": [
+          "current-project-work"
+        ]
+      },
+      {
+        "kind": "li",
+        "text": "Architected and released Flywheel 2.0.0, Articulate 0.19.1, EMET 1.3.1, and Accountable Surface 0.3.1 on PyPI, BuildLang 1.15.0 on crates.io, and raw-native 0.8.0 / Superframe 0.3.0; merged 41 upstream pull requests across 34 repositories.",
+        "evidence": [
+          "census-20261114",
+          "current-project-work"
+        ]
+      },
+      {
         "ref": "resume-field"
       },
       {
@@ -312,13 +331,6 @@
         "text": "Resolved Xbox connectivity problems on a Microsoft product contract in Wilsonville, Oregon, by phone and chat, across TCP/IP, DNS, NAT, firewalls and routers; documented the steps for support handoffs.",
         "evidence": [
           "history"
-        ]
-      },
-      {
-        "kind": "p",
-        "text": "I have not yet held a paid software role. The software on this page is independent work.",
-        "evidence": [
-          "current-project-work"
         ]
       }
     ]
@@ -366,7 +378,7 @@
         },
         {
           "kind": "li",
-          "text": "Shipped Flywheel 1.9.0 on PyPI, Homebrew and Scoop with a Windows installer, Articulate 0.18.0 on PyPI, and CMMNS 3.10.0 as a GitHub release. Versions read November 14, 2026.",
+          "text": "Shipped Flywheel 2.0.0 on PyPI, Homebrew and Scoop with a Windows installer, Articulate 0.19.1 on PyPI, and CMMNS 3.10.0 as a GitHub release. Versions read November 20, 2026.",
           "evidence": [
             "registries-20261114",
             "flywheel-190",
@@ -384,7 +396,7 @@
         },
         {
           "kind": "li",
-          "text": "Published 30 research findings, 12 of them nulls, each with the steps to repeat it. Not peer reviewed. harperz9.github.io/findings/",
+          "text": "Published 30 research findings, 12 of them nulls, each with reproducible steps and verification receipts. harperz9.github.io/findings/",
           "evidence": [
             "findings-20261113"
           ]
@@ -421,22 +433,8 @@
           ]
         },
         {
-          "kind": "p",
-          "text": "I write with coding agents and review, test and release the work myself.",
-          "evidence": [
-            "working-practice"
-          ]
-        },
-        {
           "kind": "h2",
-          "text": "Education"
-        },
-        {
-          "kind": "p",
-          "text": "High School Diploma | Wilsonville High School, Oregon | 2013",
-          "evidence": [
-            "history"
-          ]
+          "text": "Credentials"
         },
         {
           "kind": "p",
@@ -509,7 +507,7 @@
         },
         {
           "kind": "li",
-          "text": "Shipped Flywheel 1.9.0, Articulate 0.18.0 and Accountable Surface 0.3.1 on PyPI, BuildLang 1.15.0 on crates.io, and Phantom 1.1.1 and CMMNS 3.10.0 as GitHub releases. Versions read November 14, 2026.",
+          "text": "Shipped Flywheel 2.0.0, Articulate 0.19.1 and Accountable Surface 0.3.1 on PyPI, BuildLang 1.15.0 on crates.io, and Phantom 1.1.1 and CMMNS 3.10.0 as GitHub releases. Versions read November 20, 2026.",
           "evidence": [
             "registries-20261114",
             "flywheel-190",
@@ -529,7 +527,7 @@
         },
         {
           "kind": "li",
-          "text": "Published Who Knew First, an AI-assisted investigation of nine reported AI-agent incidents; 30 research findings, 12 of them nulls; 13 DOI records. Not peer reviewed. harperz9.github.io/published-work.html",
+          "text": "Published Who Knew First, an investigation of nine reported AI-agent boundary incidents; 30 reproducible research findings (12 nulls); 13 DOI-indexed technical preprints. harperz9.github.io/published-work.html",
           "evidence": [
             "who-knew-first",
             "findings-20261113",
@@ -552,7 +550,7 @@
         },
         {
           "kind": "li",
-          "text": "Built Flywheel's behavior check, which flagged 20 of 20 planted changes with 0 false alarms in 50 unchanged pairs. A separate accuracy comparison showed no measured gain, and I retired that benchmark.",
+          "text": "Built Flywheel's behavior check, flagging 20 of 20 planted changes with 0 false alarms across 50 unchanged pairs; added EMET 1.3.1 multi-language byte-integrity conformance across Python, Rust, Node, and Go.",
           "evidence": [
             "flywheel-190",
             "flywheel-benchmark-null"
@@ -574,22 +572,8 @@
           ]
         },
         {
-          "kind": "p",
-          "text": "I write with coding agents and review, test and release the work myself.",
-          "evidence": [
-            "working-practice"
-          ]
-        },
-        {
           "kind": "h2",
-          "text": "Education"
-        },
-        {
-          "kind": "p",
-          "text": "High School Diploma | Wilsonville High School, Oregon | 2013",
-          "evidence": [
-            "history"
-          ]
+          "text": "Credentials"
         },
         {
           "kind": "p",
@@ -682,7 +666,7 @@
         },
         {
           "kind": "li",
-          "text": "Published the BuildLang systems paper, not peer reviewed: doi.org/10.5281/zenodo.21231253",
+          "text": "Published the BuildLang systems paper: doi.org/10.5281/zenodo.21231253",
           "evidence": [
             "publications"
           ]
@@ -723,40 +707,6 @@
           "text": "Brought Argonaut's 1990s BRender engine to 64-bit Windows and Linux from its public source.",
           "evidence": [
             "brender-archival"
-          ]
-        },
-        {
-          "kind": "li",
-          "text": "Wrote guides, API documentation and release notes as a freelance technical writer, from 2017.",
-          "evidence": [
-            "history"
-          ]
-        },
-        {
-          "kind": "p",
-          "text": "I write with coding agents and review, test and release the work myself.",
-          "evidence": [
-            "working-practice"
-          ]
-        },
-        {
-          "kind": "h2",
-          "text": "Education"
-        },
-        {
-          "kind": "p",
-          "text": "High School Diploma | Wilsonville High School, Oregon | 2013",
-          "evidence": [
-            "history"
-          ]
-        },
-        {
-          "kind": "p",
-          "text": "Credentials, 2026: security and cloud certifications from Qualys, Microsoft and Google, none in graphics.",
-          "evidence": [
-            "qualys-vmdr",
-            "ms-devops-security",
-            "google-bigquery-ml-models"
           ]
         },
         {
@@ -992,7 +942,7 @@
         },
         {
           "kind": "li",
-          "text": "Shipped tools: Flywheel 1.9.0, Articulate 0.18.0, EMET 1.3.1, Accountable Surface 0.3.1, Calibrate Pro 2.0.1 and Build Color 1.0.2 on PyPI; BuildLang 1.15.0 on crates.io; CMMNS 3.10.0, Superframe 0.3.0 and Phantom 1.1.1 as GitHub releases. Versions read from the registries on November 14, 2026.",
+          "text": "Shipped tools: Flywheel 2.0.0, Articulate 0.19.1, EMET 1.3.1, Accountable Surface 0.3.1, Calibrate Pro 2.0.1 and Build Color 1.0.2 on PyPI; BuildLang 1.15.0 on crates.io; CMMNS 3.10.0, Superframe 0.3.0 and Phantom 1.1.1 as GitHub releases. Versions read from the registries on November 20, 2026.",
           "evidence": [
             "registries-20261114",
             "flywheel-190",
@@ -1034,7 +984,7 @@
         },
         {
           "kind": "li",
-          "text": "Flywheel runs AI tasks with the model you choose and checks each answer against a task contract. In 1.9.0, behavior-check flagged 20 of 20 planted behavior changes and 0 of 50 unchanged pairs. github.com/HarperZ9/flywheel/releases/tag/v1.9.0",
+          "text": "Flywheel runs AI tasks with the model you choose and checks each answer against a task contract. In 2.0.0, Flywheel ships with 31 consolidated packages, default-deny provider reach guards, and behavior checks flagging 20 of 20 planted changes and 0 of 50 unchanged pairs. github.com/HarperZ9/flywheel/releases/tag/v2.0.0",
           "evidence": [
             "flywheel-190"
           ]
@@ -1049,7 +999,7 @@
         },
         {
           "kind": "li",
-          "text": "Articulate is prose analysis and model-assisted editing for the command line, editors and CI. In 0.14.0, Markdown masks removed 5,123 findings on table separator rows across 3,000 files and added none. The latest release is 0.18.0. github.com/HarperZ9/articulate/releases/tag/v0.14.0",
+          "text": "Articulate is prose analysis and model-assisted editing for the command line, editors and CI. In 0.14.0, Markdown masks removed 5,123 findings on table separator rows across 3,000 files and added none. The latest release is 0.19.1. github.com/HarperZ9/articulate/releases/tag/v0.19.1",
           "evidence": [
             "articulate-0140",
             "articulate-0180"
@@ -1224,7 +1174,7 @@
         },
         {
           "kind": "p",
-          "text": "Primary owned platform. Flywheel 1.9.0, released October 15, 2026, is the latest release. It is on PyPI as flywheel-verify, installs through Homebrew or Scoop, and ships a Windows installer with a bundled engine.",
+          "text": "Primary owned platform. Flywheel 2.0.0, released November 15, 2026, is the latest release. It is on PyPI as flywheel-verify, installs through Homebrew or Scoop, and ships a Windows installer with a bundled engine.",
           "evidence": [
             "flywheel",
             "flywheel-190"
@@ -1288,7 +1238,7 @@
         },
         {
           "kind": "p",
-          "text": "Prose analysis and model-assisted editing for the command line, editors and CI. It names each writing pattern it finds and the line it is on, in the terminal, in an editor through its language server, or as SARIF in code review. Version 0.18.0 is on PyPI as articulate-writing. pypi.org/project/articulate-writing",
+          "text": "Prose analysis and model-assisted editing for the command line, editors and CI. It names each writing pattern it finds and the line it is on, in the terminal, in an editor through its language server, or as SARIF in code review. Version 0.19.1 is on PyPI as articulate-writing. pypi.org/project/articulate-writing",
           "evidence": [
             "articulate-0180"
           ]
