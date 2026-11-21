@@ -52,7 +52,7 @@ export function createWell(canvas, { reduced = false, ground = 'paper' } = {}) {
 
   const sim = createSim({ reduced }), n = NX * NY, bDye = new Uint8Array(n * 4), bDisp = new Uint8Array(n * 4), bProd = new Uint8Array(RX * RY);
   const gain = [1, 1, 1, 1, 1], time = { sim: 0, gap: 0, frames: 0 };
-  let owed = false, catchAll = 0, loom = cleanLoom(null), heard = null, heardKey = '', wove = '', more = '', raf = 0, last = 0, dead = false, idleAt = 0, idleMs = 45000, idleStart = false, soft = 0.1, strength = 0, flat = null, next = null, written = false, tl = [0, 0], done = null, layer = null, tick = 0, pane = null, paneWant = '', refract = 1;
+  let owed = false, catchAll = 0, loom = cleanLoom(null), heard = null, heardKey = '', wove = '', more = '', raf = 0, last = 0, dead = false, idleAt = 0, idleMs = 120000, idleStart = false, soft = 0.1, strength = 0, flat = null, next = null, written = false, tl = [0, 0], done = null, layer = null, tick = 0, pane = null, paneWant = '', refract = 1;
   // the pane's refraction map, from the site's glass renderer; asked for when a clear ground is first shown
   function paneFor(id) { const g = GROUNDS[id]; if (!g || g.med !== 3) return; const kind = g.v ? 'ice' : 'glass'; if (paneWant === kind) return; paneWant = kind;
     import('./glass-ground.mjs').then((m) => m.glassMap(kind)).then((m) => { if (dead || paneWant !== kind) return; gl.activeTexture(gl.TEXTURE5); gl.bindTexture(gl.TEXTURE_2D, tGlass);
@@ -140,7 +140,7 @@ export function createWell(canvas, { reduced = false, ground = 'paper' } = {}) {
     raf = requestAnimationFrame(frame);
   }
   // an act wakes the water for a while; under reduced motion it settles at once and holds a still
-  function wake(ms = 45000) {
+  function wake(ms = 120000) {
     if (dead) return;
     if (reduced) { if (takes()) brushUp(1); for (let i = 0; i < 24; i++) sim.step(STEP, false); draw(); return; }
     idleMs = ms; idleStart = true; idleAt = performance.now() + ms; if (!raf) raf = requestAnimationFrame(frame);
