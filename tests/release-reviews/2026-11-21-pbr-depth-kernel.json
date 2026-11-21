@@ -1,0 +1,7 @@
+{
+  "date": "2026-11-21",
+  "note": "Add deterministic discontinuity-aware Depth-to-Normal and PBR material map kernel",
+  "paths": {
+    "index.html": "76b70281a95a379481fb4376c507e56a803ec543ee3b91f8f184b964e5d336bc"
+  }
+}
