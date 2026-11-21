@@ -140,7 +140,7 @@
     },
     {
       "path": "tools/render_career_pages.py",
-      "sha256": "765ca1f1e961e2ea539fa81b43512dfe37da5e1aa7d654228626d41e4f89a2f5"
+      "sha256": "530b135f5dece6dc57476093c00667a764542ac0becd621093a080616b98dd00"
     },
     {
       "path": "career/resume-source.json",

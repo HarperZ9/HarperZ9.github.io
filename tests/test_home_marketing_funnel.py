@@ -14,8 +14,8 @@ HOME_CSS = ROOT / "home" / "src" / "App.css"
 HOME_INDEX = ROOT / "home" / "index.html"
 SYSTEMS = ROOT / "system" / "systems.json"
 CANONICAL_META_DESCRIPTION = (
-    "Zain Dana Harper builds Flywheel and open-source tools for testing AI systems, "
-    "with install commands, releases and source for each."
+    "Zain Dana Harper: AI verification harnesses, effect-typed compilers, "
+    "D3D12/Vulkan physics renderers, and cross-medium tools with live demos and source."
 )
 
 
