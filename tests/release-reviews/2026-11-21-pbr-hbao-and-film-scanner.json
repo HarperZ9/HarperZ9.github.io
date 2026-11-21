@@ -1,0 +1,7 @@
+{
+  "date": "2026-11-21",
+  "note": "Upgrade pbr-from-depth with 8-dir HBAO + 2nd-order curvature and add decoupled film-scanner-emulation kernel",
+  "paths": {
+    "index.html": "621468fe384226e605998342ed2a65a38e294ef52e9d46c1bb1ebb0e7dd98b25"
+  }
+}

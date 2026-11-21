@@ -49,6 +49,20 @@ export function filmLook(E) {
   const [fr, fg, fb] = f, r0 = Math.min(n - 2, Math.floor(fr)), g0 = Math.min(n - 2, Math.floor(fg)), b0 = Math.min(n - 2, Math.floor(fb)), tr = fr - r0, tg = fg - g0, tb = fb - b0;
   return [0, 1, 2].map((c) => { const sl = (b) => (at(r0, g0, b, c) * (1 - tr) + at(r0 + 1, g0, b, c) * tr) * (1 - tg) + (at(r0, g0 + 1, b, c) * (1 - tr) + at(r0 + 1, g0 + 1, b, c) * tr) * tg; return srgbToLin(sl(b0) * (1 - tb) + sl(b0 + 1) * tb); });
 }
+// Decoupled optical scanner/enlarger readout stage layered on top of the existing spectral filmLook(E) model.
+export const SCANNER_OPTICS = Object.freeze({
+  'frontier-sp3000': Object.freeze({ label: 'Frontier SP-3000 (CCD)', toe: 0.16, shoulder: 0.22, mtf: 0.88, matrix: Object.freeze([[1.04, -0.03, -0.01], [-0.02, 1.03, -0.01], [0.01, -0.03, 1.02]]) }),
+  'noritsu-hs1800': Object.freeze({ label: 'Noritsu HS-1800 (LED)', toe: 0.12, shoulder: 0.18, mtf: 0.92, matrix: Object.freeze([[1.01, -0.01, 0.0], [-0.01, 1.02, -0.01], [0.0, -0.01, 1.01]]) }),
+  'pmt-drum-scan': Object.freeze({ label: 'PMT Drum Scanner', toe: 0.06, shoulder: 0.08, mtf: 0.99, matrix: Object.freeze([[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]]) }),
+  'optical-enlarger': Object.freeze({ label: 'Optical Enlarger', toe: 0.20, shoulder: 0.28, mtf: 0.84, matrix: Object.freeze([[1.02, -0.01, -0.01], [-0.01, 1.01, 0.0], [-0.01, 0.0, 1.01]]) }),
+});
+export function filmLookScanned(E, scannerId = 'pmt-drum-scan') {
+  const sc = SCANNER_OPTICS[scannerId];
+  if (!sc) throw new Error(`unknown scanner optics: ${scannerId}`);
+  const base = filmLook(E).map((v) => clamp(v * (1 - sc.shoulder * 0.15) + sc.toe * 0.02 * (1 - v), 0, 1));
+  const M = sc.matrix;
+  return [0, 1, 2].map((r) => clamp(M[r][0] * base[0] + M[r][1] * base[1] + M[r][2] * base[2], 0, 1));
+}
 // The exposure on the negative: the scene behind the pigments (the ground's own colour) plus every pigment's light.
 export const exposure = (base, lins, d) => [0, 1, 2].map((c) => base[c] + FILM.expo * lins.reduce((s, lin, i) => s + d[i] * lin[c], 0));
 // ---- sound ----
