@@ -1,5 +1,19 @@
 // surface-start.js: all a surface loads before a press. One press, or an address that carries ?start, brings the
 // modules in (surface-page.mjs). A room has its own press, or opens when the address names it (rooms.mjs).
+const mb = document.getElementById("sx-marble-all"), mHost = document.getElementById("mx-host");
+if (mb && mHost) {
+  const goAll = () => {
+    mb.disabled = true; mb.textContent = "Marbling all mediums";
+    import("./marbled-field.mjs").then((m) => m.mountMarbledField(mHost)).then(() => {
+      mb.textContent = "Unified marbled surface active";
+    }).catch((e) => {
+      console.error("surface: marbled field failed", e);
+      mb.disabled = false; mb.textContent = "Open unified marbled surface";
+    });
+  };
+  mb.hidden = false; mb.addEventListener("click", goAll);
+  if (new URLSearchParams(location.search).has("marbled")) goAll();
+}
 const b = document.getElementById("sx-start"), say = document.getElementById("sx-say");
 if (b) {
   const words = b.textContent;

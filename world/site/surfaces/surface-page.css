@@ -37,6 +37,14 @@ body.sx-body .gw-backdrop::before { content: ""; position: absolute; inset: 0; z
 #sx-hosts[data-surface] { margin: 20px 0; }
 #sx-hosts .sf-wide { grid-column: 1 / -1; }
 .sx [hidden] { display: none !important; }
+.mx-bar { display: grid; gap: 12px; padding: 14px 0; border-top: 1px solid var(--line, rgba(244, 239, 230, .25)); }
+.mx-row { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; }
+.mx-row label { display: grid; gap: 4px; font-size: .88em; min-width: 140px; flex: 1 1 150px; }
+.mx-row select, .mx-row input[type="range"] { width: 100%; font: inherit; color: inherit; background: transparent; }
+.mx-status { margin: 0; font-size: .88em; opacity: .9; }
+article.sx-marbled-active { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 20px 28px; align-items: start; }
+article.sx-marbled-active > :not(.rm) { grid-column: 1 / -1; }
+article.sx-marbled-active .sx.rm { margin: 0; padding-top: 14px; border-top: 1px solid var(--line, rgba(244, 239, 230, .2)); }
 /* A jump to a section (an address that ends in #shader, a link on the page) lands its heading below the hand, the
    navigation fixed at the top of the screen. The hand is 78px tall; it sits clamp(10px, 2vw, 24px) from the top on a
    wide screen and 6px, or the safe area, on a narrow one. tests/surface-rooms-anchor.cjs holds this margin to the
