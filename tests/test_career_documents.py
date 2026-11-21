@@ -218,10 +218,14 @@ def test_experience_dates_use_the_adopted_low_claim_boundary() -> None:
     assert "No current status, end year" in source["date_policy"]["freelance_writing"]
     for name in STATUS_BOUNDARY_DOCS:
         src = read(name)
-        for value in ("Stream/Convergys", "Wilsonville, Oregon", "2014 to 2015",
-                      "Legendary Tree", "April 25, 2015 to June 2, 2026",
-                      "2017", "thirteen years of programming", "<h2>Projects</h2>", "<h2>Experience</h2>",
-                      "High School Diploma"):
+        required = ["Stream/Convergys", "Wilsonville, Oregon", "2014 to 2015",
+                    "Legendary Tree", "April 25, 2015 to June 2, 2026",
+                    "thirteen years of programming", "<h2>Projects</h2>", "<h2>Experience</h2>"]
+        if name != "resume-graphics-developer-tools.html":
+            required.append("2017")
+        if name in ("cv.html", "resume-grounds.html", "resume-public-operations.html"):
+            required.append("High School Diploma")
+        for value in required:
             assert value in src, (name, value)
         # 14 November 2026: one start date; the June 2026 transition line is gone from every surface.
         assert "transition began" not in src and "13 years" not in src, name

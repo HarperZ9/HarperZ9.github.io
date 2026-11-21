@@ -3,9 +3,9 @@
  "source": {
   "path": "career/resume-source.json",
   "document": "graphics-developer-tools",
-  "sha256": "b4c1be9fdef1d0bf73ff2f632055d43356f090893796f4afa5f5c521d1129a02"
+  "sha256": "cd5da70cf0b9b2233bac2e1c53da6f6dcebd609707795e2c2fa2cb207d93e356"
  },
- "ir_sha256": "1c94d0617e2eabaf59a69f85ba6643dbfe44694e04c6f42d196053c3c10c9f5d",
+ "ir_sha256": "6d47a79a419c9d0d654bccb2bbff6d767b3b9c5aa15f1ce83abd846f2b27ce9e",
  "theme": "press-resume",
  "overrides": [
   "base.size=10.0",
@@ -13,7 +13,7 @@
   "emboss.deboss_finish=inked"
  ],
  "outputs": {
-  "Zain-Dana-Harper-Resume-Graphics-Developer-Tools.pdf": "3cfec5387646b6fd94379f5778e90cd1673e2c10e8769b63567a7dadb9fce806"
+  "Zain-Dana-Harper-Resume-Graphics-Developer-Tools.pdf": "46936177e12b0fb528bdaeda25ed942b699cc22c2cd91405f843f3aa2e5f5a21"
  },
  "pdf_metadata": {
   "pdfa": false,
@@ -33,15 +33,15 @@
     "embedded": true
    },
    {
-    "name": "ELOJCN+HankenGrotesk-Regular",
+    "name": "BOPMHA+HankenGrotesk-Regular",
     "embedded": true
    },
    {
-    "name": "HFJNPJ+HankenGrotesk-Regular",
+    "name": "KLNKMG+HankenGrotesk-Regular",
     "embedded": true
    },
    {
-    "name": "JNOKPB+HankenGrotesk-Regular",
+    "name": "LDKCPG+HankenGrotesk-Regular",
     "embedded": true
    }
   ],
@@ -49,7 +49,7 @@
   "blind_text_runs": 0,
   "reading_order": true,
   "blocks_missing_from_text": [],
-  "pdf_bytes": 227432
+  "pdf_bytes": 227322
  },
  "failed": [],
  "notes": [

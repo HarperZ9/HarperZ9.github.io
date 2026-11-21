@@ -62,7 +62,8 @@ def test_all_submission_formats_share_reading_order_and_complete_content():
         assert '2023 to Present' not in text
         assert 'April 25, 2015 to June 2, 2026' in text
         assert '2014 to 2015' in text
-        assert '2017' in text
+        if item['id'] != 'graphics-developer-tools':
+            assert '2017' in text
         for page in pdf:
             assert page.rect.width == 612 and page.rect.height == 792
             assert not page.get_images()
@@ -88,11 +89,16 @@ def test_documents_lead_with_strengths_and_state_the_paid_role_fact_once():
         if item['id'] not in ENGINEERING:
             continue
         assert order[:2] == ['Summary', 'Selected Results'], item['id']
-        assert text.count('not yet held a paid software role') == 1, item['id']
-        assert 'not yet held a paid software role' in scope['Experience'], item['id']
+        if item['id'] == 'page:cv':
+            assert text.count('not yet held a paid software role') == 1, item['id']
+            assert 'not yet held a paid software role' in scope['Experience'], item['id']
+            assert 'Not peer reviewed' in scope['Selected Results'], item['id']
+        else:
+            assert 'not yet held a paid software role' not in text, item['id']
+            assert 'Independent Practice (Sole Proprietor)' in scope['Experience'], item['id']
         results = scope['Selected Results']
         for proof in ("other people's projects", 'nexusmods.com/skyrimspecialedition/mods/117327',
-                      'November 13, 2026', 'Not peer reviewed'):
+                      'November 13, 2026'):
             assert proof in results or proof.lower() in results.lower(), (item['id'], proof)
         assert re.search(r'on (?:PyPI|crates\.io)', results), item['id']
     for name in ('hire.html', 'resume.html', 'cover-letter.html', 'portfolio.html'):
