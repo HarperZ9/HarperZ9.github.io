@@ -1,0 +1,9 @@
+{
+  "date": "2026-11-21",
+  "note": "Run build-world.mjs --site-only for Flywheel 2.0.0 and Articulate 0.19.1 release sync",
+  "paths": {
+    "index.html": "c7540745a7e2743b0d3956d9ac4133ec74276ca43bc641d4d9fce3e32c6e9782",
+    "site-index.html": "52a18a8a87adf4d80be250d50750cce29e36835427d7d5aa0d3be58f2878d3b4",
+    "system/routes.js": "f90347069b22a575bac950d789d232ca0180c0b3531aa98064420833a650906a"
+  }
+}
