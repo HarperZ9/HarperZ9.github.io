@@ -23,15 +23,15 @@
 <meta name="twitter:title" content="The Playground native renderer | Zain Dana Harper">
 <meta name="twitter:description" content="The native renderer is the part of The Playground that renders frames in C++ on Direct3D 12, Vulkan and WebGPU, formerly released as raw-native. It also draws each scene on a CPU reference path, checks its fast screen-space ambient occlusion against a ray-traced reference, and writes a JSON certificate saying whether the shortcut held.">
 <link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-1ab97d86d1">
-<link rel="stylesheet" href="/studies/studies.css?v=world-1ab97d86d1">
-<link rel="stylesheet" href="/world/site/depth.css?v=world-1ab97d86d1">
-<script type="module" src="/world/ui/shell/shell.js?v=world-1ab97d86d1"></script>
-<script type="module" src="/world/site/hand-scroll.js?v=world-1ab97d86d1"></script>
-<link rel="stylesheet" href="/world/site/landmark.css?v=world-1ab97d86d1">
-<script type="module" src="/world/site/home-field.js?v=world-1ab97d86d1"></script>
-<script type="module" src="/world/site/sound.js?v=world-1ab97d86d1"></script>
-<script type="module" src="/world/site/explore/engine.js?v=world-1ab97d86d1"></script>
+<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-12efa74443">
+<link rel="stylesheet" href="/studies/studies.css?v=world-12efa74443">
+<link rel="stylesheet" href="/world/site/depth.css?v=world-12efa74443">
+<script type="module" src="/world/ui/shell/shell.js?v=world-12efa74443"></script>
+<script type="module" src="/world/site/hand-scroll.js?v=world-12efa74443"></script>
+<link rel="stylesheet" href="/world/site/landmark.css?v=world-12efa74443">
+<script type="module" src="/world/site/home-field.js?v=world-12efa74443"></script>
+<script type="module" src="/world/site/sound.js?v=world-12efa74443"></script>
+<script type="module" src="/world/site/explore/engine.js?v=world-12efa74443"></script>
 <!-- structured-data:begin (tools/structured_data.py) -->
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareSourceCode","@id":"https://harperz9.github.io/raw.html#software","name":"The Playground: native renderer","description":"The native renderer is the part of The Playground that renders frames in C++ on Direct3D 12, Vulkan and WebGPU, formerly released as raw-native. It also draws each scene on a CPU reference path, checks its fast screen-space ambient occlusion against a ray-traced reference, and writes a JSON certificate saying whether the shortcut held.","url":"https://harperz9.github.io/raw.html","codeRepository":"https://github.com/HarperZ9/raw-native","author":{"@id":"https://harperz9.github.io/#person","@type":"Person","name":"Zain Dana Harper"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://harperz9.github.io/"},{"@type":"ListItem","position":2,"name":"Catalog","item":"https://harperz9.github.io/catalog.html"},{"@type":"ListItem","position":3,"name":"The Playground: native renderer","item":"https://harperz9.github.io/raw.html"}]},{"@type":"SoftwareApplication","@id":"https://harperz9.github.io/raw.html#application","name":"raw-native","url":"https://harperz9.github.io/raw.html","softwareVersion":"0.8.0","applicationCategory":"MultimediaApplication","operatingSystem":"Windows, Linux, WebAssembly","downloadUrl":"https://github.com/HarperZ9/raw-native/releases/latest","license":"https://github.com/HarperZ9/raw-native/blob/main/LICENSE","author":{"@id":"https://harperz9.github.io/#person","@type":"Person","name":"Zain Dana Harper"},"isAccessibleForFree":true,"sameAs":"https://github.com/HarperZ9/raw-native"}]}</script>
 <!-- structured-data:end -->
@@ -110,15 +110,15 @@ new MutationObserver(s).observe(r,{attributes:true,attributeFilter:["data-theme"
 </section>
 <section class="lp-sec" id="measured" aria-labelledby="h-measured">
 <h2 id="h-measured"><span class="d-3d">What each pass does</span></h2>
-<p class="lp-lede">The hall from the nave at 1280 x 800, after 497 reference samples a pixel, on an RTX 4090.</p>
+<p class="lp-lede">The hall from the nave at 1280 x 800, after 577 reference samples a pixel, on an RTX 4090.</p>
 <ul class="lw-doors"><li class="lw-door"><figure><img src="/media/raw-native/live-stills/hall-split-1600.webp" srcset="/media/raw-native/live-stills/hall-split-800.webp 800w, /media/raw-native/live-stills/hall-split-1600.webp 1600w" sizes="(max-width: 860px) 92vw, 1100px" width="1600" height="900" loading="lazy" decoding="async" alt="The hall split down the middle: on the left the real-time frame, cool and blue in the shade; on the right the path-traced frame, warm where light bounces from the sunlit floor."><figcaption>The same frame of the hall, with the real-time image on the left and the path-traced reference on the right, after 761 samples a pixel. The reference carries the light that bounces off the sunlit floor and walls; the real-time sky light comes from the sky alone, so its shade stays blue.</figcaption></figure></li>
 <li class="lw-door"><figure><img src="/media/raw-native/live-stills/hall-error-1600.webp" srcset="/media/raw-native/live-stills/hall-error-800.webp 800w, /media/raw-native/live-stills/hall-error-1600.webp 1600w" sizes="(max-width: 860px) 92vw, 540px" width="1600" height="900" loading="lazy" decoding="async" alt="A dark frame of the hall where the columns, the arches and the far wall glow violet to gold, brightest in the shade the bounce light fills in the reference."><figcaption>The error between them, each pixel the mean distance in display values, from black (none) through violet to pale gold (a quarter of the full scale or more).</figcaption></figure></li>
 <li class="lw-door"><figure><img src="/media/raw-native/live-stills/hero-1600.webp" srcset="/media/raw-native/live-stills/hero-800.webp 800w, /media/raw-native/live-stills/hero-1600.webp 1600w" sizes="(max-width: 860px) 92vw, 540px" width="1600" height="900" loading="lazy" decoding="async" alt="A metal helmet shell with a dark visor on a pale ground, its shadow cast long to the left."><figcaption>The hero, real time.</figcaption></figure></li></ul>
 <div class="rn-wrap"><table class="rn-table"><caption>The frame's RMSE against the path-traced reference, in display values from 0 to 1, with each pass on and off. Lower is closer.</caption>
-<thead><tr><th scope="col">Pass</th><th scope="col" class="num">On</th><th scope="col" class="num">Off</th></tr></thead><tbody><tr><th scope="row">GTAO, the engine's</th><td class="num">0.122</td><td class="num">0.133</td></tr><tr><th scope="row">SSR, the engine's</th><td class="num">0.122</td><td class="num">0.142</td></tr><tr><th scope="row">TAA, the engine's</th><td class="num">0.122</td><td class="num">0.129</td></tr><tr><th scope="row">Sky light, ambient cube</th><td class="num">0.122</td><td class="num">0.120</td></tr><tr><th scope="row">Light in the air</th><td class="num">0.122</td><td class="num">0.148</td></tr></tbody></table></div>
+<thead><tr><th scope="col">Pass</th><th scope="col" class="num">On</th><th scope="col" class="num">Off</th></tr></thead><tbody><tr><th scope="row">GTAO, the engine's</th><td class="num">0.104</td><td class="num">0.114</td></tr><tr><th scope="row">SSR, the engine's</th><td class="num">0.104</td><td class="num">0.122</td></tr><tr><th scope="row">TAA, the engine's</th><td class="num">0.104</td><td class="num">0.109</td></tr><tr><th scope="row">Sky light, ambient cube</th><td class="num">0.104</td><td class="num">0.101</td></tr><tr><th scope="row">Light in the air</th><td class="num">0.104</td><td class="num">0.126</td></tr></tbody></table></div>
 <p class="lp-limit">Every row is the same frame with one pass turned on or off, measured against the same path-traced reference. Four passes bring the frame closer. The sky light makes it slightly worse, because its ambient cube has no idea the hall has a roof; the reference does.</p>
-<p class="lp-limit">GTAO against ray-traced occlusion within the same 1.2 m: RMSE 0.064, inside the engine's 0.12 tolerance; with no occlusion at all, 0.150. SSR against the traced mirror over 343,183 pixels: 0.107; the sky probe alone: 0.207.</p>
-<p class="lp-limit">On the same card the real-time passes took 4.3 ms of GPU time a frame at 1280 x 800, 12.7 ms at 2560 x 1440 and 33.9 ms at 3840 x 2160, where the engine's GTAO took 12.4 ms and its SSR 10.4 ms. The references only run while the camera holds still: at 4K one sample of each costs another 65 ms.</p>
+<p class="lp-limit">GTAO against ray-traced occlusion within the same 1.2 m: RMSE 0.064, inside the engine's 0.12 tolerance; with no occlusion at all, 0.150. SSR against the traced mirror over 343,234 pixels: 0.107; the sky probe alone: 0.210.</p>
+<p class="lp-limit">On the same card the real-time passes took 4.0 ms of GPU time a frame at 1280 x 800, 13.1 ms at 2560 x 1440 and 37.1 ms at 3840 x 2160, where the engine's GTAO took 14.9 ms and its SSR 9.8 ms. The references run only while the camera holds still: at 4K one sample of each costs another 70 ms.</p>
 </section>
 <section class="lp-sec" id="runs" aria-labelledby="h-runs">
 <h2 id="h-runs"><span class="d-3d">What runs, and whose it is</span></h2>
@@ -307,7 +307,7 @@ ctest --test-dir build -C Release --output-on-failure</pre>
 </section>
 
 <p class="lp-ways-end"><a href="/playground/">The Playground</a> <a href="/superframe.html">Superframe, the core</a> <a href="/low-water.html">Low Water</a> <a href="https://github.com/HarperZ9/superframe/tree/main/native">The source</a></p>
-<p class="lp-verified"><b>Verified</b> 14 November 2026: the measures and frame times read from this page's renderer on an RTX 4090 with the scenes and code it loads; the engine files and scenes by SHA-256 against superframe commit cac34166 and the hashes in its evidence/m3-assets.json; the tilt-shift figures from the engine's evidence/tiltshift-runs.json and gpu-rtx4090.json. The certificate exhibits and downloads are as the 0.2.0 and 0.8.0 releases wrote them.</p>
+<p class="lp-verified"><b>Verified</b> 21 November 2026: the measures and frame times read from this page's renderer on an RTX 4090 with the scenes and code it loads; the engine files and scenes by SHA-256 against superframe commit cac34166 and the hashes in its evidence/m3-assets.json; the tilt-shift figures from the engine's evidence/tiltshift-runs.json and gpu-rtx4090.json. The certificate exhibits and downloads are as the 0.2.0 and 0.8.0 releases wrote them.</p>
 </article>
 </main>
 </body>

@@ -1,5 +1,5 @@
 {
- "checkedAt": "2026-11-14T12:46:21Z",
+ "checkedAt": "2026-11-21T11:22:41Z",
  "products": {
   "buildlang": {
    "id": "buildlang",
@@ -22,17 +22,17 @@
    "id": "flywheel",
    "github": {
     "repo": "HarperZ9/flywheel",
-    "tag": "v1.9.0",
-    "version": "1.9.0",
-    "published": "2026-10-15",
-    "publishedAt": "2026-10-15T19:02:40Z",
-    "url": "https://github.com/HarperZ9/flywheel/releases/tag/v1.9.0"
+    "tag": "v2.0.0",
+    "version": "2.0.0",
+    "published": "2026-11-15",
+    "publishedAt": "2026-11-15T16:04:10Z",
+    "url": "https://github.com/HarperZ9/flywheel/releases/tag/v2.0.0"
    },
    "registry": {
     "kind": "pypi",
     "name": "flywheel-verify",
-    "version": "1.9.0",
-    "url": "https://pypi.org/project/flywheel-verify/1.9.0/"
+    "version": "2.0.0",
+    "url": "https://pypi.org/project/flywheel-verify/2.0.0/"
    }
   },
   "raw-native": {
@@ -80,17 +80,17 @@
    "id": "articulate",
    "github": {
     "repo": "HarperZ9/articulate",
-    "tag": "v0.18.0",
-    "version": "0.18.0",
-    "published": "2026-11-05",
-    "publishedAt": "2026-11-05T02:57:25Z",
-    "url": "https://github.com/HarperZ9/articulate/releases/tag/v0.18.0"
+    "tag": "v0.19.1",
+    "version": "0.19.1",
+    "published": "2026-11-15",
+    "publishedAt": "2026-11-15T11:27:54Z",
+    "url": "https://github.com/HarperZ9/articulate/releases/tag/v0.19.1"
    },
    "registry": {
     "kind": "pypi",
     "name": "articulate-writing",
-    "version": "0.18.0",
-    "url": "https://pypi.org/project/articulate-writing/0.18.0/"
+    "version": "0.19.1",
+    "url": "https://pypi.org/project/articulate-writing/0.19.1/"
    }
   },
   "low-water": {

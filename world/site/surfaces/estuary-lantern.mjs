@@ -1,12 +1,8 @@
 // estuary-lantern.mjs: Saint-Joseph lantern geometry, spectral apertures,
 // canvas renderer, opt-in WebAudio harmonic voice, and DOM binder for estuary.html.
-import {
-  ESTUARY_PROPERTIES, clamp01, createGenotype,
-  evaluateField, expressPhenotype, normalizeWeights,
-} from './estuary-field.mjs';
-import {
-  OBSERVER_MATRICES, detectMetamers, recombineAcrossMediums,
-} from './estuary-recombination.mjs';
+import { ESTUARY_PROPERTIES, clamp01, createGenotype, evaluateField, expressPhenotype, normalizeWeights } from './estuary-field.mjs';
+import { OBSERVER_MATRICES, detectMetamers, recombineAcrossMediums } from './estuary-recombination.mjs';
+import { analyzeLanternHomology } from './estuary-homology.mjs';
 
 export const OBSERVER_LENSES = Object.freeze(Object.keys(OBSERVER_MATRICES));
 
@@ -105,9 +101,10 @@ export function computeLanternFrame(state = {}) {
     const spectrum = computeApertureSpectrum(blendedCell, ap.u, ap.v, time, reducedMotion);
     return Object.freeze({ ...ap, halocline: cell.halocline, weights: Object.freeze(blendedCell), spectrum });
   }));
+  const homology = analyzeLanternHomology(apertures, lattice.cols, lattice.rows);
   return Object.freeze({
     mix, observer, seed, reducedMotion, field, phenotype, recombination,
-    metamer, topology: recombination.topology, lattice, apertures, receipt: recombination.receipt,
+    metamer, topology: recombination.topology, homology, lattice, apertures, receipt: recombination.receipt,
   });
 }
 
@@ -213,7 +210,7 @@ export function createHarmonicSynth() {
 function syncReadouts(doc, frame) {
   const set = (id, text) => { const el = doc.getElementById(id); if (el) el.textContent = text; };
   const bar = (id, pct) => { const el = doc.getElementById(id); if (el) el.style.width = `${Math.round(clamp01(pct) * 100)}%`; };
-  const { metamer: m, topology: t, recombination: r } = frame;
+  const { metamer: m, topology: t, homology: h, recombination: r } = frame;
   const badge = doc.getElementById('metamer-badge');
   if (badge) { badge.textContent = m.isMetamer ? 'METAMER DETECTED' : 'PERCEPTUALLY DISTINCT'; badge.dataset.state = m.isMetamer ? 'metamer' : 'distinct'; }
   set('metamer-observer', m.observer); set('metamer-domain', m.domainDistance.toFixed(4));
@@ -224,6 +221,9 @@ function syncReadouts(doc, frame) {
   set('topo-symmetry', `${Math.round(t.symmetry * 100)}% / ${Math.round(t.asymmetry * 100)}%`); bar('bar-symmetry', t.symmetry);
   set('topo-seams', `${Math.round(t.seams.intensity * 100)}% (${t.seams.ridgeCount} ridges)`); bar('bar-seams', t.seams.intensity);
   set('topo-negspace', `${Math.round(t.negativeSpace.ratio * 100)}% (${t.negativeSpace.betweenPeaks} corridor)`); bar('bar-negspace', t.negativeSpace.ratio);
+  set('topo-beta0', `${h.beta0} connected`);
+  set('topo-beta1', `${h.beta1} enclosed (chi ${h.eulerCharacteristic})`);
+  set('topo-winding', `${h.winding} (${h.hasSingularity ? h.direction : 'none'})`);
   set('acoustic-partials', `${r.acoustic.freqsHz.map((f) => `${f.toFixed(0)} Hz`).join(', ')} at ${r.acoustic.tempoBpm.toFixed(0)} BPM`);
   set('readout-summary', `${r.accessible.summary} ${frame.phenotype.readout.summaryText}`);
   set('readout-receipt', r.receipt.digest);

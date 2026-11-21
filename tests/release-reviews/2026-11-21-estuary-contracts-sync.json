@@ -1,0 +1,15 @@
+{
+  "date": "2026-11-21",
+  "note": "Sync career artifacts, structured data, link cards, llms-full.txt",
+  "paths": {
+    "career/Zain-Dana-Harper-Cover-Letter.docx": "8d5743862553305e7df1c3f9ae7220150fafa1fb504c56b4f35386cee60eccca",
+    "career/Zain-Dana-Harper-Cover-Letter.pdf": "7df578df451a74c1cd5b8c5b793de50c81745ba339d1145fa71268b408477bf9",
+    "career/career-artifacts.json": "90b8716150d2fb3356d2320e7251e3c05792a0c0a0622ef3cf9aaabe163cf521",
+    "career/career-build-receipt.json": "a760091eb969fb4cf8a3370b31c486549cc51887b63a3cbf99613c1d57d9e9e9",
+    "hire.html": "fecd2908e9b520cf397638688588e39f11fade3af9373337b81ba3c11736181c",
+    "index.html": "bc09727298ecd8f620848e763546eb29051b8f4fad72c576cd4e28a8c4004b41",
+    "publications.html": "4db18df1367f022fb7780251089294bfb0fad1fceb2828286e3263462da1e2bf",
+    "publications/build.json": "3723d6e8d1e1a0639306c0cdff2f7cacf864d216dc0c57c47c607fa8d61a4e5d",
+    "published-work.html": "a3d76bc9f910a43bb4133e3f50cca3e40e5c1611ad448a733ca109d0962d6474"
+  }
+}

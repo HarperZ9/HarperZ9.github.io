@@ -353,7 +353,7 @@ def test_flywheel_101_release_discovery_keeps_engine_desktop_and_service_desk_li
         fallback = fallback.split("</section>", 1)[0]
         release_link = re.search(r'Release: <a[^>]+href="([^"]+)"', fallback)
         # 2026-10-23-plain-copy: the no-script fallback links the current release, 1.9.0.
-        assert release_link and release_link.group(1) == "https://github.com/HarperZ9/flywheel/releases/tag/v1.9.0"
+        assert release_link and release_link.group(1) == "https://github.com/HarperZ9/flywheel/releases/tag/v2.0.0"
         install = re.search(r"<li>Install: ([^<]+)</li>", fallback)
         assert install and install.group(1) == flywheel["entryCommand"]
 

@@ -113,7 +113,7 @@ const HIRING_ENTRY_ROUTES = [
 ];
 
 const FLYWHEEL_CURRENT = {
-  label: "Flywheel 1.9.0",
+  label: "Flywheel 2.0.0",
   href: "https://github.com/HarperZ9/flywheel/releases/tag/v1.9.0",
   pypiHref: "https://pypi.org/project/flywheel-verify/1.9.0/",
   date: "2026-10-15",
@@ -358,7 +358,7 @@ const FLAGSHIPS: Flagship[] = [
     install: "pip install flywheel-verify",
     links: [
       { label: "Watch the demo", href: "/media/flywheel-output-check-20260905/short.mp4" },
-      { label: "Flywheel 1.9.0", href: "https://github.com/HarperZ9/flywheel/releases/tag/v1.9.0" },
+      { label: "Flywheel 2.0.0", href: "https://github.com/HarperZ9/flywheel/releases/tag/v2.0.0" },
       { label: "How it works", href: "/flywheel.html" },
     ],
   },

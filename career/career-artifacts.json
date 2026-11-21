@@ -101,24 +101,24 @@
       "sha256": "d1276bbb85dbaa3c622685271ba27fdecd030d54fe816c930a5e479955ab08a6"
     },
     {
-      "byte_length": 2899,
-      "extraction_sha256": "2146f458f1d772e89463552365a0423cc4a4c3abb67f9ec629b01e028faebcbb",
+      "byte_length": 3015,
+      "extraction_sha256": "15e42eae1a7c5364a594039af880b82d7652d317fd5d7d6b61a0a8bcc011e950",
       "format": "pdf",
       "lane_id": "page:cover-letter",
       "mime_type": "application/pdf",
       "page_count": 1,
       "path": "career/Zain-Dana-Harper-Cover-Letter.pdf",
-      "sha256": "6c32c75be34c0ecb4618b8af55c1efd5c579c71d62205a1bf2b2c28808965e7e"
+      "sha256": "7df578df451a74c1cd5b8c5b793de50c81745ba339d1145fa71268b408477bf9"
     },
     {
-      "byte_length": 37811,
-      "extraction_sha256": "029ebba833f8847b8db9eaa914917a43a946a1dcc9674f2dde9cc9570c2894e7",
+      "byte_length": 37897,
+      "extraction_sha256": "029273d22464bb05796e3747f62370d2c6b11026c9b236cabb66938f6bbb493a",
       "format": "docx",
       "lane_id": "page:cover-letter",
       "mime_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
       "page_count": null,
       "path": "career/Zain-Dana-Harper-Cover-Letter.docx",
-      "sha256": "b34eeac19f4a5de8deeb6381a70f14b551c2dfcee59bb50b71a82150d1f44138"
+      "sha256": "0c1d3487163d8e7263e0c02c4c6677549c1120c035377ea46fdd1d94581398ff"
     },
     {
       "byte_length": 22927,
@@ -164,14 +164,14 @@
   "authority_sha256": "8c5a030161fc2de8873dcc870e1315e0d6dc9c728f74727c683787bd5e152d34",
   "current_html": [
     {
-      "byte_length": 17470,
-      "extraction_sha256": "fc7cc62dba8ee60111843def3e78d5b28129946f9f447b83088e3bcc251846b9",
+      "byte_length": 17639,
+      "extraction_sha256": "427e6c24510525f944d94677e225df0afd46578c70ec5bc8c42c794f09cdf111",
       "format": "html",
       "lane_id": null,
       "mime_type": "text/html; charset=utf-8",
       "page_count": null,
       "path": "hire.html",
-      "sha256": "6fd9bbdf8e2fffd2077f74bbcd661edf68d8b3ebbdb66aba89bb98cea2cf998e"
+      "sha256": "fecd2908e9b520cf397638688588e39f11fade3af9373337b81ba3c11736181c"
     },
     {
       "byte_length": 12331,
@@ -184,24 +184,24 @@
       "sha256": "b07e976841cc81892ec578cbd829134c95eb3403968818d315d3620503282805"
     },
     {
-      "byte_length": 25889,
+      "byte_length": 25991,
       "extraction_sha256": "ba550bf181d1ec2fea4d355e697306412733f1258932681532f4e461ccd5b556",
       "format": "html",
       "lane_id": "page:portfolio",
       "mime_type": "text/html; charset=utf-8",
       "page_count": null,
       "path": "portfolio.html",
-      "sha256": "fdae7214b8ed2563b0f7e9a71391daf67e07320e02708dec8b4d99a94fcb7351"
+      "sha256": "d45cb2e124ebcb2cd1740fdb1ab5a0ca4d6489113ac070ebd1f50bd31aa4753b"
     },
     {
-      "byte_length": 4219,
-      "extraction_sha256": "029ebba833f8847b8db9eaa914917a43a946a1dcc9674f2dde9cc9570c2894e7",
+      "byte_length": 4492,
+      "extraction_sha256": "029273d22464bb05796e3747f62370d2c6b11026c9b236cabb66938f6bbb493a",
       "format": "html",
       "lane_id": "page:cover-letter",
       "mime_type": "text/html; charset=utf-8",
       "page_count": null,
       "path": "cover-letter.html",
-      "sha256": "a808e380b06480bb78d9082d3785a0a4926dd85c6683f9973707380e5eb7dfcd"
+      "sha256": "f815f93f21f4cb200032e4a91f74deb5fff729ee79366ed5e33a2d8a3436ca70"
     },
     {
       "byte_length": 37048,

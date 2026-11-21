@@ -11,7 +11,7 @@ author. Source for each is on GitHub under https://github.com/HarperZ9.
 
 ## Flywheel
 
-Version 1.9.0. Licence FSL-1.1-MIT. Python 3.11 or newer, no third-party
+Version 2.0.0. Licence FSL-1.1-MIT. Python 3.11 or newer, no third-party
 runtime dependencies.
 
 - What it is: an AI workstation and coding harness that you host yourself,
@@ -37,7 +37,7 @@ runtime dependencies.
 
 ## Articulate
 
-Version 0.18.0. Licence FSL-1.1-MIT. Python 3.9 or newer, standard library only.
+Version 0.19.1. Licence FSL-1.1-MIT. Python 3.9 or newer, standard library only.
 
 - What it does: checks prose on your computer and names each writing pattern it
   finds and the line it sits on: stacked hedges, marketing words, corporate
