@@ -1,0 +1,7 @@
+{
+  "date": "2026-11-21",
+  "note": "Extend well.mjs idle window to 120s so SwiftShader CI stays awake through frame-times",
+  "paths": {
+    "index.html": "632af1bb44d1da5e7d825eaa9232f567861bea0b13305ba0cf1fa15cbdbd624b"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "date": "2026-11-21",
+  "note": "Refresh asset revision after well.mjs idle-timer fix",
+  "paths": {
+    "index.html": "e4043c54e0b17ac02d8170c60a5985fc60e58c0a896c1810134403ebe12ee35b"
+  }
+}

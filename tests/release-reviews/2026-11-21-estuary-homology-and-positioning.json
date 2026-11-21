@@ -1,0 +1,16 @@
+{
+  "date": "2026-11-21",
+  "note": "Merge main (#574) and pin Estuary homology, spectral kernels, operator table, Playground nesting, 2.0.0/0.19.1 sync, and capability-first positioning",
+  "paths": {
+    "cover-letter.html": "f815f93f21f4cb200032e4a91f74deb5fff729ee79366ed5e33a2d8a3436ca70",
+    "flywheel.html": "5f34f43c6453d0a7605d051b671bd50a106ed56d0b084ee844f183d5cc17171a",
+    "fonts.html": "0ab5c5b05b3fd6e6c5b37eb75fa19d6bff3da24409f8ddde7e37bcf9293e2555",
+    "hire.html": "4b2830fb0bd36d10eead9ac87bc03612ab9762cffd0a93b8b18983255de44323",
+    "index.html": "16c3b440f1da124c86af5c13e679af26bc0aec7528a4634fc0d4a9a6a6471bb9",
+    "publications.html": "f0bc6755c9ea1874bc20f3bceb3b277452f72b1f41100795bb82d8844d351f34",
+    "published-work.html": "b1d0c1be3906738ac773d2be827a248d840f386800eb7c7342d9267ae0e05d81",
+    "research.html": "79cf33f06a6edb40fecf4fecf0fe42b85d65525d90364971620ff1cb4022b0ff",
+    "site-index.html": "5510540a76f59a3561c9367dbfc774ba4103c1a51ab14c0a3d73ca6f9ad35438",
+    "system/routes.js": "8f8644aaa777d0e91589cb2cc8fd6a303e710eb85b76cf3a2e6b44d0bd23b3b8"
+  }
+}
