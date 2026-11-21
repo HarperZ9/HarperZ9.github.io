@@ -13,23 +13,18 @@
 <meta property="og:title" content="The Playground | Zain Dana Harper">
 <meta property="og:description" content="The Playground is a rendering engine that turns one description into picture, type and sound: the native renderer, Superframe, the instruments and study tools, and Low Water.">
 <meta property="og:url" content="https://harperz9.github.io/playground/">
-<meta property="og:image" content="https://harperz9.github.io/img/og/p/playground.jpg?v=2c96139bee48">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="The Playground, by Zain Dana Harper. A record in flat colour with dark grooves, a cream wedge across them and an arm resting on it.">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/home.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://harperz9.github.io/img/og/p/playground.jpg?v=2c96139bee48">
-<meta name="twitter:image:alt" content="The Playground, by Zain Dana Harper. A record in flat colour with dark grooves, a cream wedge across them and an arm resting on it.">
 <meta name="twitter:title" content="The Playground | Zain Dana Harper">
 <meta name="twitter:description" content="The Playground is a rendering engine that turns one description into picture, type and sound: the native renderer, Superframe, the instruments and study tools, and Low Water.">
 <link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-dc80570072">
-<link rel="stylesheet" href="/studies/studies.css?v=world-dc80570072">
-<link rel="stylesheet" href="/world/site/depth.css?v=world-dc80570072">
-<script type="module" src="/world/ui/shell/shell.js?v=world-dc80570072"></script>
-<script type="module" src="/world/site/hand-scroll.js?v=world-dc80570072"></script>
-<link rel="stylesheet" href="/world/site/distill/distill.css?v=world-dc80570072">
-<link rel="stylesheet" href="/world/site/surfaces/surface-page.css?v=world-dc80570072"></head>
+<link rel="stylesheet" href="/world/ui/shell/shell.css">
+<link rel="stylesheet" href="/studies/studies.css">
+<link rel="stylesheet" href="/world/site/depth.css">
+<script type="module" src="/world/ui/shell/shell.js"></script>
+<script type="module" src="/world/site/hand-scroll.js"></script>
+<link rel="stylesheet" href="/world/site/distill/distill.css">
+<link rel="stylesheet" href="/world/site/surfaces/surface-page.css"></head>
 <body class="reading ds-body sx-body">
 <div class="gw-backdrop" aria-hidden="true">
   <picture>
@@ -132,7 +127,7 @@ void mainImage(out vec4 O, in vec2 U){
   O = vec4(col, 1.0);
 }</code></pre><figcaption>The shader room: “Interference”, the shader the room opens with, as written. 13 lines of GLSL.</figcaption></figure>
 <p class="sx-as">Shown as built, from the same code the room runs. With scripts off this is the whole reading.</p>
-<p class="sx-go"><button type="button" data-room-open hidden>Open the shader room</button><span>Loads 273 KB at most. Nothing loads before the press.</span></p>
+<p class="sx-go"><button type="button" data-room-open hidden>Open the shader room</button><span>Loads 274 KB at most. Nothing loads before the press.</span></p>
 </div>
 <p class="sx-say rm-say" role="status" aria-live="polite">When the blend above is running, its colours reach the shader as iPalette, the well's picture reaches it as iChannel0, and the loom, the plot map and the cubes draw the shader's frame. This line says so each time.</p>
 <div class="rm-host" role="group" aria-label="Shaders: write one, watch it run" hidden></div>
@@ -161,10 +156,22 @@ void mainImage(out vec4 O, in vec2 U){
 <p class="sx-say rm-say" role="status" aria-live="polite">When the blend above is running, its mix colours the dye. After each change the field hands its readings on as numbers. This line says so each time.</p>
 <div class="rm-host" role="group" aria-label="The field: light, flow, measure and shape in one place" hidden></div>
 </section>
+<section class="sx rm" id="estuary" data-room="estuary" data-home="playground" data-css="/world/site/surfaces/room-field.css" aria-labelledby="estuary-h">
+<h2 id="estuary-h">Estuary: continuous metamers, homology and Perret-lantern light</h2>
+<p>Every capability is a continuous weight from 0 to 1, never a binary switch. Blend refraction, fluid, measurement, CAD and sound across a Perret-lantern lattice of spectral apertures, inspect live perceptual metamers, Betti numbers (beta0/beta1), monodromy winding, seams and negative space, and hear the opt-in harmonic metamer.</p>
+<p class="demo-form" data-demo="playground-estuary" data-form="live"><b>Live.</b> This runs in your browser now, on what you give it.</p>
+<div class="rm-before">
+<figure class="rm-still">undefined<figcaption>Settled still: mix 0.50, beta0 1, beta1 0, winding 0.</figcaption></figure>
+<p class="sx-as">Shown as built, from the same code the room runs. With scripts off this is the whole reading.</p>
+<p class="sx-go"><button type="button" data-room-open hidden>Open the estuary</button><span>Loads 94 KB at most. Nothing loads before the press.</span></p>
+</div>
+<p class="sx-say rm-say" role="status" aria-live="polite">When the blend above is running, its mix and palette flow straight into the estuary; estuary hands its field, palette and harmonic score back to sound, shader and plot.</p>
+<div class="rm-host" role="group" aria-label="Estuary: continuous metamers, homology and Perret-lantern light" hidden></div>
+</section>
 <h2 id="instruments">Instruments and study tools</h2>
-<ul class="pg-list"><li><a href="/playground/distill.html">Distill</a><p>Take any file, archive or folder apart and read what it is made of.</p></li><li><a href="/studio.html">The Studio</a><p>A live media instrument for picture and sound.</p></li><li><a href="/elements.html">Elements</a><p>Pigment, water, glass and paper on one bench, with state changes.</p></li><li><a href="/glass-water.html">Glass and water</a><p>Glass lettering over a live sea in four spaces.</p></li><li><a href="/world/sound/sound.html">Sound</a><p>Instruments and scores made in the browser.</p></li><li><a href="/swatches.html">Swatches</a><p>Colour as measured material.</p></li><li><a href="/accession.html">Accession</a><p>The type family and its living forms.</p></li></ul>
+<ul class="pg-list"><li><a href="/playground/distill.html">Distill</a><p>Take any file, archive or folder apart and read what it is made of.</p></li><li><a href="/gaussian-splats.html">Gaussian Splats</a><p>Provenance-locked 3D splat worlds built from source photography.</p></li><li><a href="/studio.html">The Studio</a><p>A live media instrument for picture and sound.</p></li><li><a href="/elements.html">Elements</a><p>Pigment, water, glass and paper on one bench, with state changes.</p></li><li><a href="/glass-water.html">Glass and water</a><p>Glass lettering over a live sea in four spaces.</p></li><li><a href="/world/sound/sound.html">Sound</a><p>Instruments and scores made in the browser.</p></li><li><a href="/swatches.html">Swatches</a><p>Colour as measured material.</p></li><li><a href="/accession.html">Accession</a><p>The type family and its living forms.</p></li></ul>
 </article>
-<script type="module" src="/world/site/surfaces/surface-start.js?v=world-dc80570072"></script>
+<script type="module" src="/world/site/surfaces/surface-start.js"></script>
 </main>
 </body>
 </html>

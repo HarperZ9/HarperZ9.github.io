@@ -1,6 +1,23 @@
 // room-estuary.mjs: registry.mjs adapter that connects estuary-lantern.mjs to the shared bus.mjs protocol.
 import { DEFAULT_ELEMENT_A, DEFAULT_ELEMENT_B, computeLanternFrame } from './estuary-lantern.mjs';
 
+export function still() {
+  const frame = computeLanternFrame({ mix: 0.5, observer: 'visual-luminance', seed: 42, time: 0, reducedMotion: true });
+  const cells = frame.apertures.slice(0, 24).map((a, i) => {
+    const nx = typeof a.nx === 'number' ? a.nx : ((i % 6) + 0.5) / 6;
+    const ny = typeof a.ny === 'number' ? a.ny : (Math.floor(i / 6) + 0.5) / 4;
+    const x = Math.round(60 + nx * 520), y = Math.round(30 + ny * 220), r = Math.max(4, Math.round((a.radius ?? 0.8) * 10));
+    const op = Number(a.opacity ?? a.alpha ?? 0.85).toFixed(2);
+    return `<rect x="${x}" y="${y}" width="${r}" height="${r}" fill="${a.hex || '#e2a46b'}" fill-opacity="${op}"/>`;
+  }).join('');
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 280" role="img" aria-label="Estuary Perret-lantern lattice with spectral apertures"><rect width="640" height="280" fill="#101318"/><g stroke="#2a3140" stroke-width="1"><line x1="60" y1="140" x2="580" y2="140"/><line x1="320" y1="20" x2="320" y2="260"/><polygon points="320,40 420,90 420,190 320,240 220,190 220,90" fill="none"/></g>${cells}</svg>`;
+  return {
+    svg,
+    alt: 'Estuary Perret-lantern structural concrete lattice perforated by weighted spectral apertures.',
+    caption: `Settled still: mix 0.50, beta0 ${frame.homology.beta0}, beta1 ${frame.homology.beta1}, winding ${frame.homology.winding}.`,
+  };
+}
+
 export function mount(host, input = {}, ctx = {}) {
   const state = {
     mix: typeof input?.mix === 'number' ? input.mix : 0.5,

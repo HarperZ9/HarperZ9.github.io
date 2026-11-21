@@ -48,6 +48,15 @@
    ]
   },
   {
+   "id": "playground-estuary",
+   "page": "/playground/#estuary",
+   "form": "live",
+   "what": "The estuary blends refraction, fluid, measurement, CAD and sound continuously in the browser, computing perceptual metamers, Betti homology, monodromy winding and opt-in harmonic audio.",
+   "modules": [
+    "estuary"
+   ]
+  },
+  {
    "id": "playground-shader",
    "page": "/playground/#shader",
    "form": "live",
