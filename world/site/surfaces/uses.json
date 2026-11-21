@@ -1,416 +1,416 @@
 {
- "format": "surfaces.uses/2",
- "from": "scripts/surface-census.mjs",
- "pages": [
-  {
-   "path": "accession.html",
-   "title": "Accession",
-   "surfaces": [
-    "lettering",
-    "living",
-    "motion",
-    "well"
-   ],
-   "elements": [
-    "type",
-    "ink",
-    "paper"
-   ]
+  "format": "surfaces.uses/2",
+  "from": "scripts/surface-census.mjs",
+  "pages": [
+    {
+      "path": "accession.html",
+      "title": "Accession",
+      "surfaces": [
+        "lettering",
+        "living",
+        "motion",
+        "well"
+      ],
+      "elements": [
+        "type",
+        "ink",
+        "paper"
+      ]
+    },
+    {
+      "path": "playground/index.html",
+      "title": "The Playground",
+      "surfaces": [
+        "blend",
+        "lettering",
+        "motion",
+        "plot"
+      ],
+      "elements": [
+        "ink",
+        "glass",
+        "type"
+      ]
+    },
+    {
+      "path": "swatches.html",
+      "title": "The swatch library",
+      "surfaces": [
+        "chart",
+        "plate",
+        "well"
+      ],
+      "elements": [
+        "pigment",
+        "ink",
+        "paper"
+      ]
+    }
+  ],
+  "benches": [
+    "elements.html"
+  ],
+  "modules": {
+    "bench": {
+      "home": "playground",
+      "form": "live",
+      "state": "ready",
+      "weight": "heavy",
+      "plain": "/elements.html",
+      "bytes": 1205907,
+      "files": 163
+    },
+    "well": {
+      "home": "playground",
+      "form": "live",
+      "state": "ready",
+      "weight": "heavy",
+      "plain": null,
+      "bytes": 428718,
+      "files": 51
+    },
+    "chart": {
+      "home": "playground",
+      "form": "live",
+      "state": "ready",
+      "weight": "light",
+      "plain": null,
+      "bytes": 274254,
+      "files": 38
+    },
+    "blend": {
+      "home": "playground",
+      "form": "live",
+      "state": "ready",
+      "weight": "light",
+      "plain": null,
+      "bytes": 285568,
+      "files": 39
+    },
+    "motion": {
+      "home": "playground",
+      "form": "live",
+      "state": "ready",
+      "weight": "light",
+      "plain": null,
+      "bytes": 391995,
+      "files": 51
+    },
+    "lettering": {
+      "home": "playground",
+      "form": "live",
+      "state": "ready",
+      "weight": "light",
+      "plain": null,
+      "bytes": 391995,
+      "files": 51
+    },
+    "plot": {
+      "home": "playground",
+      "form": "live",
+      "state": "ready",
+      "weight": "light",
+      "plain": null,
+      "bytes": 391995,
+      "files": 51
+    },
+    "plate": {
+      "home": "playground",
+      "form": "live",
+      "state": "ready",
+      "weight": "heavy",
+      "plain": null,
+      "bytes": 981435,
+      "files": 143
+    },
+    "glass": {
+      "home": "playground",
+      "form": "live",
+      "state": "ready",
+      "weight": "heavy",
+      "plain": null,
+      "bytes": 981435,
+      "files": 143
+    },
+    "living": {
+      "home": "playground",
+      "form": "live",
+      "state": "ready",
+      "weight": "heavy",
+      "plain": null,
+      "bytes": 981435,
+      "files": 143
+    },
+    "loom": {
+      "home": "playground",
+      "form": "live",
+      "state": "ready",
+      "weight": "light",
+      "plain": null,
+      "bytes": 134377,
+      "files": 10
+    },
+    "ridges": {
+      "home": "playground",
+      "form": "live",
+      "state": "ready",
+      "weight": "light",
+      "plain": null,
+      "bytes": 134377,
+      "files": 10
+    },
+    "voxels": {
+      "home": "playground",
+      "form": "live",
+      "state": "ready",
+      "weight": "light",
+      "plain": null,
+      "bytes": 134377,
+      "files": 10
+    },
+    "recipe": {
+      "home": "playground",
+      "form": "live",
+      "state": "ready",
+      "weight": "light",
+      "plain": null,
+      "bytes": 348307,
+      "files": 44
+    },
+    "forge": {
+      "home": "playground",
+      "form": "live",
+      "state": "ready",
+      "weight": "light",
+      "plain": null,
+      "bytes": 76959,
+      "files": 10
+    },
+    "shader": {
+      "home": "playground",
+      "form": "live",
+      "state": "ready",
+      "weight": "light",
+      "plain": null,
+      "bytes": 230138,
+      "files": 22
+    },
+    "sound": {
+      "home": "playground",
+      "form": "live",
+      "state": "ready",
+      "weight": "heavy",
+      "plain": null,
+      "bytes": 450359,
+      "files": 33
+    },
+    "field": {
+      "home": "playground",
+      "form": "live",
+      "state": "ready",
+      "weight": "light",
+      "plain": null,
+      "bytes": 95586,
+      "files": 3
+    },
+    "estuary": {
+      "home": "playground",
+      "form": "live",
+      "state": "ready",
+      "weight": "light",
+      "plain": "/estuary.html",
+      "bytes": 46162,
+      "files": 4
+    }
   },
-  {
-   "path": "playground/index.html",
-   "title": "The Playground",
-   "surfaces": [
-    "blend",
-    "lettering",
-    "motion",
-    "plot"
-   ],
-   "elements": [
-    "ink",
-    "glass",
-    "type"
-   ]
-  },
-  {
-   "path": "swatches.html",
-   "title": "The swatch library",
-   "surfaces": [
-    "chart",
-    "plate",
-    "well"
-   ],
-   "elements": [
-    "pigment",
-    "ink",
-    "paper"
-   ]
+  "tools": {
+    "system/bulletin": {
+      "direct": 1,
+      "reach": 1
+    },
+    "system/discovery": {
+      "direct": 0,
+      "reach": 228
+    },
+    "system/ear": {
+      "direct": 0,
+      "reach": 0
+    },
+    "system/engine": {
+      "direct": 0,
+      "reach": 229
+    },
+    "system/explainer": {
+      "direct": 3,
+      "reach": 4
+    },
+    "system/fonts": {
+      "direct": 0,
+      "reach": 0
+    },
+    "system/graph": {
+      "direct": 0,
+      "reach": 2
+    },
+    "system/instruments": {
+      "direct": 0,
+      "reach": 231
+    },
+    "system/kit": {
+      "direct": 0,
+      "reach": 0
+    },
+    "system/lessons": {
+      "direct": 1,
+      "reach": 1
+    },
+    "system/lib": {
+      "direct": 2,
+      "reach": 228
+    },
+    "system/media": {
+      "direct": 0,
+      "reach": 229
+    },
+    "system/media-engine": {
+      "direct": 1,
+      "reach": 231
+    },
+    "system/school": {
+      "direct": 32,
+      "reach": 32
+    },
+    "system/showcase": {
+      "direct": 0,
+      "reach": 228
+    },
+    "system/site-music": {
+      "direct": 0,
+      "reach": 0
+    },
+    "system/type-forge": {
+      "direct": 1,
+      "reach": 228
+    },
+    "system/vendor": {
+      "direct": 0,
+      "reach": 4
+    },
+    "world/alive": {
+      "direct": 124,
+      "reach": 125
+    },
+    "world/creation": {
+      "direct": 0,
+      "reach": 1
+    },
+    "world/dataviz": {
+      "direct": 0,
+      "reach": 0
+    },
+    "world/exhibit": {
+      "direct": 0,
+      "reach": 0
+    },
+    "world/feed-22": {
+      "direct": 0,
+      "reach": 5
+    },
+    "world/feed-23": {
+      "direct": 0,
+      "reach": 8
+    },
+    "world/feed-24": {
+      "direct": 0,
+      "reach": 5
+    },
+    "world/feed-25": {
+      "direct": 0,
+      "reach": 5
+    },
+    "world/feed-28": {
+      "direct": 0,
+      "reach": 0
+    },
+    "world/feed-29": {
+      "direct": 0,
+      "reach": 0
+    },
+    "world/feed-30": {
+      "direct": 0,
+      "reach": 5
+    },
+    "world/feed-32": {
+      "direct": 0,
+      "reach": 0
+    },
+    "world/glass": {
+      "direct": 0,
+      "reach": 9
+    },
+    "world/homage": {
+      "direct": 0,
+      "reach": 0
+    },
+    "world/lettering": {
+      "direct": 0,
+      "reach": 11
+    },
+    "world/library": {
+      "direct": 0,
+      "reach": 0
+    },
+    "world/name-art": {
+      "direct": 0,
+      "reach": 0
+    },
+    "world/playbook": {
+      "direct": 0,
+      "reach": 125
+    },
+    "world/site": {
+      "direct": 54,
+      "reach": 54
+    },
+    "world/sound": {
+      "direct": 0,
+      "reach": 9
+    },
+    "world/studio": {
+      "direct": 0,
+      "reach": 7
+    },
+    "world/substrate": {
+      "direct": 0,
+      "reach": 17
+    },
+    "world/superframe": {
+      "direct": 0,
+      "reach": 11
+    },
+    "world/techniques": {
+      "direct": 0,
+      "reach": 14
+    },
+    "world/typeengine": {
+      "direct": 0,
+      "reach": 3
+    },
+    "world/typeface": {
+      "direct": 3,
+      "reach": 7
+    },
+    "world/ui": {
+      "direct": 208,
+      "reach": 208
+    },
+    "world/universe": {
+      "direct": 0,
+      "reach": 0
+    },
+    "world/visualizer": {
+      "direct": 0,
+      "reach": 0
+    }
   }
- ],
- "benches": [
-  "elements.html"
- ],
- "modules": {
-  "bench": {
-   "home": "playground",
-   "form": "live",
-   "state": "ready",
-   "weight": "heavy",
-   "plain": "/elements.html",
-   "bytes": 1227766,
-   "files": 164
-  },
-  "well": {
-   "home": "playground",
-   "form": "live",
-   "state": "ready",
-   "weight": "heavy",
-   "plain": null,
-   "bytes": 432257,
-   "files": 51
-  },
-  "chart": {
-   "home": "playground",
-   "form": "live",
-   "state": "ready",
-   "weight": "light",
-   "plain": null,
-   "bytes": 277088,
-   "files": 38
-  },
-  "blend": {
-   "home": "playground",
-   "form": "live",
-   "state": "ready",
-   "weight": "light",
-   "plain": null,
-   "bytes": 288402,
-   "files": 39
-  },
-  "motion": {
-   "home": "playground",
-   "form": "live",
-   "state": "ready",
-   "weight": "heavy",
-   "plain": null,
-   "bytes": 412990,
-   "files": 52
-  },
-  "lettering": {
-   "home": "playground",
-   "form": "live",
-   "state": "ready",
-   "weight": "heavy",
-   "plain": null,
-   "bytes": 412990,
-   "files": 52
-  },
-  "plot": {
-   "home": "playground",
-   "form": "live",
-   "state": "ready",
-   "weight": "heavy",
-   "plain": null,
-   "bytes": 412990,
-   "files": 52
-  },
-  "plate": {
-   "home": "playground",
-   "form": "live",
-   "state": "ready",
-   "weight": "heavy",
-   "plain": null,
-   "bytes": 984428,
-   "files": 143
-  },
-  "glass": {
-   "home": "playground",
-   "form": "live",
-   "state": "ready",
-   "weight": "heavy",
-   "plain": null,
-   "bytes": 984428,
-   "files": 143
-  },
-  "living": {
-   "home": "playground",
-   "form": "live",
-   "state": "ready",
-   "weight": "heavy",
-   "plain": null,
-   "bytes": 984428,
-   "files": 143
-  },
-  "loom": {
-   "home": "playground",
-   "form": "live",
-   "state": "ready",
-   "weight": "light",
-   "plain": null,
-   "bytes": 134377,
-   "files": 10
-  },
-  "ridges": {
-   "home": "playground",
-   "form": "live",
-   "state": "ready",
-   "weight": "light",
-   "plain": null,
-   "bytes": 134377,
-   "files": 10
-  },
-  "voxels": {
-   "home": "playground",
-   "form": "live",
-   "state": "ready",
-   "weight": "light",
-   "plain": null,
-   "bytes": 134377,
-   "files": 10
-  },
-  "recipe": {
-   "home": "playground",
-   "form": "live",
-   "state": "ready",
-   "weight": "light",
-   "plain": null,
-   "bytes": 351141,
-   "files": 44
-  },
-  "forge": {
-   "home": "playground",
-   "form": "live",
-   "state": "ready",
-   "weight": "light",
-   "plain": null,
-   "bytes": 76959,
-   "files": 10
-  },
-  "shader": {
-   "home": "playground",
-   "form": "live",
-   "state": "ready",
-   "weight": "light",
-   "plain": null,
-   "bytes": 230162,
-   "files": 22
-  },
-  "sound": {
-   "home": "playground",
-   "form": "live",
-   "state": "ready",
-   "weight": "heavy",
-   "plain": null,
-   "bytes": 488222,
-   "files": 38
-  },
-  "field": {
-   "home": "playground",
-   "form": "live",
-   "state": "ready",
-   "weight": "light",
-   "plain": null,
-   "bytes": 96696,
-   "files": 3
-  },
-  "estuary": {
-   "home": "playground",
-   "form": "live",
-   "state": "ready",
-   "weight": "light",
-   "plain": "/estuary.html",
-   "bytes": 46162,
-   "files": 4
-  }
- },
- "tools": {
-  "system/bulletin": {
-   "direct": 1,
-   "reach": 1
-  },
-  "system/discovery": {
-   "direct": 0,
-   "reach": 227
-  },
-  "system/ear": {
-   "direct": 0,
-   "reach": 0
-  },
-  "system/engine": {
-   "direct": 0,
-   "reach": 228
-  },
-  "system/explainer": {
-   "direct": 3,
-   "reach": 4
-  },
-  "system/fonts": {
-   "direct": 0,
-   "reach": 0
-  },
-  "system/graph": {
-   "direct": 0,
-   "reach": 2
-  },
-  "system/instruments": {
-   "direct": 0,
-   "reach": 230
-  },
-  "system/kit": {
-   "direct": 0,
-   "reach": 0
-  },
-  "system/lessons": {
-   "direct": 1,
-   "reach": 1
-  },
-  "system/lib": {
-   "direct": 2,
-   "reach": 227
-  },
-  "system/media": {
-   "direct": 0,
-   "reach": 228
-  },
-  "system/media-engine": {
-   "direct": 1,
-   "reach": 230
-  },
-  "system/school": {
-   "direct": 32,
-   "reach": 32
-  },
-  "system/showcase": {
-   "direct": 0,
-   "reach": 227
-  },
-  "system/site-music": {
-   "direct": 0,
-   "reach": 0
-  },
-  "system/type-forge": {
-   "direct": 1,
-   "reach": 227
-  },
-  "system/vendor": {
-   "direct": 0,
-   "reach": 4
-  },
-  "world/alive": {
-   "direct": 124,
-   "reach": 125
-  },
-  "world/creation": {
-   "direct": 0,
-   "reach": 1
-  },
-  "world/dataviz": {
-   "direct": 0,
-   "reach": 0
-  },
-  "world/exhibit": {
-   "direct": 0,
-   "reach": 0
-  },
-  "world/feed-22": {
-   "direct": 0,
-   "reach": 5
-  },
-  "world/feed-23": {
-   "direct": 0,
-   "reach": 8
-  },
-  "world/feed-24": {
-   "direct": 0,
-   "reach": 5
-  },
-  "world/feed-25": {
-   "direct": 0,
-   "reach": 5
-  },
-  "world/feed-28": {
-   "direct": 0,
-   "reach": 0
-  },
-  "world/feed-29": {
-   "direct": 0,
-   "reach": 0
-  },
-  "world/feed-30": {
-   "direct": 0,
-   "reach": 5
-  },
-  "world/feed-32": {
-   "direct": 0,
-   "reach": 0
-  },
-  "world/glass": {
-   "direct": 0,
-   "reach": 9
-  },
-  "world/homage": {
-   "direct": 0,
-   "reach": 0
-  },
-  "world/lettering": {
-   "direct": 1,
-   "reach": 12
-  },
-  "world/library": {
-   "direct": 0,
-   "reach": 0
-  },
-  "world/name-art": {
-   "direct": 0,
-   "reach": 0
-  },
-  "world/playbook": {
-   "direct": 0,
-   "reach": 125
-  },
-  "world/site": {
-   "direct": 57,
-   "reach": 57
-  },
-  "world/sound": {
-   "direct": 0,
-   "reach": 9
-  },
-  "world/studio": {
-   "direct": 0,
-   "reach": 7
-  },
-  "world/substrate": {
-   "direct": 0,
-   "reach": 17
-  },
-  "world/superframe": {
-   "direct": 0,
-   "reach": 11
-  },
-  "world/techniques": {
-   "direct": 0,
-   "reach": 15
-  },
-  "world/typeengine": {
-   "direct": 0,
-   "reach": 3
-  },
-  "world/typeface": {
-   "direct": 3,
-   "reach": 7
-  },
-  "world/ui": {
-   "direct": 210,
-   "reach": 210
-  },
-  "world/universe": {
-   "direct": 0,
-   "reach": 0
-  },
-  "world/visualizer": {
-   "direct": 0,
-   "reach": 0
-  }
- }
 }
