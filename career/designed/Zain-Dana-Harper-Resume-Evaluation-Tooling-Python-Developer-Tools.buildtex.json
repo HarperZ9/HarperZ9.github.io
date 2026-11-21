@@ -3,9 +3,9 @@
  "source": {
   "path": "career/resume-source.json",
   "document": "evaluation-python-tools",
-  "sha256": "b4c1be9fdef1d0bf73ff2f632055d43356f090893796f4afa5f5c521d1129a02"
+  "sha256": "cd5da70cf0b9b2233bac2e1c53da6f6dcebd609707795e2c2fa2cb207d93e356"
  },
- "ir_sha256": "4747cf8f1668e39badd9284f6fcceef09bd9052288b985e5ce00a6d1cb8800fc",
+ "ir_sha256": "a1f496eb5c2541dfa3f58ae7f49805cc36e78e00bbdf25df192cc785e665d200",
  "theme": "press-resume",
  "overrides": [
   "base.size=10.0",
@@ -13,7 +13,7 @@
   "emboss.deboss_finish=inked"
  ],
  "outputs": {
-  "Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.pdf": "5a36f0539be95e983d9e60e1f1614564863e6ca7f5f40408fea2aadad8d3dd8d"
+  "Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.pdf": "24a85fc8357e35e7fe90d19a2a44fb2a0609e3edcaddae13360e16881b481f34"
  },
  "pdf_metadata": {
   "pdfa": false,
@@ -33,15 +33,15 @@
     "embedded": true
    },
    {
-    "name": "FBNAOM+HankenGrotesk-Regular",
+    "name": "LDKCPG+HankenGrotesk-Regular",
     "embedded": true
    },
    {
-    "name": "IKHJPF+HankenGrotesk-Regular",
+    "name": "LOFEON+HankenGrotesk-Regular",
     "embedded": true
    },
    {
-    "name": "JNOKPB+HankenGrotesk-Regular",
+    "name": "OBBAOE+HankenGrotesk-Regular",
     "embedded": true
    }
   ],
@@ -49,7 +49,7 @@
   "blind_text_runs": 0,
   "reading_order": true,
   "blocks_missing_from_text": [],
-  "pdf_bytes": 225619
+  "pdf_bytes": 225983
  },
  "failed": [],
  "notes": [

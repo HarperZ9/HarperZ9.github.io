@@ -14,7 +14,7 @@ I build tests that tell a working AI system from a broken one, and renderers and
 
 - Open source: 41 pull requests merged in 34 other people's projects, counted November 14, 2026: 38 engineering changes in 31 repositories and 3 list entries. Of the engineering pull requests, 17 more were closed without merge and 13 are open. Examples: DeepEval #2822, Pydantic AI #6205, Datasette #2815, TOMLKit #549 and Biome #11518. harperz9.github.io/portfolio.html
 
-- Shipped tools: Flywheel 1.9.0, Articulate 0.18.0, EMET 1.3.1, Accountable Surface 0.3.1, Calibrate Pro 2.0.1 and Build Color 1.0.2 on PyPI; BuildLang 1.15.0 on crates.io; CMMNS 3.10.0, Superframe 0.3.0 and Phantom 1.1.1 as GitHub releases. Versions read from the registries on November 14, 2026.
+- Shipped tools: Flywheel 2.0.0, Articulate 0.19.1, EMET 1.3.1, Accountable Surface 0.3.1, Calibrate Pro 2.0.1 and Build Color 1.0.2 on PyPI; BuildLang 1.15.0 on crates.io; CMMNS 3.10.0, Superframe 0.3.0 and Phantom 1.1.1 as GitHub releases. Versions read from the registries on November 20, 2026.
 
 - Elder ENB: 1,004,693 total downloads, 179,218 unique downloads, 2,418 endorsements and 147,566 views on Nexus Mods as of November 13, 2026, at version final-elder-9. First uploaded April 21, 2024. nexusmods.com/skyrimspecialedition/mods/117327
 
@@ -24,11 +24,11 @@ I build tests that tell a working AI system from a broken one, and renderers and
 
 ## Flagship Projects
 
-- Flywheel runs AI tasks with the model you choose and checks each answer against a task contract. In 1.9.0, behavior-check flagged 20 of 20 planted behavior changes and 0 of 50 unchanged pairs. github.com/HarperZ9/flywheel/releases/tag/v1.9.0
+- Flywheel runs AI tasks with the model you choose and checks each answer against a task contract. In 2.0.0, Flywheel ships with 31 consolidated packages, default-deny provider reach guards, and behavior checks flagging 20 of 20 planted changes and 0 of 50 unchanged pairs. github.com/HarperZ9/flywheel/releases/tag/v2.0.0
 
 - CMMNS (formerly Daylight Commons) is a browser extension that shows the sources behind replies on nine social platforms. Its slur sign has 91.0% precision, 3,995 of 4,392, on public human-labelled corpora. github.com/HarperZ9/cmmns/blob/main/project-docs/EVALUATION.md
 
-- Articulate is prose analysis and model-assisted editing for the command line, editors and CI. In 0.14.0, Markdown masks removed 5,123 findings on table separator rows across 3,000 files and added none. The latest release is 0.18.0. github.com/HarperZ9/articulate/releases/tag/v0.14.0
+- Articulate is prose analysis and model-assisted editing for the command line, editors and CI. In 0.14.0, Markdown masks removed 5,123 findings on table separator rows across 3,000 files and added none. The latest release is 0.19.1. github.com/HarperZ9/articulate/releases/tag/v0.19.1
 
 - BuildLang is a systems language in which a program declares what it may touch, and the compiler checks it. Version 1.15.0, released November 14, 2026, is on crates.io. The 1.14.0 test run passed 2,079 with 0 failed. crates.io/crates/buildlang
 
@@ -96,7 +96,7 @@ Private systems work includes Array for approval-gated assessment orchestration,
 
 ### Flywheel | Model-agnostic AI workstation and coding harness
 
-Primary owned platform. Flywheel 1.9.0, released October 15, 2026, is the latest release. It is on PyPI as flywheel-verify, installs through Homebrew or Scoop, and ships a Windows installer with a bundled engine.
+Primary owned platform. Flywheel 2.0.0, released November 15, 2026, is the latest release. It is on PyPI as flywheel-verify, installs through Homebrew or Scoop, and ships a Windows installer with a bundled engine.
 
 - Routes tasks to hosted or local models through an OpenAI-compatible gateway, with command-line, desktop, and API entry points.
 
@@ -116,7 +116,7 @@ A browser extension that shows the sources behind replies on X, YouTube, Reddit,
 
 ### Articulate | Prose analysis and editing
 
-Prose analysis and model-assisted editing for the command line, editors and CI. It names each writing pattern it finds and the line it is on, in the terminal, in an editor through its language server, or as SARIF in code review. Version 0.18.0 is on PyPI as articulate-writing. pypi.org/project/articulate-writing
+Prose analysis and model-assisted editing for the command line, editors and CI. It names each writing pattern it finds and the line it is on, in the terminal, in an editor through its language server, or as SARIF in code review. Version 0.19.1 is on PyPI as articulate-writing. pypi.org/project/articulate-writing
 
 ## Graphics and Rendering
 
