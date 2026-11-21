@@ -68,6 +68,9 @@ test('computeLanternFrame integrates field, topology, metamers, and deterministi
   assert.equal(settled.phenotype.mode, 'settled');
   assert.match(settled.receipt.digest, /^fnv1a64:[0-9a-f]{16}$/);
   assert.equal(settled.apertures.length, 60);
+  assert.ok(Number.isInteger(settled.homology.beta0) && settled.homology.beta0 >= 0);
+  assert.ok(Number.isInteger(settled.homology.beta1) && settled.homology.beta1 >= 0);
+  assert.ok(Number.isInteger(settled.homology.winding));
 
   const cadence = computeLanternFrame({ ...LANTERN_PRESETS.cadenceMetamer, seed: 42, reducedMotion: true });
   assert.equal(cadence.metamer.observer, 'temporal-cadence');
@@ -151,15 +154,22 @@ test('estuary.html and estuary-lantern.mjs satisfy accessibility, import, and hy
   }
 
   // Architecture & Findings protocols and Verified line
+  for (const id of ['topo-beta0', 'topo-beta1', 'topo-winding']) {
+    assert.ok(html.includes(`id="${id}"`), `missing homology readout ${id}`);
+  }
   for (const title of [
     'Estuary Metamer Compiler',
     'Reseating-Valve Protocol',
     'Symmetry-Manifold Witnessed Memory',
     'Certified Bit-Exact Kernels',
+    'Topology, Homology &amp; Monodromy',
+    'Biology, Stress-Rest &amp; Looped Compute',
+    'Sociology, Economy &amp; Reseating-Valve Ethics',
   ]) {
     assert.ok(html.includes(title), `missing protocol summary: ${title}`);
   }
   assert.ok(html.includes('<strong>Verified:</strong>'));
+  assert.ok(html.includes('tests/estuary-homology.test.mjs'));
   assert.ok(html.includes('tests/estuary-field.test.mjs'));
   assert.ok(html.includes('tests/estuary-recombination.test.mjs'));
   assert.ok(html.includes('tests/estuary-lantern.test.mjs'));

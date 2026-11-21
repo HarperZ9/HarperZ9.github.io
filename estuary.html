@@ -173,6 +173,7 @@ select {
   border-color: var(--amber);
 }
 .kv { display: grid; grid-template-columns: 1fr auto; gap: 0.35rem 0.8rem; font-size: 0.9rem; margin: 0; }
+.kv-sep { margin-top: 0.8rem; padding-top: 0.65rem; border-top: 1px solid var(--border); }
 .kv dt { color: var(--ink-muted); }
 .kv dd { margin: 0; font-family: var(--font-mono); color: var(--ink); }
 .meter-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.55rem; }
@@ -340,6 +341,11 @@ select {
           <div class="meter-track"><div id="bar-negspace" class="meter-fill"></div></div>
         </li>
       </ul>
+      <dl class="kv kv-sep" aria-label="Homology and monodromy invariants">
+        <dt>&beta;<sub>0</sub> components</dt><dd id="topo-beta0">0 connected</dd>
+        <dt>&beta;<sub>1</sub> apertures/holes</dt><dd id="topo-beta1">0 enclosed</dd>
+        <dt>Monodromy winding</dt><dd id="topo-winding">0 (none)</dd>
+      </dl>
     </div>
 
     <div class="panel">
@@ -369,8 +375,20 @@ select {
         <h3>Certified Bit-Exact Kernels</h3>
         <p>Drives rendering, harmonic partial ratios, and accessible summaries from zero-dependency deterministic ESM modules with a fixed 32-bit PCG generator so identical seeds reproduce bit-for-bit results.</p>
       </article>
+      <article class="protocol-card">
+        <h3>Topology, Homology &amp; Monodromy</h3>
+        <p>Isomorphism preserves exact algebraic ratios across mediums, while homeomorphism preserves continuous shape invariants under deformation. Computing 0D connected components (&beta;<sub>0</sub>), 1D enclosed apertures (&beta;<sub>1</sub>), and integer monodromy winding around closed phase loops detects tears, punctured holes, and phase-flip singularities directly on the evaluated lattice.</p>
+      </article>
+      <article class="protocol-card">
+        <h3>Biology, Stress-Rest &amp; Looped Compute</h3>
+        <p>Living neural circuits alternate between active stress encoding and local rest replay instead of running every pathway at uniform depth. Inkling-2 variable-depth looped compute applies the same rhythm by spending extra recurrent passes on unresolved inputs and consolidating weights during quiet local-sleep intervals.</p>
+      </article>
+      <article class="protocol-card">
+        <h3>Sociology, Economy &amp; Reseating-Valve Ethics</h3>
+        <p>Accountable institutions and markets require low-friction ways to disengage without hidden penalties. The three-arm honest-exit reseating valve separates active participation, graceful exit, and a smooth reallocation curve so departing commitments stay honest and freed capacity returns cleanly to the commons.</p>
+      </article>
     </div>
-    <p class="verified-line"><strong>Verified:</strong> Local Node test runner (<code>node --test</code>) executed <code>tests/estuary-field.test.mjs</code>, <code>tests/estuary-recombination.test.mjs</code>, and <code>tests/estuary-lantern.test.mjs</code> covering C1 continuity across all 10 property pairs, metamer detection, relational topology, lantern geometry, spectral apertures, and static HTML accessibility invariants.</p>
+    <p class="verified-line"><strong>Verified:</strong> Local Node test runner (<code>node --test</code>) executed <code>tests/estuary-homology.test.mjs</code>, <code>tests/estuary-lantern.test.mjs</code>, <code>tests/estuary-recombination.test.mjs</code>, <code>tests/estuary-field.test.mjs</code>, and <code>world/site/surfaces/bus.test.mjs</code> covering Betti homology, monodromy winding, homeomorphism certification, C1 continuity across all 10 property pairs, metamer detection, relational topology, lantern geometry, spectral apertures, bus delivery, and static HTML accessibility invariants.</p>
   </section>
 </main>
 
