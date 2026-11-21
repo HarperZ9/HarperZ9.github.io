@@ -124,10 +124,15 @@ ${labelFor(r.demo)}
 
 async function build(m) {
   const row = ([href, name, say]) => `<li><a href="${href}">${name}</a><p>${say}</p></li>`;
+  const marbledBar = (m.rooms || []).length ? `<section class="sx mx-panel" id="m-marbled" aria-label="Unified marbled surface">
+<p class="sx-go"><button type="button" id="sx-marble-all" hidden>Open unified marbled surface</button><span>Marbles blend, type, shaders, sound, field, and estuary together on one shared bus with live temperature, operator, and bio-transducer weights.</span></p>
+<div id="mx-host" hidden></div>
+</section>` : "";
   const body = `<article class="ds">
 <h1>${esc(m.title)}</h1>
 <p class="ds-lede">${m.lede}</p>${m.make ? `\n<p>${m.make}</p>` : ""}
 <ul class="pg-list">${m.parts.map(row).join("")}</ul>
+${marbledBar}
 ${exchange(m)}
 ${(await Promise.all((m.rooms || []).map((r) => room(m, r)))).join("\n")}
 <h2 id="instruments">${esc(m.placesHeading)}</h2>
