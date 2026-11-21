@@ -63,7 +63,7 @@ async function surface(browser, name, w, h) {
   await host.asElement().scrollIntoViewIfNeeded();
   await page.waitForTimeout(2000);
   // the surface moves: two pictures of its canvas a second apart differ
-  const shot = async () => (await host.asElement().screenshot()).toString('base64');
+  const shot = async () => page.evaluate((el) => el.toDataURL('image/png'), host);
   const nudge = name === 'loom';
   const p1 = await shot();
   if (nudge) await page.evaluate(() => { const r = [...document.querySelectorAll('#sx-hosts input[type="range"]')].find((x) => x.getBoundingClientRect().width > 0); if (r) { r.value = String((+r.min + +r.max) / 3); r.dispatchEvent(new Event('input', { bubbles: true })); r.dispatchEvent(new Event('change', { bubbles: true })); } });

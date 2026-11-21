@@ -1,251 +1,83 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-type="stock" data-lettering="/world/lettering/lib/letter.mjs">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="color-scheme" content="dark">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
-<title>Estuary Lantern | Zain Dana Harper</title>
-<meta name="description" content="Interactive Estuary Lantern: Perret concrete lattice, continuous spectral glass apertures, metamer detection, field topology, and opt-in harmonic synthesis.">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<title>Estuary Lantern | The Playground | Zain Dana Harper</title>
+<meta name="description" content="Interactive Estuary Lantern inside The Playground: Perret concrete lattice, spectral glass apertures, metamer detection, homology, and harmonic synthesis.">
 <link rel="canonical" href="https://harperz9.github.io/estuary.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zain Dana Harper">
-<meta property="og:title" content="Estuary Lantern | Zain Dana Harper">
-<meta property="og:description" content="Continuous elemental property field blending refraction, fluid, measure, cad, and sound with live metamer detection and deterministic receipts.">
+<meta property="og:title" content="Estuary Lantern | The Playground | Zain Dana Harper">
+<meta property="og:description" content="Continuous elemental property field inside The Playground blending refraction, fluid, measure, cad, and sound with live metamer detection and homology.">
 <meta property="og:url" content="https://harperz9.github.io/estuary.html">
-<meta property="og:image" content="https://harperz9.github.io/img/og/portfolio-home.png">
-<meta property="og:image:alt" content="Estuary Lantern interactive cross-medium field and metamer showcase.">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/playground.jpg?v=2c96139bee48">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Estuary Lantern inside The Playground, by Zain Dana Harper.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Estuary Lantern | Zain Dana Harper">
-<meta name="twitter:description" content="Continuous elemental property field blending refraction, fluid, measure, cad, and sound with live metamer detection and deterministic receipts.">
-<meta name="twitter:image" content="https://harperz9.github.io/img/og/portfolio-home.png">
+<meta name="twitter:title" content="Estuary Lantern | The Playground | Zain Dana Harper">
+<meta name="twitter:description" content="Continuous elemental property field inside The Playground blending refraction, fluid, measure, cad, and sound with live metamer detection and homology.">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/p/playground.jpg?v=2c96139bee48">
+<meta name="twitter:image:alt" content="Estuary Lantern inside The Playground, by Zain Dana Harper.">
+<link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-12efa74443">
+<link rel="stylesheet" href="/studies/studies.css?v=world-12efa74443">
+<link rel="stylesheet" href="/world/site/depth.css?v=world-12efa74443">
+<script type="module" src="/world/ui/shell/shell.js?v=world-12efa74443"></script>
+<script type="module" src="/world/site/hand-scroll.js?v=world-12efa74443"></script>
+<link rel="stylesheet" href="/world/site/surfaces/surface-page.css?v=world-12efa74443">
 <style>
-@font-face {
-  font-family: "Hanken Grotesk";
-  src: url("/world/ui/shell/fonts/hanken-grotesk.woff2") format("woff2");
-  font-weight: 400 700;
-  font-display: swap;
-}
-:root {
-  --ground: #101318;
-  --surface: #171b23;
-  --surface-alt: #1d232e;
-  --border: #313a4b;
-  --ink: #ede9e1;
-  --ink-muted: #c2bdb2;
-  --amber: #f5b84c;
-  --teal: #3cd4c4;
-  --cobalt: #7ba8f7;
-  --violet: #d196ff;
-  --font-sans: "Hanken Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-mono: ui-monospace, "Cascadia Mono", "SFMono-Regular", Consolas, monospace;
-}
-* { box-sizing: border-box; }
-html, body {
-  margin: 0;
-  background: var(--ground);
-  color: var(--ink);
-  font-family: var(--font-sans);
-  line-height: 1.55;
-}
-a { color: var(--teal); text-underline-offset: 3px; }
-a:hover { color: var(--amber); }
-:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
-.skip-link {
-  position: absolute;
-  left: -9999px;
-  top: 0;
-  background: var(--amber);
-  color: #101318;
-  padding: 0.6rem 1rem;
-  font-weight: 700;
-  text-decoration: none;
-  z-index: 100;
-}
-.skip-link:focus { left: 0.75rem; top: 0.75rem; }
-.site-header {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 1rem 1.5rem;
-  border-bottom: 1px solid var(--border);
-  background: var(--surface);
-}
-.site-brand { color: var(--ink); font-weight: 700; text-decoration: none; letter-spacing: 0.02em; }
-.site-nav { display: flex; flex-wrap: wrap; gap: 1.15rem; font-size: 0.95rem; }
-.shell { max-width: 1220px; margin: 0 auto; padding: 1.5rem 1.25rem 3.5rem; }
+.shell { max-width: 1120px; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; position: relative; z-index: 1; }
 .hero { margin-bottom: 1.5rem; }
-.hero h1 { margin: 0 0 0.4rem; font-size: clamp(1.75rem, 3.2vw, 2.5rem); line-height: 1.15; }
-.hero p { margin: 0; color: var(--ink-muted); max-width: 72ch; }
-.noscript-box {
-  margin: 1rem 0 1.5rem;
-  padding: 1rem 1.25rem;
-  border: 1px solid var(--amber);
-  background: var(--surface);
-  border-radius: 6px;
-}
-.workspace {
-  display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.95fr);
-  gap: 1.25rem;
-  align-items: start;
-}
+.hero-crumb { font-size: 0.9rem; opacity: 0.8; margin: 0 0 0.5rem; }
+.hero h1 { margin: 0 0 0.5rem; }
+.hero p { margin: 0; max-width: 68ch; }
+.noscript-box { margin: 1rem 0 1.5rem; padding: 1rem 1.25rem; border-left: 3px solid currentColor; }
+.workspace { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.95fr); gap: 1.5rem; align-items: start; }
 @media (max-width: 920px) { .workspace { grid-template-columns: 1fr; } }
-.panel {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 1.1rem 1.2rem;
-}
+.panel { padding: 1rem 0; border-top: 1px solid color-mix(in srgb, currentColor 20%, transparent); }
 .canvas-wrap { position: relative; }
-#estuary-canvas {
-  width: 100%;
-  height: 430px;
-  display: block;
-  border-radius: 6px;
-  border: 1px solid var(--border);
-  background: var(--ground);
-}
+#estuary-canvas { width: 100%; height: 430px; display: block; border-radius: 4px; background: #101318; }
 .preset-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.85rem; }
-.btn {
-  appearance: none;
-  border: 1px solid var(--border);
-  background: var(--surface-alt);
-  color: var(--ink);
-  font-family: inherit;
-  font-size: 0.88rem;
-  font-weight: 600;
-  padding: 0.48rem 0.8rem;
-  border-radius: 5px;
-  cursor: pointer;
-}
-.btn:hover { border-color: var(--teal); }
-.btn-audio {
-  width: 100%;
-  margin-top: 0.85rem;
-  padding: 0.65rem 1rem;
-  border-color: var(--amber);
-  background: #231e14;
-  color: var(--ink);
-}
-.btn-audio[aria-pressed="true"] {
-  background: var(--amber);
-  color: #101318;
-}
-.panel h2 { margin: 0 0 0.75rem; font-size: 1.08rem; letter-spacing: 0.01em; }
-.ctrl-group { margin-bottom: 0.72rem; }
-.ctrl-label {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.9rem;
-  margin-bottom: 0.22rem;
-}
-.ctrl-val { font-family: var(--font-mono); color: var(--teal); font-size: 0.86rem; }
-input[type="range"] { width: 100%; accent-color: var(--amber); cursor: pointer; }
-select {
-  width: 100%;
-  padding: 0.5rem 0.65rem;
-  background: var(--surface-alt);
-  color: var(--ink);
-  border: 1px solid var(--border);
-  border-radius: 5px;
-  font-family: inherit;
-  font-size: 0.92rem;
-}
-.readout-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.25rem;
-  margin-top: 1.25rem;
-}
-.badge {
-  display: inline-block;
-  padding: 0.25rem 0.65rem;
-  border-radius: 4px;
-  font-family: var(--font-mono);
-  font-size: 0.82rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  margin-bottom: 0.65rem;
-  background: #222938;
-  color: var(--ink);
-  border: 1px solid var(--border);
-}
-.badge[data-state="metamer"] {
-  background: var(--amber);
-  color: #101318;
-  border-color: var(--amber);
-}
+.btn { appearance: none; border: 1px solid color-mix(in srgb, currentColor 30%, transparent); background: transparent; color: inherit; font: inherit; font-size: 0.88rem; padding: 0.42rem 0.78rem; border-radius: 3px; cursor: pointer; }
+.btn:hover { border-color: currentColor; }
+.btn-audio { width: 100%; margin-top: 0.85rem; padding: 0.6rem 1rem; font-weight: 600; }
+.btn-audio[aria-pressed="true"] { background: currentColor; color: Canvas; }
+.panel h2 { margin: 0 0 0.75rem; font-size: 1.05rem; }
+.ctrl-group { margin-bottom: 0.7rem; }
+.ctrl-label { display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 0.2rem; }
+.ctrl-val { font-family: var(--mono, ui-monospace, monospace); font-size: 0.85rem; }
+input[type="range"] { width: 100%; cursor: pointer; }
+select { width: 100%; padding: 0.45rem 0.6rem; background: transparent; color: inherit; border: 1px solid color-mix(in srgb, currentColor 30%, transparent); border-radius: 3px; font: inherit; font-size: 0.92rem; }
+.readout-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
+.badge { display: inline-block; padding: 0.22rem 0.6rem; border-radius: 3px; font-family: var(--mono, ui-monospace, monospace); font-size: 0.82rem; font-weight: 700; margin-bottom: 0.65rem; border: 1px solid color-mix(in srgb, currentColor 32%, transparent); }
+.badge[data-state="metamer"] { background: #c97a16; color: #fff; border-color: #c97a16; }
 .kv { display: grid; grid-template-columns: 1fr auto; gap: 0.35rem 0.8rem; font-size: 0.9rem; margin: 0; }
-.kv-sep { margin-top: 0.8rem; padding-top: 0.65rem; border-top: 1px solid var(--border); }
-.kv dt { color: var(--ink-muted); }
-.kv dd { margin: 0; font-family: var(--font-mono); color: var(--ink); }
+.kv-sep { margin-top: 0.8rem; padding-top: 0.65rem; border-top: 1px solid color-mix(in srgb, currentColor 20%, transparent); }
+.kv dt { opacity: 0.78; }
+.kv dd { margin: 0; font-family: var(--mono, ui-monospace, monospace); }
 .meter-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.55rem; }
 .meter-head { display: flex; justify-content: space-between; font-size: 0.88rem; margin-bottom: 0.2rem; }
-.meter-track { height: 8px; background: var(--ground); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; }
-.meter-fill { height: 100%; background: linear-gradient(90deg, var(--teal), var(--amber)); width: 0%; }
-.mono-line {
-  font-family: var(--font-mono);
-  font-size: 0.84rem;
-  color: var(--ink-muted);
-  word-break: break-word;
-  margin: 0.45rem 0 0;
-}
-.receipt-code {
-  display: inline-block;
-  font-family: var(--font-mono);
-  font-size: 0.86rem;
-  padding: 0.22rem 0.5rem;
-  background: var(--ground);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  color: var(--teal);
-}
+.meter-track { height: 6px; background: color-mix(in srgb, currentColor 14%, transparent); border-radius: 3px; overflow: hidden; }
+.meter-fill { height: 100%; background: currentColor; width: 0%; }
+.mono-line { font-family: var(--mono, ui-monospace, monospace); font-size: 0.84rem; opacity: 0.8; word-break: break-word; margin: 0.45rem 0 0; }
+.receipt-code { display: inline-block; font-family: var(--mono, ui-monospace, monospace); font-size: 0.86rem; padding: 0.2rem 0.45rem; border: 1px solid color-mix(in srgb, currentColor 24%, transparent); border-radius: 3px; }
 .findings { margin-top: 2rem; }
-.findings h2 { font-size: 1.4rem; margin: 0 0 0.75rem; }
-.protocol-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 1rem;
-}
-.protocol-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 1rem 1.15rem;
-}
-.protocol-card h3 { margin: 0 0 0.45rem; font-size: 1.02rem; color: var(--amber); }
-.protocol-card p { margin: 0; font-size: 0.92rem; color: var(--ink-muted); }
-.verified-line {
-  margin-top: 1.25rem;
-  padding: 0.85rem 1rem;
-  background: var(--surface);
-  border-left: 3px solid var(--teal);
-  font-size: 0.9rem;
-  color: var(--ink);
-}
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { transition: none !important; animation: none !important; }
-}
+.findings h2 { margin: 0 0 0.75rem; }
+.protocol-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.25rem; }
+.protocol-card { padding: 0.9rem 0; border-top: 1px solid color-mix(in srgb, currentColor 20%, transparent); }
+.protocol-card h3 { margin: 0 0 0.4rem; font-size: 1rem; }
+.protocol-card p { margin: 0; font-size: 0.92rem; opacity: 0.86; }
+.verified-line { margin-top: 1.25rem; padding: 0.75rem 1rem; border-left: 3px solid currentColor; font-size: 0.9rem; }
 </style>
 </head>
-<body>
-<a class="skip-link" href="#main">Skip to content</a>
-
-<header class="site-header">
-  <a class="site-brand" href="index.html">Zain Dana Harper</a>
-  <nav class="site-nav" aria-label="Primary">
-    <a href="index.html">Home</a>
-    <a href="playground/">The Playground</a>
-    <a href="hire.html">Hire</a>
-    <a href="findings/">Findings</a>
-  </nav>
-</header>
-
+<body class="reading ds-body sx-body">
 <main id="main" class="shell" tabindex="-1">
   <header class="hero">
+    <p class="hero-crumb"><a href="/playground/#estuary">The Playground</a> / Estuary</p>
     <h1>Estuary Lantern</h1>
     <p>A concrete structural lattice perforated by weighted spectral glass apertures. Every bay blends continuously across refraction, fluid, measure, cad, and sound, exposing perceptual metamers, field topology, opt-in harmonic partials, and a deterministic receipt.</p>
   </header>
