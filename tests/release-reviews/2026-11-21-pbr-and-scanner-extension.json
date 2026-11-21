@@ -1,0 +1,7 @@
+{
+  "date": "2026-11-21",
+  "note": "Extend grounds-more.mjs with SCANNER_OPTICS on existing spectral film model and remove duplicate film-scanner-emulation.mjs",
+  "paths": {
+    "index.html": "051ff6478860e8bc24d1661ff4d32ce41f3b79787dfa629660bcb4484e7ee022"
+  }
+}
