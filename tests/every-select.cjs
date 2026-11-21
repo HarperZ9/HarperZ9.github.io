@@ -20,7 +20,7 @@ const base = process.env.SITE_BASE_URL || 'http://127.0.0.1:8811';
 // Every page with a select in its HTML (the list is checked against the files below, so a new one is not missed),
 // and the pages that build their selects in script, with the press that shows them.
 const PAGES = [
-  { path: '/bulletin.html' }, { path: '/fonts.html' }, { path: '/loom.html' }, { path: '/raw.html' },
+  { path: '/bulletin.html' }, { path: '/estuary.html' }, { path: '/fonts.html' }, { path: '/loom.html' }, { path: '/raw.html' },
   { path: '/repo-explainers/raw-native.html', pre: ['#live-go'] }, { path: '/type-forge.html' }, { path: '/who-knew-first.html' },
   { path: '/world/sound/sound.html' }, { path: '/world/visualizer/web/grid.html' }, { path: '/world/visualizer/web/index.html' },
   { path: '/system/discovery/lab.html' }, { path: '/system/kit/specimen.html' },
