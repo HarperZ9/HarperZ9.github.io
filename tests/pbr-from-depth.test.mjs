@@ -45,6 +45,26 @@ test('discontinuity-aware gradient eliminates fake silhouette wall across foregr
   assert.ok(res.stats.discontinuityFraction > 0.05);
 });
 
+test('8-direction HBAO darkens concave pit while 2nd-order curvature marks convex ridge', () => {
+  const w = 15, h = 15, cx = 7, cy = 7;
+  const pit = new Float32Array(w * h);
+  const ridge = new Float32Array(w * h);
+  for (let y = 0; y < h; y++) {
+    for (let x = 0; x < w; x++) {
+      const r2 = (x - cx) * (x - cx) + (y - cy) * (y - cy);
+      const bump = Math.exp(-r2 / 6.0);
+      pit[y * w + x] = 1.0 - bump;
+      ridge[y * w + x] = bump;
+    }
+  }
+  const pitRes = synthesizePbrFromDepth(pit, w, h, { scale: 2.0, jumpThreshold: 2.0 });
+  const ridgeRes = synthesizePbrFromDepth(ridge, w, h, { scale: 2.0, jumpThreshold: 2.0 });
+  const center = cy * w + cx;
+  assert.ok(pitRes.ao[center] < ridgeRes.ao[center], 'concave pit must have lower HBAO than convex ridge');
+  assert.ok(ridgeRes.curvature[center] > 140, 'convex ridge must have positive curvature (>128)');
+  assert.ok(pitRes.curvature[center] < 116, 'concave pit must have negative curvature (<128)');
+});
+
 test('pbr-from-depth.mjs is deterministic and has zero em dashes or local paths', () => {
   const depth = new Float32Array(25).fill(0.5);
   const a = synthesizePbrFromDepth(depth, 5, 5);
