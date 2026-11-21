@@ -1,0 +1,11 @@
+{
+  "date": "2026-11-20",
+  "note": "Generator-backed specialist domain navigator and cover letters on hire.html, route registry sync, and career tests",
+  "paths": {
+    "career/career-artifacts.json": "4bee04a9d7ac236b9c8a5dd62b286716b58192e74a33fe701230b67a5158bced",
+    "career/career-build-receipt.json": "eb4ff723803e7616d5b3ada4531d2d8a92fca81d0ef9d6b6ec38866838916144",
+    "hire.html": "6fd9bbdf8e2fffd2077f74bbcd661edf68d8b3ebbdb66aba89bb98cea2cf998e",
+    "site-index.html": "b2d152d6637e3135f0528e7b59d9beba16e968beaca63fd17c27d2733c6372f7",
+    "system/routes.js": "8dd0bf838efa64b14fd711bb481319f66a6803df7a37720145b9283dd485f41d"
+  }
+}
