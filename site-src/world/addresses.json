@@ -656,6 +656,7 @@
   {"path":"/media/low-water/world-cac3416/walk/","kind":"leaf","surface":"unassigned","since":"2026-11-18"},
   {"path":"/media/raw-native/live/","kind":"leaf","surface":"playground","since":"2026-11-18"},
   {"path":"/playground/fourier.html","kind":"leaf","surface":"playground","since":"2026-11-19"},
-  {"path":"/estuary.html","kind":"leaf","surface":"unassigned","since":"2026-11-21"}
+  {"path":"/estuary.html","kind":"leaf","surface":"unassigned","since":"2026-11-21"},
+  {"path":"/architecture.html","kind":"record","surface":"door","since":"2026-11-25"}
  ]
 }

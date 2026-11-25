@@ -121,7 +121,7 @@
       "name": "open-archives",
       "repo": "open-archives",
       "version": "0.1.0",
-      "downloadUrl": "https://github.com/HarperZ9/open-archives",
+      "downloadUrl": "https://github.com/HarperZ9/superframe/tree/main/library/open-archives",
       "license": "https://spdx.org/licenses/AGPL-3.0-only.html",
       "os": "Windows, macOS, Linux",
       "category": "MultimediaApplication"

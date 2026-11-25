@@ -14,7 +14,7 @@ I write renderers, shader presets and compilers and check each fast path against
 
 - Released Elder ENB, a Skyrim lighting preset with 38 atmosphere presets: 1,004,693 downloads (179,218 unique) and 2,418 endorsements as of November 13, 2026. nexusmods.com/skyrimspecialedition/mods/117327
 
-- Merged 41 pull requests in 34 other people's projects, 3 of them list entries, counted November 14, 2026. Biome #11518 fixed TypeScript modifier order in the formatter. TOMLKit #549 kept sibling keys when a dotted key is replaced. Grimp #304 replaced a Rust panic with a Python error. harperz9.github.io/portfolio.html
+- Merged 41 pull requests in 34 other people's projects, 3 of them list entries, counted November 14, 2026. Biome #11518 fixed TypeScript modifier order in the formatter. TOMLKit #549 kept sibling keys when a dotted key is replaced. Grimp #303, #304, and #305 fixed absent-module errors, replaced a Rust panic with ValueError, and resolved CI lint. harperz9.github.io/portfolio.html
 
 - Shipped BuildLang 1.15.0 on crates.io, Calibrate Pro 2.0.1 and Build Color 1.0.2 on PyPI, and Superframe 0.3.0 and raw-native 0.8.0 as GitHub releases. Versions read November 14, 2026.
 

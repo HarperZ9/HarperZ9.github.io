@@ -11,7 +11,7 @@ import { SITE, SURFACES, addressOf, redirectTarget } from "./addresses-lib.mjs";
 
 const PLATFORM = { THEPLYGRND: "playground", THECMMNS: "commons", THEFLYWHEEL: "flywheel", ARTIQL8: "articulate", BLDLNG: "buildlang", RSRCH: "research", site: "door" };
 // Career documents sit under the door; they are records.
-const CAREER = /^\/(cv|resume(-[a-z-]+)?|cover-letter|hire|dossier|flywheel-pilot|income-ledger|independence)\.html$/;
+const CAREER = /^\/(architecture|cv|resume(-[a-z-]+)?|cover-letter|hire|dossier|flywheel-pilot|income-ledger|independence)\.html$/;
 // Folder rules: [pattern, surface, kind].
 const RULES = [
   [/^\/findings\//, "research", "record"],

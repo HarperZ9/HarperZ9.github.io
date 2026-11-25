@@ -316,7 +316,7 @@ def test_quantified_outcomes_keep_their_scope_and_reference_types():
     assert '324 terminal-state fixtures and 337 component cases' in cv
     assert 'count_odds task through the Inspect-to-Flywheel bridge with three deterministic controls' in cv
     assert 'HTTP 500 or incorrect HTTP 200 to HTTP 400' in cv
-    assert 'Six of 38 merged engineering pull requests in 31 external repositories' in cv
+    assert 'Nine of 38 merged engineering pull requests in 31 external repositories' in cv
     references = (ROOT / 'career/standards-reference.md').read_text(encoding='utf-8')
     rows = [line for line in references.splitlines() if line.startswith('| [')]
     assert len(rows) == 25

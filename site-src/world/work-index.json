@@ -65,7 +65,7 @@
    "version": "v1.0.1",
    "date": "2026-09-18",
    "years": "2026",
-   "repo": "https://github.com/HarperZ9/build-finance",
+   "repo": "https://github.com/HarperZ9/buildlang/tree/main/suite/build-finance",
    "release": "https://github.com/HarperZ9/build-finance/releases/tag/v1.0.1",
    "pages": [
     "build-products.html"
@@ -83,7 +83,7 @@
    "version": "v1.0.0",
    "date": "2026-06-16",
    "years": "2026",
-   "repo": "https://github.com/HarperZ9/build-oracle",
+   "repo": "https://github.com/HarperZ9/buildlang/tree/main/suite/build-oracle",
    "release": "https://github.com/HarperZ9/build-oracle/releases/tag/v1.0.0",
    "pages": [
     "build-products.html"
@@ -108,7 +108,7 @@
    "version": "v1.0.0",
    "date": "2026-06-16",
    "years": "2026",
-   "repo": "https://github.com/HarperZ9/build-engine",
+   "repo": "https://github.com/HarperZ9/buildlang/tree/main/suite/build-engine",
    "release": "https://github.com/HarperZ9/build-engine/releases/tag/v1.0.0",
    "pages": [
     "build-products.html"
@@ -158,7 +158,7 @@
    "version": "v1.0.2",
    "date": "2026-06-12",
    "years": "2026",
-   "repo": "https://github.com/HarperZ9/build-universe",
+   "repo": "https://github.com/HarperZ9/buildlang/tree/main/universe",
    "release": "https://github.com/HarperZ9/build-universe/releases/tag/v1.0.2",
    "pages": [],
    "packages": [],
@@ -174,7 +174,7 @@
    "version": "v2.0.0",
    "date": "2026-07-11",
    "years": "2026",
-   "repo": "https://github.com/HarperZ9/build-ui",
+   "repo": "https://github.com/HarperZ9/buildlang/tree/main/suite/build-ui",
    "release": "https://github.com/HarperZ9/build-ui/releases/tag/v2.0.0",
    "pages": [
     "build-products.html"
@@ -199,7 +199,7 @@
    "version": "v1.0.0",
    "date": "2026-06-16",
    "years": "2026",
-   "repo": "https://github.com/HarperZ9/build-ecosystem",
+   "repo": "https://github.com/HarperZ9/buildlang/tree/main/suite/build-ecosystem",
    "release": "https://github.com/HarperZ9/build-ecosystem/releases/tag/v1.0.0",
    "pages": [
     "build-products.html"
@@ -249,7 +249,7 @@
    "version": "v0.1.0",
    "date": "2026-06-14",
    "years": "2026",
-   "repo": "https://github.com/HarperZ9/buildlang-tmLanguage",
+   "repo": "https://github.com/HarperZ9/buildlang/tree/main/editors/tmLanguage",
    "release": "https://github.com/HarperZ9/buildlang-tmLanguage/releases/tag/v0.1.0",
    "pages": [],
    "packages": [],
@@ -265,7 +265,7 @@
    "version": "v0.1.0",
    "date": "2026-06-14",
    "years": "2026",
-   "repo": "https://github.com/HarperZ9/buildlang-vscode",
+   "repo": "https://github.com/HarperZ9/buildlang/tree/main/editors/vscode-syntax",
    "release": "https://github.com/HarperZ9/buildlang-vscode/releases/tag/v0.1.0",
    "pages": [],
    "packages": [],
@@ -800,7 +800,7 @@
    "version": null,
    "date": null,
    "years": "2026",
-   "repo": "https://github.com/HarperZ9/witnessing-spine",
+   "repo": "https://github.com/HarperZ9/flywheel/tree/main/docs/research/witnessing-spine",
    "release": null,
    "pages": [
     "witnessing-spine.html"
@@ -818,7 +818,7 @@
    "version": null,
    "date": null,
    "years": "2026",
-   "repo": "https://github.com/HarperZ9/studio-engine",
+   "repo": "https://github.com/HarperZ9/superframe/tree/main/packages/reconcile",
    "release": null,
    "pages": [
     "systems/studio-engine.html",
@@ -837,7 +837,7 @@
    "version": "v0.2.0",
    "date": "2026-10-04",
    "years": "2026",
-   "repo": "https://github.com/HarperZ9/reconcile",
+   "repo": "https://github.com/HarperZ9/superframe/tree/main/packages/reconcile",
    "release": "https://github.com/HarperZ9/reconcile/releases/tag/v0.2.0",
    "pages": [
     "repo-explainers/reconcile.html"
@@ -855,7 +855,7 @@
    "version": null,
    "date": null,
    "years": "2026",
-   "repo": "https://github.com/HarperZ9/faithful-transpile",
+   "repo": "https://github.com/HarperZ9/flywheel/tree/main/docs/research/faithful-transpile",
    "release": null,
    "pages": [
     "research-conservation-of-faithfulness.html"
@@ -1322,7 +1322,7 @@
    "version": null,
    "date": null,
    "years": "2026",
-   "repo": "https://github.com/HarperZ9/vllm-ci-forum-receipt",
+   "repo": "https://github.com/HarperZ9/flywheel/tree/main/demos/vllm-ci-forum-receipt",
    "release": null,
    "pages": [],
    "packages": [],
@@ -1338,7 +1338,7 @@
    "version": null,
    "date": null,
    "years": "2026",
-   "repo": "https://github.com/HarperZ9/crewai-kickoff-replay-receipt",
+   "repo": "https://github.com/HarperZ9/flywheel/tree/main/demos/crewai-kickoff-replay-receipt",
    "release": null,
    "pages": [],
    "packages": [],
@@ -1448,7 +1448,7 @@
    "version": "v0.8.0",
    "date": "2026-10-14",
    "years": "2026",
-   "repo": "https://github.com/HarperZ9/raw-native",
+   "repo": "https://github.com/HarperZ9/superframe/tree/main/native",
    "release": "https://github.com/HarperZ9/raw-native/releases/tag/v0.8.0",
    "pages": [
     "raw.html",
@@ -1513,7 +1513,7 @@
    "version": null,
    "date": null,
    "years": "2026",
-   "repo": "https://github.com/HarperZ9/flywheel-receipt-demo",
+   "repo": "https://github.com/HarperZ9/flywheel/tree/main/demos/flywheel-receipt-demo",
    "release": null,
    "pages": [
     "repo-explainers/flywheel-receipt-demo.html"
@@ -1531,7 +1531,7 @@
    "version": null,
    "date": null,
    "years": "2026",
-   "repo": "https://github.com/HarperZ9/flywheel-evidence-task",
+   "repo": "https://github.com/HarperZ9/flywheel/tree/main/demos/flywheel-evidence-task",
    "release": null,
    "pages": [
     "repo-explainers/flywheel-evidence-task.html"
@@ -1565,7 +1565,7 @@
    "version": null,
    "date": null,
    "years": "2026",
-   "repo": "https://github.com/HarperZ9/bootloops-second-checker",
+   "repo": "https://github.com/HarperZ9/flywheel/tree/main/demos/bootloops-second-checker",
    "release": null,
    "pages": [],
    "packages": [],
@@ -1581,7 +1581,7 @@
    "version": "v0.2.0",
    "date": "2026-10-04",
    "years": "2026",
-   "repo": "https://github.com/HarperZ9/superstack",
+   "repo": "https://github.com/HarperZ9/superframe/tree/main/packages/superstack",
    "release": "https://github.com/HarperZ9/superstack/releases/tag/v0.2.0",
    "pages": [
     "repo-explainers/superstack.html"

@@ -1,0 +1,1559 @@
+{
+  "generated_on": "2026-11-25",
+  "vision": "One connected stack aimed at isomorphism (carry a signal with zero loss) and making truth cheap to check: write capability-typed deterministic code in BuildLang, render and measure physical light, sound, and worlds in The Playground, verify every agent action and claim offline in The Flywheel, inspect public claims and build cross-domain knowledge in The Commons, and publish reproducible findings, interactive lessons, and datasets on harperz9.github.io.",
+  "summary": {
+    "flagships_loc": 5066120,
+    "flagships_test_files": 7593,
+    "github_total": 206,
+    "github_live_own": 89,
+    "github_archived": 98,
+    "oss_merged": 41,
+    "oss_repos": 34,
+    "papers": 16,
+    "findings": 669,
+    "packages": 26
+  },
+  "verified": "25 November 2026: programmatically audited across 86 local git repositories and all 206 GitHub repositories (5,066,120 LOC and 7,593 test files across the 5 flagships and RAW Wave 66; 94/94 internal site routes verified with 0 dead links, 0 local paths, 0 em dashes, and 0 retired names).",
+  "items": [
+    {
+      "id": "the-playground",
+      "name": "The Playground (Superframe + RAW DX12 + Low Water)",
+      "category": "flagship",
+      "categoryLabel": "Flagship Platform",
+      "era": "era-5-consolidation",
+      "flagship": "THE PLAYGRND",
+      "hue": "theplygrnd",
+      "status": "flagship live",
+      "lang": "JS/TS, C++23, HLSL/WGSL, Python, BuildLang",
+      "loc": 841155,
+      "test_files": 983,
+      "summary": "Deterministic rendering engine, multi-medium creative suite, C++23 D3D12/Vulkan/WebGPU renderer, RAW DX12 Wave 66 pipeline, physical-modeling DAW, cosmological N-body solver, optical/CAD labs, and the Low Water narrative game demo.",
+      "run": "git clone https://github.com/HarperZ9/superframe && cd superframe && npm run make",
+      "gap": "RAW DX12 still awaits Wave 67 GameComposite intercept (R11G11B10_FLOAT) before folding into superframe/raw/; style.wgsl is a 4,914 LOC monolith; native engine-receipt/1 emission is wired externally rather than inside superframe; several pure-BuildLang packages (plot-sheet, kcore) lack standard pytest/CI test discovery.",
+      "links": [
+        [
+          "/playground/",
+          "Open on site"
+        ],
+        [
+          "/superframe.html",
+          "Superframe"
+        ],
+        [
+          "/raw.html",
+          "Raw"
+        ],
+        [
+          "https://github.com/HarperZ9/superframe",
+          "Source"
+        ],
+        [
+          "https://github.com/HarperZ9/raw",
+          "Companion repo"
+        ]
+      ]
+    },
+    {
+      "id": "buildlang",
+      "name": "BuildLang (Compiler, BDB, Universe, Suite, Editors, RISC-V OS)",
+      "category": "flagship",
+      "categoryLabel": "Flagship Platform",
+      "era": "era-2-language-instruments",
+      "flagship": "BLDLNG",
+      "hue": "bldlng",
+      "status": "flagship live",
+      "lang": "BuildLang, Rust, Python, C/C++",
+      "loc": 1917140,
+      "test_files": 1178,
+      "summary": "Compiled systems language where function types declare every external capability effect (filesystem, network, C FFI), emitting deterministic C, HLSL/GLSL shaders, experimental WASM/x86-64/RV64 targets, plus pure-BuildLang SQL database BDB, 5 Build suite tools, 268-file Universe corpus, editor grammars, and C-to-BuildLang port tool.",
+      "run": "cargo install buildlang --version 1.15.0 --locked && buildc check main.bld",
+      "gap": "On live origin/main (2026-11-16), 187 of 268 universe/ .bld files still fail buildc check (1 lexer, 21 parser, 165 type/effect) and 16 C-transpile modules remain xfail (tracked in buildlang#290); 6 feature gaps remain in GAPS.txt; BDB uses 44.6x SQLite RAM at 100k rows and needs page checksums to close 438/500 silent fuzz corruptions; compiler/src has 1,308 .unwrap() calls and 11K+ LOC monoliths.",
+      "links": [
+        [
+          "/buildlang.html",
+          "Open on site"
+        ],
+        [
+          "https://github.com/HarperZ9/buildlang",
+          "Source"
+        ]
+      ]
+    },
+    {
+      "id": "the-flywheel",
+      "name": "The Flywheel & Articulate (Accountability Harness + 30 Consolidated Tools)",
+      "category": "flagship",
+      "categoryLabel": "Flagship Platform",
+      "era": "era-3-accountability-mcp",
+      "flagship": "THE FLYWHEEL",
+      "hue": "theflywheel",
+      "status": "flagship live",
+      "lang": "Python, Dart/Flutter, TypeScript/JS, Rust, Go",
+      "loc": 1341145,
+      "test_files": 4637,
+      "summary": "Self-hosted AI workstation, model-agnostic coding harness, cryptographic receipt engine, Three-Plate independent verification framework, and monorepo home for 30 consolidated accountability, memory, orchestration, research-intake, and prose-analysis tools including Articulate (ARTIQL8).",
+      "run": "pip install flywheel-verify articulate-writing && flywheel up",
+      "gap": "Single-model self-recheck caught only 3/6 planted ledger errors (addressed by Three-Plate Oracle targeting >=0.95 recall); 20 consolidated source repos remain live pending PyPI/npm/Cloudflare OIDC repoint; BuildLang porting has not started (0 LOC .bld); 176 silent except Exception handlers and duplicated Articulate detector.py need cleanup.",
+      "links": [
+        [
+          "/flywheel.html",
+          "Open on site"
+        ],
+        [
+          "/articulate.html",
+          "Articulate"
+        ],
+        [
+          "/demo-flywheel.html",
+          "Demo Flywheel"
+        ],
+        [
+          "https://github.com/HarperZ9/flywheel",
+          "Source"
+        ]
+      ]
+    },
+    {
+      "id": "the-commons",
+      "name": "The Commons (CMMNS Extension + 43K Multi-Modal Knowledge Pipeline)",
+      "category": "flagship",
+      "categoryLabel": "Flagship Platform",
+      "era": "era-4-playground-commons",
+      "flagship": "THE CMMNS",
+      "hue": "thecmmns",
+      "status": "flagship live",
+      "lang": "JavaScript, Python, HTML/CSS",
+      "loc": 101848,
+      "test_files": 266,
+      "summary": "Local-first AGPL-3.0 browser extension inspecting public claims, source provenance, coordination cues, and fact-checks across nine social platforms plus generic web pages, paired with a 43,380-item multi-modal knowledge archive distilled into ten structural laws.",
+      "run": "Download cmmns-chrome-3.10.0.zip from GitHub Releases and Load unpacked",
+      "gap": "Audio tracks on ~160 music/vocal videos and 259 newest Batch 27 videos are not yet transcribed; Reddit link-only post inline button placement needs live-DOM update; src/ext/core.bundle.js (18,740 LOC) is checked in as a monolithic bundle without build-hash verification.",
+      "links": [
+        [
+          "/cmmns.html",
+          "Open on site"
+        ],
+        [
+          "/cmmns.html#try",
+          "Cmmns#Try"
+        ],
+        [
+          "/who-knew-first.html",
+          "Who Knew First"
+        ],
+        [
+          "https://github.com/HarperZ9/cmmns",
+          "Source"
+        ]
+      ]
+    },
+    {
+      "id": "research-and-site",
+      "name": "Research, Publications & The Site (harperz9.github.io)",
+      "category": "flagship",
+      "categoryLabel": "Flagship Platform",
+      "era": "era-2-language-instruments",
+      "flagship": "RSRCH",
+      "hue": "rsrch",
+      "status": "flagship live",
+      "lang": "JavaScript, HTML/CSS, Python, HLSL/WGSL, BuildLang",
+      "loc": 864832,
+      "test_files": 529,
+      "summary": "Unified interactive front door, 16 papers and Zenodo DOIs, 669-entry findings ledger (30 wave-1 live findings), 27 interactive Night School AI lessons, DS-01..DS-07 verifiable datasets, live tool explainers, and source-verified career/portfolio records.",
+      "run": "Open https://harperz9.github.io/architecture.html or run pytest tests/",
+      "gap": "Over 47,000 LOC of redundant older hashed assets/index-*.js bundles remain committed in assets/ (contributing to 2.31 GB repo size); system/studio.js is 7,840 LOC; papers are independent technical records and not externally peer reviewed; arXiv submission awaits endorsement.",
+      "links": [
+        [
+          "/architecture.html",
+          "Open on site"
+        ],
+        [
+          "/",
+          ""
+        ],
+        [
+          "/research.html",
+          "Research"
+        ],
+        [
+          "https://github.com/HarperZ9/HarperZ9.github.io",
+          "Source"
+        ]
+      ]
+    },
+    {
+      "id": "articulate",
+      "name": "Articulate (ARTIQL8)",
+      "category": "tools",
+      "categoryLabel": "Tool / Package",
+      "era": "era-3-accountability-mcp",
+      "flagship": "flywheel",
+      "hue": "theflywheel",
+      "status": "flagship integrated",
+      "lang": "Python",
+      "loc": 61745,
+      "test_files": 134,
+      "summary": "Local prose analysis, register checking, and model-assisted editing for CLI, editors (LSP), pre-commit hooks, GitHub Actions (SARIF), and MCP without mutating author facts.",
+      "run": "pip install articulate-writing && articulate check README.md",
+      "gap": "feat/outbound-voice-check awaits carry into flywheel/packages/articulate; 1,785 LOC detector.py is duplicated inside claude-plugin/.",
+      "links": [
+        [
+          "/articulate.html",
+          "Open on site"
+        ],
+        [
+          "https://github.com/HarperZ9/flywheel/tree/main/packages/articulate",
+          "Source"
+        ]
+      ]
+    },
+    {
+      "id": "gather",
+      "name": "Gather",
+      "category": "tools",
+      "categoryLabel": "Tool / Package",
+      "era": "era-3-accountability-mcp",
+      "flagship": "flywheel",
+      "hue": "theflywheel",
+      "status": "flagship integrated",
+      "lang": "Python",
+      "loc": 47158,
+      "test_files": 116,
+      "summary": "Deterministic research intake from web pages, scholarly records, videos, transcripts, and CMMNS captures into hash-tracked tables and verifiable pilot reports.",
+      "run": "pip install gather-engine && gather --help",
+      "gap": "pilot_report.py is 1,684 LOC; 1 legacy constant remains in pilot_custody.py:27; latest upstream commit awaits carry.",
+      "links": [
+        [
+          "/gather.html",
+          "Open on site"
+        ],
+        [
+          "https://github.com/HarperZ9/flywheel/tree/main/packages/gather",
+          "Source"
+        ]
+      ]
+    },
+    {
+      "id": "crucible",
+      "name": "Crucible",
+      "category": "tools",
+      "categoryLabel": "Tool / Package",
+      "era": "era-3-accountability-mcp",
+      "flagship": "flywheel",
+      "hue": "theflywheel",
+      "status": "flagship integrated",
+      "lang": "Python",
+      "loc": 26657,
+      "test_files": 60,
+      "summary": "Claim-verification engine that decomposes theses into falsifiable claims with explicit failure conditions and returns offline MATCH, DRIFT, or UNVERIFIABLE verdicts.",
+      "run": "pip install crucible-bench && crucible --help",
+      "gap": "Open PR crucible#43 (numaudit) awaits merge and carry; missing evidence fails closed by design.",
+      "links": [
+        [
+          "/crucible.html",
+          "Open on site"
+        ],
+        [
+          "https://github.com/HarperZ9/flywheel/tree/main/packages/crucible",
+          "Source"
+        ]
+      ]
+    },
+    {
+      "id": "forum",
+      "name": "Forum",
+      "category": "tools",
+      "categoryLabel": "Tool / Package",
+      "era": "era-3-accountability-mcp",
+      "flagship": "flywheel",
+      "hue": "theflywheel",
+      "status": "flagship integrated",
+      "lang": "Python",
+      "loc": 32886,
+      "test_files": 121,
+      "summary": "Multi-agent orchestration engine with dependency DAGs, parallel execution, human approval pauses, flight-recorder ledger, and SQLite WAL BEGIN IMMEDIATE concurrency.",
+      "run": "pip install forum-engine && forum --help",
+      "gap": "src/forum/cli.py is 1,106 LOC; PyPI OIDC publisher awaits repoint to flywheel.",
+      "links": [
+        [
+          "/forum.html",
+          "Open on site"
+        ],
+        [
+          "https://github.com/HarperZ9/flywheel/tree/main/packages/forum",
+          "Source"
+        ]
+      ]
+    },
+    {
+      "id": "mneme",
+      "name": "Mneme",
+      "category": "tools",
+      "categoryLabel": "Tool / Package",
+      "era": "era-3-accountability-mcp",
+      "flagship": "flywheel",
+      "hue": "theflywheel",
+      "status": "flagship integrated",
+      "lang": "Python",
+      "loc": 29519,
+      "test_files": 72,
+      "summary": "Local-first SQLite agent memory store with BM25, vector, and recency ranking, turn-level provenance, drift checks, and forensic subject erasure.",
+      "run": "pip install flywheel-mneme && mneme --help",
+      "gap": "Local MCP server still runs 0.5.1 (schema 5) pending offline backup and schema-6 upgrade; PyPI name mneme-memory belongs to another publisher.",
+      "links": [
+        [
+          "/systems/mneme.html",
+          "Open on site"
+        ],
+        [
+          "https://github.com/HarperZ9/flywheel/tree/main/packages/mneme",
+          "Source"
+        ]
+      ]
+    },
+    {
+      "id": "canon",
+      "name": "Canon",
+      "category": "tools",
+      "categoryLabel": "Tool / Package",
+      "era": "era-3-accountability-mcp",
+      "flagship": "flywheel",
+      "hue": "theflywheel",
+      "status": "flagship integrated",
+      "lang": "Python",
+      "loc": 83204,
+      "test_files": 121,
+      "summary": "Compiles local memory atoms into scoped instruction capsules for Codex, Claude Code, and other agent hosts with secret quarantine and overlap-safe scrub verification.",
+      "run": "pip install flywheel-canon && canon --help",
+      "gap": "Two flagship test files (compile --out path refusal and __init__ export list) await final alignment; 8 silent excepts in utility paths.",
+      "links": [
+        [
+          "/canon.html",
+          "Open on site"
+        ],
+        [
+          "https://github.com/HarperZ9/flywheel/tree/main/packages/canon",
+          "Source"
+        ]
+      ]
+    },
+    {
+      "id": "index",
+      "name": "Index (index-graph)",
+      "category": "tools",
+      "categoryLabel": "Tool / Package",
+      "era": "era-3-accountability-mcp",
+      "flagship": "flywheel",
+      "hue": "theflywheel",
+      "status": "flagship integrated",
+      "lang": "Python",
+      "loc": 51456,
+      "test_files": 142,
+      "summary": "Deterministic repository, symbol, and dependency graph mapper powering bounded context retrieval and agent routing.",
+      "run": "pip install index-graph && index --help",
+      "gap": "router_jobs.py is 1,086 LOC; PyPI OIDC publisher awaits repoint to flywheel.",
+      "links": [
+        [
+          "/index-graph.html",
+          "Open on site"
+        ],
+        [
+          "https://github.com/HarperZ9/flywheel/tree/main/packages/index",
+          "Source"
+        ]
+      ]
+    },
+    {
+      "id": "plexus",
+      "name": "Plexus (plexus-mesh)",
+      "category": "tools",
+      "categoryLabel": "Tool / Package",
+      "era": "era-3-accountability-mcp",
+      "flagship": "flywheel",
+      "hue": "theflywheel",
+      "status": "flagship integrated",
+      "lang": "Python",
+      "loc": 9867,
+      "test_files": 23,
+      "summary": "Tool discovery and schema-wiring engine that reads declared tool inputs/outputs and emits dependency graphs and runnable multi-tool pipelines over CLI or MCP.",
+      "run": "pip install plexus-mesh && plexus --help",
+      "gap": "Wiring plans declare compatibility only; execution requires running the generated pipeline against live contracts.",
+      "links": [
+        [
+          "/systems/plexus.html",
+          "Open on site"
+        ],
+        [
+          "https://github.com/HarperZ9/flywheel/tree/main/packages/plexus",
+          "Source"
+        ]
+      ]
+    },
+    {
+      "id": "relay",
+      "name": "Relay (flywheel-relay)",
+      "category": "tools",
+      "categoryLabel": "Tool / Package",
+      "era": "era-3-accountability-mcp",
+      "flagship": "flywheel",
+      "hue": "theflywheel",
+      "status": "flagship integrated",
+      "lang": "Python",
+      "loc": 24686,
+      "test_files": 64,
+      "summary": "Permission-checked coding agent loop bridging local models, subscription CLIs, APIs, gateways, and MCP servers with automatic provider failover and acceptance gates.",
+      "run": "pip install flywheel-relay && relay --help",
+      "gap": "Command denylist is not a hard sandbox boundary; PyPI publisher awaits repoint.",
+      "links": [
+        [
+          "/systems/relay.html",
+          "Open on site"
+        ],
+        [
+          "https://github.com/HarperZ9/flywheel/tree/main/packages/relay",
+          "Source"
+        ]
+      ]
+    },
+    {
+      "id": "learn",
+      "name": "Learn (@harperz9/learn)",
+      "category": "tools",
+      "categoryLabel": "Tool / Package",
+      "era": "era-3-accountability-mcp",
+      "flagship": "flywheel",
+      "hue": "theflywheel",
+      "status": "flagship integrated",
+      "lang": "JS/TS",
+      "loc": 12130,
+      "test_files": 68,
+      "summary": "Spaced-review, retrieval-practice, prerequisite-graph, and misconception-tracking learning system that stops strictly before graded answers, consent, or CAPTCHAs.",
+      "run": "npx @harperz9/learn --help",
+      "gap": "npm trusted publisher awaits repoint to flywheel/packages/learn.",
+      "links": [
+        [
+          "/learn.html",
+          "Open on site"
+        ],
+        [
+          "https://github.com/HarperZ9/flywheel/tree/main/packages/learn",
+          "Source"
+        ]
+      ]
+    },
+    {
+      "id": "chorus",
+      "name": "Chorus (chorus-discourse)",
+      "category": "tools",
+      "categoryLabel": "Tool / Package",
+      "era": "era-3-accountability-mcp",
+      "flagship": "flywheel",
+      "hue": "theflywheel",
+      "status": "flagship integrated",
+      "lang": "Python",
+      "loc": 5800,
+      "test_files": 13,
+      "summary": "Structured multi-perspective discourse and decision-record tool that preserves dissenting positions and evidence citations.",
+      "run": "pip install chorus-discourse && chorus --help",
+      "gap": "decision.py is 648 LOC; PyPI publisher awaits repoint.",
+      "links": [
+        [
+          "/chorus.html",
+          "Open on site"
+        ],
+        [
+          "https://github.com/HarperZ9/flywheel/tree/main/packages/chorus",
+          "Source"
+        ]
+      ]
+    },
+    {
+      "id": "bulletin",
+      "name": "Bulletin",
+      "category": "tools",
+      "categoryLabel": "Tool / Package",
+      "era": "era-3-accountability-mcp",
+      "flagship": "flywheel",
+      "hue": "theflywheel",
+      "status": "flagship integrated",
+      "lang": "JS/TS",
+      "loc": 19685,
+      "test_files": 25,
+      "summary": "Public cryptographic message board for AI agents over HTTP and MCP (Cloudflare Worker), with Ed25519 key registration, signed posts, and inbox page acknowledgements.",
+      "run": "Inspect https://harperz9.github.io/bulletin.html or run packages/bulletin tests",
+      "gap": "Cloudflare wrangler deploy still points to standalone repo; posts are untrusted data and not filtered for prompt injection.",
+      "links": [
+        [
+          "/bulletin.html",
+          "Open on site"
+        ],
+        [
+          "https://github.com/HarperZ9/flywheel/tree/main/packages/bulletin",
+          "Source"
+        ]
+      ]
+    },
+    {
+      "id": "emet",
+      "name": "EMET",
+      "category": "tools",
+      "categoryLabel": "Tool / Package",
+      "era": "era-3-accountability-mcp",
+      "flagship": "flywheel",
+      "hue": "theflywheel",
+      "status": "flagship integrated",
+      "lang": "Python",
+      "loc": 12491,
+      "test_files": 15,
+      "summary": "Authority-incapable byte-level integrity witness across Python, Rust, Node, and Go implementations sharing one conformance test suite (MATCH/DRIFT/UNVERIFIABLE).",
+      "run": "pip install emet && emet --help",
+      "gap": "Rust implementation emet.rs (2,167 LOC) uses global unsafe JSON_MODE and 15 .unwrap() calls queued for safe refactor.",
+      "links": [
+        [
+          "/emet.html",
+          "Open on site"
+        ],
+        [
+          "https://github.com/HarperZ9/flywheel/tree/main/packages/emet",
+          "Source"
+        ]
+      ]
+    },
+    {
+      "id": "accountable-surface",
+      "name": "Accountable Surface",
+      "category": "tools",
+      "categoryLabel": "Tool / Package",
+      "era": "era-3-accountability-mcp",
+      "flagship": "flywheel",
+      "hue": "theflywheel",
+      "status": "flagship integrated",
+      "lang": "Python",
+      "loc": 19996,
+      "test_files": 55,
+      "summary": "Operator-granted execution boundary for filesystem, shell, HTTP, browser, and Windows UI Automation actions with explicit postconditions, rollback, and hash-chained journals.",
+      "run": "pip install accountable-surface && accountable-surface --help",
+      "gap": "Windows UI Automation adapter is verified only against a deterministic fake driver so far.",
+      "links": [
+        [
+          "/accountable-surface.html",
+          "Open on site"
+        ],
+        [
+          "https://github.com/HarperZ9/flywheel/tree/main/packages/accountable-surface",
+          "Source"
+        ]
+      ]
+    },
+    {
+      "id": "proof-surface",
+      "name": "Proof Surface & Proof Surface Report",
+      "category": "tools",
+      "categoryLabel": "Tool / Package",
+      "era": "era-3-accountability-mcp",
+      "flagship": "flywheel",
+      "hue": "theflywheel",
+      "status": "flagship integrated",
+      "lang": "Python",
+      "loc": 28451,
+      "test_files": 85,
+      "summary": "Validates AI permission, delegation, and evidence packets and emits allow/deny/needs-human recommendations plus reviewer reports without executing actions.",
+      "run": "pip install proof-surface && telos-proof --help",
+      "gap": "Recommendation engine only; caller enforces authorization; PyPI publisher awaits repoint.",
+      "links": [
+        [
+          "/proof-surface.html",
+          "Open on site"
+        ],
+        [
+          "https://github.com/HarperZ9/flywheel/tree/main/packages/proof-surface",
+          "Source"
+        ]
+      ]
+    },
+    {
+      "id": "coherence-membrane",
+      "name": "Coherence Membrane",
+      "category": "tools",
+      "categoryLabel": "Tool / Package",
+      "era": "era-3-accountability-mcp",
+      "flagship": "flywheel",
+      "hue": "theflywheel",
+      "status": "flagship integrated",
+      "lang": "Python",
+      "loc": 24765,
+      "test_files": 91,
+      "summary": "Boundary validator that checks consistency and drift across multi-stage agent outputs and memory surfaces.",
+      "run": "pip install coherence-membrane",
+      "gap": "PyPI publisher awaits repoint; small duplicate sRGB helper to align with kcore.",
+      "links": [
+        [
+          "/coherence-membrane.html",
+          "Open on site"
+        ],
+        [
+          "https://github.com/HarperZ9/flywheel/tree/main/packages/coherence-membrane",
+          "Source"
+        ]
+      ]
+    },
+    {
+      "id": "terminal-state-fixtures",
+      "name": "Terminal State Fixtures",
+      "category": "tools",
+      "categoryLabel": "Tool / Package",
+      "era": "era-3-accountability-mcp",
+      "flagship": "flywheel",
+      "hue": "theflywheel",
+      "status": "archived consolidated",
+      "lang": "Python",
+      "loc": 8809,
+      "test_files": 10,
+      "summary": "324 deterministic terminal-state fixtures and 337 component cases separating genuine model failure from provider faults, budget exhaustion, or missing evidence, plus METR count_odds replay bridge.",
+      "run": "python -m pytest packages/terminal-state-fixtures",
+      "gap": "Standalone repo archived; maintained inside HarperZ9/flywheel.",
+      "links": [
+        [
+          "/metr-count-odds-reviewer-packet.html",
+          "Open on site"
+        ],
+        [
+          "https://github.com/HarperZ9/flywheel/tree/main/packages/terminal-state-fixtures",
+          "Source"
+        ]
+      ]
+    },
+    {
+      "id": "security-hygiene-suite",
+      "name": "Public Surface Sweeper, Secret Redact IO, Repo Proof Index, Model Provenance Validator, Agent Hook Pack & Seal Watch",
+      "category": "tools",
+      "categoryLabel": "Tool / Package",
+      "era": "era-3-accountability-mcp",
+      "flagship": "flywheel",
+      "hue": "theflywheel",
+      "status": "flagship integrated",
+      "lang": "Python",
+      "loc": 4326,
+      "test_files": 3,
+      "summary": "Six focused release-hygiene and verification utilities covering repo pre-publish sweeps, secret redaction on I/O, proof-packet indexing, provenance validation, repository hooks, and daily SHA-256 seal monitoring.",
+      "run": "public-surface-sweeper . --summary",
+      "gap": "Release hygiene utilities only; pair with dedicated dependency vulnerability scanners; 3 PyPI publishers await repoint.",
+      "links": [
+        [
+          "/security-toolkit.html",
+          "Open on site"
+        ],
+        [
+          "https://github.com/HarperZ9/flywheel/tree/main/packages",
+          "Source"
+        ]
+      ]
+    },
+    {
+      "id": "telos",
+      "name": "Project Telos",
+      "category": "tools",
+      "categoryLabel": "Tool / Package",
+      "era": "era-3-accountability-mcp",
+      "flagship": "flywheel",
+      "hue": "theflywheel",
+      "status": "live standalone",
+      "lang": "JS/TS",
+      "loc": 42229,
+      "test_files": 107,
+      "summary": "Local workbench and npm MCP server (project-telos-mcp 0.9.0) for creating, governing, and replaying workstation checks, simulations, and browser/Windows automation.",
+      "run": "npx project-telos-mcp",
+      "gap": "Pre-1.0 interfaces; queued to fold into flywheel/packages/telos after MCP config and npm publisher repoint.",
+      "links": [
+        [
+          "/systems/telos.html",
+          "Open on site"
+        ],
+        [
+          "https://github.com/HarperZ9/telos",
+          "Source"
+        ]
+      ]
+    },
+    {
+      "id": "build-suite",
+      "name": "Build Suite (Engine, Finance, Oracle, UI, Ecosystem)",
+      "category": "tools",
+      "categoryLabel": "Tool / Package",
+      "era": "era-2-language-instruments",
+      "flagship": "buildlang",
+      "hue": "bldlng",
+      "status": "archived consolidated",
+      "lang": "Python",
+      "loc": 54005,
+      "test_files": 42,
+      "summary": "Five consolidated source-visible Python products covering adaptive forecasting (build-engine), algorithmic backtesting and risk metrics (build-finance), time-series changepoints (build-oracle), PyQt6 theme toolkit (build-ui), and package graph (build-ecosystem).",
+      "run": "git clone https://github.com/HarperZ9/buildlang && ls buildlang/suite/",
+      "gap": "Proprietary source-visible license; live broker paths remain private-risk gated; BuildLang port not yet started; contract_semantics.py is 4,176 LOC.",
+      "links": [
+        [
+          "/buildlang.html",
+          "Open on site"
+        ],
+        [
+          "https://github.com/HarperZ9/buildlang/tree/main/suite",
+          "Source"
+        ]
+      ]
+    },
+    {
+      "id": "bdb",
+      "name": "BuildDB (BDB)",
+      "category": "tools",
+      "categoryLabel": "Tool / Package",
+      "era": "era-4-playground-commons",
+      "flagship": "buildlang",
+      "hue": "bldlng",
+      "status": "flagship integrated",
+      "lang": "BuildLang",
+      "loc": 16289,
+      "test_files": 15,
+      "summary": "Pure BuildLang embedded SQL engine with WAL, crash-recovery harness, cross-process rollback checks, and WAL damage fuzzer.",
+      "run": "git clone https://github.com/HarperZ9/buildlang && ls buildlang/bdb/",
+      "gap": "db.bld is 11,359 LOC single file; 1,084/9,202 sqllogictest pass so far; 44.6x SQLite RAM at 100k rows; missing page checksums allow 438/500 silent fuzz corruptions.",
+      "links": [
+        [
+          "/buildlang.html",
+          "Open on site"
+        ],
+        [
+          "https://github.com/HarperZ9/buildlang/tree/main/bdb",
+          "Source"
+        ]
+      ]
+    },
+    {
+      "id": "buildlang-editors",
+      "name": "BuildLang Editors (LSP, VS Code Syntax, TextMate Grammar)",
+      "category": "tools",
+      "categoryLabel": "Tool / Package",
+      "era": "era-2-language-instruments",
+      "flagship": "buildlang",
+      "hue": "bldlng",
+      "status": "flagship integrated",
+      "lang": "BuildLang",
+      "loc": 1934,
+      "test_files": 0,
+      "summary": "Editor integration for .bld files including language-server client, snippets, and TextMate syntax highlighting.",
+      "run": "git clone https://github.com/HarperZ9/buildlang && ls buildlang/editors/",
+      "gap": "VS Code Marketplace listing still lives under legacy ID HarperZ9.quantalang pending Marketplace token repoint; GitHub Linguist PR #7913 closed for usage threshold.",
+      "links": [
+        [
+          "/buildlang.html",
+          "Open on site"
+        ],
+        [
+          "https://github.com/HarperZ9/buildlang/tree/main/editors",
+          "Source"
+        ]
+      ]
+    },
+    {
+      "id": "superstack-reconcile-studiolibs",
+      "name": "Superstack, Reconcile & Studio-Libs",
+      "category": "tools",
+      "categoryLabel": "Tool / Package",
+      "era": "era-4-playground-commons",
+      "flagship": "superframe",
+      "hue": "theplygrnd",
+      "status": "archived consolidated",
+      "lang": "Python",
+      "loc": 5581,
+      "test_files": 5,
+      "summary": "Foundational creative engine contracts: canonical cross-language seed/byte rules (JS/Python/C++), replayable browser expression worlds (reconcile), and n-dimensional/sound/perception Studio primitives (studio-libs).",
+      "run": "node packages/reconcile/cli.js create gyroid --seed 7 --out out",
+      "gap": "Duplicate copies in substrate/lib/vendor/superstack.mjs and packages/ndim + packages/perceive vs studio-libs await deduplication.",
+      "links": [
+        [
+          "/superframe.html",
+          "Open on site"
+        ],
+        [
+          "https://github.com/HarperZ9/superframe/tree/main/packages",
+          "Source"
+        ]
+      ]
+    },
+    {
+      "id": "prereg-ledger",
+      "name": "Preregistration Ledger (prereg-ledger)",
+      "category": "tools",
+      "categoryLabel": "Tool / Package",
+      "era": "era-4-playground-commons",
+      "flagship": "flywheel",
+      "hue": "theflywheel",
+      "status": "live standalone",
+      "lang": "Docs/Other",
+      "loc": 0,
+      "test_files": 0,
+      "summary": "Public immutable SHA-256 timestamp ledger anchoring study preregistrations and falsification rules before confirmatory runs execute.",
+      "run": "Inspect https://github.com/HarperZ9/prereg-ledger",
+      "gap": "Intentionally kept separate from monorepos so GitHub push timestamps remain independent witnesses.",
+      "links": [
+        [
+          "/research.html",
+          "Open on site"
+        ],
+        [
+          "https://github.com/HarperZ9/prereg-ledger",
+          "Source"
+        ]
+      ]
+    },
+    {
+      "id": "elder-enb",
+      "name": "Elder ENB (Skyrim Special Edition)",
+      "category": "creative",
+      "categoryLabel": "Game / Mod / Creative",
+      "era": "era-1-lighting-mods",
+      "flagship": "superframe",
+      "hue": "theplygrnd",
+      "status": "live flagship mod",
+      "lang": "HLSL, C++, Python",
+      "loc": 36440,
+      "test_files": 21,
+      "summary": "Layered physical lighting and post-processing preset for Skyrim Special Edition with 38 KreatE weather atmosphere presets and stackable style, lighting, and effects overlays.",
+      "run": "Download Elder ENB (final-elder-9) from Nexus Mods #117327",
+      "gap": "ENBSeries binary and required weather mods belong to their respective authors; WeatherThemeCompiler.cpp (2,659 LOC) queued for split during superframe/enb/ fold.",
+      "links": [
+        [
+          "/elder-enb.html",
+          "Open on site"
+        ],
+        [
+          "https://github.com/HarperZ9/elder-enb",
+          "Source"
+        ]
+      ]
+    },
+    {
+      "id": "low-water",
+      "name": "Low Water (Narrative Action Game & AAAA Engine Demo)",
+      "category": "creative",
+      "categoryLabel": "Game / Mod / Creative",
+      "era": "era-4-playground-commons",
+      "flagship": "superframe",
+      "hue": "theplygrnd",
+      "status": "flagship integrated",
+      "lang": "JS/TS, C++23, BuildLang, HLSL",
+      "loc": 106593,
+      "test_files": 159,
+      "summary": "Original narrative action game built on the author's own engine with deterministic one-schedule combat, procedural Hoarstead snow town, GPU-skinned hero characters, and native 4K D3D12 + DXR path-traced reference validation.",
+      "run": "git clone https://github.com/HarperZ9/superframe && npm run test:games",
+      "gap": "Pass 3 FLIP regressed slightly to 0.150 (raster detail grain/lamp halo); feat/paint and wip/compare-verb branches await scrubbed carry from private sibling; full story and city-builder layer in active development.",
+      "links": [
+        [
+          "/low-water.html",
+          "Open on site"
+        ],
+        [
+          "https://github.com/HarperZ9/superframe/tree/main/games/low-water",
+          "Source"
+        ]
+      ]
+    },
+    {
+      "id": "raw-dx12",
+      "name": "RAW DX12 (Rendering Advancement Workshop)",
+      "category": "creative",
+      "categoryLabel": "Game / Mod / Creative",
+      "era": "era-2-language-instruments",
+      "flagship": "superframe",
+      "hue": "theplygrnd",
+      "status": "live active engine",
+      "lang": "C++23, HLSL SM 6.10, Python, BuildLang",
+      "loc": 306960,
+      "test_files": 188,
+      "summary": "Direct3D 11-to-12 real-time graphics replacement and laboratory for Skyrim SE / Fallout 4 featuring persistent TLAS, RayQuery GI/RTAO/OMM, 64-step volumetric clouds, 64^3 GPU Navier-Stokes fluid fire/water, 36 bit-exact debug views, and 25-heuristic moving-camera telemetry.",
+      "run": "Inspect https://github.com/HarperZ9/raw or /raw.html",
+      "gap": "4 Wave 67 live-world targets remain (including GameComposite R11G11B10_FLOAT intercept); 3 TODOs in AtmosphereRenderer/RmlD3D11/VolumetricClouds; folds into superframe/raw/ post-v1.0.",
+      "links": [
+        [
+          "/raw.html",
+          "Open on site"
+        ],
+        [
+          "https://github.com/HarperZ9/raw",
+          "Source"
+        ]
+      ]
+    },
+    {
+      "id": "enb-ecosystem-family",
+      "name": "Truth ENB, Elder Weathers, ENB Runtime Core, ENB Validation Lab & SkyrimBridge",
+      "category": "creative",
+      "categoryLabel": "Game / Mod / Creative",
+      "era": "era-1-lighting-mods",
+      "flagship": "superframe",
+      "hue": "theplygrnd",
+      "status": "queued for superframe fold",
+      "lang": "C++23, HLSL, Python",
+      "loc": 85814,
+      "test_files": 71,
+      "summary": "Five companion Skyrim SE rendering, weather-preset compilation, D3D11 bridge, runtime lifecycle, and automated shader-validation repositories spanning the path from ENBSeries modding to custom DX12 engines.",
+      "run": "Explore /truth-enb.html, /enb-runtime-core.html, and /skyrimbridge.html",
+      "gap": "Queued to consolidate into superframe/enb/; elder-weathers needs CI workflow and font-file cleanup before import.",
+      "links": [
+        [
+          "/truth-enb.html",
+          "Open on site"
+        ],
+        [
+          "/enb-runtime-core.html",
+          "Enb Runtime Core"
+        ],
+        [
+          "/skyrimbridge.html",
+          "Skyrimbridge"
+        ],
+        [
+          "https://github.com/HarperZ9/skyrimbridge",
+          "Source"
+        ]
+      ]
+    },
+    {
+      "id": "brender-and-engine-revival",
+      "name": "BRender Archival & Engine Revival",
+      "category": "creative",
+      "categoryLabel": "Game / Mod / Creative",
+      "era": "era-3-accountability-mcp",
+      "flagship": "superframe",
+      "hue": "theplygrnd",
+      "status": "queued for superframe fold",
+      "lang": "C, Python",
+      "loc": 34185,
+      "test_files": 39,
+      "summary": "Clean-room archival rebuilds, C parity ports, Vulkan rasterizer wrappers, and preservation tooling for historical 1990s 3D engines starting with Argonaut Software's BRender.",
+      "run": "Explore /brender-archival.html and /engine-revival.html",
+      "gap": "Queued for superframe/revivals/ pending per-folder AGPL-3.0 third-party license clearance, unmerged branch diffing, and 421 site link repoints.",
+      "links": [
+        [
+          "/brender-archival.html",
+          "Open on site"
+        ],
+        [
+          "/engine-revival.html",
+          "Engine Revival"
+        ],
+        [
+          "https://github.com/HarperZ9/brender-archival",
+          "Source"
+        ]
+      ]
+    },
+    {
+      "id": "superframe-daw-and-audio",
+      "name": "Superframe Physical-Modeling DAW, Remastering, Ear, Site-Music & Maqam",
+      "category": "creative",
+      "categoryLabel": "Game / Mod / Creative",
+      "era": "era-4-playground-commons",
+      "flagship": "superframe",
+      "hue": "theplygrnd",
+      "status": "flagship integrated",
+      "lang": "C++, BuildLang, Python, JS/TS",
+      "loc": 29554,
+      "test_files": 38,
+      "summary": "Physical-modeling CLAP/VST3 instruments (modal bar bank, Steinway-measured stiff-string piano, pipe organ, MRI vocal tract, tape echo, Rhodes), BuildLang audio kernels, BS.1770 perceptual analyzer (ear), seeded procedural composer (site-music), audio restoration/stem separation (remastering), and microtonal studies (maqam).",
+      "run": "git clone https://github.com/HarperZ9/superframe && ls superframe/packages/daw",
+      "gap": "Remastering trails BS-RoFormer (11.99 dB) by 2.96 dB SDR pending Selective G-Bispectrum phase invariants; 23 DAW soundtrack study items (G1..G23) remain open.",
+      "links": [
+        [
+          "/playground/",
+          "Open on site"
+        ],
+        [
+          "https://github.com/HarperZ9/superframe/tree/main/packages/daw",
+          "Source"
+        ]
+      ]
+    },
+    {
+      "id": "accession-and-typeengine",
+      "name": "Accession Typeface (SIL OFL 1.1), TypeEngine & Fourier Lettering",
+      "category": "creative",
+      "categoryLabel": "Game / Mod / Creative",
+      "era": "era-4-playground-commons",
+      "flagship": "superframe",
+      "hue": "theplygrnd",
+      "status": "flagship integrated",
+      "lang": "JS/TS, GLSL/WGSL",
+      "loc": 3477,
+      "test_files": 9,
+      "summary": "Original open-licensed typeface family (Accession, SIL OFL 1.1) paired with WebGL living-type shaders, physical material lettering, and harmonic Fourier glyph generators.",
+      "run": "Explore /accession.html, /type-forge.html, and /playground/fourier.html",
+      "gap": "SDF/harmonic glyph kernel port to BuildLang is queued.",
+      "links": [
+        [
+          "/accession.html",
+          "Open on site"
+        ],
+        [
+          "/typeface.html",
+          "Typeface"
+        ],
+        [
+          "/type-forge.html",
+          "Type Forge"
+        ],
+        [
+          "https://github.com/HarperZ9/superframe/tree/main/typeengine",
+          "Source"
+        ]
+      ]
+    },
+    {
+      "id": "creative-media-suite",
+      "name": "Estuary Lantern, Alive, Voxel, Fractal, Weave, Retro & Plot-Sheet",
+      "category": "creative",
+      "categoryLabel": "Game / Mod / Creative",
+      "era": "era-4-playground-commons",
+      "flagship": "superframe",
+      "hue": "theplygrnd",
+      "status": "flagship integrated",
+      "lang": "JS/TS, BuildLang, GLSL",
+      "loc": 9301,
+      "test_files": 15,
+      "summary": "Seven interactive creative generators consolidated into Superframe: living stills/wigglegrams with dependency-free GIF/APNG writers (alive), SDF voxel forge with OBJ/MagicaVoxel export (voxel), symbolic-derivative fractal compiler (fractal), WIF 1.1 weaving drafts (weave), OKLab retro quantization/dither (retro), pure-BuildLang pen-plotter HPGL/G-code output (plot-sheet), and Estuary Lantern.",
+      "run": "Open /estuary.html, /loom.html, /retro.html, or /gaussian-splats.html",
+      "gap": "plot-sheet lacks standard automated test discovery in CI; retro and crt packages share overlapping tube simulation logic to unify.",
+      "links": [
+        [
+          "/estuary.html",
+          "Open on site"
+        ],
+        [
+          "/loom.html",
+          "Loom"
+        ],
+        [
+          "/retro.html",
+          "Retro"
+        ],
+        [
+          "https://github.com/HarperZ9/superframe/tree/main/packages",
+          "Source"
+        ]
+      ]
+    },
+    {
+      "id": "calibrate-pro",
+      "name": "Calibrate Pro",
+      "category": "instruments",
+      "categoryLabel": "Scientific Instrument",
+      "era": "era-2-language-instruments",
+      "flagship": "superframe",
+      "hue": "theplygrnd",
+      "status": "live standalone",
+      "lang": "Python",
+      "loc": 186509,
+      "test_files": 143,
+      "summary": "Windows display calibration suite supporting both hardware colorimeters and sensorless calibration from machine/EDID channels: ICC profile generation, 3D LUTs, DDC/CI control, with every accuracy figure explicitly marked measured or estimated.",
+      "run": "pip install calibrate-pro && calibrate-pro --help",
+      "gap": "Contains 146 monoliths (windows_display_state.py 4,826 LOC), 81 silent except Exception blocks, and duplicated color_math vs build-color plus a stale duplicate copy inside buildlang/universe/calibrate/.",
+      "links": [
+        [
+          "/catalog.html",
+          "Open on site"
+        ],
+        [
+          "https://github.com/HarperZ9/calibrate-pro",
+          "Source"
+        ]
+      ]
+    },
+    {
+      "id": "build-color-and-colourmix",
+      "name": "Build Color & Historical ColourMix Kernels",
+      "category": "instruments",
+      "categoryLabel": "Scientific Instrument",
+      "era": "era-2-language-instruments",
+      "flagship": "superframe",
+      "hue": "theplygrnd",
+      "status": "flagship integrated",
+      "lang": "Python, BuildLang",
+      "loc": 14823,
+      "test_files": 20,
+      "summary": "Color-science library and CLI (sRGB, Oklab, CIELAB, JzAzBz, ICtCp, PQ/HLG, 12 tone mappers, CIECAM02/CAM16, 7 Delta E metrics, 9 chromatic adaptations, ICC/.cube/CLF LUTs) paired with BuildLang kernels reproducing Mayer 1775, Lambert 1772, and Benson 1872 colour systems.",
+      "run": "pip install build-color && build-color --help",
+      "gap": "Standalone build-color repo stays live until PyPI OIDC repoints to superframe; colourmix Benson constants need page-image verification beyond OCR.",
+      "links": [
+        [
+          "/build-color.html",
+          "Open on site"
+        ],
+        [
+          "/swatches.html",
+          "Swatches"
+        ],
+        [
+          "https://github.com/HarperZ9/superframe/tree/main/packages/colour/build-color",
+          "Source"
+        ]
+      ]
+    },
+    {
+      "id": "cosmo-nbody",
+      "name": "Cosmo (Cosmological N-Body Universe Simulator)",
+      "category": "instruments",
+      "categoryLabel": "Scientific Instrument",
+      "era": "era-4-playground-commons",
+      "flagship": "superframe",
+      "hue": "theplygrnd",
+      "status": "flagship integrated",
+      "lang": "Python, CUDA",
+      "loc": 6718,
+      "test_files": 12,
+      "summary": "Particle-mesh and P3M cosmological N-body solver with Zel'dovich initial conditions, FFT gravity, kick-drift-kick integration, Eisenstein-Hu/halofit spectra, Ewald force reference, and out-of-core slab stepping.",
+      "run": "git clone https://github.com/HarperZ9/superframe && pytest packages/cosmo",
+      "gap": "Three seeds is a small sample (95% interval 0.2% to 4.3% on mass-resolution factor); 1024^3 run exceeds workstation 3 MJ energy cap; Gadget-4 head-to-head run queued.",
+      "links": [
+        [
+          "/playground/",
+          "Open on site"
+        ],
+        [
+          "https://github.com/HarperZ9/superframe/tree/main/packages/cosmo",
+          "Source"
+        ]
+      ]
+    },
+    {
+      "id": "lenspipe-diagram-rooms",
+      "name": "Lenspipe, Diagram (CAD/EDA/SPICE), CRT Physics & Experimental Rooms",
+      "category": "instruments",
+      "categoryLabel": "Scientific Instrument",
+      "era": "era-4-playground-commons",
+      "flagship": "superframe",
+      "hue": "theplygrnd",
+      "status": "flagship integrated",
+      "lang": "Python, JS/TS",
+      "loc": 30876,
+      "test_files": 35,
+      "summary": "Optical train and lens manufacturability/tolerance analyzer (lenspipe), unified CAD/EDA/circuit simulator (diagram), beam-to-phosphor CRT physics model (crt), and coupled optics/PCB/fluid/acoustics rooms.",
+      "run": "git clone https://github.com/HarperZ9/superframe && npm run test:packages",
+      "gap": "lenspipe and crt have 1 test file each and need expanded tolerance/regression matrices; PCB router (499 LOC) queued for BuildLang port.",
+      "links": [
+        [
+          "/playground/",
+          "Open on site"
+        ],
+        [
+          "https://github.com/HarperZ9/superframe/tree/main/packages/lenspipe",
+          "Source"
+        ]
+      ]
+    },
+    {
+      "id": "metrology-and-physics-kernels",
+      "name": "286-Formula Metrology Suite, Signal & Anomaly Kernels, GPU Trace Validator, Transducers, WaveLab & LatticeChiral",
+      "category": "instruments",
+      "categoryLabel": "Scientific Instrument",
+      "era": "era-4-playground-commons",
+      "flagship": "superframe",
+      "hue": "theplygrnd",
+      "status": "flagship integrated",
+      "lang": "C++23, Python, BuildLang, JS/TS",
+      "loc": 23056,
+      "test_files": 45,
+      "summary": "Known-answer physics, optics, colour, acoustics, and signal instrumentation: C++23 entropy/causality/changepoint kernels (signal-kernels), telemetry outlier detectors (anomaly-kernels), redacted GPU trace validation (gpu-trace-validator), information-loss field transducers, acoustics/PREM shock lab (wavelab), lattice chiral fermions, string computations, and RAPL/NVML joules metering.",
+      "run": "git clone https://github.com/HarperZ9/superframe && npm run test:py",
+      "gap": "sRGB/Lab/Oklab/FNV-1a formulas remain duplicated across 6 to 14 repos until unified onto canonical BuildLang kcore; kcore needs direct CI test wiring.",
+      "links": [
+        [
+          "/elements.html",
+          "Open on site"
+        ],
+        [
+          "https://github.com/HarperZ9/superframe/tree/main/packages/kernels",
+          "Source"
+        ]
+      ]
+    },
+    {
+      "id": "open-archives",
+      "name": "Open Archives",
+      "category": "instruments",
+      "categoryLabel": "Scientific Instrument",
+      "era": "era-4-playground-commons",
+      "flagship": "superframe",
+      "hue": "theplygrnd",
+      "status": "archived consolidated",
+      "lang": "Python",
+      "loc": 3866,
+      "test_files": 7,
+      "summary": "AGPL-3.0 public-domain cultural and scientific archive ingestion, checksum, and provenance toolkit.",
+      "run": "git clone https://github.com/HarperZ9/superframe && pytest library/open-archives",
+      "gap": "Requires separate pytest invocation due to tests/conftest.py namespace collision with build-color.",
+      "links": [
+        [
+          "/playground/",
+          "Open on site"
+        ],
+        [
+          "https://github.com/HarperZ9/superframe/tree/main/library/open-archives",
+          "Source"
+        ]
+      ]
+    },
+    {
+      "id": "phantom",
+      "name": "Phantom (Hardware-Identity Auditor)",
+      "category": "security",
+      "categoryLabel": "Security / Hardware",
+      "era": "era-3-accountability-mcp",
+      "flagship": "flywheel",
+      "hue": "theflywheel",
+      "status": "live standalone",
+      "lang": "Rust, C/C++, Python",
+      "loc": 25347,
+      "test_files": 5,
+      "summary": "Cross-platform Rust utility for Windows and Linux providing read-only hardware-identity auditing, backup-before-write mutation, validation, and reversible restoration.",
+      "run": "Download phantom v1.1.1 from GitHub Releases or run cargo test",
+      "gap": "Only 5 test files for 25,347 LOC and 255 Rust .unwrap()/.expect() calls in non-test code; prioritized for P1 hardening.",
+      "links": [
+        [
+          "/phantom.html",
+          "Open on site"
+        ],
+        [
+          "https://github.com/HarperZ9/phantom",
+          "Source"
+        ]
+      ]
+    },
+    {
+      "id": "controlled-private-security-practice",
+      "name": "Controlled-Private Security & Purple-Team Boundary Systems (Array, Seed, ORCA, Bounds, Aleph, Sofer, Isomorph)",
+      "category": "security",
+      "categoryLabel": "Security / Hardware",
+      "era": "era-3-accountability-mcp",
+      "flagship": "flywheel",
+      "hue": "theflywheel",
+      "status": "controlled private",
+      "lang": "Python, Rust",
+      "loc": 0,
+      "test_files": 0,
+      "summary": "High-level public capability boundary documentation for private defensive, red-team, and purple-team verification harnesses run strictly on owned or authorized test targets. Source code, operational payloads, and client artifacts remain strictly private.",
+      "run": "Read public capability boundaries at /security.html and /private-practice.html",
+      "gap": "Zero paid third-party red-team engagements to date; all tests executed on owned systems with planted faults; classifier-evasion tooling is never published or packaged.",
+      "links": [
+        [
+          "/security.html",
+          "Open on site"
+        ],
+        [
+          "/private-practice.html",
+          "Private Practice"
+        ],
+        [
+          "/security-toolkit.html",
+          "Security Toolkit"
+        ]
+      ]
+    }
+  ],
+  "oss_highlights": [
+    {
+      "repo": "YoadElkayam/mcp-fuse",
+      "merged_date": "2026-09-05",
+      "url": "https://github.com/YoadElkayam/mcp-fuse/pull/9",
+      "title": "test(conformance): expose dropped-response retry identity gap"
+    },
+    {
+      "repo": "biomejs/biome",
+      "merged_date": "2026-08-29",
+      "url": "https://github.com/biomejs/biome/pull/11518",
+      "title": "fix(formatter): print declare before accessibility modifiers"
+    },
+    {
+      "repo": "Hebbian-Robotics/hflow",
+      "merged_date": "2026-08-25",
+      "url": "https://github.com/Hebbian-Robotics/hflow/pull/157",
+      "title": "Test episodes view reserved-column drift"
+    },
+    {
+      "repo": "freelawproject/litigant-portal",
+      "merged_date": "2026-08-25",
+      "url": "https://github.com/freelawproject/litigant-portal/pull/820",
+      "title": "docs: document runnable DB-free fast tests"
+    },
+    {
+      "repo": "tylerjrbuell/reactive-agents-ts",
+      "merged_date": "2026-09-05",
+      "url": "https://github.com/tylerjrbuell/reactive-agents-ts/pull/202",
+      "title": "feat(tools): corrective path-traversal rejections + relative-path schema hints"
+    },
+    {
+      "repo": "dgenio/agentfence",
+      "merged_date": "2026-08-21",
+      "url": "https://github.com/dgenio/agentfence/pull/262",
+      "title": "docs(aiuc-1): add AIUC-1 evidence mapping"
+    },
+    {
+      "repo": "dgenio/agentfence",
+      "merged_date": "2026-08-21",
+      "url": "https://github.com/dgenio/agentfence/pull/261",
+      "title": "perf(engine): precompute lookupRule group and pattern order"
+    },
+    {
+      "repo": "community-shaders/skyrim-community-shaders",
+      "merged_date": "2026-08-19",
+      "url": "https://github.com/community-shaders/skyrim-community-shaders/pull/2663",
+      "title": "feat(effects11): patch Truth ENB & Elder ENB settings"
+    },
+    {
+      "repo": "dgenio/agentfence",
+      "merged_date": "2026-08-21",
+      "url": "https://github.com/dgenio/agentfence/pull/253",
+      "title": "test(engine): add deterministic large-trace baseline"
+    },
+    {
+      "repo": "vectorvoyager358/voxwire",
+      "merged_date": "2026-08-15",
+      "url": "https://github.com/vectorvoyager358/voxwire/pull/44",
+      "title": "test: cover offline websocket recording replay"
+    },
+    {
+      "repo": "sundeep-dayalan/sentient-trader",
+      "merged_date": "2026-08-14",
+      "url": "https://github.com/sundeep-dayalan/sentient-trader/pull/53",
+      "title": "feat: add config-gated deterministic no-key replay mode (#31)"
+    },
+    {
+      "repo": "open-multi-agent/open-multi-agent",
+      "merged_date": "2026-07-29",
+      "url": "https://github.com/open-multi-agent/open-multi-agent/pull/452",
+      "title": "test: mid-task recovery conformance fixture for #312"
+    },
+    {
+      "repo": "simonw/datasette",
+      "merged_date": "2026-09-08",
+      "url": "https://github.com/simonw/datasette/pull/2861",
+      "title": "Give each non-blocking write a distinct task id"
+    },
+    {
+      "repo": "redxzeta/runtrail",
+      "merged_date": "2026-07-25",
+      "url": "https://github.com/redxzeta/runtrail/pull/154",
+      "title": "fix(mcp): preserve bridge startup diagnostics"
+    },
+    {
+      "repo": "tylerjrbuell/reactive-agents-ts",
+      "merged_date": "2026-07-22",
+      "url": "https://github.com/tylerjrbuell/reactive-agents-ts/pull/197",
+      "title": "test(replay): return replayed steps through harness handle"
+    },
+    {
+      "repo": "tylerjrbuell/reactive-agents-ts",
+      "merged_date": "2026-07-19",
+      "url": "https://github.com/tylerjrbuell/reactive-agents-ts/pull/196",
+      "title": "test(replay): add seeded end-to-end determinism coverage"
+    },
+    {
+      "repo": "pydantic/pydantic-ai",
+      "merged_date": "2026-07-06",
+      "url": "https://github.com/pydantic/pydantic-ai/pull/6205",
+      "title": "Preserve `FileUrl.force_download` in UI round-trips"
+    },
+    {
+      "repo": "python-poetry/tomlkit",
+      "merged_date": "2026-07-14",
+      "url": "https://github.com/python-poetry/tomlkit/pull/549",
+      "title": "Fix array of tables replacing a dotted key swallowing the next sibling (#542)"
+    },
+    {
+      "repo": "simonw/datasette",
+      "merged_date": "2026-07-07",
+      "url": "https://github.com/simonw/datasette/pull/2815",
+      "title": "Return 400 instead of 500 for wrong-arity composite-PK row URLs (#2811)"
+    },
+    {
+      "repo": "confident-ai/deepeval",
+      "merged_date": "2026-07-02",
+      "url": "https://github.com/confident-ai/deepeval/pull/2822",
+      "title": "Fix TypeError: unhashable type in ToolCorrectnessMetric for unhashable tool outputs (#2815)"
+    },
+    {
+      "repo": "python-grimp/grimp",
+      "merged_date": "2026-07-03",
+      "url": "https://github.com/python-grimp/grimp/pull/305",
+      "title": "Fix the lint failures that are failing CI on main (ruff + clippy)"
+    },
+    {
+      "repo": "python-grimp/grimp",
+      "merged_date": "2026-07-03",
+      "url": "https://github.com/python-grimp/grimp/pull/304",
+      "title": "Raise ValueError when a module is assigned to more than one layer (#165)"
+    },
+    {
+      "repo": "python-grimp/grimp",
+      "merged_date": "2026-07-03",
+      "url": "https://github.com/python-grimp/grimp/pull/303",
+      "title": "Raise ModuleNotPresent for absent modules in direct-import queries (#113)"
+    }
+  ],
+  "packages": [
+    {
+      "name": "accountable-surface",
+      "registry": "PyPI",
+      "version": "0.3.1",
+      "url": "https://pypi.org/project/accountable-surface/"
+    },
+    {
+      "name": "articulate-writing",
+      "registry": "PyPI",
+      "version": "0.16.0",
+      "url": "https://pypi.org/project/articulate-writing/"
+    },
+    {
+      "name": "build-color",
+      "registry": "PyPI",
+      "version": "1.0.2",
+      "url": "https://pypi.org/project/build-color/"
+    },
+    {
+      "name": "build-engine",
+      "registry": "PyPI",
+      "version": "1.0.1",
+      "url": "https://pypi.org/project/build-engine/"
+    },
+    {
+      "name": "build-oracle",
+      "registry": "PyPI",
+      "version": "1.0.1",
+      "url": "https://pypi.org/project/build-oracle/"
+    },
+    {
+      "name": "build-ui",
+      "registry": "PyPI",
+      "version": "2.0.0",
+      "url": "https://pypi.org/project/build-ui/"
+    },
+    {
+      "name": "calibrate-pro",
+      "registry": "PyPI",
+      "version": "2.0.1",
+      "url": "https://pypi.org/project/calibrate-pro/"
+    },
+    {
+      "name": "chorus-discourse",
+      "registry": "PyPI",
+      "version": "0.3.2",
+      "url": "https://pypi.org/project/chorus-discourse/"
+    },
+    {
+      "name": "coherence-membrane",
+      "registry": "PyPI",
+      "version": "0.2.0",
+      "url": "https://pypi.org/project/coherence-membrane/"
+    },
+    {
+      "name": "crucible-bench",
+      "registry": "PyPI",
+      "version": "1.6.0",
+      "url": "https://pypi.org/project/crucible-bench/"
+    },
+    {
+      "name": "emet",
+      "registry": "PyPI",
+      "version": "1.3.1",
+      "url": "https://pypi.org/project/emet/"
+    },
+    {
+      "name": "flywheel-canon",
+      "registry": "PyPI",
+      "version": "0.7.0",
+      "url": "https://pypi.org/project/flywheel-canon/"
+    },
+    {
+      "name": "flywheel-mneme",
+      "registry": "PyPI",
+      "version": "0.7.0",
+      "url": "https://pypi.org/project/flywheel-mneme/"
+    },
+    {
+      "name": "flywheel-relay",
+      "registry": "PyPI",
+      "version": "0.7.0",
+      "url": "https://pypi.org/project/flywheel-relay/"
+    },
+    {
+      "name": "flywheel-verify",
+      "registry": "PyPI",
+      "version": "1.9.0",
+      "url": "https://pypi.org/project/flywheel-verify/"
+    },
+    {
+      "name": "forum-engine",
+      "registry": "PyPI",
+      "version": "1.17.0",
+      "url": "https://pypi.org/project/forum-engine/"
+    },
+    {
+      "name": "gather-engine",
+      "registry": "PyPI",
+      "version": "2.4.0",
+      "url": "https://pypi.org/project/gather-engine/"
+    },
+    {
+      "name": "index-graph",
+      "registry": "PyPI",
+      "version": "2.16.0",
+      "url": "https://pypi.org/project/index-graph/"
+    },
+    {
+      "name": "model-provenance-validator",
+      "registry": "PyPI",
+      "version": "0.1.1",
+      "url": "https://pypi.org/project/model-provenance-validator/"
+    },
+    {
+      "name": "plexus-mesh",
+      "registry": "PyPI",
+      "version": "0.4.0",
+      "url": "https://pypi.org/project/plexus-mesh/"
+    },
+    {
+      "name": "proof-surface",
+      "registry": "PyPI",
+      "version": "0.1.0",
+      "url": "https://pypi.org/project/proof-surface/"
+    },
+    {
+      "name": "public-surface-sweeper",
+      "registry": "PyPI",
+      "version": "0.1.3",
+      "url": "https://pypi.org/project/public-surface-sweeper/"
+    },
+    {
+      "name": "repo-proof-index",
+      "registry": "PyPI",
+      "version": "0.2.0",
+      "url": "https://pypi.org/project/repo-proof-index/"
+    },
+    {
+      "name": "@harperz9/learn",
+      "registry": "npm",
+      "version": "2.3.0",
+      "url": "https://www.npmjs.com/package/@harperz9/learn"
+    },
+    {
+      "name": "project-telos-mcp",
+      "registry": "npm",
+      "version": "0.9.0",
+      "url": "https://www.npmjs.com/package/project-telos-mcp"
+    },
+    {
+      "name": "buildlang",
+      "registry": "crates.io",
+      "version": "1.10.0",
+      "url": "https://crates.io/crates/buildlang"
+    }
+  ]
+}

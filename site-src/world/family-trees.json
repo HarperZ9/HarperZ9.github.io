@@ -1,0 +1,1117 @@
+{
+  "generated_date": "2026-11-25",
+  "verified": "25 November 2026: 6 distinct chronological lineages, 12 individual project histories, and 5 monthly evolution chapters (July to November 2026) verified against GitHub repository creation and archival records (206 total repos: 89 live own, 19 forks, 98 archived) and 213 indexed sessions; all merged building blocks point directly to their live super-project homes and private staging repos remain omitted.",
+  "families": [
+    {
+      "id": "the-playground",
+      "title": "The Playground (Engine, Graphics, Color, Audio, Games & Instruments)",
+      "hue": "theplygrnd",
+      "home_repo": "HarperZ9/superframe",
+      "home_url": "https://github.com/HarperZ9/superframe",
+      "origin_story": "Began on 2024-04-17 with Elder ENB shaders for Skyrim (over 1,004,693 Nexus Mods downloads), expanded in Dec 2025 Antigravity sessions (Omni-Render, LUMINA TITAN, Sensorless Calibration), split into focused single-purpose tools in spring 2026 (build-color, calibrate-pro, raw, apex-d3d11, skse, Playground), grew a native C++23 DX12/Vulkan/WebGPU renderer (raw-native) plus the Low Water game and scientific kernels (cosmo, daw, lenspipe, signal/anomaly kernels), and converged in Nov 2026 into one unified rendering and instrument engine.",
+      "sessions": 64,
+      "units": 8091,
+      "public_blocks": [
+        {
+          "name": "build-color",
+          "created": "2026-03-23",
+          "status": "Public live",
+          "url": "https://github.com/HarperZ9/build-color"
+        },
+        {
+          "name": "calibrate-pro",
+          "created": "2026-03-23",
+          "status": "Public live",
+          "url": "https://github.com/HarperZ9/calibrate-pro"
+        },
+        {
+          "name": "raw",
+          "created": "2026-04-12",
+          "status": "Public live",
+          "url": "https://github.com/HarperZ9/raw"
+        },
+        {
+          "name": "anomaly-kernels",
+          "created": "2026-06-12",
+          "status": "Merged into super-project",
+          "url": "https://github.com/HarperZ9/superframe/tree/main/packages/kernels/anomaly-kernels"
+        },
+        {
+          "name": "signal-kernels",
+          "created": "2026-06-12",
+          "status": "Merged into super-project",
+          "url": "https://github.com/HarperZ9/superframe/tree/main/packages/kernels/signal-kernels"
+        },
+        {
+          "name": "gpu-trace-validator",
+          "created": "2026-06-13",
+          "status": "Merged into super-project",
+          "url": "https://github.com/HarperZ9/superframe/tree/main/packages/quality/gpu-trace-validator"
+        },
+        {
+          "name": "engine-revival",
+          "created": "2026-07-02",
+          "status": "Public live",
+          "url": "https://github.com/HarperZ9/engine-revival"
+        },
+        {
+          "name": "brender-archival",
+          "created": "2026-07-03",
+          "status": "Public live",
+          "url": "https://github.com/HarperZ9/brender-archival"
+        },
+        {
+          "name": "enb-runtime-core",
+          "created": "2026-07-15",
+          "status": "Public live",
+          "url": "https://github.com/HarperZ9/enb-runtime-core"
+        },
+        {
+          "name": "truth-enb",
+          "created": "2026-07-15",
+          "status": "Public live",
+          "url": "https://github.com/HarperZ9/truth-enb"
+        },
+        {
+          "name": "elder-enb",
+          "created": "2026-07-16",
+          "status": "Public live",
+          "url": "https://github.com/HarperZ9/elder-enb"
+        },
+        {
+          "name": "elder-weathers",
+          "created": "2026-07-16",
+          "status": "Public live",
+          "url": "https://github.com/HarperZ9/elder-weathers"
+        },
+        {
+          "name": "enb-validation-lab",
+          "created": "2026-07-16",
+          "status": "Public live",
+          "url": "https://github.com/HarperZ9/enb-validation-lab"
+        },
+        {
+          "name": "raw-native",
+          "created": "2026-09-04",
+          "status": "Merged into super-project",
+          "url": "https://github.com/HarperZ9/superframe/tree/main/native"
+        },
+        {
+          "name": "open-archives",
+          "created": "2026-10-23",
+          "status": "Merged into super-project",
+          "url": "https://github.com/HarperZ9/superframe/tree/main/library/open-archives"
+        },
+        {
+          "name": "superframe",
+          "created": "2026-10-26",
+          "status": "Public live",
+          "url": "https://github.com/HarperZ9/superframe"
+        }
+      ],
+      "maturation_stages": [
+        {
+          "era": "2024-04 to 2025-11",
+          "stage": "Shader Craft & Community Shipping",
+          "evidence": "Elder ENB lineage proved visual craft at 1M+ downloads, exposing the ceiling of post-process-only shader hooks."
+        },
+        {
+          "era": "2025-12 to 2026-05",
+          "stage": "Color Science & Native Pipeline Breakaway",
+          "evidence": "Antigravity Genesis (Omni-Render, Sensorless Calibration) led to build-color, calibrate-pro, apex-d3d11, and RAW."
+        },
+        {
+          "era": "2026-06 to 2026-10",
+          "stage": "Multi-Medium Engine & Scientific Kernels",
+          "evidence": "superframe unified laws, audio DAW, cosmology P3M, lenspipe optics, dynamic type, and Low Water into one architecture."
+        },
+        {
+          "era": "2026-11",
+          "stage": "Full Engine Consolidation & Motion-Aware Playtesting",
+          "evidence": "raw-native, low-water, signal/anomaly kernels, gpu-trace-validator, and build-color consolidated into superframe; RAW DX12 Wave 66 reached 19 GPU compute solvers at ~1.57 ms with live moving-camera playtests."
+        }
+      ],
+      "site_links": [
+        [
+          "/playground/",
+          "The Playground"
+        ],
+        [
+          "/raw.html",
+          "RAW Native"
+        ],
+        [
+          "/low-water.html",
+          "Low Water"
+        ],
+        [
+          "/estuary.html",
+          "Estuary Lantern"
+        ]
+      ]
+    },
+    {
+      "id": "buildlang",
+      "title": "BuildLang (Effect-Typed Deterministic Systems Language, BDB & OS)",
+      "hue": "bldlng",
+      "home_repo": "HarperZ9/buildlang",
+      "home_url": "https://github.com/HarperZ9/buildlang",
+      "origin_story": "Grew out of frustration with cross-language drift across Python, Rust, C++, JS, and HLSL plus the Dec 2025 Titan OS bare-metal experiments. Started in spring 2026 as a custom compiler exploring algebraic effect rows and deterministic builds, expanded into a suite of native libraries (build-engine, build-ui, build-finance, build-oracle), an embedded pure-BuildLang SQL database (bdb), a RISC-V emulator and bare-metal OS kernel (universe/BuildOS), editor tooling, and a one-step porting tool (port/).",
+      "sessions": 52,
+      "units": 4284,
+      "public_blocks": [
+        {
+          "name": "build-universe",
+          "created": "2026-03-23",
+          "status": "Merged into super-project",
+          "url": "https://github.com/HarperZ9/buildlang/tree/main/universe"
+        },
+        {
+          "name": "buildlang",
+          "created": "2026-03-23",
+          "status": "Public live",
+          "url": "https://github.com/HarperZ9/buildlang"
+        },
+        {
+          "name": "buildlang-tmLanguage",
+          "created": "2026-04-12",
+          "status": "Merged into super-project",
+          "url": "https://github.com/HarperZ9/buildlang/tree/main/editors/tmLanguage"
+        },
+        {
+          "name": "buildlang-vscode",
+          "created": "2026-04-12",
+          "status": "Public live",
+          "url": "https://github.com/HarperZ9/buildlang-vscode"
+        }
+      ],
+      "maturation_stages": [
+        {
+          "era": "2025-12 to 2026-04",
+          "stage": "Language Seed & Bare-Metal Vision",
+          "evidence": "Titan OS concepts and early QuantaLang/BuildLang compiler experiments tested deterministic codegen."
+        },
+        {
+          "era": "2026-05 to 2026-09",
+          "stage": "Effect-Row Compiler & Deterministic Kernels",
+          "evidence": "buildc reached repeatable build hashes (147/147) and bit-identical parallel loops (par_for 5.34-5.87x) targeting C, HLSL, and GLSL."
+        },
+        {
+          "era": "2026-10 to 2026-11",
+          "stage": "Ecosystem Consolidation & Honest Gap Matrix",
+          "evidence": "build-universe, vscode-syntax, tmLanguage, suite/, bdb/, and port/ merged into HarperZ9/buildlang (1.15.0); honest xfail tracking records 96/102 feature passes alongside 187/268 universe check-fails (81 pass) (#290) and 438/500 BDB fuzz corruptions."
+        }
+      ],
+      "site_links": [
+        [
+          "/buildlang.html",
+          "BuildLang"
+        ],
+        [
+          "https://crates.io/crates/buildlang",
+          "crates.io"
+        ]
+      ]
+    },
+    {
+      "id": "the-flywheel",
+      "title": "The Flywheel (Verification Harness, Receipts, Memory & Articulate)",
+      "hue": "theflywheel",
+      "home_repo": "HarperZ9/flywheel",
+      "home_url": "https://github.com/HarperZ9/flywheel",
+      "origin_story": "Did not begin as a monolithic framework or neutral benchmarking kit. It grew out of purple teaming, adversarial security auditing (Adversarial Mirror methodology, Phantom hardware auditing, defensive red/blue verification), and polemical investigative writing questioning who checks the checkers. Observing 46.9% false-success agent self-claims and 0.33-0.50 audit recall during peak 2026 multi-agent runs turned that adversarial skepticism into discrete, single-responsibility senses and verifiers (emet, canon, crucible, forum, mneme, gather, index, plexus, relay, learn, chorus, articulate, bulletin, accountable-surface, secret-redact-io, coherence-membrane). Once proven individually, 30 packages consolidated into HarperZ9/flywheel with offline-checkable SHA-256 receipts and the Three-Plate Oracle.",
+      "sessions": 123,
+      "units": 13626,
+      "public_blocks": [
+        {
+          "name": "emet",
+          "created": "2026-06-06",
+          "status": "Public live",
+          "url": "https://github.com/HarperZ9/emet"
+        },
+        {
+          "name": "model-provenance-validator",
+          "created": "2026-06-12",
+          "status": "Public live",
+          "url": "https://github.com/HarperZ9/model-provenance-validator"
+        },
+        {
+          "name": "public-surface-sweeper",
+          "created": "2026-06-12",
+          "status": "Public live",
+          "url": "https://github.com/HarperZ9/public-surface-sweeper"
+        },
+        {
+          "name": "repo-proof-index",
+          "created": "2026-06-12",
+          "status": "Public live",
+          "url": "https://github.com/HarperZ9/repo-proof-index"
+        },
+        {
+          "name": "index",
+          "created": "2026-06-13",
+          "status": "Public live",
+          "url": "https://github.com/HarperZ9/index"
+        },
+        {
+          "name": "secret-redact-io",
+          "created": "2026-06-16",
+          "status": "Merged into super-project",
+          "url": "https://github.com/HarperZ9/flywheel/tree/main/packages/secret-redact-io"
+        },
+        {
+          "name": "coherence-membrane",
+          "created": "2026-06-17",
+          "status": "Public live",
+          "url": "https://github.com/HarperZ9/coherence-membrane"
+        },
+        {
+          "name": "proof-surface",
+          "created": "2026-06-17",
+          "status": "Public live",
+          "url": "https://github.com/HarperZ9/proof-surface"
+        },
+        {
+          "name": "behavior-transform.io",
+          "created": "2026-06-18",
+          "status": "Merged into super-project",
+          "url": "https://github.com/HarperZ9/flywheel/tree/main/packages/behavior-transform.io"
+        },
+        {
+          "name": "accountable-surface",
+          "created": "2026-06-19",
+          "status": "Public live",
+          "url": "https://github.com/HarperZ9/accountable-surface"
+        },
+        {
+          "name": "forum",
+          "created": "2026-06-24",
+          "status": "Public live",
+          "url": "https://github.com/HarperZ9/forum"
+        },
+        {
+          "name": "crucible",
+          "created": "2026-06-25",
+          "status": "Public live",
+          "url": "https://github.com/HarperZ9/crucible"
+        },
+        {
+          "name": "gather",
+          "created": "2026-06-25",
+          "status": "Public live",
+          "url": "https://github.com/HarperZ9/gather"
+        },
+        {
+          "name": "learn",
+          "created": "2026-07-01",
+          "status": "Public live",
+          "url": "https://github.com/HarperZ9/learn"
+        },
+        {
+          "name": "mneme",
+          "created": "2026-07-07",
+          "status": "Public live",
+          "url": "https://github.com/HarperZ9/mneme"
+        },
+        {
+          "name": "plexus",
+          "created": "2026-07-07",
+          "status": "Public live",
+          "url": "https://github.com/HarperZ9/plexus"
+        },
+        {
+          "name": "relay",
+          "created": "2026-07-08",
+          "status": "Public live",
+          "url": "https://github.com/HarperZ9/relay"
+        },
+        {
+          "name": "flywheel",
+          "created": "2026-07-11",
+          "status": "Public live",
+          "url": "https://github.com/HarperZ9/flywheel"
+        },
+        {
+          "name": "chorus",
+          "created": "2026-07-16",
+          "status": "Public live",
+          "url": "https://github.com/HarperZ9/chorus"
+        },
+        {
+          "name": "vllm-ci-forum-receipt",
+          "created": "2026-07-21",
+          "status": "Merged into super-project",
+          "url": "https://github.com/HarperZ9/flywheel/tree/main/demos/vllm-ci-forum-receipt"
+        },
+        {
+          "name": "crewai-kickoff-replay-receipt",
+          "created": "2026-07-25",
+          "status": "Merged into super-project",
+          "url": "https://github.com/HarperZ9/flywheel/tree/main/demos/crewai-kickoff-replay-receipt"
+        },
+        {
+          "name": "phantom",
+          "created": "2026-08-20",
+          "status": "Public live",
+          "url": "https://github.com/HarperZ9/phantom"
+        },
+        {
+          "name": "terminal-state-fixtures",
+          "created": "2026-08-21",
+          "status": "Merged into super-project",
+          "url": "https://github.com/HarperZ9/flywheel/tree/main/packages/terminal-state-fixtures"
+        },
+        {
+          "name": "canon",
+          "created": "2026-08-29",
+          "status": "Public live",
+          "url": "https://github.com/HarperZ9/canon"
+        },
+        {
+          "name": "bulletin",
+          "created": "2026-09-05",
+          "status": "Public live",
+          "url": "https://github.com/HarperZ9/bulletin"
+        },
+        {
+          "name": "articulate",
+          "created": "2026-09-18",
+          "status": "Public live",
+          "url": "https://github.com/HarperZ9/articulate"
+        },
+        {
+          "name": "flywheel-evidence-task",
+          "created": "2026-10-02",
+          "status": "Merged into super-project",
+          "url": "https://github.com/HarperZ9/flywheel/tree/main/demos/flywheel-evidence-task"
+        },
+        {
+          "name": "discover",
+          "created": "2026-10-23",
+          "status": "Merged into super-project",
+          "url": "https://github.com/HarperZ9/flywheel/tree/main/packages/discover"
+        }
+      ],
+      "maturation_stages": [
+        {
+          "era": "2026-04 to 2026-07",
+          "stage": "Purple-Teaming & Adversarial Mirror Origins",
+          "evidence": "Security auditing, Phantom, Adversarial Mirror methodology, and red/blue boundary testing established the rule: test every check by trying to break it."
+        },
+        {
+          "era": "2026-06 to 2026-08",
+          "stage": "Discrete Senses & Early Accountability Tools",
+          "evidence": "Independent MCP servers and CLIs (emet, canon, crucible, forum, mneme, gather, index, relay, articulate) solved isolated failure modes."
+        },
+        {
+          "era": "2026-09",
+          "stage": "Scale Stress-Test & Self-Verification Discovery",
+          "evidence": "Peak month (15,587 Claude JSONLs + 1,029 Codex sessions) exposed confident wrong claims and narrow-check illusions, leading to preregistered planted-failure controls."
+        },
+        {
+          "era": "2026-10 to 2026-11",
+          "stage": "30-Package Monorepo & Three-Plate Oracle",
+          "evidence": "Flywheel 2.0 consolidated 30 packages; DS-06 Three-Plate Oracle achieved 115/115 (100%) planted-defect recall with 0 false accepts; engine-receipt/1 wired live RAW Wave 66 verification."
+        }
+      ],
+      "site_links": [
+        [
+          "/flywheel.html",
+          "Flywheel"
+        ],
+        [
+          "/demo-flywheel.html",
+          "Interactive demo"
+        ],
+        [
+          "/articulate.html",
+          "Articulate"
+        ]
+      ]
+    },
+    {
+      "id": "purple-team-and-writing",
+      "title": "Purple Teaming, Adversarial Mirror, Polemical Essays & Publications",
+      "hue": "artiql8",
+      "home_repo": "HarperZ9/HarperZ9.github.io",
+      "home_url": "https://github.com/HarperZ9/HarperZ9.github.io",
+      "origin_story": "The polemical and adversarial spine running underneath every technical tool. Begins in purple-teaming and security verification (stress-testing defenses, auditing hardware/runtime boundaries in Phantom, mapping failure modes under the Adversarial Mirror method) and flows directly into essays, briefings, and empirical findings (A Bullshitter Knows a Bullshitter, Who Pays the Referees, Who Kept the Books, A Check It Cannot Predict, The Maker Is Part of the Story, 669 indexed Findings). The same refusal to accept fluent bluffing or institutional self-certification drives Articulate's anti-slop prose standard and Flywheel's planted-failure controls.",
+      "sessions": 63,
+      "units": 1954,
+      "public_blocks": [
+        {
+          "name": "HarperZ9.github.io",
+          "created": "2026-06-05",
+          "status": "Public live",
+          "url": "https://github.com/HarperZ9/HarperZ9.github.io"
+        },
+        {
+          "name": "secret-redact-io",
+          "created": "2026-06-16",
+          "status": "Merged into super-project",
+          "url": "https://github.com/HarperZ9/flywheel/tree/main/packages/secret-redact-io"
+        },
+        {
+          "name": "coherence-membrane",
+          "created": "2026-06-17",
+          "status": "Public live",
+          "url": "https://github.com/HarperZ9/coherence-membrane"
+        },
+        {
+          "name": "behavior-transform.io",
+          "created": "2026-06-18",
+          "status": "Merged into super-project",
+          "url": "https://github.com/HarperZ9/flywheel/tree/main/packages/behavior-transform.io"
+        },
+        {
+          "name": "phantom",
+          "created": "2026-08-20",
+          "status": "Public live",
+          "url": "https://github.com/HarperZ9/phantom"
+        },
+        {
+          "name": "articulate",
+          "created": "2026-09-18",
+          "status": "Public live",
+          "url": "https://github.com/HarperZ9/articulate"
+        },
+        {
+          "name": "prereg-ledger",
+          "created": "2026-10-03",
+          "status": "Public live",
+          "url": "https://github.com/HarperZ9/prereg-ledger"
+        }
+      ],
+      "maturation_stages": [
+        {
+          "era": "2026-04 to 2026-07",
+          "stage": "Adversarial Mirror & Purple-Team Foundations",
+          "evidence": "Security boundary testing, Phantom hardware-ID auditing, and red-vs-blue verification protocols framed every system by its attack and incentive surfaces."
+        },
+        {
+          "era": "2026-08 to 2026-10",
+          "stage": "Polemical Essays, Investigations & Anti-Slop Voice",
+          "evidence": "Published Who Pays the Referees, Who Kept the Books, A Bullshitter Knows a Bullshitter, A Check It Cannot Predict, and built Articulate (2,096 passing tests) to strip institutional and AI obfuscation."
+        },
+        {
+          "era": "2026-10 to 2026-11",
+          "stage": "669 Empirical Findings & Public Security/Verification Record",
+          "evidence": "Published empirical falsifications (F50, F183, F320, F515, F675), security disclosures, and Verified lines tying every claim to reproducible code and data."
+        }
+      ],
+      "site_links": [
+        [
+          "/security.html",
+          "Security work"
+        ],
+        [
+          "/publications.html",
+          "Essays & DOIs"
+        ],
+        [
+          "/findings/",
+          "Findings"
+        ],
+        [
+          "/articulate.html",
+          "Articulate"
+        ]
+      ]
+    },
+    {
+      "id": "the-commons",
+      "title": "The Commons (CMMNS Extension, Daylight Archive & Civic Provenance)",
+      "hue": "thecmmns",
+      "home_repo": "HarperZ9/cmmns",
+      "home_url": "https://github.com/HarperZ9/cmmns",
+      "origin_story": "Born from long-running research into institutional error-correction, source provenance, and media ecosystems (Who Pays the Referees, Who Kept the Books, Jonathan Rauch, Dietrich Bonhoeffer). Evolved from manual web captures and Gather scripts into the CMMNS browser extension and the 43,380-file Daylight multi-modal archive (27,678 textual saves, 7,957 stills, 2,907 videos), distilling 10 unifying through-lines and 6 structural laws.",
+      "sessions": 21,
+      "units": 1321,
+      "public_blocks": [
+        {
+          "name": "gather",
+          "created": "2026-06-25",
+          "status": "Public live",
+          "url": "https://github.com/HarperZ9/gather"
+        },
+        {
+          "name": "bulletin",
+          "created": "2026-09-05",
+          "status": "Public live",
+          "url": "https://github.com/HarperZ9/bulletin"
+        },
+        {
+          "name": "prereg-ledger",
+          "created": "2026-10-03",
+          "status": "Public live",
+          "url": "https://github.com/HarperZ9/prereg-ledger"
+        },
+        {
+          "name": "cmmns",
+          "created": "2026-10-18",
+          "status": "Public live",
+          "url": "https://github.com/HarperZ9/cmmns"
+        },
+        {
+          "name": "open-archives",
+          "created": "2026-10-23",
+          "status": "Merged into super-project",
+          "url": "https://github.com/HarperZ9/superframe/tree/main/library/open-archives"
+        }
+      ],
+      "maturation_stages": [
+        {
+          "era": "2026-07 to 2026-09",
+          "stage": "Civic Investigations & Gather Pipelines",
+          "evidence": "Source-linked essays and Gather capture pipelines established provenance-first research rules."
+        },
+        {
+          "era": "2026-10",
+          "stage": "CMMNS Extension & Daylight Capture Scale",
+          "evidence": "Browser extension surfaced reply provenance live; Daylight archive scaled past 43,380 multi-modal files."
+        },
+        {
+          "era": "2026-11",
+          "stage": "Multi-Modal Deconstruction & Knowledge Graph",
+          "evidence": "All 7,957 stills and 2,907 videos parsed into 9 Motion Laws, 10 Through-Lines, 6 Structural Laws (P1..P6), and DS-05."
+        }
+      ],
+      "site_links": [
+        [
+          "/cmmns.html",
+          "CMMNS"
+        ],
+        [
+          "/cmmns.html#try",
+          "Try on your own words"
+        ]
+      ]
+    },
+    {
+      "id": "harperz9-site",
+      "title": "HarperZ9.github.io (Unified Front Door, Design System & Research Press)",
+      "hue": "rsrch",
+      "home_repo": "HarperZ9/HarperZ9.github.io",
+      "home_url": "https://github.com/HarperZ9/HarperZ9.github.io",
+      "origin_story": "Launched on 2026-06-05 as a personal portfolio and rapidly grew across 1,928+ commits into a living publishing system, interactive WebGPU laboratory, and verified evidence ledger. Early visual experiments were superseded by DESIGN-RULES.md, dynamic typography, Estuary interactive studies, 669 indexed findings, Frank Elavsky accessible chart descriptions, and a unified surface for the entire body of work.",
+      "sessions": 86,
+      "units": 5418,
+      "public_blocks": [
+        {
+          "name": "HarperZ9",
+          "created": "2026-04-12",
+          "status": "Public live",
+          "url": "https://github.com/HarperZ9/HarperZ9"
+        },
+        {
+          "name": "HarperZ9.github.io",
+          "created": "2026-06-05",
+          "status": "Public live",
+          "url": "https://github.com/HarperZ9/HarperZ9.github.io"
+        },
+        {
+          "name": "telos",
+          "created": "2026-06-25",
+          "status": "Public live",
+          "url": "https://github.com/HarperZ9/telos"
+        }
+      ],
+      "maturation_stages": [
+        {
+          "era": "2026-06 to 2026-08",
+          "stage": "Portfolio Foundation & Telos Experiments",
+          "evidence": "First site commits (2026-06-05), early telos/telos-v2 design studies, and initial publication pages."
+        },
+        {
+          "era": "2026-09 to 2026-10",
+          "stage": "Design Canon Reset & Evidence Publications",
+          "evidence": "DESIGN-RULES.md, dynamic typography, 669 FINDINGS.md, and Verified lines established."
+        },
+        {
+          "era": "2026-11",
+          "stage": "Unified Functional Surface & Full Body of Work",
+          "evidence": "Estuary marbled WebGPU surface, 148/148 accessible chart descriptions, 14-lane frontier architecture, interactive Concept Web, and full historical tool/repo showcase."
+        }
+      ],
+      "site_links": [
+        [
+          "/",
+          "Home"
+        ],
+        [
+          "/portfolio.html",
+          "Portfolio"
+        ],
+        [
+          "/floor.html",
+          "Everything"
+        ]
+      ]
+    }
+  ],
+  "distinct_projects": [
+    {
+      "id": "elder-enb",
+      "title": "Elder ENB & Weather Shaders",
+      "flagship": "The Playground",
+      "origin_date": "2024-04-17",
+      "summary": "The April 2024 graphics floor (over 1,004,693 Nexus Mods downloads) where real-time weather/lighting shader craft hit the architectural ceiling of post-process-only hooks, motivating a full native engine.",
+      "sessions": 37,
+      "units": 2436,
+      "public_blocks": [
+        {
+          "name": "enb-runtime-core",
+          "url": "https://github.com/HarperZ9/enb-runtime-core"
+        },
+        {
+          "name": "truth-enb",
+          "url": "https://github.com/HarperZ9/truth-enb"
+        },
+        {
+          "name": "elder-enb",
+          "url": "https://github.com/HarperZ9/elder-enb"
+        },
+        {
+          "name": "elder-weathers",
+          "url": "https://github.com/HarperZ9/elder-weathers"
+        },
+        {
+          "name": "enb-validation-lab",
+          "url": "https://github.com/HarperZ9/enb-validation-lab"
+        }
+      ]
+    },
+    {
+      "id": "raw-dx12",
+      "title": "RAW DX12 Engine Replacement (Skyrim / FO4)",
+      "flagship": "The Playground",
+      "origin_date": "2025-12-08",
+      "summary": "Evolved from Dec 2025 Antigravity Omni-Render / LUMINA TITAN sessions and apex-d3d11 into an engine-level DX12 + SM6.9/6.10 pipeline with 19 GPU compute solvers (~1.57 ms at 1080p) and live moving-camera playtest verification.",
+      "sessions": 19,
+      "units": 969,
+      "public_blocks": [
+        {
+          "name": "raw",
+          "url": "https://github.com/HarperZ9/raw"
+        },
+        {
+          "name": "raw-native",
+          "url": "https://github.com/HarperZ9/superframe/tree/main/native"
+        }
+      ]
+    },
+    {
+      "id": "superframe-engine",
+      "title": "Superframe (The Playground Core: DAW, Cosmo, Lenspipe, TypeEngine)",
+      "flagship": "The Playground",
+      "origin_date": "2026-04-11",
+      "summary": "Unified laws, audio synthesis (CLAP/VST3 DAW), cosmology (512^3 P3M matching 14/14 Cosmic Emu bands within 3%), optics (lenspipe + F210 Luneburg shells), and dynamic typography from one shared property-based core.",
+      "sessions": 46,
+      "units": 630,
+      "public_blocks": [
+        {
+          "name": "anomaly-kernels",
+          "url": "https://github.com/HarperZ9/superframe/tree/main/packages/kernels/anomaly-kernels"
+        },
+        {
+          "name": "signal-kernels",
+          "url": "https://github.com/HarperZ9/superframe/tree/main/packages/kernels/signal-kernels"
+        },
+        {
+          "name": "gpu-trace-validator",
+          "url": "https://github.com/HarperZ9/superframe/tree/main/packages/quality/gpu-trace-validator"
+        },
+        {
+          "name": "engine-revival",
+          "url": "https://github.com/HarperZ9/engine-revival"
+        },
+        {
+          "name": "brender-archival",
+          "url": "https://github.com/HarperZ9/brender-archival"
+        },
+        {
+          "name": "open-archives",
+          "url": "https://github.com/HarperZ9/superframe/tree/main/library/open-archives"
+        },
+        {
+          "name": "superframe",
+          "url": "https://github.com/HarperZ9/superframe"
+        }
+      ]
+    },
+    {
+      "id": "calibrate-and-color",
+      "title": "Calibrate-Pro & Build-Color (Display Calibration & Spectral Color)",
+      "flagship": "The Playground",
+      "origin_date": "2026-03-23",
+      "summary": "Started from Dec 2025 Sensorless Calibration sessions into standalone Windows ICC display calibration (Calibrate-Pro 2.0) and deterministic CIE/Oklab/spectral color math (build-color 1.0.2, 477 tests, 0-ulp native cbrt).",
+      "sessions": 38,
+      "units": 5087,
+      "public_blocks": [
+        {
+          "name": "build-color",
+          "url": "https://github.com/HarperZ9/build-color"
+        },
+        {
+          "name": "calibrate-pro",
+          "url": "https://github.com/HarperZ9/calibrate-pro"
+        }
+      ]
+    },
+    {
+      "id": "low-water",
+      "title": "Low Water (Narrative 3D Game & World Engine Demo)",
+      "flagship": "The Playground",
+      "origin_date": "2026-10-23",
+      "summary": "Narrative action game and full Playground engine showcase shaped by Tarkovsky pacing, Bachelard spatial poetics, and the moral thesis that covered lies physically decay the world.",
+      "sessions": 11,
+      "units": 836,
+      "public_blocks": []
+    },
+    {
+      "id": "buildlang-compiler",
+      "title": "BuildLang (Effect-Typed Compiler, Suite & BuildOS)",
+      "flagship": "BuildLang",
+      "origin_date": "2025-12-08",
+      "summary": "Descended from Dec 2025 Titan OS concepts into buildc 1.15.0 (1.91M live LOC, algebraic effect rows, 147/147 repeatable hashes, 5.34-5.87x bit-identical par_for, 96/102 feature passes alongside honest xfail tracking of 187/268 universe check-fails).",
+      "sessions": 52,
+      "units": 4283,
+      "public_blocks": [
+        {
+          "name": "build-universe",
+          "url": "https://github.com/HarperZ9/buildlang/tree/main/universe"
+        },
+        {
+          "name": "buildlang",
+          "url": "https://github.com/HarperZ9/buildlang"
+        },
+        {
+          "name": "buildlang-tmLanguage",
+          "url": "https://github.com/HarperZ9/buildlang/tree/main/editors/tmLanguage"
+        },
+        {
+          "name": "buildlang-vscode",
+          "url": "https://github.com/HarperZ9/buildlang-vscode"
+        }
+      ]
+    },
+    {
+      "id": "bdb-sql",
+      "title": "BuildLang BDB (Pure-BuildLang Embedded SQL Engine)",
+      "flagship": "BuildLang",
+      "origin_date": "2026-10-15",
+      "summary": "Pure-BuildLang embedded SQL engine proving real systems workloads in BuildLang (0/170 crash-recovery bugs, 1,084/9,202 sqllogictest, with honest gap tracking on 438/500 fuzz corruptions and RAM footprint).",
+      "sessions": 3,
+      "units": 9,
+      "public_blocks": [
+        {
+          "name": "buildlang",
+          "url": "https://github.com/HarperZ9/buildlang"
+        }
+      ]
+    },
+    {
+      "id": "flywheel-harness",
+      "title": "The Flywheel (Verification Harness, Receipts & 30 Senses)",
+      "flagship": "The Flywheel",
+      "origin_date": "2026-06-06",
+      "summary": "Built bottom-up from 30 single-purpose senses forged after peak-scale 2026 sessions exposed 46.9% false-success agent self-claims and 0.33-0.50 audit recall; matured into offline-verifiable SHA-256 receipts and the Three-Plate Oracle (115/115 planted-defect recall).",
+      "sessions": 117,
+      "units": 12175,
+      "public_blocks": [
+        {
+          "name": "emet",
+          "url": "https://github.com/HarperZ9/emet"
+        },
+        {
+          "name": "model-provenance-validator",
+          "url": "https://github.com/HarperZ9/model-provenance-validator"
+        },
+        {
+          "name": "public-surface-sweeper",
+          "url": "https://github.com/HarperZ9/public-surface-sweeper"
+        },
+        {
+          "name": "repo-proof-index",
+          "url": "https://github.com/HarperZ9/repo-proof-index"
+        },
+        {
+          "name": "index",
+          "url": "https://github.com/HarperZ9/index"
+        },
+        {
+          "name": "proof-surface",
+          "url": "https://github.com/HarperZ9/proof-surface"
+        },
+        {
+          "name": "accountable-surface",
+          "url": "https://github.com/HarperZ9/accountable-surface"
+        },
+        {
+          "name": "forum",
+          "url": "https://github.com/HarperZ9/forum"
+        },
+        {
+          "name": "crucible",
+          "url": "https://github.com/HarperZ9/crucible"
+        },
+        {
+          "name": "gather",
+          "url": "https://github.com/HarperZ9/gather"
+        },
+        {
+          "name": "learn",
+          "url": "https://github.com/HarperZ9/learn"
+        },
+        {
+          "name": "mneme",
+          "url": "https://github.com/HarperZ9/mneme"
+        },
+        {
+          "name": "plexus",
+          "url": "https://github.com/HarperZ9/plexus"
+        },
+        {
+          "name": "relay",
+          "url": "https://github.com/HarperZ9/relay"
+        },
+        {
+          "name": "flywheel",
+          "url": "https://github.com/HarperZ9/flywheel"
+        },
+        {
+          "name": "chorus",
+          "url": "https://github.com/HarperZ9/chorus"
+        },
+        {
+          "name": "terminal-state-fixtures",
+          "url": "https://github.com/HarperZ9/flywheel/tree/main/packages/terminal-state-fixtures"
+        },
+        {
+          "name": "canon",
+          "url": "https://github.com/HarperZ9/canon"
+        },
+        {
+          "name": "flywheel-evidence-task",
+          "url": "https://github.com/HarperZ9/flywheel/tree/main/demos/flywheel-evidence-task"
+        },
+        {
+          "name": "discover",
+          "url": "https://github.com/HarperZ9/flywheel/tree/main/packages/discover"
+        }
+      ]
+    },
+    {
+      "id": "purple-team-security",
+      "title": "Purple Teaming, Adversarial Mirror & Phantom",
+      "flagship": "The Flywheel / Security",
+      "origin_date": "2026-04-11",
+      "summary": "The adversarial origin: testing hardware, model, and verification boundaries by attacking them first (Adversarial Mirror), separating contained security research cleanly from public defensive auditing (Phantom) and planted-failure controls.",
+      "sessions": 93,
+      "units": 5089,
+      "public_blocks": [
+        {
+          "name": "secret-redact-io",
+          "url": "https://github.com/HarperZ9/flywheel/tree/main/packages/secret-redact-io"
+        },
+        {
+          "name": "coherence-membrane",
+          "url": "https://github.com/HarperZ9/coherence-membrane"
+        },
+        {
+          "name": "behavior-transform.io",
+          "url": "https://github.com/HarperZ9/flywheel/tree/main/packages/behavior-transform.io"
+        },
+        {
+          "name": "phantom",
+          "url": "https://github.com/HarperZ9/phantom"
+        }
+      ]
+    },
+    {
+      "id": "articulate-and-essays",
+      "title": "Articulate (ARTIQL8), Polemical Essays & 669 Findings",
+      "flagship": "The Flywheel / Publications",
+      "origin_date": "2026-06-15",
+      "summary": "Unites polemical investigative essays on institutional incentives and information asymmetry with deterministic local prose checking (Articulate v0.19.1, 2,096 passing tests) and 669 preregistered empirical findings.",
+      "sessions": 50,
+      "units": 1779,
+      "public_blocks": [
+        {
+          "name": "bulletin",
+          "url": "https://github.com/HarperZ9/bulletin"
+        },
+        {
+          "name": "articulate",
+          "url": "https://github.com/HarperZ9/articulate"
+        },
+        {
+          "name": "prereg-ledger",
+          "url": "https://github.com/HarperZ9/prereg-ledger"
+        }
+      ]
+    },
+    {
+      "id": "commons-cmmns",
+      "title": "The Commons (CMMNS Extension & 43,380-File Daylight Archive)",
+      "flagship": "The Commons",
+      "origin_date": "2026-06-25",
+      "summary": "Evolved from Radar and Gather scripts into a live reply-provenance browser extension and a 43,380-file multi-modal archive distilled into 10 Through-Lines, 9 Motion Laws, 6 Structural Laws (P1..P6), and DS-05 (5,435 graph records).",
+      "sessions": 62,
+      "units": 2211,
+      "public_blocks": [
+        {
+          "name": "gather",
+          "url": "https://github.com/HarperZ9/gather"
+        },
+        {
+          "name": "bulletin",
+          "url": "https://github.com/HarperZ9/bulletin"
+        },
+        {
+          "name": "cmmns",
+          "url": "https://github.com/HarperZ9/cmmns"
+        }
+      ]
+    },
+    {
+      "id": "harperz9-site",
+      "title": "HarperZ9.github.io (Unified Interactive Surface & Design System)",
+      "flagship": "HarperZ9.github.io",
+      "origin_date": "2026-06-05",
+      "summary": "Grew across 1,928+ commits from early telos-v2 experiments into a living publication press, dynamic typography engine, Estuary WebGPU surface, 148/148 accessible chart descriptions, and unified launcher for the entire body of work.",
+      "sessions": 70,
+      "units": 4383,
+      "public_blocks": [
+        {
+          "name": "HarperZ9",
+          "url": "https://github.com/HarperZ9/HarperZ9"
+        },
+        {
+          "name": "HarperZ9.github.io",
+          "url": "https://github.com/HarperZ9/HarperZ9.github.io"
+        },
+        {
+          "name": "telos",
+          "url": "https://github.com/HarperZ9/telos"
+        }
+      ]
+    }
+  ],
+  "monthly_evolution": [
+    {
+      "month": "2026-07",
+      "strands": [
+        "native-solutions",
+        "flywheel-platform",
+        "buildlang-os",
+        "community-contribution",
+        "public-record",
+        "mission"
+      ],
+      "turning_points": [
+        "Defined Flywheel as a surface where people get verifiable receipts for what they do.",
+        "Envisioned BuildLang as an AI-native foundation uniting deterministic and stochastic computation.",
+        "Set the native-fix rule: fix root causes rather than stacking workarounds, and match public pages to ground truth."
+      ],
+      "reversals": [
+        "Shifted emphasis from commercial margin framing back to open mission-first toolmaking while staying sustainable."
+      ]
+    },
+    {
+      "month": "2026-08",
+      "strands": [
+        "unified-engine",
+        "verification-provenance",
+        "compete-to-win",
+        "generative-art-studio",
+        "live-research",
+        "shader-mastery",
+        "open-source-contribution"
+      ],
+      "turning_points": [
+        "Defined re-runnable, externally verifiable receipts as the domain-agnostic audit wedge.",
+        "Expanded into the compete-to-win bar: match and surpass every rival feature head-to-head with benchmarks.",
+        "Set the live-research rule: never work from memory; gather current real-world sources and study independents beating big orgs.",
+        "Articulated a multi-medium generative art surface for everyone alongside clean-room shader mastery with strict prior-author attribution."
+      ],
+      "reversals": [
+        "Revised verification-only wedge into full feature-parity plus verification leadership."
+      ]
+    },
+    {
+      "month": "2026-09",
+      "strands": [
+        "adversarial-mirror",
+        "rederive",
+        "environment-attribution",
+        "articulate",
+        "flywheel",
+        "compete",
+        "honesty",
+        "power-and-information-asymmetry",
+        "boundaries"
+      ],
+      "turning_points": [
+        "Formalized the Adversarial Mirror / purple-team method: stress-test your own defenses with public models so attack findings harden verification.",
+        "Established re-derivability: a verdict anyone can re-run holds even when an evaluator is hired or a referee is captured.",
+        "Grounded AI behavior in Sapolsky environment-attribution: training incentives produce behavior, so evaluate structure rather than anthropomorphic intent.",
+        "Connected information asymmetry and institutional incentives directly to polemical essays and Articulate's anti-slop prose standard.",
+        "Locked visual verification rule: anything visual must be visually verified, not assumed from passing scripts."
+      ],
+      "reversals": [
+        "Corrected wording from 'preserving' to 'preventing' misuse in disclosure notes and separated fictional planning exercises cleanly from ground-truth canon.",
+        "Clarified Telos as an executive-function actuation layer for models, not human mimicry for bypass."
+      ]
+    },
+    {
+      "month": "2026-10",
+      "strands": [
+        "illumination",
+        "verification",
+        "commons",
+        "accountability",
+        "discernment-tools",
+        "voice",
+        "engine-and-media",
+        "game-story",
+        "synthesis",
+        "design-universe",
+        "biology",
+        "challenge-not-comfort"
+      ],
+      "turning_points": [
+        "Named the core creative principle: deconstruct every reference to its physical properties and laws, then reconstruct cleanly across mediums.",
+        "Formulated Goodhart-resistant just culture: reward fixing the result rather than beating the check, and treat honest failure as valid evidence.",
+        "Evolved Radar into Daylight / CMMNS to show provenance, funding, and context while saving multi-modal media.",
+        "Anchored Low Water's narrative in moral decay from covered lies and connected biology/neuroscience/tree-ring research directly into the findings ledger."
+      ],
+      "reversals": [
+        "Reversed ASCII from a shader overlay into a full alternative rendering pipeline.",
+        "Replaced boilerplate 'does not prove' caveat clutter with live proof and clean Verified lines on publications.",
+        "Revised fixed typeface canon ('Accession is not the rule ~ dynamic is', 0627 -> 0642) and opened prior design/voice limits into weighted defaults.",
+        "Reversed piecewise clean-room transformation into first-principles synthesis with zero direct rips."
+      ]
+    },
+    {
+      "month": "2026-11",
+      "strands": [
+        "super-project-consolidation",
+        "buildlang-1.15",
+        "raw-dx12-waves",
+        "three-plate-oracle",
+        "living-docs",
+        "14-frontier-lanes",
+        "concept-web"
+      ],
+      "turning_points": [
+        "Consolidated 30 Flywheel packages, BuildLang universe/editors/suite/bdb, superframe native/low-water/kernels, and 15/15 Living Documents in the artifact catalogue.",
+        "Shipped RAW DX12 Wave 66 (19 GPU compute solvers at ~1.57 ms, 384 live moving-camera frames, live engine-receipt/1) and Three-Plate Oracle (115/115 planted-defect recall).",
+        "Expanded competitive roadmap to 14 full global-frontier lanes (AAAA engines, all languages including Bend2, CAD/lens/metrology, nuclear/fusion/fission, robotics/Physical AI, neuroscience) with live 2025-2026 arXiv verification."
+      ],
+      "reversals": [
+        "Replaced narrow peer tables and inventor-only thinker lists with full global-frontier targets and real session-mined philosophical/scientific giants (50 giants + 554 inventors)."
+      ]
+    }
+  ]
+}

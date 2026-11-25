@@ -152,11 +152,11 @@ optional D3D12 and WebGPU builds.
 - Who it is for: graphics developers who need a reference to test an occlusion,
   shading or colour implementation against, or renders that come out the same
   on every machine.
-- Try it: build from https://github.com/HarperZ9/raw-native and run
+- Try it: build from https://github.com/HarperZ9/superframe/tree/main/native and run
   `raw_native_cli --out ./out`.
 - What it does not do: the default view comes back refuted (RMSE 0.135 against
   a tolerance of 0.12); the record keeps that result.
-- Links: https://harperz9.github.io/raw.html , https://github.com/HarperZ9/raw-native
+- Links: https://harperz9.github.io/raw.html , https://github.com/HarperZ9/superframe/tree/main/native
 
 ## Telos
 
@@ -203,11 +203,12 @@ standard library only; media work uses ffmpeg.
   item carries its licence class and rights basis.
 - Who it is for: filmmakers, game and design makers who need period reference
   images, b-roll, sound and textures they can ship.
-- Try it: `git clone https://github.com/HarperZ9/open-archives`, then
+- Try it: `git clone https://github.com/HarperZ9/superframe`, then run from
+  `library/open-archives`:
   `python -m openarchives search "cotton mill" --media image --from 1837 --to 1955`.
 - What it does not do: it records the rights basis it finds; a licence you hold
   or a fair-use call is yours to record with `rights`.
-- Links: https://github.com/HarperZ9/open-archives
+- Links: https://github.com/HarperZ9/superframe/tree/main/library/open-archives
 
 ## discover
 
@@ -225,7 +226,7 @@ Version 0.1.2. Licence AGPL-3.0-only. Python 3.11 or newer, standard library onl
   then `discover repo . --gate`.
 - What it does not do: it checks form, not merit, and claims no ranking effect.
   Its video check fails engagement bait.
-- Links: https://github.com/HarperZ9/discover
+- Links: https://github.com/HarperZ9/flywheel/tree/main/packages/discover
 
 ## Author
 

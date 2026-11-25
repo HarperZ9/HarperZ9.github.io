@@ -14,6 +14,9 @@ The home page is the work as one world: a road through ink and water, then
 places for light and glass, type and lettering, mosaic, sound, data, motion and
 film, the exhibit, the engine and the tools.
 
+- [Platform architecture](https://harperz9.github.io/architecture.html): the five unified platforms,
+  interactive interoperability graph, seven verifiable datasets (DS-01 to DS-07),
+  and observed benchmark ledger.
 - [Everything](https://harperz9.github.io/floor.html): every page as a plain list of links.
 - [The element table](https://harperz9.github.io/elements.html): the world's concepts as elements,
   each with its measured colour, its bridges and credited references.
@@ -93,8 +96,7 @@ what it does not do.
 - [learn](https://harperz9.github.io/learn.html) 2.3.0: a study planner for the
   terminal and MCP that schedules reviews and tracks repeat mistakes.
   `npm install -g @harperz9/learn`
-- [open-archives](https://github.com/HarperZ9/open-archives) 0.1.0, not yet
-  released: search free archives and museum collections with one query, with
+- [open-archives](https://github.com/HarperZ9/superframe/tree/main/library/open-archives) 0.1.0, consolidated into The Playground: search free archives and museum collections with one query, with
   the licence of every item tagged.
 - [discover](https://github.com/HarperZ9/discover) 0.1.2: a pre-release check
   that people can find a project, from README opening to llms.txt and video

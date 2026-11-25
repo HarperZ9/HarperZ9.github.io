@@ -1,0 +1,32 @@
+{
+  "date": "2026-11-25",
+  "note": "Unified five-platform architecture showcase with Full Body of Work launcher, 6 Project Family Trees & 12 project histories, 14 Global-Frontier lanes, Concept Web & 50 thinkers, live DS-01..DS-07 benchmark ledger, grimp PRs 303-305 CV sync, and consolidated super-project repo links",
+  "paths": {
+    "career/Zain-Dana-Harper-CV.docx": "795de5768050e5da9845012b3231063197e93b9ec4af3735ac10e1cdd7ed7aa6",
+    "career/Zain-Dana-Harper-CV.pdf": "61976f1d2f2c3bc175db6e26c0db9437d0c687a10b8e2bb97ca480d55dbb273d",
+    "career/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.docx": "dc601bbeae95a3ac7086f1891dbef86e3bd80bac2ddef9920460731bf6e3f85c",
+    "career/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.pdf": "5a5707237445a68e6340cd0d912e4752951b34c3d0b5479af40a2435136c2e88",
+    "career/Zain-Dana-Harper-Resume-Graphics-Developer-Tools.docx": "a23cef4781e33949c5783c493e3515e59cab52ef6b74fcbfe8e04ebcd19c083c",
+    "career/Zain-Dana-Harper-Resume-Graphics-Developer-Tools.pdf": "5be426fa7538211c1df711ad76fdad8fa6582285b41b4b9afda817a05174d526",
+    "career/career-artifacts.json": "3fce34d931100b873b8c122cda8caf22e0dea086b4376075563c3bfd08bd8e54",
+    "career/career-build-receipt.json": "60f08f8a25e17edd11c82db25565bcb2fb9fb1b316015199b823418f2f3e7a21",
+    "career/designed/Zain-Dana-Harper-CV.buildtex.json": "b1039deef51cf240838708b050db929e37fcbda4ee581c601bf9cd071317ce6f",
+    "career/designed/Zain-Dana-Harper-CV.pdf": "61e0e467c1167e9c31df475678236c3b025a6f6ca9d27dfa5abb2caae915e873",
+    "career/designed/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.buildtex.json": "469d779a8c51da7345f5e84c3c8b15dfe2251ab80bcb520da4f8b274125f8560",
+    "career/designed/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.pdf": "6ca3b5a38512be803182147866636f6a274d6042f13b7e47b07012d968d7e592",
+    "career/designed/Zain-Dana-Harper-Resume-Graphics-Developer-Tools.buildtex.json": "fd36ba6a732817512ab7c6dc39ab6206409e860a3f9fd82e6526c7b2bd4ea2d6",
+    "career/designed/Zain-Dana-Harper-Resume-Graphics-Developer-Tools.pdf": "4f4049725d2eab409312d43625a3b8ad45a16c261e6ff4709030fad85e119d82",
+    "career/designed/Zain-Dana-Harper-Resume-Grounds.buildtex.json": "c99f70978c3ecb55dd8ac6deae3c5d89c3d99fd2c931d921d8e17f454af3dde2",
+    "career/designed/Zain-Dana-Harper-Resume-Public-Operations.buildtex.json": "b7aae27695911fa1102562e0a7d0c42ccd22cb8390861487b81a5c13b16f12be",
+    "career/designed/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.buildtex.json": "c4789e7dee3d07239531b674d73397723b6f1ddaf46a20e738751af986dbad70",
+    "cv.html": "a088eeb2acc9a64e2c4a6669eda613061a37beb6597b296a4c1b4273e0afea5c",
+    "cv.md": "c86b7cd796829baab2c5bf842296ce9c71e3f8ff9335200d4fc0929d9528f2bf",
+    "index.html": "0d5bd2add8c012c4c14470dcae6b2e17728a6551b3d3f3ebdccf2e5de8686b94",
+    "publications/build.json": "14d1114f450cd56418e08c491c8c1ca0687603ff90dd913417f8c38cb39a7650",
+    "resume-evaluation-tooling.html": "c6af20a645ec69dfe769a6f7a0d072a0a9e7e6568667949c88ff7f376d22f663",
+    "resume-graphics-developer-tools.html": "5006dcb0ff73814e91edaa2f6bfeb0ac5b0818fadb08427dfda3297e7f7e7d74",
+    "site-index.html": "ecad678a893ccc1a80301f8bf3670da9afb61eecc53aee5552f0f8e0c851ed7d",
+    "sitemap.xml": "280c366acc3757696322c3e197d962bc2d75d32eb614b771c34154889f72a0a1",
+    "system/routes.js": "fdf149fe0dccc5684a328ed2e88ed94a64fedee8b604ba34d17f54cb09e52c61"
+  }
+}
