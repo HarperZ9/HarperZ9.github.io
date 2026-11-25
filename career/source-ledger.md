@@ -882,11 +882,23 @@ https://github.com/biomejs/biome/pull/11518
 
 Merged August 29, 2026; author, state and merge date read from the pull request API. Fixed the formatter so the TypeScript declare modifier prints before accessibility modifiers; 10 lines added, 5 removed, 3 files.
 
+### grimp-303
+
+https://github.com/python-grimp/grimp/pull/303
+
+Merged July 3, 2026; author, state and merge date read from the pull request API. Made direct-import queries raise ModuleNotPresent for a module that is absent from the graph.
+
 ### grimp-304
 
 https://github.com/python-grimp/grimp/pull/304
 
 Merged July 3, 2026; author, state and merge date read from the pull request API. Replaced a Rust panic with a Python ValueError when one module is assigned to two layers; 84 lines added, 3 files.
+
+### grimp-305
+
+https://github.com/python-grimp/grimp/pull/305
+
+Merged July 3, 2026; author, state and merge date read from the pull request API. Fixed two lint failures that were failing continuous integration on the main branch.
 
 ### registries-20261114
 

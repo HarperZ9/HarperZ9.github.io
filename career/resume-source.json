@@ -497,12 +497,15 @@
         },
         {
           "kind": "li",
-          "text": "Merged 41 pull requests in 34 other people's projects, 3 of them list entries, counted November 14, 2026. DeepEval #2822 fixed a crash on unhashable tool outputs, with regression tests. Pydantic AI #6205 kept a file-download setting through message round trips. Datasette #2815 turned a server error into a client error, with tests. harperz9.github.io/portfolio.html",
+          "text": "Merged 41 pull requests in 34 other people's projects, 3 of them list entries, counted November 14, 2026. DeepEval #2822 fixed an unhashable-output crash. Pydantic AI #6205 kept file-download settings. Datasette #2815 turned HTTP 500 into HTTP 400. Grimp #303, #304, and #305 fixed missing-module errors, a Rust panic, and CI lint. harperz9.github.io/portfolio.html",
           "evidence": [
             "census-20261114",
             "deepeval",
             "pydantic-ai-6205",
-            "datasette"
+            "datasette",
+            "grimp-303",
+            "grimp-304",
+            "grimp-305"
           ]
         },
         {
@@ -644,12 +647,14 @@
         },
         {
           "kind": "li",
-          "text": "Merged 41 pull requests in 34 other people's projects, 3 of them list entries, counted November 14, 2026. Biome #11518 fixed TypeScript modifier order in the formatter. TOMLKit #549 kept sibling keys when a dotted key is replaced. Grimp #304 replaced a Rust panic with a Python error. harperz9.github.io/portfolio.html",
+          "text": "Merged 41 pull requests in 34 other people's projects, 3 of them list entries, counted November 14, 2026. Biome #11518 fixed TypeScript modifier order in the formatter. TOMLKit #549 kept sibling keys when a dotted key is replaced. Grimp #303, #304, and #305 fixed absent-module errors, replaced a Rust panic with ValueError, and resolved CI lint. harperz9.github.io/portfolio.html",
           "evidence": [
             "census-20261114",
             "biome-11518",
             "tomlkit",
-            "grimp-304"
+            "grimp-303",
+            "grimp-304",
+            "grimp-305"
           ]
         },
         {
@@ -1398,7 +1403,7 @@
         },
         {
           "kind": "p",
-          "text": "Six of 38 merged engineering pull requests in 31 external repositories. Full list: harperz9.github.io/portfolio.html",
+          "text": "Nine of 38 merged engineering pull requests in 31 external repositories. Full list: harperz9.github.io/portfolio.html",
           "evidence": [
             "census-20261114"
           ]
@@ -1443,6 +1448,15 @@
           "text": "Voxwire #44: added offline regression coverage for a six-event degraded voice turn, matching saved PCM audio and JSONL records to emitted events. Merged August 15, 2026. github.com/vectorvoyager358/voxwire/pull/44",
           "evidence": [
             "voxwire"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "Grimp #303, #304, and #305: made direct-import queries raise ModuleNotPresent for absent modules, replaced a Rust panic with ValueError on duplicate layer assignments, and fixed two main-branch CI lint failures; merged July 3, 2026. github.com/python-grimp/grimp/pull/304",
+          "evidence": [
+            "grimp-303",
+            "grimp-304",
+            "grimp-305"
           ]
         },
         {

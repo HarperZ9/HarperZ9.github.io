@@ -12,7 +12,7 @@ const ORIGIN = "https://harperz9.github.io/";
 const read = (p) => readFileSync(path.join(site, p), "utf8");
 const exists = (p) => existsSync(path.join(site, p));
 
-const ROOT_PAGES = ["workshop.html", "floor.html", "elements.html", "swatches.html", "accession.html", "credits.html", "cmmns.html", "superframe.html", "experiments/", "findings/", "glass-water.html", "playground/", "playground/distill.html", "playground/fourier.html", "low-water.html"];
+const ROOT_PAGES = ["architecture.html", "workshop.html", "floor.html", "elements.html", "swatches.html", "accession.html", "credits.html", "cmmns.html", "superframe.html", "experiments/", "findings/", "glass-water.html", "playground/", "playground/distill.html", "playground/fourier.html", "low-water.html"];
 const LIVE = ["world/universe/proto/path.html", "world/universe/proto/index.html", "world/typeengine/living/index.html", "world/typeengine/room/index.html",
   "world/typeengine/specimens/index.html", "world/glass/index.html", "world/visualizer/web/index.html", "world/visualizer/web/grid.html",
   "world/sound/theme/index.html", "world/superframe/room/index.html", "world/exhibit/index.html", "world/playbook/examples/index.html"];
@@ -45,6 +45,9 @@ The home page is the work as one world: a road through ink and water, then
 places for light and glass, type and lettering, mosaic, sound, data, motion and
 film, the exhibit, the engine and the tools.
 
+- [Platform architecture](${ORIGIN}architecture.html): the five unified platforms,
+  interactive interoperability graph, seven verifiable datasets (DS-01 to DS-07),
+  and observed benchmark ledger.
 - [Everything](${ORIGIN}floor.html): every page as a plain list of links.
 - [The element table](${ORIGIN}elements.html): the world's concepts as elements,
   each with its measured colour, its bridges and credited references.

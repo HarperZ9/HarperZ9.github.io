@@ -481,6 +481,42 @@
     "t": 0
    }
   },
+  "architecture.jpg": {
+   "backend": "chrome-158.0.8127.37-skia",
+   "content_sha256": "515324c8819e80652da9c1eefc5caefc495906b067f7436c41b4b291eab48d31",
+   "does_not_prove": [
+    "It does not show the figure's numbers come from a real run, except where the alt text quotes a README result.",
+    "It does not show the PNG bytes are the same under another Chrome build; the SVG and the scene are the portable record.",
+    "It does not show the artwork meets the brand rules; that is a human review against ART-DIRECTION.md."
+   ],
+   "media": {
+    "format": "rgb8",
+    "height": 630,
+    "kind": "image",
+    "transfer": "srgb",
+    "width": 1200
+   },
+   "outputs": {
+    "architecture.jpg": "2cc4bbe1ccba487d3663ec74846990250ab8f6153f0ad06eb063f8448442c20b",
+    "architecture.svg": "cd740263e02a2485a2bde2ff656cf93764d3c4cebb3c50752758b8079c091dca"
+   },
+   "producer": {
+    "name": "harperz9.repo-art",
+    "version": "0.1.0"
+   },
+   "receipt_sha256": "0914f84a43656a51cac31885b4801c4c648ce13650de9bda1c04b34e7bb31d24",
+   "reconcile": null,
+   "scene_sha256": "7729bffc92bfc9607efe98e7146b199e540907b9695842c748f42d4f51ae2043",
+   "schema": "superstack.receipt/1",
+   "seed": "architecture",
+   "seed_rule": "xmur3-mulberry32/1",
+   "seed_u32": 1884426839,
+   "time": {
+    "base": "flicks",
+    "per_second": 705600000,
+    "t": 0
+   }
+  },
   "array.jpg": {
    "backend": "chrome-156.0.8078.75-skia-2x-lanczos",
    "content_sha256": "19cb29e2681968b98f59f44c1d84810ec29a6d653316198cf2189eef0a4bd927",

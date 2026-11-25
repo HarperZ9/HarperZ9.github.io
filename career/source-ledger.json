@@ -1143,10 +1143,22 @@
       "status": "Merged August 29, 2026; author, state and merge date read from the pull request API. Fixed the formatter so the TypeScript declare modifier prints before accessibility modifiers; 10 lines added, 5 removed, 3 files."
     },
     {
+      "id": "grimp-303",
+      "url": "https://github.com/python-grimp/grimp/pull/303",
+      "read": "2026-11-25",
+      "status": "Merged July 3, 2026; author, state and merge date read from the pull request API. Made direct-import queries raise ModuleNotPresent for a module that is absent from the graph."
+    },
+    {
       "id": "grimp-304",
       "url": "https://github.com/python-grimp/grimp/pull/304",
       "read": "2026-11-14",
       "status": "Merged July 3, 2026; author, state and merge date read from the pull request API. Replaced a Rust panic with a Python ValueError when one module is assigned to two layers; 84 lines added, 3 files."
+    },
+    {
+      "id": "grimp-305",
+      "url": "https://github.com/python-grimp/grimp/pull/305",
+      "read": "2026-11-25",
+      "status": "Merged July 3, 2026; author, state and merge date read from the pull request API. Fixed two lint failures that were failing continuous integration on the main branch."
     },
     {
       "id": "registries-20261114",

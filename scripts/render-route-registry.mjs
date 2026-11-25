@@ -418,7 +418,7 @@ function familyForSystem(system) {
 
 // 26 October 2026: the world's pages (the home's road and places, the plain index, the element table, the swatch
 // library, Accession, credits and the imported live pieces under world/) form their own family.
-const WORLD_PAGES = /^(world\/|(floor|elements|swatches|accession|credits|workshop)\.html$)/;
+const WORLD_PAGES = /^(world\/|(architecture|floor|elements|swatches|accession|credits|workshop)\.html$)/;
 
 function familyForHref(href, metadata) {
   if (WORLD_PAGES.test(href)) return "World";

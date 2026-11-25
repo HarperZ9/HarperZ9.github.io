@@ -3,9 +3,9 @@
  "source": {
   "path": "career/resume-source.json",
   "document": "graphics-developer-tools",
-  "sha256": "cd5da70cf0b9b2233bac2e1c53da6f6dcebd609707795e2c2fa2cb207d93e356"
+  "sha256": "93a83e51ccebd6d3137193f102add1592a2caa94b4e1f49eb5ff6573ef4ebc38"
  },
- "ir_sha256": "6d47a79a419c9d0d654bccb2bbff6d767b3b9c5aa15f1ce83abd846f2b27ce9e",
+ "ir_sha256": "f9aa75c2395144d08ac36e5c97f784d056a147008ae97cc0a03b55eb490d8a75",
  "theme": "press-resume",
  "overrides": [
   "base.size=10.0",
@@ -13,7 +13,7 @@
   "emboss.deboss_finish=inked"
  ],
  "outputs": {
-  "Zain-Dana-Harper-Resume-Graphics-Developer-Tools.pdf": "46936177e12b0fb528bdaeda25ed942b699cc22c2cd91405f843f3aa2e5f5a21"
+  "Zain-Dana-Harper-Resume-Graphics-Developer-Tools.pdf": "4f4049725d2eab409312d43625a3b8ad45a16c261e6ff4709030fad85e119d82"
  },
  "pdf_metadata": {
   "pdfa": false,
@@ -49,7 +49,7 @@
   "blind_text_runs": 0,
   "reading_order": true,
   "blocks_missing_from_text": [],
-  "pdf_bytes": 227322
+  "pdf_bytes": 227501
  },
  "failed": [],
  "notes": [

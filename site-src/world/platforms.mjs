@@ -72,7 +72,7 @@ const ROWS = {
   "raw-native": { hue: "theplygrnd", product: "The native renderer",
     try: "#w-engine", what: "The part of The Playground that renders frames in C++ on Direct3D 12, Vulkan and WebGPU, released as raw-native. It draws each frame twice, on the CPU reference and on the GPU, and certifies whether they agree. Its light comes from [[radiance cascades]]: light gathered by rings of probes, each ring reaching farther at coarser detail, an approximation checked against a traced reference.",
     see: ["/raw.html", "Render the frame, then check it"], more: ["/low-water.html", "The game made with it"],
-    run: "Download raw-native-{v}-windows-x64.zip from the release", runIsProse: true, repo: "https://github.com/HarperZ9/raw-native" },
+    run: "Download raw-native-{v}-windows-x64.zip from the release", runIsProse: true, repo: "https://github.com/HarperZ9/superframe/tree/main/native" },
   superframe: { hue: "theplygrnd", product: "Superframe",
     try: "#w-engine", what: "The core of The Playground. One seed, written in plain words, comes back as paint, living type, lines, carved material, sound and touch. It is [[deterministic]]: the same words and seed give the same bytes on every run, not just a similar picture.",
     see: ["/superframe.html", "One recipe in every medium"], more: ["/world/superframe/room/index.html", "The assistive room"],
