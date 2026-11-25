@@ -1,6 +1,6 @@
 {
   "date": "2026-11-25",
-  "note": "Cohesive 5-platform architecture showcase, live DS-01..DS-07 benchmark ledger, Elavsky accessible diagram description, grimp PRs 303-305 CV sync, and consolidated super-project repo links",
+  "note": "Unified five-platform architecture showcase with Full Body of Work launcher, 6 Project Family Trees & 12 project histories, 14 Global-Frontier lanes, Concept Web & 50 thinkers, live DS-01..DS-07 benchmark ledger, grimp PRs 303-305 CV sync, and consolidated super-project repo links",
   "paths": {
     "career/Zain-Dana-Harper-CV.docx": "795de5768050e5da9845012b3231063197e93b9ec4af3735ac10e1cdd7ed7aa6",
     "career/Zain-Dana-Harper-CV.pdf": "61976f1d2f2c3bc175db6e26c0db9437d0c687a10b8e2bb97ca480d55dbb273d",
@@ -21,12 +21,12 @@
     "career/designed/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.buildtex.json": "c4789e7dee3d07239531b674d73397723b6f1ddaf46a20e738751af986dbad70",
     "cv.html": "a088eeb2acc9a64e2c4a6669eda613061a37beb6597b296a4c1b4273e0afea5c",
     "cv.md": "c86b7cd796829baab2c5bf842296ce9c71e3f8ff9335200d4fc0929d9528f2bf",
-    "index.html": "a1909e0524918defce853b140952049e717c8fd00b22fbf545a5db33cea2af46",
+    "index.html": "0d5bd2add8c012c4c14470dcae6b2e17728a6551b3d3f3ebdccf2e5de8686b94",
     "publications/build.json": "14d1114f450cd56418e08c491c8c1ca0687603ff90dd913417f8c38cb39a7650",
     "resume-evaluation-tooling.html": "c6af20a645ec69dfe769a6f7a0d072a0a9e7e6568667949c88ff7f376d22f663",
     "resume-graphics-developer-tools.html": "5006dcb0ff73814e91edaa2f6bfeb0ac5b0818fadb08427dfda3297e7f7e7d74",
-    "site-index.html": "b54cfe482792b1c051aaa882a898a1f8776e451bc0ed04ed8b930f924965ec57",
+    "site-index.html": "ecad678a893ccc1a80301f8bf3670da9afb61eecc53aee5552f0f8e0c851ed7d",
     "sitemap.xml": "280c366acc3757696322c3e197d962bc2d75d32eb614b771c34154889f72a0a1",
-    "system/routes.js": "0701116f389870ee06fcc37ef2abb4d5acd994b8d3a57fbd43a419662217f841"
+    "system/routes.js": "fdf149fe0dccc5684a328ed2e88ed94a64fedee8b604ba34d17f54cb09e52c61"
   }
 }

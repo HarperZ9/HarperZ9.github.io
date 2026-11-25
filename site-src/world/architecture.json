@@ -4,10 +4,10 @@
   "lede": "Every engine, compiler, verification tool, civic reader, and open dataset now builds toward one connected stack: write deterministic code, render and measure physical light, verify every claim with offline receipts, and publish the results with open data.",
   "sub": "Start with any platform below to run it on your own machine, inspect how outputs flow across repositories, or read the observed benchmark numbers and open gaps.",
   "stats": [
-    { "value": "5", "label": "Unified public platforms" },
-    { "value": "30", "label": "Tools consolidated into Flywheel" },
-    { "value": "7,065", "label": "Verified rows across 7 datasets (DS-01 to DS-07)" },
-    { "value": "286", "label": "Physics, optics, and colour equation specs (91 executable)" }
+    { "value": "5", "label": "Unified public platforms (5.06M measured LOC)" },
+    { "value": "14", "label": "Global-frontier engineering lanes tracked live" },
+    { "value": "7,391", "label": "Verified rows across 7 datasets (DS-01 to DS-07)" },
+    { "value": "41", "label": "Merged external OSS PRs across 34 repositories" }
   ],
   "edges": [
     { "from": "buildlang", "to": "playground", "label": "kcore deterministic kernels", "bendX": 0, "bendY": -26 },
@@ -62,7 +62,7 @@
       "parts": [
         ["buildc 1.15.0", "Algebraic effect rows, checked pure par_for/par_map, offline package lockfiles, and repeatable C/shader codegen."],
         ["BDB (BuildDB)", "Pure BuildLang embedded SQL engine with crash-recovery and cross-process rollback tests."],
-        ["Universe & Suite", "267 module files in universe/, five consolidated Build suite libraries in suite/, and editor syntax packages in editors/."],
+        ["Universe & Suite", "268 module files in universe/, five consolidated Build suite libraries in suite/, and editor syntax packages in editors/."],
         ["RISC-V & OS", "emu-rv64 emulator and bare-metal scheduler experiments (os-pfa, os-runq)."]
       ],
       "run": "cargo install buildlang --version 1.15.0 --locked && buildc check main.bld",
@@ -71,7 +71,7 @@
         ["https://crates.io/crates/buildlang", "crates.io"],
         ["https://github.com/HarperZ9/buildlang", "Source"]
       ],
-      "verified": "25 November 2026: buildlang v1.15.0 on GitHub and crates.io; 147/147 repeatable build hashes and 5.3x to 5.9x bit-exact par_for speedup; honest gap recorded: 195 of 267 universe/ files still fail buildc check (tracked in buildlang #290)."
+      "verified": "25 November 2026: buildlang v1.15.0 on GitHub and crates.io; 147/147 repeatable build hashes and 5.3x to 5.9x bit-exact par_for speedup; honest gap recorded on live origin/main: 187 of 268 universe/ files still fail buildc check (81 pass; tracked in buildlang #290)."
     },
     {
       "id": "flywheel",
@@ -138,7 +138,7 @@
       "produces": "Seven scrubbed benchmark datasets (DS-01 to DS-07), 16 Zenodo DOIs and site papers, and cross-domain structural laws.",
       "contract": "SHA-256 checksummed dataset manifests, planted wrong-control tests, and explicit Verified lines on every publication.",
       "parts": [
-        ["Seven Datasets (DS-01..DS-07)", "7,065 verified JSONL rows covering agent tool repair, BuildLang compiler bench, 286 physics/colour equations, RAW motion specs, Commons graph, planted-failure traps, and recall bench."],
+        ["Seven Datasets (DS-01..DS-07)", "7,391 verified JSONL rows covering agent tool repair, BuildLang compiler bench, 286 physics/colour equations, RAW motion specs, Commons & frontier knowledge graph, planted-failure traps, and recall bench."],
         ["Preregistered Findings", "669 recorded laboratory findings and timestamped preregistrations where nulls stay public."],
         ["16 Papers & Preprints", "Public PDFs and Zenodo DOIs covering verifiable trust, capability effects, faithfulness conservation, and bounded verification."]
       ],
@@ -149,7 +149,7 @@
         ["/experiments/", "Experiments"],
         ["/findings/", "Findings"]
       ],
-      "verified": "25 November 2026: 16 papers/preprints with live DOIs and PDFs; 148/148 findings charts carry data-driven accessible curve descriptions; DS-01..DS-07 production pilot suite compiled (7,065 rows across 24 SHA-256 verified files, 0 mismatches, 0 PII/local-path/em-dash findings)."
+      "verified": "25 November 2026: 16 papers/preprints with live DOIs and PDFs; 148/148 findings charts carry data-driven accessible curve descriptions; DS-01..DS-07 production pilot suite compiled (7,391 rows across 24 SHA-256 verified files, 0 mismatches, 0 PII/local-path/em-dash findings)."
     }
   ],
   "datasets": [
@@ -168,12 +168,12 @@
     {
       "id": "DS-02",
       "name": "BuildLang Effect Compiler and Porting Bench",
-      "what": "267 universe .bld modules plus 99 feature tests paired with compiler gap specs and expected effect-row diagnostics.",
+      "what": "268 live origin/main universe .bld modules plus 102 feature tests paired with compiler gap specs and expected effect-row diagnostics.",
       "platformLabel": "BLDLNG",
       "hue": "bldlng",
       "platforms": ["bldlng", "rsrch"],
       "oracle": "buildc diagnostic JSON + C reference SHA-256",
-      "observed": "366 tasks: 72/267 universe pass (195 tracked fails), 93/99 feature tests pass",
+      "observed": "370 tasks (SHA-256 912601c6c3f3): 81/268 universe pass (187 tracked fails), 96/102 feature tests pass",
       "verdict": "verified",
       "verdictLabel": "Verified"
     },
@@ -185,7 +185,7 @@
       "hue": "theplygrnd",
       "platforms": ["theplygrnd", "rsrch"],
       "oracle": "IEEE-754 float64 exact sweeps + planted wrong-control kills",
-      "observed": "91/91 executable kernels PASS (100.0%), 91/91 wrong controls killed in 5.67 ms",
+      "observed": "91/91 executable kernels PASS (100.0%), 91/91 wrong controls killed in 5.67 ms (SHA-256 49f6ac4a5339)",
       "verdict": "verified",
       "verdictLabel": "Verified"
     },
@@ -203,13 +203,13 @@
     },
     {
       "id": "DS-05",
-      "name": "Commons 43K Cross-Domain Knowledge Graph",
-      "what": "Derived metadata graph with 554 historical thinkers, 4,542 deduplicated metadata pointers across 27 Commons indexes, 10 through-line hubs, and 7 transfer edges (zero third-party raw media).",
+      "name": "Commons 43K, Frontier, Concept Web & Lineage Knowledge Graph",
+      "what": "Derived metadata graph uniting 554 historical thinkers, 50 author-referenced giants, 4,542 deduplicated Commons pointers, 14 global-frontier lanes + 33 sources, 30 concept hubs + 80 edges, 6 project family trees, and full body-of-work catalog (zero third-party raw media).",
       "platformLabel": "THE CMMNS",
       "hue": "thecmmns",
       "platforms": ["thecmmns", "rsrch"],
       "oracle": "Schema & provenance link check (CC BY derived graph)",
-      "observed": "5,113 graph records verified (SHA-256 52d43670ee40, 0 raw media)",
+      "observed": "5,435 graph records verified (SHA-256 0beb2cbda6a6, 0 raw media)",
       "verdict": "verified",
       "verdictLabel": "Verified"
     },
@@ -221,7 +221,7 @@
       "hue": "theflywheel",
       "platforms": ["theflywheel", "rsrch"],
       "oracle": "Three-Plate Oracle vs Single-Plate recall & false-accept",
-      "observed": "115/115 recall (100.0%), 0.0% false-accept, 0/30 clean FP, 145/145 3-class accuracy in 3.59 ms",
+      "observed": "115/115 recall (100.0%), 0.0% false-accept, 0/30 clean FP, 145/145 3-class accuracy in 3.59 ms (SHA-256 6a6104d9bacc)",
       "verdict": "verified",
       "verdictLabel": "Verified"
     },
@@ -233,12 +233,12 @@
       "hue": "rsrch",
       "platforms": ["rsrch", "theflywheel"],
       "oracle": "hit@1, hit@5, MRR, median latency (ms), injected tokens",
-      "observed": "hit@1 78.75%, hit@5 91.25% (73/80), MRR 0.8375, 2.00 ms median, 95.6 avg tokens",
+      "observed": "hit@1 78.75%, hit@5 91.25% (73/80), MRR 0.8375, 2.00 ms median, 95.6 avg tokens (SHA-256 16617a68b9ce)",
       "verdict": "verified",
       "verdictLabel": "Verified"
     }
   ],
-  "datasetsVerified": "25 November 2026: all 7 datasets (7,065 total JSONL rows across 24 files) passed audit_suite.py with 24/24 SHA-256 checksums verified (0 mismatches), 0 PII/credential/local-path leaks, and 0 em dashes; third-party media and private corpora remain excluded from public exports.",
+  "datasetsVerified": "25 November 2026: all 7 datasets (7,391 total JSONL rows across 24 files) passed audit_suite.py with 24/24 SHA-256 checksums verified (0 mismatches), 0 PII/credential/local-path leaks, and 0 em dashes; third-party media and private corpora remain excluded from public exports.",
   "benchmarks": [
     {
       "surface": "RAW DX12 Wave 66 Live Playtest & GPU Suites",
@@ -294,11 +294,11 @@
       "surface": "BuildLang 1.15.0 Repeatable Compiler",
       "platform": "BLDLNG",
       "hue": "bldlng",
-      "check": "Repeatable build hashes, pure par_for bit-exactness, universe/ module check, feature tests",
-      "result": "147/147 repeatable hashes, 5.34x to 5.87x par_for, 93/99 feature tests, 72/267 universe pass",
+      "check": "Repeatable build hashes, pure par_for bit-exactness, live origin/main universe/ check, feature tests",
+      "result": "147/147 repeatable hashes, 5.34x to 5.87x par_for, 96/102 feature tests, 81/268 universe pass on live origin/main",
       "verdict": "drift",
       "verdictLabel": "Open gap",
-      "gap": "195/267 universe .bld files fail buildc check (1 lex, 21 parse, 173 type errors; tracked in buildlang #290)"
+      "gap": "187/268 universe .bld files fail buildc check on live origin/main (tracked in buildlang #290)"
     },
     {
       "surface": "BuildLang BDB Embedded SQL",
@@ -331,7 +331,7 @@
       "gap": "WebGPU live paths fall back cleanly to static stills when GPU is unavailable"
     }
   ],
-  "honestGaps": "Numbers that have not passed yet stay marked as open gaps. In BuildLang, 195 of 267 universe/ modules still fail buildc check (1 lex, 21 parse, 173 type errors) and BDB still needs page-level checksums to close silent fuzz corruption. In DS-03, 91 of 286 equation specs have executable float64 kernels while 195 remain specification-only and 12 discrepancies are flagged. In DS-07 recall, 7 of 80 held-out queries still miss top-5 across memories and sessions. In audio stem separation, current htdemucs_ft baseline (9.03 dB SDR) trails BS-RoFormer (11.99 dB) by 2.96 dB. In RAW, WebGPU browser scenes run on a subset of the native DX12 pass stack.",
+  "honestGaps": "Numbers that have not passed yet stay marked as open gaps. In BuildLang, 187 of 268 universe/ modules still fail buildc check on live origin/main (81 pass) and BDB still needs page-level checksums to close silent fuzz corruption. In DS-03, 91 of 286 equation specs have executable float64 kernels while 195 remain specification-only and 12 discrepancies are flagged. In DS-07 recall, 7 of 80 held-out queries still miss top-5 across memories and sessions. In audio stem separation, current htdemucs_ft baseline (9.03 dB SDR) trails BS-RoFormer (11.99 dB) by 2.96 dB. In RAW, WebGPU browser scenes run on a subset of the native DX12 pass stack.",
   "consolidationLede": "Across 206 total GitHub repositories (89 live own repositories, 19 forks, and 98 archived repositories as of 25 November 2026), standalone repositories whose code and tests have been merged into a super-project now point directly to their live monorepo paths across this site. Historical release tags and sealed evidence hashes remain readable where published binaries or Zenodo DOIs depend on them.",
   "consolidation": [
     { "oldRepo": "signal-kernels", "livePath": "superframe/packages/kernels/signal-kernels", "liveUrl": "https://github.com/HarperZ9/superframe/tree/main/packages/kernels/signal-kernels", "platform": "THE PLAYGRND", "hue": "theplygrnd", "status": "Merged & archived" },

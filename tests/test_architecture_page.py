@@ -12,7 +12,7 @@ def test_architecture_page_has_required_platforms_datasets_and_voice() -> None:
     html = (ROOT / "architecture.html").read_text(encoding="utf-8")
     assert "Five Platforms, One Field" in html
     assert "\u2014" not in html, "em dash found in architecture.html"
-    assert not re.search(r"[A-Za-z]:[\\/](?:dev|Users|Downloads|wt|SteamLibrary)", html), "local path in architecture.html"
+    assert not re.search(r"[A-Za-z]:[\\/](?:dev|Users|Downloads|wt|SteamLibrary|library|datasets)", html), "local path in architecture.html"
     assert "zentropy" not in html.lower(), "retired name in architecture.html"
 
     for mark in ("THE PLAYGRND", "BLDLNG", "THE FLYWHEEL", "THE CMMNS", "RSRCH", "ARTIQL8"):
@@ -22,11 +22,33 @@ def test_architecture_page_has_required_platforms_datasets_and_voice() -> None:
 
     assert 'class="arch-svg"' in html
     assert 'id="arch-svg-title"' in html and 'id="arch-svg-desc"' in html
+    assert 'id="cw-svg-title"' in html and 'id="cw-svg-desc"' in html
     assert 'id="arch-inspector"' in html
     assert "Verified" in html
     assert "pending live" not in html.lower() and "pending shard" not in html.lower()
-    for fact in ("7,065", "91/91", "115/115", "91.25%", "89 live own"):
+
+    # Live-verified numbers, 14 global-frontier lanes, 6 family trees, full body of work, concept web + thinkers
+    for fact in (
+        "7,391",
+        "5,435",
+        "91/91",
+        "115/115",
+        "91.25%",
+        "89 live own",
+        "187/268",
+        "96/102",
+        "Lane 14",
+        "Elder ENB",
+        "Calibrate Pro",
+        "Purple Teaming",
+        "Isaac Newton",
+        "Claude Shannon",
+        "bow-search",
+        "frontier-list",
+        "concept-web",
+    ):
         assert fact in html, f"missing live verified fact {fact}"
+    assert "195/267" not in html, "stale BuildLang 195/267 count leaked into architecture.html"
 
 
 def test_consolidated_work_index_entries_point_to_live_super_projects() -> None:

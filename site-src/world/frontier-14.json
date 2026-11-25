@@ -1,0 +1,603 @@
+{
+  "reviewed_on": "2026-11-25",
+  "verified": "25 November 2026: all 14 global-frontier lanes and 33 canonical 2025-2026 primary sources verified against live documentation and the arXiv API (0 redirect links, 0 local paths, 0 em dashes); observed baselines keep explicit open gaps beside proposed surpass gates.",
+  "lanes": [
+    {
+      "lane_id": 1,
+      "slug": "rendering-game-engine",
+      "title": "Real-Time Rendering and Game Engine",
+      "flagship": "The Playground",
+      "hue": "theplygrnd",
+      "groups": [
+        "theplygrnd"
+      ],
+      "competitors": [
+        "Unreal Engine 5/6 Lumen Nanite",
+        "Rockstar RAGE GTA 6",
+        "Pearl Abyss BlackSpace",
+        "ENB 2026",
+        "Community Shaders 1.6.1/CSX",
+        "PIXL",
+        "WrongNebula",
+        "AnyWreck",
+        "NVIDIA RTX Neural Shaders / DLSS 4",
+        "AMD FSR 4"
+      ],
+      "breakthroughs": "DirectX 12 SM6.9 Cooperative Vectors expose Tensor/XMX cores directly inside shaders for RTX Neural Shaders; D3D12 Work Graphs enable GPU-autonomous scheduling; Split Radiance Cascades (2026-07) scales noiseless GI to 3D via sparse world-space hash maps; RAGE (GTA 6) and BlackSpace pair RTGI with fluid-carved volumetrics.",
+      "bottlenecks": "Temporal RTGI smearing and moving-camera flicker; multi-frame generation motion-vector hallucinations; legacy post-processing injectors breaking determinism; 3D cascade memory blowup without sparse hashing.",
+      "observed_baseline": "RAW DX12+SM6.9/6.10 (Wave 66 36271ba): 19 GPU compute solvers at ~1.57 ms (1080p), 0 D3D12 errors, persistent 360-frame World TLAS, RayQuery GI/RTAO/OMM, 64-step 3D clouds, Planck fluid fire + water sim, raw_engine.dll 22 fixes; 3D Cascades RMSE 0.054 @ 5.0 ms",
+      "surpass_angle": "Ship Wave 67 GameComposite intercept + sparse Split Radiance Cascades + BuildLang deterministic HLSL/WGSL shaders with Cooperative Vector hooks, gated by live cam_sweep, FLIP, and Sagnac temporal flicker oracles.",
+      "falsification_gate": "Moving-camera FLIP + Sagnac temporal MV flicker <= 0.5% vs path-traced reference, 0 D3D12 errors, >= 60 FPS @ 4K on RTX 4090.",
+      "sources": [
+        {
+          "title": "Split Radiance Cascades: Real-Time Global Illumination via Sparse Radiance Probes",
+          "venue": "arXiv:2607.20384",
+          "published": "2026-07-22",
+          "url": "https://arxiv.org/abs/2607.20384"
+        },
+        {
+          "title": "DirectX 12 Cooperative Vectors and Shader Model 6.9 Neural Shading",
+          "venue": "Microsoft DirectX DevBlog",
+          "published": "2025-03-01",
+          "url": "https://devblogs.microsoft.com/directx/cooperative-vector/"
+        }
+      ]
+    },
+    {
+      "lane_id": 2,
+      "slug": "systems-language-compiler",
+      "title": "Systems Language and Compiler",
+      "flagship": "BuildLang",
+      "hue": "bldlng",
+      "groups": [
+        "bldlng"
+      ],
+      "competitors": [
+        "Rust",
+        "Zig",
+        "C++26",
+        "Halide",
+        "ISPC",
+        "Slang",
+        "Triton",
+        "TileLang",
+        "Lean 4",
+        "TensorLean",
+        "colorless-rs",
+        "Bend2/HVM3"
+      ],
+      "breakthroughs": "C++26 finalized (2026-11-21) with Static Reflection and Contracts; Bend 2 and HVM3 run lock-free confluent interaction nets across CPUs/GPUs with formal safety laws; TileLang exposes explicit tile/shared-memory primitives across NVIDIA/AMD/Ascend; Lean 4 FRO ships grind automation and independent kernel checking; Zig ships self-hosted x86_64 backend.",
+      "bottlenecks": "Interaction nets lag dense SIMD/tensor cache locality; Triton leaves performance gaps while TileLang/CUTLASS lack formal numerical proofs; C++26 contracts lack cryptographic build receipts; Lean 4 lacks native GPU shader emission.",
+      "observed_baseline": "buildc 1.15.0: algebraic effect-row types, deterministic C/HLSL/GLSL emit (147/147 repeatable build hash), par_for 5.34-5.87x bit-identical, 96/102 tests/features pass; GAP: 187/268 universe .bld fail check (81 pass) (#290), slower than Rust on non-fannkuch, no freestanding RISC-V or interaction-net/GPU auto-parallel target yet",
+      "surpass_angle": "Close 0/268 universe check failures (from 187/268 live origin/main) and freestanding RISC-V; add effect-polymorphic sync/async uncoloring, TileLang-class deterministic GPU tile lowering, and independent proof-kernel receipts verifying CPU/GPU bit-equivalence.",
+      "falsification_gate": "0/268 universe .bld failures, >= 1.0x Rust/C++26 speed on 8-kernel suite, >= Bend2/TileLang GPU utilization, 100% bit-identical cross-OS receipts.",
+      "sources": [
+        {
+          "title": "C++26 Is Done (Again): Trip Report November 2026 ISO C++ Meeting (Static Reflection and Contracts)",
+          "venue": "Herb Sutter / WG21",
+          "published": "2026-11-21",
+          "url": "https://herbsutter.com/2026/11/21/c26-is-done-again-trip-report-november-2026-iso-c-standards-meeting-buzios-brazil/"
+        },
+        {
+          "title": "TileLang: Composable Tiled GPU Kernel Programming Language",
+          "venue": "GitHub / Apache TVM Ecosystem",
+          "published": "2026-01-01",
+          "url": "https://github.com/tile-ai/tilelang"
+        }
+      ]
+    },
+    {
+      "lane_id": 3,
+      "slug": "ai-verification-harnesses",
+      "title": "AI Verification, Receipts and Agent Harnesses",
+      "flagship": "The Flywheel",
+      "hue": "theflywheel",
+      "groups": [
+        "theflywheel"
+      ],
+      "competitors": [
+        "SWE-bench Verified/Pro V2",
+        "SWE-Proof",
+        "Harness-Bench",
+        "MIB",
+        "METR eval harnesses",
+        "Inspect AI",
+        "LangSmith",
+        "Braintrust",
+        "OpenHands"
+      ],
+      "breakthroughs": "SWE-Proof (2026-09) translates SWE-bench Verified into Nagini/Velvet/Lean proofs and finds ~25% of test-passing patches still hold formal counterexamples; Harness-Bench (2026-05) and Same Model Different Harness (2026-08) prove harness scaffolding swings coding scores drastically; MIB standardizes mechanistic circuit benchmarks.",
+      "bottlenecks": "Agent-written unit tests form an echo chamber (46.3% false-claim rate across 11,772 runs in our P01); single-plate recheckers miss 50-67% of planted errors; LLM-authored formal specs fail specification faithfulness.",
+      "observed_baseline": "Flywheel 2.0 + 30 consolidated packages, signed Merkle receipts, Three-Plate Oracle DS-06 prototype achieving 115/115 (100%) planted-defect recall & 0/115 false-accept (vs 0.061 single-plate & 0.33-0.50 historical audit), live Wave 66 engine-receipt/1 (id=68207), anti_silo_gate 13/13 PASS",
+      "surpass_angle": "Ship Flywheel Three-Plate Verification (independent spec + adversarial assumption-mutation traps + deterministic event-log replay) with signed Merkle receipts across every agent harness run.",
+      "falsification_gate": ">= 0.95 out-of-distribution planted-defect recall, <= 0.02 false-accept rate, and 100% deterministic trajectory replay.",
+      "sources": [
+        {
+          "title": "SWE-Proof: Can Language Models Resolve Real-World Issues with Machine-Checked Proofs?",
+          "venue": "arXiv:2609.21190",
+          "published": "2026-09-18",
+          "url": "https://arxiv.org/abs/2609.21190"
+        },
+        {
+          "title": "Same Model, Different Harness: Different Coding-Agent Results",
+          "venue": "arXiv:2608.26218",
+          "published": "2026-08-26",
+          "url": "https://arxiv.org/abs/2608.26218"
+        },
+        {
+          "title": "Harness-Bench: Evaluating Agent Harnesses across Models and Realistic Workflows",
+          "venue": "arXiv:2605.27922",
+          "published": "2026-05-27",
+          "url": "https://arxiv.org/abs/2605.27922"
+        },
+        {
+          "title": "MIB: A Mechanistic Interpretability Benchmark",
+          "venue": "arXiv:2504.13151",
+          "published": "2025-04-17",
+          "url": "https://arxiv.org/abs/2504.13151"
+        }
+      ]
+    },
+    {
+      "lane_id": 4,
+      "slug": "search-indexing-memory",
+      "title": "Search, Indexing and Context Memory",
+      "flagship": "The Flywheel + Library",
+      "hue": "theflywheel",
+      "groups": [
+        "theflywheel"
+      ],
+      "competitors": [
+        "SAGE",
+        "REMem",
+        "Generative Semantic Workspaces",
+        "MemGraphRAG",
+        "HippoRAG 2",
+        "Mem0",
+        "Zep/Graphiti",
+        "Letta"
+      ],
+      "breakthroughs": "SAGE (2026-05) pairs incremental graph writing with a Graph Foundation Model reader beating MemOS/Zep on LongMemEval; GSW (2025-11) tracks space-time episodic narratives over 100k-1M tokens; MemGraphRAG (2026-05) and REMem (2026) resolve graph conflicts via episodic event frames.",
+      "bottlenecks": "Flat vector RAG suffers context rot, loses exact identifiers/error codes, bloats prompt tokens, and lacks SHA-256 provenance to exact source byte offsets.",
+      "observed_baseline": "All 15/15 Living Documents live & registered in catalogue.sqlite (68,221 artifacts); federated_recall.py across 7 SQLite DBs; DS-07 80-Q held-out recall: IDF-gated compact pointer achieves 91.25% hit@5 (73/80), MRR 0.8375, 2.00 ms median latency, 95.6 avg tokens (max 124)",
+      "surpass_angle": "Unify SQLite FTS5 lexical BM25 + hybrid RRF + 15-Living-Doc semantic core + zstd cold episodic transcripts with SHA-256 byte-offset pointers and Flywheel-verified overnight sleep consolidation.",
+      "falsification_gate": ">= 0.90 hit@5 on 200-question cross-year benchmark at < 5 ms latency, < 150 avg injected tokens, 100% SHA-256 source provenance.",
+      "sources": [
+        {
+          "title": "SAGE: A Self-Evolving Agentic Graph-Memory Engine for Structure-Aware Associative Memory",
+          "venue": "arXiv:2605.12061",
+          "published": "2026-05-12",
+          "url": "https://arxiv.org/abs/2605.12061"
+        },
+        {
+          "title": "Beyond Fact Retrieval: Episodic Memory for RAG with Generative Semantic Workspaces",
+          "venue": "arXiv:2511.07587",
+          "published": "2025-11-10",
+          "url": "https://arxiv.org/abs/2511.07587"
+        },
+        {
+          "title": "MemGraphRAG: Memory-based Multi-Agent System for Graph Retrieval-Augmented Generation",
+          "venue": "arXiv:2606.00610",
+          "published": "2026-05-30",
+          "url": "https://arxiv.org/abs/2606.00610"
+        }
+      ]
+    },
+    {
+      "lane_id": 5,
+      "slug": "formula-signal-kernels",
+      "title": "Formula and Signal Kernels",
+      "flagship": "BuildLang kcore",
+      "hue": "bldlng",
+      "groups": [
+        "bldlng"
+      ],
+      "competitors": [
+        "CORE-MATH",
+        "llvm-libc",
+        "CUDA libm",
+        "Julia Base.Math",
+        "SGNO",
+        "SFNO",
+        "FFTW"
+      ],
+      "breakthroughs": "CORE-MATH correctly rounded IEEE-754 elementary functions are integrating into llvm-libc and glibc; SGNO (2026-02) stabilizes long-horizon spectral PDE generation; differentiable spherical harmonic GPU libraries (2026-09) accelerate global PDEs.",
+      "bottlenecks": "Standard CPU/GPU libm functions diverge by 1-4 ULP across vendors, breaking deterministic replay; neural operators drift without conservation laws or planted-control traps.",
+      "observed_baseline": "286 catalogued equations in FORMULAS.tsv; DS-03 91/91 (100.0%) executable IEEE-754 float64 kernels PASS and 91/91 planted wrong controls killed in 5.67 ms; native 0-ulp cbrt; honest gap: 195 equation specs remain specification-only and 12 discrepancies are flagged.",
+      "surpass_angle": "Port all 286 catalogued science/signal formulas into CORE-MATH-backed BuildLang kcore kernels with fixed-order binned reductions, CODATA-2022 constants, and mandatory planted-control kill suites.",
+      "falsification_gate": "0 ULP CPU/GPU parity across 200,000 sweep points + 100% planted-control kill rate across all 286 formula kernels.",
+      "sources": [
+        {
+          "title": "Accuracy of Mathematical Functions in Julia",
+          "venue": "arXiv:2509.05666",
+          "published": "2025-09-06",
+          "url": "https://arxiv.org/abs/2509.05666"
+        },
+        {
+          "title": "SGNO: Spectral Generator Neural Operator for Long-Horizon PDE Prediction",
+          "venue": "arXiv:2602.18801",
+          "published": "2026-02-21",
+          "url": "https://arxiv.org/abs/2602.18801"
+        },
+        {
+          "title": "A library for differentiable signal processing and machine learning on the sphere",
+          "venue": "arXiv:2609.39737",
+          "published": "2026-09-30",
+          "url": "https://arxiv.org/abs/2609.39737"
+        }
+      ]
+    },
+    {
+      "lane_id": 6,
+      "slug": "colour-science-optics-calibration",
+      "title": "Colour Science, Optics and Display Calibration",
+      "flagship": "The Playground",
+      "hue": "theplygrnd",
+      "groups": [
+        "theplygrnd"
+      ],
+      "competitors": [
+        "ACES 2.0",
+        "CIE BRDF TC",
+        "Calman",
+        "DisplayCAL",
+        "ColourSpace",
+        "Mitsuba 3",
+        "colour-science"
+      ],
+      "breakthroughs": "ACES 2.0 moves output transforms onto a perceptually uniform JMh/Hellwig color appearance space; CIE updates BRDF measurement geometry standards; 2025-2026 camera-display spectral coupling papers replace lossy 3x3 RGB matrices with end-to-end spectral pipelines.",
+      "bottlenecks": "RGB approximations miss narrowband metamers; commercial calibration tools lack open scriptable spectral receipts and HDR10/PQ proof chains.",
+      "observed_baseline": "build-color 1.0.2 (477 tests), calibrate-pro 2.0 (sensor + sensorless Windows ICC), Mayer/Lambert/Benson BuildLang kernels, native 0-ulp cbrt; DS-03 91/91 (100%) IEEE-754 float64 known-answer + 91/91 planted-control kill rate in 5.67 ms",
+      "surpass_angle": "Unify full-spectrum CIE observer integration, ACES 2.0 JMh transforms, and sensor-verified ICC/3D-LUT calibration in BuildLang with automated Mitsuba-matched spectral receipts.",
+      "falsification_gate": "<= 1e-6 DeltaE00 parity vs CIE/Mitsuba across 200,000 sweep points + live sensor-verified ICC/HDR10 calibration certificate.",
+      "sources": [
+        {
+          "title": "Color Pass-Through via Camera-Display Coupling",
+          "venue": "arXiv:2607.12746",
+          "published": "2026-07-14",
+          "url": "https://arxiv.org/abs/2607.12746"
+        },
+        {
+          "title": "Comprehensive Modeling of Camera Spectral and Color Behavior",
+          "venue": "arXiv:2507.04617",
+          "published": "2025-07-07",
+          "url": "https://arxiv.org/abs/2507.04617"
+        }
+      ]
+    },
+    {
+      "lane_id": 7,
+      "slug": "audio-dsp-sound-synthesis",
+      "title": "Audio DSP and Sound Synthesis",
+      "flagship": "The Playground DAW",
+      "hue": "theplygrnd",
+      "groups": [
+        "theplygrnd"
+      ],
+      "competitors": [
+        "BS-RoFormer",
+        "Mel-Band RoFormer",
+        "BSCodec",
+        "Ableton Live",
+        "FabFilter Pro-Q 4",
+        "iZotope Ozone/RX",
+        "Demucs"
+      ],
+      "breakthroughs": "Multi-Stage Music Source Restoration (2026-03) pairs BS-RoFormer with HiFi++ GAN to invert mastering compression and saturation; windowed sink attention (2025-10) slashes vocal separation latency; BSCodec (2025-11) brings band-split adaptive bit allocation to universal neural audio codecs.",
+      "bottlenecks": "Linear separation fails on heavily limited commercial masters; deep models sit outside low-latency DAW chains and lack deterministic cross-OS Parseval/LUFS receipts.",
+      "observed_baseline": "superframe DAW CLAP/VST3 + BuildLang modal resonators; htdemucs_ft 9.03 dB SDR (2.96 dB behind BS-RoFormer); ITU-R BS.1770 LUFS & ear analysis",
+      "surpass_angle": "Fuse windowed-attention BS-RoFormer + phase-invariant bispectrum features + BuildLang deterministic FFT/biquad/physical-modeling synthesis with exact Parseval and ITU-R BS.1770 receipts.",
+      "falsification_gate": "MUSDB18-HQ SDR >= 12.1 dB (beating BS-RoFormer 11.99 dB) + bit-identical cross-OS DAW renders with exact Parseval receipts.",
+      "sources": [
+        {
+          "title": "Multi-Stage Music Source Restoration with BandSplit-RoFormer Separation and HiFi++ GAN",
+          "venue": "arXiv:2603.04032",
+          "published": "2026-03-04",
+          "url": "https://arxiv.org/abs/2603.04032"
+        },
+        {
+          "title": "BSCodec: A Band-Split Neural Codec for High-Quality Universal Audio Reconstruction",
+          "venue": "arXiv:2511.06150",
+          "published": "2025-11-08",
+          "url": "https://arxiv.org/abs/2511.06150"
+        },
+        {
+          "title": "Efficient Vocal Source Separation Through Windowed Sink Attention",
+          "venue": "arXiv:2510.25745",
+          "published": "2025-10-29",
+          "url": "https://arxiv.org/abs/2510.25745"
+        }
+      ]
+    },
+    {
+      "lane_id": 8,
+      "slug": "world-simulation-physics-cosmology",
+      "title": "World Simulation, Physics and Cosmology",
+      "flagship": "The Playground + Research",
+      "hue": "theplygrnd",
+      "groups": [
+        "theplygrnd",
+        "rsrch"
+      ],
+      "competitors": [
+        "DeepMind Genie 2/3",
+        "GenCast / WeatherNext 3",
+        "Microsoft Aurora",
+        "GADGET-4",
+        "AREPO",
+        "OpenFOAM 14/v2606",
+        "Ansys Fluent 2026 R1"
+      ],
+      "breakthroughs": "DeepMind Genie 3 extends interactive action-controllable neural worlds past one minute of consistent memory; GenCast and WeatherNext 3 deliver probabilistic ensemble weather and cyclone forecasts rivaling NWP; GADGET-4 anchors exascale TreePM/SPH cosmology.",
+      "bottlenecks": "Neural world models violate conservation laws and topological invariants over long rollouts; classical N-body/CFD codes carry steep energy-per-step costs without compact verification receipts.",
+      "observed_baseline": "superframe/cosmo 512^3 P3M matches 14/14 Cosmic Emu bands within 3% (59% energy savings), out-of-core slab bit-exact at 256^3; F183 Hansen A2 210/210 exact reproduction + 11-target ECDF; Neural ODE ring topology proof; wmm-4 symbolic+pixel",
+      "surpass_angle": "Run matched-seed GADGET-4 P(k) and energy-per-step head-to-head; couple BuildLang deterministic TreePM/fluid solvers with conservation-checked neural residuals and topology invariants.",
+      "falsification_gate": "Within 1% of GADGET-4 P(k) at lower J/step; Blasius boundary-layer CFD within 2% at three stations; zero conservation or winding-number violations.",
+      "sources": [
+        {
+          "title": "Introducing WeatherNext 3: Probabilistic AI Global Weather Forecasting",
+          "venue": "Google DeepMind",
+          "published": "2026-01-01",
+          "url": "https://blog.google/innovation-and-ai/models-and-research/google-deepmind/introducing-weathernext-3/"
+        },
+        {
+          "title": "GADGET-4: Massively Parallel Cosmological N-Body and SPH Simulation Code",
+          "venue": "Max Planck Institute for Astrophysics",
+          "published": "2024-01-01",
+          "url": "https://wwwmpa.mpa-garching.mpg.de/gadget4/"
+        }
+      ]
+    },
+    {
+      "lane_id": 9,
+      "slug": "design-dynamic-type-civic-truth",
+      "title": "Design, Dynamic Type, Creative Tooling and Civic Truth",
+      "flagship": "The Commons + Showcase + Articulate",
+      "hue": "thecmmns",
+      "groups": [
+        "thecmmns"
+      ],
+      "competitors": [
+        "X Community Notes",
+        "Bret Victor / Dynamicland",
+        "Bartosz Ciechanowski",
+        "Differentiable Variable Fonts",
+        "Readwise",
+        "Are.na"
+      ],
+      "breakthroughs": "Differentiable Variable Fonts (2025-10) enables gradient optimization of OpenType continuous glyph axes for legibility and layout physics; Community Notes bridging algorithms resist partisan hijacking via matrix factorization; Dynamicland and interactive explainers define direct-manipulation learning.",
+      "bottlenecks": "Crowd bridging measures agreement rather than cryptographic primary-source receipts; interactive web explainers rarely run compiled physical kernels or automated accessibility proofs.",
+      "observed_baseline": "CMMNS extension + 43,380 archived Daylight saves (7,957 stills + 2,907 videos + 554 thinkers + 50 author giants); HarperZ9.github.io 1,928 commits, 8,916 files, DESIGN-RULES.md, estuary.html, pbr-from-depth.mjs, 148/148 accessible chart descriptions",
+      "surpass_angle": "Unite Ciechanowski/Victor interactive WebGPU physics explainers with cryptographic SHA-256 Verified source receipts, live Commons provenance badges, WCAG AA + Elavsky chart descriptions, and protected-fact prose linting.",
+      "falsification_gate": "100% SHA-256 receipt and link integrity, WCAG AA + screen-reader pass, and 0% mutation of protected facts or numbers.",
+      "sources": [
+        {
+          "title": "Differentiable Variable Fonts",
+          "venue": "arXiv:2510.07638",
+          "published": "2025-10-09",
+          "url": "https://arxiv.org/abs/2510.07638"
+        }
+      ]
+    },
+    {
+      "lane_id": 10,
+      "slug": "data-stores-verification-pipelines",
+      "title": "Data Stores and Verification Pipelines",
+      "flagship": "BuildLang BDB + Flywheel Ledgers",
+      "hue": "bldlng",
+      "groups": [
+        "bldlng",
+        "theflywheel"
+      ],
+      "competitors": [
+        "PostgreSQL 18",
+        "ClickHouse",
+        "TigerBeetle",
+        "DuckDB",
+        "SQLite 3.54.1",
+        "FoundationDB"
+      ],
+      "breakthroughs": "PostgreSQL 18 adds built-in Asynchronous I/O (up to 3x faster reads), B-tree skip scans, native UUIDv7, and default data checksums; TigerBeetle pioneers protocol-aware deterministic simulation testing (VOPR, 2026-08) plus external chaos fuzzing (Vortex); DuckDB adds SQL views over cryptographic ledgers (duckdb_ledger).",
+      "bottlenecks": "Embedded engines without page checksums suffer silent bit-rot under damage fuzzing; analytical/OLTP stores separate immutable audit trails from fast embedded hybrid search.",
+      "observed_baseline": "Pure BuildLang SQL engine, crash recovery 0/170, cross-process rollback PASS, 1,084/9,202 sqllogictest; GAP: 44.6x SQLite RAM at 100k rows, 1.39-1.94x slower at 100k, 438/500 silent fuzz corruptions",
+      "surpass_angle": "Add TigerBeetle-grade page/WAL BLAKE3 checksums and deterministic fault-injection simulation to BuildLang BDB, paired with vectorized columnar scans, native FTS5/BM25, and SHA-256 content-addressable ledger tables.",
+      "falsification_gate": "0/500 silent corruptions on damage fuzzer, <= 2x SQLite RAM, >= 1.0x SQLite OLTP parity, 100% parity across 68,221 catalogue rows.",
+      "sources": [
+        {
+          "title": "Protocol-Aware Deterministic Simulation Testing (TigerBeetle VOPR)",
+          "venue": "TigerBeetle Engineering Blog",
+          "published": "2026-08-20",
+          "url": "https://tigerbeetle.com/blog/2026-08-20-protocol-aware-dst"
+        }
+      ]
+    },
+    {
+      "lane_id": 11,
+      "slug": "cad-lens-blueprints-metrology",
+      "title": "CAD, Instrument Design, Lens Design, Diagrams, Blueprints, Architecture and Metrology",
+      "flagship": "The Playground + BuildLang",
+      "hue": "theplygrnd",
+      "groups": [
+        "theplygrnd",
+        "bldlng",
+        "expansion"
+      ],
+      "competitors": [
+        "SOLIDWORKS 2026 SP1",
+        "CATIA",
+        "Onshape",
+        "FreeCAD 1.1.4 / OCCT 8.0.1",
+        "CadQuery 2.8.0",
+        "OpenSCAD",
+        "Rhino 8 / Grasshopper",
+        "WrongNebula",
+        "Zemax OpticStudio 2026 R1",
+        "CODE V 2026",
+        "Ansys Speos",
+        "DeepLens"
+      ],
+      "breakthroughs": "FreeCAD 1.x/1.1.4 adds native Ondsel Assembly atop OCCT 8.0.1; Seek-CAD (2025-05) generates editable parametric CAD via self-refined local inference; DeepLens and discrete-continuous optimization (2025-09) bring differentiable ray tracing to compound lenses; OpticStudio 2026 R1 links NEST tolerancing and ODX to Speos; NIST STEP AP242 + QIF closes the CMM/optical metrology digital thread.",
+      "bottlenecks": "Traditional B-rep kernels suffer the Topological Naming Problem and lack gradients; commercial optical/CAD/metrology suites are costly silos without open cryptographic tolerance certificates.",
+      "observed_baseline": "lenspipe (optical glass + aberration & F210 stepped Luneburg lens shells), 47 OPT-* formulas in FORMULAS.tsv, exact STEP/parametric geometry primitives, BuildLang deterministic kernels, and Flywheel tolerance/measurement receipt harness",
+      "surpass_angle": "Unify BuildLang hybrid B-rep/SDF CAD with persistent topological IDs, differentiable sequential + non-sequential spectral lens ray tracing with real glass catalogs and Zernike metrology ingestion, architectural blueprint emitters, and STEP AP242 + Flywheel tolerance receipts.",
+      "falsification_gate": "<= 1e-6 mm geometric parity vs NIST CTC STEP AP242 reference, <= 0.1% MTF/spot-RMS parity vs Zemax/OSLO reference lenses, and automated blueprint dimension verification.",
+      "sources": [
+        {
+          "title": "Seek-CAD: A Self-refined Generative Modeling for 3D Parametric CAD Using Local Inference via DeepSeek",
+          "venue": "arXiv:2505.17702",
+          "published": "2025-05-23",
+          "url": "https://arxiv.org/abs/2505.17702"
+        },
+        {
+          "title": "Automated design of compound lenses with discrete-continuous optimization",
+          "venue": "arXiv:2509.23572",
+          "published": "2025-09-28",
+          "url": "https://arxiv.org/abs/2509.23572"
+        }
+      ]
+    },
+    {
+      "lane_id": 12,
+      "slug": "nuclear-fusion-fission-multiphysics",
+      "title": "Nuclear Components, Fusion, Fission and Multiphysics Simulation",
+      "flagship": "BuildLang Kernels + The Playground",
+      "hue": "theplygrnd",
+      "groups": [
+        "theplygrnd",
+        "bldlng",
+        "expansion"
+      ],
+      "competitors": [
+        "OpenMC",
+        "MCNP",
+        "Serpent 2/3",
+        "Geant4 / AdePT / Celeritas",
+        "INL MOOSE",
+        "COMSOL 6.4",
+        "JOREK",
+        "GENE",
+        "EUROfusion Digital Twin"
+      ],
+      "breakthroughs": "OpenMC achieves performance-portable GPU Monte Carlo neutronics via OpenMP target offload; Celeritas and CERN AdePT offload Geant4 EM/optical transport onto GPUs; JOREK adds GPU offloading and full-f kinetic-fluid disruption physics; INL MOOSE couples 1D-3D thermal hydraulics, CFD, and tritium transport; EUROfusion and SPARC advance multi-fidelity fusion digital twins.",
+      "bottlenecks": "History-based Monte Carlo diverges on GPU warps; MCNP is export-controlled; coupled neutronics/thermal-hydraulics/MHD pipelines rely on brittle file handoffs without deterministic cross-OS receipts or conservation guards on ML surrogates.",
+      "observed_baseline": "BuildLang correctly-rounded f64 math & bit-identical par_for kernels (5.34-5.87x scaling), superframe/cosmo 512^3 P3M & slab solvers, FORMULAS.tsv verified radiative-transfer & transport equations, and Flywheel deterministic SHA-256 simulation receipts",
+      "surpass_angle": "Build GPU-native BuildLang event-based Monte Carlo neutronics (ENDF/B-VIII HDF5/ACE) coupled in-memory to thermal-hydraulics/FEM and constrained-transport MHD with 3D Playground visualization and Flywheel conservation receipts.",
+      "falsification_gate": "k-eff within 15 pcm of OpenMC/MCNP ICSBEP benchmarks (Godiva, Jezebel, PWR pin cell) + energy/momentum/div(B)=0 conservation within 1e-12.",
+      "sources": [
+        {
+          "title": "Performance Portable Monte Carlo Particle Transport on Intel, NVIDIA, and AMD GPUs (OpenMC)",
+          "venue": "arXiv:2403.12345",
+          "published": "2024-03-19",
+          "url": "https://arxiv.org/abs/2403.12345"
+        }
+      ]
+    },
+    {
+      "lane_id": 13,
+      "slug": "robotics-physical-ai-materials-kinematics",
+      "title": "Robotics, Physical AI, Physical Materials and Kinematics",
+      "flagship": "The Playground + BuildLang + The Flywheel",
+      "hue": "theplygrnd",
+      "groups": [
+        "theplygrnd",
+        "bldlng",
+        "theflywheel",
+        "expansion"
+      ],
+      "competitors": [
+        "MuJoCo 4.0.0 / MJX",
+        "Isaac Sim 6.2.0 / Isaac Lab 3.0.0",
+        "Genesis 1.4.6",
+        "Newton 1.7.0",
+        "Drake 1.58.0",
+        "Pinocchio",
+        "Project Chrono",
+        "MatterGen",
+        "MACE-MP-0",
+        "Orb-v3",
+        "OpenVLA",
+        "pi0 / pi0.5",
+        "GR00T N1"
+      ],
+      "breakthroughs": "Genesis 1.4.6 unifies rigid/FEM/MPM/SPH/cloth GPU physics; MuJoCo 4.0.0 + MJX and Isaac Lab 3.0.0 scale RL/manipulation; SIMPLE (2026-06) standardizes humanoid loco-manipulation evals; pi0.5 (2025-04) and GR00T N1 (2025-03) advance open-world VLA manipulation; MatterGen (Nature 2025), Orb-v3 (2025-04), and MACE-MP-0 enable generative crystals and universal DFT-grade atomistic potentials.",
+      "bottlenecks": "High-FPS GPU physics engines suffer contact tunneling and non-deterministic contact ordering; atomistic ML potentials stay disconnected from macro-scale constitutive mechanics; VLA policies lack formal runtime kinematic/torque safety valves.",
+      "observed_baseline": "RAW 19 GPU compute solvers (~1.57 ms) + motion-vector/kinematic temporal verification, superframe material/BRDF/mechanics kernels, BuildLang deterministic GPU codegen, and Flywheel closed-loop oracle/control receipts",
+      "surpass_angle": "Compile exact-contract kinematics (rigid.fk, rigid.aba), deterministic XPBD/MPM rigid+soft+granular contact, and measured/MLIP constitutive material curves from BuildLang to GPU, gated by Flywheel sim-to-real safety valves.",
+      "falsification_gate": "<= 1e-9 IK/ID parity vs Pinocchio/MuJoCo, >= 4.0M batched env steps/s on RTX 4090 with zero contact tunneling and deterministic replay hashes.",
+      "sources": [
+        {
+          "title": "Orb-v3: atomistic simulation at scale",
+          "venue": "arXiv:2504.06231",
+          "published": "2025-04-08",
+          "url": "https://arxiv.org/abs/2504.06231"
+        },
+        {
+          "title": "pi0.5: a Vision-Language-Action Model with Open-World Generalization",
+          "venue": "arXiv:2504.16054",
+          "published": "2025-04-22",
+          "url": "https://arxiv.org/abs/2504.16054"
+        },
+        {
+          "title": "GR00T N1: An Open Foundation Model for Generalist Humanoid Robots",
+          "venue": "arXiv:2503.14734",
+          "published": "2025-03-18",
+          "url": "https://arxiv.org/abs/2503.14734"
+        },
+        {
+          "title": "SIMPLE: Simulation-Based Policy Learning and Evaluation for Humanoid Loco-manipulation",
+          "venue": "arXiv:2606.08278",
+          "published": "2026-06-06",
+          "url": "https://arxiv.org/abs/2606.08278"
+        }
+      ]
+    },
+    {
+      "lane_id": 14,
+      "slug": "neuroscience-psychophysics-biosim",
+      "title": "Neuroscience, Sensory Psychophysics and Bio-Simulation",
+      "flagship": "The Playground + BuildLang + Research",
+      "hue": "theplygrnd",
+      "groups": [
+        "theplygrnd",
+        "bldlng",
+        "rsrch",
+        "expansion"
+      ],
+      "competitors": [
+        "Jaxley",
+        "Arbor",
+        "NEURON / CoreNEURON",
+        "Brian2",
+        "NEST",
+        "FlyWire",
+        "Allen Brain Observatory / MICrONS",
+        "ColorVideoVDP"
+      ],
+      "breakthroughs": "Jaxley (Nature Methods, Dec 2025) brings JAX autodiff and GPU/TPU training to multi-compartment biophysical neurons; Arbor scales C++/CUDA/HIP multi-compartment plasticity and TVB co-simulation; FlyWire (2026-02) drives whole-body fruit-fly locomotion from the 140k-neuron connectome; MICrONS (Nature, Apr 2025) co-registers 75k functional visual neurons with 200k EM cells and 500M synapses; ColorVideoVDP predicts spatiotemporal JOD perceptual quality via castleCSF.",
+      "bottlenecks": "Legacy neural simulators lack differentiability or GPU scaling; biophysical fits suffer parameter degeneracy and subject-leakage bias in neural decoding benchmarks; render/display stacks lack coupled retinal/cochlear psychophysical front-ends.",
+      "observed_baseline": "Published psychophysics & neuroscience findings (F50 amygdala-vmPFC null, F81 flower-color observer gap, F147 photon detector, F320 stress-classifier leakage, F38 mood sampling floor), build-color CIE/CAM16 observers, ITU-R/ear psychoacoustics, and CSCG/active-inference world models",
+      "surpass_angle": "Build GPU-native differentiable BuildLang multi-compartment Hodgkin-Huxley and sparse connectome ODE/SDE solvers paired with calibrated retinal (ColorVideoVDP/castleCSF) and cochlear front-ends under Flywheel leakage-proof subject-split guards.",
+      "falsification_gate": "Spike-time parity within 0.01 ms vs NEURON/Arbor on canonical cortical microcircuits + JOD parity vs ColorVideoVDP + 0% subject leakage on neural decoding suites.",
+      "sources": [
+        {
+          "title": "Jaxley: differentiable simulation enables large-scale training of detailed biophysical models of neural dynamics",
+          "venue": "Nature Methods (PMID: 41233544)",
+          "published": "2025-12-01",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/41233544/"
+        },
+        {
+          "title": "Functional connectomics spanning multiple areas of mouse visual cortex (MICrONS Consortium)",
+          "venue": "Nature (PMID: 40205214)",
+          "published": "2025-04-09",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/40205214/"
+        },
+        {
+          "title": "Whole-Brain Connectomic Graph Model Enables Whole-Body Locomotion Control in Fruit Fly",
+          "venue": "arXiv:2602.17997",
+          "published": "2026-02-20",
+          "url": "https://arxiv.org/abs/2602.17997"
+        }
+      ]
+    }
+  ]
+}
