@@ -98,6 +98,7 @@ def main() -> None:
         })
 
     world = {
+        # Preserved v1 runtime schema id validated by system/engine/world-package.js.
         "schema": "zentropy.world-package/v1",
         "lane": "reconstruction",
         "mode": "ngsf-atlas",
@@ -134,7 +135,7 @@ def main() -> None:
         "claim_boundary": manifest.get("claim_boundary"),
         "scenes": scenes_out,
         "provenance": {
-            "session": "ZentropyLabs spatial session, Native Gaussian Splat Atlas v0.5.0",
+            "session": "Spatial session, Native Gaussian Splat Atlas v0.5.0",
             "standalone": Path(args.standalone).name,
             "extractor": "art/spatial/extract_atlas.py",
         },

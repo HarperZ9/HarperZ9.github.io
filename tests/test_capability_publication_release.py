@@ -76,7 +76,7 @@ def test_release_digest_is_stable_across_text_line_endings(tmp_path: Path) -> No
 
 
 def test_release_spine_matches_the_reviewed_artifact_bytes() -> None:
-    assert len(RELEASE_PATHS) >= 387, "release pins are missing"
+    assert len(RELEASE_PATHS) >= 350, "release pins are missing"
     missing = [path for path in RELEASE_PATHS if not (ROOT / path).is_file()]
     assert not missing, f"release files missing: {missing}"
 
@@ -260,209 +260,54 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     # same sheet. index-DnlLsL1T.js stays as retained history.
     # 2026-10-28-cmmns-rename: Daylight Commons is renamed CMMNS, so the bundle is index-1ZvZUOFB.js with the
     # same sheet. index-Bg7UPow6.js stays as retained history.
+    # 2026-11-25: pruned 64 unreferenced superseded assets/index-*.{js,css} bundles
+    # and their release pins; historical hashes remain in tests/release-reviews/*.json.
+    # Only the live atomic pair referenced by workshop.html stays committed in assets/.
     current_js = "index-1ZvZUOFB.js"
-    previous_cmmns_rename_js = "index-Bg7UPow6.js"
-    assert previous_cmmns_rename_js not in source
-    assert (ROOT / "assets" / previous_cmmns_rename_js).is_file()
-    assert f"assets/{previous_cmmns_rename_js}" in RELEASE_PATHS
-    previous_plain_copy_js = "index-DnlLsL1T.js"
-    assert previous_plain_copy_js not in source
-    assert (ROOT / "assets" / previous_plain_copy_js).is_file()
-    assert f"assets/{previous_plain_copy_js}" in RELEASE_PATHS
-    previous_night_school_narrated_home_js = "index-mxSUkjU6.js"
-    assert previous_night_school_narrated_home_js not in source
-    assert (ROOT / "assets" / previous_night_school_narrated_home_js).is_file()
-    assert f"assets/{previous_night_school_narrated_home_js}" in RELEASE_PATHS
-    previous_2026_10_17_night_school_mmbu_js = "index-T9NjSt7K.js"
-    assert previous_2026_10_17_night_school_mmbu_js not in source
-    assert (ROOT / "assets" / previous_2026_10_17_night_school_mmbu_js).is_file()
-    assert f"assets/{previous_2026_10_17_night_school_mmbu_js}" in RELEASE_PATHS
-    previous_night_school_coast_map_js = "index-C7QqdyWX.js"
-    assert previous_night_school_coast_map_js not in source
-    assert (ROOT / "assets" / previous_night_school_coast_map_js).is_file()
-    assert f"assets/{previous_night_school_coast_map_js}" in RELEASE_PATHS
-    previous_night_school_search_editdistance_js = "index-1pL-pv-D.js"
-    assert previous_night_school_search_editdistance_js not in source
-    assert (ROOT / "assets" / previous_night_school_search_editdistance_js).is_file()
-    assert f"assets/{previous_night_school_search_editdistance_js}" in RELEASE_PATHS
-    previous_night_school_denoiser_receipts_js = "index-BxvqK2zV.js"
-    assert previous_night_school_denoiser_receipts_js not in source
-    assert (ROOT / "assets" / previous_night_school_denoiser_receipts_js).is_file()
-    assert f"assets/{previous_night_school_denoiser_receipts_js}" in RELEASE_PATHS
-    previous_night_school_fused_precision_js = "index-bJe3vRuh.js"
-    assert previous_night_school_fused_precision_js not in source
-    assert (ROOT / "assets" / previous_night_school_fused_precision_js).is_file()
-    assert f"assets/{previous_night_school_fused_precision_js}" in RELEASE_PATHS
-    previous_night_school_quant_tiling_js = "index-Bm2nPm2b.js"
-    assert previous_night_school_quant_tiling_js not in source
-    assert (ROOT / "assets" / previous_night_school_quant_tiling_js).is_file()
-    assert f"assets/{previous_night_school_quant_tiling_js}" in RELEASE_PATHS
-    previous_night_school_evaluate_threads_js = "index-B4VAhGeJ.js"
-    assert previous_night_school_evaluate_threads_js not in source
-    assert (ROOT / "assets" / previous_night_school_evaluate_threads_js).is_file()
-    assert f"assets/{previous_night_school_evaluate_threads_js}" in RELEASE_PATHS
-    previous_pair8_js = "index-CoD1AHwR.js"
-    assert previous_pair8_js not in source
-    assert (ROOT / "assets" / previous_pair8_js).is_file()
-    assert f"assets/{previous_pair8_js}" in RELEASE_PATHS
-    previous_lessons_js = "index-DWytnneE.js"
-    assert previous_lessons_js not in source
-    assert (ROOT / "assets" / previous_lessons_js).is_file()
-    assert f"assets/{previous_lessons_js}" in RELEASE_PATHS
-    previous_school_js = "index-amx6uI37.js"
-    assert previous_school_js not in source
-    assert (ROOT / "assets" / previous_school_js).is_file()
-    assert f"assets/{previous_school_js}" in RELEASE_PATHS
-    assert "index-DwjtCOsP.js" not in source
-    assert (ROOT / "assets" / "index-DwjtCOsP.js").is_file()
-    previous_voice_js = "index-jmVIw9rV.js"
-    assert previous_voice_js not in source
-    assert (ROOT / "assets" / previous_voice_js).is_file()
-    assert f"assets/{previous_voice_js}" in RELEASE_PATHS
-    previous_guides_js = "index-C3mo4X0I.js"
-    assert previous_guides_js not in source
-    assert (ROOT / "assets" / previous_guides_js).is_file()
-    assert f"assets/{previous_guides_js}" in RELEASE_PATHS
-    previous_guides_pair = ("index-Dv8VLt1g.js", "index-DbZyfUEO.css")
-    for superseded in previous_guides_pair:
+    current_css = "index-D11WloWt.css"
+    assert f'src="/assets/{current_js}"' in source
+    assert f'href="/assets/{current_css}"' in source
+    assert (ROOT / "assets" / current_js).is_file()
+    assert (ROOT / "assets" / current_css).is_file()
+    assert f"assets/{current_js}" in RELEASE_PATHS
+    assert f"assets/{current_css}" in RELEASE_PATHS
+
+    pruned_superseded = (
+        "index-Bg7UPow6.js", "index-DnlLsL1T.js", "index-mxSUkjU6.js", "index-T9NjSt7K.js",
+        "index-C7QqdyWX.js", "index-1pL-pv-D.js", "index-BxvqK2zV.js", "index-bJe3vRuh.js",
+        "index-Bm2nPm2b.js", "index-B4VAhGeJ.js", "index-CoD1AHwR.js", "index-DWytnneE.js",
+        "index-amx6uI37.js", "index-DwjtCOsP.js", "index-jmVIw9rV.js", "index-C3mo4X0I.js",
+        "index-Dv8VLt1g.js", "index-DbZyfUEO.css", "index-mtbFWZrz.js", "index-BexgIZUT.js",
+        "index-DXjCZzHu.js", "index-BniK76UM.js", "index-G7cmpE16.js", "index-DDpFxCuj.js",
+        "index-DI6YWfTZ.js", "index-DtNiguMs.js", "index-FBDE3rFM.js", "index-BkvbD78Z.js",
+        "index-CyztdbmV.js", "index-BIA-0d5A.js", "index-Dmke1bnx.js", "index-D7LI6_j0.js",
+        "index-DkLmGDFh.js", "index-B5IIN--D.js", "index-DMn8Bp7X.js", "index-BORSyU4q.css",
+        "index-DuXEIE3Q.js", "index-D4UoCuIT.js", "index-DYDJA8vR.js", "index-Se2ioCLN.css",
+        "index-DPe17JSn.css", "index-TO_R52sc.js", "index-DJj37yQz.css", "index-JJHLIJUt.js",
+        "index-eZ1QGP52.css", "index-4wTyKocM.js", "index-DpT1GQuA.js", "index-B2kgPYlE.css",
+        "index-CS_jYuhh.js", "index-CPG6kzKK.js", "index-ClATdIWg.js", "index-9egMTEOG.js",
+        "index-Ah1hhjoZ.js", "index-b2DeyYcU.js", "index-BdFe8daW.js", "index-BHRZupim.js",
+        "index-BQ-flpWG.js", "index-CHqKSAcx.js", "index-CLzTNvxy.js", "index-CX_9A0Hy.js",
+        "index-CxyhrtVk.js", "index-D6p_rWan.js", "index-DPnmw9p_.js", "index-DrPnIzlB.js",
+    )
+    for superseded in pruned_superseded:
         assert superseded not in source
-        assert (ROOT / "assets" / superseded).is_file()
-        assert f"assets/{superseded}" in RELEASE_PATHS
-    previous_five_js = "index-mtbFWZrz.js"
-    assert previous_five_js not in source
-    assert (ROOT / "assets" / previous_five_js).is_file()
-    assert f"assets/{previous_five_js}" in RELEASE_PATHS
-    previous_check_js = "index-BexgIZUT.js"
-    assert previous_check_js not in source
-    assert (ROOT / "assets" / previous_check_js).is_file()
-    assert f"assets/{previous_check_js}" in RELEASE_PATHS
-    previous_maker_js = "index-DXjCZzHu.js"
-    assert previous_maker_js not in source
-    assert (ROOT / "assets" / previous_maker_js).is_file()
-    assert f"assets/{previous_maker_js}" in RELEASE_PATHS
-    previous_wkb_js = "index-BniK76UM.js"
-    assert previous_wkb_js not in source
-    assert (ROOT / "assets" / previous_wkb_js).is_file()
-    assert f"assets/{previous_wkb_js}" in RELEASE_PATHS
-    previous_count_js = "index-G7cmpE16.js"
-    assert previous_count_js not in source
-    assert (ROOT / "assets" / previous_count_js).is_file()
-    assert f"assets/{previous_count_js}" in RELEASE_PATHS
-    previous_record_js = "index-DDpFxCuj.js"
-    assert previous_record_js not in source
-    assert (ROOT / "assets" / previous_record_js).is_file()
-    assert f"assets/{previous_record_js}" in RELEASE_PATHS
-    previous_raw_js = "index-DI6YWfTZ.js"
-    assert previous_raw_js not in source
-    assert (ROOT / "assets" / previous_raw_js).is_file()
-    assert f"assets/{previous_raw_js}" in RELEASE_PATHS
-    previous_opener_js = "index-DtNiguMs.js"
-    assert previous_opener_js not in source
-    assert (ROOT / "assets" / previous_opener_js).is_file()
-    assert f"assets/{previous_opener_js}" in RELEASE_PATHS
-    assert not (ROOT / "assets" / "index-B3PP6LeH.js").exists()
-    assert not (ROOT / "assets" / "index-C1IxEots.js").exists()
-    previous_fonts_js = "index-FBDE3rFM.js"
-    assert previous_fonts_js not in source
-    assert (ROOT / "assets" / previous_fonts_js).is_file()
-    assert f"assets/{previous_fonts_js}" in RELEASE_PATHS
-    previous_work_js = "index-BkvbD78Z.js"
-    assert previous_work_js not in source
-    assert (ROOT / "assets" / previous_work_js).is_file()
-    assert f"assets/{previous_work_js}" in RELEASE_PATHS
-    previous_name_js = "index-CyztdbmV.js"
-    assert previous_name_js not in source
-    assert (ROOT / "assets" / previous_name_js).is_file()
-    assert f"assets/{previous_name_js}" in RELEASE_PATHS
-    previous_terms_js = "index-BIA-0d5A.js"
-    assert previous_terms_js not in source
-    assert (ROOT / "assets" / previous_terms_js).is_file()
-    assert f"assets/{previous_terms_js}" in RELEASE_PATHS
-    previous_writing_hub_js = "index-Dmke1bnx.js"
-    assert previous_writing_hub_js not in source
-    assert (ROOT / "assets" / previous_writing_hub_js).is_file()
-    assert f"assets/{previous_writing_hub_js}" in RELEASE_PATHS
-    previous_vintage_js = "index-D7LI6_j0.js"
-    assert previous_vintage_js not in source
-    assert (ROOT / "assets" / previous_vintage_js).is_file()
-    assert f"assets/{previous_vintage_js}" in RELEASE_PATHS
-    # The bundles built during this change, index-DO0BUWdN.js and index-LG6YNxx3.js, were never published.
-    assert not (ROOT / "assets" / "index-DO0BUWdN.js").exists()
-    assert not (ROOT / "assets" / "index-LG6YNxx3.js").exists()
-    previous_followup_js = "index-DkLmGDFh.js"
-    assert previous_followup_js not in source
-    assert (ROOT / "assets" / previous_followup_js).is_file()
-    assert f"assets/{previous_followup_js}" in RELEASE_PATHS
-    previous_referees_js = "index-B5IIN--D.js"
-    assert previous_referees_js not in source
-    assert (ROOT / "assets" / previous_referees_js).is_file()
-    assert f"assets/{previous_referees_js}" in RELEASE_PATHS
-    previous_atlas_js = "index-DMn8Bp7X.js"
-    assert previous_atlas_js not in source
-    assert (ROOT / "assets" / previous_atlas_js).is_file()
-    assert f"assets/{previous_atlas_js}" in RELEASE_PATHS
+        assert not (ROOT / "assets" / superseded).exists()
+        assert f"assets/{superseded}" not in RELEASE_PATHS
+
     for unpublished_js in (
+        "index-B3PP6LeH.js", "index-C1IxEots.js", "index-DO0BUWdN.js", "index-LG6YNxx3.js",
         "index-RXS41pPF.js", "index-CUXkFuw-.js", "index-Brb2IBwO.js", "index-CGMskzEB.js",
         "index-BzE0lc-H.js", "index-BLnRqjW-.js",
     ):
         assert not (ROOT / "assets" / unpublished_js).exists()
         assert f"assets/{unpublished_js}" not in RELEASE_PATHS
-    previous_advisories_css = "index-BORSyU4q.css"
-    assert previous_advisories_css not in source
-    assert (ROOT / "assets" / previous_advisories_css).is_file()
-    assert f"assets/{previous_advisories_css}" in RELEASE_PATHS
-    previous_advisories_js = "index-DuXEIE3Q.js"
-    assert previous_advisories_js not in source
-    assert (ROOT / "assets" / previous_advisories_js).is_file()
-    assert f"assets/{previous_advisories_js}" in RELEASE_PATHS
-    previous_facts_js = "index-D4UoCuIT.js"
-    assert previous_facts_js not in source
-    assert (ROOT / "assets" / previous_facts_js).is_file()
-    assert f"assets/{previous_facts_js}" in RELEASE_PATHS
-    previous_void_plates_js = "index-DYDJA8vR.js"
-    assert previous_void_plates_js not in source
-    assert (ROOT / "assets" / previous_void_plates_js).is_file()
-    # 2026-10-23-plain-copy: the flagship section adds styles, so the sheet is index-D11WloWt.css. index-Se2ioCLN.css stays as history.
-    current_css = "index-D11WloWt.css"
-    previous_plain_copy_css = "index-Se2ioCLN.css"
-    assert previous_plain_copy_css not in source
-    assert (ROOT / "assets" / previous_plain_copy_css).is_file()
-    assert f"assets/{previous_plain_copy_css}" in RELEASE_PATHS
-    previous_copy_pass_css = "index-DPe17JSn.css"
-    assert previous_copy_pass_css not in source
-    assert (ROOT / "assets" / previous_copy_pass_css).is_file()
-    previous_human_first_pair = ("index-TO_R52sc.js", "index-DJj37yQz.css")
-    previous_capability_first_pair = ("index-JJHLIJUt.js", "index-eZ1QGP52.css")
-    previous_capability_first_home_js = "index-4wTyKocM.js"
-    prior_mission_js = "index-DpT1GQuA.js"
-    prior_mission_css = "index-B2kgPYlE.css"
-    previous_home_js = "index-CS_jYuhh.js"
+
     previous_flywheel_js = "index-BIYnDBdw.js"
     previous_flywheel_css = "index-DGQrcJ5p.css"
     previous_security_js = "index-BnUu1wyw.js"
     prior_reviewed_js = "index-C_1S2nb6.js"
     prior_reviewed_css = "index-XLAt4tDw.css"
-    assert f'src="/assets/{current_js}"' in source
-    assert f'href="/assets/{current_css}"' in source
-    assert (ROOT / "assets" / current_js).is_file()
-    assert (ROOT / "assets" / current_css).is_file()
-    assert previous_home_js not in source
-    for superseded in previous_capability_first_pair + previous_human_first_pair:
-        assert superseded not in source
-        assert (ROOT / "assets" / superseded).is_file()
-        assert f"assets/{superseded}" in RELEASE_PATHS
-    # The prior v1.0.1 rollup home bundle is superseded by the capability-first
-    # refresh. It stays in the reviewed release tree as a historical artifact but
-    # is no longer referenced by index.html.
-    assert previous_capability_first_home_js not in source
-    assert (ROOT / "assets" / previous_capability_first_home_js).is_file()
-    assert f"assets/{previous_capability_first_home_js}" in RELEASE_PATHS
-    assert f"assets/{current_js}" in RELEASE_PATHS
-    assert f"assets/{current_css}" in RELEASE_PATHS
-    assert prior_mission_js not in source
-    assert prior_mission_css not in source
-    assert "index-CPG6kzKK.js" not in source
-    assert "index-ClATdIWg.js" not in source
     assert previous_gather_171_js not in source
     assert not (ROOT / "assets" / previous_gather_171_js).exists()
     assert previous_060_draft_js not in source

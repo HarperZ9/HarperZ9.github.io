@@ -3,7 +3,7 @@
 repackage it as a certified world package for the site's spatial engine.
 
 The standalone (Crystal_City_Hybrid_Proof_v1.3_Standalone.html, produced by the
-ZentropyLabs spatial session) embeds every asset as base64 inside
+spatial session) embeds every asset as base64 inside
 window.__CRYSTAL_INLINE_ASSETS__. This script decodes those exact bytes and
 writes the site-servable package:
 
@@ -154,7 +154,7 @@ def main() -> None:
             "sidecar": "splats.bin",
         },
         "provenance": {
-            "session": "ZentropyLabs spatial session, Crystal City Hybrid Proof v1.0 to v1.3",
+            "session": "Spatial session, Crystal City Hybrid Proof v1.0 to v1.3",
             "standalone": "Crystal_City_Hybrid_Proof_v1.3_Standalone.html",
             "extractor": "art/spatial/extract_crystal_city.py",
         },
