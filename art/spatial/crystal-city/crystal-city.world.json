@@ -149,7 +149,7 @@
     "sidecar": "splats.bin"
   },
   "provenance": {
-    "session": "ZentropyLabs spatial session, Crystal City Hybrid Proof v1.0 to v1.3",
+    "session": "Spatial session, Crystal City Hybrid Proof v1.0 to v1.3",
     "standalone": "Crystal_City_Hybrid_Proof_v1.3_Standalone.html",
     "extractor": "art/spatial/extract_crystal_city.py"
   },

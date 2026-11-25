@@ -21,6 +21,7 @@ from pathlib import Path
 
 SEED = "folded-light-inhabited"
 TITLE = "Folded light, inhabited"
+# Preserved v1 runtime schema id validated by system/engine/world-package.js and test_spatial_annex.py.
 SCHEMA = "zentropy.world-package/v1"
 
 # Record layout shared with system/engine/world-package.js: ten float32s.

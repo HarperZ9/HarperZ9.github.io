@@ -656,7 +656,7 @@
     }
   ],
   "provenance": {
-    "session": "ZentropyLabs spatial session, Native Gaussian Splat Atlas v0.5.0",
+    "session": "Spatial session, Native Gaussian Splat Atlas v0.5.0",
     "standalone": "Native_Gaussian_Splat_Atlas_v0.5.0_Standalone.html",
     "extractor": "art/spatial/extract_atlas.py"
   },

@@ -102,7 +102,7 @@ def main() -> None:
     matched = [e for e in seen.values() if e["status"] != "candidate"]
     candidates_only = [e for e in seen.values() if e["status"] == "candidate"]
     corpus = {
-        "schema": "zentropy.artwork-corpus/v1",
+        "schema": "spatial.artwork-corpus/v1",
         "assembled": "2026-08-03",
         "note": (
             "Deduplicated by SHA-256. published_17 is live on main; pr79_pending is "
