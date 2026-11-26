@@ -1,0 +1,168 @@
+{
+  "schema": "harperz9.one-command-installers/1",
+  "updated_utc": "2026-11-26T11:51:00Z",
+  "verification_posture": {
+    "checksum_algorithm": "SHA-256",
+    "checksum_file": "SHA256SUMS",
+    "fail_closed": true,
+    "tamper_policy": "Refuse extraction or installation before any file lands if SHA256SUMS is missing, an asset entry is absent, or computed SHA-256 differs by even 1 byte.",
+    "offline_self_test_flag": {
+      "windows": "-SelfTest",
+      "unix": "--self-test"
+    },
+    "privilege_model": "User-space only (User PATH / ~/.local or tool-specific home directory; never Machine PATH, never sudo)."
+  },
+  "installers": [
+    {
+      "id": "buildlang",
+      "name": "BuildLang (buildc + qdb + port)",
+      "repo": "HarperZ9/buildlang",
+      "binaries": [
+        "buildc",
+        "qdb",
+        "port"
+      ],
+      "windows_powershell": "irm https://raw.githubusercontent.com/HarperZ9/buildlang/main/install.ps1 | iex",
+      "unix_sh": "curl -fsSL https://raw.githubusercontent.com/HarperZ9/buildlang/main/install.sh | sh",
+      "package_managers": [
+        "cargo install buildlang",
+        "winget install HarperZ9.BuildLang",
+        "brew install harperz9/tap/buildlang"
+      ],
+      "release_workflow": ".github/workflows/release-binaries.yml",
+      "artifacts": [
+        "buildlang-<version>-x86_64-pc-windows-msvc.zip",
+        "buildlang-<version>-x86_64-unknown-linux-gnu.tar.gz",
+        "buildlang-<version>-aarch64-apple-darwin.tar.gz",
+        "SHA256SUMS"
+      ],
+      "checksum_file": "SHA256SUMS",
+      "verify_command": "buildc --version && qdb --version",
+      "self_test_windows": "powershell -NoProfile -ExecutionPolicy Bypass -File install.ps1 -SelfTest",
+      "self_test_unix": "sh install.sh --self-test"
+    },
+    {
+      "id": "qdb",
+      "name": "BuildDB (qdb)",
+      "repo": "HarperZ9/buildlang",
+      "bundled_with": "buildlang",
+      "binaries": [
+        "qdb"
+      ],
+      "windows_powershell": "irm https://raw.githubusercontent.com/HarperZ9/buildlang/main/install.ps1 | iex",
+      "unix_sh": "curl -fsSL https://raw.githubusercontent.com/HarperZ9/buildlang/main/install.sh | sh",
+      "checksum_file": "SHA256SUMS",
+      "verify_command": "qdb --version",
+      "notes": "Shipped directly in the BuildLang precompiled binary release archives alongside buildc and port."
+    },
+    {
+      "id": "flywheel",
+      "name": "Flywheel (flywheel-verify + gather + plexus)",
+      "repo": "HarperZ9/flywheel",
+      "binaries": [
+        "flywheel"
+      ],
+      "windows_powershell": "irm https://raw.githubusercontent.com/HarperZ9/flywheel/main/install.ps1 | iex",
+      "unix_sh": "curl -fsSL https://raw.githubusercontent.com/HarperZ9/flywheel/main/install.sh | sh",
+      "package_managers": [
+        "python -m pip install flywheel-verify",
+        "uv tool install flywheel-verify",
+        "pipx install flywheel-verify"
+      ],
+      "release_workflow": ".github/workflows/release-assets.yml",
+      "artifacts": [
+        "flywheel_verify-<version>-py3-none-any.whl",
+        "flywheel_verify-<version>.tar.gz",
+        "SHA256SUMS"
+      ],
+      "checksum_file": "SHA256SUMS",
+      "verify_command": "flywheel gate",
+      "self_test_windows": "powershell -NoProfile -ExecutionPolicy Bypass -File install.ps1 -SelfTest",
+      "self_test_unix": "sh install.sh --self-test",
+      "notes": "Verifies release wheel SHA-256 fail-closed and installs via uv tool, pipx, or an isolated Python 3.11+ venv.",
+      "merged_pr": "https://github.com/HarperZ9/flywheel/pull/560",
+      "merged_sha": "b31e18bc5e49f9830a22209cd32d7ee6af17c780"
+    },
+    {
+      "id": "superframe",
+      "name": "Superframe (The Playground + raw_native_cli)",
+      "repo": "HarperZ9/superframe",
+      "binaries": [
+        "superframe",
+        "raw_native_cli"
+      ],
+      "windows_powershell": "irm https://raw.githubusercontent.com/HarperZ9/superframe/main/install.ps1 | iex",
+      "unix_sh": "curl -fsSL https://raw.githubusercontent.com/HarperZ9/superframe/main/install.sh | sh",
+      "release_workflow": ".github/workflows/release-binaries.yml",
+      "artifacts": [
+        "superframe-playground-windows-x64.zip",
+        "superframe-playground-linux-x64.tar.gz",
+        "superframe-playground-macos-arm64.tar.gz",
+        "SHA256SUMS"
+      ],
+      "checksum_file": "SHA256SUMS",
+      "verify_command": "superframe list",
+      "self_test_windows": "powershell -NoProfile -ExecutionPolicy Bypass -File install.ps1 -SelfTest",
+      "self_test_unix": "sh install.sh --self-test",
+      "notes": "Bundles the Playground artifact engine, packages/, and compiled C++23 raw_native_cli.",
+      "merged_pr": "https://github.com/HarperZ9/superframe/pull/151",
+      "merged_sha": "56aee0a8adbe40d103767aa7735a104208027bf7"
+    },
+    {
+      "id": "raw-dx12",
+      "name": "RAW DX12 (Skyrim SE / Fallout 4 / Starfield Native DX12 Runtime)",
+      "repo": "HarperZ9/superframe",
+      "binaries": [
+        "raw_native_cli.exe",
+        "RAW DX12 release zip"
+      ],
+      "windows_powershell": "irm https://raw.githubusercontent.com/HarperZ9/superframe/main/install.ps1 | iex",
+      "windows_powershell_with_raw_guide": "powershell -NoProfile -ExecutionPolicy Bypass -Command \"& ([scriptblock]::Create((irm https://raw.githubusercontent.com/HarperZ9/superframe/main/install.ps1))) -WithRawDx12\"",
+      "unix_sh": "curl -fsSL https://raw.githubusercontent.com/HarperZ9/superframe/main/install.sh | sh -s -- --with-raw-dx12",
+      "checksum_file": "SHA256SUMS",
+      "distribution_channels": [
+        "https://github.com/HarperZ9/superframe/releases",
+        "Nexus Mods (RAW DX12 builds)"
+      ],
+      "notes": "Compiles and bundles raw_native_cli in Superframe releases; game-specific DX12 runtime archives ship via signed GitHub Releases and Nexus Mods with SHA256SUMS verification."
+    },
+    {
+      "id": "cmmns",
+      "name": "CMMNS (Site-Agnostic Browser Extension + CLI)",
+      "repo": "HarperZ9/cmmns",
+      "binaries": [
+        "cmmns",
+        "cmmns-ext.zip"
+      ],
+      "windows_powershell": "irm https://raw.githubusercontent.com/HarperZ9/cmmns/main/install.ps1 | iex",
+      "unix_sh": "curl -fsSL https://raw.githubusercontent.com/HarperZ9/cmmns/main/install.sh | sh",
+      "release_workflow": ".github/workflows/release-assets.yml",
+      "artifacts": [
+        "cmmns-ext.zip",
+        "cmmns-chrome-<version>.zip",
+        "cmmns-cli-<version>.zip",
+        "cmmns-firefox-<version>.xpi",
+        "cmmns-firefox-self-<version>.xpi",
+        "SHA256SUMS"
+      ],
+      "checksum_file": "SHA256SUMS",
+      "verify_command": "cmmns --help",
+      "extension_unpacked_path_windows": "%LOCALAPPDATA%\\CMMNS\\ext",
+      "extension_unpacked_path_unix": "~/.cmmns/ext",
+      "self_test_windows": "powershell -NoProfile -ExecutionPolicy Bypass -File install.ps1 -SelfTest",
+      "self_test_unix": "sh install.sh --self-test",
+      "notes": "Verifies SHA256SUMS fail-closed, unpacks the MV3 extension for Load Unpacked in chrome://extensions, and installs the cmmns CLI shim.",
+      "merged_pr": "https://github.com/HarperZ9/cmmns/pull/129",
+      "merged_sha": "1aee400b91e890d70db22b558c5e817963db1e7a"
+    },
+    {
+      "id": "harperz9-site",
+      "name": "HarperZ9.github.io (Living Proof Portfolio & Release Hub)",
+      "repo": "HarperZ9/HarperZ9.github.io",
+      "url": "https://harperz9.github.io/",
+      "install_mode": "zero-install static web hub",
+      "checksum_file": "releases.json",
+      "notes": "Zero-install browser surface hosting live WebGPU demos, interactive evidence viewers, career suite, and copy-paste 1-command installer bars sourced from this manifest."
+    }
+  ]
+}

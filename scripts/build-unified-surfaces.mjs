@@ -286,17 +286,35 @@ function buildTools() {
   const catalogAttr = hasAsset("assets/data/unified/all_public_repos_catalog.json")
     ? "/assets/data/unified/all_public_repos_catalog.json"
     : "";
+  let installerBlock = "";
+  if (hasAsset("assets/data/unified/one_command_installers.json")) {
+    const inst = JSON.parse(readFileSync(path.join(site, "assets/data/unified/one_command_installers.json"), "utf8"));
+    const cards = (inst.installers || [])
+      .filter((x) => x.windows_powershell || x.unix_sh)
+      .map((x) => {
+        const win = x.windows_powershell ? `<p style="margin:0.35rem 0 0.2rem;font-size:0.8rem;color:var(--us-muted)">Windows PowerShell:</p><pre style="margin:0;padding:0.5rem 0.65rem;overflow-x:auto;font-size:0.78rem;background:var(--us-chip-bg);border:1px solid var(--us-border);border-radius:6px"><code>${escHtml(x.windows_powershell)}</code></pre>` : "";
+        const unix = x.unix_sh ? `<p style="margin:0.45rem 0 0.2rem;font-size:0.8rem;color:var(--us-muted)">Linux / macOS:</p><pre style="margin:0;padding:0.5rem 0.65rem;overflow-x:auto;font-size:0.78rem;background:var(--us-chip-bg);border:1px solid var(--us-border);border-radius:6px"><code>${escHtml(x.unix_sh)}</code></pre>` : "";
+        const bins = (x.binaries || []).length ? `<span>${escHtml(x.binaries.join(", "))}</span>` : "";
+        return `<article class="us-card"><div class="us-card-meta"><span>Fail-Closed SHA256SUMS</span>${bins}</div><h3>${escHtml(x.name)}</h3>${x.notes ? `<p>${escHtml(x.notes)}</p>` : ""}${win}${unix}<div class="us-card-actions" style="margin-top:0.65rem"><a class="us-card-btn" href="https://github.com/${escHtml(x.repo)}">Repository</a>${x.verify_command ? `<span class="us-btn" style="font-family:'Conso',ui-monospace,monospace;font-size:0.78rem">${escHtml(x.verify_command)}</span>` : ""}</div></article>`;
+      }).join("\n");
+    installerBlock = `<section id="installers" style="margin:1.75rem 0" aria-labelledby="installers-h">
+    <h2 id="installers-h" style="margin:0 0 0.4rem">One-Command Installers (Verified via SHA256SUMS)</h2>
+    <p class="us-status" style="margin:0 0 1rem">Every flagship installer runs strictly in user space (never sudo, never Machine PATH) and refuses extraction before any file lands if SHA256SUMS mismatches by even one byte. Manifest: <a href="/assets/data/unified/one_command_installers.json">one_command_installers.json</a>.</p>
+    <div class="us-grid">${cards}</div>
+  </section>`;
+  }
   const body = `<article class="us-wrap">
   <section class="us-hero">
-    <p class="us-kicker">Complete Public Catalog | 5 Flagships + Every Public Repo &amp; Plugin</p>
+    <p class="us-kicker">Complete Public Catalog | 5 Flagships + All 159 Public Repos &amp; Plugins</p>
     <h1>Tools, Plugins &amp; Public Repositories</h1>
-    <p class="us-lede">Every standalone tool page, plugin page, repository explainer, and public HarperZ9 repository lives here in one searchable index. Active work sits inside the five flagships; archived historical repositories keep their exact destination badges so nothing disappears.</p>
+    <p class="us-lede">Every standalone tool page, plugin page, repository explainer, and all 159 public HarperZ9 repositories live here in one searchable index. Active work sits inside the five flagships; archived historical repositories keep their exact destination badges so nothing disappears.</p>
     <ul class="us-stats">
       <li>5 Flagship Homes: Superframe, BuildLang, Flywheel, CMMNS, Portfolio Site</li>
-      <li>All 38 Tools, 37 Plugins &amp; 34 Repo Explainers Preserved</li>
-      <li>Zero Orphan Pages: Every Old URL Redirects Here</li>
+      <li>159 Public Repositories (49 Active Original, 0 Private)</li>
+      <li>Zero-Friction 1-Command Installers with Fail-Closed SHA256SUMS</li>
     </ul>
   </section>
+  ${installerBlock}
   ${packExplorer({
     pack: "/assets/data/unified/tools_plugins_demos.json",
     repoCatalog: catalogAttr,
@@ -305,7 +323,7 @@ function buildTools() {
 </article>`;
   return writePage("tools.html", {
     title: "Tools, Plugins & Public Repositories",
-    description: "Searchable directory of every public HarperZ9 repository, tool, plugin, and repository explainer grouped by flagship.",
+    description: "Searchable directory of all 159 public HarperZ9 repositories, tools, plugins, and one-command SHA256SUMS installers.",
     body,
   });
 }
