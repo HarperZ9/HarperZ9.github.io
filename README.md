@@ -15,16 +15,20 @@ git clone https://github.com/HarperZ9/HarperZ9.github.io.git
 [![license](https://img.shields.io/badge/license-all_rights_reserved-e6e1d6?style=flat-square&labelColor=1a1712)](https://github.com/HarperZ9/HarperZ9.github.io/blob/main/LICENSE)
 ![node (npx serve)](https://img.shields.io/badge/node-%28npx_serve%29-e6e1d6?style=flat-square&labelColor=1a1712)
 
-> Static public site for Zain Dana Harper: Flywheel, its
-> supporting systems, the Retro Systems Lab, research publications, and
-> hiring and collaboration routes.
+> Static public site for Zain Dana Harper: five consolidated open-source platforms
+> (The Playground, BuildLang, The Flywheel, The Commons, and Research), live demos,
+> open datasets, security hierarchy, essays, and career documents in all formats.
 
-HarperZ9.github.io is the public workshop surface for **Zain Dana Harper** and
-Zain Dana Harper. Flywheel is the primary platform; the other products are
-engines, plug-ins, adapters, evaluation layers, infrastructure, research, or
-standalone creative tools. The site gives a visitor a clear way in: hire or
-collaborate, inspect a product, read a sourced publication, or open the code
-behind a verified release.
+HarperZ9.github.io is the public workshop and front door for **Zain Dana Harper**.
+Everything renders together in one field around five connected open-source platforms:
+**The Playground** (`superframe` + `RAW` DX12 + *Low Water*), **BuildLang** (`buildc`
+1.15.0 + `BDB` v2 SQL + RISC-V/OS), **The Flywheel** (`flywheel` 2.0.0 + `Articulate`
+0.19.1 + `EMET` 1.3.1 + 31 consolidated packages), **The Commons** (`cmmns` 3.10.0),
+and **Research** (30 reproducible findings including 12 nulls, 7 open datasets, and
+13 DOI-indexed preprints). The site gives every reader a clear way in: meet the person
+behind the work, inspect the unified architecture, run live interactive surfaces, review
+sourced publications, or download current resumes, CV, and cover letters in HTML, PDF,
+BuildTeX Designed PDF, DOCX, plain text, and Markdown.
 
 ## Deployment source
 
@@ -68,7 +72,11 @@ accessible, and honest about maturity; private systems stay bounded off-page.
 
 ## Pages
 
-- `index.html` -- generated React home from this repository's `home/` source.
+- `index.html` -- the world's entrance and front door, built by `scripts/build-world-home.mjs` around the six fixed landmarks, live interactive dial, and five consolidated platforms.
+- `person.html` -- the person behind the work: background, arboriculture and creative craft, convictions, and the five platforms.
+- `architecture.html` -- Five Platforms, One Field: interactive architecture graph, eight cohesive pipelines (`WF-01..WF-08`), 14 global-frontier lanes, eight project family trees, seven datasets (`DS-01..DS-07`), and live observed benchmarks with honest gaps.
+- `hire.html` | `resume.html` | `cv.html` | `cover-letter.html` | `portfolio.html` | `dossier.html` -- career hub, five one-page role-tailored resumes, full CV, three cover letters, portfolio brief, and public dossier in `.html`, `.pdf`, BuildTeX `designed/*.pdf`, `.docx`, `.txt`, and `.md` formats.
+- `security.html` | `security-toolkit.html` -- public security tools, advisories, and the capability-public 16-tool security and purple-team hierarchy.
 - `papers/` -- the paper PDFs. `tools/build_latex_papers.py` typesets thirteen
   of them with Tectonic 0.17.0 against one pinned bundle, twice each with
   `SOURCE_DATE_EPOCH` fixed, and writes `papers/receipts/<name>.json` (source
@@ -81,26 +89,18 @@ accessible, and honest about maturity; private systems stay bounded off-page.
   builds the files for a new Zenodo version from a reserved version DOI
   without changing the committed PDFs. The two corpus PDFs are printed from their pages
   by `tools/print_documents.py`.
-- `overview.html` -- the compact product map, grouped by primary domain.
-- `catalog.html` -- the detailed evidence registry, including secondary-domain
-  references and source records.
-- `studio.html` -- the Studio, a live media instrument for rendering and
-  measuring the frame.
-- `demo-index.html` -- runnable browser demos.
-- `research.html` | `publications.html` -- research index and papers.
-- `writing.html` -- essays, notes, and the public test-case intake.
-- `catalog.html` | `guide.html` -- the full catalog and the site guide.
-- `typeface.html` -- current bundled typography specimens and original-type development status.
-- `cv.html` | `person.html` | `resume.html` -- about and career surfaces.
+- `playground/` | `raw.html` | `low-water.html` | `buildlang.html` | `flywheel.html` | `cmmns.html` | `articulate.html` -- flagship platform pages and interactive browser studios.
+- `research.html` | `publications.html` | `findings/` | `experiments/` -- research index, 30 reproducible findings (12 nulls), and 13 DOI-indexed preprints.
 
-## Public lineup
+## Five consolidated platforms
 
-| Group | Public repos | State |
+| Platform | Public repo | Live scope |
 | --- | --- | --- |
-| Route, map, research, and judgment | `flywheel`, `index`, `gather`, `forum`, `crucible` | Any-model routing, workspace maps, research intake, orchestration, and evaluation. |
-| Verification, compilation, and learning | `emet`, `buildlang`, `learn` | External byte witnessing, typed-effects compilation, and witnessed learning checkpoints. |
-| Agent substrate | `relay`, `plexus`, `mneme` | Endpoint-agnostic coding, tool interop, and provenance-backed memory. |
-| Media, graphics, and design | `telos`, `studio-engine`, `build-color` | Poster systems, native rendering, neural-network graphics, simulation, and color science. |
+| **The Playground** (`THEPLAYGRND`) | `HarperZ9/superframe` + `HarperZ9/raw` | C++23 multi-backend rendering (CPU/D3D12/Vulkan/WebGPU), RAW DX12 live pipeline (`96/96`), spectral material & `64v/126t` flora meshlet forge, SI rigid-body `physai` (`30,670` steps/s), `NOH-1` (`1,149.9x`), CLAP/VST3 audio, `512^3` cosmology, and *Low Water*. |
+| **BuildLang** (`BLDLNG`) | `HarperZ9/buildlang` | Rust-built capability-effect systems language (`buildc 1.15.0` on crates.io), C/HLSL/GLSL/experimental Wasm & x86-64 backends, `BDB` v2 SQL (`2.89 MB` paging, `0/500` silent fuzz corruptions), `procgen_forge.bld` (`2,132.3x`), `aerospace_ai_kernels.bld` (`1,008.5x`), `workstation_mcp.bld` (`69.92 us`), RV64 toolchain, and `BuildTeX`. |
+| **The Flywheel** (`THEFLYWHEEL`) | `HarperZ9/flywheel` | Model-agnostic AI workstation & verification harness (`v2.0.0` on PyPI, 31 consolidated packages) including `Articulate` (`0.19.1`), `EMET` (`1.3.1`), `Accountable Surface`, `FlagshipAgentSDK`, Three-Plate Verification Oracle (`115/115` recall), `gather/deconstruct`, and JFC-3P Arm C (`95.83%`, `p=4e-6`). |
+| **The Commons** (`THECMMNS`) | `HarperZ9/cmmns` | Local-first AGPL-3.0 browser extension (`v3.10.0`) surfacing source provenance, coordination cues, fact-checks, and Web Crypto capture receipts across nine social platforms. |
+| **Research & Showcase** (`RSRCH`) | `HarperZ9/HarperZ9.github.io` | 30 reproducible empirical findings (12 nulls), 7 open verifiable datasets (`DS-01..DS-07`), 13 DOI-indexed preprints, interactive explainers, and 41 merged external OSS PRs across 34 repositories. |
 
 Private platform and product work exists behind these leaves; public claims stay
 limited to outcomes and categories, never internals.

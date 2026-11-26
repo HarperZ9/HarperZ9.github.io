@@ -111,9 +111,12 @@ export const LANDMARKS = [
 
 // After the six, the rest of the hand's places, also in a fixed order.
 export const MENU_AFTER = [
+  ["/person.html", "rope", "About"],
+  ["/architecture.html", "rope", "Architecture"],
   ["/world/universe/proto/index.html", "rope", "Map"],
   ["/publications.html", "swarm", "Writing"],
   ["/explainers.html", "sound", "Films"],
+  ["/security.html", "rope", "Security"],
   ["/hire.html", "rope", "Work"],
   ["/cv.html", "rope", "CV"],
 ];

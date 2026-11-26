@@ -57,7 +57,9 @@ html.plain .lead-piece { -webkit-mask-image: none; mask-image: none; }
 .colophon { padding: 8vh clamp(16px, 4vw, 56px) 12vh; }
 
 @media (max-width: 860px) {
-  .arrival { padding: 88px 16px 48px; min-height: 92vh; }
+  .arrival { padding: 88px 16px 20px; min-height: 98vh; gap: 6px; }
+  .arrival-doors { gap: 0 14px; }
+  .arrival-doors a { font-size: .72rem; }
   .place { min-height: auto; padding: 8vh 16px; }
   .place-in, .place:nth-child(even) .place-in { grid-template-columns: 1fr; }
   .place:nth-child(even) .lead-box { order: 0; }
@@ -76,9 +78,13 @@ html.plain .lead-piece { -webkit-mask-image: none; mask-image: none; }
 .try code{font-family:var(--mono,"Conso",ui-monospace,monospace);white-space:normal}
 .ident{display:inline-block;max-width:100%;overflow-wrap:anywhere;text-decoration:inherit}
 
-/* the arrival's one sentence: what the work is, under the name */
+/* the arrival's introduction: who I am, what connects the five platforms, and the doors in */
 .arrival-lede { position: relative; margin: 0; max-width: 34ch; font: 500 var(--fs-4)/1.35 var(--face-text); color: var(--ink); padding: 0; justify-self: start; text-wrap: pretty; text-shadow: 0 0 14px var(--halo), 0 0 4px var(--halo), 0 0 1px var(--halo), 0 0 22px var(--halo); }
-.arrival { grid-template-rows: 1fr auto auto auto; }
+.arrival-doors { position: relative; display: flex; flex-wrap: wrap; gap: 2px 18px; }
+.arrival-doors a { display: inline-flex; align-items: center; min-height: 44px; padding: 0; color: var(--ink); background: none; border: 0; text-decoration: underline dotted 1px; text-underline-offset: .3em; font: 600 var(--fs-1)/1 var(--face-utility, var(--face-text)); letter-spacing: .04em; text-transform: uppercase; text-shadow: 0 0 14px var(--halo), 0 0 4px var(--halo), 0 0 1px var(--halo), 0 0 22px var(--halo); }
+.arrival-doors a:hover { text-decoration-style: solid; text-decoration-thickness: 2px; }
+.arrival-doors a:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+.arrival { grid-template-rows: 1fr auto auto auto auto; gap: 12px; }
 
 /* the work: one row per platform, a plate beside its words; the row is the way in */
 .platforms { position: relative; z-index: 2; padding: clamp(56px, 10vh, 120px) clamp(16px, 4vw, 56px) clamp(48px, 8vh, 96px); }

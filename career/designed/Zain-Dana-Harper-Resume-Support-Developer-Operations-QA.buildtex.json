@@ -3,9 +3,9 @@
  "source": {
   "path": "career/resume-source.json",
   "document": "support-operations-qa",
-  "sha256": "93a83e51ccebd6d3137193f102add1592a2caa94b4e1f49eb5ff6573ef4ebc38"
+  "sha256": "5d9504eb8c883a83e133862b99d084b54dcd13bf4bf03a72a9fba63b73c62665"
  },
- "ir_sha256": "864a1eca6748c635c1cccf280195736c2952b948b8b590994e989940c0a32dfd",
+ "ir_sha256": "afdae14ad710930cb384e18af1e5137929f5d17c955e2b63a2eaa37f1f2078a0",
  "theme": "press-resume",
  "overrides": [
   "base.size=10.0",
@@ -13,7 +13,7 @@
   "emboss.deboss_finish=inked"
  ],
  "outputs": {
-  "Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.pdf": "c7265838ff4393084535e22a1ae5c173474437ffe86da1a4cb2ae864cae524b4"
+  "Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.pdf": "688eb0a46efe14bfe8299d6cae3012386b4e09e6aa28523abc1d9aa44aa284b9"
  },
  "pdf_metadata": {
   "pdfa": false,
@@ -33,7 +33,7 @@
     "embedded": true
    },
    {
-    "name": "EBEDCN+HankenGrotesk-Regular",
+    "name": "DDAJLB+HankenGrotesk-Regular",
     "embedded": true
    },
    {
@@ -49,7 +49,7 @@
   "blind_text_runs": 0,
   "reading_order": true,
   "blocks_missing_from_text": [],
-  "pdf_bytes": 226407
+  "pdf_bytes": 226335
  },
  "failed": [],
  "notes": [

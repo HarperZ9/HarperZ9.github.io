@@ -1,0 +1,17 @@
+Cover letter: Graphics, rendering, and systems engineering
+
+Zain Dana Harper | Kent, Washington | harperz9.github.io/cv.html | github.com/HarperZ9
+
+Dear hiring team,
+
+Static screenshots hide temporal bugs the moment a camera moves. In my live DirectX 12 graphics replacement pipeline for Skyrim SE (RAW), I built an automated moving-camera audit across 384 live 1920x1080 frames and drove all four canonical scenes to 96 of 96 passing visual and temporal heuristics (19 GPU compute solvers averaging 1.57 ms combined on an RTX 4090, 0 D3D12 debug errors, and 522 of 522 runtime tests passing). My earlier Skyrim lighting preset, Elder ENB, has 1,004,693 downloads and 2,418 endorsements on Nexus Mods.
+
+That reference-checked habit runs through my C++23 multi-backend engine (Superframe 0.3.0) and Rust-built systems compiler (BuildLang 1.15.0 on crates.io). Superframe pairs a CPU reference with D3D12, Vulkan 1.3, and WebGPU backends (60 of 60 MSVC/GCC tests, byte-identical default renders across four builds, 600 Vulkan frames matching D3D12 WARP hash for hash), alongside spectral procedural material and 64v/126t flora meshlet generation, an SI rigid-body PGS/Coulomb physics solver (30,670 steps/s), native CLAP/VST3 physical-model audio instruments, and Calibrate Pro (884 tests, USB colorimeters, HDR10+/Dolby Vision). BuildLang compiles capability-checked code to C, HLSL/GLSL, experimental WebAssembly, and standalone x86-64 executables with 147 of 147 reproducible build hashes and BDB v2 embedded SQL (2.89 MB paging, 0 of 500 silent fuzz corruptions).
+
+Maintainers of 34 external open-source projects have merged 41 of my pull requests, counted November 14, 2026, including python-grimp/grimp (#303 to #305), Biome (#11518), TOMLKit (#549), and skyrim-community-shaders (#2663). I bring about thirteen years of programming and eleven years of commercial field operations.
+
+On your team I would welcome walking through my shader passes, compiler IR, or C++ engine code directly in a technical review.
+
+Zain Dana Harper
+
+Written November 25, 2026. Figures and their sources: harperz9.github.io/career/source-ledger.md
