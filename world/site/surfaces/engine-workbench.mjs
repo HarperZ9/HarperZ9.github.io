@@ -23,7 +23,9 @@ export function initWorkbench(root = document) {
   const stageLink = wb.querySelector('#wb-stage-open');
   const stageBody = wb.querySelector('#wb-stage-body');
   const stageClose = wb.querySelector('#wb-stage-close');
+  const stageSend = wb.querySelector('#wb-stage-send');
   let activeDisc = 'all';
+  let currentStage = { title: '', target: '' };
 
   const applyFilter = () => {
     const q = (filterInput?.value || '').trim().toLowerCase();
@@ -77,9 +79,14 @@ export function initWorkbench(root = document) {
     stageBody.innerHTML = '';
   };
   stageClose?.addEventListener('click', closeStage);
+  stageSend?.addEventListener('click', async () => {
+    if (!window.__studioCanvas && window.__openUnifiedStudio) await window.__openUnifiedStudio();
+    window.__studioCanvas?.receiveEngine(currentStage);
+  });
 
   const launchInline = (title, src) => {
     if (!stage || !stageBody) return;
+    currentStage = { title, target: src };
     stage.hidden = false;
     const embedSrc = src + (src.includes('?') ? '&' : '?') + 'embed=1';
     if (stageTitle) stageTitle.textContent = `Live stage: ${title}`;

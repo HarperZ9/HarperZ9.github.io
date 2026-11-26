@@ -1,0 +1,62 @@
+/* studio-compositor.css: Unified Live Multimedia Studio (#studio-canvas-shell).
+   Open Ocean + Measured Drafting Sheet: crisp hairline rules, zero SaaS cards,
+   Hanken Grotesk + Conso, 44px touch targets, day/night AA contrast, reduced-motion safe. */
+.sc-shell { border-top: 1.5px solid var(--line, rgba(244, 239, 230, .42)); padding-top: 18px; margin: 18px 0 32px; }
+.sc-head { display: grid; gap: 6px; margin-bottom: 14px; }
+.sc-head h2 { margin: 0; font-size: clamp(1.25rem, 2.2vw, 1.65rem); }
+.sc-sub { margin: 0; font-size: .92em; color: var(--soft); max-width: 72ch; }
+.sc-grid { display: grid; grid-template-columns: minmax(250px, 300px) minmax(0, 1fr); gap: 16px 24px; align-items: start; }
+.sc-rail { border-top: 1px solid var(--line, rgba(244, 239, 230, .32)); padding-top: 8px; min-width: 0; }
+.sc-rail-head { display: grid; gap: 6px; padding-bottom: 8px; border-bottom: 1px solid var(--line, rgba(244, 239, 230, .25)); }
+.sc-kicker { font: 600 .76rem/1.2 var(--face-utility, monospace); letter-spacing: .1em; text-transform: uppercase; color: var(--soft); }
+.sc-type-in { display: grid; gap: 2px; font-size: .82em; color: var(--soft); }
+.sc-type-in input { width: 100%; min-height: 44px; padding: 4px 2px; border: 0; border-bottom: 1.5px solid currentColor; background: transparent; color: var(--ink, #f4efe6); font: 700 .95rem/1.2 var(--face-display, inherit); letter-spacing: .04em; }
+.sc-layers { list-style: none; margin: 0; padding: 0; }
+.sc-layer { padding: 6px 0; border-bottom: 1px solid var(--line, rgba(244, 239, 230, .22)); display: grid; gap: 4px; }
+.sc-layer-top { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 4px 10px; align-items: center; }
+.sc-lname { font: 700 .88rem/1.25 var(--face-text, inherit); min-width: 0; overflow-wrap: anywhere; }
+.sc-route { grid-column: 2; font: 500 .74rem/1.2 var(--face-utility, monospace); color: var(--soft); }
+.sx .sc-eye { min-width: 48px; min-height: 44px; padding: 0 8px; font: 700 .78rem/1 var(--face-utility, monospace); text-transform: uppercase; border: 1px solid var(--line, rgba(244, 239, 230, .45)); }
+.sx .sc-eye[aria-pressed="true"] { background: rgba(244, 239, 230, .14); border-color: currentColor; }
+.sc-layer-ctrl { display: grid; grid-template-columns: minmax(0, 1fr) 108px; gap: 8px 10px; align-items: end; }
+.sc-op, .sc-bl { display: grid; gap: 3px; font-size: .78rem; color: var(--soft); min-width: 0; }
+.sc-op input[type="range"] { width: 100%; min-height: 36px; accent-color: #d79e35; margin: 0; }
+.sc-bl select, .sc-scale select { width: 100%; min-height: 44px; padding: 4px 6px; font: 600 .82rem/1.2 var(--face-utility, monospace); color: #f4efe6; background: #102130; border: 1px solid var(--line, rgba(244, 239, 230, .42)); }
+.sc-stage-col { display: grid; gap: 10px; min-width: 0; }
+.sc-toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 14px; padding: 6px 0 10px; border-top: 1px solid var(--line, rgba(244, 239, 230, .32)); border-bottom: 1px solid var(--line, rgba(244, 239, 230, .24)); }
+.sc-hops { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; font: 600 .78rem/1.2 var(--face-utility, monospace); }
+.sc-hop { padding: 2px 6px; border-bottom: 1.5px solid #d79e35; }
+.sc-arrow { opacity: .6; }
+.sc-exports { display: flex; flex-wrap: wrap; gap: 6px; }
+.sx .sc-exports button { min-height: 44px; padding: 4px 10px; font: 600 .8rem/1.1 var(--face-utility, monospace); }
+.sc-canvas-wrap { position: relative; border: 1px solid var(--line, rgba(244, 239, 230, .38)); background: #091521; overflow: hidden; }
+.sc-canvas { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; cursor: crosshair; touch-action: none; }
+.sc-hud { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 14px; padding: 6px 10px; border-top: 1px solid rgba(244, 239, 230, .18); font: 500 .78rem/1.3 var(--face-utility, monospace); color: #d8d2c6; background: rgba(9, 21, 33, .92); }
+.sc-status { margin: 0; font: 500 .86rem/1.4 var(--face-utility, monospace); color: var(--soft); min-height: 1.5em; }
+.sc-daw { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--line, rgba(244, 239, 230, .32)); display: grid; gap: 12px; }
+.sc-daw-top { display: flex; flex-wrap: wrap; align-items: end; gap: 10px 16px; }
+.sx .sc-play { min-height: 44px; min-width: 112px; padding: 6px 14px; font: 700 .88rem/1 var(--face-text, inherit); border: 1.5px solid currentColor; }
+.sx .sc-play[aria-pressed="true"] { background: #d79e35; color: #091521; border-color: #d79e35; }
+.sc-scale { display: grid; gap: 3px; font-size: .78rem; color: var(--soft); min-width: 118px; }
+.sc-meter { display: flex; align-items: flex-end; gap: 3px; height: 40px; padding: 4px 6px; border: 1px solid var(--line, rgba(244, 239, 230, .28)); }
+.sc-meter i { display: block; width: 6px; height: 30px; background: #d79e35; transform-origin: bottom; transform: scaleY(.2); }
+.sc-knobs { flex: 1 1 360px; display: grid; grid-template-columns: repeat(auto-fit, minmax(112px, 1fr)); gap: 6px 14px; }
+.sc-knob { display: grid; gap: 2px; font-size: .76rem; color: var(--soft); min-width: 0; }
+.sc-knob input[type="range"] { width: 100%; min-height: 32px; accent-color: #d79e35; margin: 0; }
+.sc-seq { display: grid; gap: 6px; padding-top: 8px; border-top: 1px solid var(--line, rgba(244, 239, 230, .2)); }
+.sc-seq-row { display: grid; grid-template-columns: 54px minmax(0, 1fr); gap: 8px; align-items: center; }
+.sc-seq-lbl { font: 600 .78rem/1 var(--face-utility, monospace); color: var(--soft); }
+.sc-seq-steps { display: grid; grid-template-columns: repeat(16, minmax(0, 1fr)); gap: 4px; }
+.sx .sc-step { min-height: 44px; min-width: 0; padding: 0; border: 1px solid var(--line, rgba(244, 239, 230, .28)); background: transparent; }
+.sx .sc-step.is-on { background: rgba(215, 158, 53, .72); border-color: #d79e35; }
+.sx .sc-step.is-now { outline: 2px solid #f4efe6; outline-offset: -2px; }
+.sc-noscript { font-size: .92em; color: var(--soft); margin: 8px 0 0; max-width: 68ch; }
+@media (max-width: 960px) {
+  .sc-grid { grid-template-columns: 1fr; }
+  .sc-stage-col { order: -1; }
+}
+@media (max-width: 600px) {
+  .sc-seq-row { grid-template-columns: 44px minmax(0, 1fr); gap: 6px; }
+  .sc-seq-steps { grid-template-columns: repeat(8, minmax(0, 1fr)); }
+  .sc-layer-ctrl { grid-template-columns: minmax(0, 1fr) 98px; }
+}

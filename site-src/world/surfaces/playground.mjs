@@ -8,10 +8,10 @@ export default {
   file: "playground/index.html",
   title: "The Playground",
   description: "The Playground: one unified creative field combining Estuary, Native DX12/WebGPU rendering, Low Water, Superframe, Loom, Thread, Posters, Studio, Fractals, Type, Shaders, and Sound.",
-  lede: 'One unified creative field and rendering engine turning a single seed into picture, weave, line, type, volume, world, and sound across <a href="#m-exchange">the blend bench</a>, <a href="#estuary">Estuary</a>, <a href="#workbench">35 engines</a>, <a href="#native">Native RAW</a>, <a href="#low-water">Low Water</a>, and <a href="#superframe">Superframe</a>.',
-  make: 'Blend materials to drive colour, lettering, timing, pen lines, cloth, ridgelines, cubes, and glass on one shared bus, or mount any engine below directly onto this stage.',
+  lede: 'One unified live multimedia studio turning a single seed into composite layers, weave, line, type, volume, world, and sound across <a href="#studio-canvas-shell">the 5-layer studio</a>, <a href="#m-exchange">the blend bench</a>, <a href="#estuary">Estuary</a>, <a href="#workbench">35 engines</a>, <a href="#native">Native RAW</a>, and <a href="#low-water">Low Water</a>.',
+  make: 'Composite Estuary, Living Type, Retro 46 FX, Loom Jacquard, and Plotter Contours live with the docked modal DAW and SHA-256 Patchbay, or launch any of the 35 individual engines below.',
   jump: [
-    ["#m-marbled", "Marbled Bus"],
+    ["#studio-canvas-shell", "Unified Studio"],
     ["#m-exchange", "Blend Bench"],
     ["#estuary", "Estuary"],
     ["#workbench", "35 Engines"],

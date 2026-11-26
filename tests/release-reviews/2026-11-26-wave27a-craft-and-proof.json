@@ -1,10 +1,10 @@
 {
   "date": "2026-11-26",
-  "note": "Wave 27A: Open Ocean and Sheet craft elevation, seamless embedded Playground workbench stage, models.html honest-nulls evolution specimen, and Wave 25-28 proof sync",
+  "note": "Wave 27A+31A craft, proof sync, and unified 5-layer live studio with DAW and SHA-256 patchbay",
   "paths": {
-    "flywheel.html": "858a8ea16f059866f74b99abe1e598f9e781ab06b3c82bca06c0308f65029123",
-    "index.html": "e09bb0005b67a19e394364ac4a4bd5a77070733b08dcd8d52c562cee1b615cff",
-    "site-index.html": "18835f71a5aaf0d15bc2713ce4d599ab059afa7d98ea3c554903d91f0e3f9bff",
-    "system/routes.js": "83f40144ab2e3e7e32888357837205b0cd67da2f9bc93ac25d488101f9d9da87"
+    "flywheel.html": "ec614c8ba6e702bfd3f7fb92f3e85653672d072c06e4a573d7463c9cb30073ce",
+    "index.html": "08ddaed9031b6699bbaba010cc5070bef9c82a486b638045504b7b3e296f4f6e",
+    "site-index.html": "925032eeee12c0f2ac26ed4fef06cf2ce87086f7e51c8f4dc4cb2a23147882e3",
+    "system/routes.js": "dbef7273697303d059924048722429e2451de15fe7ef5e16ee9ce7a92120cf49"
   }
 }
