@@ -164,7 +164,34 @@ ${lanes.map((l) => { const list = studies.filter((s) => s.lane === l); return li
 </article>`;
   const rel = "studies/index.html";
   const description = `${studies.length} close readings of other people's work, measured and taken apart into layers, in design, research and journalism, with ${boards.length} boards.`;
-  writeFileSync(path.join(site, rel), page({ path: rel, title: "Studies", description, body: main, robots: ROBOTS }));
+  const jsonld = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        "@id": "https://harperz9.github.io/studies/#collection",
+        "name": "Studies",
+        "url": "https://harperz9.github.io/studies/",
+        "description": description,
+        "author": { "@id": "https://harperz9.github.io/#person", "@type": "Person", "name": "Zain Dana Harper" },
+        "hasPart": studies.map((s) => ({
+          "@type": "ScholarlyArticle",
+          "headline": s.title,
+          "url": `https://harperz9.github.io/${s.path}`,
+          "author": { "@id": "https://harperz9.github.io/#person", "@type": "Person", "name": "Zain Dana Harper" },
+          "about": s.lane,
+        })),
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://harperz9.github.io/" },
+          { "@type": "ListItem", "position": 2, "name": "Studies", "item": "https://harperz9.github.io/studies/" },
+        ],
+      },
+    ],
+  };
+  writeFileSync(path.join(site, rel), page({ path: rel, title: "Studies", description, body: main, robots: ROBOTS, jsonld }));
   return { path: rel, title: "Studies", description };
 }
 

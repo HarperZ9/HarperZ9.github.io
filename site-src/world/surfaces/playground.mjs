@@ -116,7 +116,7 @@ export default {
       discipline: "Sound, Music & Acoustics",
       engines: [
         { name: "Procedural Jazz Meditations", source: "site-music/", desc: "Five live coastal jazz pieces with note drag and loudness-measured WAV.", actions: [["room", "sound", "Open Sound"]] },
-        { name: "Round 2 Studio Audio & 1080p Explainer", source: "media/overhaul/", desc: "Pacific Horizon (166 BPM) & Estuary Rain (162 BPM) plus 1080p solver film.", actions: [["section", "studio-media", "Media & Cues"]] },
+        { name: "Round 3 Studio Audio (Estuary-Space) & 1080p Explainer", source: "media/overhaul/", desc: "Estuary Current (126 BPM), Atlantis Glass (172 BPM) & Coffaro Horizon (84 BPM) 36/36 Welch PASS.", actions: [["section", "studio-media", "Media & Cues"]] },
         { name: "Estuary Harmonic Metamer Synth", source: "estuary-lantern.mjs", desc: "Opt-in WebAudio harmonic voice coupled to Perret lantern apertures.", actions: [["room", "estuary", "Open Estuary"]] },
         { name: "Sound Engine, Visualizer & Ear", source: "world/sound/", desc: "STFT spectrograms, ribbon visualizers, function sequencers, and ANS voice.", actions: [["stage", "/world/sound/sound.html", "Open Sound Lab"]] },
       ],

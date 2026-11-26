@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-26",
+  "note": "Wave 32C Round 3 studio audio (36/36 Welch PASS), IndexNow instant indexing, studies/ and cmmns.html JSON-LD, mobile studio clearance",
+  "paths": {
+    "flywheel.html": "97342626c34634bfeb95c7c13f3531160d9f5c3d4eea2a07a12c94248edcf415",
+    "index.html": "88db8746b4d401fee73066aa98a4bc56a31dcad771e0b59b7d98bee2b18ecfe2",
+    "site-index.html": "e34e2a7cbb45f55d7d5d3a8e21c407cd442b52bde6e20d88567b600fbbee6fe4",
+    "system/routes.js": "a06e18028c83cfa76d17210045b388e7f9814c00f6e24ccd294abdba9ea4ef76"
+  }
+}

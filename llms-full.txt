@@ -37,7 +37,9 @@ runtime dependencies.
 - Recent verified milestones (2026-11-26): flywheel #565 added the unified
   `flywheel super-solver` pipeline (6/6 adversarial fault catch, 0 silent
   accepts); flywheel #566 added Execution-Oracle PUCT verification tree search
-  and a 34.99x RFC 6962 proof-carrying Merkle trace compressor (0 soundness loss).
+  and a 34.99x RFC 6962 proof-carrying Merkle trace compressor (0 soundness loss);
+  flywheel #568 shipped full-track 4096-pt Hann Welch PSD, spectral tilt, macro
+  DR, and <120 Hz phase verification in audio_deconstruct.py.
 
 ## Articulate
 
@@ -86,7 +88,9 @@ Brave and Firefox 128 or later, plus a command line for saved threads.
 - Recent verified milestones (2026-11-26): cmmns #130 added `cmmns provenance
   verify` for offline Web/AI provenance verification (agent-card.json, llms.txt,
   JSON-LD, prompt-injection 4/4 catches, engine-receipt/1); cmmns #131 published
-  the OSI/FSF AGPL-3.0-only funding.json manifest.
+  the OSI/FSF AGPL-3.0-only funding.json manifest; cmmns #132 shipped Schema.org
+  codemeta.json, llms.txt, CITATION.cff, REUSE SPDX metadata, and browser store
+  packaging checklists (9/9 CI pass).
 
 ## Superframe
 
@@ -113,6 +117,8 @@ Node 24 or later. The JavaScript engine has no dependencies; the instruments in
   https://github.com/HarperZ9/superframe
 - Recent verified milestones (2026-11-26): superframe #153 wired 3/3 native/bld/
   BuildLang kernels with bit-exact C++ parity and 3-way 100 Hz/Deja-VAE checks;
+  superframe #156 shipped clean-room taste synths, Estuary-Space FX rack,
+  Estuary Clock-Drift DAW, and Round 3 studio audio (36/36 Welch PSD pass);
   RAW DX12 Waves 74-80 pass 96/96 live moving-camera Skyrim SE checks (38/38 DXC,
   21/21 RTX 4090 GPU bench, 0 D3D12 errors).
 

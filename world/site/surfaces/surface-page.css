@@ -41,7 +41,7 @@ article.sx-marbled-active { display: grid; grid-template-columns: repeat(auto-fi
 article.sx-marbled-active > :not(.rm) { grid-column: 1 / -1; }
 article.sx-marbled-active .sx.rm { margin: 0; padding-top: 14px; border-top: 1px solid var(--line, rgba(244, 239, 230, .2)); }
 .sx { scroll-margin-top: calc(clamp(10px, 2vw, 24px) + 90px); }
-@media (max-width: 860px) { .sx { scroll-margin-top: calc(max(6px, env(safe-area-inset-top, 0px)) + 90px); } }
+@media (max-width: 860px) { .sx { scroll-margin-top: calc(max(6px, env(safe-area-inset-top, 0px)) + 90px); } #studio-canvas-shell { scroll-margin-top: calc(max(12px, env(safe-area-inset-top, 0px)) + 112px); } }
 .rm-still { margin: 1rem 0; }
 .rm-still svg { display: block; width: 100%; height: auto; max-height: 9rem; }
 .sx .rm-host:focus, .sx .rm-host:focus-visible { outline: none; box-shadow: none; }

@@ -64,7 +64,7 @@ ${labelFor("cmmns-try")}
 <script type="module" src="/world/site/commons-try.js"></script>
 
 <h2 id="provenance">Web &amp; AI provenance verifier (CLI)</h2>
-<p>On main via <a href="${repo}/pull/130">cmmns #130</a> (commit <code>bb63366e</code>), the CLI verifies any static site or local build folder offline for <code>.well-known/agent-card.json</code>, <code>llms.txt</code>, canonical JSON-LD consistency, hidden prompt-injection lures (4/4 adversarial catches), and <code>engine-receipt/1</code> chains. Live OSI/FSF AGPL-3.0-only <a href="https://raw.githubusercontent.com/HarperZ9/cmmns/main/funding.json">funding.json</a> manifest shipped in <a href="${repo}/pull/131">cmmns #131</a>.</p>
+<p>On main via <a href="${repo}/pull/130">cmmns #130</a> (commit <code>bb63366e</code>), the CLI verifies any static site or local build folder offline for <code>.well-known/agent-card.json</code>, <code>llms.txt</code>, canonical JSON-LD consistency, hidden prompt-injection lures (4/4 adversarial catches), and <code>engine-receipt/1</code> chains. Live OSI/FSF AGPL-3.0-only <a href="https://raw.githubusercontent.com/HarperZ9/cmmns/main/funding.json">funding.json</a> shipped in <a href="${repo}/pull/131">cmmns #131</a>, and Schema.org <code>codemeta.json</code>, <code>llms.txt</code>, <code>CITATION.cff</code>, REUSE SPDX metadata, and store packaging checklists shipped in <a href="${repo}/pull/132">cmmns #132</a> (commit <code>62cf5cf</code>, 9/9 CI pass).</p>
 <pre class="cmd" tabindex="0" aria-label="Provenance verify command"><code>cmmns provenance verify ./site --origin https://harperz9.github.io --json</code></pre>
 
 <h2 id="install">Install</h2>

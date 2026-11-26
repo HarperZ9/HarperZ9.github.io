@@ -298,6 +298,19 @@ def page_graph(page: dict, ctx: Context) -> tuple[list[dict], list[str]]:
             },
             breadcrumb([("Home", f"{ORIGIN}/"), ("Local Frontier Model Lab", url)]),
         ], []
+    if url == f"{ORIGIN}/cmmns.html":
+        cmmns_src = {
+            "@type": "SoftwareSourceCode",
+            "@id": f"{url}#software",
+            "name": "CMMNS",
+            "description": page["description"] or "Local-first browser extension and offline Web/AI provenance verification CLI (AGPL-3.0-only).",
+            "url": url,
+            "codeRepository": "https://github.com/HarperZ9/cmmns",
+            "license": "https://www.gnu.org/licenses/agpl-3.0.html",
+            "programmingLanguage": ["JavaScript", "TypeScript"],
+            "author": author_ref(),
+        }
+        return [cmmns_src, breadcrumb([("Home", f"{ORIGIN}/"), ("Catalog", f"{ORIGIN}/catalog.html"), ("CMMNS", url)])], []
     if url == f"{ORIGIN}/publications.html":
         return [{"@type": "CollectionPage", "@id": f"{url}#collection", "name": page["headline"], "url": url,
                  "description": page["description"], "author": author_ref(),

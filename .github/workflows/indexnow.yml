@@ -1,0 +1,53 @@
+name: IndexNow Instant Indexing
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  ping-indexnow:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - name: Wait briefly for GitHub Pages propagation
+        run: sleep 45
+      - name: Submit canonical flagship URLs to IndexNow
+        run: |
+          KEY="fa671776179afed6ba63debaa182c2ea"
+          PAYLOAD=$(cat <<'JSON'
+          {
+            "host": "harperz9.github.io",
+            "key": "fa671776179afed6ba63debaa182c2ea",
+            "keyLocation": "https://harperz9.github.io/fa671776179afed6ba63debaa182c2ea.txt",
+            "urlList": [
+              "https://harperz9.github.io/",
+              "https://harperz9.github.io/playground/",
+              "https://harperz9.github.io/models.html",
+              "https://harperz9.github.io/buildlang.html",
+              "https://harperz9.github.io/flywheel.html",
+              "https://harperz9.github.io/cmmns.html",
+              "https://harperz9.github.io/tools.html",
+              "https://harperz9.github.io/security.html",
+              "https://harperz9.github.io/architecture.html",
+              "https://harperz9.github.io/publications.html",
+              "https://harperz9.github.io/studies/",
+              "https://harperz9.github.io/person.html",
+              "https://harperz9.github.io/llms.txt",
+              "https://harperz9.github.io/llms-full.txt"
+            ]
+          }
+          JSON
+          )
+          STATUS=$(curl -sS -o /tmp/indexnow.out -w "%{http_code}" \
+            -X POST "https://api.indexnow.org/indexnow" \
+            -H "Content-Type: application/json; charset=utf-8" \
+            -d "$PAYLOAD" || echo "000")
+          echo "IndexNow HTTP status: $STATUS"
+          cat /tmp/indexnow.out || true
+          if [ "$STATUS" != "200" ] && [ "$STATUS" != "202" ]; then
+            echo "::warning::IndexNow returned HTTP $STATUS (non-fatal)"
+          fi
