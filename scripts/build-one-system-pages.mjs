@@ -20,7 +20,7 @@ import { esc } from "./studies-markdown.mjs";
 const site = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const read = (rel) => readFileSync(path.join(site, rel), "utf8");
 const readOrigin = (rel) => {
-  try { return execFileSync("git", ["show", `HEAD:${rel}`], { cwd: site, encoding: "utf8", maxBuffer: 16 * 1024 * 1024 }); }
+  try { return execFileSync("git", ["show", `origin/main:${rel}`], { cwd: site, encoding: "utf8", stdio: ["ignore", "pipe", "ignore"], maxBuffer: 16 * 1024 * 1024 }); }
   catch { return read(rel); }
 };
 const readJson = (rel) => JSON.parse(read(rel));
@@ -31,25 +31,9 @@ function assertHygiene(file, html) {
   if (/zentropy/i.test(html)) throw new Error(`${file}: retired name detected`);
 }
 
-function preserveSocialCards(rel, html) {
-  const old = readOrigin(rel);
-  const grab = (re) => old.match(re)?.[0] || "";
-  const ogImg = grab(/<meta property="og:image" content="[^"]+">/);
-  const ogAlt = grab(/<meta property="og:image:alt" content="[^"]+">/);
-  const twImg = grab(/<meta name="twitter:image" content="[^"]+">/);
-  const twAlt = grab(/<meta name="twitter:image:alt" content="[^"]+">/);
-  if (!ogImg) return html;
-  const block = [ogImg, '<meta property="og:image:width" content="1200">', '<meta property="og:image:height" content="630">', ogAlt].filter(Boolean).join("\n");
-  const twBlock = ['<meta name="twitter:card" content="summary_large_image">', twImg, twAlt].filter(Boolean).join("\n");
-  return html
-    .replace(/<meta property="og:image" content="[^"]+">/, block)
-    .replace(/<meta name="twitter:card" content="summary_large_image">/, twBlock);
-}
-
 function writeChecked(rel, html) {
-  const finalHtml = preserveSocialCards(rel, html);
-  assertHygiene(rel, finalHtml);
-  writeFileSync(path.join(site, rel), finalHtml);
+  assertHygiene(rel, html);
+  writeFileSync(path.join(site, rel), html);
   console.log(`one-system: wrote ${rel}`);
 }
 
@@ -292,6 +276,10 @@ function buildPerson() {
     <li><span class="ds-term">Respect for human attention</span><span class="ds-gloss">Software should return people to their lives calmer and more capable, never trap them with synthetic urgency or clutter.</span></li>
   </ul>
   <p style="margin-top:20px">Explore <a href="/architecture.html">Platform Architecture</a>, download resumes on <a href="/hire.html">Hire</a> or the <a href="/cv.html">Full CV</a>, browse all <a href="/tools.html">159 Public Repositories</a>, watch talks and demos on <a href="https://www.youtube.com/@zaindanaharper">YouTube</a>, or read the <a href="/current-story.html">Current Story</a>.</p>
+  <figure class="plate" style="margin:28px 0 0">
+    <canvas data-specimen="person-plate-01" data-specimen-layers="moire-swirl" aria-hidden="true" style="display:block;width:100%;height:260px;border:1px solid var(--line)"></canvas>
+    <figcaption class="ds-meta" style="margin-top:8px"><span class="plate-no">Plate 01</span><span class="plate-caption">Crescent meshes spiraling toward a warm core: a closing mark from the same engine as everything else here.</span></figcaption>
+  </figure>
 </section>
 
 ${provenance("person.html", "2026-11-26", "Direct-voice biography & craft")}
@@ -303,6 +291,7 @@ ${provenance("person.html", "2026-11-26", "Direct-voice biography & craft")}
     description: "The personal story behind the work: eleven years of arboriculture rigging, thirteen years of programming, and five open-source platforms.",
     body,
     bodyClass: "reading ds-sheet",
+    extraHead: '<script type="module" src="/system/generative-field.js?v=20260925-void-plates"></script>',
     backdrop: false,
   });
   writeChecked("person.html", html);
@@ -366,10 +355,13 @@ function buildFlywheel() {
     .replace(/href="superframe\.html"/g, 'href="/playground/#superframe"')
     .replace(/href="estuary\.html"/g, 'href="/playground/#estuary"');
 
-  const scopedStyle = `<link rel="stylesheet" href="/world/site/landmark.css">
+  const scopedStyle = `<link rel="preload" href="/world/ui/shell/pointer/theflywheel-pressed.png" as="image">
+<link rel="stylesheet" href="/world/site/landmark.css">
 <link rel="stylesheet" href="/system/notebook-sheet.css?v=20260925-void-sheets">
 <script type="module" src="/world/site/home-field.js"></script>
 <style>
+  .fw-ocean .lp-rel, .fw-ocean .lp-run { max-width: 100%; overflow-wrap: anywhere; }
+  .fw-ocean .lp-rel code, .fw-ocean .lp-run code { overflow-wrap: anywhere; word-break: break-word; }
   .fw-ocean section.mv { margin: clamp(32px, 5vw, 60px) 0 0; padding: 24px 0 0; border-top: 1px solid var(--line); }
   .fw-ocean section.mv#demo { border-top: 0; padding-top: 0; }
   .fw-ocean .fw-hero { display: grid; gap: 24px 36px; align-items: start; }

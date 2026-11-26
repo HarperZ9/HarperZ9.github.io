@@ -71,9 +71,9 @@
       "sha256": "fdf3045e8e0b6bc4e7b46033bf6d5926dfbb3fb9cde69bba189b254db3c736c2"
     },
     {
-      "byte_length": 19021,
+      "byte_length": 19031,
       "path": "hire.html",
-      "sha256": "76d165daca688e35f408449c56e6b2306cb66eb7f15e1a5ce1ea56d1c0ac01c9"
+      "sha256": "6a8436dbd2ef90edee7e11eb3389e9d2fbbed30e324489ac7dc1f862e28da121"
     },
     {
       "byte_length": 46042,
@@ -116,7 +116,7 @@
       "sha256": "892e5c5c45b86122964309704ac2f5a06fdf09f86a3f46b5a6660a5ef1571547"
     }
   ],
-  "renderer_sha256": "24cde4f51a5dbb2034f97c9e97d1b7bb58892731802741f3575632025f148c66",
+  "renderer_sha256": "409e2df0975542d0418c867781163012eea1e52e29bc8d78e43ba6a0c64cd3ce",
   "reviewed": "2026-11-25",
   "schema": "harperz9-career-text-build/v1",
   "source": {

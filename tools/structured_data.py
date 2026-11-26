@@ -37,6 +37,17 @@ SAME_AS = [
     # Checked 2026-10-23: YouTube oEmbed names this channel as the author of the
     # two videos the site's records cite (IeFOvDYrPCI, K_i9W6xCwKc).
     "https://www.youtube.com/@zaindanaharper",
+    "https://crates.io/crates/buildlang",
+    "https://pypi.org/project/flywheel-verify/",
+]
+KNOWS_ABOUT = [
+    "Deterministic compilers and typed capability effect systems",
+    "AI evaluation, verification harnesses, and planted-fault oracles",
+    "Local GPU reinforcement learning and Reverse-KL distillation",
+    "DirectX 12, Vulkan, and WebGPU rendering engines",
+    "Spectral optics and multi-medium generative instruments",
+    "Civic provenance and local-first browser verification",
+    "Commercial arboriculture rigging and field science",
 ]
 BEGIN = "<!-- structured-data:begin (tools/structured_data.py) -->"
 END = "<!-- structured-data:end -->"
@@ -144,7 +155,15 @@ def author_ref() -> dict:
 
 
 def person_node() -> dict:
-    return {"@type": "Person", "@id": PERSON_ID, "name": "Zain Dana Harper", "url": f"{ORIGIN}/", "sameAs": SAME_AS}
+    return {
+        "@type": "Person",
+        "@id": PERSON_ID,
+        "name": "Zain Dana Harper",
+        "jobTitle": "Independent Systems Engineer, Compiler & AI Verification Toolmaker",
+        "url": f"{ORIGIN}/",
+        "sameAs": SAME_AS,
+        "knowsAbout": KNOWS_ABOUT,
+    }
 
 
 def breadcrumb(trail: list[tuple[str, str]]) -> dict:
@@ -225,6 +244,50 @@ def page_graph(page: dict, ctx: Context) -> tuple[list[dict], list[str]]:
     if url == f"{ORIGIN}/person.html":
         return [person_node(), {"@type": "ProfilePage", "url": url, "name": page["headline"],
                                 "mainEntity": {"@id": PERSON_ID}}], []
+    if url == f"{ORIGIN}/tools.html":
+        return [
+            person_node(),
+            {
+                "@type": "CollectionPage",
+                "@id": f"{url}#collection",
+                "name": page["headline"],
+                "url": url,
+                "description": page["description"],
+                "author": author_ref(),
+            },
+            {
+                "@type": "Dataset",
+                "@id": f"{url}#public-repos",
+                "name": "HarperZ9 Complete Public Repository Catalog (159 Public Repositories)",
+                "description": "Machine-readable JSON inventory of all 159 public repositories and 7 fail-closed SHA256SUMS installers published under HarperZ9.",
+                "url": f"{ORIGIN}/assets/data/unified/all_public_repos_catalog.json",
+                "creator": author_ref(),
+                "isAccessibleForFree": True,
+            },
+            breadcrumb([("Home", f"{ORIGIN}/"), ("Tools & Repositories", url)]),
+        ], []
+    if url == f"{ORIGIN}/models.html":
+        return [
+            person_node(),
+            {
+                "@type": "CollectionPage",
+                "@id": f"{url}#models",
+                "name": page["headline"],
+                "url": url,
+                "description": page["description"],
+                "author": author_ref(),
+            },
+            {
+                "@type": "Dataset",
+                "@id": f"{url}#datasets",
+                "name": "Verifiable Open Datasets DS-01 through DS-07",
+                "description": "Seven open verifiable datasets and 30 empirical studies (12 published nulls) anchoring local frontier model evaluation.",
+                "url": f"{ORIGIN}/architecture.html#datasets",
+                "creator": author_ref(),
+                "isAccessibleForFree": True,
+            },
+            breadcrumb([("Home", f"{ORIGIN}/"), ("Local Frontier Model Lab", url)]),
+        ], []
     if url == f"{ORIGIN}/publications.html":
         return [{"@type": "CollectionPage", "@id": f"{url}#collection", "name": page["headline"], "url": url,
                  "description": page["description"], "author": author_ref(),

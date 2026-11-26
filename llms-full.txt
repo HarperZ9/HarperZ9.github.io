@@ -228,9 +228,43 @@ Version 0.1.2. Licence AGPL-3.0-only. Python 3.11 or newer, standard library onl
   Its video check fails engagement bait.
 - Links: https://github.com/HarperZ9/flywheel/tree/main/packages/discover
 
-## Author
+## Author & Full Ecosystem Update (2026-11-26)
 
-Zain Dana Harper. Site https://harperz9.github.io/ , GitHub
-https://github.com/HarperZ9 , ORCID https://orcid.org/0009-0001-7175-5393 ,
-YouTube https://www.youtube.com/@zaindanaharper . Papers carry Zenodo DOIs,
-listed in https://harperz9.github.io/llms.txt .
+Zain Dana Harper (Kent, Washington): eleven years of commercial arboriculture
+rigging and about thirteen years of self-directed programming across compilers,
+graphics, AI verification, and civic provenance. 41 merged upstream open-source
+pull requests across 34 repositories; 1,004,693 Elder ENB downloads; 159 public
+repositories under HarperZ9 (0 private exposed).
+
+- **BuildLang (Super Accelerator):** 12 compilation targets (C, HLSL, GLSL,
+  WGSL, Metal, SPIR-V, x86-64, RISC-V, WebAssembly, native), V5 superoptimizer,
+  Universal Hourglass IR lowering, 1.18M-record self-verifying corpus engine,
+  BuildDB (BDB) checksummed SQL, and BuildTeX PDF typesetting.
+  https://harperz9.github.io/buildlang.html
+- **The Flywheel (Super Solver):** 31 consolidated packages behind cryptographic
+  offline receipts, Rowan local/sub/API orchestration, Three-Plate Verification
+  Oracle (115/115 defect recall, 0 false accepts), EMET byte-integrity,
+  Articulate deterministic prose linting, and local frontier models
+  (JFC3P-7B-Oracle, NOH-4, Plato-Key, AVTR-4R, FRESCO/MoLT).
+  https://harperz9.github.io/flywheel.html , https://harperz9.github.io/models.html
+- **The Playground (Unified Creative Field):** Estuary continuous Perret-lantern
+  metamers, 35 creative engines across 7 disciplines (Loom, Thread, Posters,
+  Plotter, Studio, 2D/3D/Deep Fractals, Splats, Shaders + 254 presets + Retro
+  46 FX, Type Forge, Fourier, Sound), Native RAW DX12/Vulkan/WebGPU (96/96 live
+  Skyrim SE moving-camera pass), Low Water walkable 3D island, and Superframe
+  core. https://harperz9.github.io/playground/index.html
+- **The Commons (CMMNS):** Local-first browser extension surfacing source
+  provenance, coordination cues, C2PA credentials, and fact-checks across 9
+  social platforms. https://harperz9.github.io/cmmns.html
+- **Installers, Career Suite v2 & 159 Public Repos:** 7 fail-closed SHA256SUMS
+  one-command user-space installers, 66 BuildTeX career/v2 files, and full
+  searchable inventory at https://harperz9.github.io/tools.html .
+- **Hiring & Collaboration:** https://harperz9.github.io/hire.html ,
+  https://harperz9.github.io/cv.html , https://harperz9.github.io/person.html ,
+  https://harperz9.github.io/work-with-me.html .
+- **Discovery & Profiles:** Site https://harperz9.github.io/ , Agent Card
+  https://harperz9.github.io/.well-known/agent-card.json , GitHub
+  https://github.com/HarperZ9 , ORCID https://orcid.org/0009-0001-7175-5393 ,
+  YouTube https://www.youtube.com/@zaindanaharper , crates.io
+  https://crates.io/crates/buildlang , PyPI https://pypi.org/project/flywheel-verify/ .
+  Papers carry Zenodo DOIs, listed in https://harperz9.github.io/llms.txt .

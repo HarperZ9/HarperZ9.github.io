@@ -148,7 +148,7 @@ export const SURFACES = Object.freeze({
   // The field: light, flow, measurement, shape, voice, territory and circuitry as properties any element carries at a weight,
   // in one scene (world-field.mjs, built in superframe packages/world from the rooms, medium, CAD and instrument cores).
   field: S('field', 'The field', ['world/site', 'world/superframe'], ['field', 'physics', 'simulation', 'geometry', 'render'], ['palette'], ['numbers', 'image'], './room-field.mjs', { table: false, room: 'field' }),
-  estuary: S('estuary', 'Estuary lantern', ['world/site'], ['blend', 'field', 'physics', 'sound', 'geometry', 'render'], ['elements', 'blend', 'palette', 'field', 'numbers', 'score'], ['field', 'palette', 'score', 'numbers', 'json'], './room-estuary.mjs', { plain: '/playground/#estuary', table: false, room: 'estuary' }),
+  estuary: S('estuary', 'Estuary lantern', ['world/site'], ['blend', 'field', 'physics', 'sound', 'geometry', 'render'], ['elements', 'blend', 'palette', 'field', 'numbers', 'score'], ['field', 'palette', 'score', 'numbers', 'json'], './room-estuary.mjs', { plain: '/playground/', table: false, room: 'estuary' }),
 });
 
 const live = new Set();
