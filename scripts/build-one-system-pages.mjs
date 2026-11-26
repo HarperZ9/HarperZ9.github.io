@@ -370,7 +370,8 @@ function buildSecurity() {
   const old = readOrigin("security.html");
   // Extract the verified sections (#map, #hierarchy, #advisories, #private-systems, #authorization, #data) cleanly
   // while keeping exact <div class="index-row" role="listitem"> markup expected by advisory tests.
-  const headEnd = old.indexOf("</header>");
+  const sheetHead = old.indexOf('<header class="ds-sheet-head">');
+  const headEnd = sheetHead >= 0 ? old.indexOf("</header>", sheetHead) : -1;
   const provIdx = old.indexOf('<footer class="ds-prov"');
   let inner;
   if (headEnd >= 0 && provIdx > headEnd) {
