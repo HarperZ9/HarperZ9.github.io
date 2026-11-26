@@ -110,15 +110,15 @@
           "Open The Playground"
         ],
         [
-          "/raw.html",
+          "/playground/#native",
           "Native renderer"
         ],
         [
-          "/estuary.html",
+          "/playground/#estuary",
           "Estuary Lantern"
         ],
         [
-          "/low-water.html",
+          "/playground/#low-water",
           "Low Water"
         ],
         [
@@ -543,7 +543,7 @@
   "workflows": [
     {
       "id": "WF-01",
-      "name": "Capture → Deconstruct → Distill → Re-Synthesize (Universal Multimedia Loop)",
+      "name": "Capture â†’ Deconstruct â†’ Distill â†’ Re-Synthesize (Universal Multimedia Loop)",
       "hue": "thecmmns",
       "platformLabel": "THE CMMNS + PLAYGRND",
       "chain": "cmmns (daylight.sidecar/1 + commons-digest/1) -> gather/deconstruct (audio, video, image, paper) -> superframe/distill + build-color + ear + daw -> buildlang kcore_fast.bld -> flywheel engine-receipt/1",
@@ -552,7 +552,7 @@
     },
     {
       "id": "WF-02",
-      "name": "Music & Audio Download → Stems, Layers, Mastering → Remix & Remaster",
+      "name": "Music & Audio Download â†’ Stems, Layers, Mastering â†’ Remix & Remaster",
       "hue": "theplygrnd",
       "platformLabel": "THE PLAYGRND DAW",
       "chain": "cmmns audio capture -> gather/deconstruct/audio_deconstruct.py (6 spectral bands, LUFS/true-peak/crest, 4-layer M/S/Low/High + neural stems) -> superframe/packages/{ear,remastering,daw} -> kcore_fast.bld -> engine-receipt/1",
@@ -561,7 +561,7 @@
     },
     {
       "id": "WF-03",
-      "name": "Whitepaper & Research → Equations & Claims → Three-Plate Oracle → Study & Train",
+      "name": "Whitepaper & Research â†’ Equations & Claims â†’ Three-Plate Oracle â†’ Study & Train",
       "hue": "rsrch",
       "platformLabel": "RSRCH + FLYWHEEL",
       "chain": "cmmns + gather/deconstruct/paper_deconstruct.py (sections, LaTeX equations, DOIs, FORMULAS.tsv match) -> crucible + three_plate_oracle.py (MATCH/DRIFT/UNVERIFIABLE) -> mneme + DS-07 recall (2 ms) + learn -> JFC-3P local 14B eval (16.67% -> 70.83%, p=0.000244)",
@@ -570,7 +570,7 @@
     },
     {
       "id": "WF-04",
-      "name": "Video, 3D & Shader Pipeline → Motion Laws → Real-Time Engine & Playtest",
+      "name": "Video, 3D & Shader Pipeline â†’ Motion Laws â†’ Real-Time Engine & Playtest",
       "hue": "theplygrnd",
       "platformLabel": "THE PLAYGRND + RAW",
       "chain": "cmmns + gather/video_media_deconstruct.py (keyframes, scene cuts, 9 Motion Laws) -> superframe/native (8-file modular style.wgsl, lenspipe, crt, build-color) + RAW DX12 Wave 70 (96/96 live moving-camera pass across 4 scenes) -> buildlang HLSL/GLSL/C + kcore_fast -> engine-receipt/1",
@@ -579,7 +579,7 @@
     },
     {
       "id": "WF-05",
-      "name": "CAD, Optics, Physics, Nuclear, Robotics & Neuro → BuildLang Kernels → Verified Instruments",
+      "name": "CAD, Optics, Physics, Nuclear, Robotics & Neuro â†’ BuildLang Kernels â†’ Verified Instruments",
       "hue": "bldlng",
       "platformLabel": "BLDLNG + RSRCH",
       "chain": "FORMULAS.tsv (286 specs) + buildlang (buildc 1.15.0, 12-eq kcore_fast 356.5x bit-exact, BDB QDB2 0/500 silent corruptions) -> superframe (lenspipe, cosmo 512^3 P3M, crt, diagram, plot-sheet) + calibrate-pro -> Three-Plate Oracle + DS-03 -> interactive web explainers",
@@ -588,7 +588,7 @@
     },
     {
       "id": "WF-06",
-      "name": "Civic Thread & Investigation → Provenance → Zero-Slop Prose → Public Showcase",
+      "name": "Civic Thread & Investigation â†’ Provenance â†’ Zero-Slop Prose â†’ Public Showcase",
       "hue": "artiql8",
       "platformLabel": "THE CMMNS + ARTIQL8",
       "chain": "cmmns v3.10 (auto-paginate skip-dup archive, live reply provenance, coordination cues) -> gather + crucible + forum -> articulate (ARTIQL8 v0.19.1) + universal_principles_gate + workstation_mcp.bld (0.0096 ms) -> HarperZ9.github.io (Ctrl+K 5-pillar surface)",

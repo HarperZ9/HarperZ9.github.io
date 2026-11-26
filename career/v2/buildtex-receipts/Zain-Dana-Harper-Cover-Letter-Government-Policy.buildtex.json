@@ -1,0 +1,75 @@
+{
+ "schema": "buildlang.buildtex-receipt/v0",
+ "source": {
+  "path": "Zain-Dana-Harper-Cover-Letter-Government-Policy.doc.tsv",
+  "sha256": "a6b6d74806c32b2a7ef06869cee9e5372861ce93f2a8089516be27cb8cf2c19f"
+ },
+ "ir_sha256": "a6b6d74806c32b2a7ef06869cee9e5372861ce93f2a8089516be27cb8cf2c19f",
+ "theme": "press-resume",
+ "overrides": [
+  "base.size=9.5",
+  "base.leading=13.0",
+  "page.left=50",
+  "page.right=50",
+  "page.top=46",
+  "page.bottom=44",
+  "blocks.h1.size=27",
+  "blocks.h1.leading=29",
+  "blocks.h1.after=4",
+  "blocks.subtitle.size=10.2",
+  "blocks.subtitle.before=6",
+  "blocks.subtitle.after=12",
+  "blocks.meta.after=6",
+  "blocks.p.after=6",
+  "blocks.h2.size=9.8",
+  "blocks.h2.before=8"
+ ],
+ "outputs": {
+  "Zain-Dana-Harper-Cover-Letter-Government-Policy.pdf": "4f227f11860034ff309ef4881aa6a5f9411635416c8137a51c9a0999f1015376"
+ },
+ "pdf_metadata": {
+  "pdfa": false,
+  "creation_date": "D:20261125212000Z"
+ },
+ "facts": {
+  "pages": 1,
+  "pages_layout": 1,
+  "overfull": [],
+  "underfull": 0,
+  "missing_glyphs": [],
+  "glyph_fallbacks": [],
+  "math_errors": [],
+  "fonts": [
+   {
+    "name": "BJEJEB+AccessionDisplay-Master",
+    "embedded": true
+   },
+   {
+    "name": "HOEGFA+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "KFFEPI+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "KIFHJE+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "NLFFGP+HankenGrotesk-Regular",
+    "embedded": true
+   }
+  ],
+  "images": 1,
+  "blind_text_runs": 0,
+  "reading_order": true,
+  "blocks_missing_from_text": [],
+  "pdf_bytes": 234239
+ },
+ "failed": [],
+ "notes": [
+  "press: relief 1275x312 px at 150 dpi; 0 blind line(s); foil colour source: fallback constant"
+ ],
+ "external_programs": []
+}

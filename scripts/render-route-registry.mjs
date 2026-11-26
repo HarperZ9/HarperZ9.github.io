@@ -139,13 +139,20 @@ if (findRouteByHref("field-guide.html")) {
   moveRoute("field-guide.html", systems, "flywheel.html#service-desk").breadcrumbLabel = "Flywheel";
 }
 
+// Retired standalone routes consolidated into The Playground (#estuary, #native, #low-water, #superframe).
+for (const retiredHref of ["raw.html", "low-water.html", "superframe.html", "estuary.html"]) {
+  for (const family of registry.families) {
+    family.routes = family.routes.filter((item) => item.href !== retiredHref);
+  }
+}
 const rawSystem = systemRegistry.systems.find((system) => system.id === "raw");
 const rawDomain = systemRegistry.domains.find((domain) => domain.id === rawSystem?.primaryDomain);
 if (!rawDomain) throw new Error("RAW primary domain is missing from the system registry");
-const raw = moveRoute("raw.html", studio, "skyrimbridge.html");
-raw.breadcrumbLabel = rawDomain.label;
-// One name per thing: the route carries the registry's name for the renderer.
-raw.label = rawSystem.name;
+const pgEntry = findRouteByHref("playground/");
+if (pgEntry) {
+  pgEntry.route.aliases = [...new Set([...(pgEntry.route.aliases || []), "raw.html", "low-water.html", "superframe.html", "estuary.html"])];
+  pgEntry.route.breadcrumbLabel = rawDomain.label;
+}
 
 function takeRoute(href) {
   let route = null;
@@ -557,8 +564,8 @@ if (hrefExists("studies/") && !findRouteByHref("studies/")) {
 }
 // The Playground is one engine with parts (author, 2026-11-11: "the playground is the rendering engine. It's the
 // engine."). The index lists the whole first and its parts under it, each label saying which part it is.
-const playgroundParts = [["playground/", "The Playground"], ["raw.html", null], ["superframe.html", "The Playground: Superframe, the core"],
-  ["playground/distill.html", "The Playground: Distill, a study tool"], ["playground/fourier.html", "The Playground: Fourier lettering, letters as turning circles"], ["low-water.html", "Low Water, the game made with The Playground"]];
+const playgroundParts = [["playground/", "The Playground"],
+  ["playground/distill.html", "The Playground: Distill, a study tool"], ["playground/fourier.html", "The Playground: Fourier lettering, letters as turning circles"]];
 let afterPart = "studio.html";
 for (const [href, label] of playgroundParts) {
   if (!findRouteByHref(href)) continue;

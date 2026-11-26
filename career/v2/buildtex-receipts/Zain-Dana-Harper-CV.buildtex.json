@@ -1,0 +1,74 @@
+{
+ "schema": "buildlang.buildtex-receipt/v0",
+ "source": {
+  "path": "Zain-Dana-Harper-CV.doc.tsv",
+  "sha256": "59fa928956af5b1589a0578ff86294c6ebaf6c20b9d9dc199ecce1749d7e0790"
+ },
+ "ir_sha256": "59fa928956af5b1589a0578ff86294c6ebaf6c20b9d9dc199ecce1749d7e0790",
+ "theme": "press-resume",
+ "overrides": [
+  "base.size=9.2",
+  "base.leading=12.2",
+  "page.left=48",
+  "page.right=48",
+  "page.top=44",
+  "page.bottom=44",
+  "blocks.h1.size=27",
+  "blocks.h1.leading=29",
+  "blocks.h2.size=9.8",
+  "blocks.h2.before=8",
+  "blocks.h2.after=2",
+  "blocks.h3.size=9.5",
+  "blocks.h3.before=4",
+  "blocks.p.after=2.5",
+  "blocks.li.after=1.5"
+ ],
+ "outputs": {
+  "Zain-Dana-Harper-CV.pdf": "d5e20aae16760d15a2a05169b51a69606fcea9f9ae4b60b9a85cc3733bd19c80"
+ },
+ "pdf_metadata": {
+  "pdfa": false,
+  "creation_date": "D:20261125212000Z"
+ },
+ "facts": {
+  "pages": 3,
+  "pages_layout": 3,
+  "overfull": [],
+  "underfull": 0,
+  "missing_glyphs": [],
+  "glyph_fallbacks": [],
+  "math_errors": [],
+  "fonts": [
+   {
+    "name": "BJEJEB+AccessionDisplay-Master",
+    "embedded": true
+   },
+   {
+    "name": "DHBCKB+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "HDCAJO+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "MCOHDI+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "MJMOAF+HankenGrotesk-Regular",
+    "embedded": true
+   }
+  ],
+  "images": 1,
+  "blind_text_runs": 0,
+  "reading_order": true,
+  "blocks_missing_from_text": [],
+  "pdf_bytes": 245121
+ },
+ "failed": [],
+ "notes": [
+  "press: relief 1275x273 px at 150 dpi; 0 blind line(s); foil colour source: fallback constant"
+ ],
+ "external_programs": []
+}

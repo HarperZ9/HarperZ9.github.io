@@ -1,0 +1,70 @@
+ZAIN DANA HARPER
+Real-Time Rendering, Visual Systems & Creative Technology Director
+Seattle, WA (Local / Hybrid / Remote Open) | zaindharper@gmail.com | harperz9.github.io | github.com/HarperZ9 | linkedin.com/in/zaindanaharper | orcid.org/0009-0001-7175-5393
+==============================================================================
+
+30-SECOND WORK-SAMPLE PROOF STRIP
+------------------------------------------------------------------------------
+- 1,004,693 DLs: Elder ENB Nexus Mods adoption
+- 522/522 & 96/96: RAW DX12 Wave 72 runtime & live
+- 14/14 SM 6.10: Clean DXC HLSL shader compile
+- Low Water + Audio: Multi-API world, optics & CLAP DSP
+
+EXECUTIVE PROFILE
+------------------------------------------------------------------------------
+Visual systems director and real-time rendering architect uniting optical
+physics, atmospheric look-development, audio DSP, and native GPU engineering
+across 13 years of continuous creative technology work. Creator of Elder ENB
+(1,004,693 downloads and 2,418 endorsements on Nexus Mods), RAW DX12 Wave 72
+(native DirectX 12 stack across Skyrim SE, Fallout 4, and Starfield with 14/14
+DXC Shader Model 6.10 shaders), and Superframe + Low Water (DX12/Vulkan/WebGPU
+engine with BT.2020/2100 spectral optics, tree biomechanics, and physical-
+model instruments).
+
+TECHNICAL SKILLS
+------------------------------------------------------------------------------
+Visual Direction & Color Science: Atmospheric Look-Dev, BT.2020 / BT.2100
+  Spectral Optics, Oklab/CAM16/ICC/3D LUTs (build-color 1.0.2, calibrate-pro
+  2.0.1), Negative-Space Composition, Dark-Mist Shadow Preservation
+Real-Time Rendering & Audio: DirectX 12, HLSL (SM 6.10, DXC -WX), Vulkan 1.3,
+  WebGPU, Radiance Cascades GI, Hardware Ray Queries, TSR Upscaling, CLAP/VST3
+  Physical-Model Instruments (Modal Bars, Stiff-String Piano, Organ)
+Simulation, Tooling & Shipping: C++23, Rust, BuildLang 1.15.0 (2,132.3x
+  procgen codegen), 6-DOF/EKF Dynamics, Williams/Almeras Tree Biomechanics,
+  Automated Visual & Frame Verification Oracles
+
+RENDERING ARCHITECTURE, LOOK-DEVELOPMENT & INTERACTIVE WORLDS
+------------------------------------------------------------------------------
+Founder, Visual Systems Architect & Creative Technologist | Harper Research & Open-Source Ecosystem
+Seattle, WA | 2025 - Present (Independent Graphics & Visual R&D since 2013) | harperz9.github.io | github.com/HarperZ9/superframe
+- Elder ENB Million-User Visual Direction: Authored, calibrated, and shipped
+  38 HLSL atmosphere and lighting presets on Nexus Mods reaching 1,004,693
+  total downloads, 179,218 unique downloads, and 2,418 endorsements.
+- RAW DX12 Multi-Title Rendering Stack (Wave 72): Architected a clean-room
+  native DirectX 12 rendering pipeline across Skyrim SE, Fallout 4, and
+  Starfield (19 GPU compute solvers at 1.57 ms combined, 0 D3D12 debug errors,
+  522/522 runtime tests, 96/96 live moving-camera checks, 14/14 DXC SM 6.10
+  shaders).
+- Superframe Engine, Low Water & Physical-Model Audio: Built a DX12/Vulkan
+  1.3/WebGPU simulation engine (600 Vulkan frames matching D3D12 WARP hash for
+  hash) combining BT.2020/2100 spectral optics, Williams/Almeras tree
+  biomechanics, CLAP/VST3 physical instruments, and the Low Water narrative
+  world slice (250 passing tests).
+- Procedural Speed, Cross-GPU Shaders & Visual Archival: Accelerated
+  procedural synthesis 2,132.3x via the 12-target BuildLang 1.15.0 compiler
+  (HLSL/GLSL/MSL/WGSL GPU targets; 91/91 verified float64 optics/color
+  kernels), shipped build-color 1.0.2 & calibrate-pro 2.0.1 with 1-command
+  installers, ported 1990s BRender to 64-bit, and built a 6,558-video 3x3
+  contact-sheet archive.
+
+PHYSICAL CRAFT, COLLABORATION & OPEN SCIENCE
+------------------------------------------------------------------------------
+Tree Care Crew Lead (Legendary Tree, 2015 - 2026) | Upstream Open Source & Research
+- Natural-World Observation to Simulation: 11 years reading Pacific Northwest
+  light, weather, and canopy structure in commercial arboriculture; directly
+  shaped Elder ENB's natural-light calibration and Superframe's tree
+  biomechanics.
+- External Collaboration & Studies: 41 merged pull requests across 34 external
+  open-source repositories; 30 public empirical studies (13 Zenodo DOIs) plus
+  148/148 accessible chart specifications on harperz9.github.io; High School
+  Diploma (2013).

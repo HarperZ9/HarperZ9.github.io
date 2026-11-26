@@ -192,7 +192,7 @@ const FEATURED = [
   },
   {
     title: "Estuary Lantern (Interactive WebGPU Field)",
-    href: "/estuary.html",
+    href: "/playground/#estuary",
     pillar: "demos",
     kind: "Interactive",
     summary: "Live physical light, colour metamer, and water simulation running in the browser with still fallback.",
@@ -201,7 +201,7 @@ const FEATURED = [
   },
   {
     title: "Low Water (Five-Era Narrative Game)",
-    href: "/low-water.html",
+    href: "/playground/#low-water",
     pillar: "demos",
     kind: "Game",
     summary: "Five-era narrative game built on The Playground as a full-scale world and lighting proof.",

@@ -23,16 +23,18 @@
 <meta name="twitter:title" content="CMMNS | Zain Dana Harper">
 <meta name="twitter:description" content="CMMNS is a browser extension that shows where social media replies come from: place, coordination, posting, language, fact-checks.">
 <link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-a6d0cea570">
-<link rel="stylesheet" href="/studies/studies.css?v=world-a6d0cea570">
-<link rel="stylesheet" href="/world/site/depth.css?v=world-a6d0cea570">
-<script type="module" src="/world/ui/shell/shell.js?v=world-a6d0cea570"></script>
-<script type="module" src="/world/site/hand-scroll.js?v=world-a6d0cea570"></script>
+<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-200b4f3743">
+<link rel="stylesheet" href="/studies/studies.css?v=world-200b4f3743">
+<link rel="stylesheet" href="/world/site/depth.css?v=world-200b4f3743">
+<script type="module" src="/world/ui/shell/shell.js?v=world-200b4f3743"></script>
+<script type="module" src="/world/site/hand-scroll.js?v=world-200b4f3743"></script>
+<link rel="stylesheet" href="/world/site/landmark.css?v=world-200b4f3743">
+<script type="module" src="/world/site/home-field.js?v=world-200b4f3743"></script>
 <!-- structured-data:begin (tools/structured_data.py) -->
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareApplication","@id":"https://harperz9.github.io/cmmns.html#application","name":"CMMNS","url":"https://harperz9.github.io/cmmns.html","softwareVersion":"3.10.0","applicationCategory":"BrowserApplication","operatingSystem":"Chrome, Edge, Brave, Firefox","downloadUrl":"https://github.com/HarperZ9/cmmns/releases/latest","license":"https://spdx.org/licenses/AGPL-3.0-only.html","author":{"@id":"https://harperz9.github.io/#person","@type":"Person","name":"Zain Dana Harper"},"isAccessibleForFree":true,"sameAs":"https://github.com/HarperZ9/cmmns"}]}</script>
 <!-- structured-data:end -->
 </head>
-<body class="reading">
+<body class="reading landmark">
 <div class="gw-backdrop" aria-hidden="true">
   <picture>
     <source data-s="night" data-m="(orientation: portrait)" media="(orientation: portrait) and (prefers-color-scheme: dark)" type="image/avif" srcset="/media/world/glass-water/field-night-portrait-828.avif 828w, /media/world/glass-water/field-night-portrait-1242.avif 1242w" sizes="100vw">
@@ -45,6 +47,7 @@
     <source data-s="day" data-m="" media="(prefers-color-scheme: light)" type="image/webp" srcset="/media/world/glass-water/field-day-1280.webp 1280w, /media/world/glass-water/field-day-1920.webp 1920w, /media/world/glass-water/field-day-2560.webp 2560w, /media/world/glass-water/field-day-3840.webp 3840w" sizes="100vw">
     <img src="/media/world/glass-water/field-day-1920.webp" width="1920" height="1080" alt="" decoding="async" fetchpriority="low">
   </picture>
+  <canvas class="gw-live"></canvas>
   <i class="gw-dither"></i>
 </div>
 <script>(function(){var r=document.documentElement,q=matchMedia("(prefers-color-scheme: dark)");
@@ -64,10 +67,12 @@ new MutationObserver(s).observe(r,{attributes:true,attributeFilter:["data-theme"
     <ul class="o-places">
       <li><a href="/buildlang.html"><span class="o-word" data-display-on-open="glyphcell">BuildLang</span></a></li>
       <li><a href="/flywheel.html"><span class="o-word" data-display-on-open="light">Flywheel</span></a><small class="o-sub"><a href="/cmmns.html" aria-current="page">CMMNS</a> <a href="/articulate.html">Articulate</a></small></li>
-      <li><a href="/playground/"><span class="o-word" data-display-on-open="nightlights">The Playground</span></a><small class="o-sub"><a href="/raw.html">Native renderer</a> <a href="/superframe.html">Superframe, the core</a> <a href="/playground/#instruments">Instruments and study tools</a> <a href="/low-water.html">Low Water, the game</a></small></li>
-      <li><a href="/low-water.html"><span class="o-word" data-display-on-open="chladni">Game</span></a></li>
+      <li><a href="/playground/"><span class="o-word" data-display-on-open="nightlights">The Playground</span></a><small class="o-sub"><a href="/playground/#estuary">Estuary</a> <a href="/playground/#native">Native renderer</a> <a href="/playground/#superframe">Superframe</a> <a href="/playground/#workbench">All creative engines</a> <a href="/playground/#low-water">Low Water</a></small></li>
+      <li><a href="/playground/#low-water"><span class="o-word" data-display-on-open="chladni">Game</span></a></li>
       <li><a href="/#site"><span class="o-word" data-display-on-open="swarm">Site</span></a></li>
       <li><a href="/floor.html"><span class="o-word" data-display-on-open="rope">Everything</span></a></li>
+      <li><a href="/models.html"><span class="o-word" data-display-on-open="rope">Models</span></a></li>
+      <li><a href="/tools.html"><span class="o-word" data-display-on-open="rope">Tools &amp; Repos</span></a></li>
       <li><a href="/person.html"><span class="o-word" data-display-on-open="rope">About</span></a></li>
       <li><a href="/architecture.html"><span class="o-word" data-display-on-open="rope">Architecture</span></a></li>
       <li><a href="/world/universe/proto/index.html"><span class="o-word" data-display-on-open="rope">Map</span></a></li>
@@ -78,15 +83,17 @@ new MutationObserver(s).observe(r,{attributes:true,attributeFilter:["data-theme"
       <li><a href="/cv.html"><span class="o-word" data-display-on-open="rope">CV</span></a></li>
     </ul>
   </nav>
-  <p class="o-menu-foot"><a href="/architecture.html">Architecture</a> <a href="/research.html">Research</a> <a href="/portfolio.html">Portfolio</a> <a href="/elements.html">Elements</a> <a href="/swatches.html">Swatches</a> <a href="/studies/">Studies</a> <a href="/site-index.html">Site index</a> <button type="button" class="o-close" data-qj-open onclick="this.closest('dialog').close()">Search (Ctrl+K)</button> <button type="button" class="o-close" onclick="this.closest('dialog').close()">Close (Esc)</button></p>
+  <p class="o-menu-foot"><a href="/architecture.html">Architecture</a> <a href="/models.html">Models</a> <a href="/tools.html">Tools &amp; 159 Repos</a> <a href="/research.html">Research</a> <a href="/portfolio.html">Portfolio</a> <a href="/elements.html">Elements</a> <a href="/studies/">Studies</a> <a href="/site-index.html">Site index</a> <button type="button" class="o-close" data-qj-open onclick="this.closest('dialog').close()">Search (Ctrl+K)</button> <button type="button" class="o-close" onclick="this.closest('dialog').close()">Close (Esc)</button></p>
 </dialog>
 <main id="main" tabindex="-1">
-<article class="tool">
-<p class="mark-line">THE COMMONS (THECMMNS)</p>
-<h1>CMMNS</h1>
-<p>Rest the pointer on a reply and a window opens beside it: where the account is placed, signs of coordination, how it posts, how the reply argues, and whether a fact-checker has reviewed the claim. It works on X, YouTube, Reddit, Facebook, Instagram, Bluesky, Threads, TikTok and any Mastodon server you turn it on for. On a phone, tap the post's CMMNS button.</p>
-<p>CMMNS, spoken "commons", was formerly Daylight Commons, and Radar before that. An install from before the rename updates in place and keeps its settings, its saves and its save folder.</p>
+<article class="lp tool" data-landmark="cmmns" data-hue="thecmmns">
+<header class="lp-head">
+<h1><span class="d-3d">CMMNS</span> <span class="pf-mark">THECMMNS</span></h1>
+<p class="lp-lede lp-lede-1">Rest the pointer on a reply and a window opens beside it: where the account is placed, signs of coordination, how it posts, how the reply argues, and whether a fact-checker has reviewed the claim. Works on X, YouTube, Reddit, Facebook, Instagram, Bluesky, Threads, TikTok and Mastodon.</p>
+<p class="lp-run"><code>irm https://raw.githubusercontent.com/HarperZ9/cmmns/main/install.ps1 | iex</code></p>
+<p class="lp-rel">Fail-closed <code>SHA256SUMS</code> installer (macOS/Linux: <code>curl -fsSL https://raw.githubusercontent.com/HarperZ9/cmmns/main/install.sh | sh</code>). CMMNS, spoken "commons", was formerly Daylight Commons and Radar; earlier installs update in place.</p>
 <dl class="facts"><dt>Version</dt><dd><a href="https://github.com/HarperZ9/cmmns/releases/tag/v3.10.0">3.10.0</a></dd><dt>Browsers</dt><dd>Chrome, Edge, Brave, Firefox</dd><dt>Licence</dt><dd><a href="https://spdx.org/licenses/AGPL-3.0-only.html">AGPL-3.0</a></dd><dt>Source</dt><dd><a href="https://github.com/HarperZ9/cmmns">HarperZ9/cmmns</a></dd></dl>
+</header>
 
 <section id="try" class="ct" data-commons-try aria-labelledby="h-try">
 <h2 id="h-try">Try it on your own words</h2>
@@ -102,7 +109,7 @@ new MutationObserver(s).observe(r,{attributes:true,attributeFilter:["data-theme"
 <div class="ct-file-out" aria-live="polite"></div>
 <p class="ct-source">This panel runs the unmodified CMMNS core at commit 5f86ee7 (<a href="https://github.com/HarperZ9/cmmns/tree/5f86ee789c35a65d3043b4eb81ac0393ca751711/src/core">source</a>, AGPL-3.0-only): the 3.9.1 release plus the validation report from <a href="https://github.com/HarperZ9/cmmns/pull/112">pull request 112</a>. It loads only once you start.</p>
 </section>
-<script type="module" src="/world/site/commons-try.js?v=world-a6d0cea570"></script>
+<script type="module" src="/world/site/commons-try.js?v=world-200b4f3743"></script>
 
 <h2 id="install">Install</h2>
 <h3>Chrome, Edge or Brave</h3>

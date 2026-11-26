@@ -1,0 +1,187 @@
+{
+  "$schema": "https://fundingjson.org/schema/v1.0.0.json",
+  "version": "v1.0.0",
+  "entity": {
+    "type": "individual",
+    "role": "owner",
+    "name": "Zain Dana Harper",
+    "email": "17142659+HarperZ9@users.noreply.github.com",
+    "description": "Independent researcher and toolmaker operating as a sole proprietor in Kent, Washington. Builds verifiable local-first compilers, AI evaluation harnesses, rendering engines, and open archival tools, publishing methods, data, and null results openly.",
+    "webpageUrl": {
+      "url": "https://harperz9.github.io/",
+      "wellKnown": "https://harperz9.github.io/.well-known/funding-manifest-urls"
+    }
+  },
+  "projects": [
+    {
+      "guid": "buildlang",
+      "name": "BuildLang",
+      "description": "Deterministic systems and GPU programming language (buildc 1.15.0) with algebraic effect types, 12 CPU and GPU backends, certified e-graph superoptimizer prototype, BuildDB/BuildQL (qdb), and BuildTeX checked PDF typesetting.",
+      "webpageUrl": {
+        "url": "https://harperz9.github.io/buildlang.html",
+        "wellKnown": "https://harperz9.github.io/.well-known/funding-manifest-urls"
+      },
+      "repositoryUrl": {
+        "url": "https://github.com/HarperZ9/buildlang",
+        "wellKnown": "https://raw.githubusercontent.com/HarperZ9/buildlang/main/.well-known/funding-manifest-urls"
+      },
+      "licenses": [
+        "spdx:AGPL-3.0-only"
+      ],
+      "tags": [
+        "programming",
+        "developer-tools",
+        "software-engineering",
+        "database",
+        "graphics",
+        "scientific-computing",
+        "publishing",
+        "security",
+        "science"
+      ]
+    },
+    {
+      "guid": "cmmns",
+      "name": "CMMNS",
+      "description": "Site-agnostic browser extension and archival CLI capturing any webpage (cmmns.page/1, Schema.org, RSS/Atom, JSON data islands) and social threads into daylight.sidecar/1 and manifest JSONL records with SHA-256 provenance verification.",
+      "webpageUrl": {
+        "url": "https://harperz9.github.io/cmmns/install.html",
+        "wellKnown": "https://harperz9.github.io/.well-known/funding-manifest-urls"
+      },
+      "repositoryUrl": {
+        "url": "https://github.com/HarperZ9/cmmns",
+        "wellKnown": "https://raw.githubusercontent.com/HarperZ9/cmmns/main/.well-known/funding-manifest-urls"
+      },
+      "licenses": [
+        "spdx:AGPL-3.0-only"
+      ],
+      "tags": [
+        "browser-extensions",
+        "information-management",
+        "knowledge",
+        "privacy",
+        "security",
+        "data",
+        "communication",
+        "education",
+        "science"
+      ]
+    },
+    {
+      "guid": "flywheel",
+      "name": "Flywheel",
+      "description": "Local-first accountable AI evaluation and verification workbench with model-neutral gateway, Rowan router, Three-Plate verification oracle, engine-receipt/1 trails, default-deny agent grants, and local RTX 4090 model forge. Source-available under FSL-1.1-MIT (converts to MIT after two years).",
+      "webpageUrl": {
+        "url": "https://harperz9.github.io/flywheel.html",
+        "wellKnown": "https://harperz9.github.io/.well-known/funding-manifest-urls"
+      },
+      "repositoryUrl": {
+        "url": "https://github.com/HarperZ9/flywheel",
+        "wellKnown": "https://raw.githubusercontent.com/HarperZ9/flywheel/main/.well-known/funding-manifest-urls"
+      },
+      "licenses": [
+        "spdx:FSL-1.1-MIT"
+      ],
+      "tags": [
+        "artificial-intelligence",
+        "machine-learning",
+        "developer-tools",
+        "security",
+        "cryptography",
+        "science",
+        "data-science",
+        "software-engineering"
+      ]
+    },
+    {
+      "guid": "superframe",
+      "name": "The Playground (Superframe)",
+      "description": "Deterministic rendering, simulation, and multi-medium creative engine (DX12, Vulkan, WebGPU, C++23 native core) with spectral optics, biomechanical tree dynamics, and 6-DOF physical-AI simulation. Source-available under FSL-1.1-MIT (converts to MIT after two years).",
+      "webpageUrl": {
+        "url": "https://harperz9.github.io/playground/",
+        "wellKnown": "https://harperz9.github.io/.well-known/funding-manifest-urls"
+      },
+      "repositoryUrl": {
+        "url": "https://github.com/HarperZ9/superframe",
+        "wellKnown": "https://raw.githubusercontent.com/HarperZ9/superframe/main/.well-known/funding-manifest-urls"
+      },
+      "licenses": [
+        "spdx:FSL-1.1-MIT"
+      ],
+      "tags": [
+        "graphics",
+        "3d-modeling",
+        "audio",
+        "design",
+        "gaming",
+        "scientific-computing",
+        "animation",
+        "education",
+        "science"
+      ]
+    }
+  ],
+  "funding": {
+    "channels": [
+      {
+        "guid": "github-sponsors",
+        "type": "payment-provider",
+        "address": "https://github.com/sponsors/HarperZ9",
+        "description": "GitHub Sponsors for Zain Dana Harper. Supports one-time or recurring sponsorship with full public disclosure on https://harperz9.github.io/income-ledger.html."
+      },
+      {
+        "guid": "direct-grant",
+        "type": "bank",
+        "address": "US wire or ACH grant transfer (sole proprietor, Kent, WA; contact via https://harperz9.github.io/hire.html)",
+        "description": "Direct bank transfer for institutional grants, fellowships, and infrastructure funding. Account details provided directly on award."
+      }
+    ],
+    "plans": [
+      {
+        "guid": "community-any",
+        "status": "active",
+        "name": "Community support (any amount)",
+        "description": "Flexible support across Zain Dana Harper's public tools, CI maintenance, and signed binary releases.",
+        "amount": 0,
+        "currency": "USD",
+        "frequency": "one-time",
+        "channels": [
+          "github-sponsors"
+        ]
+      },
+      {
+        "guid": "monthly-maintainer",
+        "status": "active",
+        "name": "Monthly stack maintenance",
+        "description": "Recurring support for cross-platform builds, deterministic test suites, and open empirical research publications.",
+        "amount": 50,
+        "currency": "USD",
+        "frequency": "monthly",
+        "channels": [
+          "github-sponsors"
+        ]
+      },
+      {
+        "guid": "infra-grant-ecosystem",
+        "status": "active",
+        "name": "Open infrastructure and verification grant",
+        "description": "Scoped milestone grant funding compiler verification (BuildLang, AGPL-3.0), web archival provenance (CMMNS, AGPL-3.0), and reproducible evaluation infrastructure.",
+        "amount": 25000,
+        "currency": "USD",
+        "frequency": "one-time",
+        "channels": [
+          "direct-grant",
+          "github-sponsors"
+        ]
+      }
+    ],
+    "history": [
+      {
+        "year": 2026,
+        "income": 0,
+        "currency": "USD",
+        "description": "Self-funded sole proprietorship with zero external grants, sponsors, or paid clients to date. Full public disclosure at https://harperz9.github.io/income-ledger.html."
+      }
+    ]
+  }
+}

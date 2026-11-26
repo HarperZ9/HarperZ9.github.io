@@ -66,7 +66,7 @@ def test_the_menu_leads_with_the_six_landmarks_on_every_generated_page():
     # 13 November 2026: the third landmark is shown as The Playground (author, 2026-11-11: "the playground is the
     # rendering engine. It's the engine."); its place in the order is unchanged.
     words = ["BuildLang", "Flywheel", "The Playground", "Game", "Site", "Everything"]
-    for page in ("index.html", "buildlang.html", "low-water.html", "floor.html", "credits.html"):
+    for page in ("index.html", "buildlang.html", "playground/index.html", "floor.html", "credits.html"):
         html = (ROOT / page).read_text(encoding="utf-8")
         menu = html.split('<ul class="o-places">', 1)[1].split("</ul>", 1)[0]
         found = re.findall(r'<span class="o-word"[^>]*>([^<]+)</span>', menu)
@@ -88,7 +88,7 @@ def test_a_figure_names_the_first_release_that_carried_its_change():
     products = json.loads((ROOT / "site-src" / "world" / "releases.json").read_text(encoding="utf-8"))["products"]
     latest = products["buildlang"]["github"]["version"]
     known = {136: "1.11.0", 158: "1.12.0"}
-    for row, page in (("buildlang-page", "buildlang.html"), ("low-water", "low-water.html")):
+    for row, page in (("buildlang-page", "buildlang.html"), ("low-water", "playground/index.html")):
         html = (ROOT / page).read_text(encoding="utf-8")
         for pr in products[row]["prs"]:
             if pr["repo"] != "HarperZ9/buildlang" or not pr["merged"]:
@@ -100,5 +100,5 @@ def test_a_figure_names_the_first_release_that_carried_its_change():
             cited = re.findall(rf'buildlang #{pr["number"]}, merged [^<]*?\({pr["commit"]}\)([^<]*)</a>', html)
             want = f', first released in {first["version"]}' if first else f", on main after {latest}"
             assert all(c == want for c in cited), (page, pr["number"], cited, want)
-    low = (ROOT / "low-water.html").read_text(encoding="utf-8")
+    low = (ROOT / "playground/index.html").read_text(encoding="utf-8")
     assert "first released in 1.11.0" in low and "first released in 1.12.0" in low

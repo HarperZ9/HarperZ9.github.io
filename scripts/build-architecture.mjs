@@ -626,7 +626,9 @@ function build() {
     <a href="/cmmns.html">CMMNS</a>
     <a href="/articulate.html">Articulate</a>
     <a href="/security.html">Security</a>
-    <a href="/estuary.html">Estuary Lantern</a>
+    <a href="/playground/#estuary">Estuary Lantern</a>
+    <a href="/models.html">Models</a>
+    <a href="/tools.html">Tools &amp; 159 Repos</a>
     <a href="/portfolio.html">Portfolio</a>
     <a href="/floor.html">Everything</a>
   </nav>
@@ -637,8 +639,9 @@ function build() {
     title: "Platform Architecture",
     description: DATA.description,
     body,
-    bodyClass: "reading arch-page",
-    extraHead: '<link rel="stylesheet" href="/world/site/architecture.css">\n<script type="module" src="/world/site/architecture.js"></script>',
+    bodyClass: "reading landmark arch-page",
+    extraHead: '<link rel="stylesheet" href="/world/site/landmark.css">\n<link rel="stylesheet" href="/world/site/architecture.css">\n<script type="module" src="/world/site/home-field.js"></script>\n<script type="module" src="/world/site/architecture.js"></script>',
+    live: true,
   });
 
   if (DATA.description.length < 40 || DATA.description.length > 160) {

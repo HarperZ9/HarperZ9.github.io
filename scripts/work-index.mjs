@@ -67,8 +67,9 @@ function movedTo(p) {
 }
 function resolve(p) {
   for (let hop = 0; hop < 4; hop++) {
+    if (p.endsWith("/")) p += "index.html";
     let f = path.join(site, p);
-    if (!existsSync(f)) { p = movedTo(p); if (!p) return null; f = path.join(site, p); if (!existsSync(f)) return null; }
+    if (!existsSync(f)) { p = movedTo(p); if (!p) return null; if (p.endsWith("/")) p += "index.html"; f = path.join(site, p); if (!existsSync(f)) return null; }
     const m = readFileSync(f, "utf8").match(/http-equiv="refresh" content="0; url=([^"]+)"/);
     if (!m) return p === "floor.html" ? null : p;  // a link back to this index is no link
     p = m[1].replace(/^\//, "").split("#")[0] || "index.html";

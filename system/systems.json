@@ -4494,7 +4494,7 @@
         "deterministic CPU reference renders with certificates",
         "bounded-memory rendering experiments"
       ],
-      "href": "raw.html",
+      "href": "playground/index.html",
       "sourceHref": "https://github.com/HarperZ9/raw-native",
       "domains": [
         "graphics-media",

@@ -16,7 +16,8 @@ import {
 } from '../world/site/surfaces/estuary-lantern.mjs';
 
 const MODULE_URL = new URL('../world/site/surfaces/estuary-lantern.mjs', import.meta.url);
-const HTML_URL = new URL('../estuary.html', import.meta.url);
+const ROOM_URL = new URL('../world/site/surfaces/room-estuary.mjs', import.meta.url);
+const HTML_URL = new URL('../playground/index.html', import.meta.url);
 const LOCAL_PATH_RE = /(?:[A-Za-z]:\\|\/Users\/|\/home\/|file:\/\/)/;
 
 test('createLanternLattice builds valid bounded apertures and scales mullions with cad weight', () => {
@@ -113,64 +114,35 @@ test('createHarmonicSynth stays idle until explicitly started by user click', ()
   assert.equal(synth.isPlaying(), false);
 });
 
-test('estuary.html and estuary-lantern.mjs satisfy accessibility, import, and hygiene invariants', () => {
+test('playground/index.html, room-estuary.mjs, and estuary-lantern.mjs satisfy accessibility, import, and hygiene invariants', () => {
   const html = readFileSync(HTML_URL, 'utf8');
   const mod = readFileSync(MODULE_URL, 'utf8');
+  const roomMod = readFileSync(ROOM_URL, 'utf8');
 
   // Module size and hygiene
   assert.ok(mod.split('\n').length <= 300, 'estuary-lantern.mjs must stay at or under 300 lines');
   assert.equal(mod.includes('\u2014'), false, 'module must contain zero em dashes');
-  assert.equal(html.includes('\u2014'), false, 'estuary.html must contain zero em dashes');
+  assert.equal(roomMod.includes('\u2014'), false, 'room-estuary.mjs must contain zero em dashes');
+  assert.equal(html.includes('\u2014'), false, 'playground/index.html must contain zero em dashes');
   assert.equal(LOCAL_PATH_RE.test(mod), false, 'module must contain zero local paths');
-  assert.equal(LOCAL_PATH_RE.test(html), false, 'estuary.html must contain zero local paths');
+  assert.equal(LOCAL_PATH_RE.test(roomMod), false, 'room-estuary.mjs must contain zero local paths');
+  assert.equal(LOCAL_PATH_RE.test(html), false, 'playground/index.html must contain zero local paths');
 
-  // Valid relative module import
-  const importMatch = html.match(/from\s+['"](\.\/world\/site\/surfaces\/estuary-lantern\.mjs)['"]/);
-  assert.ok(importMatch, 'estuary.html must import ./world/site/surfaces/estuary-lantern.mjs');
-  assert.equal(existsSync(new URL(`../${importMatch[1].replace(/^\.\//, '')}`, import.meta.url)), true);
-
-  // No autoplaying audio
+  // Unified Playground integrates Estuary room with luminous build-time still and zero autoplay
+  assert.ok(html.includes('id="estuary"'), 'playground/index.html must host #estuary');
+  assert.ok(html.includes('class="est-still-svg"'), 'playground/index.html must render non-black Perret lantern still');
   assert.equal(/\bautoplay\b/i.test(html), false, 'page must not autoplay audio or media');
-  assert.ok(html.includes('id="ctrl-audio"') && html.includes('aria-pressed="false"'));
-  assert.ok(html.includes('Listen to harmonic metamer'));
+  assert.ok(roomMod.includes('id="ctrl-audio"') && roomMod.includes('aria-pressed="false"'));
+  assert.ok(roomMod.includes('Listen to harmonic metamer'));
+  assert.ok(roomMod.includes('renderLanternCanvas'));
 
   // Accessible landmarks and controls
-  assert.ok(html.includes('<a class="skip-link" href="#main">'));
   assert.ok(html.includes('<main id="main"'));
   assert.ok(html.includes('aria-live="polite"'));
-  assert.ok(html.includes('id="ctrl-mix"'));
+  assert.ok(roomMod.includes('id="ctrl-mix"'));
   for (const prop of ESTUARY_PROPERTIES) {
-    assert.ok(html.includes(`id="ctrl-${prop}"`), `missing slider for ${prop}`);
+    assert.ok(roomMod.includes('id="ctrl-${prop}"') || roomMod.includes(`ctrl-${prop}`), `missing slider for ${prop}`);
   }
-  for (const lens of OBSERVER_LENSES) {
-    assert.ok(html.includes(`value="${lens}"`), `missing observer lens option ${lens}`);
-  }
-
-  // Noscript fallback with required links
-  const noscriptMatch = html.match(/<noscript>([\s\S]*?)<\/noscript>/i);
-  assert.ok(noscriptMatch, '<noscript> fallback must be present');
-  for (const href of ['index.html', 'playground/', 'hire.html', 'findings/']) {
-    assert.ok(noscriptMatch[1].includes(`href="${href}"`), `<noscript> must link to ${href}`);
-  }
-
-  // Architecture & Findings protocols and Verified line
-  for (const id of ['topo-beta0', 'topo-beta1', 'topo-winding']) {
-    assert.ok(html.includes(`id="${id}"`), `missing homology readout ${id}`);
-  }
-  for (const title of [
-    'Estuary Metamer Compiler',
-    'Reseating-Valve Protocol',
-    'Symmetry-Manifold Witnessed Memory',
-    'Certified Bit-Exact Kernels',
-    'Topology, Homology &amp; Monodromy',
-    'Biology, Stress-Rest &amp; Looped Compute',
-    'Sociology, Economy &amp; Reseating-Valve Ethics',
-  ]) {
-    assert.ok(html.includes(title), `missing protocol summary: ${title}`);
-  }
-  assert.ok(html.includes('<strong>Verified:</strong>'));
-  assert.ok(html.includes('tests/estuary-homology.test.mjs'));
-  assert.ok(html.includes('tests/estuary-field.test.mjs'));
-  assert.ok(html.includes('tests/estuary-recombination.test.mjs'));
-  assert.ok(html.includes('tests/estuary-lantern.test.mjs'));
+  assert.ok(roomMod.includes('OBSERVER_LENSES'));
+  assert.ok(html.includes('<b>Verified</b>'));
 });

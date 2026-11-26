@@ -33,7 +33,7 @@
       "summary": "41 merged upstream PRs, full CV, role resumes, Flywheel verification pilot, and independence policy."
     }
   ],
-  "count": 381,
+  "count": 383,
   "items": [
     {
       "t": "Home (Front Door)",
@@ -109,7 +109,7 @@
     },
     {
       "t": "Estuary Lantern (Interactive WebGPU Field)",
-      "u": "/estuary.html",
+      "u": "/playground/#estuary",
       "p": "demos",
       "k": "Interactive",
       "s": "Live physical light, colour metamer, and water simulation running in the browser with still fallback.",
@@ -118,11 +118,11 @@
     },
     {
       "t": "Low Water (Five-Era Narrative Game)",
-      "u": "/low-water.html",
+      "u": "/playground/#low-water",
       "p": "demos",
       "k": "Game",
       "s": "Five-era narrative game built on The Playground as a full-scale world and lighting proof.",
-      "q": "low water game demo narrative world lighting low-water superframe js/ts, c++23, buildlang, hlsl flagship integrated studio",
+      "q": "low water game demo narrative world lighting low-water superframe js/ts, c++23, buildlang, hlsl flagship integrated",
       "f": 1
     },
     {
@@ -376,11 +376,11 @@
     },
     {
       "t": "Superstack, Reconcile & Studio-Libs",
-      "u": "/superframe.html",
+      "u": "/playground/#superframe",
       "p": "platforms",
       "k": "Tool / Package",
       "s": "Foundational creative engine contracts: canonical cross-language seed/byte rules (JS/Python/C++), replayable browser expression worlds (reconcile), and...",
-      "q": "superstack-reconcile-studiolibs superframe python archived consolidated studio"
+      "q": "superstack-reconcile-studiolibs superframe python archived consolidated"
     },
     {
       "t": "Elder ENB (Skyrim Special Edition)",
@@ -392,11 +392,11 @@
     },
     {
       "t": "RAW DX12 (Rendering Advancement Workshop)",
-      "u": "/raw.html",
+      "u": "/playground/#native",
       "p": "platforms",
       "k": "Game / Mod / Creative",
-      "s": "The native renderer is the part of The Playground that renders frames in C++ on Direct3D 12, Vulkan and WebGPU, formerly released as raw-native. It also...",
-      "q": "raw-dx12 superframe c++23, hlsl sm 6.10, python, buildlang live active engine studio"
+      "s": "Direct3D 11-to-12 real-time graphics replacement and laboratory for Skyrim SE / Fallout 4 featuring persistent TLAS, RayQuery GI/RTAO/OMM, 64-step...",
+      "q": "raw-dx12 superframe c++23, hlsl sm 6.10, python, buildlang live active engine"
     },
     {
       "t": "Truth ENB, Elder Weathers, ENB Runtime Core, ENB Validation Lab & SkyrimBridge",
@@ -515,7 +515,7 @@
       "u": "/person.html",
       "p": "work",
       "k": "Work",
-      "s": "The personal story behind the work: how I came to it, and who it is for.",
+      "s": "The personal story behind the work: eleven years of arboriculture rigging, thirteen years of programming, and five open-source platforms.",
       "q": "work"
     },
     {
@@ -1028,6 +1028,22 @@
       "p": "demos",
       "k": "Systems",
       "s": "Glass lettering over live water in four spaces, rendered in the browser: close to the glass, a low sun, noon from above, and night.",
+      "q": "systems"
+    },
+    {
+      "t": "Local Frontier Model Lab RSRCH",
+      "u": "/models.html",
+      "p": "platforms",
+      "k": "Systems",
+      "s": "Local frontier models (JFC3P-7B-Oracle, NOH-4, Plato-Key, AVTR-4R, FRESCO/MoLT) evaluated against compilers, physics solvers, and planted-fault oracles.",
+      "q": "systems"
+    },
+    {
+      "t": "Tools, Installers & 159 Public Repositories",
+      "u": "/tools.html",
+      "p": "platforms",
+      "k": "Systems",
+      "s": "Fail-closed SHA256SUMS one-command installers and the complete ledger of all 159 public GitHub repositories by Zain Dana Harper.",
       "q": "systems"
     },
     {

@@ -137,15 +137,15 @@
           "The Playground"
         ],
         [
-          "/raw.html",
+          "/playground/#native",
           "RAW Native"
         ],
         [
-          "/low-water.html",
+          "/playground/#low-water",
           "Low Water"
         ],
         [
-          "/estuary.html",
+          "/playground/#estuary",
           "Estuary Lantern"
         ]
       ]
@@ -711,7 +711,7 @@
     },
     {
       "id": "security-purple-team",
-      "title": "Security & Purple-Team Hierarchy (Sovereign → WARDEN → Sofer → Array → Phantom & EMET)",
+      "title": "Security & Purple-Team Hierarchy (Sovereign â†’ WARDEN â†’ Sofer â†’ Array â†’ Phantom & EMET)",
       "hue": "theflywheel",
       "home_repo": "Capability-public hierarchy (2.62M+ LOC across 18 repos)",
       "home_url": "/security.html",

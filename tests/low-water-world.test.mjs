@@ -50,7 +50,7 @@ test("the tiles open with the walk's own reader, and every region is in them", a
 });
 
 test("the page's figures are the world's", async () => {
-  const j = JSON.parse(readFileSync(join(WORLD, "out/20261118/world.json"), "utf8")), page = read("low-water.html");
+  const j = JSON.parse(readFileSync(join(WORLD, "out/20261118/world.json"), "utf8")), page = read("playground/index.html");
   const { ISLAND } = await import(pathToFileURL(join(ROOT, "site-src/world/low-water.mjs")).href);
   const kinds = {}; for (const s of j.settlements) kinds[s.kind] = (kinds[s.kind] || 0) + 1;
   const words = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen"];
@@ -69,7 +69,7 @@ test("the page's figures are the world's", async () => {
 
 test("the page states the press and loads none of the walk before it", async () => {
   const { WALK_BYTES } = await import(pathToFileURL(join(ROOT, "site-src/world/low-water.mjs")).href);
-  const page = read("low-water.html"), island = page.slice(page.indexOf('id="island"'), page.indexOf('id="story"'));
+  const page = read("playground/index.html"), island = page.slice(page.indexOf('id="island"'), page.indexOf('id="story"'));
   assert.ok(WALK_BYTES > 3e6, "the stated download covers the tiles at least");
   assert.match(island, new RegExp(`downloads ${(WALK_BYTES / 1e6).toFixed(1)} MB when you press, and nothing before`));
   assert.ok(!/<(iframe|script)[^>]+(walk\.html|world-cac3416|web-sf-cac3416)/.test(page), "no frame or script of the walk in the page");

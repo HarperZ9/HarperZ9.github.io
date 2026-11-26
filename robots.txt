@@ -1,3 +1,28 @@
+# Search and AI retrieval crawler policy for https://harperz9.github.io
+# Major search engines and AI answer/retrieval crawlers are explicitly welcomed
+# to index all public pages, documentation, datasets, and llms.txt guides.
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
 User-agent: *
 Allow: /
 Disallow: /_drafts/
@@ -5,8 +30,10 @@ Disallow: /_preview/
 Disallow: /_redesign/
 Disallow: /quantalang/
 
-# An agent arriving with no context should read llms.txt first. It names the
-# machine-readable product registry and the board agents can write to.
+# Machine-readable entry points for agents and answer engines:
 # https://harperz9.github.io/llms.txt
+# https://harperz9.github.io/llms-full.txt
+# https://harperz9.github.io/.well-known/agent-card.json
+# https://harperz9.github.io/system/systems.json
 
 Sitemap: https://harperz9.github.io/sitemap.xml

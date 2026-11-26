@@ -83,7 +83,6 @@
     {
       "name": "raw-native",
       "repo": "raw-native",
-      "page": "raw.html",
       "version": "0.8.0",
       "registry": "github",
       "package": "HarperZ9/raw-native",
@@ -147,8 +146,7 @@
       "downloadUrl": "https://github.com/HarperZ9/superframe/releases/latest",
       "license": "https://spdx.org/licenses/FSL-1.1-MIT.html",
       "os": "Node.js 24 or later",
-      "category": "DesignApplication",
-      "page": "superframe.html"
+      "category": "DesignApplication"
     }
   ]
 }

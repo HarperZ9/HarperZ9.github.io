@@ -27,7 +27,7 @@ async function open(browser, opts = {}, init) {
   const page = await ctx.newPage(), errors = [], got = [];
   page.on('pageerror', (e) => errors.push(e.message));
   page.on('request', (r) => got.push(new URL(r.url()).pathname));
-  await page.goto(base + '/raw.html', { waitUntil: 'load' });
+  await page.goto(base + '/playground/#native', { waitUntil: 'load' });
   await page.waitForFunction(() => document.querySelector('[data-toy="engine"]')?.dataset.gpu);
   return { ctx, page, errors, got };
 }
