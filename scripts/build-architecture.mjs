@@ -543,6 +543,28 @@ function benchmarksSection() {
 </section>`;
 }
 
+function workflowsSection() {
+  const rows = (DATA.workflows || []).map((w) => `<tr>
+  <th scope="row"><code>${esc(w.id)}</code><br>${esc(w.name)}</th>
+  <td data-label="Platforms"><span class="arch-tag" data-plat="${esc(w.hue)}">${esc(w.platformLabel)}</span></td>
+  <td data-label="Pipeline chain">${esc(w.chain)}</td>
+  <td data-label="External tools replaced">${esc(w.replaces)}</td>
+  <td data-label="Verified output & receipt">${esc(w.output)}</td>
+</tr>`).join("\n");
+
+  return `<section class="arch-sec" id="pipelines" aria-labelledby="h-pipelines">
+  <h2 id="h-pipelines"><span class="d-3d" data-hue="theplygrnd">Cohesive Multimodal, Procedural &amp; Assurance Pipelines (WF-01 to WF-08)</span></h2>
+  <p class="arch-sec-lede">${esc(DATA.workflowsLede || "")}</p>
+  <div class="arch-table-wrap" tabindex="0" role="region" aria-label="Eight cohesive multimodal, procedural, and security pipelines">
+    <table class="arch-table">
+      <thead><tr><th scope="col">Pipeline</th><th scope="col">Platforms</th><th scope="col">End-to-end chain</th><th scope="col">External tools replaced</th><th scope="col">Verified output &amp; receipt</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+  </div>
+  <p class="verified"><b>Verified</b> ${esc(DATA.workflowsVerified || "")}</p>
+</section>`;
+}
+
 function consolidationSection() {
   const rows = DATA.consolidation.map((c) => `<tr>
   <th scope="row"><code>${esc(c.oldRepo)}</code></th>
@@ -574,8 +596,9 @@ function build() {
     <nav class="arch-ways" aria-label="On this page">
       <a href="#graph">Architecture graph</a>
       <a href="#platforms">Five platforms</a>
+      <a href="#pipelines">Pipelines (WF-01..08)</a>
       <a href="#body-of-work">Full body of work</a>
-      <a href="#lineage">Family trees</a>
+      <a href="#lineage">Family trees (8)</a>
       <a href="#frontier">14 frontier lanes</a>
       <a href="#concept-web">Concept web</a>
       <a href="#datasets">Seven datasets</a>
@@ -586,6 +609,7 @@ function build() {
   </header>
   ${graphSection()}
   ${platformsSection()}
+  ${workflowsSection()}
   ${bodyOfWorkSection()}
   ${familyTreesSection()}
   ${frontierSection()}
@@ -601,6 +625,7 @@ function build() {
     <a href="/flywheel.html">Flywheel</a>
     <a href="/cmmns.html">CMMNS</a>
     <a href="/articulate.html">Articulate</a>
+    <a href="/security.html">Security</a>
     <a href="/estuary.html">Estuary Lantern</a>
     <a href="/portfolio.html">Portfolio</a>
     <a href="/floor.html">Everything</a>

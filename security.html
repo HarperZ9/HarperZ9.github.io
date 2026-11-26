@@ -37,11 +37,11 @@
   <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">security products</span></div>
   <div class="mid">
     <h1>Security tools</h1>
-    <p class="lede">Public security tools you can install, a toolkit of small utilities, the advisories filed against my own tools, and an index of private systems used only under written authorization.</p>
-    <p class="close">Machine-readable status for each tool: <a href="security-tools.json">security-tools.json</a>.</p>
+    <p class="lede">Public security tools you can install, a grouped verification toolkit, the advisories filed against my own tools, and the full 18-repository security and purple-team hierarchy (2.62M+ measured LOC) used only under written authorization.</p>
+    <p class="close">Machine-readable status for each tool: <a href="security-tools.json">security-tools.json</a>. Full architectural lineage: <a href="architecture.html#lineage">Family Tree #8</a> and <a href="architecture.html#pipelines">Pipeline WF-08</a>.</p>
     <figure class="art art-pillar"><img class="art-light" src="art/aperture/pillar-security-light.svg" width="1200" height="900" alt="An iris shutter drawn in fine hatched blades, closed down to a small hole with a bright core showing through it, inside a ringed housing." decoding="async"><img class="art-dark" src="art/aperture/pillar-security-dark.svg" width="1200" height="900" alt="An iris shutter drawn in fine hatched blades, closed down to a small hole with a bright core showing through it, inside a ringed housing." decoding="async"></figure>
   </div>
-  <div class="seal">updated 2026-09-27</div>
+  <div class="seal">advisories updated 2026-09-27 &middot; hierarchy updated 2026-11-25</div>
 </div>
 
 <main id="main">
@@ -50,11 +50,11 @@
   <div class="index" role="list">
     <div class="index-row" role="listitem">
       <span class="index-term">Public systems</span>
-      <span class="index-gloss"><a href="phantom.html">Phantom</a>, <a href="emet.html">EMET</a> and <a href="accountable-surface.html">Accountable Surface</a> have verified public releases; <a href="proof-surface.html">Proof Surface</a> 0.1.0 is on PyPI; its public source is at 0.2.0, which has no release. The <a href="catalog.html">product catalog</a> carries each current version.</span>
+      <span class="index-gloss"><a href="phantom.html">Phantom</a> (v1.1.1, Rust, 273 tests, 0 production unwraps), <a href="emet.html">EMET</a> (forbid unsafe code), and <a href="accountable-surface.html">Accountable Surface</a> have verified public releases; <a href="proof-surface.html">Proof Surface</a> 0.1.0 is on PyPI; its public source is at 0.2.0, which has no release. The <a href="catalog.html">product catalog</a> carries each current version.</span>
     </div>
     <div class="index-row" role="listitem">
       <span class="index-term">Toolkit</span>
-      <span class="index-gloss"><a href="security-toolkit.html">Security toolkit</a>: small utilities for pre-publication review, secret redaction, release source records and hooks.</span>
+      <span class="index-gloss"><a href="security-toolkit.html">Security toolkit</a>: complete 16-tool hierarchy plus small public utilities for pre-publication review, secret redaction, release source records, hooks, and proof indexing.</span>
     </div>
     <div class="index-row" role="listitem">
       <span class="index-term">Product and theory</span>
@@ -62,9 +62,33 @@
     </div>
     <div class="index-row" role="listitem">
       <span class="index-term">Authorized private practice</span>
-      <span class="index-gloss"><a href="private-practice.html">Private-system index</a>: <a href="array.html">Array</a>, <a href="seed.html">Seed</a>, <a href="sofer.html">Sofer</a>, <a href="isomorph.html">Isomorph</a>, <a href="bounds.html">Bounds</a>, <a href="kun.html">Kun</a>, ORCA, and Gate are distinct products for controlled campaigns, native assessment, orchestration, inference testing, trust verification, access recovery, execution, and release authority.</span>
+      <span class="index-gloss"><a href="private-practice.html">Private-system index</a>: <a href="array.html">Array</a>, <a href="seed.html">Seed</a> (WARDEN), <a href="sofer.html">Sofer</a>, <a href="isomorph.html">Isomorph</a>, <a href="bounds.html">Bounds</a>, <a href="kun.html">Kun</a>, ORCA, Aleph, and Gate are distinct systems for controlled campaigns, native assessment, domain orchestration, inference testing, trust verification, access recovery, execution, and release authority.</span>
     </div>
   </div>
+</section>
+
+<section class="mv" id="hierarchy" aria-labelledby="hierarchy-h">
+  <h2 id="hierarchy-h">Security and purple-team architecture hierarchy</h2>
+  <p class="body-text">Across 18 repositories totaling 2.62M+ measured lines of code, 2,347 test files, and 869 commits, this security and purple-team hierarchy evolved in parallel with the compiler and rendering work and directly shaped Flywheel's verification architecture. Every tool below is documented at the capability level; live operational payloads, private methods, target details, and raw credentials stay strictly embargoed.</p>
+  <div class="index" role="list">
+    <div class="index-row" role="listitem">
+      <span class="index-term">1. Routing ancestor (ancestor)</span>
+      <span class="index-gloss"><strong>Sovereign</strong> (early 2026): a 39-agent security and purple-team routing table that directly seeded Plexus capability wiring, the Index workspace router, and the Senses routing architecture.</span>
+    </div>
+    <div class="index-row" role="listitem">
+      <span class="index-term">2. Native assessment &amp; domain ledger (controlled-private)</span>
+      <span class="index-gloss"><strong>WARDEN / <a href="seed.html">Seed</a></strong> (2026-04-04, C++23, 224,887 LOC, 389 test files, 59 ATT&amp;CK-mapped modules) spun off WARDEN Reporting (C++23 CVSS and findings handoff), WARDEN Sensorium, WARDEN Agent Audit, and WARDEN Release Assurance. <strong><a href="sofer.html">Sofer</a></strong> (2026-04-11, Python, 1,364,070 LOC, 1,107 test files, 74 packages) provides the intelligence, regulatory, provenance, vulnerability-lab, and self-healing ledger with MCP bridging (sensitive hazard domains strictly measurement, evaluation, and safety-layer only). <strong><a href="kun.html">Kun</a></strong> (2026-04-12) maintains path-only access recovery with zero raw credentials. <strong>Aleph</strong> (2026-06-30, 15,418 LOC, 128 commits) serves as the private release gate, safety evaluation, and supply-chain intake layer.</span>
+    </div>
+    <div class="index-row" role="listitem">
+      <span class="index-term">3. Authorized campaign, inference &amp; trust runtimes (controlled-private)</span>
+      <span class="index-gloss"><strong>ORCA</strong> (2026-06-18, 23,011 LOC, 144 commits) enforces rules-of-engagement admission gates, blind-spot modeling, and linked-hash receipt ledgers. <strong><a href="array.html">Array</a></strong> (2026-08-25, 173,783 LOC, 200 test files, consolidating earlier campaign and run-room platforms) alongside <strong>Adversarial</strong> (155,022 LOC) coordinates authorized wave-planned engagements with RoeEnforcer containment and inclusion-proof evidence bundles. <strong><a href="isomorph.html">Isomorph</a></strong> (extracted from WARDEN 2026-06-18, 172,570 LOC, 243 test files) measures inference-boundary refusal stability with hash-chained audit records (live payloads strictly embargoed; its defensive seed fathered EMET and Accountable Surface). <strong><a href="bounds.html">Bounds</a></strong> (2026-08-25, 5,141 LOC, 29 test files) verifies agent intent drift, runtime telemetry, sealed receipts, and attested waivers.</span>
+    </div>
+    <div class="index-row" role="listitem">
+      <span class="index-term">4. Public hardware audit &amp; verification descendants (shipped / active)</span>
+      <span class="index-gloss"><strong><a href="phantom.html">Phantom</a></strong> (2026-08-20, Rust, 25,347 LOC, 273 tests, 0 production unwraps, v1.1.1 shipped) performs auditable Layer 0 to 2 hardware-identity inspection and reversible backup and restore on owned Windows and Linux machines. Public accountability descendants unified in Flywheel include <strong><a href="emet.html">EMET</a></strong> (Python, Rust, Node, and Go byte-integrity witness), <strong><a href="proof-surface.html">Proof Surface</a></strong>, <strong><a href="accountable-surface.html">Accountable Surface</a></strong>, <strong><a href="crucible.html">Crucible</a></strong>, <strong>Secret Redact IO</strong>, <strong>Agent Hook Pack</strong>, <strong>Repo Proof Index</strong>, and <strong>Public Surface Sweeper</strong>.</span>
+    </div>
+  </div>
+  <p class="body-text">Inspect the complete 16-system breakdown with maturity tags and authorization boundaries on the <a href="security-toolkit.html#full-hierarchy">Security toolkit page</a>, or trace how this lineage feeds into the unified stack on <a href="architecture.html#lineage">Platform Architecture</a>.</p>
 </section>
 
 <section class="mv" id="advisories" aria-labelledby="advisories-h">

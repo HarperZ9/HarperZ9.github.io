@@ -1,6 +1,6 @@
 {
   "generated_date": "2026-11-25",
-  "verified": "25 November 2026: 6 distinct chronological lineages, 12 individual project histories, and 5 monthly evolution chapters (July to November 2026) verified against GitHub repository creation and archival records (206 total repos: 88 live own, 19 forks, 99 archived including telos-v2) and 213 indexed sessions; all merged building blocks point directly to their live super-project homes and private staging repos remain omitted.",
+  "verified": "25 November 2026: 8 distinct chronological lineages (including Aurora WoW Origins and the full 2.62M+ LOC Security and Purple-Team Hierarchy), 14 individual project histories, and 5 monthly evolution chapters (July to November 2026) verified against GitHub repository records (206 total repos: 88 live own, 19 forks, 99 archived), local repository metrics, and 213 indexed sessions; all merged building blocks point directly to their live super-project homes and private operational payloads remain strictly omitted.",
   "families": [
     {
       "id": "the-playground",
@@ -647,6 +647,167 @@
           "Everything"
         ]
       ]
+    },
+    {
+      "id": "aurora-wow-origins",
+      "title": "WoW Origins: Aurora (435K LOC DSL Compiler, TSTL & Capability Catalogs)",
+      "hue": "bldlng",
+      "home_repo": "HarperZ9/buildlang + HarperZ9/flywheel (descendant homes)",
+      "home_url": "https://github.com/HarperZ9/buildlang",
+      "origin_story": "Built directly after the Elder ENB shader era (2024-04-17) as a deep World of Warcraft combat and automation SDK (2026-03-23, 435,306 measured LOC across 765 tracked files, 52 commits, 24 test suites). Aurora combined 70+ modular Lua SDK subsystems and 66 rotations with TypeScript-to-Lua (TSTL), a full 4-stage custom Aurora DSL Compiler (Lexer, Parser, Semantic Analyzer, and CodeGen with VSCode syntax highlighting), and structured JSON capability, receipt, lineage, and runtime-boundary catalogs. Its compiler architecture seeded BuildLang, while its structured capability and receipt catalogs seeded The Flywheel.",
+      "sessions": 18,
+      "units": 1240,
+      "public_blocks": [
+        {
+          "name": "buildlang (compiler descendant)",
+          "created": "2026-03-23",
+          "status": "Public live descendant",
+          "url": "https://github.com/HarperZ9/buildlang"
+        },
+        {
+          "name": "buildlang/editors (syntax grammar descendant)",
+          "created": "2026-04-12",
+          "status": "Merged into super-project",
+          "url": "https://github.com/HarperZ9/buildlang/tree/main/editors"
+        },
+        {
+          "name": "flywheel (capability & receipt descendant)",
+          "created": "2026-06-06",
+          "status": "Public live descendant",
+          "url": "https://github.com/HarperZ9/flywheel"
+        }
+      ],
+      "maturation_stages": [
+        {
+          "era": "2024-04 to 2026-02",
+          "stage": "Shader Craft Ceiling & Automation Foundations",
+          "evidence": "Elder ENB proved high-craft real-time shader pipelines (1M+ downloads), leading into structured state-machine and SDK architecture in Lua and TypeScript."
+        },
+        {
+          "era": "2026-03",
+          "stage": "Aurora 4-Stage DSL Compiler & 70+ SDK Modules",
+          "evidence": "435,306 LOC across 765 tracked files: 66 rotations, TSTL toolchain, Lexer -> Parser -> Semantic Analyzer -> CodeGen pipeline, and VSCode syntax grammar."
+        },
+        {
+          "era": "2026-03 to 2026-06",
+          "stage": "Capability, Receipt & Lineage Catalogs -> BuildLang + Flywheel",
+          "evidence": "Structured JSON catalogs (capabilities, receipts, lineage, runtime-boundary) crossed directly into BuildLang effect-typed compilation and Flywheel offline-verifiable receipts."
+        }
+      ],
+      "site_links": [
+        [
+          "/buildlang.html",
+          "BuildLang"
+        ],
+        [
+          "/flywheel.html",
+          "Flywheel"
+        ],
+        [
+          "/architecture.html#pipelines",
+          "Pipelines WF-01..08"
+        ]
+      ]
+    },
+    {
+      "id": "security-purple-team",
+      "title": "Security & Purple-Team Hierarchy (Sovereign → WARDEN → Sofer → Array → Phantom & EMET)",
+      "hue": "theflywheel",
+      "home_repo": "Capability-public hierarchy (2.62M+ LOC across 18 repos)",
+      "home_url": "/security.html",
+      "origin_story": "Spanning 2.62M+ measured LOC, 2,347 test files, and 869 commits across 18 repositories, this security and purple-team hierarchy evolved in parallel with the graphics and compiler work and directly fathered Flywheel's verification discipline. It began with Sovereign (a 39-agent routing table that fathered Plexus and the Index router), expanded into the C++23 WARDEN/Seed 59-module assessment engine and the 74-package Sofer domain ledger (1.36M LOC), crystallized into authorized campaign, inference-boundary, and trust verification runtimes (Orca, Array, Adversarial, Isomorph, Bounds, Aleph, Kun), and distilled its public defensive core into Phantom (v1.1.1 shipped, 0 production .unwrap()), EMET, Proof Surface, Accountable Surface, Crucible, and the Flywheel security toolkit. Strictly capability-public and payload-embargoed.",
+      "sessions": 93,
+      "units": 5089,
+      "public_blocks": [
+        {
+          "name": "phantom (Rust v1.1.1, 273 tests, 0 .unwrap())",
+          "created": "2026-08-20",
+          "status": "Public shipped",
+          "url": "https://github.com/HarperZ9/phantom"
+        },
+        {
+          "name": "emet (#![forbid(unsafe_code)])",
+          "created": "2026-06-06",
+          "status": "Public shipped",
+          "url": "https://github.com/HarperZ9/emet"
+        },
+        {
+          "name": "proof-surface",
+          "created": "2026-06-17",
+          "status": "Public active",
+          "url": "https://github.com/HarperZ9/proof-surface"
+        },
+        {
+          "name": "accountable-surface",
+          "created": "2026-06-19",
+          "status": "Public shipped",
+          "url": "https://github.com/HarperZ9/accountable-surface"
+        },
+        {
+          "name": "secret-redact-io",
+          "created": "2026-06-16",
+          "status": "Merged into Flywheel",
+          "url": "https://github.com/HarperZ9/flywheel/tree/main/packages/secret-redact-io"
+        },
+        {
+          "name": "agent-hook-pack",
+          "created": "2026-06-18",
+          "status": "Merged into Flywheel",
+          "url": "https://github.com/HarperZ9/flywheel/tree/main/packages/agent-hook-pack"
+        },
+        {
+          "name": "repo-proof-index",
+          "created": "2026-06-12",
+          "status": "Public shipped",
+          "url": "https://github.com/HarperZ9/repo-proof-index"
+        },
+        {
+          "name": "public-surface-sweeper",
+          "created": "2026-06-12",
+          "status": "Public shipped",
+          "url": "https://github.com/HarperZ9/public-surface-sweeper"
+        }
+      ],
+      "maturation_stages": [
+        {
+          "era": "Early 2026",
+          "stage": "Sovereign Routing Ancestor",
+          "evidence": "39-agent security and purple-team routing table that directly seeded Plexus capability wiring, the Index router, and the Senses routing architecture."
+        },
+        {
+          "era": "2026-04",
+          "stage": "WARDEN / Seed (C++23) & Sofer Domain Ledger",
+          "evidence": "WARDEN/Seed (224,887 LOC, 389 test files, 59 ATT&CK-mapped modules) spun off Reporting, Sensorium, Agent Audit, and Release Assurance; Sofer (1,364,070 LOC, 1,107 test files, 74 packages) added intelligence, regulatory, provenance, and MCP bridging (hazard domains measurement/safety-only), alongside Kun path-only recovery."
+        },
+        {
+          "era": "2026-06 to 2026-08",
+          "stage": "Authorized Campaign, Inference-Boundary & Trust Verification",
+          "evidence": "Orca (23,011 LOC, ROE admission gate & linked-hash receipts), Aleph (15,418 LOC, private release gate), Isomorph (172,570 LOC, 243 test files, controlled refusal calibration, payloads embargoed), Array (173,783 LOC, 200 test files consolidating red-team-platform & offensive-platform) + Adversarial (155,022 LOC), and Bounds (5,141 LOC, intent-drift & sealed trust)."
+        },
+        {
+          "era": "2026-08 to 2026-11",
+          "stage": "Public Hardware Audit & Flywheel Verification Descendants",
+          "evidence": "Phantom shipped v1.1.1 (Rust, 25,347 LOC, 273 tests, 0 production .unwrap()); EMET (#![forbid(unsafe_code)]), Proof Surface, Accountable Surface, Crucible, Secret Redact IO, Agent Hook Pack, Repo Proof Index, and Public Surface Sweeper unified inside Flywheel."
+        }
+      ],
+      "site_links": [
+        [
+          "/security.html",
+          "Security Hub"
+        ],
+        [
+          "/security-toolkit.html",
+          "Security Toolkit"
+        ],
+        [
+          "/private-practice.html",
+          "Private Practice"
+        ],
+        [
+          "/phantom.html",
+          "Phantom"
+        ]
+      ]
     }
   ],
   "distinct_projects": [
@@ -925,6 +1086,44 @@
         {
           "name": "phantom",
           "url": "https://github.com/HarperZ9/phantom"
+        }
+      ]
+    },
+    {
+      "id": "aurora-dsl",
+      "title": "Aurora (WoW SDK, 4-Stage DSL Compiler & Capability Catalogs)",
+      "flagship": "BuildLang / Flywheel Ancestor",
+      "origin_date": "2026-03-23",
+      "summary": "435,306 LOC across 765 tracked files and 52 commits bridging Elder ENB shaders to BuildLang and Flywheel: 70+ Lua SDK modules, 66 rotations, TSTL, 4-stage custom DSL compiler with VSCode grammar, and JSON capability/receipt/lineage catalogs.",
+      "sessions": 18,
+      "units": 1240,
+      "public_blocks": [
+        {
+          "name": "buildlang",
+          "url": "https://github.com/HarperZ9/buildlang"
+        },
+        {
+          "name": "flywheel",
+          "url": "https://github.com/HarperZ9/flywheel"
+        }
+      ]
+    },
+    {
+      "id": "warden-sofer-array",
+      "title": "WARDEN / Seed, Sofer, Orca, Array, Isomorph, Bounds & Aleph",
+      "flagship": "Security / Purple-Team Hierarchy",
+      "origin_date": "2026-04-04",
+      "summary": "2.62M+ measured LOC, 2,347 test files, and 869 commits across 18 repositories spanning Sovereign routing, C++23 WARDEN/Seed (224,887 LOC), Sofer (1.36M LOC), Orca, Array, Adversarial, Isomorph, Bounds, Aleph, and Kun (capability-public, payload-embargoed).",
+      "sessions": 93,
+      "units": 5089,
+      "public_blocks": [
+        {
+          "name": "security.html",
+          "url": "/security.html"
+        },
+        {
+          "name": "security-toolkit.html",
+          "url": "/security-toolkit.html"
         }
       ]
     },

@@ -1,0 +1,9 @@
+{
+  "date": "2026-11-25",
+  "note": "Wave 3C: Family Trees #7 (WoW Origins Aurora) & #8 (Security & Purple-Team Hierarchy 2.62M+ LOC), WF-01..08 Cohesive Pipelines, security.html & security-toolkit.html 16-tool hierarchy, and Wave 3 verified metrics.",
+  "paths": {
+    "security-toolkit.html": "206c923800d4147644a5ef3bc7973f0b8ccf1de6431528fa5faa935c3d16b418",
+    "site-index.html": "d13a2127723db4c26f02fd424315d9e1ab1567be978c84c54a5493e3deca10fe",
+    "system/routes.js": "eec1485b41676a5d5e5ca7ea4227d7a01e09dab2d7a1f931a0d4e0d0d39946e2"
+  }
+}
