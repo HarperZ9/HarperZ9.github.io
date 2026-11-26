@@ -84,31 +84,32 @@ html[data-theme="paper"] {
   opacity: 0.84;
 }
 
-/* World shell .o-hand search trigger button */
+/* World shell .o-hand compact high-contrast search button (opaque ground for 16:1 AA contrast over any sky) */
 .o-hand .qj-trigger--world {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.4rem;
-  min-height: 40px;
-  padding: 0.32rem 0.68rem;
-  border: 1px solid var(--qj-border-strong);
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0;
+  border: 1px solid rgba(244, 239, 230, 0.55);
   border-radius: 999px;
-  background: color-mix(in srgb, var(--qj-bg) 82%, transparent);
-  color: var(--qj-ink);
-  font: 600 0.84rem/1 var(--qj-font);
-  letter-spacing: 0.01em;
-  white-space: nowrap;
+  background-color: #121016;
+  background-image: none;
+  color: #f4efe6;
+  text-shadow: none;
   cursor: pointer;
-  backdrop-filter: blur(8px);
 }
 .o-hand .qj-trigger--world:is(:hover, :focus-visible) {
-  background: var(--qj-surface-hi);
-  border-color: var(--qj-accent);
-  color: var(--qj-ink);
+  background-color: #262230;
+  border-color: #8ee3f2;
+  color: #ffffff;
 }
 .o-hand .qj-trigger--world:focus-visible {
-  outline: 2px solid var(--qj-accent);
+  outline: 2px solid #8ee3f2;
   outline-offset: 2px;
 }
 

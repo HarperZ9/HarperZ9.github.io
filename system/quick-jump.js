@@ -298,7 +298,8 @@ function mountShellTriggers(doc, shell) {
       btn.setAttribute("data-qj-open", "");
       btn.setAttribute("aria-haspopup", "dialog");
       btn.setAttribute("aria-label", "Search site (Ctrl+K or slash)");
-      btn.innerHTML = `<span>Search</span><kbd>Ctrl+K</kbd>`;
+      btn.setAttribute("title", "Search site (Ctrl+K)");
+      btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="6"/><path d="M13.6 13.6 18 18"/></svg>`;
       const fold = hand.querySelector('[data-o="fold"]');
       if (fold && fold.parentElement) fold.parentElement.insertBefore(btn, fold.nextSibling);
       else hand.appendChild(btn);
@@ -308,9 +309,19 @@ function mountShellTriggers(doc, shell) {
 
 function inferWorldPillar(pathname) {
   const p = String(pathname || "/").toLowerCase();
-  if (p === "/" || p === "/index.html") return null;
+  if (
+    p === "/" ||
+    p === "/index.html" ||
+    p === "/elements.html" ||
+    p === "/swatches.html" ||
+    p === "/playground/" ||
+    p === "/playground/index.html" ||
+    p === "/glass-water.html"
+  ) {
+    return null;
+  }
   if (/^\/(findings|experiments)\//.test(p)) return PILLAR_META.research;
-  if (/^\/(playground|studies|world|low-water|estuary|glass-water)/.test(p)) return PILLAR_META.demos;
+  if (/^\/(playground|studies|world|low-water|estuary)/.test(p)) return PILLAR_META.demos;
   if (/^\/(buildlang|raw|superframe|cmmns|accession)/.test(p)) return PILLAR_META.platforms;
   return PILLAR_META.start;
 }
@@ -362,6 +373,15 @@ export function initQuickJump({ shell = "classic" } = {}) {
   });
 
   window.addEventListener("keydown", (e) => {
+    // Studio owns Ctrl+K and "/" for its own command palette (studio-palette).
+    if (
+      document.body &&
+      (document.body.classList.contains("studio-page") ||
+        document.body.classList.contains("studio-app") ||
+        document.querySelector("dialog.studio-palette"))
+    ) {
+      return;
+    }
     const key = (e.key || "").toLowerCase();
     if ((e.ctrlKey || e.metaKey) && !e.altKey && key === "k") {
       e.preventDefault();

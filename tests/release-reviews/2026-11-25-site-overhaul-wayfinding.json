@@ -1,8 +1,8 @@
 {
   "date": "2026-11-25",
-  "note": "Global Ctrl+K Quick-Jump search, 5-pillar wayfinding, interior world breadcrumbs, bodied.mjs harvest, and Wave 1/Wave 68 verified metric sync",
+  "note": "Global Ctrl+K Quick-Jump search, 5-pillar wayfinding, interior world breadcrumbs, bodied.mjs harvest, Wave 1/68 metric sync, and CI browser contract fixes",
   "paths": {
-    "index.html": "0cdc14d3e9009d84eb7b10ce535e166b3be11d23ca25d168c4705141d93a53e0",
+    "index.html": "5b037274060ecb7968827ad156d588e37cde9c046a0fc88599d8fab947fa9a05",
     "research.html": "9b13a0923ef48ea7332bdca692fe79c8d47c3201290665a9bda574eebbccdc88",
     "site-index.html": "7c9b8ba88a22088f46860e2c94c9d0bfcd2fa3af92f15fd764a840498a1fcb4b",
     "system/routes.js": "fd10f2f039a5e6c584c963e2de99503510eb198fd8e08689017997c2e49cfccc",
