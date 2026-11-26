@@ -4,19 +4,73 @@
   "lede": "Every engine, compiler, verification tool, civic reader, and open dataset now builds toward one connected stack: write deterministic code, render and measure physical light, verify every claim with offline receipts, and publish the results with open data.",
   "sub": "Start with any platform below to run it on your own machine, inspect how outputs flow across repositories, or read the observed benchmark numbers and open gaps.",
   "stats": [
-    { "value": "5", "label": "Unified public platforms (5.06M measured LOC)" },
-    { "value": "14", "label": "Global-frontier engineering lanes tracked live" },
-    { "value": "7,391", "label": "Verified rows across 7 datasets (DS-01 to DS-07)" },
-    { "value": "41", "label": "Merged external OSS PRs across 34 repositories" }
+    {
+      "value": "5",
+      "label": "Unified public platforms (5.06M measured LOC)"
+    },
+    {
+      "value": "14",
+      "label": "Global-frontier engineering lanes tracked live"
+    },
+    {
+      "value": "7,391",
+      "label": "Verified rows across 7 datasets (DS-01 to DS-07)"
+    },
+    {
+      "value": "41",
+      "label": "Merged external OSS PRs across 34 repositories"
+    }
   ],
   "edges": [
-    { "from": "buildlang", "to": "playground", "label": "kcore deterministic kernels", "bendX": 0, "bendY": -26 },
-    { "from": "playground", "to": "flywheel", "label": "engine-receipt/1 proofs", "bendX": 24, "bendY": 10 },
-    { "from": "buildlang", "to": "flywheel", "label": "effect-row & build hashes", "bendX": -24, "bendY": 10 },
-    { "from": "commons", "to": "flywheel", "label": "claim & source evidence", "bendX": -22, "bendY": -10 },
-    { "from": "flywheel", "to": "research", "label": "Three-Plate audit verdicts", "bendX": 22, "bendY": -10 },
-    { "from": "commons", "to": "research", "label": "43K cross-domain archive", "bendX": 0, "bendY": 28 },
-    { "from": "research", "to": "playground", "label": "DS-03/04 calibration suites", "bendX": 36, "bendY": 0 }
+    {
+      "from": "buildlang",
+      "to": "playground",
+      "label": "kcore deterministic kernels",
+      "bendX": 0,
+      "bendY": -26
+    },
+    {
+      "from": "playground",
+      "to": "flywheel",
+      "label": "engine-receipt/1 proofs",
+      "bendX": 24,
+      "bendY": 10
+    },
+    {
+      "from": "buildlang",
+      "to": "flywheel",
+      "label": "effect-row & build hashes",
+      "bendX": -24,
+      "bendY": 10
+    },
+    {
+      "from": "commons",
+      "to": "flywheel",
+      "label": "claim & source evidence",
+      "bendX": -22,
+      "bendY": -10
+    },
+    {
+      "from": "flywheel",
+      "to": "research",
+      "label": "Three-Plate audit verdicts",
+      "bendX": 22,
+      "bendY": -10
+    },
+    {
+      "from": "commons",
+      "to": "research",
+      "label": "43K cross-domain archive",
+      "bendX": 0,
+      "bendY": 28
+    },
+    {
+      "from": "research",
+      "to": "playground",
+      "label": "DS-03/04 calibration suites",
+      "bendX": 36,
+      "bendY": 0
+    }
   ],
   "platforms": [
     {
@@ -32,20 +86,47 @@
       "produces": "Deterministic multi-medium renders, Low Water 3D game scenes, Estuary interactive fields, and canonical engine-receipt/1 verification envelopes.",
       "contract": "engine-receipt/1 SHA-256 verification envelopes plus superstack.receipt/1 visual and audio hashes.",
       "parts": [
-        ["Superframe", "Core multi-medium engine, marbled surfaces, Estuary Lantern, and consolidated colour, signal, and archive packages."],
-        ["RAW DX12 & Native", "Direct3D 12, Vulkan, and WebGPU renderer with RayQuery GI/RTAO, volumetric clouds, fluid fire/water, and 36 debug views."],
-        ["Low Water", "Five-era narrative game built as the engine's full-scale world and lighting proof."],
-        ["286 Formulas & Colour", "Known-answer optics, colour science (build-color), signal kernels, and 91 executable IEEE-754 calibration kernels."]
+        [
+          "Superframe",
+          "Core multi-medium engine, marbled surfaces, Estuary Lantern, and consolidated colour, signal, and archive packages."
+        ],
+        [
+          "RAW DX12 & Native",
+          "Direct3D 12, Vulkan, and WebGPU renderer with RayQuery GI/RTAO, volumetric clouds, fluid fire/water, and 36 debug views."
+        ],
+        [
+          "Low Water",
+          "Five-era narrative game built as the engine's full-scale world and lighting proof."
+        ],
+        [
+          "286 Formulas & Colour",
+          "Known-answer optics, colour science (build-color), signal kernels, and 91 executable IEEE-754 calibration kernels."
+        ]
       ],
       "run": "git clone https://github.com/HarperZ9/superframe && cd superframe && npm run make",
       "links": [
-        ["/playground/", "Open The Playground"],
-        ["/raw.html", "Native renderer"],
-        ["/estuary.html", "Estuary Lantern"],
-        ["/low-water.html", "Low Water"],
-        ["https://github.com/HarperZ9/superframe", "Source"]
+        [
+          "/playground/",
+          "Open The Playground"
+        ],
+        [
+          "/raw.html",
+          "Native renderer"
+        ],
+        [
+          "/estuary.html",
+          "Estuary Lantern"
+        ],
+        [
+          "/low-water.html",
+          "Low Water"
+        ],
+        [
+          "https://github.com/HarperZ9/superframe",
+          "Source"
+        ]
       ],
-      "verified": "25 November 2026: superframe v0.3.0 with native engine-receipt/1 emission (superframe#143, 580 pytest PASS); RAW DX12 Wave 68 (a7e02fd) verified at 93/96 (96.9%) live heuristics across 4 scenes (inn_interior 24/24, septimus_cave 24/24, windhelm_ext_snow 23/24, riverwood_day 22/24), live GameComposite 0xc29d75356434a10a match, 522/522 runtime, and 19 GPU solvers in ~1.57 ms on RTX 4090."
+      "verified": "25 November 2026: superframe v0.3.0 with native engine-receipt/1 emission (superframe#143, #144: modular 8-file style.wgsl assembler, cosmo/daw receipts, 1,603 single-process pytest, 29/29 CI); RAW DX12 Wave 70 (5f05e30) verified at 96/96 (100.0%) live heuristics across all 4 moving-camera scenes (inn_interior 24/24, septimus_cave 24/24, riverwood_day 24/24, windhelm_ext_snow 24/24, 0 flagged scenes, 522/522 runtime, engine-receipt/1 MATCH)."
     },
     {
       "id": "buildlang",
@@ -60,18 +141,39 @@
       "produces": "Repeatable native binaries, bit-exact parallel reductions (par_for), embedded BDB stores, and verified kernels for The Playground.",
       "contract": "Declared effect-row manifests, repeatable SHA-256 build hashes, and C translation validation.",
       "parts": [
-        ["buildc 1.15.0", "Algebraic effect rows, checked pure par_for/par_map, 98/102 feature tests, kcore_fast.bld 462.9x vs Python, and repeatable C/shader codegen."],
-        ["BDB (BuildDB)", "Pure BuildLang embedded SQL engine with 4 KiB FNV-1a page checksums (0/500 silent fuzz corruptions, 10,000/10,000 fault tests PASS)."],
-        ["Universe & Suite", "268 module files in universe/, five consolidated Build suite libraries in suite/, and editor syntax packages in editors/."],
-        ["RISC-V & OS", "emu-rv64 emulator and bare-metal scheduler experiments (os-pfa, os-runq)."]
+        [
+          "buildc 1.15.0",
+          "Algebraic effect rows, checked pure par_for/par_map, 98/102 feature tests, kcore_fast.bld 462.9x vs Python, and repeatable C/shader codegen."
+        ],
+        [
+          "BDB (BuildDB)",
+          "Pure BuildLang embedded SQL engine with 4 KiB FNV-1a page checksums (0/500 silent fuzz corruptions, 10,000/10,000 fault tests PASS)."
+        ],
+        [
+          "Universe & Suite",
+          "268 module files in universe/, five consolidated Build suite libraries in suite/, and editor syntax packages in editors/."
+        ],
+        [
+          "RISC-V & OS",
+          "emu-rv64 emulator and bare-metal scheduler experiments (os-pfa, os-runq)."
+        ]
       ],
       "run": "cargo install buildlang --version 1.15.0 --locked && buildc check main.bld",
       "links": [
-        ["/buildlang.html", "BuildLang"],
-        ["https://crates.io/crates/buildlang", "crates.io"],
-        ["https://github.com/HarperZ9/buildlang", "Source"]
+        [
+          "/buildlang.html",
+          "BuildLang"
+        ],
+        [
+          "https://crates.io/crates/buildlang",
+          "crates.io"
+        ],
+        [
+          "https://github.com/HarperZ9/buildlang",
+          "Source"
+        ]
       ],
-      "verified": "25 November 2026: buildlang v1.15.0 on GitHub and crates.io; 147/147 repeatable build hashes, 98/102 feature tests (GAPS.txt 6 to 4, while/loop soundness closed), BDB 0/500 silent fuzz corruptions (10,000/10,000 fault tests PASS), kcore_fast.bld 462.9x vs Python bit-exact, workstation_mcp.bld 0.245 ms; honest gap: 187 of 268 universe/ files still fail buildc check (81 pass; buildlang #290)."
+      "verified": "25 November 2026: buildlang v1.15.0 live on GitHub, crates.io, and PATH (buildlang#327..330, 15/15 CI); 147/147 repeatable hashes, 98/102 feature tests (GAPS.txt 6 to 4), GAP-BL-11..14 closed, BDB 0/500 silent fuzz corruptions (10,000/10,000 fault tests), 12-equation kcore_fast.bld 356.5x vs Python bit-exact (39/39 checks), 4-tool workstation_mcp.bld 0.0096 ms preflight (28/28 checks); honest gap: 183 of 270 universe/ files still fail buildc check (87 pass, down from 187)."
     },
     {
       "id": "flywheel",
@@ -86,19 +188,43 @@
       "produces": "Signed Merkle receipts (MATCH, DRIFT, or UNVERIFIABLE), Three-Plate audit verdicts, Articulate prose checks, and live Bulletin logs.",
       "contract": "Offline-recheckable JSON receipts, Three-Plate proposer/mutator/oracle checks, and zero-mutation protected spans.",
       "parts": [
-        ["Core Harness (v2.0.0)", "Runs models behind one local interface with cryptographic step receipts and offline verification."],
-        ["30 Consolidated Packages", "Canon, Mneme, Forum, Crucible, Gather, EMET (#![forbid(unsafe_code)]), Index, Plexus, Relay, Chorus, Learn, Bulletin, and safety utilities under packages/."],
-        ["Three-Plate & JFC-3P", "Separates proposer, independent hypothesis mutator plus secret-prefix scanner, and execution oracle (flywheel#545, #546)."],
-        ["Articulate (ARTIQL8)", "v0.19.1 local prose checker (2,096 passing tests) flagging hedging, filler, and register drift without rewriting author facts."]
+        [
+          "Core Harness (v2.0.0)",
+          "Runs models behind one local interface with cryptographic step receipts and offline verification."
+        ],
+        [
+          "30 Consolidated Packages",
+          "Canon, Mneme, Forum, Crucible, Gather, EMET (#![forbid(unsafe_code)]), Index, Plexus, Relay, Chorus, Learn, Bulletin, and safety utilities under packages/."
+        ],
+        [
+          "Three-Plate & JFC-3P",
+          "Separates proposer, independent hypothesis mutator plus secret-prefix scanner, and execution oracle (flywheel#545, #546)."
+        ],
+        [
+          "Articulate (ARTIQL8)",
+          "v0.19.1 local prose checker (2,096 passing tests) flagging hedging, filler, and register drift without rewriting author facts."
+        ]
       ],
       "run": "pip install flywheel-verify articulate-writing && flywheel up",
       "links": [
-        ["/flywheel.html", "Flywheel"],
-        ["/articulate.html", "Articulate"],
-        ["/demo-flywheel.html", "Interactive demo"],
-        ["https://github.com/HarperZ9/flywheel", "Source"]
+        [
+          "/flywheel.html",
+          "Flywheel"
+        ],
+        [
+          "/articulate.html",
+          "Articulate"
+        ],
+        [
+          "/demo-flywheel.html",
+          "Interactive demo"
+        ],
+        [
+          "https://github.com/HarperZ9/flywheel",
+          "Source"
+        ]
       ],
-      "verified": "25 November 2026: flywheel v2.0.0 (flywheel-verify) and articulate v0.19.1 (articulate-writing) live on GitHub and PyPI; Three-Plate Oracle and #![forbid(unsafe_code)] EMET merged in flywheel#545 (192/192 CI PASS) alongside JFC-3P Omni-Modal JEPA + Fast-Weight Delta + Verifiable RL in flywheel#546."
+      "verified": "25 November 2026: flywheel v2.0.0 and articulate v0.19.1 live on GitHub and PyPI; Three-Plate Oracle + #![forbid(unsafe_code)] EMET (flywheel#545), gateway decomposition -70.6% LOC + multi-package engine-receipt/1 (flywheel#548, 179/179 CI), and live RTX 4090 JFC-3P 14B evaluation lifting pass rate from 4/24 (16.67%) to 17/24 (70.83%, McNemar p=0.000244, 0 regressions, flywheel#550, 85/85 CI)."
     },
     {
       "id": "commons",
@@ -113,17 +239,35 @@
       "produces": "In-page provenance panels, structured post decompositions, and the 43,380-item cross-domain knowledge graph feeding Research.",
       "contract": "Local-only processing with source-hash citations and zero server tracking of browsing activity.",
       "parts": [
-        ["CMMNS Extension (v3.10.0)", "Inspects sources, coordination cues, and published fact-checks directly in Chrome, Edge, Brave, or Firefox with Web Crypto capture receipts."],
-        ["43K Cross-Domain Archive", "27,678 unique text records, 7,957 reviewed stills, and 2,907 video motion contact sheets distilled into structural laws."],
-        ["Civic Provenance & Radar", "Links domain ownership and published reviews directly to primary sources with double-build SHA-256 verification."]
+        [
+          "CMMNS Extension (v3.10.0)",
+          "Inspects sources, coordination cues, and published fact-checks directly in Chrome, Edge, Brave, or Firefox with Web Crypto capture receipts."
+        ],
+        [
+          "43K Cross-Domain Archive",
+          "27,678 unique text records, 7,957 reviewed stills, and 2,907 video motion contact sheets distilled into structural laws."
+        ],
+        [
+          "Civic Provenance & Radar",
+          "Links domain ownership and published reviews directly to primary sources with double-build SHA-256 verification."
+        ]
       ],
       "run": "Download cmmns-chrome-3.10.0.zip from GitHub Releases and Load unpacked",
       "links": [
-        ["/cmmns.html", "CMMNS"],
-        ["/cmmns.html#try", "Try on your own words"],
-        ["https://github.com/HarperZ9/cmmns", "Source"]
+        [
+          "/cmmns.html",
+          "CMMNS"
+        ],
+        [
+          "/cmmns.html#try",
+          "Try on your own words"
+        ],
+        [
+          "https://github.com/HarperZ9/cmmns",
+          "Source"
+        ]
       ],
-      "verified": "25 November 2026: cmmns v3.10.0 published on GitHub Releases with cmmns-chrome-3.10.0.zip attached; Web Crypto capture receipts and double-build SHA-256 guard merged in cmmns#124; cross-domain archive indexed across 43,380 multi-modal items."
+      "verified": "25 November 2026: cmmns v3.10.0 live on GitHub Releases; cmmns#124 (Web Crypto capture receipts + double-build SHA-256 guard) and cmmns#125 (X Likes auto-pagination, persistent deduplication, unified multi-site download & sister-tool sidecar routing, 1,726 tests PASS, 9/9 CI); cross-domain archive indexed across 43,380 items."
     },
     {
       "id": "research",
@@ -138,16 +282,37 @@
       "produces": "Seven scrubbed benchmark datasets (DS-01 to DS-07), 16 Zenodo DOIs and site papers, and cross-domain structural laws.",
       "contract": "SHA-256 checksummed dataset manifests, planted wrong-control tests, and explicit Verified lines on every publication.",
       "parts": [
-        ["Seven Datasets (DS-01..DS-07)", "7,391 verified JSONL rows covering agent tool repair, BuildLang compiler bench, 286 physics/colour equations, RAW motion specs, Commons & frontier knowledge graph, planted-failure traps, and recall bench."],
-        ["Preregistered Findings", "669 recorded laboratory findings and timestamped preregistrations where nulls stay public."],
-        ["16 Papers & Preprints", "Public PDFs and Zenodo DOIs covering verifiable trust, capability effects, faithfulness conservation, and bounded verification."]
+        [
+          "Seven Datasets (DS-01..DS-07)",
+          "7,391 verified JSONL rows covering agent tool repair, BuildLang compiler bench, 286 physics/colour equations, RAW motion specs, Commons & frontier knowledge graph, planted-failure traps, and recall bench."
+        ],
+        [
+          "Preregistered Findings",
+          "669 recorded laboratory findings and timestamped preregistrations where nulls stay public."
+        ],
+        [
+          "16 Papers & Preprints",
+          "Public PDFs and Zenodo DOIs covering verifiable trust, capability effects, faithfulness conservation, and bounded verification."
+        ]
       ],
       "run": "Explore /publications.html, /experiments/, or verify SHA256SUMS on published datasets",
       "links": [
-        ["/research.html", "Research index"],
-        ["/publications.html", "Writing & DOIs"],
-        ["/experiments/", "Experiments"],
-        ["/findings/", "Findings"]
+        [
+          "/research.html",
+          "Research index"
+        ],
+        [
+          "/publications.html",
+          "Writing & DOIs"
+        ],
+        [
+          "/experiments/",
+          "Experiments"
+        ],
+        [
+          "/findings/",
+          "Findings"
+        ]
       ],
       "verified": "25 November 2026: 16 papers/preprints with live DOIs and PDFs; 148/148 findings charts carry data-driven accessible curve descriptions; DS-01..DS-07 production pilot suite compiled (7,391 rows across 24 SHA-256 verified files, 0 mismatches, 0 PII/local-path/em-dash findings)."
     }
@@ -159,7 +324,10 @@
       "what": "Multi-step coding-agent tool failure traces paired with verified fix diffs and exit-code-0 recovery oracles (mined from 119,656 calls and 3,967 errors).",
       "platformLabel": "THE FLYWHEEL",
       "hue": "theflywheel",
-      "platforms": ["theflywheel", "rsrch"],
+      "platforms": [
+        "theflywheel",
+        "rsrch"
+      ],
       "oracle": "Exit-code 0 replay diff + PII/secret scrub gate",
       "observed": "1,000 verified error-to-ok trajectories (SHA-256 1a8cdcc5ccec)",
       "verdict": "verified",
@@ -171,7 +339,10 @@
       "what": "268 live origin/main universe .bld modules plus 102 feature tests paired with compiler gap specs and expected effect-row diagnostics.",
       "platformLabel": "BLDLNG",
       "hue": "bldlng",
-      "platforms": ["bldlng", "rsrch"],
+      "platforms": [
+        "bldlng",
+        "rsrch"
+      ],
       "oracle": "buildc diagnostic JSON + C reference SHA-256",
       "observed": "370 tasks (SHA-256 912601c6c3f3): 81/268 universe pass (187 tracked fails), 96/102 feature tests pass",
       "verdict": "verified",
@@ -183,7 +354,10 @@
       "what": "286 equation specifications across optics, colour, signals, statistics, physics, geometry, ecology, and acoustics (12 flagged discrepancies logged).",
       "platformLabel": "THE PLAYGRND",
       "hue": "theplygrnd",
-      "platforms": ["theplygrnd", "rsrch"],
+      "platforms": [
+        "theplygrnd",
+        "rsrch"
+      ],
       "oracle": "IEEE-754 float64 exact sweeps + planted wrong-control kills",
       "observed": "91/91 executable kernels PASS (100.0%), 91/91 wrong controls killed in 5.67 ms (SHA-256 49f6ac4a5339)",
       "verdict": "verified",
@@ -195,7 +369,10 @@
       "what": "Public-clean motion and shader specifications: 25 Wave 65/66 heuristics, 37 DebugViews (0 to 36), 7 WaterViews (1 to 7), and 6 synthetic MV scenarios (zero game textures).",
       "platformLabel": "THE PLAYGRND",
       "hue": "theplygrnd",
-      "platforms": ["theplygrnd", "rsrch"],
+      "platforms": [
+        "theplygrnd",
+        "rsrch"
+      ],
       "oracle": "25 visual/MV heuristics + 0 D3D12 debug errors",
       "observed": "75 public specs (SHA-256 fb20da2427ff); 62/62 Wave 66 checks + 384 live 1080p frames",
       "verdict": "verified",
@@ -207,7 +384,10 @@
       "what": "Derived metadata graph uniting 554 historical thinkers, 50 author-referenced giants, 4,542 deduplicated Commons pointers, 14 global-frontier lanes + 33 sources, 30 concept hubs + 80 edges, 6 project family trees, and full body-of-work catalog (zero third-party raw media).",
       "platformLabel": "THE CMMNS",
       "hue": "thecmmns",
-      "platforms": ["thecmmns", "rsrch"],
+      "platforms": [
+        "thecmmns",
+        "rsrch"
+      ],
       "oracle": "Schema & provenance link check (CC BY derived graph)",
       "observed": "5,435 graph records verified (SHA-256 0beb2cbda6a6, 0 raw media)",
       "verdict": "verified",
@@ -219,7 +399,10 @@
       "what": "145 verification cases (110 DRIFT across 8 defect families including AB520 VITE_/NEXT_PUBLIC_ secret leaks, stubbed proofs, and mutated assumptions, plus 5 UNVERIFIABLE and 30 clean MATCH controls).",
       "platformLabel": "THE FLYWHEEL",
       "hue": "theflywheel",
-      "platforms": ["theflywheel", "rsrch"],
+      "platforms": [
+        "theflywheel",
+        "rsrch"
+      ],
       "oracle": "Three-Plate Oracle vs Single-Plate recall & false-accept",
       "observed": "115/115 recall (100.0%), 0.0% false-accept, 0/30 clean FP, 145/145 3-class accuracy in 3.59 ms (SHA-256 6a6104d9bacc)",
       "verdict": "verified",
@@ -231,7 +414,10 @@
       "what": "80 held-out stratified recall queries across catalogue (35), sessions (25), and memories (20) comparing IDF-gated compact pointers against naive LIKE and unpruned lookup.",
       "platformLabel": "RSRCH",
       "hue": "rsrch",
-      "platforms": ["rsrch", "theflywheel"],
+      "platforms": [
+        "rsrch",
+        "theflywheel"
+      ],
       "oracle": "hit@1, hit@5, MRR, median latency (ms), injected tokens",
       "observed": "hit@1 78.75%, hit@5 91.25% (73/80), MRR 0.8375, 2.00 ms median, 95.6 avg tokens (SHA-256 16617a68b9ce)",
       "verdict": "verified",
@@ -241,14 +427,24 @@
   "datasetsVerified": "25 November 2026: all 7 datasets (7,391 total JSONL rows across 24 files) passed audit_suite.py with 24/24 SHA-256 checksums verified (0 mismatches), 0 PII/credential/local-path leaks, and 0 em dashes; third-party media and private corpora remain excluded from public exports.",
   "benchmarks": [
     {
-      "surface": "RAW DX12 Wave 68 Live Playtest & GPU Suites",
+      "surface": "RAW DX12 Wave 70 Live Playtest & GPU Suites",
       "platform": "THE PLAYGRND",
       "hue": "theplygrnd",
-      "check": "Wave 68 (a7e02fd) live 4-scene playtest (384 1080p frames), Wave 67 GameComposite intercept (0xc29d75356434a10a), 522/522 runtime, 0 Ninja warnings",
-      "result": "93/96 (96.9%) live heuristics PASS: inn_interior 24/24, septimus_cave 24/24, windhelm_ext_snow 23/24, riverwood_day 22/24; 19 GPU solvers in ~1.57 ms (RTX 4090), 0 D3D12 errors",
+      "check": "Wave 70 (5f05e30) live 4-scene moving-camera playtest (384 1080p frames, zero thresholds weakened), GameComposite 0xc29d75356434a10a, 522/522 runtime, 0 Ninja warnings",
+      "result": "96/96 (100.0%) live heuristics PASS across all 4 scenes: inn_interior 24/24, septimus_cave 24/24, riverwood_day 24/24, windhelm_ext_snow 24/24; shd_boil -85%; 19 GPU solvers in ~1.57 ms (RTX 4090)",
       "verdict": "verified",
       "verdictLabel": "Verified",
-      "gap": "3 of 96 remaining live heuristics: shadow_temporal_stability on snow/river and downward cam_sweep depth_range on river, plus WebGPU browser pass parity"
+      "gap": "WebGPU browser scenes run on a subset of the native DX12 pass stack; full 4K 60 FPS gate remains next"
+    },
+    {
+      "surface": "JFC-3P Local 14B Frontier Parity Eval (RTX 4090)",
+      "platform": "THE FLYWHEEL",
+      "hue": "theflywheel",
+      "check": "Paired Arm A vs Arm B on 24 stratified held-out tasks (flywheel#550, Q4_K_M 14.8B GGUF, seed=42, temp=0.0, 24/24 planted-wrong oracle kills)",
+      "result": "16.67% (4/24) to 70.83% (17/24), +54.16 pts, exact McNemar p=0.000244 (0 regressions): DS-02 BuildLang 0/8 to 8/8 (100%), DS-01 Tool-Repair 1/6 to 5/6 (83.33%), 91.66 tok/s at 16.44 GB VRAM",
+      "verdict": "verified",
+      "verdictLabel": "Verified",
+      "gap": "DS-03 mental float math (3/10 to 4/10) still fails 6/10 without invoking BuildLang kcore, motivating live tool-call arm next"
     },
     {
       "surface": "DS-06 Three-Plate Verification Oracle + AB520 Guard",
@@ -333,24 +529,219 @@
   ],
   "honestGaps": "Numbers that have not passed yet stay marked as open gaps. In BuildLang, 187 of 268 universe/ modules still fail buildc check on live origin/main (81 pass; tracked in buildlang #290) and BDB still targets lower RAM and broader sqllogictest coverage despite closing 438/500 silent fuzz corruptions to 0/500. In DS-03, 91 of 286 equation specs have executable float64 kernels while 195 remain specification-only and 12 discrepancies are flagged. In DS-07 recall, 7 of 80 held-out queries still miss top-5 across memories and sessions. In audio stem separation, current htdemucs_ft baseline (9.03 dB SDR) trails BS-RoFormer (11.99 dB) by 2.96 dB. In RAW, WebGPU browser scenes run on a subset of the native DX12 pass stack.",
   "consolidationLede": "Across 206 total GitHub repositories (88 live own repositories, 19 forks, and 99 archived repositories as of 25 November 2026, including telos-v2 archival), standalone repositories whose code and tests have been merged into a super-project now point directly to their live monorepo paths across this site. Historical release tags and sealed evidence hashes remain readable where published binaries or Zenodo DOIs depend on them.",
+  "workflowsLede": "Eight end-to-end multimodal, procedural, scientific, and authorized security pipelines showing how The Commons, The Flywheel, BuildLang, The Playground, and Security tools compose into concrete workflows with SHA-256 receipts.",
+  "workflows": [
+    {
+      "id": "WF-01",
+      "name": "Capture → Deconstruct → Distill → Re-Synthesize (Universal Multimedia Loop)",
+      "hue": "thecmmns",
+      "platformLabel": "THE CMMNS + PLAYGRND",
+      "chain": "cmmns (daylight.sidecar/1 + commons-digest/1) -> gather/deconstruct (audio, video, image, paper) -> superframe/distill + build-color + ear + daw -> buildlang kcore_fast.bld -> flywheel engine-receipt/1",
+      "replaces": "Readwise, Are.na, ad-hoc yt-dlp scripts, manual palette sampling, disconnected stem scripts",
+      "output": "Deduplicated archive, spectral stems/LUFS, keyframes/motion deltas, distill_recipe/1, and SHA-256 receipt"
+    },
+    {
+      "id": "WF-02",
+      "name": "Music & Audio Download → Stems, Layers, Mastering → Remix & Remaster",
+      "hue": "theplygrnd",
+      "platformLabel": "THE PLAYGRND DAW",
+      "chain": "cmmns audio capture -> gather/deconstruct/audio_deconstruct.py (6 spectral bands, LUFS/true-peak/crest, 4-layer M/S/Low/High + neural stems) -> superframe/packages/{ear,remastering,daw} -> kcore_fast.bld -> engine-receipt/1",
+      "replaces": "iZotope Ozone/RX, FabFilter meters, Audacity inspection, standalone web stem splitters",
+      "output": "Inspectable WAV stems, Parseval energy receipt, mastering telemetry JSON, and DAW-ready layers"
+    },
+    {
+      "id": "WF-03",
+      "name": "Whitepaper & Research → Equations & Claims → Three-Plate Oracle → Study & Train",
+      "hue": "rsrch",
+      "platformLabel": "RSRCH + FLYWHEEL",
+      "chain": "cmmns + gather/deconstruct/paper_deconstruct.py (sections, LaTeX equations, DOIs, FORMULAS.tsv match) -> crucible + three_plate_oracle.py (MATCH/DRIFT/UNVERIFIABLE) -> mneme + DS-07 recall (2 ms) + learn -> JFC-3P local 14B eval (16.67% -> 70.83%, p=0.000244)",
+      "replaces": "Zotero, NotebookLM, Perplexity, LangSmith, unverified RAG notebooks",
+      "output": "paper-deconstruction/1, Crucible claim ledger, DS-05 graph row, Learn deck, and verified RL task"
+    },
+    {
+      "id": "WF-04",
+      "name": "Video, 3D & Shader Pipeline → Motion Laws → Real-Time Engine & Playtest",
+      "hue": "theplygrnd",
+      "platformLabel": "THE PLAYGRND + RAW",
+      "chain": "cmmns + gather/video_media_deconstruct.py (keyframes, scene cuts, 9 Motion Laws) -> superframe/native (8-file modular style.wgsl, lenspipe, crt, build-color) + RAW DX12 Wave 70 (96/96 live moving-camera pass across 4 scenes) -> buildlang HLSL/GLSL/C + kcore_fast -> engine-receipt/1",
+      "replaces": "Post-process-only shader injectors, black-box engines, manual frame scrubbing",
+      "output": "Measured 24-heuristic visual/temporal playtest report, pinned FNV-1a parity hashes, and verified 1080p/4K renders"
+    },
+    {
+      "id": "WF-05",
+      "name": "CAD, Optics, Physics, Nuclear, Robotics & Neuro → BuildLang Kernels → Verified Instruments",
+      "hue": "bldlng",
+      "platformLabel": "BLDLNG + RSRCH",
+      "chain": "FORMULAS.tsv (286 specs) + buildlang (buildc 1.15.0, 12-eq kcore_fast 356.5x bit-exact, BDB QDB2 0/500 silent corruptions) -> superframe (lenspipe, cosmo 512^3 P3M, crt, diagram, plot-sheet) + calibrate-pro -> Three-Plate Oracle + DS-03 -> interactive web explainers",
+      "replaces": "Disconnected optical/CAD/calibration scripts and unchecked numerical notebooks",
+      "output": "Bit-exact cross-OS deterministic kernel, tolerance/metrology certificate, and interactive web plate"
+    },
+    {
+      "id": "WF-06",
+      "name": "Civic Thread & Investigation → Provenance → Zero-Slop Prose → Public Showcase",
+      "hue": "artiql8",
+      "platformLabel": "THE CMMNS + ARTIQL8",
+      "chain": "cmmns v3.10 (auto-paginate skip-dup archive, live reply provenance, coordination cues) -> gather + crucible + forum -> articulate (ARTIQL8 v0.19.1) + universal_principles_gate + workstation_mcp.bld (0.0096 ms) -> HarperZ9.github.io (Ctrl+K 5-pillar surface)",
+      "replaces": "Opaque crowd scores, disconnected grammar checkers, fragmented static portfolios",
+      "output": "Source-hashed briefing, zero-em-dash accessible publication, and cryptographic Verified line"
+    },
+    {
+      "id": "WF-07",
+      "name": "Procedural Rendering, SDF Modeling, Biomechanical Foliage & Megascans-Replacement Forge",
+      "hue": "theplygrnd",
+      "platformLabel": "THE PLAYGRND + BLDLNG",
+      "chain": "cmmns + superframe/packages/decompose (74 features, 17 wallpaper groups) -> superframe/packages/materials (111 spectral 380-780 nm records, tileable 0.0-seam PBR+spectral maps, WGSL/HLSL/glTF) + native/tools/asset (SDF sculpt, sparse 8x8x8 surface nets, QEM decimation, Newton bake, RNA1/glTF) + RawFloraEngine (space-colonization, da Vinci pipe model, seasonal phenology, 64v/126t GPU meshlets) + buildlang procgen_forge.bld -> RAW DX12 + engine-receipt/1",
+      "replaces": "Unreal Engine 5 Nanite/Lumen/PCG/Substrate, Blender Geometry Nodes/Sculpt, SpeedTree, Substance Designer, Quixel Megascans",
+      "output": "Resolution-independent spectral materials (KB vs GB), tileable maps (0.0 seam error), 64v/126t DX12/WebGPU meshlets with exact bounding spheres & normal cones, and SHA-256 receipt"
+    },
+    {
+      "id": "WF-08",
+      "name": "Authorized Security, Purple-Team & Release Assurance Pipeline",
+      "hue": "theflywheel",
+      "platformLabel": "SECURITY + FLYWHEEL",
+      "chain": "Written authorization & ROE admission (Orca / Array RoeEnforcer) -> native C++23 assessment (WARDEN/Seed 59 modules) + controlled inference-boundary calibration (Isomorph, payloads embargoed) + Layer 0-2 hardware audit (Phantom v1.1.1, 0 .unwrap()) -> intent-drift & release gate (Bounds / Aleph / Sofer) -> offline verification receipts (EMET, Proof Surface, Crucible, Secret Redact IO)",
+      "replaces": "Unverified assessment scripts, ad-hoc red-team logs without replayable scope or hash-chained evidence",
+      "output": "Scope-bound ROE receipts, linked-hash evidence bundles, reversible hardware audit backups, and closed MATCH/DRIFT/UNVERIFIABLE verdicts (live payloads strictly embargoed)"
+    }
+  ],
+  "workflowsVerified": "25 November 2026: all 8 pipelines (WF-01 to WF-08) mapped directly from verified repository capabilities, Wave 3 live receipts (RAW Wave 70 96/96, JFC-3P 14B 70.83%, CMMNS#125, BuildLang#329/#330, Superframe#144, Flywheel#548), and capability-public security boundaries.",
   "consolidation": [
-    { "oldRepo": "signal-kernels", "livePath": "superframe/packages/kernels/signal-kernels", "liveUrl": "https://github.com/HarperZ9/superframe/tree/main/packages/kernels/signal-kernels", "platform": "THE PLAYGRND", "hue": "theplygrnd", "status": "Merged & archived" },
-    { "oldRepo": "anomaly-kernels", "livePath": "superframe/packages/kernels/anomaly-kernels", "liveUrl": "https://github.com/HarperZ9/superframe/tree/main/packages/kernels/anomaly-kernels", "platform": "THE PLAYGRND", "hue": "theplygrnd", "status": "Merged & archived" },
-    { "oldRepo": "gpu-trace-validator", "livePath": "superframe/packages/quality/gpu-trace-validator", "liveUrl": "https://github.com/HarperZ9/superframe/tree/main/packages/quality/gpu-trace-validator", "platform": "THE PLAYGRND", "hue": "theplygrnd", "status": "Merged & archived" },
-    { "oldRepo": "open-archives", "livePath": "superframe/library/open-archives", "liveUrl": "https://github.com/HarperZ9/superframe/tree/main/library/open-archives", "platform": "THE PLAYGRND", "hue": "theplygrnd", "status": "Merged & archived" },
-    { "oldRepo": "superstack", "livePath": "superframe/packages/superstack", "liveUrl": "https://github.com/HarperZ9/superframe/tree/main/packages/superstack", "platform": "THE PLAYGRND", "hue": "theplygrnd", "status": "Merged & archived" },
-    { "oldRepo": "reconcile", "livePath": "superframe/packages/reconcile", "liveUrl": "https://github.com/HarperZ9/superframe/tree/main/packages/reconcile", "platform": "THE PLAYGRND", "hue": "theplygrnd", "status": "Merged & archived" },
-    { "oldRepo": "studio-libs", "livePath": "superframe/packages/studio-libs", "liveUrl": "https://github.com/HarperZ9/superframe/tree/main/packages/studio-libs", "platform": "THE PLAYGRND", "hue": "theplygrnd", "status": "Merged & archived" },
-    { "oldRepo": "raw-native", "livePath": "superframe/native", "liveUrl": "https://github.com/HarperZ9/superframe/tree/main/native", "platform": "THE PLAYGRND", "hue": "theplygrnd", "status": "Merged & archived (v0.8.0 binaries kept on tag)" },
-    { "oldRepo": "build-color", "livePath": "superframe/packages/colour/build-color", "liveUrl": "https://github.com/HarperZ9/superframe/tree/main/packages/colour/build-color", "platform": "THE PLAYGRND", "hue": "theplygrnd", "status": "Merged (PyPI OIDC repoint pending)" },
-    { "oldRepo": "build-universe", "livePath": "buildlang/universe", "liveUrl": "https://github.com/HarperZ9/buildlang/tree/main/universe", "platform": "BLDLNG", "hue": "bldlng", "status": "Merged & archived" },
-    { "oldRepo": "build-engine, build-ui, build-finance, build-oracle, build-ecosystem", "livePath": "buildlang/suite/", "liveUrl": "https://github.com/HarperZ9/buildlang/tree/main/suite", "platform": "BLDLNG", "hue": "bldlng", "status": "Merged & archived" },
-    { "oldRepo": "buildlang-tmLanguage, buildlang-vscode", "livePath": "buildlang/editors/", "liveUrl": "https://github.com/HarperZ9/buildlang/tree/main/editors", "platform": "BLDLNG", "hue": "bldlng", "status": "tmLanguage merged & archived; vscode Marketplace live" },
-    { "oldRepo": "flywheel-receipt-demo, bootloops-second-checker, flywheel-evidence-task", "livePath": "flywheel/demos/", "liveUrl": "https://github.com/HarperZ9/flywheel/tree/main/demos", "platform": "THE FLYWHEEL", "hue": "theflywheel", "status": "Merged & archived" },
-    { "oldRepo": "crewai-kickoff-replay-receipt, vllm-ci-forum-receipt", "livePath": "flywheel/demos/", "liveUrl": "https://github.com/HarperZ9/flywheel/tree/main/demos", "platform": "THE FLYWHEEL", "hue": "theflywheel", "status": "Archived sealed receipts (commit hashes unchanged)" },
-    { "oldRepo": "witnessing-spine, faithful-transpile", "livePath": "flywheel/docs/research/", "liveUrl": "https://github.com/HarperZ9/flywheel/tree/main/docs/research", "platform": "THE FLYWHEEL", "hue": "theflywheel", "status": "Merged & archived (DOIs unchanged)" },
-    { "oldRepo": "discover, secret-redact-io, terminal-state-fixtures, behavior-transform.io", "livePath": "flywheel/packages/", "liveUrl": "https://github.com/HarperZ9/flywheel/tree/main/packages", "platform": "THE FLYWHEEL", "hue": "theflywheel", "status": "Merged & archived (pinned Action commit intact)" },
-    { "oldRepo": "proof-surface-report, context-curator-lite, workflow-harness-lite, agent-hook-pack, agent-routing-kit, accountable-engine, seal-watch", "livePath": "flywheel/packages/", "liveUrl": "https://github.com/HarperZ9/flywheel/tree/main/packages", "platform": "THE FLYWHEEL", "hue": "theflywheel", "status": "Merged & archived" }
+    {
+      "oldRepo": "signal-kernels",
+      "livePath": "superframe/packages/kernels/signal-kernels",
+      "liveUrl": "https://github.com/HarperZ9/superframe/tree/main/packages/kernels/signal-kernels",
+      "platform": "THE PLAYGRND",
+      "hue": "theplygrnd",
+      "status": "Merged & archived"
+    },
+    {
+      "oldRepo": "anomaly-kernels",
+      "livePath": "superframe/packages/kernels/anomaly-kernels",
+      "liveUrl": "https://github.com/HarperZ9/superframe/tree/main/packages/kernels/anomaly-kernels",
+      "platform": "THE PLAYGRND",
+      "hue": "theplygrnd",
+      "status": "Merged & archived"
+    },
+    {
+      "oldRepo": "gpu-trace-validator",
+      "livePath": "superframe/packages/quality/gpu-trace-validator",
+      "liveUrl": "https://github.com/HarperZ9/superframe/tree/main/packages/quality/gpu-trace-validator",
+      "platform": "THE PLAYGRND",
+      "hue": "theplygrnd",
+      "status": "Merged & archived"
+    },
+    {
+      "oldRepo": "open-archives",
+      "livePath": "superframe/library/open-archives",
+      "liveUrl": "https://github.com/HarperZ9/superframe/tree/main/library/open-archives",
+      "platform": "THE PLAYGRND",
+      "hue": "theplygrnd",
+      "status": "Merged & archived"
+    },
+    {
+      "oldRepo": "superstack",
+      "livePath": "superframe/packages/superstack",
+      "liveUrl": "https://github.com/HarperZ9/superframe/tree/main/packages/superstack",
+      "platform": "THE PLAYGRND",
+      "hue": "theplygrnd",
+      "status": "Merged & archived"
+    },
+    {
+      "oldRepo": "reconcile",
+      "livePath": "superframe/packages/reconcile",
+      "liveUrl": "https://github.com/HarperZ9/superframe/tree/main/packages/reconcile",
+      "platform": "THE PLAYGRND",
+      "hue": "theplygrnd",
+      "status": "Merged & archived"
+    },
+    {
+      "oldRepo": "studio-libs",
+      "livePath": "superframe/packages/studio-libs",
+      "liveUrl": "https://github.com/HarperZ9/superframe/tree/main/packages/studio-libs",
+      "platform": "THE PLAYGRND",
+      "hue": "theplygrnd",
+      "status": "Merged & archived"
+    },
+    {
+      "oldRepo": "raw-native",
+      "livePath": "superframe/native",
+      "liveUrl": "https://github.com/HarperZ9/superframe/tree/main/native",
+      "platform": "THE PLAYGRND",
+      "hue": "theplygrnd",
+      "status": "Merged & archived (v0.8.0 binaries kept on tag)"
+    },
+    {
+      "oldRepo": "build-color",
+      "livePath": "superframe/packages/colour/build-color",
+      "liveUrl": "https://github.com/HarperZ9/superframe/tree/main/packages/colour/build-color",
+      "platform": "THE PLAYGRND",
+      "hue": "theplygrnd",
+      "status": "Merged (PyPI OIDC repoint pending)"
+    },
+    {
+      "oldRepo": "build-universe",
+      "livePath": "buildlang/universe",
+      "liveUrl": "https://github.com/HarperZ9/buildlang/tree/main/universe",
+      "platform": "BLDLNG",
+      "hue": "bldlng",
+      "status": "Merged & archived"
+    },
+    {
+      "oldRepo": "build-engine, build-ui, build-finance, build-oracle, build-ecosystem",
+      "livePath": "buildlang/suite/",
+      "liveUrl": "https://github.com/HarperZ9/buildlang/tree/main/suite",
+      "platform": "BLDLNG",
+      "hue": "bldlng",
+      "status": "Merged & archived"
+    },
+    {
+      "oldRepo": "buildlang-tmLanguage, buildlang-vscode",
+      "livePath": "buildlang/editors/",
+      "liveUrl": "https://github.com/HarperZ9/buildlang/tree/main/editors",
+      "platform": "BLDLNG",
+      "hue": "bldlng",
+      "status": "tmLanguage merged & archived; vscode Marketplace live"
+    },
+    {
+      "oldRepo": "flywheel-receipt-demo, bootloops-second-checker, flywheel-evidence-task",
+      "livePath": "flywheel/demos/",
+      "liveUrl": "https://github.com/HarperZ9/flywheel/tree/main/demos",
+      "platform": "THE FLYWHEEL",
+      "hue": "theflywheel",
+      "status": "Merged & archived"
+    },
+    {
+      "oldRepo": "crewai-kickoff-replay-receipt, vllm-ci-forum-receipt",
+      "livePath": "flywheel/demos/",
+      "liveUrl": "https://github.com/HarperZ9/flywheel/tree/main/demos",
+      "platform": "THE FLYWHEEL",
+      "hue": "theflywheel",
+      "status": "Archived sealed receipts (commit hashes unchanged)"
+    },
+    {
+      "oldRepo": "witnessing-spine, faithful-transpile",
+      "livePath": "flywheel/docs/research/",
+      "liveUrl": "https://github.com/HarperZ9/flywheel/tree/main/docs/research",
+      "platform": "THE FLYWHEEL",
+      "hue": "theflywheel",
+      "status": "Merged & archived (DOIs unchanged)"
+    },
+    {
+      "oldRepo": "discover, secret-redact-io, terminal-state-fixtures, behavior-transform.io",
+      "livePath": "flywheel/packages/",
+      "liveUrl": "https://github.com/HarperZ9/flywheel/tree/main/packages",
+      "platform": "THE FLYWHEEL",
+      "hue": "theflywheel",
+      "status": "Merged & archived (pinned Action commit intact)"
+    },
+    {
+      "oldRepo": "proof-surface-report, context-curator-lite, workflow-harness-lite, agent-hook-pack, agent-routing-kit, accountable-engine, seal-watch",
+      "livePath": "flywheel/packages/",
+      "liveUrl": "https://github.com/HarperZ9/flywheel/tree/main/packages",
+      "platform": "THE FLYWHEEL",
+      "hue": "theflywheel",
+      "status": "Merged & archived"
+    }
   ],
   "pageVerified": "25 November 2026: generated by scripts/build-architecture.mjs from site-src/world/architecture.json; checked by pytest site contracts, internal link crawl, publish metadata gate, em-dash and local-path scans, art receipt digests, and rendered desktop/mobile visual inspection."
 }

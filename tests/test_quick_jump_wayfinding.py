@@ -86,16 +86,53 @@ def test_wave1_verified_metrics_synced_in_architecture() -> None:
     for token in (
         "98/102",
         "0/500",
-        "462.9x",
-        "0.245 ms",
-        "93/96",
+        "356.5x",
+        "0.0096 ms",
+        "96/96",
         "24/24",
         "0xc29d75356434a10a",
         "forbid(unsafe_code)",
         "JFC-3P",
+        "70.83%",
+        "0.000244",
         "88 live own",
         "99 archived",
         "64 dead bundles",
+        "Aurora",
+        "435,306",
+        "Sovereign",
+        "WARDEN",
+        "2.62M+",
+        "WF-07",
+        "WF-08",
     ):
-        assert token in arch, f"expected Wave 1 metric {token!r} in architecture.html"
+        assert token in arch, f"expected verified metric or lineage token {token!r} in architecture.html"
     assert "\u2014" not in arch, "em dash detected in architecture.html"
+
+
+def test_security_hierarchy_and_toolkit_recognized_cleanly() -> None:
+    for rel in ("security.html", "security-toolkit.html"):
+        text = (ROOT / rel).read_text(encoding="utf-8")
+        assert "\u2014" not in text, f"em dash found in {rel}"
+        assert ("zen" + "tropy") not in text.lower(), f"retired name found in {rel}"
+        assert not re.search(r"(?i)\boperators?\b", text), f"forbidden operator wording in {rel}"
+        assert not re.search(r"[A-Za-z]:[\\/](?:dev|Users|Downloads|wt|library)", text), f"local path in {rel}"
+        for name in (
+            "Sovereign",
+            "WARDEN",
+            "Sofer",
+            "ORCA",
+            "Array",
+            "Bounds",
+            "Isomorph",
+            "Aleph",
+            "Kun",
+            "Phantom",
+            "EMET",
+            "Proof Surface",
+            "Crucible",
+            "Secret Redact IO",
+            "Agent Hook Pack",
+            "Repo Proof Index",
+        ):
+            assert name in text, f"missing security hierarchy tool {name!r} in {rel}"

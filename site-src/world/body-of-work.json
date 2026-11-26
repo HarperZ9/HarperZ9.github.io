@@ -1228,32 +1228,66 @@
       ]
     },
     {
+      "id": "aurora-wow-origins",
+      "name": "Aurora (WoW SDK, 4-Stage DSL Compiler & Capability Catalogs)",
+      "category": "tools",
+      "categoryLabel": "Compiler & SDK Ancestor",
+      "era": "era-2-language-instruments",
+      "flagship": "buildlang / flywheel",
+      "hue": "bldlng",
+      "status": "ancestor",
+      "lang": "Lua, TypeScript (TSTL), JSON",
+      "loc": 435306,
+      "test_files": 24,
+      "summary": "Post-shader World of Warcraft engineering lineage (765 tracked files, 52 commits): 70+ SDK modules, 66 rotations across Lua and TSTL, a full 4-stage custom Aurora DSL Compiler (Lexer, Parser, Semantic Analyzer, CodeGen + VSCode grammar), and structured JSON capability, receipt, lineage, and runtime-boundary catalogs that directly seeded both BuildLang and The Flywheel.",
+      "run": "Trace the Aurora -> BuildLang & Flywheel lineage at /architecture.html#lineage",
+      "gap": "Historical ancestor preserved for lineage provenance; active compiler and receipt development continues in BuildLang and Flywheel.",
+      "links": [
+        [
+          "/architecture.html#lineage",
+          "Family Tree #7"
+        ],
+        [
+          "/buildlang.html",
+          "BuildLang descendant"
+        ],
+        [
+          "/flywheel.html",
+          "Flywheel descendant"
+        ]
+      ]
+    },
+    {
       "id": "controlled-private-security-practice",
-      "name": "Controlled-Private Security & Purple-Team Boundary Systems (Array, Seed, ORCA, Bounds, Aleph, Sofer, Isomorph)",
+      "name": "Security & Purple-Team Hierarchy (Sovereign, WARDEN/Seed, Sofer, Orca, Array, Adversarial, Isomorph, Bounds, Aleph, Kun)",
       "category": "security",
-      "categoryLabel": "Security / Hardware",
+      "categoryLabel": "Security / Purple-Team",
       "era": "era-3-accountability-mcp",
-      "flagship": "flywheel",
+      "flagship": "security / flywheel",
       "hue": "theflywheel",
       "status": "controlled private",
-      "lang": "Python, Rust",
-      "loc": 0,
-      "test_files": 0,
-      "summary": "High-level public capability boundary documentation for private defensive, red-team, and purple-team verification harnesses run strictly on owned or authorized test targets. Source code, operational payloads, and client artifacts remain strictly private.",
-      "run": "Read public capability boundaries at /security.html and /private-practice.html",
-      "gap": "Zero paid third-party red-team engagements to date; all tests executed on owned systems with planted faults; classifier-evasion tooling is never published or packaged.",
+      "lang": "Python, C++23, Rust",
+      "loc": 2620000,
+      "test_files": 2347,
+      "summary": "Full 18-repository security and purple-team engineering hierarchy (2.62M+ measured LOC, 2,347 test files, 869 commits) spanning Sovereign 39-agent routing, C++23 WARDEN/Seed (224,887 LOC, 59 ATT&CK modules), Sofer domain ledger (1.36M LOC, 74 packages), Orca ROE runtime, Array + Adversarial campaign orchestrators, Isomorph inference-boundary harness, Bounds trust verifier, Aleph release gate, and Kun path-only recovery. Capability-public and strictly payload-embargoed.",
+      "run": "Read the full hierarchy and authorization boundaries at /security.html and /security-toolkit.html",
+      "gap": "Private source, live operational payloads, private methods, targets, and client artifacts remain strictly embargoed under written-authorization rules.",
       "links": [
         [
           "/security.html",
-          "Open on site"
+          "Security Hub"
+        ],
+        [
+          "/security-toolkit.html",
+          "Security Toolkit"
         ],
         [
           "/private-practice.html",
           "Private Practice"
         ],
         [
-          "/security-toolkit.html",
-          "Security Toolkit"
+          "/architecture.html#lineage",
+          "Family Tree #8"
         ]
       ]
     }

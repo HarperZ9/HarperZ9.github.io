@@ -33,7 +33,7 @@
       "summary": "41 merged upstream PRs, full CV, role resumes, Flywheel verification pilot, and independence policy."
     }
   ],
-  "count": 377,
+  "count": 381,
   "items": [
     {
       "t": "Home (Front Door)",
@@ -142,6 +142,40 @@
       "s": "Every essay, Who Knew First investigation, briefing, and Zenodo DOI preprint in five sections.",
       "q": "publications writing essays papers doi zenodo briefings writing.html",
       "f": 1
+    },
+    {
+      "t": "Cohesive Multimodal & Procedural Pipelines (WF-01 to WF-08)",
+      "u": "/architecture.html#pipelines",
+      "p": "platforms",
+      "k": "Pipelines",
+      "s": "Eight end-to-end workflows spanning multimedia capture, audio stems, SDF/foliage procedural forge (WF-07), and authorized security assurance (WF-08).",
+      "q": "pipelines wf-01 wf-07 wf-08 procedural sdf foliage megascans security assurance workflows",
+      "f": 1
+    },
+    {
+      "t": "Aurora (WoW Origins & 4-Stage DSL Compiler)",
+      "u": "/architecture.html#lineage",
+      "p": "platforms",
+      "k": "Lineage",
+      "s": "Post-shader World of Warcraft engineering lineage (765 tracked files, 52 commits): 70+ SDK modules, 66 rotations across Lua and TSTL, a full 4-stage...",
+      "q": "aurora wow origins dsl compiler tstl lua family tree 7 buildlang flywheel ancestor aurora-wow-origins / lua, typescript (tstl), json"
+    },
+    {
+      "t": "Security & Purple-Team Hierarchy (2.62M+ LOC)",
+      "u": "/security.html#hierarchy",
+      "p": "platforms",
+      "k": "Security",
+      "s": "Full 18-repo security hierarchy: Sovereign -> WARDEN/Seed -> Sofer, Orca, Array, Isomorph, Bounds, Aleph, Kun -> Phantom & EMET.",
+      "q": "security purple team sovereign warden seed sofer orca array adversarial isomorph bounds aleph kun phantom emet hierarchy",
+      "f": 1
+    },
+    {
+      "t": "Security Engineering Toolkit & Complete Hierarchy",
+      "u": "/security-toolkit.html#full-hierarchy",
+      "p": "platforms",
+      "k": "Security",
+      "s": "All 16 security and purple-team tools with maturity tags (shipped, active, controlled-private, ancestor) and authorization boundaries.",
+      "q": "security toolkit maturity map sovereign warden sofer orca array bounds isomorph aleph kun phantom emet crucible secret redact"
     },
     {
       "t": "Datasets (DS-01 to DS-07)",
@@ -421,12 +455,12 @@
       "q": "phantom flywheel rust, c/c++, python live standalone security"
     },
     {
-      "t": "Controlled-Private Security & Purple-Team Boundary Systems (Array, Seed, ORCA, Bounds, Aleph...",
+      "t": "Security & Purple-Team Hierarchy (Sovereign, WARDEN/Seed, Sofer, Orca, Array, Adversarial...",
       "u": "/security.html",
       "p": "platforms",
-      "k": "Security / Hardware",
-      "s": "High-level public capability boundary documentation for private defensive, red-team, and purple-team verification harnesses run strictly on owned or...",
-      "q": "controlled-private-security-practice flywheel python, rust controlled private security"
+      "k": "Security / Purple-Team",
+      "s": "A verified maturity index for public security tools, Phantom, EMET, grouped toolkit work, and authorized private security practice by Zain Dana Harper.",
+      "q": "controlled-private-security-practice security / flywheel python, c++23, rust controlled private"
     },
     {
       "t": "Technical support, developer operations, and QA",
