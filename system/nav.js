@@ -138,6 +138,7 @@ function currentRouteRecord(doc) {
   const routes = allLocalRoutes();
   return routes.find((route) => localRoute(route.href, true) === current)
     || routes.find((route) => localRoute(route.href, true).split("#")[0].split("?")[0] === currentBase)
+    || routes.find((route) => (route.aliases || []).some((a) => localRoute(a, true) === currentBase))
     || null;
 }
 

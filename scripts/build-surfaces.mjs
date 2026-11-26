@@ -138,7 +138,7 @@ function workbenchSection(m) {
   if (!m.workbench?.length) return "";
   const total = m.workbench.reduce((n, g) => n + g.engines.length, 0);
   const groups = m.workbench.map((g) => `<div class="wb-group" data-wb-group>
-<h3>${esc(g.discipline)}</h3>
+<h3>${esc(g.discipline)} <span class="wb-disc-n">${g.engines.length}</span></h3>
 <ul class="wb-list">${g.engines.map((e) => {
     const btns = e.actions.map(([act, tgt, label]) => `<button type="button" data-wb-action="${esc(act)}" data-wb-target="${esc(tgt)}">${esc(label)}</button>`).join("");
     return `<li data-wb-row><span class="wb-name">${esc(e.name)}</span><span class="wb-desc">${esc(e.desc)}</span><span class="wb-actions">${btns}</span></li>`;
@@ -147,7 +147,7 @@ function workbenchSection(m) {
   return `<section class="sx" id="workbench" aria-labelledby="workbench-h">
 <span id="instruments"></span>
 <h2 id="workbench-h">Instruments and study tools</h2>
-<p>Every generator, instrument, textile loom, plotter, fractal kernel, lettering family, shader bank, synthesizer, and 3D world in this repository consolidated onto one hairline ledger. Filter by medium or mount any engine inline on this stage without leaving The Playground.</p>
+<p>All ${total} generators, looms, plotters, fractals, lettering families, shaders, synths, and 3D worlds consolidated onto one hairline ledger. Filter or mount any engine inline.</p>
 <div class="wb-toolbar">
   <label for="wb-filter" class="sr-only">Filter creative engines</label>
   <input id="wb-filter" type="search" placeholder="Filter engines: loom, thread, poster, fractal, fourier, splat, sound..." autocomplete="off">
@@ -176,7 +176,7 @@ function nativeSection() {
   return `<section class="sx" id="native" aria-labelledby="native-h">
 <h2 id="native-h">Native renderer (RAW DX12 / Vulkan / WebGPU)</h2>
 ${labelFor("raw-render")}
-<p>${esc(RW.INTRO.lede)} Live DirectX 12 Skyrim SE graphics replacement passes 96 of 96 moving-camera checks across four scenes (384 1080p frames, 19 solvers in 1.57 ms, 0 D3D12 errors), with Fallout 4 and Starfield DX12 runtime bridges sharing the same certified shader architecture.</p>
+<p>Real-time GPU renderer certified beside a CPU path-traced reference. Live DX12 Skyrim SE graphics replacement passes 96/96 moving-camera checks (384 1080p frames, 19 solvers in 1.57 ms, 0 D3D12 errors), shared with Fallout 4 and Starfield runtime bridges.</p>
 <div class="lw-walk" data-toy="engine" data-live="/media/raw-native/live/index.html">
 <ul class="lw-doors">${doors}</ul>
 <p class="lw-go" hidden><button type="button" class="toy-btn" data-start="scene=test" data-bytes="0">${esc(test.go)}</button> <span class="rn-aside">${esc(test.cap)}</span></p>
@@ -228,7 +228,7 @@ ${subSecs}
 function superframeSection() {
   return `<section class="sx" id="superframe" aria-labelledby="superframe-h">
 <h2 id="superframe-h"><span class="d-3d" data-hue="theplygrnd">Superframe: one seeded recipe across every medium</span></h2>
-<p>Superframe is the deterministic core of The Playground. Describe a piece in plain words and receive it back simultaneously as paint, living type, line drawing, carved relief, sound, and touch pattern from one seed. Fail-closed <code>SHA256SUMS</code> installer (Superframe PR #151): <code>irm https://raw.githubusercontent.com/HarperZ9/superframe/main/install.ps1 | iex</code> (Windows) or <code>curl -fsSL https://raw.githubusercontent.com/HarperZ9/superframe/main/install.sh | sh</code> (macOS/Linux).</p>
+<p>Deterministic core of The Playground: one plain-word seed renders as paint, living type, lines, clay relief, and sound. Fail-closed <code>SHA256SUMS</code> installer: <code>irm https://raw.githubusercontent.com/HarperZ9/superframe/main/install.ps1 | iex</code> (Win) or <code>curl -fsSL https://raw.githubusercontent.com/HarperZ9/superframe/main/install.sh | sh</code> (Unix).</p>
 <div class="sf-stack" data-stack aria-roledescription="layered readouts">
   <img class="layer base" loading="lazy" src="/media/world/superframe/paint-1920.webp" srcset="/media/world/superframe/paint-960.webp 960w, /media/world/superframe/paint-1280.webp 1280w, /media/world/superframe/paint-1920.webp 1920w" sizes="(max-width: 960px) 100vw, 960px" width="1920" height="1080" decoding="async" alt="Paint: rust coral, indigo ink stain, teal frost star, contour lens, ochre network, and vermilion spray on bone paper.">
   <img class="layer" loading="lazy" data-layer="lines" src="/media/world/superframe/lines-1920.webp" srcset="/media/world/superframe/lines-960.webp 960w, /media/world/superframe/lines-1280.webp 1280w, /media/world/superframe/lines-1920.webp 1920w" sizes="(max-width: 960px) 100vw, 960px" width="1920" height="1080" decoding="async" alt="Lines: the same recipe drawn as contour lines on bone paper." data-x="22" data-y="30">
@@ -247,29 +247,37 @@ function superframeSection() {
 
 function studioMediaSection() {
   return `<section class="sx" id="studio-media" aria-labelledby="studio-media-h">
-<h2 id="studio-media-h">Ecosystem 1080p explainer &amp; Round 2 studio sound</h2>
-<p>Opt-in media authored directly from the unified toolchain. Nothing autoplays; every stream starts only on press.</p>
+<h2 id="studio-media-h">Spoken overview, solver film &amp; Round 2 sound</h2>
+<p>Opt-in media built from the unified toolchain. Nothing autoplays; every stream starts only on press.</p>
 <div class="pg-media-grid">
-  <figure style="margin:0">
-    <video controls preload="none" poster="/media/overhaul/ecosystem-super-accelerator-solver-1080p-poster.webp" width="1920" height="1080" aria-label="Ecosystem Super-Accelerator Solver 1080p explainer">
-      <source src="/media/overhaul/ecosystem-super-accelerator-solver-1080p.mp4" type="video/mp4">
-    </video>
-    <figcaption class="sx-as">Ecosystem Super-Accelerator Solver (38 s, 1080p, scored over Estuary Rain fusion bed).</figcaption>
-  </figure>
+  <div class="pg-media-videos">
+    <figure style="margin:0">
+      <video controls preload="none" poster="/media/overhaul/astera-residency-intro-2min-1080p-poster.webp" width="1920" height="1080" aria-label="Zain Dana Harper two-minute overview of tools, repositories, and engines">
+        <source src="https://github.com/HarperZ9/flywheel/releases/download/astera-residency-intro-2026-11-26/astera-residency-intro-2min-1080p.mp4" type="video/mp4">
+      </video>
+      <figcaption class="sx-as">Two-Minute Tools &amp; Engines Overview (107 s, 1080p, custom voice model; <a href="https://github.com/HarperZ9/flywheel/releases/tag/astera-residency-intro-2026-11-26">SHA256SUMS</a>).</figcaption>
+    </figure>
+    <figure style="margin:0">
+      <video controls preload="none" poster="/media/overhaul/ecosystem-super-accelerator-solver-1080p-poster.webp" width="1920" height="1080" aria-label="Ecosystem Super-Accelerator Solver 1080p explainer">
+        <source src="/media/overhaul/ecosystem-super-accelerator-solver-1080p.mp4" type="video/mp4">
+      </video>
+      <figcaption class="sx-as">Ecosystem Super-Accelerator Solver (38 s, 1080p, scored over Estuary Rain).</figcaption>
+    </figure>
+  </div>
   <ul class="pg-audio-list">
     <li>
       <strong>Pacific Horizon (166 BPM Atmospheric DnB + Japanese Jazz-Fusion)</strong>
-      <span class="sx-as">44 s, 48 kHz stereo, -16.5 LUFS, -1.87 dBFS true peak, 0 clipped samples.</span>
+      <span class="sx-as">44 s, 48 kHz stereo, -16.5 LUFS, -1.87 dBFS peak, 0 clips.</span>
       <audio controls preload="none" src="/media/overhaul/round2-pacific-horizon-dnb-jazz.mp3"></audio>
     </li>
     <li>
       <strong>Estuary Rain (162 BPM Liquid DnB + Jazz-Fusion Explainer Bed)</strong>
-      <span class="sx-as">46 s, 48 kHz stereo, -16.7 LUFS, -2.07 dBFS true peak, 0 clipped samples.</span>
+      <span class="sx-as">46 s, 48 kHz stereo, -16.7 LUFS, -2.07 dBFS peak, 0 clips.</span>
       <audio controls preload="none" src="/media/overhaul/round2-estuary-rain-fusion-bed.mp3"></audio>
     </li>
   </ul>
 </div>
-<p class="verified"><b>Verified</b> ${esc(CHECKED)}: every engine row mapped from the repository code catalogue; Estuary homology and metamers tested in <code>tests/estuary-*.test.mjs</code>; Round 2 audio verified at 0 clipped samples with Parseval relative error 0.0; Native RAW and Low Water files verified by SHA-256 against superframe commit cac34166.</p>
+<p class="verified"><b>Verified</b> ${esc(CHECKED)}: 35 engines mapped from repository code; Estuary tested in <code>tests/estuary-*.test.mjs</code>; Round 2 audio at 0 clips; Native RAW and Low Water pinned to superframe commit cac34166.</p>
 </section>`;
 }
 

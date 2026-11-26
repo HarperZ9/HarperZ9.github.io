@@ -242,8 +242,18 @@ def page_graph(page: dict, ctx: Context) -> tuple[list[dict], list[str]]:
                 "author": {"@id": PERSON_ID}, "publisher": {"@id": PERSON_ID}}
         return [person_node(), site], FEEDS
     if url == f"{ORIGIN}/person.html":
+        intro_video = {
+            "@type": "VideoObject",
+            "name": "Zain Dana Harper: Two-Minute Tools & Engines Overview",
+            "description": "107-second first-person walkthrough covering commercial arboriculture, BuildLang, Flywheel, local GPU verification, and RAW DX12.",
+            "thumbnailUrl": f"{ORIGIN}/media/overhaul/astera-residency-intro-2min-1080p-poster.webp",
+            "contentUrl": "https://github.com/HarperZ9/flywheel/releases/download/astera-residency-intro-2026-11-26/astera-residency-intro-2min-1080p.mp4",
+            "uploadDate": "2026-11-26",
+            "duration": "PT1M47S",
+            "url": url,
+        }
         return [person_node(), {"@type": "ProfilePage", "url": url, "name": page["headline"],
-                                "mainEntity": {"@id": PERSON_ID}}], []
+                                "mainEntity": {"@id": PERSON_ID}}, intro_video], []
     if url == f"{ORIGIN}/tools.html":
         return [
             person_node(),

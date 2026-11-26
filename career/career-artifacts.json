@@ -164,14 +164,14 @@
   "authority_sha256": "8c5a030161fc2de8873dcc870e1315e0d6dc9c728f74727c683787bd5e152d34",
   "current_html": [
     {
-      "byte_length": 19031,
+      "byte_length": 20688,
       "extraction_sha256": "1ce11fb18d2f2f094c748dc88fc2c0ddc630b3abd103fa7694ebbb81e977c7c5",
       "format": "html",
       "lane_id": null,
       "mime_type": "text/html; charset=utf-8",
       "page_count": null,
       "path": "hire.html",
-      "sha256": "6a8436dbd2ef90edee7e11eb3389e9d2fbbed30e324489ac7dc1f862e28da121"
+      "sha256": "28fa0d3033004b73303a3b2bcf788ca67bbdae82e4294a60c97f18003ab06185"
     },
     {
       "byte_length": 12331,

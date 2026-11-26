@@ -276,14 +276,37 @@ function buildPerson() {
     <li><span class="ds-term">Respect for human attention</span><span class="ds-gloss">Software should return people to their lives calmer and more capable, never trap them with synthetic urgency or clutter.</span></li>
   </ul>
   <p style="margin-top:20px">Explore <a href="/architecture.html">Platform Architecture</a>, download resumes on <a href="/hire.html">Hire</a> or the <a href="/cv.html">Full CV</a>, browse all <a href="/tools.html">159 Public Repositories</a>, watch talks and demos on <a href="https://www.youtube.com/@zaindanaharper">YouTube</a>, or read the <a href="/current-story.html">Current Story</a>.</p>
-  <figure class="plate" style="margin:28px 0 0">
-    <canvas data-specimen="person-plate-01" data-specimen-layers="moire-swirl" aria-hidden="true" style="display:block;width:100%;height:260px;border:1px solid var(--line)"></canvas>
-    <figcaption class="ds-meta" style="margin-top:8px"><span class="plate-no">Plate 01</span><span class="plate-caption">Crescent meshes spiraling toward a warm core: a closing mark from the same engine as everything else here.</span></figcaption>
+</section>
+
+<section class="ds-sec" id="intro-video" aria-labelledby="h-intro-video">
+  <h2 id="h-intro-video">Two-minute overview (tools, engines, and voice)</h2>
+  <p>A 107-second first-person walkthrough covering commercial arboriculture, BuildLang, Flywheel, local GPU verification, and RAW DX12, narrated with a custom voice model trained from my own speech. Nothing autoplays.</p>
+  <figure class="ds-video-figure">
+    <video controls preload="none" poster="/media/overhaul/astera-residency-intro-2min-1080p-poster.webp" width="1920" height="1080" aria-label="Zain Dana Harper two-minute overview of tools, repositories, and engines">
+      <source src="https://github.com/HarperZ9/flywheel/releases/download/astera-residency-intro-2026-11-26/astera-residency-intro-2min-1080p.mp4" type="video/mp4">
+    </video>
+    <figcaption class="ds-meta"><span>107 s, 1080p 30 fps H.264</span><span>Custom voice model + softly ducked Estuary Rain bed</span><span><a href="https://github.com/HarperZ9/flywheel/releases/tag/astera-residency-intro-2026-11-26">Release &amp; SHA256SUMS</a></span></figcaption>
+  </figure>
+  <figure class="plate ds-plate" style="margin:36px 0 0">
+    <canvas data-specimen="person-plate-01" data-specimen-layers="moire-swirl" aria-hidden="true"></canvas>
+    <figcaption class="ds-meta" style="margin-top:10px"><span class="plate-no">Plate 01</span><span class="plate-caption">Crescent meshes spiraling toward a warm core: a closing mark drawn live by the same engine as everything else here.</span></figcaption>
   </figure>
 </section>
 
 ${provenance("person.html", "2026-11-26", "Direct-voice biography & craft")}
-</article>`;
+</article>
+<script type="module">
+import("/system/media-engine/page.mjs")
+  .then((p) => p.usePlugin("plate"))
+  .then((engine) => {
+    for (const c of document.querySelectorAll("canvas[data-specimen]")) {
+      if (c.dataset.plateMounted === "true") continue;
+      c.dataset.plateMounted = "true";
+      engine.mount(c, "plate", { params: { fromDataset: true }, seed: c.dataset.specimen || "person-plate-01" });
+    }
+  })
+  .catch(() => import("/system/generative-field.js?v=20260902-creative-chassis").then((m) => m.mountSpecimens?.(document)));
+</script>`;
 
   const html = page({
     path: "person.html",
@@ -291,7 +314,6 @@ ${provenance("person.html", "2026-11-26", "Direct-voice biography & craft")}
     description: "The personal story behind the work: eleven years of arboriculture rigging, thirteen years of programming, and five open-source platforms.",
     body,
     bodyClass: "reading ds-sheet",
-    extraHead: '<script type="module" src="/system/generative-field.js?v=20260925-void-plates"></script>',
     backdrop: false,
   });
   writeChecked("person.html", html);
@@ -355,14 +377,18 @@ function buildFlywheel() {
     .replace(/href="superframe\.html"/g, 'href="/playground/#superframe"')
     .replace(/href="estuary\.html"/g, 'href="/playground/#estuary"');
 
-  const scopedStyle = `<link rel="preload" href="/world/ui/shell/pointer/theflywheel-pressed.png" as="image">
-<link rel="stylesheet" href="/world/site/landmark.css">
+  const ptr1x = readFileSync(path.join(site, "world/ui/shell/pointer/theflywheel-pressed.png")).toString("base64");
+  const ptr2x = readFileSync(path.join(site, "world/ui/shell/pointer/theflywheel-pressed@2x.png")).toString("base64");
+  const scopedStyle = `<link rel="stylesheet" href="/world/site/landmark.css">
 <link rel="stylesheet" href="/system/notebook-sheet.css?v=20260925-void-sheets">
 <script type="module" src="/world/site/home-field.js"></script>
 <style>
+  html.ptr:not(.plain) article.fw-ocean[data-hue="theflywheel"] { --p-pressed: -webkit-image-set(url("data:image/png;base64,${ptr1x}") 1x, url("data:image/png;base64,${ptr2x}") 2x) 6 6 !important; }
   .fw-ocean .lp-rel, .fw-ocean .lp-run { max-width: 100%; overflow-wrap: anywhere; }
   .fw-ocean .lp-rel code, .fw-ocean .lp-run code { overflow-wrap: anywhere; word-break: break-word; }
-  .fw-ocean section.mv { margin: clamp(32px, 5vw, 60px) 0 0; padding: 24px 0 0; border-top: 1px solid var(--line); }
+  .fw-ocean section.mv { margin: clamp(36px, 5.5vw, 68px) 0 0; padding: 28px 0 0; border-top: 1px solid var(--line); }
+  .fw-ocean section.mv p { max-width: 64ch; }
+  .fw-ocean a:focus-visible, .fw-ocean button:focus-visible, .fw-ocean summary:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
   .fw-ocean section.mv#demo { border-top: 0; padding-top: 0; }
   .fw-ocean .fw-hero { display: grid; gap: 24px 36px; align-items: start; }
   @media (min-width: 62rem) {

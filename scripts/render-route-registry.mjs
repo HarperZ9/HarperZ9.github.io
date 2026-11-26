@@ -148,10 +148,10 @@ for (const retiredHref of ["raw.html", "low-water.html", "superframe.html", "est
 const rawSystem = systemRegistry.systems.find((system) => system.id === "raw");
 const rawDomain = systemRegistry.domains.find((domain) => domain.id === rawSystem?.primaryDomain);
 if (!rawDomain) throw new Error("RAW primary domain is missing from the system registry");
-if (findRouteByHref("raw.html")) {
-  const raw = moveRoute("raw.html", studio, "skyrimbridge.html");
-  raw.breadcrumbLabel = rawDomain.label;
-  raw.label = rawSystem.name;
+const pgEntry = findRouteByHref("playground/");
+if (pgEntry) {
+  pgEntry.route.aliases = [...new Set([...(pgEntry.route.aliases || []), "raw.html", "low-water.html", "superframe.html", "estuary.html"])];
+  pgEntry.route.breadcrumbLabel = rawDomain.label;
 }
 
 function takeRoute(href) {

@@ -8,8 +8,8 @@ export default {
   file: "playground/index.html",
   title: "The Playground",
   description: "The Playground: one unified creative field combining Estuary, Native DX12/WebGPU rendering, Low Water, Superframe, Loom, Thread, Posters, Studio, Fractals, Type, Shaders, and Sound.",
-  lede: 'The Playground is one unified creative field and rendering engine that turns a single description into picture, weave, line, type, volume, world, and sound. Everything runs on one shared property bus: <a href="#m-exchange">the blend bench</a>, <a href="#estuary">Estuary</a>, <a href="#workbench">every creative engine</a>, <a href="#native">the native renderer</a>, <a href="#low-water">Low Water</a>, and <a href="#superframe">Superframe</a>.',
-  make: 'Blend materials and watch one blend become colour, lettering, timing, pen lines, loom cloth, ridgelines, cubes, and glass. Open the unified marbled surface to drive every room from continuous temperature and weights, or mount any engine below directly onto this stage.',
+  lede: 'One unified creative field and rendering engine turning a single seed into picture, weave, line, type, volume, world, and sound across <a href="#m-exchange">the blend bench</a>, <a href="#estuary">Estuary</a>, <a href="#workbench">35 engines</a>, <a href="#native">Native RAW</a>, <a href="#low-water">Low Water</a>, and <a href="#superframe">Superframe</a>.',
+  make: 'Blend materials to drive colour, lettering, timing, pen lines, cloth, ridgelines, cubes, and glass on one shared bus, or mount any engine below directly onto this stage.',
   jump: [
     ["#m-marbled", "Marbled Bus"],
     ["#m-exchange", "Blend Bench"],
