@@ -56,5 +56,15 @@ def test_the_name_in_include_publishes_only_the_lab_s_file() -> None:
     import subprocess
     tracked = subprocess.run(["git", "ls-files"], cwd=ROOT, capture_output=True, text=True, check=True).stdout.split()
     for p in _list("include"):
+        if p == ".well-known":
+            wk = sorted(f for f in tracked if f.startswith(".well-known/"))
+            assert wk == [".well-known/agent-card.json", ".well-known/funding-manifest-urls"], (p, wk)
+            continue
         hits = [f for f in tracked if fnmatch.fnmatch(Path(f).name, p) or Path(f).name.startswith(p)]
         assert hits == ["media/school/receipts/job/code/main.py"], (p, hits)
+
+
+def test_well_known_manifests_are_published() -> None:
+    assert ".well-known" in _list("include"), "_config.yml must include .well-known for GitHub Pages (Jekyll)"
+    for rel in (".well-known/agent-card.json", ".well-known/funding-manifest-urls"):
+        assert (ROOT / rel).is_file(), rel

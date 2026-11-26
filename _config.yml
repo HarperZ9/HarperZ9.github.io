@@ -33,3 +33,4 @@ exclude:
 # tracked file of that name appears.
 include:
   - main.py
+  - .well-known
