@@ -102,23 +102,23 @@
     },
     {
       "byte_length": 3103,
-      "extraction_sha256": "003491a07dc161d599f774538b74c595f587b42964bb5f4c3f81a2c52fb43c89",
+      "extraction_sha256": "b8f1c25e224b3315d83182299f30f85d65b92f8853bd08501807c96f0ededfbb",
       "format": "pdf",
       "lane_id": "page:cover-letter",
       "mime_type": "application/pdf",
       "page_count": 1,
       "path": "career/Zain-Dana-Harper-Cover-Letter.pdf",
-      "sha256": "b90475e1d69086109c8b56c67017c76148252da9e9c308888580d66947d0cbb4"
+      "sha256": "2261767cc0693ef96f21cfcc5b6f2ec2695280099bae55d9d3ca5bdc21b56929"
     },
     {
-      "byte_length": 37964,
-      "extraction_sha256": "d63f2670b268e4adda14eb0fdf1e2d2aea8c3fbb5c4dce00560f37ccf540331a",
+      "byte_length": 37965,
+      "extraction_sha256": "0a15438a9176547057a73e4d490c53fb9082205c886916bd0aef88a61ffff3d0",
       "format": "docx",
       "lane_id": "page:cover-letter",
       "mime_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
       "page_count": null,
       "path": "career/Zain-Dana-Harper-Cover-Letter.docx",
-      "sha256": "711063132c75b20176ca976173e49647a652c4b90d297843cc455d73a0fcae4a"
+      "sha256": "ca17143b1fe08670a0187d977a40dbe7289893ca3586c870a4b4313b8cbd96dc"
     },
     {
       "byte_length": 23096,
@@ -194,14 +194,14 @@
       "sha256": "9d1c6f0d5f2d25f860026fdd41f276dc5ad0a87e8a5c08ecf1dd61ea84813db3"
     },
     {
-      "byte_length": 4956,
-      "extraction_sha256": "d63f2670b268e4adda14eb0fdf1e2d2aea8c3fbb5c4dce00560f37ccf540331a",
+      "byte_length": 4958,
+      "extraction_sha256": "0a15438a9176547057a73e4d490c53fb9082205c886916bd0aef88a61ffff3d0",
       "format": "html",
       "lane_id": "page:cover-letter",
       "mime_type": "text/html; charset=utf-8",
       "page_count": null,
       "path": "cover-letter.html",
-      "sha256": "1640f4ea7f961ad22ca1a79e55a489bbb795642f6d9aab39e51e3911ef4b4818"
+      "sha256": "9a99c8a634e992f50f86480d8c2718f9739e294d35ed82b81a5d82809c3d4bf5"
     },
     {
       "byte_length": 37218,

@@ -12,7 +12,7 @@ My background combines about thirteen years of independent programming with elev
 
 On your team I want to isolate root causes, turn incoming failures into clean reports and regression tests, and leave durable documentation. If the posting has a hard requirement, ask me directly and I will answer with the evidence or the gap.
 
-Sincerely,Zain Dana Harperzaindharper@gmail.com
+Sincerely, Zain Dana Harper zaindharper@gmail.com
 
 Choose a role-specific resume · PDF · DOCX · TXT · Markdown
 
