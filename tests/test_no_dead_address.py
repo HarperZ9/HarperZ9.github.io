@@ -51,7 +51,7 @@ KINDS = {"surface", "leaf", "record", "redirect", "moved", "gone"}
 SURFACES = {"playground", "commons", "flywheel", "articulate", "buildlang", "research", "door", "unassigned"}
 SIX_AND_THE_DOOR = {
     "/playground/": "playground", "/cmmns.html": "commons", "/flywheel.html": "flywheel",
-    "/demos.html": "articulate", "/buildlang.html": "buildlang", "/essays.html": "research", "/": "door",
+    "/articulate.html": "articulate", "/buildlang.html": "buildlang", "/research.html": "research", "/": "door",
 }
 REFRESH = re.compile(r'<meta[^>]+http-equiv="refresh"[^>]+content="\s*\d+\s*;\s*url=([^"]+)"', re.I)
 # Tracked files GitHub Pages does not serve (_config.yml): they are not addresses.
@@ -73,8 +73,7 @@ def page_text(address: str) -> str | None:
 
 
 def has_place(text: str, fragment: str) -> bool:
-    esc = re.escape(fragment)
-    return re.search(rf"""\b(?:id|name|data-tab)=["']{esc}["']|"slug"\s*:\s*"{esc}" """, text) is not None or (f'"slug":"{fragment}"' in text)
+    return re.search(rf"""\b(?:id|name)=["']{re.escape(fragment)}["']""", text) is not None
 
 
 def as_address(href: str, base: str) -> str | None:
@@ -195,13 +194,7 @@ def test_no_row_on_main_is_missing_or_moved() -> None:
     shown = subprocess.run(["git", "show", f"origin/main:{LEDGER_PATH}"], cwd=ROOT, capture_output=True, text=True, encoding="utf-8")
     if shown.returncode != 0:
         pytest.skip("origin/main has no address ledger yet, or origin/main is not fetched")
-    # Fragment rows whose parent page moved in Wave 16A are carried by their parent page's moved row.
-    lost = [
-        row["path"]
-        for row in json.loads(shown.stdout)["rows"]
-        if row["path"] not in BY_PATH
-        and not ("#" in row["path"] and row["path"].split("#")[0] in BY_PATH)
-    ]
+    lost = [row["path"] for row in json.loads(shown.stdout)["rows"] if row["path"] not in BY_PATH]
     assert not lost, "rows on origin/main that the working copy dropped:\n" + "\n".join(lost)
 
 
@@ -236,7 +229,7 @@ def link_problem(address: str) -> str | None:
 
 def test_absolute_links_to_this_host_resolve() -> None:
     links = absolute_links()
-    assert len(links) > 25, "the scan found too few links to be reading the pages"
+    assert len(links) > 300, "the scan found too few links to be reading the pages"
     broken = {address: f"{link_problem(address)} (on {page})" for address, page in links.items() if link_problem(address)}
     unexpected = {a: why for a, why in broken.items() if a.split("#")[0] not in KNOWN_DEAD}
     assert not unexpected, "absolute links that lead nowhere:\n" + "\n".join(f"{a}: {why}" for a, why in sorted(unexpected.items()))
@@ -262,7 +255,7 @@ def test_the_check_catches_a_dead_address() -> None:
 def test_not_found_page_reads_without_scripts() -> None:
     page = (ROOT / "404.html").read_text(encoding="utf-8")
     plain = re.sub(r"<script\b.*?</script>", "", page, flags=re.S)
-    for path in list(SIX_AND_THE_DOOR) + ["/tools.html"]:
+    for path in list(SIX_AND_THE_DOOR) + ["/site-index.html"]:
         assert f'href="{path}"' in plain, f"404.html does not list {path} without scripts"
     # every moved address is listed with a plain link to the place it went, for a reader or a crawler without scripts
     for row in ROWS:

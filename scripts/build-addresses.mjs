@@ -80,14 +80,8 @@ const WHY = {
 const asked = document.getElementById("nf-asked"), near = document.getElementById("nf-near");
 asked.textContent = location.pathname;
 asked.parentElement.hidden = false;
-Promise.all([
-  fetch("/${LEDGER}").then((r) => { if (!r.ok) throw new Error("address ledger: HTTP " + r.status); return r.json(); }),
-  fetch("/assets/data/unified/legacy_route_map.json").then((r) => r.ok ? r.json() : null).catch(() => null),
-]).then(([ledger, legacy]) => {
-  const routes = (legacy && legacy.routes) || {};
-  const altPath = location.pathname.endsWith("/") ? location.pathname + "index.html" : location.pathname;
-  const direct = routes[location.pathname] || routes[altPath];
-  const found = nearest(location.pathname, ledger.rows, ledger.projectSites || [], location.hash) || (direct ? { path: direct, why: "moved" } : null);
+fetch("/${LEDGER}").then((r) => { if (!r.ok) throw new Error("address ledger: HTTP " + r.status); return r.json(); }).then((ledger) => {
+  const found = nearest(location.pathname, ledger.rows, ledger.projectSites || [], location.hash);
   if (!found) { near.textContent = "No address on the site is close to this one. The six parts of the site and the index are listed below."; return; }
   const a = document.createElement("a");
   // the query and the place the reader asked for travel with them, unless the new address names its own

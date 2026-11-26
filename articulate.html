@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Articulate | Zain Dana Harper</title>
+<meta name="description" content="Articulate is prose analysis and model-assisted editing for the command line, editors and CI. It names each writing pattern it finds and the line it is on, in the terminal, in an editor through its language server, or as SARIF in code review.">
+<link rel="canonical" href="https://harperz9.github.io/articulate.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Articulate | Zain Dana Harper">
+<meta property="og:description" content="Zero-dependency prose linter, language server, SARIF CI gate, and code test-diff analyzer running locally.">
+<meta property="og:url" content="https://harperz9.github.io/articulate.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/articulate.jpg?v=1a7f2df7cb54">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Articulate, by Zain Dana Harper. Rows of short dashes, like lines of text, bend around a bright circle on the right. On the left, one run of dashes lifts out of its line in orange, bracketed at both ends.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/p/articulate.jpg?v=1a7f2df7cb54">
+<meta name="twitter:image:alt" content="Articulate, by Zain Dana Harper. Rows of short dashes, like lines of text, bend around a bright circle on the right. On the left, one run of dashes lifts out of its line in orange, bracketed at both ends.">
+<meta name="twitter:title" content="Articulate | Zain Dana Harper">
+<meta name="twitter:description" content="Zero-dependency prose linter, language server, SARIF CI gate, and code test-diff analyzer running locally.">
+<link rel="preload" href="system/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="system/doc.css?v=20260907-reading-completion">
+<link rel="stylesheet" href="system/art.css?v=20260925-human-notebook">
+<style>
+  .art-cover { margin: 0 0 1.5rem; }
+  .cmd { overflow-x: auto; padding: .85rem 1rem; border: 1px solid var(--line, #c9cfcf); border-radius: 2px; font-size: .92rem; line-height: 1.55; }
+  .cmd code { white-space: pre; }
+  .sample { margin: .6rem 0 1rem; padding: .1rem 0 .1rem 1rem; border-left: 3px solid currentColor; }
+</style>
+<!-- structured-data:begin (tools/structured_data.py) -->
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareSourceCode","@id":"https://harperz9.github.io/articulate.html#software","name":"Articulate","description":"Articulate is prose analysis and model-assisted editing for the command line, editors and CI. It names each writing pattern it finds and the line it is on, in the terminal, in an editor through its language server, or as SARIF in code review.","url":"https://harperz9.github.io/articulate.html","codeRepository":"https://github.com/HarperZ9/flywheel/tree/main/packages/articulate","author":{"@id":"https://harperz9.github.io/#person","@type":"Person","name":"Zain Dana Harper"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://harperz9.github.io/"},{"@type":"ListItem","position":2,"name":"Catalog","item":"https://harperz9.github.io/catalog.html"},{"@type":"ListItem","position":3,"name":"Articulate","item":"https://harperz9.github.io/articulate.html"}]},{"@type":"SoftwareApplication","@id":"https://harperz9.github.io/articulate.html#application","name":"Articulate","url":"https://harperz9.github.io/articulate.html","softwareVersion":"0.19.1","applicationCategory":"DeveloperApplication","operatingSystem":"Windows, macOS, Linux","downloadUrl":"https://pypi.org/project/articulate-writing/","license":"https://github.com/HarperZ9/articulate/blob/main/LICENSE","author":{"@id":"https://harperz9.github.io/#person","@type":"Person","name":"Zain Dana Harper"},"isAccessibleForFree":true,"sameAs":"https://github.com/HarperZ9/articulate","installUrl":"https://pypi.org/project/articulate-writing/"}]}</script>
+<!-- structured-data:end -->
+</head>
+<body class="doc">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav" aria-label="Primary"><a href="index.html">Home</a> <a href="flywheel.html">Flywheel</a> <a href="research.html">Research</a> <a href="who-knew-first.html">Who Knew First</a> <a href="hire.html">Work</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260909-pillar-navigation"></script>
+
+<main id="main">
+<article class="sheet doc-rail">
+  <header class="mast">
+    <h1>Articulate</h1>
+    <p class="role">Zero-dependency prose analysis engine, editor LSP, SARIF CI gate, MCP server, and code test-diff analyzer (v0.19.1).</p>
+  </header>
+
+  <figure class="art art-cover">
+    <img class="art-light" src="art/aperture/cover-articulate-light.svg" width="1600" height="800" alt="Rows of short dashes, like lines of text, bend around a bright circle on the right. On the left, one run of dashes lifts out of its line in orange, bracketed at both ends." loading="lazy" decoding="async">
+    <img class="art-dark" src="art/aperture/cover-articulate-dark.svg" width="1600" height="800" alt="Rows of short dashes, like lines of text, bend around a bright circle on the right. On the left, one run of dashes lifts out of its line in orange, bracketed at both ends." loading="lazy" decoding="async">
+  </figure>
+
+  <section aria-labelledby="in-short">
+    <h2 id="in-short">In short</h2>
+    <p>Articulate checks prose for named patterns such as hedging, filler words and stock phrases, and tells you the line each one is on. It is for writers, editors and teams who want those checks in a terminal, an editor or CI. The checks run on your own computer. This site checks its pages with it.</p>
+    <p><a href="#install">Install it</a> &middot; <a href="repo-explainers/articulate.html">How it works, animated</a> &middot; <a href="https://github.com/HarperZ9/flywheel/tree/main/packages/articulate" translate="no">Source on GitHub</a> &middot; <a href="https://pypi.org/project/articulate-writing/" translate="no">PyPI</a></p>
+  </section>
+
+  <section aria-labelledby="what-title">
+    <h2 id="what-title">What it is</h2>
+    <p data-purpose>Articulate is prose analysis and model-assisted editing for the command line, editors and CI. It names each writing pattern it finds and the line it is on, in the terminal, in an editor through its language server, or as SARIF in code review.</p>
+    <p>Each check runs in a writing mode, such as a memo that argues a case or technical documentation that explains. The mode sets which patterns count and how strictly. Fiction, memoir, screenplays and poetry each get their own mode, and a character's quoted line is never scored as the author's prose.</p>
+    <p>Markdown is read as Markdown. In <a href="https://github.com/HarperZ9/articulate/releases/tag/v0.14.0" translate="no">release 0.14.0</a>, masking table separator rows removed 5,123 findings on those rows across 3,000 files and added none.</p>
+  </section>
+
+  <section aria-labelledby="install">
+    <h2 id="install">Install and run a check</h2>
+    <pre class="cmd"><code>pip install <span class="ident" translate="no">articulate-writing</span>
+articulate check notes.md --mode technical-docs/explain --gate</code></pre>
+    <p><code>articulate modes</code> lists the modes. With <code>--gate</code>, the command exits with 1 when the text is blocked, so a script or a CI job can stop on it. The core needs only Python's standard library.</p>
+  </section>
+
+  <section aria-labelledby="example-title">
+    <h2 id="example-title">One example check</h2>
+    <p class="demo-form" data-demo="articulate-output" data-form="captured"><b>Captured.</b> Shown as recorded. Nothing on this page runs the tool. The full record of the run (date, command, file and hash) is not published with it yet.</p>
+    <p>This sentence went in:</p>
+    <blockquote class="sample">It is important to note that this release really represents a significant step forward. Arguably, the new cache could potentially make builds faster in many cases.</blockquote>
+    <p>Articulate 0.18.0 reports three medium findings on line 1 and does not block the text. Each finding also prints the line it came from, cut here for width.</p>
+    <pre class="cmd"><code>[articulate] notes.md [technical-docs/explain]: 0 high, 3 medium (ok)  texture 0/100
+  L1 [MEDIUM throat-clearing] throat-clearing opener
+  L1 [MEDIUM hedge-stack] stacked hedge
+  L1 [MEDIUM throat-clearing] worth-noting preamble</code></pre>
+    <p>A rewrite that names the change and gives a number comes back with no findings. Two sentences are too short for a texture score, so the tool prints &ldquo;unverifiable&rdquo; for that part. The numbers are made up for the example.</p>
+    <blockquote class="sample">This release adds a build cache. On our test project, a clean build took 41 seconds and a cached build took 9.</blockquote>
+    <pre class="cmd"><code>[articulate] notes.md [technical-docs/explain]: unverifiable (below the signal floor)  texture 0/100</code></pre>
+    <p>Both commands exit with 0. This output is from Articulate 0.18.0, run on 12 November 2026. In version 0.4.1 the same draft was blocked with one high finding, on the word &ldquo;really&rdquo;; 0.18.0 no longer reports it in this mode.</p>
+  </section>
+
+  <section aria-labelledby="evidence-title">
+    <h2 id="evidence-title">Using findings</h2>
+    <p>A finding names a writing device. It says nothing about who wrote the text, so never use one to accuse a person of using AI or to grade a student. The <a href="https://github.com/HarperZ9/articulate/blob/a914515096f872ab0c79cbb00a4e3d6028ec59ac/corpus/provenance/results.json">test results on texts of known origin</a> show why: human authors such as Darwin and Melville are flagged too.</p>
+  </section>
+
+  <section aria-labelledby="editing-title">
+    <h2 id="editing-title">Editing</h2>
+    <p>Three tools rewrite prose. Judge names problems a pattern rule cannot see, such as a claim with no position behind it. Fix rewrites a passage and checks its own result. Polish repeats until the prose clears a bar for concreteness and economy. They run through <code>articulate-mcp</code>, the MCP server that comes with the package, and send the draft to a hosted model through the <code translate="no">claude</code> command-line tool (Claude Code).</p>
+    <p>In an editor, the <code>articulate-lsp</code> server shows findings inline in any editor that speaks the Language Server Protocol, such as VS Code, a JetBrains IDE or Neovim.</p>
+  </section>
+
+  <section aria-labelledby="releases-title">
+    <h2 id="releases-title">Releases</h2>
+    <p>Release notes are on <a href="https://github.com/HarperZ9/articulate/releases" translate="no">GitHub</a>, and the upload history is on <a href="https://pypi.org/project/articulate-writing/#history" translate="no">PyPI</a>. The <a href="figures/system-capability-map.html">system map</a> shows where Articulate sits among the other tools.</p>
+  </section>
+</article>
+</main>
+</body>
+</html>

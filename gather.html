@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gather · Zain Dana Harper</title>
+<meta name="description" content="Gather collects research material from web pages, including JavaScript-rendered ones, APIs, scholarly records, PDFs, scans, audio, video, feeds and local files. It saves each item with its source in a local corpus you can search and verify.">
+<link rel="canonical" href="https://harperz9.github.io/gather.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Gather · Zain Dana Harper">
+<meta property="og:description" content="Gather collects research material from web pages, including JavaScript-rendered ones, APIs, scholarly records, PDFs, scans, audio, video, feeds and local files. It saves each item with its source in a local corpus you can search and verify.">
+<meta property="og:url" content="https://harperz9.github.io/gather.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/gather.jpg?v=8e0fdbf49570">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Gather, by Zain Dana Harper. Five bundles of lines, solid, dashed, dotted, wavy and stepped, sweep in from the right and pass through a ring into one bright core. One line stops at the ring with a short cross mark.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/p/gather.jpg?v=8e0fdbf49570">
+<meta name="twitter:image:alt" content="Gather, by Zain Dana Harper. Five bundles of lines, solid, dashed, dotted, wavy and stepped, sweep in from the right and pass through a ring into one bright core. One line stops at the ring with a short cross mark.">
+<meta name="twitter:title" content="Gather · Zain Dana Harper">
+<meta name="twitter:description" content="Gather collects research material from web pages, including JavaScript-rendered ones, APIs, scholarly records, PDFs, scans, audio, video, feeds and local files. It saves each item with its source in a local corpus you can search and verify.">
+<meta name="color-scheme" content="dark">
+<link rel="stylesheet" href="system/system.css?v=20260927-copy-pass">
+<style>
+#run .product-record-details code{
+  white-space:normal;
+  overflow-wrap:anywhere;
+  word-break:break-word;
+}
+</style>
+<!-- structured-data:begin (tools/structured_data.py) -->
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareSourceCode","@id":"https://harperz9.github.io/gather.html#software","name":"Gather","description":"Gather collects research material from web pages, including JavaScript-rendered ones, APIs, scholarly records, PDFs, scans, audio, video, feeds and local files. It saves each item with its source in a local corpus you can search and verify.","url":"https://harperz9.github.io/gather.html","codeRepository":"https://github.com/HarperZ9/flywheel/tree/main/packages/gather","author":{"@id":"https://harperz9.github.io/#person","@type":"Person","name":"Zain Dana Harper"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://harperz9.github.io/"},{"@type":"ListItem","position":2,"name":"Catalog","item":"https://harperz9.github.io/catalog.html"},{"@type":"ListItem","position":3,"name":"Gather","item":"https://harperz9.github.io/gather.html"}]}]}</script>
+<!-- structured-data:end -->
+</head>
+<body class="inner-clean">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="cv.html">About</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260909-pillar-navigation"></script>
+
+<div class="frame">
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><span translate="no">gather</span> &middot; research intake</span></div>
+  <div class="mid">
+    <h1>Collect research material from hard sources.</h1>
+    <p class="lede" data-canonical-purpose="gather">Gather collects research material from web pages, including JavaScript-rendered ones, APIs, scholarly records, PDFs, scans, audio, video, feeds and local files. It saves each item with its source in a local corpus you can search and verify.</p>
+    <p class="body-text"><a href="repo-explainers/gather.html">See it work, step by step</a>: an animated walkthrough with the real commands and output from the repository.</p>
+  </div>
+  <div class="seal"><span translate="no">gather</span> &middot; v2.5.0 &middot; <span translate="no">pip install <span class="ident" translate="no">gather-engine==2.5.0</span></span></div>
+</div>
+
+<main id="main">
+
+<figure class="plate plate--slim">
+  <canvas data-specimen="gather-plate-01" data-specimen-layers="fiber-terrain" aria-hidden="true"></canvas>
+  <figcaption>
+    <span class="plate-no">Plate 01</span>
+    <span class="plate-caption">Layered strata with arched gaps.</span>
+  </figcaption>
+</figure>
+
+<!-- SOURCES -->
+<section class="mv" id="reach" aria-labelledby="reach-h">
+  <h2 id="reach-h" class="reveal">Sources it reads</h2>
+  <p class="body-text reveal">Each source is an adapter. Every item it returns records the source, the reference, the method used, the time and a SHA-256 of the content, so you can tell a caption transcript from an OCR scan from a direct page read.</p>
+  <div class="index reveal-children" role="list" aria-label="Source adapters">
+    <div class="index-row" role="listitem" style="--i:0">
+      <span class="index-term">video</span>
+      <span class="index-gloss">captions, metadata and comments through <code translate="no">yt-dlp</code></span>
+    </div>
+    <div class="index-row" role="listitem" style="--i:1">
+      <span class="index-term">web</span>
+      <span class="index-gloss">the static HTML a server returns, without running JavaScript</span>
+    </div>
+    <div class="index-row" role="listitem" style="--i:2">
+      <span class="index-term">browser</span>
+      <span class="index-gloss">JavaScript-rendered pages through a headless browser</span>
+    </div>
+    <div class="index-row" role="listitem" style="--i:3">
+      <span class="index-term">feed &middot; docs</span>
+      <span class="index-gloss">RSS or Atom feeds, and local files or folders</span>
+    </div>
+    <div class="index-row" role="listitem" style="--i:4">
+      <span class="index-term">arxiv</span>
+      <span class="index-gloss">papers from the arXiv API by id or query</span>
+    </div>
+    <div class="index-row" role="listitem" style="--i:5">
+      <span class="index-term">pdf &middot; ocr</span>
+      <span class="index-gloss">text from PDFs through <code translate="no">pdftotext</code> and from scans through <code translate="no">tesseract</code></span>
+    </div>
+    <div class="index-row" role="listitem" style="--i:6">
+      <span class="index-term">transcribe</span>
+      <span class="index-gloss">audio transcripts through a Whisper-style CLI</span>
+    </div>
+    <div class="index-row" role="listitem" style="--i:7">
+      <span class="index-term">api</span>
+      <span class="index-gloss">authenticated JSON APIs, with the token read from the environment and never written to disk</span>
+    </div>
+  </div>
+  <p class="body-text reveal">The browser adapter guards only the first navigation; the page then follows its own redirects and sub-requests. Do not point it at untrusted URLs on a network where internal services are reachable.</p>
+</section>
+
+<!-- RUN -->
+<section class="mv" id="arch" aria-labelledby="arch-h">
+  <h2 id="arch-h" class="reveal">What a run does</h2>
+  <p class="body-text reveal"><code translate="no">gather run</code> fetches from the sources you name, filters to your scope, stores items in a local corpus that removes duplicates by hash, and writes one record of the run. <code translate="no">gather corpus verify</code> re-hashes every stored item, and recall reports any item that is missing or changed. The core needs only the Python standard library; optional adapters call their external tool only when you select that source.</p>
+</section>
+
+<!-- PROOF AND RUN IT -->
+<section class="mv" id="run" aria-labelledby="run-h">
+  <h2 id="run-h" class="reveal">Install and try it</h2>
+  <p class="body-text reveal">Version 2.5.0 installs from PyPI as <span class="ident" translate="no"><code translate="no">gather-engine</code>,</span> and gives you the <code translate="no">gather</code> command. Optional adapters need their own tool installed: <code translate="no">yt-dlp</code>, <code translate="no">pdftotext</code>, headless <code translate="no">chromium</code>, <code translate="no">tesseract</code> or a Whisper-style CLI.</p>
+  <p class="body-text reveal">Version 1.8.1 added protection for retained corpus reads against directory replacement on unsupported Linux mounts. On WSL, keep corpora on native Linux storage or use native Windows Python: Windows-drive 9p/v9fs mounts are refused with <code translate="no">UNSAFE_PATH</code>. Python hosts can pass a retained same-process corpus descriptor; CLI and MCP continue to accept directory strings.</p>
+  <p class="body-text reveal">Install 1.9.1 or later. Every earlier release is inside the range of at least one of the four Gather advisories listed on the <a href="security.html#advisories">Security page</a>. A tool found only inside the working folder now needs its absolute path in its <code translate="no">GATHER_&lt;TOOL&gt;</code> variable, and an MCP host that relied on the old <code translate="no">gather.run</code> or <code translate="no">gather.pilot</code> behavior adds a grant to its launch configuration.</p>
+  <p class="body-text reveal">Create <code translate="no">sample.txt</code> with this exact two-line body, then store it and select only the useful slice.</p>
+  <pre class="artifact" translate="no"><span class="cmt">sample.txt body</span>
+Offline quickstart: Gather keeps acquired context separate from conclusions.
+Decision fact: the release can select useful text from a stored corpus.</pre>
+  <p class="body-text reveal">After the inspect command, replace ROW_REF and CORPUS_DIGEST with the values from the inspect JSON. 0:76 selects the first line of this fixture only.</p>
+  <pre class="artifact" translate="no"><span class="pr">$ pip install <span class="ident" translate="no">gather-engine==2.5.0</span></span>
+<span class="pr">$ gather docs sample.txt --store corpus --json</span>
+<span class="pr">$ gather corpus context corpus --json --excerpt-chars 90</span>
+<span class="pr">$ gather corpus context corpus --json --select ROW_REF:0:76 --expect-digest CORPUS_DIGEST</span></pre>
+  <p class="body-text reveal"><strong>Sample selected text:</strong> <span translate="no">Offline quickstart: Gather keeps acquired context separate from conclusions.</span></p>
+  <details class="product-record-details reveal">
+    <summary>Release evidence and context limits</summary>
+    <p class="body-text">Version 1.9.1, released on 27 September 2026, fixes two more advisories, <a href="https://github.com/HarperZ9/gather/security/advisories/GHSA-r38f-cr69-jpp8" rel="noopener" aria-label="Advisory GHSA-r38f-cr69-jpp8: Gather, PATH entries reaching the working folder"><span class="ident" translate="no">GHSA-r38f-cr69-jpp8</span></a> (high) and <a href="https://github.com/HarperZ9/gather/security/advisories/GHSA-j6j7-39vh-qrp4" rel="noopener" aria-label="Advisory GHSA-j6j7-39vh-qrp4: Gather, network share paths on Windows"><span class="ident" translate="no">GHSA-j6j7-39vh-qrp4</span></a> (medium). A PATH entry that reaches the working folder, whether it names the folder, spells it another way or links to it, no longer lets a program planted there start in place of a tool. The folder of the Python that runs Gather stays on PATH, and on Windows so do the Windows, System32 and SysWOW64 folders. When Gather runs from a filesystem root, or from the home folder or a folder above it, the guard drops only the entry naming that folder itself. On Windows, the file sources and every MCP path argument refuse network shares and device paths. Every version before 1.9.1 is affected by at least one of the four advisories, so install 1.9.1 or later.</p>
+    <p class="body-text">Version 1.9.0, released on 26 September 2026, fixes two high-severity security advisories, <a href="https://github.com/HarperZ9/gather/security/advisories/GHSA-pxvv-rg3f-4v5w" rel="noopener" aria-label="Advisory GHSA-pxvv-rg3f-4v5w: Gather, MCP tool arguments"><span class="ident" translate="no">GHSA-pxvv-rg3f-4v5w</span></a> and <span class="ident" translate="no"><a href="https://github.com/HarperZ9/gather/security/advisories/GHSA-r4f3-9xrf-72m5" rel="noopener" aria-label="Advisory GHSA-r4f3-9xrf-72m5: Gather, tools started by bare name"><span translate="no">GHSA-r4f3-9xrf-72m5</span></a>.</span> Before <code translate="no">gather.run</code> or <code translate="no">gather.pilot</code> runs a command, reaches a network source or sends a credential, the MCP server now needs a grant given at launch. Every external tool now starts from an absolute path in a private folder. Every version before 1.9.0 is affected by both.</p>
+    <p class="body-text">New corpus writes preserve exact UTF-8 source text while selection uses a readable LF-normalized view. Selections stay pinned to the witnessed corpus digest you pass with <code translate="no">--expect-digest</code>.</p>
+    <p class="body-text">The 1.9.1 wheel installed from PyPI on 27 September 2026 and ran the quickstart above. The checks below were run on earlier releases.</p>
+    <p class="body-text">The public 1.8.1 wheel passed isolated Windows CLI, MCP, retained-descriptor and tamper checks. On WSL x86_64, native reads passed and an actual 9p directory-replacement attempt was refused; descendant-directory and leaf controls were instrumented. The downloaded packages match the release commit: 64 Python modules and 133 tracked source archive files. Linux mount classification uses the opened descriptor and refuses unavailable mount information. Other POSIX platforms retain no-follow and type checks without a mount-detection claim.</p>
+    <p class="body-text">The earlier released 1.7.1 wheel smoke run selected a newline-spanning <code translate="no">DECISION</code>/<code translate="no">part</code> fixture through both CLI and MCP. The payload used schema <code translate="no">gather.readable-context/v1</code>, returned <code translate="no">verified: true</code>, kept source SHA-256 <code translate="no">b1736b2f3f466fdf55d900ccf4c28ba9a2170c60914ede77173873f447dba6d3</code> separate from readable view SHA-256 <code translate="no">bfac793415f57cdb3aadb174993a58dc4767abe8005b78855daae6ab110b93cf</code>, and produced selection digest <code translate="no">0450040a624224de25249cc42f1a68099898d8d8accf68d286e71c4771b7324b</code>.</p>
+    <p class="body-text">The publication receipt verifies the GitHub release, PyPI files, GitHub and PyPI download-back hashes, a clean Windows wheel install, CLI and MCP context selection, and tamper refusal. Selection offsets belong to the readable view. To detect changed storage later, pin the corpus digest now.</p>
+  </details>
+  <div class="channels reveal">
+    <span class="g">Recorded demo</span> &rarr; <a href="demo-gather.html">29-second demo and full workflow</a>
+    &nbsp;&middot;&nbsp;
+    <span class="g">GitHub</span> &rarr; <a href="https://github.com/HarperZ9/gather/releases/tag/v2.5.0" translate="no">v2.5.0 release</a>
+    &nbsp;&middot;&nbsp;
+    <span class="g">Source</span> &rarr; <a href="https://github.com/HarperZ9/flywheel/tree/main/packages/gather" translate="no">HarperZ9/gather</a>
+    &nbsp;&middot;&nbsp;
+    <span class="g">PyPI</span> &rarr; <a href="https://pypi.org/project/gather-engine/2.5.0/" translate="no"><span class="ident" translate="no">gather-engine</span> 2.5.0</a>
+    &nbsp;&middot;&nbsp;
+    <a href="overview.html">&larr; all flagships</a> &nbsp;&middot;&nbsp; <a href="catalog.html">the index</a>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer-seal" role="contentinfo">
+  <p class="seal"><span translate="no">gather</span> &middot; research intake from hard sources &middot; <a href="https://github.com/HarperZ9/flywheel/tree/main/packages/gather">source</a></p>
+</footer>
+
+<script src="system/reveal.js?v=20260902-creative-chassis" defer></script>
+</body>
+</html>

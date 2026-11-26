@@ -104,10 +104,8 @@ async function acts(page, key, sel, act, saved) {
   assert.deepEqual(keys.filter((k) => !mapped.includes(k) && !missing.includes(k)), [], 'every studio control is mapped or listed as missing');
   assert.deepEqual([...mapped, ...missing].filter((k) => !keys.includes(k)), [], 'every listed control is still in the studio');
   for (const [k, v] of Object.entries(parity.mapped)) { assert.ok(v.act && v.act.do, `${k}: a mapped control says how to drive it`); for (const s of [].concat(v.act.sees || 'frame')) assert.ok(SEES.has(s), `${k}: sees ${s}?`); }
-  const ledger = JSON.parse(fs.readFileSync(path.join(root, 'site-src/world/addresses.json'), 'utf8'));
-  const retroRow = ledger.rows.find((r) => r.path === '/retro.html');
-  const moved = !!(retroRow && retroRow.kind === 'moved' && retroRow.to);
-  assert.equal(moved, missing.length === 0, missing.length ? '/retro.html may not redirect while controls are missing' : '/retro.html is mapped in addresses.json');
+  const stub = fs.readFileSync(path.join(root, 'retro.html'), 'utf8'), moved = /http-equiv="refresh"[^>]*url=\/playground\/\?room=shader#shader/.test(stub);
+  assert.equal(moved, missing.length === 0, missing.length ? '/retro.html may not redirect while controls are missing' : '/retro.html redirects into the shader room');
   if (missing.length) assert.match(parity.issue, /^https:\/\/github\.com\/HarperZ9\/HarperZ9\.github\.io\/issues\/\d+$/, 'the missing list names its issue');
 
   // a fake microphone and an allowed prompt, so the Microphone control can be driven headless
@@ -144,7 +142,9 @@ async function acts(page, key, sel, act, saved) {
     assert.deepEqual(absent, [], 'every mapped control is in the opened room');
     assert.deepEqual(dead, [], 'every mapped control acts on the room');
     assert.deepEqual(errors, []);
-    // /retro.html redirection via 404.html is verified by tests/addresses-moved.cjs on the Pages-like server.
+    if (!missing.length) {   // the old address, with the Gallery's hand-over query, lands in the room and keeps the query
+      const go = await ctx.newPage(); await go.goto(`${base}/retro.html?import=plate`); await go.waitForURL(/\/playground\/\?room=shader&import=plate#shader$/); await go.waitForSelector('#shader[data-room-live]'); await go.close();
+    }
     await page.evaluate(() => window.__rooms?.handles.shader?.destroy()).catch(() => {}); await page.waitForTimeout(800); await ctx.close();
   } finally { await browser.close(); }
   if (process.env.PARITY_REPORT) console.log(JSON.stringify(report, null, 1));

@@ -1,41 +1,69 @@
-# Zain Dana Harper
-**Independent Systems Architect & AI / Tooling Director**
+# Zain Dana Harper: Resumes
 
-Seattle, WA (Local / Hybrid / Remote Open) | zaindharper@gmail.com | harperz9.github.io | github.com/HarperZ9 | linkedin.com/in/zaindanaharper | orcid.org/0009-0001-7175-5393
+Updated 2026-11-25.
 
-## 30-Second Work-Sample Proof Strip
+Four primary families: support/developer operations/QA; AI systems/evaluation/Python tooling; graphics, rendering and developer tools; arboriculture/field operations/estimating. Each targeted resume is one page. A public-operations variant and full CV are also available.
 
-- **5 Shipped Platforms** - PyPI, crates.io, GitHub & Nexus Mods
-- **2,132.3x / 2.89 MB** - BuildLang 1.15.0 & BuildDB qdb.exe
-- **14.45M / 3.66 ms** - Multimodal corpus & FTS5 search
-- **4,500+ Auto Tests** - Fail-closed specs & 41 external PRs
+## Technical Support, Developer Operations, and QA
 
-## Executive Profile
+https://harperz9.github.io/resume-support-operations.html
 
-Hands-on systems architect and technical director who specifies, directs, verifies, and ships end-to-end software platforms across compilers, embedded storage, AI verification, multimodal indexing, and cross-browser tools. Excels at defining tight architectural invariants, directing AI-assisted and multi-agent build pipelines against deterministic oracles, and turning sprawling technical domains into cohesive, tested releases. Backed by 41 merged upstream PRs across 34 repos and 11 years leading real-world field crews.
+[PDF](https://harperz9.github.io/career/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.pdf)
+[DOCX](https://harperz9.github.io/career/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.docx)
+[TXT](https://harperz9.github.io/career/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.txt)
+[MD](https://harperz9.github.io/career/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.md)
 
-## Technical Skills
+## AI and Security Evaluation, and Python Developer Tools
 
-- **Architecture & Direction:** System Specification, Fail-Closed Oracle Design, Multi-Agent Workflow Direction, Platform Consolidation (206 -> 5 Flagships), Release Engineering (PyPI, crates.io, GitHub)
-- **Compilers, Storage & Data:** BuildLang 1.15.0 (Rust -> C/HLSL/Wasm/x86-64/RV64), BuildDB qdb.exe (Paged Embedded SQL), SQLite FTS5, DuckDB, PyArrow Parquet, Zstd Streaming Pipelines
-- **Verification, AI & Web:** Flywheel 2.0.0, engine-receipt/1 SHA-256 Receipts, Local Model Tooling (JFC3P-7B / NOH-4), MCP Servers (22 Tools), CMMNS (MV3), Articulate (LSP/SARIF), Python, Rust, C++23, TypeScript
+https://harperz9.github.io/resume-evaluation-tooling.html
 
-## Systems Architecture & Technical Direction
+[PDF](https://harperz9.github.io/career/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.pdf)
+[DOCX](https://harperz9.github.io/career/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.docx)
+[TXT](https://harperz9.github.io/career/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.txt)
+[MD](https://harperz9.github.io/career/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.md)
 
-### Founder, Systems Architect & Tooling Director | Harper Research & Open-Source Ecosystem
-*Seattle, WA | 2025 - Present (Independent Systems R&D since 2013) | github.com/HarperZ9 | harperz9.github.io*
+## Graphics, Rendering, and Developer Tools
 
-- **BuildLang 1.15.0 & BuildDB Embedded Storage:** Specified and shipped a Rust-hosted capability-effect compiler on crates.io (147/147 reproducible build hashes, 2,132.3x procgen speedup, 115x to 191x f64 kernels) plus BuildDB qdb.exe (2.89 MB paging footprint, 31.31 ms query, 0/500 fuzz failures).
-- **Flywheel 2.0.0 & Local Model / Agent Direction:** Consolidated 30 verification, harness, and memory packages onto PyPI behind engine-receipt/1 SHA-256 receipts; achieved 115/115 Three-Plate recall, 95.83% JFC3P-7B trap rejection, and 18x to 78x NOH-3/NOH-4 OOD and recovery MSE gains.
-- **Workstation Multimodal Knowledge Brain:** Directed a streaming single-threaded decompiler indexing 14.45M files, digesting 6,558 videos into 3x3 contact sheets at 304x reduction, and serving 6.01M scrubbed FTS5 words in 3.66 ms via a 22-tool local MCP studio.
-- **Cross-Platform Products & Upstream Collaboration:** Shipped Articulate 0.19.1 (2,096 tests), CMMNS 3.10.0 (1,735 tests across 9 web platforms), RAW DX12 Wave 72 (522/522 runtime tests), and 41 merged upstream PRs across 34 external repos (grimp, Biome, TOMLKit, Datasette, DeepEval).
+https://harperz9.github.io/resume-graphics-developer-tools.html
 
-## Field Crew Leadership, Research & Credentials
+[PDF](https://harperz9.github.io/career/Zain-Dana-Harper-Resume-Graphics-Developer-Tools.pdf)
+[DOCX](https://harperz9.github.io/career/Zain-Dana-Harper-Resume-Graphics-Developer-Tools.docx)
+[TXT](https://harperz9.github.io/career/Zain-Dana-Harper-Resume-Graphics-Developer-Tools.txt)
+[MD](https://harperz9.github.io/career/Zain-Dana-Harper-Resume-Graphics-Developer-Tools.md)
 
-### Tree Care Crew Lead | Legendary Tree (Seattle Area, WA | 2015 - 2026)
+## Arboriculture, Field Operations, and Estimating
 
-- **Crew & Client Direction:** 11 years running high-hazard commercial tree-care operations, scoping complex projects with homeowners, coordinating crews, and teaching clear structural rationale before execution.
+https://harperz9.github.io/resume-grounds.html
 
-### Publications, Support & Credentials
+[PDF](https://harperz9.github.io/career/Zain-Dana-Harper-Resume-Grounds.pdf)
+[DOCX](https://harperz9.github.io/career/Zain-Dana-Harper-Resume-Grounds.docx)
+[TXT](https://harperz9.github.io/career/Zain-Dana-Harper-Resume-Grounds.txt)
+[MD](https://harperz9.github.io/career/Zain-Dana-Harper-Resume-Grounds.md)
 
-- **Track Record:** 30 empirical studies (13 DOIs, 12 nulls); Xbox Networking Support (2014 - 2015); DeepMind badges (100/100), 4 Microsoft Applied Skills, 6 Qualys Specialist certs, Cisco Ethical Hacker (100%); High School Diploma (2013).
+## Public Operations and Facilities Support
+
+https://harperz9.github.io/resume-public-operations.html
+
+[PDF](https://harperz9.github.io/career/Zain-Dana-Harper-Resume-Public-Operations.pdf)
+[DOCX](https://harperz9.github.io/career/Zain-Dana-Harper-Resume-Public-Operations.docx)
+[TXT](https://harperz9.github.io/career/Zain-Dana-Harper-Resume-Public-Operations.txt)
+[MD](https://harperz9.github.io/career/Zain-Dana-Harper-Resume-Public-Operations.md)
+
+## Full Curriculum Vitae
+
+https://harperz9.github.io/cv.html
+
+[PDF](https://harperz9.github.io/career/Zain-Dana-Harper-CV.pdf)
+[DOCX](https://harperz9.github.io/career/Zain-Dana-Harper-CV.docx)
+[TXT](https://harperz9.github.io/career/Zain-Dana-Harper-CV.txt)
+[MD](https://harperz9.github.io/career/Zain-Dana-Harper-CV.md)
+
+## Work-history and source notes
+
+Owner-confirmed November 14, 2026: about thirteen years of programming, self-directed and unpaid. No paid software role to date, so no professional programming experience is claimed. Full-time production arboriculture ran from April 25, 2015 to June 2, 2026.
+Start year 2017 is known. No current status, end year, or continuous employment is inferred.
+Full-time period April 25, 2015 to June 2, 2026. Legendary Tree is an applicant-provided organization label; the displayed role describes duties and does not establish a formal title or legal employer name.
+2014 to 2015, Xbox/Microsoft product contract, subcontracted through Stream/Convergys in Wilsonville, Oregon. Not direct Microsoft employment.
+Sole proprietorship began September 2026, with no client work in software to date. No LLC or registered trade name is claimed.
+
+Detailed source ledger: https://harperz9.github.io/career/source-ledger.md

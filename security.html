@@ -30,7 +30,7 @@
 <body class="inner-clean hub-plate">
 <a class="skip-link" href="#main">Skip to content</a>
 <div id="site-nav" class="site-nav"></div>
-<noscript><nav class="site-nav"><a href="/tools.html#security-toolkit">Toolkit</a> <a href="/tools.html#emet">EMET</a> <a href="/tools.html#phantom">Phantom</a> <a href="/essays.html#private-practice">Private practice</a></nav></noscript>
+<noscript><nav class="site-nav"><a href="security-toolkit.html">Toolkit</a> <a href="emet.html">EMET</a> <a href="phantom.html">Phantom</a> <a href="private-practice.html">Private practice</a></nav></noscript>
 <script type="module" src="system/nav.js?v=20260909-pillar-navigation"></script>
 
 <div class="frame">
@@ -50,66 +50,45 @@
   <div class="index" role="list">
     <div class="index-row" role="listitem">
       <span class="index-term">Public systems</span>
-      <span class="index-gloss"><a href="/tools.html#phantom">Phantom</a> (v1.1.1, Rust, 273 tests, 0 production unwraps), <a href="/tools.html#emet">EMET</a> (forbid unsafe code), and <a href="/tools.html#accountable-surface">Accountable Surface</a> have verified public releases; <a href="/tools.html#proof-surface">Proof Surface</a> 0.1.0 is on PyPI; its public source is at 0.2.0, which has no release. The <a href="/tools.html#catalog">product catalog</a> carries each current version.</span>
+      <span class="index-gloss"><a href="phantom.html">Phantom</a> (v1.1.1, Rust, 273 tests, 0 production unwraps), <a href="emet.html">EMET</a> (forbid unsafe code), and <a href="accountable-surface.html">Accountable Surface</a> have verified public releases; <a href="proof-surface.html">Proof Surface</a> 0.1.0 is on PyPI; its public source is at 0.2.0, which has no release. The <a href="catalog.html">product catalog</a> carries each current version.</span>
     </div>
     <div class="index-row" role="listitem">
       <span class="index-term">Toolkit</span>
-      <span class="index-gloss"><a href="/tools.html#security-toolkit">Security toolkit</a>: complete 16-tool hierarchy plus small public utilities for pre-publication review, secret redaction, release source records, hooks, and proof indexing.</span>
+      <span class="index-gloss"><a href="security-toolkit.html">Security toolkit</a>: complete 16-tool hierarchy plus small public utilities for pre-publication review, secret redaction, release source records, hooks, and proof indexing.</span>
     </div>
     <div class="index-row" role="listitem">
       <span class="index-term">Product and theory</span>
-      <span class="index-gloss"><a href="/tools.html#accountable-surface">Accountable Surface</a> is the product. <a href="/tools.html#accountable-machines">Accountable Machines</a> is the essay behind it.</span>
+      <span class="index-gloss"><a href="accountable-surface.html">Accountable Surface</a> is the product. <a href="accountable-machines.html">Accountable Machines</a> is the essay behind it.</span>
     </div>
     <div class="index-row" role="listitem">
-      <span class="index-term">Controlled private boundary</span>
-      <span class="index-gloss">Internal adversarial assessment and private research systems remain strictly offline, authorized-only, and unpublished. Public documentation covers defensive architecture, verification methods, and governance principles only.</span>
-    </div>
-  </div>
-</section>
-
-<section class="mv" id="philosophy-lineage" aria-labelledby="phil-h">
-  <h2 id="phil-h">Purple-team philosophy, lineage, and AI assurance policy</h2>
-  <p class="body-text"><strong>The adversarial mirror.</strong> A defensive control is only trustworthy after something real tries to break it. Controls designed in a vacuum look tidy on paper and fail on first contact with creative inputs or misconfigured environments. Threat-informed purple-teaming turns the attack into a diagnostic instrument for defense: every failure found against owned, contained systems defines the exact regression guard built into the next release. That same discipline drives our planted-failure testing in Flywheel and the twelve self-filed security advisories below.</p>
-  <p class="body-text"><strong>From Sovereign and WARDEN to Flywheel.</strong> Early in 2026, two internal research threads shaped the architecture of the public stack. <em>Sovereign</em> explored multi-role routing across specialized defensive and audit perspectives, directly informing how <a href="/flywheel.html">Flywheel</a>, Plexus, and Index wire capabilities and check dependencies today. <em>WARDEN</em> studied structured assessment and evidence-chain reporting under strict scope boundaries, seeding the defensive verification lineage behind <a href="/tools.html#accountable-surface">Accountable Surface</a> (default-deny agent permissions and rollback), <a href="/tools.html#emet">EMET</a> (byte-integrity witnessing), <a href="/tools.html#crucible">Crucible</a> (falsifiable claim checks), and cryptographic <code>engine-receipt/1</code> audit trails. All offensive, dual-use, and controlled-private research codebases stay strictly offline and excluded from public distribution.</p>
-  <p class="body-text"><strong>Dual-edge assurance, institutional resilience, and public/defense oversight.</strong> Agentic software now touches codebases, credentials, financial workflows, and critical infrastructure. Three governance principles hold across both commercial teams and state or defense oversight:</p>
-  <div class="index" role="list">
-    <div class="index-row" role="listitem">
-      <span class="index-term">Proportional containment</span>
-      <span class="index-gloss">Governance, isolation, monitoring, and kill-switch authority must rise with maximum credible consequence (T1 baseline practice, T2 rehearsed challenge and independent checks, T3 restricted authority, continuous evidence, and verified stop controls), never merely with operator convenience.</span>
-    </div>
-    <div class="index-row" role="listitem">
-      <span class="index-term">Independent re-derivability</span>
-      <span class="index-gloss">Neither a model vendor nor an institutional buyer should have to take a system's summary on faith. Offline SHA-256 receipts and deterministic checks let an outside auditor re-derive the verdict from raw inputs even when incentives conflict.</span>
-    </div>
-    <div class="index-row" role="listitem">
-      <span class="index-term">Dual-edge discipline</span>
-      <span class="index-gloss">The same capability that diagnoses a failure mode can be misused if detached from authorization and containment. Healthy institutions pair strict pre-action boundaries with a zero-penalty honest-exit channel ("I could not verify this, and here is why") so failures surface early instead of being hidden.</span>
+      <span class="index-term">Authorized private practice</span>
+      <span class="index-gloss"><a href="private-practice.html">Private-system index</a>: <a href="array.html">Array</a>, <a href="seed.html">Seed</a> (WARDEN), <a href="sofer.html">Sofer</a>, <a href="isomorph.html">Isomorph</a>, <a href="bounds.html">Bounds</a>, <a href="kun.html">Kun</a>, ORCA, Aleph, and Gate are distinct systems for controlled campaigns, native assessment, domain orchestration, inference testing, trust verification, access recovery, execution, and release authority.</span>
     </div>
   </div>
 </section>
 
 <section class="mv" id="hierarchy" aria-labelledby="hierarchy-h">
-  <h2 id="hierarchy-h">Public defensive tools and private-boundary policy</h2>
-  <p class="body-text">Public releases focus strictly on defensive verification, hardware-identity auditing, secret redaction, and agent permission boundaries. Private security research lines remain strictly unpublished and excluded from public repositories and this site.</p>
+  <h2 id="hierarchy-h">Security and purple-team architecture hierarchy</h2>
+  <p class="body-text">Across 18 repositories totaling 2.62M+ measured lines of code, 2,347 test files, and 869 commits, this security and purple-team hierarchy evolved in parallel with the compiler and rendering work and directly shaped Flywheel's verification architecture. Every tool below is documented at the capability level; live operational payloads, private methods, target details, and raw credentials stay strictly embargoed.</p>
   <div class="index" role="list">
     <div class="index-row" role="listitem">
-      <span class="index-term">1. Hardware &amp; host inspection (public)</span>
-      <span class="index-gloss"><strong><a href="/tools.html#phantom">Phantom</a></strong> (v1.1.1, Rust, 273 tests, 0 production unwraps) performs auditable Layer 0 to 2 hardware-identity inspection with reversible backup and restore on owned Windows and Linux machines.</span>
+      <span class="index-term">1. Routing ancestor (ancestor)</span>
+      <span class="index-gloss"><strong>Sovereign</strong> (early 2026): a 39-agent security and purple-team routing table that directly seeded Plexus capability wiring, the Index workspace router, and the Senses routing architecture.</span>
     </div>
     <div class="index-row" role="listitem">
-      <span class="index-term">2. Verification &amp; agent gates (public)</span>
-      <span class="index-gloss"><strong><a href="/tools.html#accountable-surface">Accountable Surface</a></strong> (default-deny agent permissions, policy gates, rollback, tamper-evident journal), <strong><a href="/tools.html#emet">EMET</a></strong> (cross-language byte-integrity witness), <strong><a href="/tools.html#crucible">Crucible</a></strong> (planted-failure claim verification), and <strong><a href="/tools.html#proof-surface">Proof Surface</a></strong>.</span>
+      <span class="index-term">2. Native assessment &amp; domain ledger (controlled-private)</span>
+      <span class="index-gloss"><strong>WARDEN / <a href="seed.html">Seed</a></strong> (2026-04-04, C++23, 224,887 LOC, 389 test files, 59 ATT&amp;CK-mapped modules) spun off WARDEN Reporting (C++23 CVSS and findings handoff), WARDEN Sensorium, WARDEN Agent Audit, and WARDEN Release Assurance. <strong><a href="sofer.html">Sofer</a></strong> (2026-04-11, Python, 1,364,070 LOC, 1,107 test files, 74 packages) provides the intelligence, regulatory, provenance, vulnerability-lab, and self-healing ledger with MCP bridging (sensitive hazard domains strictly measurement, evaluation, and safety-layer only). <strong><a href="kun.html">Kun</a></strong> (2026-04-12) maintains path-only access recovery with zero raw credentials. <strong>Aleph</strong> (2026-06-30, 15,418 LOC, 128 commits) serves as the private release gate, safety evaluation, and supply-chain intake layer.</span>
     </div>
     <div class="index-row" role="listitem">
-      <span class="index-term">3. Publication &amp; hygiene guards (public)</span>
-      <span class="index-gloss"><strong>Secret Redact IO</strong>, <strong>Agent Hook Pack</strong>, <strong>Repo Proof Index</strong>, and <strong>Public Surface Sweeper</strong> (pre-publication scanning for secrets, personal metadata, and broken provenance before any artifact leaves a workstation).</span>
+      <span class="index-term">3. Authorized campaign, inference &amp; trust runtimes (controlled-private)</span>
+      <span class="index-gloss"><strong>ORCA</strong> (2026-06-18, 23,011 LOC, 144 commits) enforces rules-of-engagement admission gates, blind-spot modeling, and linked-hash receipt ledgers. <strong><a href="array.html">Array</a></strong> (2026-08-25, 173,783 LOC, 200 test files, consolidating earlier campaign and run-room platforms) alongside <strong>Adversarial</strong> (155,022 LOC) coordinates authorized wave-planned engagements with RoeEnforcer containment and inclusion-proof evidence bundles. <strong><a href="isomorph.html">Isomorph</a></strong> (extracted from WARDEN 2026-06-18, 172,570 LOC, 243 test files) measures inference-boundary refusal stability with hash-chained audit records (live payloads strictly embargoed; its defensive seed fathered EMET and Accountable Surface). <strong><a href="bounds.html">Bounds</a></strong> (2026-08-25, 5,141 LOC, 29 test files) verifies agent intent drift, runtime telemetry, sealed receipts, and attested waivers.</span>
     </div>
     <div class="index-row" role="listitem">
-      <span class="index-term">4. Controlled-private boundary</span>
-      <span class="index-gloss">Internal adversarial assessment, inference-boundary stress harnesses, and operational testbeds remain strictly private, authorized-only, and offline. No exploit payloads, evasion techniques, or private security source trees are published here.</span>
+      <span class="index-term">4. Public hardware audit &amp; verification descendants (shipped / active)</span>
+      <span class="index-gloss"><strong><a href="phantom.html">Phantom</a></strong> (2026-08-20, Rust, 25,347 LOC, 273 tests, 0 production unwraps, v1.1.1 shipped) performs auditable Layer 0 to 2 hardware-identity inspection and reversible backup and restore on owned Windows and Linux machines. Public accountability descendants unified in Flywheel include <strong><a href="emet.html">EMET</a></strong> (Python, Rust, Node, and Go byte-integrity witness), <strong><a href="proof-surface.html">Proof Surface</a></strong>, <strong><a href="accountable-surface.html">Accountable Surface</a></strong>, <strong><a href="crucible.html">Crucible</a></strong>, <strong>Secret Redact IO</strong>, <strong>Agent Hook Pack</strong>, <strong>Repo Proof Index</strong>, and <strong>Public Surface Sweeper</strong>.</span>
     </div>
   </div>
-  <p class="body-text">Browse every public defensive package on <a href="/tools.html">Tools &amp; Repositories</a>, read <a href="/frontier-safety/">Frontier Safety Archives</a>, or trace how verification integrates across all five flagships on <a href="architecture.html">Platform Architecture</a>.</p>
+  <p class="body-text">Inspect the complete 16-system breakdown with maturity tags and authorization boundaries on the <a href="security-toolkit.html#full-hierarchy">Security toolkit page</a>, or trace how this lineage feeds into the unified stack on <a href="architecture.html#lineage">Platform Architecture</a>.</p>
 </section>
 
 <section class="mv" id="advisories" aria-labelledby="advisories-h">
@@ -117,51 +96,51 @@
   <p class="body-text">The GitHub security advisories below each cover a flaw in a released version of one of my tools. A row names what could happen, the versions affected and the release that fixes it. Seven were published on 26 September 2026 and five on 27 September 2026, Pacific time. None has a CVE. Each tool&rsquo;s newest release fixes every advisory listed for it: Gather 1.9.1, Relay 0.5.0, Forum 1.15.1, Crucible 1.3.0, Canon 0.4.2 and Mneme 0.5.1.</p>
   <div class="index" role="list">
     <div class="index-row" role="listitem">
-      <span class="index-term"><a href="/tools.html#gather">Gather</a> &middot; high</span>
+      <span class="index-term"><a href="gather.html">Gather</a> &middot; high</span>
       <span class="index-gloss">A program planted in the working folder could start in place of a tool through an absolute PATH entry, a link or a drive-relative name. Affected: <code class="ident" translate="no">gather-engine</code> before 1.9.1. Fixed in 1.9.1. <a href="https://github.com/HarperZ9/gather/security/advisories/GHSA-r38f-cr69-jpp8" rel="noopener" aria-label="Advisory GHSA-r38f-cr69-jpp8: Gather, PATH entries reaching the working folder">Advisory <span class="ident" translate="no">GHSA-r38f-cr69-jpp8</span></a></span>
     </div>
     <div class="index-row" role="listitem">
-      <span class="index-term"><a href="/tools.html#gather">Gather</a> &middot; medium</span>
+      <span class="index-term"><a href="gather.html">Gather</a> &middot; medium</span>
       <span class="index-gloss">On Windows, MCP path arguments could make the machine sign in to a network share named in the call. Affected: <code class="ident" translate="no">gather-engine</code> 1.6.0 and later releases before 1.9.1. Fixed in 1.9.1. <a href="https://github.com/HarperZ9/gather/security/advisories/GHSA-j6j7-39vh-qrp4" rel="noopener" aria-label="Advisory GHSA-j6j7-39vh-qrp4: Gather, network share paths on Windows">Advisory <span class="ident" translate="no">GHSA-j6j7-39vh-qrp4</span></a></span>
     </div>
     <div class="index-row" role="listitem">
-      <span class="index-term"><a href="/tools.html#gather">Gather</a> &middot; high</span>
+      <span class="index-term"><a href="gather.html">Gather</a> &middot; high</span>
       <span class="index-gloss">MCP tool arguments could run commands and send environment secrets to a host named in the call. Affected: <code class="ident" translate="no">gather-engine</code> before 1.9.0. Fixed in 1.9.0. <a href="https://github.com/HarperZ9/gather/security/advisories/GHSA-pxvv-rg3f-4v5w" rel="noopener" aria-label="Advisory GHSA-pxvv-rg3f-4v5w: Gather, MCP tool arguments">Advisory <span class="ident" translate="no">GHSA-pxvv-rg3f-4v5w</span></a></span>
     </div>
     <div class="index-row" role="listitem">
-      <span class="index-term"><a href="/tools.html#gather">Gather</a> &middot; high</span>
+      <span class="index-term"><a href="gather.html">Gather</a> &middot; high</span>
       <span class="index-gloss">External tools started by bare name, so an executable planted in the working folder could run in their place. Affected: <code class="ident" translate="no">gather-engine</code> before 1.9.0. Fixed in 1.9.0. <a href="https://github.com/HarperZ9/gather/security/advisories/GHSA-r4f3-9xrf-72m5" rel="noopener" aria-label="Advisory GHSA-r4f3-9xrf-72m5: Gather, tools started by bare name">Advisory <span class="ident" translate="no">GHSA-r4f3-9xrf-72m5</span></a></span>
     </div>
     <div class="index-row" role="listitem">
-      <span class="index-term"><a href="/tools.html#systems-relay">Relay</a> &middot; high</span>
+      <span class="index-term"><a href="systems/relay.html">Relay</a> &middot; high</span>
       <span class="index-gloss">A program planted where a PATH entry reached the working folder could start in place of an installed tool. Affected: <code class="ident" translate="no">flywheel-relay</code> before 0.5.0. Fixed in 0.5.0. <a href="https://github.com/HarperZ9/relay/security/advisories/GHSA-82fg-qprm-q5r7" rel="noopener" aria-label="Advisory GHSA-82fg-qprm-q5r7: Relay, PATH entries reaching the working folder">Advisory <span class="ident" translate="no">GHSA-82fg-qprm-q5r7</span></a></span>
     </div>
     <div class="index-row" role="listitem">
-      <span class="index-term"><a href="/tools.html#systems-relay">Relay</a> &middot; high</span>
+      <span class="index-term"><a href="systems/relay.html">Relay</a> &middot; high</span>
       <span class="index-gloss">The CLI tiers could run a planted binary or project hooks, and shell children inherited provider keys. Affected: <code class="ident" translate="no">flywheel-relay</code> before 0.4.0. Fixed in 0.4.0. <a href="https://github.com/HarperZ9/relay/security/advisories/GHSA-xxcc-grhg-v9g7" rel="noopener" aria-label="Advisory GHSA-xxcc-grhg-v9g7: Relay, CLI tiers and provider keys">Advisory <span class="ident" translate="no">GHSA-xxcc-grhg-v9g7</span></a></span>
     </div>
     <div class="index-row" role="listitem">
-      <span class="index-term"><a href="/tools.html#systems-relay">Relay</a> &middot; medium</span>
+      <span class="index-term"><a href="systems/relay.html">Relay</a> &middot; medium</span>
       <span class="index-gloss">The session listing tool could read ledger files outside the session store. Affected: <code class="ident" translate="no">flywheel-relay</code> 0.2.0 and later releases before 0.4.0. Fixed in 0.4.0. <a href="https://github.com/HarperZ9/relay/security/advisories/GHSA-phjr-6qrc-39mw" rel="noopener" aria-label="Advisory GHSA-phjr-6qrc-39mw: Relay, session listing tool">Advisory <span class="ident" translate="no">GHSA-phjr-6qrc-39mw</span></a></span>
     </div>
     <div class="index-row" role="listitem">
-      <span class="index-term"><a href="/tools.html#forum">Forum</a> &middot; high</span>
+      <span class="index-term"><a href="forum.html">Forum</a> &middot; high</span>
       <span class="index-gloss">The working-folder guard added in 1.15.0 missed an alias, a repointed link and a quoted PATH entry, so a planted program could still start. Affected: <code class="ident" translate="no">forum-engine</code> 1.15.0 only. Fixed in 1.15.1. <a href="https://github.com/HarperZ9/forum/security/advisories/GHSA-h6qh-49hv-4xcg" rel="noopener" aria-label="Advisory GHSA-h6qh-49hv-4xcg: Forum, the 1.15.0 working-folder guard">Advisory <span class="ident" translate="no">GHSA-h6qh-49hv-4xcg</span></a></span>
     </div>
     <div class="index-row" role="listitem">
-      <span class="index-term"><a href="/tools.html#forum">Forum</a> &middot; high</span>
+      <span class="index-term"><a href="forum.html">Forum</a> &middot; high</span>
       <span class="index-gloss">Commands ran with the working folder and the full environment, gate approvals were not bound to a raised gate, and the local daemon had no authentication. Affected: <code class="ident" translate="no">forum-engine</code> before 1.15.0. Fixed in 1.15.0. <a href="https://github.com/HarperZ9/forum/security/advisories/GHSA-36gv-h885-fmjf" rel="noopener" aria-label="Advisory GHSA-36gv-h885-fmjf: Forum, executors, gates and the local daemon">Advisory <span class="ident" translate="no">GHSA-36gv-h885-fmjf</span></a></span>
     </div>
     <div class="index-row" role="listitem">
-      <span class="index-term"><a href="/tools.html#crucible">Crucible</a> &middot; medium</span>
+      <span class="index-term"><a href="crucible.html">Crucible</a> &middot; medium</span>
       <span class="index-gloss">A verdict could report <span translate="no">MATCH</span> that no sealed measurement supports. Affected: <code class="ident" translate="no">crucible-bench</code> 1.2.0 and earlier. Fixed in 1.3.0. <a href="https://github.com/HarperZ9/crucible/security/advisories/GHSA-49qx-cj4f-wfqv" rel="noopener" aria-label="Advisory GHSA-49qx-cj4f-wfqv: Crucible, unsupported MATCH verdicts">Advisory <span class="ident" translate="no">GHSA-49qx-cj4f-wfqv</span></a></span>
     </div>
     <div class="index-row" role="listitem">
-      <span class="index-term"><a href="/tools.html#canon">Canon</a> &middot; medium</span>
+      <span class="index-term"><a href="canon.html">Canon</a> &middot; medium</span>
       <span class="index-gloss">The shared context store could keep and return secrets, list transcript paths, and report a purge as complete before it was. Affected: <code class="ident" translate="no">flywheel-canon</code> 0.2.0 and later releases before 0.4.2. Fixed in 0.4.2. <a href="https://github.com/HarperZ9/canon/security/advisories/GHSA-48rq-xjfx-6j4f" rel="noopener" aria-label="Advisory GHSA-48rq-xjfx-6j4f: Canon, shared context store">Advisory <span class="ident" translate="no">GHSA-48rq-xjfx-6j4f</span></a></span>
     </div>
     <div class="index-row" role="listitem">
-      <span class="index-term"><a href="/tools.html#systems-mneme">Mneme</a> &middot; medium</span>
+      <span class="index-term"><a href="systems/mneme.html">Mneme</a> &middot; medium</span>
       <span class="index-gloss">The forget command could keep erased text, or erase another user&rsquo;s row, while its receipt said erased. Affected: <code class="ident" translate="no">flywheel-mneme</code> 0.5.0 only. Fixed in 0.5.1. <a href="https://github.com/HarperZ9/mneme/security/advisories/GHSA-j2pw-g7f4-9ppp" rel="noopener" aria-label="Advisory GHSA-j2pw-g7f4-9ppp: Mneme, forget command">Advisory <span class="ident" translate="no">GHSA-j2pw-g7f4-9ppp</span></a></span>
     </div>
   </div>
@@ -172,7 +151,7 @@
 <section class="mv" id="private-systems" aria-labelledby="private-systems-h">
   <h2 id="private-systems-h">Private operational systems</h2>
   <p class="body-text">Array controls authorized campaigns and assessment waves. Seed supplies the native C++23 assessment engine. Sofer coordinates private-line agents, models, probes, tools, and domain packages. Isomorph tests model refusal and jailbreak-class inference boundaries. Bounds verifies agent, runtime, and release trust. Kun records path-only access-recovery memory without retaining raw credentials. ORCA operates engagement state, modules, findings, reports, and bundles. Gate decides whether the connected line is ready to release or hand off.</p>
-  <p class="body-text"><a href="/essays.html#private-practice">Read the practice map</a> for what each one does. Targets, credentials, payloads, client data and findings are not published.</p>
+  <p class="body-text"><a href="private-practice.html">Read the practice map</a> for what each one does. Targets, credentials, payloads, client data and findings are not published.</p>
 </section>
 
 <section class="mv" id="authorization" aria-labelledby="authorization-h">
@@ -184,11 +163,11 @@
   <h2 id="data-h">Registry</h2>
   <p class="body-text"><a href="security-tools.json">The public security registry</a> lists each tool with its purpose, maturity, source, install command, verification command and date.</p>
   <div class="channels">
-    <span class="g">Public</span>: <a href="/tools.html#phantom">Phantom</a> &middot; <a href="/tools.html#accountable-surface">Accountable Surface</a> &middot; <a href="/tools.html#proof-surface">Proof Surface</a> &middot; <a href="/tools.html#emet">EMET</a>
+    <span class="g">Public</span>: <a href="phantom.html">Phantom</a> &middot; <a href="accountable-surface.html">Accountable Surface</a> &middot; <a href="proof-surface.html">Proof Surface</a> &middot; <a href="emet.html">EMET</a>
     &nbsp;&middot;&nbsp;
-    <span class="g">Toolkit</span>: <a href="/tools.html#security-toolkit">Security toolkit</a>
+    <span class="g">Toolkit</span>: <a href="security-toolkit.html">Security toolkit</a>
     &nbsp;&middot;&nbsp;
-    <span class="g">Private</span>: <a href="/essays.html#private-practice">System index</a> &middot; <a href="/tools.html#array">Array</a> &middot; <a href="/tools.html#seed">Seed</a> &middot; <a href="/tools.html#sofer">Sofer</a> &middot; <a href="/tools.html#isomorph">Isomorph</a> &middot; <a href="/tools.html#bounds">Bounds</a> &middot; <a href="/tools.html#kun">Kun</a>
+    <span class="g">Private</span>: <a href="private-practice.html">System index</a> &middot; <a href="array.html">Array</a> &middot; <a href="seed.html">Seed</a> &middot; <a href="sofer.html">Sofer</a> &middot; <a href="isomorph.html">Isomorph</a> &middot; <a href="bounds.html">Bounds</a> &middot; <a href="kun.html">Kun</a>
   </div>
 </section>
 </main>

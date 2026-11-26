@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en" data-type="stock" data-lettering="/world/lettering/lib/letter.mjs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<title>Estuary Lantern | The Playground | Zain Dana Harper</title>
+<meta name="description" content="Interactive Estuary Lantern inside The Playground: Perret concrete lattice, spectral glass apertures, metamer detection, homology, and harmonic synthesis.">
+<link rel="canonical" href="https://harperz9.github.io/estuary.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Estuary Lantern | The Playground | Zain Dana Harper">
+<meta property="og:description" content="Continuous elemental property field inside The Playground blending refraction, fluid, measure, cad, and sound with live metamer detection and homology.">
+<meta property="og:url" content="https://harperz9.github.io/estuary.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/playground.jpg?v=2c96139bee48">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Estuary Lantern inside The Playground, by Zain Dana Harper.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Estuary Lantern | The Playground | Zain Dana Harper">
+<meta name="twitter:description" content="Continuous elemental property field inside The Playground blending refraction, fluid, measure, cad, and sound with live metamer detection and homology.">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/p/playground.jpg?v=2c96139bee48">
+<meta name="twitter:image:alt" content="Estuary Lantern inside The Playground, by Zain Dana Harper.">
+<link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-a6d0cea570">
+<link rel="stylesheet" href="/studies/studies.css?v=world-a6d0cea570">
+<link rel="stylesheet" href="/world/site/depth.css?v=world-a6d0cea570">
+<script type="module" src="/world/ui/shell/shell.js?v=world-a6d0cea570"></script>
+<script type="module" src="/world/site/hand-scroll.js?v=world-a6d0cea570"></script>
+<link rel="stylesheet" href="/world/site/surfaces/surface-page.css?v=world-a6d0cea570">
+<style>
+.shell { max-width: 1120px; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; position: relative; z-index: 1; }
+.hero { margin-bottom: 1.5rem; }
+.hero-crumb { font-size: 0.9rem; opacity: 0.8; margin: 0 0 0.5rem; }
+.hero h1 { margin: 0 0 0.5rem; }
+.hero p { margin: 0; max-width: 68ch; }
+.noscript-box { margin: 1rem 0 1.5rem; padding: 1rem 1.25rem; border-left: 3px solid currentColor; }
+.workspace { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.95fr); gap: 1.5rem; align-items: start; }
+@media (max-width: 920px) { .workspace { grid-template-columns: 1fr; } }
+.panel { padding: 1rem 0; border-top: 1px solid color-mix(in srgb, currentColor 20%, transparent); }
+.canvas-wrap { position: relative; }
+#estuary-canvas { width: 100%; height: 430px; display: block; border-radius: 4px; background: #101318; }
+.preset-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.85rem; }
+.btn { appearance: none; border: 1px solid color-mix(in srgb, currentColor 30%, transparent); background: transparent; color: inherit; font: inherit; font-size: 0.88rem; padding: 0.42rem 0.78rem; border-radius: 3px; cursor: pointer; }
+.btn:hover { border-color: currentColor; }
+.btn-audio { width: 100%; margin-top: 0.85rem; padding: 0.6rem 1rem; font-weight: 600; }
+.btn-audio[aria-pressed="true"] { background: currentColor; color: Canvas; }
+.panel h2 { margin: 0 0 0.75rem; font-size: 1.05rem; }
+.ctrl-group { margin-bottom: 0.7rem; }
+.ctrl-label { display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 0.2rem; }
+.ctrl-val { font-family: var(--mono, ui-monospace, monospace); font-size: 0.85rem; }
+input[type="range"] { width: 100%; cursor: pointer; }
+select { width: 100%; padding: 0.45rem 0.6rem; background: transparent; color: inherit; border: 1px solid color-mix(in srgb, currentColor 30%, transparent); border-radius: 3px; font: inherit; font-size: 0.92rem; }
+.readout-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
+.badge { display: inline-block; padding: 0.22rem 0.6rem; border-radius: 3px; font-family: var(--mono, ui-monospace, monospace); font-size: 0.82rem; font-weight: 700; margin-bottom: 0.65rem; border: 1px solid color-mix(in srgb, currentColor 32%, transparent); }
+.badge[data-state="metamer"] { background: #c97a16; color: #fff; border-color: #c97a16; }
+.kv { display: grid; grid-template-columns: 1fr auto; gap: 0.35rem 0.8rem; font-size: 0.9rem; margin: 0; }
+.kv-sep { margin-top: 0.8rem; padding-top: 0.65rem; border-top: 1px solid color-mix(in srgb, currentColor 20%, transparent); }
+.kv dt { opacity: 0.78; }
+.kv dd { margin: 0; font-family: var(--mono, ui-monospace, monospace); }
+.meter-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.55rem; }
+.meter-head { display: flex; justify-content: space-between; font-size: 0.88rem; margin-bottom: 0.2rem; }
+.meter-track { height: 6px; background: color-mix(in srgb, currentColor 14%, transparent); border-radius: 3px; overflow: hidden; }
+.meter-fill { height: 100%; background: currentColor; width: 0%; }
+.mono-line { font-family: var(--mono, ui-monospace, monospace); font-size: 0.84rem; opacity: 0.8; word-break: break-word; margin: 0.45rem 0 0; }
+.receipt-code { display: inline-block; font-family: var(--mono, ui-monospace, monospace); font-size: 0.86rem; padding: 0.2rem 0.45rem; border: 1px solid color-mix(in srgb, currentColor 24%, transparent); border-radius: 3px; }
+.findings { margin-top: 2rem; }
+.findings h2 { margin: 0 0 0.75rem; }
+.protocol-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.25rem; }
+.protocol-card { padding: 0.9rem 0; border-top: 1px solid color-mix(in srgb, currentColor 20%, transparent); }
+.protocol-card h3 { margin: 0 0 0.4rem; font-size: 1rem; }
+.protocol-card p { margin: 0; font-size: 0.92rem; opacity: 0.86; }
+.verified-line { margin-top: 1.25rem; padding: 0.75rem 1rem; border-left: 3px solid currentColor; font-size: 0.9rem; }
+</style>
+</head>
+<body class="reading ds-body sx-body">
+<main id="main" class="shell" tabindex="-1">
+  <header class="hero">
+    <p class="hero-crumb"><a href="/playground/#estuary">The Playground</a> / Estuary</p>
+    <h1>Estuary Lantern</h1>
+    <p>A concrete structural lattice perforated by weighted spectral glass apertures. Every bay blends continuously across refraction, fluid, measure, cad, and sound, exposing perceptual metamers, field topology, opt-in harmonic partials, and a deterministic receipt.</p>
+  </header>
+
+  <noscript>
+    <section class="noscript-box" aria-label="Static field description">
+      <h2>JavaScript is turned off</h2>
+      <p>Estuary Lantern renders a 10 by 6 concrete grid modeled on Auguste Perret's Saint-Joseph lantern. Each glass aperture blends five continuous weights (refraction, fluid, measure, cad, and sound) through a C1 halocline curve, computes perceptual metamer projections across three observer lenses, and reports field weight, transparency, diffusion, symmetry, seams, negative space, and a deterministic FNV-1a receipt.</p>
+      <p>Continue reading on <a href="index.html">Home</a>, <a href="playground/">The Playground</a>, <a href="hire.html">Hire</a>, or <a href="findings/">Findings</a>.</p>
+    </section>
+  </noscript>
+
+  <section class="workspace" aria-label="Interactive Estuary Lantern">
+    <div class="panel canvas-wrap">
+      <canvas id="estuary-canvas" width="720" height="430" role="img" aria-label="Concrete structural lattice framing spectral glass apertures blended across refraction, fluid, measure, cad, and sound."></canvas>
+      <div class="preset-row" role="group" aria-label="Field presets">
+        <button type="button" class="btn" data-preset="estuary">Estuary blend</button>
+        <button type="button" class="btn" data-preset="cadenceMetamer">Cadence metamer (fluid vs sound)</button>
+        <button type="button" class="btn" data-preset="densityMetamer">Density metamer (refraction vs cad)</button>
+      </div>
+    </div>
+
+    <div class="panel" aria-label="Field controls">
+      <h2>Field Controls</h2>
+      <div class="ctrl-group">
+        <label class="ctrl-label" for="ctrl-mix"><span>Element A vs Element B mix</span><span id="val-mix" class="ctrl-val">0.50</span></label>
+        <input id="ctrl-mix" type="range" min="0" max="1" step="0.01" value="0.50">
+      </div>
+      <div class="ctrl-group">
+        <label class="ctrl-label" for="ctrl-refraction"><span>Refraction weight</span><span id="val-refraction" class="ctrl-val">0.85</span></label>
+        <input id="ctrl-refraction" type="range" min="0" max="1" step="0.01" value="0.85">
+      </div>
+      <div class="ctrl-group">
+        <label class="ctrl-label" for="ctrl-fluid"><span>Fluid weight</span><span id="val-fluid" class="ctrl-val">0.30</span></label>
+        <input id="ctrl-fluid" type="range" min="0" max="1" step="0.01" value="0.30">
+      </div>
+      <div class="ctrl-group">
+        <label class="ctrl-label" for="ctrl-measure"><span>Measure weight</span><span id="val-measure" class="ctrl-val">0.45</span></label>
+        <input id="ctrl-measure" type="range" min="0" max="1" step="0.01" value="0.45">
+      </div>
+      <div class="ctrl-group">
+        <label class="ctrl-label" for="ctrl-cad"><span>CAD lattice weight</span><span id="val-cad" class="ctrl-val">0.72</span></label>
+        <input id="ctrl-cad" type="range" min="0" max="1" step="0.01" value="0.72">
+      </div>
+      <div class="ctrl-group">
+        <label class="ctrl-label" for="ctrl-sound"><span>Sound weight</span><span id="val-sound" class="ctrl-val">0.25</span></label>
+        <input id="ctrl-sound" type="range" min="0" max="1" step="0.01" value="0.25">
+      </div>
+      <div class="ctrl-group">
+        <label class="ctrl-label" for="ctrl-observer"><span>Observer lens</span></label>
+        <select id="ctrl-observer">
+          <option value="visual-luminance">visual-luminance</option>
+          <option value="temporal-cadence">temporal-cadence</option>
+          <option value="structural-density">structural-density</option>
+        </select>
+      </div>
+      <button id="ctrl-audio" type="button" class="btn btn-audio" aria-pressed="false">Listen to harmonic metamer</button>
+      <p id="acoustic-partials" class="mono-line">Audio muted by default. Click above to synthesize partials.</p>
+    </div>
+  </section>
+
+  <section class="readout-grid" aria-label="Live telemetry readouts">
+    <div class="panel">
+      <h2>Metamer Detector</h2>
+      <div id="metamer-badge" class="badge" data-state="distinct">PERCEPTUALLY DISTINCT</div>
+      <dl class="kv">
+        <dt>Observer lens</dt><dd id="metamer-observer" aria-live="polite" data-readout>visual-luminance</dd>
+        <dt>Domain distance</dt><dd id="metamer-domain">0.0000</dd>
+        <dt>Perceptual distance</dt><dd id="metamer-perceptual">0.0000</dd>
+        <dt>Metamer score</dt><dd id="metamer-score">0.0000</dd>
+      </dl>
+    </div>
+
+    <div class="panel">
+      <h2>Field Topology</h2>
+      <ul class="meter-list">
+        <li>
+          <div class="meter-head"><span>Weight</span><span id="topo-weight">0%</span></div>
+          <div class="meter-track"><div id="bar-weight" class="meter-fill"></div></div>
+        </li>
+        <li>
+          <div class="meter-head"><span>Transparency</span><span id="topo-transparency">0%</span></div>
+          <div class="meter-track"><div id="bar-transparency" class="meter-fill"></div></div>
+        </li>
+        <li>
+          <div class="meter-head"><span>Diffusion</span><span id="topo-diffusion">0%</span></div>
+          <div class="meter-track"><div id="bar-diffusion" class="meter-fill"></div></div>
+        </li>
+        <li>
+          <div class="meter-head"><span>Symmetry / Asymmetry</span><span id="topo-symmetry">0% / 0%</span></div>
+          <div class="meter-track"><div id="bar-symmetry" class="meter-fill"></div></div>
+        </li>
+        <li>
+          <div class="meter-head"><span>Seams</span><span id="topo-seams">0%</span></div>
+          <div class="meter-track"><div id="bar-seams" class="meter-fill"></div></div>
+        </li>
+        <li>
+          <div class="meter-head"><span>Negative space</span><span id="topo-negspace">0%</span></div>
+          <div class="meter-track"><div id="bar-negspace" class="meter-fill"></div></div>
+        </li>
+      </ul>
+      <dl class="kv kv-sep" aria-label="Homology and monodromy invariants">
+        <dt>&beta;<sub>0</sub> components</dt><dd id="topo-beta0">0 connected</dd>
+        <dt>&beta;<sub>1</sub> apertures/holes</dt><dd id="topo-beta1">0 enclosed</dd>
+        <dt>Monodromy winding</dt><dd id="topo-winding">0 (none)</dd>
+      </dl>
+    </div>
+
+    <div class="panel">
+      <h2>Genotype to Phenotype Readout</h2>
+      <p id="readout-summary" aria-live="polite">Initializing deterministic field readout.</p>
+      <p class="mono-line">Haptic envelope: <span id="readout-haptic">pending</span></p>
+      <p class="mono-line">Receipt: <code id="readout-receipt" class="receipt-code">pending</code></p>
+    </div>
+  </section>
+
+  <section class="findings" aria-labelledby="findings-heading">
+    <h2 id="findings-heading">Architecture &amp; Findings</h2>
+    <div class="protocol-grid">
+      <article class="protocol-card">
+        <h3>Estuary Metamer Compiler</h3>
+        <p>Projects five continuous domain properties through linear observer matrices so distinct physical genotypes that look or sound identical under one lens are flagged explicitly instead of collapsing silently.</p>
+      </article>
+      <article class="protocol-card">
+        <h3>Reseating-Valve Protocol</h3>
+        <p>Replaces hard state switches with C1 halocline transitions across visual, acoustic, haptic, and accessible outputs. Every slider move preserves smooth derivatives and leaves reduced-motion views in a settled frame.</p>
+      </article>
+      <article class="protocol-card">
+        <h3>Symmetry-Manifold Witnessed Memory</h3>
+        <p>Measures mirror symmetry, asymmetry, Laplacian diffusion, halocline seam ridges, and negative-space corridors directly from the evaluated field grid, binding each configuration to a deterministic FNV-1a receipt.</p>
+      </article>
+      <article class="protocol-card">
+        <h3>Certified Bit-Exact Kernels</h3>
+        <p>Drives rendering, harmonic partial ratios, and accessible summaries from zero-dependency deterministic ESM modules with a fixed 32-bit PCG generator so identical seeds reproduce bit-for-bit results.</p>
+      </article>
+      <article class="protocol-card">
+        <h3>Topology, Homology &amp; Monodromy</h3>
+        <p>Isomorphism preserves exact algebraic ratios across mediums, while homeomorphism preserves continuous shape invariants under deformation. Computing 0D connected components (&beta;<sub>0</sub>), 1D enclosed apertures (&beta;<sub>1</sub>), and integer monodromy winding around closed phase loops detects tears, punctured holes, and phase-flip singularities directly on the evaluated lattice.</p>
+      </article>
+      <article class="protocol-card">
+        <h3>Biology, Stress-Rest &amp; Looped Compute</h3>
+        <p>Living neural circuits alternate between active stress encoding and local rest replay instead of running every pathway at uniform depth. Inkling-2 variable-depth looped compute applies the same rhythm by spending extra recurrent passes on unresolved inputs and consolidating weights during quiet local-sleep intervals.</p>
+      </article>
+      <article class="protocol-card">
+        <h3>Sociology, Economy &amp; Reseating-Valve Ethics</h3>
+        <p>Accountable institutions and markets require low-friction ways to disengage without hidden penalties. The three-arm honest-exit reseating valve separates active participation, graceful exit, and a smooth reallocation curve so departing commitments stay honest and freed capacity returns cleanly to the commons.</p>
+      </article>
+    </div>
+    <p class="verified-line"><strong>Verified:</strong> Local Node test runner (<code>node --test</code>) executed <code>tests/estuary-homology.test.mjs</code>, <code>tests/estuary-lantern.test.mjs</code>, <code>tests/estuary-recombination.test.mjs</code>, <code>tests/estuary-field.test.mjs</code>, and <code>world/site/surfaces/bus.test.mjs</code> covering Betti homology, monodromy winding, homeomorphism certification, C1 continuity across all 10 property pairs, metamer detection, relational topology, lantern geometry, spectral apertures, bus delivery, and static HTML accessibility invariants.</p>
+  </section>
+</main>
+
+<script type="module">
+import { mountEstuaryLantern } from './world/site/surfaces/estuary-lantern.mjs';
+mountEstuaryLantern(document);
+</script>
+</body>
+</html>

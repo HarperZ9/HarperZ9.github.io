@@ -1,0 +1,47 @@
+<!doctype html><meta charset="utf-8"><title>Crossover still</title><meta name="robots" content="noindex">
+<style>html,body{margin:0;background:#222}canvas{width:100%;height:auto;display:block}</style>
+<canvas id="c"></canvas>
+<script type="module">
+import { createGlass } from "../../world/site/crossover/glass.js";
+import * as S from "../../world/site/crossover/scenes.js";
+import { toolMark } from "../../world/site/crossover/tool-marks.js";
+const q = new URLSearchParams(location.search), W = +q.get("w") || 1920, H = +q.get("h") || 1080, n = +q.get("n") || 4;
+const c = document.getElementById("c"); c.width = W; c.height = H;
+async function build(name) {
+  if (name === "overprint") return { ...S.overprintStudy(), span: 1800 };
+  if (name === "michel") return { ...S.michelLevy(), span: 1900 };
+  if (name === "cleavage") return { ...S.cleavage(), span: 1900 };
+  if (name === "parity") return { ...S.parity(), span: 2000 };
+  if (name === "mie") return { ...S.mieField(), span: 2000 };
+  if (name === "mark-flywheel-open") return { lift: 10, ...(await S.flywheelOpen()), span: 1200 };
+  if (name === "mark-michel") return { lift: 10, ...S.michelMark(), span: 1200 };
+  if (name === "mark-cleavage") return { lift: 10, ...S.cleavageMark(), span: 1200 };
+  if (name.startsWith("tool:")) return { lift: 8, ...(await toolMark(name.slice(5))), span: 1150 };
+  if (name.startsWith("mark:")) return { lift: 10, ...(await S.MARKS[name.slice(5)]()), span: 1200, square: true };
+  if (name === "marks") { // all six, placed on one ground
+    const names = Object.keys(S.MARKS), groups = [], shapes = [];
+    for (const [i, k] of names.entries()) { const m = await S.MARKS[k](), off = groups.length, dx = (i % 3 - 1) * 1150, dy = (Math.floor(i / 3) - 0.5) * 1100;
+      groups.push(...m.groups); const mv = (p) => [p[0] * 0.9 + dx, p[1] * 0.9 + dy];
+      for (const s of m.shapes) { const t = { ...s, g: s.g + off };
+        for (const key of ["c", "a", "b"]) if (t[key]) t[key] = mv(t[key]);
+        for (const key of ["r", "w", "R"]) if (t[key] != null) t[key] *= 0.9;
+        if (t.hw) t.hw = t.hw.map((v) => v * 0.9); if (t.rr) t.rr *= 0.9;
+        shapes.push(t); } }
+    return { groups, shapes, span: 3700, lift: 10 };
+  }
+  throw new Error("unknown scene " + name);
+}
+try {
+  const g = await createGlass(c, { base: new URL("../../world/site/crossover/", location.href).href });
+  const s = await build(q.get("scene") || "overprint");
+  const span = s.span, u = span / W;
+  s.view = [-span / 2, -(H * u) / 2, u];
+  s.lighting = q.get("lighting") || "reflect";
+  if (q.get("refract")) s.refract = +q.get("refract"); if (q.get("caustic")) s.caustic = +q.get("caustic");
+  if (s.lighting === "backlit") s.ground = q.get("ground") === "black" ? [0, 0, 0] : [0.0040, 0.0103, 0.0176]; // the field wall, #0d1a24
+  g.setScene(s);
+  const t0 = performance.now();
+  await g.render(n);
+  window.__ms = performance.now() - t0; window.__done = true;
+} catch (e) { console.error(e); window.__err = String(e); window.__done = true; }
+</script>

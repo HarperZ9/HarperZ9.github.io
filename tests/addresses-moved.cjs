@@ -59,51 +59,44 @@ function endOf(row, byPath) {
   try {
     const scripted = await browser.newContext({ viewport: { width: 1280, height: 800 } });
     const plain = await browser.newContext({ viewport: { width: 1280, height: 800 }, javaScriptEnabled: false });
-    // A representative sample covering every distinct target hub plus a stride across the ledger;
-    // every row is checked statically in tests/test_no_dead_address.py.
-    const seenHub = new Set();
-    const sample = [];
-    for (let i = 0; i < moved.length; i++) {
-      const t = endOf(moved[i], byPath).split('#')[0].split('?')[0];
-      if (!seenHub.has(t) || (sample.length < 24 && i % Math.max(1, Math.floor(moved.length / 18)) === 0)) {
-        seenHub.add(t);
-        sample.push(moved[i]);
-      }
-    }
-    const spage = await scripted.newPage();
-    const qpage = await plain.newPage();
+    // A sample when the ledger grows large: every row is checked statically elsewhere (tests/test_no_dead_address.py);
+    // here the first 40 and every 10th after that are opened in the browser.
+    const sample = moved.filter((_, i) => i < 40 || i % 10 === 0);
     for (const row of sample) {
       const target = endOf(row, byPath);
       if (projectSites.some((p) => target.startsWith(p))) continue; // another repository's pages: not served here
       const file = path.join(ROOT, row.path.endsWith('/') ? row.path + 'index.html' : row.path);
       if (served(row.path) && fs.existsSync(file)) { failures.push(`${row.path}: a moved row has no file, and one exists`); continue; }
 
-      const first = await spage.goto(base + row.path, { waitUntil: 'domcontentloaded' });
+      const page = await scripted.newPage();
+      const first = await page.goto(base + row.path, { waitUntil: 'domcontentloaded' });
       if (first.status() !== 404) failures.push(`${row.path}: expected the not-found page with status 404, got ${first.status()}`);
       try {
-        await spage.waitForURL((u) => u.pathname + u.search + u.hash === target, { timeout: 8000 });
+        await page.waitForURL((u) => u.pathname + u.search + u.hash === target, { timeout: 8000 });
       } catch {
-        failures.push(`${row.path}: with scripts the browser stayed at ${new URL(spage.url()).pathname + new URL(spage.url()).search + new URL(spage.url()).hash}, the row leads to ${target}`);
+        failures.push(`${row.path}: with scripts the browser stayed at ${new URL(page.url()).pathname + new URL(page.url()).search + new URL(page.url()).hash}, the row leads to ${target}`);
+        await page.close();
         continue;
       }
       const place = target.split('#')[1];
       if (place) {
-        const there = await spage.evaluate((id) => !!(document.getElementById(id) || document.getElementsByName(id)[0] || document.querySelector(`[data-tab="${id}"]`)), place);
+        const there = await page.evaluate((id) => !!(document.getElementById(id) || document.getElementsByName(id)[0]), place);
         if (!there) failures.push(`${row.path}: landed on ${target}, and the page has no place named ${place}`);
       }
-      const heading = await spage.locator('h1').first().textContent().catch(() => '');
+      const heading = await page.locator('h1').first().textContent().catch(() => '');
       if (/No page at this address/.test(heading || '')) failures.push(`${row.path}: landed on the not-found page again`);
+      await page.close();
 
-      await qpage.goto(base + row.path, { waitUntil: 'domcontentloaded' });
-      const link = await qpage.evaluate((old) => {
+      const quiet = await plain.newPage();
+      await quiet.goto(base + row.path, { waitUntil: 'domcontentloaded' });
+      const link = await quiet.evaluate((old) => {
         const li = [...document.querySelectorAll('#nf-moved li')].find((x) => x.querySelector('code')?.textContent === old);
         return li ? li.querySelector('a').getAttribute('href') : null;
       }, row.path).catch(() => null);
       // With scripts off the browser parses <noscript> as markup, so the list is in the document.
       if (link !== target) failures.push(`${row.path}: without scripts the link reads ${link}, the row leads to ${target}`);
+      await quiet.close();
     }
-    await spage.close();
-    await qpage.close();
 
     // A row may map the places its old page had: each one lands on that place's new address.
     let placed = 0;
