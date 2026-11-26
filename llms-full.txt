@@ -34,6 +34,10 @@ runtime dependencies.
 - Links: https://harperz9.github.io/flywheel.html ,
   https://github.com/HarperZ9/flywheel , https://pypi.org/project/flywheel-verify/ ,
   docs https://harperz9.github.io/flywheel/docs/
+- Recent verified milestones (2026-11-26): flywheel #565 added the unified
+  `flywheel super-solver` pipeline (6/6 adversarial fault catch, 0 silent
+  accepts); flywheel #566 added Execution-Oracle PUCT verification tree search
+  and a 34.99x RFC 6962 proof-carrying Merkle trace compressor (0 soundness loss).
 
 ## Articulate
 
@@ -79,6 +83,10 @@ Brave and Firefox 128 or later, plus a command line for saved threads.
 - Links: https://harperz9.github.io/cmmns.html ,
   https://harperz9.github.io/cmmns/install.html ,
   https://github.com/HarperZ9/cmmns
+- Recent verified milestones (2026-11-26): cmmns #130 added `cmmns provenance
+  verify` for offline Web/AI provenance verification (agent-card.json, llms.txt,
+  JSON-LD, prompt-injection 4/4 catches, engine-receipt/1); cmmns #131 published
+  the OSI/FSF AGPL-3.0-only funding.json manifest.
 
 ## Superframe
 
@@ -101,8 +109,12 @@ Node 24 or later. The JavaScript engine has no dependencies; the instruments in
 - What it does not do: elements do not act on one another yet, the intent
   reader knows a small English vocabulary, and the type is the weakest
   crossing. It is a creative tool and makes no claims about therapy.
-- Links: https://harperz9.github.io/superframe.html ,
+- Links: https://harperz9.github.io/playground/#superframe ,
   https://github.com/HarperZ9/superframe
+- Recent verified milestones (2026-11-26): superframe #153 wired 3/3 native/bld/
+  BuildLang kernels with bit-exact C++ parity and 3-way 100 Hz/Deja-VAE checks;
+  RAW DX12 Waves 74-78 pass 96/96 live moving-camera Skyrim SE checks (38/38 DXC,
+  21/21 RTX 4090 GPU bench, 0 D3D12 errors).
 
 ## EMET
 
@@ -138,6 +150,9 @@ Version 1.15.0. Licence AGPL-3.0-only. Written in Rust.
   C backend is.
 - Links: https://harperz9.github.io/buildlang.html ,
   https://github.com/HarperZ9/buildlang , https://crates.io/crates/buildlang
+- Recent verified milestones (2026-11-26): buildlang #344 wired the V5
+  certified e-graph superoptimizer into buildc (`--superopt`, `--emit-cert`,
+  `buildc verify-cert`); buildlang #345 published the AGPL-3.0-only funding.json.
 
 ## raw-native
 
@@ -156,7 +171,7 @@ optional D3D12 and WebGPU builds.
   `raw_native_cli --out ./out`.
 - What it does not do: the default view comes back refuted (RMSE 0.135 against
   a tolerance of 0.12); the record keeps that result.
-- Links: https://harperz9.github.io/raw.html , https://github.com/HarperZ9/superframe/tree/main/native
+- Links: https://harperz9.github.io/playground/#native , https://github.com/HarperZ9/superframe/tree/main/native
 
 ## Telos
 

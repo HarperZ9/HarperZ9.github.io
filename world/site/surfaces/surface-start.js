@@ -52,7 +52,7 @@ if (wb) {
   wb.querySelector("#wb-filter")?.addEventListener("focus", () => { bootWb(); }, { once: true });
   wb.querySelector("#wb-filter")?.addEventListener("input", () => { bootWb(); }, { once: true });
   wb.addEventListener("click", (ev) => {
-    const btn = ev.target.closest("[data-wb-action]");
+    const btn = ev.target.closest("[data-wb-action],[data-wb-disc]");
     if (!btn || wb.dataset.wbReady) return;
     ev.preventDefault();
     bootWb().then(() => btn.click());

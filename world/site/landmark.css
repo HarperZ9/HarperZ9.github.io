@@ -3,7 +3,7 @@
    <details>, so focus, Enter, Space and a tap all open it, and nothing depends on hover). */
 body.landmark main { max-width: 1180px; padding-inline: clamp(16px, 4vw, 56px); }
 .lp { position: relative; z-index: 2; text-shadow: 0 0 14px var(--halo), 0 0 4px var(--halo), 0 0 1px var(--halo), 0 0 22px var(--halo); }
-.lp-head { min-height: 62vh; display: grid; align-content: end; gap: 18px; padding-bottom: 6vh; }
+.lp-head { min-height: 52vh; display: grid; align-content: end; gap: 16px; padding-bottom: 4vh; }
 .lp h1 { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 18px; margin: 0; font: 800 clamp(56px, 11vw, 168px)/.9 var(--face-display); letter-spacing: calc(-.045em * var(--display-track, 1)); color: var(--ink); }
 .lp .pf-mark { font: 400 var(--fs-1)/1 var(--face-utility); letter-spacing: .08em; color: var(--ink); }
 .lp p { margin: 0; max-width: 66ch; }
@@ -16,8 +16,8 @@ body.landmark main { max-width: 1180px; padding-inline: clamp(16px, 4vw, 56px); 
 .lp p.lp-run { margin: 0; max-width: 100%; overflow-x: auto; }
 .lp-run code, .lp-code { font: 400 var(--fs-2)/1.5 var(--face-utility); color: var(--ink); letter-spacing: normal; }
 .lp-ways, .lp p.lp-ways-end { display: flex; flex-wrap: wrap; gap: 4px 22px; margin: 0; }
-.lp-ways a, .lp-ways-end a { display: inline-flex; align-items: center; min-height: 44px; color: var(--ink); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .3em; font: 600 var(--fs-2)/1 var(--face-text); }
-.lp a:hover { text-decoration-thickness: 2px; }
+.lp-ways a, .lp-ways-end a { display: inline-flex; align-items: center; min-height: 44px; color: var(--ink); text-decoration: underline; text-decoration-thickness: 1px; text-decoration-color: color-mix(in srgb, currentColor 72%, transparent); text-underline-offset: .3em; font: 600 var(--fs-2)/1 var(--face-text); }
+.lp a:hover, .lp a:focus-visible { text-decoration-thickness: 2px; text-decoration-color: currentColor; }
 .lp a:focus-visible, .fig summary:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
 .lp-sec { display: grid; gap: 16px; padding-block: clamp(48px, 10vh, 120px) 0; scroll-margin-top: 72px; }
 .lp-sec h2 { margin: 0; font: 800 var(--fs-6)/1 var(--face-display); letter-spacing: calc(-.035em * var(--display-track, 1)); color: var(--ink); text-wrap: balance; }
@@ -142,6 +142,8 @@ html.lw-walking { overflow: hidden; }
 .rn-grid figcaption { font: 400 var(--fs-2)/1.4 var(--face-text); color: var(--soft); margin-top: 6px; }
 .lp .rn-ok { color: var(--verified); }
 .lp .rn-bad { color: var(--drift); }
+.rn-table td.verdict-pass { font-weight: 700; color: #9ee6be; }
+.rn-table td.verdict-drift { font-weight: 700; color: #f3b588; }
 .rn-verdict { font-family: var(--face-utility); }
 .rn-limits { max-width: 66ch; margin: 0; padding-left: 1.2em; display: grid; gap: 6px; font: 400 var(--fs-3)/1.55 var(--face-text); color: var(--ink); }
 .rn-live { display: grid; grid-template-columns: minmax(0, 32rem) minmax(0, 1fr); gap: clamp(16px, 2.5vw, 32px); align-items: start; max-width: 60rem; }
