@@ -20,19 +20,19 @@ I build tests that tell a working AI system from a broken one, and renderers and
 
 - Published work: Who Knew First, an AI-assisted investigation of disclosure across nine reported AI-agent incidents; 30 research findings, 12 of them nulls, each with the steps to repeat it; and 13 research records with DOIs, the EMET systems paper among them: doi.org/10.5281/zenodo.21230267. Not peer reviewed. harperz9.github.io/findings/
 
-- Measured results: a guard test caught 64 of 66 destructive tool calls from a steered agent on mocked tools. One accuracy comparison showed no measured gain, 9 of 10 against 8 of 10 with an interval that includes zero, and I retired that benchmark. harperz9.github.io/analytics/flywheel-benchmark-record.html
+- Measured results: RAW DX12 96/96 moving-camera pass (384 1080p frames, 19 solvers 1.57 ms, 0 D3D12 errors); Flywheel Three-Plate Oracle 115/115 recall (0 false accepts) and Arm C local 14B lift 16.67% to 95.83% (p=4e-6); steered-agent guard 64/66; retired one null accuracy benchmark (9/10 vs 8/10). harperz9.github.io/analytics/flywheel-benchmark-record.html
 
 ## Flagship Projects
 
-- Flywheel runs AI tasks with the model you choose and checks each answer against a task contract. In 2.0.0, Flywheel ships with 31 consolidated packages, default-deny provider reach guards, and behavior checks flagging 20 of 20 planted changes and 0 of 50 unchanged pairs. github.com/HarperZ9/flywheel/releases/tag/v2.0.0
+- Flywheel 2.0.0 runs any model across 31 packages (FlagshipAgentSDK, accountable-surface 563 tests, gather/deconstruct, unsafe-free Rust EMET 1.3.1, Three-Plate Oracle 115/115). github.com/HarperZ9/flywheel/releases/tag/v2.0.0
 
-- CMMNS (formerly Daylight Commons) is a browser extension that shows the sources behind replies on nine social platforms. Its slur sign has 91.0% precision, 3,995 of 4,392, on public human-labelled corpora. github.com/HarperZ9/cmmns/blob/main/project-docs/EVALUATION.md
+- CMMNS (formerly Daylight Commons) shows reply sources across nine platforms (Web Crypto receipts, 1,726 tests; slur sign 91.0% precision, 3,995 of 4,392). github.com/HarperZ9/cmmns/blob/main/project-docs/EVALUATION.md
 
-- Articulate is prose analysis and model-assisted editing for the command line, editors and CI. In 0.14.0, Markdown masks removed 5,123 findings on table separator rows across 3,000 files and added none. The latest release is 0.19.1. github.com/HarperZ9/articulate/releases/tag/v0.19.1
+- Articulate 0.19.1 is deterministic prose analysis for CLI, LSP, and SARIF CI (2,096 tests; Markdown masks removed 5,123 separator-row findings across 3,000 files). github.com/HarperZ9/flywheel/tree/main/packages/articulate
 
-- BuildLang is a systems language in which a program declares what it may touch, and the compiler checks it. Version 1.15.0, released November 14, 2026, is on crates.io. The 1.14.0 test run passed 2,079 with 0 failed. crates.io/crates/buildlang
+- BuildLang 1.15.0 (crates.io) checks capability effects for C/HLSL/GLSL/Wasm/x86-64 (147/147 hashes, 1,160 lib tests, BDB v2 2.89 MB paging 0/500 silent corruptions, procgen_forge.bld 2,132.3x, aerospace_ai_kernels.bld 1,008.5x, workstation_mcp.bld 69.92 us; 181/270 universe fails open). crates.io/crates/buildlang
 
-- Superframe (The Playground) is my engine repository; release 0.3.0 is dated November 14, 2026. Its native renderer is C++ with a CPU reference and D3D12 and WebGPU backends. In raw-native 0.8.0, default renders were byte-identical across the Windows, D3D12, Linux and WebAssembly builds. github.com/HarperZ9/raw-native/releases/tag/v0.8.0
+- Superframe 0.3.0 (The Playground) + RAW DX12: C++23 CPU/D3D12/Vulkan/WebGPU renderer (raw-native 0.8.0 byte-identical), RAW 96/96 live pass, spectral 64v/126t meshlet forge, SI physai (30,670 steps/s), NOH-1 (1,149.9x), Low Water. github.com/HarperZ9/superframe
 
 ## Experience
 

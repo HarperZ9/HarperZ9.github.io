@@ -12,13 +12,13 @@ I turn reported failures into reproducible tests and clear write-ups. Maintainer
 
 Selected Results
 
-- Merged 41 pull requests in 34 other people's projects, 3 of them list entries, counted November 14, 2026. Datasette #2815 turned a server error on malformed row URLs into a client error, with tests. Hebbian Robotics #157 added a test that reports schema drift in both directions. Voxwire #44 added offline replay coverage for a degraded voice turn. harperz9.github.io/portfolio.html
+- Merged 41 pull requests in 34 other people's projects, 3 of them list entries, counted November 14, 2026. Grimp #303/#304/#305 fixed absent-module errors, a Rust panic, and CI lint; Datasette #2815/#2861 fixed HTTP 400 validation and write task IDs; Hebbian Robotics #157 and Voxwire #44 added drift and replay tests. harperz9.github.io/portfolio.html
 
-- Shipped Flywheel 2.0.0 on PyPI, Homebrew and Scoop with a Windows installer, Articulate 0.19.1 on PyPI, and CMMNS 3.10.0 as a GitHub release. Versions read November 20, 2026.
+- Shipped Flywheel 2.0.0 and Articulate 0.19.1 (2,096 tests) on PyPI, BuildLang 1.15.0 on crates.io (147/147 repeatable hashes, BDB v2 0/500 silent corruptions), Calibrate Pro 2.0.1 (884 tests), Phantom 1.1.1 (273 tests), and CMMNS 3.10.0.
 
-- Released and updated Elder ENB, a Skyrim lighting mod: 1,004,693 downloads (179,218 unique) and 2,418 endorsements as of November 13, 2026. nexusmods.com/skyrimspecialedition/mods/117327
+- Released and supported Elder ENB, a Skyrim lighting mod: 1,004,693 downloads (179,218 unique) and 2,418 endorsements as of November 13, 2026. nexusmods.com/skyrimspecialedition/mods/117327
 
-- Published 30 research findings, 12 of them nulls, each with reproducible steps and verification receipts. harperz9.github.io/findings/
+- Published 30 research findings, 12 of them nulls, with automated data-driven accessibility descriptions across all 148 findings charts. harperz9.github.io/findings/
 
 Experience
 

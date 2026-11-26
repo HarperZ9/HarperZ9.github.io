@@ -1,9 +1,10 @@
-"""Build the cover letter PDF and DOCX files with the career artifact writers.
+"""Build the cover letter PDF, DOCX, TXT, and Markdown files with the career artifact writers.
 
-Two letters, each from its own reviewed source:
+Three letters, each from its own reviewed source:
 
-- cover-letter.html                  -> career/Zain-Dana-Harper-Cover-Letter.{pdf,docx}
-- career/cover-letter-evaluation.md  -> career/Zain-Dana-Harper-Cover-Letter-Evaluation.{pdf,docx}
+- cover-letter.html                        -> career/Zain-Dana-Harper-Cover-Letter.{pdf,docx,txt,md}
+- career/cover-letter-evaluation.md        -> career/Zain-Dana-Harper-Cover-Letter-Evaluation.{pdf,docx,txt,md}
+- career/cover-letter-graphics-systems.md  -> career/Zain-Dana-Harper-Cover-Letter-Graphics-Systems.{pdf,docx,txt,md}
 
 The writers are the ones build_career_artifacts.py uses for the resumes, so a
 rebuild from the same source bytes and pinned dependencies gives the same bytes.
@@ -11,7 +12,7 @@ The rows for the first letter in career/career-artifacts.json are refreshed in
 place. The template copy with placeholders (cover-letter-evaluation-template.md)
 is never built.
 
-    python tools/build_cover_letters.py            # build both
+    python tools/build_cover_letters.py            # build all
     python tools/build_cover_letters.py --check    # exit 1 if committed files differ
 """
 from __future__ import annotations
@@ -34,6 +35,8 @@ MANIFEST = ROOT / "career" / "career-artifacts.json"
 PAGE_STEM = "Zain-Dana-Harper-Cover-Letter"
 EVAL_SOURCE = ROOT / "career" / "cover-letter-evaluation.md"
 EVAL_STEM = "Zain-Dana-Harper-Cover-Letter-Evaluation"
+GRAPHICS_SOURCE = ROOT / "career" / "cover-letter-graphics-systems.md"
+GRAPHICS_STEM = "Zain-Dana-Harper-Cover-Letter-Graphics-Systems"
 WORD_LIMIT = 300
 
 
@@ -84,15 +87,31 @@ def _blank_file_metadata(pdf: Path, docx: Path, fixed: datetime) -> None:
     B._repack_docx(docx, fixed)
 
 
+def _blocks_text(blocks: tuple[B.Block, ...], *, markdown: bool = False) -> str:
+    lines: list[str] = []
+    for block in blocks:
+        if block.kind == "pagebreak":
+            continue
+        prefix = "# " if markdown and block.kind == "h1" else ""
+        lines.extend([prefix + block.text, ""])
+    return "\n".join(lines).rstrip() + "\n"
+
+
 def build(output: Path) -> dict[str, dict]:
     fixed = datetime.fromtimestamp(B.SOURCE_EPOCH, timezone.utc)
     rows = {}
-    for stem, blocks in ((PAGE_STEM, B._read_blocks(ROOT / "cover-letter.html")),
-                         (EVAL_STEM, markdown_blocks(EVAL_SOURCE))):
+    targets = [
+        (PAGE_STEM, B._read_blocks(ROOT / "cover-letter.html"), False),
+        (EVAL_STEM, markdown_blocks(EVAL_SOURCE), True),
+        (GRAPHICS_STEM, markdown_blocks(GRAPHICS_SOURCE), True),
+    ]
+    for stem, blocks, blank_meta in targets:
         B._build_pdf(output / f"{stem}.pdf", blocks)
         B._build_docx(output / f"{stem}.docx", blocks, fixed)
-        if stem == EVAL_STEM:
+        if blank_meta:
             _blank_file_metadata(output / f"{stem}.pdf", output / f"{stem}.docx", fixed)
+        (output / f"{stem}.txt").write_bytes(_blocks_text(blocks, markdown=False).encode("utf-8"))
+        (output / f"{stem}.md").write_bytes(_blocks_text(blocks, markdown=True).encode("utf-8"))
         for suffix in ("pdf", "docx"):
             path = output / f"{stem}.{suffix}"
             payload = path.read_bytes()
@@ -102,6 +121,13 @@ def build(output: Path) -> dict[str, dict]:
             rows[f"career/{path.name}"] = {
                 "byte_length": len(payload), "sha256": B._sha256(payload), "page_count": pages,
                 "extraction_sha256": B._sha256(B._normalized_extraction(text).encode("utf-8")),
+            }
+        for suffix in ("txt", "md"):
+            path = output / f"{stem}.{suffix}"
+            payload = path.read_bytes()
+            rows[f"career/{path.name}"] = {
+                "byte_length": len(payload), "sha256": B._sha256(payload), "page_count": None,
+                "extraction_sha256": B._sha256(payload),
             }
     return rows
 

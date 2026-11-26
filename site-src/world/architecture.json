@@ -126,7 +126,7 @@
           "Source"
         ]
       ],
-      "verified": "25 November 2026: superframe v0.3.0 with native engine-receipt/1 emission (superframe#143, #144: modular 8-file style.wgsl assembler, cosmo/daw receipts, 1,603 single-process pytest, 29/29 CI); RAW DX12 Wave 70 (5f05e30) verified at 96/96 (100.0%) live heuristics across all 4 moving-camera scenes (inn_interior 24/24, septimus_cave 24/24, riverwood_day 24/24, windhelm_ext_snow 24/24, 0 flagged scenes, 522/522 runtime, engine-receipt/1 MATCH)."
+      "verified": "25 November 2026: superframe v0.3.0 with native engine-receipt/1 emission (superframe#143..147: modular 8-file style.wgsl, spectral Megascans-replacement material & 64v/126t SDF/flora meshlet forge, NOH-1 4-level nested organism hierarchy at 1,149.9x, SI rigid-body PGS/Coulomb physai simulation at 30,670 steps/s, cosmo/daw receipts); RAW DX12 Wave 70 (5f05e30) verified at 96/96 (100.0%) live heuristics across all 4 moving-camera scenes (inn_interior 24/24, septimus_cave 24/24, riverwood_day 24/24, windhelm_ext_snow 24/24, 0 flagged scenes, 522/522 runtime, engine-receipt/1 MATCH)."
     },
     {
       "id": "buildlang",
@@ -173,7 +173,7 @@
           "Source"
         ]
       ],
-      "verified": "25 November 2026: buildlang v1.15.0 live on GitHub, crates.io, and PATH (buildlang#327..330, 15/15 CI); 147/147 repeatable hashes, 98/102 feature tests (GAPS.txt 6 to 4), GAP-BL-11..14 closed, BDB 0/500 silent fuzz corruptions (10,000/10,000 fault tests), 12-equation kcore_fast.bld 356.5x vs Python bit-exact (39/39 checks), 4-tool workstation_mcp.bld 0.0096 ms preflight (28/28 checks); honest gap: 183 of 270 universe/ files still fail buildc check (87 pass, down from 187)."
+      "verified": "25 November 2026: buildlang v1.15.0 live on GitHub, crates.io, and PATH (buildlang#327..334, 13/13 CI); 147/147 repeatable hashes, 1,160 compiler lib tests, 98/102 feature tests (GAPS.txt 6 to 4), BDB v2 2.89 MB paging with 0/500 silent fuzz corruptions (176/176 crash points, 2,000/2,000 SQLite oracle), compiled native kernels procgen_forge.bld 2,132.3x, aerospace_ai_kernels.bld 1,008.5x, 12-equation kcore_fast.bld 356.5x vs Python bit-exact, 8-tool workstation_mcp.bld 69.92 us (0.0096 ms preflight); honest gap: 181 of 270 universe/ files still fail buildc check (89 pass, parse fails 21 to 12)."
     },
     {
       "id": "flywheel",
@@ -224,7 +224,7 @@
           "Source"
         ]
       ],
-      "verified": "25 November 2026: flywheel v2.0.0 and articulate v0.19.1 live on GitHub and PyPI; Three-Plate Oracle + #![forbid(unsafe_code)] EMET (flywheel#545), gateway decomposition -70.6% LOC + multi-package engine-receipt/1 (flywheel#548, 179/179 CI), and live RTX 4090 JFC-3P 14B evaluation lifting pass rate from 4/24 (16.67%) to 17/24 (70.83%, McNemar p=0.000244, 0 regressions, flywheel#550, 85/85 CI)."
+      "verified": "25 November 2026: flywheel v2.0.0 (31 packages) and articulate v0.19.1 live on GitHub and PyPI; Three-Plate Oracle + #![forbid(unsafe_code)] EMET (flywheel#545), gateway -70.6% LOC (flywheel#548), gather/deconstruct multimodal pipeline (flywheel#551, 177/177 CI), fail-closed accountable-surface control plane (flywheel#553, 563 tests), FlagshipAgentSDK (flywheel#554), and live RTX 4090 JFC-3P 14B evaluation lifting single-shot 4/24 (16.67%) to Arm B 17/24 (70.83%, McNemar p=0.000244, flywheel#550) and Arm C live buildc execution 23/24 (95.83%, p=4e-6, 0 regressions, 24/24 planted-wrong kills, flywheel#552)."
     },
     {
       "id": "commons",
@@ -440,11 +440,11 @@
       "surface": "JFC-3P Local 14B Frontier Parity Eval (RTX 4090)",
       "platform": "THE FLYWHEEL",
       "hue": "theflywheel",
-      "check": "Paired Arm A vs Arm B on 24 stratified held-out tasks (flywheel#550, Q4_K_M 14.8B GGUF, seed=42, temp=0.0, 24/24 planted-wrong oracle kills)",
-      "result": "16.67% (4/24) to 70.83% (17/24), +54.16 pts, exact McNemar p=0.000244 (0 regressions): DS-02 BuildLang 0/8 to 8/8 (100%), DS-01 Tool-Repair 1/6 to 5/6 (83.33%), 91.66 tok/s at 16.44 GB VRAM",
+      "check": "Paired Arm A vs Arm B (flywheel#550) and Arm C live buildc f64 + FCA recall (flywheel#552) on 24 stratified held-out tasks (Q4_K_M 14.8B GGUF, seed=42, temp=0.0, 24/24 planted-wrong kills)",
+      "result": "Arm A 16.67% (4/24) to Arm B 70.83% (17/24, McNemar p=0.000244) to Arm C 95.83% (23/24, exact McNemar p=4e-6, 0 regressions, 68.08 tok/s, 16.55 GB peak VRAM)",
       "verdict": "verified",
       "verdictLabel": "Verified",
-      "gap": "DS-03 mental float math (3/10 to 4/10) still fails 6/10 without invoking BuildLang kcore, motivating live tool-call arm next"
+      "gap": "1 of 24 held-out tasks still misses under Q4 14B; scaling to broader uncontaminated multi-domain suites remains next"
     },
     {
       "surface": "DS-06 Three-Plate Verification Oracle + AB520 Guard",
@@ -477,34 +477,44 @@
       "gap": "195 of 286 equation specs remain specification-only pending executable kernel ports; 12 discrepancies flagged in source table"
     },
     {
-      "surface": "Engine-to-Flywheel Interop Bridge (engine-receipt/1)",
+      "surface": "Engine-to-Flywheel Interop Bridge (engine-receipt/1) & FlagshipAgentSDK",
       "platform": "THE FLYWHEEL",
       "hue": "theflywheel",
-      "check": "Native engine-receipt/1 emission inside superframe#143 (580 pytest PASS) + cross-flagship wire-check (7 contracts)",
-      "result": "7/7 contracts PASS, 5/5 flagships OK, 13/13 gate tests PASS, 580 superframe pytest PASS, receipt MATCH verified",
+      "check": "Native engine-receipt/1 across superframe#143..147 + flywheel#551..554 + buildlang#331..334 + cross-flagship wire-check (13 contracts)",
+      "result": "13/13 contracts PASS, 5/5 flagships OK, 22/22 interop tests PASS, FlagshipAgentSDK + accountable-surface control plane (563 tests) verified",
       "verdict": "verified",
       "verdictLabel": "Verified",
-      "gap": "Automated GitHub Action replay of engine-receipt/1 on every superframe tag planned next"
+      "gap": "Automated GitHub Action replay of engine-receipt/1 on every release tag planned next"
     },
     {
       "surface": "BuildLang 1.15.0 Repeatable Compiler & Native Kernels",
       "platform": "BLDLNG",
       "hue": "bldlng",
-      "check": "Repeatable build hashes, pure par_for, feature tests (buildlang#327), kcore_fast.bld & workstation_mcp.bld benchmarks",
-      "result": "147/147 repeatable hashes, 98/102 feature tests (GAPS.txt 6 to 4, while/loop soundness closed), kcore_fast.bld 462.9x vs Python bit-exact, workstation_mcp.bld 0.245 ms",
+      "check": "Repeatable build hashes, pure par_for, feature tests (buildlang#327..334), procgen_forge.bld, aerospace_ai_kernels.bld, kcore_fast.bld & workstation_mcp.bld",
+      "result": "147/147 repeatable hashes, 1,160 lib tests, 98/102 feature tests, procgen_forge.bld 2,132.3x, aerospace_ai_kernels.bld 1,008.5x, kcore_fast.bld 356.5x bit-exact, 8-tool workstation_mcp.bld 69.92 us (0.0096 ms preflight)",
       "verdict": "drift",
       "verdictLabel": "Open gap",
-      "gap": "187/268 universe .bld files still fail buildc check on live origin/main (81 pass; tracked in buildlang #290)"
+      "gap": "181/270 universe .bld files still fail buildc check on live origin/main (89 pass, parse fails 21 to 12; tracked in CHECK-FAILS.txt)"
     },
     {
-      "surface": "BuildLang BDB Embedded SQL (4 KiB Page Checksums)",
+      "surface": "BuildLang BDB v2 Embedded SQL (2.89 MB Paging + 4 KiB Checksums)",
       "platform": "BLDLNG",
       "hue": "bldlng",
-      "check": "4 KiB FNV-1a page checksums (buildlang#328), damage fuzzer, 10,000 fault-injection tests, crash recovery, sqllogictest",
-      "result": "0/500 silent fuzz corruptions (down from 438/500), 10,000/10,000 fault tests PASS, 0/170 crash failures, 1,084/9,202 sqllogictest",
+      "check": "BDB v2 paging & 4 KiB FNV-1a page checksums (buildlang#328, #332), damage fuzzer, crash recovery, SQLite differential oracle",
+      "result": "2.89 MB paging, 0/500 silent fuzz corruptions (down from 438/500), 176/176 crash points clean, 2,000/2,000 SQLite oracle (100.0%), 2,143/2,143 mutations, 10,000/10,000 fault tests PASS",
       "verdict": "verified",
       "verdictLabel": "Verified",
-      "gap": "Memory footprint vs SQLite at 100k rows and remaining sqllogictest coverage remain open optimization targets"
+      "gap": "Broadening remaining sqllogictest coverage remains an open optimization target"
+    },
+    {
+      "surface": "Superframe Procedural Forge, NOH-1 & Physical-AI SI Contact (physai)",
+      "platform": "THE PLAYGRND",
+      "hue": "theplygrnd",
+      "check": "Spectral Megascans-replacement forge (superframe#145), NOH-1 nested organism hierarchy (superframe#146), SI rigid-body PGS/Coulomb physai (superframe#147)",
+      "result": "0.0-seam periodic spectral materials + 64v/126t meshlets (23/23 tests); NOH-1 1,149.9x speedup; physai 30,670 steps/s across arm/biped/orbital envs (9/9 tests, engine-receipt/1 MATCH)",
+      "verdict": "verified",
+      "verdictLabel": "Verified",
+      "gap": "Full GPU batched PhysAI stepping (4M env steps/s target) planned via BuildLang GPU lowering"
     },
     {
       "surface": "Articulate (ARTIQL8), Phantom & Calibrate Pro Hardening",
@@ -527,7 +537,7 @@
       "gap": "WebGPU live paths fall back cleanly to static stills when GPU is unavailable"
     }
   ],
-  "honestGaps": "Numbers that have not passed yet stay marked as open gaps. In BuildLang, 187 of 268 universe/ modules still fail buildc check on live origin/main (81 pass; tracked in buildlang #290) and BDB still targets lower RAM and broader sqllogictest coverage despite closing 438/500 silent fuzz corruptions to 0/500. In DS-03, 91 of 286 equation specs have executable float64 kernels while 195 remain specification-only and 12 discrepancies are flagged. In DS-07 recall, 7 of 80 held-out queries still miss top-5 across memories and sessions. In audio stem separation, current htdemucs_ft baseline (9.03 dB SDR) trails BS-RoFormer (11.99 dB) by 2.96 dB. In RAW, WebGPU browser scenes run on a subset of the native DX12 pass stack.",
+  "honestGaps": "Numbers that have not passed yet stay marked as open gaps. In BuildLang, 181 of 270 universe/ modules still fail buildc check on live origin/main (89 pass, down from 187; parse fails dropped 21 to 12; tracked in CHECK-FAILS.txt) and BDB v2 continues broadening sqllogictest coverage after cutting RAM paging to 2.89 MB and closing 438/500 silent fuzz corruptions to 0/500. In DS-03, 91 of 286 equation specs have executable float64 kernels while 195 remain specification-only and 12 discrepancies are flagged. In DS-07 recall, 7 of 80 held-out queries still miss top-5 across memories and sessions. In audio stem separation, current htdemucs_ft baseline (9.03 dB SDR) trails BS-RoFormer (11.99 dB) by 2.96 dB. In RAW, WebGPU browser scenes run on a subset of the native DX12 pass stack.",
   "consolidationLede": "Across 206 total GitHub repositories (88 live own repositories, 19 forks, and 99 archived repositories as of 25 November 2026, including telos-v2 archival), standalone repositories whose code and tests have been merged into a super-project now point directly to their live monorepo paths across this site. Historical release tags and sealed evidence hashes remain readable where published binaries or Zenodo DOIs depend on them.",
   "workflowsLede": "Eight end-to-end multimodal, procedural, scientific, and authorized security pipelines showing how The Commons, The Flywheel, BuildLang, The Playground, and Security tools compose into concrete workflows with SHA-256 receipts.",
   "workflows": [

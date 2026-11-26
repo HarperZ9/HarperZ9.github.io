@@ -1,6 +1,6 @@
 {
   "schema": "harperz9-career-source/v2",
-  "reviewed": "2026-11-20",
+  "reviewed": "2026-11-25",
   "identity": {
     "name": "Zain Dana Harper",
     "location": "Kent, Washington",
@@ -368,35 +368,41 @@
         },
         {
           "kind": "li",
-          "text": "Merged 41 pull requests in 34 other people's projects, 3 of them list entries, counted November 14, 2026. Datasette #2815 turned a server error on malformed row URLs into a client error, with tests. Hebbian Robotics #157 added a test that reports schema drift in both directions. Voxwire #44 added offline replay coverage for a degraded voice turn. harperz9.github.io/portfolio.html",
+          "text": "Merged 41 pull requests in 34 other people's projects, 3 of them list entries, counted November 14, 2026. Grimp #303/#304/#305 fixed absent-module errors, a Rust panic, and CI lint; Datasette #2815/#2861 fixed HTTP 400 validation and write task IDs; Hebbian Robotics #157 and Voxwire #44 added drift and replay tests. harperz9.github.io/portfolio.html",
           "evidence": [
             "census-20261114",
             "datasette",
             "hflow",
-            "voxwire"
+            "voxwire",
+            "grimp-303",
+            "grimp-304",
+            "grimp-305"
           ]
         },
         {
           "kind": "li",
-          "text": "Shipped Flywheel 2.0.0 on PyPI, Homebrew and Scoop with a Windows installer, Articulate 0.19.1 on PyPI, and CMMNS 3.10.0 as a GitHub release. Versions read November 20, 2026.",
+          "text": "Shipped Flywheel 2.0.0 and Articulate 0.19.1 (2,096 tests) on PyPI, BuildLang 1.15.0 on crates.io (147/147 repeatable hashes, BDB v2 0/500 silent corruptions), Calibrate Pro 2.0.1 (884 tests), Phantom 1.1.1 (273 tests), and CMMNS 3.10.0.",
           "evidence": [
             "registries-20261114",
             "flywheel-190",
             "articulate-0180",
             "accountable-surface",
+            "buildlang-1150",
+            "calibrate-pro",
+            "phantom",
             "cmmns-3100"
           ]
         },
         {
           "kind": "li",
-          "text": "Released and updated Elder ENB, a Skyrim lighting mod: 1,004,693 downloads (179,218 unique) and 2,418 endorsements as of November 13, 2026. nexusmods.com/skyrimspecialedition/mods/117327",
+          "text": "Released and supported Elder ENB, a Skyrim lighting mod: 1,004,693 downloads (179,218 unique) and 2,418 endorsements as of November 13, 2026. nexusmods.com/skyrimspecialedition/mods/117327",
           "evidence": [
             "elder-enb-nexus-20261113"
           ]
         },
         {
           "kind": "li",
-          "text": "Published 30 research findings, 12 of them nulls, each with reproducible steps and verification receipts. harperz9.github.io/findings/",
+          "text": "Published 30 research findings, 12 of them nulls, with automated data-driven accessibility descriptions across all 148 findings charts. harperz9.github.io/findings/",
           "evidence": [
             "findings-20261113"
           ]
@@ -497,7 +503,7 @@
         },
         {
           "kind": "li",
-          "text": "Merged 41 pull requests in 34 other people's projects, 3 of them list entries, counted November 14, 2026. DeepEval #2822 fixed an unhashable-output crash. Pydantic AI #6205 kept file-download settings. Datasette #2815 turned HTTP 500 into HTTP 400. Grimp #303, #304, and #305 fixed missing-module errors, a Rust panic, and CI lint. harperz9.github.io/portfolio.html",
+          "text": "Merged 41 pull requests in 34 other people's projects, 3 of them list entries, counted November 14, 2026: DeepEval #2822, Pydantic AI #6205, Datasette #2815/#2861, Grimp #303/#304/#305. harperz9.github.io/portfolio.html",
           "evidence": [
             "census-20261114",
             "deepeval",
@@ -510,7 +516,7 @@
         },
         {
           "kind": "li",
-          "text": "Shipped Flywheel 2.0.0, Articulate 0.19.1 and Accountable Surface 0.3.1 on PyPI, BuildLang 1.15.0 on crates.io, and Phantom 1.1.1 and CMMNS 3.10.0 as GitHub releases. Versions read November 20, 2026.",
+          "text": "Shipped Flywheel 2.0.0, Articulate 0.19.1, Accountable Surface 0.3.1 on PyPI; BuildLang 1.15.0 on crates.io; Phantom 1.1.1 and CMMNS 3.10.0 on GitHub.",
           "evidence": [
             "registries-20261114",
             "flywheel-190",
@@ -546,22 +552,24 @@
         },
         {
           "kind": "li",
-          "text": "Measured which guards stop destructive tool calls from a steered agent, on mocked tools: a request-versus-action check caught 64 of 66 and a schema check caught 1 of 66. Merged, not yet released.",
+          "text": "Built Three-Plate Verification Oracle (115 of 115 defect recall, 0 false accepts across 145 cases vs 7 of 115 single-plate) and lifted a local 14B model from 4 of 24 to 23 of 24 (p=4e-6) via live buildc execution.",
           "evidence": [
-            "flywheel-main-20261113"
+            "flywheel-main-20261113",
+            "flywheel-190"
           ]
         },
         {
           "kind": "li",
-          "text": "Built Flywheel's behavior check, flagging 20 of 20 planted changes with 0 false alarms across 50 unchanged pairs; added EMET 1.3.1 multi-language byte-integrity conformance across Python, Rust, Node, and Go.",
+          "text": "Caught 64 of 66 harmful steered-agent calls on mocked tools (vs 1 of 66 schema check), shipped FlagshipAgentSDK, Accountable Surface (563 tests), and unsafe-free Rust EMET 1.3.1 (Python/Rust/Node/Go).",
           "evidence": [
             "flywheel-190",
-            "flywheel-benchmark-null"
+            "flywheel-main-20261113",
+            "accountable-surface"
           ]
         },
         {
           "kind": "li",
-          "text": "Built 324 terminal-state fixtures and 337 component cases that tell a failed answer from a provider failure; ran a pinned METR count_odds task through the Inspect bridge with three deterministic controls.",
+          "text": "Built 324 terminal-state fixtures and 337 component cases separating model failures from provider errors; ran pinned METR count_odds through Inspect with three controls.",
           "evidence": [
             "metr-interop-controls",
             "terminal-state-fixtures"
@@ -685,23 +693,25 @@
         },
         {
           "kind": "li",
-          "text": "Built a C++23 renderer with a CPU reference beside D3D12 and WebGPU backends; release 0.8.0 passed 60 of 60 tests with MSVC and GCC, with default renders byte-identical across four builds.",
+          "text": "Built RAW live DirectX 12 Skyrim SE pipeline (96 of 96 moving-camera heuristics across 384 1080p frames, 19 GPU solvers at 1.57 ms, 0 D3D12 errors, 522/522 runtime) beside C++23 Superframe 0.3.0 (CPU/D3D12/Vulkan/WebGPU, 60/60 MSVC/GCC tests, 600 Vulkan frames matching WARP hash for hash).",
           "evidence": [
             "raw-native-080",
-            "superframe-030"
-          ]
-        },
-        {
-          "kind": "li",
-          "text": "Added a Vulkan 1.3 backend whose 600 presented frames match the offscreen and D3D12 WARP renders hash for hash, and radiance cascades measured against the path trace. Merged, not yet released.",
-          "evidence": [
+            "superframe-030",
             "raw-native-main-20261023",
             "renderer-main-20261113"
           ]
         },
         {
           "kind": "li",
-          "text": "Developed BuildLang, a language with typed capability effects and C and shader output. Release 1.15.0 adds experimental WebAssembly and x86-64 targets that need no C toolchain.",
+          "text": "Added Superframe spectral material and 64v/126t SDF/flora meshlet forge, SI rigid-body PGS/Coulomb physai (30,670 steps/s), NOH-1 (1,149.9x), and native CLAP/VST3 physical-model audio.",
+          "evidence": [
+            "superframe-030",
+            "superframe-daw-20261113"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "Developed BuildLang 1.15.0 (Rust capability-effect compiler, C/HLSL/GLSL/Wasm/x86-64, 147/147 repeatable hashes, BDB v2 2.89 MB paging with 0/500 silent corruptions, procgen_forge.bld 2,132.3x, aerospace_ai_kernels.bld 1,008.5x).",
           "evidence": [
             "buildlang",
             "buildlang-1150"
@@ -975,7 +985,7 @@
         },
         {
           "kind": "li",
-          "text": "Measured results: a guard test caught 64 of 66 destructive tool calls from a steered agent on mocked tools. One accuracy comparison showed no measured gain, 9 of 10 against 8 of 10 with an interval that includes zero, and I retired that benchmark. harperz9.github.io/analytics/flywheel-benchmark-record.html",
+          "text": "Measured results: RAW DX12 96/96 moving-camera pass (384 1080p frames, 19 solvers 1.57 ms, 0 D3D12 errors); Flywheel Three-Plate Oracle 115/115 recall (0 false accepts) and Arm C local 14B lift 16.67% to 95.83% (p=4e-6); steered-agent guard 64/66; retired one null accuracy benchmark (9/10 vs 8/10). harperz9.github.io/analytics/flywheel-benchmark-record.html",
           "evidence": [
             "flywheel-190",
             "flywheel-main-20261113",
@@ -989,14 +999,14 @@
         },
         {
           "kind": "li",
-          "text": "Flywheel runs AI tasks with the model you choose and checks each answer against a task contract. In 2.0.0, Flywheel ships with 31 consolidated packages, default-deny provider reach guards, and behavior checks flagging 20 of 20 planted changes and 0 of 50 unchanged pairs. github.com/HarperZ9/flywheel/releases/tag/v2.0.0",
+          "text": "Flywheel 2.0.0 runs any model across 31 packages (FlagshipAgentSDK, accountable-surface 563 tests, gather/deconstruct, unsafe-free Rust EMET 1.3.1, Three-Plate Oracle 115/115). github.com/HarperZ9/flywheel/releases/tag/v2.0.0",
           "evidence": [
             "flywheel-190"
           ]
         },
         {
           "kind": "li",
-          "text": "CMMNS (formerly Daylight Commons) is a browser extension that shows the sources behind replies on nine social platforms. Its slur sign has 91.0% precision, 3,995 of 4,392, on public human-labelled corpora. github.com/HarperZ9/cmmns/blob/main/project-docs/EVALUATION.md",
+          "text": "CMMNS (formerly Daylight Commons) shows reply sources across nine platforms (Web Crypto receipts, 1,726 tests; slur sign 91.0% precision, 3,995 of 4,392). github.com/HarperZ9/cmmns/blob/main/project-docs/EVALUATION.md",
           "evidence": [
             "daylight-commons-322",
             "daylight-commons-evaluation"
@@ -1004,7 +1014,7 @@
         },
         {
           "kind": "li",
-          "text": "Articulate is prose analysis and model-assisted editing for the command line, editors and CI. In 0.14.0, Markdown masks removed 5,123 findings on table separator rows across 3,000 files and added none. The latest release is 0.19.1. github.com/HarperZ9/articulate/releases/tag/v0.19.1",
+          "text": "Articulate 0.19.1 is deterministic prose analysis for CLI, LSP, and SARIF CI (2,096 tests; Markdown masks removed 5,123 separator-row findings across 3,000 files). github.com/HarperZ9/flywheel/tree/main/packages/articulate",
           "evidence": [
             "articulate-0140",
             "articulate-0180"
@@ -1012,7 +1022,7 @@
         },
         {
           "kind": "li",
-          "text": "BuildLang is a systems language in which a program declares what it may touch, and the compiler checks it. Version 1.15.0, released November 14, 2026, is on crates.io. The 1.14.0 test run passed 2,079 with 0 failed. crates.io/crates/buildlang",
+          "text": "BuildLang 1.15.0 (crates.io) checks capability effects for C/HLSL/GLSL/Wasm/x86-64 (147/147 hashes, 1,160 lib tests, BDB v2 2.89 MB paging 0/500 silent corruptions, procgen_forge.bld 2,132.3x, aerospace_ai_kernels.bld 1,008.5x, workstation_mcp.bld 69.92 us; 181/270 universe fails open). crates.io/crates/buildlang",
           "evidence": [
             "buildlang",
             "buildlang-1140",
@@ -1021,7 +1031,7 @@
         },
         {
           "kind": "li",
-          "text": "Superframe (The Playground) is my engine repository; release 0.3.0 is dated November 14, 2026. Its native renderer is C++ with a CPU reference and D3D12 and WebGPU backends. In raw-native 0.8.0, default renders were byte-identical across the Windows, D3D12, Linux and WebAssembly builds. github.com/HarperZ9/raw-native/releases/tag/v0.8.0",
+          "text": "Superframe 0.3.0 (The Playground) + RAW DX12: C++23 CPU/D3D12/Vulkan/WebGPU renderer (raw-native 0.8.0 byte-identical), RAW 96/96 live pass, spectral 64v/126t meshlet forge, SI physai (30,670 steps/s), NOH-1 (1,149.9x), Low Water. github.com/HarperZ9/superframe",
           "evidence": [
             "raw-native-080",
             "superframe-20261113",

@@ -171,12 +171,14 @@ export const PILLARS = [
   {
     id: "work", title: "Work and CV",
     html: `<ul class="w-list-plain">
+        <li><a href="/person.html">Who I am: background, craft, convictions, and the five platforms</a></li>
+        <li><a href="/architecture.html">Five-platform architecture, benchmarks, and WF-01 to WF-08 pipelines</a></li>
+        <li><a href="/hire.html">Hire or collaborate: role-tailored resumes, cover letters, and proofs</a></li>
+        <li><a href="/cv.html">Full CV (HTML, PDF, Designed PDF, DOCX, TXT, Markdown)</a></li>
+        <li><a href="/portfolio.html">Portfolio: 41 merged upstream pull requests across 34 repositories</a></li>
         <li><a href="/flywheel-pilot.html">Flywheel verification pilot</a></li>
-        <li><a href="/cv.html">Full CV</a></li>
-        <li><a href="/person.html#stand-for">The person behind it, and what I stand for</a></li>
-        <li><a href="/resume.html">Resume</a></li>
       </ul>
-      <p class="w-go"><a class="w-try" href="/hire.html">Hire or collaborate</a> <a href="mailto:zaindharper@gmail.com">Email</a></p>`,
+      <p class="w-go"><a class="w-try" href="/hire.html">Hire or collaborate</a> <a href="/person.html">About me</a> <a href="mailto:zaindharper@gmail.com">Email</a></p>`,
   },
 ];
 

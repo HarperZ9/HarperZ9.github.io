@@ -68,11 +68,27 @@
 
   <p>The companies building systems at scale will not hold themselves to account. I mean the class running the large platforms and the feeds that decide what a lot of people see. I watched what the platforms did to people&rsquo;s attention and to what they take as real. Agentic AI is the next system like that, and the check on it has to come from outside.</p>
 
-  <p>One thing I finished on my own is a rendering preset called E L D E R . E N B, built for Skyrim SE. I made it because I wanted a specific quality of light in the game that I could not get any other way, and I built it with no money coming in for the work. It went up on NexusMods, where the download count is approaching one million, with well over a hundred thousand separate accounts running it inside their game.</p>
+  <p>One thing I finished on my own is a rendering preset called E L D E R . E N B, built for Skyrim SE. I made it because I wanted a specific quality of light in the game that I could not get any other way, and I built it with no money coming in for the work. It went up on NexusMods, where it has crossed one million downloads (1,004,693 total and 179,218 unique accounts running it inside their game as of November 13, 2026).</p>
 
-  <p>I work under my own name as a sole proprietor. There is no payroll, because I have nobody else to pay. The tools I build are aimed at frontier AI labs, and no pilot is in place at any of them yet.</p>
+  <p>I work under my own name as a Washington sole proprietor. There is no payroll, because I have nobody else to pay, and I have not yet held a paid software role. Every repository, release, upstream pull request (41 merged across 34 external projects), and empirical study on this site is independent work built over about thirteen years of self-directed programming.</p>
 
-  <p>My main tool is called <a class="inline" href="flywheel.html">Flywheel</a>. It is an AI workstation and coding harness that you host yourself. It runs AI agents with the model you choose, hosted or local, and signs a record of every tool call the agent makes with ed25519. I test its checker against a corpus of wrong answers it should reject, and an organization can track how its runs drift over months.</p>
+  <h2 id="through-line">The through-line, interests, and five platforms</h2>
+
+  <p>My work starts from a plain observation: generating plausible text, code, or imagery has become nearly free, while checking whether an output is actually true remains slow and expensive. Whether I am writing a compiler, debugging a DirectX 12 shader pass, testing an AI agent against planted faults, or measuring how light behaves in snow and dusk, the habit is the same: separate the system that proposes an answer from the reference that checks it, plant known failures to confirm the checker still catches them, and publish the result honestly when an idea comes back null.</p>
+
+  <p>Eleven years in commercial arboriculture shaped how I design software. A tree manages water, wind load, compartmentalized decay, and fungal partnerships with no central manager; a job site stays safe only when scopes match physical constraints and anyone on the ground can call a halt without penalty. That same attention runs through my broader interests: horticulture and mycology, atmospheric optics and historical color manuals, perfumery (breaking complex impressions down into volatile top, heart, and base curves), atmospheric drum and bass and acoustic silence, cinema that respects negative space, and mid-century drafting plates paired with precision instruments.</p>
+
+  <p>Everything I build now lives inside five connected open-source platforms, mapped end to end on <a class="inline" href="architecture.html">Five Platforms, One Field</a>:</p>
+
+  <p><strong><a class="inline" href="playground/">The Playground</a> (Superframe &amp; RAW):</strong> C++23 multi-backend rendering (CPU reference, Direct3D 12, Vulkan 1.3, WebGPU), a live DirectX 12 Skyrim SE graphics replacement passing 96 of 96 moving-camera checks across four scenes, spectral material and procedural flora generation, SI rigid-body physics simulation, CLAP and VST3 physical-model instruments, cosmological simulation, and the original 3D narrative game <a class="inline" href="low-water.html">Low Water</a>.</p>
+
+  <p><strong><a class="inline" href="buildlang.html">BuildLang</a>:</strong> A Rust-built compiled systems language where function types declare side effects (filesystem, network, C access), compiling to deterministic C, HLSL/GLSL, experimental WebAssembly, and standalone x86-64 executables, alongside a checksummed embedded SQL engine (BDB) and a RISC-V toolchain written in BuildLang.</p>
+
+  <p><strong><a class="inline" href="flywheel.html">The Flywheel</a> &amp; <a class="inline" href="articulate.html">Articulate</a>:</strong> A self-hosted AI workstation and coding harness consolidating 31 packages behind cryptographic offline receipts, a Three-Plate Verification Oracle, <a class="inline" href="emet.html">EMET</a> cross-language byte-integrity witnessing, an accountable workstation control plane, and deterministic prose linting.</p>
+
+  <p><strong><a class="inline" href="cmmns.html">The Commons</a> (CMMNS):</strong> A local-first, account-free browser extension surfacing source provenance, coordination cues, and fact-checks behind replies across nine social platforms.</p>
+
+  <p><strong><a class="inline" href="research.html">Research, Security &amp; Writing</a>:</strong> Thirty reproducible empirical studies (<a class="inline" href="findings/">12 published nulls</a>), 13 DOI-indexed preprints, the capability-public <a class="inline" href="security.html">security and purple-team hierarchy</a>, and signed essays on AI accountability and craft.</p>
 
   <p>I have a young son. He will grow up with AI already part of the world. Safety researchers keep resigning from the largest labs. They do not think the models are being made safe fast enough. Dario Amodei, who runs Anthropic, is now asking the industry to pace the frontier and put more into alignment and outside evaluation. Other lab heads have agreed. That is the work I already do, and I want to keep doing it while he grows up.</p>
 
@@ -80,7 +96,9 @@
 
   <p>Knowledge has no owner, so I publish methods, data and failures in the open. People who hold power should be open to scrutiny, and the tools to check a public claim should be free to anyone. People who admit an honest error should have a way back. I am tied to no organization, institution or nation. If I play for any side, it is humanity&rsquo;s.</p>
 
-  <p class="essay-sig">The short version, what I do and the path that got me here, is on the <a class="inline" href="cv.html">full CV</a>. The work itself is the rest of this site. &nbsp;<a class="totop" href="#">&uarr; top</a></p>
+  <p><strong>Nothing self-warrants:</strong> a model, compiler, or institution should never be the sole judge of its own work. <strong>Make checking cheaper:</strong> lower the cost of verifying claims for regular people instead of locking verification behind proprietary walls. <strong>Just culture over blame:</strong> honest errors lead to learning and a clear path back; only hiding failures corrupts the shared record. <strong>Neutral tools, signed essays:</strong> personal opinions belong in signed first-person writing, while verification and provenance tools apply symmetric rules to every subject, including my own work. <strong>Respect for human attention:</strong> software should return people to their lives calmer and more capable, never trap them with synthetic urgency or clutter.</p>
+
+  <p class="essay-sig">Explore the unified stack on <a class="inline" href="architecture.html">Platform Architecture</a>, read the career materials on <a class="inline" href="hire.html">Hire</a> and the <a class="inline" href="cv.html">Full CV</a>, or see the visual sequence on <a class="inline" href="current-story.html">Current Story</a>. &nbsp;<a class="totop" href="#">&uarr; top</a></p>
 
   <figure class="plate" style="margin:1.6rem 0 0">
     <canvas data-specimen="person-plate-01" data-specimen-layers="moire-swirl" aria-hidden="true"></canvas>
