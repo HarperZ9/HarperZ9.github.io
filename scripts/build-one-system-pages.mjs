@@ -382,7 +382,6 @@ function buildFlywheel() {
   const ptr2x = readFileSync(path.join(site, "world/ui/shell/pointer/theflywheel-pressed@2x.png")).toString("base64");
   const scopedStyle = `<link rel="stylesheet" href="/world/site/landmark.css">
 <link rel="stylesheet" href="/system/notebook-sheet.css?v=20260925-void-sheets">
-<script type="module" src="/world/site/home-field.js"></script>
 <style>
   html.ptr:not(.plain) article.fw-ocean[data-hue="theflywheel"] { --p-pressed: -webkit-image-set(url("data:image/png;base64,${ptr1x}") 1x, url("data:image/png;base64,${ptr2x}") 2x) 6 6 !important; }
   .fw-ocean .lp-rel, .fw-ocean .lp-run { max-width: 100%; overflow-wrap: anywhere; }
@@ -454,7 +453,7 @@ document.addEventListener("click", async (ev) => {
     body,
     bodyClass: "reading landmark fw-page",
     extraHead: scopedStyle,
-    live: true,
+    live: false,
   }).replace(/alt=""/g, 'alt="Glass and water ocean field"');
   writeChecked("flywheel.html", html);
 }
