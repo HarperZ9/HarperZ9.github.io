@@ -25,8 +25,8 @@
       ],
       "breakthroughs": "DirectX 12 SM6.9 Cooperative Vectors expose Tensor/XMX cores directly inside shaders for RTX Neural Shaders; D3D12 Work Graphs enable GPU-autonomous scheduling; Split Radiance Cascades (2026-07) scales noiseless GI to 3D via sparse world-space hash maps; RAGE (GTA 6) and BlackSpace pair RTGI with fluid-carved volumetrics.",
       "bottlenecks": "Temporal RTGI smearing and moving-camera flicker; multi-frame generation motion-vector hallucinations; legacy post-processing injectors breaking determinism; 3D cascade memory blowup without sparse hashing.",
-      "observed_baseline": "RAW DX12+SM6.9/6.10 (Wave 66 36271ba): 19 GPU compute solvers at ~1.57 ms (1080p), 0 D3D12 errors, persistent 360-frame World TLAS, RayQuery GI/RTAO/OMM, 64-step 3D clouds, Planck fluid fire + water sim, raw_engine.dll 22 fixes; 3D Cascades RMSE 0.054 @ 5.0 ms",
-      "surpass_angle": "Ship Wave 67 GameComposite intercept + sparse Split Radiance Cascades + BuildLang deterministic HLSL/WGSL shaders with Cooperative Vector hooks, gated by live cam_sweep, FLIP, and Sagnac temporal flicker oracles.",
+      "observed_baseline": "RAW DX12+SM6.9/6.10 (Wave 68 a7e02fd): 93/96 (96.9%) live heuristics (inn_interior 24/24, septimus_cave 24/24, windhelm_ext_snow 23/24, riverwood_day 22/24), live GameComposite 0xc29d75356434a10a match, 19 GPU compute solvers at ~1.57 ms (1080p), 0 D3D12 errors, persistent 360-frame World TLAS, RayQuery GI/RTAO/OMM, 64-step 3D clouds, Planck fluid fire + water sim; 3D Cascades RMSE 0.054 @ 5.0 ms",
+      "surpass_angle": "Pair Wave 67 GameComposite intercept with sparse Split Radiance Cascades and BuildLang deterministic HLSL/WGSL shaders with Cooperative Vector hooks, gated by live cam_sweep, FLIP, and Sagnac temporal flicker oracles.",
       "falsification_gate": "Moving-camera FLIP + Sagnac temporal MV flicker <= 0.5% vs path-traced reference, 0 D3D12 errors, >= 60 FPS @ 4K on RTX 4090.",
       "sources": [
         {
@@ -68,7 +68,7 @@
       ],
       "breakthroughs": "C++26 finalized (2026-11-21) with Static Reflection and Contracts; Bend 2 and HVM3 run lock-free confluent interaction nets across CPUs/GPUs with formal safety laws; TileLang exposes explicit tile/shared-memory primitives across NVIDIA/AMD/Ascend; Lean 4 FRO ships grind automation and independent kernel checking; Zig ships self-hosted x86_64 backend.",
       "bottlenecks": "Interaction nets lag dense SIMD/tensor cache locality; Triton leaves performance gaps while TileLang/CUTLASS lack formal numerical proofs; C++26 contracts lack cryptographic build receipts; Lean 4 lacks native GPU shader emission.",
-      "observed_baseline": "buildc 1.15.0: algebraic effect-row types, deterministic C/HLSL/GLSL emit (147/147 repeatable build hash), par_for 5.34-5.87x bit-identical, 96/102 tests/features pass; GAP: 187/268 universe .bld fail check (81 pass) (#290), slower than Rust on non-fannkuch, no freestanding RISC-V or interaction-net/GPU auto-parallel target yet",
+      "observed_baseline": "buildc 1.15.0: algebraic effect-row types, deterministic C/HLSL/GLSL emit (147/147 repeatable build hash), par_for 5.34-5.87x bit-identical, 98/102 tests/features pass (GAPS.txt 6 to 4, while/loop soundness closed), kcore_fast.bld 462.9x vs Python bit-exact, workstation_mcp.bld 0.245 ms; GAP: 187/268 universe .bld fail check (81 pass) (#290), no freestanding RISC-V or interaction-net/GPU auto-parallel target yet",
       "surpass_angle": "Close 0/268 universe check failures (from 187/268 live origin/main) and freestanding RISC-V; add effect-polymorphic sync/async uncoloring, TileLang-class deterministic GPU tile lowering, and independent proof-kernel receipts verifying CPU/GPU bit-equivalence.",
       "falsification_gate": "0/268 universe .bld failures, >= 1.0x Rust/C++26 speed on 8-kernel suite, >= Bend2/TileLang GPU utilization, 100% bit-identical cross-OS receipts.",
       "sources": [
@@ -108,7 +108,7 @@
       ],
       "breakthroughs": "SWE-Proof (2026-09) translates SWE-bench Verified into Nagini/Velvet/Lean proofs and finds ~25% of test-passing patches still hold formal counterexamples; Harness-Bench (2026-05) and Same Model Different Harness (2026-08) prove harness scaffolding swings coding scores drastically; MIB standardizes mechanistic circuit benchmarks.",
       "bottlenecks": "Agent-written unit tests form an echo chamber (46.3% false-claim rate across 11,772 runs in our P01); single-plate recheckers miss 50-67% of planted errors; LLM-authored formal specs fail specification faithfulness.",
-      "observed_baseline": "Flywheel 2.0 + 30 consolidated packages, signed Merkle receipts, Three-Plate Oracle DS-06 prototype achieving 115/115 (100%) planted-defect recall & 0/115 false-accept (vs 0.061 single-plate & 0.33-0.50 historical audit), live Wave 66 engine-receipt/1 (id=68207), anti_silo_gate 13/13 PASS",
+      "observed_baseline": "Flywheel 2.0 + 30 consolidated packages, signed Merkle receipts, Three-Plate Oracle + #![forbid(unsafe_code)] EMET (flywheel#545, 192/192 CI PASS) + JFC-3P Omni-Modal JEPA/Fast-Weight Delta/Verifiable RL (flywheel#546), DS-06 115/115 (100%) recall & 0/115 false-accept, native superframe#143 engine-receipt/1 (580 pytest PASS), anti_silo_gate 13/13 PASS",
       "surpass_angle": "Ship Flywheel Three-Plate Verification (independent spec + adversarial assumption-mutation traps + deterministic event-log replay) with signed Merkle receipts across every agent harness run.",
       "falsification_gate": ">= 0.95 out-of-distribution planted-defect recall, <= 0.02 false-accept rate, and 100% deterministic trajectory replay.",
       "sources": [
@@ -399,7 +399,7 @@
       ],
       "breakthroughs": "PostgreSQL 18 adds built-in Asynchronous I/O (up to 3x faster reads), B-tree skip scans, native UUIDv7, and default data checksums; TigerBeetle pioneers protocol-aware deterministic simulation testing (VOPR, 2026-08) plus external chaos fuzzing (Vortex); DuckDB adds SQL views over cryptographic ledgers (duckdb_ledger).",
       "bottlenecks": "Embedded engines without page checksums suffer silent bit-rot under damage fuzzing; analytical/OLTP stores separate immutable audit trails from fast embedded hybrid search.",
-      "observed_baseline": "Pure BuildLang SQL engine, crash recovery 0/170, cross-process rollback PASS, 1,084/9,202 sqllogictest; GAP: 44.6x SQLite RAM at 100k rows, 1.39-1.94x slower at 100k, 438/500 silent fuzz corruptions",
+      "observed_baseline": "Pure BuildLang SQL engine (buildlang#328): 4 KiB FNV-1a page checksums close silent fuzz corruptions from 438/500 to 0/500, 10,000/10,000 fault tests PASS, crash recovery 0/170, cross-process rollback PASS, 1,084/9,202 sqllogictest; GAP: RAM footprint at 100k rows and remaining sqllogictest coverage",
       "surpass_angle": "Add TigerBeetle-grade page/WAL BLAKE3 checksums and deterministic fault-injection simulation to BuildLang BDB, paired with vectorized columnar scans, native FTS5/BM25, and SHA-256 content-addressable ledger tables.",
       "falsification_gate": "0/500 silent corruptions on damage fuzzer, <= 2x SQLite RAM, >= 1.0x SQLite OLTP parity, 100% parity across 68,221 catalogue rows.",
       "sources": [

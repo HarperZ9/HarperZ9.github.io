@@ -5,15 +5,15 @@
     "flagships_loc": 5066120,
     "flagships_test_files": 7593,
     "github_total": 206,
-    "github_live_own": 89,
-    "github_archived": 98,
+    "github_live_own": 88,
+    "github_archived": 99,
     "oss_merged": 41,
     "oss_repos": 34,
     "papers": 16,
     "findings": 669,
     "packages": 26
   },
-  "verified": "25 November 2026: programmatically audited across 86 local git repositories and all 206 GitHub repositories (5,066,120 LOC and 7,593 test files across the 5 flagships and RAW Wave 66; 94/94 internal site routes verified with 0 dead links, 0 local paths, 0 em dashes, and 0 retired names).",
+  "verified": "25 November 2026: programmatically audited across 86 local git repositories and all 206 GitHub repositories (88 live own, 19 forks, 99 archived including telos-v2; 5,066,120 LOC and 7,593 test files across the 5 flagships and RAW Wave 67; 94/94 internal site routes verified with 0 dead links, 0 local paths, 0 em dashes, and 0 retired names).",
   "items": [
     {
       "id": "the-playground",
@@ -27,9 +27,9 @@
       "lang": "JS/TS, C++23, HLSL/WGSL, Python, BuildLang",
       "loc": 841155,
       "test_files": 983,
-      "summary": "Deterministic rendering engine, multi-medium creative suite, C++23 D3D12/Vulkan/WebGPU renderer, RAW DX12 Wave 66 pipeline, physical-modeling DAW, cosmological N-body solver, optical/CAD labs, and the Low Water narrative game demo.",
+      "summary": "Deterministic rendering engine, multi-medium creative suite, C++23 D3D12/Vulkan/WebGPU renderer, RAW DX12 Wave 68 pipeline (93/96 live heuristics), native engine-receipt/1 emission (superframe#143, 580 pytest PASS), physical-modeling DAW, cosmological N-body solver, optical/CAD labs, and the Low Water narrative game demo.",
       "run": "git clone https://github.com/HarperZ9/superframe && cd superframe && npm run make",
-      "gap": "RAW DX12 still awaits Wave 67 GameComposite intercept (R11G11B10_FLOAT) before folding into superframe/raw/; style.wgsl is a 4,914 LOC monolith; native engine-receipt/1 emission is wired externally rather than inside superframe; several pure-BuildLang packages (plot-sheet, kcore) lack standard pytest/CI test discovery.",
+      "gap": "Wave 68 (a7e02fd) reached 93/96 (96.9%) live heuristics (inn_interior 24/24, septimus_cave 24/24, windhelm_ext_snow 23/24, riverwood_day 22/24) with GameComposite 0xc29d75356434a10a matched; 3 remaining live heuristics (shadow_temporal_stability and river depth_range) plus style.wgsl modularization remain open.",
       "links": [
         [
           "/playground/",
@@ -67,7 +67,7 @@
       "test_files": 1178,
       "summary": "Compiled systems language where function types declare every external capability effect (filesystem, network, C FFI), emitting deterministic C, HLSL/GLSL shaders, experimental WASM/x86-64/RV64 targets, plus pure-BuildLang SQL database BDB, 5 Build suite tools, 268-file Universe corpus, editor grammars, and C-to-BuildLang port tool.",
       "run": "cargo install buildlang --version 1.15.0 --locked && buildc check main.bld",
-      "gap": "On live origin/main (2026-11-16), 187 of 268 universe/ .bld files still fail buildc check (1 lexer, 21 parser, 165 type/effect) and 16 C-transpile modules remain xfail (tracked in buildlang#290); 6 feature gaps remain in GAPS.txt; BDB uses 44.6x SQLite RAM at 100k rows and needs page checksums to close 438/500 silent fuzz corruptions; compiler/src has 1,308 .unwrap() calls and 11K+ LOC monoliths.",
+      "gap": "Wave 1 (buildlang#327, #328) closed feature tests to 98/102 (GAPS.txt 6 to 4, while/loop soundness closed), BDB silent fuzz corruptions from 438/500 to 0/500 via 4 KiB FNV-1a page checksums (10,000/10,000 fault tests PASS), kcore_fast.bld to 462.9x vs Python bit-exact, and workstation_mcp.bld to 0.245 ms; open gaps: 187 of 268 universe/ .bld files still fail buildc check (81 pass; buildlang#290), BDB 100k-row RAM footprint, and compiler/src .unwrap() cleanup.",
       "links": [
         [
           "/buildlang.html",
@@ -93,7 +93,7 @@
       "test_files": 4637,
       "summary": "Self-hosted AI workstation, model-agnostic coding harness, cryptographic receipt engine, Three-Plate independent verification framework, and monorepo home for 30 consolidated accountability, memory, orchestration, research-intake, and prose-analysis tools including Articulate (ARTIQL8).",
       "run": "pip install flywheel-verify articulate-writing && flywheel up",
-      "gap": "Single-model self-recheck caught only 3/6 planted ledger errors (addressed by Three-Plate Oracle targeting >=0.95 recall); 20 consolidated source repos remain live pending PyPI/npm/Cloudflare OIDC repoint; BuildLang porting has not started (0 LOC .bld); 176 silent except Exception handlers and duplicated Articulate detector.py need cleanup.",
+      "gap": "Three-Plate Oracle + #![forbid(unsafe_code)] EMET (flywheel#545, 192/192 CI PASS) and JFC-3P Omni-Modal JEPA + Fast-Weight Delta + Verifiable RL (flywheel#546) landed; open items: PyPI/npm OIDC publisher repoints on consolidated source repos, BuildLang porting, and Articulate detector.py deduplication.",
       "links": [
         [
           "/flywheel.html",
@@ -127,7 +127,7 @@
       "test_files": 266,
       "summary": "Local-first AGPL-3.0 browser extension inspecting public claims, source provenance, coordination cues, and fact-checks across nine social platforms plus generic web pages, paired with a 43,380-item multi-modal knowledge archive distilled into ten structural laws.",
       "run": "Download cmmns-chrome-3.10.0.zip from GitHub Releases and Load unpacked",
-      "gap": "Audio tracks on ~160 music/vocal videos and 259 newest Batch 27 videos are not yet transcribed; Reddit link-only post inline button placement needs live-DOM update; src/ext/core.bundle.js (18,740 LOC) is checked in as a monolithic bundle without build-hash verification.",
+      "gap": "Web Crypto capture receipts and double-build SHA-256 verification landed in cmmns#124; open items: audio tracks on ~160 music/vocal videos and 259 Batch 27 videos await transcription, and Reddit link-only inline button placement awaits live-DOM update.",
       "links": [
         [
           "/cmmns.html",
@@ -161,7 +161,7 @@
       "test_files": 529,
       "summary": "Unified interactive front door, 16 papers and Zenodo DOIs, 669-entry findings ledger (30 wave-1 live findings), 27 interactive Night School AI lessons, DS-01..DS-07 verifiable datasets, live tool explainers, and source-verified career/portfolio records.",
       "run": "Open https://harperz9.github.io/architecture.html or run pytest tests/",
-      "gap": "Over 47,000 LOC of redundant older hashed assets/index-*.js bundles remain committed in assets/ (contributing to 2.31 GB repo size); system/studio.js is 7,840 LOC; papers are independent technical records and not externally peer reviewed; arXiv submission awaits endorsement.",
+      "gap": "64 dead hashed bundles (34.49 MiB, 335,459 LOC) pruned in HarperZ9.github.io#579; open items: system/studio.js modularization, papers remain independent technical records (not externally peer reviewed), and arXiv submission awaits endorsement.",
       "links": [
         [
           "/architecture.html",
@@ -1055,7 +1055,7 @@
       "test_files": 143,
       "summary": "Windows display calibration suite supporting both hardware colorimeters and sensorless calibration from machine/EDID channels: ICC profile generation, 3D LUTs, DDC/CI control, with every accuracy figure explicitly marked measured or estimated.",
       "run": "pip install calibrate-pro && calibrate-pro --help",
-      "gap": "Contains 146 monoliths (windows_display_state.py 4,826 LOC), 81 silent except Exception blocks, and duplicated color_math vs build-color plus a stale duplicate copy inside buildlang/universe/calibrate/.",
+      "gap": "85 silent except Exception blocks hardened in calibrate-pro#32 (884 tests PASS); remaining open items: monolith decomposition (windows_display_state.py) and deduplicating color_math against build-color.",
       "links": [
         [
           "/catalog.html",
@@ -1215,7 +1215,7 @@
       "test_files": 5,
       "summary": "Cross-platform Rust utility for Windows and Linux providing read-only hardware-identity auditing, backup-before-write mutation, validation, and reversible restoration.",
       "run": "Download phantom v1.1.1 from GitHub Releases or run cargo test",
-      "gap": "Only 5 test files for 25,347 LOC and 255 Rust .unwrap()/.expect() calls in non-test code; prioritized for P1 hardening.",
+      "gap": "Hardened in phantom#53 to 0 production .unwrap() calls with 273 passing tests; broader hardware-profile regression coverage remains ongoing.",
       "links": [
         [
           "/phantom.html",

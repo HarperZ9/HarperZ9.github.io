@@ -69,8 +69,44 @@ html:root .site-directory h1:not(#_){
   line-height:.92;
   text-wrap:balance;
 }
-.site-directory .directory-head p{max-width:40rem;margin:0 0 1rem;font-size:1.0625rem;line-height:1.6;color:var(--soft)}
+.site-directory .directory-head p{max-width:44rem;margin:0 0 1rem;font-size:1.0625rem;line-height:1.6;color:var(--soft)}
 .site-directory .directory-head p.lead{font-size:clamp(1.125rem,1rem + .45vw,1.375rem);line-height:1.55;color:var(--ink)}
+.site-directory .directory-jump-btn{
+  display:inline-flex;align-items:center;min-height:40px;padding:.35rem .8rem;margin-right:.25rem;
+  font:650 .9375rem/1 var(--font-sans);color:var(--ink);background:var(--paper);
+  border:1px solid var(--line-strong);border-radius:var(--radius-control,2px);cursor:pointer;
+}
+.site-directory .directory-jump-btn:is(:hover,:focus-visible){background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+/* 2b. Five ways in: crisp 5-pillar wayfinding strip above the full 9-sector directory. */
+.site-directory .directory-wayfinding{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,13rem),1fr));
+  gap:.85rem;
+  margin:0 0 clamp(2rem,4vw,3rem);
+}
+html:root .site-directory .directory-wayfinding .way-card:not(#_){
+  display:flex;flex-direction:column;gap:.35rem;
+  padding:1rem;
+  border:1px solid var(--line-strong);
+  border-radius:2px;
+  background:var(--paper);
+  color:var(--ink);
+  text-decoration:none;
+}
+html:root .site-directory .directory-wayfinding .way-card:not(#_):is(:hover,:focus-visible){
+  background:var(--raised,rgba(142,227,242,.08));
+  border-color:var(--ink);
+}
+.site-directory .way-card .way-num{
+  font:700 .8125rem/1 var(--font-mono);font-variant-numeric:tabular-nums;color:var(--soft);
+}
+.site-directory .way-card strong{
+  font-size:1.08rem;font-weight:750;letter-spacing:-.015em;line-height:1.2;color:var(--ink);
+}
+.site-directory .way-card span:last-child{
+  font-size:.9rem;line-height:1.45;color:var(--soft);
+}
 
 /* 3. Search: a drawn field and a square button. */
 .site-directory .directory-search{max-width:44rem;margin:0 0 clamp(2rem,4vw,3rem)}

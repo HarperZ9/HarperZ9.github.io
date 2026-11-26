@@ -45,7 +45,7 @@
         ["/low-water.html", "Low Water"],
         ["https://github.com/HarperZ9/superframe", "Source"]
       ],
-      "verified": "25 November 2026: superframe v0.3.0; RAW DX12 Wave 66 verified with 89/89 Ninja build (0 warnings), 522/522 runtime, 78/78 SM 6.10 shaders, 49/49 GPU suites, plus 384 live 1920x1080 moving-camera frames (~1.57 ms across 19 GPU compute solvers on RTX 4090, 0 NaN/Inf, 0 D3D12 debug errors)."
+      "verified": "25 November 2026: superframe v0.3.0 with native engine-receipt/1 emission (superframe#143, 580 pytest PASS); RAW DX12 Wave 68 (a7e02fd) verified at 93/96 (96.9%) live heuristics across 4 scenes (inn_interior 24/24, septimus_cave 24/24, windhelm_ext_snow 23/24, riverwood_day 22/24), live GameComposite 0xc29d75356434a10a match, 522/522 runtime, and 19 GPU solvers in ~1.57 ms on RTX 4090."
     },
     {
       "id": "buildlang",
@@ -60,8 +60,8 @@
       "produces": "Repeatable native binaries, bit-exact parallel reductions (par_for), embedded BDB stores, and verified kernels for The Playground.",
       "contract": "Declared effect-row manifests, repeatable SHA-256 build hashes, and C translation validation.",
       "parts": [
-        ["buildc 1.15.0", "Algebraic effect rows, checked pure par_for/par_map, offline package lockfiles, and repeatable C/shader codegen."],
-        ["BDB (BuildDB)", "Pure BuildLang embedded SQL engine with crash-recovery and cross-process rollback tests."],
+        ["buildc 1.15.0", "Algebraic effect rows, checked pure par_for/par_map, 98/102 feature tests, kcore_fast.bld 462.9x vs Python, and repeatable C/shader codegen."],
+        ["BDB (BuildDB)", "Pure BuildLang embedded SQL engine with 4 KiB FNV-1a page checksums (0/500 silent fuzz corruptions, 10,000/10,000 fault tests PASS)."],
         ["Universe & Suite", "268 module files in universe/, five consolidated Build suite libraries in suite/, and editor syntax packages in editors/."],
         ["RISC-V & OS", "emu-rv64 emulator and bare-metal scheduler experiments (os-pfa, os-runq)."]
       ],
@@ -71,7 +71,7 @@
         ["https://crates.io/crates/buildlang", "crates.io"],
         ["https://github.com/HarperZ9/buildlang", "Source"]
       ],
-      "verified": "25 November 2026: buildlang v1.15.0 on GitHub and crates.io; 147/147 repeatable build hashes and 5.3x to 5.9x bit-exact par_for speedup; honest gap recorded on live origin/main: 187 of 268 universe/ files still fail buildc check (81 pass; tracked in buildlang #290)."
+      "verified": "25 November 2026: buildlang v1.15.0 on GitHub and crates.io; 147/147 repeatable build hashes, 98/102 feature tests (GAPS.txt 6 to 4, while/loop soundness closed), BDB 0/500 silent fuzz corruptions (10,000/10,000 fault tests PASS), kcore_fast.bld 462.9x vs Python bit-exact, workstation_mcp.bld 0.245 ms; honest gap: 187 of 268 universe/ files still fail buildc check (81 pass; buildlang #290)."
     },
     {
       "id": "flywheel",
@@ -87,8 +87,8 @@
       "contract": "Offline-recheckable JSON receipts, Three-Plate proposer/mutator/oracle checks, and zero-mutation protected spans.",
       "parts": [
         ["Core Harness (v2.0.0)", "Runs models behind one local interface with cryptographic step receipts and offline verification."],
-        ["30 Consolidated Packages", "Canon, Mneme, Forum, Crucible, Gather, EMET, Index, Plexus, Relay, Chorus, Learn, Bulletin, and safety utilities under packages/."],
-        ["Three-Plate Verification", "Separates proposer, independent hypothesis mutator plus secret-prefix scanner, and execution ground-truth oracle."],
+        ["30 Consolidated Packages", "Canon, Mneme, Forum, Crucible, Gather, EMET (#![forbid(unsafe_code)]), Index, Plexus, Relay, Chorus, Learn, Bulletin, and safety utilities under packages/."],
+        ["Three-Plate & JFC-3P", "Separates proposer, independent hypothesis mutator plus secret-prefix scanner, and execution oracle (flywheel#545, #546)."],
         ["Articulate (ARTIQL8)", "v0.19.1 local prose checker (2,096 passing tests) flagging hedging, filler, and register drift without rewriting author facts."]
       ],
       "run": "pip install flywheel-verify articulate-writing && flywheel up",
@@ -98,7 +98,7 @@
         ["/demo-flywheel.html", "Interactive demo"],
         ["https://github.com/HarperZ9/flywheel", "Source"]
       ],
-      "verified": "25 November 2026: flywheel v2.0.0 (flywheel-verify) and articulate v0.19.1 (articulate-writing) live on GitHub and PyPI; 30 consolidated packages wired under flywheel/packages/ and demos/."
+      "verified": "25 November 2026: flywheel v2.0.0 (flywheel-verify) and articulate v0.19.1 (articulate-writing) live on GitHub and PyPI; Three-Plate Oracle and #![forbid(unsafe_code)] EMET merged in flywheel#545 (192/192 CI PASS) alongside JFC-3P Omni-Modal JEPA + Fast-Weight Delta + Verifiable RL in flywheel#546."
     },
     {
       "id": "commons",
@@ -113,9 +113,9 @@
       "produces": "In-page provenance panels, structured post decompositions, and the 43,380-item cross-domain knowledge graph feeding Research.",
       "contract": "Local-only processing with source-hash citations and zero server tracking of browsing activity.",
       "parts": [
-        ["CMMNS Extension (v3.10.0)", "Inspects sources, coordination cues, and published fact-checks directly in Chrome, Edge, Brave, or Firefox."],
+        ["CMMNS Extension (v3.10.0)", "Inspects sources, coordination cues, and published fact-checks directly in Chrome, Edge, Brave, or Firefox with Web Crypto capture receipts."],
         ["43K Cross-Domain Archive", "27,678 unique text records, 7,957 reviewed stills, and 2,907 video motion contact sheets distilled into structural laws."],
-        ["Civic Provenance & Radar", "Links domain ownership and published reviews directly to primary sources without opaque scores."]
+        ["Civic Provenance & Radar", "Links domain ownership and published reviews directly to primary sources with double-build SHA-256 verification."]
       ],
       "run": "Download cmmns-chrome-3.10.0.zip from GitHub Releases and Load unpacked",
       "links": [
@@ -123,7 +123,7 @@
         ["/cmmns.html#try", "Try on your own words"],
         ["https://github.com/HarperZ9/cmmns", "Source"]
       ],
-      "verified": "25 November 2026: cmmns v3.10.0 published on GitHub Releases with cmmns-chrome-3.10.0.zip attached; cross-domain archive indexed across 43,380 multi-modal items."
+      "verified": "25 November 2026: cmmns v3.10.0 published on GitHub Releases with cmmns-chrome-3.10.0.zip attached; Web Crypto capture receipts and double-build SHA-256 guard merged in cmmns#124; cross-domain archive indexed across 43,380 multi-modal items."
     },
     {
       "id": "research",
@@ -241,21 +241,21 @@
   "datasetsVerified": "25 November 2026: all 7 datasets (7,391 total JSONL rows across 24 files) passed audit_suite.py with 24/24 SHA-256 checksums verified (0 mismatches), 0 PII/credential/local-path leaks, and 0 em dashes; third-party media and private corpora remain excluded from public exports.",
   "benchmarks": [
     {
-      "surface": "RAW DX12 Wave 66 Live Playtest & GPU Suites",
+      "surface": "RAW DX12 Wave 68 Live Playtest & GPU Suites",
       "platform": "THE PLAYGRND",
       "hue": "theplygrnd",
-      "check": "89/89 Ninja build, 522/522 runtime, 78/78 SM 6.10, 49/49 GPU suites, 384 live 1080p moving-camera frames",
-      "result": "19 GPU solvers in ~1.57 ms (RTX 4090); 0 NaN/Inf, 0 D3D12 errors; 22/24 cave, 21/24 inn, 19/24 snow, 18/24 river heuristics",
+      "check": "Wave 68 (a7e02fd) live 4-scene playtest (384 1080p frames), Wave 67 GameComposite intercept (0xc29d75356434a10a), 522/522 runtime, 0 Ninja warnings",
+      "result": "93/96 (96.9%) live heuristics PASS: inn_interior 24/24, septimus_cave 24/24, windhelm_ext_snow 23/24, riverwood_day 22/24; 19 GPU solvers in ~1.57 ms (RTX 4090), 0 D3D12 errors",
       "verdict": "verified",
       "verdictLabel": "Verified",
-      "gap": "Wave 67 fixes logged: vanilla GameComposite R11G11B10_FLOAT intercept, Survival Mode modal pop, residual Riverwood WaterView=7 band"
+      "gap": "3 of 96 remaining live heuristics: shadow_temporal_stability on snow/river and downward cam_sweep depth_range on river, plus WebGPU browser pass parity"
     },
     {
       "surface": "DS-06 Three-Plate Verification Oracle + AB520 Guard",
       "platform": "THE FLYWHEEL",
       "hue": "theflywheel",
-      "check": "145 planted-defect & clean-control cases comparing Plate A, Plate A+B, and Three-Plate A+B+C",
-      "result": "Three-Plate 100.0% recall (115/115) & 0.0% false-accept vs Single-Plate 6.09% recall (7/115) & 93.91% false-accept; 0/30 clean FP in 3.59 ms",
+      "check": "145 planted-defect & clean-control cases plus flywheel#545 (#![forbid(unsafe_code)] EMET) and flywheel#546 (JFC-3P)",
+      "result": "Three-Plate 100.0% recall (115/115) & 0.0% false-accept vs Single-Plate 6.09% recall (7/115) & 93.91% false-accept; 192/192 Flywheel CI PASS",
       "verdict": "verified",
       "verdictLabel": "Verified",
       "gap": "Deterministic suite measures controlled defect families; live open-ended model runs require continuous trap expansion"
@@ -284,55 +284,55 @@
       "surface": "Engine-to-Flywheel Interop Bridge (engine-receipt/1)",
       "platform": "THE FLYWHEEL",
       "hue": "theflywheel",
-      "check": "Cross-flagship wire-check (7 contracts), anti-silo mutation test, Wave 66 SHA-256 receipt round-trip",
-      "result": "7/7 contracts PASS, 5/5 flagships OK, 13/13 gate tests PASS, Wave 66 receipt MATCH (sha256:ddcd0b209c96, 62/62 heuristic checks)",
+      "check": "Native engine-receipt/1 emission inside superframe#143 (580 pytest PASS) + cross-flagship wire-check (7 contracts)",
+      "result": "7/7 contracts PASS, 5/5 flagships OK, 13/13 gate tests PASS, 580 superframe pytest PASS, receipt MATCH verified",
       "verdict": "verified",
       "verdictLabel": "Verified",
       "gap": "Automated GitHub Action replay of engine-receipt/1 on every superframe tag planned next"
     },
     {
-      "surface": "BuildLang 1.15.0 Repeatable Compiler",
+      "surface": "BuildLang 1.15.0 Repeatable Compiler & Native Kernels",
       "platform": "BLDLNG",
       "hue": "bldlng",
-      "check": "Repeatable build hashes, pure par_for bit-exactness, live origin/main universe/ check, feature tests",
-      "result": "147/147 repeatable hashes, 5.34x to 5.87x par_for, 96/102 feature tests, 81/268 universe pass on live origin/main",
+      "check": "Repeatable build hashes, pure par_for, feature tests (buildlang#327), kcore_fast.bld & workstation_mcp.bld benchmarks",
+      "result": "147/147 repeatable hashes, 98/102 feature tests (GAPS.txt 6 to 4, while/loop soundness closed), kcore_fast.bld 462.9x vs Python bit-exact, workstation_mcp.bld 0.245 ms",
       "verdict": "drift",
       "verdictLabel": "Open gap",
-      "gap": "187/268 universe .bld files fail buildc check on live origin/main (tracked in buildlang #290)"
+      "gap": "187/268 universe .bld files still fail buildc check on live origin/main (81 pass; tracked in buildlang #290)"
     },
     {
-      "surface": "BuildLang BDB Embedded SQL",
+      "surface": "BuildLang BDB Embedded SQL (4 KiB Page Checksums)",
       "platform": "BLDLNG",
       "hue": "bldlng",
-      "check": "Crash recovery, cross-process rollback, sqllogictest, damage fuzzer",
-      "result": "0/170 crash failures, 1,084/9,202 sqllogictest, 438/500 fuzzed silent corruptions",
-      "verdict": "drift",
-      "verdictLabel": "Open gap",
-      "gap": "Needs page checksums (Blake3/CRC32C) and lower RAM vs SQLite at 100k rows"
-    },
-    {
-      "surface": "Articulate (ARTIQL8) v0.19.1",
-      "platform": "ARTIQL8",
-      "hue": "artiql8",
-      "check": "Full pytest suite across register profiles, protected spans, and audit gate",
-      "result": "2,096 passed (0 failures; 7 platform/optional skips)",
+      "check": "4 KiB FNV-1a page checksums (buildlang#328), damage fuzzer, 10,000 fault-injection tests, crash recovery, sqllogictest",
+      "result": "0/500 silent fuzz corruptions (down from 438/500), 10,000/10,000 fault tests PASS, 0/170 crash failures, 1,084/9,202 sqllogictest",
       "verdict": "verified",
       "verdictLabel": "Verified",
-      "gap": "BuildLang deterministic pipeline port planned; outbound-voice-check integration pending"
+      "gap": "Memory footprint vs SQLite at 100k rows and remaining sqllogictest coverage remain open optimization targets"
     },
     {
-      "surface": "Estuary Lantern & Marbled Surfaces",
+      "surface": "Articulate (ARTIQL8), Phantom & Calibrate Pro Hardening",
+      "platform": "ARTIQL8",
+      "hue": "artiql8",
+      "check": "Articulate pytest suite, Phantom zero-unwrap audit (phantom#53), Calibrate Pro exception hardening (calibrate-pro#32)",
+      "result": "Articulate 2,096 passed; Phantom 0 production .unwrap() (273 tests PASS); Calibrate Pro 85 silent excepts hardened (884 tests PASS)",
+      "verdict": "verified",
+      "verdictLabel": "Verified",
+      "gap": "BuildLang deterministic pipeline port planned for Articulate; outbound-voice-check integration pending"
+    },
+    {
+      "surface": "Estuary Lantern, Marbled Surfaces & Site Hygiene",
       "platform": "THE PLAYGRND",
       "hue": "theplygrnd",
-      "check": "Node test suite (homology, metamer detection, C1 halocline, marbled bus, a11y)",
-      "result": "All unit and static accessibility suites PASS",
+      "check": "Node test suite (homology, metamer detection, C1 halocline, a11y) plus HarperZ9.github.io#579 dead-bundle prune",
+      "result": "All unit and accessibility suites PASS; 64 dead bundles (34.49 MiB, 335,459 LOC) pruned from site repo",
       "verdict": "verified",
       "verdictLabel": "Verified",
       "gap": "WebGPU live paths fall back cleanly to static stills when GPU is unavailable"
     }
   ],
-  "honestGaps": "Numbers that have not passed yet stay marked as open gaps. In BuildLang, 187 of 268 universe/ modules still fail buildc check on live origin/main (81 pass) and BDB still needs page-level checksums to close silent fuzz corruption. In DS-03, 91 of 286 equation specs have executable float64 kernels while 195 remain specification-only and 12 discrepancies are flagged. In DS-07 recall, 7 of 80 held-out queries still miss top-5 across memories and sessions. In audio stem separation, current htdemucs_ft baseline (9.03 dB SDR) trails BS-RoFormer (11.99 dB) by 2.96 dB. In RAW, WebGPU browser scenes run on a subset of the native DX12 pass stack.",
-  "consolidationLede": "Across 206 total GitHub repositories (89 live own repositories, 19 forks, and 98 archived repositories as of 25 November 2026), standalone repositories whose code and tests have been merged into a super-project now point directly to their live monorepo paths across this site. Historical release tags and sealed evidence hashes remain readable where published binaries or Zenodo DOIs depend on them.",
+  "honestGaps": "Numbers that have not passed yet stay marked as open gaps. In BuildLang, 187 of 268 universe/ modules still fail buildc check on live origin/main (81 pass; tracked in buildlang #290) and BDB still targets lower RAM and broader sqllogictest coverage despite closing 438/500 silent fuzz corruptions to 0/500. In DS-03, 91 of 286 equation specs have executable float64 kernels while 195 remain specification-only and 12 discrepancies are flagged. In DS-07 recall, 7 of 80 held-out queries still miss top-5 across memories and sessions. In audio stem separation, current htdemucs_ft baseline (9.03 dB SDR) trails BS-RoFormer (11.99 dB) by 2.96 dB. In RAW, WebGPU browser scenes run on a subset of the native DX12 pass stack.",
+  "consolidationLede": "Across 206 total GitHub repositories (88 live own repositories, 19 forks, and 99 archived repositories as of 25 November 2026, including telos-v2 archival), standalone repositories whose code and tests have been merged into a super-project now point directly to their live monorepo paths across this site. Historical release tags and sealed evidence hashes remain readable where published binaries or Zenodo DOIs depend on them.",
   "consolidation": [
     { "oldRepo": "signal-kernels", "livePath": "superframe/packages/kernels/signal-kernels", "liveUrl": "https://github.com/HarperZ9/superframe/tree/main/packages/kernels/signal-kernels", "platform": "THE PLAYGRND", "hue": "theplygrnd", "status": "Merged & archived" },
     { "oldRepo": "anomaly-kernels", "livePath": "superframe/packages/kernels/anomaly-kernels", "liveUrl": "https://github.com/HarperZ9/superframe/tree/main/packages/kernels/anomaly-kernels", "platform": "THE PLAYGRND", "hue": "theplygrnd", "status": "Merged & archived" },
