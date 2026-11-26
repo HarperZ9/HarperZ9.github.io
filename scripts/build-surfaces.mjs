@@ -195,7 +195,7 @@ function lowWaterSection() {
   const doors = I.starts.map((d, i) => `<li class="lw-door"><figure>${img(`/media/low-water/walk-${d.id}`, 1600, 900, d.alt, i ? "(max-width: 860px) 92vw, 540px" : "(max-width: 860px) 92vw, 1100px", false)}
 <figcaption>${esc(d.cap)}</figcaption></figure>
 <p class="lw-go" hidden><button type="button" class="toy-btn" data-start="${esc(d.q)}">${esc(d.go)}</button></p></li>`).join("\n");
-  const stills = I.stills.map(([f, place, verdict]) => `<li><figure><img src="/media/low-water/stills/${f}-640.webp" width="640" height="360" loading="lazy" decoding="async" alt="${esc(place)}"><figcaption><b>${esc(place)}</b> <span class="lw-verdict">${esc(verdict)}</span></figcaption></figure></li>`).join("");
+  const stills = I.stills.map(([f, place, verdict]) => `<li><figure><img src="/media/low-water/stills/${f}-640.webp" width="640" height="360" loading="lazy" decoding="async" alt="The engine's still of ${esc(place)}."><figcaption><b>${esc(place)}</b> <span class="lw-verdict">${esc(verdict)}</span></figcaption></figure></li>`).join("");
   const eras = `<ol class="lw-eras">${LW.ERAS.map(([n, m], i) => `<li><span class="lw-n">${i + 1}</span> <b>${esc(n)}</b> <span class="lp-v">${m} minutes</span></li>`).join("")}</ol>`;
   const keyFigs = LW.SECTIONS.flatMap((s) => s.figs || []).filter((f) => [136, 158].includes(f.pr));
   const subSecs = `<h3>Verified engine milestones</h3><p>${esc(LW.SECTIONS.map((s) => s.title).join(", "))} share the same BuildLang and Superframe core.</p>${figsHtml(keyFigs)}`;
@@ -210,7 +210,8 @@ function lowWaterSection() {
 </div>
 <figure class="lw-plate"><a href="/media/low-water/plate-20261118-1500.webp">${img("/media/low-water/plate-20261118", 1500, 1183, "The island of Low Water as a hand-lettered, hachured map: a long range down the middle, rivers to the sea, towns joined by roads, every name in an engraver's hand.", "(max-width: 860px) 92vw, 900px", true)}</a>
 <figcaption>${esc(I.plateCap)}</figcaption></figure>
-<details class="sx-rec"><summary>Fifteen engine stills, read plainly</summary><ul class="lw-stills">${stills}</ul></details>
+<h3>Fifteen engine stills, read plainly</h3>
+<ul class="lw-stills">${stills}</ul>
 </div>
 <h3 id="story">${esc(st.title)}</h3>
 <p>${esc(st.lede)}</p>

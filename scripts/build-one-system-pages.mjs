@@ -111,7 +111,29 @@ function buildTools() {
   const installersData = readJson("assets/data/unified/one_command_installers.json");
   const reposData = readJson("assets/data/unified/all_public_repos_catalog.json");
   const repos = Array.isArray(reposData) ? reposData : (reposData.repositories || reposData.repos || reposData.items || []);
-  const langs = [...new Set(repos.map((r) => r.language || r.primary_language || "Other").filter(Boolean))].sort();
+  const CAT_LABELS = {
+    "flagship": "Flagship platforms",
+    "ai-verification-flywheel": "AI verification & Flywheel",
+    "rendering-engines-and-enb": "Rendering engines & ENB",
+    "compilers-and-buildlang": "Compilers & BuildLang",
+    "research-and-governance": "Research & governance",
+    "empirical-research-and-science": "Empirical research & science",
+    "color-and-calibration": "Color & calibration",
+    "systems-and-security": "Systems & security",
+    "utilities-and-repros": "Utilities & repros",
+    "upstream-fork": "Upstream forks",
+  };
+  const catLabel = (c) => CAT_LABELS[c] || String(c || "Other").replace(/-/g, " ");
+  const catCounts = new Map();
+  for (const r of repos) {
+    const c = r.category || "other";
+    catCounts.set(c, (catCounts.get(c) || 0) + 1);
+  }
+  const cats = [...catCounts.keys()].sort((a, b) => {
+    const order = Object.keys(CAT_LABELS);
+    const ia = order.indexOf(a), ib = order.indexOf(b);
+    return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib) || a.localeCompare(b);
+  });
 
   const installerRows = (installersData.installers || []).map((inst) => {
     const winCmd = inst.windows_powershell ? `<div class="ds-cmd"><code>${esc(inst.windows_powershell)}</code><button type="button" data-copy-cmd="${esc(inst.windows_powershell)}">Copy PowerShell</button></div>` : "";
@@ -128,11 +150,11 @@ function buildTools() {
     const name = r.name || r.repo || "";
     const url = r.html_url || r.url || `https://github.com/HarperZ9/${name}`;
     const desc = r.description || "Public repository under HarperZ9.";
-    const lang = r.language || r.primary_language || "Other";
-    const status = r.archived ? "archived" : "active";
-    const search = `${name} ${desc} ${lang} ${status} ${(r.topics || []).join(" ")}`.toLowerCase();
-    return `<li data-repo-row data-lang="${esc(lang)}" data-status="${esc(status)}" data-search="${esc(search)}">
-      <span class="ds-term"><a href="${esc(url)}">${esc(name)}</a><span class="ds-sub">${esc(lang)} | ${esc(status)}</span></span>
+    const cat = r.category || "other";
+    const status = r.status || (r.archived ? "archived" : "active");
+    const search = `${name} ${desc} ${cat} ${catLabel(cat)} ${status} ${(r.topics || []).join(" ")}`.toLowerCase();
+    return `<li data-repo-row data-cat="${esc(cat)}" data-status="${esc(status)}" data-search="${esc(search)}">
+      <span class="ds-term"><a href="${esc(url)}">${esc(name)}</a><span class="ds-sub">${esc(catLabel(cat))} | ${esc(status)}</span></span>
       <span class="ds-gloss">${esc(desc)}</span>
     </li>`;
   }).join("\n");
@@ -185,9 +207,9 @@ function buildTools() {
   <h2 id="h-repos">Complete public repository ledger (${repos.length} public, 0 private)</h2>
   <div class="ds-filter">
     <label for="repo-q" class="sr-only">Filter repositories</label>
-    <input id="repo-q" type="search" placeholder="Filter ${repos.length} repos by name, language, or topic..." autocomplete="off">
-    <label for="repo-lang" class="sr-only">Language</label>
-    <select id="repo-lang"><option value="">All languages (${langs.length})</option>${langs.map((l) => `<option value="${esc(l)}">${esc(l)}</option>`).join("")}</select>
+    <input id="repo-q" type="search" placeholder="Filter ${repos.length} repos by name, category, or topic..." autocomplete="off">
+    <label for="repo-cat" class="sr-only">Category</label>
+    <select id="repo-cat"><option value="">All categories (${cats.length})</option>${cats.map((c) => `<option value="${esc(c)}">${esc(catLabel(c))} (${catCounts.get(c)})</option>`).join("")}</select>
     <label for="repo-status" class="sr-only">Status</label>
     <select id="repo-status"><option value="">Active &amp; archived</option><option value="active">Active only</option><option value="archived">Archived only</option></select>
     <span id="repo-count" class="ds-meta" aria-live="polite">Showing ${repos.length} of ${repos.length} public repositories</span>
@@ -198,18 +220,18 @@ function buildTools() {
 ${provenance("tools.html", "2026-11-26", `${repos.length} public repos | fail-closed SHA256SUMS`)}
 </article>
 <script type="module">
-const qEl = document.getElementById("repo-q"), langEl = document.getElementById("repo-lang"), stEl = document.getElementById("repo-status"), countEl = document.getElementById("repo-count");
+const qEl = document.getElementById("repo-q"), catEl = document.getElementById("repo-cat"), stEl = document.getElementById("repo-status"), countEl = document.getElementById("repo-count");
 const rows = [...document.querySelectorAll("[data-repo-row]")];
 function apply() {
-  const q = (qEl?.value || "").trim().toLowerCase(), l = langEl?.value || "", st = stEl?.value || "";
+  const q = (qEl?.value || "").trim().toLowerCase(), c = catEl?.value || "", st = stEl?.value || "";
   let n = 0;
   for (const r of rows) {
-    const ok = (!q || r.dataset.search.includes(q)) && (!l || r.dataset.lang === l) && (!st || r.dataset.status === st);
+    const ok = (!q || r.dataset.search.includes(q)) && (!c || r.dataset.cat === c) && (!st || r.dataset.status === st);
     r.hidden = !ok; if (ok) n++;
   }
   if (countEl) countEl.textContent = "Showing " + n + " of " + rows.length + " public repositories";
 }
-qEl?.addEventListener("input", apply); langEl?.addEventListener("change", apply); stEl?.addEventListener("change", apply);
+qEl?.addEventListener("input", apply); catEl?.addEventListener("change", apply); stEl?.addEventListener("change", apply);
 document.addEventListener("click", async (ev) => {
   const btn = ev.target.closest("[data-copy-cmd]"); if (!btn) return;
   try { await navigator.clipboard.writeText(btn.dataset.copyCmd); const prev = btn.textContent; btn.textContent = "Copied"; setTimeout(() => { btn.textContent = prev; }, 1600); } catch {}

@@ -1,6 +1,6 @@
 {
   "date": "2026-11-26",
-  "note": "Wave 25A: Fix all CI contracts, deepen visual craft, and embed Wave 24B custom-voice 1080p video.",
+  "note": "Wave 25A-fix: restore Low Water still alts and visible stills grid, accurate tools.html category/status filters, Estuary reducedMotion and observer lens visuals",
   "paths": {
     "a-witness-should-not-become-a-ruler.html": "99f86e3c5975b005f07de2501d34bb7573b128330980166b3d4cc926ca241c40",
     "career/career-artifacts.json": "388d372135054406eddfa123862c9c412639988a29fa376bf496dcb7d386cbc0",
@@ -8,9 +8,9 @@
     "elder-enb.html": "64554e5672bda11645dc77380395afc74015482c5c3bc3b9913bec30ba3f6c17",
     "enb-runtime-core.html": "d94562ef9fbe851776fb35e6c26beb1d3efb35ba385600397f8cc5b6d607fb75",
     "figures/system-capability-map.html": "b7cfa6ff82bce8ec9fa05735bf45a18bf1e2fa09eada08b0fd32038d7da8e98d",
-    "flywheel.html": "3b6cb37def3a51f8863393efc2ba34d1e7a5bc245991aa211182602921ea8d05",
+    "flywheel.html": "6fcc6dc4e13edfcf48b622ebc6d92bce50bf233ddd3180f5672436776f1ce049",
     "hire.html": "28fa0d3033004b73303a3b2bcf788ca67bbdae82e4294a60c97f18003ab06185",
-    "index.html": "c8884b436693ea9f8902e40a46fbde137ca272a2a76ed8f0de4fe56e0c93c95c",
+    "index.html": "09fa6e0fecf71398fcbf0274a1d9b965edbdad0be9f875f99ab0165074cf63e6",
     "overview.html": "0233d6926059ea48d775b0d3cc58a12933d76155849bd3808120325840403c98",
     "public-surface-sweeper-sample.html": "2c8d982e17a3bb999702d41a7bcc8f381cc26ad41a4584086ac99ea29c44f9fc",
     "publications/build.json": "1e534d40fe5cf46a974f6ab10f2fb76ab0c314b9ab0bc55e0131f60622e1d504",

@@ -132,23 +132,24 @@ function drawApertureGlass(ctx, ap, width, height, visual) {
 // Render the Saint-Joseph concrete lantern and spectral glass field to 2D canvas.
 export function renderLanternCanvas(ctx, width, height, frame) {
   ctx.save();
-  ctx.fillStyle = '#101318'; ctx.fillRect(0, 0, width, height);
+  const obs = frame.observer || 'visual-luminance', tc = obs === 'temporal-cadence', sd = obs === 'structural-density';
+  ctx.fillStyle = tc ? '#0d151b' : sd ? '#151412' : '#101318'; ctx.fillRect(0, 0, width, height);
   const { lattice, apertures, recombination, topology } = frame;
   for (const ap of apertures) drawApertureGlass(ctx, ap, width, height, recombination.visual);
   const cad = recombination.weights.cad, mx = lattice.frameMargin * width, my = lattice.frameMargin * height;
-  ctx.strokeStyle = `rgba(198, 194, 184, ${(0.32 + 0.52 * cad).toFixed(3)})`; ctx.lineWidth = 1.5 + 3.5 * cad;
-  ctx.strokeRect(mx * 0.65, my * 0.65, width - mx * 1.3, height - my * 1.3);
+  ctx.strokeStyle = tc ? 'rgba(130, 214, 218, 0.72)' : sd ? 'rgba(235, 224, 196, 0.84)' : `rgba(198, 194, 184, ${(0.32 + 0.52 * cad).toFixed(3)})`;
+  ctx.lineWidth = (sd ? 2.6 : 1.5) + 3.5 * cad; ctx.strokeRect(mx * 0.65, my * 0.65, width - mx * 1.3, height - my * 1.3);
   for (const ap of apertures) {
-    ctx.strokeStyle = ap.halocline > 0.42
-      ? `rgba(245, 212, 138, ${(0.35 + 0.55 * recombination.visual.seamHighlight).toFixed(3)})`
-      : `rgba(216, 212, 202, ${(0.24 + 0.42 * cad).toFixed(3)})`;
-    ctx.lineWidth = ap.isPrimaryBay ? (1.4 + 2.0 * cad) : (0.9 + 1.0 * cad);
+    ctx.strokeStyle = tc ? `rgba(138, 222, 226, ${(0.30 + 0.50 * ap.halocline).toFixed(3)})`
+      : sd ? (ap.isPrimaryBay ? 'rgba(240, 232, 214, 0.85)' : 'rgba(182, 176, 164, 0.55)')
+      : ap.halocline > 0.42 ? `rgba(245, 212, 138, ${(0.35 + 0.55 * recombination.visual.seamHighlight).toFixed(3)})` : `rgba(216, 212, 202, ${(0.24 + 0.42 * cad).toFixed(3)})`;
+    ctx.lineWidth = (ap.isPrimaryBay ? (1.4 + 2.0 * cad) : (0.9 + 1.0 * cad)) * (sd ? 1.35 : 1);
     ctx.strokeRect(ap.x * width, ap.y * height, ap.w * width, ap.h * height);
   }
   const centroid = topology.negativeSpace.centroid;
   if (centroid) {
     ctx.strokeStyle = 'rgba(237, 233, 225, 0.72)'; ctx.lineWidth = 1.25;
-    ctx.beginPath(); ctx.arc(centroid.x * width, centroid.y * height, 9, 0, Math.PI * 2); ctx.stroke();
+    ctx.beginPath(); ctx.arc(centroid.x * width, centroid.y * height, tc ? 15 : 9, 0, Math.PI * 2); ctx.stroke();
   }
   ctx.restore();
 }

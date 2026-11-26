@@ -26,13 +26,13 @@ function lanternStillSvg(frame) {
     const x = Math.round(ap.x * W), y = Math.round(ap.y * H);
     const w = Math.max(2, Math.round(ap.w * W)), h = Math.max(2, Math.round(ap.h * H));
     const fill = hex(ap.spectrum.r, ap.spectrum.g, ap.spectrum.b);
-    const stroke = ap.halocline > 0.42 ? '#f5d48a' : '#c8c4ba';
-    const sw = ap.isPrimaryBay ? (1.4 + 1.4 * cad).toFixed(1) : '1';
-    return `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${fill}" stroke="${stroke}" stroke-width="${sw}"/>`;
+    const st = ap.halocline > 0.42 ? ' stroke="#f5d48a"' : '';
+    const sw = ap.isPrimaryBay ? ` stroke-width="${(1.4 + 1.4 * cad).toFixed(1)}"` : '';
+    return `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${fill}"${st}${sw}/>`;
   }).join('');
   const c = topology.negativeSpace.centroid;
   const mark = c ? `<circle cx="${Math.round(c.x * W)}" cy="${Math.round(c.y * H)}" r="9" fill="none" stroke="#ede9e1" stroke-width="1.3"/>` : '';
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" class="est-still-svg" role="img" aria-label="Estuary Perret concrete lantern with 60 luminous spectral glass apertures"><rect width="${W}" height="${H}" fill="#101318"/><rect x="${Math.round(mx * 0.65)}" y="${Math.round(my * 0.65)}" width="${Math.round(W - mx * 1.3)}" height="${Math.round(H - my * 1.3)}" fill="none" stroke="#c6c2b8" stroke-width="2.4"/>${rects}${mark}</svg>`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" class="est-still-svg" role="img" aria-label="Estuary Perret concrete lantern with 60 luminous spectral glass apertures"><rect width="${W}" height="${H}" fill="#101318"/><rect x="${Math.round(mx * 0.65)}" y="${Math.round(my * 0.65)}" width="${Math.round(W - mx * 1.3)}" height="${Math.round(H - my * 1.3)}" fill="none" stroke="#c6c2b8" stroke-width="2.4"/><g stroke="#c8c4ba">${rects}</g>${mark}</svg>`;
 }
 
 export function still() {
@@ -52,7 +52,7 @@ export function mount(host, input = {}, ctx = {}) {
     observer: input?.observer || 'visual-luminance',
     seed: input?.seed ?? 42,
     time: 0,
-    reducedMotion: Boolean(ctx?.reduced),
+    reducedMotion: Boolean(ctx?.reduced ?? globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches),
     operatorId: input?.operatorId || OPERATORS[0].id,
     transducerId: input?.transducerId || BIO_TRANSDUCERS[0].id,
     weightsA: { ...DEFAULT_ELEMENT_A.weights, ...(input?.weightsA || input?.weights || {}) },
