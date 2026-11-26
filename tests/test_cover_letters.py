@@ -1,44 +1,52 @@
-"""Verify all 4 tailored Wave 16E-2 cover letters (all formats, 1-page PDFs, clean copy)."""
+"""The cover letter files come from their sources, and placeholders stay in the template."""
 from __future__ import annotations
 
 from pathlib import Path
 import re
+import subprocess
+import sys
 
 from pypdf import PdfReader
 
 ROOT = Path(__file__).resolve().parents[1]
-V2 = ROOT / "career" / "v2"
+LETTER = ROOT / "career" / "cover-letter-evaluation.md"
 TEMPLATE = ROOT / "career" / "cover-letter-evaluation-template.md"
-TRACKS = [
-    "Zain-Dana-Harper-Cover-Letter-Government-Policy",
-    "Zain-Dana-Harper-Cover-Letter-Forestry-Trades-Lead",
-    "Zain-Dana-Harper-Cover-Letter-AI-Eval-Systems-Direction",
-    "Zain-Dana-Harper-Cover-Letter-Academic-Fellowship",
-]
+PDF = ROOT / "career" / "Zain-Dana-Harper-Cover-Letter-Evaluation.pdf"
 
 
-def test_cover_letter_v2_tracks_exist_in_all_formats_and_fit_one_page() -> None:
-    for stem in TRACKS:
-        for ext in ("_ATS.pdf", "_Designed.pdf", ".docx", ".md", ".txt"):
-            fp = V2 / f"{stem}{ext}"
-            assert fp.is_file() and fp.stat().st_size > 500, f"Missing {fp.name}"
-        for suffix in ("_ATS.pdf", "_Designed.pdf"):
-            reader = PdfReader(V2 / f"{stem}{suffix}")
-            assert len(reader.pages) == 1, f"{stem}{suffix} exceeded 1 page"
-            extracted = reader.pages[0].extract_text() or ""
-            assert "Zain Dana Harper" in extracted, f"{stem}{suffix} missing name"
-        txt = (V2 / f"{stem}.txt").read_text(encoding="utf-8")
-        assert "\u2014" not in txt and "[COMPANY]" not in txt and "[ROLE]" not in txt
-        for banned in ("weak point", "not yet held", "no paid software", "Dear reviewer"):
-            assert banned.lower() not in txt.lower(), f"{stem}: found '{banned}'"
-        assert not re.search(r"\(?\d{3}\)?[ .-]\d{3}[ .-]\d{4}", txt), f"phone in {stem}"
+def test_committed_cover_letter_files_match_a_fresh_build() -> None:
+    proc = subprocess.run([sys.executable, "tools/build_cover_letters.py", "--check"],
+                          cwd=ROOT, capture_output=True, text=True)
+    assert proc.returncode == 0, proc.stdout + proc.stderr
 
 
-def test_cover_letter_page_mounts_all_four_tracks() -> None:
+def test_general_letter_is_short_and_opens_with_a_result() -> None:
+    """Result first, then why the role, then the plain background, then what he wants to do."""
+    text = LETTER.read_text(encoding="utf-8")
+    body = text[text.index("Dear hiring team"):text.rindex("Zain Dana Harper")]
+    assert len(body.split()) < 300
+    paragraphs = [p for p in body.split("\n\n") if p.strip()][1:]
+    assert len(paragraphs) == 4
+    assert "64 of 66" in paragraphs[0]
+    for lack in ("weak point", "not yet held", "no professional", "no paid"):
+        assert lack not in paragraphs[0] and lack not in paragraphs[1], lack
+    assert "about thirteen years" in paragraphs[2]
+    assert "not yet held" not in body
+    assert "relocate" not in body
     page = (ROOT / "cover-letter.html").read_text(encoding="utf-8")
-    for tid in ("government-policy", "forestry-trades", "ai-eval-systems", "academic-fellowship"):
-        assert f'data-tab="{tid}"' in page and f'id="{tid}"' in page
-    assert "not yet held" not in page.lower()
+    opening = page.split("<p>Dear reviewer,</p>", 1)[1].split("</p>", 1)[0]
+    assert "have merged" in opening and "not yet held" not in opening
+    assert "not yet held" not in page
+    for banned in ("—", "@", "[COMPANY]", "[ROLE]"):
+        assert banned not in text, banned
+    assert not re.search(r"\(?\d{3}\)?[ .-]\d{3}[ .-]\d{4}", text), "a phone number is in the letter"
+
+
+def test_letter_pdf_is_one_page_and_carries_the_letter() -> None:
+    reader = PdfReader(PDF)
+    assert len(reader.pages) == 1
+    words = lambda s: re.findall(r"[A-Za-z0-9]+", s)
+    assert words(reader.pages[0].extract_text()) == words(LETTER.read_text(encoding="utf-8").lstrip("# "))
 
 
 def test_placeholders_live_only_in_the_template() -> None:

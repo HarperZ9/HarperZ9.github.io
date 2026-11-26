@@ -14,7 +14,7 @@ function hand(here = "") {
   return labelHand(`<header class="o-hand" aria-label="Site">
   <a class="skip" href="#main">Skip to the page</a>
   <a class="o-home" href="/">Zain Dana Harper</a>
-  <a data-o="band" href="/world/" aria-label="The map"></a>
+  <a data-o="band" href="/world/universe/proto/index.html" aria-label="The map"></a>
   <button type="button" data-o="fold" aria-controls="o-menu" aria-expanded="false" hidden><span class="o-name">Menu (M)</span><i></i><i></i><i></i></button>
   <button type="button" data-o="lamp" data-theme-toggle aria-pressed="true"><span class="o-name">Lamp</span></button>
   <button type="button" data-o="peel" data-plain-toggle aria-pressed="false"><span class="o-name">Plain view</span></button>

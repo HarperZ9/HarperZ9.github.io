@@ -1,0 +1,129 @@
+"""Editorial-front-door and publication-lane contracts."""
+
+from __future__ import annotations
+
+import re
+from pathlib import Path
+
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+def read(rel: str) -> str:
+    return (ROOT / rel).read_text(encoding="utf-8")
+
+
+def test_publications_is_an_editorial_front_door_before_a_catalog() -> None:
+    page = read("publications.html")
+    text = " ".join(re.sub(r"<[^>]+>", "", page).split())
+
+    # 1 October 2026: the page is the Writing hub. The five sections come first; the
+    # older anchors keep their blocks below them so outside links still land.
+    assert "<h1>Writing</h1>" in page
+    for section in ("series", "essays", "atlas", "briefings", "research"):
+        assert f'href="#{section}"' in page
+        assert f'id="{section}"' in page
+    assert page.index('id="newest"') < page.index('id="publication-index"')
+    assert page.index('id="publication-index"') < page.index('id="research-records"')
+    assert page.index('id="research-records"') < page.index('id="start-here"')
+    assert page.index('id="start-here"') < page.index('id="reading-paths"')
+    assert page.index('id="reading-paths"') < page.index('id="publication-method"')
+
+
+def test_reading_paths_cover_the_requested_interests_without_fake_posts() -> None:
+    page = read("publications.html")
+    paths = {
+        "ai-frontier": "published",
+        "psychology-trauma": "published",
+        "education-access": "published",
+        "tools-systems": "published",
+        "music-listening": "published",
+        "abstract-art": "published",
+    }
+    for path_id, state in paths.items():
+        match = re.search(
+            rf'<article[^>]*data-path="{path_id}"[^>]*data-state="{state}"[^>]*>',
+            page,
+        )
+        assert match, f"missing truth-bounded reading path: {path_id} / {state}"
+
+    assert "No dedicated essay is published in this lane yet." not in page
+    assert "not a clinical or diagnostic claim" in page
+    psychology_lane = re.search(
+        r'<article[^>]*data-path="psychology-trauma"[^>]*>(.*?)</article>', page, re.S
+    )
+    assert psychology_lane
+    assert 'href="growth-needs-a-before.html"' in psychology_lane.group(1)
+    for route in ("availability-is-not-reach.html", "the-second-hearing.html", "what-the-label-changes.html"):
+        assert f'href="{route}"' in page
+
+
+def test_published_index_has_current_briefings_and_existing_essays() -> None:
+    page = read("publications.html")
+    for href in (
+        "frontier-safety.html",
+        "/briefings/2026-08-26-openai-hugging-face-incident/",
+        "models-propose-oracles-dispose.html",
+        "no-receipt-no-accept.html",
+        "pick-the-lock-for-everyone.html",
+        "the-summary-is-not-the-record.html",
+        "verified-is-not-trustworthy.html",
+        "conferred-existence-essay.html",
+    ):
+        assert f'href="{href}"' in page, href
+
+    assert page.count("data-publication-entry") >= 8
+
+
+def test_search_and_filter_are_secondary_progressive_enhancement() -> None:
+    page = read("publications.html")
+    script = read("system/publications.js")
+
+    assert '<details class="publication-tools" hidden>' in page
+    assert '<label for="publication-search">' in page
+    assert 'type="search"' in page
+    assert 'data-publication-filter="all"' in page
+    assert '<script src="system/publications.js' in page
+    assert "data-publication-entry" in script
+    assert "hidden" in script
+    assert "aria-pressed" in script
+    assert 'data-publication-result-count' in page
+    assert 'role="status"' in page
+    assert 'aria-live="polite"' in page
+    assert "resultCount.textContent" in script
+    assert "No published item matches" in page
+    assert 'document.querySelector(".publication-tools")' in script
+    assert "tools.hidden = false" in script
+
+
+def test_publication_skip_link_is_immediate_and_visible_when_focused() -> None:
+    css = read("system/publications.css")
+
+    assert ".publications-hub .skip-link" in css
+    assert ".publications-hub .skip-link:focus" in css
+    assert ".publications-hub .skip-link:focus-visible" in css
+    assert "top:.6rem" in css
+    assert "transition:none" in css
+
+
+def test_publication_visual_system_has_accessibility_fallbacks() -> None:
+    page = read("publications.html")
+    writing = read("verified-is-not-trustworthy.html")
+    css = read("system/publications.css")
+
+    assert "system/fonts/conso-regular.woff2" in page
+    assert "system/fonts/kilon.woff2" not in page
+    assert "system/fonts/conso-regular.woff2" in writing
+    assert "system/fonts/kilon.woff2" not in writing
+    assert 'class="publication-spectrum"' in page
+    # 2026-09-25: caption rewritten in plain words; the no-quantity disclaimer stays.
+    assert "Band width carries no meaning about volume, priority or maturity" in page
+    assert "data-specimen" not in page
+    for contract in (
+        "@media (max-width: 52rem)",
+        "@media (prefers-reduced-motion: reduce)",
+        "@media (forced-colors: active)",
+        "@media print",
+        "min-block-size: 44px",
+    ):
+        assert contract in css

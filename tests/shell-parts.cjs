@@ -151,9 +151,9 @@ const tabTo = async (page, test, max = 60) => { let n = 0; while (n < max && !(a
       assert.deepEqual(errors, []);
       await ctx.close();
     }
-    // 4: sound and copy on the shell's component fragment
+    // 4: sound and copy on the shell's component page
     {
-      const { ctx, page, errors, files } = await open(browser, '/world/ui/shell/template.htm', { permissions: ['clipboard-read', 'clipboard-write'] });
+      const { ctx, page, errors, files } = await open(browser, '/world/ui/shell/template.html', { permissions: ['clipboard-read', 'clipboard-write'] });
       await page.waitForSelector('[data-sound]:not([hidden])'); await page.waitForSelector('[data-copy]:not([hidden])');
       await page.waitForTimeout(1500);
       assert.deepEqual(files().filter((f) => /\/ui\/shell\/(sound|copy)\.js$/.test(f)), [], 'sound or copy loaded before a press');
@@ -190,9 +190,9 @@ const tabTo = async (page, test, max = 60) => { let n = 0; while (n < max && !(a
       out.template = { parts: files().filter((f) => PARTS.test(f)).map((f) => f.split('/ui/shell/')[1]) };
       await ctx.close();
     }
-    // 5b: the made components, on their own fragment: a switch flips from the keyboard
+    // 5b: the made components, on their own page: a switch flips from the keyboard
     {
-      const { ctx, page, errors, files } = await open(browser, '/world/ui/shell/organic/specimen.htm');
+      const { ctx, page, errors, files } = await open(browser, '/world/ui/shell/organic/specimen.html');
       await page.waitForFunction(() => document.querySelector('[data-o="panel"][data-edge-kind]'), null, { timeout: 15000 });
       assert.ok(files().some((f) => f.endsWith('/organic/made.js')), 'made.js was not fetched on a page that holds its components');
       await page.locator('[data-o="switch"]').first().focus();

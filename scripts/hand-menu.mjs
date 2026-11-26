@@ -12,7 +12,7 @@ export function menuItems(here = "") {
   return MENU.map(([href, tech, name, sub = []]) => `      <li><a href="${href}"${current(href)}><span class="o-word" data-display-on-open="${tech}">${esc(name)}</span></a>${sub.length ? `<small class="o-sub">${sub.map(([h, n]) => `<a href="${h}"${current(h)}>${esc(n)}</a>`).join(" ")}</small>` : ""}</li>`).join("\n");
 }
 
-export function menuDialog({ here = "", foot = '<a href="/architecture.html">Architecture</a> <a href="/models.html">Models</a> <a href="/demos.html">Demos</a> <a href="/media/">Media</a> <a href="/tools.html">All repos</a> <a href="/world/">World</a> <a href="/elements.html">Elements</a> <a href="/studies/">Studies</a> <a href="/findings/">Findings</a> <a href="/portfolio.html">Portfolio</a>' } = {}) {
+export function menuDialog({ here = "", foot = '<a href="/architecture.html">Architecture</a> <a href="/research.html">Research</a> <a href="/portfolio.html">Portfolio</a> <a href="/elements.html">Elements</a> <a href="/swatches.html">Swatches</a> <a href="/studies/">Studies</a> <a href="/site-index.html">Site index</a>' } = {}) {
   return `<dialog id="o-menu" data-o="menu" data-material="chladni" aria-label="Places">
   <nav aria-label="Places">
     <ul class="o-places">

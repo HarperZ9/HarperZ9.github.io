@@ -1,0 +1,649 @@
+from __future__ import annotations
+
+import json
+import re
+from pathlib import Path
+
+from ident_markup import without_idents
+
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+# 2026-10-26: the React home moved to workshop.html when the home became the world's entrance (index.html).
+def read(relative: str) -> str:
+    return (ROOT / relative).read_text(encoding="utf-8")
+
+
+def registry_record(system_id: str) -> dict[str, object]:
+    registry = json.loads(read("system/systems.json"))
+    for record in registry["systems"]:
+        if record["id"] == system_id:
+            return record
+    raise AssertionError(system_id)
+
+
+def route_hrefs(relative: str) -> set[str]:
+    source = read(relative)
+    match = re.search(r'ROUTE_REGISTRY_JSON = ("(?:[^"\\]|\\.)*");', source)
+    assert match, relative
+    registry = json.loads(json.loads(match.group(1)))
+    return {route["href"] for family in registry["families"] for route in family["routes"]}
+
+
+def evidence_by_id(record: dict[str, object]) -> dict[str, dict[str, object]]:
+    return {item["id"]: item for item in record["evidence"]}
+
+
+def test_canon_is_discoverable_with_pypi_release_and_advisory() -> None:
+    canon = registry_record("canon")
+    evidence = evidence_by_id(canon)
+
+    assert canon["href"] == "canon.html"
+    assert canon["accessMode"] == "install"
+    # 2026-09-26: Canon publishes on PyPI as flywheel-canon; 0.4.2 fixes GHSA-48rq-xjfx-6j4f.
+    # 2026-11-12: 0.7.0 is current on GitHub and PyPI; the 0.4.2 records stay as history.
+    assert canon["releaseState"] == "v0.7.0 on GitHub and PyPI as flywheel-canon"
+    assert "flywheel-canon==0.7.0" in canon["entryCommand"]
+    assert canon["evidence"][0]["id"] == "canon-release-v0-7-0"
+    assert evidence["canon-pypi-v0-7-0"]["href"] == "https://pypi.org/project/flywheel-canon/0.7.0/"
+    assert "canon-release-v0-4-2" in evidence
+    assert evidence["canon-pypi-v0-4-2"]["href"] == "https://pypi.org/project/flywheel-canon/0.4.2/"
+    advisory = evidence["canon-advisory-ghsa-48rq-xjfx-6j4f"]
+    assert advisory["type"] == "advisory"
+    assert advisory["href"] == "https://github.com/HarperZ9/canon/security/advisories/GHSA-48rq-xjfx-6j4f"
+    assert "Fixed in 0.4.2" in advisory["summary"]
+    assert "Canon publishes on PyPI as flywheel-canon. The PyPI name canon-memory belongs to another publisher." in canon["limitations"]
+    assert "pip install canon-memory" not in json.dumps(canon)
+    assert "canon --json preview" in canon["entryCommand"]
+    assert "canon --json export" in canon["verificationCommand"]
+    assert canon["runGuide"]["href"].endswith("/README.md#L133-L145")
+    assert "records.jsonl and atoms.jsonl" in without_idents(read("canon.html"))
+    assert evidence["canon-release-v0-1-0"]["href"].endswith("/releases/tag/v0.1.0")
+    assert "939639e91414bfe163c43ea689f1a5ddf348254c1989fa54b08c5f2b3849246f" in evidence[
+        "canon-release-v0-1-0"
+    ]["summary"]
+    assert evidence["canon-source-0-1-0"]["status"] == "verified"
+    assert evidence["canon-preview-export-source"]["href"].endswith("/README.md#L133-L145")
+
+    assert "canon.html" in route_hrefs("system/routes.js")
+    assert "canon.html" in route_hrefs("home/src/site-routes.ts")
+    assert "https://harperz9.github.io/canon.html" in read("sitemap.xml")
+
+
+def test_chorus_names_pypi_0_3_1_github_release_and_source_change_gate() -> None:
+    chorus = registry_record("chorus")
+    evidence = evidence_by_id(chorus)
+
+    # 2026-09-26: chorus-discourse 0.3.1 is on PyPI (publisher confirmed by PyPI
+    # provenance: HarperZ9/chorus release.yml); v0.3.0 stays the latest GitHub release.
+    assert chorus["releaseState"] == "v0.3.1 on PyPI as chorus-discourse; latest GitHub release v0.3.0"
+    assert chorus["entryCommand"].startswith("python -m pip install chorus-discourse==0.3.1;")
+    assert "chorus decision <current> --reference <reference>" in chorus["entryCommand"]
+    assert chorus["evidence"][0]["id"] == "chorus-pypi-v0-3-1"
+    assert evidence["chorus-pypi-v0-3-1"]["href"] == "https://pypi.org/project/chorus-discourse/0.3.1/"
+    assert evidence["chorus-ci-v0-3-1"]["href"].startswith("https://github.com/HarperZ9/chorus/actions/runs/")
+    assert evidence["chorus-release-v0-3-0"]["href"].endswith("/releases/tag/v0.3.0")
+    assert "1997b649ac381fdcb7a13ec4f5d2d686c9e6306dfe4c58405a7e5b9921c70f2a" in evidence[
+        "chorus-release-v0-3-0"
+    ]["summary"]
+    assert "no PyPI release claimed" not in chorus["releaseState"]
+    for surface in ("chorus.html", "research.html", "catalog.html"):
+        assert "no PyPI release claimed" not in read(surface)
+    assert "chorus-discourse==0.3.1" in without_idents(read("chorus.html"))
+    assert "108 tests" not in read("research.html")
+    assert evidence["chorus-source-change-gate-v0-3-0-source"]["status"] == "verified"
+    assert "UNVERIFIABLE" in evidence["chorus-source-change-gate-v0-3-0-source"]["summary"]
+
+
+def test_public_surface_sweeper_013_uses_verified_download_channels_separately() -> None:
+    sweeper = registry_record("public-surface-sweeper")
+    evidence = evidence_by_id(sweeper)
+
+    assert sweeper["releaseState"] == "v0.1.3 on GitHub and PyPI"
+    assert "public-surface-sweeper==0.1.3" in sweeper["entryCommand"]
+    assert "linked-worktree release checks" in sweeper["useCases"]
+    assert evidence["public-surface-sweeper-release-v0-1-3"]["href"].endswith("/releases/tag/v0.1.3")
+    assert "e8f926a6fc8e595d89a42fff936fc32f8c65ad2241d95feafe331c2cb7b7cb99" in evidence[
+        "public-surface-sweeper-release-v0-1-3"
+    ]["summary"]
+    assert evidence["public-surface-sweeper-pypi-v0-1-3"]["href"].endswith(
+        "/project/public-surface-sweeper/0.1.3/"
+    )
+    assert "9dc327e990f5017d7984db969bd259959bfe9b3bac3ea5d76d589b178dcbe286" in evidence[
+        "public-surface-sweeper-pypi-v0-1-3"
+    ]["summary"]
+    sample = read("public-surface-sweeper-sample.html")
+    assert "GitHub release v0.1.3" in sample
+    assert "public-surface-sweeper==0.1.3" in sample
+    assert "public-surface-sweeper &lt;workspace&gt; --workspace --json" in sample
+
+
+def test_index_release_discovery_names_durable_jobs_and_keeps_212_wheel_drift() -> None:
+    index = registry_record("index")
+    evidence = evidence_by_id(index)
+    payload = json.dumps(index)
+    page = without_idents(read("index-graph.html"))
+    home_projection = read("home/site/evidence-stream.json")
+
+    # 2026-09-26: 2.13.0 is current; the 2.12.0 records stay as history.
+    # 2026-11-12: 2.16.0 is current; this review read the listings and did not compare digests.
+    assert index["releaseState"] == "GitHub and PyPI release 2.16.0"
+    assert "index-graph==2.16.0" in index["entryCommand"]
+    assert index["evidence"][0]["id"] == "index-release-v2-16-0"
+    assert evidence["index-pypi-v2-16-0"]["href"].endswith("/project/index-graph/2.16.0/")
+    assert "index-release-v2-13-0" in evidence
+    assert evidence["index-pypi-v2-13-0"]["href"].endswith("/project/index-graph/2.13.0/")
+    for command in ("index router-job start", "index router-job status", "index router-job result"):
+        assert command in index["entryCommand"]
+    for tool in ("index.router.job.start", "index.router.job.status", "index.router.job.result"):
+        assert tool in index["entryCommand"]
+        assert tool in page
+
+    assert evidence["index-release-v2-12-0"]["href"].endswith("/releases/tag/v2.12.0")
+    assert "d895196f8ecca84a043f19fec7b49d94b1dd3bdb" in evidence["index-release-v2-12-0"]["summary"]
+    assert "dabd4c253804d1791755941fe695c85a1c32087d15b744ef370a092dbf8fe9b6" in evidence["index-release-v2-12-0"]["summary"]
+    assert "9451351820f6e779de3a3e567f0a9c4cf59edcee1de7bda9997d3ac6dda46445" in evidence["index-release-v2-12-0"]["summary"]
+    assert evidence["index-pypi-v2-12-0"]["href"].endswith("/project/index-graph/2.12.0/")
+    assert "1825b12a1a9413fadba7d0f786852ac0ef17515389ab19e267732e2aecbca683" in evidence["index-pypi-v2-12-0"]["summary"]
+    assert "ZIP create_system metadata differs" in evidence["index-pypi-v2-12-0"]["summary"]
+    assert "extracted file sets and file bytes match" in evidence["index-pypi-v2-12-0"]["summary"]
+    old_cross_channel_claim = "their SHA-256 digests match " + "the GitHub release assets"
+    assert old_cross_channel_claim not in payload
+
+    router_summary = evidence["index-router-job-v2-12-0"]["summary"]
+    assert "22 MCP tools" in router_summary
+    assert "703 of 703 repositories" in router_summary
+    assert "430 s cold" in router_summary
+    assert "493 s warm" in router_summary
+    assert "not a controlled speedup" in router_summary
+    assert "not a controlled speedup or maturity claim" in router_summary
+    market_space_claim = "market " + "maturity"
+    market_hyphen_claim = "market-" + "maturity"
+    assert market_space_claim not in payload.lower()
+    assert market_hyphen_claim not in payload.lower()
+
+    assert "index-release-v2-12-0" in home_projection
+    assert "index-pypi-v2-12-0" in home_projection
+    assert "https://github.com/HarperZ9/index/releases/tag/v2.16.0" in page
+    assert "https://pypi.org/project/index-graph/2.16.0/" in page
+    assert "index-graph 2.12.0" not in page
+    assert "index-graph 2.11.0" not in page
+
+
+
+def test_forum_route_preflight_skill_release_is_live_and_nonexecuting() -> None:
+    forum = registry_record("forum")
+    evidence = evidence_by_id(forum)
+    payload = json.dumps(forum)
+    page = without_idents(read("forum.html"))
+    catalog = without_idents(read("catalog.html"))
+    home_projection = read("home/site/evidence-stream.json")
+    home_registry = read("home/src/system-registry.ts")
+
+    skill = evidence["forum-route-preflight-skill-v0-1-0"]
+    # 2026-09-27: 1.15.0 fixes GHSA-36gv-h885-fmjf and 1.15.1 fixes GHSA-h6qh-49hv-4xcg in 1.15.0;
+    # the 1.14.0 records stay as history.
+    # 2026-11-12: engine 1.17.0 is current; the advisory floor on the page stays at 1.15.1.
+    assert forum["releaseState"] == "stable engine v1.17.0; standalone route-preflight skill v0.1.0"
+    assert "forum-engine==1.17.0" in forum["entryCommand"]
+    assert evidence["forum-pypi-v1-17-0"]["href"] == "https://pypi.org/project/forum-engine/1.17.0/"
+    assert "forum-engine==1.14.0" not in forum["entryCommand"]
+    assert evidence["forum-pypi-v1-15-1"]["href"] == "https://pypi.org/project/forum-engine/1.15.1/"
+    assert evidence["forum-pypi-v1-14-0"]["href"] == "https://pypi.org/project/forum-engine/1.14.0/"
+    for ghsa in ("GHSA-36gv-h885-fmjf", "GHSA-h6qh-49hv-4xcg"):
+        advisory = evidence[f"forum-advisory-{ghsa.lower()}"]
+        assert advisory["type"] == "advisory"
+        assert advisory["status"] == "published"
+        assert f"https://github.com/HarperZ9/forum/security/advisories/{ghsa}" in page
+        assert f"forum-advisory-{ghsa.lower()}" in home_projection
+    assert "install 1.15.1 or later" in page
+    assert "forum-route-preflight-skill-20260907-final.zip" in forum["entryCommand"]
+    assert forum["runGuide"]["href"].endswith(
+        "/releases/download/forum-route-preflight-v0.1.0/forum-route-preflight-skill-20260907-final.zip"
+    )
+    assert "Forum CLI or source checkout" in forum["runGuide"]["summary"]
+    assert "host skill loader" in forum["runGuide"]["summary"]
+    assert "safe_to_submit is false" in forum["verificationCommand"]
+    assert "route-preflight checks before model execution" in forum["useCases"]
+    assert "standalone host skill" in payload
+    assert "safe_to_submit=false" in payload
+
+    assert skill["href"] == "https://github.com/HarperZ9/forum/releases/tag/forum-route-preflight-v0.1.0"
+    assert skill["status"] == "verified"
+    assert "9,573-byte" in skill["summary"]
+    assert "1827a9673414e73722ba7bd74be15316534bb6c66fc55ecc26845a5e5c953450" in skill["summary"]
+    assert "afa5b4a94a3904e4afb1f441206d98a665757e0fa770049e4925020a94b0b390" in skill["summary"]
+    assert "Download-back verification matched" in skill["summary"]
+
+    for source in (page, home_projection, home_registry):
+        assert "forum-route-preflight-v0.1.0" in source
+        assert "forum-route-preflight-skill-20260907-final.zip" in source
+        assert "1827a9673414e73722ba7bd74be15316534bb6c66fc55ecc26845a5e5c953450" in source
+        assert "coming soon" not in source.lower()
+
+    # 2026-09-27: the catalog headline is the newest release, engine v1.15.1; the
+    # skill download stays on forum.html.
+    assert "Forum v1.17.0" in catalog
+    assert "https://github.com/HarperZ9/forum/releases/tag/v1.17.0" in catalog
+    assert "https://github.com/HarperZ9/forum/releases/tag/v1.17.0" in page
+    assert "coming soon" not in catalog.lower()
+    assert "safe_to_submit=false" in page
+    assert "https://github.com/HarperZ9/forum/releases/tag/forum-route-preflight-v0.1.0" in page
+    assert "https://github.com/HarperZ9/forum/releases/download/forum-route-preflight-v0.1.0/forum-route-preflight-skill-20260907-final.zip" in page
+
+
+def test_flywheel_101_release_discovery_keeps_engine_desktop_and_service_desk_limits_visible() -> None:
+    flywheel = registry_record("flywheel")
+    evidence = evidence_by_id(flywheel)
+    payload = json.dumps(flywheel)
+    page = without_idents(read("flywheel.html"))
+    catalog = without_idents(read("catalog.html"))
+    home_projection = read("home/site/evidence-stream.json")
+    home_registry = read("home/src/system-registry.ts")
+
+    release = evidence["flywheel-release-v1-0-1"]
+    pypi = evidence["flywheel-pypi-v1-0-1"]
+    service_desk = evidence["flywheel-service-desk-env-v0-1-0"]
+    # 13 November 2026: the purpose leads with the full product; the rechecked record comes second (author ruling).
+    assert flywheel["purpose"] == "Flywheel is an AI workstation and coding harness that you host yourself and run with any model, hosted or local. It has a desktop app with an assistant, a coding agent that works in your own folders with your permission, and connected tools for research, memory and writing. Every run leaves a record that can be rechecked offline."
+    assert "Service Desk Incident Environment" not in flywheel["purpose"]
+    assert flywheel["releaseState"] == "Python engine v1.9.0 on PyPI and Windows desktop v1.9.0 on GitHub"
+    assert flywheel["entryCommand"] == "pip install flywheel-verify"
+    # 2026-11-12: Flywheel 1.9.0 is current; earlier release records stay as history.
+    assert flywheel["evidence"][0]["id"] == "flywheel-release-v1-9-0"
+    assert flywheel["evidence"][1]["id"] == "flywheel-pypi-v1-9-0"
+    assert "15 of 17" in flywheel["evidence"][0]["summary"]
+    assert "flywheel-release-v1-1-0" in evidence and "flywheel-pypi-v1-1-0" in evidence
+    assert release["type"] == "release"
+    assert release["status"] == "verified"
+    assert release["href"] == "https://github.com/HarperZ9/flywheel/releases/tag/v1.0.1"
+    assert pypi["href"] == "https://pypi.org/project/flywheel-verify/1.0.1/"
+    assert service_desk["href"] == (
+        "https://github.com/HarperZ9/flywheel/releases/download/v0.6.1/"
+        "flywheel_env_service_desk_incident-0.1.0-py3-none-any.whl"
+    )
+
+    for required in (
+        "published at 2026-09-19T20:44:28Z",
+        "source commit 2efac00c0fc8a6c7d07097d0f27ac6f04a26ad23",
+        "titled Flywheel 1.0.1",
+        "Flywheel-Setup-1.0.1-x64.exe",
+        "frozen-gateway-smoke.json",
+        "56,164,323 bytes",
+        "95c616d667b1d3232a8c56a080e4de2112428000a0635eab60427b4983e90d37",
+        "reports PASS for expected version 1.0.1",
+        "The Windows desktop installer is unsigned",
+        "no measured accuracy uplift over single-shot",
+    ):
+        assert required in release["summary"]
+
+    for required in (
+        "PyPI serves flywheel-verify 1.0.1",
+        "2,217,845 bytes",
+        "be08deaabaa506c893144db460f1b43326a8fbc0e58e0dea38439b31235f2b8c",
+        "83a34cfe7709f4ee8c29dbf888b1fca99c3d1928c116f980e3b09a12b6d33916",
+        "3,350,903 bytes",
+        "clean-machine installation",
+    ):
+        assert required in pypi["summary"]
+
+    for required in (
+        "Service Desk Incident Environment 0.1.0",
+        "GitHub release asset, not a PyPI listing",
+        "27,652 bytes",
+        "2a9ec96bbf9df6659cdf2b2bbcf38241dd5fcf6a201d3e53503733b27216f7d7",
+        "19,488 bytes",
+        "e2b82108949badba38ccfa235ada4aaabf347745dcc00bce3e31e79da5e3645b",
+        "seven synthetic workflow cases",
+        "rejected an altered state file",
+    ):
+        assert required in service_desk["summary"]
+
+    for required in (
+        "Flywheel-Setup-1.0.1-x64.exe",
+        "56,164,323 bytes",
+        "95c616d667b1d3232a8c56a080e4de2112428000a0635eab60427b4983e90d37",
+        "The Windows desktop installer is unsigned",
+    ):
+        assert required in release["summary"]
+
+    for bounded_claim in (
+        "installer integration",
+        "clean OS compatibility",
+        "physical Android/mobile acceptance",
+        "general model uplift",
+        "production Bulletin posting",
+    ):
+        assert bounded_claim in release["summary"]
+
+    release_section = page[page.index('<section class="mv" id="next-release"'):]
+    release_section = release_section[: release_section.index("</section>")]
+    # 2026-09-25 round 3: the three companion products share one section, #companions, with one
+    # disclosure that holds their downloads, setup and limits; the row anchors keep their ids.
+    service_desk_section = page[page.index('<section class="mv" id="companions"'):]
+    service_desk_section = service_desk_section[: service_desk_section.index("</section>")]
+    assert '<li id="service-desk">' in service_desk_section
+    assert 'href="#next-release">1.9.0 release</a>' in page
+    assert "0.6 candidate" not in page
+    # 2026-09-25 round 3: the install lead names the version as the thing installed.
+    assert "Install the Python engine from PyPI" in release_section
+    assert "published checksums" in release_section
+    assert "The installer is unsigned" in release_section
+    assert "pip install flywheel-verify" in page
+    assert "Windows desktop: 1.9.0" in page
+    assert "Flywheel-Setup-1.9.0-x64.exe" in page
+    assert "/releases/download/v1.9.0" in page
+    assert "Flywheel-Setup-0.6.0-x64.exe" not in page
+    assert "Service Desk Incident Environment 0.1.0" in service_desk_section
+    assert "flywheel_env_service_desk_incident-0.1.0-py3-none-any.whl" in service_desk_section
+    assert "flywheel_env_service_desk_incident-0.1.0.tar.gz" in service_desk_section
+    assert "service-desk-incident-env verify RETURNED_ARTIFACT_DIR --recompute --json" in service_desk_section
+    assert "Flywheel v1.9.0" in catalog
+    assert "flywheel-release-v1-0-1" in home_projection
+    assert "flywheel-pypi-v1-0-1" in home_projection
+    assert "flywheel-release-v1-0-4" in home_projection
+    assert "flywheel-service-desk-env-v0-1-0" in home_projection
+    assert "Service Desk Incident Environment 0.1.0" in home_projection
+    assert "Service Desk Incident Environment 0.1.0" in home_registry
+    assert "Flywheel v1.1.0" in home_registry
+
+    for relative in ("home/index.html", "workshop.html"):
+        fallback = without_idents(read(relative)).split('<section id="noscript-flywheel"', 1)[1]
+        fallback = fallback.split("</section>", 1)[0]
+        release_link = re.search(r'Release: <a[^>]+href="([^"]+)"', fallback)
+        # 2026-10-23-plain-copy: the no-script fallback links the current release, 1.9.0.
+        assert release_link and release_link.group(1) == "https://github.com/HarperZ9/flywheel/releases/tag/v2.0.0"
+        install = re.search(r"<li>Install: ([^<]+)</li>", fallback)
+        assert install and install.group(1) == flywheel["entryCommand"]
+
+    for source in (payload, page, catalog, home_projection, home_registry):
+        assert "clean-machine installation passed" not in source
+        assert "physical Android acceptance passed" not in source
+        assert "mobile acceptance passed" not in source
+        assert "general model uplift passed" not in source.lower()
+        assert "general model uplift verified" not in source.lower()
+        assert "Flywheel-Setup-0.6.0-x64.exe" not in page
+        assert "service-desk 0.1.0 on PyPI" not in source.lower()
+
+
+def test_reader_flow_review_skill_is_downloadable_from_flywheel_page() -> None:
+    page = without_idents(read("flywheel.html"))
+    # 2026-09-25 round 3: the three companion products share one section, #companions, with one
+    # disclosure that holds their downloads, setup and limits; the row anchors keep their ids.
+    # The evidence and the retired benchmark now come before the install and companion sections.
+    companions_start = page.index('<section class="mv" id="companions"')
+    evidence_start = page.index('<li id="evidence-task">')
+    reader_flow_start = page.index('<li id="reader-flow-review">')
+    compare_start = page.index('<section class="mv" id="compare"')
+    section = page[companions_start:]
+    section = section[: section.index("</section>")]
+
+    assert compare_start < companions_start < evidence_start < reader_flow_start
+    # 2026-09-25 human-first notebook: tokens.css clears the sticky header for every anchor
+    # and focused element on every page, so the per-id scroll margins retired.
+    assert "html:root{scroll-padding-top:5rem}" in read("system/tokens.css")
+    assert "Reader Flow Review 0.1.0 skill ZIP" in section
+    assert "https://github.com/HarperZ9/flywheel/releases/tag/skill-reader-flow-review-v0.1.0" in section
+    assert (
+        "https://github.com/HarperZ9/flywheel/releases/download/"
+        "skill-reader-flow-review-v0.1.0/reader-flow-review-0.1.0-skill.zip"
+    ) in section
+    assert (
+        "https://github.com/HarperZ9/flywheel/releases/download/"
+        "skill-reader-flow-review-v0.1.0/SHA256SUMS"
+    ) in section
+    assert "6,379 bytes" in section
+    assert "download checksums</a>" in section
+    # 2026-09-25 round 4: the copyable prompt is restored word for word from the published page,
+    # including its quoted sample passage; only the command token takes the reading-face styling.
+    assert 'Use <span class="fw-token">$reader-flow-review</span> to review this passage for reader flow while preserving voice and uncertainty' in section
+    assert "&quot;The release is useful, but its evidence is developmental." in section
+
+    for unsupported in (
+        "marketplace approved",
+        "automatically installs",
+        "installed by default",
+        "Claude default",
+        "Codex default",
+        "publication ready",
+    ):
+        assert unsupported.lower() not in section.lower()
+
+
+def test_relay_release_discovery_uses_flywheel_relay_and_avoids_pypi_relay_agent() -> None:
+    relay = registry_record("relay")
+    evidence = evidence_by_id(relay)
+    payload = json.dumps(relay)
+    page = without_idents(read("systems/relay.html"))
+    catalog = without_idents(read("catalog.html"))
+    home_projection = read("home/site/evidence-stream.json")
+    home_registry = read("home/src/system-registry.ts")
+
+    release = evidence["relay-release-v0-2-0"]
+    # 2026-09-27: Relay publishes on PyPI as flywheel-relay; 0.5.0 fixes GHSA-82fg-qprm-q5r7,
+    # which also affects 0.4.0, the release that fixed the two 26 September advisories.
+    # 2026-11-12: 0.7.0 is current on GitHub and PyPI; the 0.5.0 records stay as history.
+    assert relay["releaseState"] == "v0.7.0 on GitHub and PyPI as flywheel-relay"
+    assert relay["entryCommand"].startswith("pip install flywheel-relay==0.7.0;")
+    assert relay["evidence"][0]["id"] == "relay-release-v0-7-0"
+    assert evidence["relay-pypi-v0-7-0"]["href"] == "https://pypi.org/project/flywheel-relay/0.7.0/"
+    assert "relay-release-v0-5-0" in evidence
+    assert evidence["relay-pypi-v0-5-0"]["href"] == "https://pypi.org/project/flywheel-relay/0.5.0/"
+    assert evidence["relay-pypi-v0-4-0"]["href"] == "https://pypi.org/project/flywheel-relay/0.4.0/"
+    for ghsa in ("ghsa-82fg-qprm-q5r7", "ghsa-xxcc-grhg-v9g7", "ghsa-phjr-6qrc-39mw"):
+        assert evidence[f"relay-advisory-{ghsa}"]["type"] == "advisory"
+    assert "Relay publishes on PyPI as flywheel-relay. The PyPI name relay-agent belongs to another publisher." in relay["limitations"]
+    assert release["type"] == "release"
+    assert release["status"] == "verified"
+    assert release["href"] == "https://github.com/HarperZ9/relay/releases/tag/v0.2.0"
+
+    for required in (
+        "Relay 0.2.0 GitHub release",
+        "9efdd82a6ea47ea37b4771315529aa4a8b04de1b",
+        "relay_agent-0.2.0-py3-none-any.whl",
+        "111,430 bytes",
+        "7b7f04ee9f393df2ec520110799ecd662033251b9dfcfaf1dad1d5727c717cee",
+        "relay_agent-0.2.0.tar.gz",
+        "188,381 bytes",
+        "202c8ad1028eb1b2b45aa28801717246254ad837e7a5b1e37b26f1dc92d006c3",
+        "clean --no-index wheel install",
+        "MCP synthetic controls",
+        "No PyPI publication or install is claimed",
+    ):
+        assert required in release["summary"]
+
+    assert "v0.7.0 on GitHub and PyPI as flywheel-relay" in catalog
+    assert "pip install flywheel-relay==0.7.0" in page
+    assert "pip install flywheel-relay==0.4.0" not in page
+    assert "relay-advisory-ghsa-82fg-qprm-q5r7" in home_projection
+    assert "relay_agent-0.2.0-py3-none-any.whl; relay" not in page
+    assert "relay-release-v0-2-0" in home_projection
+    assert "Relay 0.2.0 GitHub release" in home_registry
+
+    for source in (payload, page, catalog, home_projection, home_registry):
+        assert "https://pypi.org/project/relay-agent" not in source
+        assert "pip install relay-agent" not in source
+        assert "relay-agent 0.2.0 on PyPI" not in source
+
+    for bounded_claim in (
+        "clean-machine installation",
+        "physical Android acceptance",
+        "provider-native session migration",
+        "model uplift",
+        "arbitrary provider-native resume",
+    ):
+        assert bounded_claim not in release["summary"]
+
+
+def test_gather_current_install_and_mount_boundary_are_discoverable() -> None:
+    gather = registry_record("gather")
+    evidence = evidence_by_id(gather)
+    page = without_idents(read("gather.html"))
+    for item_id in ("gather-release-v1-8-1", "gather-pypi-v1-8-1"):
+        assert evidence[item_id]["status"] == "verified"
+        assert item_id in read("home/site/evidence-stream.json")
+        assert item_id in read("home/src/system-registry.ts")
+    release = evidence["gather-release-v1-8-1"]
+    assert "387621499c3f53c6786c613cecf638000844110a" in release["summary"]
+    assert "2029db765f9c89f4480f155089f9877caee14ea448a123162d8a44724e9e5c5a" in release["summary"]
+    assert "3293a895a55fcfa668bb665c989cc50d5806c6db77f98525739a7dbc5190f5ef" in release["summary"]
+    assert "185,963 bytes" in release["summary"]
+    assert "256,971 bytes" in release["summary"]
+    assert "keep corpora on native Linux storage or use native Windows Python" in page
+    assert "UNSAFE_PATH" in page
+    assert "CLI and MCP continue to accept directory strings" in page
+    assert "Other POSIX platforms retain no-follow and type checks without a mount-detection claim" in page
+    assert "earlier released 1.7.1 wheel smoke run" in page
+    # 2026-09-26: 1.9.0 fixes two high advisories. 2026-09-27: 1.9.1 fixes two more,
+    # which also affect 1.9.0; the page links all four and pins 1.9.1.
+    for ghsa in ("GHSA-pxvv-rg3f-4v5w", "GHSA-r4f3-9xrf-72m5", "GHSA-r38f-cr69-jpp8", "GHSA-j6j7-39vh-qrp4"):
+        assert f"https://github.com/HarperZ9/gather/security/advisories/{ghsa}" in page
+        assert evidence[f"gather-advisory-{ghsa.lower()}"]["status"] == "published"
+    assert "gather-engine==1.8" not in page
+    assert "gather-engine==1.9.0" not in page
+    assert "install 1.9.1 or later" in page
+
+
+def test_gather_171_evidence_remains_after_current_release_update() -> None:
+    gather = registry_record("gather")
+    evidence = evidence_by_id(gather)
+    payload = json.dumps(gather)
+    page = without_idents(read("gather.html"))
+    catalog = without_idents(read("catalog.html"))
+    home_projection = read("home/site/evidence-stream.json")
+    home_registry = read("home/src/system-registry.ts")
+
+    release = evidence["gather-release-v1-7-1"]
+    pypi = evidence["gather-pypi-v1-7-1"]
+    # 2026-11-12: 2.5.0 is current on GitHub and PyPI; the 1.9.1 records stay as history.
+    assert gather["releaseState"] == "stable v2.5.0 on GitHub and PyPI"
+    assert gather["entryCommand"] == "pip install gather-engine==2.5.0; gather docs sample.txt --store corpus"
+    assert gather["evidence"][0]["id"] == "gather-release-v2-5-0"
+    assert "gather-release-v1-9-1" in evidence
+    assert release["type"] == "release"
+    assert release["status"] == "verified"
+    assert release["href"] == "https://github.com/HarperZ9/gather/releases/tag/v1.7.1"
+    assert pypi["href"] == "https://pypi.org/project/gather-engine/1.7.1/"
+
+    for required in (
+        "Gather v1.7.1 GitHub release",
+        "published at 2026-09-08T23:14:18Z",
+        "source commit cb35c6d513e63fceca74c8eafcd1faee4347ea32",
+        "gather_engine-1.7.1-py3-none-any.whl",
+        "183,763 bytes",
+        "7edc83e71e462c782234756f8fb43a0f5b77b3269557f7505c3d3b968ecc5a4d",
+        "gather_engine-1.7.1.tar.gz",
+        "250,789 bytes",
+        "71e4df15252b88ec2676ba075ab0f7bd24d707c5d7072a35b09300a064096f8c",
+        "SHA256SUMS.txt",
+        "99e6b943273959088ff82cf22a3d22959390d623b06e0e5db47fc5d50252b886",
+        "exact stored bytes",
+        "readable LF-normalized view",
+        "pinned corpus digest",
+    ):
+        assert required in release["summary"]
+
+    for required in (
+        "PyPI serves gather-engine 1.7.1",
+        "64 Python modules",
+        "132 source archive files",
+        "clean Windows wheel install",
+        "gather 1.7.1",
+        "CLI and MCP context selection",
+        "tamper selection was refused",
+        "does not prove source truth",
+        "claim support",
+        "completeness",
+        "downstream model use",
+        "absence of sensitive material",
+    ):
+        assert required in pypi["summary"]
+
+    assert "stable v2.5.0 on GitHub and PyPI" in catalog
+    assert "https://github.com/HarperZ9/gather/releases/tag/v2.5.0" in page
+    assert "https://pypi.org/project/gather-engine/2.5.0/" in page
+    assert "pip install gather-engine==2.5.0" in page
+    assert "New corpus writes preserve exact UTF-8 source text while selection uses a readable LF-normalized view" in page
+    assert "Selections stay pinned to the witnessed corpus digest" in page
+    sample_fixture = (
+        "Offline quickstart: Gather keeps acquired context separate from conclusions."
+        "\nDecision fact: the release can select useful text from a stored corpus."
+    )
+    assert "sample.txt body" in page
+    assert sample_fixture in page
+    assert "replace ROW_REF and CORPUS_DIGEST with the values from the inspect JSON" in page
+    assert "0:76 selects the first line of this fixture" in page
+    assert page.index("sample.txt body") < page.index("gather docs sample.txt --store corpus --json")
+    assert "gather docs sample.txt --store corpus --json" in page
+    assert "gather corpus context corpus --json --excerpt-chars 90" in page
+    assert "gather corpus context corpus --json --select ROW_REF:0:76 --expect-digest CORPUS_DIGEST" in page
+    command_block = page[page.index("gather docs sample.txt --store corpus --json"):]
+    command_block = command_block[: command_block.index("</pre>")]
+    assert "Sample selected text" not in command_block
+    assert "Sample selected text" in page
+    assert "Offline quickstart: Gather keeps acquired context separate from conclusions." in page
+    assert "gather-release-v1-7-1" in home_projection
+    assert "gather-pypi-v1-7-1" in home_projection
+    assert "Gather v1.7.1 GitHub release" in home_registry
+
+    for source in (payload, page, catalog, home_projection, home_registry):
+        assert "E2E compiler released" not in source
+        assert "end-to-end compiler released" not in source
+        assert "new product scope released" not in source
+        assert "source truth verified" not in source
+        assert "complete gathered coverage" not in source
+        assert "example.com/article" not in source
+        assert "source bytes are normalized to LF" not in source
+
+
+def test_security_plate_lists_exactly_the_advisories_the_registry_records() -> None:
+    """The security plate and the registry name the same advisories, each linked once.
+
+    A new advisory recorded in the registry without a plate row, or a plate row with no
+    registry record, fails here. 2026-09-27: twelve advisories across six tools.
+    """
+    registry = json.loads(read("system/systems.json"))
+    page = read("security.html")
+    recorded = {}
+    for system in registry["systems"]:
+        for item in system["evidence"]:
+            if item["type"] == "advisory":
+                ghsa = re.search(r"GHSA(?:-[a-z0-9]{4}){3}", item["href"]).group(0)
+                recorded[ghsa] = item["href"]
+    # 2026-09-27 copy pass: each advisory ID carries class="ident" so it stays whole.
+    listed = re.findall(r'Advisory <span class="ident" translate="no">(GHSA(?:-[a-z0-9]{4}){3})</span>', page)
+    assert len(listed) == len(set(listed)), "an advisory is listed twice"
+    assert set(listed) == set(recorded)
+    assert len(recorded) == 12
+    for ghsa, href in recorded.items():
+        assert f'href="{href}"' in page
+
+    # Every Flywheel pin that sits inside an advisory range is named, in plate order
+    # (Gather, Relay, Forum, Crucible, Canon), and Mneme stays outside.
+    pins = ("gather-engine</code> 1.8.2", "flywheel-relay</code> 0.2.5",
+            "forum-engine</code> 1.14.0", "crucible-bench</code> 1.2.0",
+            "flywheel-canon</code> 0.2.0")
+    pin_note = page[page.index("Flywheel 1.0.4, an earlier release"):]
+    pin_note = pin_note[: pin_note.index("</p>")]
+    positions = [pin_note.index(pin) for pin in pins]
+    assert positions == sorted(positions), "the pin list does not follow the plate order"
+    assert "five of these tools</a> to affected versions" in page
+    assert "of these lanes" not in page
+    assert "Its Mneme pin, 0.4.2, is outside the Mneme advisory." in page
+
+    # The null names only tools that have no advisory in the registry.
+    null = page[page.index("No other tool in the catalog"):]
+    null = null[: null.index("</p>")]
+    assert "as of 27 September 2026" in null
+    includes = null.split("That includes ", 1)[1].split(".", 1)[0]
+    assert includes == "Flywheel, Articulate, Index and Accountable Surface"
+    with_advisory = {
+        system["name"]
+        for system in registry["systems"]
+        if any(item["type"] == "advisory" for item in system["evidence"])
+    }
+    assert with_advisory == {"Gather", "Relay", "Forum", "Crucible", "Canon", "Mneme"}
+    for name in with_advisory:
+        assert name not in includes
+    assert "updated 2026-09-27" in page

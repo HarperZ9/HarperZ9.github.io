@@ -15,7 +15,7 @@ let hooks = {};   // { setSource, onBuilt }
 
 const hub = createHub({
   id: "loom",
-  page: "system/studio-fragments/loom.htm?v=20261126-unified",
+  page: "loom.html?v=20261009-loom-hub",
   panel: ".re-panel",
   preview: ".re-preview",
   extras: ["#wv-flow"],

@@ -104,7 +104,13 @@ async function parityCheck(browser) {
   const unrecorded = await page.evaluate((list) => { const known = new Set(list.flatMap((s) => [...document.querySelectorAll(`#sound .rm-host ${s}`)]));
     return [...document.querySelectorAll('#sound .rm-host button, #sound .rm-host input, #sound .rm-host select, #sound .rm-host textarea, #sound .rm-host a[href], #sound .rm-host a.snd-wav, #sound .rm-host canvas')].filter((e) => !known.has(e) && !known.has(e.closest('details'))).map((e) => e.id || e.name || e.outerHTML.slice(0, 60)); }, [...recorded, 'details']);
   await ctx.close();
-  out.parity = { room: Object.keys(parity.room.before).length + Object.keys(parity.room.behaviours).length, added: Object.keys(parity.room.added).length, pages: 0 };
+  for (const [path, p] of Object.entries(parity.pages)) {
+    const { ctx: c2, page: pg } = await open(browser, path);
+    await pg.waitForTimeout(800);
+    for (const [sel, n] of Object.entries(p.now)) if ((await pg.$$(sel)).length < n) lost.push(`${path} ${sel}`);
+    await c2.close();
+  }
+  out.parity = { room: Object.keys(parity.room.before).length + Object.keys(parity.room.behaviours).length, added: Object.keys(parity.room.added).length, pages: Object.values(parity.pages).reduce((n, p) => n + Object.keys(p.now).length, 0) };
   assert.deepEqual(lost, [], 'no control or behaviour in the record is lost'); assert.deepEqual(unrecorded, [], 'every control of the room is in the record');
   assert.deepEqual(errors, []);
 }
@@ -171,6 +177,7 @@ async function worldPages(browser) {
     await widths(browser);
     await reduced(browser);
     await shaderHears(browser);
+    await worldPages(browser);
     console.log('surface-rooms-sound-play: ok', JSON.stringify(out));
   } finally { await browser.close(); }
 })().catch((e) => { console.error(e); console.log('surface-rooms-sound-play: partial', JSON.stringify(out)); process.exit(1); });

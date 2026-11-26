@@ -1,0 +1,374 @@
+import html
+import json
+import re
+from pathlib import Path
+
+from ident_markup import without_idents
+
+
+ROOT = Path(__file__).resolve().parents[1]
+NON_DEPLOYABLE_HTML_DIRS = {"node_modules", "dist", ".worktrees", "_preview", "_drafts", "_redesign"}
+
+
+def deployable_html_pages() -> list[Path]:
+    return [
+        path
+        for path in ROOT.rglob("*.html")
+        if not any(part in NON_DEPLOYABLE_HTML_DIRS for part in path.relative_to(ROOT).parts)
+    ]
+
+
+def _registry_record(system_id: str) -> dict:
+    registry = json.loads((ROOT / "system" / "systems.json").read_text(encoding="utf-8"))
+    return next(record for record in registry["systems"] if record["id"] == system_id)
+
+
+def _embedded_home_registry() -> dict:
+    source = (ROOT / "home" / "src" / "system-registry.ts").read_text(encoding="utf-8")
+    match = re.search(
+        r"export const SYSTEM_REGISTRY_JSON = (\".*\");\nexport const SYSTEM_REGISTRY =",
+        source,
+        re.DOTALL,
+    )
+    assert match, "home system registry no longer exposes its embedded JSON source"
+    return json.loads(json.loads(match.group(1)))
+
+
+def _og_card_data() -> dict:
+    source = (ROOT / "img" / "og" / "cards-data.js").read_text(encoding="utf-8")
+    match = re.search(r"window\.CARD_DATA\s*=\s*(\{.*\});\s*$", source, re.DOTALL)
+    assert match, "OG card data is no longer a plain object literal"
+    return json.loads(match.group(1))
+
+
+def _article_with_title_href(source: str, href: str) -> str:
+    for article in re.findall(r"<article\b[^>]*>.*?</article>", source, re.DOTALL):
+        title = re.search(r'<h3 class="product-card-title"><a href="([^"]+)"[^>]*>', article)
+        if title and html.unescape(title.group(1)) == href:
+            return article
+    raise AssertionError(href)
+
+
+def test_home_registry_matches_the_canonical_system_registry() -> None:
+    canonical = json.loads((ROOT / "system" / "systems.json").read_text(encoding="utf-8"))
+    assert _embedded_home_registry() == canonical
+
+
+def test_featured_project_pages_use_their_canonical_plain_language_purpose() -> None:
+    for slug in ("flywheel", "index", "gather", "buildlang", "phantom", "accountable-surface"):
+        record = _registry_record(slug)
+        page = (ROOT / record["href"]).read_text(encoding="utf-8")
+        canonical = re.findall(
+            rf'<p[^>]+data-canonical-purpose="{re.escape(slug)}"[^>]*>(.*?)</p>',
+            page,
+            re.DOTALL,
+        )
+        # 2026-09-25 round 3: flywheel.html no longer prints the registry purpose as visible copy.
+        # Its gate and lane wording repeated the plain paragraph above it; the purpose stays in the
+        # meta description, and a plain-words rewrite of the purpose waits for the owner.
+        if slug == "flywheel":
+            assert canonical == [], slug
+        else:
+            assert len(canonical) == 1, slug
+            assert html.unescape(re.sub(r"<[^>]+>", "", canonical[0])).strip() == record["purpose"]
+        assert f'<meta name="description" content="{html.escape(record["purpose"], quote=True)}">' in page
+
+
+def test_home_noscript_fallback_uses_the_canonical_plain_language_purposes() -> None:
+    template = (ROOT / "home" / "index.html").read_text(encoding="utf-8")
+    fallback = template.split("<noscript>", 1)[1].split("</noscript>", 1)[0]
+
+    for slug in (
+        "flywheel", "gather", "crucible", "index", "forum", "emet",
+        "relay", "mneme", "plexus", "proof-surface", "accountable-surface",
+    ):
+        record = _registry_record(slug)
+        canonical = re.findall(
+            rf'<(?:p|span)[^>]+data-canonical-purpose="{re.escape(slug)}"[^>]*>(.*?)</(?:p|span)>',
+            fallback,
+            re.DOTALL,
+        )
+        assert len(canonical) == 1, slug
+        assert html.unescape(re.sub(r"<[^>]+>", "", canonical[0])).strip() == record["purpose"]
+
+
+def test_featured_og_route_summaries_use_the_canonical_plain_language_purpose() -> None:
+    cards = _og_card_data()
+    for slug in ("flywheel", "index", "gather", "buildlang", "phantom", "accountable-surface"):
+        if "routeSummary" in cards[slug]:
+            assert cards[slug]["routeSummary"] == _registry_record(slug)["purpose"]
+
+
+def test_index_page_uses_the_registry_release_version_everywhere() -> None:
+    record = _registry_record("index")
+    version_match = re.search(r"\b(\d+\.\d+\.\d+)\b", record["releaseState"])
+    assert version_match, record["releaseState"]
+    page = without_idents((ROOT / record["href"]).read_text(encoding="utf-8"))
+    page_versions = set(re.findall(r"index-graph[- ](\d+\.\d+\.\d+)", page))
+    assert page_versions == {version_match.group(1)}
+
+
+def test_truth_enb_copy_names_the_actual_skyrim_graphics_project() -> None:
+    record = _registry_record("truth-enb")
+    purpose = record["purpose"]
+    page = (ROOT / "truth-enb.html").read_text(encoding="utf-8")
+
+    assert "Skyrim SE/AE" in purpose
+    assert "ENBSeries 0.504" in purpose
+    for capability in ("atmosphere", "cloud", "aurora", "exposure", "tone"):
+        assert capability in purpose.lower()
+        assert capability in page.lower()
+
+    assert record["architectureRole"] == "enb-shader-suite"
+    assert record["dependencies"] == ["enb-runtime-core"]
+    assert "Flywheel" not in page
+
+    invented = "public ENB graphics configuration surface for reviewable visual-runtime workflows"
+    assert invented.lower() not in purpose.lower()
+    assert invented.lower() not in page.lower()
+
+
+def test_public_copy_does_not_replace_security_capability_with_generic_boundary_prose() -> None:
+    public_copy = "\n".join(
+        path.read_text(encoding="utf-8", errors="replace")
+        for path in (ROOT / "home" / "src" / "App.tsx", ROOT / "security.html", ROOT / "private-practice.html")
+    )
+    assert "Authorized security, kept bounded" not in public_copy
+    assert "The public surface contains sanitized tests, schemas, detectors" not in public_copy
+
+
+def test_private_security_projects_keep_one_distinct_definition_on_their_own_page() -> None:
+    practice = (ROOT / "private-practice.html").read_text(encoding="utf-8")
+    security = (ROOT / "security.html").read_text(encoding="utf-8")
+    homepage = (ROOT / "home" / "src" / "App.tsx").read_text(encoding="utf-8")
+    registry = json.loads((ROOT / "system" / "systems.json").read_text(encoding="utf-8"))
+    records = {record["id"]: record for record in registry["systems"]}
+
+    for slug in ("array", "seed", "sofer", "isomorph", "bounds", "kun"):
+        record = records[slug]
+        page = (ROOT / record["href"]).read_text(encoding="utf-8")
+        canonical = re.findall(
+            rf'<p[^>]+data-canonical-purpose="{slug}"[^>]*>(.*?)</p>',
+            page,
+            re.DOTALL,
+        )
+        assert len(canonical) == 1, slug
+        assert html.unescape(re.sub(r"<[^>]+>", "", canonical[0])).strip() == record["purpose"]
+        assert f'href="{record["href"]}"' in practice
+        assert record["productType"] in practice
+        assert record["purpose"] not in html.unescape(practice)
+
+    shared_definitions = {
+        "orca": ("engagement state", "portable bundles", "produces reports"),
+        "gate": ("release-check subsystem", "verification-command results", "blocks advancement"),
+    }
+    for slug, phrases in shared_definitions.items():
+        assert f'id="{slug}"' in practice
+        for phrase in phrases:
+            assert phrase in practice
+
+    for project in ("Array", "Seed", "Sofer", "Isomorph", "Bounds", "Kun", "ORCA", "Gate"):
+        assert project in security
+
+    assert 'href="/private-practice.html"' in homepage
+    assert "Private systems are used only with written authorization" in homepage
+
+
+def test_private_security_projects_are_distinct_registry_records() -> None:
+    registry = json.loads((ROOT / "system" / "systems.json").read_text(encoding="utf-8"))
+    records = {record["id"]: record for record in registry["systems"]}
+    expected = {
+        "array": "authorized offensive campaign orchestrator",
+        "seed": "native security-assessment engine",
+        "sofer": "private-line orchestration suite",
+        "isomorph": "AI inference-boundary red-team harness",
+        "bounds": "agent, runtime, and release trust verifier",
+        "orca": "native assessment runtime",
+        "gate": "Sofer release-check subsystem",
+    }
+    expected_hrefs = {
+        "array": "array.html",
+        "seed": "seed.html",
+        "sofer": "sofer.html",
+        "isomorph": "isomorph.html",
+        "bounds": "bounds.html",
+        "orca": "private-practice.html#orca",
+        "gate": "private-practice.html#gate",
+    }
+
+    assert "authorized-private-practice" not in records
+    for system_id, product_type in expected.items():
+        record = records[system_id]
+        assert record["productType"] == product_type
+        assert record["maturity"] == "controlled-private"
+        assert record["sourceHref"] is None
+        assert record["href"] == expected_hrefs[system_id]
+        assert record["inputs"]
+        assert record["outputs"]
+        assert record["evidence"]
+        assert record["limitations"]
+        assert record["related"]
+
+    security_registry = json.loads((ROOT / "security-tools.json").read_text(encoding="utf-8"))
+    security_records = {record["slug"] for record in security_registry["records"]}
+    assert set(expected) <= security_records
+    assert "authorized-private-practice" not in security_records
+
+
+def test_every_system_has_one_canonical_placement_and_specific_product_type() -> None:
+    registry = json.loads((ROOT / "system" / "systems.json").read_text(encoding="utf-8"))
+    domain_ids = {domain["id"] for domain in registry["domains"]}
+
+    for record in registry["systems"]:
+        assert record["primaryDomain"] in domain_ids, record["id"]
+        assert record["primaryDomain"] in record["domains"], record["id"]
+        assert record["productType"].strip(), record["id"]
+        assert record["releaseState"].strip(), record["id"]
+
+
+def test_registry_uses_project_specific_inputs_outputs_and_roles() -> None:
+    registry = json.loads((ROOT / "system" / "systems.json").read_text(encoding="utf-8"))
+    forbidden_templates = {
+        "operator-defined constraints",
+        "reviewable verification record",
+    }
+    generic_roles = {"engine", "adapter", "plugin", "evaluation-layer"}
+
+    for record in registry["systems"]:
+        assert forbidden_templates.isdisjoint(record["inputs"]), record["id"]
+        assert forbidden_templates.isdisjoint(record["outputs"]), record["id"]
+        assert record["architectureRole"] not in generic_roles, record["id"]
+
+
+def test_registry_relationships_are_typed_and_evidence_backed() -> None:
+    registry = json.loads((ROOT / "system" / "systems.json").read_text(encoding="utf-8"))
+    records = {record["id"]: record for record in registry["systems"]}
+    evidence_ids = {evidence["id"] for record in records.values() for evidence in record["evidence"]}
+
+    assert registry["schema"] == "harperz9-systems/v4"
+    assert registry["relationshipPolicy"]["relatedUsage"] == "navigation-only"
+    assert registry["relationshipPolicy"]["integrationClaims"] == "relations-only"
+
+    keys = set()
+    for relation in registry["relations"]:
+        assert relation["source"] in records
+        assert relation["target"] in records
+        assert relation["relation"] != "hierarchy"
+        assert relation["status"] in {"verified-in-source", "candidate", "historical"}
+        assert relation["evidenceIds"]
+        assert set(relation["evidenceIds"]) <= evidence_ids
+        assert relation["claimScope"].strip()
+        key = (relation["source"], relation["target"], relation["relation"])
+        assert key not in keys
+        keys.add(key)
+
+    assert ("flywheel", "gather", "integrates-lane") in keys
+    assert ("truth-enb", "enb-runtime-core", "build-dependency") in keys
+    assert ("chorus", "gather", "accepts-corpus-from") in keys
+    assert not any(source == "flywheel" and target == "chorus" for source, target, _ in keys)
+
+
+def test_catalog_keeps_product_rows_compact_and_routes_to_full_definitions() -> None:
+    registry = json.loads((ROOT / "system" / "systems.json").read_text(encoding="utf-8"))
+    catalog = (ROOT / "catalog.html").read_text(encoding="utf-8")
+    domain_labels = {domain["id"]: domain["label"] for domain in registry["domains"]}
+    assert "Detailed registry, short map linked" in catalog
+    assert 'href="overview.html">product map</a>' in catalog
+
+    for record in registry["systems"]:
+        link = f'<a href="{record["href"]}">{record["name"]}</a>'
+        domain_section = re.search(
+            rf'<section[^>]+id="domain-{re.escape(record["primaryDomain"])}".*?</section>',
+            catalog,
+            re.DOTALL,
+        )
+        assert domain_section, record["id"]
+        primary_row = _article_with_title_href(domain_section.group(0), record["href"])
+        primary_text = html.unescape(primary_row)
+        assert link in primary_row, record["id"]
+        assert record["productType"] in primary_text, record["id"]
+        assert record["maturity"] in primary_text, record["id"]
+        assert record["purpose"] in primary_text, record["id"]
+
+        for domain in record["domains"]:
+            member_section = re.search(
+                rf'<section[^>]+id="domain-{re.escape(domain)}".*?</section>',
+                catalog,
+                re.DOTALL,
+            )
+            assert member_section, (record["id"], domain)
+            member_row = _article_with_title_href(member_section.group(0), record["href"])
+            member_text = html.unescape(member_row)
+            assert link in member_row, (record["id"], domain)
+            assert record["purpose"] in member_text, (record["id"], domain)
+            if domain != record["primaryDomain"]:
+                assert "Secondary domain reference." not in member_text
+                assert "Why this record appears here" in member_text
+                assert f"Primary area: {domain_labels[record['primaryDomain']]}." in member_text
+                assert f"Also appears here because it serves {domain_labels[domain]}." in member_text
+
+
+def test_current_independent_systems_are_not_missing_from_registry() -> None:
+    registry = json.loads((ROOT / "system" / "systems.json").read_text(encoding="utf-8"))
+    records = {record["id"]: record for record in registry["systems"]}
+
+    assert records["chorus"]["productType"] == "discourse synthesis system"
+    assert records["raw"]["productType"] == "native renderer of The Playground, in C++23"
+    assert records["chorus"]["architectureRole"] != "flywheel-component"
+    assert records["raw"]["architectureRole"] != "flywheel-component"
+
+
+def test_public_copy_has_no_false_universal_flywheel_hierarchy() -> None:
+    pages = [
+        ROOT / "retro.html",
+        ROOT / "engine-revival.html",
+        ROOT / "brender-archival.html",
+        ROOT / "security.html",
+        ROOT / "home" / "src" / "App.tsx",
+    ]
+    public_copy = "\n".join(path.read_text(encoding="utf-8") for path in pages)
+    forbidden = (
+        "Flywheel remains the primary platform above the cluster",
+        "Flywheel is the single primary platform",
+        "These security systems attach beneath it",
+        "the retro lane is part of the Flywheel ecosystem",
+    )
+    for phrase in forbidden:
+        assert phrase not in public_copy
+
+    figure = json.loads(
+        (ROOT / "figures" / "graphics-retro-capability-map.json").read_text(encoding="utf-8")
+    )
+    false_edges = {
+        ("flywheel", "truth-enb"),
+        ("flywheel", "retro-engine"),
+        ("flywheel", "engine-revival"),
+        ("flywheel", "brender-archival"),
+    }
+    actual_edges = {(edge["source"], edge["target"]) for edge in figure["figure"]["data"]["edges"]}
+    assert false_edges.isdisjoint(actual_edges)
+
+
+def test_product_pages_do_not_use_biological_metaphors_or_fabricated_commands() -> None:
+    for page_name in ("gather.html", "crucible.html", "learn.html"):
+        page = (ROOT / page_name).read_text(encoding="utf-8")
+        assert " organ" not in page.lower(), page_name
+        assert "peer organ" not in page.lower(), page_name
+
+    learn = (ROOT / "learn.html").read_text(encoding="utf-8")
+    assert "learn course init" not in learn
+    assert "learn course run" not in learn
+
+
+APPROVED_PAGE_GENERATORS = {
+    "scripts/render-system-pages.mjs",
+    "tools/build_plugin_support_pages.py",
+}
+
+
+def test_generated_provenance_comments_name_the_approved_source_generator() -> None:
+    for page in deployable_html_pages():
+        text = page.read_text(encoding="utf-8", errors="replace")
+        for raw_generator in re.findall(r"Generated by ([^\s]+)", text):
+            generator = raw_generator.rstrip(".,;:")
+            assert generator in APPROVED_PAGE_GENERATORS, f"{page.name}: {generator}"

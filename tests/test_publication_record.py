@@ -1,0 +1,176 @@
+"""The public research record, and every page that counts it.
+
+publications.html said "Six papers" while the CV and the dossier said eight
+records, and the CV linked here as the canonical list. Both were internally
+consistent and they contradicted each other in front of the reader: the page
+was counting papers, the documents were counting everything with a DOI. The
+taxonomy is stated now, and these tests keep the number tied to the list
+rather than to whatever the prose last happened to say.
+"""
+
+import json
+import re
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+
+# The record, as deposited. Status language is exact and is not upgraded.
+RECORD = {
+    "10.5281/zenodo.21230267": "systems paper",
+    "10.5281/zenodo.21231253": "systems paper",
+    "10.5281/zenodo.21232206": "published preprint",
+    "10.5281/zenodo.21231406": "published preprint",
+    "10.5281/zenodo.21234475": "research note",
+    "10.5281/zenodo.21231311": "research note",
+    # The formal note on faithfulness, deposited 15 September 2026 as its own Zenodo record.
+    # Added 3 October 2026, when a Zenodo search by ORCID returned it as the thirteenth record.
+    "10.5281/zenodo.22768398": "research note",
+    "10.5281/zenodo.20778927": "archived corpus",
+    "10.5281/zenodo.20773724": "archived corpus",
+    # The October 2026 editions, deposited 3 October 2026 (three are second versions of
+    # records first deposited 15 September 2026). Since that day the record holds thirteen
+    # DOI records, one per Zenodo concept, read from the Zenodo API and from
+    # system/scholarly-records.json.
+    # 15 November 2026: each of the four records took a new version, the LaTeX typeset of the
+    # same edition, and the site cites that version. The four DOIs below changed for that
+    # reason; the record still holds thirteen, one per concept.
+    "10.5281/zenodo.24238724": "philosophy paper",
+    "10.5281/zenodo.24238743": "philosophy paper",
+    "10.5281/zenodo.24238749": "philosophy paper",
+    "10.5281/zenodo.24238755": "working paper",
+}
+# The all-versions (concept) DOI of each October paper, printed beside its version DOI.
+ALL_VERSIONS = {
+    "10.5281/zenodo.24238724": "10.5281/zenodo.22768628",
+    "10.5281/zenodo.24238743": "10.5281/zenodo.22768808",
+    "10.5281/zenodo.24238749": "10.5281/zenodo.22768918",
+    "10.5281/zenodo.24238755": "10.5281/zenodo.23126483",
+}
+# Each October edition is also cited by its own landing page.
+OCTOBER_EDITIONS = {
+    "10.5281/zenodo.24238724": "research-arity-gap.html",
+    "10.5281/zenodo.24238743": "research-forcing-argument.html",
+    "10.5281/zenodo.24238749": "research-self-given.html",
+    "10.5281/zenodo.24238755": "research-conservation-of-faithfulness.html",
+}
+STATUS_PHRASE = {
+    "systems paper": "systems paper",
+    "published preprint": "published preprint",
+    "research note": "note",
+    "archived corpus": "archived research corpus",
+    "philosophy paper": "philosophy paper",
+    "working paper": "working paper",
+}
+WORDS = {1: "One", 2: "Two", 3: "Three", 6: "Six", 8: "Eight", 12: "Twelve", 13: "Thirteen"}
+
+
+def read(rel: str) -> str:
+    return (ROOT / rel).read_text(encoding="utf-8")
+
+
+def dois(source: str) -> set[str]:
+    return set(re.findall(r"10\.5281/zenodo\.\d+", source))
+
+
+def test_publications_lists_the_whole_record() -> None:
+    src = read("publications.html")
+    assert dois(src) == set(RECORD) | set(ALL_VERSIONS.values()), "publications.html and the deposited record disagree"
+    scholarly = json.loads(read("system/scholarly-records.json"))["records"]
+    assert {r["doi"] for r in scholarly} == set(RECORD), "scholarly-records.json and the record disagree"
+    deposits = json.loads(read("papers/deposits.json"))["papers"]
+    assert {d["version_doi"]: d["concept_doi"] for d in deposits.values()} == ALL_VERSIONS
+    by_doi = {r["doi"]: r for r in scholarly}
+    rows = re.findall(r'<div class="index-row" role="listitem".*?</div>', src, re.S)
+    for version, concept in ALL_VERSIONS.items():
+        assert by_doi[version]["concept_doi"] == concept
+        row = next(r for r in rows if version in r)
+        assert f'href="https://doi.org/{concept}"' in row, f"{version}: its row has no all-versions link"
+    for doi, page in OCTOBER_EDITIONS.items():
+        assert f'<meta name="citation_doi" content="{doi}">' in read(page), page
+        landing = read(page).split('id="revision"', 1)[1].split("</aside>", 1)[0]
+        assert f"doi.org/{doi}" in landing and f"doi.org/{ALL_VERSIONS[doi]}" in landing, page
+        assert "LaTeX typeset of the edition of 3 October 2026" in landing and "<b>Verified</b>" in landing, page
+
+
+def test_each_doi_keeps_its_exact_record_status() -> None:
+    src = read("publications.html")
+    rows = re.findall(r'<div class="index-row" role="listitem".*?</div>', src, re.S)
+
+    for doi, status in RECORD.items():
+        matching_rows = [row for row in rows if doi in row]
+        assert len(matching_rows) == 1, f"{doi} must appear in exactly one record row"
+        row_text = " ".join(re.sub(r"<[^>]+>", " ", matching_rows[0]).split()).lower()
+        assert STATUS_PHRASE[status] in row_text, f"{doi} lost its {status!r} status"
+
+
+def test_the_stated_count_matches_the_list() -> None:
+    """The heading says a number in words. It has to be the number of things
+    below it, or the page is lying in its largest type."""
+    src = read("publications.html")
+    heading = re.search(r'<h2[^>]*id="research-records-h"[^>]*>([^<]+)</h2>', src)
+    assert heading, "no section heading on publications.html"
+    said = heading.group(1)
+    expected = WORDS[len(RECORD)]
+    assert expected.lower() in said.lower(), f"heading says {said!r}, the list holds {len(RECORD)}"
+    record_section = src.split('id="research-records"', 1)[1].split("</section>", 1)[0]
+    rows = record_section.count('role="listitem"')
+    assert rows == len(RECORD), f"{rows} rows for {len(RECORD)} records"
+
+
+def test_the_taxonomy_adds_up() -> None:
+    """The page states how many of each kind it lists. If an entry changes kind,
+    the prose claiming the count has to change with the list."""
+    src = read("publications.html")
+    from collections import Counter
+    kinds = Counter(RECORD.values())
+    assert sum(kinds.values()) == len(RECORD)
+    for kind, n in kinds.items():
+        phrase = f"{WORDS[n].lower()} {kind}"
+        assert phrase in src.lower().replace("corpora", "corpus"), f"page never says {phrase!r}"
+
+
+def test_every_page_that_counts_the_record_agrees() -> None:
+    """The CV and the dossier both state the size of the record and both link
+    here. A reader following that link must not find a different number."""
+    n = len(RECORD)
+    # Prose spells the number, a counted chip uses the numeral. Accept either,
+    # but it has to be the size of the record.
+    pattern = re.compile(rf"(\b{WORDS[n]}\b|>\s*{n}\s*<)[^.]{{0,40}}records?", re.I)
+    for name in ("cv.html", "resume.html", "dossier.html"):
+        assert pattern.search(read(name)), f"{name} no longer states the size of the record"
+
+
+def test_nothing_claims_peer_review() -> None:
+    for name in ("publications.html", "cv.html", "resume.html", "dossier.html"):
+        src = read(name)
+        assert re.search(r"(not|none of (it|this) is|never)[^.]{0,60}peer[ -]reviewed", src, re.I), name
+
+
+def test_every_record_is_readable_without_leaving_the_site() -> None:
+    """All thirteen are hosted here: eleven as PDFs, and the two corpora as full-text
+    pages rendered from the deposited sources, each with a typeset PDF as well. A link to a file that
+    is not there is the exact failure this site exists to argue against."""
+    src = read("publications.html")
+    for href in re.findall(r'href="(papers/[^"]+)"', src):
+        assert (ROOT / href).is_file(), f"publications.html offers a missing PDF: {href}"
+    record = src.split('id="research-records"', 1)[1].split("</section>", 1)[0]
+    assert len(re.findall(r'href="papers/[^"]+\.pdf"', record)) == len(RECORD),         f"expected a local file for all {len(RECORD)} records"
+    # 1 October 2026: the Writing hub's research section also lists every PDF in papers/.
+    for pdf in (ROOT / "papers").glob("*.pdf"):
+        assert f'href="papers/{pdf.name}"' in src, f"publications.html does not list {pdf.name}"
+    for page in ("conferred-existence.html", "witnessing-spine.html"):
+        assert (ROOT / page).is_file(), f"{page} was never rendered"
+        assert f'href="{page}"' in src, f"publications.html does not link {page}"
+
+
+def test_the_rendered_corpora_carry_their_source() -> None:
+    """The pages are generated from the deposited Markdown. If a render ever
+    silently drops a section the word count collapses, so hold a floor."""
+    import html as H
+    for page, floor in (("conferred-existence.html", 60_000), ("witnessing-spine.html", 1_800)):
+        src = read(page)
+        body = src.split("</header>", 1)[1].split('<p class="note">')[0]
+        words = len(H.unescape(re.sub(r"<[^>]+>", " ", body)).split())
+        assert words >= floor, f"{page} carries only {words} words, expected at least {floor}"
+        assert "doi.org/10.5281/zenodo" in src, f"{page} does not cite its deposit"
+        assert 'data-export-slot' in src, f"{page} cannot be taken away"

@@ -16,7 +16,7 @@ let hooks = {};    // { setSource, onDrawn, workshop }
 
 const hub = createHub({
   id: "gallery",
-  page: "system/studio-fragments/gallery.htm?v=20261126-unified",
+  page: "gallery.html?v=20261009-gallery-desk",
   panel: ".desk-rail",
   preview: ".desk-plate-col",
   canvas: "#desk-canvas",

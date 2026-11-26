@@ -10,7 +10,7 @@
 
 import { FILMS, filmUrl, posterUrl, aboutNote } from "./studio-films.js?v=20261004-films";
 
-const PAGE = "system/studio-fragments/explainers.htm?v=20261126-unified";
+const PAGE = "explainers.html?v=20261009-films-source";
 const STYLES = ["system/explainer/explainer.css?v=20261003-explainers", "system/explainer/film.css?v=20261009-motion"];
 const SCOPE = "#films-mount, #films-stage";
 

@@ -6,8 +6,6 @@
     "home/**",
     "node_modules/**",
     "img/og/_card.html",
-    "media/low-water/**",
-    "media/raw-native/**",
     "frontier-safety.html",
     "frontier-safety/**",
     "checking-the-machines.html",
@@ -34,6 +32,7 @@
     {
       "name": "Articulate",
       "repo": "articulate",
+      "page": "articulate.html",
       "version": "0.19.1",
       "registry": "pypi",
       "package": "articulate-writing",
@@ -58,6 +57,7 @@
     {
       "name": "EMET",
       "repo": "emet",
+      "page": "emet.html",
       "version": "1.3.1",
       "registry": "pypi",
       "package": "emet",
@@ -107,6 +107,7 @@
     {
       "name": "learn",
       "repo": "learn",
+      "page": "learn.html",
       "version": "2.3.0",
       "registry": "npm",
       "package": "@harperz9/learn",
@@ -146,7 +147,8 @@
       "downloadUrl": "https://github.com/HarperZ9/superframe/releases/latest",
       "license": "https://spdx.org/licenses/FSL-1.1-MIT.html",
       "os": "Node.js 24 or later",
-      "category": "DesignApplication"
+      "category": "DesignApplication",
+      "page": "superframe.html"
     }
   ]
 }

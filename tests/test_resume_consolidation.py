@@ -1,0 +1,329 @@
+"""Source parity and one-page constraints for the 2026-09-20 career release.
+
+14 November 2026: every document leads with a job-title headline, a summary and its
+results. The start date is one statement, about thirteen years of programming, and the
+fact that no paid software role has been held sits once in the Experience section.
+"""
+from datetime import date
+from pathlib import Path
+import json
+import re
+import subprocess
+import sys
+import fitz
+from docx import Document
+
+ROOT = Path(__file__).resolve().parents[1]
+SOURCE = json.loads((ROOT / 'career/resume-source.json').read_text())
+HEADINGS = ('Summary', 'Selected Results', 'Flagship Projects', 'Experience', 'Projects', 'Education', 'Skills')
+ENGINEERING = ('support-operations-qa', 'evaluation-python-tools', 'graphics-developer-tools', 'page:cv')
+# Words that open a document with what is missing. None may sit above the Experience heading.
+LACKS = ('not yet held', 'no professional', 'no paid', 'No paid', 'weak point', 'transition',
+         'career change', 'moving from', 'Self-directed', 'first full-time')
+
+
+def sections(text):
+    parts = re.split(r'(?m)^(' + '|'.join(HEADINGS) + r')$', text)
+    return [parts[i] for i in range(1, len(parts), 2)], {parts[i]: parts[i + 1] for i in range(1, len(parts), 2)}
+
+
+def words(text):
+    return re.findall(r"[A-Za-z0-9]+", text.lower())
+
+
+def test_generated_career_text_has_no_source_drift():
+    result = subprocess.run([sys.executable, 'tools/render_career_pages.py', '--check'], cwd=ROOT, capture_output=True, text=True)
+    assert result.returncode == 0, result.stdout + result.stderr
+
+
+def test_all_submission_formats_share_reading_order_and_complete_content():
+    for item in SOURCE['documents']:
+        stem = ROOT / 'career' / item['stem']
+        text = stem.with_suffix('.txt').read_text()
+        pdf = fitz.open(stem.with_suffix('.pdf'))
+        docx = Document(stem.with_suffix('.docx'))
+        assert words(text) == words(' '.join(p.get_text() for p in pdf)), item['id']
+        assert words(text) == words(' '.join(p.text for p in docx.paragraphs)), item['id']
+        # 2 November 2026: the published-work inventory moved to its own page; the CV ran to six pages.
+        # 13 November 2026: it carries the work through that day and runs to seven.
+        assert len(pdf) == (7 if item['id'] == 'page:cv' else 1)
+        assert not docx.tables
+        assert len(text.split()) >= 250
+        order, scope = sections(text)
+        assert 'Projects' in order and 'Experience' in order and order[0] == 'Summary'
+        assert 'Professional Experience' not in text
+        # One start date on every surface, stated once per document.
+        assert len(re.findall(r'[Aa]bout thirteen years of programming', text)) == 1
+        for variant in ('13 years', 'June 2026', 'since 2023', 'Career transition', 'career change began'):
+            assert variant not in text, (item['id'], variant)
+        assert 'Legendary Tree' in scope['Experience']
+        assert 'thirteen years of programming' not in scope['Experience']
+        assert 'Independent Systems Engineer' not in text
+        assert '2023 to Present' not in text
+        assert 'April 25, 2015 to June 2, 2026' in text
+        assert '2014 to 2015' in text
+        if item['id'] != 'graphics-developer-tools':
+            assert '2017' in text
+        for page in pdf:
+            assert page.rect.width == 612 and page.rect.height == 792
+            assert not page.get_images()
+            for block in page.get_text('dict')['blocks']:
+                for line in block.get('lines', []):
+                    for span in line['spans']:
+                        assert span['size'] >= 10.5
+                        assert 20 <= span['bbox'][0] < span['bbox'][2] <= 592
+                        assert 20 <= span['bbox'][1] < span['bbox'][3] <= 772
+
+
+def test_documents_lead_with_strengths_and_state_the_paid_role_fact_once():
+    """Headline, summary and results come first; the limit is stated once, where the work history is."""
+    for item in SOURCE['documents']:
+        text = (ROOT / 'career' / item['stem']).with_suffix('.txt').read_text()
+        order, scope = sections(text)
+        above_experience = text.split('\nExperience\n', 1)[0]
+        for lack in LACKS:
+            assert lack not in above_experience, (item['id'], lack)
+        headline = text.split('\nSummary\n', 1)[0].strip().splitlines()[-1]
+        assert 'philosopher' not in headline and 'Curriculum Vitae' not in headline, item['id']
+        assert order.index('Summary') < order.index('Experience') < order.index('Projects'), item['id']
+        if item['id'] not in ENGINEERING:
+            continue
+        assert order[:2] == ['Summary', 'Selected Results'], item['id']
+        if item['id'] == 'page:cv':
+            assert text.count('not yet held a paid software role') == 1, item['id']
+            assert 'not yet held a paid software role' in scope['Experience'], item['id']
+            assert 'Not peer reviewed' in scope['Selected Results'], item['id']
+        else:
+            assert 'not yet held a paid software role' not in text, item['id']
+            assert 'Independent Practice (Sole Proprietor)' in scope['Experience'], item['id']
+        results = scope['Selected Results']
+        for proof in ("other people's projects", 'nexusmods.com/skyrimspecialedition/mods/117327',
+                      'November 13, 2026'):
+            assert proof in results or proof.lower() in results.lower(), (item['id'], proof)
+        assert re.search(r'on (?:PyPI|crates\.io)', results), item['id']
+    for name in ('hire.html', 'resume.html', 'cover-letter.html', 'portfolio.html'):
+        page = (ROOT / name).read_text(encoding='utf-8')
+        for gone in ('no paid software clients', 'transition began', 'Current employment targets', 'since 2023'):
+            assert gone not in page, (name, gone)
+    hire = (ROOT / 'hire.html').read_text(encoding='utf-8')
+    assert hire.index('id="proof"') < hire.index('id="technical-lanes"') < hire.index('id="background"')
+    assert hire.count('not yet held a paid software role') == 1
+    assert 'not yet held a paid software role' in hire.split('id="background"', 1)[1]
+
+
+def test_merged_counts_on_every_career_surface_match_the_census():
+    """One number with its date: the census file decides what the documents may say."""
+    census = json.loads((ROOT / 'career/open-source-census.json').read_text(encoding='utf-8'))
+    merged = census['buckets']['merged']
+    total, projects = str(merged['total']), str(merged['repos'])
+    read = date.fromisoformat(census['read_on'])
+    stamp = f'{read:%B} {read.day}, {read.year}'
+    surfaces = {item['id']: (ROOT / 'career' / item['stem']).with_suffix('.txt').read_text()
+                for item in SOURCE['documents'] if item['id'] in ENGINEERING}
+    for name in ('hire.html', 'cover-letter.html', 'career/cover-letter-evaluation.md',
+                 'career/cover-letter-evaluation-template.md'):
+        surfaces[name] = (ROOT / name).read_text(encoding='utf-8').replace('&#x27;', "'")
+    patterns = (r"(\d+) pull requests (?:merged )?in (\d+) other people's projects",
+                r'(\d+) of my pull requests in (\d+) projects')
+    for name, text in surfaces.items():
+        pairs = [m.groups() for pattern in patterns for m in re.finditer(pattern, text)]
+        pairs += [(m.group(2), m.group(1)) for m in
+                  re.finditer(r'(\d+) open-source projects(?:, [^.]*?,)? have merged (\d+) of my pull requests', text)]
+        assert pairs, name
+        assert set(pairs) == {(total, projects)}, (name, pairs)
+        assert stamp in text, (name, stamp)
+    cv = surfaces['page:cv']
+    assert (f"{merged['engineering']} engineering changes in {merged['engineering_repos']} repositories "
+            f"and {merged['listings']} list entries") in cv
+    closed, still_open = census['buckets']['closed_unmerged'], census['buckets']['open']
+    assert f"{closed['engineering']} more were closed without merge and {still_open['engineering']} are open" in cv
+
+
+def test_evaluation_metrics_are_coverage_not_financial_or_performance_claims():
+    text = (ROOT / 'career/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.txt').read_text()
+    assert all(value in text for value in ('324', '337'))
+    # Issuer assessment scores are distinct from unsubstantiated performance/ROI claims.
+    performance_text = text.replace('95% assessment', 'credential assessment')
+    assert not re.search(r'\$\s*\d|\d+\s*%|guaranteed|revenue generated', performance_text, re.I)
+    assert all(name in text for name in ('Flywheel', 'Articulate', 'Accountable Surface', 'BuildLang', 'Phantom'))
+
+
+def test_credentials_keep_issuer_type_and_completion_evidence_separate():
+    """A course achievement must not turn into an earned professional certification."""
+    credentials = SOURCE['credentials']
+    applied = [c for c in credentials if c['kind'] == 'Applied Skills credential']
+    courses = [c for c in credentials if c['kind'] == 'Course-completion certificate']
+    advanced = [c for c in credentials if c['kind'].startswith('Advanced ') and c['provider'] == 'Microsoft Learn']
+    assert len(applied) == 4
+    assert {c['credential_id'] for c in applied} == {
+        'ED8852810C3B3FBC', '3D93C65204CB43EE', '4117A3B4196233D2', 'B6385A86C4A25301'
+    }
+    assert len(courses) == 17
+    assert len(advanced) == 2
+    assert len({c['id'] for c in credentials}) == len(credentials)
+    ledger = json.loads((ROOT / 'career/source-ledger.json').read_text())
+    by_id = {row['id']: row for row in ledger['sources']}
+    cv = (ROOT / 'career/Zain-Dana-Harper-CV.txt').read_text()
+    for credential in credentials:
+        assert by_id[credential['id']]['url'] == credential['url']
+        assert credential['url'].startswith('https://')
+    for course in courses:
+        assert f"{course['course_code']}: {course['title']}" in cv
+    assert 'The SC-100 certification exam has not been taken.' in SOURCE['credential_policy']
+    assert 'Advanced Microsoft Learn Coursework' in cv
+    assert 'Coursework:' in cv and 'Research references:' in cv
+    assert SOURCE['identity']['location'] == 'Kent, Washington'
+    bluedot = next(c for c in credentials if c['id'] == 'bluedot-agi-strategy')
+    assert bluedot['kind'] == 'Course completion'
+    assert 'Owner-confirmed' in bluedot['completion_evidence']
+    assert bluedot['url_role'] == 'Provider course description, not individual completion verification'
+    assert 'score_percent' not in bluedot and 'credential_id' not in bluedot
+    assert 'AGI Strategy | Course completed in 2026' in cv
+    mcp = next(c for c in credentials if c['id'] == 'anthropic-mcp-advanced')
+    assert mcp['kind'] == 'Advanced course-completion badge'
+    assert mcp['score_percent'] == 100
+    assert mcp['url'] == 'https://academy.claude.com/verify/4dd2c6b9f121940a0a43e78f83171867'
+    assert 'Model Context Protocol: Advanced topics' in cv
+    qualys = next(c for c in credentials if c['id'] == 'qualys-policy-audit')
+    assert qualys['kind'] == 'Vendor certification'
+    assert (qualys['earned'], qualys['expires']) == ('2026-09-30', '2028-09-29')
+    assert qualys['assessment_result'] == '26 of 30 correct; passed on the first attempt'
+    assert 'credential_id' not in qualys
+    assert 'not individual credential verification' in qualys['url_role']
+    car = next(c for c in credentials if c['id'] == 'qualys-car')
+    assert car['kind'] == 'Vendor certification'
+    assert (car['earned'], car['expires']) == ('2026-09-30', '2028-09-29')
+    assert car['assessment_result'] == '29 of 30 correct; passed on the first attempt'
+    assert 'credential_id' not in car
+    assert 'not individual credential verification' in car['url_role']
+    assert qualys['designation'] == car['designation'] == 'Qualys Certified Specialist'
+    assert 'Qualys Certified Specialist: Policy Audit; Custom Assessment and Remediation' in cv
+    assert 'Issued 2026-09-30; expire 2028-09-29' in cv
+    vmdr = next(c for c in credentials if c['id'] == 'qualys-vmdr')
+    assert vmdr['kind'] == 'Vendor certification' and vmdr['course_completed'] is False
+    assert vmdr['title'] == 'Vulnerability Management Detection and Response'
+    assert 'direct open-book certification exam' in vmdr['completion_evidence']
+    api = next(c for c in credentials if c['id'] == 'building-claude-api')
+    assert len(api['assessment_scores']) == 8 and sum(api['assessment_scores']) == 69
+    code = next(c for c in credentials if c['id'] == 'claude-code-in-action')
+    for item in (api, code):
+        assert item['kind'] == 'Course-completion badge'
+        assert item['url'].startswith('https://academy.claude.com/verify/')
+        assert item['title'] in cv
+    kcs = next(c for c in credentials if c['id'] == 'qualys-kcs')
+    assert kcs['title'] == 'Qualys Kubernetes and Container Security'
+    assert kcs['kind'] == 'Vendor certification' and kcs['course_completed'] is False
+    assert kcs['designation'] == 'Qualys Certified Specialist'
+    assert (kcs['earned'], kcs['expires']) == ('2026-09-30', '2028-09-29')
+    assert kcs['assessment_result'] == '29 of 30 correct; passed on the first attempt'
+    assert kcs['title'] in cv
+    for key, title, result in (
+        ('qualys-totalcloud', 'Qualys TotalCloud Exam', '25 of 30 correct; passed on the first attempt'),
+        ('qualys-edr', 'Endpoint Detection and Response', '29 of 30 correct; passed on the first attempt'),
+    ):
+        credential = next(c for c in credentials if c['id'] == key)
+        assert credential['title'] == title and title in cv
+        assert credential['kind'] == 'Vendor certification' and credential['course_completed'] is False
+        assert credential['designation'] == 'Qualys Certified Specialist'
+        assert (credential['earned'], credential['expires']) == ('2026-09-30', '2028-09-29')
+        assert credential['assessment_result'] == result
+    slm = next(c for c in credentials if c['id'] == 'google-deepmind-slm')
+    assert slm['kind'] == 'Assessed skill badge' and slm['official_level'] == 'Advanced'
+    assert (slm['score'], slm['maximum_score']) == (100, 100)
+    assert (slm['checkpoints_passed'], slm['checkpoints_total']) == (4, 4)
+    assert slm['url_role'] == 'Official course description'
+    assert slm['title'] in cv and 'four coding checkpoints' in cv
+    unesco = next(c for c in credentials if c['id'] == 'unesco-ai-ethics')
+    assert unesco['kind'] == 'Course certificate' and unesco['official_level'] == 'Intermediate'
+    assert unesco['score_percent'] == 100 and unesco['earned'] == '2026-09-30'
+    assert unesco['certificate_id'] == '7I5YVE5P0W5K'
+    assert unesco['url'] == 'https://www.coursera.org/account/accomplishments/verify/7I5YVE5P0W5K'
+    assert unesco['title'] in cv and 'Intermediate course certificate' in cv
+    multi_agent = next(c for c in credentials if c['id'] == 'google-multi-agent')
+    assert multi_agent['kind'] == 'Assessed skill badge'
+    assert (multi_agent['course_level'], multi_agent['challenge_level']) == ('Intermediate', 'Advanced')
+    assert (multi_agent['score'], multi_agent['maximum_score'], multi_agent['checkpoints_passed']) == (100, 100, 6)
+    assert multi_agent['lab_services_deployed'] == 5
+    assert 'local and cloud sample generation were blocked' in multi_agent['execution_limit']
+    assert multi_agent['title'] in cv and 'model-access policy blocked local and cloud generation' in cv
+    cisco = next(c for c in credentials if c['id'] == 'cisco-ethical-hacker')
+    assert cisco['kind'] == 'Course certificate and learning badge'
+    assert cisco['official_level'] == 'Intermediate / student level'
+    assert cisco['score_percent'] == 100 and cisco['earned'] == '2026-09-30'
+    assert cisco['badge_id'] == 'be9be111-860f-4c06-a416-71aa0cc48e34'
+    assert 'optional labs, capstone, and lesson materials were not completed' in cisco['completion_evidence']
+    assert 'Cisco Networking Academy: Ethical Hacker' in cv and '100% knowledge exam' in cv
+    devops = next(c for c in credentials if c['id'] == 'ms-devops-security')
+    assert devops['kind'] == 'Applied Skills credential' and devops['official_level'] == 'Intermediate'
+    assert devops['score_percent'] == 95 and devops['earned'] == '2026-09-30'
+    assert devops['credential_id'] == 'B6385A86C4A25301'
+    assert devops['title'] in cv and 'Intermediate; 95% assessment' in cv
+    assert 'did not establish a successful deployment' in devops['runtime_limit']
+    evaluation_course = next(c for c in credentials if c['id'] == 'google-mlops-model-evaluation')
+    assert evaluation_course['kind'] == 'Course-completion badge'
+    assert evaluation_course['official_level'] == 'Intermediate'
+    assert evaluation_course['assessment_scores_percent'] == [100, 85]
+    assert 'score_percent' not in evaluation_course
+    assert evaluation_course['url_role'] == 'Official course description'
+    assert evaluation_course['title'] in cv
+    bedrock = next(c for c in credentials if c['id'] == 'claude-amazon-bedrock')
+    assert bedrock['kind'] == 'Course-completion badge' and bedrock['score_percent'] == 100
+    assert len(bedrock['assessment_question_counts']) == 8 and sum(bedrock['assessment_question_counts']) == 57
+    assert bedrock['title'] in cv
+    predictive = next(c for c in credentials if c['id'] == 'google-bigquery-predictive')
+    assert predictive['kind'] == 'Assessed skill badge'
+    assert (predictive['course_level'], predictive['challenge_level']) == ('Intermediate', 'Advanced')
+    assert (predictive['score'], predictive['maximum_score'], predictive['checkpoints_passed']) == (100, 100, 7)
+    assert predictive['title'] in cv
+    assert predictive['earned'] == '2026-10-01' and predictive['local_completion_date'] == '2026-09-30'
+    assert predictive['url'] == 'https://www.credly.com/badges/a89c09d0-1424-44c3-9eed-7ccb50e45d9f/public_url'
+    assert 'loaded_event_rows' not in predictive and 'model_evaluate' not in predictive
+    ml_models = next(c for c in credentials if c['id'] == 'google-bigquery-ml-models')
+    assert ml_models['kind'] == 'Assessed skill badge'
+    assert ml_models['course_level'] == ml_models['challenge_level'] == 'Intermediate'
+    assert (ml_models['score'], ml_models['maximum_score'], ml_models['checkpoints_passed']) == (100, 100, 4)
+    assert ml_models['lab_models_trained'] == 3 and ml_models['title'] in cv
+    assert ml_models['earned'] == '2026-10-01' and ml_models['local_completion_date'] == '2026-09-30'
+    assert ml_models['url'] == 'https://www.credly.com/badges/6e495603-0a8e-441a-88fc-7b62d15a4bfd/public_url'
+    assert 'general performance-improvement claim' in ml_models['execution_scope']
+    secops = next(c for c in credentials if c['id'] == 'google-secops-deep-dive')
+    assert secops['kind'] == 'Course-completion badge' and secops['official_level'] == 'Advanced'
+    assert secops['score_percent'] == 96 and secops['local_completion_date'] == '2026-09-30'
+    assert 'earned' not in secops and secops['url_role'] == 'Official course description'
+    assert secops['title'] in cv and '96% knowledge assessment' in cv
+    assert 'sole proprietor since September 2026' in cv
+    # 14 November 2026: relocation and pay are answered on application forms, not in the CV.
+    assert 'relocate' not in cv and 'no paid software clients' not in cv
+    assert 'I have not yet held a paid software role.' in cv
+    assert 'No paid red-team or purple-team engagement to date.' in cv
+
+
+def test_public_interest_work_retains_its_evidence_limits():
+    cv = (ROOT / 'career/Zain-Dana-Harper-CV.txt').read_text()
+    assert all(title in cv for title in (
+        'Who Knew First', 'Borrowed Ground', 'An Open Letter on Checking the Machines',
+        'The Sandbox Was Never Just a Box', 'Witnessed Independence'))
+    assert 'Independent essays on AI accountability' in cv
+    assert 'Proposed contestable AI decisions' in cv
+    assert 'Developed an AGI Strategy action plan for label-independent AI incident notice' in cv
+    ledger = (ROOT / 'career/source-ledger.md').read_text()
+    assert 'does not establish professional whistleblower-support' in ledger
+    assert 'The proposed trial in An Open Letter on Checking the Machines has not run.' in ledger
+
+
+def test_quantified_outcomes_keep_their_scope_and_reference_types():
+    cv = (ROOT / 'career/Zain-Dana-Harper-CV.txt').read_text()
+    assert '324 terminal-state fixtures and 337 component cases' in cv
+    assert 'count_odds task through the Inspect-to-Flywheel bridge with three deterministic controls' in cv
+    assert 'HTTP 500 or incorrect HTTP 200 to HTTP 400' in cv
+    assert 'Nine of 38 merged engineering pull requests in 31 external repositories' in cv
+    references = (ROOT / 'career/standards-reference.md').read_text(encoding='utf-8')
+    rows = [line for line in references.splitlines() if line.startswith('| [')]
+    assert len(rows) == 25
+    assert 'MCSB v2 remains preview' in references
+    assert '1.2 remains an initial public draft' in references
+    assert any('| Law |' in row for row in rows)
+    assert any('| Framework or profile |' in row for row in rows)
+    assert 'it is not a certificate' in references
+    assert 'harperz9.github.io/career/standards-reference.md' in cv
+    assert all(c['provider'] not in {'NIST', 'ISO', 'IEEE'} for c in SOURCE['credentials'])
