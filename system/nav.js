@@ -544,27 +544,34 @@ export function wireCopyButtons(doc = document) {
 
 if (typeof document !== "undefined") {
   const boot = () => {
+    let embedded = false;
+    try {
+      embedded = (typeof window !== "undefined") && (window.self !== window.top || new URLSearchParams(window.location.search).get("embed") === "1");
+    } catch { embedded = true; }
+    if (embedded) document.documentElement.classList.add("is-embedded");
     ensureNavStylesheet(document);
-    renderNav();
+    if (!embedded) renderNav();
     import("./theme-entry.js?v=20260907-theme-preferences").catch(() => {});
-    trackNavHeight(document);
+    if (!embedded) trackNavHeight(document);
     wireAnchorArrival(document);
     wirePrintDisclosures(window, document);
     wireCopyButtons(document);
     wireScrollRegions(document, window);
-    mountRouteHeader(document);
+    if (!embedded) mountRouteHeader(document);
     // The React home owns its own restrained desktop field and its static
     // mobile treatment. Static pages retain the shared enhancement.
-    if (document.documentElement.dataset.homeShell !== "react" && shouldMountAmbientField(document)) {
+    if (!embedded && document.documentElement.dataset.homeShell !== "react" && shouldMountAmbientField(document)) {
       mountAmbient(document);
       import("./cursor-field.js").then((m) => m.mountCursorField()).catch(() => {});
     }
     mountPlates(document);
-    // Global Ctrl+K Quick-Jump search overlay and visible Search trigger beside Menu.
-    import("./quick-jump.js?v=" + ASSET_V).then((m) => m.initQuickJump({ shell: "classic" })).catch(() => {});
-    // Every page offers its own text as Markdown, plain text, Word, or print.
-    // The module reads the live page, so a page added later needs nothing.
-    import("./export.js?v=" + ASSET_V).catch(() => {});
+    if (!embedded) {
+      // Global Ctrl+K Quick-Jump search overlay and visible Search trigger beside Menu.
+      import("./quick-jump.js?v=" + ASSET_V).then((m) => m.initQuickJump({ shell: "classic" })).catch(() => {});
+      // Every page offers its own text as Markdown, plain text, Word, or print.
+      // The module reads the live page, so a page added later needs nothing.
+      import("./export.js?v=" + ASSET_V).catch(() => {});
+    }
   };
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
   else boot();

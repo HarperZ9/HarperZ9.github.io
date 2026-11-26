@@ -48,13 +48,25 @@ function provenance(name, date = "2026-11-26", note = "Measured Drafting Sheet")
 // 1. models.html — Open Ocean (Local Frontier Model Lab)
 function buildModels() {
   const models = [
-    ["JFC3P-7B-Oracle", "95.83% live buildc pass rate (Arm C, up from 16.67% baseline, p=4e-6)", "Three-Plate Verification Oracle coupled to live BuildLang compiler execution. Trained on verified compile-test-repair traces so every accepted synthesis carries an offline reproducible receipt."],
+    ["JFC3P-7B-Oracle (v3 PASS)", "48/84 Raw / 49/84 Arm C (+6 over Base), 15/15 longppl preserved, 32.72 ms CUDA 151k Reverse-KL, A1..A5 PASS", "MLP-only LoRA (Q/K/V/O attention frozen) + FRESCO orthogonal gradient projection + Three-Plate Verification Oracle coupled to live buildc/f64 execution. v2's attention-layer drift (40/84, 10/15 longppl) was caught fail-closed and stays published in the evolution table below."],
+    ["PUCT Oracle Search & Merkle Trace (flywheel#566)", "6/6 adversarial fault catch + 34.99x RFC 6962 proof-carrying trace compression (0 soundness loss)", "Execution-Oracle-Guided PUCT Verification Tree Search with hard Q_oracle pruning (beating planted high-prior wrong branches) paired with fail-closed Merkle trace compression that rejects any dropped witness or forged root."],
     ["NOH-4", "78.0x lower MSE against baseline neural operator surrogates", "Compact spectral neural operator trained on deterministic fluid, optical, and structural PDE trajectories for real-time physical surrogates inside The Playground."],
     ["Plato-Key", "Deterministic geometric representation & symmetry-manifold lookup", "Separates invariant geometric primitives from rendering skins, enabling continuous metamer detection across visual, structural, and acoustic projections."],
     ["AVTR-4R", "4-stage recurrent reasoning & rollback witness", "Explicit state-hash checkpoints across reasoning steps with zero silent drift; any falsified intermediate assertion rolls back to the last verified witness."],
     ["FRESCO / MoLT / LoopCD", "Looped compute, stress-rest scheduling & distillation kernels", "Tests recursive depth vs parameter count on commodity single-GPU hardware (RTX 4090 / 24 GB VRAM), publishing null results whenever recursive scaling stalls."],
     ["BuildLang 1.18M-Record Corpus Engine", "1.18M structured syntax, effect-row, and proof records", "Self-verifying compiler training corpus generated and checked directly by buildc so every training pair is type-checked and effect-verified before fine-tuning."],
   ];
+
+  const evolution = [
+    ["Base (Qwen2.5-Coder-7B)", "43/84 (51.2%)", "15/15", "Anchor", "", "Unadapted base checkpoint on the sealed 84-item holdout."],
+    ["JFC3P-7B-Oracle v1", "95.83% buildc Arm C", "n/a (buildc)", "PASS", "verdict-pass", "Live buildc compile-test-repair lift from 16.67% baseline (p=4e-6); Three-Plate Oracle 115/115 recall, 0 false accepts."],
+    ["JFC3P-7B-Oracle v2", "40/84 (47.6%)", "10/15", "DRIFT (caught)", "verdict-drift", "Full-layer LoRA degraded long-context attention (-5 on longppl); caught fail-closed and published as an honest negative result."],
+    ["JFC3P-7B-Oracle v3", "48/84 Raw / 49/84 Arm C", "15/15", "PASS (+6)", "verdict-pass", "MLP-only LoRA (Q/K/V/O attention frozen) + FRESCO orthogonal projection + 32.72 ms CUDA 151k Reverse-KL; A1..A5 all PASS."],
+    ["Flywheel #566 Search & Trace", "6/6 faults, 34.99x", "0 soundness loss", "PASS", "verdict-pass", "Execution-Oracle PUCT tree search (prunes planted high-prior wrong branch) + RFC 6962 Merkle trace compressor."],
+  ];
+  const evoRows = evolution.map(([stage, score, lp, verdict, cls, notes]) =>
+    `<tr><th scope="row">${esc(stage)}</th><td class="num">${esc(score)}</td><td class="num">${esc(lp)}</td><td${cls ? ` class="${cls}"` : ""}>${esc(verdict)}</td><td>${esc(notes)}</td></tr>`
+  ).join("\n");
 
   const figs = models.map(([name, metric, desc]) => `<li class="fig"><details open><summary><b class="fig-n d-fine">${esc(name)}</b> ${esc(metric)}</summary><p class="fig-src">${esc(desc)}</p></details></li>`).join("\n");
 
@@ -64,6 +76,7 @@ function buildModels() {
   <p class="lp-lede lp-lede-1">Compact local models trained and evaluated on one workstation against external compilers, physics solvers, and planted-fault oracles. Models propose; independent checkers dispose.</p>
   <p class="lp-rel">Every model below runs locally under a strict Tier-A evidence firewall: no benchmark number is accepted without an offline replay script, an honest null policy, and zero secret or private-data leakage.</p>
   <nav class="lp-ways" aria-label="On this page">
+    <a href="#evolution">Evolution &amp; honest nulls</a>
     <a href="#families">Model families</a>
     <a href="#firewall">Tier-A firewall</a>
     <a href="#datasets">Open datasets</a>
@@ -73,16 +86,26 @@ function buildModels() {
   </nav>
 </header>
 
+<section class="lp-sec" id="evolution" aria-labelledby="h-evolution">
+  <h2 id="h-evolution"><span class="d-3d">Honest-nulls model evolution specimen</span></h2>
+  <p class="lp-lede">Every iteration stays on the same hairline ledger, including the caught v2 attention-drift regression that motivated freezing Q/K/V/O attention heads for v3.</p>
+  <div class="rn-wrap"><table class="rn-table">
+    <caption>Sealed 84-item holdout evolution from unadapted Base through v1, caught v2 DRIFT, v3 PASS, and Flywheel #566 inference-time search &amp; trace compression.</caption>
+    <thead><tr><th scope="col">Checkpoint / Stage</th><th scope="col" class="num">Verified Score</th><th scope="col" class="num">longppl</th><th scope="col">Gate</th><th scope="col">Observed Mechanism</th></tr></thead>
+    <tbody>${evoRows}</tbody>
+  </table></div>
+</section>
+
 <section class="lp-sec" id="families" aria-labelledby="h-families">
   <h2 id="h-families"><span class="d-3d">Model families &amp; verified runs</span></h2>
-  <p class="lp-lede">Six local research lines built to test whether small, verifiable models paired with real execution checks can close the reliability gap without opaque cloud dependencies.</p>
+  <p class="lp-lede">Local research lines built to test whether small, verifiable models paired with real execution checks can close the reliability gap without opaque cloud dependencies.</p>
   <ul class="figs">${figs}</ul>
 </section>
 
 <section class="lp-sec" id="firewall" aria-labelledby="h-firewall">
   <h2 id="h-firewall"><span class="d-3d">Tier-A evidence firewall</span></h2>
   <p class="lp-lede">Nothing self-warrants. Every fine-tuned checkpoint is scored head-to-head against its unadapted base model on the same harness, with McNemar paired intervals and retired-null disclosures kept public.</p>
-  <p class="lp-limit">Example honest null: Flywheel Local Coder 14B scored 136/164 (82.9%) against its Qwen 2.5 Coder 14B base at 141/164 (86.0%, p = 0.404) on unguided single-shot completion, while coupling the same local 14B tier to live <code>buildc</code> verification lifted BuildLang pass rates from 16.67% to 95.83% (p = 4e-6). Both results stay side by side.</p>
+  <p class="lp-limit">Example honest nulls kept public: (1) JFC3P-7B-Oracle v2 regressed to 40/84 (10/15 longppl) under full-layer LoRA before v3 froze attention heads and recovered 15/15 longppl at 48/84 Raw / 49/84 Arm C; (2) Flywheel Local Coder 14B scored 136/164 (82.9%) vs Qwen 2.5 Coder 14B base at 141/164 (86.0%, p = 0.404) unguided, while coupling the same tier to live <code>buildc</code> lifted BuildLang pass rates from 16.67% to 95.83% (p = 4e-6).</p>
 </section>
 
 <section class="lp-sec" id="datasets" aria-labelledby="h-datasets">
@@ -91,7 +114,7 @@ function buildModels() {
   <p class="lp-ways-end"><a href="/architecture.html#datasets">Seven datasets</a> <a href="/findings/">30 Findings (12 nulls)</a> <a href="/analytics/flywheel-benchmark-record.html">Benchmark record</a> <a href="/tools.html">159 Public Repos</a></p>
 </section>
 
-<p class="lp-verified"><b>Verified</b> 26 November 2026: Arm C live buildc lift (16.67% to 95.83%, p=4e-6), Three-Plate Verification Oracle recall (115/115, 0 false accepts), and 14B unguided null (136/164 vs 141/164, p=0.404) cross-checked against tracked Flywheel benchmark receipts.</p>
+<p class="lp-verified"><b>Verified</b> 26 November 2026: JFC3P-7B-Oracle v3 (48/84 Raw / 49/84 Arm C, 15/15 longppl, 32.72 ms CUDA 151k Reverse-KL, A1..A5 PASS), caught v2 DRIFT (40/84, 10/15 longppl), Flywheel #566 PUCT + 34.99x Merkle trace compressor, Arm C buildc lift (16.67% to 95.83%, p=4e-6), and Three-Plate Oracle (115/115 recall, 0 false accepts).</p>
 </article>`;
 
   const html = page({
@@ -183,10 +206,10 @@ function buildTools() {
   <p class="ds-lede">Fail-closed <code>SHA256SUMS</code> one-command user-space installers for the flagship platforms, the November 2026 BuildTeX career document suite (66 verified files), and the complete hairline-ruled ledger of all ${repos.length} public GitHub repositories under HarperZ9 (0 private repositories exposed).</p>
   <p class="ds-meta"><span>Fail-closed SHA-256 verification</span><span>User-space only (never sudo / Machine PATH)</span><span>Offline -SelfTest / --self-test</span></p>
   <nav class="ds-ways" aria-label="On this page">
-    <a href="#installers">1-Command Installers (${(installersData.installers || []).length})</a>
-    <a href="#career-v2">BuildTeX Career Suite v2 (66 files)</a>
-    <a href="#repos">All Public Repositories (${repos.length})</a>
-    <a href="/playground/">The Playground</a>
+    <a href="#installers">Installers (${(installersData.installers || []).length})</a>
+    <a href="#career-v2">Career Suite v2 (66)</a>
+    <a href="#repos">All Public Repos (${repos.length})</a>
+    <a href="/playground/">Playground</a>
     <a href="/models.html">Models</a>
   </nav>
 </header>
@@ -347,9 +370,18 @@ function buildSecurity() {
   const old = readOrigin("security.html");
   // Extract the verified sections (#map, #hierarchy, #advisories, #private-systems, #authorization, #data) cleanly
   // while keeping exact <div class="index-row" role="listitem"> markup expected by advisory tests.
-  const mainMatch = old.match(/<main id="main">([\s\S]*?)<\/main>/);
-  if (!mainMatch) throw new Error("security.html: <main> not found");
-  let inner = mainMatch[1]
+  const sheetHead = old.indexOf('<header class="ds-sheet-head">');
+  const headEnd = sheetHead >= 0 ? old.indexOf("</header>", sheetHead) : -1;
+  const provIdx = old.indexOf('<footer class="ds-prov"');
+  let inner;
+  if (headEnd >= 0 && provIdx > headEnd) {
+    inner = old.slice(headEnd + "</header>".length, provIdx).trim();
+  } else {
+    const mainMatch = old.match(/<main id="main"[^>]*>([\s\S]*?)<\/main>/);
+    if (!mainMatch) throw new Error("security.html: <main> not found");
+    inner = mainMatch[1];
+  }
+  inner = inner
     .replace(/<section class="mv"/g, '<section class="ds-sec"')
     .replace(/<div class="index" role="list">/g, '<div class="ds-ledger index" role="list">');
 
@@ -392,9 +424,10 @@ function buildFlywheel() {
   const jsonLdMatch = old.match(/<!-- structured-data:begin[\s\S]*?<!-- structured-data:end -->/);
   const svgDefsMatch = old.match(/<svg class="ns-defs"[\s\S]*?<\/svg>/);
   const demoIdx = old.indexOf('<section class="mv" id="demo"');
-  const endMainIdx = old.indexOf("</main>");
-  if (demoIdx < 0 || endMainIdx < 0) throw new Error("flywheel.html: expected #demo..#main block not found");
-  const sectionsHtml = old.slice(demoIdx, endMainIdx)
+  const endArtIdx = demoIdx >= 0 ? old.lastIndexOf("</article>") : -1;
+  const endIdx = endArtIdx > demoIdx ? endArtIdx : old.indexOf("</main>", Math.max(0, demoIdx));
+  if (demoIdx < 0 || endIdx < 0) throw new Error("flywheel.html: expected #demo..#article block not found");
+  const sectionsHtml = old.slice(demoIdx, endIdx).trim()
     .replace(/href="raw\.html"/g, 'href="/playground/#native"')
     .replace(/href="low-water\.html"/g, 'href="/playground/#low-water"')
     .replace(/href="superframe\.html"/g, 'href="/playground/#superframe"')
@@ -407,7 +440,8 @@ function buildFlywheel() {
 <style>
   html.ptr:not(.plain) article.fw-ocean[data-hue="theflywheel"] { --p-pressed: -webkit-image-set(url("data:image/png;base64,${ptr1x}") 1x, url("data:image/png;base64,${ptr2x}") 2x) 6 6 !important; }
   .fw-ocean .lp-rel, .fw-ocean .lp-run { max-width: 100%; overflow-wrap: anywhere; }
-  .fw-ocean .lp-rel code, .fw-ocean .lp-run code { overflow-wrap: anywhere; word-break: break-word; }
+  .fw-ocean .lp-rel code, .fw-ocean .lp-run code { overflow-wrap: anywhere; }
+  @media (max-width: 480px) { .fw-ocean .lp-rel code, .fw-ocean .lp-run code { word-break: break-word; } }
   .fw-ocean section.mv { margin: clamp(36px, 5.5vw, 68px) 0 0; padding: 28px 0 0; border-top: 1px solid var(--line); }
   .fw-ocean section.mv p { max-width: 64ch; }
   .fw-ocean a:focus-visible, .fw-ocean button:focus-visible, .fw-ocean summary:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
@@ -446,9 +480,9 @@ ${jsonLdMatch ? jsonLdMatch[0] : ""}`;
 <article class="lp fw-ocean" data-landmark="flywheel" data-hue="theflywheel">
 <header class="lp-head">
   <h1><span class="d-3d">Flywheel</span> <span class="pf-mark">THEFLYWHEEL</span></h1>
-  <p class="lp-lede lp-lede-1">An AI workstation and coding harness for any model, with runs you can recheck offline. Consolidates 31 packages behind cryptographic receipts, Rowan local/sub/API orchestration, Three-Plate Verification Oracle (115/115 defect recall), and Articulate.</p>
+  <p class="lp-lede lp-lede-1">An AI workstation and coding harness for any model, with runs you can recheck offline. Consolidates 31 packages behind cryptographic receipts, Rowan orchestration, Three-Plate Verification Oracle (115/115 recall), unified Super Solver (6/6 adversarial fault catch), PUCT oracle tree search, 34.99x Merkle trace compression, and Articulate.</p>
   <p class="lp-run"><code>irm https://raw.githubusercontent.com/HarperZ9/flywheel/main/install.ps1 | iex</code></p>
-  <p class="lp-rel">Fail-closed <code>SHA256SUMS</code> installer (macOS/Linux: <code>curl -fsSL https://raw.githubusercontent.com/HarperZ9/flywheel/main/install.sh | sh</code>; PyPI: <code>pip install <span class="ident" translate="no">flywheel-verify</span></code> on PyPI). Version 2.0.0 on GitHub and PyPI.</p>
+  <p class="lp-rel">Fail-closed <code>SHA256SUMS</code> installer (macOS/Linux: <code>curl -fsSL https://raw.githubusercontent.com/HarperZ9/flywheel/main/install.sh | sh</code>; PyPI: <code>pip install <span class="ident" translate="no">flywheel-verify</span></code> on PyPI). Version 2.0.0 on GitHub and PyPI; on main: <a href="https://github.com/HarperZ9/flywheel/pull/565">flywheel #565</a> (<code>flywheel super-solver</code> 6/6 fault catch) &amp; <a href="https://github.com/HarperZ9/flywheel/pull/566">flywheel #566</a> (PUCT + 34.99x RFC 6962 Merkle trace compressor).</p>
   <nav class="lp-ways" aria-label="On this page">
     <a href="#demo">Output check demo</a>
     <a href="#what">What Flywheel is</a>

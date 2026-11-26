@@ -15,53 +15,90 @@ export function initWorkbench(root = document) {
 
   const filterInput = wb.querySelector('#wb-filter');
   const countEl = wb.querySelector('#wb-count');
+  const discBar = wb.querySelector('#wb-discs');
+  const groups = [...wb.querySelectorAll('[data-wb-group]')];
   const rows = [...wb.querySelectorAll('[data-wb-row]')];
   const stage = wb.querySelector('#wb-stage');
   const stageTitle = wb.querySelector('#wb-stage-title');
   const stageLink = wb.querySelector('#wb-stage-open');
   const stageBody = wb.querySelector('#wb-stage-body');
   const stageClose = wb.querySelector('#wb-stage-close');
+  const stageSend = wb.querySelector('#wb-stage-send');
+  let activeDisc = 'all';
+  let currentStage = { title: '', target: '' };
 
   const applyFilter = () => {
     const q = (filterInput?.value || '').trim().toLowerCase();
     let shown = 0;
-    for (const row of rows) {
-      const hay = (row.dataset.wbSearch || row.textContent || '').toLowerCase();
-      const hit = !q || hay.includes(q);
-      row.hidden = !hit;
-      if (hit) shown++;
-    }
-    for (const group of wb.querySelectorAll('[data-wb-group]')) {
-      const any = [...group.querySelectorAll('[data-wb-row]')].some((r) => !r.hidden);
+    for (const group of groups) {
+      const discOk = activeDisc === 'all' || group.dataset.wbDisc === activeDisc;
+      let any = false;
+      for (const row of group.querySelectorAll('[data-wb-row]')) {
+        const hay = (row.dataset.wbSearch || row.textContent || '').toLowerCase();
+        const hit = discOk && (!q || hay.includes(q));
+        row.hidden = !hit;
+        if (hit) { shown++; any = true; }
+      }
       group.hidden = !any;
     }
     if (countEl) {
-      countEl.textContent = q ? `Showing ${shown} of ${rows.length} creative engines` : `${rows.length} creative engines across 7 disciplines`;
+      countEl.textContent = (q || activeDisc !== 'all')
+        ? `Showing ${shown} of ${rows.length} creative engines`
+        : `${rows.length} creative engines across ${groups.length} disciplines`;
     }
   };
+
+  discBar?.addEventListener('click', (ev) => {
+    const btn = ev.target.closest('[data-wb-disc]');
+    if (!btn) return;
+    activeDisc = btn.dataset.wbDisc || 'all';
+    for (const b of discBar.querySelectorAll('[data-wb-disc]')) {
+      b.setAttribute('aria-pressed', String(b === btn));
+    }
+    applyFilter();
+  });
 
   filterInput?.addEventListener('input', applyFilter);
   if (filterInput?.value) applyFilter();
 
+  const clearActive = () => {
+    for (const r of wb.querySelectorAll('[data-wb-active="true"]')) delete r.dataset.wbActive;
+    for (const b of wb.querySelectorAll('[data-wb-action][aria-current="true"]')) b.removeAttribute('aria-current');
+  };
+  const markActive = (btn) => {
+    clearActive();
+    const row = btn?.closest?.('[data-wb-row]');
+    if (row) row.dataset.wbActive = 'true';
+    if (btn) btn.setAttribute('aria-current', 'true');
+  };
+
   const closeStage = () => {
+    clearActive();
     if (!stage || !stageBody) return;
     stage.hidden = true;
     stageBody.innerHTML = '';
   };
   stageClose?.addEventListener('click', closeStage);
+  stageSend?.addEventListener('click', async () => {
+    if (!window.__studioCanvas && window.__openUnifiedStudio) await window.__openUnifiedStudio();
+    window.__studioCanvas?.receiveEngine(currentStage);
+  });
 
   const launchInline = (title, src) => {
     if (!stage || !stageBody) return;
+    currentStage = { title, target: src };
     stage.hidden = false;
-    if (stageTitle) stageTitle.textContent = title;
+    const embedSrc = src + (src.includes('?') ? '&' : '?') + 'embed=1';
+    if (stageTitle) stageTitle.textContent = `Live stage: ${title}`;
     if (stageLink) { stageLink.href = src; stageLink.textContent = `Open ${title} full window`; }
-    stageBody.innerHTML = `<iframe class="wb-frame" src="${esc(src)}" title="${esc(title)}" loading="eager" allow="autoplay; fullscreen"></iframe>`;
+    stageBody.innerHTML = `<iframe class="wb-frame" src="${esc(embedSrc)}" title="${esc(title)}" loading="eager" allow="autoplay; fullscreen"></iframe>`;
     stage.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
   };
 
   wb.addEventListener('click', async (ev) => {
     const btn = ev.target.closest('[data-wb-action]');
     if (!btn) return;
+    markActive(btn);
     const action = btn.dataset.wbAction;
     const target = btn.dataset.wbTarget || '';
     const title = btn.dataset.wbTitle || btn.closest('[data-wb-row]')?.querySelector('.wb-name')?.textContent?.trim() || btn.textContent.trim();

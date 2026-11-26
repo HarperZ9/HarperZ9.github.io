@@ -37,6 +37,14 @@ const body = `<article class="lp tool" data-landmark="cmmns" data-hue="thecmmns"
 <p class="lp-run"><code>irm https://raw.githubusercontent.com/HarperZ9/cmmns/main/install.ps1 | iex</code></p>
 <p class="lp-rel">Fail-closed <code>SHA256SUMS</code> installer (macOS/Linux: <code>curl -fsSL https://raw.githubusercontent.com/HarperZ9/cmmns/main/install.sh | sh</code>). CMMNS, spoken "commons", was formerly Daylight Commons and Radar; earlier installs update in place.</p>
 <dl class="facts"><dt>Version</dt><dd><a href="${rel}">${esc(v)}</a></dd><dt>Browsers</dt><dd>${esc(tool.os)}</dd><dt>Licence</dt><dd><a href="${esc(tool.license)}">AGPL-3.0</a></dd><dt>Source</dt><dd><a href="${repo}">HarperZ9/cmmns</a></dd></dl>
+<nav class="lp-ways" aria-label="On this page">
+  <a href="#try">Try in browser</a>
+  <a href="#provenance">Web/AI provenance CLI</a>
+  <a href="#install">Install</a>
+  <a href="#verify">Check download</a>
+  <a href="#window">What it shows</a>
+  <a href="#new">New in ${esc(v)}</a>
+</nav>
 </header>
 
 <section id="try" class="ct" data-commons-try aria-labelledby="h-try">
@@ -54,6 +62,10 @@ ${labelFor("cmmns-try")}
 <p class="ct-source">This panel runs the unmodified CMMNS core at commit 5f86ee7 (<a href="${repo}/tree/5f86ee789c35a65d3043b4eb81ac0393ca751711/src/core">source</a>, AGPL-3.0-only): the 3.9.1 release plus the validation report from <a href="${repo}/pull/112">pull request 112</a>. It loads only once you start.</p>
 </section>
 <script type="module" src="/world/site/commons-try.js"></script>
+
+<h2 id="provenance">Web &amp; AI provenance verifier (CLI)</h2>
+<p>On main via <a href="${repo}/pull/130">cmmns #130</a> (commit <code>bb63366e</code>), the CLI verifies any static site or local build folder offline for <code>.well-known/agent-card.json</code>, <code>llms.txt</code>, canonical JSON-LD consistency, hidden prompt-injection lures (4/4 adversarial catches), and <code>engine-receipt/1</code> chains. Live OSI/FSF AGPL-3.0-only <a href="https://raw.githubusercontent.com/HarperZ9/cmmns/main/funding.json">funding.json</a> manifest shipped in <a href="${repo}/pull/131">cmmns #131</a>.</p>
+<pre class="cmd" tabindex="0" aria-label="Provenance verify command"><code>cmmns provenance verify ./site --origin https://harperz9.github.io --json</code></pre>
 
 <h2 id="install">Install</h2>
 <h3>Chrome, Edge or Brave</h3>

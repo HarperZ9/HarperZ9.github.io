@@ -23,13 +23,13 @@
 <meta name="twitter:title" content="Local Frontier Model Lab | Zain Dana Harper">
 <meta name="twitter:description" content="Local frontier models (JFC3P-7B-Oracle, NOH-4, Plato-Key, AVTR-4R, FRESCO/MoLT) evaluated against compilers, physics solvers, and planted-fault oracles.">
 <link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-200b4f3743">
-<link rel="stylesheet" href="/studies/studies.css?v=world-200b4f3743">
-<link rel="stylesheet" href="/world/site/depth.css?v=world-200b4f3743">
-<script type="module" src="/world/ui/shell/shell.js?v=world-200b4f3743"></script>
-<script type="module" src="/world/site/hand-scroll.js?v=world-200b4f3743"></script>
-<link rel="stylesheet" href="/world/site/landmark.css?v=world-200b4f3743">
-<script type="module" src="/world/site/home-field.js?v=world-200b4f3743"></script>
+<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-b42c88607f">
+<link rel="stylesheet" href="/studies/studies.css?v=world-b42c88607f">
+<link rel="stylesheet" href="/world/site/depth.css?v=world-b42c88607f">
+<script type="module" src="/world/ui/shell/shell.js?v=world-b42c88607f"></script>
+<script type="module" src="/world/site/hand-scroll.js?v=world-b42c88607f"></script>
+<link rel="stylesheet" href="/world/site/landmark.css?v=world-b42c88607f">
+<script type="module" src="/world/site/home-field.js?v=world-b42c88607f"></script>
 <!-- structured-data:begin (tools/structured_data.py) -->
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://harperz9.github.io/#person","name":"Zain Dana Harper","jobTitle":"Independent Systems Engineer, Compiler & AI Verification Toolmaker","url":"https://harperz9.github.io/","sameAs":["https://github.com/HarperZ9","https://orcid.org/0009-0001-7175-5393","https://www.linkedin.com/in/zaindanaharper/","https://huggingface.co/zaindanaharper","https://www.youtube.com/@zaindanaharper","https://crates.io/crates/buildlang","https://pypi.org/project/flywheel-verify/"],"knowsAbout":["Deterministic compilers and typed capability effect systems","AI evaluation, verification harnesses, and planted-fault oracles","Local GPU reinforcement learning and Reverse-KL distillation","DirectX 12, Vulkan, and WebGPU rendering engines","Spectral optics and multi-medium generative instruments","Civic provenance and local-first browser verification","Commercial arboriculture rigging and field science"]},{"@type":"CollectionPage","@id":"https://harperz9.github.io/models.html#models","name":"Local Frontier Model Lab","url":"https://harperz9.github.io/models.html","description":"Local frontier models (JFC3P-7B-Oracle, NOH-4, Plato-Key, AVTR-4R, FRESCO/MoLT) evaluated against compilers, physics solvers, and planted-fault oracles.","author":{"@id":"https://harperz9.github.io/#person","@type":"Person","name":"Zain Dana Harper"}},{"@type":"Dataset","@id":"https://harperz9.github.io/models.html#datasets","name":"Verifiable Open Datasets DS-01 through DS-07","description":"Seven open verifiable datasets and 30 empirical studies (12 published nulls) anchoring local frontier model evaluation.","url":"https://harperz9.github.io/architecture.html#datasets","creator":{"@id":"https://harperz9.github.io/#person","@type":"Person","name":"Zain Dana Harper"},"isAccessibleForFree":true},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://harperz9.github.io/"},{"@type":"ListItem","position":2,"name":"Local Frontier Model Lab","item":"https://harperz9.github.io/models.html"}]}]}</script>
 <!-- structured-data:end -->
@@ -92,6 +92,7 @@ new MutationObserver(s).observe(r,{attributes:true,attributeFilter:["data-theme"
   <p class="lp-lede lp-lede-1">Compact local models trained and evaluated on one workstation against external compilers, physics solvers, and planted-fault oracles. Models propose; independent checkers dispose.</p>
   <p class="lp-rel">Every model below runs locally under a strict Tier-A evidence firewall: no benchmark number is accepted without an offline replay script, an honest null policy, and zero secret or private-data leakage.</p>
   <nav class="lp-ways" aria-label="On this page">
+    <a href="#evolution">Evolution &amp; honest nulls</a>
     <a href="#families">Model families</a>
     <a href="#firewall">Tier-A firewall</a>
     <a href="#datasets">Open datasets</a>
@@ -101,10 +102,25 @@ new MutationObserver(s).observe(r,{attributes:true,attributeFilter:["data-theme"
   </nav>
 </header>
 
+<section class="lp-sec" id="evolution" aria-labelledby="h-evolution">
+  <h2 id="h-evolution"><span class="d-3d">Honest-nulls model evolution specimen</span></h2>
+  <p class="lp-lede">Every iteration stays on the same hairline ledger, including the caught v2 attention-drift regression that motivated freezing Q/K/V/O attention heads for v3.</p>
+  <div class="rn-wrap"><table class="rn-table">
+    <caption>Sealed 84-item holdout evolution from unadapted Base through v1, caught v2 DRIFT, v3 PASS, and Flywheel #566 inference-time search &amp; trace compression.</caption>
+    <thead><tr><th scope="col">Checkpoint / Stage</th><th scope="col" class="num">Verified Score</th><th scope="col" class="num">longppl</th><th scope="col">Gate</th><th scope="col">Observed Mechanism</th></tr></thead>
+    <tbody><tr><th scope="row">Base (Qwen2.5-Coder-7B)</th><td class="num">43/84 (51.2%)</td><td class="num">15/15</td><td>Anchor</td><td>Unadapted base checkpoint on the sealed 84-item holdout.</td></tr>
+<tr><th scope="row">JFC3P-7B-Oracle v1</th><td class="num">95.83% buildc Arm C</td><td class="num">n/a (buildc)</td><td class="verdict-pass">PASS</td><td>Live buildc compile-test-repair lift from 16.67% baseline (p=4e-6); Three-Plate Oracle 115/115 recall, 0 false accepts.</td></tr>
+<tr><th scope="row">JFC3P-7B-Oracle v2</th><td class="num">40/84 (47.6%)</td><td class="num">10/15</td><td class="verdict-drift">DRIFT (caught)</td><td>Full-layer LoRA degraded long-context attention (-5 on longppl); caught fail-closed and published as an honest negative result.</td></tr>
+<tr><th scope="row">JFC3P-7B-Oracle v3</th><td class="num">48/84 Raw / 49/84 Arm C</td><td class="num">15/15</td><td class="verdict-pass">PASS (+6)</td><td>MLP-only LoRA (Q/K/V/O attention frozen) + FRESCO orthogonal projection + 32.72 ms CUDA 151k Reverse-KL; A1..A5 all PASS.</td></tr>
+<tr><th scope="row">Flywheel #566 Search &amp; Trace</th><td class="num">6/6 faults, 34.99x</td><td class="num">0 soundness loss</td><td class="verdict-pass">PASS</td><td>Execution-Oracle PUCT tree search (prunes planted high-prior wrong branch) + RFC 6962 Merkle trace compressor.</td></tr></tbody>
+  </table></div>
+</section>
+
 <section class="lp-sec" id="families" aria-labelledby="h-families">
   <h2 id="h-families"><span class="d-3d">Model families &amp; verified runs</span></h2>
-  <p class="lp-lede">Six local research lines built to test whether small, verifiable models paired with real execution checks can close the reliability gap without opaque cloud dependencies.</p>
-  <ul class="figs"><li class="fig"><details open><summary><b class="fig-n d-fine">JFC3P-7B-Oracle</b> 95.83% live buildc pass rate (Arm C, up from 16.67% baseline, p=4e-6)</summary><p class="fig-src">Three-Plate Verification Oracle coupled to live BuildLang compiler execution. Trained on verified compile-test-repair traces so every accepted synthesis carries an offline reproducible receipt.</p></details></li>
+  <p class="lp-lede">Local research lines built to test whether small, verifiable models paired with real execution checks can close the reliability gap without opaque cloud dependencies.</p>
+  <ul class="figs"><li class="fig"><details open><summary><b class="fig-n d-fine">JFC3P-7B-Oracle (v3 PASS)</b> 48/84 Raw / 49/84 Arm C (+6 over Base), 15/15 longppl preserved, 32.72 ms CUDA 151k Reverse-KL, A1..A5 PASS</summary><p class="fig-src">MLP-only LoRA (Q/K/V/O attention frozen) + FRESCO orthogonal gradient projection + Three-Plate Verification Oracle coupled to live buildc/f64 execution. v2's attention-layer drift (40/84, 10/15 longppl) was caught fail-closed and stays published in the evolution table below.</p></details></li>
+<li class="fig"><details open><summary><b class="fig-n d-fine">PUCT Oracle Search &amp; Merkle Trace (flywheel#566)</b> 6/6 adversarial fault catch + 34.99x RFC 6962 proof-carrying trace compression (0 soundness loss)</summary><p class="fig-src">Execution-Oracle-Guided PUCT Verification Tree Search with hard Q_oracle pruning (beating planted high-prior wrong branches) paired with fail-closed Merkle trace compression that rejects any dropped witness or forged root.</p></details></li>
 <li class="fig"><details open><summary><b class="fig-n d-fine">NOH-4</b> 78.0x lower MSE against baseline neural operator surrogates</summary><p class="fig-src">Compact spectral neural operator trained on deterministic fluid, optical, and structural PDE trajectories for real-time physical surrogates inside The Playground.</p></details></li>
 <li class="fig"><details open><summary><b class="fig-n d-fine">Plato-Key</b> Deterministic geometric representation &amp; symmetry-manifold lookup</summary><p class="fig-src">Separates invariant geometric primitives from rendering skins, enabling continuous metamer detection across visual, structural, and acoustic projections.</p></details></li>
 <li class="fig"><details open><summary><b class="fig-n d-fine">AVTR-4R</b> 4-stage recurrent reasoning &amp; rollback witness</summary><p class="fig-src">Explicit state-hash checkpoints across reasoning steps with zero silent drift; any falsified intermediate assertion rolls back to the last verified witness.</p></details></li>
@@ -115,7 +131,7 @@ new MutationObserver(s).observe(r,{attributes:true,attributeFilter:["data-theme"
 <section class="lp-sec" id="firewall" aria-labelledby="h-firewall">
   <h2 id="h-firewall"><span class="d-3d">Tier-A evidence firewall</span></h2>
   <p class="lp-lede">Nothing self-warrants. Every fine-tuned checkpoint is scored head-to-head against its unadapted base model on the same harness, with McNemar paired intervals and retired-null disclosures kept public.</p>
-  <p class="lp-limit">Example honest null: Flywheel Local Coder 14B scored 136/164 (82.9%) against its Qwen 2.5 Coder 14B base at 141/164 (86.0%, p = 0.404) on unguided single-shot completion, while coupling the same local 14B tier to live <code>buildc</code> verification lifted BuildLang pass rates from 16.67% to 95.83% (p = 4e-6). Both results stay side by side.</p>
+  <p class="lp-limit">Example honest nulls kept public: (1) JFC3P-7B-Oracle v2 regressed to 40/84 (10/15 longppl) under full-layer LoRA before v3 froze attention heads and recovered 15/15 longppl at 48/84 Raw / 49/84 Arm C; (2) Flywheel Local Coder 14B scored 136/164 (82.9%) vs Qwen 2.5 Coder 14B base at 141/164 (86.0%, p = 0.404) unguided, while coupling the same tier to live <code>buildc</code> lifted BuildLang pass rates from 16.67% to 95.83% (p = 4e-6).</p>
 </section>
 
 <section class="lp-sec" id="datasets" aria-labelledby="h-datasets">
@@ -124,7 +140,7 @@ new MutationObserver(s).observe(r,{attributes:true,attributeFilter:["data-theme"
   <p class="lp-ways-end"><a href="/architecture.html#datasets">Seven datasets</a> <a href="/findings/">30 Findings (12 nulls)</a> <a href="/analytics/flywheel-benchmark-record.html">Benchmark record</a> <a href="/tools.html">159 Public Repos</a></p>
 </section>
 
-<p class="lp-verified"><b>Verified</b> 26 November 2026: Arm C live buildc lift (16.67% to 95.83%, p=4e-6), Three-Plate Verification Oracle recall (115/115, 0 false accepts), and 14B unguided null (136/164 vs 141/164, p=0.404) cross-checked against tracked Flywheel benchmark receipts.</p>
+<p class="lp-verified"><b>Verified</b> 26 November 2026: JFC3P-7B-Oracle v3 (48/84 Raw / 49/84 Arm C, 15/15 longppl, 32.72 ms CUDA 151k Reverse-KL, A1..A5 PASS), caught v2 DRIFT (40/84, 10/15 longppl), Flywheel #566 PUCT + 34.99x Merkle trace compressor, Arm C buildc lift (16.67% to 95.83%, p=4e-6), and Three-Plate Oracle (115/115 recall, 0 false accepts).</p>
 </article>
 </main>
 </body>

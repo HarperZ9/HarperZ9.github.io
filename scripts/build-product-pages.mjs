@@ -116,9 +116,16 @@ ${limit(s.limit)}${run(s.run)}${list}${figs(s.figs)}${src(s.source)}
 <p class="lp-purpose" data-canonical-purpose="buildlang">${esc(PURPOSE)}</p>
 <p class="lp-run"><code>cargo install buildlang --version ${esc(BLR.version)} --locked</code></p>
 <p class="lp-rel">Release <a href="${BLR.url}">${esc(BLR.version)}</a>, ${esc(longDate(BLR.published))}. Each figure below opens to the pull request it was read from, and names the release that first carried that work, or says it is on main after this release or still in review.</p>
-${sectionsNav([...BL.SECTIONS, { id: "first", title: first.title }])}
+${sectionsNav([...BL.SECTIONS, { id: "superopt", title: "V5 certified superoptimizer" }, { id: "first", title: first.title }])}
 </header>
 ${sections}
+<section class="lp-sec" id="superopt" aria-labelledby="h-superopt">
+<h2 id="h-superopt"><span class="d-3d">V5 certified e-graph superoptimizer &amp; GPU polyhedral TV</span></h2>
+<p class="lp-status">Merged on main after ${esc(BLR.version)} (<a href="https://github.com/HarperZ9/buildlang/pull/344">#344</a>, <a href="https://github.com/HarperZ9/buildlang/pull/345">#345</a>, <a href="https://github.com/HarperZ9/buildlang/pull/346">#346</a>).</p>
+<p class="lp-lede">Equality saturation and certified GPU polyhedral loop tiling + uniformity-safe subgroup auto-vectorization (WGSL, HLSL, MSL, SPIR-V) wired straight into <code>buildc</code> with offline-verifiable proof certificates.</p>
+<p class="lp-run"><code>buildc build prog.bld --superopt --emit-cert cert.json &amp;&amp; buildc verify-cert cert.json</code></p>
+<p class="lp-source">Merged 26 November 2026: <a href="https://github.com/HarperZ9/buildlang/pull/344">buildlang #344</a> (V5 superopt, <code>b21c66ce</code>), <a href="https://github.com/HarperZ9/buildlang/pull/346">buildlang #346</a> (GPU polyhedral + subgroup TV <code>--emit-gpu-cert</code>, <code>998ddf27</code>, 15/15 CI green); OSI/FSF AGPL-3.0-only funding manifest via <a href="https://github.com/HarperZ9/buildlang/pull/345">buildlang #345</a> (<a href="https://raw.githubusercontent.com/HarperZ9/buildlang/main/funding.json">funding.json</a>).</p>
+</section>
 <section class="lp-sec" id="first" aria-labelledby="h-first">
 <h2 id="h-first"><span class="d-3d">${esc(first.title)}</span></h2>
 <p class="lp-lede">${esc(first.lede)}</p>

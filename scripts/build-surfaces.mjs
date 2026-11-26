@@ -137,31 +137,13 @@ ${labelFor(r.demo)}
 function workbenchSection(m) {
   if (!m.workbench?.length) return "";
   const total = m.workbench.reduce((n, g) => n + g.engines.length, 0);
-  const groups = m.workbench.map((g) => `<div class="wb-group" data-wb-group>
-<h3>${esc(g.discipline)} <span class="wb-disc-n">${g.engines.length}</span></h3>
-<ul class="wb-list">${g.engines.map((e) => {
+  const shortTab = (d) => d.split(",")[0].replace(/ & .*$/, "");
+  const tabs = [`<button type="button" data-wb-disc="all" aria-pressed="true">All (${total})</button>`, ...m.workbench.map((g, i) => `<button type="button" data-wb-disc="${i}" aria-pressed="false">${esc(shortTab(g.discipline))} (${g.engines.length})</button>`)].join("");
+  const groups = m.workbench.map((g, i) => `<div class="wb-group" data-wb-group data-wb-disc="${i}"><h3>${esc(g.discipline)} <span class="wb-disc-n">${g.engines.length}</span></h3><ul class="wb-list">${g.engines.map((e) => {
     const btns = e.actions.map(([act, tgt, label]) => `<button type="button" data-wb-action="${esc(act)}" data-wb-target="${esc(tgt)}">${esc(label)}</button>`).join("");
     return `<li data-wb-row><span class="wb-name">${esc(e.name)}</span><span class="wb-desc">${esc(e.desc)}</span><span class="wb-actions">${btns}</span></li>`;
-  }).join("")}</ul>
-</div>`).join("\n");
-  return `<section class="sx" id="workbench" aria-labelledby="workbench-h">
-<span id="instruments"></span>
-<h2 id="workbench-h">Instruments and study tools</h2>
-<p>All ${total} generators, looms, plotters, fractals, lettering families, shaders, synths, and 3D worlds consolidated onto one hairline ledger. Filter or mount any engine inline.</p>
-<div class="wb-toolbar">
-  <label for="wb-filter" class="sr-only">Filter creative engines</label>
-  <input id="wb-filter" type="search" placeholder="Filter engines: loom, thread, poster, fractal, fourier, splat, sound..." autocomplete="off">
-  <p id="wb-count" class="wb-count" aria-live="polite">${total} creative engines across ${m.workbench.length} disciplines</p>
-</div>
-<div id="wb-stage" class="wb-stage" hidden>
-  <div class="wb-stage-bar">
-    <strong id="wb-stage-title">Live stage</strong>
-    <span><a id="wb-stage-open" href="/studio.html">Open full window</a> <button type="button" id="wb-stage-close">Close stage</button></span>
-  </div>
-  <div id="wb-stage-body"></div>
-</div>
-${groups}
-</section>`;
+  }).join("")}</ul></div>`).join("");
+  return `<section class="sx" id="workbench" aria-labelledby="workbench-h"><span id="instruments"></span><h2 id="workbench-h">Instruments and study tools</h2><p>All ${total} generators, looms, plotters, fractals, lettering families, shaders, synths, and 3D worlds on one hairline ledger. Filter by discipline, mount any engine inline, or send its signal into the Unified Studio above.</p><div class="wb-toolbar"><label for="wb-filter" class="sr-only">Filter creative engines</label><input id="wb-filter" type="search" placeholder="Filter ${total} engines (loom, fractal, shader, sound)..." autocomplete="off"><p id="wb-count" class="wb-count" aria-live="polite">${total} creative engines across ${m.workbench.length} disciplines</p></div><div class="wb-discs" id="wb-discs" role="group" aria-label="Filter engines by discipline">${tabs}</div><div id="wb-stage" class="wb-stage" hidden><div class="wb-stage-bar"><strong id="wb-stage-title">Live stage</strong><span><button type="button" id="wb-stage-send">Send to Studio Layer</button> <a id="wb-stage-open" href="/studio.html">Open full window</a> <button type="button" id="wb-stage-close">Close stage</button></span></div><div id="wb-stage-body"></div></div>${groups}</section>`;
 }
 
 function nativeSection() {
@@ -176,7 +158,7 @@ function nativeSection() {
   return `<section class="sx" id="native" aria-labelledby="native-h">
 <h2 id="native-h">Native renderer (RAW DX12 / Vulkan / WebGPU)</h2>
 ${labelFor("raw-render")}
-<p>Real-time GPU renderer certified beside a CPU path-traced reference. Live DX12 Skyrim SE graphics replacement passes 96/96 moving-camera checks (384 1080p frames, 19 solvers in 1.57 ms, 0 D3D12 errors), shared with Fallout 4 and Starfield runtime bridges.</p>
+<p>Real-time C++23 GPU renderer certified beside a CPU path-traced reference. RAW DX12 Waves 74-80 pass 96/96 live moving-camera Skyrim SE checks (38/38 DXC -WX -O3, 21/21 RTX 4090 GPU bench, 0 D3D12 errors), spanning 2-slot ReSTIR-GI, L=8 hash radiance cache, world-space drainage &amp; thermal snow melt, froxel GI, Planck blackbody fire, Burley SSS, and spectral caustics.</p>
 <div class="lw-walk" data-toy="engine" data-live="/media/raw-native/live/index.html">
 <ul class="lw-doors">${doors}</ul>
 <p class="lw-go" hidden><button type="button" class="toy-btn" data-start="scene=test" data-bytes="0">${esc(test.go)}</button> <span class="rn-aside">${esc(test.cap)}</span></p>
@@ -247,39 +229,7 @@ function superframeSection() {
 }
 
 function studioMediaSection() {
-  return `<section class="sx" id="studio-media" aria-labelledby="studio-media-h">
-<h2 id="studio-media-h">Spoken overview, solver film &amp; Round 2 sound</h2>
-<p>Opt-in media built from the unified toolchain. Nothing autoplays; every stream starts only on press.</p>
-<div class="pg-media-grid">
-  <div class="pg-media-videos">
-    <figure style="margin:0">
-      <video controls preload="none" poster="/media/overhaul/astera-residency-intro-2min-1080p-poster.webp" width="1920" height="1080" aria-label="Zain Dana Harper two-minute overview of tools, repositories, and engines">
-        <source src="https://github.com/HarperZ9/flywheel/releases/download/astera-residency-intro-2026-11-26/astera-residency-intro-2min-1080p.mp4" type="video/mp4">
-      </video>
-      <figcaption class="sx-as">Two-Minute Tools &amp; Engines Overview (107 s, 1080p, custom voice model; <a href="https://github.com/HarperZ9/flywheel/releases/tag/astera-residency-intro-2026-11-26">SHA256SUMS</a>).</figcaption>
-    </figure>
-    <figure style="margin:0">
-      <video controls preload="none" poster="/media/overhaul/ecosystem-super-accelerator-solver-1080p-poster.webp" width="1920" height="1080" aria-label="Ecosystem Super-Accelerator Solver 1080p explainer">
-        <source src="/media/overhaul/ecosystem-super-accelerator-solver-1080p.mp4" type="video/mp4">
-      </video>
-      <figcaption class="sx-as">Ecosystem Super-Accelerator Solver (38 s, 1080p, scored over Estuary Rain).</figcaption>
-    </figure>
-  </div>
-  <ul class="pg-audio-list">
-    <li>
-      <strong>Pacific Horizon (166 BPM Atmospheric DnB + Japanese Jazz-Fusion)</strong>
-      <span class="sx-as">44 s, 48 kHz stereo, -16.5 LUFS, -1.87 dBFS peak, 0 clips.</span>
-      <audio controls preload="none" src="/media/overhaul/round2-pacific-horizon-dnb-jazz.mp3"></audio>
-    </li>
-    <li>
-      <strong>Estuary Rain (162 BPM Liquid DnB + Jazz-Fusion Explainer Bed)</strong>
-      <span class="sx-as">46 s, 48 kHz stereo, -16.7 LUFS, -2.07 dBFS peak, 0 clips.</span>
-      <audio controls preload="none" src="/media/overhaul/round2-estuary-rain-fusion-bed.mp3"></audio>
-    </li>
-  </ul>
-</div>
-<p class="verified"><b>Verified</b> ${esc(CHECKED)}: 35 engines mapped from repository code; Estuary tested in <code>tests/estuary-*.test.mjs</code>; Round 2 audio at 0 clips; Native RAW and Low Water pinned to superframe commit cac34166.</p>
-</section>`;
+  return `<section class="sx" id="studio-media" aria-labelledby="studio-media-h"><h2 id="studio-media-h">Spoken overview, solver film &amp; Round 2 sound</h2><p>Opt-in media built from the unified toolchain. Nothing autoplays; every stream starts only on press.</p><div class="pg-media-grid"><div class="pg-media-videos"><figure style="margin:0"><video controls preload="none" poster="/media/overhaul/astera-residency-intro-2min-1080p-poster.webp" width="1920" height="1080" aria-label="Zain Dana Harper two-minute overview of tools, repositories, and engines"><source src="https://github.com/HarperZ9/flywheel/releases/download/astera-residency-intro-2026-11-26/astera-residency-intro-2min-1080p.mp4" type="video/mp4"></video><figcaption class="sx-as">Two-Minute Tools &amp; Engines Overview (107 s, 1080p, custom voice; <a href="https://github.com/HarperZ9/flywheel/releases/tag/astera-residency-intro-2026-11-26">SHA256SUMS</a>).</figcaption></figure><figure style="margin:0"><video controls preload="none" poster="/media/overhaul/ecosystem-super-accelerator-solver-1080p-poster.webp" width="1920" height="1080" aria-label="Ecosystem Super-Accelerator Solver 1080p explainer"><source src="/media/overhaul/ecosystem-super-accelerator-solver-1080p.mp4" type="video/mp4"></video><figcaption class="sx-as">Ecosystem Super-Accelerator Solver (38 s, 1080p, scored over Estuary Rain).</figcaption></figure></div><ul class="pg-audio-list"><li><strong>Pacific Horizon (166 BPM Atmospheric DnB + Japanese Jazz-Fusion)</strong><span class="sx-as">44 s, 48 kHz stereo, -16.5 LUFS, -1.87 dBFS peak, 0 clips.</span><audio controls preload="none" src="/media/overhaul/round2-pacific-horizon-dnb-jazz.mp3"></audio></li><li><strong>Estuary Rain (162 BPM Liquid DnB + Jazz-Fusion Explainer Bed)</strong><span class="sx-as">46 s, 48 kHz stereo, -16.7 LUFS, -2.07 dBFS peak, 0 clips.</span><audio controls preload="none" src="/media/overhaul/round2-estuary-rain-fusion-bed.mp3"></audio></li></ul></div><p class="verified"><b>Verified</b> ${esc(CHECKED)}: 35 engines mapped from repository code; Estuary tested in <code>tests/estuary-*.test.mjs</code>; Superframe #153 3/3 <code>native/bld/</code> bit-exact C++ parity + 3-way 100 Hz/Deja-VAE; RAW DX12 Waves 74-80 (96/96 live Skyrim SE, 38/38 DXC, 21/21 RTX 4090 bench).</p></section>`;
 }
 
 async function build(m) {
@@ -290,12 +240,22 @@ async function build(m) {
 <div id="mx-host" hidden></div>
 </section>` : "";
   const isPlayground = m.id === "playground";
+  const studioStillSvg = `<svg class="sc-still-svg" viewBox="0 0 960 540" role="img" aria-label="Five-layer Unified Studio composite preview: Estuary Perret apertures, Living Type ESTUARY, Retro 46 FX scanlines, Loom Jacquard warp/weft, and Plotter topographic contour lines."><defs><linearGradient id="scbg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#091521"/><stop offset=".55" stop-color="#132a3a"/><stop offset="1" stop-color="#1a394b"/></linearGradient></defs><rect width="960" height="540" fill="url(#scbg)"/><g fill="none" stroke="rgba(236,229,214,.18)" stroke-width="1"><rect x="44" y="42" width="72" height="72"/><rect x="152" y="42" width="72" height="72"/><rect x="260" y="42" width="72" height="72"/><rect x="368" y="42" width="72" height="72"/><rect x="476" y="42" width="72" height="72"/><rect x="584" y="42" width="72" height="72"/><rect x="692" y="42" width="72" height="72"/><rect x="800" y="42" width="72" height="72"/><rect x="44" y="426" width="72" height="72"/><rect x="260" y="426" width="72" height="72"/><rect x="476" y="426" width="72" height="72"/><rect x="692" y="426" width="72" height="72"/></g><g fill="rgba(78,166,184,.26)"><circle cx="296" cy="210" r="34"/><circle cx="480" cy="260" r="52"/><circle cx="660" cy="220" r="38"/><circle cx="410" cy="340" r="28"/></g><g fill="none" stroke="rgba(215,158,53,.52)" stroke-width="1.3"><path d="M32 140Q260 98 480 144T928 134"/><path d="M32 210Q260 158 480 202T928 198"/><path d="M32 330Q260 288 480 326T928 318"/><path d="M32 400Q260 364 480 392T928 386"/></g><g fill="none" stroke="rgba(244,239,230,.55)" stroke-width="1.1"><path d="M32 175Q260 132 480 168T928 164"/><path d="M32 270Q260 218 480 256T928 260"/><path d="M32 365Q260 330 480 358T928 352"/></g><text x="480" y="286" text-anchor="middle" font-family="Hanken Grotesk,system-ui,sans-serif" font-weight="800" font-size="112" letter-spacing="14" fill="rgba(244,239,230,.92)" stroke="rgba(215,158,53,.65)" stroke-width="1.5">ESTUARY</text><g stroke="rgba(244,239,230,.55)" stroke-width="1"><path d="M10 18h16M18 10v16M934 18h16M942 10v16M10 522h16M18 514v16M934 522h16M942 514v16"/></g></svg>`;
+  const unifiedStudio = isPlayground ? `<section class="sx sc-shell" id="studio-canvas-shell" aria-labelledby="studio-h">
+<div class="sc-head"><h2 id="studio-h">Unified Live Multimedia Studio</h2><p class="sc-sub">Five simultaneous layers (Physics/Estuary, Living Type, Retro 46 FX, Loom Jacquard, Plotter Contours) compositing onto one canvas with a docked 4-lane modal DAW and SHA-256 verified Patchbay.</p></div>
+<div id="sc-preview" class="sc-preview">
+<ol class="sc-prev-layers" aria-label="Composite layers"><li><b>1. Physics / Estuary Field</b> <span>100% normal &middot; DAW -&gt; Estuary</span></li><li><b>2. Living Type Field</b> <span>92% screen &middot; DAW -&gt; Type</span></li><li><b>3. Retro 46 FX &amp; Grade</b> <span>58% overlay &middot; Estuary -&gt; Retro FX</span></li><li><b>4. Loom Jacquard Thread</b> <span>46% screen &middot; Retro FX -&gt; Loom</span></li><li><b>5. Plotter Vector Contours</b> <span>88% normal &middot; Loom -&gt; Plotter</span></li></ol>
+<div class="sc-prev-stage"><div class="sc-prev-hops">DAW -&gt; Estuary -&gt; Retro FX -&gt; Loom -&gt; Plotter &middot; Export PNG / WIF / SVG / Receipt</div>${studioStillSvg}<p class="sx-go"><button type="button" id="sc-launch" hidden>Open live 5-layer studio &amp; DAW</button><span>Mounts 60 fps canvas compositor, blend modes, 4-lane modal DAW (muted until Play), and SHA-256 Patchbay on press.</span></p></div>
+</div>
+<div id="sc-root" hidden></div>
+</section>` : "";
   const body = `<article class="ds lp" data-landmark="playground" data-hue="theplygrnd">
 <header class="lp-head">
 <h1><span class="d-3d">${esc(m.title)}</span> <span class="pf-mark">THEPLAYGRND</span></h1>
 <p class="ds-lede">${m.lede}</p>${m.make ? `\n<p>${m.make}</p>` : ""}
 ${jumpNav}
 </header>
+${unifiedStudio}
 ${marbledBar}
 ${exchange(m)}
 ${(await Promise.all((m.rooms || []).map((r) => room(m, r)))).join("\n")}

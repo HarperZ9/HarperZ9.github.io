@@ -25,6 +25,8 @@
     "publicReposCatalog": "https://harperz9.github.io/assets/data/unified/all_public_repos_catalog.json",
     "installersCatalog": "https://harperz9.github.io/assets/data/unified/one_command_installers.json",
     "sitemap": "https://harperz9.github.io/sitemap.xml",
+    "fundingJson": "https://harperz9.github.io/funding.json",
+    "fundingManifestUrls": "https://harperz9.github.io/.well-known/funding-manifest-urls",
     "atomFeed": "https://harperz9.github.io/feed.xml",
     "jsonFeed": "https://harperz9.github.io/feed.json"
   },
@@ -34,28 +36,28 @@
       "name": "BuildLang",
       "url": "https://harperz9.github.io/buildlang.html",
       "repository": "https://github.com/HarperZ9/buildlang",
-      "summary": "Rust-built compiled systems language with typed capability effects, 12 targets (C, HLSL, GLSL, WGSL, Metal, SPIR-V, x86-64, RISC-V, WASM), V5 superoptimizer, Universal Hourglass lowering, 1.18M-record corpus engine, BuildDB (BDB) checksummed SQL, and BuildTeX PDF typesetting."
+      "summary": "Rust-built compiled systems language with typed capability effects, 12 targets (C, HLSL, GLSL, WGSL, Metal, SPIR-V, x86-64, RISC-V, WASM), V5 certified e-graph superoptimizer (--superopt/--emit-cert/verify-cert via #344), certified GPU polyhedral tiling + subgroup TV (--emit-gpu-cert across WGSL/HLSL/MSL/SPIR-V via #346), Universal Hourglass lowering, 1.18M-record corpus engine, BuildDB (BDB), BuildTeX, and live AGPL-3.0-only funding.json (#345)."
     },
     {
       "id": "flywheel",
       "name": "The Flywheel",
       "url": "https://harperz9.github.io/flywheel.html",
       "repository": "https://github.com/HarperZ9/flywheel",
-      "summary": "Self-hosted AI workstation and coding harness consolidating 31 packages behind cryptographic offline receipts, Rowan orchestration, Three-Plate Verification Oracle (115/115 defect recall, 0 false accepts), EMET byte-integrity witnessing, and Articulate deterministic prose linting."
+      "summary": "Self-hosted AI workstation and coding harness consolidating 31 packages behind cryptographic offline receipts, Rowan orchestration, Three-Plate Verification Oracle (115/115 recall, 0 false accepts), unified flywheel super-solver (6/6 adversarial fault catch via #565), PUCT oracle tree search + 34.99x RFC 6962 Merkle trace compression (#566), EMET witnessing, and Articulate prose linting."
     },
     {
       "id": "playground",
       "name": "The Playground",
       "url": "https://harperz9.github.io/playground/index.html",
       "repository": "https://github.com/HarperZ9/superframe",
-      "summary": "Unified creative field and rendering engine combining Estuary continuous Perret-lantern metamers, 35 creative engines (Loom, Posters, Studio, Fractals, Type Forge, Shaders, Retro 46 FX, Sound), Native RAW DX12/Vulkan/WebGPU (96/96 live Skyrim SE moving-camera pass), Low Water 3D game, and Superframe deterministic core."
+      "summary": "Unified creative field and rendering engine combining Estuary continuous Perret-lantern metamers, 35 creative engines (Loom, Posters, Studio, Fractals, Type Forge, Shaders, Retro 46 FX, Sound), Native RAW DX12/Vulkan/WebGPU (Waves 74-80: 96/96 live Skyrim SE moving-camera pass, 38/38 DXC, 21/21 RTX 4090 GPU bench), Low Water 3D game, and Superframe deterministic core (#153: 3/3 native/bld bit-exact C++ parity + 3-way 100 Hz/Deja-VAE)."
     },
     {
       "id": "cmmns",
       "name": "The Commons (CMMNS)",
       "url": "https://harperz9.github.io/cmmns.html",
       "repository": "https://github.com/HarperZ9/cmmns",
-      "summary": "Local-first, account-free browser extension surfacing account provenance, coordination cues, Content Credentials (C2PA), and fact-checks across 9 social platforms."
+      "summary": "Local-first, account-free browser extension surfacing account provenance, coordination cues, Content Credentials (C2PA), and fact-checks across 9 social platforms, plus offline Web/AI provenance CLI verifier (#130, 4/4 adversarial catches) and live AGPL-3.0-only funding.json (#131)."
     },
     {
       "id": "research-and-models",
@@ -63,7 +65,7 @@
       "url": "https://harperz9.github.io/models.html",
       "findingsUrl": "https://harperz9.github.io/findings/index.html",
       "securityUrl": "https://harperz9.github.io/security.html",
-      "summary": "30 reproducible empirical studies (12 published nulls), 13 DOI-indexed Zenodo preprints, Local Frontier Model Lab (JFC3P-7B-Oracle, NOH-4, Plato-Key, AVTR-4R, FRESCO/MoLT), and capability-public security hierarchy."
+      "summary": "30 reproducible empirical studies (12 published nulls), 13 DOI-indexed Zenodo preprints, Local Frontier Model Lab (JFC3P-7B-Oracle v3 PASS 48/84 Raw / 49/84 Arm C, 15/15 longppl preserved, 32.72 ms CUDA 151k Reverse-KL, A1..A5 PASS, plus caught v2 DRIFT 40/84 kept public; NOH-4, Plato-Key, AVTR-4R, FRESCO/MoLT), and capability-public security hierarchy."
     }
   ],
   "inventory": {

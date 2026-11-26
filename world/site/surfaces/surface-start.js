@@ -1,5 +1,18 @@
 // surface-start.js: all a surface loads before a press. One press, or an address that carries ?start, brings the
 // modules in (surface-page.mjs). A room has its own press, or opens when the address names it (rooms.mjs).
+const scLaunch = document.getElementById("sc-launch"), scRoot = document.getElementById("sc-root"), scPrev = document.getElementById("sc-preview");
+if (scLaunch && scRoot) {
+  let scP = null;
+  const openStudio = () => (scP ||= (scLaunch.disabled = true, scLaunch.textContent = "Opening studio", import("./studio-compositor.mjs").then((m) => m.mountUnifiedStudio(scRoot)).catch((e) => {
+    console.error("surface: unified studio failed", e);
+    scP = null; scLaunch.disabled = false; scLaunch.textContent = "Open live 5-layer studio & DAW";
+  })));
+  scLaunch.hidden = false;
+  scLaunch.addEventListener("click", openStudio);
+  scPrev?.querySelector(".sc-still-svg")?.addEventListener("click", openStudio);
+  window.__openUnifiedStudio = openStudio;
+  if (new URLSearchParams(location.search).has("studio")) openStudio();
+}
 const mb = document.getElementById("sx-marble-all"), mHost = document.getElementById("mx-host");
 if (mb && mHost) {
   const goAll = () => {
@@ -52,7 +65,7 @@ if (wb) {
   wb.querySelector("#wb-filter")?.addEventListener("focus", () => { bootWb(); }, { once: true });
   wb.querySelector("#wb-filter")?.addEventListener("input", () => { bootWb(); }, { once: true });
   wb.addEventListener("click", (ev) => {
-    const btn = ev.target.closest("[data-wb-action]");
+    const btn = ev.target.closest("[data-wb-action],[data-wb-disc]");
     if (!btn || wb.dataset.wbReady) return;
     ev.preventDefault();
     bootWb().then(() => btn.click());
