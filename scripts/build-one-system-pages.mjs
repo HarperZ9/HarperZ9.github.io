@@ -299,10 +299,11 @@ ${provenance("person.html", "2026-11-26", "Direct-voice biography & craft")}
 import("/system/media-engine/page.mjs")
   .then((p) => p.usePlugin("plate"))
   .then((engine) => {
+    const kind = 'plate';
     for (const c of document.querySelectorAll("canvas[data-specimen]")) {
       if (c.dataset.plateMounted === "true") continue;
       c.dataset.plateMounted = "true";
-      engine.mount(c, "plate", { params: { fromDataset: true }, seed: c.dataset.specimen || "person-plate-01" });
+      engine.mount(c, kind, { params: { fromDataset: true }, seed: c.dataset.specimen || "person-plate-01" });
     }
   })
   .catch(() => import("/system/generative-field.js?v=20260902-creative-chassis").then((m) => m.mountSpecimens?.(document)));
