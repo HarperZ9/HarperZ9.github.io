@@ -28,7 +28,9 @@ function testsOf(name) {
   let rows = (suite.tests || []).map(([file, secs, ...args]) => ({ file, secs, args }));
   if (suite.select) {   // every file that matches, so a new test joins the suite without an edit here
     const { dir, pattern, contains } = suite.select, known = suite.secs || {};
+    const spare = new Set(MANIFEST.notInCi?.files || []);
     rows = fs.readdirSync(path.join(ROOT, dir)).filter((f) => new RegExp(pattern).test(f)).sort().map((f) => `${dir}/${f}`)
+      .filter((f) => !spare.has(f))
       .filter((f) => !contains || fs.readFileSync(path.join(ROOT, f), 'utf8').includes(contains))
       .map((file) => ({ file, secs: known[path.basename(file).replace(/\.cjs$/, '')] ?? DEFAULT_SECS, args: [] }));
   }

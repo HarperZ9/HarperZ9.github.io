@@ -66,7 +66,7 @@ def test_the_menu_leads_with_the_six_landmarks_on_every_generated_page():
     # 13 November 2026: the third landmark is shown as The Playground (author, 2026-11-11: "the playground is the
     # rendering engine. It's the engine."); its place in the order is unchanged.
     words = ["BuildLang", "Flywheel", "The Playground", "Game", "Site", "Everything"]
-    for page in ("index.html", "buildlang.html", "low-water.html", "floor.html", "credits.html"):
+    for page in ("index.html", "buildlang.html", "low-water.html", "tools.html", "credits.html"):
         html = (ROOT / page).read_text(encoding="utf-8")
         menu = html.split('<ul class="o-places">', 1)[1].split("</ul>", 1)[0]
         found = re.findall(r'<span class="o-word"[^>]*>([^<]+)</span>', menu)

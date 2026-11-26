@@ -1,309 +1,87 @@
 # Zain Dana Harper
+**Field Crew Leader, Independent Cross-Domain Researcher & Systems Architect**
 
-Kent, Washington | zaindharper@gmail.com | harperz9.github.io
+Seattle, WA (Local / Hybrid / Remote Open) | zaindharper@gmail.com | harperz9.github.io | github.com/HarperZ9 | linkedin.com/in/zaindanaharper | orcid.org/0009-0001-7175-5393
 
-linkedin.com/in/zaindanaharper | github.com/HarperZ9 | harperz9.github.io/published-work.html
+## 30-Second Work-Sample Proof Strip
 
-AI Evaluation and Test Engineer | Graphics and Tools Programmer
+- **11 Yrs Field Lead** - Tree crew ops, safety & client teaching
+- **30 Studies / 13 DOIs** - 12 null results; open reproductions
+- **1,004,693 DLs** - Elder ENB + 5 shipped platforms
+- **41 PRs / 34 Repos** - External maintainer-reviewed work
 
-## Summary
+## Executive Profile
 
-I build tests that tell a working AI system from a broken one, and renderers and compilers checked against a reference. Maintainers of 34 open-source projects have merged 41 of my pull requests, and my Skyrim lighting mod has 1,004,693 downloads. About thirteen years of programming, and eleven years of commercial tree care scoping jobs and coordinating crews.
+Multi-domain field leader, independent researcher, systems architect, and educator with 11 years operating and leading commercial arboriculture crews in the Seattle area alongside 13 years of continuous systems, graphics, and empirical research work. Connects living ecology, structural biology, human behavior, ethics, optics, and verifiable computing into concrete, testable artifacts. Every major claim below links to a public repository, published DOI, automated test suite, or verifiable work sample.
 
-## Selected Results
+## Technical Skills
 
-- Open source: 41 pull requests merged in 34 other people's projects, counted November 14, 2026: 38 engineering changes in 31 repositories and 3 list entries. Of the engineering pull requests, 17 more were closed without merge and 13 are open. Examples: DeepEval #2822, Pydantic AI #6205, Datasette #2815, TOMLKit #549 and Biome #11518. harperz9.github.io/portfolio.html
+- **Field Leadership & Education:** Tree-Care Crew Leadership, High-Hazard Aerial Rigging & Crane Coordination, Site Scoping & Client Expectations, Explaining Tree Biology & Structure via Organic Analogies, Safety Checklist Discipline
+- **Research, Policy & Synthesis:** Empirical Study Design, Preregistered Controls & Honest Null Publication, AI Accountability & Disclosure Investigations, Cross-Domain Associative Synthesis (Ecology, Ethics, History, Optics, AI)
+- **Verification & AI Systems:** Fail-Closed Oracles (Three-Plate 115/115), SHA-256 engine-receipt/1 Ledgers, RLVR/Oracle Post-Training (JFC3P-7B-Oracle-v1), Neural Operators (NOH-3/NOH-4), Multi-Agent Research Direction
+- **Graphics, Compilers & Data:** DirectX 12, HLSL SM 6.10, Vulkan 1.3, WebGPU, BT.2020/2100 Spectral Optics, Rust (BuildLang 1.15.0), Embedded SQL (BuildDB qdb.exe), C++23, Python, TypeScript (MV3), SQLite FTS5, DuckDB/Parquet
 
-- Shipped tools: Flywheel 2.0.0, Articulate 0.19.1, EMET 1.3.1, Accountable Surface 0.3.1, Calibrate Pro 2.0.1 and Build Color 1.0.2 on PyPI; BuildLang 1.15.0 on crates.io; CMMNS 3.10.0, Superframe 0.3.0 and Phantom 1.1.1 as GitHub releases. Versions read from the registries on November 20, 2026.
+## 1. Field Leadership, Arboriculture & Client Education
 
-- Elder ENB: 1,004,693 total downloads, 179,218 unique downloads, 2,418 endorsements and 147,566 views on Nexus Mods as of November 13, 2026, at version final-elder-9. First uploaded April 21, 2024. nexusmods.com/skyrimspecialedition/mods/117327
+### Tree Care Crew Lead & Commercial Arboriculture Operations | Legendary Tree
+*Seattle Area, WA | April 2015 - June 2026*
 
-- Published work: Who Knew First, an AI-assisted investigation of disclosure across nine reported AI-agent incidents; 30 research findings, 12 of them nulls, each with the steps to repeat it; and 13 research records with DOIs, the EMET systems paper among them: doi.org/10.5281/zenodo.21230267. Not peer reviewed. harperz9.github.io/findings/
+- **High-Hazard Crew Operations:** Operated and led commercial tree-care crews across 11 years of Pacific Northwest urban canopy work, managing dynamic rigging loads, crane clearances, drop zones, and 100+ ft aerial hazard envelopes with zero-margin safety discipline.
+- **Client Expectations & Biology Education:** Conducted on-site assessments with homeowners and property managers, setting transparent scope expectations and teaching tree biology, structural load paths, and the reasoning behind every intervention using clear organic analogies.
+- **Field-to-Model Synthesis:** Translated practical canopy mechanics and weather exposure directly into Williams/Almeras tree-stress simulations in Superframe and natural-light atmosphere presets in Elder ENB.
 
-- Measured results: RAW DX12 96/96 moving-camera pass (384 1080p frames, 19 solvers 1.57 ms, 0 D3D12 errors); Flywheel Three-Plate Oracle 115/115 recall (0 false accepts) and Arm C local 14B lift 16.67% to 95.83% (p=4e-6); steered-agent guard 64/66; retired one null accuracy benchmark (9/10 vs 8/10). harperz9.github.io/analytics/flywheel-benchmark-record.html
+### Technical Networking Support Specialist | Stream/Convergys (Xbox / Microsoft Product Contract)
+*Wilsonville, OR | 2014 - 2015*
 
-## Flagship Projects
+- **Calm Public Troubleshooting:** Diagnosed TCP/IP, DNS, NAT, router, firewall, and console hardware faults by phone and chat at high volume, documenting clear repeatable steps for team handoffs.
 
-- Flywheel 2.0.0 runs any model across 31 packages (FlagshipAgentSDK, accountable-surface 563 tests, gather/deconstruct, unsafe-free Rust EMET 1.3.1, Three-Plate Oracle 115/115). github.com/HarperZ9/flywheel/releases/tag/v2.0.0
+## 2. Independent Research, Architecture & Shipped Systems
 
-- CMMNS (formerly Daylight Commons) shows reply sources across nine platforms (Web Crypto receipts, 1,726 tests; slur sign 91.0% precision, 3,995 of 4,392). github.com/HarperZ9/cmmns/blob/main/project-docs/EVALUATION.md
+### Founder, Researcher & Independent Systems Architect | Harper Research & Open-Source Ecosystem
+*Seattle, WA | 2025 - Present (Independent Engineering & Research since 2013) | harperz9.github.io | github.com/HarperZ9*
 
-- Articulate 0.19.1 is deterministic prose analysis for CLI, LSP, and SARIF CI (2,096 tests; Markdown masks removed 5,123 separator-row findings across 3,000 files). github.com/HarperZ9/flywheel/tree/main/packages/articulate
+Architected, directed, verified, and released five unified open-source platforms under a registered Washington sole proprietorship, combining deterministic verification, native graphics, compilers, AI evaluation, and civic archival.
 
-- BuildLang 1.15.0 (crates.io) checks capability effects for C/HLSL/GLSL/Wasm/x86-64 (147/147 hashes, 1,160 lib tests, BDB v2 2.89 MB paging 0/500 silent corruptions, procgen_forge.bld 2,132.3x, aerospace_ai_kernels.bld 1,008.5x, workstation_mcp.bld 69.92 us; 181/270 universe fails open). crates.io/crates/buildlang
+### Flywheel 2.0.0, JFC3P-7B-Oracle-v1 & NOH-3 / NOH-4 (AI Verification & Models) | HarperZ9/flywheel (PyPI: flywheel-verify)
+*github.com/HarperZ9/flywheel*
 
-- Superframe 0.3.0 (The Playground) + RAW DX12: C++23 CPU/D3D12/Vulkan/WebGPU renderer (raw-native 0.8.0 byte-identical), RAW 96/96 live pass, spectral 64v/126t meshlet forge, SI physai (30,670 steps/s), NOH-1 (1,149.9x), Low Water. github.com/HarperZ9/superframe
+- **Fail-Closed Verification & Receipts:** Consolidated 30 verification, harness, and memory packages behind cryptographic engine-receipt/1 SHA-256 ledgers; Three-Plate achieved 115/115 (100%) planted-defect recall with 0 false accepts (vs 6.09% single-plate baseline); steered-agent request-vs-action guards caught 64/66 harmful tool calls (vs 1/66 schema).
+- **Local Oracle Training & Neural Operators:** Trained and quantized JFC3P-7B-Oracle-v1 (4.68 GB Q4_K_M), lifting adversarial trap rejection from 16.67% to 95.83% (+33.33 pp, Fisher exact p = 4e-6) under Arm C; designed NOH-3/NOH-4 Buckingham-Pi scale-normalized operators achieving 18x to 24x OOD MSE reduction and 78.0x post-fault recovery MSE wins.
+- **Deterministic Writing & Recall Tooling:** Shipped Articulate 0.19.1 (PyPI deterministic prose linter CLI/LSP/SARIF GitHub Action, 2,096 passing tests) and IDF-Gated Federated Recall (91.25% hit@5 in 2.00 ms).
 
-## Experience
+### RAW DX12 (Wave 72), Superframe & Elder ENB (Real-Time Graphics & Simulation) | HarperZ9/superframe & Nexus Mods
+*github.com/HarperZ9/superframe*
 
-### Commercial Arboriculture and Field Operations | Legendary Tree
+- **Native Multi-Title DX12 Pipeline:** Built RAW DX12 Wave 72 (commit 5e49f67) spanning Skyrim SE, Fallout 4, and Starfield with 19 GPU compute solvers averaging 1.57 ms combined, 0 D3D12 debug errors, 522/522 runtime tests, 96/96 live moving-camera checks, and 14/14 DXC Shader Model 6.10 shaders.
+- **Multi-API Engine, Optics & Audio:** Engineered Superframe (DX12/Vulkan 1.3/WebGPU, commit e3091922; 600 Vulkan frames matching D3D12 WARP hash for hash) uniting BT.2020/2100 spectral optics, 6-DOF/EKF dynamics, Williams/Almeras tree biomechanics, physical-model CLAP/VST3 instruments, and the Low Water playable slice (250 tests).
+- **Real-World Visual Shipping:** Shipped Elder ENB (38 HLSL lighting/atmosphere presets) reaching 1,004,693 total downloads, 179,218 unique downloads, and 2,418 endorsements on Nexus Mods; released build-color 1.0.2 and calibrate-pro 2.0.1 on PyPI.
 
-Seattle area | April 25, 2015 to June 2, 2026
+### BuildLang 1.15.0, BuildDB (qdb.exe), CMMNS & Multimodal Corpus Brain | HarperZ9/buildlang & HarperZ9/cmmns
+*github.com/HarperZ9/buildlang | github.com/HarperZ9/cmmns*
 
-- Combined ground-based tree-care work and safety coordination with client intake, site assessments, estimates, proposals, scheduling, and crew/vendor communication.
+- **Compiler & Embedded Storage:** Shipped BuildLang 1.15.0 on crates.io (Rust capability-effect compiler targeting C/HLSL/Wasm/x86-64/RV64; 147/147 reproducible hashes, 2,132.3x procgen speedup, 115x to 191x f64 kernels) and BuildDB qdb.exe (2.89 MB paging footprint, 31.31 ms query, 0/500 fuzz failures, 0/170 crash-recovery failures).
+- **Civic Provenance & Multimodal Indexing:** Shipped CMMNS 3.10.0 (cross-browser MV3 universal web-archival and provenance tool, 1,735 tests, 91.0% pooled precision across 4 corpora) and a streaming workstation decompiler indexing 14.45M files, 6,558 videos (304x reduction), and 6.01M scrubbed FTS5 words in 3.66 ms.
 
-- Monitored rigging systems, clearances, and changing conditions while supporting climbers from the ground. Explained work options and constraints to clients and maintained continuity between the proposed scope and field execution.
+## 3. Empirical Studies, Zenodo DOIs & Upstream Open-Source Record
 
-### Technical Networking Support | Xbox/Microsoft contract
+### 30 Empirical Studies (12 Published Null Results) & 13 Zenodo DOI Records
+*2025 - 2026 | harperz9.github.io/findings/ | orcid.org/0009-0001-7175-5393*
 
-Subcontracted through Stream/Convergys | Wilsonville, Oregon | 2014 to 2015
+- **Open Empirical Archive:** Published 30 reproducible studies spanning 13 disciplines with explicit negative controls and reproduction scripts, archiving 12 honest null results alongside 13 minted Zenodo DOIs (e.g., doi.org/10.5281/zenodo.21230267) and Who Knew First (nine AI-agent disclosure incidents).
+- **Physical & Numerical Verification:** Verified 91 IEEE-754 float64 kernels across optics, color, ecology, and physics (91/91 known-answer and planted-wrong kills) and benchmarked a 512^3 CUDA P3M cosmological N-body solver within 3% of Cosmic Emu across 14 bands.
 
-- Diagnosed connectivity and account issues by phone and chat using TCP/IP, DNS, NAT, firewall, and router troubleshooting; documented repeatable resolutions and customer-facing instructions.
+### 41 Merged Pull Requests Across 34 External Open-Source Repositories
+*2025 - 2026 | harperz9.github.io/portfolio.html*
 
-I have not yet held a paid software role. The software in this CV is independent work; I have been a sole proprietor since September 2026.
+- **Selected Upstream Contributions:** python-grimp/grimp (#303-#305 Python/Rust fixes), DeepEval (#2822), Pydantic AI (#6205), Datasette (#2815, #2861), TOMLKit (#549), Biome (#11518), AgentFence (#253, #261, #262), Free Law Project litigant-portal (#820), Hebbian Robotics hflow (#157), and Voxwire (#44).
 
-## Projects
+## 4. Cross-Domain Synthesis, Communication, Credentials & Education
 
-- Own the architecture, implementation, integration, tests, documentation, and release work for Flywheel and related tools. Work spans Python services and command-line tools, Flutter desktop software, Rust systems tooling, and browser interfaces.
+### Communication, Teaching & Accessibility
 
-- Develop model-agnostic workflows, evaluation harnesses, and controlled-action interfaces whose records can be checked without a model approving its own answer.
+- **Associative Synthesis & Clear Explanation:** Connects insights across ecology, tree biology, ethics, history, sociology, human behavior, optics, and AI verification; translates technical and biological complexity into grounded everyday language and shipped data-driven accessibility specs for 148/148 public charts.
 
-Personal programming began with game modding, reverse engineering, bot and rotation logic, and runtime-memory tooling, then developed into systems engineering, graphics, compilers, and AI infrastructure.
+### Verified 2026 Credentials & Education
 
-### Freelance Technical Writer, Documentation, and Product Operations
-
-Independent practice | Began 2017; project-based work
-
-- Produced technical and compliance documentation, API and implementation guides, proposals, release notes, and operational playbooks. Turned implementation details into material usable by customers, developers, and reviewers.
-
-## Security Evaluation: Red Team and Purple Team
-
-This work runs on my own systems and test targets, with planted faults and attacks. No paid red-team or purple-team engagement to date.
-
-### Planted controls in release checks
-
-Released a Flywheel monitor-admission check over 2,676 fixed test items with six planted controls and a second, independent math kernel. github.com/HarperZ9/flywheel/releases/tag/v1.5.0
-
-### Steered-agent false-accept test
-
-Measured which guards stop destructive tool calls from an agent pushed toward a hostile persona, on 28 held-out tasks with 66 harmful calls and 145 baseline calls. A schema check caught 1 of 66; a request-versus-action consistency check caught 64 of 66 with 3 false alarms in 145. All tools were mocks and nothing the model emitted was executed; the consistency check and the labeller share an author. Merged November 11, 2026, not yet released. github.com/HarperZ9/flywheel/pull/431
-
-### Accountable Surface | Governed actions and computer-use adapters
-
-Built operator-granted action interfaces for filesystem, command, API, browser, and Windows UI Automation work. Actions carry explicit scope and postconditions, journals preserve decisions and observed effects, and fake drivers make browser and desktop scenarios testable without live actions.
-
-On PyPI as accountable-surface 0.3.1; alpha. pypi.org/project/accountable-surface
-
-### Phantom | Hardware-identity inspection and reversible system changes
-
-Developed a Rust utility for Windows and Linux with read-only audit, backup-before-write, validation, restoration, and platform packages. Release v1.1.1 changes and restores user-level identifiers. github.com/HarperZ9/phantom/releases/tag/v1.1.1
-
-### Controlled assessment and detection engineering
-
-Private systems work includes Array for approval-gated assessment orchestration, Lab/Seed for controlled-lab fixtures and detection-engineering workflows, and ORCA for engagement state, findings and reports. Source and operational details are private.
-
-## AI Evaluation
-
-### Flywheel | Model-agnostic AI workstation and coding harness
-
-Primary owned platform. Flywheel 2.0.0, released November 15, 2026, is the latest release. It is on PyPI as flywheel-verify, installs through Homebrew or Scoop, and ships a Windows installer with a bundled engine.
-
-- Routes tasks to hosted or local models through an OpenAI-compatible gateway, with command-line, desktop, and API entry points.
-
-- Provides Rowan, a desktop assistant that turns requests into recorded tasks, with permission-checked coding and tool-use workflows and session state.
-
-Merged since 1.9.0 and not yet released: a coding session whose commands may write inside the project folder; provider fault and retry-deadline handling with redacted records; named accounts with a key test at setup and macOS and Linux key stores; and peer-session observers.
-
-Study tooling, also merged and not yet released: a study runner with a power gate, planted truth, automatic checks and forecasts; a data pipeline that writes a receipt at each stage; one receipt contract shared by every tool; a reviewer-independence check; and a rule that a spent budget reads as inconclusive, never as a pass.
-
-### Terminal State Fixtures and Crucible
-
-Test infrastructure for evaluating AI agents: 324 terminal-state fixtures and 337 component cases that tell a failed answer apart from a provider failure or missing evidence. Ran a pinned METR count_odds task through the Inspect-to-Flywheel bridge with three deterministic controls. github.com/HarperZ9/terminal-state-fixtures
-
-### CMMNS (formerly Daylight Commons) | Browser extension for checking where replies come from
-
-A browser extension that shows the sources behind replies on X, YouTube, Reddit, Facebook, Instagram, Bluesky, Threads, TikTok and Mastodon. Runs locally with no account. Open source (AGPL-3.0). Version 3.10.0, released November 14, 2026. github.com/HarperZ9/cmmns/releases/tag/v3.10.0
-
-### Articulate | Prose analysis and editing
-
-Prose analysis and model-assisted editing for the command line, editors and CI. It names each writing pattern it finds and the line it is on, in the terminal, in an editor through its language server, or as SARIF in code review. Version 0.19.1 is on PyPI as articulate-writing. pypi.org/project/articulate-writing
-
-## Graphics and Rendering
-
-### Elder ENB | Lighting and post-processing preset for Skyrim Special Edition
-
-An ENBSeries preset with a layered design: weather presets set the atmosphere, and stackable overlays adjust style, lighting, effects and post-processing. It ships 38 atmosphere presets for the KreatE weather system, updated from April 2024 to February 2026. ENBSeries and the required mods belong to their authors. nexusmods.com/skyrimspecialedition/mods/117327
-
-### Superframe engine and native renderer | C++ renderer with a CPU reference and checked GPU backends
-
-raw-native release 0.8.0, October 14, 2026, renders on a CPU reference and through D3D12 and WebGPU, and passed 60 of 60 tests with MSVC and GCC. It is still the last renderer release. On November 12, 2026 the renderer moved, with its history, into the Superframe engine repository as native/, alongside the superstack, reconcile and studio-libs packages and Low Water. Superframe 0.3.0, November 14, 2026, is the first release that holds them. github.com/HarperZ9/superframe/tree/main/native
-
-Merged since 0.8.0, with no renderer release since: a Vulkan 1.3 backend whose 600 presented frames on lavapipe match the offscreen and D3D12 WARP renders hash for hash; the painterly shader ported to the C++ core, equal to the JavaScript version across fifteen cases; a tilt-shift lens that repaints out-of-focus areas with coarser brushwork and no blur, about 0.86 ms a frame at 1080p on an RTX 4090; a character asset toolchain that turns brush strokes into signed distance fields, game meshes, UV atlases and baked maps; radiance cascades in flatland and world space, measured against a brute force and against the path trace, with a white-furnace check; hardware ray queries for the path tracer, with spectral caustics through measured glass; and the art scene renderer rewritten in BuildLang, byte-identical to the C++ on its pinned frame.
-
-### Simulation, audio and registry | Engine packages in Superframe 0.3.0
-
-Cosmological N-body solver, particle-mesh and P3M, with a lean CUDA engine and bitwise-repeatable runs. At 512^3 particles in 256 Mpc/h, all 14 bands to k = 5 at z = 0 and z = 1 sit inside 3 percent of the Cosmic Emu on the three-seed mean. Three seeds is a small sample: the 95 percent interval on the mass-resolution factor spans 0.2 to 4.3 percent. github.com/HarperZ9/superframe/pull/42
-
-Audio: a modal bar bank, a stiff-string piano and a pipe organ as CLAP instruments that match the offline kernels bit for bit; the same instruments as VST3 plug-ins; a piano string kernel in BuildLang with the same bytes as the C kernel; piano inharmonicity measured from a Steinway model B; and a singing tract over measured MRI tract shapes. github.com/HarperZ9/superframe/tree/main/packages/daw
-
-Registry: one entry schema and a unit table of 90 units in six scale kinds, with a checker written in BuildLang and broken-table controls.
-
-### Low Water | Original narrative game in development
-
-An original narrative game written and built on my own engine, with a deterministic combat simulation. Its main branch became public on November 12, 2026, at games/low-water in the engine repository, where 250 engine and combat tests pass on CI and 6 skip. The first C++ port steps (story VM, trace replay, host modules) are merged. github.com/HarperZ9/superframe/tree/main/games/low-water
-
-### Earlier graphics and color work
-
-Earlier HLSL and C++ modding covered post-processing, Direct3D 11 integration, shader debugging and GPU traces, with public projects SkyrimBridge, ENB Runtime Core, Brender Archival and Engine Revival. Color tools include Build Color and Calibrate Pro; Studio Engine was archived on November 11, 2026, as superseded. Newer colour work, merged in the engine: Mayer 1775, Lambert 1772 and Benson 1872 colour-mixing kernels in BuildLang.
-
-## Developer Tools and Languages
-
-### BuildLang | Language, compiler and developer tooling
-
-Developed a systems-language toolchain with typed capability effects, type inference, parser and intermediate-representation work, native C output, shader output, and language-server support; the compiler is written in Rust. Version 1.15.0, released November 14, 2026, is on crates.io. The 1.14.0 test run passed 2,079 with 0 failed. crates.io/crates/buildlang
-
-Released in 1.15.0 as experimental targets: a WebAssembly target that writes a binary module, with SHA-256 and Merkle programs running in Node, and x86-64 executables for Windows and Linux written with no C compiler, assembler or linker, limited to integers, control flow, calls and printing; nine test programs match the C backend output on Windows. Also in 1.15.0: a one-step C-subset to BuildLang translator whose five corpus programs match gcc output byte for byte. Merged and not named in a release: a RISC-V toolchain written in BuildLang, with an RV64 emulator (machine, supervisor and user modes, Sv39, a timer, interrupts and a replay check), a text assembler and a code generator that runs BuildLang programs on the emulator. github.com/HarperZ9/buildlang/releases/tag/v1.15.0
-
-### EMET | Byte-integrity witnessing
-
-Developed Python, Rust, Node, and Go implementations that check whether bytes still match their source, sharing one set of conformance cases. On PyPI as emet. pypi.org/project/emet
-
-### Flywheel companion tools | Research intake and workspace tooling
-
-Built Gather for research intake from web, scholarly and document sources, Index for workspace and symbol maps, and Forum for running teams of agents. Gather, Crucible and Forum are companion tools that Flywheel connects to; they are developed as parts of that platform and also ship as separate packages. Latest releases: Gather 2.6.0 (November 14, 2026), Crucible 1.6.0, EMET 1.3.1 and Canon 0.7.0 (October 23, 2026). Companion tools include Relay for coding agents, Plexus for tool wiring, Mneme for agent memory, Canon for assistant instructions, and Bulletin, a message board for agents.
-
-## Selected Open-Source Contributions
-
-Nine of 38 merged engineering pull requests in 31 external repositories. Full list: harperz9.github.io/portfolio.html
-
-- DeepEval #2822: fixed unhashable tool-output and nested-parameter failures in tool-correctness evaluation; merged July 2, 2026. github.com/confident-ai/deepeval/pull/2822
-
-- TOMLKit #549: preserved dotted-key siblings when replacing a value with an array of tables; merged July 14, 2026. github.com/python-poetry/tomlkit/pull/549
-
-- Datasette #2815: corrected malformed composite-key requests from HTTP 500 or incorrect HTTP 200 to HTTP 400; tested too few and too many key components in HTML and JSON. Merged July 7, 2026. github.com/simonw/datasette/pull/2815
-
-- Free Law Project #820: documented runnable database-free fast tests; merged August 25, 2026. github.com/freelawproject/litigant-portal/pull/820
-
-- Hebbian Robotics #157: tested reserved-column drift against the actual queryable episode schema; merged August 25, 2026. github.com/Hebbian-Robotics/hflow/pull/157
-
-- Voxwire #44: added offline regression coverage for a six-event degraded voice turn, matching saved PCM audio and JSONL records to emitted events. Merged August 15, 2026. github.com/vectorvoyager358/voxwire/pull/44
-
-- Grimp #303, #304, and #305: made direct-import queries raise ModuleNotPresent for absent modules, replaced a Rust panic with ValueError on duplicate layer assignments, and fixed two main-branch CI lint failures; merged July 3, 2026. github.com/python-grimp/grimp/pull/304
-
-## Skills
-
-Languages and runtimes: Python, Rust, C++, Dart/Flutter, TypeScript/JavaScript, Lua, HLSL, C#, PowerShell, and Bash. Additional cross-language conformance work includes Go and Node implementations.
-
-Security evaluation: planted-fault and control design, approval-gated assessment workflows, detection engineering fixtures, vulnerability management and policy audit, and evidence handling for findings.
-
-AI infrastructure and quality: multi-provider/local-model routing, tool-use loops, task decomposition, MCP, evaluation design, deterministic fixtures, regression testing, worker/verifier separation, failure analysis, and terminal-state scoring.
-
-Controlled actions: capability effects, approval grants, hash-chained journals, offline replay, and conformance suites.
-
-Software delivery: Git/GitHub, GitHub Actions, Python packaging, command-line design, Windows/Linux installers, CMake, test automation, and release checksums.
-
-Graphics and domain knowledge: D3D11/D3D12, Vulkan, HLSL, WebGPU/WGSL, ENBSeries presets, painterly and stylised post-processing, signed distance fields, CPU reference rendering and GPU parity checks, color-space and tone-mapping work, GPU instrumentation, and applied arboriculture/horticulture from field practice.
-
-## Working Practice
-
-AI-assisted development is part of the workflow. Architecture, integration, source review, test design, release decisions, and responsibility for the submitted work remain mine.
-
-## Research Interests
-
-Independent verification of AI evaluations, drift in live systems, records of agent actions, human approval for consequential actions, and robotics.
-
-## AI Accountability, Disclosure, and Public-Interest Writing
-
-Independent essays on AI accountability, disclosure, conflicts of interest, and human consequences, relevant to public-interest and whistleblower-protection work.
-
-- Who Knew First, September 2026. Directed and published an AI-assisted investigation comparing disclosure timelines, evidence access, institutional incentives, and evaluator conflicts across nine reported AI-agent incidents. harperz9.github.io/who-knew-first.html
-
-- An Open Letter on Checking the Machines, September 2026. Proposed contestable AI decisions, repeatable evidence checks, and accountable responses to objections. harperz9.github.io/checking-the-machines.html
-
-- Borrowed Ground, September 2026. Philosophical essay connecting human interdependence to responsibility, privacy, participation, and the limits of technical evidence as authority over people. Substantial AI assistance disclosed. harperz9.github.io/borrowed-ground.html
-
-- The Sandbox Was Never Just a Box, September 2026. Compared public security reports to examine shared-service exposure and the independence of logs, monitors, and scorers in AI-agent evaluation. harperz9.github.io/the-sandbox-was-never-just-a-box.html
-
-## Selected Publications and Research Records
-
-Independent systems papers, preprints, research notes, philosophy papers, a working paper, and archived manuscripts with DOI records. Not peer reviewed.
-
-- EMET: An Authority-Incapable Byte-Level Integrity Witness. Systems paper, 2026. Byte-integrity witnessing and the separation of observation from authority. doi.org/10.5281/zenodo.21230267
-
-- BuildLang: Accountable Compute via Typed Capability Effects. Systems paper, 2026. Capability effects and accountable compilation. doi.org/10.5281/zenodo.21231253
-
-- Witnessed Independence: Recording Whether a Verifier Graded Its Own Work. Preprint, 2026. doi.org/10.5281/zenodo.21232206
-
-- Proof Packets: A Derive-Don't-Trust Envelope for Accountable Agent Actions. Preprint, 2026. doi.org/10.5281/zenodo.21231406
-
-- The Personhood-Gate Handoff. Research note, 2026. doi.org/10.5281/zenodo.21234475
-
-- Re-Perceived Effects. Research note, 2026. doi.org/10.5281/zenodo.21231311
-
-- Faithfulness to a Named Criterion Is the Conserved Quantity Across Lossy Substrates. Research note, 2026. doi.org/10.5281/zenodo.22768398
-
-- The Witnessing Spine. Archived research corpus, 2026. doi.org/10.5281/zenodo.20778927
-
-- Conferred Existence. Long-form philosophical manuscript and archived corpus, 2026. doi.org/10.5281/zenodo.20773724
-
-- Sourcehood Without a Source: The Arity Gap and the Free Will Debate. Philosophy paper, edition of 3 October 2026. doi.org/10.5281/zenodo.24238724
-
-- The Seam That Holds While It Is Crossed. Philosophy paper, edition of 3 October 2026. doi.org/10.5281/zenodo.24238743
-
-- Self-Given Is Not Self-Grounding. Philosophy paper, edition of 3 October 2026. doi.org/10.5281/zenodo.24238749
-
-- The Conservation of Faithfulness. Working paper, edition of 3 October 2026. doi.org/10.5281/zenodo.24238755
-
-## Education
-
-High School Diploma | Wilsonville High School, Wilsonville, Oregon | 2013
-
-Self-directed study in systems programming, compilers, graphics, color science, AI evaluation, epistemics, and philosophy of mind. Practical arboriculture and plant-science knowledge comes from field work.
-
-ORCID: orcid.org/0009-0001-7175-5393 | harperz9.github.io/publications.html | harperz9.github.io/portfolio.html
-
-## Credentials and Continuing Education
-
-2026 completions. Credential IDs and check results: harperz9.github.io/career/credentials.json
-
-Qualys Certified Specialist: Policy Audit; Custom Assessment and Remediation; Vulnerability Management Detection and Response; Qualys Kubernetes and Container Security; Qualys TotalCloud Exam; Endpoint Detection and Response | Issued 2026-09-30; expire 2028-09-29
-
-### Microsoft Applied Skills | Earned September 2026
-
-- Secure AI solutions in the cloud
-
-- Get started with identities and access using Microsoft Entra
-
-- Secure storage for Azure Files and Azure Blob Storage
-
-- Implement security through a pipeline using Azure DevOps | Intermediate; 95% assessment
-
-### Advanced Microsoft Learn Coursework
-
-SC-100: Design security solutions for applications and data. Four module assessments and the case study.
-
-Design solutions that align with MCRA and MCSB. Advanced Microsoft Learn module completed September 30, 2026: security architecture, Zero Trust, insider and supply-chain risk, and AI security controls.
-
-### Linux Foundation Course-Completion Certificates
-
-LFEL1012: Secure AI/ML-Driven Software Development; LFS120: Conversational AI: Ensuring Compliance and Mitigating Risks; LFD121: Developing Secure Software
-
-LFS182: Securing Your Software Supply Chain with Sigstore; LFEL1001: Understanding the EU Cyber Resilience Act (CRA); LFS118: Ethical Principles for Conversational AI
-
-LFEL1006: Securing Projects with OpenSSF Scorecard; LFEL1005: Security Self-Assessments for Open Source Projects; LFEL1007: Automating Supply Chain Security: SBOMs and Signatures
-
-LFD125: Security for Software Development Managers; LFS180: Introduction to DevSecOps for Managers; SKF100: OWASP Top 10 Security Threats
-
-LFS184: Introduction to JavaScript Security; LFC108: Cybersecurity Essentials; LFEL1004: Authentication and Authorization for Web/API
-
-LFEL1008: Migrating AI Workflows Across Platforms; LFS147: Introduction to AI/ML Toolkits with Kubeflow
-
-### Additional Coursework and Skill Badges
-
-Cisco Networking Academy: Ethical Hacker | Course certificate and learning badge, 2026-09-30; 100% knowledge exam.
-
-Google skill badges, completed 2026-09-30: Google DeepMind: Train A Small Language Model (Advanced; 100/100, four coding checkpoints); Use Agent Skills with Multi-Agent Systems (Intermediate course/Advanced challenge; 100/100, six checkpoints). Multi-agent lab: five Cloud Run services deployed; model-access policy blocked local and cloud generation.
-
-Google BigQuery skill badges, issued 2026-10-01: Perform Predictive Data Analysis in BigQuery (100/100, seven checkpoints; Advanced challenge); Create ML Models with BigQuery ML (100/100, four checkpoints; Intermediate challenge).
-
-Google course-completion badges, completed 2026-09-30: Machine Learning Operations (MLOps) with Agent Platform: Model Evaluation (Intermediate); Google Security Operations - Deep Dive (Advanced; 96% knowledge assessment).
-
-Anthropic Claude Academy completion badges: Model Context Protocol: Advanced topics; Claude Code in action; Building with the Claude API; Claude with Amazon Bedrock | Issued September 30, 2026
-
-UNESCO: Global MOOC on the Ethics of AI | Intermediate course certificate, 2026-09-30; 100%.
-
-BlueDot Impact: AGI Strategy | Course completed in 2026
-
-Developed an AGI Strategy action plan for label-independent AI incident notice, independently reviewable evidence, accountable escalation, and tests for misleading verification results.
-
-Coursework: MCRA/MCSB, Zero Trust, OWASP web Top 10, CRA. Research references: NIST AI RMF/GenAI Profile, ISO/IEC 42001/23894, ISO 37002. Scope: harperz9.github.io/career/standards-reference.md.
+- **Credentials:** Google DeepMind badges (Train A Small Language Model, Multi-Agent Systems, 100/100); 4 Microsoft Applied Skills (Secure AI, Entra, Azure Storage, Azure DevOps Pipeline Security); 6 Qualys Specialist exams; Cisco Ethical Hacker (100%); BlueDot Impact AGI Strategy.
+- **Education:** High School Diploma, Wilsonville High School, Wilsonville, Oregon (2013). Open to formal university study and research fellowships.

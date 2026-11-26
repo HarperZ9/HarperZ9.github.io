@@ -28,31 +28,17 @@ function absolute(html) {
 function pick(html, re, what) { const m = html.match(re); if (!m) throw new Error(`home: ${what} not found in path.html`); return m[0]; }
 
 function roadParts() {
-  const p = read("world/universe/proto/path.html");
-  let hand = absolute(pick(p, /<header class="o-hand"[\s\S]*?<\/header>/, "the hand"));
-  // the skip link skips: it lands on this page's own content, with the words every other page uses
-  hand = hand.replace(/<a class="skip" href="[^"]*">[^<]*<\/a>/, '<a class="skip" href="#main">Skip to the page</a>')
-    .replace(/<a class="o-home" href="[^"]*">/, '<a class="o-home" href="/" aria-current="page">')
-    .replace(/data-o="record" data-sound/, 'data-o="record" data-hum')
-    // the home's hand keeps what has a job there: the menu, the lamp (light or dark), motion and plain view.
-    // Find and Back serve the map and its places; the sound control repeats the press in the Sound place.
-    .replace(/\s*<form class="find"[\s\S]*?<\/form>/, "")
-    .replace(/\s*<button type="button" id="back"[^>]*>[\s\S]*?<\/button>/, "")
-    .replace(/\s*<button type="button" data-o="record"[\s\S]*?<\/button>/, "");
+  let hand = `<header class="o-hand" aria-label="Site">
+  <a class="skip" href="#main">Skip to the page</a>
+  <a class="o-home" href="/" aria-current="page">Zain Dana Harper</a>
+  <a data-o="band" href="/world/" aria-label="The map"></a>
+  <button type="button" data-o="fold" aria-controls="o-menu" aria-expanded="false" hidden><span class="o-name">Menu (M)</span><i></i><i></i><i></i></button>
+  <button type="button" data-o="lamp" data-theme-toggle aria-pressed="true"><span class="o-name">Lamp</span></button>
+  <button type="button" data-o="peel" data-plain-toggle aria-pressed="false"><span class="o-name">Plain view</span></button>
+</header>`;
   hand = labelHand(hand);
-  // the menu is the site's one list: the six landmarks in the author's order, then the rest (scripts/hand-menu.mjs)
   const menu = menuDialog({ here: "/" });
-  const canvases = (p.match(/<canvas id="[^"]+" class="[^"]+" data-art aria-hidden="true"><\/canvas>/g) || []).join("\n");
-  const main = pick(p, /<main id="main">[\s\S]*?<\/main>/, "the road");
-  // the road's stops, each heading given the living-type hook (Hanken underneath until the engine paints it)
-  const stops = absolute(main.replace(/^<main id="main">/, "").replace(/<\/main>$/, "")
-    .replace(/<h1 class="sr-only">[^<]*<\/h1>/, "")
-    // living type stays off the home for now: its engine paints a paper sheet behind each heading, a box the
-    // author ruled out on 2026-11-02; it returns once the type engine can paint on a clear ground
-    // the road's plates sit far below the first screen: they load as the visitor nears them
-    .replace(/<img class="plate" (?![^>]*loading=)/g, '<img class="plate" loading="lazy" decoding="async" '));
-  const bodyClass = (p.match(/<body class="([^"]+)"/) || [, "path"])[1];
-  return { hand, menu, canvases, stops, bodyClass };
+  return { hand, menu, canvases: "", stops: "", bodyClass: "path" };
 }
 
 // a name set in capitals (EMET) gets the tracking capitals need
@@ -137,7 +123,7 @@ ${bazaar(rules)}
   </section>
   <section class="lm lm-everything" id="everything" aria-labelledby="h-everything"><div class="lm-in">
     ${head(all)}${rows(all)}
-    <p class="lm-floor"><a href="/floor.html">Every piece of work, current and past, and every page of the site</a></p>
+    <p class="lm-floor"><a href="/tools.html">Every piece of work, all 159 public repositories, and every page of the site</a></p>
   </div></section>`;
 }
 
