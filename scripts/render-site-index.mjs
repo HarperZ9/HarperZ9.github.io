@@ -69,10 +69,17 @@ ${cardTags("site-index.html").join(String.fromCharCode(10))}
 <script type="module" src="system/site-index.js?v=20260925-void-plates"></script>
 </head><body><a class="skip-link" href="#main">Skip to index</a><div id="site-nav" class="site-nav"></div>
 <main id="main" class="sheet site-directory"><header class="directory-head"><p class="directory-context masthead-path">Zain Dana Harper / Explore</p><h1>Find your way in.</h1>
-<p class="lead">Every page on the site, grouped by what it is. The <a href="floor.html">Everything</a> page lists each piece of work with its status.</p>
-<p>Each project page explains its purpose, current status and evidence. A listing here does not imply that every capability is installed or operational in Flywheel.</p>
-<p><a href="catalog.html">Browse the product catalog by capability</a> · <a href="site-index.html" aria-current="page">Site index</a></p></header>
-<div class="directory-search" hidden data-search-controls><label for="index-query">Find a page or topic</label><div><input id="index-query" type="search" placeholder="Try memory, receipts, graphics…" autocomplete="off"><button type="button" data-clear>Clear</button></div><p data-search-status role="status" aria-live="polite"></p></div>
+<p class="lead">Every page on the site, organized around five clear pillars and nine full sectors. Press <strong>Ctrl+K</strong> (or <strong>/</strong>) from any page to jump anywhere.</p>
+<p>Each project page states its purpose, current status, observed checks, and open gaps. A listing here does not imply every tool is installed or enabled by default.</p>
+<p><button type="button" class="directory-jump-btn" data-qj-open>Quick-Jump Search (Ctrl+K)</button> · <a href="architecture.html">Five-Platform Architecture</a> · <a href="catalog.html">Product catalog</a> · <a href="floor.html">Everything floor</a> · <a href="site-index.html" aria-current="page">Site index</a></p></header>
+<nav class="directory-wayfinding" aria-label="Five ways in">
+  <a class="way-card" href="index.html"><span class="way-num">01</span><strong>Start</strong><span>Front door, unified platform map, and everything inventory.</span></a>
+  <a class="way-card" href="architecture.html"><span class="way-num">02</span><strong>Platforms &amp; Tools</strong><span>The Playground, BuildLang, Flywheel, Commons, and 45 tools.</span></a>
+  <a class="way-card" href="playground/"><span class="way-num">03</span><strong>Interactive Demos</strong><span>WebGPU studios, Estuary Lantern, Low Water, receipts, and fonts.</span></a>
+  <a class="way-card" href="research.html"><span class="way-num">04</span><strong>Research &amp; Writing</strong><span>16 papers and DOIs, Who Knew First, 14 frontier lanes, and datasets.</span></a>
+  <a class="way-card" href="hire.html"><span class="way-num">05</span><strong>Work With Me / CV</strong><span>41 merged upstream PRs, full CV, role resumes, and pilot offer.</span></a>
+</nav>
+<div class="directory-search" hidden data-search-controls><label for="index-query">Filter the full directory</label><div><input id="index-query" type="search" placeholder="Try memory, receipts, graphics, BDB, Elder ENB..." autocomplete="off"><button type="button" data-clear>Clear</button></div><p data-search-status role="status" aria-live="polite"></p></div>
 <nav class="directory-pillars" aria-label="Index sectors">${shortcuts}</nav>
 <p data-no-results hidden>No matching pages. Try a broader term or clear the search.</p>
 ${sections}

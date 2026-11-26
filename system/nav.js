@@ -559,6 +559,8 @@ if (typeof document !== "undefined") {
       import("./cursor-field.js").then((m) => m.mountCursorField()).catch(() => {});
     }
     mountPlates(document);
+    // Global Ctrl+K Quick-Jump search overlay and visible Search trigger beside Menu.
+    import("./quick-jump.js?v=" + ASSET_V).then((m) => m.initQuickJump({ shell: "classic" })).catch(() => {});
     // Every page offers its own text as Markdown, plain text, Word, or print.
     // The module reads the live page, so a page added later needs nothing.
     import("./export.js?v=" + ASSET_V).catch(() => {});
