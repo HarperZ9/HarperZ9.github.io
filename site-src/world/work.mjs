@@ -51,7 +51,7 @@ const distill = () => `<div class="ds4" id="w-distill" data-distill-picture data
             <p class="ds4-how" hidden>Or drop a picture here. It is read in this tab and never uploaded.</p>
             <p class="ds4-status" data-status role="status" aria-live="polite"></p>
           </div>
-          <p class="ds4-also">The same taking-apart runs in three places. <a href="/playground/distill.html">Distill, the page</a>, takes any file, archive or folder apart by its bytes. <a href="/gather.html">Gather</a> takes a file apart into a tree of parts and rebuilds it byte for byte. <a href="/cmmns.html">CMMNS</a> saves a post as its parts: the media, the words and the replies.</p>
+          <p class="ds4-also">The same taking-apart runs in three places. <a href="/playground/distill.html">Distill, the page</a>, takes any file, archive or folder apart by its bytes. <a href="/demos.html#gather">Gather</a> takes a file apart into a tree of parts and rebuilds it byte for byte. <a href="/cmmns.html">CMMNS</a> saves a post as its parts: the media, the words and the replies.</p>
         </div>`;
 
 // The Playground leads the dial. Distill is the first thing shown inside it; the engine's frames follow.
@@ -119,7 +119,7 @@ export const PILLARS = [
         ])}
         <p class="w-note">Captured checker output. <a href="/flywheel.html#demo">Run the same three checks yourself</a>.</p>
       </figure>
-      <p class="w-go"><a class="w-try" href="/flywheel.html">Flywheel</a> <a href="/flywheel-pilot.html">Pilot</a> <a href="https://github.com/HarperZ9/flywheel">Source</a></p>`,
+      <p class="w-go"><a class="w-try" href="/flywheel.html">Flywheel</a> <a href="/models.html">Local models</a> <a href="https://github.com/HarperZ9/flywheel">Source</a></p>`,
   },
   {
     id: "commons", title: "CMMNS",
@@ -144,7 +144,7 @@ export const PILLARS = [
         ])}
         <p class="w-note">Output from <code>articulate check</code>, Articulate 0.18.0, run on 12 November 2026.</p>
       </figure>
-      <p class="w-go"><a class="w-try" href="/articulate.html">Articulate</a> <a href="https://pypi.org/project/articulate-writing/">pip install <span class="ident" translate="no">articulate-writing</span></a></p>`,
+      <p class="w-go"><a class="w-try" href="/demos.html#articulate">Articulate</a> <a href="https://pypi.org/project/articulate-writing/">pip install <span class="ident" translate="no">articulate-writing</span></a></p>`,
   },
   {
     id: "low-water", title: "Low Water",
@@ -162,21 +162,21 @@ export const PILLARS = [
         <figcaption>Claiming got cheap. Checking did not. A film, with captions.</figcaption>
       </figure>
       <ul class="w-list-plain">
-        <li><a href="/who-knew-first.html">Who Knew First</a></li>
-        <li><a href="/checking-the-machines.html">An open letter on checking the machines</a></li>
+        <li><a href="/essays.html#who-knew-first">Who Knew First</a></li>
+        <li><a href="/essays.html#checking-the-machines">An open letter on checking the machines</a></li>
         <li><a href="/night-school.html">Night School: how AI works, in short films and labs</a></li>
       </ul>
-      <p class="w-go"><a class="w-try" href="/publications.html">Writing</a> <a href="/explainers.html">Films</a></p>`,
+      <p class="w-go"><a class="w-try" href="/essays.html">Essays</a> <a href="/media/">Media &amp; films</a></p>`,
   },
   {
     id: "work", title: "Work and CV",
     html: `<ul class="w-list-plain">
-        <li><a href="/person.html">Who I am: background, craft, convictions, and the five platforms</a></li>
+        <li><a href="/person.html">Who I am: documented history, craft, convictions, and the five platforms</a></li>
         <li><a href="/architecture.html">Five-platform architecture, benchmarks, and WF-01 to WF-08 pipelines</a></li>
         <li><a href="/hire.html">Hire or collaborate: role-tailored resumes, cover letters, and proofs</a></li>
         <li><a href="/cv.html">Full CV (HTML, PDF, Designed PDF, DOCX, TXT, Markdown)</a></li>
         <li><a href="/portfolio.html">Portfolio: 41 merged upstream pull requests across 34 repositories</a></li>
-        <li><a href="/flywheel-pilot.html">Flywheel verification pilot</a></li>
+        <li><a href="/tools.html">Complete catalog: all 159 public repositories and tools</a></li>
       </ul>
       <p class="w-go"><a class="w-try" href="/hire.html">Hire or collaborate</a> <a href="/person.html">About me</a> <a href="mailto:zaindharper@gmail.com">Email</a></p>`,
   },

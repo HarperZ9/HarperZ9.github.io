@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Loom &middot; Zain Dana Harper</title>
+<meta name="description" content="Weave any picture into working cloth. Send a frame from the Retro Engine, the Studio, or the Gallery, and read or write a real WIF draft.">
+<link rel="canonical" href="https://harperz9.github.io/loom.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="The Loom &middot; Zain Dana Harper">
+<meta property="og:description" content="Weave any picture into working cloth. Send a frame from the Retro Engine, the Studio, or the Gallery, and read or write a real WIF draft.">
+<meta property="og:url" content="https://harperz9.github.io/loom.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/loom.jpg?v=7c39aec4e450">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The Loom, by Zain Dana Harper. A bright core inside a ring that breaks into offset slices, like a glitching signal.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/p/loom.jpg?v=7c39aec4e450">
+<meta name="twitter:image:alt" content="The Loom, by Zain Dana Harper. A bright core inside a ring that breaks into offset slices, like a glitching signal.">
+<meta name="twitter:title" content="The Loom &middot; Zain Dana Harper">
+<meta name="color-scheme" content="dark light">
+<link rel="preload" href="system/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="system/system.css?v=20260927-copy-pass">
+<link rel="stylesheet" href="system/instrument.css?v=20260902-creative-chassis">
+<link rel="stylesheet" href="system/instrument-forms.css?v=20260925-void-plates">
+<style>
+  /* a zoomed draft overflows its stage on purpose, so it can be panned by
+     scrolling instead of being squeezed back down to an unclickable size */
+  .re-preview.wv-zoomed{overflow:auto;justify-content:flex-start;align-items:flex-start}
+  .re-preview.wv-zoomed canvas{max-width:none;max-height:none}
+</style>
+<link rel="stylesheet" href="system/instrument-editorial.css?v=20260925-void-plates">
+</head>
+<body class="inner-clean frame-compact instrument-surface" data-defer-generative-field="true">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="/studio.html">Studio</a> <a href="/world/#gallery">Gallery</a> <a href="/world/#retro">Retro Engine</a> <a href="/tools.html#catalog">Catalog</a> <a href="/cv.html">About</a></nav></noscript>
+<script type="module" src="system/hero-aperture.js?v=20260902-creative-chassis"></script>
+<script type="module" src="system/nav.js?v=20260909-pillar-navigation"></script>
+
+<div class="frame">
+  <figure class="art hero-plate" aria-hidden="true"><canvas class="hero-aperture" data-aperture="loom"></canvas></figure>
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">The Loom</span></div>
+  <div class="mid">
+    <h1>Weave the picture <span class="g">into working cloth.</span></h1>
+    <p class="lede">Any render becomes thread. Send a frame over from the Retro Engine, the Studio, or the Gallery, or drop in your own image, and the Loom turns its tones into threading, tie-up, and treadling in a real weave structure: plain, 2/2 twill, satin, overshot, or per-thread jacquard shading. Watch the cloth build pick by pick with each row played as notes, or play the finished cloth as the score it is. Export a WIF draft that loom software opens, the charts, or the cloth itself, and the piece keeps its trail wherever it travels next.</p>
+  </div>
+  <div class="seal">image &rarr; threading &middot; tie-up &middot; treadling &middot; cloth &middot; nothing leaves your browser</div>
+</div>
+
+<main id="main">
+<section class="mv" id="loom" aria-labelledby="loom-h">
+  <h2 id="loom-h" class="visually-hidden">The Loom</h2>
+  <div class="re-stage">
+    <div class="re-preview" id="wv-stage-preview">
+      <canvas id="wv-out" role="img" aria-label="The woven cloth built from the current source image"></canvas>
+      <canvas id="wv-chart" role="img" hidden
+        aria-label="The draft: threading across the top, tie-up at the corner, treadling down the side, drawdown in the field"></canvas>
+      <button class="re-fs" id="wv-fullscreen" type="button" aria-pressed="false"
+        title="Full screen (F). Double-click the cloth too." aria-label="View the cloth full screen">&#10530;</button>
+    </div>
+
+    <div class="re-panel" id="wv-panel">
+      <details class="re-group" id="wv-rack-source" open>
+        <summary><span class="re-lab">Source <span class="re-hint">an image, or a WIF draft</span></span></summary>
+        <div class="re-body">
+      <div class="re-field"><span class="re-lab">Source</span>
+        <input type="file" class="re-in" id="wv-file" aria-label="Source image to weave" accept="image/*">
+        <p class="re-privacy">Read locally in your browser. Nothing is uploaded.</p>
+        <p class="re-hint">Or press Send to Loom on the Retro Engine or the Studio desk and the frame lands here.</p>
+        <p class="re-hint">Or open a WIF draft from Fiberworks, WeaveIt, or any WIF-aware tool.</p>
+        <div class="re-actions">
+          <input type="file" class="re-in" id="wv-wif-in" accept=".wif,text/plain" hidden>
+          <button class="re-btn" id="wv-wif-open" type="button"
+            aria-label="Open a WIF draft file">Open a WIF draft</button>
+          <button class="re-btn" id="wv-wif-check" type="button"
+            title="Export this draft, read it straight back, and compare every crossing"
+            aria-label="Check the export by re-reading it">Check the export</button>
+        </div>
+      </div>
+        </div>
+      </details>
+      <details class="re-group" id="wv-rack-draft" open>
+        <summary><span class="re-lab">Draft <span class="re-hint">structure, view, zoom</span></span></summary>
+        <div class="re-body">
+      <div class="re-field"><span class="re-lab">Start from <span class="re-hint">a whole setup in one press</span></span>
+        <div class="re-chips" role="group" aria-label="Starting points" id="wv-recipes"></div>
+      </div>
+
+      <div class="re-field"><span class="re-lab">View</span>
+        <div class="re-chips" role="radiogroup" aria-label="What the stage shows" id="wv-views">
+          <button type="button" class="re-chip" role="radio" aria-checked="true" data-view="cloth">Cloth</button>
+          <button type="button" class="re-chip" role="radio" aria-checked="false" data-view="draft">Draft</button>
+        </div>
+      </div>
+
+      <div class="re-field" id="wv-zoom-field" hidden><span class="re-lab">Draft zoom
+        <span class="re-hint">a cell is small at full width; zoom in to edit, then scroll the chart</span></span>
+        <div class="re-chips" role="radiogroup" aria-label="Draft zoom" id="wv-zooms">
+          <button type="button" class="re-chip" role="radio" aria-checked="true" data-zoom="1">Fit</button>
+          <button type="button" class="re-chip" role="radio" aria-checked="false" data-zoom="2">2x</button>
+          <button type="button" class="re-chip" role="radio" aria-checked="false" data-zoom="4">4x</button>
+          <button type="button" class="re-chip" role="radio" aria-checked="false" data-zoom="8">8x</button>
+        </div>
+      </div>
+
+      <div class="re-field"><span class="re-lab">Structure <span class="re-hint" id="wv-structure-hint"></span></span>
+        <div class="re-chips" role="radiogroup" aria-label="Weave structure" id="wv-structures"></div>
+      </div>
+
+      <p class="re-hint" id="wv-edit-hint">In the Draft view: click the tie-up to lift or drop a shaft, a threading square to move an end, a treadling square to change the treadle. The cloth follows the draft.</p>
+        </div>
+      </details>
+      <details class="re-group" id="wv-rack-cloth" open>
+        <summary><span class="re-lab">Cloth <span class="re-hint">width, sett, tone, colors</span></span></summary>
+        <div class="re-body">
+      <div class="re-field"><span class="re-lab">The cloth</span>
+        <p class="re-hint" id="wv-readout">draw or drop an image to read the cloth</p>
+      </div>
+
+      <div class="re-field"><span class="re-lab">Width in ends <span class="re-val" id="wv-sett-v">120 ends</span></span>
+        <input type="range" id="wv-sett" min="48" max="240" value="120" step="8" aria-label="Total ends across the cloth"></div>
+      <div class="re-field"><span class="re-lab">Sett <span class="re-val" id="wv-epi-v">24 epi</span></span>
+        <input type="range" id="wv-epi" min="6" max="60" value="24" step="2"
+          aria-label="Sett in ends per inch, which sets the finished size"></div>
+      <div class="re-field"><span class="re-lab">Tone drive <span class="re-val" id="wv-tone-v">60</span></span>
+        <input type="range" id="wv-tone" min="0" max="100" value="60" aria-label="How strongly image tone steers the weave"></div>
+
+      <div class="re-field"><span class="re-lab">Warp</span>
+        <div class="re-actions">
+          <select class="re-in" id="wv-warp" style="flex:1" aria-label="Warp color">
+            <option value="bone" selected>Bone</option>
+            <option value="ink">Ink</option>
+            <option value="indigo">Indigo</option>
+            <option value="rust">Rust</option>
+            <option value="gold">Gold</option>
+            <option value="custom">Your color</option>
+          </select>
+          <input type="color" id="wv-warp-color" value="#d8c8a8" hidden
+            style="width:2.4rem;height:2.4rem;border:1px solid var(--hairline);border-radius:6px;background:transparent;padding:.1rem;cursor:pointer"
+            aria-label="Your warp color">
+        </div></div>
+      <div class="re-field"><span class="re-lab">Weft</span>
+        <select class="re-in" id="wv-weft" aria-label="Weft palette">
+          <option value="image" selected>From the image</option>
+          <option value="bone-ink">Bone on ink</option>
+          <option value="ember">Ember range</option>
+          <option value="indigo-bone">Indigo and bone</option>
+        </select></div>
+        </div>
+      </details>
+      <details class="re-group" id="wv-rack-weave">
+        <summary><span class="re-lab">Weave and play <span class="re-hint">shuttle, sound</span></span></summary>
+        <div class="re-body">
+      <div class="re-actions">
+        <label class="re-toggle"><input type="checkbox" id="wv-weaveit" checked>Weave it</label>
+        <label class="re-toggle"><input type="checkbox" id="wv-sound">Sound</label>
+        <button class="re-btn" id="wv-play" aria-pressed="false"
+          title="The cloth is a score: weft rows are frequencies, the width is time. A jacquard ancestor fed punch cards to player pianos; this one plays itself.">Play the cloth</button>
+      </div>
+      <div class="re-field"><span class="re-lab">Shuttle speed <span class="re-val" id="wv-speed-v">24</span></span>
+        <input type="range" id="wv-speed" min="2" max="120" value="24" aria-label="Picks per second while weaving"></div>
+        </div>
+      </details>
+      <details class="re-group" id="wv-rack-keep" open>
+        <summary><span class="re-lab">Keep and send <span class="re-hint">WIF, chart, cloth, setups</span></span></summary>
+        <div class="re-body">
+      <div class="re-actions">
+        <button class="re-btn" id="wv-wif">Export WIF</button>
+        <button class="re-btn" id="wv-draft">Draft chart</button>
+        <button class="re-btn" id="wv-save">Save cloth</button>
+      </div>
+      <div class="re-actions">
+        <button class="re-btn" id="wv-send-retro">Send to Retro Engine &rarr;</button>
+      </div>
+      <div class="re-actions">
+        <button class="re-btn" id="wv-save-setup" title="Keep this whole setup: structure, sett, tone, colors, speed, and the piece's trail">Save setup</button>
+        <select class="re-in" id="wv-setups" aria-label="Saved setups" style="flex:1;min-width:9rem"><option value="">saved setups&#8230;</option></select>
+      </div>
+        </div>
+      </details>
+      <p class="re-status" id="wv-status" role="status" aria-live="polite"></p>
+    </div>
+  </div>
+  <p class="re-keys" id="wv-flow"></p>
+  <p class="re-keys"><b>Keys</b> <kbd>Space</kbd> weave / hold <kbd>S</kbd> save cloth <kbd>F</kbd> full screen</p>
+  <p class="re-hint">The WIF export is a standard Weaving Information File: threading, tie-up, treadling, and colors, sized to the structure's shafts. Open it in Fiberworks, WeaveIt, or any WIF-aware tool and the draft on your screen is the draft on the loom.</p>
+</section>
+</main>
+
+<script type="module" src="system/loom-studio.js?v=20261009-loom-hub"></script>
+</body>
+</html>

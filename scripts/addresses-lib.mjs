@@ -23,12 +23,12 @@ export const SURFACES = [
   { id: "playground", path: "/playground/", name: "The Playground", does: "the rendering engine, its instruments and the game made with it" },
   { id: "commons", path: "/cmmns.html", name: "The Commons", does: "where a reply comes from and how it argues" },
   { id: "flywheel", path: "/flywheel.html", name: "The Flywheel", does: "a workstation for any model, with runs you can recheck" },
-  { id: "articulate", path: "/articulate.html", name: "Articulate", does: "each writing pattern in your prose, named with its line" },
+  { id: "articulate", path: "/demos.html", name: "Demos & Articulate", does: "interactive tool demos including Articulate, Flywheel, Gather, and Plexus" },
   { id: "buildlang", path: "/buildlang.html", name: "BuildLang", does: "a language whose types list what a function may touch" },
-  { id: "research", path: "/research.html", name: "Research", does: "essays, papers and experiments, nulls included" },
+  { id: "research", path: "/essays.html", name: "Research & Essays", does: "essays, papers, studies, findings, and experiments, nulls included" },
   { id: "door", path: "/", name: "The home page", does: "the door to all six" },
 ];
-export const SITE_INDEX = "/site-index.html";
+export const SITE_INDEX = "/tools.html";
 export const KINDS = ["surface", "leaf", "record", "redirect", "moved", "gone"];
 export const leadsOn = (row) => row.kind === "redirect" || row.kind === "moved";
 const bare = (address) => address.split("#")[0].split("?")[0];
@@ -74,7 +74,10 @@ export function redirectTarget(html, from) {
   const m = REFRESH.exec(html);
   return m ? resolveAddress(m[1].trim(), from) : null;
 }
-export const hasFragment = (html, id) => new RegExp(`\\b(?:id|name)=["']${id.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}["']`).test(html);
+export const hasFragment = (html, id) => {
+  const escId = id.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return new RegExp(`\\b(?:id|name|data-tab)=["']${escId}["']|"slug"\\s*:\\s*"${escId}"`).test(html);
+};
 
 export function loadLedger(site = SITE) {
   const file = path.join(site, LEDGER);

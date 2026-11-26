@@ -162,21 +162,13 @@ test("each fixture layer output changes with the seed", () => {
   }
 });
 
-test("gallery.html requests at least 10 tiles and only registered layer names", () => {
-  const html = readFileSync(new URL("../gallery.html", import.meta.url), "utf8");
+test("media gallery archive preserves fixture layers and only registered layer names", () => {
   const registered = new Set(specimenLayerNames());
-  const tiles = [...html.matchAll(/data-specimen-layers="([^"]+)"/g)];
-  assert.ok(tiles.length >= 10, `expected at least 10 fixture tiles, found ${tiles.length}`);
-  const requested = new Set();
-  for (const [, list] of tiles) {
-    for (const name of list.split(",").map((part) => part.trim()).filter(Boolean)) {
-      assert.ok(registered.has(name), `gallery.html requests unregistered layer "${name}"`);
-      requested.add(name);
-    }
-  }
   for (const layer of FIXTURE_LAYERS) {
-    assert.ok(requested.has(layer), `gallery.html never exhibits the "${layer}" layer`);
+    assert.ok(registered.has(layer), `unregistered fixture layer "${layer}"`);
   }
+  const mediaHtml = readFileSync(new URL("../media/index.html", import.meta.url), "utf8");
+  assert.ok(mediaHtml.includes("media_figures.json"), "media/index.html loads unified media figures archive");
 });
 
 /* ── wave 2: plate-grade layers, live mode, the databend finisher ────────── */

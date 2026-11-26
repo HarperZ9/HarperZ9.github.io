@@ -44,61 +44,75 @@
 <a class="skip-link" href="#main">Skip to content</a>
 
 <div id="site-nav" class="site-nav"></div>
-<noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="cv.html">About</a></nav></noscript>
+<noscript><nav class="site-nav"><a href="tools.html">Catalog</a> <a href="studio.html">The Studio</a> <a href="architecture.html">Flagships</a> <a href="essays.html">Research</a> <a href="cv.html">About</a></nav></noscript>
 <script type="module" src="system/nav.js?v=20260909-pillar-navigation"></script>
 
 <main id="main">
 <article class="sheet essay" id="person">
   <header class="mast">
-    <p class="role" style="margin-bottom:.55rem">The person behind it</p>
+    <p class="role" style="margin-bottom:.55rem">Documented history</p>
     <h1>Zain Dana Harper</h1>
-    <p class="essay-sub">Optional reading: how I came to this work, and who it is for.</p>
-    <p class="essay-meta">Zain Dana Harper &middot; natural philosopher and toolmaker &middot; Seattle &middot; about thirteen years of programming</p>
+    <p class="essay-sub">How I came to this work, the convictions underneath it, and how five platforms grew out of one method.</p>
+    <p class="essay-meta">Zain Dana Harper &middot; independent systems architect and researcher &middot; Seattle &middot; thirteen years of programming</p>
   </header>
 
-  <p>I spent eleven years on a tree crew and stayed on the ground for all of it. On the ground I was the rigging specialist. I kept the climber safe if something let go above me, and I ran the timing, getting branches and logs of every size and shape to come down safely and fit into places they ordinarily would not, which took finesse and planning. Most of it ran on silent visual contact with the climber up in the tree. A lot of what we did was like a synchronized dance, a ballet of physics where a mistake has real consequences. We made very few mistakes over eleven years, and my father did the same work for twenty years before me.</p>
+  <p>I spent eleven years on a commercial tree crew and stayed on the ground for all of it. On the ground I was the rigging specialist. I kept the climber safe if something let go above me, and I ran the timing, bringing branches and heavy logs down through tight spaces where a bad calculation has immediate physical consequences. Most of it ran on silent visual contact with the climber overhead. Eleven years taught me to read load paths, material limits, and failure modes before cutting.</p>
 
-  <p>My family runs back through generations of broken people, and in the house I grew up in the damage never got a name. I picked it up young from the adults around me.</p>
+  <p>Tree work was the day job. At night I built software and reversed games, stepping through memory hooks, rendering passes, and runtime boundaries to see how complex systems actually behave from the outside. That habit never left. I still approach compilers, DirectX 12 pipelines, AI agents, and institutional claims the exact same way: test the system from outside, plant known faults to see whether the check really catches them, and record what happened.</p>
 
-  <p>The tree work was my day job. At night I built tools in my free time. I cheated at games and reversed them, working through their memory hooks and offsets to learn how the systems ran from outside.</p>
+  <p>I built E L D E R . E N B for Skyrim SE because I wanted a specific quality of light and shadow that did not exist in the stock renderer. I shipped it openly on NexusMods, where it has crossed one million downloads (1,004,693 total and 179,218 unique accounts as of November 13, 2026).</p>
 
-  <p>I still work on AI and its governance from outside the usual circles. There is little traction, and few people outside it know the work is happening. It is the same method I brought to the games, coming at a system from the outside and pushing it to see how it behaves.</p>
+  <p>Today I operate independently in Seattle as a Washington sole proprietor, building and maintaining an open-source engineering stack across 159 public repositories (five core flagships plus companion packages) alongside 41 merged upstream pull requests across 34 external projects (DeepEval, Pydantic AI, Datasette, Biome, TOMLKit, Python Grimp, Free Law Project, and others).</p>
 
-  <p>I build tools that attack AI systems, and I use AI to build them. That is the purple team method. I aim it at AI safety and alignment. I build the adversarial side so the defensive side has something real to test against, then I feed what the attacks find back into the defenses that are supposed to hold. That is threat-informed defense. The method sits close to me because it runs along my own impulsiveness and the line where accountability starts, and because I still falter.</p>
+  <h2 id="history-arc">Documented engineering arc (2024 to November 2026)</h2>
 
-  <p>The companies building systems at scale will not hold themselves to account. I mean the class running the large platforms and the feeds that decide what a lot of people see. I watched what the platforms did to people&rsquo;s attention and to what they take as real. Agentic AI is the next system like that, and the check on it has to come from outside.</p>
+  <p><strong>2024 to 2025: Light, shaders, and native engine roots.</strong> Started from physical light, colour grading, and display craft in Elder ENB, then designed universal DirectX 12 rendering and sensorless display calibration architectures that grew into RAW DX12 and Calibrate-Pro.</p>
 
-  <p>One thing I finished on my own is a rendering preset called E L D E R . E N B, built for Skyrim SE. I made it because I wanted a specific quality of light in the game that I could not get any other way, and I built it with no money coming in for the work. It went up on NexusMods, where it has crossed one million downloads (1,004,693 total and 179,218 unique accounts running it inside their game as of November 13, 2026).</p>
+  <p><strong>March to May 2026: Languages, compilers, and native graphics.</strong> Built BuildLang (effect-typed compiled systems and GPU language in Rust), Build Color, and the native C++23 Direct3D 12 / Vulkan / WebGPU rendering stack. Moved from modding existing engines to owning the full compiler, colorimetry, and shader pipeline.</p>
 
-  <p>I work under my own name as a Washington sole proprietor. There is no payroll, because I have nobody else to pay, and I have not yet held a paid software role. Every repository, release, upstream pull request (41 merged across 34 external projects), and empirical study on this site is independent work built over about thirteen years of self-directed programming.</p>
+  <p><strong>April to August 2026: Purple-team adversarial mirror.</strong> Built threat-informed attack and probe tools against my own systems so defensive gates had something real to stop. Every defensive rule in Flywheel came from watching an attack get past an earlier version first.</p>
 
-  <h2 id="through-line">The through-line, interests, and five platforms</h2>
+  <p><strong>June to September 2026: Flywheel accountability, upstream PRs, and essays.</strong> Shipped Flywheel, EMET, Crucible, Gather, Forum, Index, Mneme, Plexus, Articulate, and Accountable Surface around one rule: models propose, deterministic oracles dispose. Published signed essays, preregistered studies, and 41 merged upstream pull requests.</p>
 
-  <p>My work starts from a plain observation: generating plausible text, code, or imagery has become nearly free, while checking whether an output is actually true remains slow and expensive. Whether I am writing a compiler, debugging a DirectX 12 shader pass, testing an AI agent against planted faults, or measuring how light behaves in snow and dusk, the habit is the same: separate the system that proposes an answer from the reference that checks it, plant known failures to confirm the checker still catches them, and publish the result honestly when an idea comes back null.</p>
+  <p><strong>October 2026: The Playground, Low Water, and The Commons.</strong> Unified rendering, spectral optics, audio synthesis, dynamic typography, and the five-era narrative game Low Water into Superframe (The Playground), and shipped CMMNS for local-first claim provenance and archival.</p>
 
-  <p>Eleven years in commercial arboriculture shaped how I design software. A tree manages water, wind load, compartmentalized decay, and fungal partnerships with no central manager; a job site stays safe only when scopes match physical constraints and anyone on the ground can call a halt without penalty. That same attention runs through my broader interests: horticulture and mycology, atmospheric optics and historical color manuals, perfumery (breaking complex impressions down into volatile top, heart, and base curves), atmospheric drum and bass and acoustic silence, cinema that respects negative space, and mid-century drafting plates paired with precision instruments.</p>
+  <p><strong>November 2026: Five-flagship consolidation and local frontier models.</strong> Compressed the entire ecosystem into five cohesive flagships, shipped BuildLang 1.15.0 with BuildDB (qdb.exe) and 115x-191x f64 kernels, pushed RAW DX12 to 96 of 96 live moving-camera checks, and built local RTX 4090 / Colab training and verification harnesses (JFC3P-7B-Oracle Arm C 95.83% trap rejection, NOH-3/NOH-4 reseating fault valves, Plato-Key, and AVTR-4R).</p>
 
-  <p>Everything I build now lives inside five connected open-source platforms, mapped end to end on <a class="inline" href="architecture.html">Five Platforms, One Field</a>:</p>
+  <h2 id="philosophy">Core convictions and philosophy</h2>
 
-  <p><strong><a class="inline" href="playground/">The Playground</a> (Superframe &amp; RAW):</strong> C++23 multi-backend rendering (CPU reference, Direct3D 12, Vulkan 1.3, WebGPU), a live DirectX 12 Skyrim SE graphics replacement passing 96 of 96 moving-camera checks across four scenes, spectral material and procedural flora generation, SI rigid-body physics simulation, CLAP and VST3 physical-model instruments, cosmological simulation, and the original 3D narrative game <a class="inline" href="low-water.html">Low Water</a>.</p>
+  <p><strong>Tools are philosophy.</strong> Every flagship here carries an explicit position on how software should treat its users: open methods, inspectable internals, and zero silent authority.</p>
 
-  <p><strong><a class="inline" href="buildlang.html">BuildLang</a>:</strong> A Rust-built compiled systems language where function types declare side effects (filesystem, network, C access), compiling to deterministic C, HLSL/GLSL, experimental WebAssembly, and standalone x86-64 executables, alongside a checksummed embedded SQL engine (BDB) and a RISC-V toolchain written in BuildLang.</p>
+  <p><strong>Nothing self-warrants (the witnessing spine).</strong> A model, compiler, or organization should never be the sole judge of its own claims. Every trusted result is re-derived from outside, coverage-accounted, and stamped strictly MATCH, DRIFT, or UNVERIFIABLE.</p>
 
-  <p><strong><a class="inline" href="flywheel.html">The Flywheel</a> &amp; <a class="inline" href="articulate.html">Articulate</a>:</strong> A self-hosted AI workstation and coding harness consolidating 31 packages behind cryptographic offline receipts, a Three-Plate Verification Oracle, <a class="inline" href="emet.html">EMET</a> cross-language byte-integrity witnessing, an accountable workstation control plane, and deterministic prose linting.</p>
+  <p><strong>Make checking cheaper.</strong> Generating plausible text, code, or imagery is now nearly free while verifying truth stays expensive. Lowering the cost of verification for ordinary people is the core engineering target across Flywheel, BuildLang, and CMMNS.</p>
 
-  <p><strong><a class="inline" href="cmmns.html">The Commons</a> (CMMNS):</strong> A local-first, account-free browser extension surfacing source provenance, coordination cues, and fact-checks behind replies across nine social platforms.</p>
+  <p><strong>Environment over imputed intent.</strong> Misbehaviour in AI agents and institutions comes from training environments, architecture, and incentive structures, not hidden villainy. Measure mechanisms and incentives directly; treat internal readouts as untrusted signals checked against behaviour.</p>
 
-  <p><strong><a class="inline" href="research.html">Research, Security &amp; Writing</a>:</strong> Thirty reproducible empirical studies (<a class="inline" href="findings/">12 published nulls</a>), 13 DOI-indexed preprints, the capability-public <a class="inline" href="security.html">security and purple-team hierarchy</a>, and signed essays on AI accountability and craft.</p>
+  <p><strong>Properties over property.</strong> Judge software and research by measured properties rather than credentials or institutional prestige. Keep null results in the denominator. Build systems with both elasticity (recovering shape after disturbance) and plasticity (learning from sustained feedback).</p>
 
-  <p>I have a young son. He will grow up with AI already part of the world. Safety researchers keep resigning from the largest labs. They do not think the models are being made safe fast enough. Dario Amodei, who runs Anthropic, is now asking the industry to pace the frontier and put more into alignment and outside evaluation. Other lab heads have agreed. That is the work I already do, and I want to keep doing it while he grows up.</p>
+  <p><strong>Dual-edge tools and reseating valves.</strong> Every powerful tool has two edges: the same rope can pull someone out of a pit or hang them. Brittle punishment acts like a one-shot rupture disc; healthy systems use reseating relief valves with a zero-penalty honest-exit channel ("I could not verify this, and here is why") and fail-closed stops when checks cannot run.</p>
 
-  <h2 id="stand-for">What I stand for</h2>
+  <p><strong>Neutral tools, signed essays.</strong> Personal views belong in signed first-person writing. Verification, archival, and provenance tools apply symmetric rules to every subject, including my own work.</p>
 
-  <p>Knowledge has no owner, so I publish methods, data and failures in the open. People who hold power should be open to scrutiny, and the tools to check a public claim should be free to anyone. People who admit an honest error should have a way back. I am tied to no organization, institution or nation. If I play for any side, it is humanity&rsquo;s.</p>
+  <h2 id="through-line">Five flagships, one field</h2>
 
-  <p><strong>Nothing self-warrants:</strong> a model, compiler, or institution should never be the sole judge of its own work. <strong>Make checking cheaper:</strong> lower the cost of verifying claims for regular people instead of locking verification behind proprietary walls. <strong>Just culture over blame:</strong> honest errors lead to learning and a clear path back; only hiding failures corrupts the shared record. <strong>Neutral tools, signed essays:</strong> personal opinions belong in signed first-person writing, while verification and provenance tools apply symmetric rules to every subject, including my own work. <strong>Respect for human attention:</strong> software should return people to their lives calmer and more capable, never trap them with synthetic urgency or clutter.</p>
+  <p>Everything I build lives inside five connected open-source flagships, mapped end to end on <a class="inline" href="architecture.html">Platform Architecture</a> and catalogued across all 159 public repositories on <a class="inline" href="tools.html">Tools &amp; Repositories</a>:</p>
 
-  <p class="essay-sig">Explore the unified stack on <a class="inline" href="architecture.html">Platform Architecture</a>, read the career materials on <a class="inline" href="hire.html">Hire</a> and the <a class="inline" href="cv.html">Full CV</a>, or see the visual sequence on <a class="inline" href="current-story.html">Current Story</a>. &nbsp;<a class="totop" href="#">&uarr; top</a></p>
+  <p><strong><a class="inline" href="playground/">The Playground</a> (Superframe &amp; <a class="inline" href="raw.html">RAW DX12</a>):</strong> C++23 multi-backend rendering (CPU reference, Direct3D 12, Vulkan 1.3, WebGPU), live DX12 Skyrim SE / Fallout 4 / Starfield rendering (96/96 moving-camera checks), BT.2020/2100 spectral optics, 6-DOF physical-AI, biomechanical tree dynamics, CLAP/VST3 physical-model instruments, and the 3D narrative game <a class="inline" href="low-water.html">Low Water</a>.</p>
+
+  <p><strong><a class="inline" href="buildlang.html">BuildLang</a>:</strong> Compiled systems and GPU language in Rust (buildc 1.15.0) where function types declare side effects, compiling to native binaries and HLSL/GLSL shaders alongside BuildDB (qdb.exe, 0/500 silent fuzz corruptions) and 115x-191x f64 ML and physics kernels.</p>
+
+  <p><strong><a class="inline" href="flywheel.html">The Flywheel</a> &amp; <a class="inline" href="models.html">Local Frontier Models</a>:</strong> Self-hosted AI workstation and coding harness sealing every step into tamper-evident SHA-256 receipts (engine-receipt/1), multimodal deconstruction (Gather), deterministic prose checking (Articulate), accountable workstation permissions, and the Plexus RTX 4090 / Colab forge (JFC3P-7B-Oracle Arm C, NOH-3/NOH-4, Plato-Key, AVTR-4R).</p>
+
+  <p><strong><a class="inline" href="cmmns.html">The Commons</a> (CMMNS):</strong> Site-agnostic browser extension and archival tool capturing webpages and social threads into collision-free provenance sidecars locally without accounts or tracking.</p>
+
+  <p><strong><a class="inline" href="essays.html">Research, Security &amp; Writing</a>:</strong> Thirty reproducible empirical studies (<a class="inline" href="findings/">12 published nulls</a>), 13 DOI-indexed preprints, <a class="inline" href="studies/">7 open verifiable datasets (DS-01 to DS-07)</a>, capability-public <a class="inline" href="security.html">security assurance</a>, and <a class="inline" href="frontier-safety/">dated frontier-safety archives</a>.</p>
+
+  <h2 id="taste-craft">Craft, negative space, and riding the membrane</h2>
+
+  <p>Eleven years in arboriculture and lifelong study of horticulture, mycology, atmospheric optics, perfumery, acoustics, cinema, and mid-century drafting plates shape how every surface looks and behaves. I favour one steady warm light inside cold dark over synthetic gloss, material honesty that shows how an image or typeface was made, generous negative space, and software that respects human attention. Non-empirical taste and imagination stay clearly labelled as creative exploration and never masquerade as empirical proof.</p>
+
+  <p class="essay-sig">Explore the unified stack on <a class="inline" href="architecture.html">Platform Architecture</a>, browse all 159 public repos in <a class="inline" href="tools.html">Tools</a>, inspect the <a class="inline" href="models.html">Local Model Lab</a>, or open the career materials on <a class="inline" href="hire.html">Hire</a> and the <a class="inline" href="cv.html">Full CV</a>. &nbsp;<a class="totop" href="#">&uarr; top</a></p>
 
   <figure class="plate" style="margin:1.6rem 0 0">
     <canvas data-specimen="person-plate-01" data-specimen-layers="moire-swirl" aria-hidden="true"></canvas>

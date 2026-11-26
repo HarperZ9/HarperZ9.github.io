@@ -1,0 +1,41 @@
+# Zain Dana Harper
+**Independent Systems Architect & AI / Tooling Director**
+
+Seattle, WA (Local / Hybrid / Remote Open) | zaindharper@gmail.com | harperz9.github.io | github.com/HarperZ9 | linkedin.com/in/zaindanaharper | orcid.org/0009-0001-7175-5393
+
+## 30-Second Work-Sample Proof Strip
+
+- **5 Shipped Platforms** - PyPI, crates.io, GitHub & Nexus Mods
+- **2,132.3x / 2.89 MB** - BuildLang 1.15.0 & BuildDB qdb.exe
+- **14.45M / 3.66 ms** - Multimodal corpus & FTS5 search
+- **4,500+ Auto Tests** - Fail-closed specs & 41 external PRs
+
+## Executive Profile
+
+Hands-on systems architect and technical director who specifies, directs, verifies, and ships end-to-end software platforms across compilers, embedded storage, AI verification, multimodal indexing, and cross-browser tools. Excels at defining tight architectural invariants, directing AI-assisted and multi-agent build pipelines against deterministic oracles, and turning sprawling technical domains into cohesive, tested releases. Backed by 41 merged upstream PRs across 34 repos and 11 years leading real-world field crews.
+
+## Technical Skills
+
+- **Architecture & Direction:** System Specification, Fail-Closed Oracle Design, Multi-Agent Workflow Direction, Platform Consolidation (206 -> 5 Flagships), Release Engineering (PyPI, crates.io, GitHub)
+- **Compilers, Storage & Data:** BuildLang 1.15.0 (Rust -> C/HLSL/Wasm/x86-64/RV64), BuildDB qdb.exe (Paged Embedded SQL), SQLite FTS5, DuckDB, PyArrow Parquet, Zstd Streaming Pipelines
+- **Verification, AI & Web:** Flywheel 2.0.0, engine-receipt/1 SHA-256 Receipts, Local Model Tooling (JFC3P-7B / NOH-4), MCP Servers (22 Tools), CMMNS (MV3), Articulate (LSP/SARIF), Python, Rust, C++23, TypeScript
+
+## Systems Architecture & Technical Direction
+
+### Founder, Systems Architect & Tooling Director | Harper Research & Open-Source Ecosystem
+*Seattle, WA | 2025 - Present (Independent Systems R&D since 2013) | github.com/HarperZ9 | harperz9.github.io*
+
+- **BuildLang 1.15.0 & BuildDB Embedded Storage:** Specified and shipped a Rust-hosted capability-effect compiler on crates.io (147/147 reproducible build hashes, 2,132.3x procgen speedup, 115x to 191x f64 kernels) plus BuildDB qdb.exe (2.89 MB paging footprint, 31.31 ms query, 0/500 fuzz failures).
+- **Flywheel 2.0.0 & Local Model / Agent Direction:** Consolidated 30 verification, harness, and memory packages onto PyPI behind engine-receipt/1 SHA-256 receipts; achieved 115/115 Three-Plate recall, 95.83% JFC3P-7B trap rejection, and 18x to 78x NOH-3/NOH-4 OOD and recovery MSE gains.
+- **Workstation Multimodal Knowledge Brain:** Directed a streaming single-threaded decompiler indexing 14.45M files, digesting 6,558 videos into 3x3 contact sheets at 304x reduction, and serving 6.01M scrubbed FTS5 words in 3.66 ms via a 22-tool local MCP studio.
+- **Cross-Platform Products & Upstream Collaboration:** Shipped Articulate 0.19.1 (2,096 tests), CMMNS 3.10.0 (1,735 tests across 9 web platforms), RAW DX12 Wave 72 (522/522 runtime tests), and 41 merged upstream PRs across 34 external repos (grimp, Biome, TOMLKit, Datasette, DeepEval).
+
+## Field Crew Leadership, Research & Credentials
+
+### Tree Care Crew Lead | Legendary Tree (Seattle Area, WA | 2015 - 2026)
+
+- **Crew & Client Direction:** 11 years running high-hazard commercial tree-care operations, scoping complex projects with homeowners, coordinating crews, and teaching clear structural rationale before execution.
+
+### Publications, Support & Credentials
+
+- **Track Record:** 30 empirical studies (13 DOIs, 12 nulls); Xbox Networking Support (2014 - 2015); DeepMind badges (100/100), 4 Microsoft Applied Skills, 6 Qualys Specialist certs, Cisco Ethical Hacker (100%); High School Diploma (2013).

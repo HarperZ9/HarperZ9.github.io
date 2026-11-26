@@ -7,7 +7,7 @@
 // keeps drawing the text from the minted outlines (the type plugin), so the readings, PNG frame
 // and the hand-offs read it like any other source.
 
-const PAGE = "type-forge.html?v=20261009-type-desk";
+const PAGE = "system/studio-fragments/type-forge.htm?v=20261126-unified";
 const KEYS = ["weight", "contrast", "width", "x_height", "roundness", "aperture"];
 let parts = null;      // { proof, form, status, note } adopted once, moved into the mount on each entry
 let loading = null;
