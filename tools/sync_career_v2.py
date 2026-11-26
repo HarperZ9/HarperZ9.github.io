@@ -5,13 +5,14 @@ into career/v2/ and the 9 existing live career HTML pages (exact 44-HTML budget 
 from __future__ import annotations
 
 import json
+import os
 import re
 import shutil
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-SRC = Path(r"C:\dev\mission-control\2026-11-26-media-overhaul\career-v2")
+SRC = Path(os.environ.get("CAREER_V2_SRC", "")) if os.environ.get("CAREER_V2_SRC") else None
 DST_V2 = ROOT / "career" / "v2"
 
 

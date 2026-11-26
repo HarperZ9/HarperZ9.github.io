@@ -372,7 +372,7 @@ const isSpatial = (s) => s === "spatial" || s === "splats";
 let _splatsRecord = null;
 function loadSplatsRecord() {
   if (_splatsRecord) return _splatsRecord;
-  _splatsRecord = fetch("gaussian-splats.html", { credentials: "same-origin" }).then((r) => {
+  _splatsRecord = fetch("system/studio-fragments/gaussian-splats.htm", { credentials: "same-origin" }).then((r) => {
     if (!r.ok) throw new Error("gaussian-splats.html answered " + r.status);
     return r.text();
   }).then((html) => {

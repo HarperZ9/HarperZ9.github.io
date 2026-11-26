@@ -42,8 +42,10 @@ function packExplorer({ pack, category = "", repoCatalog = "", placeholder = "Fi
     const cats = category ? new Set(category.split(",")) : null;
     const items = (raw.items || []).filter((it) => !cats || cats.has(it.category));
     if (items.length) {
-      anchors = `<noscript><ul class="us-noscript-list">${items.map((it) =>
-        `<li id="${escHtml(it.slug)}"><strong>${escHtml(it.title)}</strong>: ${escHtml((it.description || it.excerpt || "").slice(0, 160))}</li>`
+      anchors = `<div class="us-anchors" hidden aria-hidden="true">${items.map((it) =>
+        `<span id="${escHtml(it.slug)}"></span>`
+      ).join("")}</div><noscript><ul class="us-noscript-list">${items.map((it) =>
+        `<li><strong>${escHtml(it.title)}</strong>: ${escHtml((it.description || it.excerpt || "").slice(0, 160))}</li>`
       ).join("")}</ul></noscript>`;
     }
   } catch { /* pack optional */ }

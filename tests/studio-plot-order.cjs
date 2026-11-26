@@ -44,9 +44,9 @@ const press = async (page, chip) => { await chip.focus(); await page.keyboard.pr
       const errors = [];
       const watch = (p) => { p.on('pageerror', (e) => errors.push(String(e.message || e))); p.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); }); };
 
-      // The archive page's own orders.
+      // The archive fragment's own orders.
       const arc = await ctx.newPage(); watch(arc);
-      await arc.goto(`${base}/session-archive.html`);
+      await arc.goto(`${base}/system/studio-fragments/session-archive.htm`);
       await arc.waitForFunction(() => document.querySelectorAll('[data-archive-grid] .arc-cell').length > 100, null, { timeout: 60000 });
       const want = {};
       for (const [key, label] of ORDERS) {
