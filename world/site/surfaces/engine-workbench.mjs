@@ -81,9 +81,10 @@ export function initWorkbench(root = document) {
   const launchInline = (title, src) => {
     if (!stage || !stageBody) return;
     stage.hidden = false;
+    const embedSrc = src + (src.includes('?') ? '&' : '?') + 'embed=1';
     if (stageTitle) stageTitle.textContent = `Live stage: ${title}`;
     if (stageLink) { stageLink.href = src; stageLink.textContent = `Open ${title} full window`; }
-    stageBody.innerHTML = `<iframe class="wb-frame" src="${esc(src)}" title="${esc(title)}" loading="eager" allow="autoplay; fullscreen"></iframe>`;
+    stageBody.innerHTML = `<iframe class="wb-frame" src="${esc(embedSrc)}" title="${esc(title)}" loading="eager" allow="autoplay; fullscreen"></iframe>`;
     stage.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
   };
 

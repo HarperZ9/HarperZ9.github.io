@@ -120,11 +120,11 @@ ${sectionsNav([...BL.SECTIONS, { id: "superopt", title: "V5 certified superoptim
 </header>
 ${sections}
 <section class="lp-sec" id="superopt" aria-labelledby="h-superopt">
-<h2 id="h-superopt"><span class="d-3d">V5 certified e-graph superoptimizer</span></h2>
-<p class="lp-status">Merged on main after ${esc(BLR.version)} (<a href="https://github.com/HarperZ9/buildlang/pull/344">#344</a>, <a href="https://github.com/HarperZ9/buildlang/pull/345">#345</a>).</p>
-<p class="lp-lede">Equality saturation wired straight into <code>buildc</code> with offline-verifiable proof certificates. Every rewrite step emits a witness checked independently before codegen.</p>
+<h2 id="h-superopt"><span class="d-3d">V5 certified e-graph superoptimizer &amp; GPU polyhedral TV</span></h2>
+<p class="lp-status">Merged on main after ${esc(BLR.version)} (<a href="https://github.com/HarperZ9/buildlang/pull/344">#344</a>, <a href="https://github.com/HarperZ9/buildlang/pull/345">#345</a>, <a href="https://github.com/HarperZ9/buildlang/pull/346">#346</a>).</p>
+<p class="lp-lede">Equality saturation and certified GPU polyhedral loop tiling + uniformity-safe subgroup auto-vectorization (WGSL, HLSL, MSL, SPIR-V) wired straight into <code>buildc</code> with offline-verifiable proof certificates.</p>
 <p class="lp-run"><code>buildc build prog.bld --superopt --emit-cert cert.json &amp;&amp; buildc verify-cert cert.json</code></p>
-<p class="lp-source">Merged 26 November 2026 (<a href="https://github.com/HarperZ9/buildlang/pull/344">buildlang #344</a>, commit <code>b21c66ce</code>; 15/15 CI green); OSI/FSF AGPL-3.0-only funding manifest live via <a href="https://github.com/HarperZ9/buildlang/pull/345">buildlang #345</a> (<a href="https://raw.githubusercontent.com/HarperZ9/buildlang/main/funding.json">funding.json</a>).</p>
+<p class="lp-source">Merged 26 November 2026: <a href="https://github.com/HarperZ9/buildlang/pull/344">buildlang #344</a> (V5 superopt, <code>b21c66ce</code>), <a href="https://github.com/HarperZ9/buildlang/pull/346">buildlang #346</a> (GPU polyhedral + subgroup TV <code>--emit-gpu-cert</code>, <code>998ddf27</code>, 15/15 CI green); OSI/FSF AGPL-3.0-only funding manifest via <a href="https://github.com/HarperZ9/buildlang/pull/345">buildlang #345</a> (<a href="https://raw.githubusercontent.com/HarperZ9/buildlang/main/funding.json">funding.json</a>).</p>
 </section>
 <section class="lp-sec" id="first" aria-labelledby="h-first">
 <h2 id="h-first"><span class="d-3d">${esc(first.title)}</span></h2>

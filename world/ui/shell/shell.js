@@ -10,6 +10,7 @@ import { initOrganic } from "./organic/organic.js";
 // Every control here is a native button; every state it changes is visible without it.
 const root = document.documentElement;
 root.classList.add("js");
+try { if (window.self !== window.top || new URLSearchParams(location.search).get("embed") === "1") root.classList.add("is-embedded"); } catch { root.classList.add("is-embedded"); }
 const reduced = matchMedia("(prefers-reduced-motion: reduce)");
 
 const store = {

@@ -211,3 +211,5 @@
 .route-header__path span{color:var(--soft,#42575d)}
 .route-header__title{letter-spacing:0;text-transform:none}
 .route-header__summary{max-width:68ch}
+html.is-embedded{--nav-h:0px}
+html.is-embedded #site-nav,html.is-embedded .site-nav,html.is-embedded .route-header__path,html.is-embedded .docnav,html.is-embedded .skip-link,html.is-embedded .frame .bar{display:none!important}

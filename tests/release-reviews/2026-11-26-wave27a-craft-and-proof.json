@@ -1,9 +1,9 @@
 {
   "date": "2026-11-26",
-  "note": "Wave 27A: Open Ocean and Sheet craft elevation, Playground discipline filter bar + active stage indicator, models.html honest-nulls evolution specimen, and Wave 25-27 proof sync",
+  "note": "Wave 27A: Open Ocean and Sheet craft elevation, seamless embedded Playground workbench stage, models.html honest-nulls evolution specimen, and Wave 25-28 proof sync",
   "paths": {
-    "flywheel.html": "d08ad67220899a49778e53e81c312de836b3a0657e7d5ecf9ed5fcc6a11ae183",
-    "index.html": "9c8234ac66aa68fe7a13acb5116aae626941c270749a8759b499c6c086223c18",
+    "flywheel.html": "858a8ea16f059866f74b99abe1e598f9e781ab06b3c82bca06c0308f65029123",
+    "index.html": "e09bb0005b67a19e394364ac4a4bd5a77070733b08dcd8d52c562cee1b615cff",
     "site-index.html": "18835f71a5aaf0d15bc2713ce4d599ab059afa7d98ea3c554903d91f0e3f9bff",
     "system/routes.js": "83f40144ab2e3e7e32888357837205b0cd67da2f9bc93ac25d488101f9d9da87"
   }

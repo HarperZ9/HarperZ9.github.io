@@ -113,7 +113,7 @@ Node 24 or later. The JavaScript engine has no dependencies; the instruments in
   https://github.com/HarperZ9/superframe
 - Recent verified milestones (2026-11-26): superframe #153 wired 3/3 native/bld/
   BuildLang kernels with bit-exact C++ parity and 3-way 100 Hz/Deja-VAE checks;
-  RAW DX12 Waves 74-78 pass 96/96 live moving-camera Skyrim SE checks (38/38 DXC,
+  RAW DX12 Waves 74-80 pass 96/96 live moving-camera Skyrim SE checks (38/38 DXC,
   21/21 RTX 4090 GPU bench, 0 D3D12 errors).
 
 ## EMET
@@ -152,7 +152,9 @@ Version 1.15.0. Licence AGPL-3.0-only. Written in Rust.
   https://github.com/HarperZ9/buildlang , https://crates.io/crates/buildlang
 - Recent verified milestones (2026-11-26): buildlang #344 wired the V5
   certified e-graph superoptimizer into buildc (`--superopt`, `--emit-cert`,
-  `buildc verify-cert`); buildlang #345 published the AGPL-3.0-only funding.json.
+  `buildc verify-cert`); buildlang #346 added certified GPU polyhedral loop
+  tiling + uniformity-safe subgroup auto-vectorization (`--emit-gpu-cert` across
+  WGSL, HLSL, MSL, SPIR-V); buildlang #345 published the AGPL-3.0-only funding.json.
 
 ## raw-native
 

@@ -81,6 +81,8 @@ html.ready dialog[data-o="menu"][open]{animation:o-menu-in var(--dur-slow) var(-
 /* ---------- the hand: live controls that come to hand, no permanent bar ---------- */
 .o-hand{position:fixed;z-index:40;right:clamp(10px,2vw,24px);top:clamp(10px,2vw,24px);display:flex;gap:6px;align-items:center;
   padding:4px;background:none;border-radius:0;box-shadow:none}
+html.is-embedded .o-hand,html.is-embedded dialog#o-menu{display:none!important}
+html.is-embedded main{padding-top:24px!important}
 .o-hand .o-home,.o-hand button,.o-hand a{text-shadow:0 0 10px var(--wall,#e8e3d9),0 0 3px var(--wall,#e8e3d9)}
 .o-hand [data-o="lamp"],.o-hand [data-o="record"],.o-hand .o-motion{box-shadow:none}
 .o-hand .o-motion{border-radius:2px;width:56px}

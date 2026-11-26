@@ -23,16 +23,16 @@
 <meta name="twitter:title" content="BuildLang | Zain Dana Harper">
 <meta name="twitter:description" content="BuildLang is a systems programming language in which a program declares what it is allowed to touch. The compiler checks those declarations and its memory rules, then emits native code through C. It ships with a CLI, editor support, two-way C integration and experimental shader output.">
 <link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-bd5c91ceb7">
-<link rel="stylesheet" href="/studies/studies.css?v=world-bd5c91ceb7">
-<link rel="stylesheet" href="/world/site/depth.css?v=world-bd5c91ceb7">
-<script type="module" src="/world/ui/shell/shell.js?v=world-bd5c91ceb7"></script>
-<script type="module" src="/world/site/hand-scroll.js?v=world-bd5c91ceb7"></script>
-<link rel="stylesheet" href="/world/site/landmark.css?v=world-bd5c91ceb7">
-<script type="module" src="/world/site/home-field.js?v=world-bd5c91ceb7"></script>
-<script type="module" src="/world/site/sound.js?v=world-bd5c91ceb7"></script>
-<script type="module" src="/world/site/explore/effects.js?v=world-bd5c91ceb7"></script>
-<script type="module" src="/world/site/explore/registry.js?v=world-bd5c91ceb7"></script>
+<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-78a48f6a49">
+<link rel="stylesheet" href="/studies/studies.css?v=world-78a48f6a49">
+<link rel="stylesheet" href="/world/site/depth.css?v=world-78a48f6a49">
+<script type="module" src="/world/ui/shell/shell.js?v=world-78a48f6a49"></script>
+<script type="module" src="/world/site/hand-scroll.js?v=world-78a48f6a49"></script>
+<link rel="stylesheet" href="/world/site/landmark.css?v=world-78a48f6a49">
+<script type="module" src="/world/site/home-field.js?v=world-78a48f6a49"></script>
+<script type="module" src="/world/site/sound.js?v=world-78a48f6a49"></script>
+<script type="module" src="/world/site/explore/effects.js?v=world-78a48f6a49"></script>
+<script type="module" src="/world/site/explore/registry.js?v=world-78a48f6a49"></script>
 <!-- structured-data:begin (tools/structured_data.py) -->
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareSourceCode","@id":"https://harperz9.github.io/buildlang.html#software","name":"BuildLang","description":"BuildLang is a systems programming language in which a program declares what it is allowed to touch. The compiler checks those declarations and its memory rules, then emits native code through C. It ships with a CLI, editor support, two-way C integration and experimental shader output.","url":"https://harperz9.github.io/buildlang.html","codeRepository":"https://github.com/HarperZ9/buildlang","author":{"@id":"https://harperz9.github.io/#person","@type":"Person","name":"Zain Dana Harper"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://harperz9.github.io/"},{"@type":"ListItem","position":2,"name":"Catalog","item":"https://harperz9.github.io/catalog.html"},{"@type":"ListItem","position":3,"name":"BuildLang","item":"https://harperz9.github.io/buildlang.html"}]},{"@type":"SoftwareApplication","@id":"https://harperz9.github.io/buildlang.html#application","name":"BuildLang","url":"https://harperz9.github.io/buildlang.html","softwareVersion":"1.15.0","applicationCategory":"DeveloperApplication","operatingSystem":"Windows, macOS, Linux","downloadUrl":"https://crates.io/crates/buildlang","license":"https://spdx.org/licenses/AGPL-3.0-only.html","author":{"@id":"https://harperz9.github.io/#person","@type":"Person","name":"Zain Dana Harper"},"isAccessibleForFree":true,"sameAs":"https://github.com/HarperZ9/buildlang","installUrl":"https://crates.io/crates/buildlang"}]}</script>
 <!-- structured-data:end -->
@@ -182,11 +182,11 @@ new MutationObserver(s).observe(r,{attributes:true,attributeFilter:["data-theme"
 <p class="fig-src">bql verify rebuilds the store and compares it table by table. No incremental view ships without sampled agreement against a rebuild, and two planted faults are caught. <a href="https://github.com/HarperZ9/buildlang/pull/119">buildlang #119, merged 5 November 2026 (0246f5b), first released in 1.11.0</a>.</p></details></li></ul>
 </section>
 <section class="lp-sec" id="superopt" aria-labelledby="h-superopt">
-<h2 id="h-superopt"><span class="d-3d">V5 certified e-graph superoptimizer</span></h2>
-<p class="lp-status">Merged on main after 1.15.0 (<a href="https://github.com/HarperZ9/buildlang/pull/344">#344</a>, <a href="https://github.com/HarperZ9/buildlang/pull/345">#345</a>).</p>
-<p class="lp-lede">Equality saturation wired straight into <code>buildc</code> with offline-verifiable proof certificates. Every rewrite step emits a witness checked independently before codegen.</p>
+<h2 id="h-superopt"><span class="d-3d">V5 certified e-graph superoptimizer &amp; GPU polyhedral TV</span></h2>
+<p class="lp-status">Merged on main after 1.15.0 (<a href="https://github.com/HarperZ9/buildlang/pull/344">#344</a>, <a href="https://github.com/HarperZ9/buildlang/pull/345">#345</a>, <a href="https://github.com/HarperZ9/buildlang/pull/346">#346</a>).</p>
+<p class="lp-lede">Equality saturation and certified GPU polyhedral loop tiling + uniformity-safe subgroup auto-vectorization (WGSL, HLSL, MSL, SPIR-V) wired straight into <code>buildc</code> with offline-verifiable proof certificates.</p>
 <p class="lp-run"><code>buildc build prog.bld --superopt --emit-cert cert.json &amp;&amp; buildc verify-cert cert.json</code></p>
-<p class="lp-source">Merged 26 November 2026 (<a href="https://github.com/HarperZ9/buildlang/pull/344">buildlang #344</a>, commit <code>b21c66ce</code>; 15/15 CI green); OSI/FSF AGPL-3.0-only funding manifest live via <a href="https://github.com/HarperZ9/buildlang/pull/345">buildlang #345</a> (<a href="https://raw.githubusercontent.com/HarperZ9/buildlang/main/funding.json">funding.json</a>).</p>
+<p class="lp-source">Merged 26 November 2026: <a href="https://github.com/HarperZ9/buildlang/pull/344">buildlang #344</a> (V5 superopt, <code>b21c66ce</code>), <a href="https://github.com/HarperZ9/buildlang/pull/346">buildlang #346</a> (GPU polyhedral + subgroup TV <code>--emit-gpu-cert</code>, <code>998ddf27</code>, 15/15 CI green); OSI/FSF AGPL-3.0-only funding manifest via <a href="https://github.com/HarperZ9/buildlang/pull/345">buildlang #345</a> (<a href="https://raw.githubusercontent.com/HarperZ9/buildlang/main/funding.json">funding.json</a>).</p>
 </section>
 <section class="lp-sec" id="first" aria-labelledby="h-first">
 <h2 id="h-first"><span class="d-3d">The first step</span></h2>

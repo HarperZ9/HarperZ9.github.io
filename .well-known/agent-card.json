@@ -36,7 +36,7 @@
       "name": "BuildLang",
       "url": "https://harperz9.github.io/buildlang.html",
       "repository": "https://github.com/HarperZ9/buildlang",
-      "summary": "Rust-built compiled systems language with typed capability effects, 12 targets (C, HLSL, GLSL, WGSL, Metal, SPIR-V, x86-64, RISC-V, WASM), V5 certified e-graph superoptimizer (--superopt/--emit-cert/verify-cert via #344), Universal Hourglass lowering, 1.18M-record corpus engine, BuildDB (BDB), BuildTeX, and live AGPL-3.0-only funding.json (#345)."
+      "summary": "Rust-built compiled systems language with typed capability effects, 12 targets (C, HLSL, GLSL, WGSL, Metal, SPIR-V, x86-64, RISC-V, WASM), V5 certified e-graph superoptimizer (--superopt/--emit-cert/verify-cert via #344), certified GPU polyhedral tiling + subgroup TV (--emit-gpu-cert across WGSL/HLSL/MSL/SPIR-V via #346), Universal Hourglass lowering, 1.18M-record corpus engine, BuildDB (BDB), BuildTeX, and live AGPL-3.0-only funding.json (#345)."
     },
     {
       "id": "flywheel",
@@ -50,7 +50,7 @@
       "name": "The Playground",
       "url": "https://harperz9.github.io/playground/index.html",
       "repository": "https://github.com/HarperZ9/superframe",
-      "summary": "Unified creative field and rendering engine combining Estuary continuous Perret-lantern metamers, 35 creative engines (Loom, Posters, Studio, Fractals, Type Forge, Shaders, Retro 46 FX, Sound), Native RAW DX12/Vulkan/WebGPU (Waves 74-78: 96/96 live Skyrim SE moving-camera pass, 38/38 DXC, 21/21 RTX 4090 GPU bench), Low Water 3D game, and Superframe deterministic core (#153: 3/3 native/bld bit-exact C++ parity + 3-way 100 Hz/Deja-VAE)."
+      "summary": "Unified creative field and rendering engine combining Estuary continuous Perret-lantern metamers, 35 creative engines (Loom, Posters, Studio, Fractals, Type Forge, Shaders, Retro 46 FX, Sound), Native RAW DX12/Vulkan/WebGPU (Waves 74-80: 96/96 live Skyrim SE moving-camera pass, 38/38 DXC, 21/21 RTX 4090 GPU bench), Low Water 3D game, and Superframe deterministic core (#153: 3/3 native/bld bit-exact C++ parity + 3-way 100 Hz/Deja-VAE)."
     },
     {
       "id": "cmmns",

@@ -124,7 +124,7 @@ export default {
     {
       discipline: "Native Engine, Living World & Inspection",
       engines: [
-        { name: "Native Renderer (RAW DX12/Vulkan/WebGPU)", source: "raw-native", desc: "C++23 GPU renderer (Waves 74-78: 96/96 live Skyrim SE, 38/38 DXC, 21/21 RTX 4090 bench).", actions: [["section", "native", "Native RAW"]] },
+        { name: "Native Renderer (RAW DX12/Vulkan/WebGPU)", source: "raw-native", desc: "C++23 GPU renderer (Waves 74-80: 96/96 live Skyrim SE, 38/38 DXC, 21/21 RTX 4090 bench).", actions: [["section", "native", "Native RAW"]] },
         { name: "Low Water (WebGPU Island & 5 Eras)", source: "low-water", desc: "Walkable WebGPU island doors, hachured plate, 15 stills, and five eras.", actions: [["section", "low-water", "Low Water"]] },
         { name: "Superframe Deterministic Core", source: "world/superframe/", desc: "One plain-word seed across paint, lines, type, clay, and sound (3/3 native/bld parity).", actions: [["section", "superframe", "Superframe"]] },
         { name: "Distill (File & Archive Dissector)", source: "distill.html", desc: "Take any file, archive, or folder apart locally in your browser.", actions: [["stage", "/playground/distill.html", "Open Distill"]] },

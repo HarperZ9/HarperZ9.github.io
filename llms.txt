@@ -31,16 +31,18 @@ ecosystem inventory:
 - [The Playground](https://harperz9.github.io/playground/index.html): unified
   creative field consolidating Estuary continuous Perret-lantern metamers, 35
   creative engines (Loom, Posters, Studio, Fractals, Type Forge, Shaders/Retro
-  46 FX, Sound), Native RAW DX12/Vulkan/WebGPU (Waves 74-78: 96/96 live Skyrim
+  46 FX, Sound), Native RAW DX12/Vulkan/WebGPU (Waves 74-80: 96/96 live Skyrim
   SE moving-camera pass, 38/38 DXC, 21/21 RTX 4090 GPU bench), Low Water 3D
   game, and Superframe deterministic core (superframe #153: 3/3 native/bld
   bit-exact C++ parity + 3-way 100 Hz/Deja-VAE).
 - [BuildLang](https://harperz9.github.io/buildlang.html): Rust-built compiled
   systems language with typed capability effects, 12 targets (C, HLSL, GLSL,
   WGSL, Metal, SPIR-V, x86-64, RISC-V, WASM), V5 certified e-graph superoptimizer
-  wired into buildc (--superopt, --emit-cert, verify-cert via buildlang #344),
-  Universal Hourglass lowering, 1.18M-record corpus engine, BuildDB (BDB),
-  BuildTeX, and live AGPL-3.0-only funding.json (buildlang #345).
+  (--superopt, --emit-cert, verify-cert via buildlang #344), certified GPU
+  polyhedral tiling + subgroup auto-vectorization (--emit-gpu-cert across
+  WGSL/HLSL/MSL/SPIR-V via buildlang #346), Universal Hourglass lowering,
+  1.18M-record corpus engine, BuildDB (BDB), BuildTeX, and live AGPL-3.0-only
+  funding.json (buildlang #345).
 - [The Flywheel](https://harperz9.github.io/flywheel.html): self-hosted AI
   workstation consolidating 31 packages behind offline cryptographic receipts,
   Rowan orchestration, Three-Plate Verification Oracle (115/115 recall, 0 false
