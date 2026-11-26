@@ -229,8 +229,8 @@ function raw() {
   return rawPage({ page, esc, HEAD, CHECKED, purpose, old });
 }
 
-for (const [file, html] of [["buildlang.html", buildlang()], ["low-water.html", lowWater()], ["raw.html", raw()]]) {
+for (const [file, html] of [["buildlang.html", buildlang()]]) {
   if (/[A-Za-z]:[\\/](?:dev|Users|Downloads)/.test(html) || html.includes("—")) throw new Error(`${file}: a local path or an em dash reached the page`);
   writeFileSync(path.join(site, file), html);
 }
-console.log("product pages: buildlang.html, low-water.html, raw.html");
+console.log("product pages: buildlang.html (low-water and raw unified into /playground/)");

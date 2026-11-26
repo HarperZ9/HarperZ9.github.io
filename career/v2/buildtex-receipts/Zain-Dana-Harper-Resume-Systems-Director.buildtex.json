@@ -1,0 +1,88 @@
+{
+ "schema": "buildlang.buildtex-receipt/v0",
+ "source": {
+  "path": "Zain-Dana-Harper-Resume-Systems-Director.doc.tsv",
+  "sha256": "b673be9cc23baefb7bffe8ddc3fe53a4ad8e6015a0f8bfef2f35e5790b59a1ae"
+ },
+ "ir_sha256": "b673be9cc23baefb7bffe8ddc3fe53a4ad8e6015a0f8bfef2f35e5790b59a1ae",
+ "theme": "press-resume",
+ "overrides": [
+  "base.size=8.6",
+  "base.leading=11.1",
+  "page.left=46",
+  "page.right=46",
+  "page.top=44",
+  "page.bottom=36",
+  "blocks.h1.size=27",
+  "blocks.h1.leading=29",
+  "blocks.h1.after=4",
+  "blocks.contact.size=8.2",
+  "blocks.contact.leading=10.4",
+  "blocks.contact.after=0.5",
+  "blocks.subtitle.size=9.8",
+  "blocks.subtitle.leading=12.2",
+  "blocks.subtitle.before=5",
+  "blocks.subtitle.after=10",
+  "blocks.h2.size=9.4",
+  "blocks.h2.leading=11.4",
+  "blocks.h2.before=9",
+  "blocks.h2.after=1.5",
+  "blocks.h3.size=8.9",
+  "blocks.h3.leading=11.0",
+  "blocks.h3.before=3",
+  "blocks.h3.after=0.5",
+  "blocks.meta.size=8.0",
+  "blocks.meta.leading=10.0",
+  "blocks.meta.after=1",
+  "blocks.p.after=1.8",
+  "blocks.li.after=1.2"
+ ],
+ "outputs": {
+  "Zain-Dana-Harper-Resume-Systems-Director.pdf": "f2a97ed3e88e30211eb6b0ae563b644a6c186ddd4b019788b5efd464b9365b56"
+ },
+ "pdf_metadata": {
+  "pdfa": false,
+  "creation_date": "D:20261125212000Z"
+ },
+ "facts": {
+  "pages": 1,
+  "pages_layout": 1,
+  "overfull": [],
+  "underfull": 0,
+  "missing_glyphs": [],
+  "glyph_fallbacks": [],
+  "math_errors": [],
+  "fonts": [
+   {
+    "name": "BJEJEB+AccessionDisplay-Master",
+    "embedded": true
+   },
+   {
+    "name": "CJPOOL+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "DPHBIP+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "JHMCPK+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "NAECGE+HankenGrotesk-Regular",
+    "embedded": true
+   }
+  ],
+  "images": 1,
+  "blind_text_runs": 0,
+  "reading_order": true,
+  "blocks_missing_from_text": [],
+  "pdf_bytes": 220019
+ },
+ "failed": [],
+ "notes": [
+  "press: relief 1275x253 px at 150 dpi; 0 blind line(s); foil colour source: fallback constant"
+ ],
+ "external_programs": []
+}

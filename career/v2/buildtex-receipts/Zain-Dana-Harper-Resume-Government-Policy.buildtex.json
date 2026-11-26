@@ -1,0 +1,88 @@
+{
+ "schema": "buildlang.buildtex-receipt/v0",
+ "source": {
+  "path": "Zain-Dana-Harper-Resume-Government-Policy.doc.tsv",
+  "sha256": "8076787df516bb5d87adf7792c0a7028f3b9a0c98b7f2c6461d899e16af33da2"
+ },
+ "ir_sha256": "8076787df516bb5d87adf7792c0a7028f3b9a0c98b7f2c6461d899e16af33da2",
+ "theme": "press-resume",
+ "overrides": [
+  "base.size=8.6",
+  "base.leading=11.1",
+  "page.left=46",
+  "page.right=46",
+  "page.top=44",
+  "page.bottom=36",
+  "blocks.h1.size=27",
+  "blocks.h1.leading=29",
+  "blocks.h1.after=4",
+  "blocks.contact.size=8.2",
+  "blocks.contact.leading=10.4",
+  "blocks.contact.after=0.5",
+  "blocks.subtitle.size=9.8",
+  "blocks.subtitle.leading=12.2",
+  "blocks.subtitle.before=5",
+  "blocks.subtitle.after=10",
+  "blocks.h2.size=9.4",
+  "blocks.h2.leading=11.4",
+  "blocks.h2.before=9",
+  "blocks.h2.after=1.5",
+  "blocks.h3.size=8.9",
+  "blocks.h3.leading=11.0",
+  "blocks.h3.before=3",
+  "blocks.h3.after=0.5",
+  "blocks.meta.size=8.0",
+  "blocks.meta.leading=10.0",
+  "blocks.meta.after=1",
+  "blocks.p.after=1.8",
+  "blocks.li.after=1.2"
+ ],
+ "outputs": {
+  "Zain-Dana-Harper-Resume-Government-Policy.pdf": "36c21390c2d85979724d8edbb59a4ba1ea2c7209ee8e804aa4455754e9d108b2"
+ },
+ "pdf_metadata": {
+  "pdfa": false,
+  "creation_date": "D:20261125212000Z"
+ },
+ "facts": {
+  "pages": 1,
+  "pages_layout": 1,
+  "overfull": [],
+  "underfull": 0,
+  "missing_glyphs": [],
+  "glyph_fallbacks": [],
+  "math_errors": [],
+  "fonts": [
+   {
+    "name": "BAGGGB+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "BJEJEB+AccessionDisplay-Master",
+    "embedded": true
+   },
+   {
+    "name": "BKFMKE+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "GGOFPH+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "NMHDDP+HankenGrotesk-Regular",
+    "embedded": true
+   }
+  ],
+  "images": 1,
+  "blind_text_runs": 0,
+  "reading_order": true,
+  "blocks_missing_from_text": [],
+  "pdf_bytes": 218688
+ },
+ "failed": [],
+ "notes": [
+  "press: relief 1275x253 px at 150 dpi; 0 blind line(s); foil colour source: fallback constant"
+ ],
+ "external_programs": []
+}

@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en" data-type="stock">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<title>Local Frontier Model Lab | Zain Dana Harper</title>
+<meta name="description" content="Local frontier models (JFC3P-7B-Oracle, NOH-4, Plato-Key, AVTR-4R, FRESCO/MoLT) evaluated against compilers, physics solvers, and planted-fault oracles.">
+<link rel="canonical" href="https://harperz9.github.io/models.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Local Frontier Model Lab | Zain Dana Harper">
+<meta property="og:description" content="Local frontier models (JFC3P-7B-Oracle, NOH-4, Plato-Key, AVTR-4R, FRESCO/MoLT) evaluated against compilers, physics solvers, and planted-fault oracles.">
+<meta property="og:url" content="https://harperz9.github.io/models.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/models.jpg?v=3e2f9ae9020d">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Local Frontier Model Lab, by Zain Dana Harper. A field of flat discs in rows, a few of them raised and in a second colour.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/p/models.jpg?v=3e2f9ae9020d">
+<meta name="twitter:image:alt" content="Local Frontier Model Lab, by Zain Dana Harper. A field of flat discs in rows, a few of them raised and in a second colour.">
+<meta name="twitter:title" content="Local Frontier Model Lab | Zain Dana Harper">
+<meta name="twitter:description" content="Local frontier models (JFC3P-7B-Oracle, NOH-4, Plato-Key, AVTR-4R, FRESCO/MoLT) evaluated against compilers, physics solvers, and planted-fault oracles.">
+<link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-ef0caa283b">
+<link rel="stylesheet" href="/studies/studies.css?v=world-ef0caa283b">
+<link rel="stylesheet" href="/world/site/depth.css?v=world-ef0caa283b">
+<script type="module" src="/world/ui/shell/shell.js?v=world-ef0caa283b"></script>
+<script type="module" src="/world/site/hand-scroll.js?v=world-ef0caa283b"></script>
+<link rel="stylesheet" href="/world/site/landmark.css?v=world-ef0caa283b">
+<script type="module" src="/world/site/home-field.js?v=world-ef0caa283b"></script></head>
+<body class="reading landmark">
+<div class="gw-backdrop" aria-hidden="true">
+  <picture>
+    <source data-s="night" data-m="(orientation: portrait)" media="(orientation: portrait) and (prefers-color-scheme: dark)" type="image/avif" srcset="/media/world/glass-water/field-night-portrait-828.avif 828w, /media/world/glass-water/field-night-portrait-1242.avif 1242w" sizes="100vw">
+    <source data-s="night" data-m="(orientation: portrait)" media="(orientation: portrait) and (prefers-color-scheme: dark)" type="image/webp" srcset="/media/world/glass-water/field-night-portrait-828.webp 828w, /media/world/glass-water/field-night-portrait-1242.webp 1242w" sizes="100vw">
+    <source data-s="night" data-m="" media="(prefers-color-scheme: dark)" type="image/avif" srcset="/media/world/glass-water/field-night-1280.avif 1280w, /media/world/glass-water/field-night-1920.avif 1920w, /media/world/glass-water/field-night-2560.avif 2560w, /media/world/glass-water/field-night-3840.avif 3840w" sizes="100vw">
+    <source data-s="night" data-m="" media="(prefers-color-scheme: dark)" type="image/webp" srcset="/media/world/glass-water/field-night-1280.webp 1280w, /media/world/glass-water/field-night-1920.webp 1920w, /media/world/glass-water/field-night-2560.webp 2560w, /media/world/glass-water/field-night-3840.webp 3840w" sizes="100vw">
+    <source data-s="day" data-m="(orientation: portrait)" media="(orientation: portrait) and (prefers-color-scheme: light)" type="image/avif" srcset="/media/world/glass-water/field-day-portrait-828.avif 828w, /media/world/glass-water/field-day-portrait-1242.avif 1242w" sizes="100vw">
+    <source data-s="day" data-m="(orientation: portrait)" media="(orientation: portrait) and (prefers-color-scheme: light)" type="image/webp" srcset="/media/world/glass-water/field-day-portrait-828.webp 828w, /media/world/glass-water/field-day-portrait-1242.webp 1242w" sizes="100vw">
+    <source data-s="day" data-m="" media="(prefers-color-scheme: light)" type="image/avif" srcset="/media/world/glass-water/field-day-1280.avif 1280w, /media/world/glass-water/field-day-1920.avif 1920w, /media/world/glass-water/field-day-2560.avif 2560w, /media/world/glass-water/field-day-3840.avif 3840w" sizes="100vw">
+    <source data-s="day" data-m="" media="(prefers-color-scheme: light)" type="image/webp" srcset="/media/world/glass-water/field-day-1280.webp 1280w, /media/world/glass-water/field-day-1920.webp 1920w, /media/world/glass-water/field-day-2560.webp 2560w, /media/world/glass-water/field-day-3840.webp 3840w" sizes="100vw">
+    <img src="/media/world/glass-water/field-day-1920.webp" width="1920" height="1080" alt="" decoding="async" fetchpriority="low">
+  </picture>
+  <canvas class="gw-live"></canvas>
+  <i class="gw-dither"></i>
+</div>
+<script>(function(){var r=document.documentElement,q=matchMedia("(prefers-color-scheme: dark)");
+function s(){var t=r.dataset.theme;if(!t)return;var d=t==="dark",p=document.querySelector(".gw-backdrop picture");if(!p)return;
+p.querySelectorAll("source[data-s]").forEach(function(x){var on=x.dataset.s===(d?"night":"day");x.media=x.dataset.m+(x.dataset.m?" and ":"")+(on?"all":"not all");});}
+new MutationObserver(s).observe(r,{attributes:true,attributeFilter:["data-theme"]});s();})();</script>
+<header class="o-hand o-said" aria-label="Site">
+  <a class="skip" href="#main">Skip to the page</a>
+  <a class="o-home" href="/">Zain Dana Harper</a>
+  <a data-o="band" href="/world/universe/proto/index.html"><span class="o-name">Map</span></a>
+  <button type="button" data-o="fold" aria-controls="o-menu" aria-keyshortcuts="m" aria-expanded="false" hidden><span class="o-name">Places</span><i></i><i></i><i></i></button>
+  <button type="button" data-o="lamp" data-theme-toggle aria-pressed="true"><span class="o-name">Day</span></button>
+  <span class="o-cell"><button type="button" data-o="peel" data-plain-toggle aria-pressed="false"><span class="o-name">Plain</span></button><span class="o-under" aria-hidden="true">Plain</span></span>
+</header>
+<dialog id="o-menu" data-o="menu" data-material="chladni" aria-label="Places">
+  <nav aria-label="Places">
+    <ul class="o-places">
+      <li><a href="/buildlang.html"><span class="o-word" data-display-on-open="glyphcell">BuildLang</span></a></li>
+      <li><a href="/flywheel.html"><span class="o-word" data-display-on-open="light">Flywheel</span></a><small class="o-sub"><a href="/cmmns.html">CMMNS</a> <a href="/articulate.html">Articulate</a></small></li>
+      <li><a href="/playground/"><span class="o-word" data-display-on-open="nightlights">The Playground</span></a><small class="o-sub"><a href="/playground/#estuary">Estuary</a> <a href="/playground/#native">Native renderer</a> <a href="/playground/#superframe">Superframe</a> <a href="/playground/#workbench">All creative engines</a> <a href="/playground/#low-water">Low Water</a></small></li>
+      <li><a href="/playground/#low-water"><span class="o-word" data-display-on-open="chladni">Game</span></a></li>
+      <li><a href="/#site"><span class="o-word" data-display-on-open="swarm">Site</span></a></li>
+      <li><a href="/floor.html"><span class="o-word" data-display-on-open="rope">Everything</span></a></li>
+      <li><a href="/models.html" aria-current="page"><span class="o-word" data-display-on-open="rope">Models</span></a></li>
+      <li><a href="/tools.html"><span class="o-word" data-display-on-open="rope">Tools &amp; Repos</span></a></li>
+      <li><a href="/person.html"><span class="o-word" data-display-on-open="rope">About</span></a></li>
+      <li><a href="/architecture.html"><span class="o-word" data-display-on-open="rope">Architecture</span></a></li>
+      <li><a href="/world/universe/proto/index.html"><span class="o-word" data-display-on-open="rope">Map</span></a></li>
+      <li><a href="/publications.html"><span class="o-word" data-display-on-open="swarm">Writing</span></a></li>
+      <li><a href="/explainers.html"><span class="o-word" data-display-on-open="sound">Films</span></a></li>
+      <li><a href="/security.html"><span class="o-word" data-display-on-open="rope">Security</span></a></li>
+      <li><a href="/hire.html"><span class="o-word" data-display-on-open="rope">Work</span></a></li>
+      <li><a href="/cv.html"><span class="o-word" data-display-on-open="rope">CV</span></a></li>
+    </ul>
+  </nav>
+  <p class="o-menu-foot"><a href="/architecture.html">Architecture</a> <a href="/models.html">Models</a> <a href="/tools.html">Tools &amp; 159 Repos</a> <a href="/research.html">Research</a> <a href="/portfolio.html">Portfolio</a> <a href="/elements.html">Elements</a> <a href="/studies/">Studies</a> <a href="/site-index.html">Site index</a> <button type="button" class="o-close" data-qj-open onclick="this.closest('dialog').close()">Search (Ctrl+K)</button> <button type="button" class="o-close" onclick="this.closest('dialog').close()">Close (Esc)</button></p>
+</dialog>
+<main id="main" tabindex="-1">
+<article class="lp" data-landmark="models" data-hue="rsrch">
+<header class="lp-head">
+  <h1><span class="d-3d">Local Frontier Model Lab</span> <span class="pf-mark">RSRCH</span></h1>
+  <p class="lp-lede lp-lede-1">Compact local models trained and evaluated on one workstation against external compilers, physics solvers, and planted-fault oracles. Models propose; independent checkers dispose.</p>
+  <p class="lp-rel">Every model below runs locally under a strict Tier-A evidence firewall: no benchmark number is accepted without an offline replay script, an honest null policy, and zero secret or private-data leakage.</p>
+  <nav class="lp-ways" aria-label="On this page">
+    <a href="#families">Model families</a>
+    <a href="#firewall">Tier-A firewall</a>
+    <a href="#datasets">Open datasets</a>
+    <a href="/flywheel.html">Flywheel</a>
+    <a href="/buildlang.html">BuildLang</a>
+    <a href="/architecture.html">Architecture</a>
+  </nav>
+</header>
+
+<section class="lp-sec" id="families" aria-labelledby="h-families">
+  <h2 id="h-families"><span class="d-3d">Model families &amp; verified runs</span></h2>
+  <p class="lp-lede">Six local research lines built to test whether small, verifiable models paired with real execution checks can close the reliability gap without opaque cloud dependencies.</p>
+  <ul class="figs"><li class="fig"><details open><summary><b class="fig-n d-fine">JFC3P-7B-Oracle</b> 95.83% live buildc pass rate (Arm C, up from 16.67% baseline, p=4e-6)</summary><p class="fig-src">Three-Plate Verification Oracle coupled to live BuildLang compiler execution. Trained on verified compile-test-repair traces so every accepted synthesis carries an offline reproducible receipt.</p></details></li>
+<li class="fig"><details open><summary><b class="fig-n d-fine">NOH-4</b> 78.0x lower MSE against baseline neural operator surrogates</summary><p class="fig-src">Compact spectral neural operator trained on deterministic fluid, optical, and structural PDE trajectories for real-time physical surrogates inside The Playground.</p></details></li>
+<li class="fig"><details open><summary><b class="fig-n d-fine">Plato-Key</b> Deterministic geometric representation &amp; symmetry-manifold lookup</summary><p class="fig-src">Separates invariant geometric primitives from rendering skins, enabling continuous metamer detection across visual, structural, and acoustic projections.</p></details></li>
+<li class="fig"><details open><summary><b class="fig-n d-fine">AVTR-4R</b> 4-stage recurrent reasoning &amp; rollback witness</summary><p class="fig-src">Explicit state-hash checkpoints across reasoning steps with zero silent drift; any falsified intermediate assertion rolls back to the last verified witness.</p></details></li>
+<li class="fig"><details open><summary><b class="fig-n d-fine">FRESCO / MoLT / LoopCD</b> Looped compute, stress-rest scheduling &amp; distillation kernels</summary><p class="fig-src">Tests recursive depth vs parameter count on commodity single-GPU hardware (RTX 4090 / 24 GB VRAM), publishing null results whenever recursive scaling stalls.</p></details></li>
+<li class="fig"><details open><summary><b class="fig-n d-fine">BuildLang 1.18M-Record Corpus Engine</b> 1.18M structured syntax, effect-row, and proof records</summary><p class="fig-src">Self-verifying compiler training corpus generated and checked directly by buildc so every training pair is type-checked and effect-verified before fine-tuning.</p></details></li></ul>
+</section>
+
+<section class="lp-sec" id="firewall" aria-labelledby="h-firewall">
+  <h2 id="h-firewall"><span class="d-3d">Tier-A evidence firewall</span></h2>
+  <p class="lp-lede">Nothing self-warrants. Every fine-tuned checkpoint is scored head-to-head against its unadapted base model on the same harness, with McNemar paired intervals and retired-null disclosures kept public.</p>
+  <p class="lp-limit">Example honest null: Flywheel Local Coder 14B scored 136/164 (82.9%) against its Qwen 2.5 Coder 14B base at 141/164 (86.0%, p = 0.404) on unguided single-shot completion, while coupling the same local 14B tier to live <code>buildc</code> verification lifted BuildLang pass rates from 16.67% to 95.83% (p = 4e-6). Both results stay side by side.</p>
+</section>
+
+<section class="lp-sec" id="datasets" aria-labelledby="h-datasets">
+  <h2 id="h-datasets"><span class="d-3d">Open datasets &amp; replay</span></h2>
+  <p class="lp-lede">Seven open verifiable datasets (DS-01 through DS-07), 30 empirical studies (12 published nulls), and 13 DOI-indexed records anchor every model experiment.</p>
+  <p class="lp-ways-end"><a href="/architecture.html#datasets">Seven datasets</a> <a href="/findings/">30 Findings (12 nulls)</a> <a href="/analytics/flywheel-benchmark-record.html">Benchmark record</a> <a href="/tools.html">159 Public Repos</a></p>
+</section>
+
+<p class="lp-verified"><b>Verified</b> 26 November 2026: Arm C live buildc lift (16.67% to 95.83%, p=4e-6), Three-Plate Verification Oracle recall (115/115, 0 false accepts), and 14B unguided null (136/164 vs 141/164, p=0.404) cross-checked against tracked Flywheel benchmark receipts.</p>
+</article>
+</main>
+</body>
+</html>

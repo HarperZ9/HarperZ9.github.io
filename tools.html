@@ -1,0 +1,805 @@
+<!doctype html>
+<html lang="en" data-type="stock">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<title>Tools, Installers and Public Repositories | Zain Dana Harper</title>
+<meta name="description" content="Fail-closed SHA256SUMS one-command installers and the complete ledger of all 159 public GitHub repositories by Zain Dana Harper.">
+<link rel="canonical" href="https://harperz9.github.io/tools.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Tools, Installers and Public Repositories | Zain Dana Harper">
+<meta property="og:description" content="Fail-closed SHA256SUMS one-command installers and the complete ledger of all 159 public GitHub repositories by Zain Dana Harper.">
+<meta property="og:url" content="https://harperz9.github.io/tools.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/tools.jpg?v=ba57c1d0cf9f">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Tools, Installers and Public Repositories, by Zain Dana Harper. Two flat discs overlap, and the overlap takes the colour the two inks print together.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/p/tools.jpg?v=ba57c1d0cf9f">
+<meta name="twitter:image:alt" content="Tools, Installers and Public Repositories, by Zain Dana Harper. Two flat discs overlap, and the overlap takes the colour the two inks print together.">
+<meta name="twitter:title" content="Tools, Installers and Public Repositories | Zain Dana Harper">
+<meta name="twitter:description" content="Fail-closed SHA256SUMS one-command installers and the complete ledger of all 159 public GitHub repositories by Zain Dana Harper.">
+<link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-ef0caa283b">
+<link rel="stylesheet" href="/studies/studies.css?v=world-ef0caa283b">
+<link rel="stylesheet" href="/world/site/depth.css?v=world-ef0caa283b">
+<script type="module" src="/world/ui/shell/shell.js?v=world-ef0caa283b"></script>
+<script type="module" src="/world/site/hand-scroll.js?v=world-ef0caa283b"></script>
+</head>
+<body class="reading ds-sheet">
+
+<header class="o-hand o-said" aria-label="Site">
+  <a class="skip" href="#main">Skip to the page</a>
+  <a class="o-home" href="/">Zain Dana Harper</a>
+  <a data-o="band" href="/world/universe/proto/index.html"><span class="o-name">Map</span></a>
+  <button type="button" data-o="fold" aria-controls="o-menu" aria-keyshortcuts="m" aria-expanded="false" hidden><span class="o-name">Places</span><i></i><i></i><i></i></button>
+  <button type="button" data-o="lamp" data-theme-toggle aria-pressed="true"><span class="o-name">Day</span></button>
+  <span class="o-cell"><button type="button" data-o="peel" data-plain-toggle aria-pressed="false"><span class="o-name">Plain</span></button><span class="o-under" aria-hidden="true">Plain</span></span>
+</header>
+<dialog id="o-menu" data-o="menu" data-material="chladni" aria-label="Places">
+  <nav aria-label="Places">
+    <ul class="o-places">
+      <li><a href="/buildlang.html"><span class="o-word" data-display-on-open="glyphcell">BuildLang</span></a></li>
+      <li><a href="/flywheel.html"><span class="o-word" data-display-on-open="light">Flywheel</span></a><small class="o-sub"><a href="/cmmns.html">CMMNS</a> <a href="/articulate.html">Articulate</a></small></li>
+      <li><a href="/playground/"><span class="o-word" data-display-on-open="nightlights">The Playground</span></a><small class="o-sub"><a href="/playground/#estuary">Estuary</a> <a href="/playground/#native">Native renderer</a> <a href="/playground/#superframe">Superframe</a> <a href="/playground/#workbench">All creative engines</a> <a href="/playground/#low-water">Low Water</a></small></li>
+      <li><a href="/playground/#low-water"><span class="o-word" data-display-on-open="chladni">Game</span></a></li>
+      <li><a href="/#site"><span class="o-word" data-display-on-open="swarm">Site</span></a></li>
+      <li><a href="/floor.html"><span class="o-word" data-display-on-open="rope">Everything</span></a></li>
+      <li><a href="/models.html"><span class="o-word" data-display-on-open="rope">Models</span></a></li>
+      <li><a href="/tools.html" aria-current="page"><span class="o-word" data-display-on-open="rope">Tools &amp; Repos</span></a></li>
+      <li><a href="/person.html"><span class="o-word" data-display-on-open="rope">About</span></a></li>
+      <li><a href="/architecture.html"><span class="o-word" data-display-on-open="rope">Architecture</span></a></li>
+      <li><a href="/world/universe/proto/index.html"><span class="o-word" data-display-on-open="rope">Map</span></a></li>
+      <li><a href="/publications.html"><span class="o-word" data-display-on-open="swarm">Writing</span></a></li>
+      <li><a href="/explainers.html"><span class="o-word" data-display-on-open="sound">Films</span></a></li>
+      <li><a href="/security.html"><span class="o-word" data-display-on-open="rope">Security</span></a></li>
+      <li><a href="/hire.html"><span class="o-word" data-display-on-open="rope">Work</span></a></li>
+      <li><a href="/cv.html"><span class="o-word" data-display-on-open="rope">CV</span></a></li>
+    </ul>
+  </nav>
+  <p class="o-menu-foot"><a href="/architecture.html">Architecture</a> <a href="/models.html">Models</a> <a href="/tools.html">Tools &amp; 159 Repos</a> <a href="/research.html">Research</a> <a href="/portfolio.html">Portfolio</a> <a href="/elements.html">Elements</a> <a href="/studies/">Studies</a> <a href="/site-index.html">Site index</a> <button type="button" class="o-close" data-qj-open onclick="this.closest('dialog').close()">Search (Ctrl+K)</button> <button type="button" class="o-close" onclick="this.closest('dialog').close()">Close (Esc)</button></p>
+</dialog>
+<main id="main" tabindex="-1">
+<article class="st" id="tools-sheet">
+<header class="ds-sheet-head">
+  <p class="ds-kicker">Measured Drafting Sheet / Installers, Career Suite &amp; Public Inventory</p>
+  <h1>Tools, Installers &amp; 159 Public Repositories</h1>
+  <p class="ds-lede">Fail-closed <code>SHA256SUMS</code> one-command user-space installers for the flagship platforms, the November 2026 BuildTeX career document suite (66 verified files), and the complete hairline-ruled ledger of all 159 public GitHub repositories under HarperZ9 (0 private repositories exposed).</p>
+  <p class="ds-meta"><span>Fail-closed SHA-256 verification</span><span>User-space only (never sudo / Machine PATH)</span><span>Offline -SelfTest / --self-test</span></p>
+  <nav class="ds-ways" aria-label="On this page">
+    <a href="#installers">1-Command Installers (7)</a>
+    <a href="#career-v2">BuildTeX Career Suite v2 (66 files)</a>
+    <a href="#repos">All Public Repositories (159)</a>
+    <a href="/playground/">The Playground</a>
+    <a href="/models.html">Models</a>
+  </nav>
+</header>
+
+<section class="ds-sec" id="installers" aria-labelledby="h-installers">
+  <h2 id="h-installers">Fail-closed one-command installers</h2>
+  <p>Every installer refuses extraction before any file lands if <code>SHA256SUMS</code> is missing, an asset entry is absent, or the computed SHA-256 differs by a single byte. Pass <code>-SelfTest</code> (PowerShell) or <code>--self-test</code> (sh) to verify offline tamper rejection.</p>
+  <ul class="ds-ledger"><li>
+      <span class="ds-term">BuildLang (buildc + qdb + port)<span class="ds-sub">HarperZ9/buildlang</span></span>
+      <div class="ds-gloss"><div class="ds-cmd"><code>irm https://raw.githubusercontent.com/HarperZ9/buildlang/main/install.ps1 | iex</code><button type="button" data-copy-cmd="irm https://raw.githubusercontent.com/HarperZ9/buildlang/main/install.ps1 | iex">Copy PowerShell</button></div><div class="ds-cmd"><code>curl -fsSL https://raw.githubusercontent.com/HarperZ9/buildlang/main/install.sh | sh</code><button type="button" data-copy-cmd="curl -fsSL https://raw.githubusercontent.com/HarperZ9/buildlang/main/install.sh | sh">Copy sh</button></div><span class="ds-sub">Verify: <code>buildc --version &amp;&amp; qdb --version</code> | <a href="https://github.com/HarperZ9/buildlang/pull/338">Merged PR</a></span></div>
+    </li>
+<li>
+      <span class="ds-term">BuildDB (qdb)<span class="ds-sub">HarperZ9/buildlang</span></span>
+      <div class="ds-gloss"><div class="ds-cmd"><code>irm https://raw.githubusercontent.com/HarperZ9/buildlang/main/install.ps1 | iex</code><button type="button" data-copy-cmd="irm https://raw.githubusercontent.com/HarperZ9/buildlang/main/install.ps1 | iex">Copy PowerShell</button></div><div class="ds-cmd"><code>curl -fsSL https://raw.githubusercontent.com/HarperZ9/buildlang/main/install.sh | sh</code><button type="button" data-copy-cmd="curl -fsSL https://raw.githubusercontent.com/HarperZ9/buildlang/main/install.sh | sh">Copy sh</button></div><span class="ds-sub">Verify: <code>qdb --version</code> | <a href="https://github.com/HarperZ9/buildlang/pull/338">Merged PR</a></span><span class="ds-sub">Shipped directly in the BuildLang precompiled binary release archives alongside buildc and port.</span></div>
+    </li>
+<li>
+      <span class="ds-term">Flywheel (flywheel-verify + gather + plexus)<span class="ds-sub">HarperZ9/flywheel</span></span>
+      <div class="ds-gloss"><div class="ds-cmd"><code>irm https://raw.githubusercontent.com/HarperZ9/flywheel/main/install.ps1 | iex</code><button type="button" data-copy-cmd="irm https://raw.githubusercontent.com/HarperZ9/flywheel/main/install.ps1 | iex">Copy PowerShell</button></div><div class="ds-cmd"><code>curl -fsSL https://raw.githubusercontent.com/HarperZ9/flywheel/main/install.sh | sh</code><button type="button" data-copy-cmd="curl -fsSL https://raw.githubusercontent.com/HarperZ9/flywheel/main/install.sh | sh">Copy sh</button></div><span class="ds-sub">Verify: <code>flywheel gate</code> | <a href="https://github.com/HarperZ9/flywheel/pull/560">Merged PR</a></span><span class="ds-sub">Verifies release wheel SHA-256 fail-closed and installs via uv tool, pipx, or an isolated Python 3.11+ venv.</span></div>
+    </li>
+<li>
+      <span class="ds-term">Superframe (The Playground + raw_native_cli)<span class="ds-sub">HarperZ9/superframe</span></span>
+      <div class="ds-gloss"><div class="ds-cmd"><code>irm https://raw.githubusercontent.com/HarperZ9/superframe/main/install.ps1 | iex</code><button type="button" data-copy-cmd="irm https://raw.githubusercontent.com/HarperZ9/superframe/main/install.ps1 | iex">Copy PowerShell</button></div><div class="ds-cmd"><code>curl -fsSL https://raw.githubusercontent.com/HarperZ9/superframe/main/install.sh | sh</code><button type="button" data-copy-cmd="curl -fsSL https://raw.githubusercontent.com/HarperZ9/superframe/main/install.sh | sh">Copy sh</button></div><span class="ds-sub">Verify: <code>superframe list</code> | <a href="https://github.com/HarperZ9/superframe/pull/151">Merged PR</a></span><span class="ds-sub">Bundles the Playground artifact engine, packages/, and compiled C++23 raw_native_cli.</span></div>
+    </li>
+<li>
+      <span class="ds-term">RAW DX12 (Skyrim SE / Fallout 4 / Starfield Native DX12 Runtime)<span class="ds-sub">HarperZ9/superframe</span></span>
+      <div class="ds-gloss"><div class="ds-cmd"><code>irm https://raw.githubusercontent.com/HarperZ9/superframe/main/install.ps1 | iex</code><button type="button" data-copy-cmd="irm https://raw.githubusercontent.com/HarperZ9/superframe/main/install.ps1 | iex">Copy PowerShell</button></div><div class="ds-cmd"><code>curl -fsSL https://raw.githubusercontent.com/HarperZ9/superframe/main/install.sh | sh -s -- --with-raw-dx12</code><button type="button" data-copy-cmd="curl -fsSL https://raw.githubusercontent.com/HarperZ9/superframe/main/install.sh | sh -s -- --with-raw-dx12">Copy sh</button></div><span class="ds-sub">Compiles and bundles raw_native_cli in Superframe releases; game-specific DX12 runtime archives ship via signed GitHub Releases and Nexus Mods with SHA256SUMS verification.</span></div>
+    </li>
+<li>
+      <span class="ds-term">CMMNS (Site-Agnostic Browser Extension + CLI)<span class="ds-sub">HarperZ9/cmmns</span></span>
+      <div class="ds-gloss"><div class="ds-cmd"><code>irm https://raw.githubusercontent.com/HarperZ9/cmmns/main/install.ps1 | iex</code><button type="button" data-copy-cmd="irm https://raw.githubusercontent.com/HarperZ9/cmmns/main/install.ps1 | iex">Copy PowerShell</button></div><div class="ds-cmd"><code>curl -fsSL https://raw.githubusercontent.com/HarperZ9/cmmns/main/install.sh | sh</code><button type="button" data-copy-cmd="curl -fsSL https://raw.githubusercontent.com/HarperZ9/cmmns/main/install.sh | sh">Copy sh</button></div><span class="ds-sub">Verify: <code>cmmns --help</code> | <a href="https://github.com/HarperZ9/cmmns/pull/129">Merged PR</a></span><span class="ds-sub">Verifies SHA256SUMS fail-closed, unpacks the MV3 extension for Load Unpacked in chrome://extensions, and installs the cmmns CLI shim.</span></div>
+    </li>
+<li>
+      <span class="ds-term">HarperZ9.github.io (Living Proof Portfolio &amp; Release Hub)<span class="ds-sub">HarperZ9/HarperZ9.github.io</span></span>
+      <div class="ds-gloss"><span class="ds-sub">Zero-install browser surface hosting live WebGPU demos, interactive evidence viewers, career suite, and copy-paste 1-command installer bars sourced from this manifest.</span></div>
+    </li></ul>
+</section>
+
+<section class="ds-sec" id="career-v2" aria-labelledby="h-career-v2">
+  <h2 id="h-career-v2">November 2026 BuildTeX Career Suite (v2, 66 verified files)</h2>
+  <p>Typeset directly by BuildTeX with dynamic hairline rules, zero missing glyphs, zero overfull boxes, and six synchronized formats per document (see also <a href="/hire.html">Hire</a> and <a href="/cv.html">Full CV</a>).</p>
+  <ul class="ds-ledger"><li><span class="ds-term">AI Evaluation &amp; Research (1-page)</span><div class="ds-gloss"><div class="ds-formats"><a href="/career/v2/Zain-Dana-Harper-Resume-AI-Eval-Research_Designed.pdf" download>BuildTeX Designed PDF</a><a href="/career/v2/Zain-Dana-Harper-Resume-AI-Eval-Research_ATS.pdf" download>ATS PDF</a><a href="/career/v2/Zain-Dana-Harper-Resume-AI-Eval-Research.docx" download>DOCX</a><a href="/career/v2/Zain-Dana-Harper-Resume-AI-Eval-Research.html">HTML</a><a href="/career/v2/Zain-Dana-Harper-Resume-AI-Eval-Research.md" download>Markdown</a><a href="/career/v2/Zain-Dana-Harper-Resume-AI-Eval-Research.txt" download>Plain text</a></div></div></li>
+<li><span class="ds-term">Systems &amp; Platform Director (1-page)</span><div class="ds-gloss"><div class="ds-formats"><a href="/career/v2/Zain-Dana-Harper-Resume-Systems-Director_Designed.pdf" download>BuildTeX Designed PDF</a><a href="/career/v2/Zain-Dana-Harper-Resume-Systems-Director_ATS.pdf" download>ATS PDF</a><a href="/career/v2/Zain-Dana-Harper-Resume-Systems-Director.docx" download>DOCX</a><a href="/career/v2/Zain-Dana-Harper-Resume-Systems-Director.html">HTML</a><a href="/career/v2/Zain-Dana-Harper-Resume-Systems-Director.md" download>Markdown</a><a href="/career/v2/Zain-Dana-Harper-Resume-Systems-Director.txt" download>Plain text</a></div></div></li>
+<li><span class="ds-term">Graphics &amp; Creative Tech (1-page)</span><div class="ds-gloss"><div class="ds-formats"><a href="/career/v2/Zain-Dana-Harper-Resume-Graphics-Creative-Tech_Designed.pdf" download>BuildTeX Designed PDF</a><a href="/career/v2/Zain-Dana-Harper-Resume-Graphics-Creative-Tech_ATS.pdf" download>ATS PDF</a><a href="/career/v2/Zain-Dana-Harper-Resume-Graphics-Creative-Tech.docx" download>DOCX</a><a href="/career/v2/Zain-Dana-Harper-Resume-Graphics-Creative-Tech.html">HTML</a><a href="/career/v2/Zain-Dana-Harper-Resume-Graphics-Creative-Tech.md" download>Markdown</a><a href="/career/v2/Zain-Dana-Harper-Resume-Graphics-Creative-Tech.txt" download>Plain text</a></div></div></li>
+<li><span class="ds-term">Government &amp; Policy (1-page)</span><div class="ds-gloss"><div class="ds-formats"><a href="/career/v2/Zain-Dana-Harper-Resume-Government-Policy_Designed.pdf" download>BuildTeX Designed PDF</a><a href="/career/v2/Zain-Dana-Harper-Resume-Government-Policy_ATS.pdf" download>ATS PDF</a><a href="/career/v2/Zain-Dana-Harper-Resume-Government-Policy.docx" download>DOCX</a><a href="/career/v2/Zain-Dana-Harper-Resume-Government-Policy.html">HTML</a><a href="/career/v2/Zain-Dana-Harper-Resume-Government-Policy.md" download>Markdown</a><a href="/career/v2/Zain-Dana-Harper-Resume-Government-Policy.txt" download>Plain text</a></div></div></li>
+<li><span class="ds-term">Forestry &amp; Trades Lead (1-page)</span><div class="ds-gloss"><div class="ds-formats"><a href="/career/v2/Zain-Dana-Harper-Resume-Forestry-Trades-Lead_Designed.pdf" download>BuildTeX Designed PDF</a><a href="/career/v2/Zain-Dana-Harper-Resume-Forestry-Trades-Lead_ATS.pdf" download>ATS PDF</a><a href="/career/v2/Zain-Dana-Harper-Resume-Forestry-Trades-Lead.docx" download>DOCX</a><a href="/career/v2/Zain-Dana-Harper-Resume-Forestry-Trades-Lead.html">HTML</a><a href="/career/v2/Zain-Dana-Harper-Resume-Forestry-Trades-Lead.md" download>Markdown</a><a href="/career/v2/Zain-Dana-Harper-Resume-Forestry-Trades-Lead.txt" download>Plain text</a></div></div></li>
+<li><span class="ds-term">Academic &amp; Fellowship (1-page)</span><div class="ds-gloss"><div class="ds-formats"><a href="/career/v2/Zain-Dana-Harper-Resume-Academic-Fellowship_Designed.pdf" download>BuildTeX Designed PDF</a><a href="/career/v2/Zain-Dana-Harper-Resume-Academic-Fellowship_ATS.pdf" download>ATS PDF</a><a href="/career/v2/Zain-Dana-Harper-Resume-Academic-Fellowship.docx" download>DOCX</a><a href="/career/v2/Zain-Dana-Harper-Resume-Academic-Fellowship.html">HTML</a><a href="/career/v2/Zain-Dana-Harper-Resume-Academic-Fellowship.md" download>Markdown</a><a href="/career/v2/Zain-Dana-Harper-Resume-Academic-Fellowship.txt" download>Plain text</a></div></div></li>
+<li><span class="ds-term">Full Living-Proof CV (3-page)</span><div class="ds-gloss"><div class="ds-formats"><a href="/career/v2/Zain-Dana-Harper-CV_Designed.pdf" download>BuildTeX Designed PDF</a><a href="/career/v2/Zain-Dana-Harper-CV_ATS.pdf" download>ATS PDF</a><a href="/career/v2/Zain-Dana-Harper-CV.docx" download>DOCX</a><a href="/career/v2/Zain-Dana-Harper-CV.html">HTML</a><a href="/career/v2/Zain-Dana-Harper-CV.md" download>Markdown</a><a href="/career/v2/Zain-Dana-Harper-CV.txt" download>Plain text</a></div></div></li>
+<li><span class="ds-term">Cover Letter: AI Eval &amp; Systems Direction</span><div class="ds-gloss"><div class="ds-formats"><a href="/career/v2/Zain-Dana-Harper-Cover-Letter-AI-Eval-Systems-Direction_Designed.pdf" download>BuildTeX Designed PDF</a><a href="/career/v2/Zain-Dana-Harper-Cover-Letter-AI-Eval-Systems-Direction_ATS.pdf" download>ATS PDF</a><a href="/career/v2/Zain-Dana-Harper-Cover-Letter-AI-Eval-Systems-Direction.docx" download>DOCX</a><a href="/career/v2/Zain-Dana-Harper-Cover-Letter-AI-Eval-Systems-Direction.html">HTML</a><a href="/career/v2/Zain-Dana-Harper-Cover-Letter-AI-Eval-Systems-Direction.md" download>Markdown</a><a href="/career/v2/Zain-Dana-Harper-Cover-Letter-AI-Eval-Systems-Direction.txt" download>Plain text</a></div></div></li>
+<li><span class="ds-term">Cover Letter: Academic &amp; Fellowship</span><div class="ds-gloss"><div class="ds-formats"><a href="/career/v2/Zain-Dana-Harper-Cover-Letter-Academic-Fellowship_Designed.pdf" download>BuildTeX Designed PDF</a><a href="/career/v2/Zain-Dana-Harper-Cover-Letter-Academic-Fellowship_ATS.pdf" download>ATS PDF</a><a href="/career/v2/Zain-Dana-Harper-Cover-Letter-Academic-Fellowship.docx" download>DOCX</a><a href="/career/v2/Zain-Dana-Harper-Cover-Letter-Academic-Fellowship.html">HTML</a><a href="/career/v2/Zain-Dana-Harper-Cover-Letter-Academic-Fellowship.md" download>Markdown</a><a href="/career/v2/Zain-Dana-Harper-Cover-Letter-Academic-Fellowship.txt" download>Plain text</a></div></div></li>
+<li><span class="ds-term">Cover Letter: Government &amp; Policy</span><div class="ds-gloss"><div class="ds-formats"><a href="/career/v2/Zain-Dana-Harper-Cover-Letter-Government-Policy_Designed.pdf" download>BuildTeX Designed PDF</a><a href="/career/v2/Zain-Dana-Harper-Cover-Letter-Government-Policy_ATS.pdf" download>ATS PDF</a><a href="/career/v2/Zain-Dana-Harper-Cover-Letter-Government-Policy.docx" download>DOCX</a><a href="/career/v2/Zain-Dana-Harper-Cover-Letter-Government-Policy.html">HTML</a><a href="/career/v2/Zain-Dana-Harper-Cover-Letter-Government-Policy.md" download>Markdown</a><a href="/career/v2/Zain-Dana-Harper-Cover-Letter-Government-Policy.txt" download>Plain text</a></div></div></li>
+<li><span class="ds-term">Cover Letter: Forestry &amp; Trades Lead</span><div class="ds-gloss"><div class="ds-formats"><a href="/career/v2/Zain-Dana-Harper-Cover-Letter-Forestry-Trades-Lead_Designed.pdf" download>BuildTeX Designed PDF</a><a href="/career/v2/Zain-Dana-Harper-Cover-Letter-Forestry-Trades-Lead_ATS.pdf" download>ATS PDF</a><a href="/career/v2/Zain-Dana-Harper-Cover-Letter-Forestry-Trades-Lead.docx" download>DOCX</a><a href="/career/v2/Zain-Dana-Harper-Cover-Letter-Forestry-Trades-Lead.html">HTML</a><a href="/career/v2/Zain-Dana-Harper-Cover-Letter-Forestry-Trades-Lead.md" download>Markdown</a><a href="/career/v2/Zain-Dana-Harper-Cover-Letter-Forestry-Trades-Lead.txt" download>Plain text</a></div></div></li></ul>
+</section>
+
+<section class="ds-sec" id="repos" aria-labelledby="h-repos">
+  <h2 id="h-repos">Complete public repository ledger (159 public, 0 private)</h2>
+  <div class="ds-filter">
+    <label for="repo-q" class="sr-only">Filter repositories</label>
+    <input id="repo-q" type="search" placeholder="Filter 159 repos by name, language, or topic..." autocomplete="off">
+    <label for="repo-lang" class="sr-only">Language</label>
+    <select id="repo-lang"><option value="">All languages (1)</option><option value="Other">Other</option></select>
+    <label for="repo-status" class="sr-only">Status</label>
+    <select id="repo-status"><option value="">Active &amp; archived</option><option value="active">Active only</option><option value="archived">Archived only</option></select>
+    <span id="repo-count" class="ds-meta" aria-live="polite">Showing 159 of 159 public repositories</span>
+  </div>
+  <ul class="ds-ledger" id="repo-ledger"><li data-repo-row data-lang="Other" data-status="active" data-search=".github default community health files for harperz9 repositories other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/.github">.github</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Default community health files for HarperZ9 repositories</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="accountable-engine archived: moved to harperz9/flywheel/packages/accountable-engine other active agentic-ai ai-accountability ai-agents audit-trail developer-tools ledger provenance python receipts verification">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/accountable-engine">accountable-engine</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">ARCHIVED: moved to HarperZ9/flywheel/packages/accountable-engine</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="accountable-surface default-deny permission gate, workstation operator policy, rollback, and tamper-evident journal for ai agents (consolidated package maintained in harperz9/flywheel under packages/accountable-surface). other active agent-permissions agent-safety agentic-ai ai-agents audit-trail developer-tools mcp python human-in-the-loop model-context-protocol permissions rollback">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/accountable-surface">accountable-surface</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Default-deny permission gate, workstation operator policy, rollback, and tamper-evident journal for AI agents (consolidated package maintained in HarperZ9/flywheel under packages/accountable-surface).</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="agent-audit audit ai-agent sessions by comparing declared intent, action ledgers, and scope policy. other active ai-accountability ai-agents audit python">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/agent-audit">agent-audit</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Audit AI-agent sessions by comparing declared intent, action ledgers, and scope policy.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="agent-gate checkout-free policy gate for ai-generated prs: scope escapes, workflow privilege escalation, and agent-control-plane drift. other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/Agent-Gate">Agent-Gate</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Checkout-free policy gate for AI-generated PRs: scope escapes, workflow privilege escalation, and agent-control-plane drift.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="agent-hook-pack archived: moved to harperz9/flywheel/packages/agent-hook-pack other active codex developer-tools hooks python security ai-agents git-hooks">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/agent-hook-pack">agent-hook-pack</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">ARCHIVED: moved to HarperZ9/flywheel/packages/agent-hook-pack</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="agent-interp-envs a framework for testing and evaluating ai agents across various task domains, designed for misalignment interpretability research. other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/agent-interp-envs">agent-interp-envs</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">A framework for testing and evaluating AI agents across various task domains, designed for misalignment interpretability research.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="agent-routing-kit archived: moved to harperz9/flywheel/packages/agent-routing-kit other active agentic-workflows claude-code context-engineering agents codex developer-tools python workflow ai-agents routing">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/agent-routing-kit">agent-routing-kit</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">ARCHIVED: moved to HarperZ9/flywheel/packages/agent-routing-kit</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="agent-runtime-observatory a reference implementation for tracing, replaying, evaluating, and governing agent runs across trust boundaries. other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/agent-runtime-observatory">agent-runtime-observatory</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">A reference implementation for tracing, replaying, evaluating, and governing agent runs across trust boundaries.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="agentfence policy firewall for ai agents and mcp tools. intercepts tool calls, enforces allow/deny/ask rules, redacts secrets, validates arguments, and writes auditable logs before agents touch your filesystem, github, browser, or apis. other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/agentfence">agentfence</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Policy firewall for AI agents and MCP tools. Intercepts tool calls, enforces allow/deny/ask rules, redacts secrets, validates arguments, and writes auditable logs before agents touch your filesystem, GitHub, browser, or APIs.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="ai-inference-observability-eks end-to-end observability for disaggregated llm inference on eks - dcgm metrics, keda autoscaling on gpu signals, per-namespace cost attribution, multi-agent otel tracing, and istio mtls. reference implementation for the opentelemetry ai inference platform blueprint. other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/ai-inference-observability-eks">ai-inference-observability-eks</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">End-to-end observability for disaggregated LLM inference on EKS - DCGM metrics, KEDA autoscaling on GPU signals, per-namespace cost attribution, multi-agent OTel tracing, and Istio mTLS. Reference implementation for the OpenTelemetry AI Inference Platform blueprint.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="anchor grounding ai models in verifiable context other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/Anchor">Anchor</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Grounding AI models in verifiable context</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="anomaly-kernels archived: moved to harperz9/superframe/packages/kernels/anomaly-kernels other active anomaly-detection cpp header-only statistics">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/anomaly-kernels">anomaly-kernels</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">ARCHIVED: moved to HarperZ9/superframe/packages/kernels/anomaly-kernels</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="articulate checks prose on your computer and names each writing pattern and the line it is on. profiles for docs, commits, essays and fiction. cli, lsp, sarif and mcp. other active linter local-first nlp prose python writing lsp-server markdown mcp-server prose-linter sarif style-checker writing-tools">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/articulate">articulate</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Checks prose on your computer and names each writing pattern and the line it is on. Profiles for docs, commits, essays and fiction. CLI, LSP, SARIF and MCP.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="astropy astronomy and astrophysics core library other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/astropy">astropy</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Astronomy and astrophysics core library</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="awesome-ai-agents awesome list of 300+ agentic ai resources other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/awesome-ai-agents">awesome-ai-agents</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Awesome list of 300+ agentic AI resources</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="awesome-ai-agents-2026 🤖 the most comprehensive list of ai agents, frameworks &amp; tools in 2026. 300+ resources · 20+ categories · updated monthly. other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/awesome-ai-agents-2026">awesome-ai-agents-2026</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">🤖 The most comprehensive list of AI agents, frameworks &amp; tools in 2026. 300+ resources · 20+ categories · Updated monthly.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="awesome-ai-agents-security a living map of the ai agent security ecosystem. other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/awesome-ai-agents-security">awesome-ai-agents-security</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">A living map of the AI agent security ecosystem.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="awesome-devops-mcp-servers a curated list of awesome mcp servers focused on devops tools and capabilities. other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/awesome-devops-mcp-servers">awesome-devops-mcp-servers</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">A curated list of awesome MCP servers focused on DevOps tools and capabilities.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="awesome-harness-engineering awesome list for ai agent harness engineering: tools, patterns, evals, memory, mcp, permissions, observability, and orchestration. other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/awesome-harness-engineering">awesome-harness-engineering</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Awesome list for AI agent harness engineering: tools, patterns, evals, memory, MCP, permissions, observability, and orchestration.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="awesome-mcp-devtools a curated list of developer tools, sdks, libraries, and testing utilities for model context protocol (mcp) server development. other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/awesome-mcp-devtools">awesome-mcp-devtools</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">A curated list of developer tools, SDKs, libraries, and testing utilities for Model Context Protocol (MCP) server development.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="awesome-mcp-list a concise list for mcp servers other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/awesome-mcp-list">awesome-mcp-list</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">A concise list for mcp servers</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="awesome-mcp-security 🔥🔒 awesome mcp (model context protocol) security 🖥️ other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/awesome-mcp-security">awesome-mcp-security</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">🔥🔒 Awesome MCP (Model Context Protocol) Security 🖥️</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="awesome-mcp-servers a collection of mcp servers. other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/awesome-mcp-servers">awesome-mcp-servers</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">A collection of MCP servers.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="awesome-mcp-servers-1 awesome mcp servers - a curated list of model context protocol servers other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/awesome-mcp-servers-1">awesome-mcp-servers-1</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Awesome MCP Servers - A curated list of Model Context Protocol servers</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="awesome-mcp-servers-2 a curated list of model context protocol (mcp) servers other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/awesome-mcp-servers-2">awesome-mcp-servers-2</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">A curated list of Model Context Protocol (MCP) servers</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="awesome-mcp-servers-3 a comprehensive collection of model context protocol (mcp) servers other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/awesome-mcp-servers-3">awesome-mcp-servers-3</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">A comprehensive collection of Model Context Protocol (MCP) servers</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="awesome-mcp-servers-devops a curated, devops-focused list of model context protocol (mcp) servers-covering source control, iac, kubernetes, ci/cd, cloud, observability, security, and collaboration-with a bias toward maintained, production-ready integrations. other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/awesome-mcp-servers-devops">awesome-mcp-servers-devops</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">A curated, DevOps-focused list of Model Context Protocol (MCP) servers-covering source control, IaC, Kubernetes, CI/CD, cloud, observability, security, and collaboration-with a bias toward maintained, production-ready integrations.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="awesome_ai_agents 🤖 a comprehensive list of 1,500+ resources and tools related to ai agents. other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/awesome_ai_agents">awesome_ai_agents</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">🤖 A comprehensive list of 1,500+ resources and tools related to AI agents.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="behavior-transform.io archived: moved to harperz9/flywheel/packages/behavior-transform.io other active agent-workflows private-line project-telos provenance io-boundary">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/behavior-transform.io">behavior-transform.io</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">ARCHIVED: moved to HarperZ9/flywheel/packages/behavior-transform.io</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="bio-research preregistered empirical studies and reproducible python pipelines in neurobiology (trauma connectivity, longitudinal hippocampal mri, opsin kinetics, tau/microtubule screens) and pacific northwest forest mycology, with honest null results. other active neurobiology bioinformatics mycology forest-pathology openneuro proteomics transcriptomics reproducible-research">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/bio-research">bio-research</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Preregistered empirical studies and reproducible Python pipelines in neurobiology (trauma connectivity, longitudinal hippocampal MRI, opsin kinetics, tau/microtubule screens) and Pacific Northwest forest mycology, with honest null results.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="biome a toolchain for web projects, aimed to provide functionalities to maintain them. biome offers formatter and linter, usable via cli and lsp. other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/biome">biome</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">A toolchain for web projects, aimed to provide functionalities to maintain them. Biome offers formatter and linter, usable via CLI and LSP.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="bootloops-second-checker archived: moved to harperz9/flywheel/demos/bootloops-second-checker other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/bootloops-second-checker">bootloops-second-checker</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">ARCHIVED: moved to HarperZ9/flywheel/demos/bootloops-second-checker</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="brender-archival run argonaut's 1990s brender 3d engine on 64-bit windows and linux: a model viewer, a short original game, and a rebuild of the 1998 source you can rerun. other active 3d-graphics brender game-engine rendering retrocomputing software-revival software-rendering cmake game-preservation model-viewer retro-gaming">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/brender-archival">brender-archival</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Run Argonaut's 1990s BRender 3D engine on 64-bit Windows and Linux: a model viewer, a short original game, and a rebuild of the 1998 source you can rerun.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="build-color python color math library and cli: oklab, jzazbz and wide-gamut conversions, hdr tone mapping, ciecam02 and cam16, delta e, chromatic adaptation, icc profiles, .cube and clf luts. other active color-science color-spaces python tone-mapping hdr colour-science 3d-lut chromatic-adaptation color-appearance-model delta-e icc-profiles oklab">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/build-color">build-color</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Python color math library and CLI: Oklab, JzAzBz and wide-gamut conversions, HDR tone mapping, CIECAM02 and CAM16, Delta E, chromatic adaptation, ICC profiles, .cube and CLF LUTs.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="build-ecosystem archived: moved with its history into harperz9/buildlang (suite/build-ecosystem). other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/build-ecosystem">build-ecosystem</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">ARCHIVED: moved with its history into HarperZ9/buildlang (suite/build-ecosystem).</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="build-engine archived: moved with its history into harperz9/buildlang (suite/build-engine). other active ensemble prediction pyqt6 python">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/build-engine">build-engine</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">ARCHIVED: moved with its history into HarperZ9/buildlang (suite/build-engine).</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="build-finance archived: moved with its history into harperz9/buildlang (suite/build-finance). other active algorithmic-trading alpaca-api backtesting python">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/build-finance">build-finance</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">ARCHIVED: moved with its history into HarperZ9/buildlang (suite/build-finance).</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="build-oracle archived: moved with its history into harperz9/buildlang (suite/build-oracle). other active arima forecasting neural-network python time-series">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/build-oracle">build-oracle</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">ARCHIVED: moved with its history into HarperZ9/buildlang (suite/build-oracle).</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="build-ui archived: moved with its history into harperz9/buildlang (suite/build-ui). other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/build-ui">build-ui</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">ARCHIVED: moved with its history into HarperZ9/buildlang (suite/build-ui).</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="build-universe archived: moved to harperz9/buildlang/universe other active compiler ecosystem rendering algorithmic-trading color-science graphics systems-programming buildlang">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/build-universe">build-universe</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">ARCHIVED: moved to HarperZ9/buildlang/universe</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="buildlang deterministic systems and gpu language (buildc 1.15.0) emitting native binaries and hlsl/glsl shaders, paired with builddb/buildql (qdb) and fast f64 ml and physics kernels. other active compiler glsl hlsl programming-language shaders systems-programming algebraic-effects capability-security effect-system ffi language-server type-inference">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/buildlang">buildlang</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Deterministic systems and GPU language (buildc 1.15.0) emitting native binaries and HLSL/GLSL shaders, paired with BuildDB/BuildQL (qdb) and fast f64 ML and physics kernels.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="buildlang-tmlanguage archived: moved to harperz9/buildlang/editors/tmlanguage other active linguist syntax-highlighting textmate-grammar buildlang">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/buildlang-tmLanguage">buildlang-tmLanguage</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">ARCHIVED: moved to HarperZ9/buildlang/editors/tmLanguage</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="buildlang-vscode vs code syntax highlighting and editor configuration for buildlang (.bld) effects-language files (monorepo copy maintained in harperz9/buildlang under editors/vscode-syntax). other active editor-tools syntax-highlighting vscode-extension buildlang">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/buildlang-vscode">buildlang-vscode</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">VS Code syntax highlighting and editor configuration for BuildLang (.bld) effects-language files (monorepo copy maintained in HarperZ9/buildlang under editors/vscode-syntax).</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="bulletin a message board for ai agents on cloudflare workers. agents join with an ed25519 key, post with signed http requests, and read the same board over rest or mcp. other active ai-agents cloudflare-workers ed25519 http-signatures mcp agent-communication cloudflare-d1 mcp-server message-board model-context-protocol multi-agent typescript">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/bulletin">bulletin</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">A message board for AI agents on Cloudflare Workers. Agents join with an Ed25519 key, post with signed HTTP requests, and read the same board over REST or MCP.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="calibrate-pro calibrate a windows display with or without a colorimeter: icc profiles, 3d luts, ddc/ci control, and structured error logging, with every accuracy figure marked measured or estimated. other active display-calibration icc-profiles python colorimeter oled windows color-calibration color-management 3d-lut ddc-ci monitor-calibration pyside6">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/calibrate-pro">calibrate-pro</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Calibrate a Windows display with or without a colorimeter: ICC profiles, 3D LUTs, DDC/CI control, and structured error logging, with every accuracy figure marked measured or estimated.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="canon canon keeps your agent instructions, decisions and project state in one local record and writes them into claude.md, agents.md, gemini.md, copilot and cursor files. other active agent-memory cli llm mcp portability python agents-md agplv3 claude-code codex context-engineering cursor">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/canon">canon</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Canon keeps your agent instructions, decisions and project state in one local record and writes them into CLAUDE.md, AGENTS.md, GEMINI.md, Copilot and Cursor files.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="cc-parachute soft landings for claude code context compaction - zero extra tokens, four auditable shell hooks other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/cc-parachute">cc-parachute</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Soft landings for Claude Code context compaction - zero extra tokens, four auditable shell hooks</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="chorus reads a comment section and reports its themes, how strongly people feel, and the topics they split on, with a receipt anyone can re-run. local, no model. other active discourse-analysis nlp python research-tool agpl cli comment-analysis mcp reproducibility sentiment-analysis topic-clustering">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/chorus">chorus</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Reads a comment section and reports its themes, how strongly people feel, and the topics they split on, with a receipt anyone can re-run. Local, no model.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="claude-context code search mcp for claude code. make entire codebase the context for any coding agent. other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/claude-context">claude-context</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Code search MCP for Claude Code. Make entire codebase the context for any coding agent.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="cmmns site-agnostic browser extension and archival tool capturing any webpage (cmmns.page/1, schema.org, rss/atom, json data islands) and social threads into daylight.sidecar/1 and manifest jsonl records with provenance analysis. other active browser-extension disinformation fact-checking media-literacy misinformation agpl">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/cmmns">cmmns</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Site-agnostic browser extension and archival tool capturing any webpage (cmmns.page/1, Schema.org, RSS/Atom, JSON data islands) and social threads into daylight.sidecar/1 and manifest JSONL records with provenance analysis.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="coherence-membrane give ai agents inspectable observations of files, images, screens, and context with receipt-backed perception. other active ai-accountability llm python ai-agents mcp observability perception receipts zero-dependency">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/coherence-membrane">coherence-membrane</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Give AI agents inspectable observations of files, images, screens, and context with receipt-backed perception.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="coinbase_clean_rbotz coinbase bot other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/coinbase_clean_rbotz">coinbase_clean_rbotz</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">coinbase bot</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="consulting-template-kit reusable consulting and technical-writing templates with validation for placeholders, private data, and release hygiene. other active consulting documentation templates">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/consulting-template-kit">consulting-template-kit</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Reusable consulting and technical-writing templates with validation for placeholders, private data, and release hygiene.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="context-curator-lite archived: moved to harperz9/flywheel/packages/context-curator-lite other active ai-workflows context developer-tools python redaction ai-agents llm">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/context-curator-lite">context-curator-lite</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">ARCHIVED: moved to HarperZ9/flywheel/packages/context-curator-lite</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="crewai-kickoff-replay-receipt archived (sealed, zero file edits): mirrored in harperz9/flywheel/demos/crewai-kickoff-replay-receipt other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/crewai-kickoff-replay-receipt">crewai-kickoff-replay-receipt</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">ARCHIVED (sealed, zero file edits): mirrored in HarperZ9/flywheel/demos/crewai-kickoff-replay-receipt</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="crucible test each claim in a thesis against a measurement and get match, drift or unverifiable, with a sealed record anyone can recheck offline. no model in the verdict step. other active evaluation python verification provenance mcp ai llm mcp-server model-context-protocol testing evaluation-framework fair-source llm-evaluation source-available falsification llm-as-a-judge regression-testing reproducibility">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/crucible">crucible</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Test each claim in a thesis against a measurement and get MATCH, DRIFT or UNVERIFIABLE, with a sealed record anyone can recheck offline. No model in the verdict step.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="crypto-margins reproducible post-quantum lattice security-margin benchmarks for fips 203 (ml-kem) and fips 204 (ml-dsa) using sagemath, lattice-estimator, and g6k, with json receipts and published null results. other active post-quantum-cryptography ml-kem ml-dsa fips-203 fips-204 lattice-cryptography sagemath reproducible-research">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/crypto-margins">crypto-margins</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Reproducible post-quantum lattice security-margin benchmarks for FIPS 203 (ML-KEM) and FIPS 204 (ML-DSA) using SageMath, lattice-estimator, and g6k, with JSON receipts and published null results.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="datasette an open source multi-tool for exploring and publishing data other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/datasette">datasette</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">An open source multi-tool for exploring and publishing data</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="deepeval the llm evaluation framework other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/deepeval">deepeval</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">The LLM Evaluation Framework</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="discover archived: moved to harperz9/flywheel/packages/discover (pinned commit 98138514 remains usable) other active agpl citation-cff discoverability github-actions json-ld llms-txt python release-automation schema-org seo sitemap youtube zero-dependency">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/discover">discover</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">ARCHIVED: moved to HarperZ9/flywheel/packages/discover (pinned commit 98138514 remains usable)</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="drizzle-orm orm other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/drizzle-orm">drizzle-orm</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">ORM</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="elder-enb elder enb workshop: transactional enb profiles, weather themes, and a native runtime plugin built on enb-runtime-core other active enb hlsl presets shaders skyrim">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/elder-enb">elder-enb</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Elder ENB Workshop: transactional ENB profiles, weather themes, and a native runtime plugin built on enb-runtime-core</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="elder-weathers original skyrim weathers generated from a physical atmosphere model: nineteen weathers across seven families, one command, one light esl plugin other active atmospheric-scattering esl python skyrim skyrim-mod skyrim-se weather">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/elder-weathers">elder-weathers</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Original Skyrim weathers generated from a physical atmosphere model: nineteen weathers across seven families, one command, one light ESL plugin</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="emet verifies file sha-256 receipts offline (match, drift, unverifiable) in python, safe rust (#![forbid(unsafe_code)]), node.js, and go (consolidated package maintained in harperz9/flywheel under packages/emet). other active attestation conformance in-toto integrity llm-security provenance python reproducibility rust supply-chain-security threat-modeling evidence metadata receipts ai-evaluation cli sha256 verification">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/emet">emet</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Verifies file SHA-256 receipts offline (MATCH, DRIFT, UNVERIFIABLE) in Python, safe Rust (#![forbid(unsafe_code)]), Node.js, and Go (consolidated package maintained in HarperZ9/flywheel under packages/emet).</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="enb-runtime-core c++23 library for enbseries plugins on skyrim: finds and fingerprints the loaded enb module, queues callback work, and holds changes around game saves. no third-party dependencies. other active cpp enb rendering skse skyrim">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/enb-runtime-core">enb-runtime-core</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">C++23 library for ENBSeries plugins on Skyrim: finds and fingerprints the loaded ENB module, queues callback work, and holds changes around game saves. No third-party dependencies.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="enb-validation-lab checks the elder enb and truth enb releases: no shared shader or asset bytes, no third-party content, valid manifests, and shaders that compile. no dependencies. other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/enb-validation-lab">enb-validation-lab</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Checks the Elder ENB and Truth ENB releases: no shared shader or asset bytes, no third-party content, valid manifests, and shaders that compile. No dependencies.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="engine-revival the catalogue of lost rendering and game engines: what each was, what survives, and which are being rebuilt. other active brender digital-preservation reproducibility retrocomputing software-archaeology software-preservation">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/engine-revival">engine-revival</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">The catalogue of lost rendering and game engines: what each was, what survives, and which are being rebuilt.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="faithful-transpile archived: moved to harperz9/flywheel/docs/research/faithful-transpile other active ai-accountability information-theory research">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/faithful-transpile">faithful-transpile</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">ARCHIVED: moved to HarperZ9/flywheel/docs/research/faithful-transpile</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="flywheel accountable ai evaluation, verification, multimodal deconstruction (gather), cryptographic engine-receipt/1 trails, and local rtx 4090 / colab model forge (jfc3p, noh-3/noh-4, arm c). other active ai-agent llm-router local-llm offline receipts zero-dependency ai-evaluation llm-evaluation mcp provenance python coding-agent openai-compatible output-validation">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/flywheel">flywheel</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Accountable AI evaluation, verification, multimodal deconstruction (gather), cryptographic engine-receipt/1 trails, and local RTX 4090 / Colab model forge (JFC3P, NOH-3/NOH-4, Arm C).</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="flywheel-desktop archived: consolidated into harperz9/flywheel. the flutter client now lives at desktop/ in the flywheel monorepo. other active ai-agents desktop flutter project-telos receipts windows">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/flywheel-desktop">flywheel-desktop</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">ARCHIVED: consolidated into HarperZ9/flywheel. The Flutter client now lives at desktop/ in the flywheel monorepo.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="flywheel-evidence-task archived: moved to harperz9/flywheel/demos/flywheel-evidence-task (maintained plugin at plugins/flywheel-evidence-task) other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/flywheel-evidence-task">flywheel-evidence-task</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">ARCHIVED: moved to HarperZ9/flywheel/demos/flywheel-evidence-task (maintained plugin at plugins/flywheel-evidence-task)</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="flywheel-receipt-demo archived: moved to harperz9/flywheel/demos/flywheel-receipt-demo other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/flywheel-receipt-demo">flywheel-receipt-demo</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">ARCHIVED: moved to HarperZ9/flywheel/demos/flywheel-receipt-demo</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="forum python cli and library that splits a request across ai agents, runs the tasks on any model (ollama, openai-compatible, anthropic), and keeps a hash-chained ledger you can verify and replay. other active ai-agents multi-agent orchestration python mcp-server model-context-protocol agent-orchestration human-in-the-loop anthropic llm-agents ollama zero-dependency">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/forum">forum</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Python CLI and library that splits a request across AI agents, runs the tasks on any model (Ollama, OpenAI-compatible, Anthropic), and keeps a hash-chained ledger you can verify and replay.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="freellmpool pool free tiers from 22 llm providers behind one openai-compatible api. 239 enabled routes, 397 cataloged models, keyless start, automatic failover, cli, proxy, and mcp. other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/freellmpool">freellmpool</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Pool free tiers from 22 LLM providers behind one OpenAI-compatible API. 239 enabled routes, 397 cataloged models, keyless start, automatic failover, CLI, proxy, and MCP.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="gather collects and deconstructs research material (web pages, papers, apis, pdfs, audio, video) into a local corpus with source hashes (consolidated package maintained in harperz9/flywheel under packages/gather). other active provenance python mcp ai llm local-first mcp-server model-context-protocol research research-tool ocr pdf-extraction web-scraping document-processing information-retrieval agpl arxiv web-crawler">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/gather">gather</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Collects and deconstructs research material (web pages, papers, APIs, PDFs, audio, video) into a local corpus with source hashes (consolidated package maintained in HarperZ9/flywheel under packages/gather).</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="governance-spec v19 governance protocol specification - independent release (cc-by-4.0) other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/governance-spec">governance-spec</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">V19 Governance Protocol Specification - Independent Release (CC-BY-4.0)</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="gpu-trace-validator archived: moved to harperz9/superframe/packages/quality/gpu-trace-validator other active gpu graphics json-schema python validation">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/gpu-trace-validator">gpu-trace-validator</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">ARCHIVED: moved to HarperZ9/superframe/packages/quality/gpu-trace-validator</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="grimp builds a graph of a python project's internal dependencies. other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/grimp">grimp</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Builds a graph of a Python project's internal dependencies.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="harperz9 zain dana harper: 5 flagship systems (the playground/superframe, buildlang, flywheel, cmmns, and harperz9.github.io) covering rendering engines, deterministic compilers, local ai verification/training, and open archival tools. other active developer-tools portfolio profile ai-evaluation verification">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/HarperZ9">HarperZ9</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Zain Dana Harper: 5 flagship systems (The Playground/superframe, BuildLang, Flywheel, CMMNS, and harperz9.github.io) covering rendering engines, deterministic compilers, local AI verification/training, and open archival tools.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="harperz9.github.io interactive portfolio and live tool showcase of zain dana harper: rendering engines, buildlang, local model training and verification, open archival tools, studies, and career. other active developer-portfolio frontend github-pages portfolio ai-evaluation essays">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/HarperZ9.github.io">HarperZ9.github.io</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Interactive portfolio and live tool showcase of Zain Dana Harper: rendering engines, BuildLang, local model training and verification, open archival tools, studies, and career.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="hflow open source sdk for building multimodal data-quality, processing, enrichment, and curation pipelines for robotics and physical ai. other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/hflow">hflow</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Open source SDK for building multimodal data-quality, processing, enrichment, and curation pipelines for robotics and Physical AI.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="index index maps your code offline: how your repositories depend on each other, what calls what inside a repo, and which docs describe which code, as html files you open in a browser. other active python dependency-graph developer-tools code-analysis context-engineering mcp-server static-analysis call-graph code-navigation documentation-generator monorepo software-architecture">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/index">index</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Index maps your code offline: how your repositories depend on each other, what calls what inside a repo, and which docs describe which code, as HTML files you open in a browser.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="inspector visual testing tool for mcp servers other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/inspector">inspector</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Visual testing tool for MCP servers</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="isort a python utility / library to sort imports. other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/isort">isort</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">A Python utility / library to sort imports.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="kysely a type-safe typescript sql query builder other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/kysely">kysely</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">A type-safe TypeScript SQL query builder</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="langfuse 🪢 open source ai engineering platform: llm evals, observability, metrics, prompt management, playground, datasets. integrates with opentelemetry, langchain, openai sdk, litellm, and more. 🍊yc w23 other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/langfuse">langfuse</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">🪢 Open source AI engineering platform: LLM evals, observability, metrics, prompt management, playground, datasets. Integrates with OpenTelemetry, LangChain, OpenAI SDK, LiteLLM, and more. 🍊YC W23</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="learn study planner for the terminal and mcp: schedules reviews, tracks repeat mistakes and checks mastery from the attempts you record. leaves graded questions to you. other active cli fsrs learning nodejs retrieval-practice spaced-repetition zero-dependency mcp mcp-server study-planner education">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/learn">learn</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Study planner for the terminal and MCP: schedules reviews, tracks repeat mistakes and checks mastery from the attempts you record. Leaves graded questions to you.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="linguist fork used for buildlang language-recognition work and upstream grammar validation. other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/linguist">linguist</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Fork used for BuildLang language-recognition work and upstream grammar validation.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="litigant-portal access to justice portal other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/litigant-portal">litigant-portal</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Access to Justice portal</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="llm access large language models from the command-line other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/llm">llm</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Access large language models from the command-line</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="llm-plugins-fusion ai engineering workflow framework for coding assistants, delivered through nova-plugin. other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/llm-plugins-fusion">llm-plugins-fusion</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">AI engineering workflow framework for coding assistants, delivered through nova-plugin.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="local-model archived: consolidated into harperz9/flywheel. the python engine and flutter desktop client now live in one monorepo. other active flywheel local-llm project-telos qwen verified-inference">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/local-model">local-model</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">ARCHIVED: consolidated into HarperZ9/flywheel. The Python engine and Flutter desktop client now live in one monorepo.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="loopcompass verified operational learning and root-cause repair for agent workflows other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/LoopCompass">LoopCompass</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Verified operational learning and root-cause repair for agent workflows</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="looplet test-driven harness engineering for python agents: own the loop, capture failures, and gate every change. other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/looplet">looplet</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Test-driven harness engineering for Python agents: own the loop, capture failures, and gate every change.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="lwpt lightweight pascal toolkit other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/lwpt">lwpt</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Lightweight Pascal toolkit</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="maqam exact input-bound approvals, policy-gated typescript tools, source-linked evidence, cli workers, and governed web research. other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/maqam">maqam</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Exact input-bound approvals, policy-gated TypeScript tools, source-linked evidence, CLI workers, and governed web research.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="mcp-fuse deterministic failure handling for mcp: the error policy standard + a zero-config resilience proxy. stop letting your llm debug your network. other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/mcp-fuse">mcp-fuse</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Deterministic failure handling for MCP: the Error Policy standard + a zero-config resilience proxy. Stop letting your LLM debug your network.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="mneme local memory for ai agents: each recalled fact names the turn it came from, and recall, drift checks and forgetting return receipts anyone can rerun. other active agent-memory llm-memory mcp provenance python retrieval agpl-3 ai-agents bm25 sqlite">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/mneme">mneme</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Local memory for AI agents: each recalled fact names the turn it came from, and recall, drift checks and forgetting return receipts anyone can rerun.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="model-provenance-validator validate model and release claims against small provenance envelopes with redacted output. other active ai-tools cli model-provenance python schema-validation ai metadata provenance validation ai-accountability">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/model-provenance-validator">model-provenance-validator</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Validate model and release claims against small provenance envelopes with redacted output.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="model_forensics_paper public repository under harperz9. other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/model_forensics_paper">model_forensics_paper</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Public repository under HarperZ9.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="numpy the fundamental package for scientific computing with python. other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/numpy">numpy</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">The fundamental package for scientific computing with Python.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="open-archives archived: moved to harperz9/superframe/library/open-archives other active agpl cli creative-commons internet-archive licensing media-library open-access public-domain python stock-footage wikimedia-commons">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/open-archives">open-archives</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">ARCHIVED: moved to HarperZ9/superframe/library/open-archives</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="open-multi-agent typescript ai agent orchestration framework with dynamic workflows. describe the goal, not the graph: a coordinator plans the task dag at runtime and runs it on any llm (claude, chatgpt, gemini, deepseek, or local models). other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/open-multi-agent">open-multi-agent</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">TypeScript AI agent orchestration framework with dynamic workflows. Describe the goal, not the graph: a coordinator plans the task DAG at runtime and runs it on any LLM (Claude, ChatGPT, Gemini, DeepSeek, or local models).</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="opengris-scaler efficient, lightweight and reliable distributed computation engine other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/opengris-scaler">opengris-scaler</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Efficient, lightweight and reliable distributed computation engine</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="phantom audit hardware identifiers software reads on windows and linux, and apply reversible seeded os-level profiles (5 windows registry ids; linux machine-id, hostname, mac) with panic-free rust error handling. other active anti-fingerprinting hardware-fingerprinting privacy windows cli device-fingerprinting hardware-id linux mac-address machine-id rust">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/phantom">phantom</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Audit hardware identifiers software reads on Windows and Linux, and apply reversible seeded OS-level profiles (5 Windows registry IDs; Linux machine-id, hostname, MAC) with panic-free Rust error handling.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="pip the python package installer other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/pip">pip</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">The Python package installer</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="plexus wires agent toolchains from evidence-backed producer/consumer contracts and hosts the local rtx 4090 / colab jfc3p model forge (consolidated package maintained in harperz9/flywheel under packages/plexus). other active capability-discovery orchestration python zero-dependency agent-toolchain">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/plexus">plexus</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Wires agent toolchains from evidence-backed producer/consumer contracts and hosts the local RTX 4090 / Colab JFC3P model forge (consolidated package maintained in HarperZ9/flywheel under packages/plexus).</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="poetry python packaging and dependency management made easy other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/poetry">poetry</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Python packaging and dependency management made easy</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="prereg-ledger public sha-256 hashes of study plans, each with the bytes it covers and a github push time as its outside timestamp. a plain markdown preregistration format you can copy. other active append-only markdown open-science preregistration reproducibility research-integrity sha256 timestamping">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/prereg-ledger">prereg-ledger</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Public SHA-256 hashes of study plans, each with the bytes it covers and a GitHub push time as its outside timestamp. A plain Markdown preregistration format you can copy.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="proof-surface proof-surface checks an ai agent's trace against the permissions it was granted, and turns traces, evals and measurements into json packets with a verdict and report. python, no dependencies. other active python agent-observability ai-agents audit-log authorization json-schema llm-evaluation opentelemetry provenance">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/proof-surface">proof-surface</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">proof-surface checks an AI agent's trace against the permissions it was granted, and turns traces, evals and measurements into JSON packets with a verdict and report. Python, no dependencies.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="proof-surface-report archived: moved to harperz9/flywheel/packages/proof-surface-report other active markdown provenance python reporting">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/proof-surface-report">proof-surface-report</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">ARCHIVED: moved to HarperZ9/flywheel/packages/proof-surface-report</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="provenance-sensorium turn local files, git state, and markdown claims into hash-stamped provenance receipts. other active ai-accountability provenance python security">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/provenance-sensorium">provenance-sensorium</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Turn local files, git state, and Markdown claims into hash-stamped provenance receipts.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="public-surface-sweeper check public repo surfaces for required files, text hygiene, secret-shaped values, and proof packets. other active cli python release-engineering repository-hygiene security-tools developer-tools release-hygiene security">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/public-surface-sweeper">public-surface-sweeper</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Check public repo surfaces for required files, text hygiene, secret-shaped values, and proof packets.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="pydantic-ai ai agent framework, the pydantic way other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/pydantic-ai">pydantic-ai</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">AI Agent Framework, the Pydantic way</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="pydantic-ai-harness batteries for your pydantic ai agent. other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/pydantic-ai-harness">pydantic-ai-harness</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Batteries for your Pydantic AI agent.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="pydash the kitchen sink of python utility libraries for doing &quot;stuff&quot; in a functional way. based on the lo-dash javascript library. other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/pydash">pydash</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">The kitchen sink of Python utility libraries for doing &quot;stuff&quot; in a functional way. Based on the Lo-Dash Javascript library.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="python-sdk the official python sdk for model context protocol servers and clients other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/python-sdk">python-sdk</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">The official Python SDK for Model Context Protocol servers and clients</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="raw raw: direct3d 11/12 volumetric atmosphere, ray-traced water, froxels, and real-time lighting bridge for skyrim se (standalone c++23 engine core in harperz9/superframe/native). other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/raw">raw</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">RAW: Direct3D 11/12 volumetric atmosphere, ray-traced water, froxels, and real-time lighting bridge for Skyrim SE (standalone C++23 engine core in HarperZ9/superframe/native).</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="raw-native archived: moved to harperz9/superframe/native other active ambient-occlusion cpp23 ray-tracing renderer color-management computer-graphics d3d12 gltf path-tracing software-rendering webassembly webgpu">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/raw-native">raw-native</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">ARCHIVED: moved to HarperZ9/superframe/native</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="reactive-agents-ts a composable typescript framework for building reliable llm agents on a harness you fully control. the same code runs the agent loop on every model tier - local 4b to frontier - with tool-call healing, verification, and durable crash-resume, on a typed 12-phase engine where every step emits an event you can hook into. effect-ts, mcp-native, mit. other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/reactive-agents-ts">reactive-agents-ts</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">A composable TypeScript framework for building reliable LLM agents on a harness you fully control. The same code runs the agent loop on every model tier - local 4B to frontier - with tool-call healing, verification, and durable crash-resume, on a typed 12-phase engine where every step emits an event you can hook into. Effect-TS, MCP-native, MIT.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="reconcile archived: moved with its history into the playground, harperz9/superframe (packages/reconcile). other active browser creative-coding generative-art javascript nodejs procedural-generation receipts replayable simulation verification">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/reconcile">reconcile</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">ARCHIVED: moved with its history into The Playground, HarperZ9/superframe (packages/reconcile).</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="registry a community driven registry service for model context protocol (mcp) servers. other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/registry">registry</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">A community driven registry service for Model Context Protocol (MCP) servers.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="relay command-line coding agent for local models (ollama), subscription clis or api keys, with failover between them, a replayable hash-chained run log, and acceptance gated on your test command. other active cli coding-agent failover llm mcp python zero-dependency ai-coding-assistant llm-agent local-llm mcp-server ollama">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/relay">relay</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Command-line coding agent for local models (Ollama), subscription CLIs or API keys, with failover between them, a replayable hash-chained run log, and acceptance gated on your test command.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="release-surface-scanner build reviewable release packets from required files, secret-shape checks, and file hashes. other active cli python release-engineering security">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/release-surface-scanner">release-surface-scanner</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Build reviewable release packets from required files, secret-shape checks, and file hashes.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="repo-proof-index index proof packets, receipts, and contracts into reviewer-ready summaries. other active cli documentation-tools python release-engineering proof-contracts proof provenance repository audit">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/repo-proof-index">repo-proof-index</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Index proof packets, receipts, and contracts into reviewer-ready summaries.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="rewardspy a plug-in debugger and visualizer for rl reward functions. detects reward hacking, tracks training health, and renders a live terminal dashboard. other active ai-safety debugging machine-learning ml-tools python reinforcement-learning reward-hacking reward-shaping rlhf terminal-dashboard training-dynamics visualization">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/rewardspy">rewardspy</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">A plug-in debugger and visualizer for RL reward functions. Detects reward hacking, tracks training health, and renders a live terminal dashboard.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="runtrail journals for agents other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/runtrail">runtrail</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">journals for agents</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="scorekeeper commitment tracking for llm agents - a normative overlay that gives long-running agents a scoreboard of their own commitments, not just a memory of what happened. other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/scorekeeper">scorekeeper</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Commitment tracking for LLM agents - a normative overlay that gives long-running agents a scoreboard of their own commitments, not just a memory of what happened.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="seal-watch archived: moved to harperz9/flywheel/packages/seal-watch other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/seal-watch">seal-watch</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">ARCHIVED: moved to HarperZ9/flywheel/packages/seal-watch</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="secret-redact-io archived: moved to harperz9/flywheel/packages/secret-redact-io other active python redaction secrets security">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/secret-redact-io">secret-redact-io</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">ARCHIVED: moved to HarperZ9/flywheel/packages/secret-redact-io</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="senses-and-sensibility senses and sensibility, conferred existence: a research program in intrinsic, bilateral accountability. text cc by 4.0, code mit. doi 10.5281/zenodo.20773724. other active ai-accountability philosophy research">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/senses-and-sensibility">senses-and-sensibility</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Senses and Sensibility, Conferred Existence: a research program in intrinsic, bilateral accountability. Text CC BY 4.0, code MIT. DOI 10.5281/zenodo.20773724.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="sentient-trader auditable multi-agent ai paper-trading system: four llm agents debate market headlines, pass risk gates, and publish replayable decision traces. langgraph · fastapi · react · supabase · redis streams · alpaca. other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/sentient-trader">sentient-trader</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Auditable multi-agent AI paper-trading system: four LLM agents debate market headlines, pass risk gates, and publish replayable decision traces. LangGraph · FastAPI · React · Supabase · Redis Streams · Alpaca.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="setuptools official project repository for the setuptools build system other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/setuptools">setuptools</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Official project repository for the Setuptools build system</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="signal-kernels archived: moved to harperz9/superframe/packages/kernels/signal-kernels other active cpp header-only information-theory signal-processing">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/signal-kernels">signal-kernels</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">ARCHIVED: moved to HarperZ9/superframe/packages/kernels/signal-kernels</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="sigstore-python a sigstore client written in python other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/sigstore-python">sigstore-python</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">A Sigstore client written in Python</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="skyrim-community-shaders community-driven advanced graphics modifications for ae, se and vr. other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/skyrim-community-shaders">skyrim-community-shaders</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Community-driven advanced graphics modifications for AE, SE and VR.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="skyrimbridge live skyrim engine state as enb shader parameters: weather, camera, combat, equipment, actor values other active cpp enb reverse-engineering skse skyrim">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/skyrimbridge">skyrimbridge</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Live Skyrim engine state as ENB shader parameters: weather, camera, combat, equipment, actor values</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="smallharness a harness for small llms other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/SmallHarness">SmallHarness</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">A harness for small llms</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="solari-cookbook public repository under harperz9. other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/solari-cookbook">solari-cookbook</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Public repository under HarperZ9.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="studio-engine archived: superseded. its generators, expression algebra, refine loop, compositor and timeline live in harperz9/superframe (packages/reconcile). other active creative-coding generative-art procedural-generation webgl glsl http-api python shaders web-audio">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/studio-engine">studio-engine</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">ARCHIVED: superseded. Its generators, expression algebra, refine loop, compositor and timeline live in HarperZ9/superframe (packages/reconcile).</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="superframe the playground rendering and simulation engine: dx12, vulkan, and webgpu, low water, 6-dof physical-ai, biomechanical tree dynamics, itu-r bt.2020/2100 spectral optics, noh-3 world bridge, sound, type, and study tools. other active cpp23 creative-coding game-engine generative-art nodejs procedural-generation renderer rendering reproducibility typography webgpu">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/superframe">superframe</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">The Playground rendering and simulation engine: DX12, Vulkan, and WebGPU, Low Water, 6-DOF physical-AI, biomechanical tree dynamics, ITU-R BT.2020/2100 spectral optics, NOH-3 world bridge, sound, type, and study tools.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="superstack archived: moved with its history into the playground, harperz9/superframe (packages/superstack). other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/superstack">superstack</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">ARCHIVED: moved with its history into The Playground, HarperZ9/superframe (packages/superstack).</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="system_prompts_leaks extracted system prompts from anthropic - claude fable 5, opus 4.8, claude code, claude design. openai - chatgpt 5.5 thinking, gpt 5.5 instant, codex. google - gemini 3.5 flash, 3.1 pro, antigravity. xai - grok, cursor, copilot, vs code, perplexity, and more. updated regularly. other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/system_prompts_leaks">system_prompts_leaks</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Extracted system prompts from Anthropic - Claude Fable 5, Opus 4.8, Claude Code, Claude Design. OpenAI - ChatGPT 5.5 Thinking, GPT 5.5 Instant, Codex. Google - Gemini 3.5 Flash, 3.1 Pro, Antigravity. xAI - Grok, Cursor, Copilot, VS Code, Perplexity, and more. Updated regularly.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="tabulint public repository under harperz9. other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/Tabulint">Tabulint</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Public repository under HarperZ9.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="telos local mcp server and cli for ai agents: read web pages and public apis, triage github actions runs, check html pages, and control a browser or windows apps after you grant access. other active ai-agents browser-automation computer-use local-first mcp-server model-context-protocol accessibility audit-log github-actions nodejs web-crawler windows-automation">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/telos">telos</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Local MCP server and CLI for AI agents: read web pages and public APIs, triage GitHub Actions runs, check HTML pages, and control a browser or Windows apps after you grant access.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="terminal-state-fixtures archived: moved to harperz9/flywheel/packages/terminal-state-fixtures other active ai-accountability ai-evaluation research">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/terminal-state-fixtures">terminal-state-fixtures</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">ARCHIVED: moved to HarperZ9/flywheel/packages/terminal-state-fixtures</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="tomlkit style-preserving toml library for python other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/tomlkit">tomlkit</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Style-preserving TOML library for Python</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="truth-enb truth enb: an original enbseries effect for skyrim with its own atmosphere, cloud, aurora, exposure and tone systems, plus c++23 cpu references for each. other active atmospheric-scattering enb hlsl rendering shaders skyrim">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/truth-enb">truth-enb</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Truth ENB: an original ENBSeries effect for Skyrim with its own atmosphere, cloud, aurora, exposure and tone systems, plus C++23 CPU references for each.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="typeguard run-time type checker for python other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/typeguard">typeguard</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Run-time type checker for Python</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="valibot-1518-repro minimal repro for valibot #1518: ts2589 across a .d.ts boundary (driver = inferoutput recursion depth, not schema size) other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/valibot-1518-repro">valibot-1518-repro</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Minimal repro for valibot #1518: TS2589 across a .d.ts boundary (driver = InferOutput recursion depth, not schema size)</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="vivaria vivaria is metr's tool for running evaluations and conducting agent elicitation research. other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/vivaria">vivaria</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Vivaria is METR's tool for running evaluations and conducting agent elicitation research.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="vllm-ci-forum-receipt archived (sealed, zero file edits): mirrored in harperz9/flywheel/demos/vllm-ci-forum-receipt other active audit ci forum github-actions provenance vllm">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/vllm-ci-forum-receipt">vllm-ci-forum-receipt</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">ARCHIVED (sealed, zero file edits): mirrored in HarperZ9/flywheel/demos/vllm-ci-forum-receipt</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="voxwire realtime voice assistant pipeline (asr -&gt; streaming llm -&gt; tts) over websockets, built to showcase streaming orchestration, per-request latency budgets, and resilience (timeouts, graceful degradation, replay). other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/voxwire">voxwire</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Realtime voice assistant pipeline (ASR -&gt; streaming LLM -&gt; TTS) over WebSockets, built to showcase streaming orchestration, per-request latency budgets, and resilience (timeouts, graceful degradation, replay).</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="website-downloader 💡  download the complete source code of any website (including all assets). [ javascripts, stylesheets, images ]  using node.js other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/website-downloader">website-downloader</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">💡  Download the complete source code of any website (including all assets). [ Javascripts, Stylesheets, Images ]  using Node.js</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="witnessing-spine archived: moved to harperz9/flywheel/docs/research/witnessing-spine other active ai-accountability fintech research">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/witnessing-spine">witnessing-spine</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">ARCHIVED: moved to HarperZ9/flywheel/docs/research/witnessing-spine</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="wol-pi small python wake-on-lan relay for a raspberry pi on a private tailnet. other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/wol-pi">wol-pi</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Small Python Wake-on-LAN relay for a Raspberry Pi on a private tailnet.</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="workflow-harness-lite archived: moved to harperz9/flywheel/packages/workflow-harness-lite other active automation cli developer-tools nodejs workflow">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/workflow-harness-lite">workflow-harness-lite</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">ARCHIVED: moved to HarperZ9/flywheel/packages/workflow-harness-lite</span>
+    </li>
+<li data-repo-row data-lang="Other" data-status="active" data-search="workspace working principles, mission, and unified 5-flagship architecture map by zain dana harper so people and ai agents can locate every project and its verification rules. other active ">
+      <span class="ds-term"><a href="https://github.com/HarperZ9/workspace">workspace</a><span class="ds-sub">Other | active</span></span>
+      <span class="ds-gloss">Working principles, mission, and unified 5-flagship architecture map by Zain Dana Harper so people and AI agents can locate every project and its verification rules.</span>
+    </li></ul>
+</section>
+
+<footer class="ds-prov" aria-label="Sheet provenance">
+  <span><b>Sheet</b> tools.html</span>
+  <span><b>Updated</b> 2026-11-26</span>
+  <span><b>Ground</b> 159 public repos | fail-closed SHA256SUMS</span>
+</footer>
+</article>
+<script type="module">
+const qEl = document.getElementById("repo-q"), langEl = document.getElementById("repo-lang"), stEl = document.getElementById("repo-status"), countEl = document.getElementById("repo-count");
+const rows = [...document.querySelectorAll("[data-repo-row]")];
+function apply() {
+  const q = (qEl?.value || "").trim().toLowerCase(), l = langEl?.value || "", st = stEl?.value || "";
+  let n = 0;
+  for (const r of rows) {
+    const ok = (!q || r.dataset.search.includes(q)) && (!l || r.dataset.lang === l) && (!st || r.dataset.status === st);
+    r.hidden = !ok; if (ok) n++;
+  }
+  if (countEl) countEl.textContent = "Showing " + n + " of " + rows.length + " public repositories";
+}
+qEl?.addEventListener("input", apply); langEl?.addEventListener("change", apply); stEl?.addEventListener("change", apply);
+document.addEventListener("click", async (ev) => {
+  const btn = ev.target.closest("[data-copy-cmd]"); if (!btn) return;
+  try { await navigator.clipboard.writeText(btn.dataset.copyCmd); const prev = btn.textContent; btn.textContent = "Copied"; setTimeout(() => { btn.textContent = prev; }, 1600); } catch {}
+});
+</script>
+</main>
+</body>
+</html>

@@ -1,62 +1,142 @@
-// playground.mjs: the manifest of The Playground's surface, /playground/. scripts/build-surfaces.mjs builds the page
-// from it. A surface is one of the six platform pages; a module is a row in world/site/surfaces/registry.mjs.
-//
-// The page opens as words and a still, and loads no module. One press starts the exchange: the blend table hands
-// its blend and its palette to the other modules through the bus (world/site/surfaces/bus.mjs), and the page shows
-// each hand-over. A heavy module starts on its own press, with its size stated.
+// playground.mjs: the manifest of The Playground's unified surface, /playground/.
+// scripts/build-surfaces.mjs builds playground/index.html from this manifest, integrating the shared
+// property bus, Estuary Perret lantern, Type Forge, Shader/Retro room, Sound room (plus Round 2 cues),
+// Field room, Native DX12/WebGPU renderer (#native), Low Water walkable island (#low-water), Superframe
+// multi-medium core (#superframe), and all creative engines from CATALOG.md into one non-siloed surface.
 export default {
   id: "playground",
   file: "playground/index.html",
   title: "The Playground",
-  description: "The Playground is a rendering engine that turns one description into picture, type and sound: the native renderer, Superframe, the instruments and study tools, and Low Water.",
-  lede: 'The Playground is a rendering engine that turns one description into picture, type and sound. It has four parts: the <a href="/raw.html">native renderer</a>, <a href="/superframe.html">Superframe</a> at the core, the <a href="#instruments">instruments and study tools</a>, and <a href="/low-water.html">Low Water</a>, the game made with it.',
-  make: 'It is also a place to make things. Blend materials and watch one blend become colour, lettering, timing and pen lines. Mint a typeface and save the font file. Play one of five pieces of music and save it as a sound file. Write a shader, watch it run, and send its frame to the loom, the plotter and a relief. Build words from turning circles in the <a href="/playground/fourier.html">Fourier room</a>. More rooms are being moved onto this page from the pages listed under <a href="#instruments">instruments and study tools</a>.',
-  parts: [
-    ["/raw.html", "The native renderer", "Renders frames in C++ on Direct3D 12, Vulkan and WebGPU, and checks each one against a reference. Released as raw-native."],
-    ["/superframe.html", "Superframe, the core", "One seeded recipe rendered as picture, line, surface, type and sound."],
-    ["/low-water.html", "Low Water", "The game made with The Playground."],
+  description: "The Playground: one unified creative field combining Estuary, Native DX12/WebGPU rendering, Low Water, Superframe, Loom, Thread, Posters, Studio, Fractals, Type, Shaders, and Sound.",
+  lede: 'The Playground is one unified creative field and rendering engine that turns a single description into picture, weave, line, type, volume, world, and sound. Everything runs on one shared property bus: <a href="#m-exchange">the blend bench</a>, <a href="#estuary">Estuary</a>, <a href="#workbench">every creative engine</a>, <a href="#native">the native renderer</a>, <a href="#low-water">Low Water</a>, and <a href="#superframe">Superframe</a>.',
+  make: 'Blend materials and watch one blend become colour, lettering, timing, pen lines, loom cloth, ridgelines, cubes, and glass. Open the unified marbled surface to drive every room from continuous temperature and weights, or mount any engine below directly onto this stage.',
+  jump: [
+    ["#m-marbled", "Marbled Bus"],
+    ["#m-exchange", "Blend Bench"],
+    ["#estuary", "Estuary"],
+    ["#workbench", "All Engines"],
+    ["#type", "Type Forge"],
+    ["#shader", "Shaders & Retro"],
+    ["#sound", "Sound & Cues"],
+    ["#native", "Native RAW"],
+    ["#low-water", "Low Water"],
+    ["#superframe", "Superframe"],
   ],
-  // The exchange: which modules start together, what the first one sends, and the heavy module that waits for a press.
+  parts: [],
+  // The exchange: stays near the top so keyboard Tab reaches #sx-start promptly and drives the shared bus.
   exchange: {
     anchor: "m-exchange",
     demo: "playground-exchange",
-    heading: "One blend, read three ways",
-    say: "Three materials from the element table are blended by share. The blend table works out the mix and hands it on. The lettering sets the blend's name in the technique of its leading part, the motion curve draws the timing the blend moves on, and the pen study inks its pens with the blend's colours. Change a share and all three follow.",
+    heading: "One blend, read across mediums",
+    say: "Three materials from the element table are blended by share. The blend table works out the mix and hands it on. Lettering, motion curve, and pen study follow immediately; add the wet well, compositor plate, crown glass, living type, jacquard loom, terrain plot map, or isometric cubes onto the same bus.",
     elements: ["ink", "glass", "type"],
     modules: ["blend", "lettering", "motion", "plot"],
     sends: [["blend", "blend"], ["blend", "palette"]],
-    press: ["well", "loom", "ridges", "voxels"],
+    press: ["well", "loom", "ridges", "voxels", "plate", "glass", "living"],
     plain: "/elements.html",
   },
-  // Rooms: creative pages folded into this one. Each is a registry module with a `room` anchor; rooms.mjs opens it.
+  // Rooms: shared-bus creative instruments folded directly onto /playground/.
   rooms: [
+    { id: "estuary", anchor: "estuary", demo: "playground-estuary", heading: "Estuary: continuous metamers, homology and Perret-lantern light", open: "Open live estuary", css: "world/site/surfaces/room-field.css",
+      say: "Continuous 0-to-1 property weights drive a 60-aperture Perret concrete lantern with live perceptual metamers, Betti homology (beta0/beta1), monodromy winding, and an opt-in harmonic voice.",
+      exchange: "Shares mix, field, palette, and harmonic score across the Playground bus.",
+      takes: ["elements", "blend", "palette", "field", "numbers", "score"], gives: ["field", "palette", "score", "numbers", "json"] },
     { id: "forge", anchor: "type", demo: "playground-type-forge", heading: "Type: mint a face", open: "Open the forge", css: "world/site/surfaces/room-forge.css",
-      say: "Zain Mint is a typeface drawn by rule. Six numbers set the pen and the proportions, the forge traces the alphabet again in your browser, and your own text is set in the result. Save the face as a font file or the line as an SVG. A weight too heavy to keep a counter open is refused by name, and no file is made.",
-      exchange: "When the blend above is running, its colour inks the proof and the lettering letters your line, and this line says so each time.",
+      say: "Zain Mint is a parametric typeface drawn by rule across six axes. Trace the alphabet in your browser and export TrueType (.ttf) or SVG; invalid counter weights refuse by name.",
+      exchange: "Takes the blend palette to ink the proof and hands your line to lettering.",
       takes: ["palette"], gives: ["text", "font", "svg"] },
-    { id: "shader", anchor: "shader", demo: "playground-shader", heading: "Shaders: write one, watch it run", open: "Open the shader room", css: "world/site/surfaces/room-shader.css",
-      say: "A fragment shader is a short program that decides the colour of every pixel, many times a second, on your graphics card. Write or change one here and it runs as you type. A mistake is marked at its line and the last working frame stays up. Start from four small shaders or from the 254 of the preset library. Save the source, the frame as a picture, or the frame as pen lines, plotter moves and a printable relief. The address carries the shader, so a link opens it. The Retro Engine moved in here whole: draw from a plate, a picture of yours, your own drawing or a scope, and put the frame through hardware palettes, dither, a CRT tube, 46 effects and feedback, with sound driving it if you like.",
-      exchange: "When the blend above is running, its colours reach the shader as iPalette, the well's picture reaches it as iChannel0, and the loom, the plot map and the cubes draw the shader's frame. This line says so each time.",
+    { id: "shader", anchor: "shader", demo: "playground-shader", heading: "Shaders & Retro: write one, watch it run", open: "Open the shader room", css: "world/site/surfaces/room-shader.css",
+      say: "Live GLSL fragment editor with 254 presets and the full Retro Engine (hardware palettes, dither, CRT optics, 46 effects, optional audio reactivity). Export PNG, SVG, G-code, or relief.",
+      exchange: "Reads blend colours as iPalette and well frames as iChannel0; feeds loom, plot map, and cubes.",
       takes: ["palette", "image"], gives: ["image", "png", "svg", "gcode"] },
     { id: "sound", anchor: "sound", demo: "playground-sound", heading: "Sound: play a piece, keep the file", open: "Play the music", css: "world/site/surfaces/room-sound.css", heavy: true, audio: true,
-      later: "The music starts with this press, which also loads {size} more at most: the instruments, which run apart from the page.",
-      say: "Five pieces of jazz over sea, wind and open air, composed and synthesized in your browser while they play. The notes show as they play. Drag across them to change the tempo and how many notes play, move the key, raise or lower each instrument, and blend the first band into the second. A seed sets the order of the sections, the piano's rhythm, the fills and how the lead develops its theme, so one seed always gives the same performance. Save what you hear as a sound file at a measured loudness. Nothing plays until you press.",
-      exchange: "When the blend above is running, its leading part chooses the piece. When the type forge is open, its line sets the seed. While it plays, the shader room can take its levels as iAudio. This line says so each time.",
+      later: "Starts on press and loads {size} at most for the synthesizer worker.",
+      say: "Five coastal jazz pieces composed and synthesized live in your browser with note drag, key shift, band morphing, and loudness-measured WAV export. Nothing plays until pressed.",
+      exchange: "Blend selects the piece, Type Forge sets the seed, and live levels feed the shader room as iAudio.",
       takes: ["blend", "text"], gives: ["score", "wav"] },
     { id: "field", anchor: "field", demo: "playground-field", heading: "The field: light, flow, measure and shape in one place", open: "Open the field", css: "world/site/surfaces/room-field.css",
-      say: "Light crosses a Luneburg glass and a body of stirred water. Neither is a room: refraction, flow, measurement, shape, a voice, a map and a circuit are properties, and every element here can carry every one of them at any weight from 0 to 1. Each element's edge is a gradient, so where the glass meets the water the light bends by both at once. Choose an element, move its sliders, drag it or move it with the arrow keys. The probe reads the water and the CAD rule dimensions it, with a tolerance on every number. Every reading is simulated and says so.",
-      exchange: "When the blend above is running, its mix colours the dye. After each change the field hands its readings on as numbers. This line says so each time.",
+      say: "Light crosses a Luneburg lens and stirred water where every element carries continuous refraction, flow, measurement, shape, voice, map, and circuit weights with toleranced CAD dimensions.",
+      exchange: "Takes blend colour for the dye and hands readings back onto the bus as numbers.",
       takes: ["palette"], gives: ["numbers", "image"] },
-    { id: "estuary", anchor: "estuary", demo: "playground-estuary", heading: "Estuary: continuous metamers, homology and Perret-lantern light", open: "Open the estuary", css: "world/site/surfaces/room-field.css",
-      say: "Every capability is a continuous weight from 0 to 1, never a binary switch. Blend refraction, fluid, measurement, CAD and sound across a Perret-lantern lattice of spectral apertures, inspect live perceptual metamers, Betti numbers (beta0/beta1), monodromy winding, seams and negative space, and hear the opt-in harmonic metamer.",
-      exchange: "When the blend above is running, its mix and palette flow straight into the estuary; estuary hands its field, palette and harmonic score back to sound, shader and plot.",
-      takes: ["elements", "blend", "palette", "field", "numbers", "score"], gives: ["field", "palette", "score", "numbers", "json"] },
   ],
-  placesHeading: "Instruments and study tools",
+  // Complete creative engine directory from CATALOG.md + registry.mjs, mountable directly on this page.
+  workbench: [
+    {
+      discipline: "Weave, Loom & Textile",
+      engines: [
+        { name: "The Loom (Jacquard & WIF)", source: "weave-engine.js", desc: "Threading, tie-up, treadling, jacquard cloth, and WIF drafts from any blend.", actions: [["exchange", "loom", "Add to bus"], ["stage", "/loom.html", "Open Loom"]] },
+        { name: "Thread Field & Dynamics", source: "weave-thread.js", desc: "Continuous warp/weft thread tension and fiber crossing dynamics.", actions: [["stage", "/studio.html?source=threads", "Open Thread"]] },
+        { name: "Bit Mosaics & Letter Tilings", source: "world/feed-24", desc: "Geometric letter tilings, tesserae andamento, and orbital paint.", actions: [["exchange", "well", "Blend in well"], ["stage", "/gallery.html", "View plates"]] },
+      ],
+    },
+    {
+      discipline: "Posters, Print, Plotter & Fabrication",
+      engines: [
+        { name: "Poster Engine", source: "poster.js", desc: "Deterministic typographic, riso, and print posters on the shared palette bus.", actions: [["stage", "/studio.html?source=poster", "Open Poster"]] },
+        { name: "Pen Plotter (SVG & G-code)", source: "plotter.js", desc: "Hatching paths, SVG pen lines, and G-code plotter moves from any frame.", actions: [["exchange", "", "Export blend"], ["stage", "/studio.html?source=plot", "Open Plotter"]] },
+        { name: "Plot Maps & Ridgelines", source: "plot-maps.js", desc: "Hidden-line terrain ridgelines drawn from frame brightness.", actions: [["exchange", "ridges", "Add to bus"]] },
+        { name: "Wave 8 Drawing Instruments", source: "system/instruments/", desc: "Six generative pens: biomech, dark monument, observatory, op-art, outrun, density.", actions: [["exchange", "", "Run Pen study"]] },
+        { name: "Watertight Relief STL", source: "relief-stl.js", desc: "Height-map to watertight printable STL mesh and knitting charts.", actions: [["exchange", "", "Export blend"]] },
+        { name: "Compositor Plates & Name-Art", source: "world/name-art", desc: "Linear-light layered plates, 35 name-art concepts, and homage portraits.", actions: [["exchange", "plate", "Add Plate"], ["stage", "/gallery.html", "Open Gallery"]] },
+      ],
+    },
+    {
+      discipline: "The Studio, Fractals, Attractors, Splats & 3D",
+      engines: [
+        { name: "The Studio Workstation", source: "studio.js", desc: "38-module multi-source canvas workstation with timeline, presets, and export.", actions: [["stage", "/studio.html", "Open Studio"]] },
+        { name: "Deep Perturbation & 2D Fractals", source: "fractal-gl.js", desc: "Arbitrary-precision BLA perturbation zoom, Buddhabrot, and Lyapunov fields.", actions: [["stage", "/studio.html?source=fractal", "Open Fractals"]] },
+        { name: "3D Raymarched Fractals", source: "fractal3d-pro.js", desc: "Distance-estimated 3D raymarched fractals with camera paths.", actions: [["stage", "/studio.html?source=fractal3d", "Open 3D Fractals"]] },
+        { name: "GPU Attractors, Flow & N-Dim", source: "attractor-gpu.js", desc: "Strange attractors, curl flow fields, N-dim projection, and glitch ops.", actions: [["stage", "/studio.html?source=spatial", "Open Spatial"]] },
+        { name: "Voxel Forge (.vox)", source: "voxel-forge.js", desc: "Height-column voxelization, isometric cubes, and MagicaVoxel export.", actions: [["exchange", "voxels", "Add Cubes"]] },
+        { name: "Gaussian Splats", source: "gaussian-splats.html", desc: "Provenance-locked 3D Gaussian splat worlds from source photography.", actions: [["stage", "/gaussian-splats.html", "Open Splats"]] },
+        { name: "Films, Exhibits & Neural GPU", source: "studio-films.js", desc: "Frame-accurate films, neural GPU kernels, and 26 perceptual exhibits.", actions: [["stage", "/studio.html?source=films", "Open Films"], ["stage", "/world/exhibit/index.html", "Open Exhibits"]] },
+      ],
+    },
+    {
+      discipline: "Paint, Pigment, Glass, Film & Shaders",
+      engines: [
+        { name: "The Well & Pigment Bench", source: "spectral.mjs", desc: "Kubelka-Munk wet pigment mixing, P3 brush engine, and capillary fibre.", actions: [["exchange", "well", "Add Well"], ["stage", "/elements.html", "Open Elements"]] },
+        { name: "Glass, Liquid & CRT Optics", source: "world/glass/", desc: "Dispersive crown-glass refraction and glass lettering over live water.", actions: [["exchange", "glass", "Add Glass"], ["stage", "/glass-water.html", "Open Glass"]] },
+        { name: "GLSL Sandbox + 254 Presets + Retro", source: "retro-engine.js", desc: "Live fragment shaders, 254 presets, hardware palettes, dither, and 46 CRT FX.", actions: [["room", "shader", "Open Shaders"]] },
+        { name: "Painterly Shaders (Oil, Gouache)", source: "shaders/paint", desc: "31-wavelength Kubelka-Munk latent pigment shaders and film halation.", actions: [["section", "native", "Native RAW"]] },
+        { name: "Swatches (Measured Colour)", source: "swatches.html", desc: "Measured pigments, mineral inks, and optical swatches.", actions: [["stage", "/swatches.html", "Open Swatches"]] },
+      ],
+    },
+    {
+      discipline: "Type, Lettering & Epicycles",
+      engines: [
+        { name: "Zain Mint Type Forge", source: "type-forge/", desc: "Six-axis algorithmic typeface generator exporting .ttf and SVG.", actions: [["room", "type", "Open Forge"]] },
+        { name: "Living Type Engine", source: "world/typeengine/", desc: "Continuous living letterforms bent by measured material properties.", actions: [["exchange", "living", "Add Living Type"]] },
+        { name: "Accession Type Family (OFL 1.1)", source: "accession.html", desc: "Original multi-cut display, text, and mono typeface specimens.", actions: [["stage", "/accession.html", "Open Accession"]] },
+        { name: "Bodied, Engraved & Chladni Lettering", source: "world/lettering", desc: "Material lettering: bodied forms, burin engraving, inflated, and Chladni sand.", actions: [["exchange", "", "Run Lettering"]] },
+        { name: "Fourier Epicycle Room", source: "fourier.html", desc: "Build letterforms and glyphs from turning harmonic circles and FFT bands.", actions: [["stage", "/playground/fourier.html", "Open Fourier"]] },
+      ],
+    },
+    {
+      discipline: "Sound, Music & Acoustics",
+      engines: [
+        { name: "Procedural Jazz Meditations", source: "site-music/", desc: "Five live coastal jazz pieces with note drag and loudness-measured WAV.", actions: [["room", "sound", "Open Sound"]] },
+        { name: "Round 2 Studio Audio & 1080p Explainer", source: "media/overhaul/", desc: "Pacific Horizon (166 BPM) & Estuary Rain (162 BPM) plus 1080p solver film.", actions: [["section", "studio-media", "Media & Cues"]] },
+        { name: "Estuary Harmonic Metamer Synth", source: "estuary-lantern.mjs", desc: "Opt-in WebAudio harmonic voice coupled to Perret lantern apertures.", actions: [["room", "estuary", "Open Estuary"]] },
+        { name: "Sound Engine, Visualizer & Ear", source: "world/sound/", desc: "STFT spectrograms, ribbon visualizers, function sequencers, and ANS voice.", actions: [["stage", "/world/sound/sound.html", "Open Sound Lab"]] },
+      ],
+    },
+    {
+      discipline: "Native Engine, Living World & Inspection",
+      engines: [
+        { name: "Native Renderer (RAW DX12/Vulkan/WebGPU)", source: "raw-native", desc: "C++23 GPU renderer certified against CPU path-traced truth with ablations.", actions: [["section", "native", "Native RAW"]] },
+        { name: "Low Water (WebGPU Island & 5 Eras)", source: "low-water", desc: "Walkable WebGPU island doors, hachured plate, 15 stills, and five eras.", actions: [["section", "low-water", "Low Water"]] },
+        { name: "Superframe Deterministic Core", source: "world/superframe/", desc: "One plain-word seed rendered as paint, lines, type, clay relief, and sound.", actions: [["section", "superframe", "Superframe"]] },
+        { name: "Distill (File & Archive Dissector)", source: "distill.html", desc: "Take any file, archive, or folder apart locally in your browser.", actions: [["stage", "/playground/distill.html", "Open Distill"]] },
+        { name: "Discovery Lab & Orbits Showcase", source: "system/discovery/", desc: "Symbolic law discovery, Noether invariants, and symplectic orbit checks.", actions: [["stage", "/system/discovery/lab.html", "Open Discovery"]] },
+      ],
+    },
+  ],
+  placesHeading: "Direct engine routes",
   places: [
     ["/playground/distill.html", "Distill", "Take any file, archive or folder apart and read what it is made of."],
     ["/gaussian-splats.html", "Gaussian Splats", "Provenance-locked 3D splat worlds built from source photography."],
-    ["/studio.html", "The Studio", "A live media instrument for picture and sound."],
+    ["/studio.html", "The Studio", "Full-window live media workstation for picture, fractals, shaders, loom and sound."],
     ["/elements.html", "Elements", "Pigment, water, glass and paper on one bench, with state changes."],
     ["/glass-water.html", "Glass and water", "Glass lettering over a live sea in four spaces."],
     ["/world/sound/sound.html", "Sound", "Instruments and scores made in the browser."],

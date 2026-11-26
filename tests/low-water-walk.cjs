@@ -33,7 +33,7 @@ async function open(browser, opts = {}, init) {
   // walk: the request came from the walk's frame (or is the frame page itself), so it is part of what a press costs
   page.on('requestfinished', async (r) => { try { const p = new URL(r.url()).pathname, s = await r.sizes(), fr = r.frame();
     got.push({ path: p, bytes: s.responseBodySize, walk: WALK.test(p) || fr !== page.mainFrame() }); } catch { /* gone with its frame */ } });
-  await page.goto(base + '/low-water.html', { waitUntil: 'load' });
+  await page.goto(base + '/playground/#low-water', { waitUntil: 'load' });
   await page.waitForFunction(() => document.querySelector('[data-toy="walk"]')?.dataset.gpu);
   return { ctx, page, errors, got };
 }

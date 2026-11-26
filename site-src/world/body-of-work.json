@@ -36,11 +36,11 @@
           "Open on site"
         ],
         [
-          "/superframe.html",
+          "/playground/#superframe",
           "Superframe"
         ],
         [
-          "/raw.html",
+          "/playground/#native",
           "Raw"
         ],
         [
@@ -770,7 +770,7 @@
       "gap": "Duplicate copies in substrate/lib/vendor/superstack.mjs and packages/ndim + packages/perceive vs studio-libs await deduplication.",
       "links": [
         [
-          "/superframe.html",
+          "/playground/#superframe",
           "Open on site"
         ],
         [
@@ -848,7 +848,7 @@
       "gap": "Pass 3 FLIP regressed slightly to 0.150 (raster detail grain/lamp halo); feat/paint and wip/compare-verb branches await scrubbed carry from private sibling; full story and city-builder layer in active development.",
       "links": [
         [
-          "/low-water.html",
+          "/playground/#low-water",
           "Open on site"
         ],
         [
@@ -874,7 +874,7 @@
       "gap": "4 Wave 67 live-world targets remain (including GameComposite R11G11B10_FLOAT intercept); 3 TODOs in AtmosphereRenderer/RmlD3D11/VolumetricClouds; folds into superframe/raw/ post-v1.0.",
       "links": [
         [
-          "/raw.html",
+          "/playground/#native",
           "Open on site"
         ],
         [
@@ -1024,7 +1024,7 @@
       "gap": "plot-sheet lacks standard automated test discovery in CI; retro and crt packages share overlapping tube simulation logic to unify.",
       "links": [
         [
-          "/estuary.html",
+          "/playground/#estuary",
           "Open on site"
         ],
         [

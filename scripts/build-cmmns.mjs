@@ -30,12 +30,14 @@ const signs = [
   ["Media", "pictures first uploaded long before the post that shows them, with reverse image search"],
 ];
 
-const body = `<article class="tool">
-<p class="mark-line">THE COMMONS (THECMMNS)</p>
-<h1>CMMNS</h1>
-<p>Rest the pointer on a reply and a window opens beside it: where the account is placed, signs of coordination, how it posts, how the reply argues, and whether a fact-checker has reviewed the claim. It works on X, YouTube, Reddit, Facebook, Instagram, Bluesky, Threads, TikTok and any Mastodon server you turn it on for. On a phone, tap the post's CMMNS button.</p>
-<p>CMMNS, spoken "commons", was formerly Daylight Commons, and Radar before that. An install from before the rename updates in place and keeps its settings, its saves and its save folder.</p>
+const body = `<article class="lp tool" data-landmark="cmmns" data-hue="thecmmns">
+<header class="lp-head">
+<h1><span class="d-3d">CMMNS</span> <span class="pf-mark">THECMMNS</span></h1>
+<p class="lp-lede lp-lede-1">Rest the pointer on a reply and a window opens beside it: where the account is placed, signs of coordination, how it posts, how the reply argues, and whether a fact-checker has reviewed the claim. Works on X, YouTube, Reddit, Facebook, Instagram, Bluesky, Threads, TikTok and Mastodon.</p>
+<p class="lp-run"><code>irm https://raw.githubusercontent.com/HarperZ9/cmmns/main/install.ps1 | iex</code></p>
+<p class="lp-rel">Fail-closed <code>SHA256SUMS</code> installer (macOS/Linux: <code>curl -fsSL https://raw.githubusercontent.com/HarperZ9/cmmns/main/install.sh | sh</code>). CMMNS, spoken "commons", was formerly Daylight Commons and Radar; earlier installs update in place.</p>
 <dl class="facts"><dt>Version</dt><dd><a href="${rel}">${esc(v)}</a></dd><dt>Browsers</dt><dd>${esc(tool.os)}</dd><dt>Licence</dt><dd><a href="${esc(tool.license)}">AGPL-3.0</a></dd><dt>Source</dt><dd><a href="${repo}">HarperZ9/cmmns</a></dd></dl>
+</header>
 
 <section id="try" class="ct" data-commons-try aria-labelledby="h-try">
 <h2 id="h-try">Try it on your own words</h2>
@@ -92,5 +94,13 @@ ${labelFor("cmmns-try")}
 </article>`;
 
 const description = "CMMNS is a browser extension that shows where social media replies come from: place, coordination, posting, language, fact-checks.";
-writeFileSync(path.join(site, "cmmns.html"), page({ path: "cmmns.html", title: "CMMNS", description, body }));
+writeFileSync(path.join(site, "cmmns.html"), page({
+  path: "cmmns.html",
+  title: "CMMNS",
+  description,
+  body,
+  bodyClass: "reading landmark",
+  extraHead: '<link rel="stylesheet" href="/world/site/landmark.css">\n<script type="module" src="/world/site/home-field.js"></script>',
+  live: true,
+}));
 console.log(`cmmns.html: CMMNS ${v}, ${description.length}-character description`);

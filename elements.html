@@ -23,14 +23,14 @@
 <meta name="twitter:title" content="The element table | Zain Dana Harper">
 <meta name="twitter:description" content="The world's concepts as an element table: each element runs live in its own medium, with its measured colour, bridges and references.">
 <link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-a6d0cea570">
-<link rel="stylesheet" href="/studies/studies.css?v=world-a6d0cea570">
-<link rel="stylesheet" href="/world/site/depth.css?v=world-a6d0cea570">
-<script type="module" src="/world/ui/shell/shell.js?v=world-a6d0cea570"></script>
-<script type="module" src="/world/site/hand-scroll.js?v=world-a6d0cea570"></script>
-<link rel="stylesheet" href="/world/ui/shell/organic/parts.css?v=world-a6d0cea570">
-<link rel="stylesheet" href="/world/site/pages.css?v=world-a6d0cea570">
-<link rel="stylesheet" href="/world/site/surfaces/bench.css?v=world-a6d0cea570"></head>
+<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-ef0caa283b">
+<link rel="stylesheet" href="/studies/studies.css?v=world-ef0caa283b">
+<link rel="stylesheet" href="/world/site/depth.css?v=world-ef0caa283b">
+<script type="module" src="/world/ui/shell/shell.js?v=world-ef0caa283b"></script>
+<script type="module" src="/world/site/hand-scroll.js?v=world-ef0caa283b"></script>
+<link rel="stylesheet" href="/world/ui/shell/organic/parts.css?v=world-ef0caa283b">
+<link rel="stylesheet" href="/world/site/pages.css?v=world-ef0caa283b">
+<link rel="stylesheet" href="/world/site/surfaces/bench.css?v=world-ef0caa283b"></head>
 <body class="parts-body bench-body">
 <div class="gw-backdrop" aria-hidden="true">
   <picture>
@@ -63,10 +63,12 @@ new MutationObserver(s).observe(r,{attributes:true,attributeFilter:["data-theme"
     <ul class="o-places">
       <li><a href="/buildlang.html"><span class="o-word" data-display-on-open="glyphcell">BuildLang</span></a></li>
       <li><a href="/flywheel.html"><span class="o-word" data-display-on-open="light">Flywheel</span></a><small class="o-sub"><a href="/cmmns.html">CMMNS</a> <a href="/articulate.html">Articulate</a></small></li>
-      <li><a href="/playground/"><span class="o-word" data-display-on-open="nightlights">The Playground</span></a><small class="o-sub"><a href="/raw.html">Native renderer</a> <a href="/superframe.html">Superframe, the core</a> <a href="/playground/#instruments">Instruments and study tools</a> <a href="/low-water.html">Low Water, the game</a></small></li>
-      <li><a href="/low-water.html"><span class="o-word" data-display-on-open="chladni">Game</span></a></li>
+      <li><a href="/playground/"><span class="o-word" data-display-on-open="nightlights">The Playground</span></a><small class="o-sub"><a href="/playground/#estuary">Estuary</a> <a href="/playground/#native">Native renderer</a> <a href="/playground/#superframe">Superframe</a> <a href="/playground/#workbench">All creative engines</a> <a href="/playground/#low-water">Low Water</a></small></li>
+      <li><a href="/playground/#low-water"><span class="o-word" data-display-on-open="chladni">Game</span></a></li>
       <li><a href="/#site"><span class="o-word" data-display-on-open="swarm">Site</span></a></li>
       <li><a href="/floor.html"><span class="o-word" data-display-on-open="rope">Everything</span></a></li>
+      <li><a href="/models.html"><span class="o-word" data-display-on-open="rope">Models</span></a></li>
+      <li><a href="/tools.html"><span class="o-word" data-display-on-open="rope">Tools &amp; Repos</span></a></li>
       <li><a href="/person.html"><span class="o-word" data-display-on-open="rope">About</span></a></li>
       <li><a href="/architecture.html"><span class="o-word" data-display-on-open="rope">Architecture</span></a></li>
       <li><a href="/world/universe/proto/index.html"><span class="o-word" data-display-on-open="rope">Map</span></a></li>
@@ -77,7 +79,7 @@ new MutationObserver(s).observe(r,{attributes:true,attributeFilter:["data-theme"
       <li><a href="/cv.html"><span class="o-word" data-display-on-open="rope">CV</span></a></li>
     </ul>
   </nav>
-  <p class="o-menu-foot"><a href="/architecture.html">Architecture</a> <a href="/research.html">Research</a> <a href="/portfolio.html">Portfolio</a> <a href="/elements.html">Elements</a> <a href="/swatches.html">Swatches</a> <a href="/studies/">Studies</a> <a href="/site-index.html">Site index</a> <button type="button" class="o-close" data-qj-open onclick="this.closest('dialog').close()">Search (Ctrl+K)</button> <button type="button" class="o-close" onclick="this.closest('dialog').close()">Close (Esc)</button></p>
+  <p class="o-menu-foot"><a href="/architecture.html">Architecture</a> <a href="/models.html">Models</a> <a href="/tools.html">Tools &amp; 159 Repos</a> <a href="/research.html">Research</a> <a href="/portfolio.html">Portfolio</a> <a href="/elements.html">Elements</a> <a href="/studies/">Studies</a> <a href="/site-index.html">Site index</a> <button type="button" class="o-close" data-qj-open onclick="this.closest('dialog').close()">Search (Ctrl+K)</button> <button type="button" class="o-close" onclick="this.closest('dialog').close()">Close (Esc)</button></p>
 </dialog>
 <main id="main" tabindex="-1">
 <article class="parts-page"><h1>Elements</h1><h2 class="sr-only">The element table</h2><p class="parts-lead">The front bench of the design studio. Choose an element and it runs in the well from its own measurements. Stir it, move its properties, blend it with others, and take what you made with you.</p><div class="parts" id="parts"></div><p class="demo-form" data-demo="bench" data-form="live"><b>Live.</b> This runs in your browser now, on what you give it.</p></article>
@@ -85,7 +87,7 @@ new MutationObserver(s).observe(r,{attributes:true,attributeFilter:["data-theme"
 const asked = (new URLSearchParams(location.search).get("e") || "").split(",").filter(Boolean);
 window.__bench = await registry.mount(document.getElementById("parts"), "bench", { elements: asked });
 window.__surfaces = registry;</script>
-<script type="module" src="/world/alive/alive.js?v=world-a6d0cea570"></script>
+<script type="module" src="/world/alive/alive.js?v=world-ef0caa283b"></script>
 </main>
 </body>
 </html>

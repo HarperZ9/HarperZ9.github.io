@@ -153,7 +153,7 @@ export const PILLARS = [
         <figcaption>Low tide, from the film Heavenly Bodies (1920). Public domain, Prelinger Archives.</figcaption>
       </figure>
       <p class="w-io">A narrative game in development, painted and played on The Playground.</p>
-      <p class="w-go"><a class="w-try" href="/low-water.html">Low Water</a> <a href="#w-engine">The Playground, the engine it runs on</a></p>`,
+      <p class="w-go"><a class="w-try" href="/playground/#low-water">Low Water</a> <a href="#w-engine">The Playground, the engine it runs on</a></p>`,
   },
   {
     id: "writing", title: "Essays and films",

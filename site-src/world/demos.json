@@ -117,7 +117,7 @@
   },
   {
    "id": "raw-render",
-   "page": "/raw.html#live-h",
+   "page": "/playground/#native",
    "form": "live",
    "what": "The 0.4.0 browser build of the native renderer draws a frame and writes its certificate."
   },

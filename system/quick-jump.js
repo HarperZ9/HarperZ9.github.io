@@ -327,14 +327,16 @@ function inferWorldPillar(pathname) {
 }
 
 function mountWorldBreadcrumb(doc) {
+  // World-shell pages use the floating corner hand menu + Ctrl+K dialog directly,
+  // with zero pasted breadcrumb box over the ocean or drafting-sheet ground.
+  // Opt-in only when a page explicitly declares [data-qj-crumb].
   if (!doc || !doc.location) return;
+  const host = doc.querySelector("[data-qj-crumb]");
+  if (!host || doc.querySelector("nav.qj-crumb")) return;
   const pathname = doc.location.pathname || "/";
   const pillar = inferWorldPillar(pathname);
   if (!pillar) return;
-  if (doc.querySelector(".masthead-path, .docnav, .route-header__path, nav.qj-crumb")) return;
-  const main = doc.querySelector("main");
-  if (!main) return;
-  const h1 = main.querySelector("h1");
+  const h1 = doc.querySelector("main h1");
   const titleFromDoc = doc.title ? doc.title.split("|")[0].split("\u00b7")[0].trim() : "";
   const pageTitle = titleFromDoc || (h1 && h1.textContent.replace(/\s+/g, " ").trim()) || "Page";
 
@@ -353,7 +355,7 @@ function mountWorldBreadcrumb(doc) {
     `<ol class="qj-crumb__trail">${trail}</ol>`
     + `<button type="button" class="qj-crumb__jump" data-qj-open aria-haspopup="dialog">Jump anywhere (Ctrl+K)</button>`;
 
-  main.insertBefore(nav, main.firstChild);
+  host.appendChild(nav);
 }
 
 export function initQuickJump({ shell = "classic" } = {}) {

@@ -12,7 +12,7 @@ import { page } from './rooms.mjs';
 const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const WIDE = new Set(['blend', 'well']);
 // What each module's adapter acts on here. The registry says what a module can take; this is what its mounted adapter reads.
-const MOUNTED_TAKES = { lettering: ['blend', 'text'], motion: ['blend'], plot: ['palette'], well: ['blend'], loom: ['palette', 'image'], ridges: ['palette', 'image'], voxels: ['palette', 'image'] };
+const MOUNTED_TAKES = { lettering: ['blend', 'text'], motion: ['blend'], plot: ['palette'], well: ['blend'], plate: ['blend'], glass: ['blend', 'image'], living: ['blend', 'text'], loom: ['palette', 'image'], ridges: ['palette', 'image'], voxels: ['palette', 'image'] };
 // Modules that hand their picture on, in the order the page falls back through them when nothing was handed on yet.
 const PICTURES = ['well', 'plot'];
 const list = (names) => (names.length < 2 ? names.join('') : `${names.slice(0, -1).join(', ')} and ${names.at(-1)}`);

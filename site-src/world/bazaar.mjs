@@ -71,6 +71,6 @@ export const PLACES = [
     id: "tools", title: "Tools", walk: ["press", {}], caption: "The rule Flywheel keeps, engraved in intaglio. It is pressed onto the sheet.", form: "tile", medium: "viscous", living: ["ink", "engraved", "ink"],
     lead: { kind: "image", src: "/media/world/lettering/intaglio-lines-1920.webp", srcset: "/media/world/lettering/intaglio-lines-960.webp 960w, /media/world/lettering/intaglio-lines-1920.webp 1920w, /media/world/lettering/intaglio-lines-3840.webp 3840w", w: 1920, h: 1080, alt: "No receipt, no accept, the rule Flywheel keeps, engraved in intaglio lines and pressed into laid paper beside an embossed guilloche seal with FW in gold foil, over a dotted rule." },
     laws: [],
-    ways: [["/flywheel.html", "Flywheel"], ["/cmmns.html", "CMMNS"], ["/articulate.html", "Articulate"], ["/emet.html", "EMET"], ["/buildlang.html", "BuildLang"], ["/superframe.html", "Superframe"], ["/raw.html", "raw-native"], ["/learn.html", "learn"], ["/workshop.html", "The workshop"]],
+    ways: [["/flywheel.html", "Flywheel"], ["/cmmns.html", "CMMNS"], ["/articulate.html", "Articulate"], ["/emet.html", "EMET"], ["/buildlang.html", "BuildLang"], ["/playground/#superframe", "Superframe"], ["/playground/#native", "raw-native"], ["/tools.html", "159 Repos"], ["/models.html", "Models"], ["/learn.html", "learn"], ["/workshop.html", "The workshop"]],
   },
 ];

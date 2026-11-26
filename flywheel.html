@@ -1,15 +1,16 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-type="stock">
 <head>
 <meta charset="utf-8">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Flywheel: an AI workstation and coding harness for any model</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<title>Flywheel: an AI workstation and coding harness for any model | Zain Dana Harper</title>
 <meta name="description" content="Flywheel is an AI workstation and coding harness that you host yourself and run with any model, hosted or local. It has a desktop app with an assistant, a coding agent that works in your own folders with your permission, and connected tools for research, memory and writing. Every run leaves a record that can be rechecked offline.">
 <link rel="canonical" href="https://harperz9.github.io/flywheel.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zain Dana Harper">
-<meta property="og:title" content="Flywheel: an AI workstation and coding harness for any model">
+<meta property="og:title" content="Flywheel: an AI workstation and coding harness for any model | Zain Dana Harper">
 <meta property="og:description" content="Flywheel is an AI workstation and coding harness that you host yourself and run with any model, hosted or local. It has a desktop app with an assistant, a coding agent that works in your own folders with your permission, and connected tools for research, memory and writing. Every run leaves a record that can be rechecked offline.">
 <meta property="og:url" content="https://harperz9.github.io/flywheel.html">
 <meta property="og:image" content="https://harperz9.github.io/img/og/p/flywheel.jpg?v=132f136f5f8b">
@@ -19,87 +20,104 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/p/flywheel.jpg?v=132f136f5f8b">
 <meta name="twitter:image:alt" content="Flywheel: an AI workstation and coding harness for any model, by Zain Dana Harper. No receipt no accept engraved in intaglio lines on laid paper, beside an embossed guilloche seal with FW in gold foil.">
-<meta name="twitter:title" content="Flywheel">
+<meta name="twitter:title" content="Flywheel: an AI workstation and coding harness for any model | Zain Dana Harper">
 <meta name="twitter:description" content="Flywheel is an AI workstation and coding harness that you host yourself and run with any model, hosted or local. It has a desktop app with an assistant, a coding agent that works in your own folders with your permission, and connected tools for research, memory and writing. Every run leaves a record that can be rechecked offline.">
-<meta name="color-scheme" content="light dark">
-<link rel="stylesheet" href="system/system.css?v=20260927-copy-pass">
-<link rel="stylesheet" href="system/notebook-sheet.css?v=20260925-void-sheets">
+<link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-ef0caa283b">
+<link rel="stylesheet" href="/studies/studies.css?v=world-ef0caa283b">
+<link rel="stylesheet" href="/world/site/depth.css?v=world-ef0caa283b">
+<script type="module" src="/world/ui/shell/shell.js?v=world-ef0caa283b"></script>
+<script type="module" src="/world/site/hand-scroll.js?v=world-ef0caa283b"></script>
+<link rel="stylesheet" href="/world/site/landmark.css?v=world-ef0caa283b">
+<link rel="stylesheet" href="/system/notebook-sheet.css?v=20260925-void-sheets">
+<script type="module" src="/world/site/home-field.js?v=world-ef0caa283b"></script>
 <style>
-  #main.fw-main{padding-bottom:0}
-  #main section.mv{min-height:0;margin:0;padding:var(--s-8,4.5rem) 0 0;border:0;border-image:none;background:transparent}
-  #main section.mv#demo{padding-top:0}
-  #main section.mv > h2,#main .fw-hero h2{margin:0 0 var(--s-4,1rem);max-width:30ch;font:560 var(--t-h2)/1.2 var(--font-sans);color:var(--ink);letter-spacing:0}
-  #main section.mv > h3{margin:var(--s-6,2rem) 0 var(--s-3,.75rem);font:600 var(--t-h3)/1.3 var(--font-sans);color:var(--ink)}
-  #main section.mv > p,#main .fw-prose p,#main .fw-hero .hero-copy > p{max-width:var(--measure,38rem);margin:0 0 var(--s-4,1rem);font:400 1.0625rem/1.6 var(--font-sans);color:var(--ink)}
-  #main section.mv > :is(.command-block,.download-set,.row-list,.table-wrap,details,.ns-sheet,.fw-links){margin-block:0 var(--s-5,1.5rem)}
-  #main section.mv > .ns-sheet{max-width:var(--wide,58rem);margin-block:var(--s-6,2rem)}
-  #main .fw-main .masthead,#main > .masthead{margin-bottom:var(--s-6,2rem)}
-  #main .fw-hero{margin:0}
-  #main .fw-hero .hero-links{margin:0}
-  #main .fw-hero .command-block{max-width:30rem}
-  #main .fw-hero h2{margin-top:var(--s-6,2rem)}
-  .fw-hero .demo-media{margin:0;min-width:0;justify-self:start;width:100%;max-width:26.25rem}
-  .fw-hero .demo-media video{display:block;width:100%;height:auto;aspect-ratio:9/16;background:#080d11;border:1px solid var(--line)}
-  .fw-hero .demo-media video:focus-visible{outline:2px solid var(--focus);outline-offset:4px}
-  .fw-hero .demo-media figcaption{margin-top:.75rem;max-width:26.25rem;font:400 .9375rem/1.5 var(--font-sans);color:var(--soft)}
-  .fw-transcript{max-width:var(--measure,38rem);min-width:0}
-  .fw-transcript details.how-we-know{margin:0 0 var(--s-5,1.5rem)}
-  @media (min-width:62rem){#main .fw-hero.page-hero.has-art{grid-template-columns:minmax(0,1fr) 26.25rem;grid-template-areas:"copy media" "text media";column-gap:var(--s-7,3rem);row-gap:var(--s-7,3rem)}.fw-hero .hero-copy{grid-area:copy}.fw-hero .demo-media{grid-area:media;width:26.25rem;max-width:26.25rem;position:sticky;top:5rem}.fw-hero .fw-transcript{grid-area:text}}
-  #main .fw-transcript h3{margin:0 0 var(--s-3,.75rem);font:600 var(--t-h3)/1.3 var(--font-sans);color:var(--ink)}
-  #main .fw-transcript p{margin:0 0 var(--s-4,1rem);font:400 1.0625rem/1.6 var(--font-sans);color:var(--ink);max-width:none}
-  .demo-results{margin:0 0 var(--s-5,1.5rem);display:grid;row-gap:.25rem}
-  .demo-results dt{margin-top:.75rem;font:600 1rem/1.5 var(--font-sans);color:var(--ink)}
-  .demo-results dd{margin:0;font:400 1.0625rem/1.55 var(--font-sans);color:var(--ink)}
-  .demo-results dd strong{font-weight:600}
-  .fw-links{display:flex;flex-wrap:wrap;gap:.5rem 1.5rem;margin:0;padding:0;list-style:none;font:400 1rem/1.6 var(--font-sans)}
-  .fw-links a{display:inline-flex;align-items:center;min-height:44px}
-  .row-list .row-title{font-size:1.125rem}
-  .row-list .row-text{color:var(--ink)}
-  .command-block + .command-block{margin-top:calc(-1 * var(--s-3,.75rem))}
-  .command-block code{white-space:pre-wrap}
-  .fw-sheet .ns-den{font:400 .875rem/1.4 var(--font-sans);color:var(--ns-soft);margin:0}
-  .fw-sheet .ns-row{--nw:13rem;--vw:8.5rem}
-  .fw-sheet .ns-row .ns-rname{padding-block:.35rem}
-  .fw-sheet .ns-rval .ns-of{font-size:.875rem;color:var(--ns-soft)}
-  .fw-sheet .fw-sheet-link{margin:0;font:500 1rem/1.5 var(--font-sans)}
-  .fw-sheet .t-ref{font-size:14px;font-weight:500;fill:var(--ns-soft)}
-  .fw-sheet .ns-fig{min-width:0}
-  .fw-sheet .ns-row.is-tall .ns-sc{min-height:48px}
-  #main section.mv > .table-wrap{max-width:var(--wide,58rem)}
-  #main .data-table tbody th{font-size:1rem}
-  .hwk-list .table-wrap{margin:0 0 .5rem}
-  .fw-null{max-width:var(--measure,38rem);margin:0 0 var(--s-5,1.5rem);font:600 1.0625rem/1.55 var(--font-sans);color:var(--ink)}
-  #main .data-table code{font-size:.9375rem}
-  .fw-nowrap{white-space:nowrap}
-  #main :is(section.mv > p,.fw-prose p,.fw-transcript p,.row-text,details.how-we-know > p) code{font-size:.9em;font-weight:500;line-height:1;vertical-align:baseline}
-  #main section.mv > .row-list{max-width:var(--wide,58rem)}
-  /* The last row drops its rule when a disclosure follows, so two hairlines never stack 24px apart. */
-  #main section.mv > .row-list:has(+ details) > li:last-child{border-bottom:0}
-  .fw-tools .row-status{margin:0;font:500 .9375rem/1.5 var(--font-sans);color:var(--soft)}
-  .fw-tools .row-text a{font-weight:500}
-  #main details.how-we-know > :is(p,.command-block,.download-set){max-width:var(--measure,38rem);margin:0 0 var(--s-4,1rem);font:400 1rem/1.6 var(--font-sans)}
-  #main details.how-we-know > .command-block{max-width:var(--wide,58rem)}
-  #main details.how-we-know > .hwk-list{margin-bottom:var(--s-5,1.5rem)}
-  #main .fw-tool-h{margin:var(--s-5,1.5rem) 0 var(--s-3,.75rem);font:600 1.125rem/1.35 var(--font-sans);color:var(--ink)}
-  #main details.how-we-know > summary + .fw-tool-h{margin-top:var(--s-3,.75rem)}
-  .command-block.is-prose code{font:400 1rem/1.6 var(--font-sans);white-space:normal;overflow-wrap:break-word}
-  .command-block.is-prose .fw-token{font:500 .9375rem/1 var(--font-mono);white-space:nowrap}
-  .hwk-list .command-block{margin:.25rem 0 .5rem}
-  .page-footer .fw-related{margin-top:.75rem}
-  @media (max-width:39.99rem){#main section.mv{padding-top:var(--s-7,3rem)}.fw-sheet .ns-row .ns-rname{padding-block:.5rem 0}}
-  @media (forced-colors:active){.fw-hero .demo-media video{border:1px solid CanvasText}.fw-hero .demo-media video:focus-visible{outline-color:Highlight}}
-  @media print{.fw-hero .demo-media,.fw-hero .btn-primary{display:none!important}.fw-hero.page-hero{display:block}}
+  .fw-ocean section.mv { margin: clamp(32px, 5vw, 60px) 0 0; padding: 24px 0 0; border-top: 1px solid var(--line); }
+  .fw-ocean section.mv#demo { border-top: 0; padding-top: 0; }
+  .fw-ocean .fw-hero { display: grid; gap: 24px 36px; align-items: start; }
+  @media (min-width: 62rem) {
+    .fw-ocean .fw-hero.has-art { grid-template-columns: minmax(0, 1fr) 23rem; grid-template-areas: "copy media" "text media"; }
+    .fw-ocean .fw-hero .hero-copy { grid-area: copy; }
+    .fw-ocean .fw-hero .demo-media { grid-area: media; position: sticky; top: 5rem; }
+    .fw-ocean .fw-hero .fw-transcript { grid-area: text; }
+  }
+  .fw-ocean .demo-media { margin: 0; max-width: 24rem; }
+  .fw-ocean .demo-media video { display: block; width: 100%; height: auto; aspect-ratio: 9/16; background: #080d11; border: 1px solid var(--line); }
+  .fw-ocean .hero-links, .fw-ocean .fw-links { display: flex; flex-wrap: wrap; gap: 8px 18px; margin: 0 0 18px; padding: 0; list-style: none; }
+  .fw-ocean .hero-links a, .fw-ocean .fw-links a { display: inline-flex; align-items: center; min-height: 44px; font-weight: 700; text-decoration: underline; text-underline-offset: .22em; }
+  .fw-ocean .row-list { list-style: none; padding: 0; margin: 18px 0; border-top: 1px solid var(--line); }
+  .fw-ocean .row-list > li { padding: 14px 0; border-bottom: 1px solid var(--line); }
+  .fw-ocean .row-title { font-weight: 700; margin: 0 0 4px; font-size: 1.08rem; }
+  .fw-ocean .row-text { margin: 0; color: var(--soft); }
+  .fw-ocean .command-block { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; padding: 10px 0; border-block: 1px solid var(--line); margin: 14px 0; font-family: var(--face-utility); }
+  .fw-ocean .command-block code { white-space: pre-wrap; overflow-wrap: anywhere; }
+  .fw-ocean .command-block button { font: 600 .88rem/1 var(--face-utility); color: inherit; background: transparent; border: 1px solid currentColor; padding: 8px 14px; min-height: 40px; cursor: pointer; }
+  .fw-ocean .table-wrap { overflow-x: auto; margin: 14px 0; border-top: 1px solid var(--line); }
+  .fw-ocean table.data-table { width: 100%; border-collapse: collapse; font-size: .95rem; }
+  .fw-ocean table.data-table th, .fw-ocean table.data-table td { text-align: left; padding: 8px 12px 8px 0; border-bottom: 1px solid var(--line); }
+  .fw-ocean .demo-results dt { font-weight: 700; margin-top: 10px; }
+  .fw-ocean .demo-results dd { margin: 2px 0 0; }
+  .fw-ocean .ns-sheet { color: #16130f; margin: 24px 0; }
+  .fw-ocean .ns-sheet a { color: #0b4a5e; }
+  .fw-ocean details.how-we-know { margin: 14px 0; padding: 10px 0; border-top: 1px solid var(--line); }
+  .fw-ocean details.how-we-know summary { cursor: pointer; font-weight: 700; min-height: 44px; line-height: 44px; }
 </style>
 <!-- structured-data:begin (tools/structured_data.py) -->
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareSourceCode","@id":"https://harperz9.github.io/flywheel.html#software","name":"Flywheel","description":"Flywheel is an AI workstation and coding harness that you host yourself and run with any model, hosted or local. It has a desktop app with an assistant, a coding agent that works in your own folders with your permission, and connected tools for research, memory and writing. Every run leaves a record that can be rechecked offline.","url":"https://harperz9.github.io/flywheel.html","codeRepository":"https://github.com/HarperZ9/flywheel","author":{"@id":"https://harperz9.github.io/#person","@type":"Person","name":"Zain Dana Harper"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://harperz9.github.io/"},{"@type":"ListItem","position":2,"name":"Catalog","item":"https://harperz9.github.io/catalog.html"},{"@type":"ListItem","position":3,"name":"Flywheel","item":"https://harperz9.github.io/flywheel.html"}]},{"@type":"SoftwareApplication","@id":"https://harperz9.github.io/flywheel.html#application","name":"Flywheel","url":"https://harperz9.github.io/flywheel.html","softwareVersion":"2.0.0","applicationCategory":"DeveloperApplication","operatingSystem":"Windows, macOS, Linux","downloadUrl":"https://pypi.org/project/flywheel-verify/","license":"https://github.com/HarperZ9/flywheel/blob/main/LICENSE","author":{"@id":"https://harperz9.github.io/#person","@type":"Person","name":"Zain Dana Harper"},"isAccessibleForFree":true,"sameAs":"https://github.com/HarperZ9/flywheel","installUrl":"https://pypi.org/project/flywheel-verify/"},{"@type":"VideoObject","@id":"https://harperz9.github.io/media/flywheel-output-check-20260905/short.mp4#video","name":"Check one number against its record","description":"Flywheel checks a synthetic summary, 36 seconds","contentUrl":"https://harperz9.github.io/media/flywheel-output-check-20260905/short.mp4","uploadDate":"2026-09-05","author":{"@id":"https://harperz9.github.io/#person","@type":"Person","name":"Zain Dana Harper"},"thumbnailUrl":"https://harperz9.github.io/media/flywheel-output-check-20260905/poster.png","duration":"PT36S"},{"@type":"VideoObject","@id":"https://harperz9.github.io/media/explainers/receipt-loop/receipt-loop.mp4#video","name":"Walk the loop yourself","description":"From a proposed answer to a kept receipt, a 65-second explainer","contentUrl":"https://harperz9.github.io/media/explainers/receipt-loop/receipt-loop.mp4","uploadDate":"2026-10-03","author":{"@id":"https://harperz9.github.io/#person","@type":"Person","name":"Zain Dana Harper"},"thumbnailUrl":"https://harperz9.github.io/media/explainers/receipt-loop/poster.png","duration":"PT65S"}]}</script>
 <!-- structured-data:end -->
 </head>
-<body class="inner-clean fw-page">
-<a class="skip-link" href="#main">Skip to content</a>
-
-<div id="site-nav" class="site-nav"></div>
-<noscript><nav class="site-nav"><a href="index.html">Zain Dana Harper</a> <a href="research.html">Research</a> <a href="who-knew-first.html">Who Knew First</a> <a href="studio.html">The Studio</a> <a href="retro.html">Retro Engine</a> <a href="engine-revival.html">Engine Revival</a> <a href="brender-archival.html">BRender Archival</a> <a href="cv.html">About</a></nav></noscript>
-<script type="module" src="system/nav.js?v=20260909-pillar-navigation"></script>
+<body class="reading landmark fw-page">
+<div class="gw-backdrop" aria-hidden="true">
+  <picture>
+    <source data-s="night" data-m="(orientation: portrait)" media="(orientation: portrait) and (prefers-color-scheme: dark)" type="image/avif" srcset="/media/world/glass-water/field-night-portrait-828.avif 828w, /media/world/glass-water/field-night-portrait-1242.avif 1242w" sizes="100vw">
+    <source data-s="night" data-m="(orientation: portrait)" media="(orientation: portrait) and (prefers-color-scheme: dark)" type="image/webp" srcset="/media/world/glass-water/field-night-portrait-828.webp 828w, /media/world/glass-water/field-night-portrait-1242.webp 1242w" sizes="100vw">
+    <source data-s="night" data-m="" media="(prefers-color-scheme: dark)" type="image/avif" srcset="/media/world/glass-water/field-night-1280.avif 1280w, /media/world/glass-water/field-night-1920.avif 1920w, /media/world/glass-water/field-night-2560.avif 2560w, /media/world/glass-water/field-night-3840.avif 3840w" sizes="100vw">
+    <source data-s="night" data-m="" media="(prefers-color-scheme: dark)" type="image/webp" srcset="/media/world/glass-water/field-night-1280.webp 1280w, /media/world/glass-water/field-night-1920.webp 1920w, /media/world/glass-water/field-night-2560.webp 2560w, /media/world/glass-water/field-night-3840.webp 3840w" sizes="100vw">
+    <source data-s="day" data-m="(orientation: portrait)" media="(orientation: portrait) and (prefers-color-scheme: light)" type="image/avif" srcset="/media/world/glass-water/field-day-portrait-828.avif 828w, /media/world/glass-water/field-day-portrait-1242.avif 1242w" sizes="100vw">
+    <source data-s="day" data-m="(orientation: portrait)" media="(orientation: portrait) and (prefers-color-scheme: light)" type="image/webp" srcset="/media/world/glass-water/field-day-portrait-828.webp 828w, /media/world/glass-water/field-day-portrait-1242.webp 1242w" sizes="100vw">
+    <source data-s="day" data-m="" media="(prefers-color-scheme: light)" type="image/avif" srcset="/media/world/glass-water/field-day-1280.avif 1280w, /media/world/glass-water/field-day-1920.avif 1920w, /media/world/glass-water/field-day-2560.avif 2560w, /media/world/glass-water/field-day-3840.avif 3840w" sizes="100vw">
+    <source data-s="day" data-m="" media="(prefers-color-scheme: light)" type="image/webp" srcset="/media/world/glass-water/field-day-1280.webp 1280w, /media/world/glass-water/field-day-1920.webp 1920w, /media/world/glass-water/field-day-2560.webp 2560w, /media/world/glass-water/field-day-3840.webp 3840w" sizes="100vw">
+    <img src="/media/world/glass-water/field-day-1920.webp" width="1920" height="1080" alt="Glass and water ocean field" decoding="async" fetchpriority="low">
+  </picture>
+  <canvas class="gw-live"></canvas>
+  <i class="gw-dither"></i>
+</div>
+<script>(function(){var r=document.documentElement,q=matchMedia("(prefers-color-scheme: dark)");
+function s(){var t=r.dataset.theme;if(!t)return;var d=t==="dark",p=document.querySelector(".gw-backdrop picture");if(!p)return;
+p.querySelectorAll("source[data-s]").forEach(function(x){var on=x.dataset.s===(d?"night":"day");x.media=x.dataset.m+(x.dataset.m?" and ":"")+(on?"all":"not all");});}
+new MutationObserver(s).observe(r,{attributes:true,attributeFilter:["data-theme"]});s();})();</script>
+<header class="o-hand o-said" aria-label="Site">
+  <a class="skip" href="#main">Skip to the page</a>
+  <a class="o-home" href="/">Zain Dana Harper</a>
+  <a data-o="band" href="/world/universe/proto/index.html"><span class="o-name">Map</span></a>
+  <button type="button" data-o="fold" aria-controls="o-menu" aria-keyshortcuts="m" aria-expanded="false" hidden><span class="o-name">Places</span><i></i><i></i><i></i></button>
+  <button type="button" data-o="lamp" data-theme-toggle aria-pressed="true"><span class="o-name">Day</span></button>
+  <span class="o-cell"><button type="button" data-o="peel" data-plain-toggle aria-pressed="false"><span class="o-name">Plain</span></button><span class="o-under" aria-hidden="true">Plain</span></span>
+</header>
+<dialog id="o-menu" data-o="menu" data-material="chladni" aria-label="Places">
+  <nav aria-label="Places">
+    <ul class="o-places">
+      <li><a href="/buildlang.html"><span class="o-word" data-display-on-open="glyphcell">BuildLang</span></a></li>
+      <li><a href="/flywheel.html" aria-current="page"><span class="o-word" data-display-on-open="light">Flywheel</span></a><small class="o-sub"><a href="/cmmns.html">CMMNS</a> <a href="/articulate.html">Articulate</a></small></li>
+      <li><a href="/playground/"><span class="o-word" data-display-on-open="nightlights">The Playground</span></a><small class="o-sub"><a href="/playground/#estuary">Estuary</a> <a href="/playground/#native">Native renderer</a> <a href="/playground/#superframe">Superframe</a> <a href="/playground/#workbench">All creative engines</a> <a href="/playground/#low-water">Low Water</a></small></li>
+      <li><a href="/playground/#low-water"><span class="o-word" data-display-on-open="chladni">Game</span></a></li>
+      <li><a href="/#site"><span class="o-word" data-display-on-open="swarm">Site</span></a></li>
+      <li><a href="/floor.html"><span class="o-word" data-display-on-open="rope">Everything</span></a></li>
+      <li><a href="/models.html"><span class="o-word" data-display-on-open="rope">Models</span></a></li>
+      <li><a href="/tools.html"><span class="o-word" data-display-on-open="rope">Tools &amp; Repos</span></a></li>
+      <li><a href="/person.html"><span class="o-word" data-display-on-open="rope">About</span></a></li>
+      <li><a href="/architecture.html"><span class="o-word" data-display-on-open="rope">Architecture</span></a></li>
+      <li><a href="/world/universe/proto/index.html"><span class="o-word" data-display-on-open="rope">Map</span></a></li>
+      <li><a href="/publications.html"><span class="o-word" data-display-on-open="swarm">Writing</span></a></li>
+      <li><a href="/explainers.html"><span class="o-word" data-display-on-open="sound">Films</span></a></li>
+      <li><a href="/security.html"><span class="o-word" data-display-on-open="rope">Security</span></a></li>
+      <li><a href="/hire.html"><span class="o-word" data-display-on-open="rope">Work</span></a></li>
+      <li><a href="/cv.html"><span class="o-word" data-display-on-open="rope">CV</span></a></li>
+    </ul>
+  </nav>
+  <p class="o-menu-foot"><a href="/architecture.html">Architecture</a> <a href="/models.html">Models</a> <a href="/tools.html">Tools &amp; 159 Repos</a> <a href="/research.html">Research</a> <a href="/portfolio.html">Portfolio</a> <a href="/elements.html">Elements</a> <a href="/studies/">Studies</a> <a href="/site-index.html">Site index</a> <button type="button" class="o-close" data-qj-open onclick="this.closest('dialog').close()">Search (Ctrl+K)</button> <button type="button" class="o-close" onclick="this.closest('dialog').close()">Close (Esc)</button></p>
+</dialog>
+<main id="main" tabindex="-1">
 <svg class="ns-defs" width="0" height="0" aria-hidden="true" focusable="false"><defs>
 <pattern id="ns-hatch" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(38)"><line x1="2.5" y1="-1" x2="2.5" y2="6" class="p-d"/></pattern>
 <pattern id="ns-cross" width="4.4" height="4.4" patternUnits="userSpaceOnUse" patternTransform="rotate(38)"><line x1="2.2" y1="-1" x2="2.2" y2="5.4" class="p-d"/><line x1="-1" y1="2.2" x2="5.4" y2="2.2" class="p-d"/></pattern>
@@ -109,15 +127,21 @@
 <marker id="dg-arrow-drift" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" class="dg-arrowhead is-drift"/></marker>
 <marker id="dg-tick" viewBox="0 0 2 12" refX="1" refY="6" markerWidth="2" markerHeight="12" markerUnits="userSpaceOnUse" orient="auto"><path d="M1 0 V12" class="dg-tickmark"/></marker>
 </defs></svg>
-<main id="main" class="page-frame fw-main">
-
-<header class="masthead">
-  <nav class="masthead-path" aria-label="Breadcrumb"><a href="index.html">Zain Dana Harper</a> / Flywheel</nav>
-  <h1>An AI workstation and coding harness for any model, with runs you can recheck.</h1>
-  <p class="dek">Flywheel runs hosted or local models behind one interface on your own machine, with a desktop assistant, a coding agent and connected tools. Every run leaves a record that anyone can recheck offline.</p>
-  <p class="meta"><span>By Zain Dana Harper</span><span>Version 1.9.0</span><span>Released 15 October 2026</span></p>
+<article class="lp fw-ocean" data-landmark="flywheel" data-hue="theflywheel">
+<header class="lp-head">
+  <h1><span class="d-3d">Flywheel</span> <span class="pf-mark">THEFLYWHEEL</span></h1>
+  <p class="lp-lede lp-lede-1">An AI workstation and coding harness for any model, with runs you can recheck offline. Consolidates 31 packages behind cryptographic receipts, Rowan local/sub/API orchestration, Three-Plate Verification Oracle (115/115 defect recall), and Articulate.</p>
+  <p class="lp-run"><code>irm https://raw.githubusercontent.com/HarperZ9/flywheel/main/install.ps1 | iex</code></p>
+  <p class="lp-rel">Fail-closed <code>SHA256SUMS</code> installer (macOS/Linux: <code>curl -fsSL https://raw.githubusercontent.com/HarperZ9/flywheel/main/install.sh | sh</code>; PyPI: <code>pip install <span class="ident" translate="no">flywheel-verify</span></code> on PyPI). Version 2.0.0 on GitHub and PyPI.</p>
+  <nav class="lp-ways" aria-label="On this page">
+    <a href="#demo">Output check demo</a>
+    <a href="#what">What Flywheel is</a>
+    <a href="#loop">Verification loop</a>
+    <a href="#compare">Benchmarks</a>
+    <a href="#next-release">Install</a>
+    <a href="#companions">Companions</a>
+  </nav>
 </header>
-
 <section class="mv" id="demo" aria-labelledby="demo-title">
   <div class="page-hero has-art fw-hero">
     <div class="hero-copy">
@@ -319,6 +343,15 @@ service-desk-incident-env review RETURNED_ARTIFACT_DIR --html-out ./review-outpu
 </section>
 
 <footer class="page-footer"><div class="page-footer-line" data-export-slot><a href="https://github.com/HarperZ9/flywheel" rel="noopener">Source on GitHub</a><a href="overview.html">The engine room</a><a href="site-index.html">Site index</a></div><p class="page-footer-line fw-related" id="retro-systems-lab">Related retro products, maintained on their own: <a href="retro.html">Retro Engine</a><a href="engine-revival.html">Engine Revival</a><a href="brender-archival.html">BRender Archival</a></p></footer>
+
+</article>
+<script type="module">
+document.addEventListener("click", async (ev) => {
+  const btn = ev.target.closest("[data-copy-target]"); if (!btn) return;
+  const el = document.querySelector(btn.getAttribute("data-copy-target")); if (!el) return;
+  try { await navigator.clipboard.writeText(el.textContent.trim()); const prev = btn.textContent; btn.textContent = "Copied"; setTimeout(() => { btn.textContent = prev; }, 1600); } catch {}
+});
+</script>
 </main>
 </body>
 </html>

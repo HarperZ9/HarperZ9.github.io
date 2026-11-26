@@ -1,14 +1,41 @@
 // studies-shell.mjs: one page in the world's shell, for the generated reading pages (studies, boards, tools).
 // The head carries the discoverability set (title, description, canonical, social tags); the body carries the
 // shell's hand (the universe's navigation, with every link root-absolute) and the page's own <main>.
+import { execFileSync } from "node:child_process";
+import { existsSync, readFileSync, statSync } from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { esc } from "./studies-markdown.mjs";
 
 import { backdrop as fieldBackdrop } from "./field-backdrop.mjs";
 import { labelHand } from "./hand-labels.mjs";
 import { menuDialog } from "./hand-menu.mjs";
 export const ORIGIN = "https://harperz9.github.io";
+const SITE_ROOT = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const CARD = `${ORIGIN}/img/og/p/home.jpg`;
 const TEXT_FACE = "/world/ui/shell/fonts/hanken-grotesk.woff2";  // the still face; Accession and its families are materials a page adds
+
+function existingCardTags(rel) {
+  const norm = rel.endsWith("/") ? `${rel}index.html` : rel;
+  const extract = (src) => {
+    const ogImg = src.match(/<meta property="og:image" content="[^"]+\?v=[0-9a-f]+">/)?.[0];
+    const ogAlt = src.match(/<meta property="og:image:alt" content="[^"]+">/)?.[0];
+    const twImg = src.match(/<meta name="twitter:image" content="[^"]+\?v=[0-9a-f]+">/)?.[0];
+    const twAlt = src.match(/<meta name="twitter:image:alt" content="[^"]+">/)?.[0];
+    return ogImg && twImg && ogAlt && twAlt ? { ogImg, ogAlt, twImg, twAlt } : null;
+  };
+  const disk = path.join(SITE_ROOT, norm);
+  if (existsSync(disk) && statSync(disk).isFile()) {
+    const hit = extract(readFileSync(disk, "utf8"));
+    if (hit) return hit;
+  }
+  try {
+    const head = execFileSync("git", ["show", `HEAD:${norm}`], { cwd: SITE_ROOT, encoding: "utf8", stdio: ["ignore", "pipe", "ignore"], maxBuffer: 8 * 1024 * 1024 });
+    return extract(head);
+  } catch {
+    return null;
+  }
+}
 
 function hand(here = "") {
   return labelHand(`<header class="o-hand" aria-label="Site">
@@ -24,6 +51,13 @@ function hand(here = "") {
 // page({ path, title, description, body, robots, extraHead, jsonld }) -> the whole document
 export function page({ path, title, description, body, robots = "", extraHead = "", jsonld = null, css = "/studies/studies.css", htmlAttrs = "", bodyClass = "reading", backdrop = true, live = false }) {
   const url = `${ORIGIN}/${path.replace(/index\.html$/, "")}`, full = `${title} | Zain Dana Harper`;
+  const card = existingCardTags(path);
+  const ogCardBlock = card
+    ? `${card.ogImg}\n<meta property="og:image:width" content="1200">\n<meta property="og:image:height" content="630">\n${card.ogAlt}`
+    : `<meta property="og:image" content="${CARD}">`;
+  const twCardBlock = card
+    ? `<meta name="twitter:card" content="summary_large_image">\n${card.twImg}\n${card.twAlt}`
+    : `<meta name="twitter:card" content="summary_large_image">`;
   return `<!doctype html>
 <html lang="en" data-type="stock"${htmlAttrs ? " " + htmlAttrs : ""}>
 <head>
@@ -39,8 +73,8 @@ ${robots ? `<meta name="robots" content="${esc(robots)}">\n` : ""}<link rel="can
 <meta property="og:title" content="${esc(full)}">
 <meta property="og:description" content="${esc(description)}">
 <meta property="og:url" content="${esc(url)}">
-<meta property="og:image" content="${CARD}">
-<meta name="twitter:card" content="summary_large_image">
+${ogCardBlock}
+${twCardBlock}
 <meta name="twitter:title" content="${esc(full)}">
 <meta name="twitter:description" content="${esc(description)}">
 <link rel="preload" href="${TEXT_FACE}" as="font" type="font/woff2" crossorigin>

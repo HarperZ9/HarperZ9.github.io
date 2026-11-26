@@ -43,3 +43,38 @@ for (const r of document.querySelectorAll("[data-room-open]")) {
   r.hidden = false; r.addEventListener("click", go);
   if ((new URLSearchParams(location.search).get("room") || "").split(",").includes(sec.id)) go();
 }
+
+// Unified creative engine workbench: load engine-workbench.mjs lazily on first filter input or launch click.
+const wb = document.getElementById("workbench");
+if (wb) {
+  let wbPromise = null;
+  const bootWb = () => (wbPromise ||= import("./engine-workbench.mjs").then((m) => { m.initWorkbench(document); return m; }));
+  wb.querySelector("#wb-filter")?.addEventListener("focus", () => { bootWb(); }, { once: true });
+  wb.querySelector("#wb-filter")?.addEventListener("input", () => { bootWb(); }, { once: true });
+  wb.addEventListener("click", (ev) => {
+    const btn = ev.target.closest("[data-wb-action]");
+    if (!btn || wb.dataset.wbReady) return;
+    ev.preventDefault();
+    bootWb().then(() => btn.click());
+  });
+}
+
+// Superframe 4-layer readout front switcher (#superframe)
+const sfBox = document.querySelector("[data-stack]");
+if (sfBox) {
+  const btns = [...sfBox.querySelectorAll("[data-show]")];
+  const layers = Object.fromEntries([...sfBox.querySelectorAll("[data-layer]")].map((el) => [el.dataset.layer, el]));
+  const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let current = "paint";
+  const show = (name) => {
+    for (const [k, el] of Object.entries(layers)) {
+      const at = `${el.dataset.x}% ${el.dataset.y}%`;
+      if (k === name) { el.style.transition = still ? "none" : ""; el.style.clipPath = `circle(150% at ${at})`; el.style.zIndex = 3; }
+      else { el.style.zIndex = k === current ? 2 : 1; if (k !== current || name === "paint") el.style.clipPath = `circle(0% at ${at})`; }
+    }
+    if (name === "paint" && layers[current]) layers[current].style.clipPath = `circle(0% at ${layers[current].dataset.x}% ${layers[current].dataset.y}%)`;
+    current = name;
+    for (const btn of btns) btn.setAttribute("aria-pressed", String(btn.dataset.show === name));
+  };
+  for (const btn of btns) btn.addEventListener("click", () => show(btn.dataset.show));
+}
