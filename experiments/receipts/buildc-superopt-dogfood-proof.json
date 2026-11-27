@@ -1,0 +1,41 @@
+{
+  "schema": "engine-receipt/1",
+  "in_toto_statement_type": "https://in-toto.io/Statement/v1",
+  "predicate_type": "https://flywheel.dev/EngineReceipt/v1",
+  "id": "buildc-superopt-dogfood-proof",
+  "title": "buildc 1.15.0 --superopt Live Dogfood Proof (-70.31% MIR cost across 265 certified rewrites)",
+  "platform": "BuildLang",
+  "domain": "computing",
+  "emitted_at": "2026-11-27T09:57:33Z",
+  "verdict": "MATCH",
+  "catalogue_id": 68529,
+  "source_url": "https://github.com/HarperZ9/buildlang/pull/351",
+  "related_url": "https://harperz9.github.io/buildlang.html#superopt",
+  "digests": {
+    "claim_sha256": "sha256:5f1c67ee51ef6ed1732f60c3ec84e090e18e64316b5f37cd908a624fb55d5abc",
+    "envelope_sha256": "sha256:03b4cd058f33cde71c60b011bf96ab7a284ac0a4e4fb0049fa4c97cd60443b6f",
+    "subject_sha256": "sha256:17e3866b10397fd50c71646bb84ed462b95da026880f36e06a83608d1dbaba3b"
+  },
+  "metrics": {
+    "cost_reduction": "-70.31% MIR cost across 265 certified e-graph rewrites verified live with buildc verify-cert",
+    "parity": "0.0 runtime drift across flagship INV-01, NTC610, epigenetics, and online-softmax/DeltaNet .bld kernels"
+  },
+  "null_or_control": "Planted forged superoptimizer certificate tamper control rejected fail-closed by buildc verify-cert with non-zero exit.",
+  "subject": {
+    "engine": "buildlang",
+    "flagship": "buildlang",
+    "task_id": "wave53a-superopt-flywheel-grad",
+    "artifacts": [
+      {
+        "rel_path": "online_softmax_deltanet.bld",
+        "bytes": 5845,
+        "sha256": "sha256:9fa6227b621da1a3689c7694a6fa2d70b2b12ca6917385ca0a83d70a7ae996e1"
+      },
+      {
+        "rel_path": "run_superopt_dogfood_proof.py",
+        "bytes": 10951,
+        "sha256": "sha256:1281405891c673419e3789fa1d08b3f5f3f02d8996e5bb61531aa6696c0c6ac4"
+      }
+    ]
+  }
+}

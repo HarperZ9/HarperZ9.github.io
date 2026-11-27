@@ -44,7 +44,7 @@ test('G9 live receipt-verified experiment table links only to verified engine-re
   const manifest = JSON.parse(readFileSync(indexPath, 'utf8'));
   const html = readFileSync(htmlPath, 'utf8');
   assert.equal(manifest.schema, 'g9-experiment-receipt-ledger/1');
-  assert.ok(Array.isArray(manifest.entries) && manifest.entries.length >= 10, 'expected at least 10 receipt-backed rows');
+  assert.ok(Array.isArray(manifest.entries) && manifest.entries.length >= 16, 'expected at least 16 receipt-backed rows');
   assert.ok(html.includes('id="receipt-ledger"'), 'experiments/index.html must include #receipt-ledger');
 
   for (const row of manifest.entries) {

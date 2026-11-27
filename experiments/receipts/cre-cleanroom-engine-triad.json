@@ -1,0 +1,46 @@
+{
+  "schema": "engine-receipt/1",
+  "in_toto_statement_type": "https://in-toto.io/Statement/v1",
+  "predicate_type": "https://flywheel.dev/EngineReceipt/v1",
+  "id": "cre-cleanroom-engine-triad",
+  "title": "Clean-Room OpenMW-Style CRE Engine Triad (207.75M BSA/s, 56.09x PEX AOT, 625x draw cut)",
+  "platform": "The Playground + BuildLang",
+  "domain": "rendering",
+  "emitted_at": "2026-11-27T09:54:47Z",
+  "verdict": "MATCH",
+  "catalogue_id": 68502,
+  "source_url": "https://github.com/HarperZ9/buildlang/pull/356",
+  "related_url": "https://harperz9.github.io/playground/",
+  "digests": {
+    "claim_sha256": "sha256:39647e160f2d04d463663c1ba5af1bbd810cfd428af87ec31d3fd1da13317665",
+    "envelope_sha256": "sha256:21f6260103b69d3538939e39d0e555b082dc9093c88b132db6b8f33cfe7d7a68",
+    "subject_sha256": "sha256:2e6f85c7a8b094b8e655dc4337c44c427381c46057a1268c445060d15043f8ba"
+  },
+  "metrics": {
+    "triad_speedups": "207.75M BSA lookups/s (#68502), 56.09x PEX AOT speedup over bytecode interpreter (#68511), 625x indirect-draw batching cut + 120 Hz frame-decoupled physics (#68520)",
+    "graduated_pr": "5/5 pure-BuildLang clean-room modules staged in buildlang #356 (0 external game assets, 0 check/lint warnings)"
+  },
+  "null_or_control": "100% synthetic clean-room public-spec fixtures catching bad-magic, truncated-subrecord, corrupt-group-size, OOB-string-index, and variable-dt frame-coupled physics explosion controls fail-closed.",
+  "subject": {
+    "engine": "buildlang",
+    "flagship": "superframe",
+    "task_id": "wave53g-cre-cleanroom-graduation-pr356-2026-11-27",
+    "artifacts": [
+      {
+        "rel_path": "cre_format_reader.bld",
+        "bytes": 20956,
+        "sha256": "sha256:62b1c4980c51d8eb9cc1ee1dbc43bd149df6b2813721da62e3a2d1049101d37c"
+      },
+      {
+        "rel_path": "cre_pex_aot.bld",
+        "bytes": 20772,
+        "sha256": "sha256:23f9d4ef04f94a5ec9af030ac2964c59a46d5d1988388407bb5755abdcbd6e9b"
+      },
+      {
+        "rel_path": "cre_cell_batcher.bld",
+        "bytes": 9431,
+        "sha256": "sha256:4f4cf9c91f97feb5929f72d50870a51af670a902678baf41bfd57949271ef3be"
+      }
+    ]
+  }
+}

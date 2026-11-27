@@ -1,0 +1,41 @@
+{
+  "schema": "engine-receipt/1",
+  "in_toto_statement_type": "https://in-toto.io/Statement/v1",
+  "predicate_type": "https://flywheel.dev/EngineReceipt/v1",
+  "id": "buildos-core-cap-microkernel",
+  "title": "BuildOS-Core Pure-BuildLang Capability Microkernel + A/B State + Supervisor (os-cap/os-sv39)",
+  "platform": "BuildLang + BuildOS",
+  "domain": "computing",
+  "emitted_at": "2026-11-27T09:55:35Z",
+  "verdict": "MATCH",
+  "catalogue_id": 68490,
+  "source_url": "https://github.com/HarperZ9/buildlang/pull/355",
+  "related_url": "https://harperz9.github.io/buildlang.html",
+  "digests": {
+    "claim_sha256": "sha256:4901428fa72b87e093a45ade859e15a318f0470db8dac7036cc48d5e1a55667b",
+    "envelope_sha256": "sha256:b3c6d5afb0c103bf40f8c87967f0df7ed2b7f509b9bf12fb37634efb2414992a",
+    "subject_sha256": "sha256:97444d47a994fbb08ed8455665bb658ac61637cf615e483887c350cb46b5acc4"
+  },
+  "metrics": {
+    "microkernel_replay": "1,000-step bit-exact deterministic replay (hash 233617195185611497), max IPC 436 cycles (<= 2,000 budget), pure effect-free kernel core",
+    "graduated_suite": "5 pure-BuildLang modules (os-cap CNode, os-sv39 W^X, cap sandbox, atomic A/B state #68504, supervisor #68509) staged in buildlang #355"
+  },
+  "null_or_control": "6/6 planted security traps caught fail-closed: capability privilege escalation (-101), use-after-revoke cascade (-102), Sv39 W^X injection (-103), PFA double-free (-104), U/S isolation violation (-108), and 1-bit replay tamper.",
+  "subject": {
+    "engine": "buildlang",
+    "flagship": "buildlang",
+    "task_id": "wave52h-buildos-graduation-pr355",
+    "artifacts": [
+      {
+        "rel_path": "universe/buildos-core/buildos_ab_state.bld",
+        "bytes": 16805,
+        "sha256": "sha256:bfb5a016b6eb10017caadaa7a39ca04e701a7950c737eae14629b9300eb9d8fb"
+      },
+      {
+        "rel_path": "universe/buildos-core/buildos_cap_sandbox.bld",
+        "bytes": 14888,
+        "sha256": "sha256:101578fc6a633403be4506615f73c771f89522010ed0b04b5abad8f2fe1bcd6f"
+      }
+    ]
+  }
+}

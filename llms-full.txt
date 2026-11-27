@@ -47,6 +47,8 @@ runtime dependencies.
   signing; flywheel #573 shipped AgentWorkspace, DelegatedMandate,
   ApprovalValve, and MCP workspace tools; flywheel #574 relicensed Flywheel
   and its consolidated packages from FSL-1.1-MIT to the pure OSI MIT License;
+  flywheel #577 (1faa3deb) shipped the `fsp` TPM Stage L/F fail-safe governance
+  protocol (180/180 tests, 29/29 red-team attacks caught, #68522);
   Data Forge shipped proof-carrying distillation (283,687.3 rows/s native
   BuildLang = 158.2x Python 1,792.8 rows/s, bit-exact FIPS 180-4 SHA-256 + RFC
   6962 Merkle, 6/6 native + 9/9 pipeline controls); Articulate native BuildLang
@@ -57,7 +59,7 @@ runtime dependencies.
   14B 48/84, 15/15 long-context zero drift, 21/24 traps, 6/6 A1..A6 PASS, live
   HF Space https://huggingface.co/spaces/zaindanaharper/jfc3p-oracle-demo); and
   JFC3P-Titan-1M v2 verified 10.331 GB RTX 4090 / 5.747 GB Edge at 1,000,000
-  tokens (291.69x KV compression, 99.85 tok/s). Live SHA-256 receipts:
+  tokens (291.69x KV compression, 99.85 tok/s). Live 16-receipt SHA-256 ledger:
   https://harperz9.github.io/experiments/#receipt-ledger .
 
 ## Articulate
@@ -196,14 +198,21 @@ Version 1.15.0. Licence AGPL-3.0-only. Written in Rust.
   runtime/audio, and FSL registry packages to pure OSI MIT (c3b2e5dd) while
   keeping core `buildc` AGPL-3.0-only; buildlang #351 (14a5260c, 15/15 CI green)
   added certified 2026 SOTA kernel rewrites (-70.5% online-softmax op-cost,
-  -42.1% Gated-DeltaNet + block-scaled dot, -33.3% FA4 Horner exp2) and GPU TV
-  across WGSL, HLSL, MSL, and SPIR-V; Stage 2 == Stage 3 self-hosting reached a
-  byte-identical fixed point (91,649 B C99, catalogue #68483); plus native
-  compiled benchmarks (Data Forge 283,687.3 rows/s, Articulate 27,606.0 docs/s,
-  INV-01 194.59 M loops/s, N18 3DGS 323.60 FPS = 1.93x C++23, NTC610 -83.33% 4K
-  PBR VRAM), J13 Model Epigenetics (100% weights-only, catalogue #68474), 319
-  zero-FLAG verified formula kernels, and 234 verified author ideas enforced via
-  Gate 6.
+  -42.1% Gated-DeltaNet + block-scaled dot, -33.3% FA4 Horner exp2, plus live
+  `buildc 1.15.0 --superopt` dogfooding cutting MIR cost by -70.31% across 265
+  certified rewrites with 0.0 drift, #68529) and GPU TV across WGSL, HLSL, MSL,
+  and SPIR-V; Stage 2 == Stage 3 self-hosting reached a byte-identical fixed
+  point (91,649 B C99, #68483) and Zero-C direct `.wasm` self-hosting emitted
+  202-376 B modules passing 5/5 live in Node (#68517); F6 BDB query engine ran
+  73.45x faster than sqlite3 on 68,500 rows (500/500 fuzz caught, #68536);
+  BuildOS-Core capability microkernel + A/B state + supervisor (#68490/#68504/
+  #68509) and clean-room CRE engine triad (207.75M BSA/s, 56.09x PEX AOT, 625x
+  draw cut, #68502/#68511/#68520) passed fail-closed; plus native compiled
+  benchmarks (Data Forge 283,687.3 rows/s, Articulate 27,606.0 docs/s, INV-01
+  194.59 M loops/s, N18 3DGS 323.60 FPS = 1.93x C++23, NTC610 -83.33% 4K PBR
+  VRAM), J13 Model Epigenetics (100% weights-only, #68474), 370+ zero-FLAG
+  verified formula kernels, and 95 built of 234 verified author ideas enforced
+  via Gate 6.
 
 ## raw-native
 

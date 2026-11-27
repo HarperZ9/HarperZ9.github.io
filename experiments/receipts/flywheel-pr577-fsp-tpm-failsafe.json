@@ -1,0 +1,30 @@
+{
+  "schema": "engine-receipt/1",
+  "in_toto_statement_type": "https://in-toto.io/Statement/v1",
+  "predicate_type": "https://flywheel.dev/EngineReceipt/v1",
+  "id": "flywheel-pr577-fsp-tpm-failsafe",
+  "title": "Flywheel #577 fsp TPM Stage L/F Fail-Safe Governance Protocol (180/180 tests, 29/29 red-team)",
+  "platform": "Flywheel",
+  "domain": "society",
+  "emitted_at": "2026-11-27T09:51:58Z",
+  "verdict": "MATCH",
+  "catalogue_id": 68522,
+  "source_url": "https://github.com/HarperZ9/flywheel/pull/577",
+  "related_url": "https://harperz9.github.io/flywheel.html",
+  "digests": {
+    "claim_sha256": "sha256:97b3778d8fd1fc7713a153e127932403d63d6cb5388cca5db7e05a27fd057202",
+    "envelope_sha256": "sha256:66a38dd7a839bdb6f4db2bdf2d3762ae9fe01d48e76797c486272a92f9d07684",
+    "subject_sha256": "sha256:906acf8e2834f5b9c65442f925415c6d9c4215ae90fe39f77dc8e5e069b2509a"
+  },
+  "metrics": {
+    "tests_and_attacks": "180/180 fsp tests PASS; 29/29 red-team replay, rollback, and forged-token attacks caught fail-closed",
+    "merge_commit": "HarperZ9/flywheel #577 merged on main (1faa3deb), pure OSI MIT License"
+  },
+  "null_or_control": "29/29 adversarial red-team attacks rejected fail-closed. Honest hardware limit kept explicit: software-enforced Stage L/F protocol verified against simulated TPM PCR/NV counters; no physical on-chip silicon fuse exists yet.",
+  "subject": {
+    "engine": "flywheel",
+    "flagship": "flywheel",
+    "task_id": "wave49l-flywheel-fsp-tpm-failsafe-pr577",
+    "git_commit": "1faa3deb3e27a97187396dfec8984c8c909bd251"
+  }
+}
