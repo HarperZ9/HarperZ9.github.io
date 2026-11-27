@@ -40,7 +40,7 @@ Seattle area | April 25, 2015 to June 2, 2026
 
 ## Projects
 
-- Built Three-Plate Verification Oracle (115 of 115 defect recall, 0 false accepts across 145 cases vs 7 of 115 single-plate) and lifted a local 14B model from 4 of 24 to 23 of 24 (p=4e-6) via live buildc execution.
+- Built Three-Plate Oracle (115/115 recall, 0 false accepts), 4-pillar --sovereign-audit MIR verifiers, 27/27 auditors, RLVR v14 (1,280 tasks), lifting 14B 4/24 to 23/24 (p=4e-6).
 
 - Caught 64 of 66 harmful steered-agent calls on mocked tools (vs 1 of 66 schema check), shipped FlagshipAgentSDK, Accountable Surface (563 tests), and unsafe-free Rust EMET 1.3.1 (Python/Rust/Node/Go).
 

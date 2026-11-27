@@ -18,21 +18,21 @@ I build tests that tell a working AI system from a broken one, and renderers and
 
 - Elder ENB: 1,004,693 total downloads, 179,218 unique downloads, 2,418 endorsements and 147,566 views on Nexus Mods as of November 13, 2026, at version final-elder-9. First uploaded April 21, 2024. nexusmods.com/skyrimspecialedition/mods/117327
 
-- Published work: Who Knew First, an AI-assisted investigation of disclosure across nine reported AI-agent incidents; 30 research findings, 12 of them nulls, each with the steps to repeat it; and 13 research records with DOIs, the EMET systems paper among them: doi.org/10.5281/zenodo.21230267. Not peer reviewed. harperz9.github.io/findings/
+- Published work: Who Knew First (nine reported AI-agent incidents); 30 research findings (12 nulls); 10-paper systems decet; 15/15 open-source gold-standard release gates; and 13 DOI-indexed records, including EMET: doi.org/10.5281/zenodo.21230267. Not peer reviewed. harperz9.github.io/findings/
 
-- Measured results: RAW DX12 96/96 moving-camera pass (384 1080p frames, 19 solvers 1.57 ms, 0 D3D12 errors); Flywheel Three-Plate Oracle 115/115 recall (0 false accepts) and Arm C local 14B lift 16.67% to 95.83% (p=4e-6); steered-agent guard 64/66; retired one null accuracy benchmark (9/10 vs 8/10). harperz9.github.io/analytics/flywheel-benchmark-record.html
+- Measured results: BuildOS-2.2 zero-C 5-ISA, 600/600 5-backend GPU shaders (5-way GLSL FMA parity), 39/39 0-ULP C++23 renderer parity, 112/112 live MIT WASM, BuildDB V11 (4,451 rows), RLVR v14 (1,280 tasks), 27/27 native auditors, unified 4-pillar --sovereign-audit MIR verifiers, RAW DX12 96/96, Three-Plate Oracle 115/115 (0 false accepts), and Arm C 14B lift 16.67% to 95.83% (p=4e-6). harperz9.github.io/analytics/flywheel-benchmark-record.html
 
 ## Flagship Projects
 
 - Flywheel 2.0.0 runs any model across 31 packages (FlagshipAgentSDK, accountable-surface 563 tests, gather/deconstruct, unsafe-free Rust EMET 1.3.1, Three-Plate Oracle 115/115). github.com/HarperZ9/flywheel/releases/tag/v2.0.0
 
-- CMMNS (formerly Daylight Commons) shows reply sources across nine platforms (Web Crypto receipts, 1,726 tests; slur sign 91.0% precision, 3,995 of 4,392). github.com/HarperZ9/cmmns/blob/main/project-docs/EVALUATION.md
+- CMMNS (formerly Daylight Commons) shows reply sources across nine platforms with 32 MIT WASM modules (Web Crypto receipts, 1,726 tests; slur sign 91.0% precision, 3,995 of 4,392). github.com/HarperZ9/cmmns/blob/main/project-docs/EVALUATION.md
 
 - Articulate 0.19.1 is deterministic prose analysis for CLI, LSP, and SARIF CI (2,096 tests; Markdown masks removed 5,123 separator-row findings across 3,000 files). github.com/HarperZ9/flywheel/tree/main/packages/articulate
 
-- BuildLang 1.15.0 (crates.io) checks capability effects for C/HLSL/GLSL/Wasm/x86-64 (147/147 hashes, 1,160 lib tests, BDB v2 2.89 MB paging 0/500 silent corruptions, procgen_forge.bld 2,132.3x, aerospace_ai_kernels.bld 1,008.5x, workstation_mcp.bld 69.92 us; 181/270 universe fails open). crates.io/crates/buildlang
+- BuildLang 1.15.0 / BuildOS-2.2 (crates.io): zero-C 5-ISA compiler, 600/600 5-backend GPU shaders (5-way GLSL FMA parity), unified 4-pillar --sovereign-audit MIR verifiers, 112/112 live MIT WASM, BuildDB V11 (4,451 rows), RLVR v14 (1,280 tasks), 27/27 native auditors, 10-paper systems decet, 15/15 open-source gold standard. crates.io/crates/buildlang
 
-- Superframe 0.3.0 (The Playground) + RAW DX12: C++23 CPU/D3D12/Vulkan/WebGPU renderer (raw-native 0.8.0 byte-identical), RAW 96/96 live pass, spectral 64v/126t meshlet forge, SI physai (30,670 steps/s), NOH-1 (1,149.9x), Low Water. github.com/HarperZ9/superframe
+- Superframe 0.3.0 (The Playground) + RAW DX12: C++23 CPU/D3D12/Vulkan/WebGPU renderer (39/39 0-ULP C++23 parity, raw-native 0.8.0 byte-identical), RAW 96/96 live pass, spectral 64v/126t meshlet forge, SI physai (30,670 steps/s), NOH-1 (1,149.9x), Low Water. github.com/HarperZ9/superframe
 
 ## Experience
 
