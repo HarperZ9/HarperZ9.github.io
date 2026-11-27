@@ -93,9 +93,10 @@ function arrow(ctx, p, q) {
 // The still: the same marks as SVG, on the light ground. One path per ray and per rim, so it reads with scripts off.
 export function stillSvg(scene, rays, dims, label) {
   const P = palette(false), f = (v) => v.toFixed(1), r = (v) => Math.round(v), grids = [], rayPaths = [], rest = [];
+  const thin = (pts, k) => pts.filter((_, i) => i % k === 0 || i === pts.length - 1);
   for (const m of marks(scene, rays, dims)) {
-    if (m.kind === 'grid') grids.push(`<path d="M${m.d.map(([x, y]) => `${r(x)} ${r(y)}`).join('L')}" opacity="${(0.55 * m.alpha).toFixed(2)}"/>`);
-    else if (m.kind === 'ray') rayPaths.push(`<path d="M${m.d.map(([x, y]) => `${r(x)} ${r(y)}`).join('L')}"/>`);
+    if (m.kind === 'grid') grids.push(`<path d="M${thin(m.d, 3).map(([x, y]) => `${r(x)} ${r(y)}`).join('L')}" opacity="${(0.55 * m.alpha).toFixed(2)}"/>`);
+    else if (m.kind === 'ray') rayPaths.push(`<path d="M${thin(m.d, 2).map(([x, y]) => `${r(x)} ${r(y)}`).join('L')}"/>`);
     else if (m.kind === 'rim') rest.push(`<circle cx="${f(m.c[0])}" cy="${f(m.c[1])}" r="${f(m.r)}" fill="${m.colour}" fill-opacity=".12" stroke="${m.colour}" stroke-width="1.5" stroke-dasharray="6 5" opacity="${m.alpha.toFixed(2)}"/>`);
     else if (m.kind === 'dim') rest.push(`<path d="M${f(m.a[0])} ${f(m.a[1])}L${f(m.b[0])} ${f(m.b[1])}" stroke="${P.ink}" stroke-width="1" opacity="${m.alpha}"/><text x="${f(m.b[0] + 6)}" y="${f(m.b[1] - 6)}" font-size="13" font-family="Conso, ui-monospace, monospace" fill="${P.ink}">${esc(m.text)}</text>`);
     else if (m.kind === 'ellipse') rest.push(`<ellipse cx="${f(m.c[0])}" cy="${f(m.c[1])}" rx="${f(m.rx)}" ry="${f(m.ry)}" transform="rotate(${f((m.angle * 180) / Math.PI)} ${f(m.c[0])} ${f(m.c[1])})" fill="none" stroke="${P.ink}" stroke-dasharray="2 4" opacity=".6"/>`);

@@ -143,7 +143,16 @@ function workbenchSection(m) {
     const btns = e.actions.map(([act, tgt, label]) => `<button type="button" data-wb-action="${esc(act)}" data-wb-target="${esc(tgt)}">${esc(label)}</button>`).join("");
     return `<li data-wb-row><span class="wb-name">${esc(e.name)}</span><span class="wb-desc">${esc(e.desc)}</span><span class="wb-actions">${btns}</span></li>`;
   }).join("")}</ul></div>`).join("");
-  return `<section class="sx" id="workbench" aria-labelledby="workbench-h"><span id="instruments"></span><h2 id="workbench-h">Instruments and study tools</h2><p>All ${total} generators, looms, plotters, fractals, lettering families, shaders, synths, and 3D worlds on one hairline ledger. Filter by discipline, mount any engine inline, or send its signal into the Unified Studio above.</p><div class="wb-toolbar"><label for="wb-filter" class="sr-only">Filter creative engines</label><input id="wb-filter" type="search" placeholder="Filter ${total} engines (loom, fractal, shader, sound)..." autocomplete="off"><p id="wb-count" class="wb-count" aria-live="polite">${total} creative engines across ${m.workbench.length} disciplines</p></div><div class="wb-discs" id="wb-discs" role="group" aria-label="Filter engines by discipline">${tabs}</div><div id="wb-stage" class="wb-stage" hidden><div class="wb-stage-bar"><strong id="wb-stage-title">Live stage</strong><span><button type="button" id="wb-stage-send">Send to Studio Layer</button> <a id="wb-stage-open" href="/studio.html">Open full window</a> <button type="button" id="wb-stage-close">Close stage</button></span></div><div id="wb-stage-body"></div></div>${groups}</section>`;
+  return `<section class="sx" id="workbench" aria-labelledby="workbench-h"><span id="instruments"></span><h2 id="workbench-h">Instruments and study tools (${total} historical &amp; live media surfaces)</h2><p>Every generator, brush, mosaic, Chladni plate, Living Type room, visualizer, Playbook scene, Night School lab, perceptual exhibit, loom, plotter, fractal, shader, and 3D world ever built for this site. Filter by discipline, mount any surface inline, or route its signal into the 11-layer Unified Studio above.</p><div class="wb-toolbar"><label for="wb-filter" class="sr-only">Filter creative surfaces</label><input id="wb-filter" type="search" placeholder="Filter ${total} surfaces (retro, chladni, brush, loom, night school)..." autocomplete="off"><p id="wb-count" class="wb-count" aria-live="polite">${total} creative surfaces across ${m.workbench.length} disciplines</p></div><div class="wb-discs" id="wb-discs" role="group" aria-label="Filter surfaces by discipline">${tabs}</div><div id="wb-stage" class="wb-stage" hidden><div class="wb-stage-bar"><strong id="wb-stage-title">Live stage</strong><span><button type="button" id="wb-stage-send">Send to Studio Layer</button> <a id="wb-stage-open" href="/studio.html">Open full window</a> <button type="button" id="wb-stage-close">Close stage</button></span></div><div id="wb-stage-body"></div></div>${groups}</section>`;
+}
+
+function creativeReposSection(m) {
+  if (!m.creativeRepos?.length) return "";
+  const total = m.creativeRepos.reduce((n, g) => n + g.repos.length, 0);
+  const groups = m.creativeRepos.map((g) => `<div class="wb-group"><h3>${esc(g.group)} <span class="wb-disc-n">${g.repos.length}</span></h3><ul class="wb-list">${g.repos.map((r) =>
+    `<li><span class="wb-name"><a href="${esc(r.url)}">${esc(r.name)}</a></span><span class="wb-desc">${esc(r.desc)} <code>${esc(r.meta)}</code></span><span class="wb-actions"><a href="${esc(r.url)}">GitHub</a></span></li>`
+  ).join("")}</ul></div>`).join("");
+  return `<section class="sx" id="creative-repos" aria-labelledby="creative-repos-h"><h2 id="creative-repos-h">Built from real engines (${total} creative repositories &amp; native packages)</h2><p>Every browser instrument above sits atop real native C++23, HLSL, WGSL, C, Rust, BuildLang, and Python repositories with verified test suites and open source code.</p>${groups}</section>`;
 }
 
 function nativeSection() {
@@ -260,6 +269,7 @@ ${marbledBar}
 ${exchange(m)}
 ${(await Promise.all((m.rooms || []).map((r) => room(m, r)))).join("\n")}
 ${workbenchSection(m)}
+${creativeReposSection(m)}
 ${isPlayground ? nativeSection() : ""}
 ${isPlayground ? lowWaterSection() : ""}
 ${isPlayground ? superframeSection() : ""}
