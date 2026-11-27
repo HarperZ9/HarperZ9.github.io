@@ -1,4 +1,3 @@
-/* surface-page.css: surface page base, still preview, and workbench hairline styles. */
 body.sx-body .gw-backdrop::before { content: ""; position: absolute; inset: 0; z-index: 1; background: rgb(66, 88, 120); mix-blend-mode: darken; }
 .sx { margin: clamp(36px, 5vw, 72px) 0; padding-top: clamp(20px, 3vw, 36px); border-top: 1px solid var(--line, rgba(244, 239, 230, .3)); }
 .sx > h2 { margin-top: 0; }
@@ -77,7 +76,8 @@ header.lp-head+.sx{margin-top:clamp(18px,2.5vw,28px)}
 .wb-group>h3{margin:0 0 10px;font:700 1.05em/1.3 var(--face-display,inherit);color:var(--soft);display:flex;align-items:baseline;gap:10px}
 .wb-disc-n{font:600 .8em/1 var(--face-utility,monospace);opacity:.72}
 .wb-list{list-style:none;padding:0;margin:0;border-top:1px solid var(--line,rgba(244,239,230,.25))}
-.wb-list>li{display:grid;grid-template-columns:minmax(12rem,17rem) minmax(0,1fr) auto;gap:6px 18px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line,rgba(244,239,230,.22))}
+.wb-list>li{display:grid;grid-template-columns:minmax(12rem,17rem) minmax(0,1fr) auto;gap:6px 18px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line,rgba(244,239,230,.22));transition:border-color .16s ease}
+.wb-list>li:hover,.wb-list>li:focus-within{border-bottom-color:currentColor}
 .wb-list>li[data-wb-active="true"]{border-left:2px solid currentColor;padding-left:12px}
 .wb-name{font-weight:700}
 .wb-desc{font-size:.92em;color:var(--soft);min-width:0;overflow-wrap:anywhere}
@@ -86,9 +86,17 @@ header.lp-head+.sx{margin-top:clamp(18px,2.5vw,28px)}
 .wb-actions button{min-height:44px;padding:.35em .85em;font-size:.85em}
 .wb-actions button[aria-current="true"]{background:rgba(244,239,230,.18)}
 .wb-actions button:focus-visible,.pg-jump a:focus-visible,.wb-toolbar input[type="search"]:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+.wb-catalog{margin-top:16px;border-top:1px solid var(--line,rgba(244,239,230,.28));padding-top:12px}
+.wb-catalog>summary{cursor:pointer;font-weight:700;padding:8px 0;min-height:44px}
 .wb-stage{margin:24px 0;padding:16px 0 0;border-top:2px solid currentColor}
 .wb-stage-bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px;margin-bottom:12px}
-.wb-frame{display:block;width:100%;height:min(76vh,720px);border:1px solid var(--line,rgba(244,239,230,.35));background:#0c1620}
+.wb-stage-controls{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.wb-stage-select{min-height:44px;max-width:260px;padding:.35em .65em;font:inherit;font-size:.85em;color:inherit;background:var(--surface,rgba(12,22,32,.85));border:1px solid var(--line,rgba(244,239,230,.35))}
+.wb-stage-body.is-split{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:900px){.wb-stage-body.is-split{grid-template-columns:1fr}}
+.wb-frame{display:block;width:100%;height:min(76vh,720px);border:1px solid var(--line,rgba(244,239,230,.35));border-radius:0;background:#0c1620;animation:wb-in .18s ease-out both}
+@keyframes wb-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.wb-list>li,.wb-frame{transition:none!important;animation:none!important}}
 .sf-stack{position:relative;aspect-ratio:16/9;border:1px solid var(--line,rgba(244,239,230,.34));overflow:hidden;margin:18px 0 8px;background:#101318;max-width:960px}
 .sf-stack .layer{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;clip-path:circle(0% at 50% 50%);transition:clip-path 1.4s cubic-bezier(.6,.05,.25,1)}
 .sf-stack .layer.base{clip-path:none}

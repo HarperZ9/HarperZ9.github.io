@@ -54,13 +54,13 @@ const MOTION = "/media/raw-native/pick-dc350a1/native/web/motion/";
 const pieces = [...document.querySelectorAll("[data-walk]")];
 let unbind = [];
 async function bindWalk() {
-  if (still() || unbind.length) return;
+  if (still() || unbind.length || matchMedia("(max-width: 860px), (hover: none)").matches) return;
   try {
     const [{ transitions, walk }, { bind }] = await Promise.all([import(`${MOTION}transitions.mjs`), import(`${MOTION}scroll.mjs`)]);
     for (const el of pieces) {
       const make = transitions[el.dataset.walk];
       if (!make) { console.warn("walk: no transition named", el.dataset.walk); continue; }
-      unbind.push(bind(el, walk(make(JSON.parse(el.dataset.walkO || "{}")), { enter: [0.05, 0.36], exit: [0.64, 0.95] }), { subject: el.parentElement }));
+      unbind.push(bind(el, walk(make(JSON.parse(el.dataset.walkO || "{}")), { enter: [0.0, 0.24], exit: [0.78, 1.0] }), { subject: el.parentElement }));
     }
   } catch (err) { console.error("walk: the pieces stay whole", err); }
 }

@@ -38,43 +38,48 @@ BuildLang core buildc and CMMNS remain AGPL-3.0-only; docs/essays CC BY 4.0):
   SHA-256 + RFC 6962 Merkle, 6/6 native + 9/9 pipeline controls), NOH-4 (78.0x
   lower MSE), Plato-Key, AVTR-4R, and FRESCO/MoLT.
 - [The Playground](https://harperz9.github.io/playground/index.html),
-  [live WASM bench (18 live + 106-module pack)](https://harperz9.github.io/playground/wasm-bench/index.html),
-  [BuildOS-2.1 Distributed Cluster, BFT, Curve25519 ZK and RSI Pareto WASM Lab](https://harperz9.github.io/playground/buildos-cluster/index.html),
-  [4-Pillar Compile-Time MIR Assurance and Live Shamir Threshold HSM WASM Lab](https://harperz9.github.io/playground/mir-assurance/index.html),
+  [live WASM bench (18 live + 112/112 MIT WASM suite)](https://harperz9.github.io/playground/wasm-bench/index.html),
+  [BuildOS-2.2 Distributed Cluster, BFT, Curve25519 ZK and RSI Pareto WASM Lab](https://harperz9.github.io/playground/buildos-cluster/index.html),
+  [4-Pillar Compile-Time --sovereign-audit MIR Assurance and Live Shamir Threshold HSM WASM Lab](https://harperz9.github.io/playground/mir-assurance/index.html),
   [Zero-C Shamir Threshold HSM and Reed-Solomon RAID-6 Storage WASM Lab](https://harperz9.github.io/playground/threshold-storage/index.html),
-  [560-Shader 5-Way GLSL FMA Parity and Live WASM Lab](https://harperz9.github.io/playground/gpu-560-fma/index.html),
-  [BuildOS-2.0 12-Subsystem Sovereign Kernel WASM](https://harperz9.github.io/playground/buildos-v2/index.html),
+  [600/600 5-Backend GPU Shaders, 5-Way GLSL FMA Parity and Live WASM Lab](https://harperz9.github.io/playground/gpu-560-fma/index.html),
+  [BuildOS-2.2 Sovereign Kernel WASM](https://harperz9.github.io/playground/buildos-v2/index.html),
   [Zero-C BuildOS Triad (9 browser WASM modules)](https://harperz9.github.io/playground/buildos-triad/index.html),
   [Post-Quantum, Enclave and RLVR WASM Lab](https://harperz9.github.io/playground/buildos-pq/index.html),
-  [22 Native BuildLang Auditors, 165/165 Gold and 10 MCP Registry Explorer](https://harperz9.github.io/playground/native-auditors/index.html),
-  [35-Module 0-ULP C++23 Renderer Parity and Live WASM Showcase](https://harperz9.github.io/playground/renderer-35/index.html),
-  [560-Shader 5-Backend GPU Compute Explorer](https://harperz9.github.io/playground/gpu-compute/index.html),
+  [27/27 Native BuildLang Auditors, 15/15 Open-Source Gold Standard and 10 MCP Registry Explorer](https://harperz9.github.io/playground/native-auditors/index.html),
+  [39/39 0-ULP C++23 Renderer Parity and Live WASM Showcase](https://harperz9.github.io/playground/renderer-35/index.html),
+  [600/600 5-Backend GPU Compute Explorer](https://harperz9.github.io/playground/gpu-compute/index.html),
   [Benchmarks V4 (20 workloads, 57 cells)](https://harperz9.github.io/playground/benchmarks-v4/index.html),
   [cross-runtime verified benchmarks V2](https://harperz9.github.io/playground/benchmarks/index.html),
-  [Open MIT Datasets (BuildDB V10 4,016 rows / 30 categories, RLVR v14 1,280 tasks, 560 GPU shaders)](https://harperz9.github.io/playground/datasets/index.html),
-  [Competitive Surpass Explorer (76 rows, 8 lanes)](https://harperz9.github.io/playground/competitive-surpass/index.html),
-  [Eight-Paper Systems Octet catalog and 35-entry BibTeX V2](https://harperz9.github.io/playground/papers/index.html),
+  [Open MIT Datasets (BuildDB V11 4,451 rows, RLVR v14 1,280 tasks, 600/600 GPU shaders)](https://harperz9.github.io/playground/datasets/index.html),
+  [Competitive Surpass Explorer (76/76 = 100.0% Surpass Matrix V5 across 8 lanes)](https://harperz9.github.io/playground/competitive-surpass/index.html),
+  [10-Paper Systems Decet catalog and 35-entry BibTeX V2](https://harperz9.github.io/playground/papers/index.html),
   [Zero-C WebAssembly crypto lab](https://harperz9.github.io/playground/crypto-bench/index.html),
-  [120/120 certified GPU shaders explorer](https://harperz9.github.io/playground/gpu-shaders/index.html), and
-  [15-repo ecosystem SBOM V3 and 165/165 Gold Standard ledger](https://harperz9.github.io/playground/sbom/index.html):
+  [GPU compute shader baseline explorer](https://harperz9.github.io/playground/gpu-shaders/index.html), and
+  [15-repo ecosystem SBOM and 15/15 Open-Source Gold Standard ledger](https://harperz9.github.io/playground/sbom/index.html):
   OSI MIT (superframe #162, 294f3f3e) unified 11-layer tactile live multimedia
   studio and creative field consolidating Low Water, Glass & Water, Fourier,
   Elements, Distill, 3D Mesh, Estuary Perret-lantern metamers, Living Type,
   Retro 46 FX, Loom, and Plotter with a docked 4-lane modal DAW and curved
-  SHA-256 Patchbay, backed by 67 historical and verification surfaces, 16 native
-  repositories, 54 standalone zero-runtime pure-OSI MIT BuildLang .wasm kernels
-  (277.28 KB total, max 13.96 KB, plus 18-module 86.06 KB live bench), 120/120
-  certified 5-target GPU compute shaders (500 superopt rewrites), 15/15 public
-  repo CycloneDX 1.5 and SPDX 2.3 SBOMs (556 components), Superframe 12 MIT
-  engine kernels (#166) + 11 of 11 bit-exact C++ to BuildLang renderer parity
-  (superframe #163, 17a9a4fc), 528 zero-FLAG verified formula kernels, 231/234
-  (98.72%) built author ideas, Round 3 studio audio (superframe #156: 36/36
-  Welch PSD pass), discovery manifests (superframe #157), Low Water 5-era
-  coastal civilization + bit-exact coastal_kernel.bld (superframe #158), and
-  Native RAW DX12/Vulkan/WebGPU (Waves 74-90: 96/96 live Skyrim SE
-  moving-camera pass, 158/158 RTX 4090 heuristics, dark_mo=0.001633 all-time
+  SHA-256 Patchbay, backed by 68 unified live surfaces, 16 native
+  repositories, 112/112 standalone zero-runtime pure-OSI MIT BuildLang .wasm kernels
+  (plus 32 CMMNS MIT WASM modules via cmmns#146), 600/600 certified 5-backend GPU
+  compute shaders with live 5-way GLSL FMA parity (#68984) and Superopt V7 (#386),
+  BuildOS-2.2 (#68982) with unified 4-pillar --sovereign-audit (#407), 27/27 native
+  auditors, 15/15 Open-Source Gold Standard & Zero-Email Clean (#591) with CycloneDX 1.5
+  and SPDX 2.3 SBOMs, 39 of 39 bit-exact 0-ULP C++23 to BuildLang renderer parity,
+  BuildDB V11 (4,451 rows #68981), RLVR v14 (1,280 tasks #68968), 10-paper systems
+  decet (#68991), 76/76 (100.0%) Competitive Surpass Matrix V5 (#68995), Round 3
+  studio audio (superframe #156: 36/36 Welch PSD pass), discovery manifests
+  (superframe #157), Low Water 5-era coastal civilization + bit-exact
+  coastal_kernel.bld (superframe #158), and Native RAW DX12/Vulkan/WebGPU
+  (Waves 74-92: 96/96 live Skyrim SE moving-camera pass, 159/159 RTX 4090
+  heuristics, CS-040 16 km fog shadow cache, dark_mo=0.001633 all-time
+  Note: registry releases remain BuildLang 1.15.0 on crates.io, Flywheel 2.0.0 on
+  PyPI, CMMNS 3.10.0, Superframe 0.3.0, Articulate 0.19.1, and learn 2.3.0; newer
+  verified milestones above are merged on origin/main ahead of the next release cut).
   best, 79/79 DXC).
-- [BuildLang](https://harperz9.github.io/buildlang.html): Rust-built compiled
+- [BuildLang](https://harperz9.github.io/buildlang.html): self-hosting compiled systems and GPU language written in BuildLang (Stage-2 zero-C 5-ISA self-compilation, Stage-0 Rust bootstrap 1.15.0 on crates.io),
   systems language (AGPL-3.0-only core buildc; pure OSI MIT universe/ and suite/
   via buildlang #350, c3b2e5dd) with typed capability effects, 12 targets (C,
   HLSL, GLSL, WGSL, Metal, SPIR-V, x86-64, RISC-V, WASM, Verilog-2001 RTL),

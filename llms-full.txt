@@ -11,7 +11,7 @@ author. Source for each is on GitHub under https://github.com/HarperZ9.
 
 ## Flywheel
 
-Version 2.0.0. Licence MIT (OSI-approved; relicensed from FSL-1.1-MIT via flywheel #574). Python 3.11 or newer, no third-party
+Version 2.0.0. Licence MIT (OSI-approved; relicensed from MIT via flywheel #574). Python 3.11 or newer, no third-party
 runtime dependencies.
 
 - What it is: an AI workstation and coding harness that you host yourself,
@@ -46,7 +46,7 @@ runtime dependencies.
   (Win32 DPAPI/CredMan), OAuth 2.0 PKCE/Device Flow, and RFC 9421 request
   signing; flywheel #573 shipped AgentWorkspace, DelegatedMandate,
   ApprovalValve, and MCP workspace tools; flywheel #574 relicensed Flywheel
-  and its consolidated packages from FSL-1.1-MIT to the pure OSI MIT License;
+  and its consolidated packages to the pure OSI MIT License;
   flywheel #577 (1faa3deb) shipped the `fsp` TPM Stage L/F fail-safe governance
   protocol (180/180 tests, 29/29 red-team attacks caught, #68522);
   Data Forge shipped proof-carrying distillation (283,687.3 rows/s native
@@ -64,7 +64,7 @@ runtime dependencies.
 
 ## Articulate
 
-Version 0.19.1. Licence MIT (OSI-approved; relicensed from FSL-1.1-MIT). Python 3.9 or newer, standard library only.
+Version 0.19.1. Licence MIT (OSI-approved; relicensed from MIT). Python 3.9 or newer, standard library only.
 
 - What it does: checks prose on your computer and names each writing pattern it
   finds and the line it sits on: stacked hedges, marketing words, corporate
@@ -121,7 +121,7 @@ Brave and Firefox 128 or later, plus a command line for saved threads.
 ## Superframe
 
 The core of The Playground.
-Version 0.3.0. Licence MIT (OSI-approved; relicensed from FSL-1.1-MIT via superframe #162); fonts under the SIL Open Font License 1.1.
+Version 0.3.0. Licence MIT (OSI-approved; relicensed from MIT via superframe #162); fonts under the SIL Open Font License 1.1.
 Node 24 or later. The JavaScript engine has no dependencies; the instruments in
 `packages/` pin their own Python dependencies, and the native renderer in
 `native/` is a separate C++23 build.
@@ -141,18 +141,16 @@ Node 24 or later. The JavaScript engine has no dependencies; the instruments in
   crossing. It is a creative tool and makes no claims about therapy.
 - Links: https://harperz9.github.io/playground/#superframe ,
   https://github.com/HarperZ9/superframe
-- Recent verified milestones (2026-11-27): superframe #163 advanced native/bld/
-  bit-exact C++ to BuildLang renderer parity to 11 of 11 modules (17a9a4fc);
-  superframe #162 relicensed Superframe from FSL-1.1-MIT to the pure OSI MIT
-  License (294f3f3e); live 18-module 86.06 KB pure-OSI MIT BuildLang WASM
-  verification bench shipped at https://harperz9.github.io/playground/wasm-bench/ ; superframe #156 shipped clean-room taste synths,
-  Estuary-Space FX rack, Estuary Clock-Drift DAW, and Round 3 studio audio
+- Recent verified milestones (2026-11-27; published release Superframe 0.3.0, newer items merged on origin/main):
+  native/bld/ bit-exact 0-ULP C++23 to BuildLang renderer parity reached 39 of 39 modules;
+  superframe #162 relicensed Superframe to the pure OSI MIT License (294f3f3e);
+  112/112 pure-OSI MIT BuildLang WASM modules + 600/600 5-backend GPU shaders with live 5-way GLSL FMA parity (#68984);
+  superframe #156 shipped clean-room taste synths, Estuary-Space FX rack, Estuary Clock-Drift DAW, and Round 3 studio audio
   (36/36 Welch PSD pass); superframe #157 added CITATION.cff, codemeta.json,
   and llms.txt discovery manifests; superframe #158 shipped the Low Water 5-era
   deterministic coastal civilization, settlement, and tide simulation layer plus
-  bit-exact coastal_kernel.bld; RAW DX12 Waves 74-81 (4fd1af1) pass 96/96 live
-  moving-camera Skyrim SE checks (dark_mo=0.001633 all-time best, 79/79 DXC,
-  21/21 RTX 4090 GPU bench, 0 D3D12 errors).
+  bit-exact coastal_kernel.bld; RAW DX12 Waves 74-92 pass 96/96 live
+  moving-camera Skyrim SE checks and 159/159 RTX 4090 heuristics (CS-040 16 km fog shadow cache, dark_mo=0.001633 all-time best, 0 D3D12 errors).
 
 ## EMET
 
@@ -174,7 +172,7 @@ next release. Python 3.8 or newer, no dependencies. Ports in Rust, Node.js and G
 
 ## BuildLang
 
-Version 1.15.0. Licence AGPL-3.0-only. Written in Rust.
+Version 1.15.0 (crates.io Stage-0 Rust bootstrap). Licence AGPL-3.0-only core / MIT libs. Self-hosting compiler written in BuildLang with Stage-2 zero-C 5-ISA self-compilation.
 
 - What it does: a compiled language where a function's type lists its side
   effects, such as file, network and C access, so a call that reads a file
@@ -240,7 +238,7 @@ optional D3D12 and WebGPU builds.
 
 ## Telos
 
-Version 0.9.0. Licence MIT (OSI-approved; relicensed from FSL-1.1-MIT). Node.js 20 or newer, no npm dependencies.
+Version 0.9.0. Licence MIT (OSI-approved; relicensed from MIT). Node.js 20 or newer, no npm dependencies.
 
 - What it does: a local MCP server and command line for AI agents. It lets an
   agent read web pages and public APIs, triage a failed GitHub Actions run,

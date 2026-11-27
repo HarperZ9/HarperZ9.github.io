@@ -103,7 +103,7 @@ github.com/HarperZ9/superframe
 BuildLang 1.15.0, BuildDB (qdb.exe), CMMNS & Multimodal Corpus Brain | HarperZ9/buildlang & HarperZ9/cmmns
 github.com/HarperZ9/buildlang | github.com/HarperZ9/cmmns
 - 12-Target Compiler, Universal Hourglass & V5 Superoptimizer: Shipped
-  BuildLang 1.15.0 on crates.io (12-target Rust capability-effect compiler
+  BuildLang 1.15.0 on crates.io (self-hosting BuildLang compiler (Stage-2 zero-C 5-ISA, Stage-0 Rust bootstrap)
   adding MSL, WGSL, and RISC-V64; 147/147 reproducible hashes; 2,132.3x
   procgen and 115x-191x f64 kernels), deterministic Universal Hourglass
   lifters (C/Python/Plain-English -> .bld with 0 LLM in loop), V5 certified

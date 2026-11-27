@@ -74,7 +74,9 @@ html.ready dialog[data-o="menu"][open]{animation:o-menu-in var(--dur-slow) var(-
 .o-places small{display:block;margin-top:6px;font:400 var(--fs-2,15px)/1.4 var(--face-text,sans-serif);opacity:.8}
 .o-menu-foot{max-width:1320px;margin:40px auto 0;display:flex;flex-wrap:wrap;gap:16px 28px;align-items:center;font-size:var(--fs-2,15px)}
 .o-menu-foot a,.o-menu-foot button{color:inherit}
-.o-close{font:600 var(--fs-2,15px) var(--face-text,sans-serif);background:none;color:inherit;border:2px solid currentColor;border-radius:0;padding:10px 16px;min-height:44px;cursor:pointer}
+.o-close{font:600 var(--fs-2,15px) var(--face-text,sans-serif);background:transparent;color:inherit;border:1px solid var(--line,currentColor);border-radius:0;padding:10px 16px;min-height:44px;cursor:pointer}
+dialog[data-o="menu"][open]{background:var(--m-ground,#0a1420)}
+@media(hover:none),(max-width:720px){.o-key-hint{display:none}}
 .o-ptr{font:600 var(--fs-2,15px) var(--face-text,sans-serif);background:none;color:inherit;border:0;padding:10px 0;min-height:44px;cursor:pointer;text-decoration:underline;text-underline-offset:.3em}
 .o-ptr[aria-pressed="false"]{text-decoration-style:dotted}
 

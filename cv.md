@@ -150,7 +150,7 @@ Earlier HLSL and C++ modding covered post-processing, Direct3D 11 integration, s
 
 ### BuildLang | Language, compiler and developer tooling
 
-Developed a systems-language toolchain with typed capability effects, type inference, parser and intermediate-representation work, native C output, shader output, and language-server support; the compiler is written in Rust. Version 1.15.0, released November 14, 2026, is on crates.io. The 1.14.0 test run passed 2,079 with 0 failed. crates.io/crates/buildlang
+Developed a systems-language toolchain with typed capability effects, type inference, parser and intermediate-representation work, native C output, shader output, and language-server support; self-hosting in BuildLang (Stage-2 zero-C 5-ISA, Stage-0 Rust bootstrap). Version 1.15.0, released November 14, 2026, is on crates.io. The 1.14.0 test run passed 2,079 with 0 failed. crates.io/crates/buildlang
 
 Released in 1.15.0 as experimental targets: a WebAssembly target that writes a binary module, with SHA-256 and Merkle programs running in Node, and x86-64 executables for Windows and Linux written with no C compiler, assembler or linker, limited to integers, control flow, calls and printing; nine test programs match the C backend output on Windows. Also in 1.15.0: a one-step C-subset to BuildLang translator whose five corpus programs match gcc output byte for byte. Merged and not named in a release: a RISC-V toolchain written in BuildLang, with an RV64 emulator (machine, supervisor and user modes, Sv39, a timer, interrupts and a replay check), a text assembler and a code generator that runs BuildLang programs on the emulator. github.com/HarperZ9/buildlang/releases/tag/v1.15.0
 

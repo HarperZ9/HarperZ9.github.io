@@ -79,14 +79,14 @@
       "name": "The Playground",
       "url": "https://harperz9.github.io/playground/index.html",
       "repository": "https://github.com/HarperZ9/superframe",
-      "summary": "Pure OSI MIT-licensed (#162, 294f3f3e) unified 11-layer tactile live multimedia studio and rendering engine combining Estuary Perret-lantern metamers, 63 historical creative surfaces, 16 native repositories, 18-module 86.06 KB live BuildLang WASM bench (/playground/wasm-bench/), Superframe 11 of 11 bit-exact C++ to BuildLang renderer parity (#163, 17a9a4fc), Native RAW DX12/Vulkan/WebGPU (Waves 74-90: 96/96 live Skyrim SE moving-camera pass, 158/158 RTX 4090 heuristics, dark_mo=0.001633 all-time best, 79/79 DXC), Low Water 5-era coastal civilization + bit-exact coastal_kernel.bld (#158), discovery manifests (#157), and Round 3 studio audio (#156: 36/36 Welch pass)."
+      "summary": "Pure OSI MIT-licensed (#162, 294f3f3e; published release Superframe 0.3.0, newer milestones on origin/main) unified 11-layer tactile live multimedia studio and rendering engine combining Estuary Perret-lantern metamers, 68 unified live surfaces, 16 native repositories, 112/112 live MIT BuildLang WASM modules, 600/600 5-backend GPU shaders with live 5-way GLSL FMA parity (#68984), BuildOS-2.2 (#68982) + unified 4-pillar --sovereign-audit (#407) + Superopt V7 (#386), 39 of 39 bit-exact 0-ULP C++23 to BuildLang renderer parity, 27/27 native auditors, BuildDB V11 (4,451 rows #68981), RLVR v14 (1,280 tasks #68968), 10-paper systems decet (#68991), 76/76 (100.0%) Competitive Surpass Matrix V5 (#68995), 15/15 Open-Source Gold Standard & Zero-Email Clean (#591), Native RAW DX12/Vulkan/WebGPU (Waves 74-92: 96/96 live Skyrim SE, 159/159 RTX 4090 heuristics, CS-040 16 km fog shadow cache), Low Water 5-era coastal civilization (#158), and Round 3 studio audio (#156: 36/36 Welch pass)."
     },
     {
       "id": "cmmns",
       "name": "The Commons (CMMNS)",
       "url": "https://harperz9.github.io/cmmns.html",
       "repository": "https://github.com/HarperZ9/cmmns",
-      "summary": "Local-first, account-free browser extension surfacing account provenance, coordination cues, Content Credentials (C2PA), and fact-checks across 9 social platforms, offline Web/AI provenance CLI verifier (#130, 4/4 adversarial catches), live AGPL-3.0-only funding.json (#131), discovery/store kit (#132), lawful public-record CIB RFC 6962 Merkle provenance & PII firewall (#133, ffb56129, 1,750/1,750 tests, 9/9 CI pass, 28/28 bit-exact proofs, 5/5 planted controls), and 9 graduated MIT BuildLang verification kernels (#134 fdebc810 + #135 55ff87f3)."
+      "summary": "Local-first, account-free browser extension (published release CMMNS 3.10.0; 32 MIT WASM modules merged on origin/main via cmmns#146) surfacing account provenance, coordination cues, Content Credentials (C2PA), and fact-checks across 9 social platforms, offline Web/AI provenance CLI verifier (#130, 4/4 adversarial catches), live AGPL-3.0-only funding.json (#131), discovery/store kit (#132), and lawful public-record CIB RFC 6962 Merkle provenance & PII firewall (#133, ffb56129, 1,750/1,750 tests, 9/9 CI pass, 28/28 bit-exact proofs, 5/5 planted controls)."
     },
     {
       "id": "research-and-models",

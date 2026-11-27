@@ -121,24 +121,24 @@
       "sha256": "ca17143b1fe08670a0187d977a40dbe7289893ca3586c870a4b4313b8cbd96dc"
     },
     {
-      "byte_length": 23058,
-      "extraction_sha256": "19ffc6588f659ac55fcfaeb3d86909bf0ad8a830237f809a50cfbb47a91b93bf",
+      "byte_length": 23103,
+      "extraction_sha256": "eff258d70e9bbae09d677739c55f8088a11fcd2dc2ad005ff3c1b8af5b93b5d2",
       "format": "pdf",
       "lane_id": "page:cv",
       "mime_type": "application/pdf",
       "page_count": 7,
       "path": "career/Zain-Dana-Harper-CV.pdf",
-      "sha256": "9258d176e81bf05e8b60b788b41d872799ff6635779598d538c48daa114ef020"
+      "sha256": "19c170f1a5c26be2616efa9aefa8c89d27eee0ac27771b087c5dd40718b3dea6"
     },
     {
-      "byte_length": 48599,
-      "extraction_sha256": "7d437d2bcd5fc16aa55831d01b35f248c2f46934f07fde5ed01d4759b5c9cd75",
+      "byte_length": 48622,
+      "extraction_sha256": "761ced0ca2381ec700c0a16c671f409adf35d34b81037e678cf794ba76290319",
       "format": "docx",
       "lane_id": "page:cv",
       "mime_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
       "page_count": null,
       "path": "career/Zain-Dana-Harper-CV.docx",
-      "sha256": "2429ff2bd679c77fc32153a717a4502dcccb78d8b2ecb447af3dd6b811175c35"
+      "sha256": "0da2a25e3283f78d38cb9ae1d0cd1b65cff66892a0c323848adf3100db89fa27"
     },
     {
       "byte_length": 5626,
@@ -204,14 +204,14 @@
       "sha256": "9a99c8a634e992f50f86480d8c2718f9739e294d35ed82b81a5d82809c3d4bf5"
     },
     {
-      "byte_length": 37349,
-      "extraction_sha256": "7d437d2bcd5fc16aa55831d01b35f248c2f46934f07fde5ed01d4759b5c9cd75",
+      "byte_length": 37390,
+      "extraction_sha256": "761ced0ca2381ec700c0a16c671f409adf35d34b81037e678cf794ba76290319",
       "format": "html",
       "lane_id": "page:cv",
       "mime_type": "text/html; charset=utf-8",
       "page_count": null,
       "path": "cv.html",
-      "sha256": "b520d7b3fb436b0edcd784a0e7349f65df55c396604fcca786c8e5c59c899e9c"
+      "sha256": "5c4b686cc62946c6b2333c7c7ef81fc3831cf2f461c27a225e71b07dd230f2be"
     },
     {
       "byte_length": 5663,

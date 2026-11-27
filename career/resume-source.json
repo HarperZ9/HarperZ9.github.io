@@ -1359,7 +1359,7 @@
         },
         {
           "kind": "p",
-          "text": "Developed a systems-language toolchain with typed capability effects, type inference, parser and intermediate-representation work, native C output, shader output, and language-server support; the compiler is written in Rust. Version 1.15.0, released November 14, 2026, is on crates.io. The 1.14.0 test run passed 2,079 with 0 failed. crates.io/crates/buildlang",
+          "text": "Developed a systems-language toolchain with typed capability effects, type inference, parser and intermediate-representation work, native C output, shader output, and language-server support; self-hosting in BuildLang (Stage-2 zero-C 5-ISA, Stage-0 Rust bootstrap). Version 1.15.0, released November 14, 2026, is on crates.io. The 1.14.0 test run passed 2,079 with 0 failed. crates.io/crates/buildlang",
           "evidence": [
             "buildlang",
             "buildlang-1140",

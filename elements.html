@@ -23,14 +23,14 @@
 <meta name="twitter:title" content="The element table | Zain Dana Harper">
 <meta name="twitter:description" content="The world's concepts as an element table: each element runs live in its own medium, with its measured colour, bridges and references.">
 <link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-6218db2f12">
-<link rel="stylesheet" href="/studies/studies.css?v=world-6218db2f12">
-<link rel="stylesheet" href="/world/site/depth.css?v=world-6218db2f12">
-<script type="module" src="/world/ui/shell/shell.js?v=world-6218db2f12"></script>
-<script type="module" src="/world/site/hand-scroll.js?v=world-6218db2f12"></script>
-<link rel="stylesheet" href="/world/ui/shell/organic/parts.css?v=world-6218db2f12">
-<link rel="stylesheet" href="/world/site/pages.css?v=world-6218db2f12">
-<link rel="stylesheet" href="/world/site/surfaces/bench.css?v=world-6218db2f12"></head>
+<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-cccc3f32de">
+<link rel="stylesheet" href="/studies/studies.css?v=world-cccc3f32de">
+<link rel="stylesheet" href="/world/site/depth.css?v=world-cccc3f32de">
+<script type="module" src="/world/ui/shell/shell.js?v=world-cccc3f32de"></script>
+<script type="module" src="/world/site/hand-scroll.js?v=world-cccc3f32de"></script>
+<link rel="stylesheet" href="/world/ui/shell/organic/parts.css?v=world-cccc3f32de">
+<link rel="stylesheet" href="/world/site/pages.css?v=world-cccc3f32de">
+<link rel="stylesheet" href="/world/site/surfaces/bench.css?v=world-cccc3f32de"></head>
 <body class="parts-body bench-body">
 <div class="gw-backdrop" aria-hidden="true">
   <picture>
@@ -79,7 +79,7 @@ new MutationObserver(s).observe(r,{attributes:true,attributeFilter:["data-theme"
       <li><a href="/cv.html"><span class="o-word" data-display-on-open="rope">CV</span></a></li>
     </ul>
   </nav>
-  <p class="o-menu-foot"><a href="/architecture.html">Architecture</a> <a href="/models.html">Models</a> <a href="/tools.html">Tools &amp; 159 Repos</a> <a href="/research.html">Research</a> <a href="/portfolio.html">Portfolio</a> <a href="/elements.html">Elements</a> <a href="/studies/">Studies</a> <a href="/site-index.html">Site index</a> <button type="button" class="o-close" data-qj-open onclick="this.closest('dialog').close()">Search (Ctrl+K)</button> <button type="button" class="o-close" onclick="this.closest('dialog').close()">Close (Esc)</button></p>
+  <p class="o-menu-foot"><a href="/research.html">Research</a> <a href="/portfolio.html">Portfolio</a> <a href="/elements.html">Elements</a> <a href="/studies/">Studies</a> <a href="/site-index.html">Site index</a> <button type="button" class="o-close" data-qj-open onclick="this.closest('dialog').close()">Search<span class="o-key-hint"> (Ctrl+K)</span></button> <button type="button" class="o-close" onclick="this.closest('dialog').close()">Close<span class="o-key-hint"> (Esc)</span></button></p>
 </dialog>
 <main id="main" tabindex="-1">
 <article class="parts-page"><h1>Elements</h1><h2 class="sr-only">The element table</h2><p class="parts-lead">The front bench of the design studio. Choose an element and it runs in the well from its own measurements. Stir it, move its properties, blend it with others, and take what you made with you.</p><div class="parts" id="parts"></div><p class="demo-form" data-demo="bench" data-form="live"><b>Live.</b> This runs in your browser now, on what you give it.</p></article>
@@ -87,7 +87,7 @@ new MutationObserver(s).observe(r,{attributes:true,attributeFilter:["data-theme"
 const asked = (new URLSearchParams(location.search).get("e") || "").split(",").filter(Boolean);
 window.__bench = await registry.mount(document.getElementById("parts"), "bench", { elements: asked });
 window.__surfaces = registry;</script>
-<script type="module" src="/world/alive/alive.js?v=world-6218db2f12"></script>
+<script type="module" src="/world/alive/alive.js?v=world-cccc3f32de"></script>
 </main>
 </body>
 </html>
