@@ -1,8 +1,8 @@
 {
   "date": "2026-11-26",
-  "note": "Wave 39A proof sync: JFC3P-7B-Oracle-v4 (63/84 Arm C, live HF Space), RAW Wave 81, Low Water superframe #158, buildlang #347/#348, flywheel #570..#573",
+  "note": "Wave 39A proof sync: JFC3P-7B-Oracle-v4 (63/84 Arm C, live HF Space), RAW Wave 81, Low Water #158, buildlang #347/#348, flywheel #570..#573 (accountable-surface ident token wrapped)",
   "paths": {
-    "flywheel.html": "52cc758e12d74dc7285afaea39dbeff0eeba833b98462f047bf222603e68f8ef",
+    "flywheel.html": "1a0cbcc7a313bb8afb2d53dadd36fb64e0bcef3729989577468311a0ee2e434a",
     "site-index.html": "10fd8e1606ca57282f33fe1bfcbc56648f4a1a9f02c533ee05ced10cdc6435d4",
     "system/routes.js": "06dd23a90467d99ba1e0fc9bc0c5cbb738a3dca41d60e0e1977d6460d9ced90b"
   }
