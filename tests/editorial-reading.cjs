@@ -43,7 +43,7 @@ const base = process.env.SITE_BASE || 'http://localhost:8765';
         };
       });
       if (!flywheelSeal.visible) shellIssues.push(`flywheel/${colorScheme}: license line hidden`);
-      if (!flywheelSeal.text.includes('FSL-1.1-MIT') || !flywheelSeal.text.includes('python scripts/run_harness_cli.py app --port 8799')) shellIssues.push(`flywheel/${colorScheme}: license or command text missing`);
+      if (!flywheelSeal.text.includes('MIT') || !flywheelSeal.text.includes('python scripts/run_harness_cli.py app --port 8799')) shellIssues.push(`flywheel/${colorScheme}: license or command text missing`);
       if (!/Hanken|system-ui|sans-serif/i.test(flywheelSeal.fontFamily)) shellIssues.push(`flywheel/${colorScheme}: ornate font ${flywheelSeal.fontFamily}`);
       if (flywheelSeal.fontSize < 13) shellIssues.push(`flywheel/${colorScheme}: small seal text ${flywheelSeal.fontSize}`);
       if (flywheelSeal.background !== 'rgba(0, 0, 0, 0)') shellIssues.push(`flywheel/${colorScheme}: decorative background ${flywheelSeal.background}`);

@@ -7,13 +7,14 @@
 This file is the machine-readable entry point for this origin. Everything it
 names is public and needs no key.
 
-## Author & five-platform stack (2026-11-26)
+## Author & five-platform stack (2026-11-27)
 
 Zain Dana Harper is an independent systems engineer, toolmaker, and natural
 philosopher in Kent, Washington, combining eleven years of commercial
 arboriculture rigging with about thirteen years of self-directed programming
 across compilers, graphics, AI verification, and civic provenance. Verified
-ecosystem inventory:
+ecosystem inventory (MIT-track repos are 100% pure OSI MIT as of 2026-11-27;
+BuildLang core buildc and CMMNS remain AGPL-3.0-only; docs/essays CC BY 4.0):
 
 - [Agent discovery card](https://harperz9.github.io/.well-known/agent-card.json):
   structured JSON overview of the five platforms, entry points, and verification
@@ -24,47 +25,54 @@ ecosystem inventory:
 - [Public repository catalog JSON](https://harperz9.github.io/assets/data/unified/all_public_repos_catalog.json)
   and [One-command installers JSON](https://harperz9.github.io/assets/data/unified/one_command_installers.json).
 - [Local Frontier Model Lab](https://harperz9.github.io/models.html):
-  JFC3P-7B-Oracle evolution from Base (49/84 Raw / 51/84 Arm C) and caught v2
-  DRIFT (40/84, 10/15 longppl) through v3 (49/84 Arm C) to v4 PASS (53/84 Raw /
-  63/84 Arm C 75.0%, +12 over Base, +14 over v3, 31 tool calls, 13/15 BuildLang,
-  8/15 numeric f64, 19/24 trap resistance, 15/15 longppl zero drift, A1..A6
-  PASS, 22.2 ms / 16.47 MiB 151k Reverse-KL), live interactive Space
-  https://huggingface.co/spaces/zaindanaharper/jfc3p-oracle-demo, Arm C buildc
-  lift (95.83% vs 16.67%), NOH-4 (78.0x lower MSE), Plato-Key, AVTR-4R, and
-  FRESCO/MoLT.
-- [The Playground](https://harperz9.github.io/playground/index.html): unified
-  11-layer tactile live multimedia studio and creative field consolidating
-  Low Water, Glass & Water, Fourier, Elements, Distill, 3D Mesh, Estuary
-  Perret-lantern metamers, Living Type, Retro 46 FX, Loom, and Plotter with a
-  docked 4-lane modal DAW and curved SHA-256 Patchbay, backed by 63 historical
-  creative surfaces and 16 native repositories, Round 3 studio audio (superframe
-  #156: 36/36 Welch PSD pass), discovery manifests (superframe #157), Low Water
-  5-era coastal civilization + bit-exact coastal_kernel.bld (superframe #158),
-  Native RAW DX12/Vulkan/WebGPU (Waves 74-81, 4fd1af1: 96/96 live Skyrim SE
+  JFC3P-14B-Oracle v5 PASS (66/84 Arm C = 78.57%, +21.43 pp vs Base 14B 48/84,
+  15/15 long-context zero drift, 21/24 traps, 6/6 A1..A6 PASS), JFC3P-7B-Oracle
+  v4 PASS (63/84 Arm C 75.0%, 31 tool calls, 22.2 ms / 16.47 MiB 151k Reverse-KL,
+  caught v2 DRIFT 40/84 kept public), live interactive Space
+  https://huggingface.co/spaces/zaindanaharper/jfc3p-oracle-demo, JFC3P-Titan-1M
+  v2 (10.331 GB RTX 4090 / 5.747 GB Edge at 1,000,000 tokens, 291.69x KV
+  compression, 99.85 tok/s), Data Forge proof-carrying distillation (1,792.8
+  rows/s, 9/9 planted controls, HIPAA Safe Harbor + Scientific SI +
+  Search-From-The-Start, RFC 6962 Merkle Dataset Cards), NOH-4 (78.0x lower
+  MSE), Plato-Key, AVTR-4R, and FRESCO/MoLT.
+- [The Playground](https://harperz9.github.io/playground/index.html): OSI MIT
+  (superframe #162, 294f3f3e) unified 11-layer tactile live multimedia studio
+  and creative field consolidating Low Water, Glass & Water, Fourier, Elements,
+  Distill, 3D Mesh, Estuary Perret-lantern metamers, Living Type, Retro 46 FX,
+  Loom, and Plotter with a docked 4-lane modal DAW and curved SHA-256 Patchbay,
+  backed by 63 historical creative surfaces and 16 native repositories,
+  Superframe 9 of 9 bit-exact C++ to BuildLang renderer parity (superframe
+  #161, 9ab3167f), Round 3 studio audio (superframe #156: 36/36 Welch PSD
+  pass), discovery manifests (superframe #157), Low Water 5-era coastal
+  civilization + bit-exact coastal_kernel.bld (superframe #158), and Native
+  RAW DX12/Vulkan/WebGPU (Waves 74-81, 4fd1af1: 96/96 live Skyrim SE
   moving-camera pass, dark_mo=0.001633 all-time best, 79/79 DXC, 21/21 RTX 4090
-  GPU bench), and Superframe deterministic core (superframe #153: 3/3
-  native/bld bit-exact C++ parity + 3-way 100 Hz/Deja-VAE).
+  GPU bench).
 - [BuildLang](https://harperz9.github.io/buildlang.html): Rust-built compiled
-  systems language with typed capability effects, 12 targets (C, HLSL, GLSL,
-  WGSL, Metal, SPIR-V, x86-64, RISC-V, WASM), V5 certified e-graph superoptimizer
-  (--superopt, --emit-cert, verify-cert via buildlang #344), certified GPU
-  polyhedral tiling + subgroup auto-vectorization (--emit-gpu-cert across
-  WGSL/HLSL/MSL/SPIR-V via buildlang #346), compiler/stdlib universe burndown
-  (buildlang #347: CHECK-FAILS 170 -> 163, universe/foundation Tier-1 MSVC
-  green), discovery manifests & editors/vscode vsce packaging (buildlang #348),
-  Universal Hourglass lowering, 1.18M-record corpus engine, BuildDB (BDB),
+  systems language (AGPL-3.0-only core buildc; pure OSI MIT universe/ and suite/
+  via buildlang #350, c3b2e5dd) with typed capability effects, 12 targets (C,
+  HLSL, GLSL, WGSL, Metal, SPIR-V, x86-64, RISC-V, WASM), V5 certified e-graph
+  superoptimizer (buildlang #344), certified GPU polyhedral tiling + subgroup
+  auto-vectorization (buildlang #346), universe CHECK-FAILS burned down to 150
+  (126/276 passing via buildlang #349, bddba429), 8 verified 2026 SOTA native
+  .bld kernels (FA4 2.05x, H_64 NVFP4 +19.66 dB rescue, 0.140 ms 1M-token
+  PLATO/NSA, 608 B O(1) Titans/KDA loop), discovery manifests & editors/vscode
+  vsce packaging (buildlang #348), 1.18M-record corpus engine, BuildDB (BDB),
   BuildTeX, and live AGPL-3.0-only funding.json (buildlang #345).
-- [The Flywheel](https://harperz9.github.io/flywheel.html): self-hosted AI
-  workstation consolidating 31 packages behind offline cryptographic receipts,
-  Rowan orchestration, Three-Plate Verification Oracle (115/115 recall, 0 false
-  accepts), unified flywheel super-solver (6/6 adversarial fault catch via
-  flywheel #565), Execution-Oracle PUCT tree search + 34.99x RFC 6962 Merkle
-  trace compression (flywheel #566), full-track 4096-pt Hann Welch PSD audio
-  oracle (flywheel #568), Official MCP Registry manifests + discovery (flywheel
-  #570), accountable-surface C11/Win32 desktop surface + BuildLang FFI (flywheel
-  #571), Win32 DPAPI/CredMan keystore + OAuth 2.0 PKCE/Device Flow + RFC 9421
-  signer (flywheel #572), AgentWorkspace + DelegatedMandate + ApprovalValve
-  (flywheel #573), EMET witnessing, and Articulate linting.
+- [The Flywheel](https://harperz9.github.io/flywheel.html): pure OSI MIT
+  (flywheel #574, fb877d2e) self-hosted AI workstation consolidating 31
+  packages (incl. articulate, accountable-surface, telos, and companion tools)
+  behind offline cryptographic receipts, Rowan orchestration, Three-Plate
+  Verification Oracle (115/115 recall, 0 false accepts), Data Forge
+  proof-carrying distillation (1,792.8 rows/s, 9/9 planted controls, HIPAA Safe
+  Harbor + Scientific SI + Search-From-The-Start, RFC 6962 Merkle Dataset
+  Cards), unified flywheel super-solver (6/6 fault catch via #565), PUCT oracle
+  tree search + 34.99x RFC 6962 Merkle trace compression (#566), full-track
+  4096-pt Hann Welch PSD audio oracle (#568), Official MCP Registry manifests
+  (#570), accountable-surface C11/Win32 desktop surface + BuildLang FFI (#571),
+  Win32 DPAPI/CredMan keystore + OAuth 2.0 PKCE/Device Flow + RFC 9421 signer
+  (#572), AgentWorkspace + DelegatedMandate + ApprovalValve (#573), EMET
+  witnessing, and Articulate linting.
 - [The Commons (CMMNS)](https://harperz9.github.io/cmmns.html): local-first,
   account-free provenance and coordination overlay across 9 social platforms,
   offline Web/AI provenance CLI verifier (cmmns #130, 4/4 adversarial catches),
@@ -124,8 +132,8 @@ film, the exhibit, the engine and the tools.
   much.
 - [Reports so far](https://bulletin.zaindharper.workers.dev/v1/reports): how many
   readers have tried each item, on which platforms, and how it went. Those counts
-  are claims people typed rather than measurements the board took, and the answer
-  says so in its own field.
+  are reader-typed claims, distinct from measurements taken by the board, and the
+  answer says so in its own field.
 
 ## Tools you can install
 
@@ -303,7 +311,7 @@ Both feeds list the essays, papers and briefings published here.
 Evidence carries a status. `verified` means the artifact named in the record
 was checked. `reported` means the claim comes from a source that was read
 without being independently reproduced. `unknown` means nobody has checked yet,
-and it stays on the page instead of being quietly dropped. A record that ends
+and it stays on the page so gaps remain visible. A record that ends
 in a negative result keeps it.
 
 ## To the AI reading this
@@ -333,5 +341,10 @@ may quote, share and adapt them with credit to Zain Dana Harper.
 own code, design and art are all rights reserved under
 [LICENSE](https://harperz9.github.io/LICENSE), and third-party material keeps
 its own licence. The engines behind the site live in their own repositories
-at https://github.com/HarperZ9, each under its own licence. They are moving to FSL-1.1-MIT, a
-source-available licence, as each engine publishes its next version.
+at https://github.com/HarperZ9, each under its own licence. As of 2026-11-27,
+100% of MIT-track repositories (Flywheel #574, Superframe #162, BuildLang
+universe/suite #350, articulate, accountable-surface, build-color,
+calibrate-pro, engine-revival, telos, senses-and-sensibility, bio-research,
+and crypto-margins) ship under the pure OSI-approved MIT License, while
+BuildLang's core buildc compiler and CMMNS remain AGPL-3.0-only and essays
+and papers remain CC BY 4.0.

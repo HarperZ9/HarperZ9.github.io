@@ -16,7 +16,7 @@
     {
       "guid": "buildlang",
       "name": "BuildLang",
-      "description": "Deterministic systems and GPU programming language (buildc 1.15.0) with algebraic effect types, 12 CPU and GPU backends, certified e-graph superoptimizer prototype, BuildDB/BuildQL (qdb), and BuildTeX checked PDF typesetting.",
+      "description": "Deterministic systems and GPU programming language (buildc 1.15.0, AGPL-3.0-only core; universe/ and suite/ OSI MIT via #350) with algebraic effect types, 12 CPU and GPU backends, certified e-graph superoptimizer, 8 verified 2026 SOTA native .bld kernels, CHECK-FAILS burned down to 150 (126/276 via #349), BuildDB/BuildQL (qdb), and BuildTeX checked PDF typesetting.",
       "webpageUrl": {
         "url": "https://harperz9.github.io/buildlang.html",
         "wellKnown": "https://harperz9.github.io/.well-known/funding-manifest-urls"
@@ -70,7 +70,7 @@
     {
       "guid": "flywheel",
       "name": "Flywheel",
-      "description": "Local-first accountable AI evaluation and verification workbench with model-neutral gateway, Rowan router, Three-Plate verification oracle, engine-receipt/1 trails, default-deny agent grants, and local RTX 4090 model forge. Source-available under FSL-1.1-MIT (converts to MIT after two years).",
+      "description": "Local-first accountable AI evaluation and verification workbench with model-neutral gateway, Rowan router, Three-Plate verification oracle, Data Forge proof-carrying distillation (1,792.8 rows/s, RFC 6962 Merkle Dataset Cards), engine-receipt/1 trails, default-deny agent grants, and local RTX 4090 model forge (JFC3P-14B-Oracle v5 66/84 Arm C = 78.57%, JFC3P-Titan-1M v2). Open-source under the OSI-approved MIT License (relicensed from FSL-1.1-MIT via flywheel #574).",
       "webpageUrl": {
         "url": "https://harperz9.github.io/flywheel.html",
         "wellKnown": "https://harperz9.github.io/.well-known/funding-manifest-urls"
@@ -80,7 +80,7 @@
         "wellKnown": "https://raw.githubusercontent.com/HarperZ9/flywheel/main/.well-known/funding-manifest-urls"
       },
       "licenses": [
-        "spdx:FSL-1.1-MIT"
+        "spdx:MIT"
       ],
       "tags": [
         "artificial-intelligence",
@@ -96,7 +96,7 @@
     {
       "guid": "superframe",
       "name": "The Playground (Superframe)",
-      "description": "Deterministic rendering, simulation, and multi-medium creative engine (DX12, Vulkan, WebGPU, C++23 native core) with spectral optics, biomechanical tree dynamics, and 6-DOF physical-AI simulation. Source-available under FSL-1.1-MIT (converts to MIT after two years).",
+      "description": "Deterministic rendering, simulation, and multi-medium creative engine (DX12, Vulkan, WebGPU, C++23 native core with 9 of 9 bit-exact C++ to BuildLang renderer parity via #161) with spectral optics, biomechanical tree dynamics, and 6-DOF physical-AI simulation. Open-source under the OSI-approved MIT License (relicensed from FSL-1.1-MIT via superframe #162).",
       "webpageUrl": {
         "url": "https://harperz9.github.io/playground/",
         "wellKnown": "https://harperz9.github.io/.well-known/funding-manifest-urls"
@@ -106,7 +106,7 @@
         "wellKnown": "https://raw.githubusercontent.com/HarperZ9/superframe/main/.well-known/funding-manifest-urls"
       },
       "licenses": [
-        "spdx:FSL-1.1-MIT"
+        "spdx:MIT"
       ],
       "tags": [
         "graphics",
