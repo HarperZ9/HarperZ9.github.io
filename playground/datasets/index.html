@@ -5,25 +5,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light dark">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<title>Open MIT Datasets: BuildDB V6, RLVR v9 and 200 GPU Shaders | Zain Dana Harper</title>
-<meta name="description" content="Interactive Measured Drafting Sheet explorer of BuildDB Parquet V6 (2,328 MIT rows across 15 categories), JFC3P-14B-Oracle-v9 (640 RLVR tasks across 16 categories), and the Bicentennial 200-shader 5-backend GPU suite.">
+<title>Open MIT Datasets: BuildDB V10, RLVR v14 and 560 GPU Shaders | Zain Dana Harper</title>
+<meta name="description" content="Interactive Measured Drafting Sheet explorer of BuildDB Parquet V10 (4,016 MIT rows across 30 categories), JFC3P-14B-Oracle-v14 (1,280 RLVR tasks across 36 categories), and the 560-shader 5-backend GPU suite.">
 <link rel="canonical" href="https://harperz9.github.io/playground/datasets/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zain Dana Harper">
-<meta property="og:title" content="Open MIT Datasets: BuildDB V6, RLVR v9 and 200 GPU Shaders | Zain Dana Harper">
-<meta property="og:description" content="Interactive Measured Drafting Sheet explorer of BuildDB Parquet V6 (2,328 MIT rows across 15 categories), JFC3P-14B-Oracle-v9 (640 RLVR tasks across 16 categories), and the Bicentennial 200-shader 5-backend GPU suite.">
+<meta property="og:title" content="Open MIT Datasets: BuildDB V10, RLVR v14 and 560 GPU Shaders | Zain Dana Harper">
+<meta property="og:description" content="Interactive Measured Drafting Sheet explorer of BuildDB Parquet V10 (4,016 MIT rows across 30 categories), JFC3P-14B-Oracle-v14 (1,280 RLVR tasks across 36 categories), and the 560-shader 5-backend GPU suite.">
 <meta property="og:url" content="https://harperz9.github.io/playground/datasets/">
 <meta property="og:image" content="https://harperz9.github.io/img/og/p/home.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Open MIT Datasets: BuildDB V6, RLVR v9 and 200 GPU Shaders | Zain Dana Harper">
-<meta name="twitter:description" content="Interactive Measured Drafting Sheet explorer of BuildDB Parquet V6 (2,328 MIT rows across 15 categories), JFC3P-14B-Oracle-v9 (640 RLVR tasks across 16 categories), and the Bicentennial 200-shader 5-backend GPU suite.">
+<meta name="twitter:title" content="Open MIT Datasets: BuildDB V10, RLVR v14 and 560 GPU Shaders | Zain Dana Harper">
+<meta name="twitter:description" content="Interactive Measured Drafting Sheet explorer of BuildDB Parquet V10 (4,016 MIT rows across 30 categories), JFC3P-14B-Oracle-v14 (1,280 RLVR tasks across 36 categories), and the 560-shader 5-backend GPU suite.">
 <link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-6218db2f12">
 <link rel="stylesheet" href="/studies/studies.css?v=world-6218db2f12">
 <link rel="stylesheet" href="/world/site/depth.css?v=world-6218db2f12">
 <script type="module" src="/world/ui/shell/shell.js?v=world-6218db2f12"></script>
 <script type="module" src="/world/site/hand-scroll.js?v=world-6218db2f12"></script>
-<meta name="datasets-manifest-sha256" content="dcb96dbf14ee84dd0fbfab14b62df2d859b7c38d317ca3422d59e1935169350d">
+<meta name="datasets-manifest-sha256" content="dd9f35d116413c8c0874f538ae092a53f4914c4dc9a5aaa2c558995ad9ba3dfb">
 <style>
   .ds-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0.65rem; padding: 0.8rem 0; border-bottom: 1px solid var(--line); }
   .ds-card { border: 1px solid var(--line); padding: 0.7rem 0.8rem; min-width: 0; }
@@ -40,7 +40,7 @@
   .ds-readout { padding: 0.75rem 0; border-bottom: 1px solid var(--line); font-family: var(--face-utility); font-size: 0.84rem; font-variant-numeric: tabular-nums; min-height: 4.8rem; }
   .ds-readout p { margin: 0.22rem 0; }
   .ds-wrap { width: 100%; overflow-x: auto; margin-top: 0.5rem; }
-  .ds-wrap-cats { min-height: 1120px; }
+  .ds-wrap-cats { min-height: 1780px; }
   .ds-table { width: 100%; min-width: 680px; table-layout: fixed; border-collapse: collapse; font-size: 0.83rem; }
   .ds-table th, .ds-table td { text-align: left; padding: 0.5rem 0.55rem 0.5rem 0; border-bottom: 1px solid var(--line); vertical-align: top; overflow-wrap: break-word; }
   .ds-table th:last-child, .ds-table td:last-child { padding-right: 0; }
@@ -85,15 +85,18 @@
 <main id="main" tabindex="-1">
 <article class="st" id="open-datasets">
 <header class="ds-sheet-head">
-  <p class="ds-kicker">Measured Drafting Sheet / Pure-OSI MIT Open Datasets</p>
+  <p class="ds-kicker">Measured Drafting Sheet / Pure-OSI MIT Open Datasets V10, RLVR v14 &amp; 560 GPU Shaders</p>
   <h1>Open MIT Datasets</h1>
-  <p class="ds-lede">Structured ledger of three pure-OSI MIT open training and verification corpora sealed under Flywheel receipts: BuildDB Parquet V6 (2328 pure-MIT rows across 15 record categories, 0 non-MIT rows, 1.40 MB ZSTD Parquet, receipt #68839), JFC3P-14B-Oracle-v9 (640 deterministic RLVR tasks across 16 families, 544 train / 96 eval, receipt #68861), and the Bicentennial 200-shader GPU compute suite (40 pure-MIT kernels across 5 backends, 1228 Superopt V6 rewrites, receipt #68850).</p>
-  <p class="ds-meta"><span>2328 BuildDB V6 rows</span><span>640 RLVR v9 tasks</span><span>200 certified GPU shaders</span><span>0 non-MIT rows</span></p>
+  <p class="ds-lede">Structured ledger of three pure-OSI MIT open training and verification corpora sealed under Flywheel receipts: BuildDB Parquet V10 (4016 pure-MIT rows across 30 record categories, 0 non-MIT rows, 1.98 MB ZSTD Parquet, receipt #68955), JFC3P-14B-Oracle-v14 (1280 deterministic RLVR tasks across 36 families, 1104 train / 176 eval, receipt #68968), and the 560-shader 5-backend GPU compute suite (112 pure-MIT kernels across 5 backends, 4009 Superopt V6 rewrites, receipt #68973).</p>
+  <p class="ds-meta"><span>4016 BuildDB V10 rows</span><span>1280 RLVR v14 tasks</span><span>560 certified GPU shaders</span><span>0 non-MIT rows</span></p>
   <nav class="ds-ways" aria-label="Related surfaces">
     <a href="/playground/">The Playground</a>
+    <a href="/playground/buildos-cluster/">BuildOS Cluster Lab</a>
+    <a href="/playground/renderer-35/">35-Module Renderer</a>
+    <a href="/playground/native-auditors/">22 Native Auditors</a>
+    <a href="/playground/gpu-compute/">GPU Compute Explorer</a>
     <a href="/playground/benchmarks-v4/">Benchmarks V4</a>
-    <a href="/playground/competitive-surpass/">Competitive Surpass</a>
-    <a href="/playground/papers/">Research Papers</a>
+    <a href="/playground/papers/">Research Papers (8)</a>
     <a href="./datasets_manifest.json">Manifest JSON</a>
   </nav>
 </header>
@@ -101,161 +104,281 @@
 <section class="ds-sec" id="packs" aria-labelledby="h-packs">
   <h2 id="h-packs">Sealed open MIT dataset packs</h2>
   <div class="ds-cards">
-    <div class="ds-card"><p class="ds-card-k">BuildDB Parquet V6 (#68839)</p><p class="ds-card-v">2,328 MIT rows</p><p class="ds-card-s">15 record categories, 0 non-MIT, 1,467,505 B ZSTD Parquet (5.53x vs 8.11 MB JSONL), 2/2 leak/dupe controls rejected.</p></div>
-    <div class="ds-card"><p class="ds-card-k">JFC3P-14B-Oracle-v9 (#68861)</p><p class="ds-card-v">640/640 RLVR tasks</p><p class="ds-card-s">544 train / 96 eval across 16 deterministic oracle categories (653 KB JSONL + 4.0 KB zero-secret Colab H100 notebook).</p></div>
-    <div class="ds-card"><p class="ds-card-k">Bicentennial GPU Pack (#68850)</p><p class="ds-card-v">200 certified shaders</p><p class="ds-card-s">40 unique pure-MIT kernels across WGSL, HLSL, MSL, SPIR-V, and GLSL (1,228 Superopt V6 rewrites, 763 KB total).</p></div>
+    <div class="ds-card"><p class="ds-card-k">BuildDB Parquet V10 (#68955)</p><p class="ds-card-v">4,016 MIT rows</p><p class="ds-card-s">30 record categories, 0 non-MIT, 2,077,064 B ZSTD Parquet (6.08x vs 12.05 MB JSONL), 2/2 leak/dupe controls rejected.</p></div>
+    <div class="ds-card"><p class="ds-card-k">JFC3P-14B-Oracle-v14 (#68968)</p><p class="ds-card-v">1,280/1,280 RLVR tasks</p><p class="ds-card-s">1,104 train / 176 eval across 36 deterministic oracle categories (1.18 MB JSONL + 4.0 KB zero-secret Colab H100 notebook).</p></div>
+    <div class="ds-card"><p class="ds-card-k">5-Backend GPU 560-Pack (#68973)</p><p class="ds-card-v">560 certified shaders</p><p class="ds-card-s">112 unique pure-MIT kernels across WGSL, HLSL, MSL, SPIR-V, and GLSL (4,009 Superopt V6 rewrites, 2.22 MB total).</p></div>
   </div>
 </section>
 
 <section class="ds-sec" id="categories" aria-labelledby="h-cats">
-  <h2 id="h-cats">Interactive BuildDB V6 record categories (15 categories)</h2>
+  <h2 id="h-cats">Interactive BuildDB V10 record categories (30 categories)</h2>
   <div class="ds-pills" role="group" aria-label="Filter categories by corpus group">
-    <button type="button" class="ds-pill" data-group="all" data-active="1" aria-pressed="true">All 15 categories (2328)</button>
-    <button type="button" class="ds-pill" data-group="kernels-certs" data-active="0" aria-pressed="false">Kernels and Certs (5)</button>
-    <button type="button" class="ds-pill" data-group="os-bench-sbom" data-active="0" aria-pressed="false">OS, Bench and SBOM (5)</button>
-    <button type="button" class="ds-pill" data-group="rlvr-signals-papers" data-active="0" aria-pressed="false">RLVR, Signals and Papers (5)</button>
+    <button type="button" class="ds-pill" data-group="all" data-active="1" aria-pressed="true">All 30 categories (4016)</button>
+    <button type="button" class="ds-pill" data-group="kernels-certs" data-active="0" aria-pressed="false">Kernels and Certs (11)</button>
+    <button type="button" class="ds-pill" data-group="os-bench-sbom" data-active="0" aria-pressed="false">OS, Bench and SBOM (12)</button>
+    <button type="button" class="ds-pill" data-group="rlvr-signals-papers" data-active="0" aria-pressed="false">RLVR, Signals and Papers (7)</button>
   </div>
   <div class="ds-controls" role="region" aria-label="Category and keyword filters">
     <label class="ds-field" for="ds-category">Record category
       <select id="ds-category">
-        <option value="all">All 15 categories (2328)</option>
-        <option value="formula_kernel">Formula kernels (557)</option>
-        <option value="rlvr_task">RLVR verifier tasks (512)</option>
-        <option value="buildlang_kernel">BuildLang kernels (323)</option>
+        <option value="all">All 30 categories (4016)</option>
+        <option value="rlvr_task">RLVR verifier tasks (1152)</option>
+        <option value="formula_kernel">Formula kernels (589)</option>
+        <option value="buildlang_kernel">BuildLang kernels (492)</option>
+        <option value="gpu_shader_cert">GPU shader certs (400)</option>
+        <option value="zeroc_crypto_proof">Zero-C crypto and OS proofs (285)</option>
         <option value="author_idea">Author ideas register (234)</option>
-        <option value="superopt_cert">Superopt certificates (139)</option>
-        <option value="gpu_shader_cert">GPU shader certs (120)</option>
-        <option value="zeroc_crypto_proof">Zero-C crypto and OS proofs (80)</option>
+        <option value="superopt_cert">Superopt certificates (163)</option>
+        <option value="playground_wasm_module">Playground WASM modules (100)</option>
+        <option value="gpu_isa_impact">GPU ISA impact records (80)</option>
         <option value="benchmark_v4">Benchmarks V4 records (77)</option>
         <option value="competitive_signal">Competitive signals (76)</option>
-        <option value="playground_wasm_module">Playground WASM modules (66)</option>
-        <option value="flywheel_stdlib_verifier">Flywheel stdlib verifiers (54)</option>
+        <option value="flywheel_stdlib_verifier">Flywheel stdlib verifiers (76)</option>
+        <option value="flywheel_merged_verifier">Flywheel merged verifiers (36)</option>
+        <option value="flywheel_pr_graduated">Flywheel PR graduated suites (33)</option>
         <option value="sbom_summary">SBOM V1 summaries (32)</option>
         <option value="sbom_v2_summary">SBOM V2 summaries (31)</option>
-        <option value="gpu_isa_impact">GPU ISA impact records (24)</option>
-        <option value="technical_paper_metadata">Technical paper metadata (3)</option>
+        <option value="repro_cert_proof">Isolated reproducibility proofs (30)</option>
+        <option value="sbom_v3_summary">SBOM V3 summaries (30)</option>
+        <option value="native_cli_auditor">Native CLI auditors (26)</option>
+        <option value="privacy_hygiene_audit">Privacy hygiene sweeps (15)</option>
+        <option value="repo_governance_audit">Repo governance audits (15)</option>
+        <option value="mcp_registry_server">MCP Registry servers (10)</option>
+        <option value="cap_effect_audit">Capability-effect audits (7)</option>
+        <option value="technical_paper_metadata">Technical paper metadata (7)</option>
+        <option value="ct_taint_audit">Constant-time taint audits (5)</option>
+        <option value="det_float_audit">Strict determinism audits (5)</option>
+        <option value="wcet_stack_audit">WCET stack audits (5)</option>
+        <option value="renderer_parity_proof">Renderer parity proofs (3)</option>
+        <option value="grant_pack_metadata">Non-dilutive grant packs (1)</option>
+        <option value="rsi_pareto_audit">RSI Pareto audit (1)</option>
       </select>
     </label>
     <label class="ds-field" for="ds-search">Search category, description, or receipt ID
-      <input id="ds-search" type="search" placeholder="e.g. rlvr, superopt, 68850" autocomplete="off">
+      <input id="ds-search" type="search" placeholder="e.g. rlvr, taint, 68955" autocomplete="off">
     </label>
     <button type="button" id="ds-reset" class="ds-reset">Reset filters</button>
   </div>
   <div class="ds-readout" aria-live="polite">
-    <p id="ds-status">Showing 15/15 BuildDB V6 record categories (2328/2328 pure-MIT rows, 0 non-MIT)</p>
-    <p id="ds-digest">Manifest SHA-256: dcb96dbf14ee84dd0fbfab1... | BuildDB V6 (2328 rows) + RLVR v9 (640 tasks) + 200 GPU shaders</p>
+    <p id="ds-status">Showing 30/30 BuildDB V10 record categories (4016/4016 pure-MIT rows, 0 non-MIT) | Category: all</p>
+    <p id="ds-digest">Manifest SHA-256: dd9f35d116413c8c0874f53... | BuildDB V10 (4016 rows) + RLVR v14 (1280 tasks) + 560 GPU shaders</p>
   </div>
-  <div class="ds-wrap ds-wrap-cats" tabindex="0" role="region" aria-label="BuildDB V6 15 record categories">
+  <div class="ds-wrap ds-wrap-cats" tabindex="0" role="region" aria-label="BuildDB V10 30 record categories">
     <table class="ds-table">
       <colgroup><col style="width:26%"><col style="width:10%"><col style="width:10%"><col style="width:12%"><col style="width:42%"></colgroup>
       <thead>
         <tr><th scope="col">Record category</th><th scope="col">Rows</th><th scope="col">Share</th><th scope="col">Receipt</th><th scope="col">Verified contents</th></tr>
       </thead>
       <tbody>
-        <tr data-cat="formula_kernel" data-group="kernels-certs">
-          <th scope="row">Formula kernels<span class="ds-sub">formula_kernel | Kernels and Certs</span></th>
-          <td class="mono">557</td>
-          <td class="mono">23.93%</td>
-          <td class="mono">#68839</td>
-          <td>Zero-FLAG mathematical and systems formulas verified against independent oracles.</td>
-        </tr>
         <tr data-cat="rlvr_task" data-group="rlvr-signals-papers">
           <th scope="row">RLVR verifier tasks<span class="ds-sub">rlvr_task | RLVR, Signals and Papers</span></th>
-          <td class="mono">512</td>
-          <td class="mono">21.99%</td>
-          <td class="mono">#68861</td>
-          <td>Deterministic pure-MIT reinforcement-learning verifier tasks (512 in BuildDB V6, expanded to 640 in RLVR v9).</td>
+          <td class="mono">1152</td>
+          <td class="mono">28.69%</td>
+          <td class="mono">#68946</td>
+          <td>1,152 deterministic pure-MIT reinforcement-learning verifier tasks from JFC3P-14B-Oracle-v13 (992 train / 160 eval across 32 families).</td>
+        </tr>
+        <tr data-cat="formula_kernel" data-group="kernels-certs">
+          <th scope="row">Formula kernels<span class="ds-sub">formula_kernel | Kernels and Certs</span></th>
+          <td class="mono">589</td>
+          <td class="mono">14.67%</td>
+          <td class="mono">#68955</td>
+          <td>589 zero-FLAG mathematical and systems formulas verified against independent oracles.</td>
         </tr>
         <tr data-cat="buildlang_kernel" data-group="kernels-certs">
           <th scope="row">BuildLang kernels<span class="ds-sub">buildlang_kernel | Kernels and Certs</span></th>
-          <td class="mono">323</td>
-          <td class="mono">13.87%</td>
-          <td class="mono">#68839</td>
-          <td>Pure-OSI MIT BuildLang verification, physics, rendering, and governance source kernels.</td>
+          <td class="mono">492</td>
+          <td class="mono">12.25%</td>
+          <td class="mono">#68955</td>
+          <td>492 pure-OSI MIT BuildLang verification, physics, rendering, and governance source kernels.</td>
+        </tr>
+        <tr data-cat="gpu_shader_cert" data-group="kernels-certs">
+          <th scope="row">GPU shader certs<span class="ds-sub">gpu_shader_cert | Kernels and Certs</span></th>
+          <td class="mono">400</td>
+          <td class="mono">9.96%</td>
+          <td class="mono">#68973</td>
+          <td>Externally validated WGSL, HLSL, MSL, SPIR-V, and GLSL compute shader certifications (400 in V10, expanded to 560 in Wave 166A pack).</td>
+        </tr>
+        <tr data-cat="zeroc_crypto_proof" data-group="os-bench-sbom">
+          <th scope="row">Zero-C crypto and OS proofs<span class="ds-sub">zeroc_crypto_proof | OS, Bench and SBOM</span></th>
+          <td class="mono">285</td>
+          <td class="mono">7.10%</td>
+          <td class="mono">#68932</td>
+          <td>285 self-hosted Zero-C 5-ISA binary proofs across TLS, PQ KEM, enclave, BuildOS-2.0, QUIC-Lite, Sandbox VM, BFT, ZK, and BuildOS-2.1 cluster.</td>
         </tr>
         <tr data-cat="author_idea" data-group="rlvr-signals-papers">
           <th scope="row">Author ideas register<span class="ds-sub">author_idea | RLVR, Signals and Papers</span></th>
           <td class="mono">234</td>
-          <td class="mono">10.05%</td>
+          <td class="mono">5.83%</td>
           <td class="mono">#68804</td>
-          <td>Tracked idea registry records linked to verified implementation receipts.</td>
+          <td>234 tracked idea registry records linked to verified implementation receipts.</td>
         </tr>
         <tr data-cat="superopt_cert" data-group="kernels-certs">
           <th scope="row">Superopt certificates<span class="ds-sub">superopt_cert | Kernels and Certs</span></th>
-          <td class="mono">139</td>
-          <td class="mono">5.97%</td>
-          <td class="mono">#68839</td>
-          <td>Proof-carrying e-graph rewrite certificates checked by buildc verify-cert.</td>
+          <td class="mono">163</td>
+          <td class="mono">4.06%</td>
+          <td class="mono">#68955</td>
+          <td>163 proof-carrying e-graph rewrite certificates checked by buildc verify-cert.</td>
         </tr>
-        <tr data-cat="gpu_shader_cert" data-group="kernels-certs">
-          <th scope="row">GPU shader certs<span class="ds-sub">gpu_shader_cert | Kernels and Certs</span></th>
-          <td class="mono">120</td>
-          <td class="mono">5.15%</td>
-          <td class="mono">#68850</td>
-          <td>Externally validated WGSL, HLSL, MSL, SPIR-V, and GLSL compute shader certifications (120 in V6, 200 in Bicentennial pack).</td>
+        <tr data-cat="playground_wasm_module" data-group="kernels-certs">
+          <th scope="row">Playground WASM modules<span class="ds-sub">playground_wasm_module | Kernels and Certs</span></th>
+          <td class="mono">100</td>
+          <td class="mono">2.49%</td>
+          <td class="mono">#68961</td>
+          <td>Compiled pure-OSI MIT browser WebAssembly verification modules with pinned SHA-256 digests (100 in V10, expanded to 106 in pack106).</td>
         </tr>
-        <tr data-cat="zeroc_crypto_proof" data-group="os-bench-sbom">
-          <th scope="row">Zero-C crypto and OS proofs<span class="ds-sub">zeroc_crypto_proof | OS, Bench and SBOM</span></th>
+        <tr data-cat="gpu_isa_impact" data-group="rlvr-signals-papers">
+          <th scope="row">GPU ISA impact records<span class="ds-sub">gpu_isa_impact | RLVR, Signals and Papers</span></th>
           <td class="mono">80</td>
-          <td class="mono">3.44%</td>
-          <td class="mono">#68816</td>
-          <td>Self-hosted Zero-C 5-ISA binary proofs across TLS crypto and BuildOS microkernel slices.</td>
+          <td class="mono">1.99%</td>
+          <td class="mono">#68973</td>
+          <td>80 per-backend FMA and instruction-level comparison records across 5 GPU targets.</td>
         </tr>
         <tr data-cat="benchmark_v4" data-group="os-bench-sbom">
           <th scope="row">Benchmarks V4 records<span class="ds-sub">benchmark_v4 | OS, Bench and SBOM</span></th>
           <td class="mono">77</td>
-          <td class="mono">3.31%</td>
+          <td class="mono">1.92%</td>
           <td class="mono">#68814</td>
-          <td>Cross-ecosystem p50 runtime and parity measurements across native, WASM, Zero-C PE, and Python.</td>
+          <td>77 cross-ecosystem p50 runtime and parity measurements across native, WASM, Zero-C PE, and Python.</td>
         </tr>
         <tr data-cat="competitive_signal" data-group="rlvr-signals-papers">
           <th scope="row">Competitive signals<span class="ds-sub">competitive_signal | RLVR, Signals and Papers</span></th>
           <td class="mono">76</td>
-          <td class="mono">3.26%</td>
+          <td class="mono">1.89%</td>
           <td class="mono">#68818</td>
           <td>76 tracked competitive benchmark rows across 8 technical lanes.</td>
         </tr>
-        <tr data-cat="playground_wasm_module" data-group="kernels-certs">
-          <th scope="row">Playground WASM modules<span class="ds-sub">playground_wasm_module | Kernels and Certs</span></th>
-          <td class="mono">66</td>
-          <td class="mono">2.84%</td>
-          <td class="mono">#68824</td>
-          <td>Compiled pure-OSI MIT browser WebAssembly verification modules with pinned SHA-256 digests.</td>
-        </tr>
         <tr data-cat="flywheel_stdlib_verifier" data-group="os-bench-sbom">
           <th scope="row">Flywheel stdlib verifiers<span class="ds-sub">flywheel_stdlib_verifier | OS, Bench and SBOM</span></th>
-          <td class="mono">54</td>
-          <td class="mono">2.32%</td>
-          <td class="mono">#68830</td>
-          <td>Pure-stdlib Python verification harnesses audited by Crucible tail-risk fuzzing.</td>
+          <td class="mono">76</td>
+          <td class="mono">1.89%</td>
+          <td class="mono">#68918</td>
+          <td>76 pure-stdlib Python verification harnesses audited by Crucible tail-risk fuzzing.</td>
+        </tr>
+        <tr data-cat="flywheel_merged_verifier" data-group="os-bench-sbom">
+          <th scope="row">Flywheel merged verifiers<span class="ds-sub">flywheel_merged_verifier | OS, Bench and SBOM</span></th>
+          <td class="mono">36</td>
+          <td class="mono">0.90%</td>
+          <td class="mono">#68955</td>
+          <td>36 merged pure-OSI MIT Flywheel verification modules on origin/main.</td>
+        </tr>
+        <tr data-cat="flywheel_pr_graduated" data-group="os-bench-sbom">
+          <th scope="row">Flywheel PR graduated suites<span class="ds-sub">flywheel_pr_graduated | OS, Bench and SBOM</span></th>
+          <td class="mono">33</td>
+          <td class="mono">0.82%</td>
+          <td class="mono">#68955</td>
+          <td>33 graduated pure-OSI MIT Flywheel PR verifier and attestation suite records.</td>
         </tr>
         <tr data-cat="sbom_summary" data-group="os-bench-sbom">
           <th scope="row">SBOM V1 summaries<span class="ds-sub">sbom_summary | OS, Bench and SBOM</span></th>
           <td class="mono">32</td>
-          <td class="mono">1.37%</td>
+          <td class="mono">0.80%</td>
           <td class="mono">#68722</td>
-          <td>Initial SPDX and CycloneDX software bill of materials records across 15 public repositories.</td>
+          <td>32 initial SPDX and CycloneDX software bill of materials records across 15 public repositories.</td>
         </tr>
         <tr data-cat="sbom_v2_summary" data-group="os-bench-sbom">
           <th scope="row">SBOM V2 summaries<span class="ds-sub">sbom_v2_summary | OS, Bench and SBOM</span></th>
           <td class="mono">31</td>
-          <td class="mono">1.33%</td>
+          <td class="mono">0.77%</td>
           <td class="mono">#68827</td>
-          <td>Refreshed SPDX 2.3 and CycloneDX 1.5 SBOM records verifying 100% pure-OSI licensing.</td>
+          <td>31 refreshed SPDX 2.3 and CycloneDX 1.5 SBOM records verifying 100% pure-OSI licensing.</td>
         </tr>
-        <tr data-cat="gpu_isa_impact" data-group="rlvr-signals-papers">
-          <th scope="row">GPU ISA impact records<span class="ds-sub">gpu_isa_impact | RLVR, Signals and Papers</span></th>
-          <td class="mono">24</td>
-          <td class="mono">1.03%</td>
-          <td class="mono">#68850</td>
-          <td>Per-backend FMA and instruction-level comparison records across 5 GPU targets.</td>
+        <tr data-cat="repro_cert_proof" data-group="os-bench-sbom">
+          <th scope="row">Isolated reproducibility proofs<span class="ds-sub">repro_cert_proof | OS, Bench and SBOM</span></th>
+          <td class="mono">30</td>
+          <td class="mono">0.75%</td>
+          <td class="mono">#68947</td>
+          <td>30 isolated external contributor reproducibility proofs covering all 15/15 public repositories (5 flagships + 10 MCP servers).</td>
+        </tr>
+        <tr data-cat="sbom_v3_summary" data-group="os-bench-sbom">
+          <th scope="row">SBOM V3 summaries<span class="ds-sub">sbom_v3_summary | OS, Bench and SBOM</span></th>
+          <td class="mono">30</td>
+          <td class="mono">0.75%</td>
+          <td class="mono">#68894</td>
+          <td>30 refreshed SPDX 2.3 and CycloneDX 1.5 SBOM V3 records paired with 15/15 Open-Source Gold Standard governance.</td>
+        </tr>
+        <tr data-cat="native_cli_auditor" data-group="kernels-certs">
+          <th scope="row">Native CLI auditors<span class="ds-sub">native_cli_auditor | Kernels and Certs</span></th>
+          <td class="mono">26</td>
+          <td class="mono">0.65%</td>
+          <td class="mono">#68941</td>
+          <td>26 compiled native BuildLang cockpit verification binaries running in sub-millisecond time.</td>
+        </tr>
+        <tr data-cat="privacy_hygiene_audit" data-group="os-bench-sbom">
+          <th scope="row">Privacy hygiene sweeps<span class="ds-sub">privacy_hygiene_audit | OS, Bench and SBOM</span></th>
+          <td class="mono">15</td>
+          <td class="mono">0.37%</td>
+          <td class="mono">#68937</td>
+          <td>15 public repository SIG-058 privacy and metadata hygiene audit records (0 local paths, 0 secrets).</td>
+        </tr>
+        <tr data-cat="repo_governance_audit" data-group="os-bench-sbom">
+          <th scope="row">Repo governance audits<span class="ds-sub">repo_governance_audit | OS, Bench and SBOM</span></th>
+          <td class="mono">15</td>
+          <td class="mono">0.37%</td>
+          <td class="mono">#68894</td>
+          <td>15 public repository Open-Source Gold Standard governance records (15/15 = 165/165).</td>
+        </tr>
+        <tr data-cat="mcp_registry_server" data-group="os-bench-sbom">
+          <th scope="row">MCP Registry servers<span class="ds-sub">mcp_registry_server | OS, Bench and SBOM</span></th>
+          <td class="mono">10</td>
+          <td class="mono">0.25%</td>
+          <td class="mono">#68916</td>
+          <td>10 Official MCP Registry server metadata records with mcp-name and pure-OSI provenance.</td>
+        </tr>
+        <tr data-cat="cap_effect_audit" data-group="kernels-certs">
+          <th scope="row">Capability-effect audits<span class="ds-sub">cap_effect_audit | Kernels and Certs</span></th>
+          <td class="mono">7</td>
+          <td class="mono">0.17%</td>
+          <td class="mono">#68877</td>
+          <td>7 interprocedural MIR capability-effect verification records (--deny-effect).</td>
         </tr>
         <tr data-cat="technical_paper_metadata" data-group="rlvr-signals-papers">
           <th scope="row">Technical paper metadata<span class="ds-sub">technical_paper_metadata | RLVR, Signals and Papers</span></th>
+          <td class="mono">7</td>
+          <td class="mono">0.17%</td>
+          <td class="mono">#68929</td>
+          <td>7 structured preprint metadata records covering the Seven-Paper Systems Septet (#68793..#68929).</td>
+        </tr>
+        <tr data-cat="ct_taint_audit" data-group="kernels-certs">
+          <th scope="row">Constant-time taint audits<span class="ds-sub">ct_taint_audit | Kernels and Certs</span></th>
+          <td class="mono">5</td>
+          <td class="mono">0.12%</td>
+          <td class="mono">#68925</td>
+          <td>5 compile-time MIR constant-time secret-taint verification records (--constant-time).</td>
+        </tr>
+        <tr data-cat="det_float_audit" data-group="kernels-certs">
+          <th scope="row">Strict determinism audits<span class="ds-sub">det_float_audit | Kernels and Certs</span></th>
+          <td class="mono">5</td>
+          <td class="mono">0.12%</td>
+          <td class="mono">#68945</td>
+          <td>5 compile-time MIR floating-point determinism verification records (--strict-determinism).</td>
+        </tr>
+        <tr data-cat="wcet_stack_audit" data-group="kernels-certs">
+          <th scope="row">WCET stack audits<span class="ds-sub">wcet_stack_audit | Kernels and Certs</span></th>
+          <td class="mono">5</td>
+          <td class="mono">0.12%</td>
+          <td class="mono">#68903</td>
+          <td>5 static MIR worst-case execution time and bounded max-stack verification records (--max-stack-bytes).</td>
+        </tr>
+        <tr data-cat="renderer_parity_proof" data-group="kernels-certs">
+          <th scope="row">Renderer parity proofs<span class="ds-sub">renderer_parity_proof | Kernels and Certs</span></th>
           <td class="mono">3</td>
-          <td class="mono">0.13%</td>
-          <td class="mono">#68852</td>
-          <td>Structured preprint records for the technical papers (cs.PL/OS, cs.AI/SE, cs.GR, and BuildOS).</td>
+          <td class="mono">0.07%</td>
+          <td class="mono">#68924</td>
+          <td>3 bit-exact 0-ULP C++23 to BuildLang renderer parity records (#35..#37, #68924/#68933/#68944).</td>
+        </tr>
+        <tr data-cat="grant_pack_metadata" data-group="rlvr-signals-papers">
+          <th scope="row">Non-dilutive grant packs<span class="ds-sub">grant_pack_metadata | RLVR, Signals and Papers</span></th>
+          <td class="mono">1</td>
+          <td class="mono">0.02%</td>
+          <td class="mono">#68938</td>
+          <td>ARPA-H / NIH verified privacy-preserving biomedical GPU compute pack metadata (#68938).</td>
+        </tr>
+        <tr data-cat="rsi_pareto_audit" data-group="rlvr-signals-papers">
+          <th scope="row">RSI Pareto audit<span class="ds-sub">rsi_pareto_audit | RLVR, Signals and Papers</span></th>
+          <td class="mono">1</td>
+          <td class="mono">0.02%</td>
+          <td class="mono">#68942</td>
+          <td>Pure-BuildLang Oracle-Gated RSI Pareto Orchestrator audit (3.020x monotonic gain, 40/40 Goodhart rollbacks, #68942).</td>
         </tr>
       </tbody>
     </table>
@@ -264,102 +387,202 @@
 </section>
 
 <section class="ds-sec" id="rlvr" aria-labelledby="h-rlvr">
-  <h2 id="h-rlvr">JFC3P-14B-Oracle-v9 task breakdown (16 categories, 640 tasks)</h2>
-  <div class="ds-wrap" tabindex="0" role="region" aria-label="JFC3P-14B-Oracle-v9 16 task categories">
+  <h2 id="h-rlvr">JFC3P-14B-Oracle-v14 task breakdown (36 categories, 1,280 tasks)</h2>
+  <div class="ds-wrap" tabindex="0" role="region" aria-label="JFC3P-14B-Oracle-v14 36 task categories">
     <table class="ds-table">
       <colgroup><col style="width:58%"><col style="width:20%"><col style="width:22%"></colgroup>
       <thead>
-        <tr><th scope="col">RLVR category</th><th scope="col">Tasks (544 train / 96 eval total)</th><th scope="col">Pack cohort</th></tr>
+        <tr><th scope="col">RLVR category</th><th scope="col">Tasks (1,104 train / 176 eval total)</th><th scope="col">Pack cohort</th></tr>
       </thead>
       <tbody>
         <tr data-rlvr="buildlang_synthesis">
           <th scope="row" class="mono">buildlang_synthesis</th>
           <td class="mono">80</td>
-          <td class="mono">V8+V9</td>
+          <td class="mono">V8..V14</td>
         </tr>
         <tr data-rlvr="superopt_equivalence">
           <th scope="row" class="mono">superopt_equivalence</th>
           <td class="mono">80</td>
-          <td class="mono">V8+V9</td>
+          <td class="mono">V8..V14</td>
         </tr>
         <tr data-rlvr="planted_negative_trap">
           <th scope="row" class="mono">planted_negative_trap</th>
           <td class="mono">64</td>
-          <td class="mono">V8+V9</td>
+          <td class="mono">V8..V14</td>
+        </tr>
+        <tr data-rlvr="bft_consensus_slice33">
+          <th scope="row" class="mono">bft_consensus_slice33</th>
+          <td class="mono">32</td>
+          <td class="mono">V8..V14</td>
         </tr>
         <tr data-rlvr="buildos_smp_mmu_iommu">
           <th scope="row" class="mono">buildos_smp_mmu_iommu</th>
           <td class="mono">32</td>
-          <td class="mono">V9 new</td>
+          <td class="mono">V8..V14</td>
+        </tr>
+        <tr data-rlvr="buildos_v2_sovereign_merkle">
+          <th scope="row" class="mono">buildos_v2_sovereign_merkle</th>
+          <td class="mono">32</td>
+          <td class="mono">V8..V14</td>
+        </tr>
+        <tr data-rlvr="buildos_v21_cluster_slice35">
+          <th scope="row" class="mono">buildos_v21_cluster_slice35</th>
+          <td class="mono">32</td>
+          <td class="mono">V14 new</td>
         </tr>
         <tr data-rlvr="buildos_zeroc_security">
           <th scope="row" class="mono">buildos_zeroc_security</th>
           <td class="mono">32</td>
-          <td class="mono">V8+V9</td>
+          <td class="mono">V8..V14</td>
+        </tr>
+        <tr data-rlvr="cap_sandbox_vm_slice32">
+          <th scope="row" class="mono">cap_sandbox_vm_slice32</th>
+          <td class="mono">32</td>
+          <td class="mono">V8..V14</td>
         </tr>
         <tr data-rlvr="competitive_surpass_cs">
           <th scope="row" class="mono">competitive_surpass_cs</th>
           <td class="mono">32</td>
-          <td class="mono">V8+V9</td>
+          <td class="mono">V8..V14</td>
         </tr>
         <tr data-rlvr="compiler_backend_ops_parity">
           <th scope="row" class="mono">compiler_backend_ops_parity</th>
           <td class="mono">32</td>
-          <td class="mono">V9 new</td>
+          <td class="mono">V8..V14</td>
+        </tr>
+        <tr data-rlvr="constant_time_taint_verifier">
+          <th scope="row" class="mono">constant_time_taint_verifier</th>
+          <td class="mono">32</td>
+          <td class="mono">V8..V14</td>
+        </tr>
+        <tr data-rlvr="gpu_280pack_frontier_compute">
+          <th scope="row" class="mono">gpu_280pack_frontier_compute</th>
+          <td class="mono">32</td>
+          <td class="mono">V8..V14</td>
+        </tr>
+        <tr data-rlvr="gpu_320pack_photonics_geo">
+          <th scope="row" class="mono">gpu_320pack_photonics_geo</th>
+          <td class="mono">32</td>
+          <td class="mono">V8..V14</td>
+        </tr>
+        <tr data-rlvr="gpu_400pack_quadricentennial">
+          <th scope="row" class="mono">gpu_400pack_quadricentennial</th>
+          <td class="mono">32</td>
+          <td class="mono">V8..V14</td>
+        </tr>
+        <tr data-rlvr="gpu_480pack_astro_qec_gnn">
+          <th scope="row" class="mono">gpu_480pack_astro_qec_gnn</th>
+          <td class="mono">32</td>
+          <td class="mono">V14 new</td>
         </tr>
         <tr data-rlvr="gpu_5way_fma_superopt">
           <th scope="row" class="mono">gpu_5way_fma_superopt</th>
           <td class="mono">32</td>
-          <td class="mono">V8+V9</td>
+          <td class="mono">V8..V14</td>
         </tr>
         <tr data-rlvr="gpu_compute_5target">
           <th scope="row" class="mono">gpu_compute_5target</th>
           <td class="mono">32</td>
-          <td class="mono">V8+V9</td>
+          <td class="mono">V8..V14</td>
+        </tr>
+        <tr data-rlvr="mcts_and_selfplay_egraph_rlvr">
+          <th scope="row" class="mono">mcts_and_selfplay_egraph_rlvr</th>
+          <td class="mono">32</td>
+          <td class="mono">V8..V14</td>
+        </tr>
+        <tr data-rlvr="mir_deny_effect_interproc">
+          <th scope="row" class="mono">mir_deny_effect_interproc</th>
+          <td class="mono">32</td>
+          <td class="mono">V8..V14</td>
+        </tr>
+        <tr data-rlvr="oss_gold_and_renderer_30_33">
+          <th scope="row" class="mono">oss_gold_and_renderer_30_33</th>
+          <td class="mono">32</td>
+          <td class="mono">V8..V14</td>
+        </tr>
+        <tr data-rlvr="pq_kem_and_enclave_zeroc">
+          <th scope="row" class="mono">pq_kem_and_enclave_zeroc</th>
+          <td class="mono">32</td>
+          <td class="mono">V8..V14</td>
+        </tr>
+        <tr data-rlvr="quic_lite_firewall_zeroc">
+          <th scope="row" class="mono">quic_lite_firewall_zeroc</th>
+          <td class="mono">32</td>
+          <td class="mono">V8..V14</td>
         </tr>
         <tr data-rlvr="rsi_anti_goodhart">
           <th scope="row" class="mono">rsi_anti_goodhart</th>
           <td class="mono">32</td>
-          <td class="mono">V8+V9</td>
+          <td class="mono">V8..V14</td>
+        </tr>
+        <tr data-rlvr="shamir_threshold_hsm_slice36">
+          <th scope="row" class="mono">shamir_threshold_hsm_slice36</th>
+          <td class="mono">32</td>
+          <td class="mono">V14 new</td>
+        </tr>
+        <tr data-rlvr="strict_determinism_float_verifier">
+          <th scope="row" class="mono">strict_determinism_float_verifier</th>
+          <td class="mono">32</td>
+          <td class="mono">V14 new</td>
+        </tr>
+        <tr data-rlvr="superframe_crt_lens_parity">
+          <th scope="row" class="mono">superframe_crt_lens_parity</th>
+          <td class="mono">32</td>
+          <td class="mono">V8..V14</td>
         </tr>
         <tr data-rlvr="superframe_native_bld">
           <th scope="row" class="mono">superframe_native_bld</th>
           <td class="mono">32</td>
-          <td class="mono">V8+V9</td>
+          <td class="mono">V8..V14</td>
         </tr>
         <tr data-rlvr="superopt_v6_soundness">
           <th scope="row" class="mono">superopt_v6_soundness</th>
           <td class="mono">32</td>
-          <td class="mono">V8+V9</td>
+          <td class="mono">V8..V14</td>
+        </tr>
+        <tr data-rlvr="superopt_v7_ieee754_soundness">
+          <th scope="row" class="mono">superopt_v7_ieee754_soundness</th>
+          <td class="mono">32</td>
+          <td class="mono">V8..V14</td>
         </tr>
         <tr data-rlvr="titan_epigenetic_unified">
           <th scope="row" class="mono">titan_epigenetic_unified</th>
           <td class="mono">32</td>
-          <td class="mono">V9 new</td>
+          <td class="mono">V8..V14</td>
         </tr>
         <tr data-rlvr="unsolvable_honest_exit">
           <th scope="row" class="mono">unsolvable_honest_exit</th>
           <td class="mono">32</td>
-          <td class="mono">V8+V9</td>
+          <td class="mono">V8..V14</td>
+        </tr>
+        <tr data-rlvr="wcet_max_stack_verifier">
+          <th scope="row" class="mono">wcet_max_stack_verifier</th>
+          <td class="mono">32</td>
+          <td class="mono">V8..V14</td>
         </tr>
         <tr data-rlvr="world_physics_3d_gpu">
           <th scope="row" class="mono">world_physics_3d_gpu</th>
           <td class="mono">32</td>
-          <td class="mono">V9 new</td>
+          <td class="mono">V8..V14</td>
         </tr>
         <tr data-rlvr="zeroc_crypto_5isa">
           <th scope="row" class="mono">zeroc_crypto_5isa</th>
           <td class="mono">32</td>
-          <td class="mono">V8+V9</td>
+          <td class="mono">V8..V14</td>
+        </tr>
+        <tr data-rlvr="zk_pedersen_schnorr_slice34">
+          <th scope="row" class="mono">zk_pedersen_schnorr_slice34</th>
+          <td class="mono">32</td>
+          <td class="mono">V8..V14</td>
         </tr>
       </tbody>
     </table>
   </div>
 </section>
 
-<section class="ds-sec" id="gpu200" aria-labelledby="h-gpu">
-  <h2 id="h-gpu">Bicentennial 200-shader GPU compute batches (40 kernels x 5 backends)</h2>
-  <div class="ds-wrap" tabindex="0" role="region" aria-label="Bicentennial 200-shader GPU compute batches">
+<section class="ds-sec" id="gpu560" aria-labelledby="h-gpu">
+  <h2 id="h-gpu">Certified 560-shader GPU compute batches (112 kernels x 5 backends)</h2>
+  <div class="ds-wrap" tabindex="0" role="region" aria-label="Certified 560-shader GPU compute batches">
     <table class="ds-table">
       <colgroup><col style="width:35%"><col style="width:12%"><col style="width:12%"><col style="width:41%"></colgroup>
       <thead>
@@ -414,6 +637,60 @@
           <td class="mono">20</td>
           <td>Heston Monte Carlo, PageRank graph step, Fourier optics, and radix-2 FFT</td>
         </tr>
+        <tr data-gpu-batch="wave134a_titan_ai_rlvr_240pack">
+          <th scope="row" class="mono">wave134a_titan_ai_rlvr_240pack</th>
+          <td class="mono">8</td>
+          <td class="mono">40</td>
+          <td>FlashAttention-3, RMSNorm-SwiGLU, INT4 AWQ, MoE Top-K, Mamba-2 SSD, GRPO, SpecTree, H2O</td>
+        </tr>
+        <tr data-gpu-batch="wave135c_frontier_domain_280pack">
+          <th scope="row" class="mono">wave135c_frontier_domain_280pack</th>
+          <td class="mono">8</td>
+          <td class="mono">40</td>
+          <td>Rigid-body LCP, MPM snow, FDTD room IR, QFT gate, CryoEM CTF, EKF-SLAM, JFA 3D, HashGrid</td>
+        </tr>
+        <tr data-gpu-batch="wave138a_photonics_geo_320pack">
+          <th scope="row" class="mono">wave138a_photonics_geo_320pack</th>
+          <td class="mono">8</td>
+          <td class="mono">40</td>
+          <td>Photonics FDTD, seismic wave, plasma PIC, magnetohydrodynamics, SAR, LIDAR, and geodesy</td>
+        </tr>
+        <tr data-gpu-batch="wave142a_crypto_med_360pack">
+          <th scope="row" class="mono">wave142a_crypto_med_360pack</th>
+          <td class="mono">8</td>
+          <td class="mono">40</td>
+          <td>NTT lattice, zk-MSM, elliptic-curve Montgomery, CT backprojection, MRI k-space, and ultrasound</td>
+        </tr>
+        <tr data-gpu-batch="wave146a_quadricentennial_400pack">
+          <th scope="row" class="mono">wave146a_quadricentennial_400pack</th>
+          <td class="mono">8</td>
+          <td class="mono">40</td>
+          <td>Quadricentennial aerospace CFD, orbital N-body, lattice QCD, climate GCM, and multi-physics kernels</td>
+        </tr>
+        <tr data-gpu-batch="wave156b_astro_robotics_440pack">
+          <th scope="row" class="mono">wave156b_astro_robotics_440pack</th>
+          <td class="mono">8</td>
+          <td class="mono">40</td>
+          <td>Kepler-Lambert orbit, MHD plasma flux, CCD IK, ICP SVD, Rayleigh-Mie, 3x3 Jacobi SVD, Hilbert/Morton 3D, Reed-Solomon GF(2^8)</td>
+        </tr>
+        <tr data-gpu-batch="wave161a_qec_gnn_480pack">
+          <th scope="row" class="mono">wave161a_qec_gnn_480pack</th>
+          <td class="mono">8</td>
+          <td class="mono">40</td>
+          <td>Surface-Code QEC syndrome, GraphSAGE, Black-Scholes Greeks, CSR SpMV CG, RTS Kalman, xxHash32 Bloom, Catmull-Clark, bilateral GI denoise</td>
+        </tr>
+        <tr data-gpu-batch="wave163a_quingentennial_520pack">
+          <th scope="row" class="mono">wave163a_quingentennial_520pack</th>
+          <td class="mono">8</td>
+          <td class="mono">40</td>
+          <td>Quingentennial 520-pack certified 5-backend compute kernels (#68966)</td>
+        </tr>
+        <tr data-gpu-batch="wave166a_qchem_zk_560pack">
+          <th scope="row" class="mono">wave166a_qchem_zk_560pack</th>
+          <td class="mono">8</td>
+          <td class="mono">40</td>
+          <td>Quantum chemistry and zero-knowledge proving compute kernels (#68973)</td>
+        </tr>
       </tbody>
     </table>
   </div>
@@ -421,13 +698,13 @@
 
 <section class="ds-sec" id="scope" aria-labelledby="h-scope">
   <h2 id="h-scope">Honest scope and hygiene guarantees</h2>
-  <p>Every row in BuildDB Parquet V6 (#68839) and JFC3P-14B-Oracle-v9 (#68861) is filtered fail-closed for pure-OSI MIT provenance (0 non-MIT rows, 0 local workstation paths, 0 secrets) with planted duplicate-ID, secret-leak, and failing-solution controls verified before sealing. All 200 shaders in the Bicentennial GPU pack (#68850) pass external validation across WGSL, HLSL, MSL, SPIR-V, and GLSL with 1,228 verified Superopt V6 rewrites. This browser page verifies datasets_manifest.json via WebCrypto SHA-256 before enabling filters and summarizes the sealed offline corpora; multi-megabyte Parquet and JSONL training files remain staged offline and are not embedded inline in static site HTML.</p>
+  <p>Every row in BuildDB Parquet V10 (#68955) and JFC3P-14B-Oracle-v14 (#68968) is filtered fail-closed for pure-OSI MIT provenance (0 non-MIT rows, 0 local workstation paths, 0 secrets) with planted duplicate-ID, secret-leak, and failing-solution controls verified before sealing. All 560 shaders in the 5-backend GPU pack (#68973) pass external validation across WGSL, HLSL, MSL, SPIR-V, and GLSL with 4,009 verified Superopt V6 rewrites. This browser page verifies datasets_manifest.json via WebCrypto SHA-256 before enabling filters and summarizes the sealed offline corpora; multi-megabyte Parquet and JSONL training files remain staged offline and are not embedded inline in static site HTML.</p>
 </section>
 
 <footer class="ds-sheet-foot">
   <p><strong>Sheet</strong> <code>playground/datasets/index.html</code></p>
   <p><strong>Updated</strong> 2026-11-27</p>
-  <p><strong>Ground</strong> Measured Drafting Sheet | Pure OSI MIT | 2,328 BuildDB V6 rows | 640 RLVR v9 tasks | 200 GPU shaders</p>
+  <p><strong>Ground</strong> Measured Drafting Sheet | Pure OSI MIT | 4,016 BuildDB V10 rows | 1,280 RLVR v14 tasks | 560 GPU shaders</p>
 </footer>
 </article>
 <script type="module" src="./datasets_explorer.mjs"></script>

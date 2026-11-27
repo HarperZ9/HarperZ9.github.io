@@ -40,11 +40,11 @@ Technical Networking Support | Stream/Convergys | 2014 to 2015
 
 Projects
 
-- Built RAW live DirectX 12 Skyrim SE pipeline (96 of 96 moving-camera heuristics across 384 1080p frames, 19 GPU solvers at 1.57 ms, 0 D3D12 errors, 522/522 runtime) beside C++23 Superframe 0.3.0 (CPU/D3D12/Vulkan/WebGPU, 60/60 MSVC/GCC tests, 600 Vulkan frames matching WARP hash for hash).
+- Built RAW live DX12 Skyrim SE pipeline (96/96 moving-camera pass, 19 solvers 1.57 ms, 0 D3D12 errors) beside C++23 Superframe 0.3.0 (39/39 0-ULP CPU/D3D12/Vulkan/WebGPU parity, 600/600 5-backend GPU shaders with 5-way GLSL FMA parity).
 
 - Added Superframe spectral material and 64v/126t SDF/flora meshlet forge, SI rigid-body PGS/Coulomb physai (30,670 steps/s), NOH-1 (1,149.9x), and native CLAP/VST3 physical-model audio.
 
-- Developed BuildLang 1.15.0 (Rust capability-effect compiler, C/HLSL/GLSL/Wasm/x86-64, 147/147 repeatable hashes, BDB v2 2.89 MB paging with 0/500 silent corruptions, procgen_forge.bld 2,132.3x, aerospace_ai_kernels.bld 1,008.5x).
+- Developed BuildLang 1.15.0 / BuildOS-2.2 (zero-C 5-ISA compiler, 600/600 5-backend GPU shaders, 112/112 live MIT WASM, 4-pillar --sovereign-audit MIR verifiers, BuildDB V11 4,451 rows, 27/27 native auditors).
 
 - Brought Argonaut's 1990s BRender engine to 64-bit Windows and Linux from its public source.
 

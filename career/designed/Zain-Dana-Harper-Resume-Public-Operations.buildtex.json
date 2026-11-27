@@ -3,7 +3,7 @@
  "source": {
   "path": "career/resume-source.json",
   "document": "public-operations",
-  "sha256": "5d9504eb8c883a83e133862b99d084b54dcd13bf4bf03a72a9fba63b73c62665"
+  "sha256": "02ba838469d49a03db0a41a8c6ad7c98454ed0c33f267410971c53df8895217b"
  },
  "ir_sha256": "ac0bcff1d4e7c367b4630bca81186c69b696753b240223c231d859b3ea4872ba",
  "theme": "press-resume",
@@ -13,7 +13,7 @@
   "emboss.deboss_finish=inked"
  ],
  "outputs": {
-  "Zain-Dana-Harper-Resume-Public-Operations.pdf": "dd3e7815ee59325b7c7341c86375cf0cae0a1ccc0b1d73f1afd4224f36cabb73"
+  "Zain-Dana-Harper-Resume-Public-Operations.pdf": "a4a7ccb02eb3b88db1b3dd7271a95134d1c84311e575c2d6cf205bd5d3f26794"
  },
  "pdf_metadata": {
   "pdfa": false,
@@ -49,7 +49,7 @@
   "blind_text_runs": 0,
   "reading_order": true,
   "blocks_missing_from_text": [],
-  "pdf_bytes": 219261
+  "pdf_bytes": 219264
  },
  "failed": [],
  "notes": [

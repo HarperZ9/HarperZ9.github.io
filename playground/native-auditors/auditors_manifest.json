@@ -1,0 +1,511 @@
+{
+  "schema": "native-auditors-explorer/1",
+  "license": "MIT",
+  "date": "2026-11-27",
+  "cockpit": {
+    "receipt_catalogue_id": 68904,
+    "auditors_passed": "22/22",
+    "auditors_total": 22,
+    "sub_ms_auditors": 9,
+    "native_bins_tracked": 23,
+    "stale_native_bins": 0,
+    "peak_speedup_x": 1531,
+    "auditors": [
+      {
+        "id": "rsi_audit",
+        "binary": "rsi_closed_loop_cli.exe",
+        "binary_bytes": 75460,
+        "lane": "core-compiler-gates",
+        "elapsed_ms": 9.63,
+        "ok": true,
+        "scope": "Closed-loop RSI verification (Arm B gain 8.953x)"
+      },
+      {
+        "id": "epigenetics_audit",
+        "binary": "epigenetics_audit_cli.exe",
+        "binary_bytes": 82945,
+        "lane": "core-compiler-gates",
+        "elapsed_ms": 14.26,
+        "ok": true,
+        "scope": "Epigenetic plasticity audit (95.83% heldout accuracy)"
+      },
+      {
+        "id": "accountability_audit",
+        "binary": "accountability_gate_cli.exe",
+        "binary_bytes": 73276,
+        "lane": "core-compiler-gates",
+        "elapsed_ms": 9.79,
+        "ok": true,
+        "scope": "Three-plate accountability gate (1.00 recall)"
+      },
+      {
+        "id": "egraph_audit",
+        "binary": "egraph_audit_cli.exe",
+        "binary_bytes": 71781,
+        "lane": "core-compiler-gates",
+        "elapsed_ms": 9.79,
+        "ok": true,
+        "scope": "E-graph Superopt proof-step reduction (87.5%)"
+      },
+      {
+        "id": "selfhost_audit",
+        "binary": "buildc_selfhost_quadarch.exe",
+        "binary_bytes": 169861,
+        "lane": "core-compiler-gates",
+        "elapsed_ms": 81.51,
+        "ok": true,
+        "scope": "5-target zero-C self-hosting verification (PE/ELF/RV64/AArch64/WASM)"
+      },
+      {
+        "id": "receipt_verify",
+        "binary": "workstation_receipt_verify.exe",
+        "binary_bytes": 79545,
+        "lane": "core-compiler-gates",
+        "elapsed_ms": 2.186,
+        "ok": true,
+        "scope": "Native SHA-256 envelope seal and artifact digest verifier"
+      },
+      {
+        "id": "reinject_check",
+        "binary": "reinject_dogfood_check.py",
+        "binary_bytes": 0,
+        "lane": "core-compiler-gates",
+        "elapsed_ms": 82.07,
+        "ok": true,
+        "scope": "Tracks 23 native BuildLang binaries (0 stale) and formula sync"
+      },
+      {
+        "id": "wasm_gate",
+        "binary": "workstation_wasm_gate.exe",
+        "binary_bytes": 80037,
+        "lane": "security-os-gpu",
+        "elapsed_ms": 6.334,
+        "ok": true,
+        "scope": "Verifies 36/36, 78/78, and 84/84 pure-OSI MIT WASM packs"
+      },
+      {
+        "id": "gpu_cert_gate",
+        "binary": "workstation_gpu_cert_gate.exe",
+        "binary_bytes": 79928,
+        "lane": "security-os-gpu",
+        "elapsed_ms": 25.662,
+        "ok": true,
+        "scope": "Verifies 120 core GPU shader certs and 500 Superopt rewrites"
+      },
+      {
+        "id": "buildos_gate",
+        "binary": "workstation_buildos_gate.exe",
+        "binary_bytes": 75150,
+        "lane": "security-os-gpu",
+        "elapsed_ms": 0.837,
+        "ok": true,
+        "scope": "Verifies 14 BuildOS Zero-C slices / 70 binaries across 5 ISAs"
+      },
+      {
+        "id": "renderer_parity_gate",
+        "binary": "workstation_renderer_parity_gate.exe",
+        "binary_bytes": 74682,
+        "lane": "security-os-gpu",
+        "elapsed_ms": 0.204,
+        "ok": true,
+        "scope": "Verifies 20/20 graduated 0-ULP C++23 renderer parity modules"
+      },
+      {
+        "id": "gpu200_gate",
+        "binary": "workstation_gpu200_gate.exe",
+        "binary_bytes": 75888,
+        "lane": "security-os-gpu",
+        "elapsed_ms": 1.127,
+        "ok": true,
+        "scope": "Verifies 200 shaders (40 MIT kernels x 5 backends, 1,228 rewrites)"
+      },
+      {
+        "id": "pq_enclave_gate",
+        "binary": "workstation_pq_enclave_gate.exe",
+        "binary_bytes": 74644,
+        "lane": "security-os-gpu",
+        "elapsed_ms": 0.14,
+        "ok": true,
+        "scope": "Verifies PQ Hybrid KEM + Confidential Enclave + Goodhart Valve (98 attacks)"
+      },
+      {
+        "id": "buildos_v2_gate",
+        "binary": "workstation_buildos_v2_gate.exe",
+        "binary_bytes": 75189,
+        "lane": "security-os-gpu",
+        "elapsed_ms": 0.229,
+        "ok": true,
+        "scope": "Verifies BuildOS-2.0 (45 bins, 40 attacks) + 280 GPU shaders (1,531x vs Python)"
+      },
+      {
+        "id": "formula_gate",
+        "binary": "workstation_formula_gate.exe",
+        "binary_bytes": 72261,
+        "lane": "data-docs-governance",
+        "elapsed_ms": 2.237,
+        "ok": true,
+        "scope": "Verifies 572 zero-FLAG formulas, 234 ideas, and 76 competitive signals"
+      },
+      {
+        "id": "sbom_gate",
+        "binary": "workstation_sbom_gate.exe",
+        "binary_bytes": 76801,
+        "lane": "data-docs-governance",
+        "elapsed_ms": 5.683,
+        "ok": true,
+        "scope": "Verifies 32 V1 + 31 V2 SBOMs and 2,146 pure-OSI components"
+      },
+      {
+        "id": "benchmark_gate",
+        "binary": "workstation_benchmark_gate.exe",
+        "binary_bytes": 82993,
+        "lane": "data-docs-governance",
+        "elapsed_ms": 0.571,
+        "ok": true,
+        "scope": "Verifies 20/20 Benchmarks V4 workloads across 57 runtime cells"
+      },
+      {
+        "id": "surpass_gate",
+        "binary": "workstation_surpass_gate.exe",
+        "binary_bytes": 73583,
+        "lane": "data-docs-governance",
+        "elapsed_ms": 0.492,
+        "ok": true,
+        "scope": "Verifies 76 competitive benchmark rows across 8 technical lanes"
+      },
+      {
+        "id": "ideas_gate",
+        "binary": "workstation_ideas_gate.exe",
+        "binary_bytes": 77829,
+        "lane": "data-docs-governance",
+        "elapsed_ms": 4.865,
+        "ok": true,
+        "scope": "Verifies 231/231 built author ideas with 0 unverified claims"
+      },
+      {
+        "id": "dataset_gate",
+        "binary": "workstation_dataset_gate.exe",
+        "binary_bytes": 74644,
+        "lane": "data-docs-governance",
+        "elapsed_ms": 0.18,
+        "ok": true,
+        "scope": "Verifies BuildDB V6/V7 and RLVR corpora across 15,930 indexed rows"
+      },
+      {
+        "id": "papers_gate",
+        "binary": "workstation_papers_gate.exe",
+        "binary_bytes": 74644,
+        "lane": "data-docs-governance",
+        "elapsed_ms": 0.271,
+        "ok": true,
+        "scope": "Verifies 10/10 sealed PDFs (42 pages) and paper/grant receipts"
+      },
+      {
+        "id": "rlvr_synth_gate",
+        "binary": "workstation_rlvr_synth_gate.exe",
+        "binary_bytes": 74644,
+        "lane": "data-docs-governance",
+        "elapsed_ms": 0.198,
+        "ok": true,
+        "scope": "Verifies Self-Play RLVR Synthesizer + BuildDB V7 + RLVR v9 (3,306 units)"
+      }
+    ]
+  },
+  "oss_gold_sbom_v3": {
+    "receipt_catalogue_id": 68894,
+    "gold_standard_score": "165/165",
+    "gold_standard_perfect_repos": "15/15",
+    "total_sbom_files": 30,
+    "total_components": 259,
+    "stale_fsl": 0,
+    "proprietary": 0,
+    "repositories": [
+      {
+        "slug": "buildlang",
+        "repo": "HarperZ9/buildlang",
+        "group": "flagship",
+        "ecosystem": "cargo",
+        "version": "1.15.0",
+        "license": "AGPL-3.0-only",
+        "component_count": 175,
+        "spdx_sha256": "e1515e12f7c933ac82541678af71558a0c96d3d713b89d1c7dc00e0f9982e8f2",
+        "cdx_sha256": "73943a45598abbd5381a214c8bc2a3af62c2dc2a2c4a1e9c26b7cbd9eca997e9"
+      },
+      {
+        "slug": "superframe",
+        "repo": "HarperZ9/superframe",
+        "group": "flagship",
+        "ecosystem": "npm",
+        "version": "0.3.0",
+        "license": "MIT",
+        "component_count": 1,
+        "spdx_sha256": "f8ad8614d3fc8623aab597615d0efeb6ee5f2069767948e85c8c55bcda3875c1",
+        "cdx_sha256": "20faf08ad0cd8d8f1d828e002539c78dab733027f699747449dd0fecdf39e8ad"
+      },
+      {
+        "slug": "flywheel",
+        "repo": "HarperZ9/flywheel",
+        "group": "flagship",
+        "ecosystem": "pypi",
+        "version": "2.0.0",
+        "license": "MIT",
+        "component_count": 13,
+        "spdx_sha256": "3a97e8c62b4993e65d5f9c39835aa9aaa966212b67a0051406f7fcb837d521c5",
+        "cdx_sha256": "4e0828316121d16660b91477abe4257889fbcccb5babaef3f7b5cded9174fb63"
+      },
+      {
+        "slug": "cmmns",
+        "repo": "HarperZ9/cmmns",
+        "group": "flagship",
+        "ecosystem": "npm",
+        "version": "3.10.0",
+        "license": "AGPL-3.0-only",
+        "component_count": 1,
+        "spdx_sha256": "4bc89e74dd8650cd634927e8255a567cca3760fb6a85380a9bde133eb6b02b55",
+        "cdx_sha256": "2ec790d112772a69200b6c608b3a62f66e5abb0dbf9e5afb92a46799e7fb29b5"
+      },
+      {
+        "slug": "HarperZ9.github.io",
+        "repo": "HarperZ9/HarperZ9.github.io",
+        "group": "flagship",
+        "ecosystem": "npm",
+        "version": "2026.11.27",
+        "license": "CC-BY-4.0",
+        "component_count": 1,
+        "spdx_sha256": "eade1689513177b4a740ded765ac783020f9ef5dcb0b7bfac160c05dd823ac4b",
+        "cdx_sha256": "101c59bace4316aaeaa8546dc97ce4601f142cc74e1b798be05662fdae5a7b9a"
+      },
+      {
+        "slug": "articulate",
+        "repo": "HarperZ9/articulate",
+        "group": "mcp_server",
+        "ecosystem": "pypi",
+        "version": "0.19.1",
+        "license": "MIT",
+        "component_count": 6,
+        "spdx_sha256": "ca0f5dce242c71c77a345e5fcc4c5d5d389004b9012bd9675f0900e2e5630c27",
+        "cdx_sha256": "c33c327709aaaffd6dfcce9e8df4ef3d7efb05cab37149ee9cbdf8bee0fac2f4"
+      },
+      {
+        "slug": "index",
+        "repo": "HarperZ9/index",
+        "group": "mcp_server",
+        "ecosystem": "pypi",
+        "version": "2.16.0",
+        "license": "MIT",
+        "component_count": 2,
+        "spdx_sha256": "e76354f9bce78face0257930d93d911fe078cd5c557c2f343b5c77721ca7c6f2",
+        "cdx_sha256": "fec44cce2b9cccc96f719a2093ca60899971ac8aead018c332c370f57e3d5889"
+      },
+      {
+        "slug": "forum",
+        "repo": "HarperZ9/forum",
+        "group": "mcp_server",
+        "ecosystem": "pypi",
+        "version": "1.17.0",
+        "license": "MIT",
+        "component_count": 5,
+        "spdx_sha256": "26a67f534cbe3746876068c61aa65819c3ad9ce4eb63cec294c8a5f78768d446",
+        "cdx_sha256": "9f5c31fa5503236275ec13a17e196b36bdf131cd672d444292d04d342028ff6e"
+      },
+      {
+        "slug": "crucible",
+        "repo": "HarperZ9/crucible",
+        "group": "mcp_server",
+        "ecosystem": "pypi",
+        "version": "1.6.0",
+        "license": "MIT",
+        "component_count": 7,
+        "spdx_sha256": "225e9d1db0f8e4162f9533286a270ca56fbd6b97a86ccc69a0df3c59f9518eed",
+        "cdx_sha256": "e522cb1d5b98316899f20a01f82b8975a386215d6747acf7313d658ae8010199"
+      },
+      {
+        "slug": "plexus",
+        "repo": "HarperZ9/plexus",
+        "group": "mcp_server",
+        "ecosystem": "pypi",
+        "version": "0.4.0",
+        "license": "MIT",
+        "component_count": 2,
+        "spdx_sha256": "0c490ada3e7029681ff43f329d95cfd6a7be6f6f46254bb9a9a920fe9e1ed2d0",
+        "cdx_sha256": "526b6c01c0cba989b36f7650590e643cf49c0e97998f15e160aa04e13912fa53"
+      },
+      {
+        "slug": "calibrate-pro",
+        "repo": "HarperZ9/calibrate-pro",
+        "group": "mcp_server",
+        "ecosystem": "pypi",
+        "version": "2.0.1",
+        "license": "MIT",
+        "component_count": 19,
+        "spdx_sha256": "6c2ec27e968d9a44bcfe251330c18aedff1a39c817fa7e465e249adf50dcd0d4",
+        "cdx_sha256": "aa3d0193b936c296efbde0eb44d23eadf550b48418a2205215fd7a3e6ef166d8"
+      },
+      {
+        "slug": "gather",
+        "repo": "HarperZ9/gather",
+        "group": "mcp_server",
+        "ecosystem": "pypi",
+        "version": "2.6.0",
+        "license": "AGPL-3.0-only",
+        "component_count": 8,
+        "spdx_sha256": "b5d38a35b962a426b3c502a771c90ff7b46e6dac2c22d60cef137d3ef2077c3d",
+        "cdx_sha256": "55f61f3dc33fa7459d6f450b82adde003323480ba5607752385121ccec26b27e"
+      },
+      {
+        "slug": "chorus",
+        "repo": "HarperZ9/chorus",
+        "group": "mcp_server",
+        "ecosystem": "pypi",
+        "version": "0.3.2",
+        "license": "AGPL-3.0-only",
+        "component_count": 1,
+        "spdx_sha256": "7a1a805a6218584b01e45943ce979a539170418aebc95f82fbbb681737b9fea0",
+        "cdx_sha256": "0027c549ee9088cbaf1b44748cb8ce7122cd01752d6b74d590255be230c3be35"
+      },
+      {
+        "slug": "mneme",
+        "repo": "HarperZ9/mneme",
+        "group": "mcp_server",
+        "ecosystem": "pypi",
+        "version": "0.7.0",
+        "license": "AGPL-3.0-only",
+        "component_count": 2,
+        "spdx_sha256": "7e9b218f9f6aea492c1b20ffff3c15d41078de7f2e716a70f93ff164b54e6f3b",
+        "cdx_sha256": "b4b1a72f2455e6f0fff37181348378f8282a11935a1072ba8ae36a64d4a6fab3"
+      },
+      {
+        "slug": "learn",
+        "repo": "HarperZ9/learn",
+        "group": "mcp_server",
+        "ecosystem": "npm",
+        "version": "2.3.0",
+        "license": "AGPL-3.0-only",
+        "component_count": 1,
+        "spdx_sha256": "0c434678ae753b49eb0427e72b3068128616ea30ffad4d3e6e90ef6fe7704fac",
+        "cdx_sha256": "2e0dd3e788f3c80b64a78c160e513e74783274a32e4e6b0dab68625b7809fd19"
+      }
+    ]
+  },
+  "mcp_registry": {
+    "receipt_catalogue_id": 68895,
+    "spec_version": "2025-12-11",
+    "total_servers": 10,
+    "passed_servers": 10,
+    "pypi_servers": 9,
+    "npm_servers": 1,
+    "total_dry_run_artifacts": 19,
+    "servers": [
+      {
+        "slug": "articulate",
+        "repo": "HarperZ9/articulate",
+        "mcp_name": "io.github.harperz9/articulate",
+        "registry_type": "pypi",
+        "package_identifier": "articulate-writing",
+        "package_version": "0.19.1",
+        "license_spdx": "MIT",
+        "server_json_sha256": "sha256:a665bfa85a178a1a9d81c0e4df9482b6cbaeddfdff757e6db3e31dbe971591da",
+        "dry_run_artifact_count": 2
+      },
+      {
+        "slug": "index",
+        "repo": "HarperZ9/index",
+        "mcp_name": "io.github.harperz9/index",
+        "registry_type": "pypi",
+        "package_identifier": "index-graph",
+        "package_version": "2.16.0",
+        "license_spdx": "MIT",
+        "server_json_sha256": "sha256:1c0a95ef5ade81e062b01104341ea1e28efe6e8172e9ade99a743cb957f67164",
+        "dry_run_artifact_count": 2
+      },
+      {
+        "slug": "plexus",
+        "repo": "HarperZ9/plexus",
+        "mcp_name": "io.github.harperz9/plexus",
+        "registry_type": "pypi",
+        "package_identifier": "plexus-mesh",
+        "package_version": "0.4.0",
+        "license_spdx": "MIT",
+        "server_json_sha256": "sha256:25f14f844a108d73449229da80a1c8616568a285d883eb7e26d0b63bc4c09968",
+        "dry_run_artifact_count": 2
+      },
+      {
+        "slug": "gather",
+        "repo": "HarperZ9/gather",
+        "mcp_name": "io.github.harperz9/gather",
+        "registry_type": "pypi",
+        "package_identifier": "gather-engine",
+        "package_version": "2.6.0",
+        "license_spdx": "AGPL-3.0-only",
+        "server_json_sha256": "sha256:e514386534b99830e192e23a71ef0be860db9f66e208c0ab7ab53910e7641999",
+        "dry_run_artifact_count": 2
+      },
+      {
+        "slug": "chorus",
+        "repo": "HarperZ9/chorus",
+        "mcp_name": "io.github.harperz9/chorus",
+        "registry_type": "pypi",
+        "package_identifier": "chorus-discourse",
+        "package_version": "0.3.2",
+        "license_spdx": "AGPL-3.0-only",
+        "server_json_sha256": "sha256:1a4519f6fdc94d0cf839261e05ba248289ab10d21e8c9a54a88f9634663d5094",
+        "dry_run_artifact_count": 2
+      },
+      {
+        "slug": "mneme",
+        "repo": "HarperZ9/mneme",
+        "mcp_name": "io.github.harperz9/mneme",
+        "registry_type": "pypi",
+        "package_identifier": "flywheel-mneme",
+        "package_version": "0.7.0",
+        "license_spdx": "AGPL-3.0-only",
+        "server_json_sha256": "sha256:b34ac802456f11ff33d99c4e909a09428131909790ecb6317e85505a28f55410",
+        "dry_run_artifact_count": 2
+      },
+      {
+        "slug": "learn",
+        "repo": "HarperZ9/learn",
+        "mcp_name": "io.github.harperz9/learn",
+        "registry_type": "npm",
+        "package_identifier": "@harperz9/learn",
+        "package_version": "2.3.0",
+        "license_spdx": "AGPL-3.0-only",
+        "server_json_sha256": "sha256:0e2535f8321e0735f08b80190f0e745d4cb2b7de2c25eca85ce35885464559bd",
+        "dry_run_artifact_count": 1
+      },
+      {
+        "slug": "crucible",
+        "repo": "HarperZ9/crucible",
+        "mcp_name": "io.github.harperz9/crucible",
+        "registry_type": "pypi",
+        "package_identifier": "crucible-bench",
+        "package_version": "1.6.0",
+        "license_spdx": "MIT",
+        "server_json_sha256": "sha256:e80ddde1f2bb0f2202a9939a08a9b4a48573c7d3a695fc15eac3c85a507dda73",
+        "dry_run_artifact_count": 2
+      },
+      {
+        "slug": "forum",
+        "repo": "HarperZ9/forum",
+        "mcp_name": "io.github.harperz9/forum",
+        "registry_type": "pypi",
+        "package_identifier": "forum-engine",
+        "package_version": "1.17.0",
+        "license_spdx": "MIT",
+        "server_json_sha256": "sha256:d06a8048bb11ef4f96f22ac9fbfaa06929bc96e3f635ca6d75b65cea3ecf7da9",
+        "dry_run_artifact_count": 2
+      },
+      {
+        "slug": "calibrate-pro",
+        "repo": "HarperZ9/calibrate-pro",
+        "mcp_name": "io.github.harperz9/calibrate-pro",
+        "registry_type": "pypi",
+        "package_identifier": "calibrate-pro",
+        "package_version": "2.0.1",
+        "license_spdx": "MIT",
+        "server_json_sha256": "sha256:8588dc1edc1040098e804c5fc9c5e99e8c618350339f29361e31ede0a6a57575",
+        "dry_run_artifact_count": 2
+      }
+    ]
+  }
+}

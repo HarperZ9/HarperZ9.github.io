@@ -32,8 +32,8 @@ export async function verifyPinnedCatalog(rawBytes, expectedSha256) {
     err.code = "bad_schema";
     throw err;
   }
-  if (!Array.isArray(data.papers) || data.papers.length !== 5) {
-    const err = new Error(`expected 5 papers, got ${data.papers?.length}`);
+  if (!Array.isArray(data.papers) || data.papers.length !== 8) {
+    const err = new Error(`expected 8 papers, got ${data.papers?.length}`);
     err.code = "bad_paper_count";
     throw err;
   }

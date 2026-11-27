@@ -1,0 +1,3852 @@
+{
+  "schema": "buildlang-gpu-560-fma-lab/1",
+  "license": "MIT",
+  "date": "2026-11-27",
+  "compiler_commit": "f78cbb46",
+  "receipt_560pack": 68973,
+  "total_shaders": 560,
+  "unique_kernels": 112,
+  "gpu_targets": 5,
+  "total_shader_bytes": 2329296,
+  "total_rewrites": 4009,
+  "fma_5way_pack14_kernels": 8,
+  "fma_5way_sites_per_backend": 46,
+  "fma_5way_sites_total": 230,
+  "total_wasm_bytes": 43980,
+  "wasms": [
+    {
+      "id": "iridescence",
+      "label": "Superframe Renderer #38: Belcour-Barla Iridescence",
+      "file": "superframe_art_iridescence.wasm",
+      "receipt_id": 68957,
+      "imports_note": "5 no-op env.print_* stubs (0 I/O)",
+      "summary": "Thin-film Belcour-Barla spectral iridescence (unpolarized, polarized, spectral, exact sweeps) emitting 0-ULP C++23 FNV-1a parity.",
+      "nominal_expr": "irid_hash() === 0x79c84b0ebc8c281d",
+      "bytes": 31383,
+      "sha256": "7a92ca5934d66c64af8e5d67bebc8aa262d05632970df627bff4e523b6e167db",
+      "imports_count": 5
+    },
+    {
+      "id": "flash_attn",
+      "label": "Titan Tiled FlashAttention + Symplectic State",
+      "file": "titan_flash_attn.wasm",
+      "receipt_id": 68980,
+      "imports_note": "5 no-op env.print_* stubs (0 I/O)",
+      "summary": "Online-softmax tiled causal attention (seq=128, 8x SRAM, 64x score-buf savings, drift<=1e-12) with 2/2 live causal/denom traps.",
+      "nominal_expr": "run_titan_flash_attn_wasm() -> drift=4.44e-16, failures=0",
+      "bytes": 12597,
+      "sha256": "429736b06f47268cfae189b37c426c5724d5aee8183364c7988a707cafd9691b",
+      "imports_count": 5
+    }
+  ],
+  "kernels": [
+    {
+      "kernel": "pbr_ggx_brdf_compute",
+      "batch": "batch1",
+      "total_bytes": 21230,
+      "total_rewrites": 28,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 3900,
+          "rewrites": 7,
+          "validator": "verify-cert-only"
+        },
+        "hlsl": {
+          "bytes": 3330,
+          "rewrites": 7,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 3357,
+          "rewrites": 7,
+          "validator": "verify-cert-only"
+        },
+        "spirv": {
+          "bytes": 6656,
+          "rewrites": 7,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 3987,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "ntc610_decode_compute",
+      "batch": "batch1",
+      "total_bytes": 11613,
+      "total_rewrites": 20,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 2084,
+          "rewrites": 5,
+          "validator": "verify-cert-only"
+        },
+        "hlsl": {
+          "bytes": 1723,
+          "rewrites": 5,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 1754,
+          "rewrites": 5,
+          "validator": "verify-cert-only"
+        },
+        "spirv": {
+          "bytes": 3904,
+          "rewrites": 5,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 2148,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "splat_3dgs_project_compute",
+      "batch": "batch1",
+      "total_bytes": 11969,
+      "total_rewrites": 21,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 2181,
+          "rewrites": 5,
+          "validator": "verify-cert-only"
+        },
+        "hlsl": {
+          "bytes": 1763,
+          "rewrites": 5,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 1809,
+          "rewrites": 5,
+          "validator": "verify-cert-only"
+        },
+        "spirv": {
+          "bytes": 3992,
+          "rewrites": 5,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 2224,
+          "rewrites": 1,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "jonswap_wave_compute",
+      "batch": "batch1",
+      "total_bytes": 19666,
+      "total_rewrites": 55,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 3687,
+          "rewrites": 13,
+          "validator": "verify-cert-only"
+        },
+        "hlsl": {
+          "bytes": 3199,
+          "rewrites": 13,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 3236,
+          "rewrites": 13,
+          "validator": "verify-cert-only"
+        },
+        "spirv": {
+          "bytes": 5840,
+          "rewrites": 13,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 3704,
+          "rewrites": 3,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "indirect_frustum_cull_compute",
+      "batch": "batch1",
+      "total_bytes": 12518,
+      "total_rewrites": 4,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 2262,
+          "rewrites": 1,
+          "validator": "verify-cert-only"
+        },
+        "hlsl": {
+          "bytes": 1883,
+          "rewrites": 1,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 1896,
+          "rewrites": 1,
+          "validator": "verify-cert-only"
+        },
+        "spirv": {
+          "bytes": 4180,
+          "rewrites": 1,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 2297,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "sdf_raymarch_compute",
+      "batch": "batch1",
+      "total_bytes": 18491,
+      "total_rewrites": 20,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 3436,
+          "rewrites": 5,
+          "validator": "verify-cert-only"
+        },
+        "hlsl": {
+          "bytes": 3025,
+          "rewrites": 5,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 3052,
+          "rewrites": 5,
+          "validator": "verify-cert-only"
+        },
+        "spirv": {
+          "bytes": 5496,
+          "rewrites": 5,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 3482,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "cayley_symplectic_step_compute",
+      "batch": "batch2",
+      "total_bytes": 11845,
+      "total_rewrites": 17,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 2193,
+          "rewrites": 4,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 1756,
+          "rewrites": 4,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 1760,
+          "rewrites": 4,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 3912,
+          "rewrites": 4,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 2224,
+          "rewrites": 1,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "rmsnorm_swiglu_compute",
+      "batch": "batch2",
+      "total_bytes": 16730,
+      "total_rewrites": 36,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 2970,
+          "rewrites": 9,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 2589,
+          "rewrites": 9,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 2588,
+          "rewrites": 9,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 5544,
+          "rewrites": 9,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 3039,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "volumetric_froxel_scatter_compute",
+      "batch": "batch2",
+      "total_bytes": 19125,
+      "total_rewrites": 33,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 3670,
+          "rewrites": 8,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 3018,
+          "rewrites": 8,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 2967,
+          "rewrites": 8,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 5912,
+          "rewrites": 8,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 3558,
+          "rewrites": 1,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "hiz_depth_downsample_compute",
+      "batch": "batch2",
+      "total_bytes": 11719,
+      "total_rewrites": 0,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 2036,
+          "rewrites": 0,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 1796,
+          "rewrites": 0,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 1653,
+          "rewrites": 0,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 4052,
+          "rewrites": 0,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 2182,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "bilateral_atrous_denoise_compute",
+      "batch": "batch2",
+      "total_bytes": 19879,
+      "total_rewrites": 24,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 3719,
+          "rewrites": 6,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 3002,
+          "rewrites": 6,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 2969,
+          "rewrites": 6,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 6300,
+          "rewrites": 6,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 3889,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "oklab_filmic_grade_compute",
+      "batch": "batch2",
+      "total_bytes": 17006,
+      "total_rewrites": 58,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 3066,
+          "rewrites": 13,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 2694,
+          "rewrites": 13,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 2660,
+          "rewrites": 13,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 5412,
+          "rewrites": 13,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 3174,
+          "rewrites": 6,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "rope_rotary_embed_compute",
+      "batch": "batch3",
+      "total_bytes": 11494,
+      "total_rewrites": 18,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 2107,
+          "rewrites": 4,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 1770,
+          "rewrites": 4,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 1759,
+          "rewrites": 4,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 3724,
+          "rewrites": 4,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 2134,
+          "rewrites": 2,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "int4_dequant_matvec_compute",
+      "batch": "batch3",
+      "total_bytes": 15812,
+      "total_rewrites": 12,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 2798,
+          "rewrites": 3,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 2416,
+          "rewrites": 3,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 2412,
+          "rewrites": 3,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 5264,
+          "rewrites": 3,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 2922,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "bvh_aabb_intersect_compute",
+      "batch": "batch3",
+      "total_bytes": 19715,
+      "total_rewrites": 0,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 3562,
+          "rewrites": 0,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 2940,
+          "rewrites": 0,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 2867,
+          "rewrites": 0,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 6580,
+          "rewrites": 0,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 3766,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "shallow_water_step_compute",
+      "batch": "batch3",
+      "total_bytes": 13848,
+      "total_rewrites": 8,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 2400,
+          "rewrites": 2,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 2104,
+          "rewrites": 2,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 2012,
+          "rewrites": 2,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 4720,
+          "rewrites": 2,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 2612,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "wind_foliage_bend_compute",
+      "batch": "batch3",
+      "total_bytes": 16415,
+      "total_rewrites": 9,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 2920,
+          "rewrites": 2,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 2567,
+          "rewrites": 2,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 2493,
+          "rewrites": 2,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 5384,
+          "rewrites": 2,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 3051,
+          "rewrites": 1,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "spectral_xyz_eval_compute",
+      "batch": "batch3",
+      "total_bytes": 14894,
+      "total_rewrites": 36,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 2656,
+          "rewrites": 9,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 2224,
+          "rewrites": 9,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 2136,
+          "rewrites": 9,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 4992,
+          "rewrites": 9,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 2886,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "flash_attn_tile_compute",
+      "batch": "batch4",
+      "total_bytes": 17805,
+      "total_rewrites": 24,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 3156,
+          "rewrites": 6,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 2788,
+          "rewrites": 6,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 2697,
+          "rewrites": 6,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 5800,
+          "rewrites": 6,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 3364,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "moe_router_topk_compute",
+      "batch": "batch4",
+      "total_bytes": 17255,
+      "total_rewrites": 12,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 3087,
+          "rewrites": 3,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 2674,
+          "rewrites": 3,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 2575,
+          "rewrites": 3,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 5676,
+          "rewrites": 3,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 3243,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "cloth_verlet_step_compute",
+      "batch": "batch4",
+      "total_bytes": 17628,
+      "total_rewrites": 28,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 3148,
+          "rewrites": 7,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 2612,
+          "rewrites": 7,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 2628,
+          "rewrites": 7,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 5960,
+          "rewrites": 7,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 3280,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "ordered_dither_compute",
+      "batch": "batch4",
+      "total_bytes": 12729,
+      "total_rewrites": 0,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 2302,
+          "rewrites": 0,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 2036,
+          "rewrites": 0,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 1991,
+          "rewrites": 0,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 4144,
+          "rewrites": 0,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 2256,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "sky_rayleigh_mie_compute",
+      "batch": "batch4",
+      "total_bytes": 18161,
+      "total_rewrites": 37,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 3390,
+          "rewrites": 9,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 2786,
+          "rewrites": 9,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 2769,
+          "rewrites": 9,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 5840,
+          "rewrites": 9,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 3376,
+          "rewrites": 1,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "merkle_hash_step_compute",
+      "batch": "batch4",
+      "total_bytes": 22739,
+      "total_rewrites": 0,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 4105,
+          "rewrites": 0,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 3463,
+          "rewrites": 0,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 3430,
+          "rewrites": 0,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 7652,
+          "rewrites": 0,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 4089,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "titan_fca_attention_compute",
+      "batch": "wave117d_titan_ai",
+      "total_bytes": 27081,
+      "total_rewrites": 65,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 4876,
+          "rewrites": 13,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 4131,
+          "rewrites": 13,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 4086,
+          "rewrites": 13,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 8972,
+          "rewrites": 13,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 5016,
+          "rewrites": 13,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "titan_sinkhorn_mhc_compute",
+      "batch": "wave117d_titan_ai",
+      "total_bytes": 34972,
+      "total_rewrites": 50,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 6344,
+          "rewrites": 10,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 5549,
+          "rewrites": 10,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 5432,
+          "rewrites": 10,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 11200,
+          "rewrites": 10,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 6447,
+          "rewrites": 10,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "titan_int4_dequant_gemv_compute",
+      "batch": "wave117d_titan_ai",
+      "total_bytes": 16538,
+      "total_rewrites": 20,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 3026,
+          "rewrites": 4,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 2347,
+          "rewrites": 4,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 2285,
+          "rewrites": 4,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 5640,
+          "rewrites": 4,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 3240,
+          "rewrites": 4,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "titan_j13_svd_guard_compute",
+      "batch": "wave117d_titan_ai",
+      "total_bytes": 20758,
+      "total_rewrites": 45,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 3782,
+          "rewrites": 9,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 3222,
+          "rewrites": 9,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 3177,
+          "rewrites": 9,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 6744,
+          "rewrites": 9,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 3833,
+          "rewrites": 9,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "world_gaussian_splat_tile_compute",
+      "batch": "wave122c_world_physics_3d",
+      "total_bytes": 23843,
+      "total_rewrites": 29,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 4304,
+          "rewrites": 7,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 3598,
+          "rewrites": 7,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 3488,
+          "rewrites": 7,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 7884,
+          "rewrites": 7,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 4569,
+          "rewrites": 1,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "world_navier_stokes_jacobi_compute",
+      "batch": "wave122c_world_physics_3d",
+      "total_bytes": 25435,
+      "total_rewrites": 50,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 4648,
+          "rewrites": 11,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 3817,
+          "rewrites": 11,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 3744,
+          "rewrites": 11,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 8448,
+          "rewrites": 11,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 4778,
+          "rewrites": 6,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "world_xpbd_auxetic_step_compute",
+      "batch": "wave122c_world_physics_3d",
+      "total_bytes": 24034,
+      "total_rewrites": 40,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 4494,
+          "rewrites": 10,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 3669,
+          "rewrites": 10,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 3667,
+          "rewrites": 10,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 7684,
+          "rewrites": 10,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 4520,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "world_spectral_sky_transmittance_compute",
+      "batch": "wave122c_world_physics_3d",
+      "total_bytes": 29390,
+      "total_rewrites": 78,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 5586,
+          "rewrites": 19,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 4519,
+          "rewrites": 19,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 4490,
+          "rewrites": 19,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 9216,
+          "rewrites": 19,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 5579,
+          "rewrites": 2,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "sci_fdtd_maxwell_yee_compute",
+      "batch": "wave124d_sci_bio_audio",
+      "total_bytes": 18588,
+      "total_rewrites": 20,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 3311,
+          "rewrites": 5,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 2700,
+          "rewrites": 5,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 2676,
+          "rewrites": 5,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 6332,
+          "rewrites": 5,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 3569,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "sci_reaction_diffusion_gs_compute",
+      "batch": "wave124d_sci_bio_audio",
+      "total_bytes": 20918,
+      "total_rewrites": 32,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 3717,
+          "rewrites": 8,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 3021,
+          "rewrites": 8,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 2982,
+          "rewrites": 8,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 7192,
+          "rewrites": 8,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 4006,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "sci_fdn_reverb_dsp_compute",
+      "batch": "wave124d_sci_bio_audio",
+      "total_bytes": 23399,
+      "total_rewrites": 39,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 4351,
+          "rewrites": 9,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 3371,
+          "rewrites": 9,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 3305,
+          "rewrites": 9,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 7824,
+          "rewrites": 9,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 4548,
+          "rewrites": 3,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "sci_molecular_lj_verlet_compute",
+      "batch": "wave124d_sci_bio_audio",
+      "total_bytes": 24529,
+      "total_rewrites": 56,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 4522,
+          "rewrites": 13,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 3540,
+          "rewrites": 13,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 3513,
+          "rewrites": 13,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 8172,
+          "rewrites": 13,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 4782,
+          "rewrites": 4,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "fin_heston_montecarlo_compute",
+      "batch": "wave127a_fin_graph_optics_fft",
+      "total_bytes": 25210,
+      "total_rewrites": 52,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 4652,
+          "rewrites": 13,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 3670,
+          "rewrites": 13,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 3752,
+          "rewrites": 13,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 8296,
+          "rewrites": 13,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 4840,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "graph_pagerank_spmv_compute",
+      "batch": "wave127a_fin_graph_optics_fft",
+      "total_bytes": 13636,
+      "total_rewrites": 16,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 2379,
+          "rewrites": 4,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 1913,
+          "rewrites": 4,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 1847,
+          "rewrites": 4,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 4776,
+          "rewrites": 4,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 2721,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "optics_thinfilm_airy_compute",
+      "batch": "wave127a_fin_graph_optics_fft",
+      "total_bytes": 23767,
+      "total_rewrites": 96,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 4393,
+          "rewrites": 22,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 3596,
+          "rewrites": 22,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 3552,
+          "rewrites": 22,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 7732,
+          "rewrites": 22,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 4494,
+          "rewrites": 8,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "dsp_fft_radix2_butterfly_compute",
+      "batch": "wave127a_fin_graph_optics_fft",
+      "total_bytes": 20906,
+      "total_rewrites": 40,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 3744,
+          "rewrites": 10,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 3184,
+          "rewrites": 10,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 3094,
+          "rewrites": 10,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 7024,
+          "rewrites": 10,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 3860,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "flash_attention_v3_tiled",
+      "batch": "wave134a_titan_ai_rlvr_240pack",
+      "total_bytes": 20085,
+      "total_rewrites": 24,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 3527,
+          "rewrites": 6,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 3097,
+          "rewrites": 6,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 3004,
+          "rewrites": 6,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 6652,
+          "rewrites": 6,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 3805,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "rmsnorm_swiglu_fused",
+      "batch": "wave134a_titan_ai_rlvr_240pack",
+      "total_bytes": 21160,
+      "total_rewrites": 56,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 3722,
+          "rewrites": 14,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 3218,
+          "rewrites": 14,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 3229,
+          "rewrites": 14,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 7132,
+          "rewrites": 14,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 3859,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "int4_awq_dequant_gemv",
+      "batch": "wave134a_titan_ai_rlvr_240pack",
+      "total_bytes": 17254,
+      "total_rewrites": 17,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 3066,
+          "rewrites": 4,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 2467,
+          "rewrites": 4,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 2410,
+          "rewrites": 4,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 5952,
+          "rewrites": 4,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 3359,
+          "rewrites": 1,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "moe_topk2_capacity_router",
+      "batch": "wave134a_titan_ai_rlvr_240pack",
+      "total_bytes": 19956,
+      "total_rewrites": 25,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 3472,
+          "rewrites": 6,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 3077,
+          "rewrites": 6,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 2966,
+          "rewrites": 6,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 6744,
+          "rewrites": 6,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 3697,
+          "rewrites": 1,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "mamba2_ssd_chunk_scan",
+      "batch": "wave134a_titan_ai_rlvr_240pack",
+      "total_bytes": 17957,
+      "total_rewrites": 24,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 3147,
+          "rewrites": 6,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 2653,
+          "rewrites": 6,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 2589,
+          "rewrites": 6,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 6180,
+          "rewrites": 6,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 3388,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "grpo_advantage_clip_loss",
+      "batch": "wave134a_titan_ai_rlvr_240pack",
+      "total_bytes": 24185,
+      "total_rewrites": 47,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 4364,
+          "rewrites": 11,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 3753,
+          "rewrites": 11,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 3710,
+          "rewrites": 11,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 7884,
+          "rewrites": 11,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 4474,
+          "rewrites": 3,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "speculative_tree_verify_gpu",
+      "batch": "wave134a_titan_ai_rlvr_240pack",
+      "total_bytes": 11317,
+      "total_rewrites": 0,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 1996,
+          "rewrites": 0,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 1746,
+          "rewrites": 0,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 1626,
+          "rewrites": 0,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 3800,
+          "rewrites": 0,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 2149,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "h2o_heavy_hitter_evict_gpu",
+      "batch": "wave134a_titan_ai_rlvr_240pack",
+      "total_bytes": 9513,
+      "total_rewrites": 4,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 1734,
+          "rewrites": 1,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 1414,
+          "rewrites": 1,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 1383,
+          "rewrites": 1,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 3136,
+          "rewrites": 1,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 1846,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "rigid_body_lcp_pgs_gpu",
+      "batch": "wave135c_frontier_domain_280pack",
+      "total_bytes": 20411,
+      "total_rewrites": 25,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 3612,
+          "rewrites": 6,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 3111,
+          "rewrites": 6,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 3050,
+          "rewrites": 6,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 6708,
+          "rewrites": 6,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 3930,
+          "rewrites": 1,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "mpm_snow_elastoplastic_gpu",
+      "batch": "wave135c_frontier_domain_280pack",
+      "total_bytes": 23825,
+      "total_rewrites": 35,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 4183,
+          "rewrites": 8,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 3727,
+          "rewrites": 8,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 3633,
+          "rewrites": 8,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 7908,
+          "rewrites": 8,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 4374,
+          "rewrites": 3,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "fdtd_acoustic_room_ir_gpu",
+      "batch": "wave135c_frontier_domain_280pack",
+      "total_bytes": 21464,
+      "total_rewrites": 32,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 3823,
+          "rewrites": 8,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 3123,
+          "rewrites": 8,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 3139,
+          "rewrites": 8,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 7340,
+          "rewrites": 8,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 4039,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "qft_statevector_gate_gpu",
+      "batch": "wave135c_frontier_domain_280pack",
+      "total_bytes": 15364,
+      "total_rewrites": 20,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 2865,
+          "rewrites": 5,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 2246,
+          "rewrites": 5,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 2214,
+          "rewrites": 5,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 5036,
+          "rewrites": 5,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 3003,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "cryoem_ctf_wiener_filter_gpu",
+      "batch": "wave135c_frontier_domain_280pack",
+      "total_bytes": 17644,
+      "total_rewrites": 36,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 3203,
+          "rewrites": 9,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 2623,
+          "rewrites": 9,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 2652,
+          "rewrites": 9,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 5876,
+          "rewrites": 9,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 3290,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "kalman_ekf_slam_update_gpu",
+      "batch": "wave135c_frontier_domain_280pack",
+      "total_bytes": 26685,
+      "total_rewrites": 66,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 4775,
+          "rewrites": 16,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 4068,
+          "rewrites": 16,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 4021,
+          "rewrites": 16,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 8820,
+          "rewrites": 16,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 5001,
+          "rewrites": 2,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "signed_distance_jfa_3d_gpu",
+      "batch": "wave135c_frontier_domain_280pack",
+      "total_bytes": 26434,
+      "total_rewrites": 43,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 4581,
+          "rewrites": 10,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 4005,
+          "rewrites": 10,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 3888,
+          "rewrites": 10,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 9004,
+          "rewrites": 10,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 4956,
+          "rewrites": 3,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "neural_radiance_hashgrid_gpu",
+      "batch": "wave135c_frontier_domain_280pack",
+      "total_bytes": 21397,
+      "total_rewrites": 36,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 3767,
+          "rewrites": 9,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 3147,
+          "rewrites": 9,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 3093,
+          "rewrites": 9,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 7272,
+          "rewrites": 9,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 4118,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "spectral_path_mis_bsdf_gpu",
+      "batch": "wave138a_photonics_geo_320pack",
+      "total_bytes": 27510,
+      "total_rewrites": 41,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 5037,
+          "rewrites": 10,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 4293,
+          "rewrites": 10,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 4267,
+          "rewrites": 10,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 8648,
+          "rewrites": 10,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 5265,
+          "rewrites": 1,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "atmosphere_multiscatter_lut_gpu",
+      "batch": "wave138a_photonics_geo_320pack",
+      "total_bytes": 27067,
+      "total_rewrites": 65,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 5059,
+          "rewrites": 16,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 4215,
+          "rewrites": 16,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 4187,
+          "rewrites": 16,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 8408,
+          "rewrites": 16,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 5198,
+          "rewrites": 1,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "nbody_barnes_hut_quadrupole_gpu",
+      "batch": "wave138a_photonics_geo_320pack",
+      "total_bytes": 27876,
+      "total_rewrites": 75,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 4985,
+          "rewrites": 18,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 4267,
+          "rewrites": 18,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 4207,
+          "rewrites": 18,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 9204,
+          "rewrites": 18,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 5213,
+          "rewrites": 3,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "smith_waterman_banded_gpu",
+      "batch": "wave138a_photonics_geo_320pack",
+      "total_bytes": 16192,
+      "total_rewrites": 0,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 2874,
+          "rewrites": 0,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 2450,
+          "rewrites": 0,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 2318,
+          "rewrites": 0,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 5432,
+          "rewrites": 0,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 3118,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "seismic_rtm_acoustic_3d_gpu",
+      "batch": "wave138a_photonics_geo_320pack",
+      "total_bytes": 13582,
+      "total_rewrites": 25,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 2406,
+          "rewrites": 6,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 1926,
+          "rewrites": 6,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 1932,
+          "rewrites": 6,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 4660,
+          "rewrites": 6,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 2658,
+          "rewrites": 1,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "lattice_boltzmann_d3q19_gpu",
+      "batch": "wave138a_photonics_geo_320pack",
+      "total_bytes": 23391,
+      "total_rewrites": 75,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 4190,
+          "rewrites": 18,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 3567,
+          "rewrites": 18,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 3490,
+          "rewrites": 18,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 7776,
+          "rewrites": 18,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 4368,
+          "rewrites": 3,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "optimal_transport_sinkhorn_gpu",
+      "batch": "wave138a_photonics_geo_320pack",
+      "total_bytes": 25845,
+      "total_rewrites": 92,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 4733,
+          "rewrites": 22,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 3890,
+          "rewrites": 22,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 3826,
+          "rewrites": 22,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 8532,
+          "rewrites": 22,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 4864,
+          "rewrites": 4,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "cholesky_batched_spd_gpu",
+      "batch": "wave138a_photonics_geo_320pack",
+      "total_bytes": 27945,
+      "total_rewrites": 64,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 4993,
+          "rewrites": 16,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 4297,
+          "rewrites": 16,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 4201,
+          "rewrites": 16,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 9548,
+          "rewrites": 16,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 4906,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "mlkem_ntt_q3329_gpu",
+      "batch": "wave142a_crypto_med_360pack",
+      "total_bytes": 13781,
+      "total_rewrites": 0,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 2603,
+          "rewrites": 0,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 2038,
+          "rewrites": 0,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 1955,
+          "rewrites": 0,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 4552,
+          "rewrites": 0,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 2633,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "blake3_compress_gpu",
+      "batch": "wave142a_crypto_med_360pack",
+      "total_bytes": 19745,
+      "total_rewrites": 0,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 3552,
+          "rewrites": 0,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 3056,
+          "rewrites": 0,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 2991,
+          "rewrites": 0,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 6540,
+          "rewrites": 0,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 3606,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "chacha20_block_gpu",
+      "batch": "wave142a_crypto_med_360pack",
+      "total_bytes": 22918,
+      "total_rewrites": 0,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 4155,
+          "rewrites": 0,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 3633,
+          "rewrites": 0,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 3578,
+          "rewrites": 0,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 7408,
+          "rewrites": 0,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 4144,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "radon_fbp_ct_recon_gpu",
+      "batch": "wave142a_crypto_med_360pack",
+      "total_bytes": 15928,
+      "total_rewrites": 30,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 2828,
+          "rewrites": 7,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 2273,
+          "rewrites": 7,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 2292,
+          "rewrites": 7,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 5424,
+          "rewrites": 7,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 3111,
+          "rewrites": 2,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "mri_nufft_gridding_gpu",
+      "batch": "wave142a_crypto_med_360pack",
+      "total_bytes": 19674,
+      "total_rewrites": 50,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 3498,
+          "rewrites": 12,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 2986,
+          "rewrites": 12,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 2921,
+          "rewrites": 12,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 6540,
+          "rewrites": 12,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 3729,
+          "rewrites": 2,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "biquad_iir_bank_dsp_gpu",
+      "batch": "wave142a_crypto_med_360pack",
+      "total_bytes": 17209,
+      "total_rewrites": 28,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 3075,
+          "rewrites": 7,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 2388,
+          "rewrites": 7,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 2500,
+          "rewrites": 7,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 6092,
+          "rewrites": 7,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 3154,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "kalman_ukf_sigma_pts_gpu",
+      "batch": "wave142a_crypto_med_360pack",
+      "total_bytes": 21221,
+      "total_rewrites": 56,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 3957,
+          "rewrites": 14,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 3119,
+          "rewrites": 14,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 3223,
+          "rewrites": 14,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 6996,
+          "rewrites": 14,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 3926,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "voronoi_lloyd_relax_gpu",
+      "batch": "wave142a_crypto_med_360pack",
+      "total_bytes": 18921,
+      "total_rewrites": 36,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 3293,
+          "rewrites": 9,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 2735,
+          "rewrites": 9,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 2678,
+          "rewrites": 9,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 6584,
+          "rewrites": 9,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 3631,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "meshlet_frustum_hi_z_cull_gpu",
+      "batch": "wave146a_quadricentennial_400pack",
+      "total_bytes": 18560,
+      "total_rewrites": 16,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 3276,
+          "rewrites": 4,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 2644,
+          "rewrites": 4,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 2680,
+          "rewrites": 4,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 6416,
+          "rewrites": 4,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 3544,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "restir_di_reservoir_resample_gpu",
+      "batch": "wave146a_quadricentennial_400pack",
+      "total_bytes": 19557,
+      "total_rewrites": 22,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 3571,
+          "rewrites": 5,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 2868,
+          "rewrites": 5,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 2760,
+          "rewrites": 5,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 6512,
+          "rewrites": 5,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 3846,
+          "rewrites": 2,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "shallow_water_swe_climate_gpu",
+      "batch": "wave146a_quadricentennial_400pack",
+      "total_bytes": 24791,
+      "total_rewrites": 53,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 4471,
+          "rewrites": 13,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 3638,
+          "rewrites": 13,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 3634,
+          "rewrites": 13,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 8352,
+          "rewrites": 13,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 4696,
+          "rewrites": 1,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "protein_dihedral_ramachandran_gpu",
+      "batch": "wave146a_quadricentennial_400pack",
+      "total_bytes": 24668,
+      "total_rewrites": 65,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 4399,
+          "rewrites": 16,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 3779,
+          "rewrites": 16,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 3757,
+          "rewrites": 16,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 8104,
+          "rewrites": 16,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 4629,
+          "rewrites": 1,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "bc7_block_endpoint_fit_gpu",
+      "batch": "wave146a_quadricentennial_400pack",
+      "total_bytes": 35090,
+      "total_rewrites": 94,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 6154,
+          "rewrites": 22,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 5507,
+          "rewrites": 22,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 5383,
+          "rewrites": 22,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 11532,
+          "rewrites": 22,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 6514,
+          "rewrites": 6,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "radix_sort_histogram_scan_gpu",
+      "batch": "wave146a_quadricentennial_400pack",
+      "total_bytes": 25384,
+      "total_rewrites": 0,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 4474,
+          "rewrites": 0,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 3968,
+          "rewrites": 0,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 3693,
+          "rewrites": 0,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 8568,
+          "rewrites": 0,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 4681,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "delaunay_flip_edge_gpu",
+      "batch": "wave146a_quadricentennial_400pack",
+      "total_bytes": 19107,
+      "total_rewrites": 52,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 3352,
+          "rewrites": 12,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 2910,
+          "rewrites": 12,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 2845,
+          "rewrites": 12,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 6456,
+          "rewrites": 12,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 3544,
+          "rewrites": 4,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "cloth_pbd_bending_gpu",
+      "batch": "wave146a_quadricentennial_400pack",
+      "total_bytes": 34623,
+      "total_rewrites": 160,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 6198,
+          "rewrites": 36,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 5398,
+          "rewrites": 36,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 5397,
+          "rewrites": 36,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 11600,
+          "rewrites": 36,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 6030,
+          "rewrites": 16,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "kepler_lambert_orbit_gpu",
+      "batch": "wave156b_astro_robotics_440pack",
+      "total_bytes": 29176,
+      "total_rewrites": 87,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 5376,
+          "rewrites": 21,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 4698,
+          "rewrites": 21,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 4670,
+          "rewrites": 21,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 9016,
+          "rewrites": 21,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 5416,
+          "rewrites": 3,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "mhd_hll_plasma_flux_gpu",
+      "batch": "wave156b_astro_robotics_440pack",
+      "total_bytes": 35327,
+      "total_rewrites": 120,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 6447,
+          "rewrites": 28,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 5515,
+          "rewrites": 28,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 5445,
+          "rewrites": 28,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 11428,
+          "rewrites": 28,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 6492,
+          "rewrites": 8,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "inverse_kinematics_ccd_gpu",
+      "batch": "wave156b_astro_robotics_440pack",
+      "total_bytes": 28352,
+      "total_rewrites": 68,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 5043,
+          "rewrites": 17,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 4390,
+          "rewrites": 17,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 4336,
+          "rewrites": 17,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 9308,
+          "rewrites": 17,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 5275,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "icp_pointcloud_svd_gpu",
+      "batch": "wave156b_astro_robotics_440pack",
+      "total_bytes": 19660,
+      "total_rewrites": 24,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 3468,
+          "rewrites": 6,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 2847,
+          "rewrites": 6,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 2904,
+          "rewrites": 6,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 6808,
+          "rewrites": 6,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 3633,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "rayleigh_mie_phase_gpu",
+      "batch": "wave156b_astro_robotics_440pack",
+      "total_bytes": 17222,
+      "total_rewrites": 46,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 3288,
+          "rewrites": 11,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 2620,
+          "rewrites": 11,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 2639,
+          "rewrites": 11,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 5432,
+          "rewrites": 11,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 3243,
+          "rewrites": 2,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "svd_jacobi_3x3_gpu",
+      "batch": "wave156b_astro_robotics_440pack",
+      "total_bytes": 28235,
+      "total_rewrites": 89,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 5026,
+          "rewrites": 21,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 4416,
+          "rewrites": 21,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 4325,
+          "rewrites": 21,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 9276,
+          "rewrites": 21,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 5192,
+          "rewrites": 5,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "hilbert_curve_morton3d_gpu",
+      "batch": "wave156b_astro_robotics_440pack",
+      "total_bytes": 21569,
+      "total_rewrites": 0,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 3961,
+          "rewrites": 0,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 3381,
+          "rewrites": 0,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 3336,
+          "rewrites": 0,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 6956,
+          "rewrites": 0,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 3935,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "reed_solomon_gf256_gpu",
+      "batch": "wave156b_astro_robotics_440pack",
+      "total_bytes": 17966,
+      "total_rewrites": 0,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 3244,
+          "rewrites": 0,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 2897,
+          "rewrites": 0,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 2826,
+          "rewrites": 0,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 5672,
+          "rewrites": 0,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 3327,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "surface_code_syndrome_gpu",
+      "batch": "wave161a_qec_gnn_480pack",
+      "total_bytes": 12700,
+      "total_rewrites": 0,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 2405,
+          "rewrites": 0,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 1884,
+          "rewrites": 0,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 1830,
+          "rewrites": 0,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 4112,
+          "rewrites": 0,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 2469,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "graphsage_neighbor_agg_gpu",
+      "batch": "wave161a_qec_gnn_480pack",
+      "total_bytes": 25568,
+      "total_rewrites": 52,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 4497,
+          "rewrites": 13,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 3862,
+          "rewrites": 13,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 3821,
+          "rewrites": 13,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 8600,
+          "rewrites": 13,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 4788,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "black_scholes_greeks_gpu",
+      "batch": "wave161a_qec_gnn_480pack",
+      "total_bytes": 35874,
+      "total_rewrites": 104,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 6551,
+          "rewrites": 25,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 5667,
+          "rewrites": 25,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 5597,
+          "rewrites": 25,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 11312,
+          "rewrites": 25,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 6747,
+          "rewrites": 4,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "conjugate_gradient_spmv_gpu",
+      "batch": "wave161a_qec_gnn_480pack",
+      "total_bytes": 15510,
+      "total_rewrites": 24,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 2695,
+          "rewrites": 6,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 2161,
+          "rewrites": 6,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 2088,
+          "rewrites": 6,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 5540,
+          "rewrites": 6,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 3026,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "kalman_rts_smoother_gpu",
+      "batch": "wave161a_qec_gnn_480pack",
+      "total_bytes": 12628,
+      "total_rewrites": 8,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 2281,
+          "rewrites": 2,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 1860,
+          "rewrites": 2,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 1811,
+          "rewrites": 2,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 4160,
+          "rewrites": 2,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 2516,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "bloom_filter_xxhash64_gpu",
+      "batch": "wave161a_qec_gnn_480pack",
+      "total_bytes": 18278,
+      "total_rewrites": 0,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 3369,
+          "rewrites": 0,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 2822,
+          "rewrites": 0,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 2798,
+          "rewrites": 0,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 5928,
+          "rewrites": 0,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 3361,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "catmull_clark_subdiv_gpu",
+      "batch": "wave161a_qec_gnn_480pack",
+      "total_bytes": 14400,
+      "total_rewrites": 39,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 2504,
+          "rewrites": 9,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 2059,
+          "rewrites": 9,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 1989,
+          "rewrites": 9,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 5044,
+          "rewrites": 9,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 2804,
+          "rewrites": 3,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "bilateral_guided_denoise_gpu",
+      "batch": "wave161a_qec_gnn_480pack",
+      "total_bytes": 27491,
+      "total_rewrites": 51,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 4922,
+          "rewrites": 12,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 4136,
+          "rewrites": 12,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 4086,
+          "rewrites": 12,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 9048,
+          "rewrites": 12,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 5299,
+          "rewrites": 3,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "karplus_strong_modal_gpu",
+      "batch": "wave163a_quingentennial_520pack",
+      "total_bytes": 14681,
+      "total_rewrites": 29,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 2664,
+          "rewrites": 7,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 2141,
+          "rewrites": 7,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 2171,
+          "rewrites": 7,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 4896,
+          "rewrites": 7,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 2809,
+          "rewrites": 1,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "lqr_riccati_control_gpu",
+      "batch": "wave163a_quingentennial_520pack",
+      "total_bytes": 12584,
+      "total_rewrites": 12,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 2286,
+          "rewrites": 3,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 1844,
+          "rewrites": 3,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 1824,
+          "rewrites": 3,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 4240,
+          "rewrites": 3,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 2390,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "signed_octahedral_gbuffer_gpu",
+      "batch": "wave163a_quingentennial_520pack",
+      "total_bytes": 30978,
+      "total_rewrites": 32,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 5714,
+          "rewrites": 8,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 5097,
+          "rewrites": 8,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 5023,
+          "rewrites": 8,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 9440,
+          "rewrites": 8,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 5704,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "huffman_canonical_bitpack_gpu",
+      "batch": "wave163a_quingentennial_520pack",
+      "total_bytes": 15048,
+      "total_rewrites": 0,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 2799,
+          "rewrites": 0,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 2283,
+          "rewrites": 0,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 2199,
+          "rewrites": 0,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 4884,
+          "rewrites": 0,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 2883,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "navier_stokes_vorticity_conf_gpu",
+      "batch": "wave163a_quingentennial_520pack",
+      "total_bytes": 21646,
+      "total_rewrites": 44,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 3832,
+          "rewrites": 11,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 3220,
+          "rewrites": 11,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 3184,
+          "rewrites": 11,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 7440,
+          "rewrites": 11,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 3970,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "monte_carlo_heston_barrier_gpu",
+      "batch": "wave163a_quingentennial_520pack",
+      "total_bytes": 31623,
+      "total_rewrites": 64,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 6055,
+          "rewrites": 16,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 4717,
+          "rewrites": 16,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 4739,
+          "rewrites": 16,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 9848,
+          "rewrites": 16,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 6264,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "gaussian_splat_tile_blend_gpu",
+      "batch": "wave163a_quingentennial_520pack",
+      "total_bytes": 19704,
+      "total_rewrites": 24,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 3436,
+          "rewrites": 6,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 2922,
+          "rewrites": 6,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 2812,
+          "rewrites": 6,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 6700,
+          "rewrites": 6,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 3834,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "keccak_f1600_theta_rho_gpu",
+      "batch": "wave163a_quingentennial_520pack",
+      "total_bytes": 23512,
+      "total_rewrites": 0,
+      "fma_5way": null,
+      "targets": {
+        "wgsl": {
+          "bytes": 4234,
+          "rewrites": 0,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 3607,
+          "rewrites": 0,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 3527,
+          "rewrites": 0,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 7928,
+          "rewrites": 0,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 4216,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "gpu_dft_hartree_fock_eri",
+      "batch": "wave166a_qchem_zk_560pack",
+      "total_bytes": 23879,
+      "total_rewrites": 65,
+      "fma_5way": 11,
+      "targets": {
+        "wgsl": {
+          "bytes": 4301,
+          "rewrites": 13,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 3731,
+          "rewrites": 13,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 3681,
+          "rewrites": 13,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 7760,
+          "rewrites": 13,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 4406,
+          "rewrites": 13,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "gpu_mpm_snow_plasticity",
+      "batch": "wave166a_qchem_zk_560pack",
+      "total_bytes": 25736,
+      "total_rewrites": 45,
+      "fma_5way": 6,
+      "targets": {
+        "wgsl": {
+          "bytes": 4429,
+          "rewrites": 9,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 3969,
+          "rewrites": 9,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 3836,
+          "rewrites": 9,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 8896,
+          "rewrites": 9,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 4606,
+          "rewrites": 9,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "gpu_pippenger_msm_bucket",
+      "batch": "wave166a_qchem_zk_560pack",
+      "total_bytes": 14616,
+      "total_rewrites": 0,
+      "fma_5way": 0,
+      "targets": {
+        "wgsl": {
+          "bytes": 2813,
+          "rewrites": 0,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 2143,
+          "rewrites": 0,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 2119,
+          "rewrites": 0,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 4652,
+          "rewrites": 0,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 2889,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "gpu_ntt_dilithium_8380417",
+      "batch": "wave166a_qchem_zk_560pack",
+      "total_bytes": 21451,
+      "total_rewrites": 0,
+      "fma_5way": 0,
+      "targets": {
+        "wgsl": {
+          "bytes": 4184,
+          "rewrites": 0,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 3263,
+          "rewrites": 0,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 3161,
+          "rewrites": 0,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 6660,
+          "rewrites": 0,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 4183,
+          "rewrites": 0,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "gpu_neural_radiance_hashgrid",
+      "batch": "wave166a_qchem_zk_560pack",
+      "total_bytes": 22824,
+      "total_rewrites": 50,
+      "fma_5way": 10,
+      "targets": {
+        "wgsl": {
+          "bytes": 4023,
+          "rewrites": 10,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 3381,
+          "rewrites": 10,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 3334,
+          "rewrites": 10,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 7812,
+          "rewrites": 10,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 4274,
+          "rewrites": 10,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "gpu_av1_cdef_deringing",
+      "batch": "wave166a_qchem_zk_560pack",
+      "total_bytes": 31863,
+      "total_rewrites": 35,
+      "fma_5way": 6,
+      "targets": {
+        "wgsl": {
+          "bytes": 5661,
+          "rewrites": 7,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 5078,
+          "rewrites": 7,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 4898,
+          "rewrites": 7,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 10408,
+          "rewrites": 7,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 5818,
+          "rewrites": 7,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "gpu_sparse_block_jacobi",
+      "batch": "wave166a_qchem_zk_560pack",
+      "total_bytes": 18937,
+      "total_rewrites": 30,
+      "fma_5way": 6,
+      "targets": {
+        "wgsl": {
+          "bytes": 3397,
+          "rewrites": 6,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 2810,
+          "rewrites": 6,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 2740,
+          "rewrites": 6,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 6416,
+          "rewrites": 6,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 3574,
+          "rewrites": 6,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    },
+    {
+      "kernel": "gpu_lbm_d3q19_collision",
+      "batch": "wave166a_qchem_zk_560pack",
+      "total_bytes": 21732,
+      "total_rewrites": 50,
+      "fma_5way": 7,
+      "targets": {
+        "wgsl": {
+          "bytes": 3889,
+          "rewrites": 10,
+          "validator": "naga-30.0.1+msl31+spirv-val-PASS"
+        },
+        "hlsl": {
+          "bytes": 3330,
+          "rewrites": 10,
+          "validator": "dxc-cs_6_0-PASS"
+        },
+        "msl": {
+          "bytes": 3290,
+          "rewrites": 10,
+          "validator": "metal31-spec+verify-cert-PASS"
+        },
+        "spirv": {
+          "bytes": 7224,
+          "rewrites": 10,
+          "validator": "spirv-val-PASS"
+        },
+        "glsl": {
+          "bytes": 3999,
+          "rewrites": 10,
+          "validator": "glslangValidator+spirv-val-PASS"
+        }
+      }
+    }
+  ]
+}

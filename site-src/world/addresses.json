@@ -681,6 +681,14 @@
   {"path":"/playground/competitive-surpass/","kind":"leaf","surface":"playground","since":"2026-11-27"},
   {"path":"/playground/papers/","kind":"leaf","surface":"playground","since":"2026-11-27"},
   {"path":"/playground/buildos-pq/","kind":"leaf","surface":"playground","since":"2026-11-27"},
-  {"path":"/playground/datasets/","kind":"leaf","surface":"playground","since":"2026-11-27"}
+  {"path":"/playground/datasets/","kind":"leaf","surface":"playground","since":"2026-11-27"},
+  {"path":"/playground/buildos-v2/","kind":"leaf","surface":"playground","since":"2026-11-27"},
+  {"path":"/playground/gpu-compute/","kind":"leaf","surface":"playground","since":"2026-11-27"},
+  {"path":"/playground/native-auditors/","kind":"leaf","surface":"playground","since":"2026-11-27"},
+  {"path":"/playground/renderer-35/","kind":"leaf","surface":"playground","since":"2026-11-27"},
+  {"path":"/playground/buildos-cluster/","kind":"leaf","surface":"playground","since":"2026-11-27"},
+  {"path":"/playground/mir-assurance/","kind":"leaf","surface":"playground","since":"2026-11-27"},
+  {"path":"/playground/gpu-560-fma/","kind":"leaf","surface":"playground","since":"2026-11-27"},
+  {"path":"/playground/threshold-storage/","kind":"leaf","surface":"playground","since":"2026-11-27"}
  ]
 }

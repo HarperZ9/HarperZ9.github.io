@@ -3,7 +3,7 @@
  "source": {
   "path": "career/resume-source.json",
   "document": "support-operations-qa",
-  "sha256": "5d9504eb8c883a83e133862b99d084b54dcd13bf4bf03a72a9fba63b73c62665"
+  "sha256": "02ba838469d49a03db0a41a8c6ad7c98454ed0c33f267410971c53df8895217b"
  },
  "ir_sha256": "afdae14ad710930cb384e18af1e5137929f5d17c955e2b63a2eaa37f1f2078a0",
  "theme": "press-resume",
@@ -13,7 +13,7 @@
   "emboss.deboss_finish=inked"
  ],
  "outputs": {
-  "Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.pdf": "688eb0a46efe14bfe8299d6cae3012386b4e09e6aa28523abc1d9aa44aa284b9"
+  "Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.pdf": "913df181b165fdacb3b0afb605a07d86c1e5693954da569f1eb44aeedea977ca"
  },
  "pdf_metadata": {
   "pdfa": false,
@@ -49,7 +49,7 @@
   "blind_text_runs": 0,
   "reading_order": true,
   "blocks_missing_from_text": [],
-  "pdf_bytes": 226335
+  "pdf_bytes": 226337
  },
  "failed": [],
  "notes": [

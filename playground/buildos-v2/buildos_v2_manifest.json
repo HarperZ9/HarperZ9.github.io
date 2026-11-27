@@ -1,0 +1,145 @@
+{
+  "schema": "buildos-v2-sovereign-showcase/1",
+  "license": "MIT",
+  "date": "2026-11-27",
+  "receipt_catalogue_id": 68874,
+  "wasm": {
+    "file": "buildos_v2_sovereign_zeroc.wasm",
+    "bytes": 134198,
+    "sha256": "9cc4445b1e7a40e4cc221a484c07521c53ae5cf1f3f5d3b32a508b53ef4b5f22",
+    "imports_count": 0,
+    "expected_sovereign_root": "b0169274ea5bb300813d8d409c1098cbd92cb7490dcaf3fe30865b15eddc393f"
+  },
+  "subsystems": [
+    {
+      "id": "S01",
+      "name": "Signed Boot & Ed25519",
+      "wasm_export": "os_s01_boot_log",
+      "mechanism": "Verified boot digest plus RFC 8032 Ed25519 signature check over boot_root"
+    },
+    {
+      "id": "S02",
+      "name": "4-Core SMP & Sv39 W^X MMU",
+      "wasm_export": "os_s02_smp_sv39_mmu",
+      "mechanism": "4-core SMP spinlock/TLB shootdown and Sv39 page-table W^X enforcement"
+    },
+    {
+      "id": "S03",
+      "name": "W^X Capability Scheduler",
+      "wasm_export": "os_s03_wx_cap_sched",
+      "mechanism": "Deterministic task scheduling with HMAC-authenticated capability tokens"
+    },
+    {
+      "id": "S04",
+      "name": "Cap IPC & Merkle VFS",
+      "wasm_export": "os_s04_ipc_merkle_vfs",
+      "mechanism": "Capability-checked inter-process messaging and content-addressed Merkle VFS"
+    },
+    {
+      "id": "S05",
+      "name": "PCIe IOMMU & NVMe WAL",
+      "wasm_export": "os_s05_iommu_nvme_wal",
+      "mechanism": "PCIe DMA aperture isolation plus hash-chained NVMe write-ahead log"
+    },
+    {
+      "id": "S06",
+      "name": "ML-KEM-512 + X25519 PQ KEM",
+      "wasm_export": "os_s06a_mlkem512",
+      "mechanism": "FIPS 203 q=3329 Ring-NTT ML-KEM-512 + X25519 + HKDF-SHA256 + ChaCha20-Poly1305"
+    },
+    {
+      "id": "S07",
+      "name": "Signed Package Manifest",
+      "wasm_export": "os_s07_pkg_manifest",
+      "mechanism": "Ed25519 signed package verification and zero-trust bytecode allowlist"
+    },
+    {
+      "id": "S08",
+      "name": "Confidential Enclave Quote",
+      "wasm_export": "os_s08a_enclave_policy",
+      "mechanism": "Measurement-bound HKDF/AEAD sealing, zero-egress policy, and Ed25519 quote"
+    },
+    {
+      "id": "S09",
+      "name": "Certified GPU & 32-Tile VRAM",
+      "wasm_export": "os_s09_gpu_vram",
+      "mechanism": "Shader-allowlist command queue verification and 32-tile VRAM isolation"
+    },
+    {
+      "id": "S10",
+      "name": "Capability Display Compositor",
+      "wasm_export": "os_s10_cap_compositor",
+      "mechanism": "Window-surface isolation blocking unauthorized cross-window framebuffer reads"
+    },
+    {
+      "id": "S11",
+      "name": "Anti-Keylogger HID & Q15 Audio",
+      "wasm_export": "os_s11_input_audio_dsp",
+      "mechanism": "Focus-scoped HID event routing plus deterministic Q15 audio mixing"
+    },
+    {
+      "id": "S12",
+      "name": "12-Leaf RFC 6962 Root",
+      "wasm_export": "os_s12_sovereign_root",
+      "mechanism": "Merkle commit folding all 12 subsystem roots into sovereign_root"
+    }
+  ],
+  "attacks": [
+    {
+      "id": "atk_boot_ed25519",
+      "mode": 1,
+      "subsystem": "S01 Signed Boot",
+      "expected_rc": -101,
+      "label": "Forged boot Ed25519 signature scalar S"
+    },
+    {
+      "id": "atk_sv39_rwx",
+      "mode": 2,
+      "subsystem": "S02 Sv39 MMU",
+      "expected_rc": -201,
+      "label": "Sv39 hardware page-table W^X violation (RWX=7)"
+    },
+    {
+      "id": "atk_iommu_dma",
+      "mode": 3,
+      "subsystem": "S05 PCIe IOMMU",
+      "expected_rc": -301,
+      "label": "PCIe IOMMU DMA escape outside permitted aperture"
+    },
+    {
+      "id": "atk_mlkem_ct",
+      "mode": 4,
+      "subsystem": "S06 PQ Hybrid KEM",
+      "expected_rc": -401,
+      "label": "1-bit ML-KEM-512 ciphertext tamper (FO implicit reject)"
+    },
+    {
+      "id": "atk_enclave_mr",
+      "mode": 5,
+      "subsystem": "S08 Enclave",
+      "expected_rc": -501,
+      "label": "Confidential enclave mr_enclave measurement mismatch"
+    },
+    {
+      "id": "atk_gpu_shader",
+      "mode": 6,
+      "subsystem": "S09 GPU Queue",
+      "expected_rc": -601,
+      "label": "Uncertified GPU shader bytecode submission"
+    },
+    {
+      "id": "atk_comp_scrape",
+      "mode": 7,
+      "subsystem": "S10 Compositor",
+      "expected_rc": -701,
+      "label": "Cross-window compositor framebuffer screen-scrape"
+    },
+    {
+      "id": "atk_hid_keylog",
+      "mode": 8,
+      "subsystem": "S11 HID / Audio",
+      "expected_rc": -801,
+      "label": "Background HID keylogger input tap"
+    }
+  ]
+}

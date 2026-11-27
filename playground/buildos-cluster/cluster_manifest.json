@@ -1,0 +1,242 @@
+{
+  "schema": "buildos-cluster-lab/1",
+  "license": "MIT",
+  "date": "2026-11-27",
+  "total_wasm_bytes": 136145,
+  "total_modules": 4,
+  "total_attacks": 16,
+  "modules": [
+    {
+      "id": "cluster_v21",
+      "label": "BuildOS-2.1 Distributed Cluster",
+      "short_label": "BuildOS-2.1 Cluster",
+      "file": "buildos_v2_distributed_sovereign_zeroc.wasm",
+      "receipt_id": 68932,
+      "strict_zero_imports": true,
+      "imports_note": "0 host imports (Zero-C Stage-2)",
+      "summary": "Fused QUIC firewall + fuel-metered sandbox VM + ZK balance + 4-node BFT quorum + 4-leaf RFC 6962 cluster root.",
+      "nominal_expr": "buildos_v21_cluster_run(0n) === 1n",
+      "bytes": 66784,
+      "sha256": "112fa8b78bfb3d744c8ee1f3cf448c76eb3ba7c6836720fd878574faeed2461f",
+      "imports_count": 0
+    },
+    {
+      "id": "bft_ledger",
+      "label": "BuildOS Slice 33: BFT Quorum Ledger",
+      "short_label": "BFT Quorum Ledger",
+      "file": "buildos_bft_consensus_ledger_zeroc.wasm",
+      "receipt_id": 68912,
+      "strict_zero_imports": true,
+      "imports_note": "0 host imports (Zero-C Stage-2)",
+      "summary": "4-validator Ed25519 3/4 quorum consensus ledger with equivocation slashing and hash-chained block history.",
+      "nominal_expr": "bft_consensus_run(0n) === 1n",
+      "bytes": 30622,
+      "sha256": "aa3f21449db15954f807755133bc7dc0124226b3b6f835b8bf61fc60120a9760",
+      "imports_count": 0
+    },
+    {
+      "id": "zk_pedersen",
+      "label": "BuildOS Slice 34: Curve25519 ZK",
+      "short_label": "Curve25519 ZK",
+      "file": "buildos_zk_pedersen_merkle_zeroc.wasm",
+      "receipt_id": 68923,
+      "strict_zero_imports": true,
+      "imports_note": "0 host imports (Zero-C Stage-2)",
+      "summary": "Edwards25519 Pedersen value commitments (1000 = 625 + 375), Schnorr knowledge proof, and RFC 6962 Merkle inclusion.",
+      "nominal_expr": "zk_pedersen_run(0n) === 1n",
+      "bytes": 29478,
+      "sha256": "67f1da8c5ab1c4b52d1daf681450c37b12c60dd89140cffeace1b2ad275e921a",
+      "imports_count": 0
+    },
+    {
+      "id": "titan_rsi",
+      "label": "Titan RSI Pareto Orchestrator",
+      "short_label": "Titan RSI Pareto",
+      "file": "titan_rsi_pareto_orchestrator.wasm",
+      "receipt_id": 68942,
+      "strict_zero_imports": false,
+      "imports_note": "5 no-op env.print_* stubs (0 I/O)",
+      "summary": "100-cycle oracle-gated Pareto allocator: 3.020x monotonic gain (3.39 to 10.24), 40/40 Goodhart rollbacks, 0 regressions.",
+      "nominal_expr": "run_titan_rsi_pareto_wasm() -> 3.020x, hash=1468869863",
+      "bytes": 9261,
+      "sha256": "6b484d5ac52b5c4ad6e7df1494e45f499f5b9db46bbcc0ddfbde487929f0f4c5",
+      "imports_count": 5
+    }
+  ],
+  "attacks": [
+    {
+      "id": "cl_quic_replay",
+      "module_id": "cluster_v21",
+      "module_label": "BuildOS-2.1 Cluster",
+      "kind": "cluster_mode",
+      "arg": 1,
+      "expected_rc": -101,
+      "call_expr": "buildos_v21_cluster_run(1n)",
+      "label": "QUIC replay packet sequence number (pn=101)"
+    },
+    {
+      "id": "cl_peer_egress",
+      "module_id": "cluster_v21",
+      "module_label": "BuildOS-2.1 Cluster",
+      "kind": "cluster_mode",
+      "arg": 2,
+      "expected_rc": -201,
+      "call_expr": "buildos_v21_cluster_run(2n)",
+      "label": "Unauthorized CAP_NET_PEER egress to Peer 3"
+    },
+    {
+      "id": "cl_vm_fuel",
+      "module_id": "cluster_v21",
+      "module_label": "BuildOS-2.1 Cluster",
+      "kind": "cluster_mode",
+      "arg": 3,
+      "expected_rc": -301,
+      "call_expr": "buildos_v21_cluster_run(3n)",
+      "label": "Guest sandbox VM infinite-loop fuel exhaustion"
+    },
+    {
+      "id": "cl_zk_inflate",
+      "module_id": "cluster_v21",
+      "module_label": "BuildOS-2.1 Cluster",
+      "kind": "cluster_mode",
+      "arg": 4,
+      "expected_rc": -401,
+      "call_expr": "buildos_v21_cluster_run(4n)",
+      "label": "ZK value-inflation balance breach (v_out2=376)"
+    },
+    {
+      "id": "cl_bft_equiv",
+      "module_id": "cluster_v21",
+      "module_label": "BuildOS-2.1 Cluster",
+      "kind": "cluster_mode",
+      "arg": 5,
+      "expected_rc": -501,
+      "call_expr": "buildos_v21_cluster_run(5n)",
+      "label": "BFT equivocating validator V1 slashed"
+    },
+    {
+      "id": "cl_ed25519_sig",
+      "module_id": "cluster_v21",
+      "module_label": "BuildOS-2.1 Cluster",
+      "kind": "cluster_mode",
+      "arg": 6,
+      "expected_rc": -601,
+      "call_expr": "buildos_v21_cluster_run(6n)",
+      "label": "1-bit forged Ed25519 quorum signature (V1)"
+    },
+    {
+      "id": "bft_equiv_slash",
+      "module_id": "bft_ledger",
+      "module_label": "BFT Quorum Ledger",
+      "kind": "bft_mode",
+      "arg": 1,
+      "expected_rc": -101,
+      "call_expr": "bft_consensus_run(1n)",
+      "label": "Equivocating double-vote validator V1 slashed"
+    },
+    {
+      "id": "bft_sub_quorum",
+      "module_id": "bft_ledger",
+      "module_label": "BFT Quorum Ledger",
+      "kind": "bft_mode",
+      "arg": 2,
+      "expected_rc": -201,
+      "call_expr": "bft_consensus_run(2n)",
+      "label": "Insufficient 2/4 sub-quorum (< 3 validators)"
+    },
+    {
+      "id": "bft_forged_sig",
+      "module_id": "bft_ledger",
+      "module_label": "BFT Quorum Ledger",
+      "kind": "bft_mode",
+      "arg": 3,
+      "expected_rc": -301,
+      "call_expr": "bft_consensus_run(3n)",
+      "label": "1-bit forged Ed25519 validator signature S"
+    },
+    {
+      "id": "bft_parent_tamper",
+      "module_id": "bft_ledger",
+      "module_label": "BFT Quorum Ledger",
+      "kind": "bft_mode",
+      "arg": 4,
+      "expected_rc": -401,
+      "call_expr": "bft_consensus_run(4n)",
+      "label": "Tampered parent-hash log history on Block 3"
+    },
+    {
+      "id": "zk_schnorr_s",
+      "module_id": "zk_pedersen",
+      "module_label": "Curve25519 ZK",
+      "kind": "zk_mode",
+      "arg": 1,
+      "expected_rc": -101,
+      "call_expr": "zk_pedersen_run(1n)",
+      "label": "1-bit forged Schnorr response scalar s"
+    },
+    {
+      "id": "zk_val_inflate",
+      "module_id": "zk_pedersen",
+      "module_label": "Curve25519 ZK",
+      "kind": "zk_mode",
+      "arg": 2,
+      "expected_rc": -201,
+      "call_expr": "zk_pedersen_run(2n)",
+      "label": "Value-inflation balance breach (v_out2=376)"
+    },
+    {
+      "id": "zk_blind_open",
+      "module_id": "zk_pedersen",
+      "module_label": "Curve25519 ZK",
+      "kind": "zk_mode",
+      "arg": 3,
+      "expected_rc": -301,
+      "call_expr": "zk_pedersen_run(3n)",
+      "label": "Mismatched commitment opening blinding factor r_in"
+    },
+    {
+      "id": "zk_merkle_sib",
+      "module_id": "zk_pedersen",
+      "module_label": "Curve25519 ZK",
+      "kind": "zk_mode",
+      "arg": 4,
+      "expected_rc": -401,
+      "call_expr": "zk_pedersen_run(4n)",
+      "label": "1-bit forged RFC 6962 Merkle sibling hash"
+    },
+    {
+      "id": "rsi_goodhart",
+      "module_id": "titan_rsi",
+      "module_label": "Titan RSI Pareto",
+      "kind": "rsi_valve",
+      "args": [
+        0,
+        -0.1,
+        0.95,
+        0.1,
+        100,
+        2
+      ],
+      "expected_rc": -101,
+      "call_expr": "anti_goodhart_valve(0,-0.1,...)",
+      "label": "Unverified proxy gain with failing oracle rolled back"
+    },
+    {
+      "id": "rsi_zero_budget",
+      "module_id": "titan_rsi",
+      "module_label": "Titan RSI Pareto",
+      "kind": "rsi_valve",
+      "args": [
+        1,
+        0.05,
+        0,
+        0.1,
+        0,
+        2
+      ],
+      "expected_rc": -201,
+      "call_expr": "anti_goodhart_valve(1,0.05,...,0)",
+      "label": "Non-positive remaining Joule budget fail-closed trap"
+    }
+  ]
+}
