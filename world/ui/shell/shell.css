@@ -490,3 +490,5 @@ html.plain .claim{background-size:100% .14em;animation:none}
 @media (prefers-reduced-motion:reduce){.salon > li,.notes li{transition:none}}
 html.plain .salon > li,html.plain .notes li{opacity:1!important;transform:none!important;filter:none!important}
 @media (max-width:860px){.room-in > [style*="grid-column"],.room-in > .reading,.room-in > .notes{grid-column:1 / -1 !important}}
+html.is-embedded header.o-hand,html.is-embedded #o-menu,html.is-embedded footer.ds-prov{display:none!important}
+html.is-embedded main{padding-top:12px!important}

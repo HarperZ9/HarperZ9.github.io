@@ -70,6 +70,7 @@ if (wb) {
     ev.preventDefault();
     bootWb().then(() => btn.click());
   });
+  if (new URLSearchParams(location.search).has("open")) bootWb();
 }
 
 // Superframe 4-layer readout front switcher (#superframe)

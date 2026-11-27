@@ -88,6 +88,10 @@ header.lp-head+.sx{margin-top:clamp(18px,2.5vw,28px)}
 .wb-actions button:focus-visible,.pg-jump a:focus-visible,.wb-toolbar input[type="search"]:focus-visible{outline:2px solid currentColor;outline-offset:3px}
 .wb-stage{margin:24px 0;padding:16px 0 0;border-top:2px solid currentColor}
 .wb-stage-bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px;margin-bottom:12px}
+.wb-stage-controls{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.wb-stage-select{min-height:44px;max-width:260px;padding:.35em .65em;font:inherit;font-size:.85em;color:inherit;background:var(--surface,rgba(12,22,32,.85));border:1px solid var(--line,rgba(244,239,230,.35))}
+.wb-stage-body.is-split{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:900px){.wb-stage-body.is-split{grid-template-columns:1fr}}
 .wb-frame{display:block;width:100%;height:min(76vh,720px);border:1px solid var(--line,rgba(244,239,230,.35));background:#0c1620}
 .sf-stack{position:relative;aspect-ratio:16/9;border:1px solid var(--line,rgba(244,239,230,.34));overflow:hidden;margin:18px 0 8px;background:#101318;max-width:960px}
 .sf-stack .layer{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;clip-path:circle(0% at 50% 50%);transition:clip-path 1.4s cubic-bezier(.6,.05,.25,1)}

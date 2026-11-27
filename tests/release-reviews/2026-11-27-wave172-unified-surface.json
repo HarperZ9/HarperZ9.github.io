@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-27",
+  "note": "Wave 172 Unified Cohesive Surface (all modules integrated in-place with quick-switcher, split-view, deep-links, embedded chrome dedup)",
+  "paths": {
+    "flywheel.html": "c2fa27225bddbabcb65de08044223f4b5d5517ada7a6ae1c60172522fb9682e4",
+    "index.html": "d74a8ec577d4c7b7bff8c13353d0e60c129087bdd80b692fa50c7ebafee5cbe2",
+    "site-index.html": "cfe543a387c211c55bdc54355926043fdcb78814e713bf81b07fed4478733792",
+    "system/routes.js": "a0f5e64ae00ddcb22f3cfb38e28841e876b40da1ee3c05556a55e3454fcbea04"
+  }
+}
