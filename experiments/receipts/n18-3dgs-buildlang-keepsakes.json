@@ -1,0 +1,29 @@
+{
+  "schema": "engine-receipt/1",
+  "in_toto_statement_type": "https://in-toto.io/Statement/v1",
+  "predicate_type": "https://flywheel.dev/EngineReceipt/v1",
+  "id": "n18-3dgs-buildlang-keepsakes",
+  "title": "N18 3D Gaussian Splatting native BuildLang rasterizer (323.60 FPS, 1.93x C++23)",
+  "platform": "The Playground + BuildLang",
+  "domain": "rendering",
+  "emitted_at": "2026-11-27T09:27:35Z",
+  "verdict": "MATCH",
+  "catalogue_id": 68480,
+  "source_url": "https://github.com/HarperZ9/superframe",
+  "related_url": "https://harperz9.github.io/playground/",
+  "digests": {
+    "claim_sha256": "sha256:2fcfd28c3bf276a16d9e8be56af27cff2045f2812cf80674d86cf0772ae639b7",
+    "envelope_sha256": "sha256:a32a0ae7c078877870f69edfab3223b91716bfade12e22c60feee820fdd4a4cc",
+    "subject_sha256": "sha256:c2accfa280772e1d8d43651d228a113e9bea9760fb4ab00216505fe883cf2ef9"
+  },
+  "metrics": {
+    "throughput": "323.60 FPS native BuildLang --release (1.93x faster than C++23 reference)",
+    "ecosystem_scale": "Backed by 319 zero-FLAG verified formula kernels and 234 author ideas enforced via Gate 6"
+  },
+  "null_or_control": "Planted invalid covariance/singular-splat and out-of-bounds projection controls caught fail-closed against the independent C++23 differential reference.",
+  "subject": {
+    "engine": "superframe",
+    "flagship": "superframe",
+    "task_id": "wave50b-n18-gsplat-keepsakes-and-jfc3p-epigenetics"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "schema": "engine-receipt/1",
+  "in_toto_statement_type": "https://in-toto.io/Statement/v1",
+  "predicate_type": "https://flywheel.dev/EngineReceipt/v1",
+  "id": "buildlang-pr351-superopt-gpu-tv",
+  "title": "BuildLang #351 V5 certified SOTA kernel superoptimizer & GPU TV (commit 14a5260c)",
+  "platform": "BuildLang",
+  "domain": "computing",
+  "emitted_at": "2026-11-27T09:14:30Z",
+  "verdict": "MATCH",
+  "catalogue_id": 68465,
+  "source_url": "https://github.com/HarperZ9/buildlang/pull/351",
+  "related_url": "https://harperz9.github.io/buildlang.html#superopt",
+  "digests": {
+    "claim_sha256": "sha256:cbc8e6b5c2577d2d329111243eaeaa0ab5ff477829e5325728c8550babc0c6f7",
+    "envelope_sha256": "sha256:4c6d375a2e0c4d58c6c77904448096f72731cc423eceb4325abea4f82bd2ac23",
+    "subject_sha256": "sha256:f834ae82689fec6cd3d5f1c1c7cee55d246e4e2be5a945df98d81bc832ff9b86"
+  },
+  "metrics": {
+    "online_softmax": "-70.5% op-cost (95 to 28 across 5 certified rewrites R14..R18; exp 5 to 2, log 1 to 0, parity <= 1e-12)",
+    "gated_deltanet": "-42.1% op-cost (38 to 22 with BitExact E8M0 block-scale hoist, parity <= 1e-12)",
+    "fa4_horner_exp2": "-33.3% op-cost (12 to 8 via opt-in R20_HORNER_EXP2_FMA, max abs err <= 3.92e-6 on [0, 1])",
+    "gpu_tv_ci": "15/15 CI green across WGSL, HLSL, MSL, SPIR-V; 0.0 subgroup reduction drift across W_s=16/32/64"
+  },
+  "null_or_control": "100% fail-closed rejection on all planted unsound rewrites, forged error witnesses, wrong subgroup reduction ops, illegal cooperative tiles, negative H*delta, and nested divergent barriers.",
+  "subject": {
+    "engine": "buildlang",
+    "flagship": "superframe",
+    "task_id": "wave43e-sota-kernel-superopt-gpu-tv",
+    "git_commit": "14a5260c1fcf4c4b736c3fe62c457889f295b062",
+    "artifacts": [
+      {
+        "rel_path": "compiler/src/codegen/superopt.rs",
+        "bytes": 131575,
+        "sha256": "sha256:f04bea7c182c2876a73ef15b38d935364acd14725835e93e7c7ab5f1eb02ca27"
+      },
+      {
+        "rel_path": "compiler/src/codegen/gpu_polyhedral.rs",
+        "bytes": 57576,
+        "sha256": "sha256:0f304817c06240ef8c7346df52945d62a8c773164ccc10c2d5b9ce9b4e77d5a2"
+      },
+      {
+        "rel_path": "compiler/tests/wave43e_sota_kernel_superopt.rs",
+        "bytes": 33854,
+        "sha256": "sha256:cd2bffc70b0e6020e8a184b43ac01ec76a2fc65d698d4ad0ab5f1eb02c91b69"
+      }
+    ]
+  }
+}

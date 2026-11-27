@@ -1,0 +1,48 @@
+{
+  "schema": "engine-receipt/1",
+  "in_toto_statement_type": "https://in-toto.io/Statement/v1",
+  "predicate_type": "https://flywheel.dev/EngineReceipt/v1",
+  "id": "data-forge-buildlang-sig058",
+  "title": "Data Forge native BuildLang core (data_forge_core.bld, SIG-058)",
+  "platform": "BuildLang + Flywheel",
+  "domain": "computing",
+  "emitted_at": "2026-11-27T09:11:03Z",
+  "verdict": "MATCH",
+  "catalogue_id": 68460,
+  "source_url": "https://github.com/HarperZ9/buildlang",
+  "related_url": "https://github.com/HarperZ9/flywheel/pull/574",
+  "digests": {
+    "claim_sha256": "sha256:6492957aac152bb75ceaeeba497ed51963949c3cc9289535b2801d981b5719c5",
+    "envelope_sha256": "sha256:9072e264d16657a68d277d67ac79404bddb5bb52d91a06905443c29d0a12797e",
+    "subject_sha256": "sha256:fece459200a8441fe8175ac916a2e5a7839dd87db2b1805863850c2c9e727e78"
+  },
+  "metrics": {
+    "throughput": "283,687.3 rows/s (25,000 rows in 88.13 ms)",
+    "speedup_vs_python": "158.2x vs Python data_forge.py (1,792.8 rows/s)",
+    "merkle_parity": "Bit-exact FIPS 180-4 SHA-256 and RFC 6962 Merkle root (sha256:06c47063a30f97a375555085307606d123348b620f592e88f6ac2732e757da3a)",
+    "compiler": "buildc 1.15.0 --release (buildc check PASS, buildc lint 0 issues)"
+  },
+  "null_or_control": "6/6 planted fail-closed controls caught: exact duplicate, 6-gram holdout contamination leak, email PII, local path leak, API token + HIPAA MRN pattern, and 1-leaf Merkle tamper flipping the RFC 6962 root.",
+  "subject": {
+    "engine": "buildlang",
+    "flagship": "buildlang",
+    "task_id": "wave48f-data-forge-buildlang-core-2026-11-27",
+    "artifacts": [
+      {
+        "rel_path": "data_forge_core.bld",
+        "bytes": 17386,
+        "sha256": "sha256:62d765aac0f28b63b41e558b8767d7de4bbf0357e60dda129508546ea9be42dd"
+      },
+      {
+        "rel_path": "verify_data_forge_buildlang.py",
+        "bytes": 4249,
+        "sha256": "sha256:3ff6e897fc8e2aa50f236ff64bcbd628d27dcbfe5ad24cbc999a2bae6d82bf02"
+      },
+      {
+        "rel_path": "DATA-FORGE-BUILDLANG-CORE-2026-11-27.md",
+        "bytes": 3478,
+        "sha256": "sha256:2abe2203283cd06fd9949f0bf288d4794403177dbf16fdbf5f7371b0feef570a"
+      }
+    ]
+  }
+}

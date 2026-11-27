@@ -1,0 +1,48 @@
+{
+  "schema": "engine-receipt/1",
+  "in_toto_statement_type": "https://in-toto.io/Statement/v1",
+  "predicate_type": "https://flywheel.dev/EngineReceipt/v1",
+  "id": "inv01-symplectic-loom-titan",
+  "title": "INV-01 Symplectic Loom-Titan-1M (+ INV-02 composed gate): BuildLang vs C++23 AVX2+FMA",
+  "platform": "BuildLang + Models",
+  "domain": "ai",
+  "emitted_at": "2026-11-27T09:11:48Z",
+  "verdict": "MATCH",
+  "catalogue_id": 68459,
+  "source_url": "https://harperz9.github.io/models.html",
+  "related_url": "https://github.com/HarperZ9/buildlang",
+  "digests": {
+    "claim_sha256": "sha256:298fc1fc3c3e3a8a6a3423db7d4bc751c9442d9eb33e049a13f656cad7045744",
+    "envelope_sha256": "sha256:340c365fc94cb8f3f98ddd58a4a7e3fd70fe65e4668565d271a2f9340e755282",
+    "subject_sha256": "sha256:f4f0a0a821a4c9fe379cb2cba3c9e3fe4e1f80cee3327d46e389f39eca88baf3"
+  },
+  "metrics": {
+    "throughput": "194.59 M loops/s BuildLang --release (8.22 ms for 1.6M K=32 loops; C++23 AVX2+FMA reference 326.18 M loops/s)",
+    "numerical_parity": "2.22e-16 max abs diff across all 14 float scalars (0.0 on 13/14, 10/10 bit-exact discrete matches)",
+    "context_and_vram": "0.0812 ms 1M-token PLATO/NSA + MoltKV FNV-1a query (3/3 needle hits, 0.0 err); 10.331 GB RTX 4090 / 5.747 GB Edge VRAM",
+    "energy_stability": "2,893.98x lower K=32 relative energy drift vs explicit Euler (0.002461 vs 7.122987)"
+  },
+  "null_or_control": "5/5 planted fail-closed controls caught in both BuildLang and C++23: explicit Euler energy blowup, unconstrained 1.55x LoomFormer spectral explosion (norm 776.97), MoltKV 1-bit page corruption on block 7,609, d_beta causal pre-bifurcation alarm 390 steps early (0 false alarms on stable control), and composed INV-02 GSPO clip 1.28 + honest-exit valve.",
+  "subject": {
+    "engine": "superframe",
+    "flagship": "buildlang",
+    "task_id": "wave48a-inv01-symplectic-loom-titan-buildlang-cpp23",
+    "artifacts": [
+      {
+        "rel_path": "symplectic_loom_titan_inv01.bld",
+        "bytes": 18229,
+        "sha256": "sha256:5081a0704466ce99288a4092e2079d9a1aaeb97fd1419dd77c52fc42ec74b483"
+      },
+      {
+        "rel_path": "symplectic_loom_titan_inv01_ref.cpp",
+        "bytes": 14040,
+        "sha256": "sha256:37a1669b9d9e1302faed92d588b012fb6fa93656ff64266893bf8741acf2be02"
+      },
+      {
+        "rel_path": "inv01_parity_report.json",
+        "bytes": 3372,
+        "sha256": "sha256:10dcb3906358a18bd2e8143de4239ea98b58ff1b184d2ffe5984f081ada6da56"
+      }
+    ]
+  }
+}

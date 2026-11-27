@@ -24,6 +24,7 @@
     "systemsRegistry": "https://harperz9.github.io/system/systems.json",
     "publicReposCatalog": "https://harperz9.github.io/assets/data/unified/all_public_repos_catalog.json",
     "installersCatalog": "https://harperz9.github.io/assets/data/unified/one_command_installers.json",
+    "experimentReceipts": "https://harperz9.github.io/experiments/receipts/index.json",
     "sitemap": "https://harperz9.github.io/sitemap.xml",
     "fundingJson": "https://harperz9.github.io/funding.json",
     "fundingManifestUrls": "https://harperz9.github.io/.well-known/funding-manifest-urls",
@@ -36,14 +37,14 @@
       "name": "BuildLang",
       "url": "https://harperz9.github.io/buildlang.html",
       "repository": "https://github.com/HarperZ9/buildlang",
-      "summary": "Rust-built compiled systems language (AGPL-3.0-only core buildc; pure OSI MIT universe/ and suite/ via #350, c3b2e5dd) with typed capability effects, 12 targets (C, HLSL, GLSL, WGSL, Metal, SPIR-V, x86-64, RISC-V, WASM), V5 certified e-graph superoptimizer (#344), certified GPU polyhedral tiling + subgroup TV (#346), universe CHECK-FAILS burned down to 150 (126/276 via #349, bddba429), 8 verified 2026 SOTA native .bld kernels (FA4 2.05x, H_64 NVFP4 +19.66 dB rescue, 0.140 ms 1M-token PLATO/NSA, 608 B O(1) Titans/KDA loop), CITATION/codemeta/llms.txt + editors/vscode vsce packaging (#348), 1.18M-record corpus engine, BuildDB (BDB), BuildTeX, and live AGPL-3.0-only funding.json (#345)."
+      "summary": "Rust-built compiled systems language (AGPL-3.0-only core buildc; pure OSI MIT universe/ and suite/ via #350, c3b2e5dd) with typed capability effects, 12 targets (C, HLSL, GLSL, WGSL, Metal, SPIR-V, x86-64, RISC-V, WASM), V5 certified e-graph superoptimizer (#344), certified GPU polyhedral tiling + subgroup TV (#346), certified 2026 SOTA rewrites (#351, 14a5260c: -70.5% online-softmax op-cost, -42.1% Gated-DeltaNet, -33.3% FA4 Horner, GPU TV across WGSL/HLSL/MSL/SPIR-V), Stage 2 == Stage 3 byte-identical self-hosting fixed point (catalogue #68483), universe CHECK-FAILS burned down to 150 (126/276 via #349, bddba429), native compiled benchmarks (Data Forge 283,687.3 rows/s, Articulate 27,606.0 docs/s, INV-01 194.59 M loops/s, N18 3DGS 323.60 FPS = 1.93x C++23, NTC610 -83.33% 4K PBR VRAM), 319 zero-FLAG verified formula kernels, 234 verified author ideas enforced via Gate 6, CITATION/codemeta/llms.txt + editors/vscode vsce packaging (#348), 1.18M-record corpus engine, BuildDB (BDB), BuildTeX, and live AGPL-3.0-only funding.json (#345)."
     },
     {
       "id": "flywheel",
       "name": "The Flywheel",
       "url": "https://harperz9.github.io/flywheel.html",
       "repository": "https://github.com/HarperZ9/flywheel",
-      "summary": "Pure OSI MIT-licensed (#574, fb877d2e) self-hosted AI workstation and coding harness consolidating 31 packages behind cryptographic offline receipts, Rowan orchestration, Three-Plate Verification Oracle (115/115 recall, 0 false accepts), Data Forge proof-carrying distillation (1,792.8 rows/s, 9/9 planted controls, HIPAA Safe Harbor + Scientific SI + Search-From-The-Start, RFC 6962 Merkle Dataset Cards), unified flywheel super-solver (6/6 fault catch via #565), PUCT oracle tree search + 34.99x RFC 6962 Merkle trace compression (#566), Official MCP Registry manifests (#570), accountable-surface C11/Win32 desktop surface + BuildLang FFI (#571), Win32 DPAPI/CredMan keystore + OAuth 2.0 PKCE/Device Flow + RFC 9421 signer (#572), AgentWorkspace + DelegatedMandate + ApprovalValve (#573), EMET witnessing, and Articulate prose linting."
+      "summary": "Pure OSI MIT-licensed (#574, fb877d2e) self-hosted AI workstation and coding harness consolidating 31 packages behind cryptographic offline receipts, Rowan orchestration, Three-Plate Verification Oracle (115/115 recall, 0 false accepts), Data Forge proof-carrying distillation (283,687.3 rows/s native BuildLang = 158.2x Python 1,792.8 rows/s, bit-exact SHA-256 + RFC 6962 Merkle, 6/6 native + 9/9 pipeline controls), Articulate native BuildLang core (27,606.0 docs/s, 4.19e-13 cadence parity, 6/6 traps), unified flywheel super-solver (6/6 fault catch via #565), PUCT oracle tree search + 34.99x RFC 6962 Merkle trace compression (#566), Official MCP Registry manifests (#570), accountable-surface C11/Win32 desktop surface + BuildLang FFI (#571), Win32 DPAPI/CredMan keystore + OAuth 2.0 PKCE/Device Flow + RFC 9421 signer (#572), AgentWorkspace + DelegatedMandate + ApprovalValve (#573), and EMET witnessing."
     },
     {
       "id": "playground",
@@ -57,16 +58,17 @@
       "name": "The Commons (CMMNS)",
       "url": "https://harperz9.github.io/cmmns.html",
       "repository": "https://github.com/HarperZ9/cmmns",
-      "summary": "Local-first, account-free browser extension surfacing account provenance, coordination cues, Content Credentials (C2PA), and fact-checks across 9 social platforms, plus offline Web/AI provenance CLI verifier (#130, 4/4 adversarial catches) and live AGPL-3.0-only funding.json (#131)."
+      "summary": "Local-first, account-free browser extension surfacing account provenance, coordination cues, Content Credentials (C2PA), and fact-checks across 9 social platforms, offline Web/AI provenance CLI verifier (#130, 4/4 adversarial catches), live AGPL-3.0-only funding.json (#131), discovery/store kit (#132), and lawful public-record CIB RFC 6962 Merkle provenance & PII firewall (#133, ffb56129, 1,750/1,750 tests, 9/9 CI pass, 28/28 bit-exact proofs, 5/5 planted controls)."
     },
     {
       "id": "research-and-models",
       "name": "Research, Local Frontier Models & Security",
       "url": "https://harperz9.github.io/models.html",
+      "experimentsUrl": "https://harperz9.github.io/experiments/index.html#receipt-ledger",
       "findingsUrl": "https://harperz9.github.io/findings/index.html",
       "securityUrl": "https://harperz9.github.io/security.html",
       "demoSpaceUrl": "https://huggingface.co/spaces/zaindanaharper/jfc3p-oracle-demo",
-      "summary": "30 reproducible empirical studies (12 published nulls), 13 DOI-indexed Zenodo preprints, Local Frontier Model Lab (JFC3P-14B-Oracle v5 PASS 66/84 Arm C = 78.57%, +21.43 pp vs Base 14B 48/84, 15/15 long-context zero drift, 21/24 traps, 6/6 A1..A6 PASS; JFC3P-7B-Oracle v4 63/84 Arm C 75.0%, 31 tool calls; caught v2 DRIFT 40/84 kept public; live HF Space zaindanaharper/jfc3p-oracle-demo; JFC3P-Titan-1M v2 10.331 GB RTX 4090 / 5.747 GB Edge at 1M tokens, 291.69x KV compression, 99.85 tok/s; Data Forge 1,792.8 rows/s, 9/9 planted controls, RFC 6962 Merkle Dataset Cards; NOH-4, Plato-Key, AVTR-4R, FRESCO/MoLT), and capability-public security hierarchy."
+      "summary": "30 reproducible empirical studies (12 published nulls), 90 preregistered null/refuted experiments + G9 live SHA-256 receipt ledger (10 committed engine-receipt/1 JSON proofs), 13 DOI-indexed Zenodo preprints, Local Frontier Model Lab (JFC3P-14B-Oracle v5 PASS 66/84 Arm C = 78.57%, +21.43 pp vs Base 14B 48/84, 15/15 long-context zero drift, 21/24 traps, 6/6 A1..A6 PASS; JFC3P-7B-Oracle v4 63/84 Arm C 75.0%; caught v2 DRIFT 40/84 kept public; live HF Space zaindanaharper/jfc3p-oracle-demo; INV-01 Symplectic Loom-Titan-1M 194.59 M loops/s native BuildLang, 2.22e-16 parity vs C++23 AVX2+FMA, 0.0812 ms 1M-token PLATO/NSA + MoltKV query, 5/5 controls, 10.331 GB RTX 4090 / 5.747 GB Edge; J13 Model Epigenetics 100% weights-only incentive detection + J8 persistent memory; Data Forge 283,687.3 rows/s native BuildLang = 158.2x Python, bit-exact SHA-256 + RFC 6962 Merkle; NOH-4, Plato-Key, AVTR-4R, FRESCO/MoLT), and capability-public security hierarchy."
     }
   ],
   "inventory": {
