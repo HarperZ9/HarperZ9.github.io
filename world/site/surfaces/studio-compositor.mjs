@@ -1,6 +1,7 @@
-// studio-compositor.mjs: Consolidated 11-Layer Live Multimedia Studio (#studio-canvas-shell) for /playground/.
-// Combines Estuary, Low Water, Glass & Water, 3D Mesh, Elements Palette, Fourier, Living Type, Retro 46 FX,
-// Loom Jacquard, Plotter Contours, and Distill Layer-0 File Ingest with 4 presets + docked 4-lane modal DAW.
+// studio-compositor.mjs: Wave 34B-2 Consolidated 11-Layer Live Multimedia Studio (#studio-canvas-shell).
+// Tactile curve + right-angle + negative-space design: canvas-first dominant viewport, collapsible
+// frosted-slate layer drawer, curved SVG cubic-bezier Patchbay ribbons, pill switches, circular dials,
+// recessed amber DAW pads, Distill file drop, 4 presets, and multi-format PNG/WIF/SVG/Receipt exports.
 import { LAYER_RENDERERS, STACK_PRESETS, STUDIO_LAYERS, createLayerStack } from './unified-layer-registry.mjs';
 
 const BLENDS = ['normal', 'screen', 'multiply', 'overlay', 'difference'];
@@ -13,6 +14,7 @@ const LANES = [
   ['hat', 'Hat', [1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1]],
   ['chord', 'Chord', [1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0]],
 ];
+const PORT_COLOR = { audio_features: '#d79e35', palette: '#d79e35', frame: '#4ea6b8', cloth_wif: '#ece5d6', vector: '#ece5d6', type_field: '#ece5d6' };
 const W = 960, H = 540;
 const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
@@ -39,14 +41,30 @@ function setupRoving(el, sel) {
   return reset;
 }
 
-function hopChainNodes(presetId) {
+function buildPatchbaySvg(presetId) {
   const p = STACK_PRESETS[presetId] || STACK_PRESETS['multimedia-master'];
   const nodes = [];
   for (const [from, , to] of p.wires) {
     if (!nodes.length) nodes.push(from);
     nodes.push(to);
   }
-  return nodes;
+  const n = Math.max(2, nodes.length), padX = 66, span = 880 - padX * 2, baseY = 48;
+  const xs = nodes.map((_, i) => padX + (span * i) / (n - 1));
+  const arcs = p.wires.map(([, port], i) => {
+    const x1 = xs[i], x2 = xs[i + 1], mx = (x1 + x2) / 2, arch = i % 2 === 0 ? 12 : 18;
+    const col = PORT_COLOR[port] || '#4ea6b8';
+    return `<path class="sc-patch-ribbon" d="M${x1.toFixed(1)} ${baseY - 12}C${(x1 + 18).toFixed(1)} ${arch},${(x2 - 18).toFixed(1)} ${arch},${x2.toFixed(1)} ${baseY - 12}" stroke="${col}"/>`
+      + `<text x="${mx.toFixed(1)}" y="${arch - 2}" text-anchor="middle" fill="${col}" font-size="9" font-family="Conso,ui-monospace,monospace">${esc(port)}</text>`;
+  }).join('');
+  const pills = nodes.map((name, i) => {
+    const x = xs[i], pw = Math.max(76, name.length * 7.2 + 20);
+    return `<rect x="${(x - pw / 2).toFixed(1)}" y="${baseY - 14}" width="${pw.toFixed(1)}" height="28" rx="14" fill="rgba(9,21,33,.92)" stroke="rgba(244,239,230,.36)" stroke-width="1"/>`
+      + `<text x="${x.toFixed(1)}" y="${baseY + 4}" text-anchor="middle" fill="#f4efe6" font-size="11" font-weight="600" font-family="Conso,ui-monospace,monospace">${esc(name)}</text>`;
+  }).join('');
+  return `<svg class="sc-patch-svg" viewBox="0 0 880 76" role="img" aria-label="Patchbay signal flow: ${esc(nodes.join(' to '))}">`
+    + `<line x1="18" y1="${baseY}" x2="862" y2="${baseY}" stroke="rgba(244,239,230,.22)" stroke-width="1"/>`
+    + `<path d="M12 ${baseY}h12M18 ${baseY - 6}v12M856 ${baseY}h12M862 ${baseY - 6}v12" stroke="rgba(244,239,230,.5)" stroke-width="1"/>`
+    + arcs + pills + `</svg>`;
 }
 
 export function mountUnifiedStudio(host) {
@@ -80,23 +98,26 @@ export function mountUnifiedStudio(host) {
     `<button type="button" class="sc-preset" data-sc-preset="${p.id}" aria-pressed="${p.id === state.preset}">${esc(p.label)}</button>`
   ).join('');
 
-  host.innerHTML = `<div class="sc-presets" id="sc-presets" role="toolbar" aria-label="Studio stack presets"><span class="sc-kicker">Presets (11 engines)</span><div class="sc-preset-row">${presetBtns}</div></div>
-<div class="sc-grid">
-<aside class="sc-rail" id="sc-rail" aria-label="Composite layer stack">
-<div class="sc-rail-head"><span class="sc-kicker" id="sc-rail-count">Layer stack (11 engines)</span>
-<label class="sc-type-in"><span>Living Type / Fourier Word</span><input type="text" id="sc-type-text" value="${esc(state.text)}" maxlength="18" aria-label="Living Type text"></label></div>
-<ol class="sc-layers" id="sc-layers"></ol>
-<div class="sc-add-row"><select id="sc-add-sel" aria-label="Add studio layer">${STUDIO_LAYERS.map((l) => `<option value="${l.id}">${esc(l.name)}</option>`).join('')}</select><button type="button" id="sc-add-btn">Add layer</button></div>
-</aside>
+  host.innerHTML = `<div class="sc-presets" id="sc-presets" role="toolbar" aria-label="Studio stack presets">
+<div class="sc-preset-left"><span class="sc-kicker">Presets (11 engines)</span><div class="sc-preset-row">${presetBtns}</div></div>
+<button type="button" class="sc-drawer-btn" id="sc-rail-toggle" aria-expanded="true" aria-controls="sc-rail">Layers (8/11)</button></div>
+<div class="sc-grid" id="sc-grid">
 <div class="sc-stage-col">
-<div class="sc-toolbar" id="sc-toolbar" role="toolbar" aria-label="Studio exports, Distill ingest, and patchbay">
-<div class="sc-hops" id="sc-hops" aria-label="Patchbay hop chain"></div>
+<div class="sc-toolbar" id="sc-toolbar" role="toolbar" aria-label="Studio exports and Distill file ingest">
+<span class="sc-kicker">Shared 11-layer stage &middot; Drag to stir or drop file</span>
 <div class="sc-exports"><button type="button" id="sc-distill-btn">Drop / Load File</button><input type="file" id="sc-distill-file" hidden aria-label="Load local file into Distill layer"><button type="button" data-sc-export="png">PNG</button><button type="button" data-sc-export="wif">WIF</button><button type="button" data-sc-export="svg">SVG</button><button type="button" data-sc-export="receipt">Receipt</button></div>
 </div>
+<div class="sc-patch-panel" id="sc-hops" aria-label="Curved Patchbay signal flow"></div>
 <div class="sc-canvas-wrap" id="sc-dropzone"><canvas id="sc-canvas" class="sc-canvas" width="${W}" height="${H}" aria-label="Consolidated 11-layer multimedia studio composite. Drag to stir or drop any local file to Distill."></canvas>
 <div class="sc-hud" aria-hidden="true"><span id="sc-hud-mode">11-layer consolidated studio</span><span id="sc-hud-sha">patchbay: ready (6 hops)</span></div></div>
 <p class="sc-status" id="sc-status" role="status" aria-live="polite">Unified 11-layer studio ready: Multimedia Master preset active. Audio starts muted until Play is pressed.</p>
-</div></div>
+</div>
+<aside class="sc-rail" id="sc-rail" aria-label="Composite layer stack">
+<div class="sc-rail-head"><span class="sc-kicker" id="sc-rail-count">Layer stack (8/11 active)</span>
+<label class="sc-type-in"><span>Living Type / Fourier Word</span><input type="text" id="sc-type-text" value="${esc(state.text)}" maxlength="18" aria-label="Living Type text"></label></div>
+<ol class="sc-layers" id="sc-layers"></ol>
+<div class="sc-add-row"><select id="sc-add-sel" aria-label="Add studio layer">${STUDIO_LAYERS.map((l) => `<option value="${l.id}">${esc(l.name)}</option>`).join('')}</select><button type="button" id="sc-add-btn">Add layer</button></div>
+</aside></div>
 <div class="sc-daw" id="sc-daw" role="toolbar" aria-label="DAW sequencer and synthesizer">
 <div class="sc-daw-top"><button type="button" class="sc-play" id="sc-play" aria-pressed="false">Play DAW</button>
 <label class="sc-scale"><span>Scale</span><select id="sc-scale" aria-label="DAW modal scale">${SCALES.map(([v, t]) => `<option value="${v}">${t}</option>`).join('')}</select></label>
@@ -108,6 +129,9 @@ export function mountUnifiedStudio(host) {
   if (prev) prev.hidden = true;
   host.hidden = false;
 
+  const gridEl = host.querySelector('#sc-grid');
+  const railEl = host.querySelector('#sc-rail');
+  const railToggle = host.querySelector('#sc-rail-toggle');
   const canvas = host.querySelector('#sc-canvas');
   const ctx = canvas.getContext('2d', { willReadFrequently: true });
   const layersEl = host.querySelector('#sc-layers');
@@ -125,22 +149,22 @@ export function mountUnifiedStudio(host) {
   const [smFx, gSm] = mk(160, 90);
   const [smGlass] = mk(192, 108);
   const [smElem] = mk(160, 90);
-
   let resetRailRoving = () => {};
 
   function renderLayerRail() {
     state.layers = layerStack.list();
     const activeN = state.layers.filter((l) => l.on).length;
     countEl.textContent = `Layer stack (${activeN}/${state.layers.length} active)`;
+    if (railToggle) railToggle.textContent = `Layers (${activeN}/${state.layers.length})`;
     layersEl.innerHTML = state.layers.map((L, i) => `<li class="sc-layer${L.on ? ' is-active' : ''}" data-sc-layer="${L.id}">
-<div class="sc-layer-top"><button type="button" class="sc-eye" data-sc-eye="${L.id}" aria-pressed="${L.on}" aria-label="Toggle ${esc(L.name)}">${L.on ? 'On' : 'Off'}</button>
+<div class="sc-layer-top"><button type="button" class="sc-eye" data-sc-eye="${L.id}" aria-pressed="${L.on}" aria-label="Toggle ${esc(L.name)}"><span class="sr-only">${L.on ? 'On' : 'Off'}</span></button>
 <span class="sc-lname">${i + 1}. ${esc(L.name)}</span>
 <span class="sc-ord"><button type="button" class="sc-mv" data-sc-mv="${L.id}:-1" aria-label="Move ${esc(L.name)} up">^</button><button type="button" class="sc-mv" data-sc-mv="${L.id}:1" aria-label="Move ${esc(L.name)} down">v</button><button type="button" class="sc-mv" data-sc-rm="${L.id}" aria-label="Remove ${esc(L.name)}">x</button></span>
 <span class="sc-route">${esc(L.route)}</span></div>
 <div class="sc-layer-ctrl"><label class="sc-op"><span>Op <output data-sc-op-out="${L.id}">${Math.round(L.opacity * 100)}%</output></span>
 <input type="range" min="0" max="100" value="${Math.round(L.opacity * 100)}" data-sc-op="${L.id}" aria-label="${esc(L.name)} opacity"></label>
 <label class="sc-bl"><span>Blend</span><select id="sc-blend-${L.id}" data-sc-blend="${L.id}" aria-label="${esc(L.name)} blend mode">${BLENDS.map((b) => `<option value="${b}"${b === L.blend ? ' selected' : ''}>${b}</option>`).join('')}</select></label></div></li>`).join('');
-    hopsEl.innerHTML = hopChainNodes(state.preset).map((h) => `<span class="sc-hop">${esc(h)}</span>`).join('<span class="sc-arrow" aria-hidden="true">-&gt;</span>');
+    hopsEl.innerHTML = buildPatchbaySvg(state.preset);
     modeEl.textContent = `${STACK_PRESETS[state.preset]?.label || state.preset} (${activeN} layers live)`;
     resetRailRoving();
   }
@@ -310,6 +334,14 @@ export function mountUnifiedStudio(host) {
   }
 
   host.addEventListener('click', async (ev) => {
+    if (ev.target.id === 'sc-rail-toggle') {
+      const open = railEl.hidden;
+      railEl.hidden = !open;
+      gridEl.classList.toggle('is-rail-collapsed', !open);
+      railToggle.setAttribute('aria-expanded', String(open));
+      statusEl.textContent = open ? 'Layer drawer expanded.' : 'Layer drawer tucked for full-bleed canvas view.';
+      return;
+    }
     const pre = ev.target.closest('[data-sc-preset]');
     if (pre) {
       const id = pre.dataset.scPreset;
@@ -401,7 +433,7 @@ export function mountUnifiedStudio(host) {
   canvas.addEventListener('pointermove', (ev) => { if (drag) stir(ev); });
   canvas.addEventListener('pointerup', () => { drag = false; });
 
-  resetRailRoving = setupRoving(host.querySelector('#sc-rail'), 'button, input, select');
+  resetRailRoving = setupRoving(railEl, 'button, input, select');
   setupRoving(host.querySelector('#sc-presets'), 'button');
   setupRoving(host.querySelector('#sc-toolbar'), 'button');
   setupRoving(host.querySelector('#sc-daw'), 'button, input, select');
@@ -425,6 +457,7 @@ export function mountUnifiedStudio(host) {
 
   const api = {
     applyPreset: async (id) => { host.querySelector(`[data-sc-preset="${id}"]`)?.click(); },
+    toggleDrawer: () => { railToggle?.click(); },
     ingestBytes: async (bytes, name) => {
       const rt = await getBridge();
       const out = rt.ingestFileBytes(bytes, name || 'studio.bin', state);
