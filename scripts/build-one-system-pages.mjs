@@ -539,7 +539,7 @@ function buildWasmBench() {
   .wb-toolbar button[aria-pressed="true"] { border-color: var(--ink); font-weight: 700; }
   .wb-readout { padding: 0.85rem 0; border-bottom: 1px solid var(--line); font-family: var(--face-utility); font-size: 0.86rem; font-variant-numeric: tabular-nums; }
   .wb-readout p { margin: 0.25rem 0; }
-  .wb-table-wrap { width: 100%; overflow-x: auto; margin-top: 0.5rem; }
+  .wb-table-wrap { width: 100%; overflow-x: auto; margin-top: 0.5rem; min-height: 860px; }
   .wb-table-wrap:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
   .wb-table { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
   .wb-table th, .wb-table td { text-align: left; padding: 0.55rem 0.65rem 0.55rem 0; border-bottom: 1px solid var(--line); vertical-align: top; }
