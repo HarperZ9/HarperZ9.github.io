@@ -236,7 +236,7 @@ async function sha256HexBrowser(buf) {
 }
 
 if (typeof window !== "undefined" && typeof document !== "undefined") {
-  window.addEventListener("DOMContentLoaded", async () => {
+  const boot = async () => {
     const tbody = document.getElementById("gs-rows");
     const statusEl = document.getElementById("gs-status");
     const digestEl = document.getElementById("gs-digest");
@@ -265,7 +265,7 @@ if (typeof window !== "undefined" && typeof document !== "undefined") {
         if (statusEl) {
           const rw = filtered.reduce((acc, s) => acc + Number(s.rewrites || 0), 0);
           const kb = (filtered.reduce((acc, s) => acc + Number(s.shader_bytes || 0), 0) / 1024).toFixed(2);
-          statusEl.textContent = `Showing ${filtered.length} of ${data.shaders.length} certified shaders | ${kb} KB | ${rw} superopt rewrites`;
+          statusEl.textContent = `Showing ${filtered.length} of ${data.shaders.length} certified shaders | Sort: ${state.sortBy} | ${kb} KB | ${rw} superopt rewrites`;
         }
         for (const b of domainBtns) b.setAttribute("aria-pressed", String(b.dataset.domainFilter === state.domain));
         for (const b of targetBtns) b.setAttribute("aria-pressed", String(b.dataset.targetFilter === state.target));
@@ -284,5 +284,10 @@ if (typeof window !== "undefined" && typeof document !== "undefined") {
     } catch (err) {
       if (statusEl) statusEl.textContent = `Showing pre-rendered 120/120 certified GPU shader table (${err.message}).`;
     }
-  });
+  };
+  if (document.readyState === "loading") {
+    window.addEventListener("DOMContentLoaded", boot);
+  } else {
+    boot();
+  }
 }

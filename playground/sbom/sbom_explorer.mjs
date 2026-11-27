@@ -264,7 +264,7 @@ async function sha256HexBrowser(buf) {
 }
 
 if (typeof window !== "undefined" && typeof document !== "undefined") {
-  window.addEventListener("DOMContentLoaded", async () => {
+  const boot = async () => {
     const tbody = document.getElementById("sb-comp-rows");
     const statusEl = document.getElementById("sb-status");
     const digestEl = document.getElementById("sb-digest");
@@ -294,7 +294,7 @@ if (typeof window !== "undefined" && typeof document !== "undefined") {
         if (tbody) tbody.innerHTML = renderComponentRows(filtered, 200);
         if (statusEl) {
           const shown = Math.min(filtered.length, 200);
-          statusEl.textContent = `Matched ${filtered.length} of ${summary.totalComponents} components (displaying ${shown}) across 15 public repositories`;
+          statusEl.textContent = `Matched ${filtered.length} of ${summary.totalComponents} components (displaying ${shown}) across 15 public repositories | Repo: ${state.repo} | License: ${state.license} | Type: ${state.type}`;
         }
         for (const b of tierBtns) b.setAttribute("aria-pressed", String(b.dataset.tierFilter === state.tier));
       }
@@ -311,5 +311,10 @@ if (typeof window !== "undefined" && typeof document !== "undefined") {
     } catch (err) {
       if (statusEl) statusEl.textContent = `Displaying pre-rendered 15-repo SBOM summary (${err.message}).`;
     }
-  });
+  };
+  if (document.readyState === "loading") {
+    window.addEventListener("DOMContentLoaded", boot);
+  } else {
+    boot();
+  }
 }

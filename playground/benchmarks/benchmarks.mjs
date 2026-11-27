@@ -406,7 +406,7 @@ export function mountBenchmarksSurface(doc = document, data, receiptSummary = nu
     if (tbody) tbody.innerHTML = renderTableRows(filtered);
     if (chartHost) chartHost.innerHTML = renderSpeedupSvg(filtered, { metric: state.metric });
     if (statusEl) {
-      statusEl.textContent = `Showing ${filtered.length} of ${data.kernels.length} verified kernels | Parity ${data.parity_all_ok ? "8/8 MATCH" : "MISMATCH"} | Planted wrong-output control caught: ${data.planted_control?.planted_wrong_output_caught ? "true" : "false"}`;
+      statusEl.textContent = `Showing ${filtered.length} of ${data.kernels.length} verified kernels | Sort: ${state.sortBy} | Parity ${data.parity_all_ok ? "8/8 MATCH" : "MISMATCH"} | Planted wrong-output control caught: ${data.planted_control?.planted_wrong_output_caught ? "true" : "false"}`;
     }
     for (const btn of runtimeBtns) {
       btn.setAttribute("aria-pressed", String(btn.dataset.runtimeFilter === state.runtime));
@@ -458,7 +458,7 @@ export function mountBenchmarksSurface(doc = document, data, receiptSummary = nu
 }
 
 if (typeof window !== "undefined" && typeof document !== "undefined") {
-  window.addEventListener("DOMContentLoaded", async () => {
+  const boot = async () => {
     try {
       const [resJson, resSummary] = await Promise.all([
         fetch("./benchmarks_v2_results.json"),
@@ -486,5 +486,10 @@ if (typeof window !== "undefined" && typeof document !== "undefined") {
         statusEl.textContent = `Interactive dataset load note: displaying pre-rendered verified sheet (${err.message}).`;
       }
     }
-  });
+  };
+  if (document.readyState === "loading") {
+    window.addEventListener("DOMContentLoaded", boot);
+  } else {
+    boot();
+  }
 }
