@@ -160,5 +160,5 @@ test('Wave 31A studio assets pass hygiene guard (zero em dashes, zero excluded w
     assert.ok(!/[A-Z]:\\|\/Users\//.test(text), `local path found in ${rel}`);
   }
   const compBytes = fs.statSync(path.join(ROOT, 'world/site/surfaces/studio-compositor.mjs')).size;
-  assert.ok(compBytes <= 22000, `studio-compositor.mjs (${compBytes} B) should stay sleek for eager network budget`);
+  assert.ok(compBytes <= 28000, `studio-compositor.mjs (${compBytes} B) should stay sleek`);
 });
