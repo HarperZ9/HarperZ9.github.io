@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+message: "If you cite this portfolio, essays, or interactive research tools, please cite these metadata."
+type: software
+title: "harperz9.github.io"
+abstract: "Interactive portfolio, essays, and live tool showcase of Zain Dana Harper covering rendering engines, BuildLang, local model training and verification, open archival tools, and reproducible studies."
+version: "2026.11.27"
+date-released: 2026-11-27
+authors:
+  - family-names: "Harper"
+    given-names: "Zain Dana"
+    orcid: "https://orcid.org/0009-0001-7175-5393"
+repository-code: "https://github.com/HarperZ9/HarperZ9.github.io"
+url: "https://harperz9.github.io/"
+license: CC-BY-4.0
+license-url: "https://github.com/HarperZ9/HarperZ9.github.io/blob/main/LICENSE"
+keywords:
+  - accessibility
+  - ai-evaluation
+  - buildlang
+  - cmmns
+  - flywheel
+  - open-science
+  - portfolio
+  - provenance
+  - rendering-engine
+  - reproducibility
+  - superframe
