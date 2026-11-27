@@ -2,6 +2,7 @@
    Open Ocean + Measured Drafting Sheet: crisp hairline rules, zero SaaS cards,
    Hanken Grotesk + Conso, 44px touch targets, day/night AA contrast, reduced-motion safe. */
 .sc-shell { border-top: 1.5px solid var(--line, rgba(244, 239, 230, .42)); padding-top: 18px; margin: 18px 0 32px; }
+@media (max-width: 860px) { .sc-shell { scroll-margin-top: calc(max(12px, env(safe-area-inset-top, 0px)) + 112px); padding-top: 22px; } }
 .sc-head { display: grid; gap: 6px; margin-bottom: 14px; }
 .sc-head h2 { margin: 0; font-size: clamp(1.25rem, 2.2vw, 1.65rem); }
 .sc-sub { margin: 0; font-size: .92em; color: var(--soft); max-width: 72ch; }
