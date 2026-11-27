@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en" data-type="stock">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<title>BuildLang Cross-Runtime Verified Benchmarks | Zain Dana Harper</title>
+<meta name="description" content="Strictly measured BuildLang cross-runtime benchmark suite V2 comparing native, Zero-C PE32+, Node WebAssembly, and Python 3.12 with 8/8 SHA-256 parity and honest process-spawn disclosures.">
+<link rel="canonical" href="https://harperz9.github.io/playground/benchmarks/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="BuildLang Cross-Runtime Verified Benchmarks | Zain Dana Harper">
+<meta property="og:description" content="Strictly measured BuildLang cross-runtime benchmark suite V2 comparing native, Zero-C PE32+, Node WebAssembly, and Python 3.12 with 8/8 SHA-256 parity and honest process-spawn disclosures.">
+<meta property="og:url" content="https://harperz9.github.io/playground/benchmarks/">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/home.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="BuildLang Cross-Runtime Verified Benchmarks | Zain Dana Harper">
+<meta name="twitter:description" content="Strictly measured BuildLang cross-runtime benchmark suite V2 comparing native, Zero-C PE32+, Node WebAssembly, and Python 3.12 with 8/8 SHA-256 parity and honest process-spawn disclosures.">
+<link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-6218db2f12">
+<link rel="stylesheet" href="/studies/studies.css?v=world-6218db2f12">
+<link rel="stylesheet" href="/world/site/depth.css?v=world-6218db2f12">
+<script type="module" src="/world/ui/shell/shell.js?v=world-6218db2f12"></script>
+<script type="module" src="/world/site/hand-scroll.js?v=world-6218db2f12"></script>
+<style>
+  .bm-toolbar { display: flex; flex-wrap: wrap; gap: 0.5rem 0.65rem; align-items: center; padding: 0.85rem 0; border-bottom: 1px solid var(--line); }
+  .bm-toolbar-group { display: inline-flex; flex-wrap: wrap; gap: 0.45rem; align-items: center; }
+  .bm-toolbar button, .bm-toolbar select, .bm-toolbar input { background: transparent; color: var(--ink); border: 1px solid var(--line); padding: 0.4rem 0.72rem; min-height: 40px; font-family: var(--face-utility); font-size: 0.82rem; }
+  .bm-toolbar button { cursor: pointer; }
+  .bm-toolbar button:focus-visible, .bm-toolbar select:focus-visible, .bm-toolbar input:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .bm-toolbar button[aria-pressed="true"] { border-color: var(--ink); font-weight: 700; }
+  .bm-readout { padding: 0.8rem 0; border-bottom: 1px solid var(--line); font-family: var(--face-utility); font-size: 0.84rem; font-variant-numeric: tabular-nums; }
+  .bm-readout p { margin: 0.22rem 0; }
+  .bm-chart-wrap { padding: 1rem 0 0.75rem; border-bottom: 1px solid var(--line); overflow-x: auto; }
+  .bm-svg { width: 100%; max-width: 760px; height: auto; display: block; font-family: var(--face-utility); }
+  .bm-svg-num { font-variant-numeric: tabular-nums; }
+  .bm-table-wrap { width: 100%; overflow-x: auto; margin-top: 0.5rem; }
+  .bm-table-wrap:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .bm-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  .bm-table th, .bm-table td { text-align: left; padding: 0.55rem 0.65rem 0.55rem 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .bm-table thead th { font-family: var(--face-utility); font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--soft); font-weight: 600; }
+  .bm-table .mono { font-family: var(--face-utility); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .bm-sub { display: block; font-family: var(--face-utility); font-size: 0.74rem; color: var(--soft); font-weight: 400; margin-top: 0.12rem; }
+  .bm-metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(11.5rem, 1fr)); gap: 0.75rem 1.25rem; margin: 1rem 0 0; padding: 0.9rem 0; border-block: 1px solid var(--line); list-style: none; }
+  .bm-metrics li b { display: block; font-family: var(--face-utility); font-size: 1.08rem; font-variant-numeric: tabular-nums; }
+  .bm-metrics li span { font-size: 0.8rem; color: var(--soft); }
+</style></head>
+<body class="reading ds-sheet">
+
+<header class="o-hand o-said" aria-label="Site">
+  <a class="skip" href="#main">Skip to the page</a>
+  <a class="o-home" href="/">Zain Dana Harper</a>
+  <a data-o="band" href="/world/universe/proto/index.html"><span class="o-name">Map</span></a>
+  <button type="button" data-o="fold" aria-controls="o-menu" aria-keyshortcuts="m" aria-expanded="false" hidden><span class="o-name">Places</span><i></i><i></i><i></i></button>
+  <button type="button" data-o="lamp" data-theme-toggle aria-pressed="true"><span class="o-name">Day</span></button>
+  <span class="o-cell"><button type="button" data-o="peel" data-plain-toggle aria-pressed="false"><span class="o-name">Plain</span></button><span class="o-under" aria-hidden="true">Plain</span></span>
+</header>
+<dialog id="o-menu" data-o="menu" data-material="chladni" aria-label="Places">
+  <nav aria-label="Places">
+    <ul class="o-places">
+      <li><a href="/buildlang.html"><span class="o-word" data-display-on-open="glyphcell">BuildLang</span></a></li>
+      <li><a href="/flywheel.html"><span class="o-word" data-display-on-open="light">Flywheel</span></a><small class="o-sub"><a href="/cmmns.html">CMMNS</a> <a href="/articulate.html">Articulate</a></small></li>
+      <li><a href="/playground/"><span class="o-word" data-display-on-open="nightlights">The Playground</span></a><small class="o-sub"><a href="/playground/#estuary">Estuary</a> <a href="/playground/#native">Native renderer</a> <a href="/playground/#superframe">Superframe</a> <a href="/playground/#workbench">All creative engines</a> <a href="/playground/#low-water">Low Water</a></small></li>
+      <li><a href="/playground/#low-water"><span class="o-word" data-display-on-open="chladni">Game</span></a></li>
+      <li><a href="/#site"><span class="o-word" data-display-on-open="swarm">Site</span></a></li>
+      <li><a href="/floor.html"><span class="o-word" data-display-on-open="rope">Everything</span></a></li>
+      <li><a href="/models.html"><span class="o-word" data-display-on-open="rope">Models</span></a></li>
+      <li><a href="/tools.html"><span class="o-word" data-display-on-open="rope">Tools &amp; Repos</span></a></li>
+      <li><a href="/person.html"><span class="o-word" data-display-on-open="rope">About</span></a></li>
+      <li><a href="/architecture.html"><span class="o-word" data-display-on-open="rope">Architecture</span></a></li>
+      <li><a href="/world/universe/proto/index.html"><span class="o-word" data-display-on-open="rope">Map</span></a></li>
+      <li><a href="/publications.html"><span class="o-word" data-display-on-open="swarm">Writing</span></a></li>
+      <li><a href="/explainers.html"><span class="o-word" data-display-on-open="sound">Films</span></a></li>
+      <li><a href="/security.html"><span class="o-word" data-display-on-open="rope">Security</span></a></li>
+      <li><a href="/hire.html"><span class="o-word" data-display-on-open="rope">Work</span></a></li>
+      <li><a href="/cv.html"><span class="o-word" data-display-on-open="rope">CV</span></a></li>
+    </ul>
+  </nav>
+  <p class="o-menu-foot"><a href="/architecture.html">Architecture</a> <a href="/models.html">Models</a> <a href="/tools.html">Tools &amp; 159 Repos</a> <a href="/research.html">Research</a> <a href="/portfolio.html">Portfolio</a> <a href="/elements.html">Elements</a> <a href="/studies/">Studies</a> <a href="/site-index.html">Site index</a> <button type="button" class="o-close" data-qj-open onclick="this.closest('dialog').close()">Search (Ctrl+K)</button> <button type="button" class="o-close" onclick="this.closest('dialog').close()">Close (Esc)</button></p>
+</dialog>
+<main id="main" tabindex="-1">
+<article class="st" id="benchmarks-v2">
+<header class="ds-sheet-head">
+  <p class="ds-kicker">Measured Drafting Sheet / Verified Cross-Runtime Benchmark Suite V2</p>
+  <h1>BuildLang Cross-Runtime Verified Benchmarks</h1>
+  <p class="ds-lede">Strictly measured workstation latency and canonical SHA-256 parity across four execution targets (<code>buildc 1.15.0</code> native, Zero-C PE32+, Node <code>v25.2.1</code> WebAssembly, and Python <code>3.12.10</code> stdlib) over 1 warmup plus 7 timed runs on Windows-11-10.0.26320-SP0 (AMD64). Pure OSI MIT data with zero synthetic figures and explicit process-spawn disclosures.</p>
+  <p class="ds-meta"><span>8/8 SHA-256 parity MATCH</span><span>Titan-1M 30.21x native / 27.46x WASM</span><span>Indirect Cull 13.01x native</span><span>Planted control caught: true</span></p>
+  <nav class="ds-ways" aria-label="Related surfaces">
+    <a href="/playground/">The Playground</a>
+    <a href="/playground/wasm-bench/">18-Module Live WASM Bench</a>
+    <a href="/experiments/#receipt-ledger">G9 SHA-256 Receipt Ledger</a>
+    <a href="/buildlang.html">BuildLang</a>
+    <a href="./benchmarks_v2_results.json">Raw Results JSON</a>
+    <a href="./benchmarks_v2_receipt_summary.json">Receipt Summary JSON</a>
+  </nav>
+</header>
+
+<section class="ds-sec" id="headline" aria-labelledby="h-headline">
+  <h2 id="h-headline">Verified headline measurements ([Checked])</h2>
+  <ul class="bm-metrics">
+    <li><b>30.21x / 27.46x</b><span>Titan-1M Cayley (N44): 21.034 ms native and 23.140 ms WASM (5.27 KB) vs 635.520 ms Python.</span></li>
+    <li><b>13.01x native</b><span>Indirect Draw Cull (N63, 100K): 9.326 ms native vs 121.347 ms Python.</span></li>
+    <li><b>4.724 ms vs 5.706 ms</b><span>Zero-C PE32+ SHA-256 (7.50 KB) beats CRT native by 0.9819 ms; WASM beats Python 7.51x.</span></li>
+    <li><b>5.430 ms vs 6.998 ms</b><span>Zero-C PE32+ ChaCha20-Poly1305 (10.00 KB) beats CRT native by 1.568 ms; WASM beats Python 4.55x.</span></li>
+    <li><b>5.62x native</b><span>K-Core Color (B2, 100K CIEDE2000): 21.050 ms native vs 118.275 ms Python.</span></li>
+    <li><b>8/8 parity</b><span>Exact canonical SHA-256 output parity across every measured runtime; planted wrong-output control (<code>planted_wrong_output_caught=true</code>) tripped immediately.</span></li>
+  </ul>
+</section>
+
+<section class="ds-sec" id="interactive" aria-labelledby="h-interactive">
+  <h2 id="h-interactive">Interactive cross-runtime chart and filter ledger</h2>
+  <div class="bm-toolbar" role="region" aria-label="Benchmark filters and chart mode">
+    <div class="bm-toolbar-group" role="group" aria-label="Filter by runtime">
+      <button type="button" data-runtime-filter="all" aria-pressed="true">All Runtimes (8)</button>
+      <button type="button" data-runtime-filter="zeroc_pe32" aria-pressed="false">Zero-C PE32+ (2)</button>
+      <button type="button" data-runtime-filter="node_wasm" aria-pressed="false">Node WASM (7)</button>
+      <button type="button" data-runtime-filter="buildc_native" aria-pressed="false">Native (8)</button>
+    </div>
+    <div class="bm-toolbar-group" role="group" aria-label="Filter by workload class">
+      <button type="button" data-category-filter="all" aria-pressed="true">All Classes</button>
+      <button type="button" data-category-filter="compute" aria-pressed="false">Heavy Compute (3)</button>
+      <button type="button" data-category-filter="crypto" aria-pressed="false">Zero-C Crypto (2)</button>
+      <button type="button" data-category-filter="micro" aria-pressed="false">Micro-Kernels (3)</button>
+    </div>
+    <div class="bm-toolbar-group" role="group" aria-label="Chart comparison mode">
+      <button type="button" data-chart-metric="native_vs_python" aria-pressed="true">Chart: Native vs Python</button>
+      <button type="button" data-chart-metric="wasm_vs_python" aria-pressed="false">Chart: WASM vs Python</button>
+      <button type="button" data-chart-metric="zeroc_vs_crt" aria-pressed="false">Chart: Zero-C PE32+ vs CRT</button>
+    </div>
+    <div class="bm-toolbar-group">
+      <label for="bm-search" class="sr-only">Filter kernels</label>
+      <input id="bm-search" type="search" placeholder="Filter kernel, idea, or SHA..." autocomplete="off">
+      <label for="bm-sort" class="sr-only">Sort order</label>
+      <select id="bm-sort">
+        <option value="default">Suite order</option>
+        <option value="speedup_desc">Highest speedup first</option>
+        <option value="native_asc">Fastest native p50</option>
+        <option value="wasm_asc">Fastest WASM p50</option>
+        <option value="python_desc">Heaviest Python baseline</option>
+        <option value="name_asc">Kernel name (A to Z)</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="bm-readout" aria-live="polite">
+    <p id="bm-status">Showing 8 of 8 verified kernels | Parity 8/8 MATCH | Planted wrong-output control caught: true</p>
+    <p id="bm-receipt-status">Receipt verdict: MATCH | Results digest: sha256:1c231adb8dda9d3f... | Claim: sha256:9d9892e44b6a5a8f...</p>
+  </div>
+
+  <figure class="bm-chart-wrap" id="bm-chart-host"><svg class="bm-svg" viewBox="0 0 760 298" role="img" aria-label="Measured BuildLang Native vs Python 3.12 p50 Speedup (Higher is Faster)">
+  <title>Measured BuildLang Native vs Python 3.12 p50 Speedup (Higher is Faster)</title>
+  <desc>Hairline measured comparison rendered directly from benchmarks_v2_results.json (8 entries, unit: x).</desc>
+  <text x="0" y="16" fill="currentColor" font-size="12" font-weight="700">Measured BuildLang Native vs Python 3.12 p50 Speedup (Higher is Faster)</text>
+  <line x1="228" y1="32" x2="228" y2="282" stroke="currentColor" stroke-opacity="0.4" stroke-width="1"/>
+  <line x1="286.2" y1="30" x2="286.2" y2="282" stroke="currentColor" stroke-opacity="0.55" stroke-dasharray="3 3" stroke-width="1"/>
+  <text x="286.2" y="26" text-anchor="middle" fill="currentColor" font-size="10" fill-opacity="0.78">1.0x parity</text>
+  <g data-bar-id="sha256">
+  <text x="218" y="51" text-anchor="end" fill="currentColor" font-size="11.5">SHA-256</text>
+  <line x1="228" y1="60" x2="548" y2="60" stroke="currentColor" stroke-opacity="0.14" stroke-width="1"/>
+  <rect x="228" y="40" width="16.5" height="14" fill="currentColor" fill-opacity="0.32"/>
+  <text x="252.5" y="51" fill="currentColor" font-size="11" class="bm-svg-num">0.08x (5.706 ms vs 0.484 ms)</text>
+</g>
+<g data-bar-id="aead_chacha20_poly1305">
+  <text x="218" y="81" text-anchor="end" fill="currentColor" font-size="11.5">ChaCha20-Poly1305 AEAD</text>
+  <line x1="228" y1="90" x2="548" y2="90" stroke="currentColor" stroke-opacity="0.14" stroke-width="1"/>
+  <rect x="228" y="70" width="13.0" height="14" fill="currentColor" fill-opacity="0.32"/>
+  <text x="249.0" y="81" fill="currentColor" font-size="11" class="bm-svg-num">0.05x (6.998 ms vs 0.340 ms)</text>
+</g>
+<g data-bar-id="titan_1m">
+  <text x="218" y="111" text-anchor="end" fill="currentColor" font-size="11.5">Titan-1M Cayley Symplectic</text>
+  <line x1="228" y1="120" x2="548" y2="120" stroke="currentColor" stroke-opacity="0.14" stroke-width="1"/>
+  <rect x="228" y="100" width="320.0" height="14" fill="currentColor" fill-opacity="0.88"/>
+  <text x="556.0" y="111" fill="currentColor" font-size="11" class="bm-svg-num">30.21x (21.034 ms vs 635.520 ms)</text>
+</g>
+<g data-bar-id="indirect_draw_cull">
+  <text x="218" y="141" text-anchor="end" fill="currentColor" font-size="11.5">Indirect Draw Cull</text>
+  <line x1="228" y1="150" x2="548" y2="150" stroke="currentColor" stroke-opacity="0.14" stroke-width="1"/>
+  <rect x="228" y="130" width="210.0" height="14" fill="currentColor" fill-opacity="0.88"/>
+  <text x="446.0" y="141" fill="currentColor" font-size="11" class="bm-svg-num">13.01x (9.326 ms vs 121.347 ms)</text>
+</g>
+<g data-bar-id="ntc610_block_compress">
+  <text x="218" y="171" text-anchor="end" fill="currentColor" font-size="11.5">NTC610 Block Compress</text>
+  <line x1="228" y1="180" x2="548" y2="180" stroke="currentColor" stroke-opacity="0.14" stroke-width="1"/>
+  <rect x="228" y="160" width="33.4" height="14" fill="currentColor" fill-opacity="0.32"/>
+  <text x="269.4" y="171" fill="currentColor" font-size="11" class="bm-svg-num">0.33x (5.389 ms vs 1.752 ms)</text>
+</g>
+<g data-bar-id="pbr_16archetype">
+  <text x="218" y="201" text-anchor="end" fill="currentColor" font-size="11.5">PBR 16-Archetype Furnace Conservation</text>
+  <line x1="228" y1="210" x2="548" y2="210" stroke="currentColor" stroke-opacity="0.14" stroke-width="1"/>
+  <rect x="228" y="190" width="5.8" height="14" fill="currentColor" fill-opacity="0.32"/>
+  <text x="241.8" y="201" fill="currentColor" font-size="11" class="bm-svg-num">0.01x (5.150 ms vs 0.075 ms)</text>
+</g>
+<g data-bar-id="jonswap_ocean">
+  <text x="218" y="231" text-anchor="end" fill="currentColor" font-size="11.5">JONSWAP 64-Band Ocean + 16x16 Gerstner</text>
+  <line x1="228" y1="240" x2="548" y2="240" stroke="currentColor" stroke-opacity="0.14" stroke-width="1"/>
+  <rect x="228" y="220" width="30.8" height="14" fill="currentColor" fill-opacity="0.32"/>
+  <text x="266.8" y="231" fill="currentColor" font-size="11" class="bm-svg-num">0.28x (5.728 ms vs 1.613 ms)</text>
+</g>
+<g data-bar-id="kcore_color">
+  <text x="218" y="261" text-anchor="end" fill="currentColor" font-size="11.5">K-Core Color</text>
+  <line x1="228" y1="270" x2="548" y2="270" stroke="currentColor" stroke-opacity="0.14" stroke-width="1"/>
+  <rect x="228" y="250" width="138.0" height="14" fill="currentColor" fill-opacity="0.88"/>
+  <text x="374.0" y="261" fill="currentColor" font-size="11" class="bm-svg-num">5.62x (21.050 ms vs 118.275 ms)</text>
+</g>
+</svg></figure>
+
+  <div class="bm-table-wrap" tabindex="0" role="region" aria-label="Cross-runtime measured latency table">
+    <table class="bm-table">
+      <thead>
+        <tr>
+          <th scope="col">Kernel &amp; Verified Runtimes</th>
+          <th scope="col">Native p50</th>
+          <th scope="col">Zero-C PE32+ p50</th>
+          <th scope="col">Node WASM p50</th>
+          <th scope="col">Python 3.12 p50</th>
+          <th scope="col">Best Speedup vs Python</th>
+          <th scope="col">Parity SHA-256</th>
+        </tr>
+      </thead>
+      <tbody id="bm-rows">
+<tr data-kernel-id="sha256" data-category="crypto">
+  <th scope="row">SHA-256 (FIPS 180-4 3-Vector KAT)<span class="bm-sub">F1/N53 | buildc_native, node_wasm, python_stdlib, zeroc_pe32</span></th>
+  <td class="mono">5.706 ms<span class="bm-sub">min 5.079 / p95 5.954</span></td>
+  <td class="mono">4.724 ms<span class="bm-sub">7.50 KB (7680 B)</span></td>
+  <td class="mono">0.065 ms<span class="bm-sub">2.92 KB (2992 B)</span></td>
+  <td class="mono">0.484 ms<span class="bm-sub">min 0.459 / p95 0.544</span></td>
+  <td class="mono"><b>7.51x (WASM)</b></td>
+  <td class="mono" title="890a20a53120ff6ceedfdd520a49dd6b0bfe1251570453ecb0effd275ebe2c39">890a20a53120ff6c<span class="bm-sub">MATCH</span></td>
+</tr>
+<tr data-kernel-id="aead_chacha20_poly1305" data-category="crypto">
+  <th scope="row">ChaCha20-Poly1305 AEAD (RFC 8439)<span class="bm-sub">F1/N53 | buildc_native, node_wasm, python_stdlib, zeroc_pe32</span></th>
+  <td class="mono">6.998 ms<span class="bm-sub">min 6.585 / p95 7.443</span></td>
+  <td class="mono">5.430 ms<span class="bm-sub">10.00 KB (10240 B)</span></td>
+  <td class="mono">0.075 ms<span class="bm-sub">3.30 KB (3381 B)</span></td>
+  <td class="mono">0.340 ms<span class="bm-sub">min 0.328 / p95 0.366</span></td>
+  <td class="mono"><b>4.55x (WASM)</b></td>
+  <td class="mono" title="c0e071faeaae4666532ca5a84a382af645807884b7bddae9ffe5396d963cfc81">c0e071faeaae4666<span class="bm-sub">MATCH</span></td>
+</tr>
+<tr data-kernel-id="titan_1m" data-category="compute">
+  <th scope="row">Titan-1M Cayley Symplectic (1,000,000 steps)<span class="bm-sub">N44 | buildc_native, node_wasm, python_stdlib</span></th>
+  <td class="mono">21.034 ms<span class="bm-sub">min 18.578 / p95 24.370</span></td>
+  <td class="mono">N/A<span class="bm-sub">f64 subset</span></td>
+  <td class="mono">23.140 ms<span class="bm-sub">5.27 KB (5396 B)</span></td>
+  <td class="mono">635.520 ms<span class="bm-sub">min 624.156 / p95 661.163</span></td>
+  <td class="mono"><b>30.21x (Native)</b></td>
+  <td class="mono" title="407884a0a576fa41c1be904782a9a662b75901256e1ea77a00b019cdc916c4a7">407884a0a576fa41<span class="bm-sub">MATCH</span></td>
+</tr>
+<tr data-kernel-id="indirect_draw_cull" data-category="compute">
+  <th scope="row">Indirect Draw Cull (100K Frustum + Hi-Z)<span class="bm-sub">N63 | buildc_native, node_wasm, python_stdlib</span></th>
+  <td class="mono">9.326 ms<span class="bm-sub">min 9.100 / p95 9.654</span></td>
+  <td class="mono">N/A<span class="bm-sub">f64 subset</span></td>
+  <td class="mono">594.303 ms<span class="bm-sub">6.75 KB (6907 B)</span></td>
+  <td class="mono">121.347 ms<span class="bm-sub">min 115.528 / p95 126.305</span></td>
+  <td class="mono"><b>13.01x (Native)</b></td>
+  <td class="mono" title="9deebb4fedc0a917b6b11eaa521e462c4434ce3f22ead1ddc1f2da33daced4b7">9deebb4fedc0a917<span class="bm-sub">MATCH</span></td>
+</tr>
+<tr data-kernel-id="ntc610_block_compress" data-category="micro">
+  <th scope="row">NTC610 Block Compress (16x16x4 Tile)<span class="bm-sub">N41 | buildc_native, node_wasm, python_stdlib</span></th>
+  <td class="mono">5.389 ms<span class="bm-sub">min 5.070 / p95 5.748</span></td>
+  <td class="mono">N/A<span class="bm-sub">f64 subset</span></td>
+  <td class="mono">5.821 ms<span class="bm-sub">7.92 KB (8108 B)</span></td>
+  <td class="mono">1.752 ms<span class="bm-sub">min 1.738 / p95 1.950</span></td>
+  <td class="mono"><b>0.33x proc (51.4x internal)</b></td>
+  <td class="mono" title="a64b94b7e2e5ab28681e6bdf3eb04d8ca2d9a603c964067cb957370596ae4710">a64b94b7e2e5ab28<span class="bm-sub">MATCH</span></td>
+</tr>
+<tr data-kernel-id="pbr_16archetype" data-category="micro">
+  <th scope="row">PBR 16-Archetype Furnace Conservation<span class="bm-sub">N64 | buildc_native, node_wasm, python_stdlib</span></th>
+  <td class="mono">5.150 ms<span class="bm-sub">min 4.829 / p95 5.521</span></td>
+  <td class="mono">N/A<span class="bm-sub">f64 subset</span></td>
+  <td class="mono">0.158 ms<span class="bm-sub">5.53 KB (5660 B)</span></td>
+  <td class="mono">0.075 ms<span class="bm-sub">min 0.074 / p95 0.080</span></td>
+  <td class="mono"><b>0.48x WASM (18.8x internal)</b></td>
+  <td class="mono" title="bb93f838e1dad44d7e36555b1a5eba5cf3e6f4d97d9a02fd020913d54b91e1a1">bb93f838e1dad44d<span class="bm-sub">MATCH</span></td>
+</tr>
+<tr data-kernel-id="jonswap_ocean" data-category="micro">
+  <th scope="row">JONSWAP 64-Band Ocean + 16x16 Gerstner<span class="bm-sub">N38 | buildc_native, node_wasm, python_stdlib</span></th>
+  <td class="mono">5.728 ms<span class="bm-sub">min 5.432 / p95 5.975</span></td>
+  <td class="mono">N/A<span class="bm-sub">f64 subset</span></td>
+  <td class="mono">96.217 ms<span class="bm-sub">6.01 KB (6153 B)</span></td>
+  <td class="mono">1.613 ms<span class="bm-sub">min 1.603 / p95 1.662</span></td>
+  <td class="mono"><b>0.28x proc (4.20x internal)</b></td>
+  <td class="mono" title="8b97bb6f1ac06356dfe21e052bfa3bc5c11669aa2c64043fbc2af83d3a2ef422">8b97bb6f1ac06356<span class="bm-sub">MATCH</span></td>
+</tr>
+<tr data-kernel-id="kcore_color" data-category="compute">
+  <th scope="row">K-Core Color (100K CIEDE2000 + Oklab)<span class="bm-sub">B2 | buildc_native, python_stdlib</span></th>
+  <td class="mono">21.050 ms<span class="bm-sub">min 19.030 / p95 23.326</span></td>
+  <td class="mono">N/A<span class="bm-sub">f64 subset</span></td>
+  <td class="mono">N/A<span class="bm-sub">no log import</span></td>
+  <td class="mono">118.275 ms<span class="bm-sub">min 111.582 / p95 124.052</span></td>
+  <td class="mono"><b>5.62x (Native)</b></td>
+  <td class="mono" title="35d65490d22f280dd7b6f241db901fb7dfa7099f8dae030bb48c417b5d789e65">35d65490d22f280d<span class="bm-sub">MATCH</span></td>
+</tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="ds-sec" id="disclosures" aria-labelledby="h-disclosures">
+  <h2 id="h-disclosures">Honest scope boundaries and measurement disclosures ([Reported])</h2>
+  <ul class="ds-ledger">
+    <li><span class="ds-term">Subprocess Launch Floor (~4.7 to 5.7 ms)</span><span class="ds-gloss">Native and Zero-C PE32+ timings measure full Windows <code>CreateProcess</code> wall-clock process startup plus execution (~5 ms floor), whereas Node WASM and Python 3.12 measure in-process invocation. On sub-millisecond micro-kernels (NTC610 0.034 ms = 51.4x internal, PBR 16-Archetype 0.004 ms = 18.8x internal, JONSWAP 0.384 ms = 4.20x internal), full subprocess wall-clock time therefore appears slower than in-process Python; both raw subprocess p50 and internal context are kept visible.</span></li>
+    <li><span class="ds-term">Stateless WASM Wrapper &amp; Software Math</span><span class="ds-gloss">In Indirect Draw Cull WASM (594.303 ms), each stateless metric export re-runs the 100K sweep (6 calls = 600K sweeps), and JONSWAP Ocean WASM (96.217 ms) executes software Taylor <code>sin</code>, <code>cos</code>, <code>exp</code>, and <code>ln</code> without native <code>libm</code>.</span></li>
+    <li><span class="ds-term">Target Subset Coverage</span><span class="ds-gloss">Zero-C PE32+ currently targets the integer and bitwise compiler subset (2/8 kernels: SHA-256 and ChaCha20-Poly1305), where it consistently beats C-runtime native binaries on cold-start latency. BuildLang WASM codegen covers 7/8 kernels and does not yet emit the <code>log</code> runtime import needed by K-Core Color.</span></li>
+    <li><span class="ds-term">Planted Negative Control</span><span class="ds-gloss">Mutating <code>vis_hash</code> by 1 (<code>93681847</code> to <code>93681848</code>) tripped fail-closed parity verification immediately (<code>planted_wrong_output_caught=true</code>). Canonical envelope digest: <code>sha256:b84b324725fa2bd3971401eaa7fdaeb8aa20a8bc6571ed04cc262b4fcd1620a6</code>.</span></li>
+  </ul>
+</section>
+
+<footer class="ds-prov" aria-label="Sheet provenance">
+  <span><b>Sheet</b> playground/benchmarks/index.html</span>
+  <span><b>Updated</b> 2026-11-27</span>
+  <span><b>Ground</b> Measured Drafting Sheet | Pure OSI MIT | 8/8 parity | receipt sha256:9d9892e44b6a5a8f...</span>
+</footer>
+</article>
+<script type="module" src="./benchmarks.mjs"></script>
+</main>
+</body>
+</html>

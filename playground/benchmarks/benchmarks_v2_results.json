@@ -1,0 +1,500 @@
+{
+  "environment": {
+    "arch": "AMD64",
+    "buildc_version": "buildc 1.15.0",
+    "node_version": "v25.2.1",
+    "os": "Windows-11-10.0.26320-SP0",
+    "python_version": "3.12.10",
+    "timed_runs": 7,
+    "warmup_runs": 1
+  },
+  "kernels": [
+    {
+      "buildc_native": {
+        "min_ms": 5.0791,
+        "p50_ms": 5.7062,
+        "p95_ms": 5.9544,
+        "runs_ms": [
+          5.8457,
+          5.9544,
+          5.4213,
+          5.7062,
+          5.7251,
+          5.3527,
+          5.0791
+        ]
+      },
+      "id": "sha256",
+      "idea_id": "F1/N53",
+      "name": "SHA-256 (FIPS 180-4 3-Vector KAT)",
+      "native_process_speedup_vs_python_p50": 0.08,
+      "node_wasm": {
+        "min_ms": 0.0612,
+        "p50_ms": 0.0645,
+        "p95_ms": 0.0924,
+        "runs_ms": [
+          0.0924,
+          0.0882,
+          0.0618,
+          0.0646,
+          0.0645,
+          0.0618,
+          0.0612
+        ],
+        "wasm_bytes": 2992
+      },
+      "parity_ok": true,
+      "parity_sha256": "890a20a53120ff6ceedfdd520a49dd6b0bfe1251570453ecb0effd275ebe2c39",
+      "python_stdlib": {
+        "min_ms": 0.4594,
+        "p50_ms": 0.4842,
+        "p95_ms": 0.5443,
+        "runs_ms": [
+          0.4742,
+          0.4842,
+          0.4926,
+          0.5366,
+          0.5443,
+          0.4594,
+          0.4814
+        ]
+      },
+      "runtimes_verified": [
+        "buildc_native",
+        "node_wasm",
+        "python_stdlib",
+        "zeroc_pe32"
+      ],
+      "wasm_speedup_vs_python_p50": 7.51,
+      "zeroc_pe32": {
+        "exe_bytes": 7680,
+        "min_ms": 4.6561,
+        "p50_ms": 4.7243,
+        "p95_ms": 5.2604,
+        "runs_ms": [
+          4.754,
+          4.7243,
+          4.9659,
+          5.2604,
+          4.7048,
+          4.6825,
+          4.6561
+        ]
+      }
+    },
+    {
+      "buildc_native": {
+        "min_ms": 6.5849,
+        "p50_ms": 6.9983,
+        "p95_ms": 7.4433,
+        "runs_ms": [
+          7.0346,
+          7.4433,
+          6.9983,
+          6.7398,
+          6.5849,
+          7.0442,
+          6.9874
+        ]
+      },
+      "id": "aead_chacha20_poly1305",
+      "idea_id": "F1/N53",
+      "name": "ChaCha20-Poly1305 AEAD (RFC 8439)",
+      "native_process_speedup_vs_python_p50": 0.05,
+      "node_wasm": {
+        "min_ms": 0.045,
+        "p50_ms": 0.0747,
+        "p95_ms": 0.129,
+        "runs_ms": [
+          0.0708,
+          0.129,
+          0.0747,
+          0.0456,
+          0.045,
+          0.0814,
+          0.0799
+        ],
+        "wasm_bytes": 3381
+      },
+      "parity_ok": true,
+      "parity_sha256": "c0e071faeaae4666532ca5a84a382af645807884b7bddae9ffe5396d963cfc81",
+      "python_stdlib": {
+        "min_ms": 0.3277,
+        "p50_ms": 0.3399,
+        "p95_ms": 0.3661,
+        "runs_ms": [
+          0.3383,
+          0.3447,
+          0.3277,
+          0.3661,
+          0.3399,
+          0.3532,
+          0.3361
+        ]
+      },
+      "runtimes_verified": [
+        "buildc_native",
+        "node_wasm",
+        "python_stdlib",
+        "zeroc_pe32"
+      ],
+      "wasm_speedup_vs_python_p50": 4.55,
+      "zeroc_pe32": {
+        "exe_bytes": 10240,
+        "min_ms": 5.0538,
+        "p50_ms": 5.4303,
+        "p95_ms": 5.7773,
+        "runs_ms": [
+          5.7773,
+          5.2861,
+          5.4303,
+          5.4143,
+          5.0538,
+          5.6295,
+          5.6144
+        ]
+      }
+    },
+    {
+      "buildc_native": {
+        "min_ms": 18.5777,
+        "p50_ms": 21.0344,
+        "p95_ms": 24.3703,
+        "runs_ms": [
+          24.3703,
+          22.6945,
+          21.0344,
+          20.4879,
+          20.8335,
+          18.5777,
+          21.0577
+        ]
+      },
+      "id": "titan_1m",
+      "idea_id": "N44",
+      "name": "Titan-1M Cayley Symplectic (1,000,000 steps)",
+      "native_process_speedup_vs_python_p50": 30.21,
+      "node_wasm": {
+        "min_ms": 22.1928,
+        "p50_ms": 23.1396,
+        "p95_ms": 24.3952,
+        "runs_ms": [
+          22.9098,
+          22.1928,
+          22.9754,
+          23.645,
+          23.1396,
+          24.3952,
+          23.463
+        ],
+        "wasm_bytes": 5396
+      },
+      "parity_ok": true,
+      "parity_sha256": "407884a0a576fa41c1be904782a9a662b75901256e1ea77a00b019cdc916c4a7",
+      "python_stdlib": {
+        "min_ms": 624.1561,
+        "p50_ms": 635.5199,
+        "p95_ms": 661.1632,
+        "runs_ms": [
+          624.1561,
+          657.2021,
+          641.2481,
+          635.5199,
+          661.1632,
+          631.0391,
+          624.365
+        ]
+      },
+      "runtimes_verified": [
+        "buildc_native",
+        "node_wasm",
+        "python_stdlib"
+      ],
+      "wasm_speedup_vs_python_p50": 27.46,
+      "zeroc_pe32": null
+    },
+    {
+      "buildc_native": {
+        "min_ms": 9.1,
+        "p50_ms": 9.326,
+        "p95_ms": 9.6536,
+        "runs_ms": [
+          9.5549,
+          9.6396,
+          9.326,
+          9.2612,
+          9.6536,
+          9.2019,
+          9.1
+        ]
+      },
+      "id": "indirect_draw_cull",
+      "idea_id": "N63",
+      "name": "Indirect Draw Cull (100K Frustum + Hi-Z)",
+      "native_process_speedup_vs_python_p50": 13.01,
+      "node_wasm": {
+        "min_ms": 590.1207,
+        "p50_ms": 594.303,
+        "p95_ms": 610.0852,
+        "runs_ms": [
+          610.0852,
+          603.3916,
+          594.303,
+          595.169,
+          591.2542,
+          594.0034,
+          590.1207
+        ],
+        "wasm_bytes": 6907
+      },
+      "parity_ok": true,
+      "parity_sha256": "9deebb4fedc0a917b6b11eaa521e462c4434ce3f22ead1ddc1f2da33daced4b7",
+      "python_stdlib": {
+        "min_ms": 115.5283,
+        "p50_ms": 121.3469,
+        "p95_ms": 126.3048,
+        "runs_ms": [
+          119.6125,
+          115.5283,
+          125.0844,
+          126.3048,
+          124.9656,
+          115.6468,
+          121.3469
+        ]
+      },
+      "runtimes_verified": [
+        "buildc_native",
+        "node_wasm",
+        "python_stdlib"
+      ],
+      "wasm_speedup_vs_python_p50": 0.2,
+      "zeroc_pe32": null
+    },
+    {
+      "buildc_native": {
+        "min_ms": 5.0696,
+        "p50_ms": 5.3888,
+        "p95_ms": 5.7479,
+        "runs_ms": [
+          5.096,
+          5.7479,
+          5.3888,
+          5.3548,
+          5.6645,
+          5.0696,
+          5.6518
+        ]
+      },
+      "id": "ntc610_block_compress",
+      "idea_id": "N41",
+      "name": "NTC610 Block Compress (16x16x4 Tile)",
+      "native_process_speedup_vs_python_p50": 0.33,
+      "node_wasm": {
+        "min_ms": 5.7019,
+        "p50_ms": 5.8205,
+        "p95_ms": 6.1258,
+        "runs_ms": [
+          5.8205,
+          5.7201,
+          5.9335,
+          6.1258,
+          6,
+          5.7019,
+          5.7157
+        ],
+        "wasm_bytes": 8108
+      },
+      "parity_ok": true,
+      "parity_sha256": "a64b94b7e2e5ab28681e6bdf3eb04d8ca2d9a603c964067cb957370596ae4710",
+      "python_stdlib": {
+        "min_ms": 1.7378,
+        "p50_ms": 1.7517,
+        "p95_ms": 1.9502,
+        "runs_ms": [
+          1.9502,
+          1.7643,
+          1.7417,
+          1.7496,
+          1.7378,
+          1.7517,
+          1.7596
+        ]
+      },
+      "runtimes_verified": [
+        "buildc_native",
+        "node_wasm",
+        "python_stdlib"
+      ],
+      "wasm_speedup_vs_python_p50": 0.3,
+      "zeroc_pe32": null
+    },
+    {
+      "buildc_native": {
+        "min_ms": 4.8289,
+        "p50_ms": 5.1503,
+        "p95_ms": 5.521,
+        "runs_ms": [
+          5.226,
+          5.1503,
+          5.0444,
+          5.2816,
+          5.521,
+          4.8289,
+          4.9454
+        ]
+      },
+      "id": "pbr_16archetype",
+      "idea_id": "N64",
+      "name": "PBR 16-Archetype Furnace Conservation",
+      "native_process_speedup_vs_python_p50": 0.01,
+      "node_wasm": {
+        "min_ms": 0.1556,
+        "p50_ms": 0.1579,
+        "p95_ms": 0.339,
+        "runs_ms": [
+          0.339,
+          0.2947,
+          0.1602,
+          0.1567,
+          0.1579,
+          0.1568,
+          0.1556
+        ],
+        "wasm_bytes": 5660
+      },
+      "parity_ok": true,
+      "parity_sha256": "bb93f838e1dad44d7e36555b1a5eba5cf3e6f4d97d9a02fd020913d54b91e1a1",
+      "python_stdlib": {
+        "min_ms": 0.074,
+        "p50_ms": 0.0751,
+        "p95_ms": 0.0804,
+        "runs_ms": [
+          0.0751,
+          0.0751,
+          0.0748,
+          0.0743,
+          0.074,
+          0.08,
+          0.0804
+        ]
+      },
+      "runtimes_verified": [
+        "buildc_native",
+        "node_wasm",
+        "python_stdlib"
+      ],
+      "wasm_speedup_vs_python_p50": 0.48,
+      "zeroc_pe32": null
+    },
+    {
+      "buildc_native": {
+        "min_ms": 5.4321,
+        "p50_ms": 5.7283,
+        "p95_ms": 5.975,
+        "runs_ms": [
+          5.7178,
+          5.7053,
+          5.7874,
+          5.7283,
+          5.895,
+          5.975,
+          5.4321
+        ]
+      },
+      "id": "jonswap_ocean",
+      "idea_id": "N38",
+      "name": "JONSWAP 64-Band Ocean + 16x16 Gerstner",
+      "native_process_speedup_vs_python_p50": 0.28,
+      "node_wasm": {
+        "min_ms": 94.8337,
+        "p50_ms": 96.2171,
+        "p95_ms": 99.5891,
+        "runs_ms": [
+          96.6075,
+          95.2933,
+          99.5891,
+          95.2163,
+          94.8337,
+          96.3958,
+          96.2171
+        ],
+        "wasm_bytes": 6153
+      },
+      "parity_ok": true,
+      "parity_sha256": "8b97bb6f1ac06356dfe21e052bfa3bc5c11669aa2c64043fbc2af83d3a2ef422",
+      "python_stdlib": {
+        "min_ms": 1.6031,
+        "p50_ms": 1.6125,
+        "p95_ms": 1.6623,
+        "runs_ms": [
+          1.6623,
+          1.6125,
+          1.6133,
+          1.6099,
+          1.6331,
+          1.6031,
+          1.6119
+        ]
+      },
+      "runtimes_verified": [
+        "buildc_native",
+        "node_wasm",
+        "python_stdlib"
+      ],
+      "wasm_speedup_vs_python_p50": 0.02,
+      "zeroc_pe32": null
+    },
+    {
+      "buildc_native": {
+        "min_ms": 19.0301,
+        "p50_ms": 21.0498,
+        "p95_ms": 23.326,
+        "runs_ms": [
+          22.5695,
+          23.326,
+          19.0301,
+          20.7246,
+          19.9526,
+          21.521,
+          21.0498
+        ]
+      },
+      "id": "kcore_color",
+      "idea_id": "B2",
+      "name": "K-Core Color (100K CIEDE2000 + Oklab)",
+      "native_process_speedup_vs_python_p50": 5.62,
+      "node_wasm": null,
+      "parity_ok": true,
+      "parity_sha256": "35d65490d22f280dd7b6f241db901fb7dfa7099f8dae030bb48c417b5d789e65",
+      "python_stdlib": {
+        "min_ms": 111.5822,
+        "p50_ms": 118.2753,
+        "p95_ms": 124.052,
+        "runs_ms": [
+          116.222,
+          111.5822,
+          111.7929,
+          124.052,
+          118.2753,
+          118.9689,
+          120.2568
+        ]
+      },
+      "runtimes_verified": [
+        "buildc_native",
+        "python_stdlib"
+      ],
+      "wasm_speedup_vs_python_p50": null,
+      "zeroc_pe32": null
+    }
+  ],
+  "kernels_total": 8,
+  "license": "MIT",
+  "parity_all_ok": true,
+  "planted_control": {
+    "planted_wrong_output_caught": true,
+    "reason": "Parity mismatch on planted_control_kernel: {'buildc_native': '096461632b741ccd65d31b030d382361643aaf19c66bbed03aa9375e49880ea7', 'python_std"
+  },
+  "schema": "wave82e-cross-runtime-benchmarks-v2/1"
+}
