@@ -1,0 +1,661 @@
+{
+  "schema": "research-papers-catalog/1",
+  "license": "MIT",
+  "date": "2026-11-27",
+  "paper_count": 4,
+  "receipt_count": 48,
+  "papers": [
+    {
+      "id": "paper1-buildlang",
+      "number": 1,
+      "bibtex_key": "harper2026buildlang",
+      "track_id": "cs.PL-cs.OS",
+      "track_label": "arXiv cs.PL / cs.OS",
+      "title": "BuildLang: First-Principles Zero-C 5-ISA Microkernel Verification and Proof-Carrying 5-Backend GPU Compute Compilation",
+      "description": "Six-page arXiv (cs.PL / cs.OS) and Zenodo-ready technical preprint reporting BuildLang's Zero-C 5-ISA BuildOS Microkernel Triad (Slices 13 to 20; 21.86 KB unified WASM; receipts 68741, 68750, 68759, 68769), proof-carrying e-graph superoptimization across 120/120 externally validated 5-target GPU shaders (-48.82% MIR cost, 105/105 5-way IEEE-754 FMA parity; receipts 68718, 68729, 68754, 68773), 20/20 bit-exact 0-ULP C++23 renderer parity (68786), 60/60 live MIT WASM modules in 339.30 KB (68784), 528 zero-FLAG formulas and 13/13 native auditors (68775), and an explicit Honest Scope Limits and Negative Results catalog.",
+      "date": "2026-11-27",
+      "author": "Zain Dana Harper",
+      "affiliation": "Independent Researcher, Kent, Washington, USA (WA State Sole Proprietorship UBI 606-301-569)",
+      "license": "CC-BY-4.0",
+      "code_licenses": [
+        "MIT",
+        "AGPL-3.0-only"
+      ],
+      "pages": 6,
+      "words": 1630,
+      "pdf_bytes": 1131266,
+      "pdf_file": "BUILDLANG-ZEROC-5ISA-AND-5GPU-PAPER-2026-11-27.pdf",
+      "catalogue_id": 68793,
+      "claim_sha256": "sha256:2980693aec160e60c0401ee6ffa3440ddee879040fc947306365fa0ff081dbf5",
+      "verified_catalogue_ids": [
+        68718,
+        68729,
+        68741,
+        68750,
+        68754,
+        68759,
+        68769,
+        68773,
+        68775,
+        68778,
+        68784,
+        68786
+      ],
+      "primary_url": "https://github.com/HarperZ9/buildlang",
+      "send_policy": "STAGED_ON_DISK_ONLY_ZERO_EXTERNAL_UPLOADS"
+    },
+    {
+      "id": "paper2-flywheel",
+      "number": 2,
+      "bibtex_key": "harper2026flywheel",
+      "track_id": "cs.AI-cs.SE",
+      "track_label": "arXiv cs.AI / cs.SE",
+      "title": "Models Propose, Oracles Dispose: Receipts, Tail-Risk Fuzzing, and Epigenetic Guards for Accountable Self-Improvement",
+      "description": "Six-page arXiv (cs.AI / cs.SE) and Zenodo-ready technical preprint presenting Flywheel's accountable self-improvement architecture: live closed-loop IEEE-754 NaN/-Inf bypass catch by Crucible tail-risk fuzzing (68760 -> 68771, 1,160/1,160 cases + 200/200 on buildos_attest 68781), 180/180 sharded proof-mutant kill rate (68749), epigenetic spectral and contraction continual-learning kernels (J13 68744, CS-009 Sleep-LoRA 68764, CS-005 FCA-Titans & CS-006 Sparrow 68789, CS-014 structured vs IID honest null 68778), sub-5ms forensic claim-to-receipt auditing exposing 54/231 drifted/uncited claims live (CLI #15 68791), 10/10 MCP governance (68737), 15/15 SBOMs (68722), and 12/30 public nulls (G9).",
+      "date": "2026-11-27",
+      "author": "Zain Dana Harper",
+      "affiliation": "Independent Researcher, Kent, Washington, USA (WA State Sole Proprietorship UBI 606-301-569)",
+      "license": "CC-BY-4.0",
+      "code_licenses": [
+        "MIT",
+        "AGPL-3.0-only"
+      ],
+      "pages": 6,
+      "words": 1378,
+      "pdf_bytes": 1013742,
+      "pdf_file": "FLYWHEEL-ACCOUNTABLE-RSI-PAPER-2026-11-27.pdf",
+      "catalogue_id": 68797,
+      "claim_sha256": "sha256:cd4d0e6eaf19bb1597121161abe55de00b48790a4f182cabb828d9bf3d4aa090",
+      "verified_catalogue_ids": [
+        68675,
+        68722,
+        68737,
+        68744,
+        68749,
+        68760,
+        68764,
+        68771,
+        68778,
+        68781,
+        68789,
+        68791
+      ],
+      "primary_url": "https://github.com/HarperZ9/flywheel",
+      "send_policy": "STAGED_ON_DISK_ONLY_ZERO_EXTERNAL_UPLOADS"
+    },
+    {
+      "id": "paper3-rendering",
+      "number": 3,
+      "bibtex_key": "harper2026rendering",
+      "track_id": "cs.GR",
+      "track_label": "arXiv cs.GR / SIGGRAPH Systems",
+      "title": "Bit-Exact Cross-Language Rendering and Physics-First DX12 Engine Replacement: From C++23 to BuildLang",
+      "description": "Six-page arXiv (cs.GR / SIGGRAPH systems track) and Zenodo-ready technical preprint reporting 22/22 bit-exact 0-ULP C++23 to BuildLang renderer parity (art_pbr_lobes 68768, art_bvh 68777, art_ploc_bvh 68786, art_taa 68792, art_gtao 68794), live RTX 4090 RAW DX12 engine replacement with OPT-052 SM 6.10 Cooperative Vector NTC (-83.33% VRAM, 0 D3D12 debug errors, 160/160 heuristics, 522/522 checks, 68756), six pure-MIT graphics and spectral optics surpass kernels (CS-039, CS-042, CS-047, CS-045, CS-046, CS-049; 68757, 68766, 68776, 68779), and candid architectural and visual eye-audit boundaries.",
+      "date": "2026-11-27",
+      "author": "Zain Dana Harper",
+      "affiliation": "Independent Researcher, Kent, Washington, USA (WA State Sole Proprietorship UBI 606-301-569)",
+      "license": "CC-BY-4.0",
+      "code_licenses": [
+        "MIT",
+        "AGPL-3.0-only"
+      ],
+      "pages": 6,
+      "words": 1435,
+      "pdf_bytes": 3217063,
+      "pdf_file": "PLAYGROUND-BITEXACT-RENDERING-PAPER3-2026-11-27.pdf",
+      "catalogue_id": 68808,
+      "claim_sha256": "sha256:b8dc2fbfe1e2aef743a8a337bb42a39c0b0cf0fd238a39d39bef55b0e60bd848",
+      "verified_catalogue_ids": [
+        68756,
+        68757,
+        68766,
+        68768,
+        68776,
+        68777,
+        68779,
+        68786,
+        68792,
+        68794
+      ],
+      "primary_url": "https://github.com/HarperZ9/superframe",
+      "send_policy": "STAGED_ON_DISK_ONLY_ZERO_EXTERNAL_UPLOADS"
+    },
+    {
+      "id": "paper4-buildos",
+      "number": 4,
+      "bibtex_key": "harper2026buildos",
+      "track_id": "cs.OS-SOSP",
+      "track_label": "arXiv cs.OS / SOSP Systems",
+      "title": "Zero-C Sovereign Microkernels Across Five ISAs: From Signed Boot to Capability-Isolated SMP, IOMMU, Display, Input, Audio, and GPU Arenas",
+      "description": "Six-page arXiv (cs.OS / SOSP systems track) and Zenodo-ready technical preprint reporting 11 zero-C 5-ISA BuildOS microkernel slices (Slices 17 to 27, 55 clean binaries + 225+ attack-rejection binaries across x64-pe, x64-elf, rv64-elf, aarch64-elf, and zero-import .wasm, compiled by our 3-stage fixed-point self-hosting compiler with zero C compiler, zero Rust runtime, and zero linker), including unified 7-subsystem BuildOS-1.0 (72.83 KB WASM, 355M RV64 / 394M AArch64 live ops, 6/6 attacks, 68816), 4-Core SMP + Sv39/x64 MMU (68819), PCIe IOMMU DMA Fence + NVMe WAL (68832), GPU Command Queue + VRAM Arena (68841), Benchmarks V4 1.59x WASM speedup (68814), 72/72 MIT WASM suite (68840), cmmns#141 (68817), 0.316 ms native BuildOS gate (68835), buildlang#380 graduation (68825), and explicit trust-boundary limits.",
+      "date": "2026-11-27",
+      "author": "Zain Dana Harper",
+      "affiliation": "Independent Researcher, Kent, Washington, USA (WA State Sole Proprietorship UBI 606-301-569)",
+      "license": "CC-BY-4.0",
+      "code_licenses": [
+        "MIT",
+        "AGPL-3.0-only"
+      ],
+      "pages": 6,
+      "words": 1540,
+      "pdf_bytes": 689665,
+      "pdf_file": "BUILDOS-ZEROC-5ISA-MICROKERNEL-PAPER4-2026-11-27.pdf",
+      "catalogue_id": 68852,
+      "claim_sha256": "sha256:2453788bc006c1a2e095ecc4e629ab946275fe5c3b31fb98ac119f3ee3392797",
+      "verified_catalogue_ids": [
+        68741,
+        68750,
+        68759,
+        68769,
+        68785,
+        68795,
+        68805,
+        68814,
+        68816,
+        68817,
+        68819,
+        68825,
+        68832,
+        68835,
+        68840,
+        68841
+      ],
+      "primary_url": "https://github.com/HarperZ9/buildlang",
+      "send_policy": "STAGED_ON_DISK_ONLY_ZERO_EXTERNAL_UPLOADS"
+    }
+  ],
+  "receipt_ledger": [
+    {
+      "catalogue_id": 68675,
+      "role": "Flywheel rsi_guard v1 baseline before Crucible tail-fuzz patch",
+      "papers": [
+        "Paper #2"
+      ],
+      "tracks": [
+        "cs.AI-cs.SE"
+      ]
+    },
+    {
+      "catalogue_id": 68718,
+      "role": "GPU 5-backend externally validated compute shaders (Batch 1)",
+      "papers": [
+        "Paper #1"
+      ],
+      "tracks": [
+        "cs.PL-cs.OS"
+      ]
+    },
+    {
+      "catalogue_id": 68722,
+      "role": "15/15 public repository CycloneDX SBOMs (556 components)",
+      "papers": [
+        "Paper #2"
+      ],
+      "tracks": [
+        "cs.AI-cs.SE"
+      ]
+    },
+    {
+      "catalogue_id": 68729,
+      "role": "GPU 5-backend externally validated compute shaders (Batch 2)",
+      "papers": [
+        "Paper #1"
+      ],
+      "tracks": [
+        "cs.PL-cs.OS"
+      ]
+    },
+    {
+      "catalogue_id": 68737,
+      "role": "10/10 pure-OSI MCP server governance descriptors",
+      "papers": [
+        "Paper #2"
+      ],
+      "tracks": [
+        "cs.AI-cs.SE"
+      ]
+    },
+    {
+      "catalogue_id": 68741,
+      "role": "BuildOS Zero-C Slice 17 signed bootloader (5 ISAs)",
+      "papers": [
+        "Paper #1",
+        "Paper #4"
+      ],
+      "tracks": [
+        "cs.PL-cs.OS",
+        "cs.OS-SOSP"
+      ]
+    },
+    {
+      "catalogue_id": 68744,
+      "role": "J13 SVD spectral rank-collapse guard (5.80e-16 parity)",
+      "papers": [
+        "Paper #2"
+      ],
+      "tracks": [
+        "cs.AI-cs.SE"
+      ]
+    },
+    {
+      "catalogue_id": 68749,
+      "role": "CS-017 sharded proof-mutant harness (180/180 kill rate)",
+      "papers": [
+        "Paper #2"
+      ],
+      "tracks": [
+        "cs.AI-cs.SE"
+      ]
+    },
+    {
+      "catalogue_id": 68750,
+      "role": "BuildOS Zero-C Slice 18 capability W^X scheduler (5 ISAs)",
+      "papers": [
+        "Paper #1",
+        "Paper #4"
+      ],
+      "tracks": [
+        "cs.PL-cs.OS",
+        "cs.OS-SOSP"
+      ]
+    },
+    {
+      "catalogue_id": 68754,
+      "role": "GPU 5-backend externally validated compute shaders (105/105 FMA parity)",
+      "papers": [
+        "Paper #1"
+      ],
+      "tracks": [
+        "cs.PL-cs.OS"
+      ]
+    },
+    {
+      "catalogue_id": 68756,
+      "role": "RTX 4090 RAW DX12 SM 6.10 Cooperative Vector NTC (-83.33% VRAM)",
+      "papers": [
+        "Paper #3"
+      ],
+      "tracks": [
+        "cs.GR"
+      ]
+    },
+    {
+      "catalogue_id": 68757,
+      "role": "CS-039 / CS-042 spectral optics and graphics surpass kernels",
+      "papers": [
+        "Paper #3"
+      ],
+      "tracks": [
+        "cs.GR"
+      ]
+    },
+    {
+      "catalogue_id": 68759,
+      "role": "BuildOS Zero-C Slice 19 zero-copy IPC and Merkle VFS (5 ISAs)",
+      "papers": [
+        "Paper #1",
+        "Paper #4"
+      ],
+      "tracks": [
+        "cs.PL-cs.OS",
+        "cs.OS-SOSP"
+      ]
+    },
+    {
+      "catalogue_id": 68760,
+      "role": "CS-024 Crucible tail-risk fuzzer catching NaN/-Inf bypasses",
+      "papers": [
+        "Paper #2"
+      ],
+      "tracks": [
+        "cs.AI-cs.SE"
+      ]
+    },
+    {
+      "catalogue_id": 68764,
+      "role": "CS-009 Sleep-LoRA continual consolidation (-97.09% error, +0.061% drift)",
+      "papers": [
+        "Paper #2"
+      ],
+      "tracks": [
+        "cs.AI-cs.SE"
+      ]
+    },
+    {
+      "catalogue_id": 68766,
+      "role": "CS-047 graphics surpass kernel with superopt certificate",
+      "papers": [
+        "Paper #3"
+      ],
+      "tracks": [
+        "cs.GR"
+      ]
+    },
+    {
+      "catalogue_id": 68768,
+      "role": "C++23 to BuildLang 0-ULP renderer Module #18 (art_pbr_lobes)",
+      "papers": [
+        "Paper #3"
+      ],
+      "tracks": [
+        "cs.GR"
+      ]
+    },
+    {
+      "catalogue_id": 68769,
+      "role": "BuildOS Zero-C Slice 20 end-to-end triad (21.86 KB WASM, 5 ISAs)",
+      "papers": [
+        "Paper #1",
+        "Paper #4"
+      ],
+      "tracks": [
+        "cs.PL-cs.OS",
+        "cs.OS-SOSP"
+      ]
+    },
+    {
+      "catalogue_id": 68771,
+      "role": "Flywheel rsi_guard v2 patched (1,160/1,160 tail-fuzz cases, 0 bypasses)",
+      "papers": [
+        "Paper #2"
+      ],
+      "tracks": [
+        "cs.AI-cs.SE"
+      ]
+    },
+    {
+      "catalogue_id": 68773,
+      "role": "120/120 externally validated 5-target GPU shaders (-48.82% MIR cost)",
+      "papers": [
+        "Paper #1"
+      ],
+      "tracks": [
+        "cs.PL-cs.OS"
+      ]
+    },
+    {
+      "catalogue_id": 68775,
+      "role": "528 zero-FLAG formulas and 13/13 native auditors",
+      "papers": [
+        "Paper #1"
+      ],
+      "tracks": [
+        "cs.PL-cs.OS"
+      ]
+    },
+    {
+      "catalogue_id": 68776,
+      "role": "CS-049 Fourier optics and PDB provenance surpass kernel",
+      "papers": [
+        "Paper #3"
+      ],
+      "tracks": [
+        "cs.GR"
+      ]
+    },
+    {
+      "catalogue_id": 68777,
+      "role": "C++23 to BuildLang 0-ULP renderer Module #19 (art_bvh)",
+      "papers": [
+        "Paper #3"
+      ],
+      "tracks": [
+        "cs.GR"
+      ]
+    },
+    {
+      "catalogue_id": 68778,
+      "role": "CS-014 fractal procedural weights (+42.16 dB structured vs 2.03 dB IID null)",
+      "papers": [
+        "Paper #1",
+        "Paper #2"
+      ],
+      "tracks": [
+        "cs.PL-cs.OS",
+        "cs.AI-cs.SE"
+      ]
+    },
+    {
+      "catalogue_id": 68779,
+      "role": "CS-045 persistent 3D memory and CS-046 two-view mocap surpass kernels",
+      "papers": [
+        "Paper #3"
+      ],
+      "tracks": [
+        "cs.GR"
+      ]
+    },
+    {
+      "catalogue_id": 68781,
+      "role": "Flywheel buildos_attest 5-ISA verifier (200/200 tail-fuzz cases)",
+      "papers": [
+        "Paper #2"
+      ],
+      "tracks": [
+        "cs.AI-cs.SE"
+      ]
+    },
+    {
+      "catalogue_id": 68784,
+      "role": "60/60 live MIT Playground WASM modules (339.30 KB)",
+      "papers": [
+        "Paper #1"
+      ],
+      "tracks": [
+        "cs.PL-cs.OS"
+      ]
+    },
+    {
+      "catalogue_id": 68785,
+      "role": "BuildOS Zero-C Slice 21 encrypted network and package verifier (5 ISAs)",
+      "papers": [
+        "Paper #4"
+      ],
+      "tracks": [
+        "cs.OS-SOSP"
+      ]
+    },
+    {
+      "catalogue_id": 68786,
+      "role": "C++23 to BuildLang 0-ULP renderer Module #20 (art_ploc_bvh)",
+      "papers": [
+        "Paper #1",
+        "Paper #3"
+      ],
+      "tracks": [
+        "cs.PL-cs.OS",
+        "cs.GR"
+      ]
+    },
+    {
+      "catalogue_id": 68789,
+      "role": "CS-005 FCA-Titans (75.48x 128k VRAM cut) and CS-006 Sparrow (71.58x loss drop)",
+      "papers": [
+        "Paper #2"
+      ],
+      "tracks": [
+        "cs.AI-cs.SE"
+      ]
+    },
+    {
+      "catalogue_id": 68791,
+      "role": "CLI #15 workstation_ideas_gate exposing 54/231 drifted/uncited claims live",
+      "papers": [
+        "Paper #2"
+      ],
+      "tracks": [
+        "cs.AI-cs.SE"
+      ]
+    },
+    {
+      "catalogue_id": 68792,
+      "role": "C++23 to BuildLang 0-ULP renderer Module #21 (art_taa)",
+      "papers": [
+        "Paper #3"
+      ],
+      "tracks": [
+        "cs.GR"
+      ]
+    },
+    {
+      "catalogue_id": 68793,
+      "role": "Paper #1 sealed preprint receipt (BuildLang Zero-C 5-ISA and 5-GPU)",
+      "papers": [
+        "Paper #1"
+      ],
+      "tracks": [
+        "cs.PL-cs.OS"
+      ]
+    },
+    {
+      "catalogue_id": 68794,
+      "role": "C++23 to BuildLang 0-ULP renderer Module #22 (art_gtao)",
+      "papers": [
+        "Paper #3"
+      ],
+      "tracks": [
+        "cs.GR"
+      ]
+    },
+    {
+      "catalogue_id": 68795,
+      "role": "BuildOS Zero-C Slice 22 display compositor and frame isolation (5 ISAs)",
+      "papers": [
+        "Paper #4"
+      ],
+      "tracks": [
+        "cs.OS-SOSP"
+      ]
+    },
+    {
+      "catalogue_id": 68797,
+      "role": "Paper #2 sealed preprint receipt (Flywheel Accountable Self-Improvement)",
+      "papers": [
+        "Paper #2"
+      ],
+      "tracks": [
+        "cs.AI-cs.SE"
+      ]
+    },
+    {
+      "catalogue_id": 68805,
+      "role": "BuildOS Zero-C Slice 23 anti-keylogger HID and Q15 audio DSP (5 ISAs)",
+      "papers": [
+        "Paper #4"
+      ],
+      "tracks": [
+        "cs.OS-SOSP"
+      ]
+    },
+    {
+      "catalogue_id": 68808,
+      "role": "Paper #3 sealed preprint receipt (Bit-Exact C++23 to BuildLang Rendering)",
+      "papers": [
+        "Paper #3"
+      ],
+      "tracks": [
+        "cs.GR"
+      ]
+    },
+    {
+      "catalogue_id": 68814,
+      "role": "Cross-ecosystem Benchmarks V4 (20/20 workloads, 57/57 cells, 1.59x Slice 21 WASM)",
+      "papers": [
+        "Paper #4"
+      ],
+      "tracks": [
+        "cs.OS-SOSP"
+      ]
+    },
+    {
+      "catalogue_id": 68816,
+      "role": "BuildOS-1.0 Slice 24 unified 7-subsystem microkernel (72.83 KB WASM, 6/6 attacks)",
+      "papers": [
+        "Paper #4"
+      ],
+      "tracks": [
+        "cs.OS-SOSP"
+      ]
+    },
+    {
+      "catalogue_id": 68817,
+      "role": "CMMNS WASM Bridge V4 and site papers surface verification (1,772/1,772 tests)",
+      "papers": [
+        "Paper #4"
+      ],
+      "tracks": [
+        "cs.OS-SOSP"
+      ]
+    },
+    {
+      "catalogue_id": 68819,
+      "role": "BuildOS Zero-C Slice 25 4-core SMP capability scheduler and Sv39/x64 MMU (5 ISAs)",
+      "papers": [
+        "Paper #4"
+      ],
+      "tracks": [
+        "cs.OS-SOSP"
+      ]
+    },
+    {
+      "catalogue_id": 68825,
+      "role": "BuildLang universe graduation PR #380 for Zero-C BuildOS kernels",
+      "papers": [
+        "Paper #4"
+      ],
+      "tracks": [
+        "cs.OS-SOSP"
+      ]
+    },
+    {
+      "catalogue_id": 68832,
+      "role": "BuildOS Zero-C Slice 26 PCIe IOMMU DMA fence and NVMe WAL (5 ISAs)",
+      "papers": [
+        "Paper #4"
+      ],
+      "tracks": [
+        "cs.OS-SOSP"
+      ]
+    },
+    {
+      "catalogue_id": 68835,
+      "role": "Step-5 Superopt V6 native auditors rebuild and 0.316 ms BuildOS gate",
+      "papers": [
+        "Paper #4"
+      ],
+      "tracks": [
+        "cs.OS-SOSP"
+      ]
+    },
+    {
+      "catalogue_id": 68840,
+      "role": "72/72 live MIT Playground WASM module suite (529.83 KB)",
+      "papers": [
+        "Paper #4"
+      ],
+      "tracks": [
+        "cs.OS-SOSP"
+      ]
+    },
+    {
+      "catalogue_id": 68841,
+      "role": "BuildOS Zero-C Slice 27 GPU command queue, certified shader fence, and VRAM arena (5 ISAs)",
+      "papers": [
+        "Paper #4"
+      ],
+      "tracks": [
+        "cs.OS-SOSP"
+      ]
+    },
+    {
+      "catalogue_id": 68852,
+      "role": "Paper #4 sealed preprint receipt (Zero-C Sovereign Microkernels Across Five ISAs)",
+      "papers": [
+        "Paper #4"
+      ],
+      "tracks": [
+        "cs.OS-SOSP"
+      ]
+    }
+  ]
+}

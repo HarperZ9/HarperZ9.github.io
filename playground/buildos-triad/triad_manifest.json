@@ -1,0 +1,287 @@
+{
+  "schema": "buildos-triad-manifest/1",
+  "license": "MIT",
+  "date": "2026-11-27",
+  "compiler": "buildc_crypto_stage2 (Zero-C self-hosted backend, no C compiler, no linker)",
+  "module_count": 9,
+  "total_bytes": 111830,
+  "total_attacks": 25,
+  "modules": [
+    {
+      "slug": "sha256_zeroc",
+      "slice": 11,
+      "title": "FIPS 180-4 SHA-256",
+      "file": "sha256_zeroc.wasm",
+      "bytes": 2992,
+      "sha256": "0f4755595ead4a5617506e78feee3ce958913c78b803d1528de70cca3a5f2fc9",
+      "imports": 0,
+      "fn": null,
+      "clean_count": 24,
+      "clean_transcript_sha256": "f7c44dbb1c9dd41c5bbb55d84c80680073b266b85b9451daa022931126f940ef",
+      "attacks": [
+        {
+          "mode": 1,
+          "label": "Flip 1 input bit (abc to abd), compare to WebCrypto",
+          "expect_rc": -1,
+          "transcript_sha256": "0822d1bea80df77ebab122e460a8027afd63f6f8e8aa13e5858b91b57f5602fd"
+        }
+      ]
+    },
+    {
+      "slug": "aead_chacha20_poly1305",
+      "slice": 13,
+      "title": "RFC 8439 ChaCha20-Poly1305 AEAD",
+      "file": "aead_chacha20_poly1305.wasm",
+      "bytes": 3381,
+      "sha256": "82d4277caf047ed91c86453be40c82f87c9da8e0ecc6561868d6cfb6416e3b54",
+      "imports": 0,
+      "fn": "aead_rfc8439_run",
+      "clean_count": 34,
+      "clean_transcript_sha256": "33f674d833b39223a0e266e89cd727565fb5c11096c46ba78242a8ed585f52ca",
+      "attacks": [
+        {
+          "mode": 1,
+          "label": "1-bit ciphertext flip",
+          "expect_rc": 0,
+          "transcript_sha256": "7720834a47e478c36247b0a8326e31b135a0d6562c3bcc6bad51912fd067b783"
+        },
+        {
+          "mode": 2,
+          "label": "1-bit AAD header flip",
+          "expect_rc": 0,
+          "transcript_sha256": "bd170674b635e143ffb9a96dcdfa1faafc6435a0e0a14a9647cdfa08d7e3651f"
+        }
+      ]
+    },
+    {
+      "slug": "x25519_curve25519_zeroc",
+      "slice": 14,
+      "title": "RFC 7748 X25519 ECDH",
+      "file": "x25519_curve25519_zeroc.wasm",
+      "bytes": 4392,
+      "sha256": "85f5feeba8623f58dc26496941d5698634f314a5265d13208d04d5467a81bf91",
+      "imports": 0,
+      "fn": "x25519_suite",
+      "clean_count": 26,
+      "clean_transcript_sha256": "7cd57287124c260fdebc67bdaab0248e04424c89022dbed49c7b9cdfd73c21c0",
+      "attacks": [
+        {
+          "mode": 1,
+          "label": "1-bit Alice scalar flip",
+          "expect_rc": 0,
+          "transcript_sha256": "9ba3243a1b93471c688aecddce278936069527bd64d85a5b524db2b20d87240e"
+        }
+      ]
+    },
+    {
+      "slug": "tls_mini_handshake_zeroc",
+      "slice": 15,
+      "title": "TLS mini handshake (X25519, HKDF-SHA256, AEAD)",
+      "file": "tls_mini_handshake_zeroc.wasm",
+      "bytes": 11829,
+      "sha256": "8f8529a64e8cf084bfa42e71bf03f8e7ba90ac290e20a0f5dfe556320e675eb6",
+      "imports": 0,
+      "fn": "tls_handshake_run",
+      "clean_count": 26,
+      "clean_transcript_sha256": "c34235406de0ec87484fb1741b7f3649f88a8a12033618afee5624af2158902a",
+      "attacks": [
+        {
+          "mode": 1,
+          "label": "MITM transcript key swap",
+          "expect_rc": -101,
+          "transcript_sha256": "a384a45c14f900db9caea90aa9df07d9a763d6c399040e4b01528182113c899b"
+        },
+        {
+          "mode": 2,
+          "label": "1-bit ciphertext flip",
+          "expect_rc": -201,
+          "transcript_sha256": "745199bdfe86c5a89423d8cc21d0b6f8e04c2a98056027f0c0c92fe1bed95f30"
+        }
+      ]
+    },
+    {
+      "slug": "ed25519_verify_zeroc",
+      "slice": 16,
+      "title": "SHA-512 and RFC 8032 Ed25519 verify",
+      "file": "ed25519_verify_zeroc.wasm",
+      "bytes": 21748,
+      "sha256": "cf4c44206ea1b7b308681e2cb186bc610909453ec3b90923fafcf235afec642a",
+      "imports": 0,
+      "fn": "ed25519_suite",
+      "clean_count": 46,
+      "clean_transcript_sha256": "d54db2dfde8ee2e55638784a1dc1821d7c4041540d7a6c9883ad32edc09710e4",
+      "attacks": [
+        {
+          "mode": 1,
+          "label": "1-bit signature S flip",
+          "expect_rc": -101,
+          "transcript_sha256": "70ab9dd9e5a358cec6219ce67ca9e00e001276fef5ac1805ee9fce78400bfce0"
+        },
+        {
+          "mode": 2,
+          "label": "1-bit message flip",
+          "expect_rc": -201,
+          "transcript_sha256": "a9053667ce85eb4ab01456c7510f43d4967c745e33f9c9daa69389eb8c1bf8b1"
+        },
+        {
+          "mode": 3,
+          "label": "Non-canonical S >= L malleability",
+          "expect_rc": -301,
+          "transcript_sha256": "5a604b433ed498e455b9f01fd3cd1eda4c60e03ed83a35924adbaed28edf4775"
+        }
+      ]
+    },
+    {
+      "slug": "buildos_signed_boot_zeroc",
+      "slice": 17,
+      "title": "Signed bootloader (SHA-256, epoch, RFC 6962, Ed25519)",
+      "file": "buildos_signed_boot_zeroc.wasm",
+      "bytes": 26577,
+      "sha256": "0b375a5f0ecfd463b0856da8d24b2bd17ea8d707f5ea4b79d708f7e6e52a5b68",
+      "imports": 0,
+      "fn": "buildos_boot_verify",
+      "clean_count": 28,
+      "clean_transcript_sha256": "ee9907267aa6ba01db657b23040dd9d97db56d44e2f87a3d496cb9c67df1dcef",
+      "attacks": [
+        {
+          "mode": 1,
+          "label": "1-bit kernel image tamper",
+          "expect_rc": -101,
+          "transcript_sha256": "6447a0377876a9c4d5e1e965447d0f4914c3edddb084fd558b4e5da859bb9602"
+        },
+        {
+          "mode": 2,
+          "label": "Anti-rollback epoch downgrade",
+          "expect_rc": -201,
+          "transcript_sha256": "8d2aae44b57a7f063e3434baf0d44d5e407f68612a7b5329bc5d4cddbeeba5b6"
+        },
+        {
+          "mode": 3,
+          "label": "1-bit Merkle proof tamper",
+          "expect_rc": -301,
+          "transcript_sha256": "cc2a66f9f2038d14c1f2fa961d19d81ddc043b6682c76f86acf278d4cc3e066a"
+        },
+        {
+          "mode": 4,
+          "label": "1-bit Ed25519 signature tamper",
+          "expect_rc": -401,
+          "transcript_sha256": "675114f28b7b18f677364fa343e68b8b845b9eb25e4bc8f0fddedb001045a8f8"
+        }
+      ]
+    },
+    {
+      "slug": "buildos_cap_sched_zeroc",
+      "slice": 18,
+      "title": "Capability scheduler, W^X, code-page SHA-256",
+      "file": "buildos_cap_sched_zeroc.wasm",
+      "bytes": 9912,
+      "sha256": "4cb9a8a18155ba65394d911ea2e41ea66541ac1ceda1db7ae8abdd7a86275991",
+      "imports": 0,
+      "fn": "microkernel_run",
+      "clean_count": 19,
+      "clean_transcript_sha256": "21e556482a91f1cc08e00a9fc03a89fbfaf7af62b368d73afc8c83dec9ecc12f",
+      "attacks": [
+        {
+          "mode": 1,
+          "label": "W^X violation (RWX page)",
+          "expect_rc": -101,
+          "transcript_sha256": "c935513f551f4dd899f9ee3d5d2cbff28c88b6019524a33b67c53780e7902b93"
+        },
+        {
+          "mode": 2,
+          "label": "Forged capability bit",
+          "expect_rc": -201,
+          "transcript_sha256": "99d912bced35d1f29107ecc1b9e5ab397f3500ecf9a112445cdf8c54ed15fe45"
+        },
+        {
+          "mode": 3,
+          "label": "1-bit code-page tamper before dispatch",
+          "expect_rc": -301,
+          "transcript_sha256": "1d8ee547813d556578c12d6bb0def3c7d238934277acd5d82417843a9f772faf"
+        },
+        {
+          "mode": 4,
+          "label": "CPU budget overrun",
+          "expect_rc": -401,
+          "transcript_sha256": "f4c16e7e391dacc645999592ea1f1a913b4a84b4a07b0c9617c8ac698d25afc7"
+        }
+      ]
+    },
+    {
+      "slug": "buildos_ipc_vfs_zeroc",
+      "slice": 19,
+      "title": "Zero-copy capability IPC and Merkle VFS",
+      "file": "buildos_ipc_vfs_zeroc.wasm",
+      "bytes": 9132,
+      "sha256": "972feffea2383fde60d4062ea6b070f6403e2710902d6086fc0eb9a378a6de0a",
+      "imports": 0,
+      "fn": "ipc_vfs_run",
+      "clean_count": 20,
+      "clean_transcript_sha256": "9e6d33c00ad85c15a8adef51a68ba07743d8d1904a12597f4a2af882b8af402f",
+      "attacks": [
+        {
+          "mode": 1,
+          "label": "Unauthorized sender (no capability)",
+          "expect_rc": -101,
+          "transcript_sha256": "c935513f551f4dd899f9ee3d5d2cbff28c88b6019524a33b67c53780e7902b93"
+        },
+        {
+          "mode": 2,
+          "label": "Double send after transfer",
+          "expect_rc": -201,
+          "transcript_sha256": "99d912bced35d1f29107ecc1b9e5ab397f3500ecf9a112445cdf8c54ed15fe45"
+        },
+        {
+          "mode": 3,
+          "label": "1-bit silent block corruption",
+          "expect_rc": -301,
+          "transcript_sha256": "1d8ee547813d556578c12d6bb0def3c7d238934277acd5d82417843a9f772faf"
+        },
+        {
+          "mode": 4,
+          "label": "Ring sequence replay forgery",
+          "expect_rc": -401,
+          "transcript_sha256": "f4c16e7e391dacc645999592ea1f1a913b4a84b4a07b0c9617c8ac698d25afc7"
+        }
+      ]
+    },
+    {
+      "slug": "buildos_e2e_triad_zeroc",
+      "slice": 20,
+      "title": "End-to-end boot, schedule, IPC and VFS triad",
+      "file": "buildos_e2e_triad_zeroc.wasm",
+      "bytes": 21867,
+      "sha256": "12aaf82cf6f0dc96a5e42a7ec917bb403bd713012b3f579db27ddce2205a3f2d",
+      "imports": 0,
+      "fn": "buildos_triad_run",
+      "clean_count": 30,
+      "clean_transcript_sha256": "6b760959fb8e554f2238c4ec478b2555c97ccf6fc821eaf5aab272ba71d351cd",
+      "attacks": [
+        {
+          "mode": 1,
+          "label": "Boot epoch rollback",
+          "expect_rc": -101,
+          "transcript_sha256": "6447a0377876a9c4d5e1e965447d0f4914c3edddb084fd558b4e5da859bb9602"
+        },
+        {
+          "mode": 2,
+          "label": "Post-boot W^X escalation",
+          "expect_rc": -201,
+          "transcript_sha256": "8d2aae44b57a7f063e3434baf0d44d5e407f68612a7b5329bc5d4cddbeeba5b6"
+        },
+        {
+          "mode": 3,
+          "label": "IPC double-send ownership fault",
+          "expect_rc": -301,
+          "transcript_sha256": "cc2a66f9f2038d14c1f2fa961d19d81ddc043b6682c76f86acf278d4cc3e066a"
+        },
+        {
+          "mode": 4,
+          "label": "VFS 1-bit block corruption",
+          "expect_rc": -401,
+          "transcript_sha256": "675114f28b7b18f677364fa343e68b8b845b9eb25e4bc8f0fddedb001045a8f8"
+        }
+      ]
+    }
+  ]
+}

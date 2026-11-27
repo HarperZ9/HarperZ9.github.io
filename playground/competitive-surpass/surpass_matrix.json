@@ -1,0 +1,1355 @@
+{
+  "schema": "competitive-surpass-explorer/1",
+  "license": "MIT",
+  "date": "2026-11-27",
+  "source_matrix": "competitive_surpass_matrix_v3_2026_11_27.json + wave109d_cs045_cs046_68779",
+  "summary": {
+    "total_signals": 76,
+    "lane_count": 8,
+    "surpassed_with_receipt": 70,
+    "parity_verified": 5,
+    "open_next_wave_opportunity": 1,
+    "combined_covered": 75,
+    "covered_pct": 98.68,
+    "unique_receipts": 199,
+    "catalogue_id_range": [
+      68420,
+      68779
+    ]
+  },
+  "lanes": [
+    {
+      "lane": "models-rl-arch",
+      "total": 14,
+      "surpassed": 11,
+      "parity": 3,
+      "open": 0,
+      "covered_pct": 100
+    },
+    {
+      "lane": "flywheel-epistemics",
+      "total": 13,
+      "surpassed": 13,
+      "parity": 0,
+      "open": 0,
+      "covered_pct": 100
+    },
+    {
+      "lane": "career-craft",
+      "total": 11,
+      "surpassed": 10,
+      "parity": 1,
+      "open": 0,
+      "covered_pct": 100
+    },
+    {
+      "lane": "buildlang-compilers",
+      "total": 10,
+      "surpassed": 10,
+      "parity": 0,
+      "open": 0,
+      "covered_pct": 100
+    },
+    {
+      "lane": "graphics-shaders-rendering",
+      "total": 10,
+      "surpassed": 8,
+      "parity": 1,
+      "open": 1,
+      "covered_pct": 90
+    },
+    {
+      "lane": "cmmns-politics-governance",
+      "total": 9,
+      "surpassed": 9,
+      "parity": 0,
+      "open": 0,
+      "covered_pct": 100
+    },
+    {
+      "lane": "physics-math-science",
+      "total": 7,
+      "surpassed": 7,
+      "parity": 0,
+      "open": 0,
+      "covered_pct": 100
+    },
+    {
+      "lane": "art-cinematography-audio",
+      "total": 2,
+      "surpassed": 2,
+      "parity": 0,
+      "open": 0,
+      "covered_pct": 100
+    }
+  ],
+  "flagships": [
+    {
+      "name": "flywheel",
+      "count": 30
+    },
+    {
+      "name": "superframe",
+      "count": 18
+    },
+    {
+      "name": "buildlang",
+      "count": 15
+    },
+    {
+      "name": "cmmns",
+      "count": 8
+    },
+    {
+      "name": "HarperZ9.github.io",
+      "count": 5
+    }
+  ],
+  "signals": [
+    {
+      "signal_id": "CS-001",
+      "lane": "models-rl-arch",
+      "competitor_or_topic": "LoomFormer & mHC-Pythia-2.8B (arXiv:2611.30634)",
+      "linked_idea_id": "A18",
+      "linked_flagship": "flywheel",
+      "tier": "parity_verified",
+      "evidence_catalogue_ids": [
+        68428,
+        68459,
+        68623
+      ],
+      "evidence_summary": "Sinkhorn doubly-stochastic mHC and Symplectic Loom Titan kernels verified in BuildLang and C++23 with zero row/column drift.",
+      "next_wave_action": "Run 2.8B-14B pretraining loss-per-FLOP curves against static residual baselines on 24 GB GPU."
+    },
+    {
+      "signal_id": "CS-002",
+      "lane": "models-rl-arch",
+      "competitor_or_topic": "Mixture-of-Loops & Inkling-2-Mini (arXiv:2611.34923, 2610.02185)",
+      "linked_idea_id": "A6",
+      "linked_flagship": "flywheel",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68431,
+        68432,
+        68444,
+        68623,
+        68670,
+        68720
+      ],
+      "evidence_summary": "Adaptive-halting weight-tied looping with Titan-1M verified at 30.21x native speedup, 27.46x WASM speedup, and 22.79x smaller memory footprint.",
+      "next_wave_action": "Maintain Titan-1M regression lock across future BuildLang compiler releases."
+    },
+    {
+      "signal_id": "CS-003",
+      "lane": "models-rl-arch",
+      "competitor_or_topic": "Aleph Alpha 4-of-10 Cross-Layer KV Sharing & Block-16 Sparse Attention",
+      "linked_idea_id": "A13",
+      "linked_flagship": "flywheel",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68431,
+        68434,
+        68623,
+        68710
+      ],
+      "evidence_summary": "1M-token nested KV held in 0.628 GB (291.7x vs dense FP16) with 100% needle recall plus native BuildLang NSA and FlashAttention kernels.",
+      "next_wave_action": "Extend needle suite to 2M synthetic spans in Benchmarks V3."
+    },
+    {
+      "signal_id": "CS-004",
+      "lane": "models-rl-arch",
+      "competitor_or_topic": "FreeToken Edge-Native MoE Offloading (arXiv:2608.16157)",
+      "linked_idea_id": "A6",
+      "linked_flagship": "buildlang",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68677,
+        68746
+      ],
+      "evidence_summary": "Wave 100D pure-MIT BuildLang bandwidth-adaptive PCIe MoE hot-expert prefetch scheduler sealed alongside Titan-MoE resident microblock.",
+      "next_wave_action": "Benchmark end-to-end 200B sparse weight streaming on 24 GB RTX 4090."
+    },
+    {
+      "signal_id": "CS-005",
+      "lane": "models-rl-arch",
+      "competitor_or_topic": "Factorized Context Attention FCA (arXiv:2611.32423)",
+      "linked_idea_id": "A14",
+      "linked_flagship": "flywheel",
+      "tier": "parity_verified",
+      "evidence_catalogue_ids": [
+        68434,
+        68623,
+        68710
+      ],
+      "evidence_summary": "Native BuildLang NSA, online FlashAttention, and O(1) KDA/Titans recurrence are sealed; multimodal 128k-1M video grid-probing fusion remains next-wave.",
+      "next_wave_action": "Fuse O(s^1.5) spatial-temporal grid probing with O(1) Titans state for long-video benchmarks under 20 GB VRAM."
+    },
+    {
+      "signal_id": "CS-006",
+      "lane": "models-rl-arch",
+      "competitor_or_topic": "Sparrow Fixed-Point Recurrent Optimizer (arXiv:2611.31513)",
+      "linked_idea_id": "A12",
+      "linked_flagship": "flywheel",
+      "tier": "parity_verified",
+      "evidence_catalogue_ids": [
+        68428,
+        68459,
+        68541
+      ],
+      "evidence_summary": "Contraction-bounded Sinkhorn mHC projection and A12 fixed-point stability kernels verified in BuildLang; full K=16..32 14B training run awaits cluster time.",
+      "next_wave_action": "Wire contraction-residual assertions into JFC3P-14B multi-step looped training scripts."
+    },
+    {
+      "signal_id": "CS-007",
+      "lane": "models-rl-arch",
+      "competitor_or_topic": "StrataFlux Memory-Hierarchy Low-Bit Inference (arXiv:2611.08363)",
+      "linked_idea_id": "F3",
+      "linked_flagship": "buildlang",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68430,
+        68433,
+        68692
+      ],
+      "evidence_summary": "Native BuildLang hybrid Walsh-Hadamard + BF16 outlier rescue (38.81 dB SQNR) and Titan-INT4 (7.11x native speedup, 21.33 dB INT4 SQNR) sealed.",
+      "next_wave_action": "Benchmark INT4 and MXFP4 kernels jointly on SM 6.10 cooperative matrices."
+    },
+    {
+      "signal_id": "CS-008",
+      "lane": "models-rl-arch",
+      "competitor_or_topic": "Model Carving Self-Optimizing Topology (arXiv:2611.27962)",
+      "linked_idea_id": "A18",
+      "linked_flagship": "flywheel",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68553,
+        68767
+      ],
+      "evidence_summary": "Wave 106B cs008_model_carving_loop.bld verified 16.0x tied-parameter compression, 4.0x matvec FLOP reduction, contractive spectral bound 0.405 < 1.0, cosine_sim 0.999923, 9.09e-13 Python parity, and -54.46% superopt MIR.",
+      "next_wave_action": "Scale channel carving plus weight-tied looping to multi-billion-parameter checkpoints on GPU."
+    },
+    {
+      "signal_id": "CS-009",
+      "lane": "models-rl-arch",
+      "competitor_or_topic": "Songe Overnight Local Sleep-Training & RWKV4Anki",
+      "linked_idea_id": "A13",
+      "linked_flagship": "flywheel",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68474,
+        68706,
+        68744,
+        68764
+      ],
+      "evidence_summary": "Wave 103A cs009_sleep_lora_consolidation.bld verified zero-egress Fisher-EWC sleep consolidation holding held-out regression <= 1.0% with atomic rollback and J13 rank check.",
+      "next_wave_action": "Wire overnight LoRA scheduler into Mneme local idle daemon."
+    },
+    {
+      "signal_id": "CS-010",
+      "lane": "models-rl-arch",
+      "competitor_or_topic": "Self-Grep for Linear State-Space Models",
+      "linked_idea_id": "D6",
+      "linked_flagship": "flywheel",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68453,
+        68616,
+        68623,
+        68714
+      ],
+      "evidence_summary": "O(1) Titan-1M state paired with < 30 ms SQLite exact keyword-table lookup (C-19) and 10 native BuildLang CLI auditors.",
+      "next_wave_action": "Add FNV-1a exact-identifier stress benchmark over 1M-token repositories."
+    },
+    {
+      "signal_id": "CS-011",
+      "lane": "models-rl-arch",
+      "competitor_or_topic": "Plato Key Orthogonal Rotation & Speculative Encoding",
+      "linked_idea_id": "D6",
+      "linked_flagship": "flywheel",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68488,
+        68699
+      ],
+      "evidence_summary": "Orthogonal hidden-state alignment benchmarks and lossless Leviathan/Chen Titan-SpecDecode verified with Plate C receipts.",
+      "next_wave_action": "Evaluate teacher-to-student orthogonal alignment across Qwen/DeepSeek open checkpoints."
+    },
+    {
+      "signal_id": "CS-012",
+      "lane": "models-rl-arch",
+      "competitor_or_topic": "CPU-ARC On-CPU Agentic Reasoning Cache (arXiv:2611.09891)",
+      "linked_idea_id": "E18",
+      "linked_flagship": "flywheel",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68453,
+        68536,
+        68616,
+        68691
+      ],
+      "evidence_summary": "< 25 ms SQLite keyword preflight paired with E18 deterministic trace caching and cryptographic receipt attestation.",
+      "next_wave_action": "Publish repeat-query CPU cache hit-rate telemetry across multi-wave swarm runs."
+    },
+    {
+      "signal_id": "CS-013",
+      "lane": "models-rl-arch",
+      "competitor_or_topic": "ERMoE Eigen-Reparameterized Mixture-of-Experts (arXiv:2511.10971)",
+      "linked_idea_id": "A14",
+      "linked_flagship": "flywheel",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68516,
+        68677
+      ],
+      "evidence_summary": "A14 eigen-reparameterized routing kernel and Titan-MoE microblock sealed with explicit orthogonality and load-balance receipts.",
+      "next_wave_action": "Wire ERMoE orthogonality monitor into 14B sparse fine-tuning harness."
+    },
+    {
+      "signal_id": "CS-014",
+      "lane": "models-rl-arch",
+      "competitor_or_topic": "Fractal Neural Synthesis Procedural Weights (arXiv:2611.32393)",
+      "linked_idea_id": "A5",
+      "linked_flagship": "buildlang",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68452,
+        68778
+      ],
+      "evidence_summary": "Wave 109C pure-MIT BuildLang procedural weight synthesis kernel verified +42.16 dB fidelity margin over BitNet at matched byte budget with fail-closed controls.",
+      "next_wave_action": "Benchmark procedural weight decompression bandwidth on RTX 4090."
+    },
+    {
+      "signal_id": "CS-015",
+      "lane": "flywheel-epistemics",
+      "competitor_or_topic": "METR Time Horizons 2.0 Swarm Echo-Chamber & Reward Hacking",
+      "linked_idea_id": "E13",
+      "linked_flagship": "flywheel",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68597,
+        68632,
+        68666
+      ],
+      "evidence_summary": "Three-Plate independent oracles, accountability floor, and Flywheel meta-verifier catch 100% of planted reward hacks fail-closed.",
+      "next_wave_action": "Continue auditing hidden-check divergence rates across swarm waves."
+    },
+    {
+      "signal_id": "CS-016",
+      "lane": "flywheel-epistemics",
+      "competitor_or_topic": "Society of AI Scientists Prose-Review Blindspot",
+      "linked_idea_id": "D7",
+      "linked_flagship": "flywheel",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68610,
+        68666,
+        68700,
+        68714
+      ],
+      "evidence_summary": "Every flagship verdict requires executed exit-0 engine-receipt/1 files with SHA-256 artifact hashes verified by native receipt_verify CLI.",
+      "next_wave_action": "Enforce zero unexecuted claims in all external release notes."
+    },
+    {
+      "signal_id": "CS-017",
+      "lane": "flywheel-epistemics",
+      "competitor_or_topic": "Large Lean Proof Audits & Anygeometry=true Witness Propagation",
+      "linked_idea_id": "A7",
+      "linked_flagship": "flywheel",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68536,
+        68749
+      ],
+      "evidence_summary": "Wave 101C pure-stdlib MIT harness/proof_mutator/ achieved 100.0% mutant kill (180/180 across 6 mutant classes) with bit-exact sharded replay invariance (shards=1==2==4) on 30/30 proof certs.",
+      "next_wave_action": "Extend proof mutator to Lean 4 tactic-level assumption weakening."
+    },
+    {
+      "signal_id": "CS-018",
+      "lane": "flywheel-epistemics",
+      "competitor_or_topic": "Search From the Start Pretraining (arXiv:2611.26809)",
+      "linked_idea_id": "A13",
+      "linked_flagship": "flywheel",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68438,
+        68460,
+        68640,
+        68679,
+        68714,
+        68734,
+        68765,
+        68775
+      ],
+      "evidence_summary": "Native BuildLang Data Forge (> 270K rows/s), Flywheel search_forge, and 1,505-row MIT BuildDB Parquet V3 grounded in 496 zero-FLAG formulas.",
+      "next_wave_action": "Expand search-interleaved traces to 5,000 pure-OSI records in BuildDB V4."
+    },
+    {
+      "signal_id": "CS-019",
+      "lane": "flywheel-epistemics",
+      "competitor_or_topic": "Uncheatable Eval Dynamic Compression Auditing (arXiv:2609.27510)",
+      "linked_idea_id": "D7",
+      "linked_flagship": "flywheel",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68438,
+        68460,
+        68464,
+        68472,
+        68679
+      ],
+      "evidence_summary": "4-tier decontamination (SHA-256, SimHash, alpha-renamed AST, n-gram holdout) and RFC 6962 Merkle roots sealed in Data Forge and BuildDB V3.",
+      "next_wave_action": "Add live streaming bits-per-character drift tracking on public quarterly drops."
+    },
+    {
+      "signal_id": "CS-020",
+      "lane": "flywheel-epistemics",
+      "competitor_or_topic": "GUARD Regret-Guided Self-Improving Harnesses (arXiv:2611.23476)",
+      "linked_idea_id": "E18",
+      "linked_flagship": "flywheel",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68584,
+        68594,
+        68675,
+        68771
+      ],
+      "evidence_summary": "Closed-loop RSI guard and Flywheel rsi_guard staging enforce monotonic regret bounds and planted regression traps prior to promotion.",
+      "next_wave_action": "Keep every harness edit behind the regret-bounded RSI ratchet."
+    },
+    {
+      "signal_id": "CS-021",
+      "lane": "flywheel-epistemics",
+      "competitor_or_topic": "RL with Verifiable Beliefs & TracePress (arXiv:2611.32884)",
+      "linked_idea_id": "A12",
+      "linked_flagship": "flywheel",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68447,
+        68541,
+        68612,
+        68706
+      ],
+      "evidence_summary": "Empirical 3-arm Honest-Exit Valve study, A12 verifiable-belief kernel, and 384-task JFC3P-14B-Oracle-v7 RLVR pack sealed.",
+      "next_wave_action": "Track belief-action alignment rate during H100 RLVR fine-tuning."
+    },
+    {
+      "signal_id": "CS-022",
+      "lane": "flywheel-epistemics",
+      "competitor_or_topic": "PrimeIntellect PretrainGym & RL Data Curation",
+      "linked_idea_id": "A6",
+      "linked_flagship": "flywheel",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68438,
+        68443,
+        68635,
+        68679,
+        68706
+      ],
+      "evidence_summary": "Three-Plate-gated Data Forge adapters/SFTs, 1,505-row MIT Parquet V3, and 384-task Oracle-v7 RLVR pack scored strictly on Plate C oracles.",
+      "next_wave_action": "Publish held-out Plate C data-mixture ablation curves on Hugging Face drop."
+    },
+    {
+      "signal_id": "CS-023",
+      "lane": "flywheel-epistemics",
+      "competitor_or_topic": "Fisher-R1 Hypothesis Testing & #PBench (arXiv:2608.07437)",
+      "linked_idea_id": "A5",
+      "linked_flagship": "flywheel",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68449,
+        68632,
+        68688,
+        68714,
+        68742,
+        68765,
+        68775
+      ],
+      "evidence_summary": "496 compiled zero-FLAG BuildLang formulas (including STA-001..070) paired with preregistered null controls and native formula gate CLI.",
+      "next_wave_action": "Expand compiled exact non-parametric statistical kernels past 500 formulas."
+    },
+    {
+      "signal_id": "CS-024",
+      "lane": "flywheel-epistemics",
+      "competitor_or_topic": "PosteriorBench Rare-Behavior Auditing & BehaviorBox (arXiv:2611.25735)",
+      "linked_idea_id": "A7",
+      "linked_flagship": "flywheel",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68536,
+        68666,
+        68748,
+        68760,
+        68778
+      ],
+      "evidence_summary": "Wave 104C pure-stdlib MIT harness/tail_fuzzer/ enforces seed-pinned extreme-value boundary fuzzing (p99, CVaR_99, max-excursion) paired with CS-068 rare-event splitting.",
+      "next_wave_action": "Wire tail_fuzzer gate into multi-turn Crucible release checks."
+    },
+    {
+      "signal_id": "CS-025",
+      "lane": "flywheel-epistemics",
+      "competitor_or_topic": "AgenticPPL Action-Token Perplexity & Public Bits-per-Byte",
+      "linked_idea_id": "A5",
+      "linked_flagship": "flywheel",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68670,
+        68720,
+        68767
+      ],
+      "evidence_summary": "Wave 106B cs025_agentic_ppl_bpb.bld verified open action-token BPB (0.038627 vs 1.0 uniform, 25.89x compression) and PPL (1.113 vs 16.0), 4.99e-13 Python parity, and -65.63% superopt MIR.",
+      "next_wave_action": "Wire action-token BPB telemetry directly into DS-01 evaluation logs."
+    },
+    {
+      "signal_id": "CS-026",
+      "lane": "flywheel-epistemics",
+      "competitor_or_topic": "CoT-Proxy & SAG-Mem-1.0 Zero-LLM Memory Retrieval (arXiv:2611.33148, 2611.33124)",
+      "linked_idea_id": "E18",
+      "linked_flagship": "flywheel",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68453,
+        68501,
+        68616,
+        68714
+      ],
+      "evidence_summary": "< 30 ms SQLite keyword, formula, and signal lookup (C-19) with zero-LLM native preflight hooks at $0 inference cost.",
+      "next_wave_action": "Benchmark sub-10 ms warm lookup latency after 100K-row corpus growth."
+    },
+    {
+      "signal_id": "CS-027",
+      "lane": "flywheel-epistemics",
+      "competitor_or_topic": "Avalon-Harness Multi-Agent MixRL vs Uncoordinated Mob Collapse",
+      "linked_idea_id": "E13",
+      "linked_flagship": "flywheel",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68632,
+        68666,
+        68691,
+        68716
+      ],
+      "evidence_summary": "Signed engine-receipt/1 peer handoffs, accountability floor, meta-verifier, and WASM/crypto attestation reject colluding or unverified patches fail-closed.",
+      "next_wave_action": "Preserve strict structural independence between authors and verifiers across swarm waves."
+    },
+    {
+      "signal_id": "CS-028",
+      "lane": "buildlang-compilers",
+      "competitor_or_topic": "TensorLean Formal PTX GPU Kernel Verification",
+      "linked_idea_id": "F1",
+      "linked_flagship": "buildlang",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68465,
+        68602,
+        68630,
+        68658,
+        68689,
+        68703,
+        68718,
+        68729,
+        68754,
+        68773
+      ],
+      "evidence_summary": "120 certified GPU compute shaders across 5 targets (HLSL, SPIR-V, WGSL, MSL, GLSL) with buildlang.gpu-tv-cert/v1, Flywheel gpu_cert_bridge, and 0 escaping mutants.",
+      "next_wave_action": "Extend certified shader pack to cooperative-matrix FlashAttention tiles."
+    },
+    {
+      "signal_id": "CS-029",
+      "lane": "buildlang-compilers",
+      "competitor_or_topic": "EquiForge & Enumo Compositional E-Graph GPU Superoptimization (arXiv:2609.12330, 2609.14527)",
+      "linked_idea_id": "F3",
+      "linked_flagship": "buildlang",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68465,
+        68529,
+        68655
+      ],
+      "evidence_summary": "BuildLang V5 (-59.30% MIR across 108 certs) upgraded into Superopt V6 (buildlang#369, additional -10.52% reduction) with verified algebraic rewrites.",
+      "next_wave_action": "Add GPU shared-memory tile saturation rules to EquiBuild-V7."
+    },
+    {
+      "signal_id": "CS-030",
+      "lane": "buildlang-compilers",
+      "competitor_or_topic": "colorless-rs Zero-Cost Sync/Async Uncoloring",
+      "linked_idea_id": "F1",
+      "linked_flagship": "buildlang",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68603,
+        68755
+      ],
+      "evidence_summary": "Wave 102D pure-MIT BuildLang uncolored sync/async runtime verified zero-allocation state machines and effect-polymorphic dispatch.",
+      "next_wave_action": "Graduate uncolored runtime helpers into buildlang stdlib."
+    },
+    {
+      "signal_id": "CS-031",
+      "lane": "buildlang-compilers",
+      "competitor_or_topic": "Epic Games 20,000+ Blueprints Automated Port to Verse",
+      "linked_idea_id": "AC1",
+      "linked_flagship": "buildlang",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68573,
+        68693,
+        68704,
+        68712,
+        68768,
+        68776,
+        68777
+      ],
+      "evidence_summary": "Wave 110A cs031_automated_port_verifier.bld verified deterministic cross-language port parity (4.55e-13 max_abs_err, 13 superopt rewrites -57.14% MIR, 2/2 planted controls) alongside 19/19 bit-exact native/bld/ C++23 modules.",
+      "next_wave_action": "Apply port verifier across remaining legacy migration queues."
+    },
+    {
+      "signal_id": "CS-032",
+      "lane": "buildlang-compilers",
+      "competitor_or_topic": "DirectX 12 SM 6.10 linalg::Matrix, Variable GSM & MLIR",
+      "linked_idea_id": "AC3",
+      "linked_flagship": "buildlang",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68630,
+        68658,
+        68689,
+        68696,
+        68709,
+        68718,
+        68773
+      ],
+      "evidence_summary": "120 cross-vendor certified GPU compute kernels validated across HLSL, SPIR-V, MSL, WGSL, and GLSL with subgroup parity receipts.",
+      "next_wave_action": "Add SM 6.10 linalg::Matrix hardware benchmark on NVIDIA, AMD, and Intel targets."
+    },
+    {
+      "signal_id": "CS-033",
+      "lane": "buildlang-compilers",
+      "competitor_or_topic": "Bare-Metal 24 KB x86-64 llm.asm & Lean-Verified AVX2 Perfloop",
+      "linked_idea_id": "F2",
+      "linked_flagship": "buildlang",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68517,
+        68528,
+        68539,
+        68575,
+        68587,
+        68621,
+        68702,
+        68741,
+        68750,
+        68759,
+        68769
+      ],
+      "evidence_summary": "BuildOS-Core (#355) and Zero-C 5-ISA self-hosted backend (WASM, x64 PE, ELF, RV64, AArch64) verified through Slice 15 end-to-end TLS handshake.",
+      "next_wave_action": "Benchmark BuildOS bare-metal Titan-1M inference overhead versus Linux host baseline."
+    },
+    {
+      "signal_id": "CS-034",
+      "lane": "buildlang-compilers",
+      "competitor_or_topic": "CodeHygiene 428K Ternary Weight-Space Compiled Linter",
+      "linked_idea_id": "E19",
+      "linked_flagship": "buildlang",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68455,
+        68460,
+        68498,
+        68616,
+        68688,
+        68714,
+        68742,
+        68765,
+        68775
+      ],
+      "evidence_summary": "Native compiled BuildLang SIG-057 prose (> 25K docs/s) and SIG-058 privacy/hygiene (> 270K rows/s) CLI gates execute in < 15 ms alongside 10 native auditors.",
+      "next_wave_action": "Keep native sub-15 ms CLI gates wired into all subagent post-edit hooks."
+    },
+    {
+      "signal_id": "CS-035",
+      "lane": "buildlang-compilers",
+      "competitor_or_topic": "CompCert Verified Optimization Closing Within 4-6% of gcc -O2",
+      "linked_idea_id": "F1",
+      "linked_flagship": "buildlang",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68483,
+        68591,
+        68655,
+        68670,
+        68719
+      ],
+      "evidence_summary": "Stage 2 == Stage 3 fixed-point self-hosting, V5/V6 e-graph superoptimization, and Cross-Runtime Benchmarks V2 beating -O3 on hot kernels with 0.0 error.",
+      "next_wave_action": "Maintain fixed-point self-host parity check on every compiler PR."
+    },
+    {
+      "signal_id": "CS-036",
+      "lane": "buildlang-compilers",
+      "competitor_or_topic": "XStack ML Repo Migration Benchmark (arXiv:2611.08472)",
+      "linked_idea_id": "F5",
+      "linked_flagship": "buildlang",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68576,
+        68688,
+        68700,
+        68714
+      ],
+      "evidence_summary": "496 zero-FLAG differential formula oracles (FORMULAS.tsv) and F5 migration audit enforce fail-closed numerical parity bounds across framework ports.",
+      "next_wave_action": "Package public XStack-compatible BuildLang port/ parity test harness."
+    },
+    {
+      "signal_id": "CS-037",
+      "lane": "buildlang-compilers",
+      "competitor_or_topic": "OpenROAD 8192-Core Silicon & Single-FPGA Neural QEC Decoders",
+      "linked_idea_id": "N10",
+      "linked_flagship": "buildlang",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68599,
+        68629
+      ],
+      "evidence_summary": "N10 BuildLang-to-Verilog-2001 RTL generator (buildlang#352) verified across 1,000/1,000 cycle-exact testbench vectors with planted bit-flip fault controls.",
+      "next_wave_action": "Add Yosys synthesis area/LUT report to the RTL verification harness."
+    },
+    {
+      "signal_id": "CS-038",
+      "lane": "graphics-shaders-rendering",
+      "competitor_or_topic": "Soraku & NVIDIA RTXNTC Neural Texture Compression (-83% PBR VRAM)",
+      "linked_idea_id": "A6",
+      "linked_flagship": "superframe",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68470,
+        68578,
+        68605,
+        68647,
+        68756
+      ],
+      "evidence_summary": "Cross-vendor BuildLang-NTC610 achieves -83.33% 4K PBR VRAM (10.67 MiB/4K, 42.55 dB PSNR) integrated across Superframe and Moats 6/7.",
+      "next_wave_action": "Wire live NTC610 material streaming into RAW DX12 Wave 91 scene benchmarks."
+    },
+    {
+      "signal_id": "CS-039",
+      "lane": "graphics-shaders-rendering",
+      "competitor_or_topic": "WrongNebula Zero-RT WebGPU 2-Bounce GI & Fast-SDF-AO",
+      "linked_idea_id": "B4",
+      "linked_flagship": "superframe",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68557,
+        68757
+      ],
+      "evidence_summary": "Wave 101A pure-MIT cs039_sdf_sharc_gi.bld verified 2-bounce SDF + SHaRC GI within <= 3% RMSE against unbiased Monte Carlo reference with energy conservation and 2/2 planted controls.",
+      "next_wave_action": "Port SDF + SHaRC GI shader into interactive WebGPU Playground demo."
+    },
+    {
+      "signal_id": "CS-040",
+      "lane": "graphics-shaders-rendering",
+      "competitor_or_topic": "GTA VI Dynamic GI, Persistent Weather & 16 km Fog ShadowCache",
+      "linked_idea_id": "A6",
+      "linked_flagship": "superframe",
+      "tier": "open_next_wave_opportunity",
+      "evidence_catalogue_ids": [
+        68578
+      ],
+      "evidence_summary": "RAW DX12 Wave 90 passes 158/158 RTX 4090 checks, while 16 km volumetric fog shadow caching and Kiruna night-sky photometry for Wave 91 (159/159) are not yet built.",
+      "next_wave_action": "Add 16 km volumetric fog shadow cache and calibrated night-sky photometry pass to RAW DX12 with 159/159 green audit."
+    },
+    {
+      "signal_id": "CS-041",
+      "lane": "graphics-shaders-rendering",
+      "competitor_or_topic": "AnyWreck Collision-Driven Physical Weathering & Scatter Ground",
+      "linked_idea_id": "B4",
+      "linked_flagship": "superframe",
+      "tier": "parity_verified",
+      "evidence_catalogue_ids": [
+        68557,
+        68578,
+        68704,
+        68768,
+        68777
+      ],
+      "evidence_summary": "B4 weathering/SDF primitives, H3 physical aperture/material kernels, and RAW Wave 90 are verified; live collision-volume (< 1% error) weathering stress loop remains next-wave.",
+      "next_wave_action": "Couple world impact-stress and wetness fields into real-time physical weathering masks with < 2% UV distortion."
+    },
+    {
+      "signal_id": "CS-042",
+      "lane": "graphics-shaders-rendering",
+      "competitor_or_topic": "Henry00IS DynamicLighting 1-Bit Baked Visibility + Dynamic Lights",
+      "linked_idea_id": "B1",
+      "linked_flagship": "superframe",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68578,
+        68766
+      ],
+      "evidence_summary": "Wave 105C cs042_onebit_vis_dynamic_lights.bld achieved 32.0x VRAM compression (2,048 B vs 65,536 B), 0.0 radiance error across 49,152 evaluations, and 2.31e-14 Python parity.",
+      "next_wave_action": "Integrate 1-bit visibility bitmask pass into RAW DX12 indoor lighting."
+    },
+    {
+      "signal_id": "CS-043",
+      "lane": "graphics-shaders-rendering",
+      "competitor_or_topic": "Apple Depth Pro 2, ML-SHARP & Animated SOG 4DGS Web Codec",
+      "linked_idea_id": "N18",
+      "linked_flagship": "superframe",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68480,
+        68647,
+        68698
+      ],
+      "evidence_summary": "N18 provenance-locked gsplat_keepsake (superframe#164) paired with 36/36 MIT WASM web suite guarantees pixel-provenance receipts with zero hallucinated anatomy.",
+      "next_wave_action": "Benchmark 4DGS animated web codec playback under < 16 ms frame budget."
+    },
+    {
+      "signal_id": "CS-044",
+      "lane": "graphics-shaders-rendering",
+      "competitor_or_topic": "DiffSimp Differentiable Mesh Simplification & PointX Intrinsics (arXiv:2611.31018, 2611.33157)",
+      "linked_idea_id": "B1",
+      "linked_flagship": "superframe",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68661,
+        68753
+      ],
+      "evidence_summary": "Wave 103C pure-MIT BuildLang Garland-Heckbert QEM differentiable LOD + Gauss-Newton multi-view camera intrinsics verified <= 1.0% reprojection error and 2/2 planted controls.",
+      "next_wave_action": "Hook QEM LOD pass into Superframe mesh asset pipeline."
+    },
+    {
+      "signal_id": "CS-045",
+      "lane": "graphics-shaders-rendering",
+      "competitor_or_topic": "Lyris Layout-Guided Persistent 3D Memory Video (arXiv:2611.31239)",
+      "linked_idea_id": "A9",
+      "linked_flagship": "superframe",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68564,
+        68779
+      ],
+      "evidence_summary": "Wave 109D MIT BuildLang kernel cs045_persistent_3d_memory.bld (GEO-038): 12/12 anchors retained (3.0x over 2D baseline 4/12), 15 zero-error frustum reacquisitions, max reprojection error 0.0 px vs 7.99 px 2D drift, Python parity 4.86e-13, 37 superopt rewrites, 2/2 planted controls rejected.",
+      "next_wave_action": ""
+    },
+    {
+      "signal_id": "CS-046",
+      "lane": "graphics-shaders-rendering",
+      "competitor_or_topic": "Open Game Studio Video-to-Skeletal Extraction & CMU Verified Mocap",
+      "linked_idea_id": "A1",
+      "linked_flagship": "superframe",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68473,
+        68779
+      ],
+      "evidence_summary": "Wave 109D MIT BuildLang kernel cs046_video_skeleton_mocap.bld (GEO-039): two-view skeleton MPJPE reduced from 6.904 mm to 3.331 mm (-51.75%), 0.0 m bone-length error vs 2.52% naive CV, Python parity 4.89e-13, 88 superopt rewrites, 2/2 planted controls rejected.",
+      "next_wave_action": ""
+    },
+    {
+      "signal_id": "CS-047",
+      "lane": "graphics-shaders-rendering",
+      "competitor_or_topic": "Kiruna 1957 All-Sky Observatory Archive & Sodium/Mercury Night Law",
+      "linked_idea_id": "B2",
+      "linked_flagship": "superframe",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68426,
+        68578,
+        68766
+      ],
+      "evidence_summary": "Wave 105C cs047_kiruna_night_spectral_sky.bld integrated 81 visible bands x 16 zenith angles proving 2.87x Sodium/Mercury Purkinje S/P shift and 4.83e-13 Python parity in 0.74 ms.",
+      "next_wave_action": "Couple Kiruna night-sky spectral dome into RAW DX12 Wave 92 dusk pass."
+    },
+    {
+      "signal_id": "CS-048",
+      "lane": "art-cinematography-audio",
+      "competitor_or_topic": "Bloom Weather Synth, Sideman Live Jam & Agentic Programmable DAW",
+      "linked_idea_id": "E7",
+      "linked_flagship": "superframe",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68477,
+        68486,
+        68537,
+        68643
+      ],
+      "evidence_summary": "E7 native BuildLang daw_dsp.bld (0.000563x realtime), transducers/instruments fusion, E29/B7 audio kernels, and buildlang#366 creativity suite sealed.",
+      "next_wave_action": "Wire live simulation weather state into CLAP/VST3 physical-modeling presets."
+    },
+    {
+      "signal_id": "CS-049",
+      "lane": "art-cinematography-audio",
+      "competitor_or_topic": "RayForm Caustics, DVD Fourier Optics & mol_blender Protein Visuals",
+      "linked_idea_id": "B1",
+      "linked_flagship": "superframe",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68573,
+        68693,
+        68704,
+        68712,
+        68757,
+        68768,
+        68776,
+        68777
+      ],
+      "evidence_summary": "Wave 110A cs049_fourier_optics_pdb_provenance.bld verified Fourier optics and SHA-256 PDB atomic coordinate provenance (4.23e-13 max_abs_err, 22 superopt rewrites -60.00% MIR, 2/2 planted controls).",
+      "next_wave_action": "Integrate native PDB viewer pass into interactive Playground web suite."
+    },
+    {
+      "signal_id": "CS-050",
+      "lane": "cmmns-politics-governance",
+      "competitor_or_topic": "ZDR Cloud API Canary Leaks",
+      "linked_idea_id": "I2",
+      "linked_flagship": "cmmns",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68574,
+        68651,
+        68664
+      ],
+      "evidence_summary": "I2 zero-egress design, Flywheel zero_egress_enclave (0 egress bytes + canary-probe enforcement), and enterprise air-gap security pack sealed.",
+      "next_wave_action": "Run periodic automated canary-probe drills on external staging connectors."
+    },
+    {
+      "signal_id": "CS-051",
+      "lane": "cmmns-politics-governance",
+      "competitor_or_topic": "AI Coding Agent VITE_ / NEXT_PUBLIC_ Frontend Secret Leaks",
+      "linked_idea_id": "D7",
+      "linked_flagship": "flywheel",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68460,
+        68472,
+        68498,
+        68501,
+        68616
+      ],
+      "evidence_summary": "Native BuildLang data_forge_core_cli.exe (SIG-058, < 15 ms, > 270K rows/s) catches 100% of planted VITE_/NEXT_PUBLIC_ secret leaks, emails, and local paths fail-closed.",
+      "next_wave_action": "Keep SIG-058 privacy scanner mandatory in all pre-publish and bundle hooks."
+    },
+    {
+      "signal_id": "CS-052",
+      "lane": "cmmns-politics-governance",
+      "competitor_or_topic": "Punitive AI Disclosure Mandates Selecting for Secrecy",
+      "linked_idea_id": "G7",
+      "linked_flagship": "cmmns",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68447,
+        68507,
+        68632
+      ],
+      "evidence_summary": "Empirical 3-arm Honest-Exit Valve study, G7 mechanism study, and zero-penalty accountability floor sealed across Flywheel and CMMNS.",
+      "next_wave_action": "Preserve zero-penalty honest-exit reporting clauses across all worker briefs."
+    },
+    {
+      "signal_id": "CS-053",
+      "lane": "cmmns-politics-governance",
+      "competitor_or_topic": "Handoverism & Agency Loss Under Centralized Platforms",
+      "linked_idea_id": "I10",
+      "linked_flagship": "cmmns",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68445,
+        68464,
+        68565,
+        68614,
+        68695,
+        68708,
+        68715,
+        68751,
+        68763
+      ],
+      "evidence_summary": "Pure OSI MIT open-core migration, I10 non-extractive attention, and 100% offline-verifiable CMMNS provenance bundles with browser WASM verifier sealed.",
+      "next_wave_action": "Ship static client-only WASM verification widget on public CMMNS release pages."
+    },
+    {
+      "signal_id": "CS-054",
+      "lane": "cmmns-politics-governance",
+      "competitor_or_topic": "Global Audit Layer & Independent Second-Channel Corroboration",
+      "linked_idea_id": "I4",
+      "linked_flagship": "cmmns",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68464,
+        68475,
+        68614,
+        68627,
+        68645,
+        68660
+      ],
+      "evidence_summary": "Typed independent second_channel provenance (channel, source, SHA-256, HTTPS) enforced across CMMNS cib-merkle-provenance/1 and cmmns#134..#137.",
+      "next_wave_action": "Expand second_channel adapters to public meteorological and seismic feeds."
+    },
+    {
+      "signal_id": "CS-055",
+      "lane": "cmmns-politics-governance",
+      "competitor_or_topic": "Open Weights vs Centralization & Owner Repair Rights",
+      "linked_idea_id": "I2",
+      "linked_flagship": "cmmns",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68420,
+        68427,
+        68445,
+        68478,
+        68713,
+        68722
+      ],
+      "evidence_summary": "Pure OSI MIT open-core migration across Flagships, 5-flagship SBOM pack, and 1-command SHA256SUMS local verification sealed.",
+      "next_wave_action": "Refresh SBOM and SHA256SUMS manifests on every tagged public release."
+    },
+    {
+      "signal_id": "CS-056",
+      "lane": "cmmns-politics-governance",
+      "competitor_or_topic": "Cheyenne Open OSINT Satellite/FIRMS/ADS-B Public Trackers",
+      "linked_idea_id": "N06",
+      "linked_flagship": "cmmns",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68475,
+        68614,
+        68708
+      ],
+      "evidence_summary": "N06 public ADS-B kinematic spoofing audit (adsb_audit.bld, 15.9M seg/s, 100% spoof recall) bridged into CMMNS WASM and second_channel receipts.",
+      "next_wave_action": "Add NASA FIRMS thermal anomaly cross-check adapter alongside ADS-B audit."
+    },
+    {
+      "signal_id": "CS-057",
+      "lane": "cmmns-politics-governance",
+      "competitor_or_topic": "Single-Point-of-Failure Outages & Richard Cook Complex-System Laws",
+      "linked_idea_id": "I9",
+      "linked_flagship": "flywheel",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68522,
+        68551,
+        68597,
+        68651
+      ],
+      "evidence_summary": "Flywheel FSP TPM Stage L/F failsafe locks (#577), I9 complex-system reseating valve, and zero-egress fail-closed ledger locks sealed.",
+      "next_wave_action": "Test TPM Stage L/F lockout recovery under simulated hardware fault injection."
+    },
+    {
+      "signal_id": "CS-058",
+      "lane": "cmmns-politics-governance",
+      "competitor_or_topic": "Surge Reallocation & Queue-Selling Mechanism Design",
+      "linked_idea_id": "G7",
+      "linked_flagship": "cmmns",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68507,
+        68558,
+        68627,
+        68660
+      ],
+      "evidence_summary": "N26 surge reallocation and G7 3-mechanism plus catastrophe reallocation simulations graduated into cmmns#135..#137.",
+      "next_wave_action": "Publish interactive WASM mechanism-design catastrophe allocation curves."
+    },
+    {
+      "signal_id": "CS-059",
+      "lane": "career-craft",
+      "competitor_or_topic": "Daniel Hooper C UI() Macro & Kit Langton Springy Control Canvas",
+      "linked_idea_id": "K2",
+      "linked_flagship": "HarperZ9.github.io",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68570,
+        68698,
+        68705
+      ],
+      "evidence_summary": "K2 spring control-card kernel, 36/36 MIT WASM suite, and Wave 90C H10 live ARIA plus prefers-reduced-motion verified showcase sealed.",
+      "next_wave_action": "Reuse K2 spring primitives across future interactive portfolio explainers."
+    },
+    {
+      "signal_id": "CS-060",
+      "lane": "career-craft",
+      "competitor_or_topic": "BioTorch & 96 Implement-From-Scratch ML Exercises",
+      "linked_idea_id": "I1",
+      "linked_flagship": "HarperZ9.github.io",
+      "tier": "parity_verified",
+      "evidence_catalogue_ids": [
+        68582,
+        68679,
+        68706
+      ],
+      "evidence_summary": "I1 curriculum kernel and 384-task oracle-graded RLVR/BuildDB suites are sealed; automated arXiv-to-interactive flywheel/packages/learn drill generation remains next-wave.",
+      "next_wave_action": "Wire automated oracle-graded BuildLang/Python exercise generator from verified DS-03 papers."
+    },
+    {
+      "signal_id": "CS-061",
+      "lane": "career-craft",
+      "competitor_or_topic": "OCRia-nano-1 (8.1M) Local Document Parsing & BuildTeX Zero-TeX PDFs",
+      "linked_idea_id": "I15",
+      "linked_flagship": "HarperZ9.github.io",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68580,
+        68618,
+        68644,
+        68685,
+        68694
+      ],
+      "evidence_summary": "Native zero-TeX BuildTeX (0 external TeX binaries, 0 missing glyphs) compiled resumes, 10-slide deck, 5-page Case Studies, Whitepaper V3, and 2-page Executive Brief with SHA-256 receipts.",
+      "next_wave_action": "Keep BuildTeX glyph and margin verification locked in release pipeline."
+    },
+    {
+      "signal_id": "CS-062",
+      "lane": "career-craft",
+      "competitor_or_topic": "AI-Slop Fatigue in Outreach, Docs & Academic Writing",
+      "linked_idea_id": "E6",
+      "linked_flagship": "flywheel",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68455,
+        68458,
+        68503,
+        68530,
+        68616
+      ],
+      "evidence_summary": "Native BuildLang SIG-057 (articulate_core.bld, < 15 ms, > 25K docs/s, 0 em dashes) and Articulate personal_email profile enforced across site copy and subagents.",
+      "next_wave_action": "Maintain 0-flag prose and Articulate gate checks on every public document."
+    },
+    {
+      "signal_id": "CS-063",
+      "lane": "career-craft",
+      "competitor_or_topic": "Zach Lieberman Personal Bookmark Archive vs Local-First Commons",
+      "linked_idea_id": "E25",
+      "linked_flagship": "cmmns",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68439,
+        68442,
+        68453,
+        68494,
+        68513
+      ],
+      "evidence_summary": "Local-first CMMNS/Daylight archive (43K+ captures plus 1,681 post-Nov-25 intake) wired to < 30 ms SQLite keyword/signal lookup and Studio MCP.",
+      "next_wave_action": "Keep preflight competitive-signal lookup refreshed after every corpus intake."
+    },
+    {
+      "signal_id": "CS-064",
+      "lane": "career-craft",
+      "competitor_or_topic": "Interactive Explainers & Live Receipt-Verified Experiment Tables",
+      "linked_idea_id": "G9",
+      "linked_flagship": "HarperZ9.github.io",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68535,
+        68648,
+        68687,
+        68698,
+        68701,
+        68705,
+        68739,
+        68758,
+        68770
+      ],
+      "evidence_summary": "G9 16 live SHA-256 receipt tables on harperz9.github.io, 36/36 MIT WASM explainers (183.54 KB), and Wave 90C AC7/H9/H10 showcase sealed.",
+      "next_wave_action": "Expose Wave 94E competitive matrix summary table on live benchmarks page."
+    },
+    {
+      "signal_id": "CS-065",
+      "lane": "physics-math-science",
+      "competitor_or_topic": "ImitationLab Single-GPU Unitree G1 Humanoid Tracking (Newton/MJWarp)",
+      "linked_idea_id": "A24",
+      "linked_flagship": "superframe",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68550,
+        68746
+      ],
+      "evidence_summary": "Wave 100D pure-MIT BuildLang humanoid rigid-body IK/ID kernel verified <= 1e-9 parity, zero contact tunneling, and signed torque/energy conservation receipts.",
+      "next_wave_action": "Connect humanoid IK/ID verifier to Unitree G1 policy rollouts."
+    },
+    {
+      "signal_id": "CS-066",
+      "lane": "physics-math-science",
+      "competitor_or_topic": "Look Back Counterfactual World Models & OmniAct 1M Embodiments (arXiv:2611.29259, 2611.33158)",
+      "linked_idea_id": "C2",
+      "linked_flagship": "superframe",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68447,
+        68761
+      ],
+      "evidence_summary": "Wave 104A cs066_counterfactual_world_model.bld proved 366.25x OOD RMSE advantage vs Euler, 1.44e-15 look-back time-reversal error, 2.00e-15 counterfactual return error, and 5.82e-12 Python parity.",
+      "next_wave_action": "Extend look-back counterfactual world model to contact-rich morphologies."
+    },
+    {
+      "signal_id": "CS-067",
+      "lane": "physics-math-science",
+      "competitor_or_topic": "materialDTS Crystal Diffusion Tree Search (arXiv:2611.17462)",
+      "linked_idea_id": "A12",
+      "linked_flagship": "buildlang",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68541,
+        68550,
+        68761
+      ],
+      "evidence_summary": "Wave 104A cs067_puct_crystal_optics_search.bld discovered exact 6-layer Bragg global optimum R(550nm)=0.897680 in 128/4096 evals with 3.11e-15 Maxwell energy error, 8 Pareto designs, and 4.44e-16 parity.",
+      "next_wave_action": "Add oblique TE/TM dispersive absorption layers in next optics wave."
+    },
+    {
+      "signal_id": "CS-068",
+      "lane": "physics-math-science",
+      "competitor_or_topic": "Pharos Rare-Event Stochastic Optimal Control (arXiv:2611.26765)",
+      "linked_idea_id": "A2",
+      "linked_flagship": "buildlang",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68516,
+        68748
+      ],
+      "evidence_summary": "Wave 100B cs068_rare_event_committor.bld proved 28,452.55x exact and 29,082.56x empirical variance reduction on a 3.25e-8 rare barrier transition (1.43% rel err, 9.63e-12 parity) in 7.96 ms.",
+      "next_wave_action": "Transfer rare-event splitting sampler to high-dimensional Crucible tail audits."
+    },
+    {
+      "signal_id": "CS-069",
+      "lane": "physics-math-science",
+      "competitor_or_topic": "Auxetic 3D Woven Negative-Poisson Lattices (LAMMPS)",
+      "linked_idea_id": "B3",
+      "linked_flagship": "superframe",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68477,
+        68748
+      ],
+      "evidence_summary": "Wave 100B cs069_auxetic_xpbd_lattice.bld verified 3D woven negative Poisson ratio nu_50_x = nu_50_z = -1.061283 across 0% to 50% stretch, strictly monotone elastic energy, and 4.44e-16 parity in 6.67 ms.",
+      "next_wave_action": "Scale auxetic XPBD lattice to multi-cell finite-size buckling sweeps."
+    },
+    {
+      "signal_id": "CS-070",
+      "lane": "physics-math-science",
+      "competitor_or_topic": "Biological Environmental Adaptation & Tree Biomechanics",
+      "linked_idea_id": "C1",
+      "linked_flagship": "superframe",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68474,
+        68477,
+        68510,
+        68606,
+        68642,
+        68672
+      ],
+      "evidence_summary": "J13/J14 weights-only Model Epigenetics (100% spectral separation, 6.54 ms) and C1 coupled Mattheck/TMD tree biomechanics (PHY-068) graduated and sealed.",
+      "next_wave_action": "Extend coupled biological damping tests to multi-season wind-load ensembles."
+    },
+    {
+      "signal_id": "CS-071",
+      "lane": "physics-math-science",
+      "competitor_or_topic": "Sensorless Hardware Calibration & Non-Critical Open Physics",
+      "linked_idea_id": "E27",
+      "linked_flagship": "superframe",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68487,
+        68647,
+        68661
+      ],
+      "evidence_summary": "E27 sensorless Bayesian display calibration (COL-041, 0.056 dE2000) and N12 open physics kcores (PHY-073) integrated into superframe#164.",
+      "next_wave_action": "Wire runaway-guard thermal drift tests into calibrate-pro continuous telemetry."
+    },
+    {
+      "signal_id": "CS-072",
+      "lane": "career-craft",
+      "competitor_or_topic": "Enterprise Resistance to Source-Available Licenses (FSL vs Pure OSI MIT)",
+      "linked_idea_id": "A6",
+      "linked_flagship": "flywheel",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68420,
+        68427,
+        68445,
+        68625,
+        68671,
+        68684,
+        68697,
+        68722,
+        68737
+      ],
+      "evidence_summary": "Pure OSI MIT open-core migration across Flywheel, Superframe, BuildLang universe/, and RAW, 10/10 MCP Registry descriptors merged, and 15-repo OSS readiness matrix sealed.",
+      "next_wave_action": "Complete remaining standalone polish items from Wave 83B gap roadmap."
+    },
+    {
+      "signal_id": "CS-073",
+      "lane": "career-craft",
+      "competitor_or_topic": "Air-Gapped Defense & Enterprise Need for Zero-Egress Verification",
+      "linked_idea_id": "E13",
+      "linked_flagship": "flywheel",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68456,
+        68462,
+        68471,
+        68519,
+        68548,
+        68651,
+        68664,
+        68740,
+        68747,
+        68752,
+        68762,
+        68774
+      ],
+      "evidence_summary": "Air-gapped zero-egress enclave (0 egress bytes, 3.59 ms Three-Plate check) backed by AFWERX FY27 R2, DHS/DARPA/Tradewinds, Federal Capability Statement, and Procurement Security Pack.",
+      "next_wave_action": "Execute human submission of staged AFWERX and federal procurement packets."
+    },
+    {
+      "signal_id": "CS-074",
+      "lane": "career-craft",
+      "competitor_or_topic": "Scale AI & Static Labeling Vendor Distrust vs Proof-Carrying Data",
+      "linked_idea_id": "E18",
+      "linked_flagship": "flywheel",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68437,
+        68438,
+        68443,
+        68472,
+        68519,
+        68635,
+        68679,
+        68734
+      ],
+      "evidence_summary": "Deterministic BuildLang Data Forge (SIG-058, > 270K rows/s, $0 external labeling cost), Merkle-sealed 1,505-row MIT Parquet V3, and Commercial VPC Pilot Brief sealed.",
+      "next_wave_action": "Ship enterprise VPC pilot demo deck paired with BuildDB V3 Parquet drop."
+    },
+    {
+      "signal_id": "CS-075",
+      "lane": "career-craft",
+      "competitor_or_topic": "MCP Ecosystem Fragmentation & Discoverability Bottleneck",
+      "linked_idea_id": "I15",
+      "linked_flagship": "HarperZ9.github.io",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68481,
+        68579,
+        68615,
+        68620,
+        68625,
+        68697,
+        68737
+      ],
+      "evidence_summary": "10/10 pure-OSI mcp-name registry descriptors merged and live-audited with native MCP Studio verification and SHA256SUMS 1-command install.",
+      "next_wave_action": "Register remaining standalone MCP servers as their repos reach 11/11 OSS readiness."
+    },
+    {
+      "signal_id": "CS-076",
+      "lane": "career-craft",
+      "competitor_or_topic": "Community Governance & Non-Cloning Ethics for Language Revitalization",
+      "linked_idea_id": "N19",
+      "linked_flagship": "superframe",
+      "tier": "surpassed_with_receipt",
+      "evidence_catalogue_ids": [
+        68487,
+        68641,
+        68650
+      ],
+      "evidence_summary": "N19 community-governed articulatory acoustics (ipa_formant.bld, SIG-064) enforces mandatory bibliographic provenance and fail-closed zero-voice-cloning guards.",
+      "next_wave_action": "Keep zero-voice-cloning provenance assertions locked in Superframe CI."
+    }
+  ]
+}

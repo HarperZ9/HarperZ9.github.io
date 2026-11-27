@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en" data-type="stock">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<title>Cross-Ecosystem Benchmarks V4: 20 Workloads, 57 Runtime Cells | Zain Dana Harper</title>
+<meta name="description" content="Interactive Measured Drafting Sheet explorer of 20 verified pure-OSI MIT workloads across 57 runtime cells (BuildLang native, Node V8 WASM, Zero-C PE, Python 3.12 stdlib; receipt #68814).">
+<link rel="canonical" href="https://harperz9.github.io/playground/benchmarks-v4/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Cross-Ecosystem Benchmarks V4: 20 Workloads, 57 Runtime Cells | Zain Dana Harper">
+<meta property="og:description" content="Interactive Measured Drafting Sheet explorer of 20 verified pure-OSI MIT workloads across 57 runtime cells (BuildLang native, Node V8 WASM, Zero-C PE, Python 3.12 stdlib; receipt #68814).">
+<meta property="og:url" content="https://harperz9.github.io/playground/benchmarks-v4/">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/home.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Cross-Ecosystem Benchmarks V4: 20 Workloads, 57 Runtime Cells | Zain Dana Harper">
+<meta name="twitter:description" content="Interactive Measured Drafting Sheet explorer of 20 verified pure-OSI MIT workloads across 57 runtime cells (BuildLang native, Node V8 WASM, Zero-C PE, Python 3.12 stdlib; receipt #68814).">
+<link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-6218db2f12">
+<link rel="stylesheet" href="/studies/studies.css?v=world-6218db2f12">
+<link rel="stylesheet" href="/world/site/depth.css?v=world-6218db2f12">
+<script type="module" src="/world/ui/shell/shell.js?v=world-6218db2f12"></script>
+<script type="module" src="/world/site/hand-scroll.js?v=world-6218db2f12"></script>
+<meta name="benchmarks-v4-sha256" content="58562e85ac3eb782692259b92e250d147148bd8e3b01797cddf39a5b75ebc8cc">
+<style>
+  .bv-highlights { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0.65rem; padding: 0.8rem 0; border-bottom: 1px solid var(--line); }
+  .bv-hi { border: 1px solid var(--line); padding: 0.65rem 0.75rem; min-width: 0; }
+  .bv-hi-k { font-family: var(--face-utility); font-size: 0.73rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--soft); margin: 0; overflow-wrap: anywhere; }
+  .bv-hi-v { font-family: var(--face-utility); font-size: 1.15rem; font-weight: 700; margin: 0.2rem 0; font-variant-numeric: tabular-nums; }
+  .bv-hi-s { font-size: 0.78rem; color: var(--soft); margin: 0; }
+  .bv-pills { display: flex; flex-wrap: wrap; gap: 0.45rem; padding: 0.75rem 0; border-bottom: 1px solid var(--line); }
+  .bv-controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.6rem 0.75rem; padding: 0.8rem 0; border-bottom: 1px solid var(--line); align-items: end; }
+  .bv-field { display: flex; flex-direction: column; gap: 0.25rem; font-family: var(--face-utility); font-size: 0.75rem; color: var(--soft); }
+  .bv-field select, .bv-field input, .bv-pill, .bv-reset { background: transparent; color: var(--ink); border: 1px solid var(--line); padding: 0.42rem 0.68rem; min-height: 40px; font-family: var(--face-utility); font-size: 0.82rem; }
+  .bv-pill, .bv-reset { cursor: pointer; }
+  .bv-pill[data-active="1"] { background: var(--ink); color: var(--paper, #f4f1ea); border-color: var(--ink); }
+  .bv-field select:focus-visible, .bv-field input:focus-visible, .bv-pill:focus-visible, .bv-reset:focus-visible, .bv-wrap:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .bv-readout { padding: 0.75rem 0; border-bottom: 1px solid var(--line); font-family: var(--face-utility); font-size: 0.84rem; font-variant-numeric: tabular-nums; min-height: 4.8rem; }
+  .bv-readout p { margin: 0.22rem 0; }
+  .bv-wrap { width: 100%; overflow-x: auto; margin-top: 0.5rem; }
+  .bv-table { width: 100%; min-width: 680px; table-layout: fixed; border-collapse: collapse; font-size: 0.83rem; }
+  .bv-table th, .bv-table td { text-align: left; padding: 0.5rem 0.55rem 0.5rem 0; border-bottom: 1px solid var(--line); vertical-align: top; overflow-wrap: break-word; }
+  .bv-table th:last-child, .bv-table td:last-child { padding-right: 0; }
+  .bv-table thead th { font-family: var(--face-utility); font-size: 0.73rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--soft); font-weight: 600; }
+  .mono { font-family: var(--face-utility); font-variant-numeric: tabular-nums; }
+  .bv-sub { display: block; font-family: var(--face-utility); font-size: 0.72rem; color: var(--soft); font-weight: 400; margin-top: 0.14rem; }
+  .bv-empty { padding: 1rem 0; font-family: var(--face-utility); font-size: 0.85rem; color: var(--soft); }
+</style></head>
+<body class="reading ds-sheet">
+
+<header class="o-hand o-said" aria-label="Site">
+  <a class="skip" href="#main">Skip to the page</a>
+  <a class="o-home" href="/">Zain Dana Harper</a>
+  <a data-o="band" href="/world/universe/proto/index.html"><span class="o-name">Map</span></a>
+  <button type="button" data-o="fold" aria-controls="o-menu" aria-keyshortcuts="m" aria-expanded="false" hidden><span class="o-name">Places</span><i></i><i></i><i></i></button>
+  <button type="button" data-o="lamp" data-theme-toggle aria-pressed="true"><span class="o-name">Day</span></button>
+  <span class="o-cell"><button type="button" data-o="peel" data-plain-toggle aria-pressed="false"><span class="o-name">Plain</span></button><span class="o-under" aria-hidden="true">Plain</span></span>
+</header>
+<dialog id="o-menu" data-o="menu" data-material="chladni" aria-label="Places">
+  <nav aria-label="Places">
+    <ul class="o-places">
+      <li><a href="/buildlang.html"><span class="o-word" data-display-on-open="glyphcell">BuildLang</span></a></li>
+      <li><a href="/flywheel.html"><span class="o-word" data-display-on-open="light">Flywheel</span></a><small class="o-sub"><a href="/cmmns.html">CMMNS</a> <a href="/articulate.html">Articulate</a></small></li>
+      <li><a href="/playground/"><span class="o-word" data-display-on-open="nightlights">The Playground</span></a><small class="o-sub"><a href="/playground/#estuary">Estuary</a> <a href="/playground/#native">Native renderer</a> <a href="/playground/#superframe">Superframe</a> <a href="/playground/#workbench">All creative engines</a> <a href="/playground/#low-water">Low Water</a></small></li>
+      <li><a href="/playground/#low-water"><span class="o-word" data-display-on-open="chladni">Game</span></a></li>
+      <li><a href="/#site"><span class="o-word" data-display-on-open="swarm">Site</span></a></li>
+      <li><a href="/floor.html"><span class="o-word" data-display-on-open="rope">Everything</span></a></li>
+      <li><a href="/models.html"><span class="o-word" data-display-on-open="rope">Models</span></a></li>
+      <li><a href="/tools.html"><span class="o-word" data-display-on-open="rope">Tools &amp; Repos</span></a></li>
+      <li><a href="/person.html"><span class="o-word" data-display-on-open="rope">About</span></a></li>
+      <li><a href="/architecture.html"><span class="o-word" data-display-on-open="rope">Architecture</span></a></li>
+      <li><a href="/world/universe/proto/index.html"><span class="o-word" data-display-on-open="rope">Map</span></a></li>
+      <li><a href="/publications.html"><span class="o-word" data-display-on-open="swarm">Writing</span></a></li>
+      <li><a href="/explainers.html"><span class="o-word" data-display-on-open="sound">Films</span></a></li>
+      <li><a href="/security.html"><span class="o-word" data-display-on-open="rope">Security</span></a></li>
+      <li><a href="/hire.html"><span class="o-word" data-display-on-open="rope">Work</span></a></li>
+      <li><a href="/cv.html"><span class="o-word" data-display-on-open="rope">CV</span></a></li>
+    </ul>
+  </nav>
+  <p class="o-menu-foot"><a href="/architecture.html">Architecture</a> <a href="/models.html">Models</a> <a href="/tools.html">Tools &amp; 159 Repos</a> <a href="/research.html">Research</a> <a href="/portfolio.html">Portfolio</a> <a href="/elements.html">Elements</a> <a href="/studies/">Studies</a> <a href="/site-index.html">Site index</a> <button type="button" class="o-close" data-qj-open onclick="this.closest('dialog').close()">Search (Ctrl+K)</button> <button type="button" class="o-close" onclick="this.closest('dialog').close()">Close (Esc)</button></p>
+</dialog>
+<main id="main" tabindex="-1">
+<article class="st" id="benchmarks-v4">
+<header class="ds-sheet-head">
+  <p class="ds-kicker">Measured Drafting Sheet / Cross-Ecosystem Benchmarks V4</p>
+  <h1>Cross-Ecosystem Benchmarks V4: 20 Workloads, 57 Runtime Cells</h1>
+  <p class="ds-lede">Median (p50) latency and cross-runtime SHA-256 parity across 20 pure-OSI MIT workloads and 57 measured runtime cells (BuildLang native, Node V8 WebAssembly, Zero-C PE, and Python 3.12 stdlib; 1 warmup + 7 timed runs each; Flywheel receipt #68814). Every workload matched bit-for-bit across all measured runtimes (20/20 parity) and passed planted hash-tamper and quantile-monotonicity controls.</p>
+  <p class="ds-meta"><span>20/20 parity verified</span><span>57/57 runtime cells</span><span>Receipt #68814</span><span>7 timed runs + 1 warmup</span></p>
+  <nav class="ds-ways" aria-label="Related surfaces">
+    <a href="/playground/">The Playground</a>
+    <a href="/playground/benchmarks/">Benchmarks V3</a>
+    <a href="/playground/buildos-triad/">Zero-C BuildOS Triad</a>
+    <a href="/playground/competitive-surpass/">Competitive Surpass</a>
+    <a href="./benchmarks_v4_manifest.json">Manifest JSON</a>
+  </nav>
+</header>
+
+<section class="ds-sec" id="highlights" aria-labelledby="h-hi">
+  <h2 id="h-hi">Headline p50 speedups vs Python 3.12 stdlib</h2>
+  <div class="bv-highlights">
+    <div class="bv-hi"><p class="bv-hi-k">titan_1m (AI)</p><p class="bv-hi-v">37.73x native</p><p class="bv-hi-s">17.24 ms native / 22.77 ms WASM (28.58x) vs 650.62 ms Python</p></div>
+    <div class="bv-hi"><p class="bv-hi-k">indirect_draw_cull</p><p class="bv-hi-v">13.75x native</p><p class="bv-hi-s">8.85 ms native vs 121.78 ms Python (GPU culling kernel)</p></div>
+    <div class="bv-hi"><p class="bv-hi-k">sha256 (FIPS 180-4)</p><p class="bv-hi-v">10.98x WASM</p><p class="bv-hi-s">0.05 ms Node V8 WASM (2,992 B) vs 0.53 ms Python</p></div>
+    <div class="bv-hi"><p class="bv-hi-k">cs014_fractal_weights</p><p class="bv-hi-v">2.24x native</p><p class="bv-hi-s">71.52 ms native vs 160.33 ms Python</p></div>
+    <div class="bv-hi"><p class="bv-hi-k">cs005_fca_titans_128k</p><p class="bv-hi-v">2.03x native</p><p class="bv-hi-s">20.19 ms native vs 41.04 ms Python</p></div>
+    <div class="bv-hi"><p class="bv-hi-k">buildos_slice21_net_pkg</p><p class="bv-hi-v">1.59x Zero-C WASM</p><p class="bv-hi-s">5.05 ms Zero-C WASM vs 8.05 ms Python (AEAD + Ed25519)</p></div>
+  </div>
+</section>
+
+<section class="ds-sec" id="matrix" aria-labelledby="h-matrix">
+  <h2 id="h-matrix">Interactive 20-workload benchmark matrix</h2>
+  <div class="bv-pills" role="group" aria-label="Filter workloads by category">
+    <button type="button" class="bv-pill" data-category="all" data-active="1" aria-pressed="true">All categories (20)</button>
+    <button type="button" class="bv-pill" data-category="crypto-tls" data-active="0" aria-pressed="false">Crypto and TLS (4)</button>
+    <button type="button" class="bv-pill" data-category="buildos-zeroc" data-active="0" aria-pressed="false">Zero-C BuildOS (4)</button>
+    <button type="button" class="bv-pill" data-category="ai-surpass" data-active="0" aria-pressed="false">AI and Surpass (6)</button>
+    <button type="button" class="bv-pill" data-category="graphics-graph" data-active="0" aria-pressed="false">Graphics and Graph (6)</button>
+  </div>
+  <div class="bv-controls" role="region" aria-label="Tier and keyword filters">
+    <label class="bv-field" for="bv-tier">Benchmark tier
+      <select id="bv-tier">
+        <option value="all">All tiers (20)</option>
+        <option value="v2_canonical">V2 canonical (8)</option>
+        <option value="v3_frontier">V3 frontier (5)</option>
+        <option value="v4_frontier">V4 frontier (7)</option>
+      </select>
+    </label>
+    <label class="bv-field" for="bv-search">Search workload, idea ID, or parity hash
+      <input id="bv-search" type="search" placeholder="e.g. titan_1m, slice21, cs014" autocomplete="off">
+    </label>
+    <button type="button" id="bv-reset" class="bv-reset">Reset filters</button>
+  </div>
+  <div class="bv-readout" aria-live="polite">
+    <p id="bv-status">Showing 20/20 workloads (57/57 runtime cells) | Parity: 20/20 PASS</p>
+    <p id="bv-digest">Manifest SHA-256: 58562e85ac3eb782692259b... | 20 workloads, 57 runtime cells, receipt #68814</p>
+  </div>
+  <div class="bv-wrap" tabindex="0" role="region" aria-label="Cross-ecosystem benchmark p50 timing table">
+    <table class="bv-table">
+      <colgroup><col style="width:32%"><col style="width:13%"><col style="width:14%"><col style="width:14%"><col style="width:14%"><col style="width:13%"></colgroup>
+      <thead>
+        <tr><th scope="col">Workload</th><th scope="col">Python p50</th><th scope="col">Native p50</th><th scope="col">WASM p50</th><th scope="col">Zero-C PE</th><th scope="col">Parity</th></tr>
+      </thead>
+      <tbody>
+        <tr data-workload="sha256" data-category="crypto-tls" data-tier="v2_canonical">
+          <th scope="row">SHA-256 (FIPS 180-4 3-Vector KAT)<span class="bv-sub">sha256 | Crypto and TLS | V2 canonical</span></th>
+          <td class="mono">0.53 ms</td>
+          <td class="mono">6.58 ms<span class="bv-sub">0.08x</span></td>
+          <td class="mono">0.05 ms<span class="bv-sub">10.98x</span></td>
+          <td class="mono">4.94 ms<span class="bv-sub">4 cells</span></td>
+          <td class="mono" title="890a20a53120ff6ceedfdd520a49dd6b0bfe1251570453ecb0effd275ebe2c39">PASS 890a20a5</td>
+        </tr>
+        <tr data-workload="aead_chacha20_poly1305" data-category="crypto-tls" data-tier="v2_canonical">
+          <th scope="row">ChaCha20-Poly1305 AEAD (RFC 8439)<span class="bv-sub">aead_chacha20_poly1305 | Crypto and TLS | V2 canonical</span></th>
+          <td class="mono">0.19 ms</td>
+          <td class="mono">5.08 ms<span class="bv-sub">0.04x</span></td>
+          <td class="mono">0.10 ms<span class="bv-sub">1.91x</span></td>
+          <td class="mono">3.98 ms<span class="bv-sub">4 cells</span></td>
+          <td class="mono" title="c0e071faeaae4666532ca5a84a382af645807884b7bddae9ffe5396d963cfc81">PASS c0e071fa</td>
+        </tr>
+        <tr data-workload="titan_1m" data-category="ai-surpass" data-tier="v2_canonical">
+          <th scope="row">Titan-1M Cayley Symplectic (1,000,000 steps)<span class="bv-sub">titan_1m | AI and Surpass | V2 canonical</span></th>
+          <td class="mono">650.62 ms</td>
+          <td class="mono">17.24 ms<span class="bv-sub">37.73x</span></td>
+          <td class="mono">22.77 ms<span class="bv-sub">28.58x</span></td>
+          <td class="mono">n/a<span class="bv-sub">3 cells</span></td>
+          <td class="mono" title="407884a0a576fa41c1be904782a9a662b75901256e1ea77a00b019cdc916c4a7">PASS 407884a0</td>
+        </tr>
+        <tr data-workload="indirect_draw_cull" data-category="graphics-graph" data-tier="v2_canonical">
+          <th scope="row">Indirect Draw Cull (100K Frustum + Hi-Z)<span class="bv-sub">indirect_draw_cull | Graphics and Graph | V2 canonical</span></th>
+          <td class="mono">121.78 ms</td>
+          <td class="mono">8.85 ms<span class="bv-sub">13.75x</span></td>
+          <td class="mono">594.94 ms<span class="bv-sub">0.20x</span></td>
+          <td class="mono">n/a<span class="bv-sub">3 cells</span></td>
+          <td class="mono" title="9deebb4fedc0a917b6b11eaa521e462c4434ce3f22ead1ddc1f2da33daced4b7">PASS 9deebb4f</td>
+        </tr>
+        <tr data-workload="ntc610_block_compress" data-category="graphics-graph" data-tier="v2_canonical">
+          <th scope="row">NTC610 Block Compress (16x16x4 Tile)<span class="bv-sub">ntc610_block_compress | Graphics and Graph | V2 canonical</span></th>
+          <td class="mono">1.78 ms</td>
+          <td class="mono">5.37 ms<span class="bv-sub">0.33x</span></td>
+          <td class="mono">5.77 ms<span class="bv-sub">0.31x</span></td>
+          <td class="mono">n/a<span class="bv-sub">3 cells</span></td>
+          <td class="mono" title="a64b94b7e2e5ab28681e6bdf3eb04d8ca2d9a603c964067cb957370596ae4710">PASS a64b94b7</td>
+        </tr>
+        <tr data-workload="pbr_16archetype" data-category="graphics-graph" data-tier="v2_canonical">
+          <th scope="row">PBR 16-Archetype Furnace Conservation<span class="bv-sub">pbr_16archetype | Graphics and Graph | V2 canonical</span></th>
+          <td class="mono">0.08 ms</td>
+          <td class="mono">5.31 ms<span class="bv-sub">0.01x</span></td>
+          <td class="mono">0.10 ms<span class="bv-sub">0.75x</span></td>
+          <td class="mono">n/a<span class="bv-sub">3 cells</span></td>
+          <td class="mono" title="bb93f838e1dad44d7e36555b1a5eba5cf3e6f4d97d9a02fd020913d54b91e1a1">PASS bb93f838</td>
+        </tr>
+        <tr data-workload="jonswap_ocean" data-category="graphics-graph" data-tier="v2_canonical">
+          <th scope="row">JONSWAP 64-Band Ocean + 16x16 Gerstner<span class="bv-sub">jonswap_ocean | Graphics and Graph | V2 canonical</span></th>
+          <td class="mono">1.61 ms</td>
+          <td class="mono">5.60 ms<span class="bv-sub">0.29x</span></td>
+          <td class="mono">95.37 ms<span class="bv-sub">0.02x</span></td>
+          <td class="mono">n/a<span class="bv-sub">3 cells</span></td>
+          <td class="mono" title="8b97bb6f1ac06356dfe21e052bfa3bc5c11669aa2c64043fbc2af83d3a2ef422">PASS 8b97bb6f</td>
+        </tr>
+        <tr data-workload="kcore_color" data-category="graphics-graph" data-tier="v2_canonical">
+          <th scope="row">K-Core Color (100K CIEDE2000 + Oklab)<span class="bv-sub">kcore_color | Graphics and Graph | V2 canonical</span></th>
+          <td class="mono">113.17 ms</td>
+          <td class="mono">18.86 ms<span class="bv-sub">6.00x</span></td>
+          <td class="mono">n/a<span class="bv-sub">n/a</span></td>
+          <td class="mono">n/a<span class="bv-sub">2 cells</span></td>
+          <td class="mono" title="35d65490d22f280dd7b6f241db901fb7dfa7099f8dae030bb48c417b5d789e65">PASS 35d65490</td>
+        </tr>
+        <tr data-workload="x25519_curve25519_zeroc" data-category="crypto-tls" data-tier="v3_frontier">
+          <th scope="row">X25519 Curve25519 ECDH (RFC 7748 10-Limb)<span class="bv-sub">x25519_curve25519_zeroc | Crypto and TLS | V3 frontier</span></th>
+          <td class="mono">3.17 ms</td>
+          <td class="mono">7.55 ms<span class="bv-sub">0.42x</span></td>
+          <td class="mono">4.23 ms<span class="bv-sub">0.75x</span></td>
+          <td class="mono">11.45 ms<span class="bv-sub">4 cells</span></td>
+          <td class="mono" title="56b40e3730a2cd2826bf1bd8b75239c4c36c5e12a6ba5a03e1371a4b8133ff6e">PASS 56b40e37</td>
+        </tr>
+        <tr data-workload="tls_mini_handshake_zeroc" data-category="crypto-tls" data-tier="v3_frontier">
+          <th scope="row">Zero-C TLS 1.3 Mini Handshake (X25519+HKDF+AEAD)<span class="bv-sub">tls_mini_handshake_zeroc | Crypto and TLS | V3 frontier</span></th>
+          <td class="mono">3.26 ms</td>
+          <td class="mono">7.87 ms<span class="bv-sub">0.41x</span></td>
+          <td class="mono">2.76 ms<span class="bv-sub">1.18x</span></td>
+          <td class="mono">10.66 ms<span class="bv-sub">4 cells</span></td>
+          <td class="mono" title="a3a1609c2080e5de85c0fab2bfbb76ee6727b1b04b5cb2a49f000f87ac8f5ccd">PASS a3a1609c</td>
+        </tr>
+        <tr data-workload="titan_moe_block_verified" data-category="ai-surpass" data-tier="v3_frontier">
+          <th scope="row">Titan-MoE Block (RMSNorm+RoPE+Cayley+Top-2 SwiGLU)<span class="bv-sub">titan_moe_block_verified | AI and Surpass | V3 frontier</span></th>
+          <td class="mono">18.67 ms</td>
+          <td class="mono">6.52 ms<span class="bv-sub">2.86x</span></td>
+          <td class="mono">n/a<span class="bv-sub">n/a</span></td>
+          <td class="mono">n/a<span class="bv-sub">2 cells</span></td>
+          <td class="mono" title="be7e7d7a60a1a756007dcbd6865468dd55ed410ab331ca03a45586a40778e19b">PASS be7e7d7a</td>
+        </tr>
+        <tr data-workload="titan_int4_quant_verified" data-category="ai-surpass" data-tier="v3_frontier">
+          <th scope="row">Titan-INT4 Group-Quant MatVec + Cayley (128x64x64)<span class="bv-sub">titan_int4_quant_verified | AI and Surpass | V3 frontier</span></th>
+          <td class="mono">45.29 ms</td>
+          <td class="mono">7.12 ms<span class="bv-sub">6.36x</span></td>
+          <td class="mono">n/a<span class="bv-sub">n/a</span></td>
+          <td class="mono">n/a<span class="bv-sub">2 cells</span></td>
+          <td class="mono" title="001a69bd5c1e89bf277c9e744137bf2b3a44d06054193bdc002bc2dd313de60f">PASS 001a69bd</td>
+        </tr>
+        <tr data-workload="titan_speculative_decode_verified" data-category="ai-surpass" data-tier="v3_frontier">
+          <th scope="row">Titan Lossless Speculative Decode (K=4, 256 tok x2)<span class="bv-sub">titan_speculative_decode_verified | AI and Surpass | V3 frontier</span></th>
+          <td class="mono">5.51 ms</td>
+          <td class="mono">6.05 ms<span class="bv-sub">0.91x</span></td>
+          <td class="mono">n/a<span class="bv-sub">n/a</span></td>
+          <td class="mono">n/a<span class="bv-sub">2 cells</span></td>
+          <td class="mono" title="223f15d9cf8bff6f545cc2b05a157a911be54d098a1a962c8facaa23a8b16717">PASS 223f15d9</td>
+        </tr>
+        <tr data-workload="buildos_slice20_e2e_triad" data-category="buildos-zeroc" data-tier="v4_frontier">
+          <th scope="row">Zero-C BuildOS Slice 20 Unified Triad (Boot+W^X+IPC+VFS)<span class="bv-sub">buildos_slice20_e2e_triad | Zero-C BuildOS | V4 frontier</span></th>
+          <td class="mono">0.01 ms</td>
+          <td class="mono">n/a<span class="bv-sub">n/a</span></td>
+          <td class="mono">0.27 ms<span class="bv-sub">0.05x</span></td>
+          <td class="mono">4.33 ms<span class="bv-sub">3 cells</span></td>
+          <td class="mono" title="64f1fbcdb85af3ac9c11a2df4d331a6e05c3aa3b25661ca97c016f237004ae1a">PASS 64f1fbcd</td>
+        </tr>
+        <tr data-workload="buildos_slice21_net_pkg" data-category="buildos-zeroc" data-tier="v4_frontier">
+          <th scope="row">Zero-C BuildOS Slice 21 Net/Pkg (X25519+AEAD+Ed25519+VFS)<span class="bv-sub">buildos_slice21_net_pkg | Zero-C BuildOS | V4 frontier</span></th>
+          <td class="mono">8.05 ms</td>
+          <td class="mono">n/a<span class="bv-sub">n/a</span></td>
+          <td class="mono">5.05 ms<span class="bv-sub">1.59x</span></td>
+          <td class="mono">15.52 ms<span class="bv-sub">3 cells</span></td>
+          <td class="mono" title="ebe96c0eef13176a7968be5fcd8eef3fe0b7762737e23f99950e262025bf915c">PASS ebe96c0e</td>
+        </tr>
+        <tr data-workload="buildos_slice22_compositor" data-category="buildos-zeroc" data-tier="v4_frontier">
+          <th scope="row">Zero-C BuildOS Slice 22 Capability Display Compositor<span class="bv-sub">buildos_slice22_compositor | Zero-C BuildOS | V4 frontier</span></th>
+          <td class="mono">0.12 ms</td>
+          <td class="mono">n/a<span class="bv-sub">n/a</span></td>
+          <td class="mono">0.14 ms<span class="bv-sub">0.89x</span></td>
+          <td class="mono">6.11 ms<span class="bv-sub">3 cells</span></td>
+          <td class="mono" title="433f9a100bbf48f089661294b170f96df6560dcd282b678303d5768f961369b2">PASS 433f9a10</td>
+        </tr>
+        <tr data-workload="buildos_slice23_input_audio" data-category="buildos-zeroc" data-tier="v4_frontier">
+          <th scope="row">Zero-C BuildOS Slice 23 Anti-Keylogger Input + Q15 Audio DSP<span class="bv-sub">buildos_slice23_input_audio | Zero-C BuildOS | V4 frontier</span></th>
+          <td class="mono">0.02 ms</td>
+          <td class="mono">n/a<span class="bv-sub">n/a</span></td>
+          <td class="mono">0.08 ms<span class="bv-sub">0.23x</span></td>
+          <td class="mono">5.70 ms<span class="bv-sub">3 cells</span></td>
+          <td class="mono" title="aa1140ebb3d82eb7787f83a93d21344a41521484a801a66b889b9612232808e4">PASS aa1140eb</td>
+        </tr>
+        <tr data-workload="cs005_fca_titans_128k" data-category="ai-surpass" data-tier="v4_frontier">
+          <th scope="row">CS-005 FCA-Titans 128k Sparse+Cayley Attention<span class="bv-sub">cs005_fca_titans_128k | AI and Surpass | V4 frontier</span></th>
+          <td class="mono">41.04 ms</td>
+          <td class="mono">20.19 ms<span class="bv-sub">2.03x</span></td>
+          <td class="mono">n/a<span class="bv-sub">n/a</span></td>
+          <td class="mono">n/a<span class="bv-sub">2 cells</span></td>
+          <td class="mono" title="89daf7595c291f585bbc3b730e99a2a89b30c6b698dcd86dca932a613a0f9e0b">PASS 89daf759</td>
+        </tr>
+        <tr data-workload="cs014_fractal_weights" data-category="ai-surpass" data-tier="v4_frontier">
+          <th scope="row">CS-014 Fractal Procedural Weights (16x Budget + Honest Null)<span class="bv-sub">cs014_fractal_weights | AI and Surpass | V4 frontier</span></th>
+          <td class="mono">160.33 ms</td>
+          <td class="mono">71.52 ms<span class="bv-sub">2.24x</span></td>
+          <td class="mono">n/a<span class="bv-sub">n/a</span></td>
+          <td class="mono">n/a<span class="bv-sub">2 cells</span></td>
+          <td class="mono" title="2f0fa4e42d1ffbc8bce90d75462b2829a527f50fd7c9dab56d7f7baa21ca5ee3">PASS 2f0fa4e4</td>
+        </tr>
+        <tr data-workload="cs045_cs046_3d_memory_mocap" data-category="graphics-graph" data-tier="v4_frontier">
+          <th scope="row">CS-045 + CS-046 Persistent 3D Memory &amp; Two-View Skeleton Mocap<span class="bv-sub">cs045_cs046_3d_memory_mocap | Graphics and Graph | V4 frontier</span></th>
+          <td class="mono">44.54 ms</td>
+          <td class="mono">31.16 ms<span class="bv-sub">1.43x</span></td>
+          <td class="mono">n/a<span class="bv-sub">n/a</span></td>
+          <td class="mono">n/a<span class="bv-sub">2 cells</span></td>
+          <td class="mono" title="c76bfbfb6d24329fc2bb5f80e0448d6adea2ffe3f9eaa6e5b40ed0d462b6eb1b">PASS c76bfbfb</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p id="bv-empty" class="bv-empty" hidden>No workloads match the active filter combination.</p>
+</section>
+
+<section class="ds-sec" id="scope" aria-labelledby="h-scope">
+  <h2 id="h-scope">Honest measurement scope</h2>
+  <p>Timings come from a single Windows 11 workstation (Python 3.12.10, Node v25.2.1; 1 warmup + 7 timed runs, reporting p50). Native executables and Zero-C PE binaries incur Windows process-spawn overhead (~4 to 7 ms), which is why short sub-millisecond workloads such as sha256 or buildos_slice20_e2e_triad show speedup in in-process Node V8 WASM (10.98x on sha256, 1.59x on buildos_slice21_net_pkg) while showing below 1.0x in cold-spawned native executables. Long compute workloads (titan_1m 37.73x, indirect_draw_cull 13.75x, kcore_color 6.00x, titan_int4_quant 6.36x, cs014 2.24x, cs005 2.03x) amortize process startup cleanly. Both planted negative controls (corrupted output hash and inverted quantile order) were rejected fail-closed in receipt #68814. This page verifies benchmarks_v4_manifest.json via WebCrypto SHA-256 before enabling filters and does not re-run native binaries in the browser.</p>
+</section>
+
+<footer class="ds-sheet-foot">
+  <p><strong>Sheet</strong> <code>playground/benchmarks-v4/index.html</code></p>
+  <p><strong>Updated</strong> 2026-11-27</p>
+  <p><strong>Ground</strong> Measured Drafting Sheet | Pure OSI MIT | 20 workloads, 57 runtime cells | Receipt #68814</p>
+</footer>
+</article>
+<script type="module" src="./benchmarks_v4_explorer.mjs"></script>
+</main>
+</body>
+</html>

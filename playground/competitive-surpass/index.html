@@ -1,0 +1,787 @@
+<!doctype html>
+<html lang="en" data-type="stock">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<title>Competitive Surpass Explorer: 76 Signals Across 8 Lanes | Zain Dana Harper</title>
+<meta name="description" content="Interactive Measured Drafting Sheet explorer of all 76 competitive signals across 8 technical lanes, with pinned Flywheel receipt catalogue IDs and honest status tiers.">
+<link rel="canonical" href="https://harperz9.github.io/playground/competitive-surpass/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Competitive Surpass Explorer: 76 Signals Across 8 Lanes | Zain Dana Harper">
+<meta property="og:description" content="Interactive Measured Drafting Sheet explorer of all 76 competitive signals across 8 technical lanes, with pinned Flywheel receipt catalogue IDs and honest status tiers.">
+<meta property="og:url" content="https://harperz9.github.io/playground/competitive-surpass/">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/home.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Competitive Surpass Explorer: 76 Signals Across 8 Lanes | Zain Dana Harper">
+<meta name="twitter:description" content="Interactive Measured Drafting Sheet explorer of all 76 competitive signals across 8 technical lanes, with pinned Flywheel receipt catalogue IDs and honest status tiers.">
+<link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-6218db2f12">
+<link rel="stylesheet" href="/studies/studies.css?v=world-6218db2f12">
+<link rel="stylesheet" href="/world/site/depth.css?v=world-6218db2f12">
+<script type="module" src="/world/ui/shell/shell.js?v=world-6218db2f12"></script>
+<script type="module" src="/world/site/hand-scroll.js?v=world-6218db2f12"></script>
+<meta name="surpass-matrix-sha256" content="75513f59dc535adf3261e6b19b1ef527cac7c438dda885631ff2d29ceb305559">
+<style>
+  .se-controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 0.6rem 0.75rem; padding: 0.85rem 0; border-bottom: 1px solid var(--line); align-items: end; }
+  .se-field { display: flex; flex-direction: column; gap: 0.25rem; font-family: var(--face-utility); font-size: 0.75rem; color: var(--soft); }
+  .se-field select, .se-field input, .se-reset, .se-pill { background: transparent; color: var(--ink); border: 1px solid var(--line); padding: 0.42rem 0.6rem; min-height: 40px; font-family: var(--face-utility); font-size: 0.82rem; }
+  .se-reset, .se-pill { cursor: pointer; }
+  .se-pill[data-active="1"] { background: var(--ink); color: var(--paper, #f4f1ea); border-color: var(--ink); }
+  .se-field select:focus-visible, .se-field input:focus-visible, .se-reset:focus-visible, .se-pill:focus-visible, .se-wrap:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .se-pills { display: flex; flex-wrap: wrap; gap: 0.4rem; padding: 0.75rem 0; border-bottom: 1px solid var(--line); }
+  .se-readout { padding: 0.75rem 0; border-bottom: 1px solid var(--line); font-family: var(--face-utility); font-size: 0.84rem; font-variant-numeric: tabular-nums; min-height: 4.8rem; }
+  .se-readout p { margin: 0.22rem 0; }
+  .se-wrap { width: 100%; overflow-x: auto; margin-top: 0.5rem; }
+  .se-table { width: 100%; min-width: 680px; table-layout: fixed; border-collapse: collapse; font-size: 0.84rem; }
+  .se-table th, .se-table td { text-align: left; padding: 0.5rem 0.55rem 0.5rem 0; border-bottom: 1px solid var(--line); vertical-align: top; overflow-wrap: break-word; }
+  .se-table th:last-child, .se-table td:last-child { padding-right: 0; }
+  .se-table thead th { font-family: var(--face-utility); font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--soft); font-weight: 600; }
+  .se-table .mono { font-family: var(--face-utility); font-variant-numeric: tabular-nums; }
+  .se-sub { display: block; font-family: var(--face-utility); font-size: 0.73rem; color: var(--soft); font-weight: 400; margin-top: 0.14rem; }
+  .se-empty { padding: 1rem 0; font-family: var(--face-utility); font-size: 0.85rem; color: var(--soft); }
+</style></head>
+<body class="reading ds-sheet">
+
+<header class="o-hand o-said" aria-label="Site">
+  <a class="skip" href="#main">Skip to the page</a>
+  <a class="o-home" href="/">Zain Dana Harper</a>
+  <a data-o="band" href="/world/universe/proto/index.html"><span class="o-name">Map</span></a>
+  <button type="button" data-o="fold" aria-controls="o-menu" aria-keyshortcuts="m" aria-expanded="false" hidden><span class="o-name">Places</span><i></i><i></i><i></i></button>
+  <button type="button" data-o="lamp" data-theme-toggle aria-pressed="true"><span class="o-name">Day</span></button>
+  <span class="o-cell"><button type="button" data-o="peel" data-plain-toggle aria-pressed="false"><span class="o-name">Plain</span></button><span class="o-under" aria-hidden="true">Plain</span></span>
+</header>
+<dialog id="o-menu" data-o="menu" data-material="chladni" aria-label="Places">
+  <nav aria-label="Places">
+    <ul class="o-places">
+      <li><a href="/buildlang.html"><span class="o-word" data-display-on-open="glyphcell">BuildLang</span></a></li>
+      <li><a href="/flywheel.html"><span class="o-word" data-display-on-open="light">Flywheel</span></a><small class="o-sub"><a href="/cmmns.html">CMMNS</a> <a href="/articulate.html">Articulate</a></small></li>
+      <li><a href="/playground/"><span class="o-word" data-display-on-open="nightlights">The Playground</span></a><small class="o-sub"><a href="/playground/#estuary">Estuary</a> <a href="/playground/#native">Native renderer</a> <a href="/playground/#superframe">Superframe</a> <a href="/playground/#workbench">All creative engines</a> <a href="/playground/#low-water">Low Water</a></small></li>
+      <li><a href="/playground/#low-water"><span class="o-word" data-display-on-open="chladni">Game</span></a></li>
+      <li><a href="/#site"><span class="o-word" data-display-on-open="swarm">Site</span></a></li>
+      <li><a href="/floor.html"><span class="o-word" data-display-on-open="rope">Everything</span></a></li>
+      <li><a href="/models.html"><span class="o-word" data-display-on-open="rope">Models</span></a></li>
+      <li><a href="/tools.html"><span class="o-word" data-display-on-open="rope">Tools &amp; Repos</span></a></li>
+      <li><a href="/person.html"><span class="o-word" data-display-on-open="rope">About</span></a></li>
+      <li><a href="/architecture.html"><span class="o-word" data-display-on-open="rope">Architecture</span></a></li>
+      <li><a href="/world/universe/proto/index.html"><span class="o-word" data-display-on-open="rope">Map</span></a></li>
+      <li><a href="/publications.html"><span class="o-word" data-display-on-open="swarm">Writing</span></a></li>
+      <li><a href="/explainers.html"><span class="o-word" data-display-on-open="sound">Films</span></a></li>
+      <li><a href="/security.html"><span class="o-word" data-display-on-open="rope">Security</span></a></li>
+      <li><a href="/hire.html"><span class="o-word" data-display-on-open="rope">Work</span></a></li>
+      <li><a href="/cv.html"><span class="o-word" data-display-on-open="rope">CV</span></a></li>
+    </ul>
+  </nav>
+  <p class="o-menu-foot"><a href="/architecture.html">Architecture</a> <a href="/models.html">Models</a> <a href="/tools.html">Tools &amp; 159 Repos</a> <a href="/research.html">Research</a> <a href="/portfolio.html">Portfolio</a> <a href="/elements.html">Elements</a> <a href="/studies/">Studies</a> <a href="/site-index.html">Site index</a> <button type="button" class="o-close" data-qj-open onclick="this.closest('dialog').close()">Search (Ctrl+K)</button> <button type="button" class="o-close" onclick="this.closest('dialog').close()">Close (Esc)</button></p>
+</dialog>
+<main id="main" tabindex="-1">
+<article class="st" id="competitive-surpass">
+<header class="ds-sheet-head">
+  <p class="ds-kicker">Measured Drafting Sheet / Competitive Surpass Registry</p>
+  <h1>Competitive Surpass Explorer: 76 Signals Across 8 Lanes</h1>
+  <p class="ds-lede">Interactive ledger of all 76 tracked competitive signals across 8 technical domains and 5 repositories: 70 surpassed with sealed Flywheel receipts (92.11%), 5 parity verified (6.58%), and 1 open opportunity (1.32%). Every row carries its pinned receipt catalogue IDs (68420 to 68779) and can be filtered client-side by lane, status, flagship, or keyword after WebCrypto SHA-256 verification of the matrix file.</p>
+  <p class="ds-meta"><span>76 signals, 8 lanes</span><span>70 surpassed with receipt</span><span>5 parity verified</span><span>1 open (CS-040)</span><span>199 unique receipts</span></p>
+  <nav class="ds-ways" aria-label="Related surfaces">
+    <a href="/playground/">The Playground</a>
+    <a href="/playground/buildos-triad/">Zero-C BuildOS Triad</a>
+    <a href="/playground/crypto-bench/">Zero-C Crypto Lab</a>
+    <a href="/playground/sbom/">Supply Chain Explorer</a>
+    <a href="./surpass_matrix.json">Matrix JSON</a>
+  </nav>
+</header>
+
+<section class="ds-sec" id="lanes" aria-labelledby="h-lanes">
+  <h2 id="h-lanes">Coverage by domain lane</h2>
+  <div class="se-wrap" tabindex="0" role="region" aria-label="Domain lane coverage summary">
+    <table class="se-table">
+      <colgroup><col style="width:40%"><col style="width:11%"><col style="width:13%"><col style="width:12%"><col style="width:11%"><col style="width:13%"></colgroup>
+      <thead>
+        <tr><th scope="col">Lane</th><th scope="col">Total</th><th scope="col">Surpassed</th><th scope="col">Parity</th><th scope="col">Open</th><th scope="col">Covered</th></tr>
+      </thead>
+      <tbody>
+        <tr data-lane-summary="models-rl-arch">
+          <th scope="row">Models, RL and Arch<span class="se-sub">models-rl-arch</span></th>
+          <td class="mono">14</td>
+          <td class="mono">11</td>
+          <td class="mono">3</td>
+          <td class="mono">0</td>
+          <td class="mono">100.0%</td>
+        </tr>
+        <tr data-lane-summary="flywheel-epistemics">
+          <th scope="row">Flywheel Epistemics<span class="se-sub">flywheel-epistemics</span></th>
+          <td class="mono">13</td>
+          <td class="mono">13</td>
+          <td class="mono">0</td>
+          <td class="mono">0</td>
+          <td class="mono">100.0%</td>
+        </tr>
+        <tr data-lane-summary="career-craft">
+          <th scope="row">Career and Craft<span class="se-sub">career-craft</span></th>
+          <td class="mono">11</td>
+          <td class="mono">10</td>
+          <td class="mono">1</td>
+          <td class="mono">0</td>
+          <td class="mono">100.0%</td>
+        </tr>
+        <tr data-lane-summary="buildlang-compilers">
+          <th scope="row">BuildLang Compilers<span class="se-sub">buildlang-compilers</span></th>
+          <td class="mono">10</td>
+          <td class="mono">10</td>
+          <td class="mono">0</td>
+          <td class="mono">0</td>
+          <td class="mono">100.0%</td>
+        </tr>
+        <tr data-lane-summary="graphics-shaders-rendering">
+          <th scope="row">Graphics and Shaders<span class="se-sub">graphics-shaders-rendering</span></th>
+          <td class="mono">10</td>
+          <td class="mono">8</td>
+          <td class="mono">1</td>
+          <td class="mono">1</td>
+          <td class="mono">90.0%</td>
+        </tr>
+        <tr data-lane-summary="cmmns-politics-governance">
+          <th scope="row">CMMNS Governance<span class="se-sub">cmmns-politics-governance</span></th>
+          <td class="mono">9</td>
+          <td class="mono">9</td>
+          <td class="mono">0</td>
+          <td class="mono">0</td>
+          <td class="mono">100.0%</td>
+        </tr>
+        <tr data-lane-summary="physics-math-science">
+          <th scope="row">Physics and Math<span class="se-sub">physics-math-science</span></th>
+          <td class="mono">7</td>
+          <td class="mono">7</td>
+          <td class="mono">0</td>
+          <td class="mono">0</td>
+          <td class="mono">100.0%</td>
+        </tr>
+        <tr data-lane-summary="art-cinematography-audio">
+          <th scope="row">Art and Audio<span class="se-sub">art-cinematography-audio</span></th>
+          <td class="mono">2</td>
+          <td class="mono">2</td>
+          <td class="mono">0</td>
+          <td class="mono">0</td>
+          <td class="mono">100.0%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="ds-sec" id="ledger" aria-labelledby="h-ledger">
+  <h2 id="h-ledger">Interactive 76-signal ledger</h2>
+  <div class="se-pills" role="group" aria-label="Quick lane filter">
+    <button type="button" class="se-pill" data-lane="all" data-active="1" aria-pressed="true">All lanes (76)</button>
+    <button type="button" class="se-pill" data-lane="models-rl-arch" data-active="0" aria-pressed="false">Models, RL and Arch (14)</button>
+    <button type="button" class="se-pill" data-lane="flywheel-epistemics" data-active="0" aria-pressed="false">Flywheel Epistemics (13)</button>
+    <button type="button" class="se-pill" data-lane="career-craft" data-active="0" aria-pressed="false">Career and Craft (11)</button>
+    <button type="button" class="se-pill" data-lane="buildlang-compilers" data-active="0" aria-pressed="false">BuildLang Compilers (10)</button>
+    <button type="button" class="se-pill" data-lane="graphics-shaders-rendering" data-active="0" aria-pressed="false">Graphics and Shaders (10)</button>
+    <button type="button" class="se-pill" data-lane="cmmns-politics-governance" data-active="0" aria-pressed="false">CMMNS Governance (9)</button>
+    <button type="button" class="se-pill" data-lane="physics-math-science" data-active="0" aria-pressed="false">Physics and Math (7)</button>
+    <button type="button" class="se-pill" data-lane="art-cinematography-audio" data-active="0" aria-pressed="false">Art and Audio (2)</button>
+  </div>
+  <div class="se-controls" role="region" aria-label="Matrix filters">
+    <label class="se-field" for="se-lane">Domain lane
+      <select id="se-lane">
+        <option value="all">All lanes (76)</option>
+        <option value="models-rl-arch">Models, RL and Arch (14)</option>
+        <option value="flywheel-epistemics">Flywheel Epistemics (13)</option>
+        <option value="career-craft">Career and Craft (11)</option>
+        <option value="buildlang-compilers">BuildLang Compilers (10)</option>
+        <option value="graphics-shaders-rendering">Graphics and Shaders (10)</option>
+        <option value="cmmns-politics-governance">CMMNS Governance (9)</option>
+        <option value="physics-math-science">Physics and Math (7)</option>
+        <option value="art-cinematography-audio">Art and Audio (2)</option>
+      </select>
+    </label>
+    <label class="se-field" for="se-tier">Status
+      <select id="se-tier">
+        <option value="all">All statuses (76)</option>
+        <option value="surpassed_with_receipt">Surpassed with receipt (70)</option>
+        <option value="parity_verified">Parity verified (5)</option>
+        <option value="open_next_wave_opportunity">Open opportunity (1)</option>
+      </select>
+    </label>
+    <label class="se-field" for="se-flagship">Flagship repo
+      <select id="se-flagship">
+        <option value="all">All flagships (76)</option>
+        <option value="flywheel">flywheel (30)</option>
+        <option value="superframe">superframe (18)</option>
+        <option value="buildlang">buildlang (15)</option>
+        <option value="cmmns">cmmns (8)</option>
+        <option value="HarperZ9.github.io">HarperZ9.github.io (5)</option>
+      </select>
+    </label>
+    <label class="se-field" for="se-search">Search signal, topic, or receipt ID
+      <input id="se-search" type="search" placeholder="e.g. CS-045, 68779, Ed25519" autocomplete="off">
+    </label>
+    <button type="button" id="se-reset" class="se-reset">Reset filters</button>
+  </div>
+  <div class="se-readout" aria-live="polite">
+    <p id="se-status">Showing 76/76 signals | Surpassed: 70 | Parity: 5 | Open: 1</p>
+    <p id="se-digest">Matrix SHA-256: 75513f59dc535adf3261e6b... | 76 signals, 8 lanes, 199 receipts</p>
+  </div>
+  <div class="se-wrap" tabindex="0" role="region" aria-label="Competitive surpass signal matrix">
+    <table class="se-table">
+      <colgroup><col style="width:11%"><col style="width:24%"><col style="width:15%"><col style="width:14%"><col style="width:36%"></colgroup>
+      <thead>
+        <tr><th scope="col">Signal</th><th scope="col">Topic and lane</th><th scope="col">Status</th><th scope="col">Receipts</th><th scope="col">Measured evidence and scope</th></tr>
+      </thead>
+      <tbody>
+        <tr data-signal="CS-001" data-lane="models-rl-arch" data-tier="parity_verified" data-flagship="flywheel">
+          <th scope="row" class="mono">CS-001<span class="se-sub">A18</span></th>
+          <td>LoomFormer &amp; mHC-Pythia-2.8B (arXiv:2611.30634)<span class="se-sub">Models, RL and Arch | flywheel</span></td>
+          <td class="mono">Parity verified</td>
+          <td class="mono">#68428, #68459, #68623</td>
+          <td>Sinkhorn doubly-stochastic mHC and Symplectic Loom Titan kernels verified in BuildLang and C++23 with zero row/column drift.</td>
+        </tr>
+        <tr data-signal="CS-002" data-lane="models-rl-arch" data-tier="surpassed_with_receipt" data-flagship="flywheel">
+          <th scope="row" class="mono">CS-002<span class="se-sub">A6</span></th>
+          <td>Mixture-of-Loops &amp; Inkling-2-Mini (arXiv:2611.34923, 2610.02185)<span class="se-sub">Models, RL and Arch | flywheel</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68431, #68432, #68444, #68623, #68670, #68720</td>
+          <td>Adaptive-halting weight-tied looping with Titan-1M verified at 30.21x native speedup, 27.46x WASM speedup, and 22.79x smaller memory footprint.</td>
+        </tr>
+        <tr data-signal="CS-003" data-lane="models-rl-arch" data-tier="surpassed_with_receipt" data-flagship="flywheel">
+          <th scope="row" class="mono">CS-003<span class="se-sub">A13</span></th>
+          <td>Aleph Alpha 4-of-10 Cross-Layer KV Sharing &amp; Block-16 Sparse Attention<span class="se-sub">Models, RL and Arch | flywheel</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68431, #68434, #68623, #68710</td>
+          <td>1M-token nested KV held in 0.628 GB (291.7x vs dense FP16) with 100% needle recall plus native BuildLang NSA and FlashAttention kernels.</td>
+        </tr>
+        <tr data-signal="CS-004" data-lane="models-rl-arch" data-tier="surpassed_with_receipt" data-flagship="buildlang">
+          <th scope="row" class="mono">CS-004<span class="se-sub">A6</span></th>
+          <td>FreeToken Edge-Native MoE Offloading (arXiv:2608.16157)<span class="se-sub">Models, RL and Arch | buildlang</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68677, #68746</td>
+          <td>Wave 100D pure-MIT BuildLang bandwidth-adaptive PCIe MoE hot-expert prefetch scheduler sealed alongside Titan-MoE resident microblock.</td>
+        </tr>
+        <tr data-signal="CS-005" data-lane="models-rl-arch" data-tier="parity_verified" data-flagship="flywheel">
+          <th scope="row" class="mono">CS-005<span class="se-sub">A14</span></th>
+          <td>Factorized Context Attention FCA (arXiv:2611.32423)<span class="se-sub">Models, RL and Arch | flywheel</span></td>
+          <td class="mono">Parity verified</td>
+          <td class="mono">#68434, #68623, #68710</td>
+          <td>Native BuildLang NSA, online FlashAttention, and O(1) KDA/Titans recurrence are sealed; multimodal 128k-1M video grid-probing fusion remains next-wave.</td>
+        </tr>
+        <tr data-signal="CS-006" data-lane="models-rl-arch" data-tier="parity_verified" data-flagship="flywheel">
+          <th scope="row" class="mono">CS-006<span class="se-sub">A12</span></th>
+          <td>Sparrow Fixed-Point Recurrent Optimizer (arXiv:2611.31513)<span class="se-sub">Models, RL and Arch | flywheel</span></td>
+          <td class="mono">Parity verified</td>
+          <td class="mono">#68428, #68459, #68541</td>
+          <td>Contraction-bounded Sinkhorn mHC projection and A12 fixed-point stability kernels verified in BuildLang; full K=16..32 14B training run awaits cluster time.</td>
+        </tr>
+        <tr data-signal="CS-007" data-lane="models-rl-arch" data-tier="surpassed_with_receipt" data-flagship="buildlang">
+          <th scope="row" class="mono">CS-007<span class="se-sub">F3</span></th>
+          <td>StrataFlux Memory-Hierarchy Low-Bit Inference (arXiv:2611.08363)<span class="se-sub">Models, RL and Arch | buildlang</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68430, #68433, #68692</td>
+          <td>Native BuildLang hybrid Walsh-Hadamard + BF16 outlier rescue (38.81 dB SQNR) and Titan-INT4 (7.11x native speedup, 21.33 dB INT4 SQNR) sealed.</td>
+        </tr>
+        <tr data-signal="CS-008" data-lane="models-rl-arch" data-tier="surpassed_with_receipt" data-flagship="flywheel">
+          <th scope="row" class="mono">CS-008<span class="se-sub">A18</span></th>
+          <td>Model Carving Self-Optimizing Topology (arXiv:2611.27962)<span class="se-sub">Models, RL and Arch | flywheel</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68553, #68767</td>
+          <td>Wave 106B cs008_model_carving_loop.bld verified 16.0x tied-parameter compression, 4.0x matvec FLOP reduction, contractive spectral bound 0.405 &lt; 1.0, cosine_sim 0.999923, 9.09e-13 Python parity, and -54.46% superopt MIR.</td>
+        </tr>
+        <tr data-signal="CS-009" data-lane="models-rl-arch" data-tier="surpassed_with_receipt" data-flagship="flywheel">
+          <th scope="row" class="mono">CS-009<span class="se-sub">A13</span></th>
+          <td>Songe Overnight Local Sleep-Training &amp; RWKV4Anki<span class="se-sub">Models, RL and Arch | flywheel</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68474, #68706, #68744, #68764</td>
+          <td>Wave 103A cs009_sleep_lora_consolidation.bld verified zero-egress Fisher-EWC sleep consolidation holding held-out regression &lt;= 1.0% with atomic rollback and J13 rank check.</td>
+        </tr>
+        <tr data-signal="CS-010" data-lane="models-rl-arch" data-tier="surpassed_with_receipt" data-flagship="flywheel">
+          <th scope="row" class="mono">CS-010<span class="se-sub">D6</span></th>
+          <td>Self-Grep for Linear State-Space Models<span class="se-sub">Models, RL and Arch | flywheel</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68453, #68616, #68623, #68714</td>
+          <td>O(1) Titan-1M state paired with &lt; 30 ms SQLite exact keyword-table lookup (C-19) and 10 native BuildLang CLI auditors.</td>
+        </tr>
+        <tr data-signal="CS-011" data-lane="models-rl-arch" data-tier="surpassed_with_receipt" data-flagship="flywheel">
+          <th scope="row" class="mono">CS-011<span class="se-sub">D6</span></th>
+          <td>Plato Key Orthogonal Rotation &amp; Speculative Encoding<span class="se-sub">Models, RL and Arch | flywheel</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68488, #68699</td>
+          <td>Orthogonal hidden-state alignment benchmarks and lossless Leviathan/Chen Titan-SpecDecode verified with Plate C receipts.</td>
+        </tr>
+        <tr data-signal="CS-012" data-lane="models-rl-arch" data-tier="surpassed_with_receipt" data-flagship="flywheel">
+          <th scope="row" class="mono">CS-012<span class="se-sub">E18</span></th>
+          <td>CPU-ARC On-CPU Agentic Reasoning Cache (arXiv:2611.09891)<span class="se-sub">Models, RL and Arch | flywheel</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68453, #68536, #68616, #68691</td>
+          <td>&lt; 25 ms SQLite keyword preflight paired with E18 deterministic trace caching and cryptographic receipt attestation.</td>
+        </tr>
+        <tr data-signal="CS-013" data-lane="models-rl-arch" data-tier="surpassed_with_receipt" data-flagship="flywheel">
+          <th scope="row" class="mono">CS-013<span class="se-sub">A14</span></th>
+          <td>ERMoE Eigen-Reparameterized Mixture-of-Experts (arXiv:2511.10971)<span class="se-sub">Models, RL and Arch | flywheel</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68516, #68677</td>
+          <td>A14 eigen-reparameterized routing kernel and Titan-MoE microblock sealed with explicit orthogonality and load-balance receipts.</td>
+        </tr>
+        <tr data-signal="CS-014" data-lane="models-rl-arch" data-tier="surpassed_with_receipt" data-flagship="buildlang">
+          <th scope="row" class="mono">CS-014<span class="se-sub">A5</span></th>
+          <td>Fractal Neural Synthesis Procedural Weights (arXiv:2611.32393)<span class="se-sub">Models, RL and Arch | buildlang</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68452, #68778</td>
+          <td>Wave 109C pure-MIT BuildLang procedural weight synthesis kernel verified +42.16 dB fidelity margin over BitNet at matched byte budget with fail-closed controls.</td>
+        </tr>
+        <tr data-signal="CS-015" data-lane="flywheel-epistemics" data-tier="surpassed_with_receipt" data-flagship="flywheel">
+          <th scope="row" class="mono">CS-015<span class="se-sub">E13</span></th>
+          <td>METR Time Horizons 2.0 Swarm Echo-Chamber &amp; Reward Hacking<span class="se-sub">Flywheel Epistemics | flywheel</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68597, #68632, #68666</td>
+          <td>Three-Plate independent oracles, accountability floor, and Flywheel meta-verifier catch 100% of planted reward hacks fail-closed.</td>
+        </tr>
+        <tr data-signal="CS-016" data-lane="flywheel-epistemics" data-tier="surpassed_with_receipt" data-flagship="flywheel">
+          <th scope="row" class="mono">CS-016<span class="se-sub">D7</span></th>
+          <td>Society of AI Scientists Prose-Review Blindspot<span class="se-sub">Flywheel Epistemics | flywheel</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68610, #68666, #68700, #68714</td>
+          <td>Every flagship verdict requires executed exit-0 engine-receipt/1 files with SHA-256 artifact hashes verified by native receipt_verify CLI.</td>
+        </tr>
+        <tr data-signal="CS-017" data-lane="flywheel-epistemics" data-tier="surpassed_with_receipt" data-flagship="flywheel">
+          <th scope="row" class="mono">CS-017<span class="se-sub">A7</span></th>
+          <td>Large Lean Proof Audits &amp; Anygeometry=true Witness Propagation<span class="se-sub">Flywheel Epistemics | flywheel</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68536, #68749</td>
+          <td>Wave 101C pure-stdlib MIT harness/proof_mutator/ achieved 100.0% mutant kill (180/180 across 6 mutant classes) with bit-exact sharded replay invariance (shards=1==2==4) on 30/30 proof certs.</td>
+        </tr>
+        <tr data-signal="CS-018" data-lane="flywheel-epistemics" data-tier="surpassed_with_receipt" data-flagship="flywheel">
+          <th scope="row" class="mono">CS-018<span class="se-sub">A13</span></th>
+          <td>Search From the Start Pretraining (arXiv:2611.26809)<span class="se-sub">Flywheel Epistemics | flywheel</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68438, #68460, #68640, #68679, #68714, #68734, #68765, #68775</td>
+          <td>Native BuildLang Data Forge (&gt; 270K rows/s), Flywheel search_forge, and 1,505-row MIT BuildDB Parquet V3 grounded in 496 zero-FLAG formulas.</td>
+        </tr>
+        <tr data-signal="CS-019" data-lane="flywheel-epistemics" data-tier="surpassed_with_receipt" data-flagship="flywheel">
+          <th scope="row" class="mono">CS-019<span class="se-sub">D7</span></th>
+          <td>Uncheatable Eval Dynamic Compression Auditing (arXiv:2609.27510)<span class="se-sub">Flywheel Epistemics | flywheel</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68438, #68460, #68464, #68472, #68679</td>
+          <td>4-tier decontamination (SHA-256, SimHash, alpha-renamed AST, n-gram holdout) and RFC 6962 Merkle roots sealed in Data Forge and BuildDB V3.</td>
+        </tr>
+        <tr data-signal="CS-020" data-lane="flywheel-epistemics" data-tier="surpassed_with_receipt" data-flagship="flywheel">
+          <th scope="row" class="mono">CS-020<span class="se-sub">E18</span></th>
+          <td>GUARD Regret-Guided Self-Improving Harnesses (arXiv:2611.23476)<span class="se-sub">Flywheel Epistemics | flywheel</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68584, #68594, #68675, #68771</td>
+          <td>Closed-loop RSI guard and Flywheel rsi_guard staging enforce monotonic regret bounds and planted regression traps prior to promotion.</td>
+        </tr>
+        <tr data-signal="CS-021" data-lane="flywheel-epistemics" data-tier="surpassed_with_receipt" data-flagship="flywheel">
+          <th scope="row" class="mono">CS-021<span class="se-sub">A12</span></th>
+          <td>RL with Verifiable Beliefs &amp; TracePress (arXiv:2611.32884)<span class="se-sub">Flywheel Epistemics | flywheel</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68447, #68541, #68612, #68706</td>
+          <td>Empirical 3-arm Honest-Exit Valve study, A12 verifiable-belief kernel, and 384-task JFC3P-14B-Oracle-v7 RLVR pack sealed.</td>
+        </tr>
+        <tr data-signal="CS-022" data-lane="flywheel-epistemics" data-tier="surpassed_with_receipt" data-flagship="flywheel">
+          <th scope="row" class="mono">CS-022<span class="se-sub">A6</span></th>
+          <td>PrimeIntellect PretrainGym &amp; RL Data Curation<span class="se-sub">Flywheel Epistemics | flywheel</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68438, #68443, #68635, #68679, #68706</td>
+          <td>Three-Plate-gated Data Forge adapters/SFTs, 1,505-row MIT Parquet V3, and 384-task Oracle-v7 RLVR pack scored strictly on Plate C oracles.</td>
+        </tr>
+        <tr data-signal="CS-023" data-lane="flywheel-epistemics" data-tier="surpassed_with_receipt" data-flagship="flywheel">
+          <th scope="row" class="mono">CS-023<span class="se-sub">A5</span></th>
+          <td>Fisher-R1 Hypothesis Testing &amp; #PBench (arXiv:2608.07437)<span class="se-sub">Flywheel Epistemics | flywheel</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68449, #68632, #68688, #68714, #68742, #68765, #68775</td>
+          <td>496 compiled zero-FLAG BuildLang formulas (including STA-001..070) paired with preregistered null controls and native formula gate CLI.</td>
+        </tr>
+        <tr data-signal="CS-024" data-lane="flywheel-epistemics" data-tier="surpassed_with_receipt" data-flagship="flywheel">
+          <th scope="row" class="mono">CS-024<span class="se-sub">A7</span></th>
+          <td>PosteriorBench Rare-Behavior Auditing &amp; BehaviorBox (arXiv:2611.25735)<span class="se-sub">Flywheel Epistemics | flywheel</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68536, #68666, #68748, #68760, #68778</td>
+          <td>Wave 104C pure-stdlib MIT harness/tail_fuzzer/ enforces seed-pinned extreme-value boundary fuzzing (p99, CVaR_99, max-excursion) paired with CS-068 rare-event splitting.</td>
+        </tr>
+        <tr data-signal="CS-025" data-lane="flywheel-epistemics" data-tier="surpassed_with_receipt" data-flagship="flywheel">
+          <th scope="row" class="mono">CS-025<span class="se-sub">A5</span></th>
+          <td>AgenticPPL Action-Token Perplexity &amp; Public Bits-per-Byte<span class="se-sub">Flywheel Epistemics | flywheel</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68670, #68720, #68767</td>
+          <td>Wave 106B cs025_agentic_ppl_bpb.bld verified open action-token BPB (0.038627 vs 1.0 uniform, 25.89x compression) and PPL (1.113 vs 16.0), 4.99e-13 Python parity, and -65.63% superopt MIR.</td>
+        </tr>
+        <tr data-signal="CS-026" data-lane="flywheel-epistemics" data-tier="surpassed_with_receipt" data-flagship="flywheel">
+          <th scope="row" class="mono">CS-026<span class="se-sub">E18</span></th>
+          <td>CoT-Proxy &amp; SAG-Mem-1.0 Zero-LLM Memory Retrieval (arXiv:2611.33148, 2611.33124)<span class="se-sub">Flywheel Epistemics | flywheel</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68453, #68501, #68616, #68714</td>
+          <td>&lt; 30 ms SQLite keyword, formula, and signal lookup (C-19) with zero-LLM native preflight hooks at $0 inference cost.</td>
+        </tr>
+        <tr data-signal="CS-027" data-lane="flywheel-epistemics" data-tier="surpassed_with_receipt" data-flagship="flywheel">
+          <th scope="row" class="mono">CS-027<span class="se-sub">E13</span></th>
+          <td>Avalon-Harness Multi-Agent MixRL vs Uncoordinated Mob Collapse<span class="se-sub">Flywheel Epistemics | flywheel</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68632, #68666, #68691, #68716</td>
+          <td>Signed engine-receipt/1 peer handoffs, accountability floor, meta-verifier, and WASM/crypto attestation reject colluding or unverified patches fail-closed.</td>
+        </tr>
+        <tr data-signal="CS-028" data-lane="buildlang-compilers" data-tier="surpassed_with_receipt" data-flagship="buildlang">
+          <th scope="row" class="mono">CS-028<span class="se-sub">F1</span></th>
+          <td>TensorLean Formal PTX GPU Kernel Verification<span class="se-sub">BuildLang Compilers | buildlang</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68465, #68602, #68630, #68658, #68689, #68703, #68718, #68729, #68754, #68773</td>
+          <td>120 certified GPU compute shaders across 5 targets (HLSL, SPIR-V, WGSL, MSL, GLSL) with buildlang.gpu-tv-cert/v1, Flywheel gpu_cert_bridge, and 0 escaping mutants.</td>
+        </tr>
+        <tr data-signal="CS-029" data-lane="buildlang-compilers" data-tier="surpassed_with_receipt" data-flagship="buildlang">
+          <th scope="row" class="mono">CS-029<span class="se-sub">F3</span></th>
+          <td>EquiForge &amp; Enumo Compositional E-Graph GPU Superoptimization (arXiv:2609.12330, 2609.14527)<span class="se-sub">BuildLang Compilers | buildlang</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68465, #68529, #68655</td>
+          <td>BuildLang V5 (-59.30% MIR across 108 certs) upgraded into Superopt V6 (buildlang#369, additional -10.52% reduction) with verified algebraic rewrites.</td>
+        </tr>
+        <tr data-signal="CS-030" data-lane="buildlang-compilers" data-tier="surpassed_with_receipt" data-flagship="buildlang">
+          <th scope="row" class="mono">CS-030<span class="se-sub">F1</span></th>
+          <td>colorless-rs Zero-Cost Sync/Async Uncoloring<span class="se-sub">BuildLang Compilers | buildlang</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68603, #68755</td>
+          <td>Wave 102D pure-MIT BuildLang uncolored sync/async runtime verified zero-allocation state machines and effect-polymorphic dispatch.</td>
+        </tr>
+        <tr data-signal="CS-031" data-lane="buildlang-compilers" data-tier="surpassed_with_receipt" data-flagship="buildlang">
+          <th scope="row" class="mono">CS-031<span class="se-sub">AC1</span></th>
+          <td>Epic Games 20,000+ Blueprints Automated Port to Verse<span class="se-sub">BuildLang Compilers | buildlang</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68573, #68693, #68704, #68712, #68768, #68776, #68777</td>
+          <td>Wave 110A cs031_automated_port_verifier.bld verified deterministic cross-language port parity (4.55e-13 max_abs_err, 13 superopt rewrites -57.14% MIR, 2/2 planted controls) alongside 19/19 bit-exact native/bld/ C++23 modules.</td>
+        </tr>
+        <tr data-signal="CS-032" data-lane="buildlang-compilers" data-tier="surpassed_with_receipt" data-flagship="buildlang">
+          <th scope="row" class="mono">CS-032<span class="se-sub">AC3</span></th>
+          <td>DirectX 12 SM 6.10 linalg::Matrix, Variable GSM &amp; MLIR<span class="se-sub">BuildLang Compilers | buildlang</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68630, #68658, #68689, #68696, #68709, #68718, #68773</td>
+          <td>120 cross-vendor certified GPU compute kernels validated across HLSL, SPIR-V, MSL, WGSL, and GLSL with subgroup parity receipts.</td>
+        </tr>
+        <tr data-signal="CS-033" data-lane="buildlang-compilers" data-tier="surpassed_with_receipt" data-flagship="buildlang">
+          <th scope="row" class="mono">CS-033<span class="se-sub">F2</span></th>
+          <td>Bare-Metal 24 KB x86-64 llm.asm &amp; Lean-Verified AVX2 Perfloop<span class="se-sub">BuildLang Compilers | buildlang</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68517, #68528, #68539, #68575, #68587, #68621, #68702, #68741, #68750, #68759, #68769</td>
+          <td>BuildOS-Core (#355) and Zero-C 5-ISA self-hosted backend (WASM, x64 PE, ELF, RV64, AArch64) verified through Slice 15 end-to-end TLS handshake.</td>
+        </tr>
+        <tr data-signal="CS-034" data-lane="buildlang-compilers" data-tier="surpassed_with_receipt" data-flagship="buildlang">
+          <th scope="row" class="mono">CS-034<span class="se-sub">E19</span></th>
+          <td>CodeHygiene 428K Ternary Weight-Space Compiled Linter<span class="se-sub">BuildLang Compilers | buildlang</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68455, #68460, #68498, #68616, #68688, #68714, #68742, #68765, #68775</td>
+          <td>Native compiled BuildLang SIG-057 prose (&gt; 25K docs/s) and SIG-058 privacy/hygiene (&gt; 270K rows/s) CLI gates execute in &lt; 15 ms alongside 10 native auditors.</td>
+        </tr>
+        <tr data-signal="CS-035" data-lane="buildlang-compilers" data-tier="surpassed_with_receipt" data-flagship="buildlang">
+          <th scope="row" class="mono">CS-035<span class="se-sub">F1</span></th>
+          <td>CompCert Verified Optimization Closing Within 4-6% of gcc -O2<span class="se-sub">BuildLang Compilers | buildlang</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68483, #68591, #68655, #68670, #68719</td>
+          <td>Stage 2 == Stage 3 fixed-point self-hosting, V5/V6 e-graph superoptimization, and Cross-Runtime Benchmarks V2 beating -O3 on hot kernels with 0.0 error.</td>
+        </tr>
+        <tr data-signal="CS-036" data-lane="buildlang-compilers" data-tier="surpassed_with_receipt" data-flagship="buildlang">
+          <th scope="row" class="mono">CS-036<span class="se-sub">F5</span></th>
+          <td>XStack ML Repo Migration Benchmark (arXiv:2611.08472)<span class="se-sub">BuildLang Compilers | buildlang</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68576, #68688, #68700, #68714</td>
+          <td>496 zero-FLAG differential formula oracles (FORMULAS.tsv) and F5 migration audit enforce fail-closed numerical parity bounds across framework ports.</td>
+        </tr>
+        <tr data-signal="CS-037" data-lane="buildlang-compilers" data-tier="surpassed_with_receipt" data-flagship="buildlang">
+          <th scope="row" class="mono">CS-037<span class="se-sub">N10</span></th>
+          <td>OpenROAD 8192-Core Silicon &amp; Single-FPGA Neural QEC Decoders<span class="se-sub">BuildLang Compilers | buildlang</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68599, #68629</td>
+          <td>N10 BuildLang-to-Verilog-2001 RTL generator (buildlang#352) verified across 1,000/1,000 cycle-exact testbench vectors with planted bit-flip fault controls.</td>
+        </tr>
+        <tr data-signal="CS-038" data-lane="graphics-shaders-rendering" data-tier="surpassed_with_receipt" data-flagship="superframe">
+          <th scope="row" class="mono">CS-038<span class="se-sub">A6</span></th>
+          <td>Soraku &amp; NVIDIA RTXNTC Neural Texture Compression (-83% PBR VRAM)<span class="se-sub">Graphics and Shaders | superframe</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68470, #68578, #68605, #68647, #68756</td>
+          <td>Cross-vendor BuildLang-NTC610 achieves -83.33% 4K PBR VRAM (10.67 MiB/4K, 42.55 dB PSNR) integrated across Superframe and Moats 6/7.</td>
+        </tr>
+        <tr data-signal="CS-039" data-lane="graphics-shaders-rendering" data-tier="surpassed_with_receipt" data-flagship="superframe">
+          <th scope="row" class="mono">CS-039<span class="se-sub">B4</span></th>
+          <td>WrongNebula Zero-RT WebGPU 2-Bounce GI &amp; Fast-SDF-AO<span class="se-sub">Graphics and Shaders | superframe</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68557, #68757</td>
+          <td>Wave 101A pure-MIT cs039_sdf_sharc_gi.bld verified 2-bounce SDF + SHaRC GI within &lt;= 3% RMSE against unbiased Monte Carlo reference with energy conservation and 2/2 planted controls.</td>
+        </tr>
+        <tr data-signal="CS-040" data-lane="graphics-shaders-rendering" data-tier="open_next_wave_opportunity" data-flagship="superframe">
+          <th scope="row" class="mono">CS-040<span class="se-sub">A6</span></th>
+          <td>GTA VI Dynamic GI, Persistent Weather &amp; 16 km Fog ShadowCache<span class="se-sub">Graphics and Shaders | superframe</span></td>
+          <td class="mono">Open opportunity</td>
+          <td class="mono">#68578</td>
+          <td>RAW DX12 Wave 90 passes 158/158 RTX 4090 checks, while 16 km volumetric fog shadow caching and Kiruna night-sky photometry for Wave 91 (159/159) are not yet built. Next: Add 16 km volumetric fog shadow cache and calibrated night-sky photometry pass to RAW DX12 with 159/159 green audit.</td>
+        </tr>
+        <tr data-signal="CS-041" data-lane="graphics-shaders-rendering" data-tier="parity_verified" data-flagship="superframe">
+          <th scope="row" class="mono">CS-041<span class="se-sub">B4</span></th>
+          <td>AnyWreck Collision-Driven Physical Weathering &amp; Scatter Ground<span class="se-sub">Graphics and Shaders | superframe</span></td>
+          <td class="mono">Parity verified</td>
+          <td class="mono">#68557, #68578, #68704, #68768, #68777</td>
+          <td>B4 weathering/SDF primitives, H3 physical aperture/material kernels, and RAW Wave 90 are verified; live collision-volume (&lt; 1% error) weathering stress loop remains next-wave.</td>
+        </tr>
+        <tr data-signal="CS-042" data-lane="graphics-shaders-rendering" data-tier="surpassed_with_receipt" data-flagship="superframe">
+          <th scope="row" class="mono">CS-042<span class="se-sub">B1</span></th>
+          <td>Henry00IS DynamicLighting 1-Bit Baked Visibility + Dynamic Lights<span class="se-sub">Graphics and Shaders | superframe</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68578, #68766</td>
+          <td>Wave 105C cs042_onebit_vis_dynamic_lights.bld achieved 32.0x VRAM compression (2,048 B vs 65,536 B), 0.0 radiance error across 49,152 evaluations, and 2.31e-14 Python parity.</td>
+        </tr>
+        <tr data-signal="CS-043" data-lane="graphics-shaders-rendering" data-tier="surpassed_with_receipt" data-flagship="superframe">
+          <th scope="row" class="mono">CS-043<span class="se-sub">N18</span></th>
+          <td>Apple Depth Pro 2, ML-SHARP &amp; Animated SOG 4DGS Web Codec<span class="se-sub">Graphics and Shaders | superframe</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68480, #68647, #68698</td>
+          <td>N18 provenance-locked gsplat_keepsake (superframe#164) paired with 36/36 MIT WASM web suite guarantees pixel-provenance receipts with zero hallucinated anatomy.</td>
+        </tr>
+        <tr data-signal="CS-044" data-lane="graphics-shaders-rendering" data-tier="surpassed_with_receipt" data-flagship="superframe">
+          <th scope="row" class="mono">CS-044<span class="se-sub">B1</span></th>
+          <td>DiffSimp Differentiable Mesh Simplification &amp; PointX Intrinsics (arXiv:2611.31018, 2611.33157)<span class="se-sub">Graphics and Shaders | superframe</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68661, #68753</td>
+          <td>Wave 103C pure-MIT BuildLang Garland-Heckbert QEM differentiable LOD + Gauss-Newton multi-view camera intrinsics verified &lt;= 1.0% reprojection error and 2/2 planted controls.</td>
+        </tr>
+        <tr data-signal="CS-045" data-lane="graphics-shaders-rendering" data-tier="surpassed_with_receipt" data-flagship="superframe">
+          <th scope="row" class="mono">CS-045<span class="se-sub">A9</span></th>
+          <td>Lyris Layout-Guided Persistent 3D Memory Video (arXiv:2611.31239)<span class="se-sub">Graphics and Shaders | superframe</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68564, #68779</td>
+          <td>Wave 109D MIT BuildLang kernel cs045_persistent_3d_memory.bld (GEO-038): 12/12 anchors retained (3.0x over 2D baseline 4/12), 15 zero-error frustum reacquisitions, max reprojection error 0.0 px vs 7.99 px 2D drift, Python parity 4.86e-13, 37 superopt rewrites, 2/2 planted controls rejected.</td>
+        </tr>
+        <tr data-signal="CS-046" data-lane="graphics-shaders-rendering" data-tier="surpassed_with_receipt" data-flagship="superframe">
+          <th scope="row" class="mono">CS-046<span class="se-sub">A1</span></th>
+          <td>Open Game Studio Video-to-Skeletal Extraction &amp; CMU Verified Mocap<span class="se-sub">Graphics and Shaders | superframe</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68473, #68779</td>
+          <td>Wave 109D MIT BuildLang kernel cs046_video_skeleton_mocap.bld (GEO-039): two-view skeleton MPJPE reduced from 6.904 mm to 3.331 mm (-51.75%), 0.0 m bone-length error vs 2.52% naive CV, Python parity 4.89e-13, 88 superopt rewrites, 2/2 planted controls rejected.</td>
+        </tr>
+        <tr data-signal="CS-047" data-lane="graphics-shaders-rendering" data-tier="surpassed_with_receipt" data-flagship="superframe">
+          <th scope="row" class="mono">CS-047<span class="se-sub">B2</span></th>
+          <td>Kiruna 1957 All-Sky Observatory Archive &amp; Sodium/Mercury Night Law<span class="se-sub">Graphics and Shaders | superframe</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68426, #68578, #68766</td>
+          <td>Wave 105C cs047_kiruna_night_spectral_sky.bld integrated 81 visible bands x 16 zenith angles proving 2.87x Sodium/Mercury Purkinje S/P shift and 4.83e-13 Python parity in 0.74 ms.</td>
+        </tr>
+        <tr data-signal="CS-048" data-lane="art-cinematography-audio" data-tier="surpassed_with_receipt" data-flagship="superframe">
+          <th scope="row" class="mono">CS-048<span class="se-sub">E7</span></th>
+          <td>Bloom Weather Synth, Sideman Live Jam &amp; Agentic Programmable DAW<span class="se-sub">Art and Audio | superframe</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68477, #68486, #68537, #68643</td>
+          <td>E7 native BuildLang daw_dsp.bld (0.000563x realtime), transducers/instruments fusion, E29/B7 audio kernels, and buildlang#366 creativity suite sealed.</td>
+        </tr>
+        <tr data-signal="CS-049" data-lane="art-cinematography-audio" data-tier="surpassed_with_receipt" data-flagship="superframe">
+          <th scope="row" class="mono">CS-049<span class="se-sub">B1</span></th>
+          <td>RayForm Caustics, DVD Fourier Optics &amp; mol_blender Protein Visuals<span class="se-sub">Art and Audio | superframe</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68573, #68693, #68704, #68712, #68757, #68768, #68776, #68777</td>
+          <td>Wave 110A cs049_fourier_optics_pdb_provenance.bld verified Fourier optics and SHA-256 PDB atomic coordinate provenance (4.23e-13 max_abs_err, 22 superopt rewrites -60.00% MIR, 2/2 planted controls).</td>
+        </tr>
+        <tr data-signal="CS-050" data-lane="cmmns-politics-governance" data-tier="surpassed_with_receipt" data-flagship="cmmns">
+          <th scope="row" class="mono">CS-050<span class="se-sub">I2</span></th>
+          <td>ZDR Cloud API Canary Leaks<span class="se-sub">CMMNS Governance | cmmns</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68574, #68651, #68664</td>
+          <td>I2 zero-egress design, Flywheel zero_egress_enclave (0 egress bytes + canary-probe enforcement), and enterprise air-gap security pack sealed.</td>
+        </tr>
+        <tr data-signal="CS-051" data-lane="cmmns-politics-governance" data-tier="surpassed_with_receipt" data-flagship="flywheel">
+          <th scope="row" class="mono">CS-051<span class="se-sub">D7</span></th>
+          <td>AI Coding Agent VITE_ / NEXT_PUBLIC_ Frontend Secret Leaks<span class="se-sub">CMMNS Governance | flywheel</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68460, #68472, #68498, #68501, #68616</td>
+          <td>Native BuildLang data_forge_core_cli.exe (SIG-058, &lt; 15 ms, &gt; 270K rows/s) catches 100% of planted VITE_/NEXT_PUBLIC_ secret leaks, emails, and local paths fail-closed.</td>
+        </tr>
+        <tr data-signal="CS-052" data-lane="cmmns-politics-governance" data-tier="surpassed_with_receipt" data-flagship="cmmns">
+          <th scope="row" class="mono">CS-052<span class="se-sub">G7</span></th>
+          <td>Punitive AI Disclosure Mandates Selecting for Secrecy<span class="se-sub">CMMNS Governance | cmmns</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68447, #68507, #68632</td>
+          <td>Empirical 3-arm Honest-Exit Valve study, G7 mechanism study, and zero-penalty accountability floor sealed across Flywheel and CMMNS.</td>
+        </tr>
+        <tr data-signal="CS-053" data-lane="cmmns-politics-governance" data-tier="surpassed_with_receipt" data-flagship="cmmns">
+          <th scope="row" class="mono">CS-053<span class="se-sub">I10</span></th>
+          <td>Handoverism &amp; Agency Loss Under Centralized Platforms<span class="se-sub">CMMNS Governance | cmmns</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68445, #68464, #68565, #68614, #68695, #68708, #68715, #68751, #68763</td>
+          <td>Pure OSI MIT open-core migration, I10 non-extractive attention, and 100% offline-verifiable CMMNS provenance bundles with browser WASM verifier sealed.</td>
+        </tr>
+        <tr data-signal="CS-054" data-lane="cmmns-politics-governance" data-tier="surpassed_with_receipt" data-flagship="cmmns">
+          <th scope="row" class="mono">CS-054<span class="se-sub">I4</span></th>
+          <td>Global Audit Layer &amp; Independent Second-Channel Corroboration<span class="se-sub">CMMNS Governance | cmmns</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68464, #68475, #68614, #68627, #68645, #68660</td>
+          <td>Typed independent second_channel provenance (channel, source, SHA-256, HTTPS) enforced across CMMNS cib-merkle-provenance/1 and cmmns#134..#137.</td>
+        </tr>
+        <tr data-signal="CS-055" data-lane="cmmns-politics-governance" data-tier="surpassed_with_receipt" data-flagship="cmmns">
+          <th scope="row" class="mono">CS-055<span class="se-sub">I2</span></th>
+          <td>Open Weights vs Centralization &amp; Owner Repair Rights<span class="se-sub">CMMNS Governance | cmmns</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68420, #68427, #68445, #68478, #68713, #68722</td>
+          <td>Pure OSI MIT open-core migration across Flagships, 5-flagship SBOM pack, and 1-command SHA256SUMS local verification sealed.</td>
+        </tr>
+        <tr data-signal="CS-056" data-lane="cmmns-politics-governance" data-tier="surpassed_with_receipt" data-flagship="cmmns">
+          <th scope="row" class="mono">CS-056<span class="se-sub">N06</span></th>
+          <td>Cheyenne Open OSINT Satellite/FIRMS/ADS-B Public Trackers<span class="se-sub">CMMNS Governance | cmmns</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68475, #68614, #68708</td>
+          <td>N06 public ADS-B kinematic spoofing audit (adsb_audit.bld, 15.9M seg/s, 100% spoof recall) bridged into CMMNS WASM and second_channel receipts.</td>
+        </tr>
+        <tr data-signal="CS-057" data-lane="cmmns-politics-governance" data-tier="surpassed_with_receipt" data-flagship="flywheel">
+          <th scope="row" class="mono">CS-057<span class="se-sub">I9</span></th>
+          <td>Single-Point-of-Failure Outages &amp; Richard Cook Complex-System Laws<span class="se-sub">CMMNS Governance | flywheel</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68522, #68551, #68597, #68651</td>
+          <td>Flywheel FSP TPM Stage L/F failsafe locks (#577), I9 complex-system reseating valve, and zero-egress fail-closed ledger locks sealed.</td>
+        </tr>
+        <tr data-signal="CS-058" data-lane="cmmns-politics-governance" data-tier="surpassed_with_receipt" data-flagship="cmmns">
+          <th scope="row" class="mono">CS-058<span class="se-sub">G7</span></th>
+          <td>Surge Reallocation &amp; Queue-Selling Mechanism Design<span class="se-sub">CMMNS Governance | cmmns</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68507, #68558, #68627, #68660</td>
+          <td>N26 surge reallocation and G7 3-mechanism plus catastrophe reallocation simulations graduated into cmmns#135..#137.</td>
+        </tr>
+        <tr data-signal="CS-059" data-lane="career-craft" data-tier="surpassed_with_receipt" data-flagship="HarperZ9.github.io">
+          <th scope="row" class="mono">CS-059<span class="se-sub">K2</span></th>
+          <td>Daniel Hooper C UI() Macro &amp; Kit Langton Springy Control Canvas<span class="se-sub">Career and Craft | HarperZ9.github.io</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68570, #68698, #68705</td>
+          <td>K2 spring control-card kernel, 36/36 MIT WASM suite, and Wave 90C H10 live ARIA plus prefers-reduced-motion verified showcase sealed.</td>
+        </tr>
+        <tr data-signal="CS-060" data-lane="career-craft" data-tier="parity_verified" data-flagship="HarperZ9.github.io">
+          <th scope="row" class="mono">CS-060<span class="se-sub">I1</span></th>
+          <td>BioTorch &amp; 96 Implement-From-Scratch ML Exercises<span class="se-sub">Career and Craft | HarperZ9.github.io</span></td>
+          <td class="mono">Parity verified</td>
+          <td class="mono">#68582, #68679, #68706</td>
+          <td>I1 curriculum kernel and 384-task oracle-graded RLVR/BuildDB suites are sealed; automated arXiv-to-interactive flywheel/packages/learn drill generation remains next-wave.</td>
+        </tr>
+        <tr data-signal="CS-061" data-lane="career-craft" data-tier="surpassed_with_receipt" data-flagship="HarperZ9.github.io">
+          <th scope="row" class="mono">CS-061<span class="se-sub">I15</span></th>
+          <td>OCRia-nano-1 (8.1M) Local Document Parsing &amp; BuildTeX Zero-TeX PDFs<span class="se-sub">Career and Craft | HarperZ9.github.io</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68580, #68618, #68644, #68685, #68694</td>
+          <td>Native zero-TeX BuildTeX (0 external TeX binaries, 0 missing glyphs) compiled resumes, 10-slide deck, 5-page Case Studies, Whitepaper V3, and 2-page Executive Brief with SHA-256 receipts.</td>
+        </tr>
+        <tr data-signal="CS-062" data-lane="career-craft" data-tier="surpassed_with_receipt" data-flagship="flywheel">
+          <th scope="row" class="mono">CS-062<span class="se-sub">E6</span></th>
+          <td>AI-Slop Fatigue in Outreach, Docs &amp; Academic Writing<span class="se-sub">Career and Craft | flywheel</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68455, #68458, #68503, #68530, #68616</td>
+          <td>Native BuildLang SIG-057 (articulate_core.bld, &lt; 15 ms, &gt; 25K docs/s, 0 em dashes) and Articulate personal_email profile enforced across site copy and subagents.</td>
+        </tr>
+        <tr data-signal="CS-063" data-lane="career-craft" data-tier="surpassed_with_receipt" data-flagship="cmmns">
+          <th scope="row" class="mono">CS-063<span class="se-sub">E25</span></th>
+          <td>Zach Lieberman Personal Bookmark Archive vs Local-First Commons<span class="se-sub">Career and Craft | cmmns</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68439, #68442, #68453, #68494, #68513</td>
+          <td>Local-first CMMNS/Daylight archive (43K+ captures plus 1,681 post-Nov-25 intake) wired to &lt; 30 ms SQLite keyword/signal lookup and Studio MCP.</td>
+        </tr>
+        <tr data-signal="CS-064" data-lane="career-craft" data-tier="surpassed_with_receipt" data-flagship="HarperZ9.github.io">
+          <th scope="row" class="mono">CS-064<span class="se-sub">G9</span></th>
+          <td>Interactive Explainers &amp; Live Receipt-Verified Experiment Tables<span class="se-sub">Career and Craft | HarperZ9.github.io</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68535, #68648, #68687, #68698, #68701, #68705, #68739, #68758, #68770</td>
+          <td>G9 16 live SHA-256 receipt tables on harperz9.github.io, 36/36 MIT WASM explainers (183.54 KB), and Wave 90C AC7/H9/H10 showcase sealed.</td>
+        </tr>
+        <tr data-signal="CS-065" data-lane="physics-math-science" data-tier="surpassed_with_receipt" data-flagship="superframe">
+          <th scope="row" class="mono">CS-065<span class="se-sub">A24</span></th>
+          <td>ImitationLab Single-GPU Unitree G1 Humanoid Tracking (Newton/MJWarp)<span class="se-sub">Physics and Math | superframe</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68550, #68746</td>
+          <td>Wave 100D pure-MIT BuildLang humanoid rigid-body IK/ID kernel verified &lt;= 1e-9 parity, zero contact tunneling, and signed torque/energy conservation receipts.</td>
+        </tr>
+        <tr data-signal="CS-066" data-lane="physics-math-science" data-tier="surpassed_with_receipt" data-flagship="superframe">
+          <th scope="row" class="mono">CS-066<span class="se-sub">C2</span></th>
+          <td>Look Back Counterfactual World Models &amp; OmniAct 1M Embodiments (arXiv:2611.29259, 2611.33158)<span class="se-sub">Physics and Math | superframe</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68447, #68761</td>
+          <td>Wave 104A cs066_counterfactual_world_model.bld proved 366.25x OOD RMSE advantage vs Euler, 1.44e-15 look-back time-reversal error, 2.00e-15 counterfactual return error, and 5.82e-12 Python parity.</td>
+        </tr>
+        <tr data-signal="CS-067" data-lane="physics-math-science" data-tier="surpassed_with_receipt" data-flagship="buildlang">
+          <th scope="row" class="mono">CS-067<span class="se-sub">A12</span></th>
+          <td>materialDTS Crystal Diffusion Tree Search (arXiv:2611.17462)<span class="se-sub">Physics and Math | buildlang</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68541, #68550, #68761</td>
+          <td>Wave 104A cs067_puct_crystal_optics_search.bld discovered exact 6-layer Bragg global optimum R(550nm)=0.897680 in 128/4096 evals with 3.11e-15 Maxwell energy error, 8 Pareto designs, and 4.44e-16 parity.</td>
+        </tr>
+        <tr data-signal="CS-068" data-lane="physics-math-science" data-tier="surpassed_with_receipt" data-flagship="buildlang">
+          <th scope="row" class="mono">CS-068<span class="se-sub">A2</span></th>
+          <td>Pharos Rare-Event Stochastic Optimal Control (arXiv:2611.26765)<span class="se-sub">Physics and Math | buildlang</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68516, #68748</td>
+          <td>Wave 100B cs068_rare_event_committor.bld proved 28,452.55x exact and 29,082.56x empirical variance reduction on a 3.25e-8 rare barrier transition (1.43% rel err, 9.63e-12 parity) in 7.96 ms.</td>
+        </tr>
+        <tr data-signal="CS-069" data-lane="physics-math-science" data-tier="surpassed_with_receipt" data-flagship="superframe">
+          <th scope="row" class="mono">CS-069<span class="se-sub">B3</span></th>
+          <td>Auxetic 3D Woven Negative-Poisson Lattices (LAMMPS)<span class="se-sub">Physics and Math | superframe</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68477, #68748</td>
+          <td>Wave 100B cs069_auxetic_xpbd_lattice.bld verified 3D woven negative Poisson ratio nu_50_x = nu_50_z = -1.061283 across 0% to 50% stretch, strictly monotone elastic energy, and 4.44e-16 parity in 6.67 ms.</td>
+        </tr>
+        <tr data-signal="CS-070" data-lane="physics-math-science" data-tier="surpassed_with_receipt" data-flagship="superframe">
+          <th scope="row" class="mono">CS-070<span class="se-sub">C1</span></th>
+          <td>Biological Environmental Adaptation &amp; Tree Biomechanics<span class="se-sub">Physics and Math | superframe</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68474, #68477, #68510, #68606, #68642, #68672</td>
+          <td>J13/J14 weights-only Model Epigenetics (100% spectral separation, 6.54 ms) and C1 coupled Mattheck/TMD tree biomechanics (PHY-068) graduated and sealed.</td>
+        </tr>
+        <tr data-signal="CS-071" data-lane="physics-math-science" data-tier="surpassed_with_receipt" data-flagship="superframe">
+          <th scope="row" class="mono">CS-071<span class="se-sub">E27</span></th>
+          <td>Sensorless Hardware Calibration &amp; Non-Critical Open Physics<span class="se-sub">Physics and Math | superframe</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68487, #68647, #68661</td>
+          <td>E27 sensorless Bayesian display calibration (COL-041, 0.056 dE2000) and N12 open physics kcores (PHY-073) integrated into superframe#164.</td>
+        </tr>
+        <tr data-signal="CS-072" data-lane="career-craft" data-tier="surpassed_with_receipt" data-flagship="flywheel">
+          <th scope="row" class="mono">CS-072<span class="se-sub">A6</span></th>
+          <td>Enterprise Resistance to Source-Available Licenses (FSL vs Pure OSI MIT)<span class="se-sub">Career and Craft | flywheel</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68420, #68427, #68445, #68625, #68671, #68684, #68697, #68722, #68737</td>
+          <td>Pure OSI MIT open-core migration across Flywheel, Superframe, BuildLang universe/, and RAW, 10/10 MCP Registry descriptors merged, and 15-repo OSS readiness matrix sealed.</td>
+        </tr>
+        <tr data-signal="CS-073" data-lane="career-craft" data-tier="surpassed_with_receipt" data-flagship="flywheel">
+          <th scope="row" class="mono">CS-073<span class="se-sub">E13</span></th>
+          <td>Air-Gapped Defense &amp; Enterprise Need for Zero-Egress Verification<span class="se-sub">Career and Craft | flywheel</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68456, #68462, #68471, #68519, #68548, #68651, #68664, #68740, #68747, #68752, #68762, #68774</td>
+          <td>Air-gapped zero-egress enclave (0 egress bytes, 3.59 ms Three-Plate check) backed by AFWERX FY27 R2, DHS/DARPA/Tradewinds, Federal Capability Statement, and Procurement Security Pack.</td>
+        </tr>
+        <tr data-signal="CS-074" data-lane="career-craft" data-tier="surpassed_with_receipt" data-flagship="flywheel">
+          <th scope="row" class="mono">CS-074<span class="se-sub">E18</span></th>
+          <td>Scale AI &amp; Static Labeling Vendor Distrust vs Proof-Carrying Data<span class="se-sub">Career and Craft | flywheel</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68437, #68438, #68443, #68472, #68519, #68635, #68679, #68734</td>
+          <td>Deterministic BuildLang Data Forge (SIG-058, &gt; 270K rows/s, $0 external labeling cost), Merkle-sealed 1,505-row MIT Parquet V3, and Commercial VPC Pilot Brief sealed.</td>
+        </tr>
+        <tr data-signal="CS-075" data-lane="career-craft" data-tier="surpassed_with_receipt" data-flagship="HarperZ9.github.io">
+          <th scope="row" class="mono">CS-075<span class="se-sub">I15</span></th>
+          <td>MCP Ecosystem Fragmentation &amp; Discoverability Bottleneck<span class="se-sub">Career and Craft | HarperZ9.github.io</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68481, #68579, #68615, #68620, #68625, #68697, #68737</td>
+          <td>10/10 pure-OSI mcp-name registry descriptors merged and live-audited with native MCP Studio verification and SHA256SUMS 1-command install.</td>
+        </tr>
+        <tr data-signal="CS-076" data-lane="career-craft" data-tier="surpassed_with_receipt" data-flagship="superframe">
+          <th scope="row" class="mono">CS-076<span class="se-sub">N19</span></th>
+          <td>Community Governance &amp; Non-Cloning Ethics for Language Revitalization<span class="se-sub">Career and Craft | superframe</span></td>
+          <td class="mono">Surpassed (receipt)</td>
+          <td class="mono">#68487, #68641, #68650</td>
+          <td>N19 community-governed articulatory acoustics (ipa_formant.bld, SIG-064) enforces mandatory bibliographic provenance and fail-closed zero-voice-cloning guards.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p id="se-empty" class="se-empty" hidden>No signals match the active filter combination.</p>
+</section>
+
+<section class="ds-sec" id="scope" aria-labelledby="h-scope">
+  <h2 id="h-scope">Honest scope and status definitions</h2>
+  <p><strong>Surpassed with receipt (70/76):</strong> a pure-OSI MIT implementation and deterministic oracle passed on-machine, beat the tracked baseline on the measured metric, rejected planted negative controls, and sealed an engine-receipt/1 record under the cited catalogue ID. <strong>Parity verified (5/76):</strong> core mathematical or algorithmic parity is verified under receipt, while a full large-scale hardware sweep (for example multi-billion parameter pretraining curves or large GPU clusters) remains outside local workstation scope. <strong>Open opportunity (1/76):</strong> CS-040 (16 km volumetric fog shadow caching and night-sky photometry in RAW DX12) is explicitly tracked as open rather than claimed complete.</p>
+  <p>This browser page verifies the integrity of surpass_matrix.json against its pinned SHA-256 digest before enabling interactive filtering. It displays recorded receipt catalogue IDs (68420 to 68779) and summaries; it does not query a remote receipt server or re-execute native C++23, DX12, or BuildLang binaries inside the browser.</p>
+</section>
+
+<footer class="ds-sheet-foot">
+  <p><strong>Sheet</strong> <code>playground/competitive-surpass/index.html</code></p>
+  <p><strong>Updated</strong> 2026-11-27</p>
+  <p><strong>Ground</strong> Measured Drafting Sheet | Pure OSI MIT | 76 signals | 70 surpassed, 5 parity, 1 open</p>
+</footer>
+</article>
+<script type="module" src="./surpass_explorer.mjs"></script>
+</main>
+</body>
+</html>
