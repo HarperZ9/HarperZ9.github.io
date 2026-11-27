@@ -1,0 +1,23 @@
+{
+  "schema": "wave86c-benchmarks-receipt-summary/1",
+  "source_schema": "wave82e-cross-runtime-benchmarks-v2/1",
+  "license": "MIT",
+  "emitted_at": "2026-11-27T11:32:45Z",
+  "verdict": "MATCH",
+  "results_rel_path": "benchmarks_v2_results.json",
+  "results_bytes": 11817,
+  "results_sha256": "sha256:1c231adb8dda9d3ff0eff855eb2640f9901833ea6046b6333a606cbf797a143e",
+  "claim_sha256": "sha256:9d9892e44b6a5a8f25c2ad6248f526d4f565ee159866a7fc17849724511ebdd0",
+  "envelope_sha256": "sha256:b84b324725fa2bd3971401eaa7fdaeb8aa20a8bc6571ed04cc262b4fcd1620a6",
+  "subject_sha256": "sha256:c81a4e92553620e0151acc615978a50c01bab0eb2fd2035b4f4192fe53be34cc",
+  "oracle_stdout_excerpt": "WAVE82E_BENCH_VERIFY_PASS kernels=8/8 parity=8/8 native=8/8 wasm=7/8 zeroc=2/8 python=8/8 planted_wrong_output_caught=True",
+  "environment_summary": {
+    "buildc_version": "buildc 1.15.0",
+    "node_version": "v25.2.1",
+    "python_version": "3.12.10",
+    "os": "Windows-11-10.0.26320-SP0",
+    "arch": "AMD64",
+    "warmup_runs": 1,
+    "timed_runs": 7
+  }
+}

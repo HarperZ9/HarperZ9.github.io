@@ -1,0 +1,1181 @@
+<!doctype html>
+<html lang="en" data-type="stock">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<title>Public Ecosystem Supply-Chain and SBOM Ledger | Zain Dana Harper</title>
+<meta name="description" content="Interactive CycloneDX 1.5 and SPDX 2.3 supply-chain explorer covering all 15 public HarperZ9 repositories and 556 unified components with live SHA-256 verification.">
+<link rel="canonical" href="https://harperz9.github.io/playground/sbom/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Public Ecosystem Supply-Chain and SBOM Ledger | Zain Dana Harper">
+<meta property="og:description" content="Interactive CycloneDX 1.5 and SPDX 2.3 supply-chain explorer covering all 15 public HarperZ9 repositories and 556 unified components with live SHA-256 verification.">
+<meta property="og:url" content="https://harperz9.github.io/playground/sbom/">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/home.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Public Ecosystem Supply-Chain and SBOM Ledger | Zain Dana Harper">
+<meta name="twitter:description" content="Interactive CycloneDX 1.5 and SPDX 2.3 supply-chain explorer covering all 15 public HarperZ9 repositories and 556 unified components with live SHA-256 verification.">
+<link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-6218db2f12">
+<link rel="stylesheet" href="/studies/studies.css?v=world-6218db2f12">
+<link rel="stylesheet" href="/world/site/depth.css?v=world-6218db2f12">
+<script type="module" src="/world/ui/shell/shell.js?v=world-6218db2f12"></script>
+<script type="module" src="/world/site/hand-scroll.js?v=world-6218db2f12"></script>
+<style>
+  .sb-toolbar { display: flex; flex-wrap: wrap; gap: 0.5rem 0.65rem; align-items: center; padding: 0.85rem 0; border-bottom: 1px solid var(--line); }
+  .sb-group { display: inline-flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; }
+  .sb-toolbar button, .sb-toolbar select, .sb-toolbar input { background: transparent; color: var(--ink); border: 1px solid var(--line); padding: 0.4rem 0.72rem; min-height: 40px; font-family: var(--face-utility); font-size: 0.82rem; }
+  .sb-toolbar button { cursor: pointer; }
+  .sb-toolbar button:focus-visible, .sb-toolbar select:focus-visible, .sb-toolbar input:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .sb-toolbar button[aria-pressed="true"] { border-color: var(--ink); font-weight: 700; }
+  .sb-readout { padding: 0.8rem 0; border-bottom: 1px solid var(--line); font-family: var(--face-utility); font-size: 0.84rem; font-variant-numeric: tabular-nums; }
+  .sb-readout p { margin: 0.22rem 0; }
+  .sb-chart-wrap { padding: 1rem 0 0.75rem; border-bottom: 1px solid var(--line); overflow-x: auto; }
+  .sb-svg { width: 100%; max-width: 760px; height: auto; display: block; font-family: var(--face-utility); }
+  .sb-svg-num { font-variant-numeric: tabular-nums; }
+  .sb-table-wrap { width: 100%; overflow-x: auto; margin-top: 0.5rem; min-height: 760px; }
+  .sb-table-wrap:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .sb-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; }
+  .sb-table th, .sb-table td { text-align: left; padding: 0.5rem 0.6rem 0.5rem 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .sb-table thead th { font-family: var(--face-utility); font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--soft); font-weight: 600; }
+  .sb-table .mono { font-family: var(--face-utility); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .sb-sub { display: block; font-family: var(--face-utility); font-size: 0.72rem; color: var(--soft); font-weight: 400; margin-top: 0.12rem; word-break: break-all; }
+</style></head>
+<body class="reading ds-sheet">
+
+<header class="o-hand o-said" aria-label="Site">
+  <a class="skip" href="#main">Skip to the page</a>
+  <a class="o-home" href="/">Zain Dana Harper</a>
+  <a data-o="band" href="/world/universe/proto/index.html"><span class="o-name">Map</span></a>
+  <button type="button" data-o="fold" aria-controls="o-menu" aria-keyshortcuts="m" aria-expanded="false" hidden><span class="o-name">Places</span><i></i><i></i><i></i></button>
+  <button type="button" data-o="lamp" data-theme-toggle aria-pressed="true"><span class="o-name">Day</span></button>
+  <span class="o-cell"><button type="button" data-o="peel" data-plain-toggle aria-pressed="false"><span class="o-name">Plain</span></button><span class="o-under" aria-hidden="true">Plain</span></span>
+</header>
+<dialog id="o-menu" data-o="menu" data-material="chladni" aria-label="Places">
+  <nav aria-label="Places">
+    <ul class="o-places">
+      <li><a href="/buildlang.html"><span class="o-word" data-display-on-open="glyphcell">BuildLang</span></a></li>
+      <li><a href="/flywheel.html"><span class="o-word" data-display-on-open="light">Flywheel</span></a><small class="o-sub"><a href="/cmmns.html">CMMNS</a> <a href="/articulate.html">Articulate</a></small></li>
+      <li><a href="/playground/"><span class="o-word" data-display-on-open="nightlights">The Playground</span></a><small class="o-sub"><a href="/playground/#estuary">Estuary</a> <a href="/playground/#native">Native renderer</a> <a href="/playground/#superframe">Superframe</a> <a href="/playground/#workbench">All creative engines</a> <a href="/playground/#low-water">Low Water</a></small></li>
+      <li><a href="/playground/#low-water"><span class="o-word" data-display-on-open="chladni">Game</span></a></li>
+      <li><a href="/#site"><span class="o-word" data-display-on-open="swarm">Site</span></a></li>
+      <li><a href="/floor.html"><span class="o-word" data-display-on-open="rope">Everything</span></a></li>
+      <li><a href="/models.html"><span class="o-word" data-display-on-open="rope">Models</span></a></li>
+      <li><a href="/tools.html"><span class="o-word" data-display-on-open="rope">Tools &amp; Repos</span></a></li>
+      <li><a href="/person.html"><span class="o-word" data-display-on-open="rope">About</span></a></li>
+      <li><a href="/architecture.html"><span class="o-word" data-display-on-open="rope">Architecture</span></a></li>
+      <li><a href="/world/universe/proto/index.html"><span class="o-word" data-display-on-open="rope">Map</span></a></li>
+      <li><a href="/publications.html"><span class="o-word" data-display-on-open="swarm">Writing</span></a></li>
+      <li><a href="/explainers.html"><span class="o-word" data-display-on-open="sound">Films</span></a></li>
+      <li><a href="/security.html"><span class="o-word" data-display-on-open="rope">Security</span></a></li>
+      <li><a href="/hire.html"><span class="o-word" data-display-on-open="rope">Work</span></a></li>
+      <li><a href="/cv.html"><span class="o-word" data-display-on-open="rope">CV</span></a></li>
+    </ul>
+  </nav>
+  <p class="o-menu-foot"><a href="/architecture.html">Architecture</a> <a href="/models.html">Models</a> <a href="/tools.html">Tools &amp; 159 Repos</a> <a href="/research.html">Research</a> <a href="/portfolio.html">Portfolio</a> <a href="/elements.html">Elements</a> <a href="/studies/">Studies</a> <a href="/site-index.html">Site index</a> <button type="button" class="o-close" data-qj-open onclick="this.closest('dialog').close()">Search (Ctrl+K)</button> <button type="button" class="o-close" onclick="this.closest('dialog').close()">Close (Esc)</button></p>
+</dialog>
+<main id="main" tabindex="-1">
+<article class="st" id="sbom-explorer">
+<header class="ds-sheet-head">
+  <p class="ds-kicker">Measured Drafting Sheet / 15-Repository Ecosystem Supply-Chain &amp; SBOM Explorer</p>
+  <h1>Public Ecosystem Supply-Chain &amp; SBOM Ledger</h1>
+  <p class="ds-lede">Machine-verifiable Software Bill of Materials covering all 15/15 public HarperZ9 repositories (5 core flagships plus 10 Official MCP Registry servers = 556 unified components) published in CycloneDX 1.5 and paired with SPDX 2.3 manifests. Zero external CDN calls, zero local workstation paths, and live <code>crypto.subtle</code> SHA-256 verification of the bundled CycloneDX BOM.</p>
+  <p class="ds-meta"><span>15/15 public repositories</span><span>556 unified components</span><span>CycloneDX 1.5 + SPDX 2.3</span><span>0 forbidden licenses</span></p>
+  <nav class="ds-ways" aria-label="Related surfaces">
+    <a href="/playground/">The Playground</a>
+    <a href="/playground/wasm-bench/">18-Module WASM Bench</a>
+    <a href="/playground/benchmarks/">Verified Benchmarks</a>
+    <a href="/playground/crypto-bench/">Zero-C Crypto Lab</a>
+    <a href="/playground/gpu-shaders/">120 GPU Shaders</a>
+    <a href="./harper-ecosystem-15repos.cdx.json">Download CycloneDX 1.5 JSON</a>
+  </nav>
+</header>
+
+<section class="ds-sec" id="repos" aria-labelledby="h-repos">
+  <h2 id="h-repos">15/15 public repositories (5 Flagships + 10 Official MCP Servers)</h2>
+  <figure class="sb-chart-wrap"><svg class="sb-svg" viewBox="0 0 760 260" role="img" aria-label="License composition across 556 components">
+  <title>SPDX License Composition Across 15 Public Repositories (556 Components)</title>
+  <desc>Hairline bar chart showing top SPDX license counts across all 556 components in harper-ecosystem-15repos.cdx.json.</desc>
+  <text x="0" y="16" fill="currentColor" font-size="12" font-weight="700">SPDX License Composition Across 15 Public Repositories (556 Components)</text>
+  <line x1="210" y1="30" x2="210" y2="246" stroke="currentColor" stroke-opacity="0.4" stroke-width="1"/>
+  <g data-license="NOASSERTION">
+  <text x="200" y="48" text-anchor="end" fill="currentColor" font-size="11">NOASSERTION</text>
+  <line x1="210" y1="55" x2="630" y2="55" stroke="currentColor" stroke-opacity="0.14" stroke-width="1"/>
+  <rect x="210" y="38" width="420.0" height="12" fill="currentColor" fill-opacity="0.82"/>
+  <text x="638.0" y="48" fill="currentColor" font-size="10.8" class="sb-svg-num">268 (48.2%)</text>
+</g>
+<g data-license="MIT">
+  <text x="200" y="74" text-anchor="end" fill="currentColor" font-size="11">MIT</text>
+  <line x1="210" y1="81" x2="630" y2="81" stroke="currentColor" stroke-opacity="0.14" stroke-width="1"/>
+  <rect x="210" y="64" width="300.9" height="12" fill="currentColor" fill-opacity="0.82"/>
+  <text x="518.9" y="74" fill="currentColor" font-size="10.8" class="sb-svg-num">192 (34.5%)</text>
+</g>
+<g data-license="AGPL-3.0-only">
+  <text x="200" y="100" text-anchor="end" fill="currentColor" font-size="11">AGPL-3.0-only</text>
+  <line x1="210" y1="107" x2="630" y2="107" stroke="currentColor" stroke-opacity="0.14" stroke-width="1"/>
+  <rect x="210" y="90" width="42.3" height="12" fill="currentColor" fill-opacity="0.82"/>
+  <text x="260.3" y="100" fill="currentColor" font-size="10.8" class="sb-svg-num">27 (4.9%)</text>
+</g>
+<g data-license="Apache-2.0">
+  <text x="200" y="126" text-anchor="end" fill="currentColor" font-size="11">Apache-2.0</text>
+  <line x1="210" y1="133" x2="630" y2="133" stroke="currentColor" stroke-opacity="0.14" stroke-width="1"/>
+  <rect x="210" y="116" width="37.6" height="12" fill="currentColor" fill-opacity="0.82"/>
+  <text x="255.6" y="126" fill="currentColor" font-size="10.8" class="sb-svg-num">24 (4.3%)</text>
+</g>
+<g data-license="MPL-2.0">
+  <text x="200" y="152" text-anchor="end" fill="currentColor" font-size="11">MPL-2.0</text>
+  <line x1="210" y1="159" x2="630" y2="159" stroke="currentColor" stroke-opacity="0.14" stroke-width="1"/>
+  <rect x="210" y="142" width="18.8" height="12" fill="currentColor" fill-opacity="0.82"/>
+  <text x="236.8" y="152" fill="currentColor" font-size="10.8" class="sb-svg-num">12 (2.2%)</text>
+</g>
+<g data-license="LGPL-3.0-or-later">
+  <text x="200" y="178" text-anchor="end" fill="currentColor" font-size="11">LGPL-3.0-or-later</text>
+  <line x1="210" y1="185" x2="630" y2="185" stroke="currentColor" stroke-opacity="0.14" stroke-width="1"/>
+  <rect x="210" y="168" width="15.7" height="12" fill="currentColor" fill-opacity="0.82"/>
+  <text x="233.7" y="178" fill="currentColor" font-size="10.8" class="sb-svg-num">10 (1.8%)</text>
+</g>
+<g data-license="MIT OR Apache-2.0">
+  <text x="200" y="204" text-anchor="end" fill="currentColor" font-size="11">MIT OR Apache-2.0</text>
+  <line x1="210" y1="211" x2="630" y2="211" stroke="currentColor" stroke-opacity="0.14" stroke-width="1"/>
+  <rect x="210" y="194" width="7.8" height="12" fill="currentColor" fill-opacity="0.82"/>
+  <text x="225.8" y="204" fill="currentColor" font-size="10.8" class="sb-svg-num">5 (0.9%)</text>
+</g>
+<g data-license="ISC">
+  <text x="200" y="230" text-anchor="end" fill="currentColor" font-size="11">ISC</text>
+  <line x1="210" y1="237" x2="630" y2="237" stroke="currentColor" stroke-opacity="0.14" stroke-width="1"/>
+  <rect x="210" y="220" width="6.3" height="12" fill="currentColor" fill-opacity="0.82"/>
+  <text x="224.3" y="230" fill="currentColor" font-size="10.8" class="sb-svg-num">4 (0.7%)</text>
+</g>
+</svg></figure>
+  <div class="sb-table-wrap" style="min-height: 420px;" tabindex="0" role="region" aria-label="15 public repositories SBOM summary">
+    <table class="sb-table">
+      <thead>
+        <tr>
+          <th scope="col">Repository</th>
+          <th scope="col">Tier</th>
+          <th scope="col">Version</th>
+          <th scope="col">Root License</th>
+          <th scope="col">Components</th>
+          <th scope="col">Libraries</th>
+        </tr>
+      </thead>
+      <tbody>
+<tr data-repo-row="buildlang" data-tier="flagship">
+  <th scope="row"><a href="https://github.com/HarperZ9/buildlang" rel="noopener">HarperZ9/buildlang</a></th>
+  <td class="mono">Flagship</td>
+  <td class="mono">1.15.0</td>
+  <td class="mono">AGPL-3.0-only</td>
+  <td class="mono">243</td>
+  <td class="mono">242</td>
+</tr>
+<tr data-repo-row="superframe" data-tier="flagship">
+  <th scope="row"><a href="https://github.com/HarperZ9/superframe" rel="noopener">HarperZ9/superframe</a></th>
+  <td class="mono">Flagship</td>
+  <td class="mono">0.3.0</td>
+  <td class="mono">MIT</td>
+  <td class="mono">30</td>
+  <td class="mono">29</td>
+</tr>
+<tr data-repo-row="flywheel" data-tier="flagship">
+  <th scope="row"><a href="https://github.com/HarperZ9/flywheel" rel="noopener">HarperZ9/flywheel</a></th>
+  <td class="mono">Flagship</td>
+  <td class="mono">2.0.0</td>
+  <td class="mono">MIT</td>
+  <td class="mono">135</td>
+  <td class="mono">134</td>
+</tr>
+<tr data-repo-row="cmmns" data-tier="flagship">
+  <th scope="row"><a href="https://github.com/HarperZ9/cmmns" rel="noopener">HarperZ9/cmmns</a></th>
+  <td class="mono">Flagship</td>
+  <td class="mono">3.10.0</td>
+  <td class="mono">AGPL-3.0-only</td>
+  <td class="mono">2</td>
+  <td class="mono">1</td>
+</tr>
+<tr data-repo-row="HarperZ9.github.io" data-tier="flagship">
+  <th scope="row"><a href="https://github.com/HarperZ9/HarperZ9.github.io" rel="noopener">HarperZ9/HarperZ9.github.io</a></th>
+  <td class="mono">Flagship</td>
+  <td class="mono">2026.11.27</td>
+  <td class="mono">CC-BY-4.0</td>
+  <td class="mono">83</td>
+  <td class="mono">82</td>
+</tr>
+<tr data-repo-row="articulate" data-tier="mcp_server">
+  <th scope="row"><a href="https://github.com/HarperZ9/articulate" rel="noopener">HarperZ9/articulate</a></th>
+  <td class="mono">Official MCP</td>
+  <td class="mono">0.19.1</td>
+  <td class="mono">MIT</td>
+  <td class="mono">7</td>
+  <td class="mono">6</td>
+</tr>
+<tr data-repo-row="index" data-tier="mcp_server">
+  <th scope="row"><a href="https://github.com/HarperZ9/index" rel="noopener">HarperZ9/index</a></th>
+  <td class="mono">Official MCP</td>
+  <td class="mono">2.16.0</td>
+  <td class="mono">MIT</td>
+  <td class="mono">3</td>
+  <td class="mono">2</td>
+</tr>
+<tr data-repo-row="forum" data-tier="mcp_server">
+  <th scope="row"><a href="https://github.com/HarperZ9/forum" rel="noopener">HarperZ9/forum</a></th>
+  <td class="mono">Official MCP</td>
+  <td class="mono">1.17.0</td>
+  <td class="mono">MIT</td>
+  <td class="mono">6</td>
+  <td class="mono">5</td>
+</tr>
+<tr data-repo-row="crucible" data-tier="mcp_server">
+  <th scope="row"><a href="https://github.com/HarperZ9/crucible" rel="noopener">HarperZ9/crucible</a></th>
+  <td class="mono">Official MCP</td>
+  <td class="mono">1.6.0</td>
+  <td class="mono">MIT</td>
+  <td class="mono">8</td>
+  <td class="mono">7</td>
+</tr>
+<tr data-repo-row="plexus" data-tier="mcp_server">
+  <th scope="row"><a href="https://github.com/HarperZ9/plexus" rel="noopener">HarperZ9/plexus</a></th>
+  <td class="mono">Official MCP</td>
+  <td class="mono">0.4.0</td>
+  <td class="mono">MIT</td>
+  <td class="mono">3</td>
+  <td class="mono">2</td>
+</tr>
+<tr data-repo-row="calibrate-pro" data-tier="mcp_server">
+  <th scope="row"><a href="https://github.com/HarperZ9/calibrate-pro" rel="noopener">HarperZ9/calibrate-pro</a></th>
+  <td class="mono">Official MCP</td>
+  <td class="mono">2.0.1</td>
+  <td class="mono">MIT</td>
+  <td class="mono">20</td>
+  <td class="mono">19</td>
+</tr>
+<tr data-repo-row="gather" data-tier="mcp_server">
+  <th scope="row"><a href="https://github.com/HarperZ9/gather" rel="noopener">HarperZ9/gather</a></th>
+  <td class="mono">Official MCP</td>
+  <td class="mono">2.6.0</td>
+  <td class="mono">AGPL-3.0-only</td>
+  <td class="mono">9</td>
+  <td class="mono">8</td>
+</tr>
+<tr data-repo-row="chorus" data-tier="mcp_server">
+  <th scope="row"><a href="https://github.com/HarperZ9/chorus" rel="noopener">HarperZ9/chorus</a></th>
+  <td class="mono">Official MCP</td>
+  <td class="mono">0.3.2</td>
+  <td class="mono">AGPL-3.0-only</td>
+  <td class="mono">2</td>
+  <td class="mono">1</td>
+</tr>
+<tr data-repo-row="mneme" data-tier="mcp_server">
+  <th scope="row"><a href="https://github.com/HarperZ9/mneme" rel="noopener">HarperZ9/mneme</a></th>
+  <td class="mono">Official MCP</td>
+  <td class="mono">0.7.0</td>
+  <td class="mono">AGPL-3.0-only</td>
+  <td class="mono">3</td>
+  <td class="mono">2</td>
+</tr>
+<tr data-repo-row="learn" data-tier="mcp_server">
+  <th scope="row"><a href="https://github.com/HarperZ9/learn" rel="noopener">HarperZ9/learn</a></th>
+  <td class="mono">Official MCP</td>
+  <td class="mono">2.3.0</td>
+  <td class="mono">AGPL-3.0-only</td>
+  <td class="mono">2</td>
+  <td class="mono">1</td>
+</tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="ds-sec" id="components" aria-labelledby="h-components">
+  <h2 id="h-components">Interactive 556-component dependency filter ledger</h2>
+  <div class="sb-toolbar" role="region" aria-label="SBOM component filters">
+    <div class="sb-group" role="group" aria-label="Filter by repository tier">
+      <button type="button" data-tier-filter="all" aria-pressed="true">All 15 Repos (556)</button>
+      <button type="button" data-tier-filter="flagship" aria-pressed="false">5 Flagships</button>
+      <button type="button" data-tier-filter="mcp_server" aria-pressed="false">10 Official MCP Servers</button>
+    </div>
+    <div class="sb-group">
+      <label for="sb-repo" class="sr-only">Repository</label>
+      <select id="sb-repo"><option value="all">All 15 repositories</option><option value="buildlang">buildlang (243)</option><option value="superframe">superframe (30)</option><option value="flywheel">flywheel (135)</option><option value="cmmns">cmmns (2)</option><option value="HarperZ9.github.io">HarperZ9.github.io (83)</option><option value="articulate">articulate (7)</option><option value="index">index (3)</option><option value="forum">forum (6)</option><option value="crucible">crucible (8)</option><option value="plexus">plexus (3)</option><option value="calibrate-pro">calibrate-pro (20)</option><option value="gather">gather (9)</option><option value="chorus">chorus (2)</option><option value="mneme">mneme (3)</option><option value="learn">learn (2)</option></select>
+      <label for="sb-license" class="sr-only">SPDX License</label>
+      <select id="sb-license"><option value="all">All SPDX licenses</option><option value="NOASSERTION">NOASSERTION (268)</option><option value="MIT">MIT (192)</option><option value="AGPL-3.0-only">AGPL-3.0-only (27)</option><option value="Apache-2.0">Apache-2.0 (24)</option><option value="MPL-2.0">MPL-2.0 (12)</option><option value="LGPL-3.0-or-later">LGPL-3.0-or-later (10)</option><option value="MIT OR Apache-2.0">MIT OR Apache-2.0 (5)</option><option value="ISC">ISC (4)</option><option value="Apache-2.0 AND LGPL-3.0-or-later">Apache-2.0 AND LGPL-3.0-or-later (3)</option><option value="Proprietary">Proprietary (3)</option><option value="0BSD">0BSD (2)</option><option value="CC-BY-4.0">CC-BY-4.0 (2)</option><option value="CC0-1.0">CC0-1.0 (2)</option><option value="BSD-3-Clause">BSD-3-Clause (1)</option><option value="LicenseRef-FSL-1.1-MIT">LicenseRef-FSL-1.1-MIT (1)</option></select>
+      <label for="sb-type" class="sr-only">Component type</label>
+      <select id="sb-type"><option value="all">Apps &amp; libraries</option><option value="application">Root apps (15)</option><option value="library">Libraries (541)</option></select>
+      <label for="sb-search" class="sr-only">Search components</label>
+      <input id="sb-search" type="search" placeholder="Search package, purl, or license..." autocomplete="off">
+    </div>
+  </div>
+
+  <div class="sb-readout" aria-live="polite">
+    <p id="sb-status">Matched 556 of 556 components (displaying first 120 in static sheet) across 15 public repositories</p>
+    <p id="sb-digest">BOM SHA-256: sha256:3389dee14e4ec9b9... | CycloneDX 1.5 | SPDX 2.3 paired</p>
+  </div>
+
+  <div class="sb-table-wrap" tabindex="0" role="region" aria-label="556 unified SBOM components table">
+    <table class="sb-table">
+      <thead>
+        <tr>
+          <th scope="col">Component &amp; PURL</th>
+          <th scope="col">Version</th>
+          <th scope="col">Repository</th>
+          <th scope="col">Type</th>
+          <th scope="col">SPDX License</th>
+        </tr>
+      </thead>
+      <tbody id="sb-comp-rows">
+<tr data-comp-repo="buildlang" data-comp-lic="AGPL-3.0-only">
+  <th scope="row">buildlang<span class="sb-sub">pkg:github/harperz9/buildlang@1.15.0</span></th>
+  <td class="mono">1.15.0</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">application</td>
+  <td class="mono">AGPL-3.0-only</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">addr2line<span class="sb-sub">pkg:cargo/addr2line@0.25.1</span></th>
+  <td class="mono">0.25.1</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">adler2<span class="sb-sub">pkg:cargo/adler2@2.0.1</span></th>
+  <td class="mono">2.0.1</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">aho-corasick<span class="sb-sub">pkg:cargo/aho-corasick@1.1.4</span></th>
+  <td class="mono">1.1.4</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">alloca<span class="sb-sub">pkg:cargo/alloca@0.4.0</span></th>
+  <td class="mono">0.4.0</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">anes<span class="sb-sub">pkg:cargo/anes@0.1.6</span></th>
+  <td class="mono">0.1.6</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">anstream<span class="sb-sub">pkg:cargo/anstream@0.6.21</span></th>
+  <td class="mono">0.6.21</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">anstyle<span class="sb-sub">pkg:cargo/anstyle@1.0.13</span></th>
+  <td class="mono">1.0.13</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">anstyle-parse<span class="sb-sub">pkg:cargo/anstyle-parse@0.2.7</span></th>
+  <td class="mono">0.2.7</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">anstyle-query<span class="sb-sub">pkg:cargo/anstyle-query@1.1.5</span></th>
+  <td class="mono">1.1.5</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">anstyle-wincon<span class="sb-sub">pkg:cargo/anstyle-wincon@3.0.11</span></th>
+  <td class="mono">3.0.11</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">ash<span class="sb-sub">pkg:cargo/ash@0.38.0+1.3.281</span></th>
+  <td class="mono">0.38.0+1.3.281</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">autocfg<span class="sb-sub">pkg:cargo/autocfg@1.5.0</span></th>
+  <td class="mono">1.5.0</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">backtrace<span class="sb-sub">pkg:cargo/backtrace@0.3.76</span></th>
+  <td class="mono">0.3.76</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">backtrace-ext<span class="sb-sub">pkg:cargo/backtrace-ext@0.2.1</span></th>
+  <td class="mono">0.2.1</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">bit-set<span class="sb-sub">pkg:cargo/bit-set@0.11.1</span></th>
+  <td class="mono">0.11.1</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">bit-vec<span class="sb-sub">pkg:cargo/bit-vec@0.10.1</span></th>
+  <td class="mono">0.10.1</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">bit_field<span class="sb-sub">pkg:cargo/bit_field@0.10.3</span></th>
+  <td class="mono">0.10.3</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">bitflags<span class="sb-sub">pkg:cargo/bitflags@2.10.0</span></th>
+  <td class="mono">2.10.0</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">block-buffer<span class="sb-sub">pkg:cargo/block-buffer@0.12.1</span></th>
+  <td class="mono">0.12.1</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">borsh<span class="sb-sub">pkg:cargo/borsh@1.8.1</span></th>
+  <td class="mono">1.8.1</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">borsh-derive<span class="sb-sub">pkg:cargo/borsh-derive@1.8.1</span></th>
+  <td class="mono">1.8.1</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="AGPL-3.0-only">
+  <th scope="row">buildlang<span class="sb-sub">pkg:cargo/buildlang@1.15.0</span></th>
+  <td class="mono">1.15.0</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">AGPL-3.0-only</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="Proprietary">
+  <th scope="row">buildos-bootloader<span class="sb-sub">pkg:cargo/buildos-bootloader@2.0.0</span></th>
+  <td class="mono">2.0.0</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">Proprietary</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="Proprietary">
+  <th scope="row">buildos-kernel<span class="sb-sub">pkg:cargo/buildos-kernel@2.0.0</span></th>
+  <td class="mono">2.0.0</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">Proprietary</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">bumpalo<span class="sb-sub">pkg:cargo/bumpalo@3.20.3</span></th>
+  <td class="mono">3.20.3</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">bytes<span class="sb-sub">pkg:cargo/bytes@1.12.1</span></th>
+  <td class="mono">1.12.1</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">cast<span class="sb-sub">pkg:cargo/cast@0.3.0</span></th>
+  <td class="mono">0.3.0</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">cc<span class="sb-sub">pkg:cargo/cc@1.2.64</span></th>
+  <td class="mono">1.2.64</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">cfg-if<span class="sb-sub">pkg:cargo/cfg-if@1.0.4</span></th>
+  <td class="mono">1.0.4</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">cfg_aliases<span class="sb-sub">pkg:cargo/cfg_aliases@0.2.2</span></th>
+  <td class="mono">0.2.2</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">chacha20<span class="sb-sub">pkg:cargo/chacha20@0.10.2</span></th>
+  <td class="mono">0.10.2</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">ciborium<span class="sb-sub">pkg:cargo/ciborium@0.2.2</span></th>
+  <td class="mono">0.2.2</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">ciborium-io<span class="sb-sub">pkg:cargo/ciborium-io@0.2.2</span></th>
+  <td class="mono">0.2.2</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">ciborium-ll<span class="sb-sub">pkg:cargo/ciborium-ll@0.2.2</span></th>
+  <td class="mono">0.2.2</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">clap<span class="sb-sub">pkg:cargo/clap@4.5.60</span></th>
+  <td class="mono">4.5.60</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">clap_builder<span class="sb-sub">pkg:cargo/clap_builder@4.5.60</span></th>
+  <td class="mono">4.5.60</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">clap_derive<span class="sb-sub">pkg:cargo/clap_derive@4.5.55</span></th>
+  <td class="mono">4.5.55</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">clap_lex<span class="sb-sub">pkg:cargo/clap_lex@1.1.0</span></th>
+  <td class="mono">1.1.0</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">colorchoice<span class="sb-sub">pkg:cargo/colorchoice@1.0.4</span></th>
+  <td class="mono">1.0.4</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">console<span class="sb-sub">pkg:cargo/console@0.16.3</span></th>
+  <td class="mono">0.16.3</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">const-oid<span class="sb-sub">pkg:cargo/const-oid@0.10.2</span></th>
+  <td class="mono">0.10.2</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">core_detect<span class="sb-sub">pkg:cargo/core_detect@1.0.0</span></th>
+  <td class="mono">1.0.0</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="AGPL-3.0-only">
+  <th scope="row">coreutils<span class="sb-sub">pkg:cargo/coreutils@1.0.0</span></th>
+  <td class="mono">1.0.0</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">AGPL-3.0-only</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">cpufeatures<span class="sb-sub">pkg:cargo/cpufeatures@0.3.0</span></th>
+  <td class="mono">0.3.0</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">criterion<span class="sb-sub">pkg:cargo/criterion@0.8.2</span></th>
+  <td class="mono">0.8.2</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">criterion-plot<span class="sb-sub">pkg:cargo/criterion-plot@0.8.2</span></th>
+  <td class="mono">0.8.2</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">crossbeam-deque<span class="sb-sub">pkg:cargo/crossbeam-deque@0.8.6</span></th>
+  <td class="mono">0.8.6</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">crossbeam-epoch<span class="sb-sub">pkg:cargo/crossbeam-epoch@0.9.18</span></th>
+  <td class="mono">0.9.18</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">crossbeam-utils<span class="sb-sub">pkg:cargo/crossbeam-utils@0.8.21</span></th>
+  <td class="mono">0.8.21</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">crunchy<span class="sb-sub">pkg:cargo/crunchy@0.2.4</span></th>
+  <td class="mono">0.2.4</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">crypto-common<span class="sb-sub">pkg:cargo/crypto-common@0.2.2</span></th>
+  <td class="mono">0.2.2</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">diff<span class="sb-sub">pkg:cargo/diff@0.1.13</span></th>
+  <td class="mono">0.1.13</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">digest<span class="sb-sub">pkg:cargo/digest@0.11.3</span></th>
+  <td class="mono">0.11.3</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">either<span class="sb-sub">pkg:cargo/either@1.15.0</span></th>
+  <td class="mono">1.15.0</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">encode_unicode<span class="sb-sub">pkg:cargo/encode_unicode@1.0.0</span></th>
+  <td class="mono">1.0.0</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">equivalent<span class="sb-sub">pkg:cargo/equivalent@1.0.2</span></th>
+  <td class="mono">1.0.2</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">errno<span class="sb-sub">pkg:cargo/errno@0.3.14</span></th>
+  <td class="mono">0.3.14</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">fastrand<span class="sb-sub">pkg:cargo/fastrand@2.3.0</span></th>
+  <td class="mono">2.3.0</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">find-msvc-tools<span class="sb-sub">pkg:cargo/find-msvc-tools@0.1.9</span></th>
+  <td class="mono">0.1.9</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">fnv<span class="sb-sub">pkg:cargo/fnv@1.0.7</span></th>
+  <td class="mono">1.0.7</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">foldhash<span class="sb-sub">pkg:cargo/foldhash@0.2.0</span></th>
+  <td class="mono">0.2.0</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">getrandom<span class="sb-sub">pkg:cargo/getrandom@0.3.4</span></th>
+  <td class="mono">0.3.4</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">getrandom<span class="sb-sub">pkg:cargo/getrandom@0.4.3</span></th>
+  <td class="mono">0.4.3</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">gimli<span class="sb-sub">pkg:cargo/gimli@0.32.3</span></th>
+  <td class="mono">0.32.3</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">half<span class="sb-sub">pkg:cargo/half@2.7.1</span></th>
+  <td class="mono">2.7.1</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">hashbrown<span class="sb-sub">pkg:cargo/hashbrown@0.16.1</span></th>
+  <td class="mono">0.16.1</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">hashbrown<span class="sb-sub">pkg:cargo/hashbrown@0.17.1</span></th>
+  <td class="mono">0.17.1</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">heck<span class="sb-sub">pkg:cargo/heck@0.5.0</span></th>
+  <td class="mono">0.5.0</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">hybrid-array<span class="sb-sub">pkg:cargo/hybrid-array@0.4.12</span></th>
+  <td class="mono">0.4.12</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">indexmap<span class="sb-sub">pkg:cargo/indexmap@2.14.2</span></th>
+  <td class="mono">2.14.2</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="AGPL-3.0-only">
+  <th scope="row">init<span class="sb-sub">pkg:cargo/init@0.1.0</span></th>
+  <td class="mono">0.1.0</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">AGPL-3.0-only</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">insta<span class="sb-sub">pkg:cargo/insta@1.49.0</span></th>
+  <td class="mono">1.49.0</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">is_ci<span class="sb-sub">pkg:cargo/is_ci@1.2.0</span></th>
+  <td class="mono">1.2.0</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">is_terminal_polyfill<span class="sb-sub">pkg:cargo/is_terminal_polyfill@1.70.2</span></th>
+  <td class="mono">1.70.2</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">itertools<span class="sb-sub">pkg:cargo/itertools@0.13.0</span></th>
+  <td class="mono">0.13.0</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">itoa<span class="sb-sub">pkg:cargo/itoa@1.0.15</span></th>
+  <td class="mono">1.0.15</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">itoa<span class="sb-sub">pkg:cargo/itoa@1.0.18</span></th>
+  <td class="mono">1.0.18</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">js-sys<span class="sb-sub">pkg:cargo/js-sys@0.3.83</span></th>
+  <td class="mono">0.3.83</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="AGPL-3.0-only">
+  <th scope="row">libbuild<span class="sb-sub">pkg:cargo/libbuild@0.1.0</span></th>
+  <td class="mono">0.1.0</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">AGPL-3.0-only</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">libc<span class="sb-sub">pkg:cargo/libc@0.2.178</span></th>
+  <td class="mono">0.2.178</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">libloading<span class="sb-sub">pkg:cargo/libloading@0.8.9</span></th>
+  <td class="mono">0.8.9</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">libm<span class="sb-sub">pkg:cargo/libm@0.2.15</span></th>
+  <td class="mono">0.2.15</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">linux-raw-sys<span class="sb-sub">pkg:cargo/linux-raw-sys@0.11.0</span></th>
+  <td class="mono">0.11.0</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">lock_api<span class="sb-sub">pkg:cargo/lock_api@0.4.14</span></th>
+  <td class="mono">0.4.14</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">log<span class="sb-sub">pkg:cargo/log@0.4.29</span></th>
+  <td class="mono">0.4.29</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">memchr<span class="sb-sub">pkg:cargo/memchr@2.7.6</span></th>
+  <td class="mono">2.7.6</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">memchr<span class="sb-sub">pkg:cargo/memchr@2.8.0</span></th>
+  <td class="mono">2.8.0</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">miette<span class="sb-sub">pkg:cargo/miette@7.6.0</span></th>
+  <td class="mono">7.6.0</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">miette-derive<span class="sb-sub">pkg:cargo/miette-derive@7.6.0</span></th>
+  <td class="mono">7.6.0</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">miniz_oxide<span class="sb-sub">pkg:cargo/miniz_oxide@0.8.9</span></th>
+  <td class="mono">0.8.9</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">num-traits<span class="sb-sub">pkg:cargo/num-traits@0.2.19</span></th>
+  <td class="mono">0.2.19</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">object<span class="sb-sub">pkg:cargo/object@0.37.3</span></th>
+  <td class="mono">0.37.3</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">once_cell<span class="sb-sub">pkg:cargo/once_cell@1.21.3</span></th>
+  <td class="mono">1.21.3</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">once_cell_polyfill<span class="sb-sub">pkg:cargo/once_cell_polyfill@1.70.2</span></th>
+  <td class="mono">1.70.2</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">oorandom<span class="sb-sub">pkg:cargo/oorandom@11.1.5</span></th>
+  <td class="mono">11.1.5</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">owo-colors<span class="sb-sub">pkg:cargo/owo-colors@4.2.3</span></th>
+  <td class="mono">4.2.3</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">page_size<span class="sb-sub">pkg:cargo/page_size@0.6.0</span></th>
+  <td class="mono">0.6.0</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="MIT">
+  <th scope="row">photon-frametrace<span class="sb-sub">pkg:cargo/photon-frametrace@0.1.0</span></th>
+  <td class="mono">0.1.0</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">MIT</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="Proprietary">
+  <th scope="row">photon-hook<span class="sb-sub">pkg:cargo/photon-hook@1.0.0</span></th>
+  <td class="mono">1.0.0</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">Proprietary</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">plotters<span class="sb-sub">pkg:cargo/plotters@0.3.7</span></th>
+  <td class="mono">0.3.7</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">plotters-backend<span class="sb-sub">pkg:cargo/plotters-backend@0.3.7</span></th>
+  <td class="mono">0.3.7</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">plotters-svg<span class="sb-sub">pkg:cargo/plotters-svg@0.3.7</span></th>
+  <td class="mono">0.3.7</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">pretty_assertions<span class="sb-sub">pkg:cargo/pretty_assertions@1.4.1</span></th>
+  <td class="mono">1.4.1</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">proc-macro-crate<span class="sb-sub">pkg:cargo/proc-macro-crate@3.5.0</span></th>
+  <td class="mono">3.5.0</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">proc-macro2<span class="sb-sub">pkg:cargo/proc-macro2@1.0.103</span></th>
+  <td class="mono">1.0.103</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">proc-macro2<span class="sb-sub">pkg:cargo/proc-macro2@1.0.106</span></th>
+  <td class="mono">1.0.106</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">proptest<span class="sb-sub">pkg:cargo/proptest@1.12.0</span></th>
+  <td class="mono">1.12.0</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">ptr_meta<span class="sb-sub">pkg:cargo/ptr_meta@0.2.0</span></th>
+  <td class="mono">0.2.0</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">ptr_meta_derive<span class="sb-sub">pkg:cargo/ptr_meta_derive@0.2.0</span></th>
+  <td class="mono">0.2.0</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">quick-error<span class="sb-sub">pkg:cargo/quick-error@1.2.3</span></th>
+  <td class="mono">1.2.3</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">quote<span class="sb-sub">pkg:cargo/quote@1.0.42</span></th>
+  <td class="mono">1.0.42</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">quote<span class="sb-sub">pkg:cargo/quote@1.0.45</span></th>
+  <td class="mono">1.0.45</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">r-efi<span class="sb-sub">pkg:cargo/r-efi@5.3.0</span></th>
+  <td class="mono">5.3.0</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">r-efi<span class="sb-sub">pkg:cargo/r-efi@6.0.0</span></th>
+  <td class="mono">6.0.0</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">rand<span class="sb-sub">pkg:cargo/rand@0.10.3</span></th>
+  <td class="mono">0.10.3</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">rand_core<span class="sb-sub">pkg:cargo/rand_core@0.10.1</span></th>
+  <td class="mono">0.10.1</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">rand_xorshift<span class="sb-sub">pkg:cargo/rand_xorshift@0.5.0</span></th>
+  <td class="mono">0.5.0</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">rayon<span class="sb-sub">pkg:cargo/rayon@1.11.0</span></th>
+  <td class="mono">1.11.0</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+<tr data-comp-repo="buildlang" data-comp-lic="NOASSERTION">
+  <th scope="row">rayon-core<span class="sb-sub">pkg:cargo/rayon-core@1.13.0</span></th>
+  <td class="mono">1.13.0</td>
+  <td class="mono">buildlang</td>
+  <td class="mono">library</td>
+  <td class="mono">NOASSERTION</td>
+</tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<footer class="ds-prov" aria-label="Sheet provenance">
+  <span><b>Sheet</b> playground/sbom/index.html</span>
+  <span><b>Updated</b> 2026-11-27</span>
+  <span><b>Ground</b> Measured Drafting Sheet | 15/15 public repos | 556 components | CycloneDX 1.5 + SPDX 2.3</span>
+</footer>
+</article>
+<script type="module" src="./sbom_explorer.mjs"></script>
+</main>
+</body>
+</html>

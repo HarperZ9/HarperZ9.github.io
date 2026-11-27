@@ -554,12 +554,16 @@ function buildWasmBench() {
   <p class="ds-kicker">Measured Drafting Sheet / Live WebAssembly Verification Bench</p>
   <h1>BuildLang 18-Module WASM Live Verification Bench</h1>
   <p class="ds-lede">Eighteen standalone, zero-runtime pure-OSI MIT WebAssembly modules compiled directly by <code>buildc 1.15.0</code> (88,123 bytes / 86.06 KB total, max 9.30 KB per module, zero external CDN calls). Every module executes live in your browser against its SHA-256 digest and planted fail-closed controls.</p>
-  <p class="ds-meta"><span>86.06 KB total (18 modules)</span><span>Pure OSI MIT License</span><span>485 zero-FLAG kernels</span><span>223/234 (95.30%) built ideas</span></p>
+  <p class="ds-meta"><span>86.06 KB live bench (18 modules)</span><span>277.28 KB full archive (54 modules)</span><span>Pure OSI MIT License</span><span>528 zero-FLAG kernels</span><span>231/234 (98.72%) built ideas</span></p>
   <nav class="ds-ways" aria-label="Related pages">
     <a href="/playground/">The Playground</a>
+    <a href="/playground/benchmarks/">Verified Benchmarks</a>
+    <a href="/playground/crypto-bench/">Zero-C Crypto Lab</a>
+    <a href="/playground/gpu-shaders/">120 GPU Shaders</a>
+    <a href="/playground/sbom/">15-Repo SBOM</a>
     <a href="/experiments/#receipt-ledger">G9 SHA-256 Receipt Ledger</a>
-    <a href="/buildlang.html">BuildLang</a>
-    <a href="./playground_wasm_18pack_manifest.json">Manifest JSON</a>
+    <a href="./playground_wasm_18pack_manifest.json">18-Pack JSON</a>
+    <a href="./pack54/wasm_54pack_manifest.json">54-Pack JSON</a>
   </nav>
 </header>
 

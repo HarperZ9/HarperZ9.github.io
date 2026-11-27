@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en" data-type="stock">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<title>BuildLang Zero-C WebAssembly Cryptography Lab | Zain Dana Harper</title>
+<meta name="description" content="Four standalone pure-OSI MIT BuildLang WebAssembly cryptography modules (SHA-256, RFC 6962 Merkle, ChaCha20-Poly1305 AEAD, X25519 ECDH; 34.21 KB total) with live browser KAT verification and 1-bit fail-closed tamper toggles.">
+<link rel="canonical" href="https://harperz9.github.io/playground/crypto-bench/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="BuildLang Zero-C WebAssembly Cryptography Lab | Zain Dana Harper">
+<meta property="og:description" content="Four standalone pure-OSI MIT BuildLang WebAssembly cryptography modules (SHA-256, RFC 6962 Merkle, ChaCha20-Poly1305 AEAD, X25519 ECDH; 34.21 KB total) with live browser KAT verification and 1-bit fail-closed tamper toggles.">
+<meta property="og:url" content="https://harperz9.github.io/playground/crypto-bench/">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/home.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="BuildLang Zero-C WebAssembly Cryptography Lab | Zain Dana Harper">
+<meta name="twitter:description" content="Four standalone pure-OSI MIT BuildLang WebAssembly cryptography modules (SHA-256, RFC 6962 Merkle, ChaCha20-Poly1305 AEAD, X25519 ECDH; 34.21 KB total) with live browser KAT verification and 1-bit fail-closed tamper toggles.">
+<link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-6218db2f12">
+<link rel="stylesheet" href="/studies/studies.css?v=world-6218db2f12">
+<link rel="stylesheet" href="/world/site/depth.css?v=world-6218db2f12">
+<script type="module" src="/world/ui/shell/shell.js?v=world-6218db2f12"></script>
+<script type="module" src="/world/site/hand-scroll.js?v=world-6218db2f12"></script>
+<style>
+  .cb-toolbar { display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; padding: 0.85rem 0; border-bottom: 1px solid var(--line); }
+  .cb-toolbar button, .cb-toggle { background: transparent; color: var(--ink); border: 1px solid var(--line); padding: 0.4rem 0.78rem; min-height: 40px; font-family: var(--face-utility); font-size: 0.82rem; cursor: pointer; }
+  .cb-toolbar button:focus-visible, .cb-toggle:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .cb-toggle[aria-pressed="true"] { border-color: var(--ink); font-weight: 700; text-decoration: underline; }
+  .cb-readout { padding: 0.8rem 0; border-bottom: 1px solid var(--line); font-family: var(--face-utility); font-size: 0.84rem; font-variant-numeric: tabular-nums; }
+  .cb-readout p { margin: 0.22rem 0; }
+  .cb-table-wrap { width: 100%; overflow-x: auto; margin-top: 0.5rem; }
+  .cb-table-wrap:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .cb-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  .cb-table th, .cb-table td { text-align: left; padding: 0.55rem 0.65rem 0.55rem 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .cb-table thead th { font-family: var(--face-utility); font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--soft); font-weight: 600; }
+  .cb-table .mono { font-family: var(--face-utility); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .cb-sub { display: block; font-family: var(--face-utility); font-size: 0.74rem; color: var(--soft); font-weight: 400; margin-top: 0.14rem; white-space: normal; max-width: 34ch; }
+  .cb-pass { font-weight: 700; }
+  .cb-reject { font-weight: 700; text-decoration: underline; }
+</style></head>
+<body class="reading ds-sheet">
+
+<header class="o-hand o-said" aria-label="Site">
+  <a class="skip" href="#main">Skip to the page</a>
+  <a class="o-home" href="/">Zain Dana Harper</a>
+  <a data-o="band" href="/world/universe/proto/index.html"><span class="o-name">Map</span></a>
+  <button type="button" data-o="fold" aria-controls="o-menu" aria-keyshortcuts="m" aria-expanded="false" hidden><span class="o-name">Places</span><i></i><i></i><i></i></button>
+  <button type="button" data-o="lamp" data-theme-toggle aria-pressed="true"><span class="o-name">Day</span></button>
+  <span class="o-cell"><button type="button" data-o="peel" data-plain-toggle aria-pressed="false"><span class="o-name">Plain</span></button><span class="o-under" aria-hidden="true">Plain</span></span>
+</header>
+<dialog id="o-menu" data-o="menu" data-material="chladni" aria-label="Places">
+  <nav aria-label="Places">
+    <ul class="o-places">
+      <li><a href="/buildlang.html"><span class="o-word" data-display-on-open="glyphcell">BuildLang</span></a></li>
+      <li><a href="/flywheel.html"><span class="o-word" data-display-on-open="light">Flywheel</span></a><small class="o-sub"><a href="/cmmns.html">CMMNS</a> <a href="/articulate.html">Articulate</a></small></li>
+      <li><a href="/playground/"><span class="o-word" data-display-on-open="nightlights">The Playground</span></a><small class="o-sub"><a href="/playground/#estuary">Estuary</a> <a href="/playground/#native">Native renderer</a> <a href="/playground/#superframe">Superframe</a> <a href="/playground/#workbench">All creative engines</a> <a href="/playground/#low-water">Low Water</a></small></li>
+      <li><a href="/playground/#low-water"><span class="o-word" data-display-on-open="chladni">Game</span></a></li>
+      <li><a href="/#site"><span class="o-word" data-display-on-open="swarm">Site</span></a></li>
+      <li><a href="/floor.html"><span class="o-word" data-display-on-open="rope">Everything</span></a></li>
+      <li><a href="/models.html"><span class="o-word" data-display-on-open="rope">Models</span></a></li>
+      <li><a href="/tools.html"><span class="o-word" data-display-on-open="rope">Tools &amp; Repos</span></a></li>
+      <li><a href="/person.html"><span class="o-word" data-display-on-open="rope">About</span></a></li>
+      <li><a href="/architecture.html"><span class="o-word" data-display-on-open="rope">Architecture</span></a></li>
+      <li><a href="/world/universe/proto/index.html"><span class="o-word" data-display-on-open="rope">Map</span></a></li>
+      <li><a href="/publications.html"><span class="o-word" data-display-on-open="swarm">Writing</span></a></li>
+      <li><a href="/explainers.html"><span class="o-word" data-display-on-open="sound">Films</span></a></li>
+      <li><a href="/security.html"><span class="o-word" data-display-on-open="rope">Security</span></a></li>
+      <li><a href="/hire.html"><span class="o-word" data-display-on-open="rope">Work</span></a></li>
+      <li><a href="/cv.html"><span class="o-word" data-display-on-open="rope">CV</span></a></li>
+    </ul>
+  </nav>
+  <p class="o-menu-foot"><a href="/architecture.html">Architecture</a> <a href="/models.html">Models</a> <a href="/tools.html">Tools &amp; 159 Repos</a> <a href="/research.html">Research</a> <a href="/portfolio.html">Portfolio</a> <a href="/elements.html">Elements</a> <a href="/studies/">Studies</a> <a href="/site-index.html">Site index</a> <button type="button" class="o-close" data-qj-open onclick="this.closest('dialog').close()">Search (Ctrl+K)</button> <button type="button" class="o-close" onclick="this.closest('dialog').close()">Close (Esc)</button></p>
+</dialog>
+<main id="main" tabindex="-1">
+<article class="st" id="crypto-bench">
+<header class="ds-sheet-head">
+  <p class="ds-kicker">Measured Drafting Sheet / Live Zero-C WebAssembly Cryptography Lab</p>
+  <h1>BuildLang Zero-C WebAssembly Cryptography Lab</h1>
+  <p class="ds-lede">Four standalone, pure-OSI MIT BuildLang WebAssembly cryptography primitives (35033 bytes / 34.21 KB total, zero external CDN calls, zero network verification). Each module verifies its own SHA-256 binary digest via <code>crypto.subtle</code> prior to <code>WebAssembly.instantiate</code> and runs live RFC Known-Answer Tests with an interactive 1-bit tamper toggle that proves fail-closed rejection in-browser.</p>
+  <p class="ds-meta"><span>4/4 TLS-1.3 &amp; Transparency primitives</span><span>34.21 KB total (&lt;= 35 KB)</span><span>Zero external CDN calls</span><span>Live 1-bit fail-closed tamper mode</span></p>
+  <nav class="ds-ways" aria-label="Related surfaces">
+    <a href="/playground/">The Playground</a>
+    <a href="/playground/wasm-bench/">18-Module WASM Bench</a>
+    <a href="/playground/benchmarks/">Verified Benchmarks</a>
+    <a href="/experiments/#receipt-ledger">G9 SHA-256 Receipt Ledger</a>
+    <a href="./crypto_bench_manifest.json">Manifest JSON</a>
+  </nav>
+</header>
+
+<section class="cb-toolbar" aria-label="Cryptography verification controls">
+  <button id="cb-run-clean" type="button">Verify All 4 RFC KATs (Clean)</button>
+  <button id="cb-run-tamper" type="button">Flip 1 Bit Across All 4 (Fail-Closed)</button>
+</section>
+
+<section class="cb-readout" aria-live="polite">
+  <p id="cb-summary">Ready to verify 4 MIT Zero-C WebAssembly cryptography modules (34.21 KB total) via crypto.subtle SHA-256.</p>
+  <p id="cb-controls">Planted loader controls pending: corrupted WASM magic CompileError + tampered manifest SHA-256 pre-instantiation refusal.</p>
+</section>
+
+<div class="cb-table-wrap" tabindex="0" role="region" aria-label="Zero-C WebAssembly cryptography KAT verification ledger">
+  <table class="cb-table">
+    <thead>
+      <tr>
+        <th scope="col">Primitive &amp; Standard</th>
+        <th scope="col">WASM Size</th>
+        <th scope="col">Latency</th>
+        <th scope="col">Live Output &amp; KAT Check</th>
+        <th scope="col">Binary SHA-256</th>
+        <th scope="col">Interactive 1-Bit Tamper</th>
+        <th scope="col">Status</th>
+      </tr>
+    </thead>
+    <tbody id="cb-rows">
+<tr data-crypto-slug="sha256_zeroc">
+  <th scope="row">SHA-256 (FIPS 180-4)<span class="cb-sub">FIPS 180-4 | F1/N53 | SIG-146</span></th>
+  <td class="mono">7.50 KB<span class="cb-sub">7681 B</span></td>
+  <td class="mono">pending</td>
+  <td class="mono" title="ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad">ba7816bf8f01cfea4141...<span class="cb-sub">SHA-256(&quot;abc&quot;). Flip 1 bit in input block -&gt; all 8/8 digest words avalanche and fail KAT check.</span></td>
+  <td class="mono" title="c5754cae0eb87aa8dfa68562df5e29df0af1d3f750f31e1875f055fca267b3be">c5754cae0eb8</td>
+  <td><button type="button" class="cb-toggle" data-tamper-toggle="sha256_zeroc" aria-pressed="false">1-Bit Tamper: OFF</button></td>
+  <td class="mono">READY</td>
+</tr>
+<tr data-crypto-slug="merkle_rfc6962">
+  <th scope="row">Merkle Transparency Tree (RFC 6962)<span class="cb-sub">RFC 6962 | N49/AC1 | SIG-147</span></th>
+  <td class="mono">8.46 KB<span class="cb-sub">8662 B</span></td>
+  <td class="mono">pending</td>
+  <td class="mono" title="3c534b22b2e8c8fff07416469d39d9553b4d325e51874140e429b2c2a9ae22d2">3c534b22b2e8c8fff074...<span class="cb-sub">4-leaf 0x00/0x01 Merkle root. Mutate 1 leaf bit (rc=-902) or swap domain prefix 0x00/0x01 (rc=-903) -&gt; fail-closed rejection.</span></td>
+  <td class="mono" title="b64214e9e067c85ff41d2a5d00d8b73316d91287cb443403f35c03b37d441628">b64214e9e067</td>
+  <td><button type="button" class="cb-toggle" data-tamper-toggle="merkle_rfc6962" aria-pressed="false">1-Bit Tamper: OFF</button></td>
+  <td class="mono">READY</td>
+</tr>
+<tr data-crypto-slug="aead_chacha20_poly1305">
+  <th scope="row">ChaCha20-Poly1305 AEAD (RFC 8439)<span class="cb-sub">RFC 8439 Sec 2.8.2 | F1/N53 | SIG-148</span></th>
+  <td class="mono">13.96 KB<span class="cb-sub">14298 B</span></td>
+  <td class="mono">pending</td>
+  <td class="mono" title="1ae10b594f09e26a7e902ecbd0600691">1ae10b594f09e26a7e90...<span class="cb-sub">Poly1305 128-bit auth tag (ct0=d31a8d34). Flip 1 bit in ciphertext (or AAD -&gt; b7837c931c1b268f99eefa516bd77309) -&gt; auth tag mismatch.</span></td>
+  <td class="mono" title="e43ab1f0cc36e6f24bc15e914cb3d4b3d7c0128176fc74222924879195c61470">e43ab1f0cc36</td>
+  <td><button type="button" class="cb-toggle" data-tamper-toggle="aead_chacha20_poly1305" aria-pressed="false">1-Bit Tamper: OFF</button></td>
+  <td class="mono">READY</td>
+</tr>
+<tr data-crypto-slug="x25519_curve25519_zeroc">
+  <th scope="row">X25519 Curve25519 ECDH (RFC 7748)<span class="cb-sub">RFC 7748 Sec 6.1 | F1/AC1/N53 | SIG-149</span></th>
+  <td class="mono">4.29 KB<span class="cb-sub">4392 B</span></td>
+  <td class="mono">pending</td>
+  <td class="mono" title="4a5d9d5ba4ce2de1728e3bf480350f25e07e21c947d19e3376f09b3c1e161742">4a5d9d5ba4ce2de1728e...<span class="cb-sub">Shared secret (Alice/Bob ECDH + low-order guard). Flip 1 scalar bit -&gt; ecdh_match drops 1 to 0 across all 8/8 words; all-zero point rejected.</span></td>
+  <td class="mono" title="85f5feeba8623f58dc26496941d5698634f314a5265d13208d04d5467a81bf91">85f5feeba862</td>
+  <td><button type="button" class="cb-toggle" data-tamper-toggle="x25519_curve25519_zeroc" aria-pressed="false">1-Bit Tamper: OFF</button></td>
+  <td class="mono">READY</td>
+</tr>
+    </tbody>
+  </table>
+</div>
+
+<section class="ds-sec" id="vectors" aria-labelledby="h-vectors">
+  <h2 id="h-vectors">Verified RFC test vectors and honest scope limits</h2>
+  <ul class="ds-ledger">
+    <li><span class="ds-term">FIPS 180-4 SHA-256</span><span class="ds-gloss"><code>sha256_zeroc.wasm</code> (7.50 KB) reproduces <code>ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad</code> for <code>"abc"</code>; flipping 1 input bit shifts all 8/8 digest words to <code>a52d159f262b2c6ddb724a61840befc36eb30c88877a4030b65cbe86298449c9</code>.</span></li>
+    <li><span class="ds-term">RFC 6962 Merkle Tree</span><span class="ds-gloss"><code>merkle_rfc6962.wasm</code> (8.46 KB) computes the domain-separated <code>0x00</code>/<code>0x01</code> root <code>3c534b22b2e8c8fff07416469d39d9553b4d325e51874140e429b2c2a9ae22d2</code> (4/4 proofs); 1-bit leaf tamper shifts root to <code>b6c43fd6ac264eea036fa6c7cfcca8a20c582030fb7b4aa70f352781dd13bfd4</code> (<code>-902</code>) and domain-prefix swap returns <code>-903</code>.</span></li>
+    <li><span class="ds-term">RFC 8439 ChaCha20-Poly1305</span><span class="ds-gloss"><code>aead_chacha20_poly1305.wasm</code> (13.96 KB) matches Section 2.8.2 tag <code>1ae10b594f09e26a7e902ecbd0600691</code> and ciphertext word <code>d31a8d34</code>; 1-bit ciphertext tamper shifts tag to <code>843fc679081345d0a7aa816846c90f42</code> and AAD tamper shifts tag to <code>b7837c931c1b268f99eefa516bd77309</code>.</span></li>
+    <li><span class="ds-term">RFC 7748 X25519 ECDH</span><span class="ds-gloss"><code>x25519_curve25519_zeroc.wasm</code> (4.29 KB, zero WASM imports, compiled directly by our Zero-C compiler) reproduces Section 6.1 shared secret <code>4a5d9d5ba4ce2de1728e3bf480350f25e07e21c947d19e3376f09b3c1e161742</code> with <code>ecdh_match=1</code> and all-zero low-order point rejection; 1-bit scalar flip drops <code>ecdh_match</code> to <code>0</code> and shifts all 8/8 words to <code>e988be83790df90187b1f98e405bd22b55927b9f0facf56dc08a25f5afa32414</code>.</span></li>
+    <li><span class="ds-term">Scope Disclosure ([Reported])</span><span class="ds-gloss">These WebAssembly modules execute fixed RFC Known-Answer Tests and deterministic 1-bit fault injection for browser verification; they are audit artifacts and do not replace a constant-time production TLS library for secret key management.</span></li>
+  </ul>
+</section>
+
+<footer class="ds-prov" aria-label="Sheet provenance">
+  <span><b>Sheet</b> playground/crypto-bench/index.html</span>
+  <span><b>Updated</b> 2026-11-27</span>
+  <span><b>Ground</b> Measured Drafting Sheet | Pure OSI MIT | 4/4 Zero-C Crypto WASMs (34.21 KB)</span>
+</footer>
+</article>
+<script type="module" src="./crypto_bench.mjs"></script>
+</main>
+</body>
+</html>

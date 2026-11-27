@@ -1,0 +1,73 @@
+{
+  "schema": "wave89e-crypto-bench-manifest/1",
+  "license": "MIT",
+  "date": "2026-11-27",
+  "compiler": "BuildLang Zero-C & buildc 1.15.0 (MIT WebAssembly)",
+  "module_count": 4,
+  "total_bytes": 35033,
+  "total_kb": 34.21,
+  "budget_kb": 35.0,
+  "under_budget": true,
+  "modules": [
+    {
+      "slug": "sha256_zeroc",
+      "name": "SHA-256 (FIPS 180-4)",
+      "standard": "FIPS 180-4",
+      "idea_id": "F1/N53",
+      "formula_id": "SIG-146",
+      "wasm_path": "wasm/sha256_zeroc.wasm",
+      "wasm_bytes": 7681,
+      "wasm_kb": 7.5,
+      "wasm_sha256": "c5754cae0eb87aa8dfa68562df5e29df0af1d3f750f31e1875f055fca267b3be",
+      "kat_label": "SHA-256(\"abc\")",
+      "expected_clean": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
+      "expected_tampered": "a52d159f262b2c6ddb724a61840befc36eb30c88877a4030b65cbe86298449c9",
+      "tamper_description": "Flip 1 bit in input block -> all 8/8 digest words avalanche and fail KAT check."
+    },
+    {
+      "slug": "merkle_rfc6962",
+      "name": "Merkle Transparency Tree (RFC 6962)",
+      "standard": "RFC 6962",
+      "idea_id": "N49/AC1",
+      "formula_id": "SIG-147",
+      "wasm_path": "wasm/merkle_rfc6962.wasm",
+      "wasm_bytes": 8662,
+      "wasm_kb": 8.46,
+      "wasm_sha256": "b64214e9e067c85ff41d2a5d00d8b73316d91287cb443403f35c03b37d441628",
+      "kat_label": "4-leaf 0x00/0x01 Merkle root",
+      "expected_clean": "3c534b22b2e8c8fff07416469d39d9553b4d325e51874140e429b2c2a9ae22d2",
+      "expected_tampered": "b6c43fd6ac264eea036fa6c7cfcca8a20c582030fb7b4aa70f352781dd13bfd4",
+      "tamper_description": "Mutate 1 leaf bit (rc=-902) or swap domain prefix 0x00/0x01 (rc=-903) -> fail-closed rejection."
+    },
+    {
+      "slug": "aead_chacha20_poly1305",
+      "name": "ChaCha20-Poly1305 AEAD (RFC 8439)",
+      "standard": "RFC 8439 Sec 2.8.2",
+      "idea_id": "F1/N53",
+      "formula_id": "SIG-148",
+      "wasm_path": "wasm/aead_chacha20_poly1305.wasm",
+      "wasm_bytes": 14298,
+      "wasm_kb": 13.96,
+      "wasm_sha256": "e43ab1f0cc36e6f24bc15e914cb3d4b3d7c0128176fc74222924879195c61470",
+      "kat_label": "Poly1305 128-bit auth tag (ct0=d31a8d34)",
+      "expected_clean": "1ae10b594f09e26a7e902ecbd0600691",
+      "expected_tampered": "843fc679081345d0a7aa816846c90f42",
+      "tamper_description": "Flip 1 bit in ciphertext (or AAD -> b7837c931c1b268f99eefa516bd77309) -> auth tag mismatch."
+    },
+    {
+      "slug": "x25519_curve25519_zeroc",
+      "name": "X25519 Curve25519 ECDH (RFC 7748)",
+      "standard": "RFC 7748 Sec 6.1",
+      "idea_id": "F1/AC1/N53",
+      "formula_id": "SIG-149",
+      "wasm_path": "wasm/x25519_curve25519_zeroc.wasm",
+      "wasm_bytes": 4392,
+      "wasm_kb": 4.29,
+      "wasm_sha256": "85f5feeba8623f58dc26496941d5698634f314a5265d13208d04d5467a81bf91",
+      "kat_label": "Shared secret (Alice/Bob ECDH + low-order guard)",
+      "expected_clean": "4a5d9d5ba4ce2de1728e3bf480350f25e07e21c947d19e3376f09b3c1e161742",
+      "expected_tampered": "e988be83790df90187b1f98e405bd22b55927b9f0facf56dc08a25f5afa32414",
+      "tamper_description": "Flip 1 scalar bit -> ecdh_match drops 1 to 0 across all 8/8 words; all-zero point rejected."
+    }
+  ]
+}
