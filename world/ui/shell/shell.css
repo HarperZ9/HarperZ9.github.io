@@ -492,3 +492,6 @@ html.plain .salon > li,html.plain .notes li{opacity:1!important;transform:none!i
 @media (max-width:860px){.room-in > [style*="grid-column"],.room-in > .reading,.room-in > .notes{grid-column:1 / -1 !important}}
 html.is-embedded header.o-hand,html.is-embedded #o-menu,html.is-embedded footer.ds-prov{display:none!important}
 html.is-embedded main{padding-top:12px!important}
+.arrival-doors a,.pg-jump a,.ds-ways a{transition:color .16s ease,border-color .16s ease}
+.ds-video-figure video,.pg-media-grid video{border-radius:0;box-shadow:none}
+@media(prefers-reduced-motion:reduce){.arrival-doors a,.pg-jump a,.ds-ways a{transition:none!important}}
