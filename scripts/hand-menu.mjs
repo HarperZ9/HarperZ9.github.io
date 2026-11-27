@@ -12,13 +12,13 @@ export function menuItems(here = "") {
   return MENU.map(([href, tech, name, sub = []]) => `      <li><a href="${href}"${current(href)}><span class="o-word" data-display-on-open="${tech}">${esc(name)}</span></a>${sub.length ? `<small class="o-sub">${sub.map(([h, n]) => `<a href="${h}"${current(h)}>${esc(n)}</a>`).join(" ")}</small>` : ""}</li>`).join("\n");
 }
 
-export function menuDialog({ here = "", foot = '<a href="/architecture.html">Architecture</a> <a href="/models.html">Models</a> <a href="/tools.html">Tools &amp; 159 Repos</a> <a href="/research.html">Research</a> <a href="/portfolio.html">Portfolio</a> <a href="/elements.html">Elements</a> <a href="/studies/">Studies</a> <a href="/site-index.html">Site index</a>' } = {}) {
+export function menuDialog({ here = "", foot = '<a href="/research.html">Research</a> <a href="/portfolio.html">Portfolio</a> <a href="/elements.html">Elements</a> <a href="/studies/">Studies</a> <a href="/site-index.html">Site index</a>' } = {}) {
   return `<dialog id="o-menu" data-o="menu" data-material="chladni" aria-label="Places">
   <nav aria-label="Places">
     <ul class="o-places">
 ${menuItems(here)}
     </ul>
   </nav>
-  <p class="o-menu-foot">${foot} <button type="button" class="o-close" data-qj-open onclick="this.closest('dialog').close()">Search (Ctrl+K)</button> <button type="button" class="o-close" onclick="this.closest('dialog').close()">Close (Esc)</button></p>
+  <p class="o-menu-foot">${foot} <button type="button" class="o-close" data-qj-open onclick="this.closest('dialog').close()">Search<span class="o-key-hint"> (Ctrl+K)</span></button> <button type="button" class="o-close" onclick="this.closest('dialog').close()">Close<span class="o-key-hint"> (Esc)</span></button></p>
 </dialog>`;
 }

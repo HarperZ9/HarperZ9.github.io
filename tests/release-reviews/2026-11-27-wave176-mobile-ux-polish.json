@@ -1,0 +1,8 @@
+{
+  "date": "2026-11-27",
+  "note": "Wave 176: Mobile Goya full-width reveal, deduplicated Places menu without desktop key hints, hairline framing for Data/Engine plates, and Tools cleanup",
+  "paths": {
+    "flywheel.html": "1ccb468c846297d695df07a4450ac28313ba829122244ef899df2811e22be294",
+    "index.html": "9e42b35c141fd21d98a984164f1127bb0aec018653de88079755c2ef137cb14c"
+  }
+}
