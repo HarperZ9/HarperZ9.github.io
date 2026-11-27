@@ -18,22 +18,23 @@ const mjs = readFileSync(path.join(PG, "papers_catalog.mjs"), "utf8");
 const rawJson = readFileSync(path.join(PG, "papers_manifest.json"));
 const data = JSON.parse(rawJson.toString("utf8"));
 
-test("papers catalog SHA-256 is pinned in index.html and lists all 4 sealed preprints (68793, 68797, 68808, 68852)", async () => {
+test("papers catalog SHA-256 is pinned in index.html and lists all 5 sealed preprints (68793, 68797, 68808, 68852, 68873)", async () => {
   const m = html.match(/<meta name="papers-manifest-sha256" content="([0-9a-f]{64})">/);
   assert.ok(m, "missing papers-manifest-sha256 meta tag");
   const { sha256, data: verified } = await verifyPinnedCatalog(rawJson, m[1]);
   assert.equal(sha256, m[1]);
-  assert.equal(verified.papers.length, 4);
-  assert.deepEqual(verified.papers.map((p) => p.catalogue_id), [68793, 68797, 68808, 68852]);
-  assert.ok(verified.receipt_ledger.length >= 45);
+  assert.equal(verified.papers.length, 5);
+  assert.deepEqual(verified.papers.map((p) => p.catalogue_id), [68793, 68797, 68808, 68852, 68873]);
+  assert.ok(verified.receipt_ledger.length >= 50);
 });
 
 test("BibTeX and plain citation formatters and track filters work deterministically", () => {
-  assert.equal(filterPapers(data.papers, "all").length, 4);
+  assert.equal(filterPapers(data.papers, "all").length, 5);
   assert.equal(filterPapers(data.papers, "cs.PL-cs.OS").length, 1);
   assert.equal(filterPapers(data.papers, "cs.AI-cs.SE").length, 1);
   assert.equal(filterPapers(data.papers, "cs.GR").length, 1);
   assert.equal(filterPapers(data.papers, "cs.OS-SOSP").length, 1);
+  assert.equal(filterPapers(data.papers, "cs.CR-cs.OS").length, 1);
   for (const p of data.papers) {
     const bib = formatBibtex(p);
     const cit = formatCitation(p);
@@ -62,7 +63,7 @@ test("planted fail-closed controls: 1-byte tamper, bad schema, and truncated pap
 test("page markup matches Measured Drafting Sheet canon, honest negative results, zero CDN, zero local paths", () => {
   const chk = verifySurfaceConsistency(html, data);
   assert.equal(chk.ok, true);
-  assert.equal(chk.cards, 4);
+  assert.equal(chk.cards, 5);
   assert.match(html, /class="reading ds-sheet"/);
   assert.match(html, /\/world\/ui\/shell\/shell\.css/);
   assert.match(html, /Honest negative results and scope limits/);

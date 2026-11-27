@@ -40,10 +40,12 @@ BuildLang core buildc and CMMNS remain AGPL-3.0-only; docs/essays CC BY 4.0):
 - [The Playground](https://harperz9.github.io/playground/index.html),
   [live WASM bench (18 live + 78-module pack)](https://harperz9.github.io/playground/wasm-bench/index.html),
   [Zero-C BuildOS Triad (9 browser WASM modules)](https://harperz9.github.io/playground/buildos-triad/index.html),
+  [Post-Quantum, Enclave and RLVR WASM Lab](https://harperz9.github.io/playground/buildos-pq/index.html),
   [Benchmarks V4 (20 workloads, 57 cells)](https://harperz9.github.io/playground/benchmarks-v4/index.html),
   [cross-runtime verified benchmarks V2](https://harperz9.github.io/playground/benchmarks/index.html),
+  [Open MIT Datasets (BuildDB V6, RLVR v9, 200 GPU shaders)](https://harperz9.github.io/playground/datasets/index.html),
   [Competitive Surpass Explorer (76 rows, 8 lanes)](https://harperz9.github.io/playground/competitive-surpass/index.html),
-  [Four-Paper Systems Quartet catalog](https://harperz9.github.io/playground/papers/index.html),
+  [Five-Paper Systems Quintet catalog](https://harperz9.github.io/playground/papers/index.html),
   [Zero-C WebAssembly crypto lab](https://harperz9.github.io/playground/crypto-bench/index.html),
   [120/120 certified GPU shaders explorer](https://harperz9.github.io/playground/gpu-shaders/index.html), and
   [15-repo ecosystem SBOM ledger](https://harperz9.github.io/playground/sbom/index.html):

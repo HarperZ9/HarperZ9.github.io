@@ -2,8 +2,8 @@
   "schema": "research-papers-catalog/1",
   "license": "MIT",
   "date": "2026-11-27",
-  "paper_count": 4,
-  "receipt_count": 48,
+  "paper_count": 5,
+  "receipt_count": 56,
   "papers": [
     {
       "id": "paper1-buildlang",
@@ -159,6 +159,41 @@
         68835,
         68840,
         68841
+      ],
+      "primary_url": "https://github.com/HarperZ9/buildlang",
+      "send_policy": "STAGED_ON_DISK_ONLY_ZERO_EXTERNAL_UPLOADS"
+    },
+    {
+      "id": "paper5-pq-enclave",
+      "number": 5,
+      "bibtex_key": "harper2026pqenclave",
+      "track_id": "cs.CR-cs.OS",
+      "track_label": "arXiv cs.CR / IEEE S&P",
+      "title": "Zero-C Post-Quantum Hybrid Key Exchange and Confidential Enclave Attestation Across Five ISAs",
+      "description": "Six-page arXiv (cs.CR / IEEE S&P security track) and Zenodo-ready technical preprint presenting zero-C five-ISA FIPS 203 q=3329 ML-KEM-512 Ring-NTT + X25519 hybrid key exchange (Slice 29, 68862, 25,674 B .wasm, 20/20 planted PQ/hybrid attacks rejected), measurement-bound HKDF/AEAD confidential enclave sealing and Ed25519 remote quote attestation (Slice 28, 68848, 35,925 B .wasm, 20/20 attacks), Superopt V7 R31..R40 (-51.16% bitwise crypto MIR cost, 1,600/1,600 soundness fuzzer, 68857), Flywheel enclave_quote_gate (400/400 Crucible tail-fuzz cases 0 bypasses, 68859), Goodhart PRM-vs-Oracle Valve (90/90 reward-hacking traps blocked, 68864), 19/19 native auditors (68865), and explicit pre-audit limits.",
+      "date": "2026-11-27",
+      "author": "Zain Dana Harper",
+      "affiliation": "Independent Researcher, Kent, Washington, USA (WA State Sole Proprietorship UBI 606-301-569)",
+      "license": "CC-BY-4.0",
+      "code_licenses": [
+        "MIT",
+        "AGPL-3.0-only"
+      ],
+      "pages": 6,
+      "words": 1319,
+      "pdf_bytes": 658184,
+      "pdf_file": "BUILDOS-PQ-ENCLAVE-PAPER5-2026-11-27.pdf",
+      "catalogue_id": 68873,
+      "claim_sha256": "sha256:26650539a6ae6cdf9ded6302361abc4a39676024d1143c8b68090dc910b87609",
+      "verified_catalogue_ids": [
+        68848,
+        68852,
+        68857,
+        68859,
+        68862,
+        68864,
+        68865,
+        68866
       ],
       "primary_url": "https://github.com/HarperZ9/buildlang",
       "send_policy": "STAGED_ON_DISK_ONLY_ZERO_EXTERNAL_UPLOADS"
@@ -648,13 +683,95 @@
       ]
     },
     {
+      "catalogue_id": 68848,
+      "role": "BuildOS Zero-C Slice 28 confidential enclave sealing and Ed25519 remote quote (35,925 B WASM)",
+      "papers": [
+        "Paper #5"
+      ],
+      "tracks": [
+        "cs.CR-cs.OS"
+      ]
+    },
+    {
       "catalogue_id": 68852,
       "role": "Paper #4 sealed preprint receipt (Zero-C Sovereign Microkernels Across Five ISAs)",
       "papers": [
-        "Paper #4"
+        "Paper #4",
+        "Paper #5"
       ],
       "tracks": [
-        "cs.OS-SOSP"
+        "cs.OS-SOSP",
+        "cs.CR-cs.OS"
+      ]
+    },
+    {
+      "catalogue_id": 68857,
+      "role": "BuildLang Superopt V7 R31..R40 (-51.16% crypto MIR cost, 1,600/1,600 soundness fuzzer)",
+      "papers": [
+        "Paper #5"
+      ],
+      "tracks": [
+        "cs.CR-cs.OS"
+      ]
+    },
+    {
+      "catalogue_id": 68859,
+      "role": "Flywheel enclave_quote_gate and GPU 200-pack verifier (400/400 Crucible fuzz)",
+      "papers": [
+        "Paper #5"
+      ],
+      "tracks": [
+        "cs.CR-cs.OS"
+      ]
+    },
+    {
+      "catalogue_id": 68862,
+      "role": "BuildOS Zero-C Slice 29 FIPS 203 ML-KEM-512 + X25519 hybrid KEM (25,674 B WASM)",
+      "papers": [
+        "Paper #5"
+      ],
+      "tracks": [
+        "cs.CR-cs.OS"
+      ]
+    },
+    {
+      "catalogue_id": 68864,
+      "role": "Test-time compute MCTS Goodhart valve (120/120 solves, 90/90 traps blocked)",
+      "papers": [
+        "Paper #5"
+      ],
+      "tracks": [
+        "cs.CR-cs.OS"
+      ]
+    },
+    {
+      "catalogue_id": 68865,
+      "role": "19/19 live native BuildLang auditors, 20 binaries, 78/78 MIT WASM, 563 formulas",
+      "papers": [
+        "Paper #5"
+      ],
+      "tracks": [
+        "cs.CR-cs.OS"
+      ]
+    },
+    {
+      "catalogue_id": 68866,
+      "role": "Master launch and data room Index V6 and Portfolio Integrity Auditor V7 (78/78 receipts)",
+      "papers": [
+        "Paper #5"
+      ],
+      "tracks": [
+        "cs.CR-cs.OS"
+      ]
+    },
+    {
+      "catalogue_id": 68873,
+      "role": "Paper #5 sealed preprint receipt (Zero-C Post-Quantum Hybrid KEM and Enclave Attestation)",
+      "papers": [
+        "Paper #5"
+      ],
+      "tracks": [
+        "cs.CR-cs.OS"
       ]
     }
   ]

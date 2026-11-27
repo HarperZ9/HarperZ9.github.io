@@ -25,7 +25,7 @@ const PAGES = [
   { path: '/world/sound/sound.html' }, { path: '/world/visualizer/web/grid.html' }, { path: '/world/visualizer/web/index.html' },
   { path: '/system/discovery/lab.html' }, { path: '/system/kit/specimen.html' },
   { path: '/playground/', rooms: ['estuary', 'forge', 'shader', 'sound', 'field'], then: { 'shd-mod-tgt': '#shd-mod-add' } },
-  { path: '/playground/benchmarks/' }, { path: '/playground/benchmarks-v4/' }, { path: '/playground/competitive-surpass/' }, { path: '/playground/gpu-shaders/' }, { path: '/playground/sbom/' },
+  { path: '/playground/benchmarks/' }, { path: '/playground/benchmarks-v4/' }, { path: '/playground/buildos-pq/' }, { path: '/playground/competitive-surpass/' }, { path: '/playground/datasets/' }, { path: '/playground/gpu-shaders/' }, { path: '/playground/sbom/' },
 ];
 // Not driven here, with the reason: the Studio has tests/studio-selects.cjs; the live renderer and the packaged
 // viewer need WebGPU (tests/raw-live.cjs drives the renderer where a GPU answers); a source template is not a page.

@@ -1,0 +1,187 @@
+{
+  "schema": "buildos-pq-showcase/1",
+  "license": "MIT",
+  "date": "2026-11-27",
+  "total_wasm_bytes": 89840,
+  "total_modules": 4,
+  "total_attacks": 12,
+  "modules": [
+    {
+      "id": "pq_hybrid_kem",
+      "label": "BuildOS Slice 29: PQ Hybrid KEM",
+      "short_label": "PQ Hybrid KEM",
+      "file": "buildos_pq_hybrid_kem_zeroc.wasm",
+      "bytes": 25674,
+      "sha256": "d16baadbacbf27a49ca0b069d363f7aa69f1e1a28e46d8b13c380d6c02c5804e",
+      "imports_count": 0,
+      "imports_note": "0 host imports (Zero-C Stage-2)",
+      "receipt_id": 68862,
+      "summary": "FIPS 203 q=3329 ML-KEM-512 Ring-NTT + X25519 Hybrid KEM + HKDF-SHA256 + ChaCha20-Poly1305 AEAD.",
+      "nominal_expr": "pq_hybrid_kem_run(0n) === 1n"
+    },
+    {
+      "id": "enclave_attest",
+      "label": "BuildOS Slice 28: Confidential Enclave",
+      "short_label": "Confidential Enclave",
+      "file": "buildos_enclave_attest_zeroc.wasm",
+      "bytes": 35925,
+      "sha256": "ee57385625f35235bcdf554b4d5f5602f8d75bce84227dbd537b00e11da95e00",
+      "imports_count": 0,
+      "imports_note": "0 host imports (Zero-C Stage-2)",
+      "receipt_id": 68848,
+      "summary": "Measurement-bound HKDF/AEAD sealing, zero-egress allowlist, and Ed25519 remote quote attestation.",
+      "nominal_expr": "enclave_attest_run(0n) === 1n"
+    },
+    {
+      "id": "mcts_goodhart",
+      "label": "Titan MCTS + Goodhart Valve",
+      "short_label": "MCTS + Goodhart Valve",
+      "file": "titan_test_time_mcts_oracle.wasm",
+      "bytes": 13626,
+      "sha256": "9bc9b5f853cd7c1bfda16d6fc2fd42df9e166a34321a7ca6743bbc24253f27ba",
+      "imports_count": 5,
+      "imports_note": "5 no-op env.print_* stubs (0 I/O)",
+      "receipt_id": 68864,
+      "summary": "120-problem test-time PUCT search (120/120 solved vs 30/120 greedy = 4.00x) blocking 90/90 Goodhart traps.",
+      "nominal_expr": "run_titan_mcts_wasm() -> 120/120, hash=143053981"
+    },
+    {
+      "id": "rlvr_synthesizer",
+      "label": "Titan E-Graph RLVR Synthesizer",
+      "short_label": "RLVR Synthesizer",
+      "file": "titan_egraph_rlvr_synthesizer.wasm",
+      "bytes": 14615,
+      "sha256": "13eedcd6a398f50a1458f73f5a0dc71b1822cb482fccea85377d5979422ecdb0",
+      "imports_count": 5,
+      "imports_note": "5 no-op env.print_* stubs (0 I/O)",
+      "receipt_id": 68868,
+      "summary": "Self-play RLVR (2/16 to 16/16 monotonic = 8.00x, 961 verified proofs, 92 traps rejected, 46 ops saved).",
+      "nominal_expr": "run_titan_rlvr_wasm() -> 16/16, hash=3868613143"
+    }
+  ],
+  "attacks": [
+    {
+      "id": "pq_ct_tamper",
+      "module_id": "pq_hybrid_kem",
+      "module_label": "PQ Hybrid KEM",
+      "kind": "pq_mode",
+      "arg": 1,
+      "expected_rc": -101,
+      "call_expr": "pq_hybrid_kem_run(1n)",
+      "label": "1-bit ML-KEM ciphertext tamper (FO implicit rejection)"
+    },
+    {
+      "id": "pq_x25519_mitm",
+      "module_id": "pq_hybrid_kem",
+      "module_label": "PQ Hybrid KEM",
+      "kind": "pq_mode",
+      "arg": 2,
+      "expected_rc": -201,
+      "call_expr": "pq_hybrid_kem_run(2n)",
+      "label": "1-bit X25519 peer public-key MITM"
+    },
+    {
+      "id": "pq_coeff_oob",
+      "module_id": "pq_hybrid_kem",
+      "module_label": "PQ Hybrid KEM",
+      "kind": "pq_mode",
+      "arg": 3,
+      "expected_rc": -301,
+      "call_expr": "pq_hybrid_kem_run(3n)",
+      "label": "Polynomial coefficient out-of-range (>= 3329) injection"
+    },
+    {
+      "id": "pq_aead_tag",
+      "module_id": "pq_hybrid_kem",
+      "module_label": "PQ Hybrid KEM",
+      "kind": "pq_mode",
+      "arg": 4,
+      "expected_rc": -401,
+      "call_expr": "pq_hybrid_kem_run(4n)",
+      "label": "AEAD 1-bit Poly1305 authentication tag tamper"
+    },
+    {
+      "id": "enc_mr_tamper",
+      "module_id": "enclave_attest",
+      "module_label": "Confidential Enclave",
+      "kind": "enclave_mode",
+      "arg": 1,
+      "expected_rc": -101,
+      "call_expr": "enclave_attest_run(1n)",
+      "label": "1-bit mr_enclave tamper failing ChaCha20-Poly1305 unseal"
+    },
+    {
+      "id": "enc_nonce_replay",
+      "module_id": "enclave_attest",
+      "module_label": "Confidential Enclave",
+      "kind": "enclave_mode",
+      "arg": 2,
+      "expected_rc": -201,
+      "call_expr": "enclave_attest_run(2n)",
+      "label": "Stale/replayed attestation nonce (seq 41 <= 41)"
+    },
+    {
+      "id": "enc_cap_egress",
+      "module_id": "enclave_attest",
+      "module_label": "Confidential Enclave",
+      "kind": "enclave_mode",
+      "arg": 3,
+      "expected_rc": -301,
+      "call_expr": "enclave_attest_run(3n)",
+      "label": "Unauthorized zero-egress capability violation (CAP_NET_EGRESS)"
+    },
+    {
+      "id": "enc_ed25519_sig",
+      "module_id": "enclave_attest",
+      "module_label": "Confidential Enclave",
+      "kind": "enclave_mode",
+      "arg": 4,
+      "expected_rc": -401,
+      "call_expr": "enclave_attest_run(4n)",
+      "label": "Forged Ed25519 remote quote signature S"
+    },
+    {
+      "id": "mcts_goodhart_trap",
+      "module_id": "mcts_goodhart",
+      "module_label": "MCTS + Goodhart Valve",
+      "kind": "mcts_valve",
+      "prm": 0.95,
+      "oracle": 0,
+      "expected_rc": 2,
+      "call_expr": "eval_goodhart_valve(0.95, 0.0)",
+      "label": "Deceptive PRM proxy (0.95) with failing symbolic oracle (0.0) -> GOODHART_TRAP"
+    },
+    {
+      "id": "mcts_zero_budget",
+      "module_id": "mcts_goodhart",
+      "module_label": "MCTS + Goodhart Valve",
+      "kind": "mcts_budget",
+      "budget": 0,
+      "expected_rc": -401,
+      "call_expr": "validate_mcts_budget(0)",
+      "label": "Zero search budget fail-closed trap"
+    },
+    {
+      "id": "rlvr_proxy_hack",
+      "module_id": "rlvr_synthesizer",
+      "module_label": "RLVR Synthesizer",
+      "kind": "rlvr_gate",
+      "oracle": 0,
+      "proxy": 0.98,
+      "expected_rc": -501,
+      "call_expr": "verified_policy_update_gate(0.0, 0.98)",
+      "label": "Unverified proxy reward-hack policy update (oracle=0, proxy=0.98)"
+    },
+    {
+      "id": "rlvr_unsound_rule",
+      "module_id": "rlvr_synthesizer",
+      "module_label": "RLVR Synthesizer",
+      "kind": "rlvr_rule",
+      "task": 0,
+      "rule": 11,
+      "expected_rc": 0,
+      "call_expr": "verify_candidate_oracle(0, 11)",
+      "label": "Unsound partial-test trap rewrite rule 11 (x & 31) rejected by 64-vector oracle"
+    }
+  ]
+}
