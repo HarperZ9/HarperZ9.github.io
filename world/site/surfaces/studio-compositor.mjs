@@ -136,9 +136,9 @@ export function mountUnifiedStudio(host) {
 <div class="sc-insp-links"><a href="/glass-water.html">Glass Optics</a> <a href="/build-color.html">OKLab/HDR</a> <a href="/swatches.html">Swatches</a> <a href="/world/exhibit/index.html">26 Exhibits</a></div>
 </div>
 <div class="sc-insp-pane" data-sc-ipane="worlds" hidden>
-<div class="sc-insp-group"><span class="sc-kicker">Rendering Worlds</span>
-<p class="sc-insp-meta">Low Water 5-Era Coastal World &middot; Superframe 39/39 0-ULP C++23 Renderer &middot; RAW DX12 6-Scene World (159/159, CS-040)</p>
-<div class="sc-insp-links"><a href="/media/low-water/walk.html">Low Water Walk</a> <a href="/playground/renderer-35/">39/39 0-ULP</a> <a href="/media/raw-native/viewer-0.8.0/web/viewer/index.html">RAW 3D Viewer</a> <a href="/gaussian-splats.html">Gaussian Splats</a> <a href="/world/universe/proto/index.html">World Map</a></div></div>
+<div class="sc-insp-group"><span class="sc-kicker">Flagship Rendering Worlds</span>
+<p class="sc-insp-meta">Superframe 39/39 0-ULP C++23 Renderer &middot; RAW DX12 6-Scene Volumetrics (1.476 ms RTX 4090, 159/159, CS-040 Kiruna Twilight &amp; 16 km Fog Cache)</p>
+<div class="sc-insp-links"><a href="/playground/renderer-35/">39/39 0-ULP</a> <a href="/media/raw-native/viewer-0.8.0/web/viewer/index.html">RAW 3D Viewer</a> <a href="/gaussian-splats.html">Gaussian Splats</a> <a href="/world/universe/proto/index.html">World Map</a></div></div>
 </div>
 <div class="sc-insp-pane" data-sc-ipane="compute" hidden>
 <div class="sc-insp-group"><span class="sc-kicker">Compute, OS &amp; Verification</span>
