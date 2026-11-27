@@ -117,18 +117,34 @@ export function mountUnifiedStudio(host) {
 <div class="sc-hud" aria-hidden="true"><span id="sc-hud-mode">11-layer consolidated studio</span><span id="sc-hud-sha">patchbay: ready (6 hops)</span></div></div>
 <p class="sc-status" id="sc-status" role="status" aria-live="polite">4-Zone Media Studio live: Multimedia Master active. Audio starts muted until Play is pressed.</p>
 </div>
-<aside class="sc-inspector" id="sc-inspector" aria-label="Contextual layer inspector">
-<div class="sc-rail-head"><span class="sc-kicker">Inspector</span></div>
-<label class="sc-type-in"><span>Living Type / Fourier Word</span><input type="text" id="sc-type-text" value="${esc(state.text)}" maxlength="18" aria-label="Living Type text"></label>
-<div class="sc-insp-group"><span class="sc-kicker">Field &amp; Optics</span>
+<aside class="sc-inspector" id="sc-inspector" aria-label="Contextual studio inspector">
+<div class="sc-rail-head"><span class="sc-kicker sc-acc">Studio Inspector</span>
+<div class="sc-insp-tabs" role="tablist" aria-label="Studio domains"><button type="button" role="tab" data-sc-itab="instruments" aria-selected="true">Instruments</button><button type="button" role="tab" data-sc-itab="lenses" aria-selected="false">Lenses</button><button type="button" role="tab" data-sc-itab="worlds" aria-selected="false">Worlds</button><button type="button" role="tab" data-sc-itab="compute" aria-selected="false">Compute</button></div></div>
+<div class="sc-insp-pane" data-sc-ipane="instruments">
+<label class="sc-type-in"><span>Accession / Living Type Word</span><input type="text" id="sc-type-text" value="${esc(state.text)}" maxlength="18" aria-label="Living Type text"></label>
+<div class="sc-insp-group"><span class="sc-kicker">Palette Ground</span>
+<div class="sc-pal-btns" role="group" aria-label="Studio palette"><button type="button" data-sc-pal="estuary" aria-pressed="true">Estuary</button><button type="button" data-sc-pal="obsidian" aria-pressed="false">Obsidian</button><button type="button" data-sc-pal="parchment" aria-pressed="false">Parchment</button><button type="button" data-sc-pal="cobalt" aria-pressed="false">Cobalt</button></div></div>
+<div class="sc-insp-group"><span class="sc-kicker">All Creative Instruments</span>
+<div class="sc-insp-links"><a href="/elements.html">Blend</a> <a href="/type-forge.html">Type Forge</a> <a href="/accession.html">Accession</a> <a href="/retro.html">Shaders/Retro</a> <a href="/loom.html">Loom</a> <a href="/studio.html?source=plot">Plotter</a> <a href="/studio.html?source=fractal">Fractals</a> <a href="/studio.html?source=spatial">Attractors</a> <a href="/playground/distill.html">Distill</a></div></div>
+</div>
+<div class="sc-insp-pane" data-sc-ipane="lenses" hidden>
+<div class="sc-insp-group"><span class="sc-kicker">Optical &amp; Perceptual Lens</span>
+<div class="sc-pal-btns" role="group" aria-label="Optical lens mode"><button type="button" data-sc-lens="luneburg" aria-pressed="true">Luneburg</button><button type="button" data-sc-lens="crt" aria-pressed="false">CRT / VHS</button><button type="button" data-sc-lens="iridescence" aria-pressed="false">Iridescence</button><button type="button" data-sc-lens="metamer" aria-pressed="false">Estuary</button></div>
 <label class="sc-op"><span>Stir X <output id="sc-ix-out">52%</output></span><input type="range" id="sc-insp-x" min="0" max="100" value="52" aria-label="Field stir X"></label>
 <label class="sc-op"><span>Stir Y <output id="sc-iy-out">46%</output></span><input type="range" id="sc-insp-y" min="0" max="100" value="46" aria-label="Field stir Y"></label>
 <label class="sc-op"><span>Energy <output id="sc-ie-out">35%</output></span><input type="range" id="sc-insp-energy" min="0" max="100" value="35" aria-label="Field energy"></label></div>
-<div class="sc-insp-group"><span class="sc-kicker">Palette Ground</span>
-<div class="sc-pal-btns" role="group" aria-label="Studio palette"><button type="button" data-sc-pal="estuary" aria-pressed="true">Estuary</button><button type="button" data-sc-pal="obsidian" aria-pressed="false">Obsidian</button><button type="button" data-sc-pal="parchment" aria-pressed="false">Parchment</button><button type="button" data-sc-pal="cobalt" aria-pressed="false">Cobalt</button></div></div>
-<div class="sc-insp-group"><span class="sc-kicker">Compute &amp; Verification</span>
-<p class="sc-insp-meta">BuildOS-2.2 &middot; 600/600 GPU FMA &middot; 112/112 MIT WASM &middot; 39/39 0-ULP</p>
-<div class="sc-insp-links"><a href="/playground/mir-assurance/">MIR Audit</a> <a href="/playground/gpu-560-fma/">GPU 600</a> <a href="/playground/wasm-bench/">WASM 112</a> <a href="/playground/renderer-35/">0-ULP</a></div></div>
+<div class="sc-insp-links"><a href="/glass-water.html">Glass Optics</a> <a href="/build-color.html">OKLab/HDR</a> <a href="/swatches.html">Swatches</a> <a href="/world/exhibit/index.html">26 Exhibits</a></div>
+</div>
+<div class="sc-insp-pane" data-sc-ipane="worlds" hidden>
+<div class="sc-insp-group"><span class="sc-kicker">Rendering Worlds</span>
+<p class="sc-insp-meta">Low Water 5-Era Coastal World &middot; Superframe 39/39 0-ULP C++23 Renderer &middot; RAW DX12 6-Scene World (159/159, CS-040)</p>
+<div class="sc-insp-links"><a href="/media/low-water/walk.html">Low Water Walk</a> <a href="/playground/renderer-35/">39/39 0-ULP</a> <a href="/media/raw-native/viewer-0.8.0/web/viewer/index.html">RAW 3D Viewer</a> <a href="/gaussian-splats.html">Gaussian Splats</a> <a href="/world/universe/proto/index.html">World Map</a></div></div>
+</div>
+<div class="sc-insp-pane" data-sc-ipane="compute" hidden>
+<div class="sc-insp-group"><span class="sc-kicker">Compute, OS &amp; Verification</span>
+<p class="sc-insp-meta">BuildOS-2.2 &middot; 600/600 GPU FMA &middot; 112/112 MIT WASM &middot; 4-Pillar --sovereign-audit &middot; BuildDB V11 (4,451) &middot; 10-Paper Decet</p>
+<div class="sc-insp-links"><a href="/playground/mir-assurance/">MIR Audit</a> <a href="/playground/threshold-storage/">Threshold HSM</a> <a href="/playground/buildos-cluster/">BuildOS-2.2</a> <a href="/playground/gpu-560-fma/">GPU 600 FMA</a> <a href="/playground/wasm-bench/">WASM 112</a> <a href="/playground/datasets/">Datasets V11</a> <a href="/playground/papers/">10 Papers</a></div></div>
+</div>
 </aside></div>
 <div class="sc-daw" id="sc-daw" role="toolbar" aria-label="DAW transport and sequencer">
 <div class="sc-daw-top"><button type="button" class="sc-play" id="sc-play" aria-pressed="false">Play DAW</button>
@@ -179,6 +195,24 @@ export function mountUnifiedStudio(host) {
     state.palette = PALS[id].slice();
     host.querySelectorAll('[data-sc-pal]').forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
     statusEl.textContent = `Studio palette switched to ${btn.textContent}.`;
+  }));
+  host.querySelectorAll('[data-sc-itab]').forEach((tab) => tab.addEventListener('click', () => {
+    const k = tab.dataset.scItab;
+    host.querySelectorAll('[data-sc-itab]').forEach((t) => t.setAttribute('aria-selected', String(t === tab)));
+    host.querySelectorAll('[data-sc-ipane]').forEach((p) => { p.hidden = p.dataset.scIpane !== k; });
+  }));
+  const LENS_CFG = {
+    luneburg: { stirEnergy: 0.35, grit: 0.14, space: 0.36 },
+    crt: { stirEnergy: 0.55, grit: 0.52, space: 0.24 },
+    iridescence: { stirEnergy: 0.68, grit: 0.22, space: 0.58 },
+    metamer: { stirEnergy: 0.44, grit: 0.18, space: 0.48 },
+  };
+  host.querySelectorAll('[data-sc-lens]').forEach((btn) => btn.addEventListener('click', () => {
+    const c = LENS_CFG[btn.dataset.scLens];
+    if (!c) return;
+    state.stirEnergy = c.stirEnergy; state.daw.grit = c.grit; state.daw.space = c.space;
+    host.querySelectorAll('[data-sc-lens]').forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+    statusEl.textContent = `Optical lens switched to ${btn.textContent}.`;
   }));
 
   const mk = (w = W, h = H) => { const c = document.createElement('canvas'); c.width = w; c.height = h; return [c, c.getContext('2d', { willReadFrequently: w < W })]; };
