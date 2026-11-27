@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-27",
+  "note": "Wave 178C: Demote archived Low Water prototype off headline billing and lead with 4-Zone Media Studio, Superframe 39/39 0-ULP, RAW DX12 1.476 ms CS-040, BuildLang 600/600 GPU FMA, and BuildOS-2.2",
+  "paths": {
+    "flywheel.html": "aa42a5ff4e4ee73290921f3d5d93c6386933a596626936f7a234c0ac8c023c74",
+    "index.html": "3d85a590813bb4d505e50bbeaf5a75aa4379a05bd4de40a42dc13f3f53cd8272",
+    "site-index.html": "8538e35d96819f22b3a7ecc1a5035ed66680d7d8a66b88709fa5259113980ef1",
+    "system/routes.js": "977954463526fb66d56fcc8d9c7b45c66d833da48f35da594d0197ce87fdc30c"
+  }
+}
