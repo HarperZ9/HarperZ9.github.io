@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en" data-type="stock">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<title>BuildOS Cluster, BFT, ZK and RSI Live WASM Lab | Zain Dana Harper</title>
+<meta name="description" content="Live in-browser WebAssembly lab executing BuildOS-2.1 Distributed Cluster, BFT Quorum Ledger, Curve25519 Pedersen/Schnorr ZK, and Titan Oracle-Gated RSI Pareto Orchestrator.">
+<link rel="canonical" href="https://harperz9.github.io/playground/buildos-cluster/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="BuildOS Cluster, BFT, ZK and RSI Live WASM Lab | Zain Dana Harper">
+<meta property="og:description" content="Live in-browser WebAssembly lab executing BuildOS-2.1 Distributed Cluster, BFT Quorum Ledger, Curve25519 Pedersen/Schnorr ZK, and Titan Oracle-Gated RSI Pareto Orchestrator.">
+<meta property="og:url" content="https://harperz9.github.io/playground/buildos-cluster/">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/home.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="BuildOS Cluster, BFT, ZK and RSI Live WASM Lab | Zain Dana Harper">
+<meta name="twitter:description" content="Live in-browser WebAssembly lab executing BuildOS-2.1 Distributed Cluster, BFT Quorum Ledger, Curve25519 Pedersen/Schnorr ZK, and Titan Oracle-Gated RSI Pareto Orchestrator.">
+<link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-6218db2f12">
+<link rel="stylesheet" href="/studies/studies.css?v=world-6218db2f12">
+<link rel="stylesheet" href="/world/site/depth.css?v=world-6218db2f12">
+<script type="module" src="/world/ui/shell/shell.js?v=world-6218db2f12"></script>
+<script type="module" src="/world/site/hand-scroll.js?v=world-6218db2f12"></script>
+<meta name="cluster-manifest-sha256" content="1eda93e59011f4a12b944269dbe497a445e6a9be915cd604776056c51e6bf5a0">
+<style>
+  .cl-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 0.7rem; padding: 0.85rem 0; border-bottom: 1px solid var(--line); }
+  .cl-card { border: 1px solid var(--line); padding: 0.72rem 0.82rem; min-width: 0; display: flex; flex-direction: column; gap: 0.32rem; }
+  .cl-card-k { font-family: var(--face-utility); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--soft); margin: 0; }
+  .cl-card-v { font-family: var(--face-utility); font-size: 1.02rem; font-weight: 700; margin: 0; font-variant-numeric: tabular-nums; }
+  .cl-card-s { font-size: 0.79rem; color: var(--soft); margin: 0; overflow-wrap: anywhere; }
+  .cl-card-out { font-family: var(--face-utility); font-size: 0.75rem; border-top: 1px solid var(--line); padding-top: 0.38rem; margin: 0.25rem 0 0; min-height: 4.6rem; overflow-wrap: anywhere; }
+  .cl-card-actions { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: auto; padding-top: 0.3rem; }
+  .cl-controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(195px, 1fr)); gap: 0.6rem 0.7rem; padding: 0.8rem 0; border-bottom: 1px solid var(--line); align-items: end; }
+  .cl-field { display: flex; flex-direction: column; gap: 0.25rem; font-family: var(--face-utility); font-size: 0.74rem; color: var(--soft); }
+  .cl-field select, .cl-btn { background: transparent; color: var(--ink); border: 1px solid var(--line); padding: 0.42rem 0.68rem; min-height: 40px; font-family: var(--face-utility); font-size: 0.8rem; }
+  .cl-btn { cursor: pointer; }
+  .cl-btn-primary { background: var(--ink); color: var(--paper, #f4f1ea); border-color: var(--ink); }
+  .cl-field select:focus-visible, .cl-btn:focus-visible, .cl-wrap:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .cl-readout { padding: 0.75rem 0; border-bottom: 1px solid var(--line); font-family: var(--face-utility); font-size: 0.81rem; font-variant-numeric: tabular-nums; }
+  .cl-readout p { margin: 0.2rem 0; }
+  .cl-log { margin: 0.45rem 0 0; padding: 0.65rem 0.75rem; border: 1px solid var(--line); font-family: var(--face-utility); font-size: 0.75rem; white-space: pre-wrap; overflow: auto; height: 12rem; }
+  .cl-wrap { width: 100%; overflow-x: auto; margin-top: 0.5rem; }
+  .cl-table { width: 100%; min-width: 720px; table-layout: fixed; border-collapse: collapse; font-size: 0.81rem; }
+  .cl-table th, .cl-table td { text-align: left; padding: 0.46rem 0.52rem 0.46rem 0; border-bottom: 1px solid var(--line); vertical-align: top; overflow-wrap: break-word; }
+  .cl-table th:last-child, .cl-table td:last-child { padding-right: 0; }
+  .cl-table thead th { font-family: var(--face-utility); font-size: 0.71rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--soft); font-weight: 600; }
+  .mono { font-family: var(--face-utility); font-size: 0.75rem; font-variant-numeric: tabular-nums; }
+</style></head>
+<body class="reading ds-sheet">
+
+<header class="o-hand o-said" aria-label="Site">
+  <a class="skip" href="#main">Skip to the page</a>
+  <a class="o-home" href="/">Zain Dana Harper</a>
+  <a data-o="band" href="/world/universe/proto/index.html"><span class="o-name">Map</span></a>
+  <button type="button" data-o="fold" aria-controls="o-menu" aria-keyshortcuts="m" aria-expanded="false" hidden><span class="o-name">Places</span><i></i><i></i><i></i></button>
+  <button type="button" data-o="lamp" data-theme-toggle aria-pressed="true"><span class="o-name">Day</span></button>
+  <span class="o-cell"><button type="button" data-o="peel" data-plain-toggle aria-pressed="false"><span class="o-name">Plain</span></button><span class="o-under" aria-hidden="true">Plain</span></span>
+</header>
+<dialog id="o-menu" data-o="menu" data-material="chladni" aria-label="Places">
+  <nav aria-label="Places">
+    <ul class="o-places">
+      <li><a href="/buildlang.html"><span class="o-word" data-display-on-open="glyphcell">BuildLang</span></a></li>
+      <li><a href="/flywheel.html"><span class="o-word" data-display-on-open="light">Flywheel</span></a><small class="o-sub"><a href="/cmmns.html">CMMNS</a> <a href="/articulate.html">Articulate</a></small></li>
+      <li><a href="/playground/"><span class="o-word" data-display-on-open="nightlights">The Playground</span></a><small class="o-sub"><a href="/playground/#estuary">Estuary</a> <a href="/playground/#native">Native renderer</a> <a href="/playground/#superframe">Superframe</a> <a href="/playground/#workbench">All creative engines</a> <a href="/playground/#low-water">Low Water</a></small></li>
+      <li><a href="/playground/#low-water"><span class="o-word" data-display-on-open="chladni">Game</span></a></li>
+      <li><a href="/#site"><span class="o-word" data-display-on-open="swarm">Site</span></a></li>
+      <li><a href="/floor.html"><span class="o-word" data-display-on-open="rope">Everything</span></a></li>
+      <li><a href="/models.html"><span class="o-word" data-display-on-open="rope">Models</span></a></li>
+      <li><a href="/tools.html"><span class="o-word" data-display-on-open="rope">Tools &amp; Repos</span></a></li>
+      <li><a href="/person.html"><span class="o-word" data-display-on-open="rope">About</span></a></li>
+      <li><a href="/architecture.html"><span class="o-word" data-display-on-open="rope">Architecture</span></a></li>
+      <li><a href="/world/universe/proto/index.html"><span class="o-word" data-display-on-open="rope">Map</span></a></li>
+      <li><a href="/publications.html"><span class="o-word" data-display-on-open="swarm">Writing</span></a></li>
+      <li><a href="/explainers.html"><span class="o-word" data-display-on-open="sound">Films</span></a></li>
+      <li><a href="/security.html"><span class="o-word" data-display-on-open="rope">Security</span></a></li>
+      <li><a href="/hire.html"><span class="o-word" data-display-on-open="rope">Work</span></a></li>
+      <li><a href="/cv.html"><span class="o-word" data-display-on-open="rope">CV</span></a></li>
+    </ul>
+  </nav>
+  <p class="o-menu-foot"><a href="/architecture.html">Architecture</a> <a href="/models.html">Models</a> <a href="/tools.html">Tools &amp; 159 Repos</a> <a href="/research.html">Research</a> <a href="/portfolio.html">Portfolio</a> <a href="/elements.html">Elements</a> <a href="/studies/">Studies</a> <a href="/site-index.html">Site index</a> <button type="button" class="o-close" data-qj-open onclick="this.closest('dialog').close()">Search (Ctrl+K)</button> <button type="button" class="o-close" onclick="this.closest('dialog').close()">Close (Esc)</button></p>
+</dialog>
+<main id="main" tabindex="-1">
+<article class="st" id="buildos-cluster">
+<header class="ds-sheet-head">
+  <p class="ds-kicker">Measured Drafting Sheet / Distributed Cluster, BFT, ZK &amp; RSI WASM Lab</p>
+  <h1>BuildOS Cluster Lab</h1>
+  <p class="ds-lede">Live client-side WebAssembly lab executing four pure-OSI MIT BuildLang binaries (136,145 B = 132.95 KB total) directly in browser memory after WebCrypto SHA-256 verification: BuildOS-2.1 Distributed Sovereign Cluster (#68932), BFT Quorum Ledger (#68912), Curve25519 Pedersen/Schnorr ZK (#68923), and Titan Oracle-Gated RSI Pareto Orchestrator (#68942).</p>
+  <p class="ds-meta"><span>4 live MIT WASM binaries</span><span>132.95 KB total</span><span>16/16 live fail-closed attacks</span><span>3.020x RSI Pareto gain</span></p>
+  <nav class="ds-ways" aria-label="Related surfaces">
+    <a href="/playground/">The Playground</a>
+    <a href="/playground/buildos-v2/">BuildOS-2.0</a>
+    <a href="/playground/buildos-pq/">BuildOS PQ &amp; RLVR</a>
+    <a href="/playground/renderer-35/">35-Module Renderer</a>
+    <a href="./cluster_manifest.json">Manifest JSON</a>
+  </nav>
+</header>
+
+<section class="ds-sec" id="deck" aria-labelledby="h-deck">
+  <h2 id="h-deck">Live in-browser cluster, BFT, ZK, and RSI WebAssembly deck</h2>
+  <div class="cl-cards">
+    <div class="cl-card" data-mod-card="cluster_v21">
+      <p class="cl-card-k">BuildOS-2.1 Distributed Cluster (#68932)</p>
+      <p class="cl-card-v">66,784 B (0 host imports (Zero-C Stage-2))</p>
+      <p class="cl-card-s">Fused QUIC firewall + fuel-metered sandbox VM + ZK balance + 4-node BFT quorum + 4-leaf RFC 6962 cluster root.</p>
+      <p class="cl-card-s mono">buildos_v2_distributed_sovereign_zeroc.wasm | sha256:112fa8b78bfb3d...</p>
+      <p class="cl-card-out" data-mod-out="cluster_v21">Staged: buildos_v21_cluster_run(0n) === 1n</p>
+      <div class="cl-card-actions">
+        <button type="button" class="cl-btn cl-btn-primary" data-run-mod="cluster_v21">Run Live WASM</button>
+        <button type="button" class="cl-btn" data-atk-mod="cluster_v21">Inject Attacks</button>
+      </div>
+    </div>
+    <div class="cl-card" data-mod-card="bft_ledger">
+      <p class="cl-card-k">BuildOS Slice 33: BFT Quorum Ledger (#68912)</p>
+      <p class="cl-card-v">30,622 B (0 host imports (Zero-C Stage-2))</p>
+      <p class="cl-card-s">4-validator Ed25519 3/4 quorum consensus ledger with equivocation slashing and hash-chained block history.</p>
+      <p class="cl-card-s mono">buildos_bft_consensus_ledger_zeroc.wasm | sha256:aa3f21449db159...</p>
+      <p class="cl-card-out" data-mod-out="bft_ledger">Staged: bft_consensus_run(0n) === 1n</p>
+      <div class="cl-card-actions">
+        <button type="button" class="cl-btn cl-btn-primary" data-run-mod="bft_ledger">Run Live WASM</button>
+        <button type="button" class="cl-btn" data-atk-mod="bft_ledger">Inject Attacks</button>
+      </div>
+    </div>
+    <div class="cl-card" data-mod-card="zk_pedersen">
+      <p class="cl-card-k">BuildOS Slice 34: Curve25519 ZK (#68923)</p>
+      <p class="cl-card-v">29,478 B (0 host imports (Zero-C Stage-2))</p>
+      <p class="cl-card-s">Edwards25519 Pedersen value commitments (1000 = 625 + 375), Schnorr knowledge proof, and RFC 6962 Merkle inclusion.</p>
+      <p class="cl-card-s mono">buildos_zk_pedersen_merkle_zeroc.wasm | sha256:67f1da8c5ab1c4...</p>
+      <p class="cl-card-out" data-mod-out="zk_pedersen">Staged: zk_pedersen_run(0n) === 1n</p>
+      <div class="cl-card-actions">
+        <button type="button" class="cl-btn cl-btn-primary" data-run-mod="zk_pedersen">Run Live WASM</button>
+        <button type="button" class="cl-btn" data-atk-mod="zk_pedersen">Inject Attacks</button>
+      </div>
+    </div>
+    <div class="cl-card" data-mod-card="titan_rsi">
+      <p class="cl-card-k">Titan RSI Pareto Orchestrator (#68942)</p>
+      <p class="cl-card-v">9,261 B (5 no-op env.print_* stubs (0 I/O))</p>
+      <p class="cl-card-s">100-cycle oracle-gated Pareto allocator: 3.020x monotonic gain (3.39 to 10.24), 40/40 Goodhart rollbacks, 0 regressions.</p>
+      <p class="cl-card-s mono">titan_rsi_pareto_orchestrator.wasm | sha256:6b484d5ac52b5c...</p>
+      <p class="cl-card-out" data-mod-out="titan_rsi">Staged: run_titan_rsi_pareto_wasm() -&gt; 3.020x, hash=1468869863</p>
+      <div class="cl-card-actions">
+        <button type="button" class="cl-btn cl-btn-primary" data-run-mod="titan_rsi">Run Live WASM</button>
+        <button type="button" class="cl-btn" data-atk-mod="titan_rsi">Inject Attacks</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="ds-sec" id="workbench" aria-labelledby="h-bench">
+  <h2 id="h-bench">Interactive execution and 16-vector fail-closed attack workbench</h2>
+  <div class="cl-controls" role="region" aria-label="Cluster lab execution and attack controls">
+    <label class="cl-field" for="cl-module">Target WASM module
+      <select id="cl-module">
+        <option value="all">All 4 live WASM modules (132.95 KB)</option>
+        <option value="cluster_v21">BuildOS-2.1 Cluster (66,784 B)</option>
+        <option value="bft_ledger">BFT Quorum Ledger (30,622 B)</option>
+        <option value="zk_pedersen">Curve25519 ZK (29,478 B)</option>
+        <option value="titan_rsi">Titan RSI Pareto (9,261 B)</option>
+      </select>
+    </label>
+    <label class="cl-field" for="cl-attack">Attack or Goodhart trap vector
+      <select id="cl-attack">
+        <option value="cl_quic_replay">BuildOS-2.1 Cluster: QUIC replay packet sequence number (pn=101) (rc=-101)</option>
+        <option value="cl_peer_egress">BuildOS-2.1 Cluster: Unauthorized CAP_NET_PEER egress to Peer 3 (rc=-201)</option>
+        <option value="cl_vm_fuel">BuildOS-2.1 Cluster: Guest sandbox VM infinite-loop fuel exhaustion (rc=-301)</option>
+        <option value="cl_zk_inflate">BuildOS-2.1 Cluster: ZK value-inflation balance breach (v_out2=376) (rc=-401)</option>
+        <option value="cl_bft_equiv">BuildOS-2.1 Cluster: BFT equivocating validator V1 slashed (rc=-501)</option>
+        <option value="cl_ed25519_sig">BuildOS-2.1 Cluster: 1-bit forged Ed25519 quorum signature (V1) (rc=-601)</option>
+        <option value="bft_equiv_slash">BFT Quorum Ledger: Equivocating double-vote validator V1 slashed (rc=-101)</option>
+        <option value="bft_sub_quorum">BFT Quorum Ledger: Insufficient 2/4 sub-quorum (&lt; 3 validators) (rc=-201)</option>
+        <option value="bft_forged_sig">BFT Quorum Ledger: 1-bit forged Ed25519 validator signature S (rc=-301)</option>
+        <option value="bft_parent_tamper">BFT Quorum Ledger: Tampered parent-hash log history on Block 3 (rc=-401)</option>
+        <option value="zk_schnorr_s">Curve25519 ZK: 1-bit forged Schnorr response scalar s (rc=-101)</option>
+        <option value="zk_val_inflate">Curve25519 ZK: Value-inflation balance breach (v_out2=376) (rc=-201)</option>
+        <option value="zk_blind_open">Curve25519 ZK: Mismatched commitment opening blinding factor r_in (rc=-301)</option>
+        <option value="zk_merkle_sib">Curve25519 ZK: 1-bit forged RFC 6962 Merkle sibling hash (rc=-401)</option>
+        <option value="rsi_goodhart">Titan RSI Pareto: Unverified proxy gain with failing oracle rolled back (rc=-101)</option>
+        <option value="rsi_zero_budget">Titan RSI Pareto: Non-positive remaining Joule budget fail-closed trap (rc=-201)</option>
+      </select>
+    </label>
+    <button type="button" id="cl-run-all" class="cl-btn cl-btn-primary">Run Live WASM</button>
+    <button type="button" id="cl-run-attack" class="cl-btn">Inject Selected Attack</button>
+    <button type="button" id="cl-run-all-attacks" class="cl-btn">Run All 16 Attacks</button>
+  </div>
+  <div class="cl-readout" aria-live="polite">
+    <p id="cl-status">Awaiting WebCrypto SHA-256 manifest verification...</p>
+    <pre id="cl-log" class="cl-log">Click "Run Live WASM" or "Run All 16 Attacks" to verify all 4 pinned .wasm binaries directly inside browser memory.</pre>
+  </div>
+</section>
+
+<section class="ds-sec" id="matrix" aria-labelledby="h-matrix">
+  <h2 id="h-matrix">16-vector fail-closed cluster, Byzantine, ZK, and RSI trap matrix</h2>
+  <div class="cl-wrap" tabindex="0" role="region" aria-label="16 live fail-closed cluster and RSI attacks">
+    <table class="cl-table">
+      <colgroup><col style="width:19%"><col style="width:16%"><col style="width:27%"><col style="width:22%"><col style="width:16%"></colgroup>
+      <thead>
+        <tr><th scope="col">Vector ID</th><th scope="col">Module</th><th scope="col">Planted attack or trap</th><th scope="col">WASM call</th><th scope="col">Live status code</th></tr>
+      </thead>
+      <tbody>
+        <tr data-atk-row="cl_quic_replay" data-module="cluster_v21">
+          <td class="mono">cl_quic_replay</td>
+          <td><strong>BuildOS-2.1 Cluster</strong></td>
+          <td>QUIC replay packet sequence number (pn=101)</td>
+          <td class="mono">buildos_v21_cluster_run(1n)</td>
+          <td class="mono" data-atk-rc="cl_quic_replay">-101 (staged)</td>
+        </tr>
+        <tr data-atk-row="cl_peer_egress" data-module="cluster_v21">
+          <td class="mono">cl_peer_egress</td>
+          <td><strong>BuildOS-2.1 Cluster</strong></td>
+          <td>Unauthorized CAP_NET_PEER egress to Peer 3</td>
+          <td class="mono">buildos_v21_cluster_run(2n)</td>
+          <td class="mono" data-atk-rc="cl_peer_egress">-201 (staged)</td>
+        </tr>
+        <tr data-atk-row="cl_vm_fuel" data-module="cluster_v21">
+          <td class="mono">cl_vm_fuel</td>
+          <td><strong>BuildOS-2.1 Cluster</strong></td>
+          <td>Guest sandbox VM infinite-loop fuel exhaustion</td>
+          <td class="mono">buildos_v21_cluster_run(3n)</td>
+          <td class="mono" data-atk-rc="cl_vm_fuel">-301 (staged)</td>
+        </tr>
+        <tr data-atk-row="cl_zk_inflate" data-module="cluster_v21">
+          <td class="mono">cl_zk_inflate</td>
+          <td><strong>BuildOS-2.1 Cluster</strong></td>
+          <td>ZK value-inflation balance breach (v_out2=376)</td>
+          <td class="mono">buildos_v21_cluster_run(4n)</td>
+          <td class="mono" data-atk-rc="cl_zk_inflate">-401 (staged)</td>
+        </tr>
+        <tr data-atk-row="cl_bft_equiv" data-module="cluster_v21">
+          <td class="mono">cl_bft_equiv</td>
+          <td><strong>BuildOS-2.1 Cluster</strong></td>
+          <td>BFT equivocating validator V1 slashed</td>
+          <td class="mono">buildos_v21_cluster_run(5n)</td>
+          <td class="mono" data-atk-rc="cl_bft_equiv">-501 (staged)</td>
+        </tr>
+        <tr data-atk-row="cl_ed25519_sig" data-module="cluster_v21">
+          <td class="mono">cl_ed25519_sig</td>
+          <td><strong>BuildOS-2.1 Cluster</strong></td>
+          <td>1-bit forged Ed25519 quorum signature (V1)</td>
+          <td class="mono">buildos_v21_cluster_run(6n)</td>
+          <td class="mono" data-atk-rc="cl_ed25519_sig">-601 (staged)</td>
+        </tr>
+        <tr data-atk-row="bft_equiv_slash" data-module="bft_ledger">
+          <td class="mono">bft_equiv_slash</td>
+          <td><strong>BFT Quorum Ledger</strong></td>
+          <td>Equivocating double-vote validator V1 slashed</td>
+          <td class="mono">bft_consensus_run(1n)</td>
+          <td class="mono" data-atk-rc="bft_equiv_slash">-101 (staged)</td>
+        </tr>
+        <tr data-atk-row="bft_sub_quorum" data-module="bft_ledger">
+          <td class="mono">bft_sub_quorum</td>
+          <td><strong>BFT Quorum Ledger</strong></td>
+          <td>Insufficient 2/4 sub-quorum (&lt; 3 validators)</td>
+          <td class="mono">bft_consensus_run(2n)</td>
+          <td class="mono" data-atk-rc="bft_sub_quorum">-201 (staged)</td>
+        </tr>
+        <tr data-atk-row="bft_forged_sig" data-module="bft_ledger">
+          <td class="mono">bft_forged_sig</td>
+          <td><strong>BFT Quorum Ledger</strong></td>
+          <td>1-bit forged Ed25519 validator signature S</td>
+          <td class="mono">bft_consensus_run(3n)</td>
+          <td class="mono" data-atk-rc="bft_forged_sig">-301 (staged)</td>
+        </tr>
+        <tr data-atk-row="bft_parent_tamper" data-module="bft_ledger">
+          <td class="mono">bft_parent_tamper</td>
+          <td><strong>BFT Quorum Ledger</strong></td>
+          <td>Tampered parent-hash log history on Block 3</td>
+          <td class="mono">bft_consensus_run(4n)</td>
+          <td class="mono" data-atk-rc="bft_parent_tamper">-401 (staged)</td>
+        </tr>
+        <tr data-atk-row="zk_schnorr_s" data-module="zk_pedersen">
+          <td class="mono">zk_schnorr_s</td>
+          <td><strong>Curve25519 ZK</strong></td>
+          <td>1-bit forged Schnorr response scalar s</td>
+          <td class="mono">zk_pedersen_run(1n)</td>
+          <td class="mono" data-atk-rc="zk_schnorr_s">-101 (staged)</td>
+        </tr>
+        <tr data-atk-row="zk_val_inflate" data-module="zk_pedersen">
+          <td class="mono">zk_val_inflate</td>
+          <td><strong>Curve25519 ZK</strong></td>
+          <td>Value-inflation balance breach (v_out2=376)</td>
+          <td class="mono">zk_pedersen_run(2n)</td>
+          <td class="mono" data-atk-rc="zk_val_inflate">-201 (staged)</td>
+        </tr>
+        <tr data-atk-row="zk_blind_open" data-module="zk_pedersen">
+          <td class="mono">zk_blind_open</td>
+          <td><strong>Curve25519 ZK</strong></td>
+          <td>Mismatched commitment opening blinding factor r_in</td>
+          <td class="mono">zk_pedersen_run(3n)</td>
+          <td class="mono" data-atk-rc="zk_blind_open">-301 (staged)</td>
+        </tr>
+        <tr data-atk-row="zk_merkle_sib" data-module="zk_pedersen">
+          <td class="mono">zk_merkle_sib</td>
+          <td><strong>Curve25519 ZK</strong></td>
+          <td>1-bit forged RFC 6962 Merkle sibling hash</td>
+          <td class="mono">zk_pedersen_run(4n)</td>
+          <td class="mono" data-atk-rc="zk_merkle_sib">-401 (staged)</td>
+        </tr>
+        <tr data-atk-row="rsi_goodhart" data-module="titan_rsi">
+          <td class="mono">rsi_goodhart</td>
+          <td><strong>Titan RSI Pareto</strong></td>
+          <td>Unverified proxy gain with failing oracle rolled back</td>
+          <td class="mono">anti_goodhart_valve(0,-0.1,...)</td>
+          <td class="mono" data-atk-rc="rsi_goodhart">-101 (staged)</td>
+        </tr>
+        <tr data-atk-row="rsi_zero_budget" data-module="titan_rsi">
+          <td class="mono">rsi_zero_budget</td>
+          <td><strong>Titan RSI Pareto</strong></td>
+          <td>Non-positive remaining Joule budget fail-closed trap</td>
+          <td class="mono">anti_goodhart_valve(1,0.05,...,0)</td>
+          <td class="mono" data-atk-rc="rsi_zero_budget">-201 (staged)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="ds-sec" id="scope" aria-labelledby="h-scope">
+  <h2 id="h-scope">Honest scope and import boundaries</h2>
+  <p>Every .wasm payload on this page is verified via WebCrypto SHA-256 before WebAssembly.instantiate runs. All three Zero-C BuildOS binaries (buildos_v2_distributed_sovereign_zeroc.wasm, buildos_bft_consensus_ledger_zeroc.wasm, and buildos_zk_pedersen_merkle_zeroc.wasm) are compiled with zero C compiler and enforced fail-closed to have strictly 0 host imports (WebAssembly.Module.imports(mod).length === 0). titan_rsi_pareto_orchestrator.wasm imports only 5 no-op env.print_* stubs with 0 filesystem, 0 network, and 0 syscall access. All cryptography is pre-audit pure-OSI MIT research code.</p>
+</section>
+
+<footer class="ds-sheet-foot">
+  <p><strong>Sheet</strong> <code>playground/buildos-cluster/index.html</code></p>
+  <p><strong>Updated</strong> 2026-11-27</p>
+  <p><strong>Ground</strong> Measured Drafting Sheet | Pure OSI MIT | 4 live WASMs (132.95 KB) | 16/16 attacks | 3.020x RSI gain</p>
+</footer>
+</article>
+<script type="module" src="./cluster_lab.mjs"></script>
+</main>
+</body>
+</html>

@@ -1,115 +1,215 @@
 {
-  "schema": "open-mit-datasets-explorer/2",
+  "schema": "open-mit-datasets-explorer/6",
   "license": "MIT",
   "date": "2026-11-27",
-  "builddb_v6": {
-    "receipt_catalogue_id": 68839,
-    "total_rows": 2328,
+  "builddb_v10": {
+    "receipt_catalogue_id": 68955,
+    "total_rows": 4016,
     "non_mit_rows": 0,
-    "category_count": 15,
-    "parquet_bytes": 1467505,
-    "jsonl_bytes": 8114826,
-    "compression_ratio_x": 5.53,
-    "parquet_sha256": "sha256:ec02f0a7081b191887a28b7293fab3e234c6dac8babbbdebab75d74e10c40b9b"
+    "category_count": 30,
+    "parquet_bytes": 2077064,
+    "jsonl_bytes": 12631345,
+    "compression_ratio_x": 6.08,
+    "parquet_sha256": "sha256:54005a77840654ca83827af32fed6d303c1df92550499fbb0a352fef07a7f43a"
   },
-  "rlvr_v9": {
-    "receipt_catalogue_id": 68861,
-    "total_tasks": 640,
-    "train_tasks": 544,
-    "eval_tasks": 96,
-    "category_count": 16,
-    "jsonl_bytes": 653400,
-    "notebook_bytes": 4028,
+  "rlvr_v14": {
+    "receipt_catalogue_id": 68968,
+    "total_tasks": 1280,
+    "train_tasks": 1104,
+    "eval_tasks": 176,
+    "category_count": 36,
+    "jsonl_bytes": 1233040,
+    "notebook_bytes": 4093,
     "categories": [
       {
         "id": "buildlang_synthesis",
         "total": 80,
-        "is_v9_new": false
+        "is_new": false
       },
       {
         "id": "superopt_equivalence",
         "total": 80,
-        "is_v9_new": false
+        "is_new": false
       },
       {
         "id": "planted_negative_trap",
         "total": 64,
-        "is_v9_new": false
+        "is_new": false
+      },
+      {
+        "id": "bft_consensus_slice33",
+        "total": 32,
+        "is_new": false
       },
       {
         "id": "buildos_smp_mmu_iommu",
         "total": 32,
-        "is_v9_new": true
+        "is_new": false
+      },
+      {
+        "id": "buildos_v2_sovereign_merkle",
+        "total": 32,
+        "is_new": false
+      },
+      {
+        "id": "buildos_v21_cluster_slice35",
+        "total": 32,
+        "is_new": true
       },
       {
         "id": "buildos_zeroc_security",
         "total": 32,
-        "is_v9_new": false
+        "is_new": false
+      },
+      {
+        "id": "cap_sandbox_vm_slice32",
+        "total": 32,
+        "is_new": false
       },
       {
         "id": "competitive_surpass_cs",
         "total": 32,
-        "is_v9_new": false
+        "is_new": false
       },
       {
         "id": "compiler_backend_ops_parity",
         "total": 32,
-        "is_v9_new": true
+        "is_new": false
+      },
+      {
+        "id": "constant_time_taint_verifier",
+        "total": 32,
+        "is_new": false
+      },
+      {
+        "id": "gpu_280pack_frontier_compute",
+        "total": 32,
+        "is_new": false
+      },
+      {
+        "id": "gpu_320pack_photonics_geo",
+        "total": 32,
+        "is_new": false
+      },
+      {
+        "id": "gpu_400pack_quadricentennial",
+        "total": 32,
+        "is_new": false
+      },
+      {
+        "id": "gpu_480pack_astro_qec_gnn",
+        "total": 32,
+        "is_new": true
       },
       {
         "id": "gpu_5way_fma_superopt",
         "total": 32,
-        "is_v9_new": false
+        "is_new": false
       },
       {
         "id": "gpu_compute_5target",
         "total": 32,
-        "is_v9_new": false
+        "is_new": false
+      },
+      {
+        "id": "mcts_and_selfplay_egraph_rlvr",
+        "total": 32,
+        "is_new": false
+      },
+      {
+        "id": "mir_deny_effect_interproc",
+        "total": 32,
+        "is_new": false
+      },
+      {
+        "id": "oss_gold_and_renderer_30_33",
+        "total": 32,
+        "is_new": false
+      },
+      {
+        "id": "pq_kem_and_enclave_zeroc",
+        "total": 32,
+        "is_new": false
+      },
+      {
+        "id": "quic_lite_firewall_zeroc",
+        "total": 32,
+        "is_new": false
       },
       {
         "id": "rsi_anti_goodhart",
         "total": 32,
-        "is_v9_new": false
+        "is_new": false
+      },
+      {
+        "id": "shamir_threshold_hsm_slice36",
+        "total": 32,
+        "is_new": true
+      },
+      {
+        "id": "strict_determinism_float_verifier",
+        "total": 32,
+        "is_new": true
+      },
+      {
+        "id": "superframe_crt_lens_parity",
+        "total": 32,
+        "is_new": false
       },
       {
         "id": "superframe_native_bld",
         "total": 32,
-        "is_v9_new": false
+        "is_new": false
       },
       {
         "id": "superopt_v6_soundness",
         "total": 32,
-        "is_v9_new": false
+        "is_new": false
+      },
+      {
+        "id": "superopt_v7_ieee754_soundness",
+        "total": 32,
+        "is_new": false
       },
       {
         "id": "titan_epigenetic_unified",
         "total": 32,
-        "is_v9_new": true
+        "is_new": false
       },
       {
         "id": "unsolvable_honest_exit",
         "total": 32,
-        "is_v9_new": false
+        "is_new": false
+      },
+      {
+        "id": "wcet_max_stack_verifier",
+        "total": 32,
+        "is_new": false
       },
       {
         "id": "world_physics_3d_gpu",
         "total": 32,
-        "is_v9_new": true
+        "is_new": false
       },
       {
         "id": "zeroc_crypto_5isa",
         "total": 32,
-        "is_v9_new": false
+        "is_new": false
+      },
+      {
+        "id": "zk_pedersen_schnorr_slice34",
+        "total": 32,
+        "is_new": false
       }
     ]
   },
-  "gpu_200pack": {
-    "receipt_catalogue_id": 68850,
-    "total_shaders": 200,
-    "unique_kernels": 40,
+  "gpu_560pack": {
+    "receipt_catalogue_id": 68973,
+    "total_shaders": 560,
+    "unique_kernels": 112,
     "targets": 5,
-    "total_rewrites": 1228,
-    "total_bytes": 763290,
+    "total_rewrites": 4009,
+    "total_bytes": 2329296,
     "batches": [
       {
         "id": "batch1",
@@ -158,144 +258,333 @@
         "kernels": 4,
         "shaders": 20,
         "scope": "Heston Monte Carlo, PageRank graph step, Fourier optics, and radix-2 FFT"
+      },
+      {
+        "id": "wave134a_titan_ai_rlvr_240pack",
+        "kernels": 8,
+        "shaders": 40,
+        "scope": "FlashAttention-3, RMSNorm-SwiGLU, INT4 AWQ, MoE Top-K, Mamba-2 SSD, GRPO, SpecTree, H2O"
+      },
+      {
+        "id": "wave135c_frontier_domain_280pack",
+        "kernels": 8,
+        "shaders": 40,
+        "scope": "Rigid-body LCP, MPM snow, FDTD room IR, QFT gate, CryoEM CTF, EKF-SLAM, JFA 3D, HashGrid"
+      },
+      {
+        "id": "wave138a_photonics_geo_320pack",
+        "kernels": 8,
+        "shaders": 40,
+        "scope": "Photonics FDTD, seismic wave, plasma PIC, magnetohydrodynamics, SAR, LIDAR, and geodesy"
+      },
+      {
+        "id": "wave142a_crypto_med_360pack",
+        "kernels": 8,
+        "shaders": 40,
+        "scope": "NTT lattice, zk-MSM, elliptic-curve Montgomery, CT backprojection, MRI k-space, and ultrasound"
+      },
+      {
+        "id": "wave146a_quadricentennial_400pack",
+        "kernels": 8,
+        "shaders": 40,
+        "scope": "Quadricentennial aerospace CFD, orbital N-body, lattice QCD, climate GCM, and multi-physics kernels"
+      },
+      {
+        "id": "wave156b_astro_robotics_440pack",
+        "kernels": 8,
+        "shaders": 40,
+        "scope": "Kepler-Lambert orbit, MHD plasma flux, CCD IK, ICP SVD, Rayleigh-Mie, 3x3 Jacobi SVD, Hilbert/Morton 3D, Reed-Solomon GF(2^8)"
+      },
+      {
+        "id": "wave161a_qec_gnn_480pack",
+        "kernels": 8,
+        "shaders": 40,
+        "scope": "Surface-Code QEC syndrome, GraphSAGE, Black-Scholes Greeks, CSR SpMV CG, RTS Kalman, xxHash32 Bloom, Catmull-Clark, bilateral GI denoise"
+      },
+      {
+        "id": "wave163a_quingentennial_520pack",
+        "kernels": 8,
+        "shaders": 40,
+        "scope": "Quingentennial 520-pack certified 5-backend compute kernels (#68966)"
+      },
+      {
+        "id": "wave166a_qchem_zk_560pack",
+        "kernels": 8,
+        "shaders": 40,
+        "scope": "Quantum chemistry and zero-knowledge proving compute kernels (#68973)"
       }
     ]
   },
   "record_categories": [
     {
-      "id": "formula_kernel",
-      "label": "Formula kernels",
-      "group": "kernels-certs",
-      "rows": 557,
-      "share_pct": 23.93,
-      "receipt_id": 68839,
-      "description": "Zero-FLAG mathematical and systems formulas verified against independent oracles."
-    },
-    {
       "id": "rlvr_task",
       "label": "RLVR verifier tasks",
       "group": "rlvr-signals-papers",
-      "rows": 512,
-      "share_pct": 21.99,
-      "receipt_id": 68861,
-      "description": "Deterministic pure-MIT reinforcement-learning verifier tasks (512 in BuildDB V6, expanded to 640 in RLVR v9)."
+      "rows": 1152,
+      "share_pct": 28.69,
+      "receipt_id": 68946,
+      "description": "1,152 deterministic pure-MIT reinforcement-learning verifier tasks from JFC3P-14B-Oracle-v13 (992 train / 160 eval across 32 families)."
+    },
+    {
+      "id": "formula_kernel",
+      "label": "Formula kernels",
+      "group": "kernels-certs",
+      "rows": 589,
+      "share_pct": 14.67,
+      "receipt_id": 68955,
+      "description": "589 zero-FLAG mathematical and systems formulas verified against independent oracles."
     },
     {
       "id": "buildlang_kernel",
       "label": "BuildLang kernels",
       "group": "kernels-certs",
-      "rows": 323,
-      "share_pct": 13.87,
-      "receipt_id": 68839,
-      "description": "Pure-OSI MIT BuildLang verification, physics, rendering, and governance source kernels."
+      "rows": 492,
+      "share_pct": 12.25,
+      "receipt_id": 68955,
+      "description": "492 pure-OSI MIT BuildLang verification, physics, rendering, and governance source kernels."
+    },
+    {
+      "id": "gpu_shader_cert",
+      "label": "GPU shader certs",
+      "group": "kernels-certs",
+      "rows": 400,
+      "share_pct": 9.96,
+      "receipt_id": 68973,
+      "description": "Externally validated WGSL, HLSL, MSL, SPIR-V, and GLSL compute shader certifications (400 in V10, expanded to 560 in Wave 166A pack)."
+    },
+    {
+      "id": "zeroc_crypto_proof",
+      "label": "Zero-C crypto and OS proofs",
+      "group": "os-bench-sbom",
+      "rows": 285,
+      "share_pct": 7.1,
+      "receipt_id": 68932,
+      "description": "285 self-hosted Zero-C 5-ISA binary proofs across TLS, PQ KEM, enclave, BuildOS-2.0, QUIC-Lite, Sandbox VM, BFT, ZK, and BuildOS-2.1 cluster."
     },
     {
       "id": "author_idea",
       "label": "Author ideas register",
       "group": "rlvr-signals-papers",
       "rows": 234,
-      "share_pct": 10.05,
+      "share_pct": 5.83,
       "receipt_id": 68804,
-      "description": "Tracked idea registry records linked to verified implementation receipts."
+      "description": "234 tracked idea registry records linked to verified implementation receipts."
     },
     {
       "id": "superopt_cert",
       "label": "Superopt certificates",
       "group": "kernels-certs",
-      "rows": 139,
-      "share_pct": 5.97,
-      "receipt_id": 68839,
-      "description": "Proof-carrying e-graph rewrite certificates checked by buildc verify-cert."
+      "rows": 163,
+      "share_pct": 4.06,
+      "receipt_id": 68955,
+      "description": "163 proof-carrying e-graph rewrite certificates checked by buildc verify-cert."
     },
     {
-      "id": "gpu_shader_cert",
-      "label": "GPU shader certs",
+      "id": "playground_wasm_module",
+      "label": "Playground WASM modules",
       "group": "kernels-certs",
-      "rows": 120,
-      "share_pct": 5.15,
-      "receipt_id": 68850,
-      "description": "Externally validated WGSL, HLSL, MSL, SPIR-V, and GLSL compute shader certifications (120 in V6, 200 in Bicentennial pack)."
+      "rows": 100,
+      "share_pct": 2.49,
+      "receipt_id": 68961,
+      "description": "Compiled pure-OSI MIT browser WebAssembly verification modules with pinned SHA-256 digests (100 in V10, expanded to 106 in pack106)."
     },
     {
-      "id": "zeroc_crypto_proof",
-      "label": "Zero-C crypto and OS proofs",
-      "group": "os-bench-sbom",
+      "id": "gpu_isa_impact",
+      "label": "GPU ISA impact records",
+      "group": "rlvr-signals-papers",
       "rows": 80,
-      "share_pct": 3.44,
-      "receipt_id": 68816,
-      "description": "Self-hosted Zero-C 5-ISA binary proofs across TLS crypto and BuildOS microkernel slices."
+      "share_pct": 1.99,
+      "receipt_id": 68973,
+      "description": "80 per-backend FMA and instruction-level comparison records across 5 GPU targets."
     },
     {
       "id": "benchmark_v4",
       "label": "Benchmarks V4 records",
       "group": "os-bench-sbom",
       "rows": 77,
-      "share_pct": 3.31,
+      "share_pct": 1.92,
       "receipt_id": 68814,
-      "description": "Cross-ecosystem p50 runtime and parity measurements across native, WASM, Zero-C PE, and Python."
+      "description": "77 cross-ecosystem p50 runtime and parity measurements across native, WASM, Zero-C PE, and Python."
     },
     {
       "id": "competitive_signal",
       "label": "Competitive signals",
       "group": "rlvr-signals-papers",
       "rows": 76,
-      "share_pct": 3.26,
+      "share_pct": 1.89,
       "receipt_id": 68818,
       "description": "76 tracked competitive benchmark rows across 8 technical lanes."
-    },
-    {
-      "id": "playground_wasm_module",
-      "label": "Playground WASM modules",
-      "group": "kernels-certs",
-      "rows": 66,
-      "share_pct": 2.84,
-      "receipt_id": 68824,
-      "description": "Compiled pure-OSI MIT browser WebAssembly verification modules with pinned SHA-256 digests."
     },
     {
       "id": "flywheel_stdlib_verifier",
       "label": "Flywheel stdlib verifiers",
       "group": "os-bench-sbom",
-      "rows": 54,
-      "share_pct": 2.32,
-      "receipt_id": 68830,
-      "description": "Pure-stdlib Python verification harnesses audited by Crucible tail-risk fuzzing."
+      "rows": 76,
+      "share_pct": 1.89,
+      "receipt_id": 68918,
+      "description": "76 pure-stdlib Python verification harnesses audited by Crucible tail-risk fuzzing."
+    },
+    {
+      "id": "flywheel_merged_verifier",
+      "label": "Flywheel merged verifiers",
+      "group": "os-bench-sbom",
+      "rows": 36,
+      "share_pct": 0.9,
+      "receipt_id": 68955,
+      "description": "36 merged pure-OSI MIT Flywheel verification modules on origin/main."
+    },
+    {
+      "id": "flywheel_pr_graduated",
+      "label": "Flywheel PR graduated suites",
+      "group": "os-bench-sbom",
+      "rows": 33,
+      "share_pct": 0.82,
+      "receipt_id": 68955,
+      "description": "33 graduated pure-OSI MIT Flywheel PR verifier and attestation suite records."
     },
     {
       "id": "sbom_summary",
       "label": "SBOM V1 summaries",
       "group": "os-bench-sbom",
       "rows": 32,
-      "share_pct": 1.37,
+      "share_pct": 0.8,
       "receipt_id": 68722,
-      "description": "Initial SPDX and CycloneDX software bill of materials records across 15 public repositories."
+      "description": "32 initial SPDX and CycloneDX software bill of materials records across 15 public repositories."
     },
     {
       "id": "sbom_v2_summary",
       "label": "SBOM V2 summaries",
       "group": "os-bench-sbom",
       "rows": 31,
-      "share_pct": 1.33,
+      "share_pct": 0.77,
       "receipt_id": 68827,
-      "description": "Refreshed SPDX 2.3 and CycloneDX 1.5 SBOM records verifying 100% pure-OSI licensing."
+      "description": "31 refreshed SPDX 2.3 and CycloneDX 1.5 SBOM records verifying 100% pure-OSI licensing."
     },
     {
-      "id": "gpu_isa_impact",
-      "label": "GPU ISA impact records",
-      "group": "rlvr-signals-papers",
-      "rows": 24,
-      "share_pct": 1.03,
-      "receipt_id": 68850,
-      "description": "Per-backend FMA and instruction-level comparison records across 5 GPU targets."
+      "id": "repro_cert_proof",
+      "label": "Isolated reproducibility proofs",
+      "group": "os-bench-sbom",
+      "rows": 30,
+      "share_pct": 0.75,
+      "receipt_id": 68947,
+      "description": "30 isolated external contributor reproducibility proofs covering all 15/15 public repositories (5 flagships + 10 MCP servers)."
+    },
+    {
+      "id": "sbom_v3_summary",
+      "label": "SBOM V3 summaries",
+      "group": "os-bench-sbom",
+      "rows": 30,
+      "share_pct": 0.75,
+      "receipt_id": 68894,
+      "description": "30 refreshed SPDX 2.3 and CycloneDX 1.5 SBOM V3 records paired with 15/15 Open-Source Gold Standard governance."
+    },
+    {
+      "id": "native_cli_auditor",
+      "label": "Native CLI auditors",
+      "group": "kernels-certs",
+      "rows": 26,
+      "share_pct": 0.65,
+      "receipt_id": 68941,
+      "description": "26 compiled native BuildLang cockpit verification binaries running in sub-millisecond time."
+    },
+    {
+      "id": "privacy_hygiene_audit",
+      "label": "Privacy hygiene sweeps",
+      "group": "os-bench-sbom",
+      "rows": 15,
+      "share_pct": 0.37,
+      "receipt_id": 68937,
+      "description": "15 public repository SIG-058 privacy and metadata hygiene audit records (0 local paths, 0 secrets)."
+    },
+    {
+      "id": "repo_governance_audit",
+      "label": "Repo governance audits",
+      "group": "os-bench-sbom",
+      "rows": 15,
+      "share_pct": 0.37,
+      "receipt_id": 68894,
+      "description": "15 public repository Open-Source Gold Standard governance records (15/15 = 165/165)."
+    },
+    {
+      "id": "mcp_registry_server",
+      "label": "MCP Registry servers",
+      "group": "os-bench-sbom",
+      "rows": 10,
+      "share_pct": 0.25,
+      "receipt_id": 68916,
+      "description": "10 Official MCP Registry server metadata records with mcp-name and pure-OSI provenance."
+    },
+    {
+      "id": "cap_effect_audit",
+      "label": "Capability-effect audits",
+      "group": "kernels-certs",
+      "rows": 7,
+      "share_pct": 0.17,
+      "receipt_id": 68877,
+      "description": "7 interprocedural MIR capability-effect verification records (--deny-effect)."
     },
     {
       "id": "technical_paper_metadata",
       "label": "Technical paper metadata",
       "group": "rlvr-signals-papers",
+      "rows": 7,
+      "share_pct": 0.17,
+      "receipt_id": 68929,
+      "description": "7 structured preprint metadata records covering the Seven-Paper Systems Septet (#68793..#68929)."
+    },
+    {
+      "id": "ct_taint_audit",
+      "label": "Constant-time taint audits",
+      "group": "kernels-certs",
+      "rows": 5,
+      "share_pct": 0.12,
+      "receipt_id": 68925,
+      "description": "5 compile-time MIR constant-time secret-taint verification records (--constant-time)."
+    },
+    {
+      "id": "det_float_audit",
+      "label": "Strict determinism audits",
+      "group": "kernels-certs",
+      "rows": 5,
+      "share_pct": 0.12,
+      "receipt_id": 68945,
+      "description": "5 compile-time MIR floating-point determinism verification records (--strict-determinism)."
+    },
+    {
+      "id": "wcet_stack_audit",
+      "label": "WCET stack audits",
+      "group": "kernels-certs",
+      "rows": 5,
+      "share_pct": 0.12,
+      "receipt_id": 68903,
+      "description": "5 static MIR worst-case execution time and bounded max-stack verification records (--max-stack-bytes)."
+    },
+    {
+      "id": "renderer_parity_proof",
+      "label": "Renderer parity proofs",
+      "group": "kernels-certs",
       "rows": 3,
-      "share_pct": 0.13,
-      "receipt_id": 68852,
-      "description": "Structured preprint records for the technical papers (cs.PL/OS, cs.AI/SE, cs.GR, and BuildOS)."
+      "share_pct": 0.07,
+      "receipt_id": 68924,
+      "description": "3 bit-exact 0-ULP C++23 to BuildLang renderer parity records (#35..#37, #68924/#68933/#68944)."
+    },
+    {
+      "id": "grant_pack_metadata",
+      "label": "Non-dilutive grant packs",
+      "group": "rlvr-signals-papers",
+      "rows": 1,
+      "share_pct": 0.02,
+      "receipt_id": 68938,
+      "description": "ARPA-H / NIH verified privacy-preserving biomedical GPU compute pack metadata (#68938)."
+    },
+    {
+      "id": "rsi_pareto_audit",
+      "label": "RSI Pareto audit",
+      "group": "rlvr-signals-papers",
+      "rows": 1,
+      "share_pct": 0.02,
+      "receipt_id": 68942,
+      "description": "Pure-BuildLang Oracle-Gated RSI Pareto Orchestrator audit (3.020x monotonic gain, 40/40 Goodhart rollbacks, #68942)."
     }
   ]
 }

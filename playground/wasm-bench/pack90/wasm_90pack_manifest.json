@@ -1,0 +1,917 @@
+{
+  "schema": "site-dropin-wasm-90pack/1",
+  "wave": "136A",
+  "date": "2026-11-27",
+  "license": "MIT",
+  "module_count": 90,
+  "zero_import_count": 13,
+  "total_bytes": 870177,
+  "total_kb": 849.78,
+  "pack15_bytes": 133637,
+  "pack15_kb": 130.5,
+  "max_module_bytes": 74577,
+  "max_module_kb": 72.83,
+  "under_850kb": true,
+  "modules": [
+    {
+      "pack": 1,
+      "idea_id": "N38",
+      "slug": "buoy_ocean_field",
+      "wasm_path": "wasm/buoy_ocean_field.wasm",
+      "wasm_bytes": 6153,
+      "wasm_kb": 6.01,
+      "wasm_sha256": "fbc66b979d6a7d6e13d61e2278b3b5b7a437de4489161fe0a7a0e150a0c63108",
+      "license": "MIT"
+    },
+    {
+      "pack": 1,
+      "idea_id": "N61",
+      "slug": "metamer_divergence",
+      "wasm_path": "wasm/metamer_divergence.wasm",
+      "wasm_bytes": 9526,
+      "wasm_kb": 9.3,
+      "wasm_sha256": "e58583f6c77e71bbe2a0a17b7651d6bfec552baff1f72b74ce86e1e7a8b75b86",
+      "license": "MIT"
+    },
+    {
+      "pack": 1,
+      "idea_id": "E4",
+      "slug": "console_shader_stack",
+      "wasm_path": "wasm/console_shader_stack.wasm",
+      "wasm_bytes": 4863,
+      "wasm_kb": 4.75,
+      "wasm_sha256": "e81d3c934d489cb197478dc33adf3d958f3f13feb721d5944f5933ca2b91b3cf",
+      "license": "MIT"
+    },
+    {
+      "pack": 1,
+      "idea_id": "K3",
+      "slug": "midcentury_synthesis_grid",
+      "wasm_path": "wasm/midcentury_synthesis_grid.wasm",
+      "wasm_bytes": 4130,
+      "wasm_kb": 4.03,
+      "wasm_sha256": "5d935f7341b3c35db688f9016f867c5b20907cf75ea8c5e024311e6ba0905b93",
+      "license": "MIT"
+    },
+    {
+      "pack": 1,
+      "idea_id": "N30",
+      "slug": "confidence_word_calib",
+      "wasm_path": "wasm/confidence_word_calib.wasm",
+      "wasm_bytes": 1582,
+      "wasm_kb": 1.54,
+      "wasm_sha256": "81e4c0422c5e46bbd4f7d1690826de59f6e6d9c440633d99057dc57c353b2648",
+      "license": "MIT"
+    },
+    {
+      "pack": 1,
+      "idea_id": "E5",
+      "slug": "living_type_bezier",
+      "wasm_path": "wasm/living_type_bezier.wasm",
+      "wasm_bytes": 3716,
+      "wasm_kb": 3.63,
+      "wasm_sha256": "ba7018cfc05cacae06b5d0424e236f69353fb8598d26450b3753479e7e4d09d8",
+      "license": "MIT"
+    },
+    {
+      "pack": 2,
+      "idea_id": "N25",
+      "slug": "honest_exit_valve",
+      "wasm_path": "wasm/honest_exit_valve.wasm",
+      "wasm_bytes": 2688,
+      "wasm_kb": 2.62,
+      "wasm_sha256": "55d0c0fcb5528e645d629874666ed001e6a09ad4dc62bde7006f5b6fad87f60f",
+      "license": "MIT"
+    },
+    {
+      "pack": 2,
+      "idea_id": "N26",
+      "slug": "catastrophe_surge",
+      "wasm_path": "wasm/catastrophe_surge.wasm",
+      "wasm_bytes": 4763,
+      "wasm_kb": 4.65,
+      "wasm_sha256": "7e247af46e7867a41cee1220e17b52120de1892fab70557a1c89fcb21750c84f",
+      "license": "MIT"
+    },
+    {
+      "pack": 2,
+      "idea_id": "N58",
+      "slug": "blackout_commons",
+      "wasm_path": "wasm/blackout_commons.wasm",
+      "wasm_bytes": 5875,
+      "wasm_kb": 5.74,
+      "wasm_sha256": "52ff426ef5a2ddc6d98aa5dde7d6e833f627869c7dcd8776685cb46003be3c33",
+      "license": "MIT"
+    },
+    {
+      "pack": 2,
+      "idea_id": "N59",
+      "slug": "community_homeostasis",
+      "wasm_path": "wasm/community_homeostasis.wasm",
+      "wasm_bytes": 3760,
+      "wasm_kb": 3.67,
+      "wasm_sha256": "a859417f0fa03fd9bffac32ff9104ce2a4e92ebe16f6e486c8dc1eb5b437b9bb",
+      "license": "MIT"
+    },
+    {
+      "pack": 2,
+      "idea_id": "N71",
+      "slug": "disclosure_penalty",
+      "wasm_path": "wasm/disclosure_penalty.wasm",
+      "wasm_bytes": 2243,
+      "wasm_kb": 2.19,
+      "wasm_sha256": "4bcf3b600e39fe61eee6cb6a1e07d4e4046ad3b772cad205eb24351cd76f09b7",
+      "license": "MIT"
+    },
+    {
+      "pack": 2,
+      "idea_id": "G4",
+      "slug": "tree_wind_root_rot",
+      "wasm_path": "wasm/tree_wind_root_rot.wasm",
+      "wasm_bytes": 1796,
+      "wasm_kb": 1.75,
+      "wasm_sha256": "8413c53d40d705c67cb1c634d2616159f7140c468b2e1b8a31c209123541baf8",
+      "license": "MIT"
+    },
+    {
+      "pack": 3,
+      "idea_id": "N42",
+      "slug": "moat_egraph_cert_compress",
+      "wasm_path": "wasm/moat_egraph_cert_compress.wasm",
+      "wasm_bytes": 7769,
+      "wasm_kb": 7.59,
+      "wasm_sha256": "4550a2da637442d6b53149900959058c6d54d0bc7add16431d6395fdb4a053fb",
+      "license": "MIT"
+    },
+    {
+      "pack": 3,
+      "idea_id": "F2",
+      "slug": "moat_zerocopy_cap_ipc",
+      "wasm_path": "wasm/moat_zerocopy_cap_ipc.wasm",
+      "wasm_bytes": 2782,
+      "wasm_kb": 2.72,
+      "wasm_sha256": "4d0abe3bc676f8df4a895d572746667be5c93790062595510207c0fd48724f15",
+      "license": "MIT"
+    },
+    {
+      "pack": 3,
+      "idea_id": "N49",
+      "slug": "moat_three_plate",
+      "wasm_path": "wasm/moat_three_plate.wasm",
+      "wasm_bytes": 4961,
+      "wasm_kb": 4.84,
+      "wasm_sha256": "183dab189b39dcd51e8695565f6c12343108b354428da90eab3a2eaf58993291",
+      "license": "MIT"
+    },
+    {
+      "pack": 3,
+      "idea_id": "N41",
+      "slug": "moat_ntc_block",
+      "wasm_path": "wasm/moat_ntc_block.wasm",
+      "wasm_bytes": 8108,
+      "wasm_kb": 7.92,
+      "wasm_sha256": "f762c4be308cc8c5d963425b60aa2257ec1d7477936228c36a8d4d5e7ee85ff2",
+      "license": "MIT"
+    },
+    {
+      "pack": 3,
+      "idea_id": "AC8",
+      "slug": "rsi_closed_loop",
+      "wasm_path": "wasm/rsi_closed_loop.wasm",
+      "wasm_bytes": 4787,
+      "wasm_kb": 4.67,
+      "wasm_sha256": "4cfe7502d693c70d91773cd95e416dbba3267b57e044cc544c1a0dcc0758febc",
+      "license": "MIT"
+    },
+    {
+      "pack": 3,
+      "idea_id": "J13",
+      "slug": "epigenetics_audit",
+      "wasm_path": "wasm/epigenetics_audit.wasm",
+      "wasm_bytes": 8621,
+      "wasm_kb": 8.42,
+      "wasm_sha256": "ff53a9aba4ef772f7ca79d012b07ea09db36258febb063ce872f8e799ca1a47f",
+      "license": "MIT"
+    },
+    {
+      "pack": 4,
+      "idea_id": "N44",
+      "slug": "titan_1m",
+      "wasm_path": "wasm/titan_1m.wasm",
+      "wasm_bytes": 5396,
+      "wasm_kb": 5.27,
+      "wasm_sha256": "3d7c0df24f838f2afc3f9252938fe27cc20412159dfff4e6594ec73854a8bdb1",
+      "license": "MIT"
+    },
+    {
+      "pack": 4,
+      "idea_id": "E2",
+      "slug": "low_water_combat",
+      "wasm_path": "wasm/low_water_combat.wasm",
+      "wasm_bytes": 5106,
+      "wasm_kb": 4.99,
+      "wasm_sha256": "c7fe4f88c07f7d899c055a95fcd3d56890f2c4de5e9fc4c5fe50b5f154919cca",
+      "license": "MIT"
+    },
+    {
+      "pack": 4,
+      "idea_id": "N64",
+      "slug": "pbr_16archetype",
+      "wasm_path": "wasm/pbr_16archetype.wasm",
+      "wasm_bytes": 5660,
+      "wasm_kb": 5.53,
+      "wasm_sha256": "119276d8c8a97718643115ddac2c752224aee078e5fac3aa8c590be6d333fe2e",
+      "license": "MIT"
+    },
+    {
+      "pack": 4,
+      "idea_id": "N63",
+      "slug": "moat_indirect_cull",
+      "wasm_path": "wasm/moat_indirect_cull.wasm",
+      "wasm_bytes": 6907,
+      "wasm_kb": 6.75,
+      "wasm_sha256": "b58572f7fb05cd0274eee1155aa68f68cad60923d321719e69073ae56b7219a8",
+      "license": "MIT"
+    },
+    {
+      "pack": 4,
+      "idea_id": "N11",
+      "slug": "moat_tpm_merkle",
+      "wasm_path": "wasm/moat_tpm_merkle.wasm",
+      "wasm_bytes": 4133,
+      "wasm_kb": 4.04,
+      "wasm_sha256": "c6b746be0e478b7a5a1dc3872890df9b51d32097cd5501a15641559489f216e2",
+      "license": "MIT"
+    },
+    {
+      "pack": 4,
+      "idea_id": "N29",
+      "slug": "moat_cross_gpu_tv",
+      "wasm_path": "wasm/moat_cross_gpu_tv.wasm",
+      "wasm_bytes": 6336,
+      "wasm_kb": 6.19,
+      "wasm_sha256": "613e496fda678b1b991ad8cb807beadddca550ebc50577041b79bc90f0f805cb",
+      "license": "MIT"
+    },
+    {
+      "pack": 5,
+      "idea_id": "F1",
+      "slug": "sha256_zeroc",
+      "wasm_path": "wasm/sha256_zeroc.wasm",
+      "wasm_bytes": 7681,
+      "wasm_kb": 7.5,
+      "wasm_sha256": "c5754cae0eb87aa8dfa68562df5e29df0af1d3f750f31e1875f055fca267b3be",
+      "license": "MIT"
+    },
+    {
+      "pack": 5,
+      "idea_id": "F1",
+      "slug": "aead_chacha20_poly1305",
+      "wasm_path": "wasm/aead_chacha20_poly1305.wasm",
+      "wasm_bytes": 14298,
+      "wasm_kb": 13.96,
+      "wasm_sha256": "e43ab1f0cc36e6f24bc15e914cb3d4b3d7c0128176fc74222924879195c61470",
+      "license": "MIT"
+    },
+    {
+      "pack": 5,
+      "idea_id": "N49",
+      "slug": "merkle_rfc6962",
+      "wasm_path": "wasm/merkle_rfc6962.wasm",
+      "wasm_bytes": 8662,
+      "wasm_kb": 8.46,
+      "wasm_sha256": "b64214e9e067c85ff41d2a5d00d8b73316d91287cb443403f35c03b37d441628",
+      "license": "MIT"
+    },
+    {
+      "pack": 5,
+      "idea_id": "N53",
+      "slug": "rsi_closed_loop_p5",
+      "wasm_path": "wasm/rsi_closed_loop_p5.wasm",
+      "wasm_bytes": 3160,
+      "wasm_kb": 3.09,
+      "wasm_sha256": "c5fdb4cbfe072935c0ed2af781a4e8724f22aac6a6a5301685b0caf43e8793e6",
+      "license": "MIT"
+    },
+    {
+      "pack": 5,
+      "idea_id": "N42",
+      "slug": "ntc610_compress",
+      "wasm_path": "wasm/ntc610_compress.wasm",
+      "wasm_bytes": 4054,
+      "wasm_kb": 3.96,
+      "wasm_sha256": "cbe69e9a2ee6c5a5ac050c6bd57262ed0a38f306040dd52ff54a4183100f0eee",
+      "license": "MIT"
+    },
+    {
+      "pack": 5,
+      "idea_id": "N38",
+      "slug": "jonswap_ocean",
+      "wasm_path": "wasm/jonswap_ocean.wasm",
+      "wasm_bytes": 3179,
+      "wasm_kb": 3.1,
+      "wasm_sha256": "66a5f8eb62922916ef2e71b565e90bfb12fcdd727026738949ee1540362c9ce0",
+      "license": "MIT"
+    },
+    {
+      "pack": 6,
+      "idea_id": "F1",
+      "slug": "x25519_curve25519_zeroc",
+      "wasm_path": "wasm/x25519_curve25519_zeroc.wasm",
+      "wasm_bytes": 4392,
+      "wasm_kb": 4.29,
+      "wasm_sha256": "85f5feeba8623f58dc26496941d5698634f314a5265d13208d04d5467a81bf91",
+      "license": "MIT"
+    },
+    {
+      "pack": 6,
+      "idea_id": "H8",
+      "slug": "camera_reciprocity_origami",
+      "wasm_path": "wasm/camera_reciprocity_origami.wasm",
+      "wasm_bytes": 3092,
+      "wasm_kb": 3.02,
+      "wasm_sha256": "65b907c06860247f3f98c443d6d9de1e119673144dbe08bdcfcb8c21ff243d4f",
+      "license": "MIT"
+    },
+    {
+      "pack": 6,
+      "idea_id": "K2",
+      "slug": "cinematography_framing",
+      "wasm_path": "wasm/cinematography_framing.wasm",
+      "wasm_bytes": 3063,
+      "wasm_kb": 2.99,
+      "wasm_sha256": "07505524168351f67c48d04ca1703eff14e7ac7d61539a3dde898026531361db",
+      "license": "MIT"
+    },
+    {
+      "pack": 6,
+      "idea_id": "E23",
+      "slug": "weather_ocean_sky_map",
+      "wasm_path": "wasm/weather_ocean_sky_map.wasm",
+      "wasm_bytes": 4578,
+      "wasm_kb": 4.47,
+      "wasm_sha256": "d49f0b461af1fd42e227353177c48ef9e607488c1023254968c610edd34ae45e",
+      "license": "MIT"
+    },
+    {
+      "pack": 6,
+      "idea_id": "J15",
+      "slug": "minds_eye_distance",
+      "wasm_path": "wasm/minds_eye_distance.wasm",
+      "wasm_bytes": 5138,
+      "wasm_kb": 5.02,
+      "wasm_sha256": "5a2f7869dd081f34c38211f4c079af1c7387d2e017bd52e5093f3fc850623a09",
+      "license": "MIT"
+    },
+    {
+      "pack": 6,
+      "idea_id": "H6",
+      "slug": "ambient_jazz_waves",
+      "wasm_path": "wasm/ambient_jazz_waves.wasm",
+      "wasm_bytes": 4989,
+      "wasm_kb": 4.87,
+      "wasm_sha256": "6ee5e360edc6a8c9507ceea956bf4e12fbdfd90e3233a7205f23c4ffa2444ea4",
+      "license": "MIT"
+    },
+    {
+      "pack": 7,
+      "idea_id": "F1",
+      "slug": "tls_mini_handshake_zeroc",
+      "wasm_path": "wasm/tls_mini_handshake_zeroc.wasm",
+      "wasm_bytes": 11829,
+      "wasm_kb": 11.55,
+      "wasm_sha256": "8f8529a64e8cf084bfa42e71bf03f8e7ba90ac290e20a0f5dfe556320e675eb6",
+      "license": "MIT"
+    },
+    {
+      "pack": 7,
+      "idea_id": "N28",
+      "slug": "three_control_negatives",
+      "wasm_path": "wasm/three_control_negatives.wasm",
+      "wasm_bytes": 3915,
+      "wasm_kb": 3.82,
+      "wasm_sha256": "26a293500b7df0057343931a5f4efd3acf69eb520a147547b808aca9d7c9517a",
+      "license": "MIT"
+    },
+    {
+      "pack": 7,
+      "idea_id": "N51",
+      "slug": "personal_voice_twin",
+      "wasm_path": "wasm/personal_voice_twin.wasm",
+      "wasm_bytes": 5205,
+      "wasm_kb": 5.08,
+      "wasm_sha256": "c8d881ef939f4a0517c5a49d2234e1523cbde9a5618fb85dcb0f4e01c3f9a395",
+      "license": "MIT"
+    },
+    {
+      "pack": 7,
+      "idea_id": "N52",
+      "slug": "universal_articulate_pipe",
+      "wasm_path": "wasm/universal_articulate_pipe.wasm",
+      "wasm_bytes": 2310,
+      "wasm_kb": 2.26,
+      "wasm_sha256": "4db25224f98dd8320b7db132fed4cd26a02783063000a59e760a0ee3b9ec2d91",
+      "license": "MIT"
+    },
+    {
+      "pack": 7,
+      "idea_id": "D11",
+      "slug": "concept_phase_states",
+      "wasm_path": "wasm/concept_phase_states.wasm",
+      "wasm_bytes": 4231,
+      "wasm_kb": 4.13,
+      "wasm_sha256": "9b78baeb9466b96310705ff3ad61733dfbf1afda3af3f7ecd9ce903678e44b85",
+      "license": "MIT"
+    },
+    {
+      "pack": 7,
+      "idea_id": "A9",
+      "slug": "cross_layer_overlap",
+      "wasm_path": "wasm/cross_layer_overlap.wasm",
+      "wasm_bytes": 4277,
+      "wasm_kb": 4.18,
+      "wasm_sha256": "e0467b0c5ed0b22db70a70d7cbafb9eff8dd4e91d306485f4141959778aae3c3",
+      "license": "MIT"
+    },
+    {
+      "pack": 8,
+      "idea_id": "N32",
+      "slug": "cmmns_evidence_quorum",
+      "wasm_path": "wasm/cmmns_evidence_quorum.wasm",
+      "wasm_bytes": 9387,
+      "wasm_kb": 9.17,
+      "wasm_sha256": "e9f7588bfc21ea6643798bbd3eae34a337dbc14fd4dba6ec393fa616eea6312b",
+      "license": "MIT"
+    },
+    {
+      "pack": 8,
+      "idea_id": "N43",
+      "slug": "cmmns_citation_decay",
+      "wasm_path": "wasm/cmmns_citation_decay.wasm",
+      "wasm_bytes": 2806,
+      "wasm_kb": 2.74,
+      "wasm_sha256": "e520e7521a7fa116199fcd27c782af35a3e3669f00757456cfed707bed2cf6eb",
+      "license": "MIT"
+    },
+    {
+      "pack": 8,
+      "idea_id": "N49",
+      "slug": "cmmns_source_corroboration",
+      "wasm_path": "wasm/cmmns_source_corroboration.wasm",
+      "wasm_bytes": 4760,
+      "wasm_kb": 4.65,
+      "wasm_sha256": "3dee534031553ab7c2ae2237db12fd1080acd6a417e2fe1f5bd6e7a1ab3a502a",
+      "license": "MIT"
+    },
+    {
+      "pack": 8,
+      "idea_id": "F1",
+      "slug": "cmmns_archive_merkle_diff",
+      "wasm_path": "wasm/cmmns_archive_merkle_diff.wasm",
+      "wasm_bytes": 8039,
+      "wasm_kb": 7.85,
+      "wasm_sha256": "1c0bdfb13aeb1e7ea7f87f6df0717ba7f3203cdaf8a0163224b667cc2b2efbfc",
+      "license": "MIT"
+    },
+    {
+      "pack": 8,
+      "idea_id": "I10",
+      "slug": "cmmns_attention_valve",
+      "wasm_path": "wasm/cmmns_attention_valve.wasm",
+      "wasm_bytes": 1487,
+      "wasm_kb": 1.45,
+      "wasm_sha256": "f4489709f9369067b4db73cdee5483466cd7b8a67a04352408483f1cb8ddaec3",
+      "license": "MIT"
+    },
+    {
+      "pack": 8,
+      "idea_id": "H3",
+      "slug": "cocoon_cloth_aperture",
+      "wasm_path": "wasm/cocoon_cloth_aperture.wasm",
+      "wasm_bytes": 3888,
+      "wasm_kb": 3.8,
+      "wasm_sha256": "50834c95a31a57e4ec9679ae77191fb3220bd403e71f726006ff2c47a154e303",
+      "license": "MIT"
+    },
+    {
+      "pack": 9,
+      "idea_id": "N11",
+      "slug": "buildos_cap_sched_zeroc",
+      "wasm_path": "wasm/buildos_cap_sched_zeroc.wasm",
+      "wasm_bytes": 9912,
+      "wasm_kb": 9.68,
+      "wasm_sha256": "4cb9a8a18155ba65394d911ea2e41ea66541ac1ceda1db7ae8abdd7a86275991",
+      "license": "MIT"
+    },
+    {
+      "pack": 9,
+      "idea_id": "N11",
+      "slug": "buildos_ipc_vfs_zeroc",
+      "wasm_path": "wasm/buildos_ipc_vfs_zeroc.wasm",
+      "wasm_bytes": 9132,
+      "wasm_kb": 8.92,
+      "wasm_sha256": "972feffea2383fde60d4062ea6b070f6403e2710902d6086fc0eb9a378a6de0a",
+      "license": "MIT"
+    },
+    {
+      "pack": 9,
+      "idea_id": "I1",
+      "slug": "first_principles_dag",
+      "wasm_path": "wasm/first_principles_dag.wasm",
+      "wasm_bytes": 5717,
+      "wasm_kb": 5.58,
+      "wasm_sha256": "db092d50785acf07694993abc7b0d678b430b4b676aaad6ffde9be199537eec0",
+      "license": "MIT"
+    },
+    {
+      "pack": 9,
+      "idea_id": "A8",
+      "slug": "potential_space_transmute",
+      "wasm_path": "wasm/potential_space_transmute.wasm",
+      "wasm_bytes": 2445,
+      "wasm_kb": 2.39,
+      "wasm_sha256": "35ce5a81a36d97cc86e6759a4fb84c523e60a67d644f7230d0744db18d082124",
+      "license": "MIT"
+    },
+    {
+      "pack": 9,
+      "idea_id": "I16",
+      "slug": "cs030_effect_uncolored_runtime",
+      "wasm_path": "wasm/cs030_effect_uncolored_runtime.wasm",
+      "wasm_bytes": 3123,
+      "wasm_kb": 3.05,
+      "wasm_sha256": "ecd445c70096e4bc9a374d4cc89d0ab1d40acbedc6be5d5c452de1aca8823a8a",
+      "license": "MIT"
+    },
+    {
+      "pack": 9,
+      "idea_id": "I16",
+      "slug": "cs068_rare_event_committor",
+      "wasm_path": "wasm/cs068_rare_event_committor.wasm",
+      "wasm_bytes": 3525,
+      "wasm_kb": 3.44,
+      "wasm_sha256": "fd834579bab62112a77b4858ce1f2fac11d0aa50dca3c92dc512c8579dbb8a84",
+      "license": "MIT"
+    },
+    {
+      "pack": 10,
+      "idea_id": "N11",
+      "slug": "buildos_e2e_triad_zeroc",
+      "wasm_path": "wasm/buildos_e2e_triad_zeroc.wasm",
+      "wasm_bytes": 21867,
+      "wasm_kb": 21.35,
+      "wasm_sha256": "12aaf82cf6f0dc96a5e42a7ec917bb403bd713012b3f579db27ddce2205a3f2d",
+      "license": "MIT"
+    },
+    {
+      "pack": 10,
+      "idea_id": "B1",
+      "slug": "cs042_onebit_vis_dynamic_lights",
+      "wasm_path": "wasm/cs042_onebit_vis_dynamic_lights.wasm",
+      "wasm_bytes": 8798,
+      "wasm_kb": 8.59,
+      "wasm_sha256": "eafe42856a38e729b44c6fefe99a47986964809ed86aca727444f191c3e26b33",
+      "license": "MIT"
+    },
+    {
+      "pack": 10,
+      "idea_id": "B2",
+      "slug": "cs047_kiruna_night_spectral_sky",
+      "wasm_path": "wasm/cs047_kiruna_night_spectral_sky.wasm",
+      "wasm_bytes": 8928,
+      "wasm_kb": 8.72,
+      "wasm_sha256": "a0bbec519e352430f917130bc1862ba6ccbcf89fff7ef12ac20d60fe394504a4",
+      "license": "MIT"
+    },
+    {
+      "pack": 10,
+      "idea_id": "A5",
+      "slug": "cs025_agentic_ppl_bpb",
+      "wasm_path": "wasm/cs025_agentic_ppl_bpb.wasm",
+      "wasm_bytes": 6568,
+      "wasm_kb": 6.41,
+      "wasm_sha256": "4c8aaf6d9108c557858e94f6093f943f139fa925c4d5fe46444dfbd570eb154f",
+      "license": "MIT"
+    },
+    {
+      "pack": 10,
+      "idea_id": "A18",
+      "slug": "cs008_model_carving_loop",
+      "wasm_path": "wasm/cs008_model_carving_loop.wasm",
+      "wasm_bytes": 11300,
+      "wasm_kb": 11.04,
+      "wasm_sha256": "1964bab275cc4ba0306245bd4ad1abcd817038614fd430636bea4e794910f46c",
+      "license": "MIT"
+    },
+    {
+      "pack": 10,
+      "idea_id": "I16",
+      "slug": "cs069_auxetic_xpbd_lattice",
+      "wasm_path": "wasm/cs069_auxetic_xpbd_lattice.wasm",
+      "wasm_bytes": 6049,
+      "wasm_kb": 5.91,
+      "wasm_sha256": "749a325187b28abfcae80b408557f53b57fd4218112e15204704dc6197f089f0",
+      "license": "MIT"
+    },
+    {
+      "pack": 11,
+      "idea_id": "A9",
+      "slug": "cs045_persistent_3d_memory",
+      "wasm_path": "wasm/cs045_persistent_3d_memory.wasm",
+      "wasm_bytes": 8445,
+      "wasm_kb": 8.25,
+      "wasm_sha256": "0799a5ebb5868a9014d4696175e81eb8d4ef9c076998460e3740ba272c559a49",
+      "license": "MIT"
+    },
+    {
+      "pack": 11,
+      "idea_id": "A1",
+      "slug": "cs046_video_skeleton_mocap",
+      "wasm_path": "wasm/cs046_video_skeleton_mocap.wasm",
+      "wasm_bytes": 15036,
+      "wasm_kb": 14.68,
+      "wasm_sha256": "de189989e6c1f53c9fc2aea8509f44313560bea36fd5ee404749fe8409248523",
+      "license": "MIT"
+    },
+    {
+      "pack": 11,
+      "idea_id": "A5",
+      "slug": "cs014_fractal_procedural_weights",
+      "wasm_path": "wasm/cs014_fractal_procedural_weights.wasm",
+      "wasm_bytes": 22446,
+      "wasm_kb": 21.92,
+      "wasm_sha256": "40b960218d6150a1dbe358cac9b9c96b01e5f9cd6601cce4a6c69ea953c42879",
+      "license": "MIT"
+    },
+    {
+      "pack": 11,
+      "idea_id": "A7",
+      "slug": "cs024_posterior_rare_tail_audit",
+      "wasm_path": "wasm/cs024_posterior_rare_tail_audit.wasm",
+      "wasm_bytes": 6031,
+      "wasm_kb": 5.89,
+      "wasm_sha256": "b77c2d31b6f2920fd2d29e3a37de5c735fc1af474d2aaf6577e5218f2b202aa9",
+      "license": "MIT"
+    },
+    {
+      "pack": 11,
+      "idea_id": "AC1",
+      "slug": "cs031_automated_port_verifier",
+      "wasm_path": "wasm/cs031_automated_port_verifier.wasm",
+      "wasm_bytes": 3782,
+      "wasm_kb": 3.69,
+      "wasm_sha256": "694326b863a22eac5b0b6d692c719196aff46706b720ef1b0f72288364d9c70d",
+      "license": "MIT"
+    },
+    {
+      "pack": 11,
+      "idea_id": "B1",
+      "slug": "cs049_fourier_optics_pdb_provenance",
+      "wasm_path": "wasm/cs049_fourier_optics_pdb_provenance.wasm",
+      "wasm_bytes": 6288,
+      "wasm_kb": 6.14,
+      "wasm_sha256": "8b40f7b0cce0d2dee82ae8d2eb93ac18048ca3b27d9c4687beeddb19f92ec5ab",
+      "license": "MIT"
+    },
+    {
+      "pack": 12,
+      "idea_id": "N11",
+      "slug": "buildos_v1_unified_zeroc",
+      "wasm_path": "wasm/buildos_v1_unified_zeroc.wasm",
+      "wasm_bytes": 74577,
+      "wasm_kb": 72.83,
+      "wasm_sha256": "fbd90e53cbc9fb2f91a7e245680127b714e7a0bb6447d601d8369051a6f7d5d2",
+      "license": "MIT"
+    },
+    {
+      "pack": 12,
+      "idea_id": "N11",
+      "slug": "buildos_compositor_zeroc",
+      "wasm_path": "wasm/buildos_compositor_zeroc.wasm",
+      "wasm_bytes": 7976,
+      "wasm_kb": 7.79,
+      "wasm_sha256": "4bb0d135bc048fc7235e409a59d50cd54d3fd511105890d1a4db7637677356d2",
+      "license": "MIT"
+    },
+    {
+      "pack": 12,
+      "idea_id": "N11",
+      "slug": "buildos_input_audio_zeroc",
+      "wasm_path": "wasm/buildos_input_audio_zeroc.wasm",
+      "wasm_bytes": 7369,
+      "wasm_kb": 7.2,
+      "wasm_sha256": "3343275725b9037a9a1dd2dc8ed9eeed2f17dd4396e12df127a2642540e6f1f5",
+      "license": "MIT"
+    },
+    {
+      "pack": 12,
+      "idea_id": "A14",
+      "slug": "cs005_fca_titans_grid_probe",
+      "wasm_path": "wasm/cs005_fca_titans_grid_probe.wasm",
+      "wasm_bytes": 12754,
+      "wasm_kb": 12.46,
+      "wasm_sha256": "6a5c9521d6d5c0893e28cee895b8a26c1187503d1351745f688122a73fc99bc1",
+      "license": "MIT"
+    },
+    {
+      "pack": 12,
+      "idea_id": "A12",
+      "slug": "cs006_sparrow_fixedpoint_loop",
+      "wasm_path": "wasm/cs006_sparrow_fixedpoint_loop.wasm",
+      "wasm_bytes": 15697,
+      "wasm_kb": 15.33,
+      "wasm_sha256": "8d5bf612622046df442519ad987423daa1bfe7a203215932a09f84b123cfd107",
+      "license": "MIT"
+    },
+    {
+      "pack": 12,
+      "idea_id": "A18",
+      "slug": "cs001_loom_mhc_loss_per_flop",
+      "wasm_path": "wasm/cs001_loom_mhc_loss_per_flop.wasm",
+      "wasm_bytes": 14701,
+      "wasm_kb": 14.36,
+      "wasm_sha256": "7b812324f35d7775ff03f6f3013b95591344be6dfc6cde38b6440bd87c84a447",
+      "license": "MIT"
+    },
+    {
+      "pack": 13,
+      "idea_id": "N11",
+      "slug": "buildos_smp_mmu_zeroc",
+      "wasm_path": "wasm/buildos_smp_mmu_zeroc.wasm",
+      "wasm_bytes": 9255,
+      "wasm_kb": 9.04,
+      "wasm_sha256": "8245725c56d16efb7eefd4e611579b2adc0e823835b312cfb68e2861d0fe4f77",
+      "license": "MIT"
+    },
+    {
+      "pack": 13,
+      "idea_id": "N11",
+      "slug": "buildos_iommu_nvme_zeroc",
+      "wasm_path": "wasm/buildos_iommu_nvme_zeroc.wasm",
+      "wasm_bytes": 11147,
+      "wasm_kb": 10.89,
+      "wasm_sha256": "4136267b72fa4aa6f1d28dd2bdcd495263a0f991ea2ed112c29a0196317be336",
+      "license": "MIT"
+    },
+    {
+      "pack": 13,
+      "idea_id": "N11",
+      "slug": "buildos_gpu_vram_zeroc",
+      "wasm_path": "wasm/buildos_gpu_vram_zeroc.wasm",
+      "wasm_bytes": 11440,
+      "wasm_kb": 11.17,
+      "wasm_sha256": "dff66229c4c3f5b78536236f5bec9f28214c4eb787fa96f499bfa5a035a92e61",
+      "license": "MIT"
+    },
+    {
+      "pack": 13,
+      "idea_id": "A14",
+      "slug": "titan_unified_epigenetic_engine",
+      "wasm_path": "wasm/titan_unified_epigenetic_engine.wasm",
+      "wasm_bytes": 47625,
+      "wasm_kb": 46.51,
+      "wasm_sha256": "a751f61c925dbd85ff346c5d8f455f6bd5dc3142ce3d62f379c0d460db7d0e90",
+      "license": "MIT"
+    },
+    {
+      "pack": 13,
+      "idea_id": "B4",
+      "slug": "cs041_anywreck_physical_weathering",
+      "wasm_path": "wasm/cs041_anywreck_physical_weathering.wasm",
+      "wasm_bytes": 8785,
+      "wasm_kb": 8.58,
+      "wasm_sha256": "f39b54a02a53c85406090d4ee69f8bd2d8d74bf1b53abbfcb4a7b70ca878fb5a",
+      "license": "MIT"
+    },
+    {
+      "pack": 13,
+      "idea_id": "I1",
+      "slug": "cs060_biotorch_oracle_drill_forge",
+      "wasm_path": "wasm/cs060_biotorch_oracle_drill_forge.wasm",
+      "wasm_bytes": 9435,
+      "wasm_kb": 9.21,
+      "wasm_sha256": "8f2e89608de800aaa33930ef535d34b8633174524c9cfa5281827d78f4849477",
+      "license": "MIT"
+    },
+    {
+      "pack": 14,
+      "idea_id": "N11",
+      "slug": "buildos_enclave_attest_zeroc",
+      "wasm_path": "wasm/buildos_enclave_attest_zeroc.wasm",
+      "wasm_bytes": 35925,
+      "wasm_kb": 35.08,
+      "wasm_sha256": "ee57385625f35235bcdf554b4d5f5602f8d75bce84227dbd537b00e11da95e00",
+      "license": "MIT"
+    },
+    {
+      "pack": 14,
+      "idea_id": "B4",
+      "slug": "superframe_art_brdf",
+      "wasm_path": "wasm/superframe_art_brdf.wasm",
+      "wasm_bytes": 7149,
+      "wasm_kb": 6.98,
+      "wasm_sha256": "6e64a886cde6de40ae8892ee47b0726a85f0e5903171b36124bd925587060deb",
+      "license": "MIT"
+    },
+    {
+      "pack": 14,
+      "idea_id": "E23",
+      "slug": "superframe_art_sky",
+      "wasm_path": "wasm/superframe_art_sky.wasm",
+      "wasm_bytes": 12785,
+      "wasm_kb": 12.49,
+      "wasm_sha256": "01fdc2f056d541be4984009dced78d227e5290352102ccf6817b0696e16d5e93",
+      "license": "MIT"
+    },
+    {
+      "pack": 14,
+      "idea_id": "E4",
+      "slug": "superframe_art_gtao",
+      "wasm_path": "wasm/superframe_art_gtao.wasm",
+      "wasm_bytes": 16329,
+      "wasm_kb": 15.95,
+      "wasm_sha256": "f0cd074b60b8328dc451a6b7cb8acc4da98d43e5e10f9a7514a4a73dade4b5d9",
+      "license": "MIT"
+    },
+    {
+      "pack": 14,
+      "idea_id": "E4",
+      "slug": "superframe_art_ssr",
+      "wasm_path": "wasm/superframe_art_ssr.wasm",
+      "wasm_bytes": 13536,
+      "wasm_kb": 13.22,
+      "wasm_sha256": "8c83ed8536aa7cae3288b24254db887c57ec819664020e2c10d4760257ec0b41",
+      "license": "MIT"
+    },
+    {
+      "pack": 14,
+      "idea_id": "E4",
+      "slug": "superframe_art_purity",
+      "wasm_path": "wasm/superframe_art_purity.wasm",
+      "wasm_bytes": 10582,
+      "wasm_kb": 10.33,
+      "wasm_sha256": "11b17cd5f3e344dda01c5d17ed94454b3c2dd9285bf56bd0586e72e91003b282",
+      "license": "MIT"
+    },
+    {
+      "pack": 15,
+      "idea_id": "N11",
+      "slug": "buildos_pq_hybrid_kem_zeroc",
+      "wasm_path": "wasm/buildos_pq_hybrid_kem_zeroc.wasm",
+      "wasm_bytes": 25674,
+      "wasm_kb": 25.07,
+      "wasm_sha256": "d16baadbacbf27a49ca0b069d363f7aa69f1e1a28e46d8b13c380d6c02c5804e",
+      "license": "MIT"
+    },
+    {
+      "pack": 15,
+      "idea_id": "A14",
+      "slug": "titan_test_time_mcts_oracle",
+      "wasm_path": "wasm/titan_test_time_mcts_oracle.wasm",
+      "wasm_bytes": 13626,
+      "wasm_kb": 13.31,
+      "wasm_sha256": "9bc9b5f853cd7c1bfda16d6fc2fd42df9e166a34321a7ca6743bbc24253f27ba",
+      "license": "MIT"
+    },
+    {
+      "pack": 15,
+      "idea_id": "N42",
+      "slug": "titan_egraph_rlvr_synthesizer",
+      "wasm_path": "wasm/titan_egraph_rlvr_synthesizer.wasm",
+      "wasm_bytes": 14615,
+      "wasm_kb": 14.27,
+      "wasm_sha256": "13eedcd6a398f50a1458f73f5a0dc71b1822cb482fccea85377d5979422ecdb0",
+      "license": "MIT"
+    },
+    {
+      "pack": 15,
+      "idea_id": "H8",
+      "slug": "superframe_art_lens",
+      "wasm_path": "wasm/superframe_art_lens.wasm",
+      "wasm_bytes": 31902,
+      "wasm_kb": 31.15,
+      "wasm_sha256": "35e0ba9ec08bbb4e4dccd633aa8cc05181a4fa557fb2b9694e07841f126e73b6",
+      "license": "MIT"
+    },
+    {
+      "pack": 15,
+      "idea_id": "E4",
+      "slug": "superframe_art_sag",
+      "wasm_path": "wasm/superframe_art_sag.wasm",
+      "wasm_bytes": 24234,
+      "wasm_kb": 23.67,
+      "wasm_sha256": "e71aa09ec3c852f4298c61343cdb0870146a6ea0806c53a3f69d95b1e84761a8",
+      "license": "MIT"
+    },
+    {
+      "pack": 15,
+      "idea_id": "H8",
+      "slug": "superframe_art_film_optics",
+      "wasm_path": "wasm/superframe_art_film_optics.wasm",
+      "wasm_bytes": 23586,
+      "wasm_kb": 23.03,
+      "wasm_sha256": "373153a5d47842128c405e24aced563717b26f5ca843b43281a57f26f0caf023",
+      "license": "MIT"
+    }
+  ]
+}

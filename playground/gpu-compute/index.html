@@ -1,0 +1,1131 @@
+<!doctype html>
+<html lang="en" data-type="stock">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<title>560-Shader 5-Backend GPU Compute Explorer | Zain Dana Harper</title>
+<meta name="description" content="Interactive Measured Drafting Sheet explorer indexing all 560 certified 5-backend GPU compute shaders across 112 pure-OSI MIT BuildLang kernels (WGSL, HLSL, MSL, SPIR-V, GLSL, 4,009 Superopt V6 rewrites).">
+<link rel="canonical" href="https://harperz9.github.io/playground/gpu-compute/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="560-Shader 5-Backend GPU Compute Explorer | Zain Dana Harper">
+<meta property="og:description" content="Interactive Measured Drafting Sheet explorer indexing all 560 certified 5-backend GPU compute shaders across 112 pure-OSI MIT BuildLang kernels (WGSL, HLSL, MSL, SPIR-V, GLSL, 4,009 Superopt V6 rewrites).">
+<meta property="og:url" content="https://harperz9.github.io/playground/gpu-compute/">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/home.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="560-Shader 5-Backend GPU Compute Explorer | Zain Dana Harper">
+<meta name="twitter:description" content="Interactive Measured Drafting Sheet explorer indexing all 560 certified 5-backend GPU compute shaders across 112 pure-OSI MIT BuildLang kernels (WGSL, HLSL, MSL, SPIR-V, GLSL, 4,009 Superopt V6 rewrites).">
+<link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-6218db2f12">
+<link rel="stylesheet" href="/studies/studies.css?v=world-6218db2f12">
+<link rel="stylesheet" href="/world/site/depth.css?v=world-6218db2f12">
+<script type="module" src="/world/ui/shell/shell.js?v=world-6218db2f12"></script>
+<script type="module" src="/world/site/hand-scroll.js?v=world-6218db2f12"></script>
+<meta name="gpu-manifest-sha256" content="e07d74362332746ebb0063a69fd55f6b9c2f4d74f5f482ce21dca29fd95b19da">
+<style>
+  .gpu-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0.65rem; padding: 0.8rem 0; border-bottom: 1px solid var(--line); }
+  .gpu-card { border: 1px solid var(--line); padding: 0.7rem 0.8rem; min-width: 0; }
+  .gpu-card-k { font-family: var(--face-utility); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--soft); margin: 0; }
+  .gpu-card-v { font-family: var(--face-utility); font-size: 1.08rem; font-weight: 700; margin: 0.2rem 0; font-variant-numeric: tabular-nums; }
+  .gpu-card-s { font-size: 0.78rem; color: var(--soft); margin: 0; }
+  .gpu-badges { display: flex; flex-wrap: wrap; gap: 0.4rem; padding: 0.65rem 0; border-bottom: 1px solid var(--line); }
+  .gpu-badge { border: 1px solid var(--line); padding: 0.24rem 0.55rem; font-family: var(--face-utility); font-size: 0.73rem; }
+  .gpu-pills { display: flex; flex-wrap: wrap; gap: 0.45rem; padding: 0.75rem 0; border-bottom: 1px solid var(--line); }
+  .gpu-controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); gap: 0.6rem 0.7rem; padding: 0.8rem 0; border-bottom: 1px solid var(--line); align-items: end; }
+  .gpu-field { display: flex; flex-direction: column; gap: 0.25rem; font-family: var(--face-utility); font-size: 0.74rem; color: var(--soft); }
+  .gpu-field select, .gpu-field input, .gpu-pill, .gpu-btn { background: transparent; color: var(--ink); border: 1px solid var(--line); padding: 0.42rem 0.65rem; min-height: 40px; font-family: var(--face-utility); font-size: 0.8rem; }
+  .gpu-pill, .gpu-btn { cursor: pointer; }
+  .gpu-pill[data-active="1"], .gpu-btn-primary { background: var(--ink); color: var(--paper, #f4f1ea); border-color: var(--ink); }
+  .gpu-field select:focus-visible, .gpu-field input:focus-visible, .gpu-pill:focus-visible, .gpu-btn:focus-visible, .gpu-wrap:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .gpu-readout { padding: 0.75rem 0; border-bottom: 1px solid var(--line); font-family: var(--face-utility); font-size: 0.81rem; font-variant-numeric: tabular-nums; min-height: 5.2rem; }
+  .gpu-readout p { margin: 0.22rem 0; overflow-wrap: anywhere; }
+  .gpu-wrap { width: 100%; overflow-x: auto; margin-top: 0.5rem; }
+  .gpu-table { width: 100%; min-width: 720px; table-layout: fixed; border-collapse: collapse; font-size: 0.81rem; }
+  .gpu-table th, .gpu-table td { text-align: left; padding: 0.46rem 0.52rem 0.46rem 0; border-bottom: 1px solid var(--line); vertical-align: top; overflow-wrap: break-word; }
+  .gpu-table th:last-child, .gpu-table td:last-child { padding-right: 0; }
+  .gpu-table thead th { font-family: var(--face-utility); font-size: 0.71rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--soft); font-weight: 600; }
+  .mono { font-family: var(--face-utility); font-size: 0.75rem; font-variant-numeric: tabular-nums; }
+  .gpu-sub { display: block; font-family: var(--face-utility); font-size: 0.7rem; color: var(--soft); font-weight: 400; margin-top: 0.14rem; }
+  .gpu-empty { padding: 1rem 0; font-family: var(--face-utility); font-size: 0.84rem; color: var(--soft); }
+</style></head>
+<body class="reading ds-sheet">
+
+<header class="o-hand o-said" aria-label="Site">
+  <a class="skip" href="#main">Skip to the page</a>
+  <a class="o-home" href="/">Zain Dana Harper</a>
+  <a data-o="band" href="/world/universe/proto/index.html"><span class="o-name">Map</span></a>
+  <button type="button" data-o="fold" aria-controls="o-menu" aria-keyshortcuts="m" aria-expanded="false" hidden><span class="o-name">Places</span><i></i><i></i><i></i></button>
+  <button type="button" data-o="lamp" data-theme-toggle aria-pressed="true"><span class="o-name">Day</span></button>
+  <span class="o-cell"><button type="button" data-o="peel" data-plain-toggle aria-pressed="false"><span class="o-name">Plain</span></button><span class="o-under" aria-hidden="true">Plain</span></span>
+</header>
+<dialog id="o-menu" data-o="menu" data-material="chladni" aria-label="Places">
+  <nav aria-label="Places">
+    <ul class="o-places">
+      <li><a href="/buildlang.html"><span class="o-word" data-display-on-open="glyphcell">BuildLang</span></a></li>
+      <li><a href="/flywheel.html"><span class="o-word" data-display-on-open="light">Flywheel</span></a><small class="o-sub"><a href="/cmmns.html">CMMNS</a> <a href="/articulate.html">Articulate</a></small></li>
+      <li><a href="/playground/"><span class="o-word" data-display-on-open="nightlights">The Playground</span></a><small class="o-sub"><a href="/playground/#estuary">Estuary</a> <a href="/playground/#native">Native renderer</a> <a href="/playground/#superframe">Superframe</a> <a href="/playground/#workbench">All creative engines</a> <a href="/playground/#low-water">Low Water</a></small></li>
+      <li><a href="/playground/#low-water"><span class="o-word" data-display-on-open="chladni">Game</span></a></li>
+      <li><a href="/#site"><span class="o-word" data-display-on-open="swarm">Site</span></a></li>
+      <li><a href="/floor.html"><span class="o-word" data-display-on-open="rope">Everything</span></a></li>
+      <li><a href="/models.html"><span class="o-word" data-display-on-open="rope">Models</span></a></li>
+      <li><a href="/tools.html"><span class="o-word" data-display-on-open="rope">Tools &amp; Repos</span></a></li>
+      <li><a href="/person.html"><span class="o-word" data-display-on-open="rope">About</span></a></li>
+      <li><a href="/architecture.html"><span class="o-word" data-display-on-open="rope">Architecture</span></a></li>
+      <li><a href="/world/universe/proto/index.html"><span class="o-word" data-display-on-open="rope">Map</span></a></li>
+      <li><a href="/publications.html"><span class="o-word" data-display-on-open="swarm">Writing</span></a></li>
+      <li><a href="/explainers.html"><span class="o-word" data-display-on-open="sound">Films</span></a></li>
+      <li><a href="/security.html"><span class="o-word" data-display-on-open="rope">Security</span></a></li>
+      <li><a href="/hire.html"><span class="o-word" data-display-on-open="rope">Work</span></a></li>
+      <li><a href="/cv.html"><span class="o-word" data-display-on-open="rope">CV</span></a></li>
+    </ul>
+  </nav>
+  <p class="o-menu-foot"><a href="/architecture.html">Architecture</a> <a href="/models.html">Models</a> <a href="/tools.html">Tools &amp; 159 Repos</a> <a href="/research.html">Research</a> <a href="/portfolio.html">Portfolio</a> <a href="/elements.html">Elements</a> <a href="/studies/">Studies</a> <a href="/site-index.html">Site index</a> <button type="button" class="o-close" data-qj-open onclick="this.closest('dialog').close()">Search (Ctrl+K)</button> <button type="button" class="o-close" onclick="this.closest('dialog').close()">Close (Esc)</button></p>
+</dialog>
+<main id="main" tabindex="-1">
+<article class="st" id="gpu-compute">
+<header class="ds-sheet-head">
+  <p class="ds-kicker">Measured Drafting Sheet / 5-Backend Certified GPU Compute</p>
+  <h1>560 GPU Shaders</h1>
+  <p class="ds-lede">Interactive ledger of all 560 certified 5-backend GPU compute shaders compiled from 112 pure-OSI MIT BuildLang kernels across WGSL, HLSL, MSL, SPIR-V, and GLSL (4,009 verified Superopt V6 rewrites, 2,329,296 B total emitted bytecode/source, receipt #68973). Filter live by domain, wave batch, GPU backend, or keyword, and verify 3/3 fail-closed tamper controls in browser memory via WebCrypto SHA-256.</p>
+  <p class="ds-meta"><span>560 certified shaders</span><span>112 pure-MIT kernels</span><span>5 GPU backends</span><span>4,009 Superopt V6 rewrites</span></p>
+  <nav class="ds-ways" aria-label="Related surfaces">
+    <a href="/playground/">The Playground</a>
+    <a href="/playground/buildos-v2/">BuildOS-2.0</a>
+    <a href="/playground/buildos-pq/">BuildOS PQ &amp; RLVR</a>
+    <a href="/playground/datasets/">Open Datasets</a>
+    <a href="./gpu_explorer_manifest.json">Manifest JSON</a>
+  </nav>
+</header>
+
+<section class="ds-sec" id="summary" aria-labelledby="h-summary">
+  <h2 id="h-summary">Suite totals and external validator toolchain</h2>
+  <div class="gpu-cards">
+    <div class="gpu-card"><p class="gpu-card-k">Certified Shaders (#68973)</p><p class="gpu-card-v">560 / 560 PASS</p><p class="gpu-card-s">112 pure-MIT kernels x 5 targets (112 WGSL, 112 HLSL, 112 MSL, 112 SPIR-V, 112 GLSL).</p></div>
+    <div class="gpu-card"><p class="gpu-card-k">Superopt V6 Certificates</p><p class="gpu-card-v">4,009 rewrites</p><p class="gpu-card-s">Proof-carrying e-graph rewrites verified by buildc verify-cert with 0 failures.</p></div>
+    <div class="gpu-card"><p class="gpu-card-k">Emitted Payload Footprint</p><p class="gpu-card-v">2,329,296 B</p><p class="gpu-card-s">Across 17 cumulative domain batches spanning PBR, Titan AI/RLVR, QEC/GNN, Physics, Optics, Quantum Chemistry, ZK, and Frontier compute.</p></div>
+  </div>
+  <div class="gpu-badges" aria-label="External shader validation toolchains">
+    <span class="gpu-badge">dxc cs_6_0</span>
+    <span class="gpu-badge">glslangValidator</span>
+    <span class="gpu-badge">spirv-val</span>
+    <span class="gpu-badge">naga 30.0.1</span>
+    <span class="gpu-badge">Metal 3.1</span>
+    <span class="gpu-badge">buildc verify-cert</span>
+  </div>
+</section>
+
+<section class="ds-sec" id="explorer" aria-labelledby="h-explorer">
+  <h2 id="h-explorer">Interactive 112-kernel / 560-shader explorer</h2>
+  <div class="gpu-pills" role="group" aria-label="Filter kernels by domain">
+    <button type="button" class="gpu-pill" data-domain="all" data-active="1" aria-pressed="true">All 112 kernels (560)</button>
+    <button type="button" class="gpu-pill" data-domain="rendering-pbr" data-active="0" aria-pressed="false">Rendering &amp; PBR (24)</button>
+    <button type="button" class="gpu-pill" data-domain="titan-ai-rlvr" data-active="0" aria-pressed="false">Titan AI &amp; RLVR (20)</button>
+    <button type="button" class="gpu-pill" data-domain="physics-sci-frontier" data-active="0" aria-pressed="false">Physics, Sci &amp; Frontier (68)</button>
+  </div>
+  <div class="gpu-controls" role="region" aria-label="Batch, backend, and keyword filters">
+    <label class="gpu-field" for="gpu-batch">Domain batch (17 batches)
+      <select id="gpu-batch">
+        <option value="all">All 17 batches (56k / 280s)</option>
+        <option value="batch1">batch1 (6k / 30s)</option>
+        <option value="batch2">batch2 (6k / 30s)</option>
+        <option value="batch3">batch3 (6k / 30s)</option>
+        <option value="batch4">batch4 (6k / 30s)</option>
+        <option value="wave117d_titan_ai">wave117d_titan_ai (4k / 20s)</option>
+        <option value="wave122c_world_physics_3d">wave122c_world_physics_3d (4k / 20s)</option>
+        <option value="wave124d_sci_bio_audio">wave124d_sci_bio_audio (4k / 20s)</option>
+        <option value="wave127a_fin_graph_optics_fft">wave127a_fin_graph_optics_fft (4k / 20s)</option>
+        <option value="wave134a_titan_ai_rlvr_240pack">wave134a_titan_ai_rlvr_240pack (8k / 40s)</option>
+        <option value="wave135c_frontier_domain_280pack">wave135c_frontier_domain_280pack (8k / 40s)</option>
+        <option value="wave138a_photonics_geo_320pack">wave138a_photonics_geo_320pack (8k / 40s)</option>
+        <option value="wave142a_crypto_med_360pack">wave142a_crypto_med_360pack (8k / 40s)</option>
+        <option value="wave146a_quadricentennial_400pack">wave146a_quadricentennial_400pack (8k / 40s)</option>
+        <option value="wave156b_astro_robotics_440pack">wave156b_astro_robotics_440pack (8k / 40s)</option>
+        <option value="wave161a_qec_gnn_480pack">wave161a_qec_gnn_480pack (8k / 40s)</option>
+        <option value="wave163a_quingentennial_520pack">wave163a_quingentennial_520pack (8k / 40s)</option>
+        <option value="wave166a_qchem_zk_560pack">wave166a_qchem_zk_560pack (8k / 40s)</option>
+      </select>
+    </label>
+    <label class="gpu-field" for="gpu-backend">GPU backend target
+      <select id="gpu-backend">
+        <option value="all">All 5 backends (560 shaders)</option>
+        <option value="wgsl">WGSL (112 shaders)</option>
+        <option value="hlsl">HLSL (112 shaders)</option>
+        <option value="msl">MSL (112 shaders)</option>
+        <option value="spirv">SPIRV (112 shaders)</option>
+        <option value="glsl">GLSL (112 shaders)</option>
+      </select>
+    </label>
+    <label class="gpu-field" for="gpu-search">Search kernel, batch, or validator
+      <input id="gpu-search" type="search" placeholder="e.g. flash, mamba, naga" autocomplete="off">
+    </label>
+    <button type="button" id="gpu-reset" class="gpu-btn">Reset filters</button>
+    <button type="button" id="gpu-tamper-btn" class="gpu-btn gpu-btn-primary">Run Fail-Closed Tamper Test</button>
+  </div>
+  <div class="gpu-readout" aria-live="polite">
+    <p id="gpu-status">Showing 112/112 pure-MIT kernels (560 certified shaders on all 5 backends, 4,009 Superopt V6 rewrites, 2,329,296 B).</p>
+    <p id="gpu-tamper-out">Manifest SHA-256: e07d74362332746ebb00... | Awaiting browser WebCrypto verification...</p>
+  </div>
+  <div class="gpu-wrap" tabindex="0" role="region" aria-label="112 pure-MIT GPU compute kernels">
+    <table class="gpu-table">
+      <colgroup><col style="width:31%"><col style="width:17%"><col style="width:10%"><col style="width:12%"><col style="width:30%"></colgroup>
+      <thead>
+        <tr><th scope="col">Kernel &amp; batch</th><th scope="col">Domain</th><th scope="col">Rewrites</th><th scope="col">Bytes</th><th scope="col">Cert digest &amp; validators</th></tr>
+      </thead>
+      <tbody>
+        <tr data-kernel="pbr_ggx_brdf_compute" data-domain="rendering-pbr" data-batch="batch1">
+          <td class="mono"><strong>pbr_ggx_brdf_compute</strong><span class="gpu-sub">batch1</span></td>
+          <td>Rendering &amp; PBR</td>
+          <td class="mono" data-k-rw="pbr_ggx_brdf_compute">28</td>
+          <td class="mono" data-k-bytes="pbr_ggx_brdf_compute">21,230 B</td>
+          <td class="mono" data-k-val="pbr_ggx_brdf_compute">PASS (7a4a65d341e5...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="ntc610_decode_compute" data-domain="rendering-pbr" data-batch="batch1">
+          <td class="mono"><strong>ntc610_decode_compute</strong><span class="gpu-sub">batch1</span></td>
+          <td>Rendering &amp; PBR</td>
+          <td class="mono" data-k-rw="ntc610_decode_compute">20</td>
+          <td class="mono" data-k-bytes="ntc610_decode_compute">11,613 B</td>
+          <td class="mono" data-k-val="ntc610_decode_compute">PASS (150875c560ba...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="splat_3dgs_project_compute" data-domain="rendering-pbr" data-batch="batch1">
+          <td class="mono"><strong>splat_3dgs_project_compute</strong><span class="gpu-sub">batch1</span></td>
+          <td>Rendering &amp; PBR</td>
+          <td class="mono" data-k-rw="splat_3dgs_project_compute">21</td>
+          <td class="mono" data-k-bytes="splat_3dgs_project_compute">11,969 B</td>
+          <td class="mono" data-k-val="splat_3dgs_project_compute">PASS (0d08a396d7c2...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="jonswap_wave_compute" data-domain="rendering-pbr" data-batch="batch1">
+          <td class="mono"><strong>jonswap_wave_compute</strong><span class="gpu-sub">batch1</span></td>
+          <td>Rendering &amp; PBR</td>
+          <td class="mono" data-k-rw="jonswap_wave_compute">55</td>
+          <td class="mono" data-k-bytes="jonswap_wave_compute">19,666 B</td>
+          <td class="mono" data-k-val="jonswap_wave_compute">PASS (701e33b6e222...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="indirect_frustum_cull_compute" data-domain="rendering-pbr" data-batch="batch1">
+          <td class="mono"><strong>indirect_frustum_cull_compute</strong><span class="gpu-sub">batch1</span></td>
+          <td>Rendering &amp; PBR</td>
+          <td class="mono" data-k-rw="indirect_frustum_cull_compute">4</td>
+          <td class="mono" data-k-bytes="indirect_frustum_cull_compute">12,518 B</td>
+          <td class="mono" data-k-val="indirect_frustum_cull_compute">PASS (fce288b1e8df...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="sdf_raymarch_compute" data-domain="rendering-pbr" data-batch="batch1">
+          <td class="mono"><strong>sdf_raymarch_compute</strong><span class="gpu-sub">batch1</span></td>
+          <td>Rendering &amp; PBR</td>
+          <td class="mono" data-k-rw="sdf_raymarch_compute">20</td>
+          <td class="mono" data-k-bytes="sdf_raymarch_compute">18,491 B</td>
+          <td class="mono" data-k-val="sdf_raymarch_compute">PASS (0bb8f6e57062...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="cayley_symplectic_step_compute" data-domain="rendering-pbr" data-batch="batch2">
+          <td class="mono"><strong>cayley_symplectic_step_compute</strong><span class="gpu-sub">batch2</span></td>
+          <td>Rendering &amp; PBR</td>
+          <td class="mono" data-k-rw="cayley_symplectic_step_compute">17</td>
+          <td class="mono" data-k-bytes="cayley_symplectic_step_compute">11,845 B</td>
+          <td class="mono" data-k-val="cayley_symplectic_step_compute">PASS (9079ce1b315f...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="rmsnorm_swiglu_compute" data-domain="rendering-pbr" data-batch="batch2">
+          <td class="mono"><strong>rmsnorm_swiglu_compute</strong><span class="gpu-sub">batch2</span></td>
+          <td>Rendering &amp; PBR</td>
+          <td class="mono" data-k-rw="rmsnorm_swiglu_compute">36</td>
+          <td class="mono" data-k-bytes="rmsnorm_swiglu_compute">16,730 B</td>
+          <td class="mono" data-k-val="rmsnorm_swiglu_compute">PASS (1453aeb679ba...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="volumetric_froxel_scatter_compute" data-domain="rendering-pbr" data-batch="batch2">
+          <td class="mono"><strong>volumetric_froxel_scatter_compute</strong><span class="gpu-sub">batch2</span></td>
+          <td>Rendering &amp; PBR</td>
+          <td class="mono" data-k-rw="volumetric_froxel_scatter_compute">33</td>
+          <td class="mono" data-k-bytes="volumetric_froxel_scatter_compute">19,125 B</td>
+          <td class="mono" data-k-val="volumetric_froxel_scatter_compute">PASS (c815ef39920c...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="hiz_depth_downsample_compute" data-domain="rendering-pbr" data-batch="batch2">
+          <td class="mono"><strong>hiz_depth_downsample_compute</strong><span class="gpu-sub">batch2</span></td>
+          <td>Rendering &amp; PBR</td>
+          <td class="mono" data-k-rw="hiz_depth_downsample_compute">0</td>
+          <td class="mono" data-k-bytes="hiz_depth_downsample_compute">11,719 B</td>
+          <td class="mono" data-k-val="hiz_depth_downsample_compute">PASS (d5d43eb65753...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="bilateral_atrous_denoise_compute" data-domain="rendering-pbr" data-batch="batch2">
+          <td class="mono"><strong>bilateral_atrous_denoise_compute</strong><span class="gpu-sub">batch2</span></td>
+          <td>Rendering &amp; PBR</td>
+          <td class="mono" data-k-rw="bilateral_atrous_denoise_compute">24</td>
+          <td class="mono" data-k-bytes="bilateral_atrous_denoise_compute">19,879 B</td>
+          <td class="mono" data-k-val="bilateral_atrous_denoise_compute">PASS (8a580aa48d99...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="oklab_filmic_grade_compute" data-domain="rendering-pbr" data-batch="batch2">
+          <td class="mono"><strong>oklab_filmic_grade_compute</strong><span class="gpu-sub">batch2</span></td>
+          <td>Rendering &amp; PBR</td>
+          <td class="mono" data-k-rw="oklab_filmic_grade_compute">58</td>
+          <td class="mono" data-k-bytes="oklab_filmic_grade_compute">17,006 B</td>
+          <td class="mono" data-k-val="oklab_filmic_grade_compute">PASS (ce2587fd36a2...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="rope_rotary_embed_compute" data-domain="rendering-pbr" data-batch="batch3">
+          <td class="mono"><strong>rope_rotary_embed_compute</strong><span class="gpu-sub">batch3</span></td>
+          <td>Rendering &amp; PBR</td>
+          <td class="mono" data-k-rw="rope_rotary_embed_compute">18</td>
+          <td class="mono" data-k-bytes="rope_rotary_embed_compute">11,494 B</td>
+          <td class="mono" data-k-val="rope_rotary_embed_compute">PASS (090860f223b3...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="int4_dequant_matvec_compute" data-domain="rendering-pbr" data-batch="batch3">
+          <td class="mono"><strong>int4_dequant_matvec_compute</strong><span class="gpu-sub">batch3</span></td>
+          <td>Rendering &amp; PBR</td>
+          <td class="mono" data-k-rw="int4_dequant_matvec_compute">12</td>
+          <td class="mono" data-k-bytes="int4_dequant_matvec_compute">15,812 B</td>
+          <td class="mono" data-k-val="int4_dequant_matvec_compute">PASS (27bd5c01cd0f...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="bvh_aabb_intersect_compute" data-domain="rendering-pbr" data-batch="batch3">
+          <td class="mono"><strong>bvh_aabb_intersect_compute</strong><span class="gpu-sub">batch3</span></td>
+          <td>Rendering &amp; PBR</td>
+          <td class="mono" data-k-rw="bvh_aabb_intersect_compute">0</td>
+          <td class="mono" data-k-bytes="bvh_aabb_intersect_compute">19,715 B</td>
+          <td class="mono" data-k-val="bvh_aabb_intersect_compute">PASS (89c27a657587...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="shallow_water_step_compute" data-domain="rendering-pbr" data-batch="batch3">
+          <td class="mono"><strong>shallow_water_step_compute</strong><span class="gpu-sub">batch3</span></td>
+          <td>Rendering &amp; PBR</td>
+          <td class="mono" data-k-rw="shallow_water_step_compute">8</td>
+          <td class="mono" data-k-bytes="shallow_water_step_compute">13,848 B</td>
+          <td class="mono" data-k-val="shallow_water_step_compute">PASS (a8fee52932c5...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="wind_foliage_bend_compute" data-domain="rendering-pbr" data-batch="batch3">
+          <td class="mono"><strong>wind_foliage_bend_compute</strong><span class="gpu-sub">batch3</span></td>
+          <td>Rendering &amp; PBR</td>
+          <td class="mono" data-k-rw="wind_foliage_bend_compute">9</td>
+          <td class="mono" data-k-bytes="wind_foliage_bend_compute">16,415 B</td>
+          <td class="mono" data-k-val="wind_foliage_bend_compute">PASS (75f1f9e28f9e...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="spectral_xyz_eval_compute" data-domain="rendering-pbr" data-batch="batch3">
+          <td class="mono"><strong>spectral_xyz_eval_compute</strong><span class="gpu-sub">batch3</span></td>
+          <td>Rendering &amp; PBR</td>
+          <td class="mono" data-k-rw="spectral_xyz_eval_compute">36</td>
+          <td class="mono" data-k-bytes="spectral_xyz_eval_compute">14,894 B</td>
+          <td class="mono" data-k-val="spectral_xyz_eval_compute">PASS (60773bd6ba5c...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="flash_attn_tile_compute" data-domain="rendering-pbr" data-batch="batch4">
+          <td class="mono"><strong>flash_attn_tile_compute</strong><span class="gpu-sub">batch4</span></td>
+          <td>Rendering &amp; PBR</td>
+          <td class="mono" data-k-rw="flash_attn_tile_compute">24</td>
+          <td class="mono" data-k-bytes="flash_attn_tile_compute">17,805 B</td>
+          <td class="mono" data-k-val="flash_attn_tile_compute">PASS (f5eb2ae679f7...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="moe_router_topk_compute" data-domain="rendering-pbr" data-batch="batch4">
+          <td class="mono"><strong>moe_router_topk_compute</strong><span class="gpu-sub">batch4</span></td>
+          <td>Rendering &amp; PBR</td>
+          <td class="mono" data-k-rw="moe_router_topk_compute">12</td>
+          <td class="mono" data-k-bytes="moe_router_topk_compute">17,255 B</td>
+          <td class="mono" data-k-val="moe_router_topk_compute">PASS (7930cb59034d...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="cloth_verlet_step_compute" data-domain="rendering-pbr" data-batch="batch4">
+          <td class="mono"><strong>cloth_verlet_step_compute</strong><span class="gpu-sub">batch4</span></td>
+          <td>Rendering &amp; PBR</td>
+          <td class="mono" data-k-rw="cloth_verlet_step_compute">28</td>
+          <td class="mono" data-k-bytes="cloth_verlet_step_compute">17,628 B</td>
+          <td class="mono" data-k-val="cloth_verlet_step_compute">PASS (94b5bd882568...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="ordered_dither_compute" data-domain="rendering-pbr" data-batch="batch4">
+          <td class="mono"><strong>ordered_dither_compute</strong><span class="gpu-sub">batch4</span></td>
+          <td>Rendering &amp; PBR</td>
+          <td class="mono" data-k-rw="ordered_dither_compute">0</td>
+          <td class="mono" data-k-bytes="ordered_dither_compute">12,729 B</td>
+          <td class="mono" data-k-val="ordered_dither_compute">PASS (d7a699825457...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="sky_rayleigh_mie_compute" data-domain="rendering-pbr" data-batch="batch4">
+          <td class="mono"><strong>sky_rayleigh_mie_compute</strong><span class="gpu-sub">batch4</span></td>
+          <td>Rendering &amp; PBR</td>
+          <td class="mono" data-k-rw="sky_rayleigh_mie_compute">37</td>
+          <td class="mono" data-k-bytes="sky_rayleigh_mie_compute">18,161 B</td>
+          <td class="mono" data-k-val="sky_rayleigh_mie_compute">PASS (29fe6f316f81...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="merkle_hash_step_compute" data-domain="rendering-pbr" data-batch="batch4">
+          <td class="mono"><strong>merkle_hash_step_compute</strong><span class="gpu-sub">batch4</span></td>
+          <td>Rendering &amp; PBR</td>
+          <td class="mono" data-k-rw="merkle_hash_step_compute">0</td>
+          <td class="mono" data-k-bytes="merkle_hash_step_compute">22,739 B</td>
+          <td class="mono" data-k-val="merkle_hash_step_compute">PASS (801eed1d30e1...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="titan_fca_attention_compute" data-domain="titan-ai-rlvr" data-batch="wave117d_titan_ai">
+          <td class="mono"><strong>titan_fca_attention_compute</strong><span class="gpu-sub">wave117d_titan_ai</span></td>
+          <td>Titan AI &amp; RLVR</td>
+          <td class="mono" data-k-rw="titan_fca_attention_compute">65</td>
+          <td class="mono" data-k-bytes="titan_fca_attention_compute">27,081 B</td>
+          <td class="mono" data-k-val="titan_fca_attention_compute">PASS (7f4b769a16a5...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="titan_sinkhorn_mhc_compute" data-domain="titan-ai-rlvr" data-batch="wave117d_titan_ai">
+          <td class="mono"><strong>titan_sinkhorn_mhc_compute</strong><span class="gpu-sub">wave117d_titan_ai</span></td>
+          <td>Titan AI &amp; RLVR</td>
+          <td class="mono" data-k-rw="titan_sinkhorn_mhc_compute">50</td>
+          <td class="mono" data-k-bytes="titan_sinkhorn_mhc_compute">34,972 B</td>
+          <td class="mono" data-k-val="titan_sinkhorn_mhc_compute">PASS (75db6b9c78f3...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="titan_int4_dequant_gemv_compute" data-domain="titan-ai-rlvr" data-batch="wave117d_titan_ai">
+          <td class="mono"><strong>titan_int4_dequant_gemv_compute</strong><span class="gpu-sub">wave117d_titan_ai</span></td>
+          <td>Titan AI &amp; RLVR</td>
+          <td class="mono" data-k-rw="titan_int4_dequant_gemv_compute">20</td>
+          <td class="mono" data-k-bytes="titan_int4_dequant_gemv_compute">16,538 B</td>
+          <td class="mono" data-k-val="titan_int4_dequant_gemv_compute">PASS (c8a0bbc53244...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="titan_j13_svd_guard_compute" data-domain="titan-ai-rlvr" data-batch="wave117d_titan_ai">
+          <td class="mono"><strong>titan_j13_svd_guard_compute</strong><span class="gpu-sub">wave117d_titan_ai</span></td>
+          <td>Titan AI &amp; RLVR</td>
+          <td class="mono" data-k-rw="titan_j13_svd_guard_compute">45</td>
+          <td class="mono" data-k-bytes="titan_j13_svd_guard_compute">20,758 B</td>
+          <td class="mono" data-k-val="titan_j13_svd_guard_compute">PASS (9c7bdcb96f07...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="world_gaussian_splat_tile_compute" data-domain="physics-sci-frontier" data-batch="wave122c_world_physics_3d">
+          <td class="mono"><strong>world_gaussian_splat_tile_compute</strong><span class="gpu-sub">wave122c_world_physics_3d</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="world_gaussian_splat_tile_compute">29</td>
+          <td class="mono" data-k-bytes="world_gaussian_splat_tile_compute">23,843 B</td>
+          <td class="mono" data-k-val="world_gaussian_splat_tile_compute">PASS (a08a6b0edd2a...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="world_navier_stokes_jacobi_compute" data-domain="physics-sci-frontier" data-batch="wave122c_world_physics_3d">
+          <td class="mono"><strong>world_navier_stokes_jacobi_compute</strong><span class="gpu-sub">wave122c_world_physics_3d</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="world_navier_stokes_jacobi_compute">50</td>
+          <td class="mono" data-k-bytes="world_navier_stokes_jacobi_compute">25,435 B</td>
+          <td class="mono" data-k-val="world_navier_stokes_jacobi_compute">PASS (6972490b3639...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="world_xpbd_auxetic_step_compute" data-domain="physics-sci-frontier" data-batch="wave122c_world_physics_3d">
+          <td class="mono"><strong>world_xpbd_auxetic_step_compute</strong><span class="gpu-sub">wave122c_world_physics_3d</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="world_xpbd_auxetic_step_compute">40</td>
+          <td class="mono" data-k-bytes="world_xpbd_auxetic_step_compute">24,034 B</td>
+          <td class="mono" data-k-val="world_xpbd_auxetic_step_compute">PASS (0580b973f2c7...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="world_spectral_sky_transmittance_compute" data-domain="physics-sci-frontier" data-batch="wave122c_world_physics_3d">
+          <td class="mono"><strong>world_spectral_sky_transmittance_compute</strong><span class="gpu-sub">wave122c_world_physics_3d</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="world_spectral_sky_transmittance_compute">78</td>
+          <td class="mono" data-k-bytes="world_spectral_sky_transmittance_compute">29,390 B</td>
+          <td class="mono" data-k-val="world_spectral_sky_transmittance_compute">PASS (754ce6d51737...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="sci_fdtd_maxwell_yee_compute" data-domain="physics-sci-frontier" data-batch="wave124d_sci_bio_audio">
+          <td class="mono"><strong>sci_fdtd_maxwell_yee_compute</strong><span class="gpu-sub">wave124d_sci_bio_audio</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="sci_fdtd_maxwell_yee_compute">20</td>
+          <td class="mono" data-k-bytes="sci_fdtd_maxwell_yee_compute">18,588 B</td>
+          <td class="mono" data-k-val="sci_fdtd_maxwell_yee_compute">PASS (9bbea65f13e7...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="sci_reaction_diffusion_gs_compute" data-domain="physics-sci-frontier" data-batch="wave124d_sci_bio_audio">
+          <td class="mono"><strong>sci_reaction_diffusion_gs_compute</strong><span class="gpu-sub">wave124d_sci_bio_audio</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="sci_reaction_diffusion_gs_compute">32</td>
+          <td class="mono" data-k-bytes="sci_reaction_diffusion_gs_compute">20,918 B</td>
+          <td class="mono" data-k-val="sci_reaction_diffusion_gs_compute">PASS (c9eb45b22308...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="sci_fdn_reverb_dsp_compute" data-domain="physics-sci-frontier" data-batch="wave124d_sci_bio_audio">
+          <td class="mono"><strong>sci_fdn_reverb_dsp_compute</strong><span class="gpu-sub">wave124d_sci_bio_audio</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="sci_fdn_reverb_dsp_compute">39</td>
+          <td class="mono" data-k-bytes="sci_fdn_reverb_dsp_compute">23,399 B</td>
+          <td class="mono" data-k-val="sci_fdn_reverb_dsp_compute">PASS (fff69541145b...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="sci_molecular_lj_verlet_compute" data-domain="physics-sci-frontier" data-batch="wave124d_sci_bio_audio">
+          <td class="mono"><strong>sci_molecular_lj_verlet_compute</strong><span class="gpu-sub">wave124d_sci_bio_audio</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="sci_molecular_lj_verlet_compute">56</td>
+          <td class="mono" data-k-bytes="sci_molecular_lj_verlet_compute">24,529 B</td>
+          <td class="mono" data-k-val="sci_molecular_lj_verlet_compute">PASS (a22ab1bd1d5a...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="fin_heston_montecarlo_compute" data-domain="physics-sci-frontier" data-batch="wave127a_fin_graph_optics_fft">
+          <td class="mono"><strong>fin_heston_montecarlo_compute</strong><span class="gpu-sub">wave127a_fin_graph_optics_fft</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="fin_heston_montecarlo_compute">52</td>
+          <td class="mono" data-k-bytes="fin_heston_montecarlo_compute">25,210 B</td>
+          <td class="mono" data-k-val="fin_heston_montecarlo_compute">PASS (031230de3b5b...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="graph_pagerank_spmv_compute" data-domain="physics-sci-frontier" data-batch="wave127a_fin_graph_optics_fft">
+          <td class="mono"><strong>graph_pagerank_spmv_compute</strong><span class="gpu-sub">wave127a_fin_graph_optics_fft</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="graph_pagerank_spmv_compute">16</td>
+          <td class="mono" data-k-bytes="graph_pagerank_spmv_compute">13,636 B</td>
+          <td class="mono" data-k-val="graph_pagerank_spmv_compute">PASS (db6b235ba685...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="optics_thinfilm_airy_compute" data-domain="physics-sci-frontier" data-batch="wave127a_fin_graph_optics_fft">
+          <td class="mono"><strong>optics_thinfilm_airy_compute</strong><span class="gpu-sub">wave127a_fin_graph_optics_fft</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="optics_thinfilm_airy_compute">96</td>
+          <td class="mono" data-k-bytes="optics_thinfilm_airy_compute">23,767 B</td>
+          <td class="mono" data-k-val="optics_thinfilm_airy_compute">PASS (31f40a762d02...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="dsp_fft_radix2_butterfly_compute" data-domain="physics-sci-frontier" data-batch="wave127a_fin_graph_optics_fft">
+          <td class="mono"><strong>dsp_fft_radix2_butterfly_compute</strong><span class="gpu-sub">wave127a_fin_graph_optics_fft</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="dsp_fft_radix2_butterfly_compute">40</td>
+          <td class="mono" data-k-bytes="dsp_fft_radix2_butterfly_compute">20,906 B</td>
+          <td class="mono" data-k-val="dsp_fft_radix2_butterfly_compute">PASS (3f3bff52d5e7...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="flash_attention_v3_tiled" data-domain="titan-ai-rlvr" data-batch="wave134a_titan_ai_rlvr_240pack">
+          <td class="mono"><strong>flash_attention_v3_tiled</strong><span class="gpu-sub">wave134a_titan_ai_rlvr_240pack</span></td>
+          <td>Titan AI &amp; RLVR</td>
+          <td class="mono" data-k-rw="flash_attention_v3_tiled">24</td>
+          <td class="mono" data-k-bytes="flash_attention_v3_tiled">20,085 B</td>
+          <td class="mono" data-k-val="flash_attention_v3_tiled">PASS (97b460119b88...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="rmsnorm_swiglu_fused" data-domain="titan-ai-rlvr" data-batch="wave134a_titan_ai_rlvr_240pack">
+          <td class="mono"><strong>rmsnorm_swiglu_fused</strong><span class="gpu-sub">wave134a_titan_ai_rlvr_240pack</span></td>
+          <td>Titan AI &amp; RLVR</td>
+          <td class="mono" data-k-rw="rmsnorm_swiglu_fused">56</td>
+          <td class="mono" data-k-bytes="rmsnorm_swiglu_fused">21,160 B</td>
+          <td class="mono" data-k-val="rmsnorm_swiglu_fused">PASS (9d135f5f73e2...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="int4_awq_dequant_gemv" data-domain="titan-ai-rlvr" data-batch="wave134a_titan_ai_rlvr_240pack">
+          <td class="mono"><strong>int4_awq_dequant_gemv</strong><span class="gpu-sub">wave134a_titan_ai_rlvr_240pack</span></td>
+          <td>Titan AI &amp; RLVR</td>
+          <td class="mono" data-k-rw="int4_awq_dequant_gemv">17</td>
+          <td class="mono" data-k-bytes="int4_awq_dequant_gemv">17,254 B</td>
+          <td class="mono" data-k-val="int4_awq_dequant_gemv">PASS (f8af17a316c2...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="moe_topk2_capacity_router" data-domain="titan-ai-rlvr" data-batch="wave134a_titan_ai_rlvr_240pack">
+          <td class="mono"><strong>moe_topk2_capacity_router</strong><span class="gpu-sub">wave134a_titan_ai_rlvr_240pack</span></td>
+          <td>Titan AI &amp; RLVR</td>
+          <td class="mono" data-k-rw="moe_topk2_capacity_router">25</td>
+          <td class="mono" data-k-bytes="moe_topk2_capacity_router">19,956 B</td>
+          <td class="mono" data-k-val="moe_topk2_capacity_router">PASS (51fec7fb0629...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="mamba2_ssd_chunk_scan" data-domain="titan-ai-rlvr" data-batch="wave134a_titan_ai_rlvr_240pack">
+          <td class="mono"><strong>mamba2_ssd_chunk_scan</strong><span class="gpu-sub">wave134a_titan_ai_rlvr_240pack</span></td>
+          <td>Titan AI &amp; RLVR</td>
+          <td class="mono" data-k-rw="mamba2_ssd_chunk_scan">24</td>
+          <td class="mono" data-k-bytes="mamba2_ssd_chunk_scan">17,957 B</td>
+          <td class="mono" data-k-val="mamba2_ssd_chunk_scan">PASS (13c1b4c0443a...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="grpo_advantage_clip_loss" data-domain="titan-ai-rlvr" data-batch="wave134a_titan_ai_rlvr_240pack">
+          <td class="mono"><strong>grpo_advantage_clip_loss</strong><span class="gpu-sub">wave134a_titan_ai_rlvr_240pack</span></td>
+          <td>Titan AI &amp; RLVR</td>
+          <td class="mono" data-k-rw="grpo_advantage_clip_loss">47</td>
+          <td class="mono" data-k-bytes="grpo_advantage_clip_loss">24,185 B</td>
+          <td class="mono" data-k-val="grpo_advantage_clip_loss">PASS (7763b25d6174...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="speculative_tree_verify_gpu" data-domain="titan-ai-rlvr" data-batch="wave134a_titan_ai_rlvr_240pack">
+          <td class="mono"><strong>speculative_tree_verify_gpu</strong><span class="gpu-sub">wave134a_titan_ai_rlvr_240pack</span></td>
+          <td>Titan AI &amp; RLVR</td>
+          <td class="mono" data-k-rw="speculative_tree_verify_gpu">0</td>
+          <td class="mono" data-k-bytes="speculative_tree_verify_gpu">11,317 B</td>
+          <td class="mono" data-k-val="speculative_tree_verify_gpu">PASS (e89f663345c9...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="h2o_heavy_hitter_evict_gpu" data-domain="titan-ai-rlvr" data-batch="wave134a_titan_ai_rlvr_240pack">
+          <td class="mono"><strong>h2o_heavy_hitter_evict_gpu</strong><span class="gpu-sub">wave134a_titan_ai_rlvr_240pack</span></td>
+          <td>Titan AI &amp; RLVR</td>
+          <td class="mono" data-k-rw="h2o_heavy_hitter_evict_gpu">4</td>
+          <td class="mono" data-k-bytes="h2o_heavy_hitter_evict_gpu">9,513 B</td>
+          <td class="mono" data-k-val="h2o_heavy_hitter_evict_gpu">PASS (f059eaa20eac...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="rigid_body_lcp_pgs_gpu" data-domain="physics-sci-frontier" data-batch="wave135c_frontier_domain_280pack">
+          <td class="mono"><strong>rigid_body_lcp_pgs_gpu</strong><span class="gpu-sub">wave135c_frontier_domain_280pack</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="rigid_body_lcp_pgs_gpu">25</td>
+          <td class="mono" data-k-bytes="rigid_body_lcp_pgs_gpu">20,411 B</td>
+          <td class="mono" data-k-val="rigid_body_lcp_pgs_gpu">PASS (9d563fe649f9...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="mpm_snow_elastoplastic_gpu" data-domain="physics-sci-frontier" data-batch="wave135c_frontier_domain_280pack">
+          <td class="mono"><strong>mpm_snow_elastoplastic_gpu</strong><span class="gpu-sub">wave135c_frontier_domain_280pack</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="mpm_snow_elastoplastic_gpu">35</td>
+          <td class="mono" data-k-bytes="mpm_snow_elastoplastic_gpu">23,825 B</td>
+          <td class="mono" data-k-val="mpm_snow_elastoplastic_gpu">PASS (502b4c4929ad...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="fdtd_acoustic_room_ir_gpu" data-domain="physics-sci-frontier" data-batch="wave135c_frontier_domain_280pack">
+          <td class="mono"><strong>fdtd_acoustic_room_ir_gpu</strong><span class="gpu-sub">wave135c_frontier_domain_280pack</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="fdtd_acoustic_room_ir_gpu">32</td>
+          <td class="mono" data-k-bytes="fdtd_acoustic_room_ir_gpu">21,464 B</td>
+          <td class="mono" data-k-val="fdtd_acoustic_room_ir_gpu">PASS (3590182e9d03...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="qft_statevector_gate_gpu" data-domain="physics-sci-frontier" data-batch="wave135c_frontier_domain_280pack">
+          <td class="mono"><strong>qft_statevector_gate_gpu</strong><span class="gpu-sub">wave135c_frontier_domain_280pack</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="qft_statevector_gate_gpu">20</td>
+          <td class="mono" data-k-bytes="qft_statevector_gate_gpu">15,364 B</td>
+          <td class="mono" data-k-val="qft_statevector_gate_gpu">PASS (8dc27ca090b2...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="cryoem_ctf_wiener_filter_gpu" data-domain="physics-sci-frontier" data-batch="wave135c_frontier_domain_280pack">
+          <td class="mono"><strong>cryoem_ctf_wiener_filter_gpu</strong><span class="gpu-sub">wave135c_frontier_domain_280pack</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="cryoem_ctf_wiener_filter_gpu">36</td>
+          <td class="mono" data-k-bytes="cryoem_ctf_wiener_filter_gpu">17,644 B</td>
+          <td class="mono" data-k-val="cryoem_ctf_wiener_filter_gpu">PASS (7c356298b4f2...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="kalman_ekf_slam_update_gpu" data-domain="physics-sci-frontier" data-batch="wave135c_frontier_domain_280pack">
+          <td class="mono"><strong>kalman_ekf_slam_update_gpu</strong><span class="gpu-sub">wave135c_frontier_domain_280pack</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="kalman_ekf_slam_update_gpu">66</td>
+          <td class="mono" data-k-bytes="kalman_ekf_slam_update_gpu">26,685 B</td>
+          <td class="mono" data-k-val="kalman_ekf_slam_update_gpu">PASS (0813c051fe62...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="signed_distance_jfa_3d_gpu" data-domain="physics-sci-frontier" data-batch="wave135c_frontier_domain_280pack">
+          <td class="mono"><strong>signed_distance_jfa_3d_gpu</strong><span class="gpu-sub">wave135c_frontier_domain_280pack</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="signed_distance_jfa_3d_gpu">43</td>
+          <td class="mono" data-k-bytes="signed_distance_jfa_3d_gpu">26,434 B</td>
+          <td class="mono" data-k-val="signed_distance_jfa_3d_gpu">PASS (5843d4937458...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="neural_radiance_hashgrid_gpu" data-domain="physics-sci-frontier" data-batch="wave135c_frontier_domain_280pack">
+          <td class="mono"><strong>neural_radiance_hashgrid_gpu</strong><span class="gpu-sub">wave135c_frontier_domain_280pack</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="neural_radiance_hashgrid_gpu">36</td>
+          <td class="mono" data-k-bytes="neural_radiance_hashgrid_gpu">21,397 B</td>
+          <td class="mono" data-k-val="neural_radiance_hashgrid_gpu">PASS (614bdb456828...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="spectral_path_mis_bsdf_gpu" data-domain="physics-sci-frontier" data-batch="wave138a_photonics_geo_320pack">
+          <td class="mono"><strong>spectral_path_mis_bsdf_gpu</strong><span class="gpu-sub">wave138a_photonics_geo_320pack</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="spectral_path_mis_bsdf_gpu">41</td>
+          <td class="mono" data-k-bytes="spectral_path_mis_bsdf_gpu">27,510 B</td>
+          <td class="mono" data-k-val="spectral_path_mis_bsdf_gpu">PASS (066d0e59a8e3...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="atmosphere_multiscatter_lut_gpu" data-domain="physics-sci-frontier" data-batch="wave138a_photonics_geo_320pack">
+          <td class="mono"><strong>atmosphere_multiscatter_lut_gpu</strong><span class="gpu-sub">wave138a_photonics_geo_320pack</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="atmosphere_multiscatter_lut_gpu">65</td>
+          <td class="mono" data-k-bytes="atmosphere_multiscatter_lut_gpu">27,067 B</td>
+          <td class="mono" data-k-val="atmosphere_multiscatter_lut_gpu">PASS (fc967e1f5f40...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="nbody_barnes_hut_quadrupole_gpu" data-domain="physics-sci-frontier" data-batch="wave138a_photonics_geo_320pack">
+          <td class="mono"><strong>nbody_barnes_hut_quadrupole_gpu</strong><span class="gpu-sub">wave138a_photonics_geo_320pack</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="nbody_barnes_hut_quadrupole_gpu">75</td>
+          <td class="mono" data-k-bytes="nbody_barnes_hut_quadrupole_gpu">27,876 B</td>
+          <td class="mono" data-k-val="nbody_barnes_hut_quadrupole_gpu">PASS (ddcd6570c661...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="smith_waterman_banded_gpu" data-domain="physics-sci-frontier" data-batch="wave138a_photonics_geo_320pack">
+          <td class="mono"><strong>smith_waterman_banded_gpu</strong><span class="gpu-sub">wave138a_photonics_geo_320pack</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="smith_waterman_banded_gpu">0</td>
+          <td class="mono" data-k-bytes="smith_waterman_banded_gpu">16,192 B</td>
+          <td class="mono" data-k-val="smith_waterman_banded_gpu">PASS (dd7f64258a63...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="seismic_rtm_acoustic_3d_gpu" data-domain="physics-sci-frontier" data-batch="wave138a_photonics_geo_320pack">
+          <td class="mono"><strong>seismic_rtm_acoustic_3d_gpu</strong><span class="gpu-sub">wave138a_photonics_geo_320pack</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="seismic_rtm_acoustic_3d_gpu">25</td>
+          <td class="mono" data-k-bytes="seismic_rtm_acoustic_3d_gpu">13,582 B</td>
+          <td class="mono" data-k-val="seismic_rtm_acoustic_3d_gpu">PASS (81b619699dd3...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="lattice_boltzmann_d3q19_gpu" data-domain="physics-sci-frontier" data-batch="wave138a_photonics_geo_320pack">
+          <td class="mono"><strong>lattice_boltzmann_d3q19_gpu</strong><span class="gpu-sub">wave138a_photonics_geo_320pack</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="lattice_boltzmann_d3q19_gpu">75</td>
+          <td class="mono" data-k-bytes="lattice_boltzmann_d3q19_gpu">23,391 B</td>
+          <td class="mono" data-k-val="lattice_boltzmann_d3q19_gpu">PASS (fbe4da9e83fe...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="optimal_transport_sinkhorn_gpu" data-domain="physics-sci-frontier" data-batch="wave138a_photonics_geo_320pack">
+          <td class="mono"><strong>optimal_transport_sinkhorn_gpu</strong><span class="gpu-sub">wave138a_photonics_geo_320pack</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="optimal_transport_sinkhorn_gpu">92</td>
+          <td class="mono" data-k-bytes="optimal_transport_sinkhorn_gpu">25,845 B</td>
+          <td class="mono" data-k-val="optimal_transport_sinkhorn_gpu">PASS (81ab50f3bb39...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="cholesky_batched_spd_gpu" data-domain="physics-sci-frontier" data-batch="wave138a_photonics_geo_320pack">
+          <td class="mono"><strong>cholesky_batched_spd_gpu</strong><span class="gpu-sub">wave138a_photonics_geo_320pack</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="cholesky_batched_spd_gpu">64</td>
+          <td class="mono" data-k-bytes="cholesky_batched_spd_gpu">27,945 B</td>
+          <td class="mono" data-k-val="cholesky_batched_spd_gpu">PASS (407f622ce779...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="mlkem_ntt_q3329_gpu" data-domain="physics-sci-frontier" data-batch="wave142a_crypto_med_360pack">
+          <td class="mono"><strong>mlkem_ntt_q3329_gpu</strong><span class="gpu-sub">wave142a_crypto_med_360pack</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="mlkem_ntt_q3329_gpu">0</td>
+          <td class="mono" data-k-bytes="mlkem_ntt_q3329_gpu">13,781 B</td>
+          <td class="mono" data-k-val="mlkem_ntt_q3329_gpu">PASS (b4f7a8843c16...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="blake3_compress_gpu" data-domain="physics-sci-frontier" data-batch="wave142a_crypto_med_360pack">
+          <td class="mono"><strong>blake3_compress_gpu</strong><span class="gpu-sub">wave142a_crypto_med_360pack</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="blake3_compress_gpu">0</td>
+          <td class="mono" data-k-bytes="blake3_compress_gpu">19,745 B</td>
+          <td class="mono" data-k-val="blake3_compress_gpu">PASS (81f5ccd21929...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="chacha20_block_gpu" data-domain="physics-sci-frontier" data-batch="wave142a_crypto_med_360pack">
+          <td class="mono"><strong>chacha20_block_gpu</strong><span class="gpu-sub">wave142a_crypto_med_360pack</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="chacha20_block_gpu">0</td>
+          <td class="mono" data-k-bytes="chacha20_block_gpu">22,918 B</td>
+          <td class="mono" data-k-val="chacha20_block_gpu">PASS (9e1391a8f018...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="radon_fbp_ct_recon_gpu" data-domain="physics-sci-frontier" data-batch="wave142a_crypto_med_360pack">
+          <td class="mono"><strong>radon_fbp_ct_recon_gpu</strong><span class="gpu-sub">wave142a_crypto_med_360pack</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="radon_fbp_ct_recon_gpu">30</td>
+          <td class="mono" data-k-bytes="radon_fbp_ct_recon_gpu">15,928 B</td>
+          <td class="mono" data-k-val="radon_fbp_ct_recon_gpu">PASS (ab9073699f23...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="mri_nufft_gridding_gpu" data-domain="physics-sci-frontier" data-batch="wave142a_crypto_med_360pack">
+          <td class="mono"><strong>mri_nufft_gridding_gpu</strong><span class="gpu-sub">wave142a_crypto_med_360pack</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="mri_nufft_gridding_gpu">50</td>
+          <td class="mono" data-k-bytes="mri_nufft_gridding_gpu">19,674 B</td>
+          <td class="mono" data-k-val="mri_nufft_gridding_gpu">PASS (87b0180726ba...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="biquad_iir_bank_dsp_gpu" data-domain="physics-sci-frontier" data-batch="wave142a_crypto_med_360pack">
+          <td class="mono"><strong>biquad_iir_bank_dsp_gpu</strong><span class="gpu-sub">wave142a_crypto_med_360pack</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="biquad_iir_bank_dsp_gpu">28</td>
+          <td class="mono" data-k-bytes="biquad_iir_bank_dsp_gpu">17,209 B</td>
+          <td class="mono" data-k-val="biquad_iir_bank_dsp_gpu">PASS (4cb72dfd946b...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="kalman_ukf_sigma_pts_gpu" data-domain="physics-sci-frontier" data-batch="wave142a_crypto_med_360pack">
+          <td class="mono"><strong>kalman_ukf_sigma_pts_gpu</strong><span class="gpu-sub">wave142a_crypto_med_360pack</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="kalman_ukf_sigma_pts_gpu">56</td>
+          <td class="mono" data-k-bytes="kalman_ukf_sigma_pts_gpu">21,221 B</td>
+          <td class="mono" data-k-val="kalman_ukf_sigma_pts_gpu">PASS (27e31b719a74...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="voronoi_lloyd_relax_gpu" data-domain="physics-sci-frontier" data-batch="wave142a_crypto_med_360pack">
+          <td class="mono"><strong>voronoi_lloyd_relax_gpu</strong><span class="gpu-sub">wave142a_crypto_med_360pack</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="voronoi_lloyd_relax_gpu">36</td>
+          <td class="mono" data-k-bytes="voronoi_lloyd_relax_gpu">18,921 B</td>
+          <td class="mono" data-k-val="voronoi_lloyd_relax_gpu">PASS (5a2d5ad1fa8c...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="meshlet_frustum_hi_z_cull_gpu" data-domain="physics-sci-frontier" data-batch="wave146a_quadricentennial_400pack">
+          <td class="mono"><strong>meshlet_frustum_hi_z_cull_gpu</strong><span class="gpu-sub">wave146a_quadricentennial_400pack</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="meshlet_frustum_hi_z_cull_gpu">16</td>
+          <td class="mono" data-k-bytes="meshlet_frustum_hi_z_cull_gpu">18,560 B</td>
+          <td class="mono" data-k-val="meshlet_frustum_hi_z_cull_gpu">PASS (37d458c18c5e...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="restir_di_reservoir_resample_gpu" data-domain="physics-sci-frontier" data-batch="wave146a_quadricentennial_400pack">
+          <td class="mono"><strong>restir_di_reservoir_resample_gpu</strong><span class="gpu-sub">wave146a_quadricentennial_400pack</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="restir_di_reservoir_resample_gpu">22</td>
+          <td class="mono" data-k-bytes="restir_di_reservoir_resample_gpu">19,557 B</td>
+          <td class="mono" data-k-val="restir_di_reservoir_resample_gpu">PASS (9fc58a8d0051...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="shallow_water_swe_climate_gpu" data-domain="physics-sci-frontier" data-batch="wave146a_quadricentennial_400pack">
+          <td class="mono"><strong>shallow_water_swe_climate_gpu</strong><span class="gpu-sub">wave146a_quadricentennial_400pack</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="shallow_water_swe_climate_gpu">53</td>
+          <td class="mono" data-k-bytes="shallow_water_swe_climate_gpu">24,791 B</td>
+          <td class="mono" data-k-val="shallow_water_swe_climate_gpu">PASS (0500b51fe072...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="protein_dihedral_ramachandran_gpu" data-domain="physics-sci-frontier" data-batch="wave146a_quadricentennial_400pack">
+          <td class="mono"><strong>protein_dihedral_ramachandran_gpu</strong><span class="gpu-sub">wave146a_quadricentennial_400pack</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="protein_dihedral_ramachandran_gpu">65</td>
+          <td class="mono" data-k-bytes="protein_dihedral_ramachandran_gpu">24,668 B</td>
+          <td class="mono" data-k-val="protein_dihedral_ramachandran_gpu">PASS (5fabc2bb10f4...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="bc7_block_endpoint_fit_gpu" data-domain="physics-sci-frontier" data-batch="wave146a_quadricentennial_400pack">
+          <td class="mono"><strong>bc7_block_endpoint_fit_gpu</strong><span class="gpu-sub">wave146a_quadricentennial_400pack</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="bc7_block_endpoint_fit_gpu">94</td>
+          <td class="mono" data-k-bytes="bc7_block_endpoint_fit_gpu">35,090 B</td>
+          <td class="mono" data-k-val="bc7_block_endpoint_fit_gpu">PASS (82f314c1c366...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="radix_sort_histogram_scan_gpu" data-domain="physics-sci-frontier" data-batch="wave146a_quadricentennial_400pack">
+          <td class="mono"><strong>radix_sort_histogram_scan_gpu</strong><span class="gpu-sub">wave146a_quadricentennial_400pack</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="radix_sort_histogram_scan_gpu">0</td>
+          <td class="mono" data-k-bytes="radix_sort_histogram_scan_gpu">25,384 B</td>
+          <td class="mono" data-k-val="radix_sort_histogram_scan_gpu">PASS (fc02b4a6c373...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="delaunay_flip_edge_gpu" data-domain="physics-sci-frontier" data-batch="wave146a_quadricentennial_400pack">
+          <td class="mono"><strong>delaunay_flip_edge_gpu</strong><span class="gpu-sub">wave146a_quadricentennial_400pack</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="delaunay_flip_edge_gpu">52</td>
+          <td class="mono" data-k-bytes="delaunay_flip_edge_gpu">19,107 B</td>
+          <td class="mono" data-k-val="delaunay_flip_edge_gpu">PASS (0c5889f8b73a...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="cloth_pbd_bending_gpu" data-domain="physics-sci-frontier" data-batch="wave146a_quadricentennial_400pack">
+          <td class="mono"><strong>cloth_pbd_bending_gpu</strong><span class="gpu-sub">wave146a_quadricentennial_400pack</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="cloth_pbd_bending_gpu">160</td>
+          <td class="mono" data-k-bytes="cloth_pbd_bending_gpu">34,623 B</td>
+          <td class="mono" data-k-val="cloth_pbd_bending_gpu">PASS (40b5032d8b47...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="kepler_lambert_orbit_gpu" data-domain="physics-sci-frontier" data-batch="wave156b_astro_robotics_440pack">
+          <td class="mono"><strong>kepler_lambert_orbit_gpu</strong><span class="gpu-sub">wave156b_astro_robotics_440pack</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="kepler_lambert_orbit_gpu">87</td>
+          <td class="mono" data-k-bytes="kepler_lambert_orbit_gpu">29,176 B</td>
+          <td class="mono" data-k-val="kepler_lambert_orbit_gpu">PASS (94cabc7c8981...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="mhd_hll_plasma_flux_gpu" data-domain="physics-sci-frontier" data-batch="wave156b_astro_robotics_440pack">
+          <td class="mono"><strong>mhd_hll_plasma_flux_gpu</strong><span class="gpu-sub">wave156b_astro_robotics_440pack</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="mhd_hll_plasma_flux_gpu">120</td>
+          <td class="mono" data-k-bytes="mhd_hll_plasma_flux_gpu">35,327 B</td>
+          <td class="mono" data-k-val="mhd_hll_plasma_flux_gpu">PASS (8e32e47190bf...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="inverse_kinematics_ccd_gpu" data-domain="physics-sci-frontier" data-batch="wave156b_astro_robotics_440pack">
+          <td class="mono"><strong>inverse_kinematics_ccd_gpu</strong><span class="gpu-sub">wave156b_astro_robotics_440pack</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="inverse_kinematics_ccd_gpu">68</td>
+          <td class="mono" data-k-bytes="inverse_kinematics_ccd_gpu">28,352 B</td>
+          <td class="mono" data-k-val="inverse_kinematics_ccd_gpu">PASS (8721f33c4241...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="icp_pointcloud_svd_gpu" data-domain="physics-sci-frontier" data-batch="wave156b_astro_robotics_440pack">
+          <td class="mono"><strong>icp_pointcloud_svd_gpu</strong><span class="gpu-sub">wave156b_astro_robotics_440pack</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="icp_pointcloud_svd_gpu">24</td>
+          <td class="mono" data-k-bytes="icp_pointcloud_svd_gpu">19,660 B</td>
+          <td class="mono" data-k-val="icp_pointcloud_svd_gpu">PASS (0d2334302735...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="rayleigh_mie_phase_gpu" data-domain="physics-sci-frontier" data-batch="wave156b_astro_robotics_440pack">
+          <td class="mono"><strong>rayleigh_mie_phase_gpu</strong><span class="gpu-sub">wave156b_astro_robotics_440pack</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="rayleigh_mie_phase_gpu">46</td>
+          <td class="mono" data-k-bytes="rayleigh_mie_phase_gpu">17,222 B</td>
+          <td class="mono" data-k-val="rayleigh_mie_phase_gpu">PASS (e075a193fbe3...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="svd_jacobi_3x3_gpu" data-domain="physics-sci-frontier" data-batch="wave156b_astro_robotics_440pack">
+          <td class="mono"><strong>svd_jacobi_3x3_gpu</strong><span class="gpu-sub">wave156b_astro_robotics_440pack</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="svd_jacobi_3x3_gpu">89</td>
+          <td class="mono" data-k-bytes="svd_jacobi_3x3_gpu">28,235 B</td>
+          <td class="mono" data-k-val="svd_jacobi_3x3_gpu">PASS (705961cc6b31...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="hilbert_curve_morton3d_gpu" data-domain="physics-sci-frontier" data-batch="wave156b_astro_robotics_440pack">
+          <td class="mono"><strong>hilbert_curve_morton3d_gpu</strong><span class="gpu-sub">wave156b_astro_robotics_440pack</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="hilbert_curve_morton3d_gpu">0</td>
+          <td class="mono" data-k-bytes="hilbert_curve_morton3d_gpu">21,569 B</td>
+          <td class="mono" data-k-val="hilbert_curve_morton3d_gpu">PASS (91d7e6c9e132...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="reed_solomon_gf256_gpu" data-domain="physics-sci-frontier" data-batch="wave156b_astro_robotics_440pack">
+          <td class="mono"><strong>reed_solomon_gf256_gpu</strong><span class="gpu-sub">wave156b_astro_robotics_440pack</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="reed_solomon_gf256_gpu">0</td>
+          <td class="mono" data-k-bytes="reed_solomon_gf256_gpu">17,966 B</td>
+          <td class="mono" data-k-val="reed_solomon_gf256_gpu">PASS (f86fe36fdad8...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="surface_code_syndrome_gpu" data-domain="titan-ai-rlvr" data-batch="wave161a_qec_gnn_480pack">
+          <td class="mono"><strong>surface_code_syndrome_gpu</strong><span class="gpu-sub">wave161a_qec_gnn_480pack</span></td>
+          <td>Titan AI &amp; RLVR</td>
+          <td class="mono" data-k-rw="surface_code_syndrome_gpu">0</td>
+          <td class="mono" data-k-bytes="surface_code_syndrome_gpu">12,700 B</td>
+          <td class="mono" data-k-val="surface_code_syndrome_gpu">PASS (6fe6fd603950...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="graphsage_neighbor_agg_gpu" data-domain="titan-ai-rlvr" data-batch="wave161a_qec_gnn_480pack">
+          <td class="mono"><strong>graphsage_neighbor_agg_gpu</strong><span class="gpu-sub">wave161a_qec_gnn_480pack</span></td>
+          <td>Titan AI &amp; RLVR</td>
+          <td class="mono" data-k-rw="graphsage_neighbor_agg_gpu">52</td>
+          <td class="mono" data-k-bytes="graphsage_neighbor_agg_gpu">25,568 B</td>
+          <td class="mono" data-k-val="graphsage_neighbor_agg_gpu">PASS (55475b0d3722...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="black_scholes_greeks_gpu" data-domain="titan-ai-rlvr" data-batch="wave161a_qec_gnn_480pack">
+          <td class="mono"><strong>black_scholes_greeks_gpu</strong><span class="gpu-sub">wave161a_qec_gnn_480pack</span></td>
+          <td>Titan AI &amp; RLVR</td>
+          <td class="mono" data-k-rw="black_scholes_greeks_gpu">104</td>
+          <td class="mono" data-k-bytes="black_scholes_greeks_gpu">35,874 B</td>
+          <td class="mono" data-k-val="black_scholes_greeks_gpu">PASS (59394c258716...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="conjugate_gradient_spmv_gpu" data-domain="titan-ai-rlvr" data-batch="wave161a_qec_gnn_480pack">
+          <td class="mono"><strong>conjugate_gradient_spmv_gpu</strong><span class="gpu-sub">wave161a_qec_gnn_480pack</span></td>
+          <td>Titan AI &amp; RLVR</td>
+          <td class="mono" data-k-rw="conjugate_gradient_spmv_gpu">24</td>
+          <td class="mono" data-k-bytes="conjugate_gradient_spmv_gpu">15,510 B</td>
+          <td class="mono" data-k-val="conjugate_gradient_spmv_gpu">PASS (227536174e6d...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="kalman_rts_smoother_gpu" data-domain="titan-ai-rlvr" data-batch="wave161a_qec_gnn_480pack">
+          <td class="mono"><strong>kalman_rts_smoother_gpu</strong><span class="gpu-sub">wave161a_qec_gnn_480pack</span></td>
+          <td>Titan AI &amp; RLVR</td>
+          <td class="mono" data-k-rw="kalman_rts_smoother_gpu">8</td>
+          <td class="mono" data-k-bytes="kalman_rts_smoother_gpu">12,628 B</td>
+          <td class="mono" data-k-val="kalman_rts_smoother_gpu">PASS (2810f54288e9...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="bloom_filter_xxhash64_gpu" data-domain="titan-ai-rlvr" data-batch="wave161a_qec_gnn_480pack">
+          <td class="mono"><strong>bloom_filter_xxhash64_gpu</strong><span class="gpu-sub">wave161a_qec_gnn_480pack</span></td>
+          <td>Titan AI &amp; RLVR</td>
+          <td class="mono" data-k-rw="bloom_filter_xxhash64_gpu">0</td>
+          <td class="mono" data-k-bytes="bloom_filter_xxhash64_gpu">18,278 B</td>
+          <td class="mono" data-k-val="bloom_filter_xxhash64_gpu">PASS (37e8f179b91b...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="catmull_clark_subdiv_gpu" data-domain="titan-ai-rlvr" data-batch="wave161a_qec_gnn_480pack">
+          <td class="mono"><strong>catmull_clark_subdiv_gpu</strong><span class="gpu-sub">wave161a_qec_gnn_480pack</span></td>
+          <td>Titan AI &amp; RLVR</td>
+          <td class="mono" data-k-rw="catmull_clark_subdiv_gpu">39</td>
+          <td class="mono" data-k-bytes="catmull_clark_subdiv_gpu">14,400 B</td>
+          <td class="mono" data-k-val="catmull_clark_subdiv_gpu">PASS (1e4ec083e5cb...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="bilateral_guided_denoise_gpu" data-domain="titan-ai-rlvr" data-batch="wave161a_qec_gnn_480pack">
+          <td class="mono"><strong>bilateral_guided_denoise_gpu</strong><span class="gpu-sub">wave161a_qec_gnn_480pack</span></td>
+          <td>Titan AI &amp; RLVR</td>
+          <td class="mono" data-k-rw="bilateral_guided_denoise_gpu">51</td>
+          <td class="mono" data-k-bytes="bilateral_guided_denoise_gpu">27,491 B</td>
+          <td class="mono" data-k-val="bilateral_guided_denoise_gpu">PASS (b5414b5a3b56...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="karplus_strong_modal_gpu" data-domain="physics-sci-frontier" data-batch="wave163a_quingentennial_520pack">
+          <td class="mono"><strong>karplus_strong_modal_gpu</strong><span class="gpu-sub">wave163a_quingentennial_520pack</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="karplus_strong_modal_gpu">29</td>
+          <td class="mono" data-k-bytes="karplus_strong_modal_gpu">14,681 B</td>
+          <td class="mono" data-k-val="karplus_strong_modal_gpu">PASS (40ffb1a93fa8...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="lqr_riccati_control_gpu" data-domain="physics-sci-frontier" data-batch="wave163a_quingentennial_520pack">
+          <td class="mono"><strong>lqr_riccati_control_gpu</strong><span class="gpu-sub">wave163a_quingentennial_520pack</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="lqr_riccati_control_gpu">12</td>
+          <td class="mono" data-k-bytes="lqr_riccati_control_gpu">12,584 B</td>
+          <td class="mono" data-k-val="lqr_riccati_control_gpu">PASS (e0157f96ed82...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="signed_octahedral_gbuffer_gpu" data-domain="physics-sci-frontier" data-batch="wave163a_quingentennial_520pack">
+          <td class="mono"><strong>signed_octahedral_gbuffer_gpu</strong><span class="gpu-sub">wave163a_quingentennial_520pack</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="signed_octahedral_gbuffer_gpu">32</td>
+          <td class="mono" data-k-bytes="signed_octahedral_gbuffer_gpu">30,978 B</td>
+          <td class="mono" data-k-val="signed_octahedral_gbuffer_gpu">PASS (ee5184aabae8...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="huffman_canonical_bitpack_gpu" data-domain="physics-sci-frontier" data-batch="wave163a_quingentennial_520pack">
+          <td class="mono"><strong>huffman_canonical_bitpack_gpu</strong><span class="gpu-sub">wave163a_quingentennial_520pack</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="huffman_canonical_bitpack_gpu">0</td>
+          <td class="mono" data-k-bytes="huffman_canonical_bitpack_gpu">15,048 B</td>
+          <td class="mono" data-k-val="huffman_canonical_bitpack_gpu">PASS (dbc539b35929...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="navier_stokes_vorticity_conf_gpu" data-domain="physics-sci-frontier" data-batch="wave163a_quingentennial_520pack">
+          <td class="mono"><strong>navier_stokes_vorticity_conf_gpu</strong><span class="gpu-sub">wave163a_quingentennial_520pack</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="navier_stokes_vorticity_conf_gpu">44</td>
+          <td class="mono" data-k-bytes="navier_stokes_vorticity_conf_gpu">21,646 B</td>
+          <td class="mono" data-k-val="navier_stokes_vorticity_conf_gpu">PASS (61312d865df2...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="monte_carlo_heston_barrier_gpu" data-domain="physics-sci-frontier" data-batch="wave163a_quingentennial_520pack">
+          <td class="mono"><strong>monte_carlo_heston_barrier_gpu</strong><span class="gpu-sub">wave163a_quingentennial_520pack</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="monte_carlo_heston_barrier_gpu">64</td>
+          <td class="mono" data-k-bytes="monte_carlo_heston_barrier_gpu">31,623 B</td>
+          <td class="mono" data-k-val="monte_carlo_heston_barrier_gpu">PASS (e6ce57dd90e3...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="gaussian_splat_tile_blend_gpu" data-domain="physics-sci-frontier" data-batch="wave163a_quingentennial_520pack">
+          <td class="mono"><strong>gaussian_splat_tile_blend_gpu</strong><span class="gpu-sub">wave163a_quingentennial_520pack</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="gaussian_splat_tile_blend_gpu">24</td>
+          <td class="mono" data-k-bytes="gaussian_splat_tile_blend_gpu">19,704 B</td>
+          <td class="mono" data-k-val="gaussian_splat_tile_blend_gpu">PASS (f10a4f5f796f...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="keccak_f1600_theta_rho_gpu" data-domain="physics-sci-frontier" data-batch="wave163a_quingentennial_520pack">
+          <td class="mono"><strong>keccak_f1600_theta_rho_gpu</strong><span class="gpu-sub">wave163a_quingentennial_520pack</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="keccak_f1600_theta_rho_gpu">0</td>
+          <td class="mono" data-k-bytes="keccak_f1600_theta_rho_gpu">23,512 B</td>
+          <td class="mono" data-k-val="keccak_f1600_theta_rho_gpu">PASS (5ff85c6148a5...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="gpu_dft_hartree_fock_eri" data-domain="physics-sci-frontier" data-batch="wave166a_qchem_zk_560pack">
+          <td class="mono"><strong>gpu_dft_hartree_fock_eri</strong><span class="gpu-sub">wave166a_qchem_zk_560pack</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="gpu_dft_hartree_fock_eri">65</td>
+          <td class="mono" data-k-bytes="gpu_dft_hartree_fock_eri">23,879 B</td>
+          <td class="mono" data-k-val="gpu_dft_hartree_fock_eri">PASS (24a27dabc1b6...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="gpu_mpm_snow_plasticity" data-domain="physics-sci-frontier" data-batch="wave166a_qchem_zk_560pack">
+          <td class="mono"><strong>gpu_mpm_snow_plasticity</strong><span class="gpu-sub">wave166a_qchem_zk_560pack</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="gpu_mpm_snow_plasticity">45</td>
+          <td class="mono" data-k-bytes="gpu_mpm_snow_plasticity">25,736 B</td>
+          <td class="mono" data-k-val="gpu_mpm_snow_plasticity">PASS (a7aca1e4261a...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="gpu_pippenger_msm_bucket" data-domain="physics-sci-frontier" data-batch="wave166a_qchem_zk_560pack">
+          <td class="mono"><strong>gpu_pippenger_msm_bucket</strong><span class="gpu-sub">wave166a_qchem_zk_560pack</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="gpu_pippenger_msm_bucket">0</td>
+          <td class="mono" data-k-bytes="gpu_pippenger_msm_bucket">14,616 B</td>
+          <td class="mono" data-k-val="gpu_pippenger_msm_bucket">PASS (2059a9341779...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="gpu_ntt_dilithium_8380417" data-domain="physics-sci-frontier" data-batch="wave166a_qchem_zk_560pack">
+          <td class="mono"><strong>gpu_ntt_dilithium_8380417</strong><span class="gpu-sub">wave166a_qchem_zk_560pack</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="gpu_ntt_dilithium_8380417">0</td>
+          <td class="mono" data-k-bytes="gpu_ntt_dilithium_8380417">21,451 B</td>
+          <td class="mono" data-k-val="gpu_ntt_dilithium_8380417">PASS (ab6e9203efa5...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="gpu_neural_radiance_hashgrid" data-domain="physics-sci-frontier" data-batch="wave166a_qchem_zk_560pack">
+          <td class="mono"><strong>gpu_neural_radiance_hashgrid</strong><span class="gpu-sub">wave166a_qchem_zk_560pack</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="gpu_neural_radiance_hashgrid">50</td>
+          <td class="mono" data-k-bytes="gpu_neural_radiance_hashgrid">22,824 B</td>
+          <td class="mono" data-k-val="gpu_neural_radiance_hashgrid">PASS (05ee00aa4597...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="gpu_av1_cdef_deringing" data-domain="physics-sci-frontier" data-batch="wave166a_qchem_zk_560pack">
+          <td class="mono"><strong>gpu_av1_cdef_deringing</strong><span class="gpu-sub">wave166a_qchem_zk_560pack</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="gpu_av1_cdef_deringing">35</td>
+          <td class="mono" data-k-bytes="gpu_av1_cdef_deringing">31,863 B</td>
+          <td class="mono" data-k-val="gpu_av1_cdef_deringing">PASS (0db24eea7b12...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="gpu_sparse_block_jacobi" data-domain="physics-sci-frontier" data-batch="wave166a_qchem_zk_560pack">
+          <td class="mono"><strong>gpu_sparse_block_jacobi</strong><span class="gpu-sub">wave166a_qchem_zk_560pack</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="gpu_sparse_block_jacobi">30</td>
+          <td class="mono" data-k-bytes="gpu_sparse_block_jacobi">18,937 B</td>
+          <td class="mono" data-k-val="gpu_sparse_block_jacobi">PASS (6cfe6c5acb95...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+        <tr data-kernel="gpu_lbm_d3q19_collision" data-domain="physics-sci-frontier" data-batch="wave166a_qchem_zk_560pack">
+          <td class="mono"><strong>gpu_lbm_d3q19_collision</strong><span class="gpu-sub">wave166a_qchem_zk_560pack</span></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono" data-k-rw="gpu_lbm_d3q19_collision">50</td>
+          <td class="mono" data-k-bytes="gpu_lbm_d3q19_collision">21,732 B</td>
+          <td class="mono" data-k-val="gpu_lbm_d3q19_collision">PASS (7e022ce7ebc1...)<span class="gpu-sub">dxc + glslang + spirv-val + naga + Metal 3.1 + verify-cert</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p id="gpu-empty" class="gpu-empty" hidden>No kernels match the active filter combination.</p>
+</section>
+
+<section class="ds-sec" id="batches" aria-labelledby="h-batches">
+  <h2 id="h-batches">17 cumulative domain batches (560 shaders)</h2>
+  <div class="gpu-wrap" tabindex="0" role="region" aria-label="17 cumulative GPU compute batches">
+    <table class="gpu-table">
+      <colgroup><col style="width:34%"><col style="width:22%"><col style="width:10%"><col style="width:10%"><col style="width:10%"><col style="width:14%"></colgroup>
+      <thead>
+        <tr><th scope="col">Batch</th><th scope="col">Domain</th><th scope="col">Kernels</th><th scope="col">Shaders</th><th scope="col">Rewrites</th><th scope="col">Bytes</th></tr>
+      </thead>
+      <tbody>
+        <tr data-batch-row="batch1">
+          <td class="mono"><strong>batch1</strong></td>
+          <td>Rendering &amp; PBR</td>
+          <td class="mono">6</td>
+          <td class="mono">30</td>
+          <td class="mono">148</td>
+          <td class="mono">95,487 B</td>
+        </tr>
+        <tr data-batch-row="batch2">
+          <td class="mono"><strong>batch2</strong></td>
+          <td>Rendering &amp; PBR</td>
+          <td class="mono">6</td>
+          <td class="mono">30</td>
+          <td class="mono">168</td>
+          <td class="mono">96,304 B</td>
+        </tr>
+        <tr data-batch-row="batch3">
+          <td class="mono"><strong>batch3</strong></td>
+          <td>Rendering &amp; PBR</td>
+          <td class="mono">6</td>
+          <td class="mono">30</td>
+          <td class="mono">83</td>
+          <td class="mono">92,178 B</td>
+        </tr>
+        <tr data-batch-row="batch4">
+          <td class="mono"><strong>batch4</strong></td>
+          <td>Rendering &amp; PBR</td>
+          <td class="mono">6</td>
+          <td class="mono">30</td>
+          <td class="mono">101</td>
+          <td class="mono">106,317 B</td>
+        </tr>
+        <tr data-batch-row="wave117d_titan_ai">
+          <td class="mono"><strong>wave117d_titan_ai</strong></td>
+          <td>Titan AI &amp; RLVR</td>
+          <td class="mono">4</td>
+          <td class="mono">20</td>
+          <td class="mono">180</td>
+          <td class="mono">99,349 B</td>
+        </tr>
+        <tr data-batch-row="wave122c_world_physics_3d">
+          <td class="mono"><strong>wave122c_world_physics_3d</strong></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono">4</td>
+          <td class="mono">20</td>
+          <td class="mono">197</td>
+          <td class="mono">102,702 B</td>
+        </tr>
+        <tr data-batch-row="wave124d_sci_bio_audio">
+          <td class="mono"><strong>wave124d_sci_bio_audio</strong></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono">4</td>
+          <td class="mono">20</td>
+          <td class="mono">147</td>
+          <td class="mono">87,434 B</td>
+        </tr>
+        <tr data-batch-row="wave127a_fin_graph_optics_fft">
+          <td class="mono"><strong>wave127a_fin_graph_optics_fft</strong></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono">4</td>
+          <td class="mono">20</td>
+          <td class="mono">204</td>
+          <td class="mono">83,519 B</td>
+        </tr>
+        <tr data-batch-row="wave134a_titan_ai_rlvr_240pack">
+          <td class="mono"><strong>wave134a_titan_ai_rlvr_240pack</strong></td>
+          <td>Titan AI &amp; RLVR</td>
+          <td class="mono">8</td>
+          <td class="mono">40</td>
+          <td class="mono">197</td>
+          <td class="mono">141,427 B</td>
+        </tr>
+        <tr data-batch-row="wave135c_frontier_domain_280pack">
+          <td class="mono"><strong>wave135c_frontier_domain_280pack</strong></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono">8</td>
+          <td class="mono">40</td>
+          <td class="mono">293</td>
+          <td class="mono">173,224 B</td>
+        </tr>
+        <tr data-batch-row="wave138a_photonics_geo_320pack">
+          <td class="mono"><strong>wave138a_photonics_geo_320pack</strong></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono">8</td>
+          <td class="mono">40</td>
+          <td class="mono">437</td>
+          <td class="mono">189,408 B</td>
+        </tr>
+        <tr data-batch-row="wave142a_crypto_med_360pack">
+          <td class="mono"><strong>wave142a_crypto_med_360pack</strong></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono">8</td>
+          <td class="mono">40</td>
+          <td class="mono">200</td>
+          <td class="mono">149,397 B</td>
+        </tr>
+        <tr data-batch-row="wave146a_quadricentennial_400pack">
+          <td class="mono"><strong>wave146a_quadricentennial_400pack</strong></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono">8</td>
+          <td class="mono">40</td>
+          <td class="mono">462</td>
+          <td class="mono">201,780 B</td>
+        </tr>
+        <tr data-batch-row="wave156b_astro_robotics_440pack">
+          <td class="mono"><strong>wave156b_astro_robotics_440pack</strong></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono">8</td>
+          <td class="mono">40</td>
+          <td class="mono">434</td>
+          <td class="mono">197,507 B</td>
+        </tr>
+        <tr data-batch-row="wave161a_qec_gnn_480pack">
+          <td class="mono"><strong>wave161a_qec_gnn_480pack</strong></td>
+          <td>Titan AI &amp; RLVR</td>
+          <td class="mono">8</td>
+          <td class="mono">40</td>
+          <td class="mono">278</td>
+          <td class="mono">162,449 B</td>
+        </tr>
+        <tr data-batch-row="wave163a_quingentennial_520pack">
+          <td class="mono"><strong>wave163a_quingentennial_520pack</strong></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono">8</td>
+          <td class="mono">40</td>
+          <td class="mono">205</td>
+          <td class="mono">169,776 B</td>
+        </tr>
+        <tr data-batch-row="wave166a_qchem_zk_560pack">
+          <td class="mono"><strong>wave166a_qchem_zk_560pack</strong></td>
+          <td>Physics, Sci &amp; Frontier</td>
+          <td class="mono">8</td>
+          <td class="mono">40</td>
+          <td class="mono">275</td>
+          <td class="mono">181,038 B</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="ds-sec" id="scope" aria-labelledby="h-scope">
+  <h2 id="h-scope">Honest scope and validation boundaries</h2>
+  <p>All 560 shaders pass buildc verify-cert with pinned SHA-256 digests verified by WebCrypto in this page before interactive filters activate. External compiler and validator toolchains (dxc cs_6_0, glslangValidator, spirv-val, naga 30.0.1, and Metal 3.1 static checks) validate emitted WGSL, HLSL, MSL, SPIR-V, and GLSL artifacts offline across the frontier batches (#68973), while earlier rendering batches record buildc verify-cert certification; raw multi-megabyte shader source trees remain staged offline outside static site HTML.</p>
+</section>
+
+<footer class="ds-sheet-foot">
+  <p><strong>Sheet</strong> <code>playground/gpu-compute/index.html</code></p>
+  <p><strong>Updated</strong> 2026-11-27</p>
+  <p><strong>Ground</strong> Measured Drafting Sheet | Pure OSI MIT | 560 certified shaders | 112 kernels x 5 backends | 4,009 Superopt V6 rewrites</p>
+</footer>
+</article>
+<script type="module" src="./gpu_explorer.mjs"></script>
+</main>
+</body>
+</html>

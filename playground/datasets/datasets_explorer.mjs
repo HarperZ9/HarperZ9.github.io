@@ -3,7 +3,7 @@
 //
 // Zero-dependency browser and Node ES module for /playground/datasets/.
 // Verifies the pinned SHA-256 of datasets_manifest.json before hydrating interactive
-// category (15 BuildDB V6 categories), group, and search filters.
+// category (30 BuildDB V10 categories), group, and search filters; RLVR v14 and GPU 560-pack ledgers.
 
 export const GROUP_LABELS = {
   "kernels-certs": "Kernels and Certs",
@@ -33,13 +33,13 @@ export async function verifyPinnedDatasets(rawBytes, expectedSha256) {
   }
   const text = typeof rawBytes === "string" ? rawBytes : new TextDecoder().decode(rawBytes);
   const data = JSON.parse(text);
-  if (data.schema !== "open-mit-datasets-explorer/2") {
+  if (data.schema !== "open-mit-datasets-explorer/6") {
     const err = new Error(`unexpected manifest schema: ${data.schema}`);
     err.code = "bad_schema";
     throw err;
   }
-  if (!Array.isArray(data.record_categories) || data.record_categories.length !== 15) {
-    const err = new Error(`expected 15 record categories, got ${data.record_categories?.length}`);
+  if (!Array.isArray(data.record_categories) || data.record_categories.length !== 30) {
+    const err = new Error(`expected 30 record categories, got ${data.record_categories?.length}`);
     err.code = "bad_category_count";
     throw err;
   }
@@ -73,7 +73,7 @@ export function renderRlvrRows(rlvrCats) {
   return rlvrCats.map((r) => `        <tr data-rlvr="${esc(r.id)}">
           <th scope="row" class="mono">${esc(r.id)}</th>
           <td class="mono">${r.total}</td>
-          <td class="mono">${r.is_v9_new ? "V9 new" : "V8+V9"}</td>
+          <td class="mono">${r.is_new ? "V14 new" : "V8..V14"}</td>
         </tr>`).join("\n");
 }
 
@@ -91,8 +91,8 @@ export function verifySurfaceConsistency(html, data) {
   const rlvrRows = (html.match(/<tr data-rlvr="/g) || []).length;
   const gpuRows = (html.match(/<tr data-gpu-batch="/g) || []).length;
   if (catRows !== data.record_categories.length) throw new Error(`cat rows ${catRows} != ${data.record_categories.length}`);
-  if (rlvrRows !== data.rlvr_v9.categories.length) throw new Error(`rlvr rows ${rlvrRows} != ${data.rlvr_v9.categories.length}`);
-  if (gpuRows !== data.gpu_200pack.batches.length) throw new Error(`gpu rows ${gpuRows} != ${data.gpu_200pack.batches.length}`);
+  if (rlvrRows !== data.rlvr_v14.categories.length) throw new Error(`rlvr rows ${rlvrRows} != ${data.rlvr_v14.categories.length}`);
+  if (gpuRows !== data.gpu_560pack.batches.length) throw new Error(`gpu rows ${gpuRows} != ${data.gpu_560pack.batches.length}`);
   for (const c of data.record_categories) {
     if (!html.includes(`data-cat="${c.id}"`)) throw new Error(`missing category ${c.id}`);
   }
@@ -115,7 +115,7 @@ async function hydrate(doc) {
     const pinned = (q('meta[name="datasets-manifest-sha256"]') || {}).content || "";
     const { sha256, data } = await verifyPinnedDatasets(raw, pinned);
     const rowsById = new Map([...doc.querySelectorAll("tr[data-cat]")].map((tr) => [tr.dataset.cat, tr]));
-    digest.textContent = `Manifest SHA-256: ${sha256.slice(0, 23)}... | BuildDB V6 (${data.builddb_v6.total_rows} rows) + RLVR v9 (${data.rlvr_v9.total_tasks} tasks) + ${data.gpu_200pack.total_shaders} GPU shaders`;
+    digest.textContent = `Manifest SHA-256: ${sha256.slice(0, 23)}... | BuildDB V10 (${data.builddb_v10.total_rows} rows) + RLVR v14 (${data.rlvr_v14.total_tasks} tasks) + ${data.gpu_560pack.total_shaders} GPU shaders`;
 
     let activeGroup = "all";
     const apply = () => {
@@ -123,7 +123,7 @@ async function hydrate(doc) {
       const shownIds = new Set(shown.map((c) => c.id));
       for (const [id, tr] of rowsById.entries()) tr.hidden = !shownIds.has(id);
       const rowSum = shown.reduce((n, c) => n + c.rows, 0);
-      status.textContent = `Showing ${shown.length}/15 BuildDB V6 record categories (${rowSum}/${data.builddb_v6.total_rows} pure-MIT rows, 0 non-MIT) | Category: ${catSel.value}`;
+      status.textContent = `Showing ${shown.length}/30 BuildDB V10 record categories (${rowSum}/${data.builddb_v10.total_rows} pure-MIT rows, 0 non-MIT) | Category: ${catSel.value}`;
       emptyNote.hidden = shown.length > 0;
       for (const btn of doc.querySelectorAll("button.ds-pill")) {
         const active = btn.dataset.group === activeGroup;

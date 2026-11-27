@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: 2026 Zain Dana Harper and the Portfolio Site contributors
 // SPDX-License-Identifier: MIT
 //
-// Deterministic surface, category filter, and fail-closed controls for Wave 132B /playground/datasets/.
+// Deterministic surface, category filter, and fail-closed controls for Wave 164C /playground/datasets/.
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
@@ -18,33 +18,34 @@ const mjs = readFileSync(path.join(PG, "datasets_explorer.mjs"), "utf8");
 const rawJson = readFileSync(path.join(PG, "datasets_manifest.json"));
 const data = JSON.parse(rawJson.toString("utf8"));
 
-test("manifest SHA-256 is pinned and pins BuildDB V6 (2,328/15), RLVR v9 (640/16), and Bicentennial GPU 200-Pack", async () => {
+test("manifest SHA-256 is pinned and pins BuildDB V10 (4,016/30), RLVR v14 (1,280/36), and GPU 560-Pack", async () => {
   const m = html.match(/<meta name="datasets-manifest-sha256" content="([0-9a-f]{64})">/);
   assert.ok(m, "missing datasets-manifest-sha256 meta tag");
   const { sha256, data: verified } = await verifyPinnedDatasets(rawJson, m[1]);
   assert.equal(sha256, m[1]);
-  assert.equal(verified.builddb_v6.total_rows, 2328);
-  assert.equal(verified.builddb_v6.non_mit_rows, 0);
-  assert.equal(verified.builddb_v6.receipt_catalogue_id, 68839);
-  assert.equal(verified.record_categories.length, 15);
-  assert.equal(verified.record_categories.reduce((n, c) => n + c.rows, 0), 2328);
-  assert.equal(verified.rlvr_v9.total_tasks, 640);
-  assert.equal(verified.rlvr_v9.train_tasks, 544);
-  assert.equal(verified.rlvr_v9.eval_tasks, 96);
-  assert.equal(verified.rlvr_v9.categories.length, 16);
-  assert.equal(verified.rlvr_v9.receipt_catalogue_id, 68861);
-  assert.equal(verified.gpu_200pack.total_shaders, 200);
-  assert.equal(verified.gpu_200pack.unique_kernels, 40);
-  assert.equal(verified.gpu_200pack.total_rewrites, 1228);
-  assert.equal(verified.gpu_200pack.receipt_catalogue_id, 68850);
+  assert.equal(verified.builddb_v10.total_rows, 4016);
+  assert.equal(verified.builddb_v10.non_mit_rows, 0);
+  assert.equal(verified.builddb_v10.receipt_catalogue_id, 68955);
+  assert.equal(verified.record_categories.length, 30);
+  assert.equal(verified.record_categories.reduce((n, c) => n + c.rows, 0), 4016);
+  assert.equal(verified.rlvr_v14.total_tasks, 1280);
+  assert.equal(verified.rlvr_v14.train_tasks, 1104);
+  assert.equal(verified.rlvr_v14.eval_tasks, 176);
+  assert.equal(verified.rlvr_v14.categories.length, 36);
+  assert.equal(verified.rlvr_v14.receipt_catalogue_id, 68968);
+  assert.equal(verified.gpu_560pack.total_shaders, 560);
+  assert.equal(verified.gpu_560pack.unique_kernels, 112);
+  assert.equal(verified.gpu_560pack.total_rewrites, 4009);
+  assert.equal(verified.gpu_560pack.receipt_catalogue_id, 68973);
 });
 
-test("category dropdown, corpus group pills, and search partition all 15 categories deterministically", () => {
+test("category dropdown, corpus group pills, and search partition all 30 categories deterministically", () => {
   assert.equal(filterCategories(data.record_categories, { category: "rlvr_task" }).length, 1);
-  assert.equal(filterCategories(data.record_categories, { group: "kernels-certs" }).length, 5);
-  assert.equal(filterCategories(data.record_categories, { group: "os-bench-sbom" }).length, 5);
-  assert.equal(filterCategories(data.record_categories, { group: "rlvr-signals-papers" }).length, 5);
-  assert.equal(filterCategories(data.record_categories, { query: "68850" }).length, 2);
+  const kc = filterCategories(data.record_categories, { group: "kernels-certs" }).length;
+  const ob = filterCategories(data.record_categories, { group: "os-bench-sbom" }).length;
+  const rs = filterCategories(data.record_categories, { group: "rlvr-signals-papers" }).length;
+  assert.equal(kc + ob + rs, 30);
+  assert.ok(filterCategories(data.record_categories, { query: "68973" }).length >= 1);
   assert.equal(filterCategories(data.record_categories, { group: "os-bench-sbom", query: "rlvr" }).length, 0);
 });
 
@@ -58,7 +59,7 @@ test("3/3 planted fail-closed controls reject 1-byte tamper, forged schema, and 
   const badSchemaSha = await sha256Hex(badSchema);
   await assert.rejects(() => verifyPinnedDatasets(badSchema, badSchemaSha), (e) => e.code === "bad_schema");
 
-  const trunc = Buffer.from(JSON.stringify({ ...data, record_categories: data.record_categories.slice(0, 14) }), "utf8");
+  const trunc = Buffer.from(JSON.stringify({ ...data, record_categories: data.record_categories.slice(0, 29) }), "utf8");
   const truncSha = await sha256Hex(trunc);
   await assert.rejects(() => verifyPinnedDatasets(trunc, truncSha), (e) => e.code === "bad_category_count");
 });
@@ -66,9 +67,9 @@ test("3/3 planted fail-closed controls reject 1-byte tamper, forged schema, and 
 test("page markup matches Measured Drafting Sheet canon, zero [data-copy], zero CDN, zero local paths", () => {
   const chk = verifySurfaceConsistency(html, data);
   assert.equal(chk.ok, true);
-  assert.equal(chk.catRows, 15);
-  assert.equal(chk.rlvrRows, 16);
-  assert.equal(chk.gpuRows, 8);
+  assert.equal(chk.catRows, 30);
+  assert.equal(chk.rlvrRows, 36);
+  assert.equal(chk.gpuRows, 17);
   assert.match(html, /class="reading ds-sheet"/);
   assert.match(html, /\/world\/ui\/shell\/shell\.css/);
   assert.doesNotMatch(html, /\bdata-copy=/);

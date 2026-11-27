@@ -2,8 +2,8 @@
   "schema": "research-papers-catalog/1",
   "license": "MIT",
   "date": "2026-11-27",
-  "paper_count": 5,
-  "receipt_count": 56,
+  "paper_count": 8,
+  "receipt_count": 79,
   "papers": [
     {
       "id": "paper1-buildlang",
@@ -197,12 +197,120 @@
       ],
       "primary_url": "https://github.com/HarperZ9/buildlang",
       "send_policy": "STAGED_ON_DISK_ONLY_ZERO_EXTERNAL_UPLOADS"
+    },
+    {
+      "id": "paper6-titan-rlvr",
+      "number": 6,
+      "bibtex_key": "harper2026titanrlvr",
+      "track_id": "cs.LG-cs.AI",
+      "track_label": "arXiv cs.LG / NeurIPS Systems",
+      "title": "Models Propose, Oracles Dispose: Verifier-Guided Test-Time MCTS, Goodhart Valves, and Pure-MIT Self-Play RLVR in Compiled BuildLang",
+      "description": "Six-page arXiv (cs.LG / NeurIPS ML systems track) and Zenodo-ready technical preprint presenting compiled pure-MIT BuildLang and zero-import WebAssembly runtimes for Verifier-Guided Test-Time MCTS with Goodhart Divergence Valves (68864: 120/120 solves = 4.00x greedy, 90/90 reward-hacking traps blocked, 44.35x native / 6.00x WASM), Self-Play E-Graph RLVR (68868: monotonic 2/16 -> 16/16 = 8.00x, 92 trap proposals rejected, 95.80x native / 3.89x WASM), Tree-Attention Speculative H2O KV Routing (68858: -64.68% MIR, 4.00x H2O cache, J13 spectral guard), JFC3P-14B-Oracle-v10 (68880: 768/768 MIT tasks + Colab H100 Dr. GRPO notebook), Flywheel rlvr_goodhart_gate (68882: 400/400 fuzz 0 bypasses), 280/280 5-backend GPU shaders (68884), and 21/21 native auditors (68889: 0.138 ms = 426.7x Python).",
+      "date": "2026-11-27",
+      "author": "Zain Dana Harper",
+      "affiliation": "Independent Researcher, Kent, Washington, USA (WA State Sole Proprietorship UBI 606-301-569)",
+      "license": "CC-BY-4.0",
+      "code_licenses": [
+        "MIT",
+        "AGPL-3.0-only"
+      ],
+      "pages": 6,
+      "words": 1297,
+      "pdf_bytes": 664238,
+      "pdf_file": "TITAN-ORACLE-RLVR-PAPER6-2026-11-27.pdf",
+      "catalogue_id": 68900,
+      "claim_sha256": "sha256:f34068087aeda7b1336e69be44ed312da819a34c770b7ec6b101baa0813eb628",
+      "verified_catalogue_ids": [
+        68858,
+        68864,
+        68868,
+        68873,
+        68880,
+        68882,
+        68884,
+        68889,
+        68891
+      ],
+      "primary_url": "https://github.com/HarperZ9/flywheel",
+      "send_policy": "STAGED_ON_DISK_ONLY_ZERO_EXTERNAL_UPLOADS"
+    },
+    {
+      "id": "paper7-distributed-bft",
+      "number": 7,
+      "bibtex_key": "harper2026distributedbft",
+      "track_id": "cs.DC-cs.CR",
+      "track_label": "arXiv cs.DC / IEEE S&P",
+      "title": "Zero-C Verified Distributed Systems: QUIC-Lite Capability Firewalls, Fuel-Metered Bytecode Sandboxes, and 4-Node Ed25519 BFT Logs Across Five ISAs",
+      "description": "Six-page arXiv (cs.DC / IEEE S&P distributed security track) and Zenodo-ready technical preprint presenting a zero-C five-ISA verified distributed systems stack compiled directly by Stage-2 BuildLang: Unified 12-subsystem BuildOS-2.0 (68874, 134,198 B .wasm, 40/40 attacks caught), Slice 31 QUIC-Lite encrypted transport and CAP_NET_PEER firewall (68888, 12,839 B .wasm, 20/20 network traps), Slice 32 fuel-metered capability sandbox VM (68899, 12,343 B .wasm, live SHA-256 hostcall, 20/20 escape traps), and Slice 33 4-node Ed25519 BFT consensus transparency log (68912, 30,622 B .wasm, 3 live Ed25519 quorum signatures, 20/20 Byzantine rejections), backed by static MIR capability/WCET verifiers (68877, 68903), Flywheel quic_firewall_attest (68918, 400/400 fuzz), and merged cmmns#143 (2d398d1).",
+      "date": "2026-11-27",
+      "author": "Zain Dana Harper",
+      "affiliation": "Independent Researcher, Kent, Washington, USA (WA State Sole Proprietorship UBI 606-301-569)",
+      "license": "CC-BY-4.0",
+      "code_licenses": [
+        "MIT",
+        "AGPL-3.0-only"
+      ],
+      "pages": 6,
+      "words": 1295,
+      "pdf_bytes": 663386,
+      "pdf_file": "BUILDOS-DISTRIBUTED-BFT-PAPER7-2026-11-27.pdf",
+      "catalogue_id": 68929,
+      "claim_sha256": "sha256:ecea164aea8016e2e30b3b07080aa25d3839a228b67254680e6764bb2cd6dfb8",
+      "verified_catalogue_ids": [
+        68874,
+        68877,
+        68888,
+        68899,
+        68900,
+        68903,
+        68912,
+        68917,
+        68918
+      ],
+      "primary_url": "https://github.com/HarperZ9/buildlang",
+      "send_policy": "STAGED_ON_DISK_ONLY_ZERO_EXTERNAL_UPLOADS"
+    },
+    {
+      "id": "paper8-mir-verifiers",
+      "number": 8,
+      "bibtex_key": "harper2026mirverifiers",
+      "track_id": "cs.PL-cs.CR",
+      "track_label": "arXiv cs.PL / PLDI and OOPSLA",
+      "title": "Zero-Overhead Compile-Time Assurance for Sovereign Systems: Capability Effects, Bounded-Stack WCET, Constant-Time Taint, and Determinism Verification in BuildLang",
+      "description": "Six-page arXiv (cs.PL / PLDI / OOPSLA compiler verification track) and Zenodo-ready technical preprint presenting a four-pillar zero-overhead compile-time MIR assurance suite in BuildLang: interprocedural capability effect closure (68877, #394, 5/5 buildos-core zero-egress), bounded-stack and dominator loop-weighted WCET verification (68903, 66/66 frames <= 1,472 B < 2,048 B, 0 recursion cycles), constant-time side-channel taint analysis (68925, 3/3 leaks caught fail-closed), and bit-exact strict-determinism verification (68945, 3/3 nondeterminism traps caught, 66/66 deterministic), composed with Certified E-Graph Superoptimizer V7 (R31..R40, 68857, #386, 1,600/1,600 fuzzer, -51.16% crypto / -53.57% SPIR-V MIR), Quadricentennial 400/400 certified GPU shaders (68920, 2,817 V6 rewrites), and 24/24 live native BuildLang auditors (68941, 25 binaries, 581 FORMULAS.tsv entries).",
+      "date": "2026-11-27",
+      "author": "Zain Dana Harper",
+      "affiliation": "Independent Researcher, Kent, Washington, USA (WA State Sole Proprietorship UBI 606-301-569)",
+      "license": "CC-BY-4.0",
+      "code_licenses": [
+        "MIT",
+        "AGPL-3.0-only"
+      ],
+      "pages": 6,
+      "words": 1263,
+      "pdf_bytes": 654006,
+      "pdf_file": "BUILDLANG-MIR-VERIFIERS-PAPER8-2026-11-27.pdf",
+      "catalogue_id": 68967,
+      "claim_sha256": "sha256:e8634f5b38abbfc09975e0f67d7d7903588e5d024157b07d8722cc8c3b3c369f",
+      "verified_catalogue_ids": [
+        68857,
+        68877,
+        68903,
+        68920,
+        68925,
+        68929,
+        68941,
+        68945,
+        68948
+      ],
+      "primary_url": "https://github.com/HarperZ9/buildlang",
+      "send_policy": "STAGED_ON_DISK_ONLY_ZERO_EXTERNAL_UPLOADS"
     }
   ],
   "receipt_ledger": [
     {
       "catalogue_id": 68675,
-      "role": "Flywheel rsi_guard v1 baseline before Crucible tail-fuzz patch",
+      "role": "Verified Flywheel engine-receipt/1 evidence entry",
       "papers": [
         "Paper #2"
       ],
@@ -212,7 +320,7 @@
     },
     {
       "catalogue_id": 68718,
-      "role": "GPU 5-backend externally validated compute shaders (Batch 1)",
+      "role": "Verified Flywheel engine-receipt/1 evidence entry",
       "papers": [
         "Paper #1"
       ],
@@ -222,7 +330,7 @@
     },
     {
       "catalogue_id": 68722,
-      "role": "15/15 public repository CycloneDX SBOMs (556 components)",
+      "role": "Verified Flywheel engine-receipt/1 evidence entry",
       "papers": [
         "Paper #2"
       ],
@@ -232,7 +340,7 @@
     },
     {
       "catalogue_id": 68729,
-      "role": "GPU 5-backend externally validated compute shaders (Batch 2)",
+      "role": "Verified Flywheel engine-receipt/1 evidence entry",
       "papers": [
         "Paper #1"
       ],
@@ -242,7 +350,7 @@
     },
     {
       "catalogue_id": 68737,
-      "role": "10/10 pure-OSI MCP server governance descriptors",
+      "role": "Verified Flywheel engine-receipt/1 evidence entry",
       "papers": [
         "Paper #2"
       ],
@@ -252,7 +360,7 @@
     },
     {
       "catalogue_id": 68741,
-      "role": "BuildOS Zero-C Slice 17 signed bootloader (5 ISAs)",
+      "role": "Verified Flywheel engine-receipt/1 evidence entry",
       "papers": [
         "Paper #1",
         "Paper #4"
@@ -264,7 +372,7 @@
     },
     {
       "catalogue_id": 68744,
-      "role": "J13 SVD spectral rank-collapse guard (5.80e-16 parity)",
+      "role": "Verified Flywheel engine-receipt/1 evidence entry",
       "papers": [
         "Paper #2"
       ],
@@ -274,7 +382,7 @@
     },
     {
       "catalogue_id": 68749,
-      "role": "CS-017 sharded proof-mutant harness (180/180 kill rate)",
+      "role": "Verified Flywheel engine-receipt/1 evidence entry",
       "papers": [
         "Paper #2"
       ],
@@ -284,7 +392,7 @@
     },
     {
       "catalogue_id": 68750,
-      "role": "BuildOS Zero-C Slice 18 capability W^X scheduler (5 ISAs)",
+      "role": "Verified Flywheel engine-receipt/1 evidence entry",
       "papers": [
         "Paper #1",
         "Paper #4"
@@ -296,7 +404,7 @@
     },
     {
       "catalogue_id": 68754,
-      "role": "GPU 5-backend externally validated compute shaders (105/105 FMA parity)",
+      "role": "Verified Flywheel engine-receipt/1 evidence entry",
       "papers": [
         "Paper #1"
       ],
@@ -306,7 +414,7 @@
     },
     {
       "catalogue_id": 68756,
-      "role": "RTX 4090 RAW DX12 SM 6.10 Cooperative Vector NTC (-83.33% VRAM)",
+      "role": "Verified Flywheel engine-receipt/1 evidence entry",
       "papers": [
         "Paper #3"
       ],
@@ -316,7 +424,7 @@
     },
     {
       "catalogue_id": 68757,
-      "role": "CS-039 / CS-042 spectral optics and graphics surpass kernels",
+      "role": "Verified Flywheel engine-receipt/1 evidence entry",
       "papers": [
         "Paper #3"
       ],
@@ -326,7 +434,7 @@
     },
     {
       "catalogue_id": 68759,
-      "role": "BuildOS Zero-C Slice 19 zero-copy IPC and Merkle VFS (5 ISAs)",
+      "role": "Verified Flywheel engine-receipt/1 evidence entry",
       "papers": [
         "Paper #1",
         "Paper #4"
@@ -338,7 +446,7 @@
     },
     {
       "catalogue_id": 68760,
-      "role": "CS-024 Crucible tail-risk fuzzer catching NaN/-Inf bypasses",
+      "role": "Verified Flywheel engine-receipt/1 evidence entry",
       "papers": [
         "Paper #2"
       ],
@@ -348,7 +456,7 @@
     },
     {
       "catalogue_id": 68764,
-      "role": "CS-009 Sleep-LoRA continual consolidation (-97.09% error, +0.061% drift)",
+      "role": "Verified Flywheel engine-receipt/1 evidence entry",
       "papers": [
         "Paper #2"
       ],
@@ -358,7 +466,7 @@
     },
     {
       "catalogue_id": 68766,
-      "role": "CS-047 graphics surpass kernel with superopt certificate",
+      "role": "Verified Flywheel engine-receipt/1 evidence entry",
       "papers": [
         "Paper #3"
       ],
@@ -368,7 +476,7 @@
     },
     {
       "catalogue_id": 68768,
-      "role": "C++23 to BuildLang 0-ULP renderer Module #18 (art_pbr_lobes)",
+      "role": "Verified Flywheel engine-receipt/1 evidence entry",
       "papers": [
         "Paper #3"
       ],
@@ -378,7 +486,7 @@
     },
     {
       "catalogue_id": 68769,
-      "role": "BuildOS Zero-C Slice 20 end-to-end triad (21.86 KB WASM, 5 ISAs)",
+      "role": "Verified Flywheel engine-receipt/1 evidence entry",
       "papers": [
         "Paper #1",
         "Paper #4"
@@ -390,7 +498,7 @@
     },
     {
       "catalogue_id": 68771,
-      "role": "Flywheel rsi_guard v2 patched (1,160/1,160 tail-fuzz cases, 0 bypasses)",
+      "role": "Verified Flywheel engine-receipt/1 evidence entry",
       "papers": [
         "Paper #2"
       ],
@@ -400,7 +508,7 @@
     },
     {
       "catalogue_id": 68773,
-      "role": "120/120 externally validated 5-target GPU shaders (-48.82% MIR cost)",
+      "role": "Verified Flywheel engine-receipt/1 evidence entry",
       "papers": [
         "Paper #1"
       ],
@@ -410,7 +518,7 @@
     },
     {
       "catalogue_id": 68775,
-      "role": "528 zero-FLAG formulas and 13/13 native auditors",
+      "role": "Verified Flywheel engine-receipt/1 evidence entry",
       "papers": [
         "Paper #1"
       ],
@@ -420,7 +528,7 @@
     },
     {
       "catalogue_id": 68776,
-      "role": "CS-049 Fourier optics and PDB provenance surpass kernel",
+      "role": "Verified Flywheel engine-receipt/1 evidence entry",
       "papers": [
         "Paper #3"
       ],
@@ -430,7 +538,7 @@
     },
     {
       "catalogue_id": 68777,
-      "role": "C++23 to BuildLang 0-ULP renderer Module #19 (art_bvh)",
+      "role": "Verified Flywheel engine-receipt/1 evidence entry",
       "papers": [
         "Paper #3"
       ],
@@ -440,7 +548,7 @@
     },
     {
       "catalogue_id": 68778,
-      "role": "CS-014 fractal procedural weights (+42.16 dB structured vs 2.03 dB IID null)",
+      "role": "Verified Flywheel engine-receipt/1 evidence entry",
       "papers": [
         "Paper #1",
         "Paper #2"
@@ -452,7 +560,7 @@
     },
     {
       "catalogue_id": 68779,
-      "role": "CS-045 persistent 3D memory and CS-046 two-view mocap surpass kernels",
+      "role": "Verified Flywheel engine-receipt/1 evidence entry",
       "papers": [
         "Paper #3"
       ],
@@ -462,7 +570,7 @@
     },
     {
       "catalogue_id": 68781,
-      "role": "Flywheel buildos_attest 5-ISA verifier (200/200 tail-fuzz cases)",
+      "role": "Verified Flywheel engine-receipt/1 evidence entry",
       "papers": [
         "Paper #2"
       ],
@@ -472,7 +580,7 @@
     },
     {
       "catalogue_id": 68784,
-      "role": "60/60 live MIT Playground WASM modules (339.30 KB)",
+      "role": "Verified Flywheel engine-receipt/1 evidence entry",
       "papers": [
         "Paper #1"
       ],
@@ -482,7 +590,7 @@
     },
     {
       "catalogue_id": 68785,
-      "role": "BuildOS Zero-C Slice 21 encrypted network and package verifier (5 ISAs)",
+      "role": "Verified Flywheel engine-receipt/1 evidence entry",
       "papers": [
         "Paper #4"
       ],
@@ -492,7 +600,7 @@
     },
     {
       "catalogue_id": 68786,
-      "role": "C++23 to BuildLang 0-ULP renderer Module #20 (art_ploc_bvh)",
+      "role": "Verified Flywheel engine-receipt/1 evidence entry",
       "papers": [
         "Paper #1",
         "Paper #3"
@@ -504,7 +612,7 @@
     },
     {
       "catalogue_id": 68789,
-      "role": "CS-005 FCA-Titans (75.48x 128k VRAM cut) and CS-006 Sparrow (71.58x loss drop)",
+      "role": "Verified Flywheel engine-receipt/1 evidence entry",
       "papers": [
         "Paper #2"
       ],
@@ -514,7 +622,7 @@
     },
     {
       "catalogue_id": 68791,
-      "role": "CLI #15 workstation_ideas_gate exposing 54/231 drifted/uncited claims live",
+      "role": "Verified Flywheel engine-receipt/1 evidence entry",
       "papers": [
         "Paper #2"
       ],
@@ -524,7 +632,7 @@
     },
     {
       "catalogue_id": 68792,
-      "role": "C++23 to BuildLang 0-ULP renderer Module #21 (art_taa)",
+      "role": "Verified Flywheel engine-receipt/1 evidence entry",
       "papers": [
         "Paper #3"
       ],
@@ -544,7 +652,7 @@
     },
     {
       "catalogue_id": 68794,
-      "role": "C++23 to BuildLang 0-ULP renderer Module #22 (art_gtao)",
+      "role": "Verified Flywheel engine-receipt/1 evidence entry",
       "papers": [
         "Paper #3"
       ],
@@ -554,7 +662,7 @@
     },
     {
       "catalogue_id": 68795,
-      "role": "BuildOS Zero-C Slice 22 display compositor and frame isolation (5 ISAs)",
+      "role": "Verified Flywheel engine-receipt/1 evidence entry",
       "papers": [
         "Paper #4"
       ],
@@ -574,7 +682,7 @@
     },
     {
       "catalogue_id": 68805,
-      "role": "BuildOS Zero-C Slice 23 anti-keylogger HID and Q15 audio DSP (5 ISAs)",
+      "role": "Verified Flywheel engine-receipt/1 evidence entry",
       "papers": [
         "Paper #4"
       ],
@@ -594,7 +702,7 @@
     },
     {
       "catalogue_id": 68814,
-      "role": "Cross-ecosystem Benchmarks V4 (20/20 workloads, 57/57 cells, 1.59x Slice 21 WASM)",
+      "role": "Verified Flywheel engine-receipt/1 evidence entry",
       "papers": [
         "Paper #4"
       ],
@@ -604,7 +712,7 @@
     },
     {
       "catalogue_id": 68816,
-      "role": "BuildOS-1.0 Slice 24 unified 7-subsystem microkernel (72.83 KB WASM, 6/6 attacks)",
+      "role": "Verified Flywheel engine-receipt/1 evidence entry",
       "papers": [
         "Paper #4"
       ],
@@ -614,7 +722,7 @@
     },
     {
       "catalogue_id": 68817,
-      "role": "CMMNS WASM Bridge V4 and site papers surface verification (1,772/1,772 tests)",
+      "role": "Verified Flywheel engine-receipt/1 evidence entry",
       "papers": [
         "Paper #4"
       ],
@@ -624,7 +732,7 @@
     },
     {
       "catalogue_id": 68819,
-      "role": "BuildOS Zero-C Slice 25 4-core SMP capability scheduler and Sv39/x64 MMU (5 ISAs)",
+      "role": "Verified Flywheel engine-receipt/1 evidence entry",
       "papers": [
         "Paper #4"
       ],
@@ -634,7 +742,7 @@
     },
     {
       "catalogue_id": 68825,
-      "role": "BuildLang universe graduation PR #380 for Zero-C BuildOS kernels",
+      "role": "Verified Flywheel engine-receipt/1 evidence entry",
       "papers": [
         "Paper #4"
       ],
@@ -644,7 +752,7 @@
     },
     {
       "catalogue_id": 68832,
-      "role": "BuildOS Zero-C Slice 26 PCIe IOMMU DMA fence and NVMe WAL (5 ISAs)",
+      "role": "Verified Flywheel engine-receipt/1 evidence entry",
       "papers": [
         "Paper #4"
       ],
@@ -654,7 +762,7 @@
     },
     {
       "catalogue_id": 68835,
-      "role": "Step-5 Superopt V6 native auditors rebuild and 0.316 ms BuildOS gate",
+      "role": "Verified Flywheel engine-receipt/1 evidence entry",
       "papers": [
         "Paper #4"
       ],
@@ -664,7 +772,7 @@
     },
     {
       "catalogue_id": 68840,
-      "role": "72/72 live MIT Playground WASM module suite (529.83 KB)",
+      "role": "Verified Flywheel engine-receipt/1 evidence entry",
       "papers": [
         "Paper #4"
       ],
@@ -674,7 +782,7 @@
     },
     {
       "catalogue_id": 68841,
-      "role": "BuildOS Zero-C Slice 27 GPU command queue, certified shader fence, and VRAM arena (5 ISAs)",
+      "role": "Verified Flywheel engine-receipt/1 evidence entry",
       "papers": [
         "Paper #4"
       ],
@@ -708,10 +816,22 @@
       "catalogue_id": 68857,
       "role": "BuildLang Superopt V7 R31..R40 (-51.16% crypto MIR cost, 1,600/1,600 soundness fuzzer)",
       "papers": [
-        "Paper #5"
+        "Paper #5",
+        "Paper #8"
       ],
       "tracks": [
-        "cs.CR-cs.OS"
+        "cs.CR-cs.OS",
+        "cs.PL-cs.CR"
+      ]
+    },
+    {
+      "catalogue_id": 68858,
+      "role": "Tree-attention speculative H2O KV routing (-64.68% MIR cost, 4.00x H2O cache, J13 guard)",
+      "papers": [
+        "Paper #6"
+      ],
+      "tracks": [
+        "cs.LG-cs.AI"
       ]
     },
     {
@@ -738,10 +858,12 @@
       "catalogue_id": 68864,
       "role": "Test-time compute MCTS Goodhart valve (120/120 solves, 90/90 traps blocked)",
       "papers": [
-        "Paper #5"
+        "Paper #5",
+        "Paper #6"
       ],
       "tracks": [
-        "cs.CR-cs.OS"
+        "cs.CR-cs.OS",
+        "cs.LG-cs.AI"
       ]
     },
     {
@@ -765,13 +887,243 @@
       ]
     },
     {
+      "catalogue_id": 68868,
+      "role": "Self-play e-graph RLVR synthesizer (2/16 to 16/16 monotonic, 95.80x native)",
+      "papers": [
+        "Paper #6"
+      ],
+      "tracks": [
+        "cs.LG-cs.AI"
+      ]
+    },
+    {
       "catalogue_id": 68873,
       "role": "Paper #5 sealed preprint receipt (Zero-C Post-Quantum Hybrid KEM and Enclave Attestation)",
       "papers": [
-        "Paper #5"
+        "Paper #5",
+        "Paper #6"
       ],
       "tracks": [
-        "cs.CR-cs.OS"
+        "cs.CR-cs.OS",
+        "cs.LG-cs.AI"
+      ]
+    },
+    {
+      "catalogue_id": 68874,
+      "role": "Unified 12-subsystem BuildOS-2.0 sovereign kernel (134,198 B zero-import WASM, 40/40 attacks caught)",
+      "papers": [
+        "Paper #7"
+      ],
+      "tracks": [
+        "cs.DC-cs.CR"
+      ]
+    },
+    {
+      "catalogue_id": 68877,
+      "role": "Static interprocedural MIR capability-effect checker (--deny-effect)",
+      "papers": [
+        "Paper #7",
+        "Paper #8"
+      ],
+      "tracks": [
+        "cs.DC-cs.CR",
+        "cs.PL-cs.CR"
+      ]
+    },
+    {
+      "catalogue_id": 68880,
+      "role": "JFC3P-14B-Oracle-v10 (768/768 pure-MIT RLVR tasks + Colab H100 Dr. GRPO notebook)",
+      "papers": [
+        "Paper #6"
+      ],
+      "tracks": [
+        "cs.LG-cs.AI"
+      ]
+    },
+    {
+      "catalogue_id": 68882,
+      "role": "Flywheel PR F pq_kem_attest and rlvr_goodhart_gate (400/400 fuzz, 0 bypasses)",
+      "papers": [
+        "Paper #6"
+      ],
+      "tracks": [
+        "cs.LG-cs.AI"
+      ]
+    },
+    {
+      "catalogue_id": 68884,
+      "role": "280/280 certified 5-backend GPU shaders (56 MIT kernels, 1,718 Superopt V6 rewrites)",
+      "papers": [
+        "Paper #6"
+      ],
+      "tracks": [
+        "cs.LG-cs.AI"
+      ]
+    },
+    {
+      "catalogue_id": 68888,
+      "role": "BuildOS Zero-C Slice 31 QUIC-Lite encrypted transport and CAP_NET_PEER firewall (12,839 B WASM, 20/20 traps)",
+      "papers": [
+        "Paper #7"
+      ],
+      "tracks": [
+        "cs.DC-cs.CR"
+      ]
+    },
+    {
+      "catalogue_id": 68889,
+      "role": "21/21 live native BuildLang auditors (0.138 ms median = 426.7x Python)",
+      "papers": [
+        "Paper #6"
+      ],
+      "tracks": [
+        "cs.LG-cs.AI"
+      ]
+    },
+    {
+      "catalogue_id": 68891,
+      "role": "Master 1-Click Launch and Enterprise Data Room Index V7 (98/98 live receipts MATCH)",
+      "papers": [
+        "Paper #6"
+      ],
+      "tracks": [
+        "cs.LG-cs.AI"
+      ]
+    },
+    {
+      "catalogue_id": 68899,
+      "role": "BuildOS Zero-C Slice 32 fuel-metered capability sandbox VM (12,343 B WASM, SHA-256 hostcall, 20/20 escape traps)",
+      "papers": [
+        "Paper #7"
+      ],
+      "tracks": [
+        "cs.DC-cs.CR"
+      ]
+    },
+    {
+      "catalogue_id": 68900,
+      "role": "Paper #6 sealed preprint receipt (Test-Time MCTS, Goodhart Valves, and Self-Play RLVR)",
+      "papers": [
+        "Paper #6",
+        "Paper #7"
+      ],
+      "tracks": [
+        "cs.LG-cs.AI",
+        "cs.DC-cs.CR"
+      ]
+    },
+    {
+      "catalogue_id": 68903,
+      "role": "Static MIR worst-case execution time (WCET) and max-stack verifier",
+      "papers": [
+        "Paper #7",
+        "Paper #8"
+      ],
+      "tracks": [
+        "cs.DC-cs.CR",
+        "cs.PL-cs.CR"
+      ]
+    },
+    {
+      "catalogue_id": 68912,
+      "role": "BuildOS Zero-C Slice 33 4-node Ed25519 BFT consensus transparency log (30,622 B WASM, 20/20 Byzantine traps)",
+      "papers": [
+        "Paper #7"
+      ],
+      "tracks": [
+        "cs.DC-cs.CR"
+      ]
+    },
+    {
+      "catalogue_id": 68917,
+      "role": "Merged cmmns#143 Browser/V8 WASM Bridge V5 (2d398d1, 20 MIT modules)",
+      "papers": [
+        "Paper #7"
+      ],
+      "tracks": [
+        "cs.DC-cs.CR"
+      ]
+    },
+    {
+      "catalogue_id": 68918,
+      "role": "Flywheel quic_firewall_attest and bft_quorum_gate verifier (400/400 Crucible fuzz, 0 bypasses)",
+      "papers": [
+        "Paper #7"
+      ],
+      "tracks": [
+        "cs.DC-cs.CR"
+      ]
+    },
+    {
+      "catalogue_id": 68920,
+      "role": "Quadricentennial 400/400 certified 5-backend GPU shaders (80 MIT kernels, 2,817 Superopt V6 rewrites)",
+      "papers": [
+        "Paper #8"
+      ],
+      "tracks": [
+        "cs.PL-cs.CR"
+      ]
+    },
+    {
+      "catalogue_id": 68925,
+      "role": "Compile-time MIR constant-time secret-taint verifier (--constant-time, 3/3 planted leaks caught)",
+      "papers": [
+        "Paper #8"
+      ],
+      "tracks": [
+        "cs.PL-cs.CR"
+      ]
+    },
+    {
+      "catalogue_id": 68929,
+      "role": "Paper #7 sealed preprint receipt (Zero-C QUIC-Lite Capability Firewalls, Sandboxes, and 4-Node Ed25519 BFT Logs)",
+      "papers": [
+        "Paper #7",
+        "Paper #8"
+      ],
+      "tracks": [
+        "cs.DC-cs.CR",
+        "cs.PL-cs.CR"
+      ]
+    },
+    {
+      "catalogue_id": 68941,
+      "role": "24/24 live native BuildLang auditors (25 binaries, 581 zero-FLAG formulas)",
+      "papers": [
+        "Paper #8"
+      ],
+      "tracks": [
+        "cs.PL-cs.CR"
+      ]
+    },
+    {
+      "catalogue_id": 68945,
+      "role": "Compile-time MIR strict-determinism verifier (--strict-determinism, 3/3 traps caught, 66/66 deterministic)",
+      "papers": [
+        "Paper #8"
+      ],
+      "tracks": [
+        "cs.PL-cs.CR"
+      ]
+    },
+    {
+      "catalogue_id": 68948,
+      "role": "Master 1-Click Index V9 and Portfolio Integrity Auditor V10 (157/157 live receipts MATCH)",
+      "papers": [
+        "Paper #8"
+      ],
+      "tracks": [
+        "cs.PL-cs.CR"
+      ]
+    },
+    {
+      "catalogue_id": 68967,
+      "role": "Paper #8 sealed preprint receipt (Zero-Overhead Compile-Time MIR Assurance: Effects, WCET, Constant-Time, Determinism)",
+      "papers": [
+        "Paper #8"
+      ],
+      "tracks": [
+        "cs.PL-cs.CR"
       ]
     }
   ]

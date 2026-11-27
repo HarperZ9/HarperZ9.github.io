@@ -1,0 +1,118 @@
+{
+  "schema": "buildos-threshold-storage-lab/1",
+  "license": "MIT",
+  "date": "2026-11-27",
+  "total_modules": 2,
+  "total_wasm_bytes": 20066,
+  "total_attacks": 8,
+  "modules": [
+    {
+      "id": "shamir_hsm",
+      "label": "BuildOS Slice 36: (t=3, n=5) Shamir Threshold HSM",
+      "short_label": "Shamir (3,5) HSM",
+      "file": "buildos_shamir_threshold_hsm_zeroc.wasm",
+      "receipt_id": 68951,
+      "run_fn": "hsm_stage1_execute",
+      "root_mem_idx": 17,
+      "expected_root_hex": "0b8beced748fd9708385180f42c36f74fad38ed16bf745c6e2d0cd6698caba7c",
+      "root_label": "4-leaf RFC 6962 HSM Audit Root",
+      "summary": "Shamir (3,5) over F_p (p=2^31-1), Pedersen VSS commitments in subgroup q=98784247763, and Epoch-1 zero-secret proactive share rotation (20/20 subsets match).",
+      "nominal_expr": "hsm_stage1_execute(0n) === 1n",
+      "bytes": 11087,
+      "sha256": "0e6d27ac75b9a510586342637c943b9b880bd11f52faf7541255f37e6f6ebe44",
+      "imports_count": 0,
+      "strict_zero_imports": true
+    },
+    {
+      "id": "raid6_fs",
+      "label": "BuildOS Slice 37: RS(4,2) Self-Healing RAID-6 FS",
+      "short_label": "RS(4,2) RAID-6 FS",
+      "file": "buildos_erasure_coded_raid_fs_zeroc.wasm",
+      "receipt_id": 68959,
+      "run_fn": "raid_stage1_execute",
+      "root_mem_idx": 12,
+      "expected_root_hex": "8050f7383227a958ec45a50716a9545d526b55bc16fd06911976db045d52c8f0",
+      "root_label": "6-shard RFC 6962 Storage Merkle Root",
+      "summary": "Reed-Solomon (k=4, m=2) over GF(2^8) with live 4x4 Gauss-Jordan inversion healing all 15/15 two-shard erasure pairs (2,880 B) plus RFC 6962 scrubber.",
+      "nominal_expr": "raid_stage1_execute(0n) === 1n",
+      "bytes": 8979,
+      "sha256": "21acd654d3f4b78f14efb6132a7362fc039fec76e088477454677d78a9bd3cc0",
+      "imports_count": 0,
+      "strict_zero_imports": true
+    }
+  ],
+  "attacks": [
+    {
+      "id": "hsm_sub_threshold",
+      "module_id": "shamir_hsm",
+      "module_label": "Shamir (3,5) HSM",
+      "mode": 1,
+      "expected_rc": -101,
+      "call_expr": "hsm_stage1_execute(1n)",
+      "label": "Sub-threshold 2/5 reconstruction attempt (< t=3)"
+    },
+    {
+      "id": "hsm_corrupt_share",
+      "module_id": "shamir_hsm",
+      "module_label": "Shamir (3,5) HSM",
+      "mode": 2,
+      "expected_rc": -201,
+      "call_expr": "hsm_stage1_execute(2n)",
+      "label": "Corrupted Custodian 3 share (+1 mod p) caught by Pedersen VSS"
+    },
+    {
+      "id": "hsm_bad_refresh",
+      "module_id": "shamir_hsm",
+      "module_label": "Shamir (3,5) HSM",
+      "mode": 3,
+      "expected_rc": -301,
+      "call_expr": "hsm_stage1_execute(3n)",
+      "label": "Malicious proactive refresh polynomial with g(0)=1337 != 0"
+    },
+    {
+      "id": "hsm_dup_x_replay",
+      "module_id": "shamir_hsm",
+      "module_label": "Shamir (3,5) HSM",
+      "mode": 4,
+      "expected_rc": -401,
+      "call_expr": "hsm_stage1_execute(4n)",
+      "label": "Duplicate share x-coordinate replay ({1, 1, 3}) blocked"
+    },
+    {
+      "id": "raid_3shard_loss",
+      "module_id": "raid6_fs",
+      "module_label": "RS(4,2) RAID-6 FS",
+      "mode": 1,
+      "expected_rc": -101,
+      "call_expr": "raid_stage1_execute(1n)",
+      "label": "3-shard simultaneous loss exceeding m=2 erasure tolerance"
+    },
+    {
+      "id": "raid_silent_bitrot",
+      "module_id": "raid6_fs",
+      "module_label": "RS(4,2) RAID-6 FS",
+      "mode": 2,
+      "expected_rc": -201,
+      "call_expr": "raid_stage1_execute(2n)",
+      "label": "Silent 1-bit bit-rot on surviving shard 2 caught by RFC 6962 scrub"
+    },
+    {
+      "id": "raid_shard_swap",
+      "module_id": "raid6_fs",
+      "module_label": "RS(4,2) RAID-6 FS",
+      "mode": 3,
+      "expected_rc": -301,
+      "call_expr": "raid_stage1_execute(3n)",
+      "label": "Shard-index swap/replay (shard 1 payload injected into slot 0)"
+    },
+    {
+      "id": "raid_no_cap_write",
+      "module_id": "raid6_fs",
+      "module_label": "RS(4,2) RAID-6 FS",
+      "mode": 4,
+      "expected_rc": -401,
+      "call_expr": "raid_stage1_execute(4n)",
+      "label": "Unauthorized storage write without CAP_FS_WRITE capability bit"
+    }
+  ]
+}

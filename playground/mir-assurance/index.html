@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en" data-type="stock">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<title>MIR Assurance Suite and Live Shamir Threshold HSM WASM Lab | Zain Dana Harper</title>
+<meta name="description" content="Four zero-overhead BuildLang compile-time MIR verifiers across 66/66 buildos-core functions paired with a live zero-import (t=3, n=5) Shamir Threshold HSM WebAssembly lab.">
+<link rel="canonical" href="https://harperz9.github.io/playground/mir-assurance/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="MIR Assurance Suite and Live Shamir Threshold HSM WASM Lab | Zain Dana Harper">
+<meta property="og:description" content="Four zero-overhead BuildLang compile-time MIR verifiers across 66/66 buildos-core functions paired with a live zero-import (t=3, n=5) Shamir Threshold HSM WebAssembly lab.">
+<meta property="og:url" content="https://harperz9.github.io/playground/mir-assurance/">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/home.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="MIR Assurance Suite and Live Shamir Threshold HSM WASM Lab | Zain Dana Harper">
+<meta name="twitter:description" content="Four zero-overhead BuildLang compile-time MIR verifiers across 66/66 buildos-core functions paired with a live zero-import (t=3, n=5) Shamir Threshold HSM WebAssembly lab.">
+<link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-6218db2f12">
+<link rel="stylesheet" href="/studies/studies.css?v=world-6218db2f12">
+<link rel="stylesheet" href="/world/site/depth.css?v=world-6218db2f12">
+<script type="module" src="/world/ui/shell/shell.js?v=world-6218db2f12"></script>
+<script type="module" src="/world/site/hand-scroll.js?v=world-6218db2f12"></script>
+<meta name="mir-manifest-sha256" content="0fe067dcf8e237ae7a045cabfac0d39c4cdf776438a5cda4ab513273e334a295">
+<style>
+  .ma-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 0.7rem; padding: 0.85rem 0; border-bottom: 1px solid var(--line); }
+  .ma-card { border: 1px solid var(--line); padding: 0.72rem 0.82rem; min-width: 0; display: flex; flex-direction: column; gap: 0.32rem; transition: opacity 0.15s ease; }
+  .ma-card-k { font-family: var(--face-utility); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--soft); margin: 0; }
+  .ma-card-v { font-family: var(--face-utility); font-size: 1.0rem; font-weight: 700; margin: 0; font-variant-numeric: tabular-nums; }
+  .ma-card-s { font-size: 0.79rem; color: var(--soft); margin: 0; overflow-wrap: anywhere; }
+  .ma-card-out { font-family: var(--face-utility); font-size: 0.75rem; border-top: 1px solid var(--line); padding-top: 0.38rem; margin: 0.25rem 0 0; min-height: 4.4rem; overflow-wrap: anywhere; }
+  .ma-card-actions { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: auto; padding-top: 0.3rem; }
+  .ma-controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(195px, 1fr)); gap: 0.6rem 0.7rem; padding: 0.8rem 0; border-bottom: 1px solid var(--line); align-items: end; }
+  .ma-field { display: flex; flex-direction: column; gap: 0.25rem; font-family: var(--face-utility); font-size: 0.74rem; color: var(--soft); }
+  .ma-field select, .ma-btn { background: transparent; color: var(--ink); border: 1px solid var(--line); padding: 0.42rem 0.68rem; min-height: 40px; font-family: var(--face-utility); font-size: 0.8rem; }
+  .ma-btn { cursor: pointer; }
+  .ma-btn-primary { background: var(--ink); color: var(--paper, #f4f1ea); border-color: var(--ink); }
+  .ma-field select:focus-visible, .ma-btn:focus-visible, .ma-wrap:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .ma-readout { padding: 0.75rem 0; border-bottom: 1px solid var(--line); font-family: var(--face-utility); font-size: 0.81rem; font-variant-numeric: tabular-nums; }
+  .ma-readout p { margin: 0.2rem 0; }
+  .ma-log { margin: 0.45rem 0 0; padding: 0.65rem 0.75rem; border: 1px solid var(--line); font-family: var(--face-utility); font-size: 0.75rem; white-space: pre-wrap; overflow: auto; height: 9.5rem; }
+  .ma-wrap { width: 100%; overflow-x: auto; margin-top: 0.5rem; }
+  .ma-table { width: 100%; min-width: 700px; table-layout: fixed; border-collapse: collapse; font-size: 0.81rem; }
+  .ma-table th, .ma-table td { text-align: left; padding: 0.46rem 0.52rem 0.46rem 0; border-bottom: 1px solid var(--line); vertical-align: top; overflow-wrap: break-word; }
+  .ma-table th:last-child, .ma-table td:last-child { padding-right: 0; }
+  .ma-table thead th { font-family: var(--face-utility); font-size: 0.71rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--soft); font-weight: 600; }
+  .mono { font-family: var(--face-utility); font-size: 0.75rem; font-variant-numeric: tabular-nums; }
+</style></head>
+<body class="reading ds-sheet">
+
+<header class="o-hand o-said" aria-label="Site">
+  <a class="skip" href="#main">Skip to the page</a>
+  <a class="o-home" href="/">Zain Dana Harper</a>
+  <a data-o="band" href="/world/universe/proto/index.html"><span class="o-name">Map</span></a>
+  <button type="button" data-o="fold" aria-controls="o-menu" aria-keyshortcuts="m" aria-expanded="false" hidden><span class="o-name">Places</span><i></i><i></i><i></i></button>
+  <button type="button" data-o="lamp" data-theme-toggle aria-pressed="true"><span class="o-name">Day</span></button>
+  <span class="o-cell"><button type="button" data-o="peel" data-plain-toggle aria-pressed="false"><span class="o-name">Plain</span></button><span class="o-under" aria-hidden="true">Plain</span></span>
+</header>
+<dialog id="o-menu" data-o="menu" data-material="chladni" aria-label="Places">
+  <nav aria-label="Places">
+    <ul class="o-places">
+      <li><a href="/buildlang.html"><span class="o-word" data-display-on-open="glyphcell">BuildLang</span></a></li>
+      <li><a href="/flywheel.html"><span class="o-word" data-display-on-open="light">Flywheel</span></a><small class="o-sub"><a href="/cmmns.html">CMMNS</a> <a href="/articulate.html">Articulate</a></small></li>
+      <li><a href="/playground/"><span class="o-word" data-display-on-open="nightlights">The Playground</span></a><small class="o-sub"><a href="/playground/#estuary">Estuary</a> <a href="/playground/#native">Native renderer</a> <a href="/playground/#superframe">Superframe</a> <a href="/playground/#workbench">All creative engines</a> <a href="/playground/#low-water">Low Water</a></small></li>
+      <li><a href="/playground/#low-water"><span class="o-word" data-display-on-open="chladni">Game</span></a></li>
+      <li><a href="/#site"><span class="o-word" data-display-on-open="swarm">Site</span></a></li>
+      <li><a href="/floor.html"><span class="o-word" data-display-on-open="rope">Everything</span></a></li>
+      <li><a href="/models.html"><span class="o-word" data-display-on-open="rope">Models</span></a></li>
+      <li><a href="/tools.html"><span class="o-word" data-display-on-open="rope">Tools &amp; Repos</span></a></li>
+      <li><a href="/person.html"><span class="o-word" data-display-on-open="rope">About</span></a></li>
+      <li><a href="/architecture.html"><span class="o-word" data-display-on-open="rope">Architecture</span></a></li>
+      <li><a href="/world/universe/proto/index.html"><span class="o-word" data-display-on-open="rope">Map</span></a></li>
+      <li><a href="/publications.html"><span class="o-word" data-display-on-open="swarm">Writing</span></a></li>
+      <li><a href="/explainers.html"><span class="o-word" data-display-on-open="sound">Films</span></a></li>
+      <li><a href="/security.html"><span class="o-word" data-display-on-open="rope">Security</span></a></li>
+      <li><a href="/hire.html"><span class="o-word" data-display-on-open="rope">Work</span></a></li>
+      <li><a href="/cv.html"><span class="o-word" data-display-on-open="rope">CV</span></a></li>
+    </ul>
+  </nav>
+  <p class="o-menu-foot"><a href="/architecture.html">Architecture</a> <a href="/models.html">Models</a> <a href="/tools.html">Tools &amp; 159 Repos</a> <a href="/research.html">Research</a> <a href="/portfolio.html">Portfolio</a> <a href="/elements.html">Elements</a> <a href="/studies/">Studies</a> <a href="/site-index.html">Site index</a> <button type="button" class="o-close" data-qj-open onclick="this.closest('dialog').close()">Search (Ctrl+K)</button> <button type="button" class="o-close" onclick="this.closest('dialog').close()">Close (Esc)</button></p>
+</dialog>
+<main id="main" tabindex="-1">
+<article class="st" id="mir-assurance">
+<header class="ds-sheet-head">
+  <p class="ds-kicker">Measured Drafting Sheet / 4-Pillar Compile-Time MIR Verification &amp; Live Threshold HSM Lab</p>
+  <h1>MIR Assurance &amp; HSM Lab</h1>
+  <p class="ds-lede">Compile-time assurance deck covering all four zero-overhead BuildLang MIR verifiers (Capability Egress #68877, WCET Stack #68903, Constant-Time Taint #68925, Bit-Exact Determinism #68945 across 66/66 buildos-core functions) paired with live in-browser WebAssembly execution of BuildOS Slice 36: a strictly zero-import 11,087 B (t=3, n=5) Shamir Threshold Secret Sharing, Pedersen VSS, and Proactive Key-Refresh Virtual HSM (#68951).</p>
+  <p class="ds-meta"><span>4/4 MIR verifier pillars</span><span>66/66 buildos-core functions</span><span>11,087 B 0-import HSM WASM</span><span>4/4 live HSM attack traps</span></p>
+  <nav class="ds-ways" aria-label="Related surfaces">
+    <a href="/playground/">The Playground</a>
+    <a href="/playground/buildos-cluster/">BuildOS Cluster</a>
+    <a href="/playground/buildos-v2/">BuildOS-2.0</a>
+    <a href="/playground/renderer-35/">35-Module Renderer</a>
+    <a href="./mir_assurance_manifest.json">Manifest JSON</a>
+  </nav>
+</header>
+
+<section class="ds-sec" id="pillars" aria-labelledby="h-pillars">
+  <h2 id="h-pillars">Four zero-overhead BuildLang compile-time MIR verifiers</h2>
+  <div class="ma-cards">
+    <div class="ma-card" data-pillar-card="cap_effect">
+      <p class="ma-card-k">Pillar 1 / Wave 130C (#68877)</p>
+      <p class="ma-card-v">Capability &amp; Effect Egress Verifier</p>
+      <p class="ma-card-s">Proves zero fs, net, exec, or unsafe egress across all 5 buildos-core modules (60 pure functions, 6 console-only) at compile time.</p>
+      <p class="ma-card-s mono">60/66 pure, 0 egress | 1177+4 tests (0.18s) | buildlang.effect-manifest/v1</p>
+    </div>
+    <div class="ma-card" data-pillar-card="wcet_stack">
+      <p class="ma-card-k">Pillar 2 / Wave 135E (#68903)</p>
+      <p class="ma-card-v">WCET &amp; Bounded-Stack Verifier</p>
+      <p class="ma-card-s">Static RV64 call-graph &amp; frame analyzer proving 66/66 functions stay under 2,048 B single-frame (max 1,472 B) with zero recursion cycles.</p>
+      <p class="ma-card-s mono">peak 2752 B (&lt; 4096 B), 0 recursion | 1177+4 tests (1.08s) | buildlang.wcet-manifest/v1</p>
+    </div>
+    <div class="ma-card" data-pillar-card="ct_taint">
+      <p class="ma-card-k">Pillar 3 / Wave 143A (#68925)</p>
+      <p class="ma-card-v">Constant-Time Side-Channel Taint Verifier</p>
+      <p class="ma-card-s">Dataflow taint tracker catching secret-dependent branches, S-box cache lookups, and variable-latency divisions fail-closed.</p>
+      <p class="ma-card-s mono">0 leaks across 66/66 fns, 3/3 controls trapped | 1177+4 tests (1.51s) | buildlang.ct-manifest/v1</p>
+    </div>
+    <div class="ma-card" data-pillar-card="det_repro">
+      <p class="ma-card-k">Pillar 4 / Wave 150C (#68945)</p>
+      <p class="ma-card-v">Bit-Exact Determinism &amp; Reproducibility Verifier</p>
+      <p class="ma-card-s">Rejects nondeterministic float equality, unseeded clocks, and unordered maps so builds emit bit-exact digests across targets.</p>
+      <p class="ma-card-s mono">66/66 bit-exact, 3/3 traps caught | 1177+4 tests (1.07s) | buildlang.det-manifest/v1</p>
+    </div>
+  </div>
+</section>
+
+<section class="ds-sec" id="hsm-workbench" aria-labelledby="h-hsm">
+  <h2 id="h-hsm">Live Zero-C (t=3, n=5) Shamir Threshold HSM &amp; MIR filter workbench</h2>
+  <div class="ma-cards">
+    <div class="ma-card" data-hsm-card="shamir_hsm">
+      <p class="ma-card-k">BuildOS Slice 36: (t=3, n=5) Shamir Threshold HSM (#68951)</p>
+      <p class="ma-card-v">11,087 B (strictly 0 host imports, Zero-C Stage-2)</p>
+      <p class="ma-card-s">Shamir (3,5) over F_p (p=2^31-1), Pedersen VSS commitments in subgroup q=98784247763, Epoch-1 zero-secret proactive share refresh (20/20 subsets reconstruct unchanged master secret), and 4-leaf RFC 6962 SHA-256 audit root.</p>
+      <p class="ma-card-s mono">buildos_shamir_threshold_hsm_zeroc.wasm | sha256:0e6d27ac75b9a5... | root:0b8beced748fd9...</p>
+      <p class="ma-card-out" data-hsm-out="shamir_hsm">Staged: hsm_stage1_execute(0n) === 1n | 4/4 live fail-closed attacks (-101..-401)</p>
+      <div class="ma-card-actions">
+        <button type="button" id="ma-run-hsm-card" class="ma-btn ma-btn-primary">Run Live HSM WASM</button>
+        <button type="button" id="ma-atk-card" class="ma-btn">Inject All 4 HSM Attacks</button>
+      </div>
+    </div>
+  </div>
+  <div class="ma-controls" role="region" aria-label="MIR pillar filter and Threshold HSM execution controls">
+    <label class="ma-field" for="ma-pillar">Inspect MIR verifier pillar
+      <select id="ma-pillar">
+        <option value="all">All 4 MIR pillars (66/66 buildos-core fns)</option>
+        <option value="cap_effect">Pillar 1: Effect Egress (#68877)</option>
+        <option value="wcet_stack">Pillar 2: WCET Stack (#68903)</option>
+        <option value="ct_taint">Pillar 3: Constant-Time (#68925)</option>
+        <option value="det_repro">Pillar 4: Strict Determinism (#68945)</option>
+      </select>
+    </label>
+    <label class="ma-field" for="ma-attack">Threshold HSM attack vector
+      <select id="ma-attack">
+        <option value="hsm_sub_threshold">Sub-threshold 2/5 Shamir reconstruction attempt (&lt; t=3) (rc=-101)</option>
+        <option value="hsm_corrupt_share">Corrupted Custodian 3 share (+1 mod p) caught by Pedersen VSS (rc=-201)</option>
+        <option value="hsm_bad_refresh">Malicious proactive key-refresh polynomial with g(0) = 1337 != 0 (rc=-301)</option>
+        <option value="hsm_dup_x_replay">Duplicate share x-coordinate replay ({1, 1, 3}) blocked (rc=-401)</option>
+      </select>
+    </label>
+    <button type="button" id="ma-run-hsm" class="ma-btn ma-btn-primary">Run Live HSM</button>
+    <button type="button" id="ma-run-attack" class="ma-btn">Inject Selected Attack</button>
+    <button type="button" id="ma-run-all-attacks" class="ma-btn">Run All 4 Attacks</button>
+  </div>
+  <div class="ma-readout" aria-live="polite">
+    <p id="ma-status">Awaiting WebCrypto SHA-256 manifest verification...</p>
+    <pre id="ma-log" class="ma-log">Click "Run Live HSM" or "Run All 4 Attacks" to execute buildos_shamir_threshold_hsm_zeroc.wasm (0 host imports) directly inside browser memory.</pre>
+  </div>
+</section>
+
+<section class="ds-sec" id="core-sweep" aria-labelledby="h-core">
+  <h2 id="h-core">5/5 buildos-core modules verified across all 4 MIR pillars (66/66 functions)</h2>
+  <div class="ma-wrap" tabindex="0" role="region" aria-label="buildos-core 4-pillar MIR verification sweep">
+    <table class="ma-table">
+      <colgroup><col style="width:24%"><col style="width:9%"><col style="width:18%"><col style="width:37%"><col style="width:12%"></colgroup>
+      <thead>
+        <tr><th scope="col">Module</th><th scope="col">Fns</th><th scope="col">Max Frame / Stack</th><th scope="col">4-Pillar MIR Proof Summary</th><th scope="col">Status</th></tr>
+      </thead>
+      <tbody id="ma-core-tbody">
+      <tr>
+        <td class="mono">buildos_ab_state.bld</td>
+        <td class="mono">15</td>
+        <td class="mono">1472 B / 2688 B</td>
+        <td>0 egress | 1472B / 2688B | 0 CT | 15/15 det</td>
+        <td class="mono">4/4 PASS</td>
+      </tr>
+      <tr>
+        <td class="mono">buildos_cap_sandbox.bld</td>
+        <td class="mono">10</td>
+        <td class="mono">1360 B / 2752 B</td>
+        <td>0 egress | 1360B / 2752B | 0 CT | 10/10 det</td>
+        <td class="mono">4/4 PASS</td>
+      </tr>
+      <tr>
+        <td class="mono">buildos_core_cap_sv39.bld</td>
+        <td class="mono">22</td>
+        <td class="mono">832 B / 2032 B</td>
+        <td>0 egress | 832B / 2032B | 0 CT | 22/22 det</td>
+        <td class="mono">4/4 PASS</td>
+      </tr>
+      <tr>
+        <td class="mono">buildos_fb_boot_slice2.bld</td>
+        <td class="mono">10</td>
+        <td class="mono">624 B / 1008 B</td>
+        <td>0 egress | 624B / 1008B | 0 CT | 10/10 det</td>
+        <td class="mono">4/4 PASS</td>
+      </tr>
+      <tr>
+        <td class="mono">buildos_supervisor.bld</td>
+        <td class="mono">9</td>
+        <td class="mono">1056 B / 1728 B</td>
+        <td>0 egress | 1056B / 1728B | 0 CT | 9/9 det</td>
+        <td class="mono">4/4 PASS</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="ds-sec" id="hsm-attacks" aria-labelledby="h-atk">
+  <h2 id="h-atk">4-vector fail-closed Threshold HSM attack matrix</h2>
+  <div class="ma-wrap" tabindex="0" role="region" aria-label="4 live fail-closed Shamir HSM attacks">
+    <table class="ma-table">
+      <colgroup><col style="width:20%"><col style="width:40%"><col style="width:22%"><col style="width:18%"></colgroup>
+      <thead>
+        <tr><th scope="col">Vector ID</th><th scope="col">Planted HSM Attack</th><th scope="col">WASM Call</th><th scope="col">Live Status Code</th></tr>
+      </thead>
+      <tbody>
+      <tr data-atk-row="hsm_sub_threshold">
+        <td class="mono">hsm_sub_threshold</td>
+        <td>Sub-threshold 2/5 Shamir reconstruction attempt (&lt; t=3)</td>
+        <td class="mono">hsm_stage1_execute(1n)</td>
+        <td class="mono" data-atk-status="hsm_sub_threshold">expected -101</td>
+      </tr>
+      <tr data-atk-row="hsm_corrupt_share">
+        <td class="mono">hsm_corrupt_share</td>
+        <td>Corrupted Custodian 3 share (+1 mod p) caught by Pedersen VSS</td>
+        <td class="mono">hsm_stage1_execute(2n)</td>
+        <td class="mono" data-atk-status="hsm_corrupt_share">expected -201</td>
+      </tr>
+      <tr data-atk-row="hsm_bad_refresh">
+        <td class="mono">hsm_bad_refresh</td>
+        <td>Malicious proactive key-refresh polynomial with g(0) = 1337 != 0</td>
+        <td class="mono">hsm_stage1_execute(3n)</td>
+        <td class="mono" data-atk-status="hsm_bad_refresh">expected -301</td>
+      </tr>
+      <tr data-atk-row="hsm_dup_x_replay">
+        <td class="mono">hsm_dup_x_replay</td>
+        <td>Duplicate share x-coordinate replay ({1, 1, 3}) blocked</td>
+        <td class="mono">hsm_stage1_execute(4n)</td>
+        <td class="mono" data-atk-status="hsm_dup_x_replay">expected -401</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="ds-sec" id="scope" aria-labelledby="h-scope">
+  <h2 id="h-scope">Honest scope and cryptographic boundaries</h2>
+  <p>The four BuildLang compile-time MIR verifiers execute during compilation inside buildc with zero runtime overhead; this browser sheet surfaces their pinned buildos-core sweep manifests (#68877, #68903, #68925, #68945) alongside live WebAssembly execution of buildos_shamir_threshold_hsm_zeroc.wasm (#68951). Before instantiation, client verification checks WebCrypto SHA-256 and asserts WebAssembly.Module.imports(mod).length === 0 fail-closed. The Shamir (3,5) and Pedersen VSS routines use compact research field parameters (p = 2^31 - 1, q = 98784247763) for pure-OSI MIT demonstration and are not production-sized 256-bit audited cryptography.</p>
+</section>
+
+<footer class="ds-sheet-foot">
+  <p><strong>Sheet</strong> <code>playground/mir-assurance/index.html</code></p>
+  <p><strong>Updated</strong> 2026-11-27</p>
+  <p><strong>Ground</strong> Measured Drafting Sheet | Pure OSI MIT | 4 MIR Pillars (66/66 fns) | 11,087 B 0-import HSM WASM | 4/4 live attacks</p>
+</footer>
+</article>
+<script type="module" src="./mir_assurance_lab.mjs"></script>
+</main>
+</body>
+</html>

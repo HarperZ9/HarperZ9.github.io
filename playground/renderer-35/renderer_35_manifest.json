@@ -1,0 +1,416 @@
+{
+  "schema": "renderer-35-parity-showcase/1",
+  "license": "MIT",
+  "date": "2026-11-27",
+  "latest_receipt_catalogue_id": 68924,
+  "wasm_pack_catalogue_id": 68878,
+  "total_modules": 35,
+  "total_wasm_modules": 4,
+  "total_wasm_bytes": 49799,
+  "wasm_modules": [
+    {
+      "id": "art_brdf",
+      "mod_num": 11,
+      "label": "Module #11: GGX-VNDF BRDF",
+      "file": "superframe_art_brdf.wasm",
+      "fn_name": "brdf_grid_hash",
+      "expected_nominal_hash": "0xe8d741020e6f146a",
+      "expected_ablation_hash": "0x3278011a5aa5fb87",
+      "summary": "GGX-VNDF specular albedo (16x16x256), Smith masking, Schlick Fresnel, 64-pt Gauss-Legendre.",
+      "ablation_note": "Perturbed roughness/specular parameters reject C++23 furnace pin.",
+      "bytes": 7149,
+      "sha256": "6e64a886cde6de40ae8892ee47b0726a85f0e5903171b36124bd925587060deb"
+    },
+    {
+      "id": "art_sky",
+      "mod_num": 10,
+      "label": "Module #10: Preetham & CIE Sky",
+      "file": "superframe_art_sky.wasm",
+      "fn_name": "sky_cube16_hash",
+      "expected_nominal_hash": "0x4774e06b9efdb90d",
+      "expected_ablation_hash": "0xfbe2da37380aedc2",
+      "summary": "Preetham atmospheric scattering + CIE overcast + sun disk baked to 3x6x16x16 cubemaps.",
+      "ablation_note": "Perturbed turbidity/zenith rejects C++23 sky cubemap pin.",
+      "bytes": 12785,
+      "sha256": "01fdc2f056d541be4984009dced78d227e5290352102ccf6817b0696e16d5e93"
+    },
+    {
+      "id": "art_gtao",
+      "mod_num": 22,
+      "label": "Module #22: Ground-Truth AO",
+      "file": "superframe_art_gtao.wasm",
+      "fn_name": "gtao_hash",
+      "expected_nominal_hash": "0x10d3723a5bd82529",
+      "expected_ablation_hash": "0x18cacb7a24d2d03c",
+      "summary": "Horizon-based Ground-Truth Ambient Occlusion hemisphere integration with bent normals.",
+      "ablation_note": "Ablated horizon clamp rejects C++23 GTAO parity pin.",
+      "bytes": 16329,
+      "sha256": "f0cd074b60b8328dc451a6b7cb8acc4da98d43e5e10f9a7514a4a73dade4b5d9"
+    },
+    {
+      "id": "art_ssr",
+      "mod_num": 23,
+      "label": "Module #23: Hi-Z Screen-Space Reflections",
+      "file": "superframe_art_ssr.wasm",
+      "fn_name": "ssr_hash",
+      "expected_nominal_hash": "0x5fe10583a278ee55",
+      "expected_ablation_hash": "0xf99e235517d04fbe",
+      "summary": "Screen-space raymarching with hierarchical-Z depth clipping (344 exact hits).",
+      "ablation_note": "Ablated thickness/clip guard yields 378 spurious hits and rejects pin.",
+      "bytes": 13536,
+      "sha256": "8c83ed8536aa7cae3288b24254db887c57ec819664020e2c10d4760257ec0b41"
+    }
+  ],
+  "modules": [
+    {
+      "num": 1,
+      "name": "art_scene.bld",
+      "cohort": "core-1-11",
+      "fnv1a_pin": "0x8e70a9159d2007bf",
+      "ulp_err": 0,
+      "receipt_id": null,
+      "has_live_wasm": false,
+      "summary": "Still-life daylight 256x144 lit buffer raymarcher"
+    },
+    {
+      "num": 2,
+      "name": "art_anchor.bld",
+      "cohort": "core-1-11",
+      "fnv1a_pin": "0x364d778712fdc849",
+      "ulp_err": 0,
+      "receipt_id": null,
+      "has_live_wasm": false,
+      "summary": "Still-life 256x144 anchor canvas projection"
+    },
+    {
+      "num": 3,
+      "name": "art_town_coc.bld",
+      "cohort": "core-1-11",
+      "fnv1a_pin": "0x2c4cd941314f50b5",
+      "ulp_err": 0,
+      "receipt_id": null,
+      "has_live_wasm": false,
+      "summary": "Town dusk 256x144 Circle-of-Confusion depth map"
+    },
+    {
+      "num": 4,
+      "name": "art_town_lit.bld",
+      "cohort": "core-1-11",
+      "fnv1a_pin": "0x91ee8ea81ab861f0",
+      "ulp_err": 0,
+      "receipt_id": null,
+      "has_live_wasm": false,
+      "summary": "Town night + sodium lamp 256x144 lit buffer"
+    },
+    {
+      "num": 5,
+      "name": "art_metrics.bld",
+      "cohort": "core-1-11",
+      "fnv1a_pin": "0xbf2cbc974ff8fcad",
+      "ulp_err": 0,
+      "receipt_id": null,
+      "has_live_wasm": false,
+      "summary": "8-bit sRGB quantization codes & perceptual metrics"
+    },
+    {
+      "num": 6,
+      "name": "art_strokes_ref.bld",
+      "cohort": "core-1-11",
+      "fnv1a_pin": "0x4add0d97495fd95d",
+      "ulp_err": 0,
+      "receipt_id": null,
+      "has_live_wasm": false,
+      "summary": "Tonemapped 8-bit paint reference + motion 1->0 vectors"
+    },
+    {
+      "num": 7,
+      "name": "art_tiltshift_defocus.bld",
+      "cohort": "core-1-11",
+      "fnv1a_pin": "0x6d3f8b9acb221e67",
+      "ulp_err": 0,
+      "receipt_id": null,
+      "has_live_wasm": false,
+      "summary": "Gaussian tilt-shift defocus 8-bit composition"
+    },
+    {
+      "num": 8,
+      "name": "art_scene_room.bld",
+      "cohort": "core-1-11",
+      "fnv1a_pin": "0xc99282210e56cf4a",
+      "ulp_err": 0,
+      "receipt_id": null,
+      "has_live_wasm": false,
+      "summary": "Conversation room 256x144 interior lighting buffer"
+    },
+    {
+      "num": 9,
+      "name": "art_tiltshift_fx.bld",
+      "cohort": "core-1-11",
+      "fnv1a_pin": "0x593c8ac027015c51",
+      "ulp_err": 0,
+      "receipt_id": null,
+      "has_live_wasm": false,
+      "summary": "Night halation, star diffraction, vignette, and film grain"
+    },
+    {
+      "num": 10,
+      "name": "art_sky.bld",
+      "cohort": "core-1-11",
+      "fnv1a_pin": "0x4774e06b9efdb90d",
+      "ulp_err": 0,
+      "receipt_id": null,
+      "has_live_wasm": true,
+      "summary": "Preetham atmospheric + CIE overcast 3x6x16x16 sky cubemaps"
+    },
+    {
+      "num": 11,
+      "name": "art_brdf.bld",
+      "cohort": "core-1-11",
+      "fnv1a_pin": "0xe8d741020e6f146a",
+      "ulp_err": 0,
+      "receipt_id": null,
+      "has_live_wasm": true,
+      "summary": "GGX-VNDF + Smith + Schlick + 64-pt Gauss-Legendre furnace"
+    },
+    {
+      "num": 12,
+      "name": "art_dither.bld",
+      "cohort": "pbr-bvh-12-24",
+      "fnv1a_pin": "0xb9ca7e2db4a440f7",
+      "ulp_err": 0,
+      "receipt_id": 68693,
+      "has_live_wasm": false,
+      "summary": "Ordered Bayer & blue-noise screen-space dithering"
+    },
+    {
+      "num": 13,
+      "name": "art_noise.bld",
+      "cohort": "pbr-bvh-12-24",
+      "fnv1a_pin": "0xbb69adfcaefa21bc",
+      "ulp_err": 0,
+      "receipt_id": 68704,
+      "has_live_wasm": false,
+      "summary": "Deterministic gradient Perlin, simplex, and fBm noise"
+    },
+    {
+      "num": 14,
+      "name": "art_fractal_dither.bld",
+      "cohort": "pbr-bvh-12-24",
+      "fnv1a_pin": "0x5ac361b7dfe0a6bb",
+      "ulp_err": 0,
+      "receipt_id": 68712,
+      "has_live_wasm": false,
+      "summary": "Multi-scale fractal error-diffusion dithering"
+    },
+    {
+      "num": 15,
+      "name": "art_colour.bld",
+      "cohort": "pbr-bvh-12-24",
+      "fnv1a_pin": "0xbe6b65ab61737ae6",
+      "ulp_err": 0,
+      "receipt_id": 68725,
+      "has_live_wasm": false,
+      "summary": "ACES filmic tonemapping and CIE XYZ/sRGB colour transforms"
+    },
+    {
+      "num": 16,
+      "name": "art_lighting_clusters.bld",
+      "cohort": "pbr-bvh-12-24",
+      "fnv1a_pin": "0xc93a45505a52aa3d",
+      "ulp_err": 0,
+      "receipt_id": 68735,
+      "has_live_wasm": false,
+      "summary": "Clustered forward+ 3D light-grid frustum assignment"
+    },
+    {
+      "num": 17,
+      "name": "art_sdf.bld",
+      "cohort": "pbr-bvh-12-24",
+      "fnv1a_pin": "0xfc95bcdfb4c924c0",
+      "ulp_err": 0,
+      "receipt_id": 68757,
+      "has_live_wasm": false,
+      "summary": "Signed distance field CSG primitives and analytic gradients"
+    },
+    {
+      "num": 18,
+      "name": "art_pbr_lobes.bld",
+      "cohort": "pbr-bvh-12-24",
+      "fnv1a_pin": "0x1910d71016117f17",
+      "ulp_err": 0,
+      "receipt_id": 68768,
+      "has_live_wasm": false,
+      "summary": "Multi-scattering PBR microfacet diffuse and specular lobes"
+    },
+    {
+      "num": 19,
+      "name": "art_bvh.bld",
+      "cohort": "pbr-bvh-12-24",
+      "fnv1a_pin": "0x4ba2e9e4ac44978f",
+      "ulp_err": 0,
+      "receipt_id": 68777,
+      "has_live_wasm": false,
+      "summary": "Surface-Area-Heuristic BVH construction and ray traversal"
+    },
+    {
+      "num": 20,
+      "name": "art_ploc_bvh.bld",
+      "cohort": "pbr-bvh-12-24",
+      "fnv1a_pin": "0x15d8a0fddff70a6f",
+      "ulp_err": 0,
+      "receipt_id": 68786,
+      "has_live_wasm": false,
+      "summary": "Parallel Locally-Ordered Clustering (PLOC) BVH builder"
+    },
+    {
+      "num": 21,
+      "name": "art_taa.bld",
+      "cohort": "pbr-bvh-12-24",
+      "fnv1a_pin": "0x3239948c3e1c8d63",
+      "ulp_err": 0,
+      "receipt_id": 68792,
+      "has_live_wasm": false,
+      "summary": "Temporal Anti-Aliasing variance-clipped history reprojection"
+    },
+    {
+      "num": 22,
+      "name": "art_gtao.bld",
+      "cohort": "pbr-bvh-12-24",
+      "fnv1a_pin": "0x10d3723a5bd82529",
+      "ulp_err": 0,
+      "receipt_id": 68794,
+      "has_live_wasm": true,
+      "summary": "Ground-Truth Ambient Occlusion hemisphere integration"
+    },
+    {
+      "num": 23,
+      "name": "art_ssr.bld",
+      "cohort": "pbr-bvh-12-24",
+      "fnv1a_pin": "0x5fe10583a278ee55",
+      "ulp_err": 0,
+      "receipt_id": 68801,
+      "has_live_wasm": true,
+      "summary": "Hi-Z screen-space reflection raymarching (344 exact hits)"
+    },
+    {
+      "num": 24,
+      "name": "art_purity.bld",
+      "cohort": "pbr-bvh-12-24",
+      "fnv1a_pin": "0x7fce44868c056d9c",
+      "ulp_err": 0,
+      "receipt_id": 68810,
+      "has_live_wasm": false,
+      "summary": "Spectral chromatic purity and gamut-boundary projection"
+    },
+    {
+      "num": 25,
+      "name": "art_crt_signal.bld",
+      "cohort": "crt-media-25-35",
+      "fnv1a_pin": "0x0b4c621d072ff134",
+      "ulp_err": 0,
+      "receipt_id": 68831,
+      "has_live_wasm": false,
+      "summary": "NTSC/PAL CRT composite signal modulation and chroma decode"
+    },
+    {
+      "num": 26,
+      "name": "art_crt_glass.bld",
+      "cohort": "crt-media-25-35",
+      "fnv1a_pin": "0x4477974d58b7f8b3",
+      "ulp_err": 0,
+      "receipt_id": 68842,
+      "has_live_wasm": false,
+      "summary": "Curved CRT glass refraction, shadow-mask, and halation"
+    },
+    {
+      "num": 27,
+      "name": "art_crt_beam.bld",
+      "cohort": "crt-media-25-35",
+      "fnv1a_pin": "0xcf3c2ef1a58b54b7",
+      "ulp_err": 0,
+      "receipt_id": 68849,
+      "has_live_wasm": false,
+      "summary": "CRT electron-beam Gaussian spot deflection and phosphor decay"
+    },
+    {
+      "num": 28,
+      "name": "art_lens.bld",
+      "cohort": "crt-media-25-35",
+      "fnv1a_pin": "0xbd8268cb80d70739",
+      "ulp_err": 0,
+      "receipt_id": 68856,
+      "has_live_wasm": false,
+      "summary": "Multi-element physical lens distortion and chromatic aberration"
+    },
+    {
+      "num": 29,
+      "name": "art_sag.bld",
+      "cohort": "crt-media-25-35",
+      "fnv1a_pin": "0xc093c83f3628e436",
+      "ulp_err": 0,
+      "receipt_id": 68863,
+      "has_live_wasm": false,
+      "summary": "Aspheric optical surface sag and paraxial ray transfer"
+    },
+    {
+      "num": 30,
+      "name": "art_film_optics.bld",
+      "cohort": "crt-media-25-35",
+      "fnv1a_pin": "0xce8d086fa30550d9",
+      "ulp_err": 0,
+      "receipt_id": 68870,
+      "has_live_wasm": false,
+      "summary": "Thin-film interference iridescence and optical dispersion"
+    },
+    {
+      "num": 31,
+      "name": "art_oklab.bld",
+      "cohort": "crt-media-25-35",
+      "fnv1a_pin": "0x7e6d89e1bdc206b0",
+      "ulp_err": 0,
+      "receipt_id": 68885,
+      "has_live_wasm": false,
+      "summary": "Perceptual Oklab/Oklch colour-space conversion and gamut clip"
+    },
+    {
+      "num": 32,
+      "name": "art_hysteresis.bld",
+      "cohort": "crt-media-25-35",
+      "fnv1a_pin": "0xf449c65538876a32",
+      "ulp_err": 0,
+      "receipt_id": 68893,
+      "has_live_wasm": false,
+      "summary": "Temporal Schmitt-trigger hysteresis quantisation (76.8% flicker cut)"
+    },
+    {
+      "num": 33,
+      "name": "art_fibre.bld",
+      "cohort": "crt-media-25-35",
+      "fnv1a_pin": "0x1530d0d4a57b7e47",
+      "ulp_err": 0,
+      "receipt_id": 68905,
+      "has_live_wasm": false,
+      "summary": "Anisotropic cellulose paper fibre field and pigment transport"
+    },
+    {
+      "num": 34,
+      "name": "art_palettelight.bld",
+      "cohort": "crt-media-25-35",
+      "fnv1a_pin": "0x217f4000ac49695a",
+      "ulp_err": 0,
+      "receipt_id": 68914,
+      "has_live_wasm": false,
+      "summary": "Palette-aware artistic relighting and tonal harmonization"
+    },
+    {
+      "num": 35,
+      "name": "art_hatch.bld",
+      "cohort": "crt-media-25-35",
+      "fnv1a_pin": "0xbd556d27b9d7c43a",
+      "ulp_err": 0,
+      "receipt_id": 68924,
+      "has_live_wasm": false,
+      "summary": "SDF Hessian Weingarten curvature engraving and cross-hatching"
+    }
+  ]
+}

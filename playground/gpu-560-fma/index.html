@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en" data-type="stock">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<title>GPU 560 Certified Shaders, 5-Way FMA Parity and Live WASM Lab | Zain Dana Harper</title>
+<meta name="description" content="Explorer for 560/560 certified BuildLang 5-backend GPU compute shaders with live 5-way GLSL FMA parity plus in-browser Belcour-Barla Iridescence and Titan FlashAttention WASM execution.">
+<link rel="canonical" href="https://harperz9.github.io/playground/gpu-560-fma/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="GPU 560 Certified Shaders, 5-Way FMA Parity and Live WASM Lab | Zain Dana Harper">
+<meta property="og:description" content="Explorer for 560/560 certified BuildLang 5-backend GPU compute shaders with live 5-way GLSL FMA parity plus in-browser Belcour-Barla Iridescence and Titan FlashAttention WASM execution.">
+<meta property="og:url" content="https://harperz9.github.io/playground/gpu-560-fma/">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/home.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="GPU 560 Certified Shaders, 5-Way FMA Parity and Live WASM Lab | Zain Dana Harper">
+<meta name="twitter:description" content="Explorer for 560/560 certified BuildLang 5-backend GPU compute shaders with live 5-way GLSL FMA parity plus in-browser Belcour-Barla Iridescence and Titan FlashAttention WASM execution.">
+<link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-6218db2f12">
+<link rel="stylesheet" href="/studies/studies.css?v=world-6218db2f12">
+<link rel="stylesheet" href="/world/site/depth.css?v=world-6218db2f12">
+<script type="module" src="/world/ui/shell/shell.js?v=world-6218db2f12"></script>
+<script type="module" src="/world/site/hand-scroll.js?v=world-6218db2f12"></script>
+<meta name="gf-manifest-sha256" content="1962388a476d7f4da471a9a6d6c0c222890ab881fbed6e9d9d381388d99f3c22">
+<style>
+  .gf-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 0.7rem; padding: 0.85rem 0; border-bottom: 1px solid var(--line); }
+  .gf-card { border: 1px solid var(--line); padding: 0.72rem 0.82rem; min-width: 0; display: flex; flex-direction: column; gap: 0.32rem; }
+  .gf-card-k { font-family: var(--face-utility); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--soft); margin: 0; }
+  .gf-card-v { font-family: var(--face-utility); font-size: 1.02rem; font-weight: 700; margin: 0; font-variant-numeric: tabular-nums; }
+  .gf-card-s { font-size: 0.79rem; color: var(--soft); margin: 0; overflow-wrap: anywhere; }
+  .gf-card-out { font-family: var(--face-utility); font-size: 0.75rem; border-top: 1px solid var(--line); padding-top: 0.38rem; margin: 0.25rem 0 0; min-height: 4.4rem; overflow-wrap: anywhere; }
+  .gf-card-actions { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: auto; padding-top: 0.3rem; }
+  .gf-controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(195px, 1fr)); gap: 0.6rem 0.7rem; padding: 0.8rem 0; border-bottom: 1px solid var(--line); align-items: end; }
+  .gf-field { display: flex; flex-direction: column; gap: 0.25rem; font-family: var(--face-utility); font-size: 0.74rem; color: var(--soft); }
+  .gf-field select, .gf-btn { background: transparent; color: var(--ink); border: 1px solid var(--line); padding: 0.42rem 0.68rem; min-height: 40px; font-family: var(--face-utility); font-size: 0.8rem; }
+  .gf-btn { cursor: pointer; }
+  .gf-btn-primary { background: var(--ink); color: var(--paper, #f4f1ea); border-color: var(--ink); }
+  .gf-field select:focus-visible, .gf-btn:focus-visible, .gf-wrap:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .gf-readout { padding: 0.75rem 0; border-bottom: 1px solid var(--line); font-family: var(--face-utility); font-size: 0.81rem; font-variant-numeric: tabular-nums; }
+  .gf-readout p { margin: 0.2rem 0; }
+  .gf-log { margin: 0.45rem 0 0; padding: 0.65rem 0.75rem; border: 1px solid var(--line); font-family: var(--face-utility); font-size: 0.75rem; white-space: pre-wrap; overflow: auto; height: 8.5rem; }
+  .gf-wrap { width: 100%; overflow-x: auto; margin-top: 0.5rem; }
+  .gf-table { width: 100%; min-width: 720px; table-layout: fixed; border-collapse: collapse; font-size: 0.81rem; }
+  .gf-table th, .gf-table td { text-align: left; padding: 0.46rem 0.52rem 0.46rem 0; border-bottom: 1px solid var(--line); vertical-align: top; overflow-wrap: break-word; }
+  .gf-table th:last-child, .gf-table td:last-child { padding-right: 0; }
+  .gf-table thead th { font-family: var(--face-utility); font-size: 0.71rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--soft); font-weight: 600; }
+  .mono { font-family: var(--face-utility); font-size: 0.75rem; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+</style></head>
+<body class="reading ds-sheet">
+
+<header class="o-hand o-said" aria-label="Site">
+  <a class="skip" href="#main">Skip to the page</a>
+  <a class="o-home" href="/">Zain Dana Harper</a>
+  <a data-o="band" href="/world/universe/proto/index.html"><span class="o-name">Map</span></a>
+  <button type="button" data-o="fold" aria-controls="o-menu" aria-keyshortcuts="m" aria-expanded="false" hidden><span class="o-name">Places</span><i></i><i></i><i></i></button>
+  <button type="button" data-o="lamp" data-theme-toggle aria-pressed="true"><span class="o-name">Day</span></button>
+  <span class="o-cell"><button type="button" data-o="peel" data-plain-toggle aria-pressed="false"><span class="o-name">Plain</span></button><span class="o-under" aria-hidden="true">Plain</span></span>
+</header>
+<dialog id="o-menu" data-o="menu" data-material="chladni" aria-label="Places">
+  <nav aria-label="Places">
+    <ul class="o-places">
+      <li><a href="/buildlang.html"><span class="o-word" data-display-on-open="glyphcell">BuildLang</span></a></li>
+      <li><a href="/flywheel.html"><span class="o-word" data-display-on-open="light">Flywheel</span></a><small class="o-sub"><a href="/cmmns.html">CMMNS</a> <a href="/articulate.html">Articulate</a></small></li>
+      <li><a href="/playground/"><span class="o-word" data-display-on-open="nightlights">The Playground</span></a><small class="o-sub"><a href="/playground/#estuary">Estuary</a> <a href="/playground/#native">Native renderer</a> <a href="/playground/#superframe">Superframe</a> <a href="/playground/#workbench">All creative engines</a> <a href="/playground/#low-water">Low Water</a></small></li>
+      <li><a href="/playground/#low-water"><span class="o-word" data-display-on-open="chladni">Game</span></a></li>
+      <li><a href="/#site"><span class="o-word" data-display-on-open="swarm">Site</span></a></li>
+      <li><a href="/floor.html"><span class="o-word" data-display-on-open="rope">Everything</span></a></li>
+      <li><a href="/models.html"><span class="o-word" data-display-on-open="rope">Models</span></a></li>
+      <li><a href="/tools.html"><span class="o-word" data-display-on-open="rope">Tools &amp; Repos</span></a></li>
+      <li><a href="/person.html"><span class="o-word" data-display-on-open="rope">About</span></a></li>
+      <li><a href="/architecture.html"><span class="o-word" data-display-on-open="rope">Architecture</span></a></li>
+      <li><a href="/world/universe/proto/index.html"><span class="o-word" data-display-on-open="rope">Map</span></a></li>
+      <li><a href="/publications.html"><span class="o-word" data-display-on-open="swarm">Writing</span></a></li>
+      <li><a href="/explainers.html"><span class="o-word" data-display-on-open="sound">Films</span></a></li>
+      <li><a href="/security.html"><span class="o-word" data-display-on-open="rope">Security</span></a></li>
+      <li><a href="/hire.html"><span class="o-word" data-display-on-open="rope">Work</span></a></li>
+      <li><a href="/cv.html"><span class="o-word" data-display-on-open="rope">CV</span></a></li>
+    </ul>
+  </nav>
+  <p class="o-menu-foot"><a href="/architecture.html">Architecture</a> <a href="/models.html">Models</a> <a href="/tools.html">Tools &amp; 159 Repos</a> <a href="/research.html">Research</a> <a href="/portfolio.html">Portfolio</a> <a href="/elements.html">Elements</a> <a href="/studies/">Studies</a> <a href="/site-index.html">Site index</a> <button type="button" class="o-close" data-qj-open onclick="this.closest('dialog').close()">Search (Ctrl+K)</button> <button type="button" class="o-close" onclick="this.closest('dialog').close()">Close (Esc)</button></p>
+</dialog>
+<main id="main" tabindex="-1">
+<article class="st" id="gpu-560-fma">
+<header class="ds-sheet-head">
+  <p class="ds-kicker">Measured Drafting Sheet / 560-Shader 5-Backend GPU Compute, Live GLSL FMA Parity &amp; WASM Lab</p>
+  <h1>GPU 560 FMA &amp; WASM Lab</h1>
+  <p class="ds-lede">Interactive explorer for 560/560 certified BuildLang 5-backend GPU compute shaders (#68973: 112 pure-OSI MIT kernels across WGSL, HLSL SM6.6, Metal 3.1, SPIR-V 1.6, and GLSL 4.60; 4,009 Superopt rewrites; 2.22 MB; live 5-way GLSL FMA parity on main f78cbb46 with 46x5 = 230 exact sites) paired with live in-browser WASM execution of Belcour-Barla Iridescence (#68957) and Titan FlashAttention (#68980).</p>
+  <p class="ds-meta"><span>560/560 certified shaders</span><span>112 MIT kernels</span><span>4,009 superopt rewrites</span><span>5/5 exact GLSL FMA parity</span></p>
+  <nav class="ds-ways" aria-label="Related surfaces">
+    <a href="/playground/">The Playground</a>
+    <a href="/playground/gpu-compute/">GPU 280 Baseline</a>
+    <a href="/playground/threshold-storage/">Threshold Storage</a>
+    <a href="/playground/mir-assurance/">MIR Assurance</a>
+    <a href="./gpu_560_fma_manifest.json">Manifest JSON</a>
+  </nav>
+</header>
+
+<section class="ds-sec" id="wasm-deck" aria-labelledby="h-wasm">
+  <h2 id="h-wasm">Live in-browser renderer &amp; FlashAttention WebAssembly deck</h2>
+  <div class="gf-cards">
+    <div class="gf-card" data-wasm-card="iridescence">
+      <p class="gf-card-k">Superframe Renderer #38: Belcour-Barla Iridescence (#68957)</p>
+      <p class="gf-card-v">31,383 B (5 no-op env.print_* stubs (0 I/O))</p>
+      <p class="gf-card-s">Thin-film Belcour-Barla spectral iridescence (unpolarized, polarized, spectral, exact sweeps) emitting 0-ULP C++23 FNV-1a parity.</p>
+      <p class="gf-card-s mono">superframe_art_iridescence.wasm | sha256:7a92ca5934d66c...</p>
+      <p class="gf-card-out" data-wasm-out="iridescence">Staged: irid_hash() === 0x79c84b0ebc8c281d</p>
+      <div class="gf-card-actions">
+        <button type="button" class="gf-btn gf-btn-primary" data-run-wasm="iridescence">Run Live WASM</button>
+      </div>
+    </div>
+    <div class="gf-card" data-wasm-card="flash_attn">
+      <p class="gf-card-k">Titan Tiled FlashAttention + Symplectic State (#68980)</p>
+      <p class="gf-card-v">12,597 B (5 no-op env.print_* stubs (0 I/O))</p>
+      <p class="gf-card-s">Online-softmax tiled causal attention (seq=128, 8x SRAM, 64x score-buf savings, drift&lt;=1e-12) with 2/2 live causal/denom traps.</p>
+      <p class="gf-card-s mono">titan_flash_attn.wasm | sha256:429736b06f4726...</p>
+      <p class="gf-card-out" data-wasm-out="flash_attn">Staged: run_titan_flash_attn_wasm() -&gt; drift=4.44e-16, failures=0</p>
+      <div class="gf-card-actions">
+        <button type="button" class="gf-btn gf-btn-primary" data-run-wasm="flash_attn">Run Live WASM</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="ds-sec" id="explorer" aria-labelledby="h-exp">
+  <h2 id="h-exp">Interactive 560-shader explorer &amp; live WASM workbench</h2>
+  <div class="gf-controls" role="region" aria-label="GPU 560 shader filter and WASM controls">
+    <label class="gf-field" for="gf-kernel">Kernel slice (112 MIT kernels)
+      <select id="gf-kernel">
+        <option value="pack14_fma">Pack-14: 8 Exact 5-Way GLSL FMA Kernels (230 sites)</option>
+        <option value="all">First 16 of 112 Certified MIT GPU Kernels</option>
+        <option value="gpu_dft_hartree_fock_eri">gpu_dft_hartree_fock_eri (11 FMA x 5 backends)</option>
+        <option value="gpu_mpm_snow_plasticity">gpu_mpm_snow_plasticity (6 FMA x 5 backends)</option>
+        <option value="gpu_pippenger_msm_bucket">gpu_pippenger_msm_bucket (0 FMA x 5 backends)</option>
+        <option value="gpu_ntt_dilithium_8380417">gpu_ntt_dilithium_8380417 (0 FMA x 5 backends)</option>
+        <option value="gpu_neural_radiance_hashgrid">gpu_neural_radiance_hashgrid (10 FMA x 5 backends)</option>
+        <option value="gpu_av1_cdef_deringing">gpu_av1_cdef_deringing (6 FMA x 5 backends)</option>
+        <option value="gpu_sparse_block_jacobi">gpu_sparse_block_jacobi (6 FMA x 5 backends)</option>
+        <option value="gpu_lbm_d3q19_collision">gpu_lbm_d3q19_collision (7 FMA x 5 backends)</option>
+      </select>
+    </label>
+    <label class="gf-field" for="gf-backend">Target GPU backend
+      <select id="gf-backend">
+        <option value="all">All 5 backends (WGSL / HLSL / MSL / SPIR-V / GLSL)</option>
+        <option value="wgsl">WGSL (WebGPU / naga validated)</option>
+        <option value="hlsl">HLSL SM6.6 (dxc validated)</option>
+        <option value="msl">Metal 3.1 (naga + spec validated)</option>
+        <option value="spirv">SPIR-V 1.6 (spirv-val validated)</option>
+        <option value="glsl">GLSL 4.60 (native fma() on main f78cbb46)</option>
+      </select>
+    </label>
+    <button type="button" id="gf-run-all" class="gf-btn gf-btn-primary">Run Both Live WASMs</button>
+  </div>
+  <div class="gf-readout" aria-live="polite">
+    <p id="gf-status">Awaiting WebCrypto SHA-256 manifest verification...</p>
+    <pre id="gf-log" class="gf-log">Click "Run Both Live WASMs" to verify Belcour-Barla Iridescence (0-ULP C++23 hash) and Titan FlashAttention (drift &lt;= 1e-12, 2/2 traps) inside browser memory.</pre>
+  </div>
+  <div class="gf-wrap" tabindex="0" role="region" aria-label="Certified GPU compute kernels and 5-way FMA parity">
+    <table class="gf-table">
+      <colgroup><col style="width:24%"><col style="width:18%"><col style="width:20%"><col style="width:38%"></colgroup>
+      <thead>
+        <tr><th scope="col">Kernel</th><th scope="col">Batch</th><th scope="col">5-Way FMA / Certs</th><th scope="col">Per-Backend Size &amp; Rewrites</th></tr>
+      </thead>
+      <tbody id="gf-tbody">
+      <tr data-kernel-row="gpu_dft_hartree_fock_eri">
+        <td class="mono">gpu_dft_hartree_fock_eri</td>
+        <td class="mono">wave166a_qchem_zk_560pack</td>
+        <td class="mono">11 sites x 5 backends (55 exact)</td>
+        <td class="mono">WGSL: 4301B (13rw) | HLSL: 3731B (13rw) | MSL: 3681B (13rw) | SPIRV: 7760B (13rw) | GLSL: 4406B (13rw)</td>
+      </tr>
+      <tr data-kernel-row="gpu_mpm_snow_plasticity">
+        <td class="mono">gpu_mpm_snow_plasticity</td>
+        <td class="mono">wave166a_qchem_zk_560pack</td>
+        <td class="mono">6 sites x 5 backends (30 exact)</td>
+        <td class="mono">WGSL: 4429B (9rw) | HLSL: 3969B (9rw) | MSL: 3836B (9rw) | SPIRV: 8896B (9rw) | GLSL: 4606B (9rw)</td>
+      </tr>
+      <tr data-kernel-row="gpu_pippenger_msm_bucket">
+        <td class="mono">gpu_pippenger_msm_bucket</td>
+        <td class="mono">wave166a_qchem_zk_560pack</td>
+        <td class="mono">0 sites x 5 backends (0 exact)</td>
+        <td class="mono">WGSL: 2813B (0rw) | HLSL: 2143B (0rw) | MSL: 2119B (0rw) | SPIRV: 4652B (0rw) | GLSL: 2889B (0rw)</td>
+      </tr>
+      <tr data-kernel-row="gpu_ntt_dilithium_8380417">
+        <td class="mono">gpu_ntt_dilithium_8380417</td>
+        <td class="mono">wave166a_qchem_zk_560pack</td>
+        <td class="mono">0 sites x 5 backends (0 exact)</td>
+        <td class="mono">WGSL: 4184B (0rw) | HLSL: 3263B (0rw) | MSL: 3161B (0rw) | SPIRV: 6660B (0rw) | GLSL: 4183B (0rw)</td>
+      </tr>
+      <tr data-kernel-row="gpu_neural_radiance_hashgrid">
+        <td class="mono">gpu_neural_radiance_hashgrid</td>
+        <td class="mono">wave166a_qchem_zk_560pack</td>
+        <td class="mono">10 sites x 5 backends (50 exact)</td>
+        <td class="mono">WGSL: 4023B (10rw) | HLSL: 3381B (10rw) | MSL: 3334B (10rw) | SPIRV: 7812B (10rw) | GLSL: 4274B (10rw)</td>
+      </tr>
+      <tr data-kernel-row="gpu_av1_cdef_deringing">
+        <td class="mono">gpu_av1_cdef_deringing</td>
+        <td class="mono">wave166a_qchem_zk_560pack</td>
+        <td class="mono">6 sites x 5 backends (30 exact)</td>
+        <td class="mono">WGSL: 5661B (7rw) | HLSL: 5078B (7rw) | MSL: 4898B (7rw) | SPIRV: 10408B (7rw) | GLSL: 5818B (7rw)</td>
+      </tr>
+      <tr data-kernel-row="gpu_sparse_block_jacobi">
+        <td class="mono">gpu_sparse_block_jacobi</td>
+        <td class="mono">wave166a_qchem_zk_560pack</td>
+        <td class="mono">6 sites x 5 backends (30 exact)</td>
+        <td class="mono">WGSL: 3397B (6rw) | HLSL: 2810B (6rw) | MSL: 2740B (6rw) | SPIRV: 6416B (6rw) | GLSL: 3574B (6rw)</td>
+      </tr>
+      <tr data-kernel-row="gpu_lbm_d3q19_collision">
+        <td class="mono">gpu_lbm_d3q19_collision</td>
+        <td class="mono">wave166a_qchem_zk_560pack</td>
+        <td class="mono">7 sites x 5 backends (35 exact)</td>
+        <td class="mono">WGSL: 3889B (10rw) | HLSL: 3330B (10rw) | MSL: 3290B (10rw) | SPIRV: 7224B (10rw) | GLSL: 3999B (10rw)</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="ds-sec" id="scope" aria-labelledby="h-scope">
+  <h2 id="h-scope">Honest scope and import boundaries</h2>
+  <p>The 560 certified GPU compute shaders (#68973) are compiled ahead-of-time by buildc 1.15.0 (main f78cbb46) and validated natively via dxc, glslangValidator, spirv-val, and naga; this browser sheet verifies their pinned manifest digest and lets visitors filter all 112 kernels and 5 backends. Both live browser .wasm payloads (superframe_art_iridescence.wasm 31,383 B #68957 and titan_flash_attn.wasm 12,597 B #68980) are verified via WebCrypto SHA-256 and enforced to import only 5 benign no-op env.print_* stdout stubs with zero filesystem, network, or syscall access.</p>
+</section>
+
+<footer class="ds-sheet-foot">
+  <p><strong>Sheet</strong> <code>playground/gpu-560-fma/index.html</code></p>
+  <p><strong>Updated</strong> 2026-11-27</p>
+  <p><strong>Ground</strong> Measured Drafting Sheet | Pure OSI MIT | 560/560 Shaders (112 Kernels, 4,009 Rewrites) | 2 Live WASMs (42.95 KB)</p>
+</footer>
+</article>
+<script type="module" src="./gpu_560_fma_lab.mjs"></script>
+</main>
+</body>
+</html>

@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="en" data-type="stock">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<title>Native Auditors, OSS Gold and MCP Registry | Zain Dana Harper</title>
+<meta name="description" content="Interactive Measured Drafting Sheet explorer indexing 22/22 live native BuildLang CLI auditors, 15/15 (165/165) Open-Source Gold Standard &amp; SBOM V3, and 10/10 Official MCP Registry 2025-12-11 servers.">
+<link rel="canonical" href="https://harperz9.github.io/playground/native-auditors/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Native Auditors, OSS Gold and MCP Registry | Zain Dana Harper">
+<meta property="og:description" content="Interactive Measured Drafting Sheet explorer indexing 22/22 live native BuildLang CLI auditors, 15/15 (165/165) Open-Source Gold Standard &amp; SBOM V3, and 10/10 Official MCP Registry 2025-12-11 servers.">
+<meta property="og:url" content="https://harperz9.github.io/playground/native-auditors/">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/home.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Native Auditors, OSS Gold and MCP Registry | Zain Dana Harper">
+<meta name="twitter:description" content="Interactive Measured Drafting Sheet explorer indexing 22/22 live native BuildLang CLI auditors, 15/15 (165/165) Open-Source Gold Standard &amp; SBOM V3, and 10/10 Official MCP Registry 2025-12-11 servers.">
+<link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-6218db2f12">
+<link rel="stylesheet" href="/studies/studies.css?v=world-6218db2f12">
+<link rel="stylesheet" href="/world/site/depth.css?v=world-6218db2f12">
+<script type="module" src="/world/ui/shell/shell.js?v=world-6218db2f12"></script>
+<script type="module" src="/world/site/hand-scroll.js?v=world-6218db2f12"></script>
+<meta name="auditors-manifest-sha256" content="7b20751696348587d377adf04ce260a7b42d2c5712a99eb59b327692fe88ff2e">
+<style>
+  .aud-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0.65rem; padding: 0.8rem 0; border-bottom: 1px solid var(--line); }
+  .aud-card { border: 1px solid var(--line); padding: 0.7rem 0.8rem; min-width: 0; }
+  .aud-card-k { font-family: var(--face-utility); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--soft); margin: 0; }
+  .aud-card-v { font-family: var(--face-utility); font-size: 1.08rem; font-weight: 700; margin: 0.2rem 0; font-variant-numeric: tabular-nums; }
+  .aud-card-s { font-size: 0.78rem; color: var(--soft); margin: 0; }
+  .aud-pills { display: flex; flex-wrap: wrap; gap: 0.45rem; padding: 0.75rem 0; border-bottom: 1px solid var(--line); }
+  .aud-controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); gap: 0.6rem 0.7rem; padding: 0.8rem 0; border-bottom: 1px solid var(--line); align-items: end; }
+  .aud-field { display: flex; flex-direction: column; gap: 0.25rem; font-family: var(--face-utility); font-size: 0.74rem; color: var(--soft); }
+  .aud-field select, .aud-field input, .aud-pill, .aud-btn { background: transparent; color: var(--ink); border: 1px solid var(--line); padding: 0.42rem 0.65rem; min-height: 40px; font-family: var(--face-utility); font-size: 0.8rem; }
+  .aud-pill, .aud-btn { cursor: pointer; }
+  .aud-pill[data-active="1"], .aud-btn-primary { background: var(--ink); color: var(--paper, #f4f1ea); border-color: var(--ink); }
+  .aud-field select:focus-visible, .aud-field input:focus-visible, .aud-pill:focus-visible, .aud-btn:focus-visible, .aud-wrap:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .aud-readout { padding: 0.75rem 0; border-bottom: 1px solid var(--line); font-family: var(--face-utility); font-size: 0.81rem; font-variant-numeric: tabular-nums; min-height: 5.2rem; }
+  .aud-readout p { margin: 0.22rem 0; overflow-wrap: anywhere; }
+  .aud-wrap { width: 100%; overflow-x: auto; margin-top: 0.5rem; }
+  .aud-table { width: 100%; min-width: 720px; table-layout: fixed; border-collapse: collapse; font-size: 0.81rem; }
+  .aud-table th, .aud-table td { text-align: left; padding: 0.46rem 0.52rem 0.46rem 0; border-bottom: 1px solid var(--line); vertical-align: top; overflow-wrap: break-word; }
+  .aud-table th:last-child, .aud-table td:last-child { padding-right: 0; }
+  .aud-table thead th { font-family: var(--face-utility); font-size: 0.71rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--soft); font-weight: 600; }
+  .mono { font-family: var(--face-utility); font-size: 0.75rem; font-variant-numeric: tabular-nums; }
+  .aud-sub { display: block; font-family: var(--face-utility); font-size: 0.7rem; color: var(--soft); font-weight: 400; margin-top: 0.14rem; }
+  .aud-empty { padding: 1rem 0; font-family: var(--face-utility); font-size: 0.84rem; color: var(--soft); }
+</style></head>
+<body class="reading ds-sheet">
+
+<header class="o-hand o-said" aria-label="Site">
+  <a class="skip" href="#main">Skip to the page</a>
+  <a class="o-home" href="/">Zain Dana Harper</a>
+  <a data-o="band" href="/world/universe/proto/index.html"><span class="o-name">Map</span></a>
+  <button type="button" data-o="fold" aria-controls="o-menu" aria-keyshortcuts="m" aria-expanded="false" hidden><span class="o-name">Places</span><i></i><i></i><i></i></button>
+  <button type="button" data-o="lamp" data-theme-toggle aria-pressed="true"><span class="o-name">Day</span></button>
+  <span class="o-cell"><button type="button" data-o="peel" data-plain-toggle aria-pressed="false"><span class="o-name">Plain</span></button><span class="o-under" aria-hidden="true">Plain</span></span>
+</header>
+<dialog id="o-menu" data-o="menu" data-material="chladni" aria-label="Places">
+  <nav aria-label="Places">
+    <ul class="o-places">
+      <li><a href="/buildlang.html"><span class="o-word" data-display-on-open="glyphcell">BuildLang</span></a></li>
+      <li><a href="/flywheel.html"><span class="o-word" data-display-on-open="light">Flywheel</span></a><small class="o-sub"><a href="/cmmns.html">CMMNS</a> <a href="/articulate.html">Articulate</a></small></li>
+      <li><a href="/playground/"><span class="o-word" data-display-on-open="nightlights">The Playground</span></a><small class="o-sub"><a href="/playground/#estuary">Estuary</a> <a href="/playground/#native">Native renderer</a> <a href="/playground/#superframe">Superframe</a> <a href="/playground/#workbench">All creative engines</a> <a href="/playground/#low-water">Low Water</a></small></li>
+      <li><a href="/playground/#low-water"><span class="o-word" data-display-on-open="chladni">Game</span></a></li>
+      <li><a href="/#site"><span class="o-word" data-display-on-open="swarm">Site</span></a></li>
+      <li><a href="/floor.html"><span class="o-word" data-display-on-open="rope">Everything</span></a></li>
+      <li><a href="/models.html"><span class="o-word" data-display-on-open="rope">Models</span></a></li>
+      <li><a href="/tools.html"><span class="o-word" data-display-on-open="rope">Tools &amp; Repos</span></a></li>
+      <li><a href="/person.html"><span class="o-word" data-display-on-open="rope">About</span></a></li>
+      <li><a href="/architecture.html"><span class="o-word" data-display-on-open="rope">Architecture</span></a></li>
+      <li><a href="/world/universe/proto/index.html"><span class="o-word" data-display-on-open="rope">Map</span></a></li>
+      <li><a href="/publications.html"><span class="o-word" data-display-on-open="swarm">Writing</span></a></li>
+      <li><a href="/explainers.html"><span class="o-word" data-display-on-open="sound">Films</span></a></li>
+      <li><a href="/security.html"><span class="o-word" data-display-on-open="rope">Security</span></a></li>
+      <li><a href="/hire.html"><span class="o-word" data-display-on-open="rope">Work</span></a></li>
+      <li><a href="/cv.html"><span class="o-word" data-display-on-open="rope">CV</span></a></li>
+    </ul>
+  </nav>
+  <p class="o-menu-foot"><a href="/architecture.html">Architecture</a> <a href="/models.html">Models</a> <a href="/tools.html">Tools &amp; 159 Repos</a> <a href="/research.html">Research</a> <a href="/portfolio.html">Portfolio</a> <a href="/elements.html">Elements</a> <a href="/studies/">Studies</a> <a href="/site-index.html">Site index</a> <button type="button" class="o-close" data-qj-open onclick="this.closest('dialog').close()">Search (Ctrl+K)</button> <button type="button" class="o-close" onclick="this.closest('dialog').close()">Close (Esc)</button></p>
+</dialog>
+<main id="main" tabindex="-1">
+<article class="st" id="native-auditors">
+<header class="ds-sheet-head">
+  <p class="ds-kicker">Measured Drafting Sheet / Native BuildLang Cockpit &amp; OSS Governance</p>
+  <h1>Native Auditors &amp; OSS Gold</h1>
+  <p class="ds-lede">Structured telemetry ledger uniting three sealed verification pillars: 22/22 live native BuildLang CLI auditors (23 tracked binaries, 0 stale, sub-millisecond speeds up to 1,531x vs Python, receipt #68904), the 15/15 = 165/165 = 100.0% Open-Source Gold Standard &amp; SBOM V3 (30 SPDX 2.3 + CycloneDX 1.5 JSONs, 259 components, 0 FSL-1.1-MIT, receipt #68894), and the 10/10 Official MCP Registry 2025-12-11 submission pack (19 dry-run artifacts, receipt #68895).</p>
+  <p class="ds-meta"><span>22/22 live native auditors</span><span>165/165 OSS Gold (15/15)</span><span>10/10 MCP Registry 2025-12-11</span><span>0 FSL / 0 stale bins</span></p>
+  <nav class="ds-ways" aria-label="Related surfaces">
+    <a href="/playground/">The Playground</a>
+    <a href="/playground/buildos-v2/">BuildOS-2.0</a>
+    <a href="/playground/gpu-compute/">280 GPU Shaders</a>
+    <a href="/playground/datasets/">Open Datasets</a>
+    <a href="./auditors_manifest.json">Manifest JSON</a>
+  </nav>
+</header>
+
+<section class="ds-sec" id="pillars" aria-labelledby="h-pillars">
+  <h2 id="h-pillars">Sealed governance and cockpit pillars</h2>
+  <div class="aud-cards">
+    <div class="aud-card"><p class="aud-card-k">Native Cockpit (#68904)</p><p class="aud-card-v">22/22 PASS (9 sub-ms)</p><p class="aud-card-s">23 tracked BuildLang native CLIs (0 stale), up to 1,531x faster than Python (0.132 ms warm median).</p></div>
+    <div class="aud-card"><p class="aud-card-k">OSS Gold + SBOM V3 (#68894)</p><p class="aud-card-v">165/165 (15/15 repos)</p><p class="aud-card-s">30 SPDX 2.3 + CycloneDX 1.5 SBOMs across 259 components, 0 FSL-1.1-MIT, 0 proprietary licenses.</p></div>
+    <div class="aud-card"><p class="aud-card-k">MCP Registry Pack (#68895)</p><p class="aud-card-v">10/10 (2025-12-11)</p><p class="aud-card-s">9 PyPI + 1 npm official MCP servers, 19 dry-run wheel/sdist/tgz artifacts, 2/2 planted controls blocked.</p></div>
+  </div>
+</section>
+
+<section class="ds-sec" id="cockpit" aria-labelledby="h-cockpit">
+  <h2 id="h-cockpit">Interactive 22/22 native BuildLang auditor cockpit</h2>
+  <div class="aud-pills" role="group" aria-label="Filter native auditors by lane">
+    <button type="button" class="aud-pill" data-lane="all" data-active="1" aria-pressed="true">All 22 auditors</button>
+    <button type="button" class="aud-pill" data-lane="core-compiler-gates" data-active="0" aria-pressed="false">Core &amp; Compiler (7)</button>
+    <button type="button" class="aud-pill" data-lane="security-os-gpu" data-active="0" aria-pressed="false">Security, OS &amp; GPU (7)</button>
+    <button type="button" class="aud-pill" data-lane="data-docs-governance" data-active="0" aria-pressed="false">Data, Docs &amp; Governance (8)</button>
+  </div>
+  <div class="aud-controls" role="region" aria-label="Lane, latency, and keyword filters">
+    <label class="aud-field" for="aud-lane">Verification lane
+      <select id="aud-lane">
+        <option value="all">All 3 lanes (22 auditors)</option>
+        <option value="core-compiler-gates">Core &amp; Compiler (7)</option>
+        <option value="security-os-gpu">Security, OS &amp; GPU (7)</option>
+        <option value="data-docs-governance">Data, Docs &amp; Governance (8)</option>
+      </select>
+    </label>
+    <label class="aud-field" for="aud-speed">Latency tier
+      <select id="aud-speed">
+        <option value="all">All latencies (22)</option>
+        <option value="sub-ms">Sub-millisecond (&lt; 1.0 ms)</option>
+        <option value="fast-ms">Millisecond (&gt;= 1.0 ms)</option>
+      </select>
+    </label>
+    <label class="aud-field" for="aud-search">Search auditor, binary, or scope
+      <input id="aud-search" type="search" placeholder="e.g. buildos, sbom, rlvr" autocomplete="off">
+    </label>
+    <button type="button" id="aud-reset" class="aud-btn">Reset filters</button>
+    <button type="button" id="aud-tamper-btn" class="aud-btn aud-btn-primary">Run Fail-Closed Tamper Test</button>
+  </div>
+  <div class="aud-readout" aria-live="polite">
+    <p id="aud-status">Showing 22/22 live native BuildLang auditors (9 sub-millisecond gates, 23 tracked binaries, 0 stale).</p>
+    <p id="aud-tamper-out">Manifest SHA-256: 7b20751696348587d377... | Awaiting browser WebCrypto verification...</p>
+  </div>
+  <div class="aud-wrap" tabindex="0" role="region" aria-label="22 native BuildLang CLI auditors">
+    <table class="aud-table">
+      <colgroup><col style="width:27%"><col style="width:17%"><col style="width:11%"><col style="width:11%"><col style="width:34%"></colgroup>
+      <thead>
+        <tr><th scope="col">Auditor &amp; binary</th><th scope="col">Lane</th><th scope="col">Live time</th><th scope="col">Binary size</th><th scope="col">Verified coverage</th></tr>
+      </thead>
+      <tbody>
+        <tr data-aud="rsi_audit" data-lane="core-compiler-gates">
+          <td class="mono"><strong>rsi_audit</strong><span class="aud-sub">rsi_closed_loop_cli.exe</span></td>
+          <td>Core &amp; Compiler</td>
+          <td class="mono">9.630 ms</td>
+          <td class="mono">75,460 B</td>
+          <td>Closed-loop RSI verification (Arm B gain 8.953x)</td>
+        </tr>
+        <tr data-aud="epigenetics_audit" data-lane="core-compiler-gates">
+          <td class="mono"><strong>epigenetics_audit</strong><span class="aud-sub">epigenetics_audit_cli.exe</span></td>
+          <td>Core &amp; Compiler</td>
+          <td class="mono">14.260 ms</td>
+          <td class="mono">82,945 B</td>
+          <td>Epigenetic plasticity audit (95.83% heldout accuracy)</td>
+        </tr>
+        <tr data-aud="accountability_audit" data-lane="core-compiler-gates">
+          <td class="mono"><strong>accountability_audit</strong><span class="aud-sub">accountability_gate_cli.exe</span></td>
+          <td>Core &amp; Compiler</td>
+          <td class="mono">9.790 ms</td>
+          <td class="mono">73,276 B</td>
+          <td>Three-plate accountability gate (1.00 recall)</td>
+        </tr>
+        <tr data-aud="egraph_audit" data-lane="core-compiler-gates">
+          <td class="mono"><strong>egraph_audit</strong><span class="aud-sub">egraph_audit_cli.exe</span></td>
+          <td>Core &amp; Compiler</td>
+          <td class="mono">9.790 ms</td>
+          <td class="mono">71,781 B</td>
+          <td>E-graph Superopt proof-step reduction (87.5%)</td>
+        </tr>
+        <tr data-aud="selfhost_audit" data-lane="core-compiler-gates">
+          <td class="mono"><strong>selfhost_audit</strong><span class="aud-sub">buildc_selfhost_quadarch.exe</span></td>
+          <td>Core &amp; Compiler</td>
+          <td class="mono">81.510 ms</td>
+          <td class="mono">169,861 B</td>
+          <td>5-target zero-C self-hosting verification (PE/ELF/RV64/AArch64/WASM)</td>
+        </tr>
+        <tr data-aud="receipt_verify" data-lane="core-compiler-gates">
+          <td class="mono"><strong>receipt_verify</strong><span class="aud-sub">workstation_receipt_verify.exe</span></td>
+          <td>Core &amp; Compiler</td>
+          <td class="mono">2.186 ms</td>
+          <td class="mono">79,545 B</td>
+          <td>Native SHA-256 envelope seal and artifact digest verifier</td>
+        </tr>
+        <tr data-aud="reinject_check" data-lane="core-compiler-gates">
+          <td class="mono"><strong>reinject_check</strong><span class="aud-sub">reinject_dogfood_check.py</span></td>
+          <td>Core &amp; Compiler</td>
+          <td class="mono">82.070 ms</td>
+          <td class="mono">bridge</td>
+          <td>Tracks 23 native BuildLang binaries (0 stale) and formula sync</td>
+        </tr>
+        <tr data-aud="wasm_gate" data-lane="security-os-gpu">
+          <td class="mono"><strong>wasm_gate</strong><span class="aud-sub">workstation_wasm_gate.exe</span></td>
+          <td>Security, OS &amp; GPU</td>
+          <td class="mono">6.334 ms</td>
+          <td class="mono">80,037 B</td>
+          <td>Verifies 36/36, 78/78, and 84/84 pure-OSI MIT WASM packs</td>
+        </tr>
+        <tr data-aud="gpu_cert_gate" data-lane="security-os-gpu">
+          <td class="mono"><strong>gpu_cert_gate</strong><span class="aud-sub">workstation_gpu_cert_gate.exe</span></td>
+          <td>Security, OS &amp; GPU</td>
+          <td class="mono">25.662 ms</td>
+          <td class="mono">79,928 B</td>
+          <td>Verifies 120 core GPU shader certs and 500 Superopt rewrites</td>
+        </tr>
+        <tr data-aud="buildos_gate" data-lane="security-os-gpu">
+          <td class="mono"><strong>buildos_gate</strong><span class="aud-sub">workstation_buildos_gate.exe</span></td>
+          <td>Security, OS &amp; GPU</td>
+          <td class="mono">0.837 ms</td>
+          <td class="mono">75,150 B</td>
+          <td>Verifies 14 BuildOS Zero-C slices / 70 binaries across 5 ISAs</td>
+        </tr>
+        <tr data-aud="renderer_parity_gate" data-lane="security-os-gpu">
+          <td class="mono"><strong>renderer_parity_gate</strong><span class="aud-sub">workstation_renderer_parity_gate.exe</span></td>
+          <td>Security, OS &amp; GPU</td>
+          <td class="mono">0.204 ms</td>
+          <td class="mono">74,682 B</td>
+          <td>Verifies 20/20 graduated 0-ULP C++23 renderer parity modules</td>
+        </tr>
+        <tr data-aud="gpu200_gate" data-lane="security-os-gpu">
+          <td class="mono"><strong>gpu200_gate</strong><span class="aud-sub">workstation_gpu200_gate.exe</span></td>
+          <td>Security, OS &amp; GPU</td>
+          <td class="mono">1.127 ms</td>
+          <td class="mono">75,888 B</td>
+          <td>Verifies 200 shaders (40 MIT kernels x 5 backends, 1,228 rewrites)</td>
+        </tr>
+        <tr data-aud="pq_enclave_gate" data-lane="security-os-gpu">
+          <td class="mono"><strong>pq_enclave_gate</strong><span class="aud-sub">workstation_pq_enclave_gate.exe</span></td>
+          <td>Security, OS &amp; GPU</td>
+          <td class="mono">0.140 ms</td>
+          <td class="mono">74,644 B</td>
+          <td>Verifies PQ Hybrid KEM + Confidential Enclave + Goodhart Valve (98 attacks)</td>
+        </tr>
+        <tr data-aud="buildos_v2_gate" data-lane="security-os-gpu">
+          <td class="mono"><strong>buildos_v2_gate</strong><span class="aud-sub">workstation_buildos_v2_gate.exe</span></td>
+          <td>Security, OS &amp; GPU</td>
+          <td class="mono">0.229 ms</td>
+          <td class="mono">75,189 B</td>
+          <td>Verifies BuildOS-2.0 (45 bins, 40 attacks) + 280 GPU shaders (1,531x vs Python)</td>
+        </tr>
+        <tr data-aud="formula_gate" data-lane="data-docs-governance">
+          <td class="mono"><strong>formula_gate</strong><span class="aud-sub">workstation_formula_gate.exe</span></td>
+          <td>Data, Docs &amp; Governance</td>
+          <td class="mono">2.237 ms</td>
+          <td class="mono">72,261 B</td>
+          <td>Verifies 572 zero-FLAG formulas, 234 ideas, and 76 competitive signals</td>
+        </tr>
+        <tr data-aud="sbom_gate" data-lane="data-docs-governance">
+          <td class="mono"><strong>sbom_gate</strong><span class="aud-sub">workstation_sbom_gate.exe</span></td>
+          <td>Data, Docs &amp; Governance</td>
+          <td class="mono">5.683 ms</td>
+          <td class="mono">76,801 B</td>
+          <td>Verifies 32 V1 + 31 V2 SBOMs and 2,146 pure-OSI components</td>
+        </tr>
+        <tr data-aud="benchmark_gate" data-lane="data-docs-governance">
+          <td class="mono"><strong>benchmark_gate</strong><span class="aud-sub">workstation_benchmark_gate.exe</span></td>
+          <td>Data, Docs &amp; Governance</td>
+          <td class="mono">0.571 ms</td>
+          <td class="mono">82,993 B</td>
+          <td>Verifies 20/20 Benchmarks V4 workloads across 57 runtime cells</td>
+        </tr>
+        <tr data-aud="surpass_gate" data-lane="data-docs-governance">
+          <td class="mono"><strong>surpass_gate</strong><span class="aud-sub">workstation_surpass_gate.exe</span></td>
+          <td>Data, Docs &amp; Governance</td>
+          <td class="mono">0.492 ms</td>
+          <td class="mono">73,583 B</td>
+          <td>Verifies 76 competitive benchmark rows across 8 technical lanes</td>
+        </tr>
+        <tr data-aud="ideas_gate" data-lane="data-docs-governance">
+          <td class="mono"><strong>ideas_gate</strong><span class="aud-sub">workstation_ideas_gate.exe</span></td>
+          <td>Data, Docs &amp; Governance</td>
+          <td class="mono">4.865 ms</td>
+          <td class="mono">77,829 B</td>
+          <td>Verifies 231/231 built author ideas with 0 unverified claims</td>
+        </tr>
+        <tr data-aud="dataset_gate" data-lane="data-docs-governance">
+          <td class="mono"><strong>dataset_gate</strong><span class="aud-sub">workstation_dataset_gate.exe</span></td>
+          <td>Data, Docs &amp; Governance</td>
+          <td class="mono">0.180 ms</td>
+          <td class="mono">74,644 B</td>
+          <td>Verifies BuildDB V6/V7 and RLVR corpora across 15,930 indexed rows</td>
+        </tr>
+        <tr data-aud="papers_gate" data-lane="data-docs-governance">
+          <td class="mono"><strong>papers_gate</strong><span class="aud-sub">workstation_papers_gate.exe</span></td>
+          <td>Data, Docs &amp; Governance</td>
+          <td class="mono">0.271 ms</td>
+          <td class="mono">74,644 B</td>
+          <td>Verifies 10/10 sealed PDFs (42 pages) and paper/grant receipts</td>
+        </tr>
+        <tr data-aud="rlvr_synth_gate" data-lane="data-docs-governance">
+          <td class="mono"><strong>rlvr_synth_gate</strong><span class="aud-sub">workstation_rlvr_synth_gate.exe</span></td>
+          <td>Data, Docs &amp; Governance</td>
+          <td class="mono">0.198 ms</td>
+          <td class="mono">74,644 B</td>
+          <td>Verifies Self-Play RLVR Synthesizer + BuildDB V7 + RLVR v9 (3,306 units)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p id="aud-empty" class="aud-empty" hidden>No auditors match the active filter combination.</p>
+</section>
+
+<section class="ds-sec" id="oss-gold" aria-labelledby="h-oss">
+  <h2 id="h-oss">15/15 Open-Source Gold Standard &amp; SBOM V3 (165/165)</h2>
+  <div class="aud-wrap" tabindex="0" role="region" aria-label="15 repositories Open-Source Gold Standard and SBOM V3">
+    <table class="aud-table">
+      <colgroup><col style="width:28%"><col style="width:16%"><col style="width:18%"><col style="width:12%"><col style="width:26%"></colgroup>
+      <thead>
+        <tr><th scope="col">Repository</th><th scope="col">SPDX license</th><th scope="col">Ecosystem &amp; ver</th><th scope="col">Components</th><th scope="col">Gold &amp; SPDX digest</th></tr>
+      </thead>
+      <tbody>
+        <tr data-oss-repo="buildlang">
+          <td class="mono"><strong>HarperZ9/buildlang</strong></td>
+          <td class="mono">AGPL-3.0-only</td>
+          <td class="mono">cargo 1.15.0</td>
+          <td class="mono">175</td>
+          <td class="mono">11/11 (e1515e12f7...)</td>
+        </tr>
+        <tr data-oss-repo="superframe">
+          <td class="mono"><strong>HarperZ9/superframe</strong></td>
+          <td class="mono">MIT</td>
+          <td class="mono">npm 0.3.0</td>
+          <td class="mono">1</td>
+          <td class="mono">11/11 (f8ad8614d3...)</td>
+        </tr>
+        <tr data-oss-repo="flywheel">
+          <td class="mono"><strong>HarperZ9/flywheel</strong></td>
+          <td class="mono">MIT</td>
+          <td class="mono">pypi 2.0.0</td>
+          <td class="mono">13</td>
+          <td class="mono">11/11 (3a97e8c62b...)</td>
+        </tr>
+        <tr data-oss-repo="cmmns">
+          <td class="mono"><strong>HarperZ9/cmmns</strong></td>
+          <td class="mono">AGPL-3.0-only</td>
+          <td class="mono">npm 3.10.0</td>
+          <td class="mono">1</td>
+          <td class="mono">11/11 (4bc89e74dd...)</td>
+        </tr>
+        <tr data-oss-repo="HarperZ9.github.io">
+          <td class="mono"><strong>HarperZ9/HarperZ9.github.io</strong></td>
+          <td class="mono">CC-BY-4.0</td>
+          <td class="mono">npm 2026.11.27</td>
+          <td class="mono">1</td>
+          <td class="mono">11/11 (eade168951...)</td>
+        </tr>
+        <tr data-oss-repo="articulate">
+          <td class="mono"><strong>HarperZ9/articulate</strong></td>
+          <td class="mono">MIT</td>
+          <td class="mono">pypi 0.19.1</td>
+          <td class="mono">6</td>
+          <td class="mono">11/11 (ca0f5dce24...)</td>
+        </tr>
+        <tr data-oss-repo="index">
+          <td class="mono"><strong>HarperZ9/index</strong></td>
+          <td class="mono">MIT</td>
+          <td class="mono">pypi 2.16.0</td>
+          <td class="mono">2</td>
+          <td class="mono">11/11 (e76354f9bc...)</td>
+        </tr>
+        <tr data-oss-repo="forum">
+          <td class="mono"><strong>HarperZ9/forum</strong></td>
+          <td class="mono">MIT</td>
+          <td class="mono">pypi 1.17.0</td>
+          <td class="mono">5</td>
+          <td class="mono">11/11 (26a67f534c...)</td>
+        </tr>
+        <tr data-oss-repo="crucible">
+          <td class="mono"><strong>HarperZ9/crucible</strong></td>
+          <td class="mono">MIT</td>
+          <td class="mono">pypi 1.6.0</td>
+          <td class="mono">7</td>
+          <td class="mono">11/11 (225e9d1db0...)</td>
+        </tr>
+        <tr data-oss-repo="plexus">
+          <td class="mono"><strong>HarperZ9/plexus</strong></td>
+          <td class="mono">MIT</td>
+          <td class="mono">pypi 0.4.0</td>
+          <td class="mono">2</td>
+          <td class="mono">11/11 (0c490ada3e...)</td>
+        </tr>
+        <tr data-oss-repo="calibrate-pro">
+          <td class="mono"><strong>HarperZ9/calibrate-pro</strong></td>
+          <td class="mono">MIT</td>
+          <td class="mono">pypi 2.0.1</td>
+          <td class="mono">19</td>
+          <td class="mono">11/11 (6c2ec27e96...)</td>
+        </tr>
+        <tr data-oss-repo="gather">
+          <td class="mono"><strong>HarperZ9/gather</strong></td>
+          <td class="mono">AGPL-3.0-only</td>
+          <td class="mono">pypi 2.6.0</td>
+          <td class="mono">8</td>
+          <td class="mono">11/11 (b5d38a35b9...)</td>
+        </tr>
+        <tr data-oss-repo="chorus">
+          <td class="mono"><strong>HarperZ9/chorus</strong></td>
+          <td class="mono">AGPL-3.0-only</td>
+          <td class="mono">pypi 0.3.2</td>
+          <td class="mono">1</td>
+          <td class="mono">11/11 (7a1a805a62...)</td>
+        </tr>
+        <tr data-oss-repo="mneme">
+          <td class="mono"><strong>HarperZ9/mneme</strong></td>
+          <td class="mono">AGPL-3.0-only</td>
+          <td class="mono">pypi 0.7.0</td>
+          <td class="mono">2</td>
+          <td class="mono">11/11 (7e9b218f9f...)</td>
+        </tr>
+        <tr data-oss-repo="learn">
+          <td class="mono"><strong>HarperZ9/learn</strong></td>
+          <td class="mono">AGPL-3.0-only</td>
+          <td class="mono">npm 2.3.0</td>
+          <td class="mono">1</td>
+          <td class="mono">11/11 (0c434678ae...)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="ds-sec" id="mcp-registry" aria-labelledby="h-mcp">
+  <h2 id="h-mcp">10/10 Official MCP Registry 2025-12-11 pack (19 artifacts)</h2>
+  <div class="aud-wrap" tabindex="0" role="region" aria-label="10 Official MCP Registry 2025-12-11 servers">
+    <table class="aud-table">
+      <colgroup><col style="width:27%"><col style="width:26%"><col style="width:15%"><col style="width:8%"><col style="width:24%"></colgroup>
+      <thead>
+        <tr><th scope="col">MCP name</th><th scope="col">Registry &amp; package</th><th scope="col">License</th><th scope="col">Pkgs</th><th scope="col">Schema &amp; manifest digest</th></tr>
+      </thead>
+      <tbody>
+        <tr data-mcp-srv="articulate">
+          <td class="mono"><strong>io.github.harperz9/articulate</strong></td>
+          <td class="mono">pypi / articulate-writing@0.19.1</td>
+          <td class="mono">MIT</td>
+          <td class="mono">2</td>
+          <td class="mono">2025-12-11 PASS (a665bfa85a...)</td>
+        </tr>
+        <tr data-mcp-srv="index">
+          <td class="mono"><strong>io.github.harperz9/index</strong></td>
+          <td class="mono">pypi / index-graph@2.16.0</td>
+          <td class="mono">MIT</td>
+          <td class="mono">2</td>
+          <td class="mono">2025-12-11 PASS (1c0a95ef5a...)</td>
+        </tr>
+        <tr data-mcp-srv="plexus">
+          <td class="mono"><strong>io.github.harperz9/plexus</strong></td>
+          <td class="mono">pypi / plexus-mesh@0.4.0</td>
+          <td class="mono">MIT</td>
+          <td class="mono">2</td>
+          <td class="mono">2025-12-11 PASS (25f14f844a...)</td>
+        </tr>
+        <tr data-mcp-srv="gather">
+          <td class="mono"><strong>io.github.harperz9/gather</strong></td>
+          <td class="mono">pypi / gather-engine@2.6.0</td>
+          <td class="mono">AGPL-3.0-only</td>
+          <td class="mono">2</td>
+          <td class="mono">2025-12-11 PASS (e514386534...)</td>
+        </tr>
+        <tr data-mcp-srv="chorus">
+          <td class="mono"><strong>io.github.harperz9/chorus</strong></td>
+          <td class="mono">pypi / chorus-discourse@0.3.2</td>
+          <td class="mono">AGPL-3.0-only</td>
+          <td class="mono">2</td>
+          <td class="mono">2025-12-11 PASS (1a4519f6fd...)</td>
+        </tr>
+        <tr data-mcp-srv="mneme">
+          <td class="mono"><strong>io.github.harperz9/mneme</strong></td>
+          <td class="mono">pypi / flywheel-mneme@0.7.0</td>
+          <td class="mono">AGPL-3.0-only</td>
+          <td class="mono">2</td>
+          <td class="mono">2025-12-11 PASS (b34ac80245...)</td>
+        </tr>
+        <tr data-mcp-srv="learn">
+          <td class="mono"><strong>io.github.harperz9/learn</strong></td>
+          <td class="mono">npm / @harperz9/learn@2.3.0</td>
+          <td class="mono">AGPL-3.0-only</td>
+          <td class="mono">1</td>
+          <td class="mono">2025-12-11 PASS (0e2535f832...)</td>
+        </tr>
+        <tr data-mcp-srv="crucible">
+          <td class="mono"><strong>io.github.harperz9/crucible</strong></td>
+          <td class="mono">pypi / crucible-bench@1.6.0</td>
+          <td class="mono">MIT</td>
+          <td class="mono">2</td>
+          <td class="mono">2025-12-11 PASS (e80ddde1f2...)</td>
+        </tr>
+        <tr data-mcp-srv="forum">
+          <td class="mono"><strong>io.github.harperz9/forum</strong></td>
+          <td class="mono">pypi / forum-engine@1.17.0</td>
+          <td class="mono">MIT</td>
+          <td class="mono">2</td>
+          <td class="mono">2025-12-11 PASS (d06a8048bb...)</td>
+        </tr>
+        <tr data-mcp-srv="calibrate-pro">
+          <td class="mono"><strong>io.github.harperz9/calibrate-pro</strong></td>
+          <td class="mono">pypi / calibrate-pro@2.0.1</td>
+          <td class="mono">MIT</td>
+          <td class="mono">2</td>
+          <td class="mono">2025-12-11 PASS (8588dc1edc...)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="ds-sec" id="scope" aria-labelledby="h-scope">
+  <h2 id="h-scope">Honest scope and release boundaries</h2>
+  <p>This static page verifies auditors_manifest.json via WebCrypto SHA-256 before enabling filters and summarizes live workstation telemetry from native x64-pe BuildLang auditors (#68904), offline SBOM V3 manifests (#68894), and offline MCP Registry 2025-12-11 dry-run packs (#68895). External PyPI, npm, and Official MCP Registry submissions remain strictly offline until explicit human release approval.</p>
+</section>
+
+<footer class="ds-sheet-foot">
+  <p><strong>Sheet</strong> <code>playground/native-auditors/index.html</code></p>
+  <p><strong>Updated</strong> 2026-11-27</p>
+  <p><strong>Ground</strong> Measured Drafting Sheet | Pure OSI MIT | 22/22 native auditors | 15/15 OSS Gold | 10/10 MCP Registry</p>
+</footer>
+</article>
+<script type="module" src="./auditors_explorer.mjs"></script>
+</main>
+</body>
+</html>
