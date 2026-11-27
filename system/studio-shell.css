@@ -271,3 +271,14 @@ html body.studio-page .studio-timeline.tl-below .tl-note{flex-basis:100%}
 /* The Finish layer (studio-finish.js, 14 October 2026): raw-native's frame laid exactly over #studio-canvas. */
 html body.studio-page #viewport-stage > #finish-canvas{position:absolute;z-index:2;pointer-events:none;margin:0;object-fit:contain}
 html body.studio-page #viewport-stage > #finish-canvas[hidden]{display:none}
+
+/* Wave 180 Unified Multimedia Super-Tool Hub & BuildLang WASM Sand/Glass Controls */
+.unified-export-mount { margin: 0.65rem 0 0.85rem; }
+.unified-export-hub { display: flex; flex-wrap: wrap; gap: 0.45rem; align-items: center; padding: 0.55rem 0.65rem; border: 1px solid rgba(244, 239, 230, 0.16); border-radius: 8px; background: rgba(9, 21, 33, 0.55); }
+.unified-export-hub select { flex: 1 1 150px; min-width: 140px; }
+.unified-export-status { width: 100%; font-size: 0.78rem; opacity: 0.85; font-family: Conso, ui-monospace, monospace; }
+.sand-presets, .sand-materials, .sand-controls { display: flex; flex-wrap: wrap; gap: 0.35rem; margin: 0.5rem 0; align-items: center; }
+.sand-materials button[aria-pressed="true"] { border-color: #d79e35; background: rgba(215, 158, 53, 0.22); }
+.supertool-metrics { display: grid; grid-template-columns: auto 1fr; gap: 0.3rem 0.75rem; font-size: 0.82rem; font-family: Conso, ui-monospace, monospace; }
+.supertool-metrics dt { opacity: 0.72; }
+.supertool-metrics dd { margin: 0; font-weight: 600; }

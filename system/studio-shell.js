@@ -44,6 +44,12 @@ export const SOURCE_GUIDE = Object.freeze({
   revival:   { name: "Engine Revival", purpose: "Re-hash Engine Revival's release media in this browser." },
   raw:       { name: "RAW", purpose: "Render one scene with raw-native and check the fast path against the reference." },
   viewer:    { name: "Verified viewer", purpose: "Open a glTF model, render it on your GPU and on the CPU reference, and read the certificate." },
+  sand:      { name: "Sand & Glass", purpose: "Pour falling sand, water, ink, oil, fire, acid, and Cauchy-dispersive glass driven by the BuildLang WASM physics kernel." },
+  estuary:   { name: "Estuary", purpose: "Drive the 60-aperture Perret concrete lantern with continuous 0-to-1 metamers and Betti homology." },
+  elements:  { name: "Elements & Optics", purpose: "Blend measured periodic elements across Kubelka-Munk pigment, Luneburg lens refraction, and live audio." },
+  shaders:   { name: "GLSL Shaders", purpose: "Edit live GLSL fragment shaders across 254 presets with 46 Retro FX and audio reactivity." },
+  daw:       { name: "Instruments & DAW", purpose: "Perform five coastal jazz pieces and live physical-model synthesis with loudness-measured WAV export." },
+  superframe:{ name: "Superframe & BuildLang", purpose: "Run compiled BuildLang WASM kernels, Superframe 39/39 0-ULP checks, and BuildOS verifiers live." },
 });
 
 // The action bar's fixed order. A source leaves out what it does not have; it never reorders.
