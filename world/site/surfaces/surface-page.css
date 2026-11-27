@@ -86,6 +86,8 @@ header.lp-head+.sx{margin-top:clamp(18px,2.5vw,28px)}
 .wb-actions button{min-height:44px;padding:.35em .85em;font-size:.85em}
 .wb-actions button[aria-current="true"]{background:rgba(244,239,230,.18)}
 .wb-actions button:focus-visible,.pg-jump a:focus-visible,.wb-toolbar input[type="search"]:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+.wb-catalog{margin-top:16px;border-top:1px solid var(--line,rgba(244,239,230,.28));padding-top:12px}
+.wb-catalog>summary{cursor:pointer;font-weight:700;padding:8px 0;min-height:44px}
 .wb-stage{margin:24px 0;padding:16px 0 0;border-top:2px solid currentColor}
 .wb-stage-bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px;margin-bottom:12px}
 .wb-stage-controls{display:flex;flex-wrap:wrap;align-items:center;gap:8px}

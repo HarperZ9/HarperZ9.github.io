@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-27",
+  "note": "Wave 176B: One Engine Studio dock, collapsed 68-module catalog drawer, stripped dev byte disclaimers and LOC tags, opaque mobile Places menu",
+  "paths": {
+    "flywheel.html": "c1c16cffc0cdef2858c5cdf50b70fbf86cb52f765cbe79c4be642057c4da90f9",
+    "index.html": "61eaeb722b897ca1967ba35c1435c8bbee4a93e6369996d43691f4b1b19fe942",
+    "site-index.html": "d7e59ec1716a55f8f00f89c42d8d15f683b2cc7d42c3572261b45430e55dd2f7",
+    "system/routes.js": "c1d4e7fef905fe5ab1bc82d3af840ac86ffc543b967f356c5e5be207893c9031"
+  }
+}
