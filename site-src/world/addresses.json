@@ -675,6 +675,12 @@
   {"path":"/playground/benchmarks/","kind":"leaf","surface":"playground","since":"2026-11-27"},
   {"path":"/playground/crypto-bench/","kind":"leaf","surface":"playground","since":"2026-11-27"},
   {"path":"/playground/gpu-shaders/","kind":"leaf","surface":"playground","since":"2026-11-27"},
-  {"path":"/playground/sbom/","kind":"leaf","surface":"playground","since":"2026-11-27"}
+  {"path":"/playground/sbom/","kind":"leaf","surface":"playground","since":"2026-11-27"},
+  {"path":"/playground/benchmarks-v4/","kind":"leaf","surface":"playground","since":"2026-11-27"},
+  {"path":"/playground/buildos-triad/","kind":"leaf","surface":"playground","since":"2026-11-27"},
+  {"path":"/playground/competitive-surpass/","kind":"leaf","surface":"playground","since":"2026-11-27"},
+  {"path":"/playground/papers/","kind":"leaf","surface":"playground","since":"2026-11-27"},
+  {"path":"/playground/buildos-pq/","kind":"leaf","surface":"playground","since":"2026-11-27"},
+  {"path":"/playground/datasets/","kind":"leaf","surface":"playground","since":"2026-11-27"}
  ]
 }

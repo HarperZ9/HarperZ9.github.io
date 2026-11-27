@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en" data-type="stock">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<title>BuildOS PQ, Enclave and RLVR Live WASM | Zain Dana Harper</title>
+<meta name="description" content="Live in-browser WebAssembly showcase executing FIPS 203 ML-KEM-512 + X25519 Hybrid KEM, Confidential Enclave Ed25519 attestation, Test-Time Compute MCTS + Goodhart Valve, and Self-Play E-Graph RLVR Synthesizer.">
+<link rel="canonical" href="https://harperz9.github.io/playground/buildos-pq/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="BuildOS PQ, Enclave and RLVR Live WASM | Zain Dana Harper">
+<meta property="og:description" content="Live in-browser WebAssembly showcase executing FIPS 203 ML-KEM-512 + X25519 Hybrid KEM, Confidential Enclave Ed25519 attestation, Test-Time Compute MCTS + Goodhart Valve, and Self-Play E-Graph RLVR Synthesizer.">
+<meta property="og:url" content="https://harperz9.github.io/playground/buildos-pq/">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/home.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="BuildOS PQ, Enclave and RLVR Live WASM | Zain Dana Harper">
+<meta name="twitter:description" content="Live in-browser WebAssembly showcase executing FIPS 203 ML-KEM-512 + X25519 Hybrid KEM, Confidential Enclave Ed25519 attestation, Test-Time Compute MCTS + Goodhart Valve, and Self-Play E-Graph RLVR Synthesizer.">
+<link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-6218db2f12">
+<link rel="stylesheet" href="/studies/studies.css?v=world-6218db2f12">
+<link rel="stylesheet" href="/world/site/depth.css?v=world-6218db2f12">
+<script type="module" src="/world/ui/shell/shell.js?v=world-6218db2f12"></script>
+<script type="module" src="/world/site/hand-scroll.js?v=world-6218db2f12"></script>
+<meta name="pq-manifest-sha256" content="7fc67ed1ee65c1810e13170e1bac64a58ab1fb892bf6b906d4a62e31a17bde20">
+<style>
+  .pq-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 0.7rem; padding: 0.85rem 0; border-bottom: 1px solid var(--line); }
+  .pq-card { border: 1px solid var(--line); padding: 0.75rem 0.85rem; min-width: 0; display: flex; flex-direction: column; gap: 0.35rem; }
+  .pq-card-k { font-family: var(--face-utility); font-size: 0.73rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--soft); margin: 0; }
+  .pq-card-v { font-family: var(--face-utility); font-size: 1.02rem; font-weight: 700; margin: 0; font-variant-numeric: tabular-nums; }
+  .pq-card-s { font-size: 0.8rem; color: var(--soft); margin: 0; }
+  .pq-card-out { font-family: var(--face-utility); font-size: 0.76rem; border-top: 1px solid var(--line); padding-top: 0.4rem; margin: 0.25rem 0 0; min-height: 4.8rem; overflow-wrap: anywhere; }
+  .pq-card-actions { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: auto; padding-top: 0.35rem; }
+  .pq-controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.6rem 0.75rem; padding: 0.85rem 0; border-bottom: 1px solid var(--line); align-items: end; }
+  .pq-field { display: flex; flex-direction: column; gap: 0.25rem; font-family: var(--face-utility); font-size: 0.75rem; color: var(--soft); }
+  .pq-field select, .pq-btn { background: transparent; color: var(--ink); border: 1px solid var(--line); padding: 0.44rem 0.72rem; min-height: 40px; font-family: var(--face-utility); font-size: 0.81rem; }
+  .pq-btn { cursor: pointer; }
+  .pq-btn-primary { background: var(--ink); color: var(--paper, #f4f1ea); border-color: var(--ink); }
+  .pq-field select:focus-visible, .pq-btn:focus-visible, .pq-wrap:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .pq-readout { padding: 0.8rem 0; border-bottom: 1px solid var(--line); font-family: var(--face-utility); font-size: 0.82rem; font-variant-numeric: tabular-nums; }
+  .pq-readout p { margin: 0.2rem 0; }
+  .pq-log { margin: 0.45rem 0 0; padding: 0.65rem 0.75rem; border: 1px solid var(--line); font-family: var(--face-utility); font-size: 0.76rem; white-space: pre-wrap; overflow: auto; height: 12.5rem; }
+  .pq-wrap { width: 100%; overflow-x: auto; margin-top: 0.5rem; }
+  .pq-table { width: 100%; min-width: 720px; table-layout: fixed; border-collapse: collapse; font-size: 0.82rem; }
+  .pq-table th, .pq-table td { text-align: left; padding: 0.48rem 0.55rem 0.48rem 0; border-bottom: 1px solid var(--line); vertical-align: top; overflow-wrap: break-word; }
+  .pq-table th:last-child, .pq-table td:last-child { padding-right: 0; }
+  .pq-table thead th { font-family: var(--face-utility); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--soft); font-weight: 600; }
+  .mono { font-family: var(--face-utility); font-size: 0.76rem; font-variant-numeric: tabular-nums; }
+</style></head>
+<body class="reading ds-sheet">
+
+<header class="o-hand o-said" aria-label="Site">
+  <a class="skip" href="#main">Skip to the page</a>
+  <a class="o-home" href="/">Zain Dana Harper</a>
+  <a data-o="band" href="/world/universe/proto/index.html"><span class="o-name">Map</span></a>
+  <button type="button" data-o="fold" aria-controls="o-menu" aria-keyshortcuts="m" aria-expanded="false" hidden><span class="o-name">Places</span><i></i><i></i><i></i></button>
+  <button type="button" data-o="lamp" data-theme-toggle aria-pressed="true"><span class="o-name">Day</span></button>
+  <span class="o-cell"><button type="button" data-o="peel" data-plain-toggle aria-pressed="false"><span class="o-name">Plain</span></button><span class="o-under" aria-hidden="true">Plain</span></span>
+</header>
+<dialog id="o-menu" data-o="menu" data-material="chladni" aria-label="Places">
+  <nav aria-label="Places">
+    <ul class="o-places">
+      <li><a href="/buildlang.html"><span class="o-word" data-display-on-open="glyphcell">BuildLang</span></a></li>
+      <li><a href="/flywheel.html"><span class="o-word" data-display-on-open="light">Flywheel</span></a><small class="o-sub"><a href="/cmmns.html">CMMNS</a> <a href="/articulate.html">Articulate</a></small></li>
+      <li><a href="/playground/"><span class="o-word" data-display-on-open="nightlights">The Playground</span></a><small class="o-sub"><a href="/playground/#estuary">Estuary</a> <a href="/playground/#native">Native renderer</a> <a href="/playground/#superframe">Superframe</a> <a href="/playground/#workbench">All creative engines</a> <a href="/playground/#low-water">Low Water</a></small></li>
+      <li><a href="/playground/#low-water"><span class="o-word" data-display-on-open="chladni">Game</span></a></li>
+      <li><a href="/#site"><span class="o-word" data-display-on-open="swarm">Site</span></a></li>
+      <li><a href="/floor.html"><span class="o-word" data-display-on-open="rope">Everything</span></a></li>
+      <li><a href="/models.html"><span class="o-word" data-display-on-open="rope">Models</span></a></li>
+      <li><a href="/tools.html"><span class="o-word" data-display-on-open="rope">Tools &amp; Repos</span></a></li>
+      <li><a href="/person.html"><span class="o-word" data-display-on-open="rope">About</span></a></li>
+      <li><a href="/architecture.html"><span class="o-word" data-display-on-open="rope">Architecture</span></a></li>
+      <li><a href="/world/universe/proto/index.html"><span class="o-word" data-display-on-open="rope">Map</span></a></li>
+      <li><a href="/publications.html"><span class="o-word" data-display-on-open="swarm">Writing</span></a></li>
+      <li><a href="/explainers.html"><span class="o-word" data-display-on-open="sound">Films</span></a></li>
+      <li><a href="/security.html"><span class="o-word" data-display-on-open="rope">Security</span></a></li>
+      <li><a href="/hire.html"><span class="o-word" data-display-on-open="rope">Work</span></a></li>
+      <li><a href="/cv.html"><span class="o-word" data-display-on-open="rope">CV</span></a></li>
+    </ul>
+  </nav>
+  <p class="o-menu-foot"><a href="/architecture.html">Architecture</a> <a href="/models.html">Models</a> <a href="/tools.html">Tools &amp; 159 Repos</a> <a href="/research.html">Research</a> <a href="/portfolio.html">Portfolio</a> <a href="/elements.html">Elements</a> <a href="/studies/">Studies</a> <a href="/site-index.html">Site index</a> <button type="button" class="o-close" data-qj-open onclick="this.closest('dialog').close()">Search (Ctrl+K)</button> <button type="button" class="o-close" onclick="this.closest('dialog').close()">Close (Esc)</button></p>
+</dialog>
+<main id="main" tabindex="-1">
+<article class="st" id="buildos-pq-showcase">
+<header class="ds-sheet-head">
+  <p class="ds-kicker">Measured Drafting Sheet / Live In-Browser BuildLang WASM</p>
+  <h1>BuildOS PQ, Enclave &amp; RLVR</h1>
+  <p class="ds-lede">Live client-side WebAssembly showcase executing four pure-OSI MIT BuildLang binaries (89,840 B total) directly in browser memory after WebCrypto SHA-256 verification: Slice 29 FIPS 203 ML-KEM-512 + X25519 Hybrid KEM (#68862), Slice 28 Confidential Enclave + Ed25519 Remote Quote (#68848), Test-Time Compute MCTS + Goodhart Valve (#68864), and the Self-Play E-Graph RLVR Synthesizer (#68868).</p>
+  <p class="ds-meta"><span>4 live MIT WASM binaries</span><span>87.73 KB total</span><span>12 fail-closed attacks</span><span>WebCrypto SHA-256 pinned</span></p>
+  <nav class="ds-ways" aria-label="Related surfaces">
+    <a href="/playground/">The Playground</a>
+    <a href="/playground/buildos-triad/">BuildOS Triad</a>
+    <a href="/playground/datasets/">Open Datasets</a>
+    <a href="/playground/papers/">Research Papers</a>
+    <a href="./pq_manifest.json">Manifest JSON</a>
+  </nav>
+</header>
+
+<section class="ds-sec" id="wasm-deck" aria-labelledby="h-deck">
+  <h2 id="h-deck">Live in-browser WebAssembly modules (4 binaries)</h2>
+  <div class="pq-cards">
+    <div class="pq-card" data-mod-card="pq_hybrid_kem">
+      <p class="pq-card-k">BuildOS Slice 29: PQ Hybrid KEM (#68862)</p>
+      <p class="pq-card-v">25,674 B (0 host imports (Zero-C Stage-2))</p>
+      <p class="pq-card-s">FIPS 203 q=3329 ML-KEM-512 Ring-NTT + X25519 Hybrid KEM + HKDF-SHA256 + ChaCha20-Poly1305 AEAD.</p>
+      <p class="pq-card-s mono">buildos_pq_hybrid_kem_zeroc.wasm | sha256:d16baadbacbf27...</p>
+      <p class="pq-card-out" data-mod-out="pq_hybrid_kem">Staged: pq_hybrid_kem_run(0n) === 1n</p>
+      <div class="pq-card-actions">
+        <button type="button" class="pq-btn pq-btn-primary" data-run-mod="pq_hybrid_kem">Run Live WASM</button>
+        <button type="button" class="pq-btn" data-attack-mod="pq_hybrid_kem">Inject Attacks</button>
+      </div>
+    </div>
+    <div class="pq-card" data-mod-card="enclave_attest">
+      <p class="pq-card-k">BuildOS Slice 28: Confidential Enclave (#68848)</p>
+      <p class="pq-card-v">35,925 B (0 host imports (Zero-C Stage-2))</p>
+      <p class="pq-card-s">Measurement-bound HKDF/AEAD sealing, zero-egress allowlist, and Ed25519 remote quote attestation.</p>
+      <p class="pq-card-s mono">buildos_enclave_attest_zeroc.wasm | sha256:ee57385625f352...</p>
+      <p class="pq-card-out" data-mod-out="enclave_attest">Staged: enclave_attest_run(0n) === 1n</p>
+      <div class="pq-card-actions">
+        <button type="button" class="pq-btn pq-btn-primary" data-run-mod="enclave_attest">Run Live WASM</button>
+        <button type="button" class="pq-btn" data-attack-mod="enclave_attest">Inject Attacks</button>
+      </div>
+    </div>
+    <div class="pq-card" data-mod-card="mcts_goodhart">
+      <p class="pq-card-k">Titan MCTS + Goodhart Valve (#68864)</p>
+      <p class="pq-card-v">13,626 B (5 no-op env.print_* stubs (0 I/O))</p>
+      <p class="pq-card-s">120-problem test-time PUCT search (120/120 solved vs 30/120 greedy = 4.00x) blocking 90/90 Goodhart traps.</p>
+      <p class="pq-card-s mono">titan_test_time_mcts_oracle.wasm | sha256:9bc9b5f853cd7c...</p>
+      <p class="pq-card-out" data-mod-out="mcts_goodhart">Staged: run_titan_mcts_wasm() -&gt; 120/120, hash=143053981</p>
+      <div class="pq-card-actions">
+        <button type="button" class="pq-btn pq-btn-primary" data-run-mod="mcts_goodhart">Run Live WASM</button>
+        <button type="button" class="pq-btn" data-attack-mod="mcts_goodhart">Inject Attacks</button>
+      </div>
+    </div>
+    <div class="pq-card" data-mod-card="rlvr_synthesizer">
+      <p class="pq-card-k">Titan E-Graph RLVR Synthesizer (#68868)</p>
+      <p class="pq-card-v">14,615 B (5 no-op env.print_* stubs (0 I/O))</p>
+      <p class="pq-card-s">Self-play RLVR (2/16 to 16/16 monotonic = 8.00x, 961 verified proofs, 92 traps rejected, 46 ops saved).</p>
+      <p class="pq-card-s mono">titan_egraph_rlvr_synthesizer.wasm | sha256:13eedcd6a398f5...</p>
+      <p class="pq-card-out" data-mod-out="rlvr_synthesizer">Staged: run_titan_rlvr_wasm() -&gt; 16/16, hash=3868613143</p>
+      <div class="pq-card-actions">
+        <button type="button" class="pq-btn pq-btn-primary" data-run-mod="rlvr_synthesizer">Run Live WASM</button>
+        <button type="button" class="pq-btn" data-attack-mod="rlvr_synthesizer">Inject Attacks</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="ds-sec" id="workbench" aria-labelledby="h-bench">
+  <h2 id="h-bench">Interactive execution and fail-closed attack workbench</h2>
+  <div class="pq-controls" role="region" aria-label="WASM module and attack controls">
+    <label class="pq-field" for="pq-module">Target WASM module
+      <select id="pq-module">
+        <option value="all">All 4 live WASM modules (87.73 KB)</option>
+        <option value="pq_hybrid_kem">PQ Hybrid KEM (25,674 B)</option>
+        <option value="enclave_attest">Confidential Enclave (35,925 B)</option>
+        <option value="mcts_goodhart">MCTS + Goodhart Valve (13,626 B)</option>
+        <option value="rlvr_synthesizer">RLVR Synthesizer (14,615 B)</option>
+      </select>
+    </label>
+    <label class="pq-field" for="pq-attack">Attack or Goodhart tamper vector
+      <select id="pq-attack">
+        <option value="pq_ct_tamper">PQ Hybrid KEM: 1-bit ML-KEM ciphertext tamper (FO implicit rejection) (rc=-101)</option>
+        <option value="pq_x25519_mitm">PQ Hybrid KEM: 1-bit X25519 peer public-key MITM (rc=-201)</option>
+        <option value="pq_coeff_oob">PQ Hybrid KEM: Polynomial coefficient out-of-range (&gt;= 3329) injection (rc=-301)</option>
+        <option value="pq_aead_tag">PQ Hybrid KEM: AEAD 1-bit Poly1305 authentication tag tamper (rc=-401)</option>
+        <option value="enc_mr_tamper">Confidential Enclave: 1-bit mr_enclave tamper failing ChaCha20-Poly1305 unseal (rc=-101)</option>
+        <option value="enc_nonce_replay">Confidential Enclave: Stale/replayed attestation nonce (seq 41 &lt;= 41) (rc=-201)</option>
+        <option value="enc_cap_egress">Confidential Enclave: Unauthorized zero-egress capability violation (CAP_NET_EGRESS) (rc=-301)</option>
+        <option value="enc_ed25519_sig">Confidential Enclave: Forged Ed25519 remote quote signature S (rc=-401)</option>
+        <option value="mcts_goodhart_trap">MCTS + Goodhart Valve: Deceptive PRM proxy (0.95) with failing symbolic oracle (0.0) -&gt; GOODHART_TRAP (rc=2)</option>
+        <option value="mcts_zero_budget">MCTS + Goodhart Valve: Zero search budget fail-closed trap (rc=-401)</option>
+        <option value="rlvr_proxy_hack">RLVR Synthesizer: Unverified proxy reward-hack policy update (oracle=0, proxy=0.98) (rc=-501)</option>
+        <option value="rlvr_unsound_rule">RLVR Synthesizer: Unsound partial-test trap rewrite rule 11 (x &amp; 31) rejected by 64-vector oracle (rc=0)</option>
+      </select>
+    </label>
+    <button type="button" id="pq-run-all" class="pq-btn pq-btn-primary">Run Live WASM</button>
+    <button type="button" id="pq-run-attack" class="pq-btn">Inject Attack / Goodhart Tamper</button>
+    <button type="button" id="pq-run-all-attacks" class="pq-btn">Run All 12 Attacks</button>
+  </div>
+  <div class="pq-readout" aria-live="polite">
+    <p id="pq-status">Awaiting WebCrypto SHA-256 manifest verification...</p>
+    <pre id="pq-log" class="pq-log">Click "Run Live WASM" or "Inject Attack / Goodhart Tamper" to execute pinned .wasm binaries directly in browser memory.</pre>
+  </div>
+</section>
+
+<section class="ds-sec" id="attacks" aria-labelledby="h-attacks">
+  <h2 id="h-attacks">Fail-closed attack and Goodhart tamper matrix (12 live vectors)</h2>
+  <div class="pq-wrap" tabindex="0" role="region" aria-label="12 live fail-closed attack vectors">
+    <table class="pq-table">
+      <colgroup><col style="width:21%"><col style="width:14%"><col style="width:24%"><col style="width:25%"><col style="width:16%"></colgroup>
+      <thead>
+        <tr><th scope="col">Vector ID</th><th scope="col">Module</th><th scope="col">Planted attack or tamper</th><th scope="col">WASM call</th><th scope="col">Live status code</th></tr>
+      </thead>
+      <tbody>
+        <tr data-attack-row="pq_ct_tamper" data-module="pq_hybrid_kem">
+          <td class="mono">pq_ct_tamper</td>
+          <td><strong>PQ Hybrid KEM</strong></td>
+          <td>1-bit ML-KEM ciphertext tamper (FO implicit rejection)</td>
+          <td class="mono">pq_hybrid_kem_run(1n)</td>
+          <td class="mono" data-attack-rc="pq_ct_tamper">-101 (staged)</td>
+        </tr>
+        <tr data-attack-row="pq_x25519_mitm" data-module="pq_hybrid_kem">
+          <td class="mono">pq_x25519_mitm</td>
+          <td><strong>PQ Hybrid KEM</strong></td>
+          <td>1-bit X25519 peer public-key MITM</td>
+          <td class="mono">pq_hybrid_kem_run(2n)</td>
+          <td class="mono" data-attack-rc="pq_x25519_mitm">-201 (staged)</td>
+        </tr>
+        <tr data-attack-row="pq_coeff_oob" data-module="pq_hybrid_kem">
+          <td class="mono">pq_coeff_oob</td>
+          <td><strong>PQ Hybrid KEM</strong></td>
+          <td>Polynomial coefficient out-of-range (&gt;= 3329) injection</td>
+          <td class="mono">pq_hybrid_kem_run(3n)</td>
+          <td class="mono" data-attack-rc="pq_coeff_oob">-301 (staged)</td>
+        </tr>
+        <tr data-attack-row="pq_aead_tag" data-module="pq_hybrid_kem">
+          <td class="mono">pq_aead_tag</td>
+          <td><strong>PQ Hybrid KEM</strong></td>
+          <td>AEAD 1-bit Poly1305 authentication tag tamper</td>
+          <td class="mono">pq_hybrid_kem_run(4n)</td>
+          <td class="mono" data-attack-rc="pq_aead_tag">-401 (staged)</td>
+        </tr>
+        <tr data-attack-row="enc_mr_tamper" data-module="enclave_attest">
+          <td class="mono">enc_mr_tamper</td>
+          <td><strong>Confidential Enclave</strong></td>
+          <td>1-bit mr_enclave tamper failing ChaCha20-Poly1305 unseal</td>
+          <td class="mono">enclave_attest_run(1n)</td>
+          <td class="mono" data-attack-rc="enc_mr_tamper">-101 (staged)</td>
+        </tr>
+        <tr data-attack-row="enc_nonce_replay" data-module="enclave_attest">
+          <td class="mono">enc_nonce_replay</td>
+          <td><strong>Confidential Enclave</strong></td>
+          <td>Stale/replayed attestation nonce (seq 41 &lt;= 41)</td>
+          <td class="mono">enclave_attest_run(2n)</td>
+          <td class="mono" data-attack-rc="enc_nonce_replay">-201 (staged)</td>
+        </tr>
+        <tr data-attack-row="enc_cap_egress" data-module="enclave_attest">
+          <td class="mono">enc_cap_egress</td>
+          <td><strong>Confidential Enclave</strong></td>
+          <td>Unauthorized zero-egress capability violation (CAP_NET_EGRESS)</td>
+          <td class="mono">enclave_attest_run(3n)</td>
+          <td class="mono" data-attack-rc="enc_cap_egress">-301 (staged)</td>
+        </tr>
+        <tr data-attack-row="enc_ed25519_sig" data-module="enclave_attest">
+          <td class="mono">enc_ed25519_sig</td>
+          <td><strong>Confidential Enclave</strong></td>
+          <td>Forged Ed25519 remote quote signature S</td>
+          <td class="mono">enclave_attest_run(4n)</td>
+          <td class="mono" data-attack-rc="enc_ed25519_sig">-401 (staged)</td>
+        </tr>
+        <tr data-attack-row="mcts_goodhart_trap" data-module="mcts_goodhart">
+          <td class="mono">mcts_goodhart_trap</td>
+          <td><strong>MCTS + Goodhart Valve</strong></td>
+          <td>Deceptive PRM proxy (0.95) with failing symbolic oracle (0.0) -&gt; GOODHART_TRAP</td>
+          <td class="mono">eval_goodhart_valve(0.95, 0.0)</td>
+          <td class="mono" data-attack-rc="mcts_goodhart_trap">2 (staged)</td>
+        </tr>
+        <tr data-attack-row="mcts_zero_budget" data-module="mcts_goodhart">
+          <td class="mono">mcts_zero_budget</td>
+          <td><strong>MCTS + Goodhart Valve</strong></td>
+          <td>Zero search budget fail-closed trap</td>
+          <td class="mono">validate_mcts_budget(0)</td>
+          <td class="mono" data-attack-rc="mcts_zero_budget">-401 (staged)</td>
+        </tr>
+        <tr data-attack-row="rlvr_proxy_hack" data-module="rlvr_synthesizer">
+          <td class="mono">rlvr_proxy_hack</td>
+          <td><strong>RLVR Synthesizer</strong></td>
+          <td>Unverified proxy reward-hack policy update (oracle=0, proxy=0.98)</td>
+          <td class="mono">verified_policy_update_gate(0.0, 0.98)</td>
+          <td class="mono" data-attack-rc="rlvr_proxy_hack">-501 (staged)</td>
+        </tr>
+        <tr data-attack-row="rlvr_unsound_rule" data-module="rlvr_synthesizer">
+          <td class="mono">rlvr_unsound_rule</td>
+          <td><strong>RLVR Synthesizer</strong></td>
+          <td>Unsound partial-test trap rewrite rule 11 (x &amp; 31) rejected by 64-vector oracle</td>
+          <td class="mono">verify_candidate_oracle(0, 11)</td>
+          <td class="mono" data-attack-rc="rlvr_unsound_rule">0 (staged)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="ds-sec" id="scope" aria-labelledby="h-scope">
+  <h2 id="h-scope">Honest scope and cryptographic boundaries</h2>
+  <p>Every .wasm payload on this page is verified against its pinned WebCrypto SHA-256 digest in pq_manifest.json before WebAssembly.instantiate runs. Both BuildOS slices (buildos_pq_hybrid_kem_zeroc.wasm and buildos_enclave_attest_zeroc.wasm) are compiled by the self-hosted Stage-2 BuildLang compiler with strictly 0 host imports; the two Titan modules (titan_test_time_mcts_oracle.wasm and titan_egraph_rlvr_synthesizer.wasm) import only 5 no-op env.print_* stubs with 0 filesystem, 0 network, and 0 syscall access. All cryptography is pre-audit research code published under the pure-OSI MIT license for deterministic verification and reproducibility; it has not undergone a third-party security audit.</p>
+</section>
+
+<footer class="ds-sheet-foot">
+  <p><strong>Sheet</strong> <code>playground/buildos-pq/index.html</code></p>
+  <p><strong>Updated</strong> 2026-11-27</p>
+  <p><strong>Ground</strong> Measured Drafting Sheet | Pure OSI MIT | 4 live WASM binaries (89,840 B) | 12 fail-closed attacks</p>
+</footer>
+</article>
+<script type="module" src="./pq_showcase.mjs"></script>
+</main>
+</body>
+</html>

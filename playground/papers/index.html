@@ -1,0 +1,625 @@
+<!doctype html>
+<html lang="en" data-type="stock">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<title>Technical Research Papers: Compilers, Accountable Verification, Rendering, Microkernels, and Post-Quantum Enclaves | Zain Dana Harper</title>
+<meta name="description" content="Five sealed six-page technical preprints across cs.PL/cs.OS, cs.AI/cs.SE, cs.GR, cs.OS/SOSP, and cs.CR/IEEE S&amp;P with interactive BibTeX copy, verified Flywheel catalogue IDs, and honest negative results.">
+<link rel="canonical" href="https://harperz9.github.io/playground/papers/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Technical Research Papers: Compilers, Accountable Verification, Rendering, Microkernels, and Post-Quantum Enclaves | Zain Dana Harper">
+<meta property="og:description" content="Five sealed six-page technical preprints across cs.PL/cs.OS, cs.AI/cs.SE, cs.GR, cs.OS/SOSP, and cs.CR/IEEE S&amp;P with interactive BibTeX copy, verified Flywheel catalogue IDs, and honest negative results.">
+<meta property="og:url" content="https://harperz9.github.io/playground/papers/">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/home.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Technical Research Papers: Compilers, Accountable Verification, Rendering, Microkernels, and Post-Quantum Enclaves | Zain Dana Harper">
+<meta name="twitter:description" content="Five sealed six-page technical preprints across cs.PL/cs.OS, cs.AI/cs.SE, cs.GR, cs.OS/SOSP, and cs.CR/IEEE S&amp;P with interactive BibTeX copy, verified Flywheel catalogue IDs, and honest negative results.">
+<link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-6218db2f12">
+<link rel="stylesheet" href="/studies/studies.css?v=world-6218db2f12">
+<link rel="stylesheet" href="/world/site/depth.css?v=world-6218db2f12">
+<script type="module" src="/world/ui/shell/shell.js?v=world-6218db2f12"></script>
+<script type="module" src="/world/site/hand-scroll.js?v=world-6218db2f12"></script>
+<meta name="papers-manifest-sha256" content="3491a620ebdd21fc9efe10b1cecfc8e5aead2e9dbb8ae983ba86b269c2e81c43">
+<style>
+  .pp-pills { display: flex; flex-wrap: wrap; gap: 0.45rem; padding: 0.75rem 0; border-bottom: 1px solid var(--line); }
+  .pp-pill, .pp-btn { background: transparent; color: var(--ink); border: 1px solid var(--line); padding: 0.42rem 0.72rem; min-height: 40px; font-family: var(--face-utility); font-size: 0.82rem; cursor: pointer; }
+  .pp-pill[data-active="1"] { background: var(--ink); color: var(--paper, #f4f1ea); border-color: var(--ink); }
+  .pp-pill:focus-visible, .pp-btn:focus-visible, .pp-wrap:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .pp-readout { padding: 0.75rem 0; border-bottom: 1px solid var(--line); font-family: var(--face-utility); font-size: 0.84rem; font-variant-numeric: tabular-nums; min-height: 5.8rem; }
+  .pp-readout p { margin: 0.22rem 0; }
+  .pp-card { padding: 1.15rem 0; border-bottom: 1px solid var(--line); }
+  .pp-kicker { font-family: var(--face-utility); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--soft); margin: 0 0 0.25rem 0; }
+  .pp-card h3 { margin: 0 0 0.35rem 0; }
+  .pp-meta { font-family: var(--face-utility); font-size: 0.78rem; color: var(--soft); margin: 0 0 0.65rem 0; }
+  .pp-abstract { margin: 0 0 0.65rem 0; }
+  .pp-sub { font-size: 0.84rem; margin: 0.25rem 0; }
+  .pp-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.75rem 0 0.6rem 0; }
+  .pp-details { margin-top: 0.4rem; font-size: 0.84rem; }
+  .pp-details summary { cursor: pointer; font-family: var(--face-utility); font-size: 0.8rem; color: var(--soft); }
+  .pp-pre { overflow-x: auto; padding: 0.65rem; border: 1px solid var(--line); font-family: var(--face-utility); font-size: 0.76rem; line-height: 1.45; }
+  .pp-cit { font-family: var(--face-utility); font-size: 0.78rem; margin: 0.5rem 0 0 0; }
+  .pp-callout { padding: 0.9rem 1rem; border-left: 3px solid var(--ink); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); margin: 0.75rem 0; }
+  .pp-callout p { margin: 0.4rem 0; }
+  .pp-wrap { width: 100%; overflow-x: auto; margin-top: 0.5rem; }
+  .pp-table { width: 100%; min-width: 680px; table-layout: fixed; border-collapse: collapse; font-size: 0.84rem; }
+  .pp-table th, .pp-table td { text-align: left; padding: 0.5rem 0.55rem 0.5rem 0; border-bottom: 1px solid var(--line); vertical-align: top; overflow-wrap: break-word; }
+  .pp-table th:last-child, .pp-table td:last-child { padding-right: 0; }
+  .pp-table thead th { font-family: var(--face-utility); font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--soft); font-weight: 600; }
+  .mono { font-family: var(--face-utility); font-variant-numeric: tabular-nums; }
+</style></head>
+<body class="reading ds-sheet">
+
+<header class="o-hand o-said" aria-label="Site">
+  <a class="skip" href="#main">Skip to the page</a>
+  <a class="o-home" href="/">Zain Dana Harper</a>
+  <a data-o="band" href="/world/universe/proto/index.html"><span class="o-name">Map</span></a>
+  <button type="button" data-o="fold" aria-controls="o-menu" aria-keyshortcuts="m" aria-expanded="false" hidden><span class="o-name">Places</span><i></i><i></i><i></i></button>
+  <button type="button" data-o="lamp" data-theme-toggle aria-pressed="true"><span class="o-name">Day</span></button>
+  <span class="o-cell"><button type="button" data-o="peel" data-plain-toggle aria-pressed="false"><span class="o-name">Plain</span></button><span class="o-under" aria-hidden="true">Plain</span></span>
+</header>
+<dialog id="o-menu" data-o="menu" data-material="chladni" aria-label="Places">
+  <nav aria-label="Places">
+    <ul class="o-places">
+      <li><a href="/buildlang.html"><span class="o-word" data-display-on-open="glyphcell">BuildLang</span></a></li>
+      <li><a href="/flywheel.html"><span class="o-word" data-display-on-open="light">Flywheel</span></a><small class="o-sub"><a href="/cmmns.html">CMMNS</a> <a href="/articulate.html">Articulate</a></small></li>
+      <li><a href="/playground/"><span class="o-word" data-display-on-open="nightlights">The Playground</span></a><small class="o-sub"><a href="/playground/#estuary">Estuary</a> <a href="/playground/#native">Native renderer</a> <a href="/playground/#superframe">Superframe</a> <a href="/playground/#workbench">All creative engines</a> <a href="/playground/#low-water">Low Water</a></small></li>
+      <li><a href="/playground/#low-water"><span class="o-word" data-display-on-open="chladni">Game</span></a></li>
+      <li><a href="/#site"><span class="o-word" data-display-on-open="swarm">Site</span></a></li>
+      <li><a href="/floor.html"><span class="o-word" data-display-on-open="rope">Everything</span></a></li>
+      <li><a href="/models.html"><span class="o-word" data-display-on-open="rope">Models</span></a></li>
+      <li><a href="/tools.html"><span class="o-word" data-display-on-open="rope">Tools &amp; Repos</span></a></li>
+      <li><a href="/person.html"><span class="o-word" data-display-on-open="rope">About</span></a></li>
+      <li><a href="/architecture.html"><span class="o-word" data-display-on-open="rope">Architecture</span></a></li>
+      <li><a href="/world/universe/proto/index.html"><span class="o-word" data-display-on-open="rope">Map</span></a></li>
+      <li><a href="/publications.html"><span class="o-word" data-display-on-open="swarm">Writing</span></a></li>
+      <li><a href="/explainers.html"><span class="o-word" data-display-on-open="sound">Films</span></a></li>
+      <li><a href="/security.html"><span class="o-word" data-display-on-open="rope">Security</span></a></li>
+      <li><a href="/hire.html"><span class="o-word" data-display-on-open="rope">Work</span></a></li>
+      <li><a href="/cv.html"><span class="o-word" data-display-on-open="rope">CV</span></a></li>
+    </ul>
+  </nav>
+  <p class="o-menu-foot"><a href="/architecture.html">Architecture</a> <a href="/models.html">Models</a> <a href="/tools.html">Tools &amp; 159 Repos</a> <a href="/research.html">Research</a> <a href="/portfolio.html">Portfolio</a> <a href="/elements.html">Elements</a> <a href="/studies/">Studies</a> <a href="/site-index.html">Site index</a> <button type="button" class="o-close" data-qj-open onclick="this.closest('dialog').close()">Search (Ctrl+K)</button> <button type="button" class="o-close" onclick="this.closest('dialog').close()">Close (Esc)</button></p>
+</dialog>
+<main id="main" tabindex="-1">
+<article class="st" id="research-papers">
+<header class="ds-sheet-head">
+  <p class="ds-kicker">Measured Drafting Sheet / Five-Paper Systems Quintet</p>
+  <h1>Technical Research Papers: Compilers, Accountable Verification, Rendering, Microkernels, and Post-Quantum Enclaves</h1>
+  <p class="ds-lede">Five six-page arXiv and Zenodo-ready technical preprints by Zain Dana Harper (Independent Researcher, Kent, Washington, USA; WA State Sole Proprietorship UBI 606-301-569), staged offline on disk under CC-BY-4.0 prose and pure-OSI MIT / AGPL-3.0-only software licenses. Every quantitative claim links to a sealed Flywheel engine-receipt/1 catalogue entry (56 unique verified IDs from #68675 to #68873).</p>
+  <p class="ds-meta"><span>5 sealed 6-page preprints</span><span>7302 words total</span><span>56 verified catalogue IDs</span><span>CC-BY-4.0 prose / MIT code</span></p>
+  <nav class="ds-ways" aria-label="Related surfaces">
+    <a href="/playground/">The Playground</a>
+    <a href="/playground/buildos-triad/">Zero-C BuildOS Triad</a>
+    <a href="/playground/buildos-pq/">Post-Quantum &amp; Enclave Lab</a>
+    <a href="/playground/competitive-surpass/">Competitive Surpass Explorer</a>
+    <a href="/playground/benchmarks-v4/">Benchmarks V4</a>
+    <a href="/playground/datasets/">Open MIT Datasets</a>
+    <a href="/experiments/#receipt-ledger">Receipt Ledger</a>
+    <a href="./papers_manifest.json">Catalog JSON</a>
+  </nav>
+</header>
+
+<section class="ds-sec" id="quintet" aria-labelledby="h-quintet">
+  <h2 id="h-quintet">Preprint quintet and interactive citations</h2>
+  <div class="pp-pills" role="group" aria-label="Filter papers by track">
+    <button type="button" class="pp-pill" data-track="all" data-active="1" aria-pressed="true">All tracks (5)</button>
+    <button type="button" class="pp-pill" data-track="cs.PL-cs.OS" data-active="0" aria-pressed="false">cs.PL / cs.OS (1)</button>
+    <button type="button" class="pp-pill" data-track="cs.AI-cs.SE" data-active="0" aria-pressed="false">cs.AI / cs.SE (1)</button>
+    <button type="button" class="pp-pill" data-track="cs.GR" data-active="0" aria-pressed="false">cs.GR (1)</button>
+    <button type="button" class="pp-pill" data-track="cs.OS-SOSP" data-active="0" aria-pressed="false">cs.OS / SOSP (1)</button>
+    <button type="button" class="pp-pill" data-track="cs.CR-cs.OS" data-active="0" aria-pressed="false">cs.CR / S&amp;P (1)</button>
+    <button type="button" class="pp-btn" id="pp-copy-all-bib">Copy all 5 BibTeX entries</button>
+  </div>
+  <div class="pp-readout" aria-live="polite">
+    <p id="pp-status">Showing 5/5 papers | Track: All tracks | Offline preprints (zero external uploads)</p>
+    <p id="pp-digest">Catalog SHA-256: 3491a620ebdd21fc9efe10b... | 5 papers, 56 verified receipts</p>
+    <p id="pp-copy-status">Select Copy BibTeX or Copy plain citation on any paper below.</p>
+  </div>
+  <section class="pp-card" data-paper="paper1-buildlang" data-track="cs.PL-cs.OS">
+    <div class="pp-card-head">
+      <p class="pp-kicker">Paper #1 | arXiv cs.PL / cs.OS | Receipt #68793</p>
+      <h3>BuildLang: First-Principles Zero-C 5-ISA Microkernel Verification and Proof-Carrying 5-Backend GPU Compute Compilation</h3>
+      <p class="pp-meta">6 pages | 1630 words | 1104.8 KB PDF | CC-BY-4.0 prose / MIT and AGPL-3.0-only code</p>
+    </div>
+    <p class="pp-abstract">Six-page arXiv (cs.PL / cs.OS) and Zenodo-ready technical preprint reporting BuildLang's Zero-C 5-ISA BuildOS Microkernel Triad (Slices 13 to 20; 21.86 KB unified WASM; receipts 68741, 68750, 68759, 68769), proof-carrying e-graph superoptimization across 120/120 externally validated 5-target GPU shaders (-48.82% MIR cost, 105/105 5-way IEEE-754 FMA parity; receipts 68718, 68729, 68754, 68773), 20/20 bit-exact 0-ULP C++23 renderer parity (68786), 60/60 live MIT WASM modules in 339.30 KB (68784), 528 zero-FLAG formulas and 13/13 native auditors (68775), and an explicit Honest Scope Limits and Negative Results catalog.</p>
+    <p class="pp-sub"><strong>Cited receipts (12):</strong> <span class="mono">#68718, #68729, #68741, #68750, #68754, #68759, #68769, #68773, #68775, #68778, #68784, #68786</span></p>
+    <p class="pp-sub"><strong>Paper receipt claim SHA-256:</strong> <span class="mono" title="sha256:2980693aec160e60c0401ee6ffa3440ddee879040fc947306365fa0ff081dbf5">sha256:2980693aec160e60...</span></p>
+    <div class="pp-actions" role="group" aria-label="Citation actions for Paper #1">
+      <button type="button" class="pp-btn" data-paper-copy="bibtex" data-paper-id="paper1-buildlang">Copy BibTeX</button>
+      <button type="button" class="pp-btn" data-paper-copy="citation" data-paper-id="paper1-buildlang">Copy plain citation</button>
+    </div>
+    <details class="pp-details">
+      <summary>BibTeX and plain-text citation</summary>
+      <pre class="pp-pre" data-bib="paper1-buildlang">@misc{harper2026buildlang,
+  author       = {Harper, Zain Dana},
+  title        = {{BuildLang: First-Principles Zero-C 5-ISA Microkernel Verification and Proof-Carrying 5-Backend GPU Compute Compilation}},
+  year         = {2026},
+  month        = {nov},
+  note         = {Preprint (arXiv cs.PL / cs.OS); Flywheel receipt catalogue #68793; CC-BY-4.0},
+  url          = {https://github.com/HarperZ9/buildlang}
+}</pre>
+      <p class="pp-cit" data-cit="paper1-buildlang">Harper, Z. D. (2026). BuildLang: First-Principles Zero-C 5-ISA Microkernel Verification and Proof-Carrying 5-Backend GPU Compute Compilation. Preprint (arXiv cs.PL / cs.OS, 6 pp., CC-BY-4.0, Flywheel receipt #68793). https://github.com/HarperZ9/buildlang</p>
+    </details>
+  </section>
+  <section class="pp-card" data-paper="paper2-flywheel" data-track="cs.AI-cs.SE">
+    <div class="pp-card-head">
+      <p class="pp-kicker">Paper #2 | arXiv cs.AI / cs.SE | Receipt #68797</p>
+      <h3>Models Propose, Oracles Dispose: Receipts, Tail-Risk Fuzzing, and Epigenetic Guards for Accountable Self-Improvement</h3>
+      <p class="pp-meta">6 pages | 1378 words | 990.0 KB PDF | CC-BY-4.0 prose / MIT and AGPL-3.0-only code</p>
+    </div>
+    <p class="pp-abstract">Six-page arXiv (cs.AI / cs.SE) and Zenodo-ready technical preprint presenting Flywheel's accountable self-improvement architecture: live closed-loop IEEE-754 NaN/-Inf bypass catch by Crucible tail-risk fuzzing (68760 -&gt; 68771, 1,160/1,160 cases + 200/200 on buildos_attest 68781), 180/180 sharded proof-mutant kill rate (68749), epigenetic spectral and contraction continual-learning kernels (J13 68744, CS-009 Sleep-LoRA 68764, CS-005 FCA-Titans &amp; CS-006 Sparrow 68789, CS-014 structured vs IID honest null 68778), sub-5ms forensic claim-to-receipt auditing exposing 54/231 drifted/uncited claims live (CLI #15 68791), 10/10 MCP governance (68737), 15/15 SBOMs (68722), and 12/30 public nulls (G9).</p>
+    <p class="pp-sub"><strong>Cited receipts (12):</strong> <span class="mono">#68675, #68722, #68737, #68744, #68749, #68760, #68764, #68771, #68778, #68781, #68789, #68791</span></p>
+    <p class="pp-sub"><strong>Paper receipt claim SHA-256:</strong> <span class="mono" title="sha256:cd4d0e6eaf19bb1597121161abe55de00b48790a4f182cabb828d9bf3d4aa090">sha256:cd4d0e6eaf19bb15...</span></p>
+    <div class="pp-actions" role="group" aria-label="Citation actions for Paper #2">
+      <button type="button" class="pp-btn" data-paper-copy="bibtex" data-paper-id="paper2-flywheel">Copy BibTeX</button>
+      <button type="button" class="pp-btn" data-paper-copy="citation" data-paper-id="paper2-flywheel">Copy plain citation</button>
+    </div>
+    <details class="pp-details">
+      <summary>BibTeX and plain-text citation</summary>
+      <pre class="pp-pre" data-bib="paper2-flywheel">@misc{harper2026flywheel,
+  author       = {Harper, Zain Dana},
+  title        = {{Models Propose, Oracles Dispose: Receipts, Tail-Risk Fuzzing, and Epigenetic Guards for Accountable Self-Improvement}},
+  year         = {2026},
+  month        = {nov},
+  note         = {Preprint (arXiv cs.AI / cs.SE); Flywheel receipt catalogue #68797; CC-BY-4.0},
+  url          = {https://github.com/HarperZ9/flywheel}
+}</pre>
+      <p class="pp-cit" data-cit="paper2-flywheel">Harper, Z. D. (2026). Models Propose, Oracles Dispose: Receipts, Tail-Risk Fuzzing, and Epigenetic Guards for Accountable Self-Improvement. Preprint (arXiv cs.AI / cs.SE, 6 pp., CC-BY-4.0, Flywheel receipt #68797). https://github.com/HarperZ9/flywheel</p>
+    </details>
+  </section>
+  <section class="pp-card" data-paper="paper3-rendering" data-track="cs.GR">
+    <div class="pp-card-head">
+      <p class="pp-kicker">Paper #3 | arXiv cs.GR / SIGGRAPH Systems | Receipt #68808</p>
+      <h3>Bit-Exact Cross-Language Rendering and Physics-First DX12 Engine Replacement: From C++23 to BuildLang</h3>
+      <p class="pp-meta">6 pages | 1435 words | 3141.7 KB PDF | CC-BY-4.0 prose / MIT and AGPL-3.0-only code</p>
+    </div>
+    <p class="pp-abstract">Six-page arXiv (cs.GR / SIGGRAPH systems track) and Zenodo-ready technical preprint reporting 22/22 bit-exact 0-ULP C++23 to BuildLang renderer parity (art_pbr_lobes 68768, art_bvh 68777, art_ploc_bvh 68786, art_taa 68792, art_gtao 68794), live RTX 4090 RAW DX12 engine replacement with OPT-052 SM 6.10 Cooperative Vector NTC (-83.33% VRAM, 0 D3D12 debug errors, 160/160 heuristics, 522/522 checks, 68756), six pure-MIT graphics and spectral optics surpass kernels (CS-039, CS-042, CS-047, CS-045, CS-046, CS-049; 68757, 68766, 68776, 68779), and candid architectural and visual eye-audit boundaries.</p>
+    <p class="pp-sub"><strong>Cited receipts (10):</strong> <span class="mono">#68756, #68757, #68766, #68768, #68776, #68777, #68779, #68786, #68792, #68794</span></p>
+    <p class="pp-sub"><strong>Paper receipt claim SHA-256:</strong> <span class="mono" title="sha256:b8dc2fbfe1e2aef743a8a337bb42a39c0b0cf0fd238a39d39bef55b0e60bd848">sha256:b8dc2fbfe1e2aef7...</span></p>
+    <div class="pp-actions" role="group" aria-label="Citation actions for Paper #3">
+      <button type="button" class="pp-btn" data-paper-copy="bibtex" data-paper-id="paper3-rendering">Copy BibTeX</button>
+      <button type="button" class="pp-btn" data-paper-copy="citation" data-paper-id="paper3-rendering">Copy plain citation</button>
+    </div>
+    <details class="pp-details">
+      <summary>BibTeX and plain-text citation</summary>
+      <pre class="pp-pre" data-bib="paper3-rendering">@misc{harper2026rendering,
+  author       = {Harper, Zain Dana},
+  title        = {{Bit-Exact Cross-Language Rendering and Physics-First DX12 Engine Replacement: From C++23 to BuildLang}},
+  year         = {2026},
+  month        = {nov},
+  note         = {Preprint (arXiv cs.GR / SIGGRAPH Systems); Flywheel receipt catalogue #68808; CC-BY-4.0},
+  url          = {https://github.com/HarperZ9/superframe}
+}</pre>
+      <p class="pp-cit" data-cit="paper3-rendering">Harper, Z. D. (2026). Bit-Exact Cross-Language Rendering and Physics-First DX12 Engine Replacement: From C++23 to BuildLang. Preprint (arXiv cs.GR / SIGGRAPH Systems, 6 pp., CC-BY-4.0, Flywheel receipt #68808). https://github.com/HarperZ9/superframe</p>
+    </details>
+  </section>
+  <section class="pp-card" data-paper="paper4-buildos" data-track="cs.OS-SOSP">
+    <div class="pp-card-head">
+      <p class="pp-kicker">Paper #4 | arXiv cs.OS / SOSP Systems | Receipt #68852</p>
+      <h3>Zero-C Sovereign Microkernels Across Five ISAs: From Signed Boot to Capability-Isolated SMP, IOMMU, Display, Input, Audio, and GPU Arenas</h3>
+      <p class="pp-meta">6 pages | 1540 words | 673.5 KB PDF | CC-BY-4.0 prose / MIT and AGPL-3.0-only code</p>
+    </div>
+    <p class="pp-abstract">Six-page arXiv (cs.OS / SOSP systems track) and Zenodo-ready technical preprint reporting 11 zero-C 5-ISA BuildOS microkernel slices (Slices 17 to 27, 55 clean binaries + 225+ attack-rejection binaries across x64-pe, x64-elf, rv64-elf, aarch64-elf, and zero-import .wasm, compiled by our 3-stage fixed-point self-hosting compiler with zero C compiler, zero Rust runtime, and zero linker), including unified 7-subsystem BuildOS-1.0 (72.83 KB WASM, 355M RV64 / 394M AArch64 live ops, 6/6 attacks, 68816), 4-Core SMP + Sv39/x64 MMU (68819), PCIe IOMMU DMA Fence + NVMe WAL (68832), GPU Command Queue + VRAM Arena (68841), Benchmarks V4 1.59x WASM speedup (68814), 72/72 MIT WASM suite (68840), cmmns#141 (68817), 0.316 ms native BuildOS gate (68835), buildlang#380 graduation (68825), and explicit trust-boundary limits.</p>
+    <p class="pp-sub"><strong>Cited receipts (16):</strong> <span class="mono">#68741, #68750, #68759, #68769, #68785, #68795, #68805, #68814, #68816, #68817, #68819, #68825, #68832, #68835, #68840, #68841</span></p>
+    <p class="pp-sub"><strong>Paper receipt claim SHA-256:</strong> <span class="mono" title="sha256:2453788bc006c1a2e095ecc4e629ab946275fe5c3b31fb98ac119f3ee3392797">sha256:2453788bc006c1a2...</span></p>
+    <div class="pp-actions" role="group" aria-label="Citation actions for Paper #4">
+      <button type="button" class="pp-btn" data-paper-copy="bibtex" data-paper-id="paper4-buildos">Copy BibTeX</button>
+      <button type="button" class="pp-btn" data-paper-copy="citation" data-paper-id="paper4-buildos">Copy plain citation</button>
+    </div>
+    <details class="pp-details">
+      <summary>BibTeX and plain-text citation</summary>
+      <pre class="pp-pre" data-bib="paper4-buildos">@misc{harper2026buildos,
+  author       = {Harper, Zain Dana},
+  title        = {{Zero-C Sovereign Microkernels Across Five ISAs: From Signed Boot to Capability-Isolated SMP, IOMMU, Display, Input, Audio, and GPU Arenas}},
+  year         = {2026},
+  month        = {nov},
+  note         = {Preprint (arXiv cs.OS / SOSP Systems); Flywheel receipt catalogue #68852; CC-BY-4.0},
+  url          = {https://github.com/HarperZ9/buildlang}
+}</pre>
+      <p class="pp-cit" data-cit="paper4-buildos">Harper, Z. D. (2026). Zero-C Sovereign Microkernels Across Five ISAs: From Signed Boot to Capability-Isolated SMP, IOMMU, Display, Input, Audio, and GPU Arenas. Preprint (arXiv cs.OS / SOSP Systems, 6 pp., CC-BY-4.0, Flywheel receipt #68852). https://github.com/HarperZ9/buildlang</p>
+    </details>
+  </section>
+  <section class="pp-card" data-paper="paper5-pq-enclave" data-track="cs.CR-cs.OS">
+    <div class="pp-card-head">
+      <p class="pp-kicker">Paper #5 | arXiv cs.CR / IEEE S&amp;P | Receipt #68873</p>
+      <h3>Zero-C Post-Quantum Hybrid Key Exchange and Confidential Enclave Attestation Across Five ISAs</h3>
+      <p class="pp-meta">6 pages | 1319 words | 642.8 KB PDF | CC-BY-4.0 prose / MIT and AGPL-3.0-only code</p>
+    </div>
+    <p class="pp-abstract">Six-page arXiv (cs.CR / IEEE S&amp;P security track) and Zenodo-ready technical preprint presenting zero-C five-ISA FIPS 203 q=3329 ML-KEM-512 Ring-NTT + X25519 hybrid key exchange (Slice 29, 68862, 25,674 B .wasm, 20/20 planted PQ/hybrid attacks rejected), measurement-bound HKDF/AEAD confidential enclave sealing and Ed25519 remote quote attestation (Slice 28, 68848, 35,925 B .wasm, 20/20 attacks), Superopt V7 R31..R40 (-51.16% bitwise crypto MIR cost, 1,600/1,600 soundness fuzzer, 68857), Flywheel enclave_quote_gate (400/400 Crucible tail-fuzz cases 0 bypasses, 68859), Goodhart PRM-vs-Oracle Valve (90/90 reward-hacking traps blocked, 68864), 19/19 native auditors (68865), and explicit pre-audit limits.</p>
+    <p class="pp-sub"><strong>Cited receipts (8):</strong> <span class="mono">#68848, #68852, #68857, #68859, #68862, #68864, #68865, #68866</span></p>
+    <p class="pp-sub"><strong>Paper receipt claim SHA-256:</strong> <span class="mono" title="sha256:26650539a6ae6cdf9ded6302361abc4a39676024d1143c8b68090dc910b87609">sha256:26650539a6ae6cdf...</span></p>
+    <div class="pp-actions" role="group" aria-label="Citation actions for Paper #5">
+      <button type="button" class="pp-btn" data-paper-copy="bibtex" data-paper-id="paper5-pq-enclave">Copy BibTeX</button>
+      <button type="button" class="pp-btn" data-paper-copy="citation" data-paper-id="paper5-pq-enclave">Copy plain citation</button>
+    </div>
+    <details class="pp-details">
+      <summary>BibTeX and plain-text citation</summary>
+      <pre class="pp-pre" data-bib="paper5-pq-enclave">@misc{harper2026pqenclave,
+  author       = {Harper, Zain Dana},
+  title        = {{Zero-C Post-Quantum Hybrid Key Exchange and Confidential Enclave Attestation Across Five ISAs}},
+  year         = {2026},
+  month        = {nov},
+  note         = {Preprint (arXiv cs.CR / IEEE S&amp;P); Flywheel receipt catalogue #68873; CC-BY-4.0},
+  url          = {https://github.com/HarperZ9/buildlang}
+}</pre>
+      <p class="pp-cit" data-cit="paper5-pq-enclave">Harper, Z. D. (2026). Zero-C Post-Quantum Hybrid Key Exchange and Confidential Enclave Attestation Across Five ISAs. Preprint (arXiv cs.CR / IEEE S&amp;P, 6 pp., CC-BY-4.0, Flywheel receipt #68873). https://github.com/HarperZ9/buildlang</p>
+    </details>
+  </section>
+</section>
+
+<section class="ds-sec" id="negative-results" aria-labelledby="h-neg">
+  <h2 id="h-neg">Honest negative results and scope limits</h2>
+  <div class="pp-callout" role="note" aria-label="Negative results and explicit scope boundaries">
+    <p><strong>Public negative results (G9):</strong> Twelve of thirty published experimental studies record null or negative outcomes and remain public alongside positive results.</p>
+    <p><strong>Structured vs IID weight compression null (CS-014, #68778):</strong> Procedural fractal weights achieve +42.16 dB SNR on structured low-frequency tensors, while dropping to 2.03 dB on unstructured IID random tensors (an honest null boundary documented in Paper #2).</p>
+    <p><strong>Live forensic claim audit catch (#68791):</strong> Running the native claim-to-receipt auditor (CLI #15) exposed 54 of 231 previously marked BUILT claims with drifted or missing receipt citations before remediation and strict fail-closed enforcement.</p>
+    <p><strong>Microkernel and post-quantum trust-boundary limits (Papers #4 and #5, #68852 / #68873):</strong> Stage-0 Rust bootstrap remains outside the Stage-2 Zero-C compilation boundary, RV64/AArch64 execution runs in deterministic user-space emulators without bare-metal silicon drivers, and all custom ML-KEM-512, X25519, AEAD, and Ed25519 routines remain pre-audit pending independent side-channel review.</p>
+    <p><strong>Open rendering benchmark (CS-040):</strong> 16 km volumetric fog shadow caching and calibrated night-sky photometry remain explicitly open in the competitive register until verified end-to-end on hardware.</p>
+    <p><strong>Offline preprint status:</strong> All five six-page PDFs and Zenodo metadata packages are staged strictly offline on disk with zero automatic external uploads to arXiv or Zenodo.</p>
+  </div>
+</section>
+
+<section class="ds-sec" id="receipts" aria-labelledby="h-receipts">
+  <h2 id="h-receipts">Verified Flywheel catalogue ID ledger (56 entries)</h2>
+  <div class="pp-wrap" tabindex="0" role="region" aria-label="Verified receipt catalogue IDs cited across the five papers">
+    <table class="pp-table">
+      <colgroup><col style="width:13%"><col style="width:49%"><col style="width:18%"><col style="width:20%"></colgroup>
+      <thead>
+        <tr><th scope="col">Catalogue ID</th><th scope="col">Verified evidence scope</th><th scope="col">Cited in</th><th scope="col">Track</th></tr>
+      </thead>
+      <tbody>
+        <tr data-track="cs.AI-cs.SE">
+          <th scope="row" class="mono">#68675</th>
+          <td>Flywheel rsi_guard v1 baseline before Crucible tail-fuzz patch</td>
+          <td class="mono">Paper #2</td>
+          <td class="mono">cs.AI-cs.SE</td>
+        </tr>
+        <tr data-track="cs.PL-cs.OS">
+          <th scope="row" class="mono">#68718</th>
+          <td>GPU 5-backend externally validated compute shaders (Batch 1)</td>
+          <td class="mono">Paper #1</td>
+          <td class="mono">cs.PL-cs.OS</td>
+        </tr>
+        <tr data-track="cs.AI-cs.SE">
+          <th scope="row" class="mono">#68722</th>
+          <td>15/15 public repository CycloneDX SBOMs (556 components)</td>
+          <td class="mono">Paper #2</td>
+          <td class="mono">cs.AI-cs.SE</td>
+        </tr>
+        <tr data-track="cs.PL-cs.OS">
+          <th scope="row" class="mono">#68729</th>
+          <td>GPU 5-backend externally validated compute shaders (Batch 2)</td>
+          <td class="mono">Paper #1</td>
+          <td class="mono">cs.PL-cs.OS</td>
+        </tr>
+        <tr data-track="cs.AI-cs.SE">
+          <th scope="row" class="mono">#68737</th>
+          <td>10/10 pure-OSI MCP server governance descriptors</td>
+          <td class="mono">Paper #2</td>
+          <td class="mono">cs.AI-cs.SE</td>
+        </tr>
+        <tr data-track="cs.PL-cs.OS cs.OS-SOSP">
+          <th scope="row" class="mono">#68741</th>
+          <td>BuildOS Zero-C Slice 17 signed bootloader (5 ISAs)</td>
+          <td class="mono">Paper #1, Paper #4</td>
+          <td class="mono">cs.PL-cs.OS, cs.OS-SOSP</td>
+        </tr>
+        <tr data-track="cs.AI-cs.SE">
+          <th scope="row" class="mono">#68744</th>
+          <td>J13 SVD spectral rank-collapse guard (5.80e-16 parity)</td>
+          <td class="mono">Paper #2</td>
+          <td class="mono">cs.AI-cs.SE</td>
+        </tr>
+        <tr data-track="cs.AI-cs.SE">
+          <th scope="row" class="mono">#68749</th>
+          <td>CS-017 sharded proof-mutant harness (180/180 kill rate)</td>
+          <td class="mono">Paper #2</td>
+          <td class="mono">cs.AI-cs.SE</td>
+        </tr>
+        <tr data-track="cs.PL-cs.OS cs.OS-SOSP">
+          <th scope="row" class="mono">#68750</th>
+          <td>BuildOS Zero-C Slice 18 capability W^X scheduler (5 ISAs)</td>
+          <td class="mono">Paper #1, Paper #4</td>
+          <td class="mono">cs.PL-cs.OS, cs.OS-SOSP</td>
+        </tr>
+        <tr data-track="cs.PL-cs.OS">
+          <th scope="row" class="mono">#68754</th>
+          <td>GPU 5-backend externally validated compute shaders (105/105 FMA parity)</td>
+          <td class="mono">Paper #1</td>
+          <td class="mono">cs.PL-cs.OS</td>
+        </tr>
+        <tr data-track="cs.GR">
+          <th scope="row" class="mono">#68756</th>
+          <td>RTX 4090 RAW DX12 SM 6.10 Cooperative Vector NTC (-83.33% VRAM)</td>
+          <td class="mono">Paper #3</td>
+          <td class="mono">cs.GR</td>
+        </tr>
+        <tr data-track="cs.GR">
+          <th scope="row" class="mono">#68757</th>
+          <td>CS-039 / CS-042 spectral optics and graphics surpass kernels</td>
+          <td class="mono">Paper #3</td>
+          <td class="mono">cs.GR</td>
+        </tr>
+        <tr data-track="cs.PL-cs.OS cs.OS-SOSP">
+          <th scope="row" class="mono">#68759</th>
+          <td>BuildOS Zero-C Slice 19 zero-copy IPC and Merkle VFS (5 ISAs)</td>
+          <td class="mono">Paper #1, Paper #4</td>
+          <td class="mono">cs.PL-cs.OS, cs.OS-SOSP</td>
+        </tr>
+        <tr data-track="cs.AI-cs.SE">
+          <th scope="row" class="mono">#68760</th>
+          <td>CS-024 Crucible tail-risk fuzzer catching NaN/-Inf bypasses</td>
+          <td class="mono">Paper #2</td>
+          <td class="mono">cs.AI-cs.SE</td>
+        </tr>
+        <tr data-track="cs.AI-cs.SE">
+          <th scope="row" class="mono">#68764</th>
+          <td>CS-009 Sleep-LoRA continual consolidation (-97.09% error, +0.061% drift)</td>
+          <td class="mono">Paper #2</td>
+          <td class="mono">cs.AI-cs.SE</td>
+        </tr>
+        <tr data-track="cs.GR">
+          <th scope="row" class="mono">#68766</th>
+          <td>CS-047 graphics surpass kernel with superopt certificate</td>
+          <td class="mono">Paper #3</td>
+          <td class="mono">cs.GR</td>
+        </tr>
+        <tr data-track="cs.GR">
+          <th scope="row" class="mono">#68768</th>
+          <td>C++23 to BuildLang 0-ULP renderer Module #18 (art_pbr_lobes)</td>
+          <td class="mono">Paper #3</td>
+          <td class="mono">cs.GR</td>
+        </tr>
+        <tr data-track="cs.PL-cs.OS cs.OS-SOSP">
+          <th scope="row" class="mono">#68769</th>
+          <td>BuildOS Zero-C Slice 20 end-to-end triad (21.86 KB WASM, 5 ISAs)</td>
+          <td class="mono">Paper #1, Paper #4</td>
+          <td class="mono">cs.PL-cs.OS, cs.OS-SOSP</td>
+        </tr>
+        <tr data-track="cs.AI-cs.SE">
+          <th scope="row" class="mono">#68771</th>
+          <td>Flywheel rsi_guard v2 patched (1,160/1,160 tail-fuzz cases, 0 bypasses)</td>
+          <td class="mono">Paper #2</td>
+          <td class="mono">cs.AI-cs.SE</td>
+        </tr>
+        <tr data-track="cs.PL-cs.OS">
+          <th scope="row" class="mono">#68773</th>
+          <td>120/120 externally validated 5-target GPU shaders (-48.82% MIR cost)</td>
+          <td class="mono">Paper #1</td>
+          <td class="mono">cs.PL-cs.OS</td>
+        </tr>
+        <tr data-track="cs.PL-cs.OS">
+          <th scope="row" class="mono">#68775</th>
+          <td>528 zero-FLAG formulas and 13/13 native auditors</td>
+          <td class="mono">Paper #1</td>
+          <td class="mono">cs.PL-cs.OS</td>
+        </tr>
+        <tr data-track="cs.GR">
+          <th scope="row" class="mono">#68776</th>
+          <td>CS-049 Fourier optics and PDB provenance surpass kernel</td>
+          <td class="mono">Paper #3</td>
+          <td class="mono">cs.GR</td>
+        </tr>
+        <tr data-track="cs.GR">
+          <th scope="row" class="mono">#68777</th>
+          <td>C++23 to BuildLang 0-ULP renderer Module #19 (art_bvh)</td>
+          <td class="mono">Paper #3</td>
+          <td class="mono">cs.GR</td>
+        </tr>
+        <tr data-track="cs.PL-cs.OS cs.AI-cs.SE">
+          <th scope="row" class="mono">#68778</th>
+          <td>CS-014 fractal procedural weights (+42.16 dB structured vs 2.03 dB IID null)</td>
+          <td class="mono">Paper #1, Paper #2</td>
+          <td class="mono">cs.PL-cs.OS, cs.AI-cs.SE</td>
+        </tr>
+        <tr data-track="cs.GR">
+          <th scope="row" class="mono">#68779</th>
+          <td>CS-045 persistent 3D memory and CS-046 two-view mocap surpass kernels</td>
+          <td class="mono">Paper #3</td>
+          <td class="mono">cs.GR</td>
+        </tr>
+        <tr data-track="cs.AI-cs.SE">
+          <th scope="row" class="mono">#68781</th>
+          <td>Flywheel buildos_attest 5-ISA verifier (200/200 tail-fuzz cases)</td>
+          <td class="mono">Paper #2</td>
+          <td class="mono">cs.AI-cs.SE</td>
+        </tr>
+        <tr data-track="cs.PL-cs.OS">
+          <th scope="row" class="mono">#68784</th>
+          <td>60/60 live MIT Playground WASM modules (339.30 KB)</td>
+          <td class="mono">Paper #1</td>
+          <td class="mono">cs.PL-cs.OS</td>
+        </tr>
+        <tr data-track="cs.OS-SOSP">
+          <th scope="row" class="mono">#68785</th>
+          <td>BuildOS Zero-C Slice 21 encrypted network and package verifier (5 ISAs)</td>
+          <td class="mono">Paper #4</td>
+          <td class="mono">cs.OS-SOSP</td>
+        </tr>
+        <tr data-track="cs.PL-cs.OS cs.GR">
+          <th scope="row" class="mono">#68786</th>
+          <td>C++23 to BuildLang 0-ULP renderer Module #20 (art_ploc_bvh)</td>
+          <td class="mono">Paper #1, Paper #3</td>
+          <td class="mono">cs.PL-cs.OS, cs.GR</td>
+        </tr>
+        <tr data-track="cs.AI-cs.SE">
+          <th scope="row" class="mono">#68789</th>
+          <td>CS-005 FCA-Titans (75.48x 128k VRAM cut) and CS-006 Sparrow (71.58x loss drop)</td>
+          <td class="mono">Paper #2</td>
+          <td class="mono">cs.AI-cs.SE</td>
+        </tr>
+        <tr data-track="cs.AI-cs.SE">
+          <th scope="row" class="mono">#68791</th>
+          <td>CLI #15 workstation_ideas_gate exposing 54/231 drifted/uncited claims live</td>
+          <td class="mono">Paper #2</td>
+          <td class="mono">cs.AI-cs.SE</td>
+        </tr>
+        <tr data-track="cs.GR">
+          <th scope="row" class="mono">#68792</th>
+          <td>C++23 to BuildLang 0-ULP renderer Module #21 (art_taa)</td>
+          <td class="mono">Paper #3</td>
+          <td class="mono">cs.GR</td>
+        </tr>
+        <tr data-track="cs.PL-cs.OS">
+          <th scope="row" class="mono">#68793</th>
+          <td>Paper #1 sealed preprint receipt (BuildLang Zero-C 5-ISA and 5-GPU)</td>
+          <td class="mono">Paper #1</td>
+          <td class="mono">cs.PL-cs.OS</td>
+        </tr>
+        <tr data-track="cs.GR">
+          <th scope="row" class="mono">#68794</th>
+          <td>C++23 to BuildLang 0-ULP renderer Module #22 (art_gtao)</td>
+          <td class="mono">Paper #3</td>
+          <td class="mono">cs.GR</td>
+        </tr>
+        <tr data-track="cs.OS-SOSP">
+          <th scope="row" class="mono">#68795</th>
+          <td>BuildOS Zero-C Slice 22 display compositor and frame isolation (5 ISAs)</td>
+          <td class="mono">Paper #4</td>
+          <td class="mono">cs.OS-SOSP</td>
+        </tr>
+        <tr data-track="cs.AI-cs.SE">
+          <th scope="row" class="mono">#68797</th>
+          <td>Paper #2 sealed preprint receipt (Flywheel Accountable Self-Improvement)</td>
+          <td class="mono">Paper #2</td>
+          <td class="mono">cs.AI-cs.SE</td>
+        </tr>
+        <tr data-track="cs.OS-SOSP">
+          <th scope="row" class="mono">#68805</th>
+          <td>BuildOS Zero-C Slice 23 anti-keylogger HID and Q15 audio DSP (5 ISAs)</td>
+          <td class="mono">Paper #4</td>
+          <td class="mono">cs.OS-SOSP</td>
+        </tr>
+        <tr data-track="cs.GR">
+          <th scope="row" class="mono">#68808</th>
+          <td>Paper #3 sealed preprint receipt (Bit-Exact C++23 to BuildLang Rendering)</td>
+          <td class="mono">Paper #3</td>
+          <td class="mono">cs.GR</td>
+        </tr>
+        <tr data-track="cs.OS-SOSP">
+          <th scope="row" class="mono">#68814</th>
+          <td>Cross-ecosystem Benchmarks V4 (20/20 workloads, 57/57 cells, 1.59x Slice 21 WASM)</td>
+          <td class="mono">Paper #4</td>
+          <td class="mono">cs.OS-SOSP</td>
+        </tr>
+        <tr data-track="cs.OS-SOSP">
+          <th scope="row" class="mono">#68816</th>
+          <td>BuildOS-1.0 Slice 24 unified 7-subsystem microkernel (72.83 KB WASM, 6/6 attacks)</td>
+          <td class="mono">Paper #4</td>
+          <td class="mono">cs.OS-SOSP</td>
+        </tr>
+        <tr data-track="cs.OS-SOSP">
+          <th scope="row" class="mono">#68817</th>
+          <td>CMMNS WASM Bridge V4 and site papers surface verification (1,772/1,772 tests)</td>
+          <td class="mono">Paper #4</td>
+          <td class="mono">cs.OS-SOSP</td>
+        </tr>
+        <tr data-track="cs.OS-SOSP">
+          <th scope="row" class="mono">#68819</th>
+          <td>BuildOS Zero-C Slice 25 4-core SMP capability scheduler and Sv39/x64 MMU (5 ISAs)</td>
+          <td class="mono">Paper #4</td>
+          <td class="mono">cs.OS-SOSP</td>
+        </tr>
+        <tr data-track="cs.OS-SOSP">
+          <th scope="row" class="mono">#68825</th>
+          <td>BuildLang universe graduation PR #380 for Zero-C BuildOS kernels</td>
+          <td class="mono">Paper #4</td>
+          <td class="mono">cs.OS-SOSP</td>
+        </tr>
+        <tr data-track="cs.OS-SOSP">
+          <th scope="row" class="mono">#68832</th>
+          <td>BuildOS Zero-C Slice 26 PCIe IOMMU DMA fence and NVMe WAL (5 ISAs)</td>
+          <td class="mono">Paper #4</td>
+          <td class="mono">cs.OS-SOSP</td>
+        </tr>
+        <tr data-track="cs.OS-SOSP">
+          <th scope="row" class="mono">#68835</th>
+          <td>Step-5 Superopt V6 native auditors rebuild and 0.316 ms BuildOS gate</td>
+          <td class="mono">Paper #4</td>
+          <td class="mono">cs.OS-SOSP</td>
+        </tr>
+        <tr data-track="cs.OS-SOSP">
+          <th scope="row" class="mono">#68840</th>
+          <td>72/72 live MIT Playground WASM module suite (529.83 KB)</td>
+          <td class="mono">Paper #4</td>
+          <td class="mono">cs.OS-SOSP</td>
+        </tr>
+        <tr data-track="cs.OS-SOSP">
+          <th scope="row" class="mono">#68841</th>
+          <td>BuildOS Zero-C Slice 27 GPU command queue, certified shader fence, and VRAM arena (5 ISAs)</td>
+          <td class="mono">Paper #4</td>
+          <td class="mono">cs.OS-SOSP</td>
+        </tr>
+        <tr data-track="cs.CR-cs.OS">
+          <th scope="row" class="mono">#68848</th>
+          <td>BuildOS Zero-C Slice 28 confidential enclave sealing and Ed25519 remote quote (35,925 B WASM)</td>
+          <td class="mono">Paper #5</td>
+          <td class="mono">cs.CR-cs.OS</td>
+        </tr>
+        <tr data-track="cs.OS-SOSP cs.CR-cs.OS">
+          <th scope="row" class="mono">#68852</th>
+          <td>Paper #4 sealed preprint receipt (Zero-C Sovereign Microkernels Across Five ISAs)</td>
+          <td class="mono">Paper #4, Paper #5</td>
+          <td class="mono">cs.OS-SOSP, cs.CR-cs.OS</td>
+        </tr>
+        <tr data-track="cs.CR-cs.OS">
+          <th scope="row" class="mono">#68857</th>
+          <td>BuildLang Superopt V7 R31..R40 (-51.16% crypto MIR cost, 1,600/1,600 soundness fuzzer)</td>
+          <td class="mono">Paper #5</td>
+          <td class="mono">cs.CR-cs.OS</td>
+        </tr>
+        <tr data-track="cs.CR-cs.OS">
+          <th scope="row" class="mono">#68859</th>
+          <td>Flywheel enclave_quote_gate and GPU 200-pack verifier (400/400 Crucible fuzz)</td>
+          <td class="mono">Paper #5</td>
+          <td class="mono">cs.CR-cs.OS</td>
+        </tr>
+        <tr data-track="cs.CR-cs.OS">
+          <th scope="row" class="mono">#68862</th>
+          <td>BuildOS Zero-C Slice 29 FIPS 203 ML-KEM-512 + X25519 hybrid KEM (25,674 B WASM)</td>
+          <td class="mono">Paper #5</td>
+          <td class="mono">cs.CR-cs.OS</td>
+        </tr>
+        <tr data-track="cs.CR-cs.OS">
+          <th scope="row" class="mono">#68864</th>
+          <td>Test-time compute MCTS Goodhart valve (120/120 solves, 90/90 traps blocked)</td>
+          <td class="mono">Paper #5</td>
+          <td class="mono">cs.CR-cs.OS</td>
+        </tr>
+        <tr data-track="cs.CR-cs.OS">
+          <th scope="row" class="mono">#68865</th>
+          <td>19/19 live native BuildLang auditors, 20 binaries, 78/78 MIT WASM, 563 formulas</td>
+          <td class="mono">Paper #5</td>
+          <td class="mono">cs.CR-cs.OS</td>
+        </tr>
+        <tr data-track="cs.CR-cs.OS">
+          <th scope="row" class="mono">#68866</th>
+          <td>Master launch and data room Index V6 and Portfolio Integrity Auditor V7 (78/78 receipts)</td>
+          <td class="mono">Paper #5</td>
+          <td class="mono">cs.CR-cs.OS</td>
+        </tr>
+        <tr data-track="cs.CR-cs.OS">
+          <th scope="row" class="mono">#68873</th>
+          <td>Paper #5 sealed preprint receipt (Zero-C Post-Quantum Hybrid KEM and Enclave Attestation)</td>
+          <td class="mono">Paper #5</td>
+          <td class="mono">cs.CR-cs.OS</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<footer class="ds-sheet-foot">
+  <p><strong>Sheet</strong> <code>playground/papers/index.html</code></p>
+  <p><strong>Updated</strong> 2026-11-27</p>
+  <p><strong>Ground</strong> Measured Drafting Sheet | CC-BY-4.0 prose, MIT code | 5 sealed preprints | 56 verified catalogue IDs</p>
+</footer>
+</article>
+<script type="module" src="./papers_catalog.mjs"></script>
+</main>
+</body>
+</html>

@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="en" data-type="stock">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<title>Zero-C BuildOS Microkernel Triad | Zain Dana Harper</title>
+<meta name="description" content="Nine Zero-C WebAssembly binaries (SHA-256, AEAD, X25519, TLS handshake, Ed25519, signed boot, capability scheduler, IPC and Merkle VFS, end-to-end triad) running live with 25 fail-closed attack injections.">
+<link rel="canonical" href="https://harperz9.github.io/playground/buildos-triad/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Zero-C BuildOS Microkernel Triad | Zain Dana Harper">
+<meta property="og:description" content="Nine Zero-C WebAssembly binaries (SHA-256, AEAD, X25519, TLS handshake, Ed25519, signed boot, capability scheduler, IPC and Merkle VFS, end-to-end triad) running live with 25 fail-closed attack injections.">
+<meta property="og:url" content="https://harperz9.github.io/playground/buildos-triad/">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/home.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Zero-C BuildOS Microkernel Triad | Zain Dana Harper">
+<meta name="twitter:description" content="Nine Zero-C WebAssembly binaries (SHA-256, AEAD, X25519, TLS handshake, Ed25519, signed boot, capability scheduler, IPC and Merkle VFS, end-to-end triad) running live with 25 fail-closed attack injections.">
+<link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-6218db2f12">
+<link rel="stylesheet" href="/studies/studies.css?v=world-6218db2f12">
+<link rel="stylesheet" href="/world/site/depth.css?v=world-6218db2f12">
+<script type="module" src="/world/ui/shell/shell.js?v=world-6218db2f12"></script>
+<script type="module" src="/world/site/hand-scroll.js?v=world-6218db2f12"></script>
+<meta name="triad-manifest-sha256" content="ab648dcfd9e482ecfb21ac9c2661695d0dd6fd50923863a166b4365af580b2a8">
+<style>
+  .bt-toolbar { display: flex; flex-wrap: wrap; gap: 0.5rem 0.65rem; align-items: center; padding: 0.85rem 0; border-bottom: 1px solid var(--line); }
+  .bt-toolbar button, .bt-inject { background: transparent; color: var(--ink); border: 1px solid var(--line); padding: 0.4rem 0.72rem; min-height: 40px; font-family: var(--face-utility); font-size: 0.82rem; cursor: pointer; }
+  .bt-toolbar button:focus-visible, .bt-inject:focus-visible, .bt-wrap:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .bt-readout { padding: 0.8rem 0; border-bottom: 1px solid var(--line); font-family: var(--face-utility); font-size: 0.84rem; font-variant-numeric: tabular-nums; min-height: 5.2rem; }
+  .bt-readout p { margin: 0.22rem 0; }
+  .bt-wrap { width: 100%; overflow-x: auto; margin-top: 0.5rem; }
+  .bt-wrap-ledger { min-height: 640px; }
+  .bt-wrap-attacks { min-height: 1760px; }
+  .bt-wrap-controls { min-height: 190px; }
+  .bt-table { width: 100%; min-width: 680px; table-layout: fixed; border-collapse: collapse; font-size: 0.84rem; }
+  .bt-table th, .bt-table td { text-align: left; padding: 0.5rem 0.55rem 0.5rem 0; border-bottom: 1px solid var(--line); vertical-align: top; overflow: hidden; }
+  .bt-table th:last-child, .bt-table td:last-child { padding-right: 0; }
+  .bt-table thead th { font-family: var(--face-utility); font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--soft); font-weight: 600; }
+  .bt-table .mono { font-family: var(--face-utility); font-variant-numeric: tabular-nums; white-space: nowrap; text-overflow: ellipsis; }
+  .bt-sub { display: block; font-family: var(--face-utility); font-size: 0.73rem; color: var(--soft); font-weight: 400; margin-top: 0.12rem; }
+</style></head>
+<body class="reading ds-sheet">
+
+<header class="o-hand o-said" aria-label="Site">
+  <a class="skip" href="#main">Skip to the page</a>
+  <a class="o-home" href="/">Zain Dana Harper</a>
+  <a data-o="band" href="/world/universe/proto/index.html"><span class="o-name">Map</span></a>
+  <button type="button" data-o="fold" aria-controls="o-menu" aria-keyshortcuts="m" aria-expanded="false" hidden><span class="o-name">Places</span><i></i><i></i><i></i></button>
+  <button type="button" data-o="lamp" data-theme-toggle aria-pressed="true"><span class="o-name">Day</span></button>
+  <span class="o-cell"><button type="button" data-o="peel" data-plain-toggle aria-pressed="false"><span class="o-name">Plain</span></button><span class="o-under" aria-hidden="true">Plain</span></span>
+</header>
+<dialog id="o-menu" data-o="menu" data-material="chladni" aria-label="Places">
+  <nav aria-label="Places">
+    <ul class="o-places">
+      <li><a href="/buildlang.html"><span class="o-word" data-display-on-open="glyphcell">BuildLang</span></a></li>
+      <li><a href="/flywheel.html"><span class="o-word" data-display-on-open="light">Flywheel</span></a><small class="o-sub"><a href="/cmmns.html">CMMNS</a> <a href="/articulate.html">Articulate</a></small></li>
+      <li><a href="/playground/"><span class="o-word" data-display-on-open="nightlights">The Playground</span></a><small class="o-sub"><a href="/playground/#estuary">Estuary</a> <a href="/playground/#native">Native renderer</a> <a href="/playground/#superframe">Superframe</a> <a href="/playground/#workbench">All creative engines</a> <a href="/playground/#low-water">Low Water</a></small></li>
+      <li><a href="/playground/#low-water"><span class="o-word" data-display-on-open="chladni">Game</span></a></li>
+      <li><a href="/#site"><span class="o-word" data-display-on-open="swarm">Site</span></a></li>
+      <li><a href="/floor.html"><span class="o-word" data-display-on-open="rope">Everything</span></a></li>
+      <li><a href="/models.html"><span class="o-word" data-display-on-open="rope">Models</span></a></li>
+      <li><a href="/tools.html"><span class="o-word" data-display-on-open="rope">Tools &amp; Repos</span></a></li>
+      <li><a href="/person.html"><span class="o-word" data-display-on-open="rope">About</span></a></li>
+      <li><a href="/architecture.html"><span class="o-word" data-display-on-open="rope">Architecture</span></a></li>
+      <li><a href="/world/universe/proto/index.html"><span class="o-word" data-display-on-open="rope">Map</span></a></li>
+      <li><a href="/publications.html"><span class="o-word" data-display-on-open="swarm">Writing</span></a></li>
+      <li><a href="/explainers.html"><span class="o-word" data-display-on-open="sound">Films</span></a></li>
+      <li><a href="/security.html"><span class="o-word" data-display-on-open="rope">Security</span></a></li>
+      <li><a href="/hire.html"><span class="o-word" data-display-on-open="rope">Work</span></a></li>
+      <li><a href="/cv.html"><span class="o-word" data-display-on-open="rope">CV</span></a></li>
+    </ul>
+  </nav>
+  <p class="o-menu-foot"><a href="/architecture.html">Architecture</a> <a href="/models.html">Models</a> <a href="/tools.html">Tools &amp; 159 Repos</a> <a href="/research.html">Research</a> <a href="/portfolio.html">Portfolio</a> <a href="/elements.html">Elements</a> <a href="/studies/">Studies</a> <a href="/site-index.html">Site index</a> <button type="button" class="o-close" data-qj-open onclick="this.closest('dialog').close()">Search (Ctrl+K)</button> <button type="button" class="o-close" onclick="this.closest('dialog').close()">Close (Esc)</button></p>
+</dialog>
+<main id="main" tabindex="-1">
+<article class="st" id="buildos-triad">
+<header class="ds-sheet-head">
+  <p class="ds-kicker">Measured Drafting Sheet / Zero-C BuildOS Microkernel Triad</p>
+  <h1>Zero-C BuildOS Triad, Running Live in Your Browser</h1>
+  <p class="ds-lede">9 pure-OSI MIT WebAssembly binaries built by the self-hosted BuildLang backend with no C compiler and no linker (111,830 bytes total, 0 imports each): SHA-256, ChaCha20-Poly1305, X25519, a TLS mini handshake, Ed25519, a signed bootloader, a capability scheduler with W^X, a zero-copy IPC and Merkle filesystem, and the end-to-end triad. Each binary is checked against a pinned SHA-256 before it compiles, then run here, then attacked 25 ways. Every attack must fail closed.</p>
+  <p class="ds-meta"><span>9 binaries, 0 imports</span><span>25 injectable attacks</span><span>3 integrity controls</span><span>109.21 KB total</span></p>
+  <nav class="ds-ways" aria-label="Related surfaces">
+    <a href="/playground/">The Playground</a>
+    <a href="/playground/crypto-bench/">Zero-C Crypto Lab</a>
+    <a href="/playground/gpu-shaders/">GPU Shaders</a>
+    <a href="/playground/sbom/">Supply Chain Explorer</a>
+    <a href="./triad_manifest.json">Manifest JSON</a>
+  </nav>
+</header>
+
+<section class="ds-sec" id="run" aria-labelledby="h-run">
+  <h2 id="h-run">Live verification and attack injection</h2>
+  <div class="bt-toolbar" role="group" aria-label="Triad controls">
+    <button type="button" id="bt-inject-all">Inject all 25 attacks</button>
+    <button type="button" id="bt-controls">Run 3 integrity controls</button>
+  </div>
+  <div class="bt-readout" aria-live="polite">
+    <p id="bt-status">Clean runs: pending | Attacks rejected: 0/25 | Integrity controls: 0/3</p>
+    <p id="bt-digest">Manifest SHA-256: pending</p>
+  </div>
+
+  <h3>Binary ledger</h3>
+  <div class="bt-wrap bt-wrap-ledger" tabindex="0" role="region" aria-label="Zero-C binary ledger">
+    <table class="bt-table">
+      <colgroup><col style="width:33%"><col style="width:11%"><col style="width:9%"><col style="width:16%"><col style="width:20%"><col style="width:11%"></colgroup>
+      <thead>
+        <tr><th scope="col">Binary</th><th scope="col">Size</th><th scope="col">Imports</th><th scope="col">Pinned SHA-256</th><th scope="col">Live run</th><th scope="col">Time</th></tr>
+      </thead>
+      <tbody>
+        <tr data-slug="sha256_zeroc">
+          <th scope="row">FIPS 180-4 SHA-256<span class="bt-sub">Slice 11 | sha256_zeroc.wasm</span></th>
+          <td class="mono">2,992 B</td>
+          <td class="mono">0</td>
+          <td class="mono" title="0f4755595ead4a5617506e78feee3ce958913c78b803d1528de70cca3a5f2fc9">0f4755595ead</td>
+          <td class="mono" data-cell="status">PENDING</td>
+          <td class="mono" data-cell="ms">pending</td>
+        </tr>
+        <tr data-slug="aead_chacha20_poly1305">
+          <th scope="row">RFC 8439 ChaCha20-Poly1305 AEAD<span class="bt-sub">Slice 13 | aead_chacha20_poly1305.wasm</span></th>
+          <td class="mono">3,381 B</td>
+          <td class="mono">0</td>
+          <td class="mono" title="82d4277caf047ed91c86453be40c82f87c9da8e0ecc6561868d6cfb6416e3b54">82d4277caf04</td>
+          <td class="mono" data-cell="status">PENDING</td>
+          <td class="mono" data-cell="ms">pending</td>
+        </tr>
+        <tr data-slug="x25519_curve25519_zeroc">
+          <th scope="row">RFC 7748 X25519 ECDH<span class="bt-sub">Slice 14 | x25519_curve25519_zeroc.wasm</span></th>
+          <td class="mono">4,392 B</td>
+          <td class="mono">0</td>
+          <td class="mono" title="85f5feeba8623f58dc26496941d5698634f314a5265d13208d04d5467a81bf91">85f5feeba862</td>
+          <td class="mono" data-cell="status">PENDING</td>
+          <td class="mono" data-cell="ms">pending</td>
+        </tr>
+        <tr data-slug="tls_mini_handshake_zeroc">
+          <th scope="row">TLS mini handshake (X25519, HKDF-SHA256, AEAD)<span class="bt-sub">Slice 15 | tls_mini_handshake_zeroc.wasm</span></th>
+          <td class="mono">11,829 B</td>
+          <td class="mono">0</td>
+          <td class="mono" title="8f8529a64e8cf084bfa42e71bf03f8e7ba90ac290e20a0f5dfe556320e675eb6">8f8529a64e8c</td>
+          <td class="mono" data-cell="status">PENDING</td>
+          <td class="mono" data-cell="ms">pending</td>
+        </tr>
+        <tr data-slug="ed25519_verify_zeroc">
+          <th scope="row">SHA-512 and RFC 8032 Ed25519 verify<span class="bt-sub">Slice 16 | ed25519_verify_zeroc.wasm</span></th>
+          <td class="mono">21,748 B</td>
+          <td class="mono">0</td>
+          <td class="mono" title="cf4c44206ea1b7b308681e2cb186bc610909453ec3b90923fafcf235afec642a">cf4c44206ea1</td>
+          <td class="mono" data-cell="status">PENDING</td>
+          <td class="mono" data-cell="ms">pending</td>
+        </tr>
+        <tr data-slug="buildos_signed_boot_zeroc">
+          <th scope="row">Signed bootloader (SHA-256, epoch, RFC 6962, Ed25519)<span class="bt-sub">Slice 17 | buildos_signed_boot_zeroc.wasm</span></th>
+          <td class="mono">26,577 B</td>
+          <td class="mono">0</td>
+          <td class="mono" title="0b375a5f0ecfd463b0856da8d24b2bd17ea8d707f5ea4b79d708f7e6e52a5b68">0b375a5f0ecf</td>
+          <td class="mono" data-cell="status">PENDING</td>
+          <td class="mono" data-cell="ms">pending</td>
+        </tr>
+        <tr data-slug="buildos_cap_sched_zeroc">
+          <th scope="row">Capability scheduler, W^X, code-page SHA-256<span class="bt-sub">Slice 18 | buildos_cap_sched_zeroc.wasm</span></th>
+          <td class="mono">9,912 B</td>
+          <td class="mono">0</td>
+          <td class="mono" title="4cb9a8a18155ba65394d911ea2e41ea66541ac1ceda1db7ae8abdd7a86275991">4cb9a8a18155</td>
+          <td class="mono" data-cell="status">PENDING</td>
+          <td class="mono" data-cell="ms">pending</td>
+        </tr>
+        <tr data-slug="buildos_ipc_vfs_zeroc">
+          <th scope="row">Zero-copy capability IPC and Merkle VFS<span class="bt-sub">Slice 19 | buildos_ipc_vfs_zeroc.wasm</span></th>
+          <td class="mono">9,132 B</td>
+          <td class="mono">0</td>
+          <td class="mono" title="972feffea2383fde60d4062ea6b070f6403e2710902d6086fc0eb9a378a6de0a">972feffea238</td>
+          <td class="mono" data-cell="status">PENDING</td>
+          <td class="mono" data-cell="ms">pending</td>
+        </tr>
+        <tr data-slug="buildos_e2e_triad_zeroc">
+          <th scope="row">End-to-end boot, schedule, IPC and VFS triad<span class="bt-sub">Slice 20 | buildos_e2e_triad_zeroc.wasm</span></th>
+          <td class="mono">21,867 B</td>
+          <td class="mono">0</td>
+          <td class="mono" title="12aaf82cf6f0dc96a5e42a7ec917bb403bd713012b3f579db27ddce2205a3f2d">12aaf82cf6f0</td>
+          <td class="mono" data-cell="status">PENDING</td>
+          <td class="mono" data-cell="ms">pending</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Attack matrix</h3>
+  <div class="bt-wrap bt-wrap-attacks" tabindex="0" role="region" aria-label="Attack injection matrix">
+    <table class="bt-table">
+      <colgroup><col style="width:26%"><col style="width:29%"><col style="width:11%"><col style="width:11%"><col style="width:12%"><col style="width:11%"></colgroup>
+      <thead>
+        <tr><th scope="col">Binary</th><th scope="col">Injected attack</th><th scope="col">Expected</th><th scope="col">Observed</th><th scope="col">Verdict</th><th scope="col">Action</th></tr>
+      </thead>
+      <tbody>
+        <tr data-slug="sha256_zeroc" data-mode="1">
+          <th scope="row">FIPS 180-4 SHA-256<span class="bt-sub">Slice 11</span></th>
+          <td>Flip 1 input bit (abc to abd), compare to WebCrypto</td>
+          <td class="mono">rc=-1</td>
+          <td class="mono" data-cell="obs">pending</td>
+          <td class="mono" data-cell="verdict">NOT RUN</td>
+          <td><button type="button" class="bt-inject" data-slug="sha256_zeroc" data-mode="1" aria-label="Inject attack Flip 1 input bit (abc to abd), compare to WebCrypto into FIPS 180-4 SHA-256">Inject</button></td>
+        </tr>
+        <tr data-slug="aead_chacha20_poly1305" data-mode="1">
+          <th scope="row">RFC 8439 ChaCha20-Poly1305 AEAD<span class="bt-sub">Slice 13</span></th>
+          <td>1-bit ciphertext flip</td>
+          <td class="mono">rc=0</td>
+          <td class="mono" data-cell="obs">pending</td>
+          <td class="mono" data-cell="verdict">NOT RUN</td>
+          <td><button type="button" class="bt-inject" data-slug="aead_chacha20_poly1305" data-mode="1" aria-label="Inject attack 1-bit ciphertext flip into RFC 8439 ChaCha20-Poly1305 AEAD">Inject</button></td>
+        </tr>
+        <tr data-slug="aead_chacha20_poly1305" data-mode="2">
+          <th scope="row">RFC 8439 ChaCha20-Poly1305 AEAD<span class="bt-sub">Slice 13</span></th>
+          <td>1-bit AAD header flip</td>
+          <td class="mono">rc=0</td>
+          <td class="mono" data-cell="obs">pending</td>
+          <td class="mono" data-cell="verdict">NOT RUN</td>
+          <td><button type="button" class="bt-inject" data-slug="aead_chacha20_poly1305" data-mode="2" aria-label="Inject attack 1-bit AAD header flip into RFC 8439 ChaCha20-Poly1305 AEAD">Inject</button></td>
+        </tr>
+        <tr data-slug="x25519_curve25519_zeroc" data-mode="1">
+          <th scope="row">RFC 7748 X25519 ECDH<span class="bt-sub">Slice 14</span></th>
+          <td>1-bit Alice scalar flip</td>
+          <td class="mono">rc=0</td>
+          <td class="mono" data-cell="obs">pending</td>
+          <td class="mono" data-cell="verdict">NOT RUN</td>
+          <td><button type="button" class="bt-inject" data-slug="x25519_curve25519_zeroc" data-mode="1" aria-label="Inject attack 1-bit Alice scalar flip into RFC 7748 X25519 ECDH">Inject</button></td>
+        </tr>
+        <tr data-slug="tls_mini_handshake_zeroc" data-mode="1">
+          <th scope="row">TLS mini handshake (X25519, HKDF-SHA256, AEAD)<span class="bt-sub">Slice 15</span></th>
+          <td>MITM transcript key swap</td>
+          <td class="mono">rc=-101</td>
+          <td class="mono" data-cell="obs">pending</td>
+          <td class="mono" data-cell="verdict">NOT RUN</td>
+          <td><button type="button" class="bt-inject" data-slug="tls_mini_handshake_zeroc" data-mode="1" aria-label="Inject attack MITM transcript key swap into TLS mini handshake (X25519, HKDF-SHA256, AEAD)">Inject</button></td>
+        </tr>
+        <tr data-slug="tls_mini_handshake_zeroc" data-mode="2">
+          <th scope="row">TLS mini handshake (X25519, HKDF-SHA256, AEAD)<span class="bt-sub">Slice 15</span></th>
+          <td>1-bit ciphertext flip</td>
+          <td class="mono">rc=-201</td>
+          <td class="mono" data-cell="obs">pending</td>
+          <td class="mono" data-cell="verdict">NOT RUN</td>
+          <td><button type="button" class="bt-inject" data-slug="tls_mini_handshake_zeroc" data-mode="2" aria-label="Inject attack 1-bit ciphertext flip into TLS mini handshake (X25519, HKDF-SHA256, AEAD)">Inject</button></td>
+        </tr>
+        <tr data-slug="ed25519_verify_zeroc" data-mode="1">
+          <th scope="row">SHA-512 and RFC 8032 Ed25519 verify<span class="bt-sub">Slice 16</span></th>
+          <td>1-bit signature S flip</td>
+          <td class="mono">rc=-101</td>
+          <td class="mono" data-cell="obs">pending</td>
+          <td class="mono" data-cell="verdict">NOT RUN</td>
+          <td><button type="button" class="bt-inject" data-slug="ed25519_verify_zeroc" data-mode="1" aria-label="Inject attack 1-bit signature S flip into SHA-512 and RFC 8032 Ed25519 verify">Inject</button></td>
+        </tr>
+        <tr data-slug="ed25519_verify_zeroc" data-mode="2">
+          <th scope="row">SHA-512 and RFC 8032 Ed25519 verify<span class="bt-sub">Slice 16</span></th>
+          <td>1-bit message flip</td>
+          <td class="mono">rc=-201</td>
+          <td class="mono" data-cell="obs">pending</td>
+          <td class="mono" data-cell="verdict">NOT RUN</td>
+          <td><button type="button" class="bt-inject" data-slug="ed25519_verify_zeroc" data-mode="2" aria-label="Inject attack 1-bit message flip into SHA-512 and RFC 8032 Ed25519 verify">Inject</button></td>
+        </tr>
+        <tr data-slug="ed25519_verify_zeroc" data-mode="3">
+          <th scope="row">SHA-512 and RFC 8032 Ed25519 verify<span class="bt-sub">Slice 16</span></th>
+          <td>Non-canonical S &gt;= L malleability</td>
+          <td class="mono">rc=-301</td>
+          <td class="mono" data-cell="obs">pending</td>
+          <td class="mono" data-cell="verdict">NOT RUN</td>
+          <td><button type="button" class="bt-inject" data-slug="ed25519_verify_zeroc" data-mode="3" aria-label="Inject attack Non-canonical S &gt;= L malleability into SHA-512 and RFC 8032 Ed25519 verify">Inject</button></td>
+        </tr>
+        <tr data-slug="buildos_signed_boot_zeroc" data-mode="1">
+          <th scope="row">Signed bootloader (SHA-256, epoch, RFC 6962, Ed25519)<span class="bt-sub">Slice 17</span></th>
+          <td>1-bit kernel image tamper</td>
+          <td class="mono">rc=-101</td>
+          <td class="mono" data-cell="obs">pending</td>
+          <td class="mono" data-cell="verdict">NOT RUN</td>
+          <td><button type="button" class="bt-inject" data-slug="buildos_signed_boot_zeroc" data-mode="1" aria-label="Inject attack 1-bit kernel image tamper into Signed bootloader (SHA-256, epoch, RFC 6962, Ed25519)">Inject</button></td>
+        </tr>
+        <tr data-slug="buildos_signed_boot_zeroc" data-mode="2">
+          <th scope="row">Signed bootloader (SHA-256, epoch, RFC 6962, Ed25519)<span class="bt-sub">Slice 17</span></th>
+          <td>Anti-rollback epoch downgrade</td>
+          <td class="mono">rc=-201</td>
+          <td class="mono" data-cell="obs">pending</td>
+          <td class="mono" data-cell="verdict">NOT RUN</td>
+          <td><button type="button" class="bt-inject" data-slug="buildos_signed_boot_zeroc" data-mode="2" aria-label="Inject attack Anti-rollback epoch downgrade into Signed bootloader (SHA-256, epoch, RFC 6962, Ed25519)">Inject</button></td>
+        </tr>
+        <tr data-slug="buildos_signed_boot_zeroc" data-mode="3">
+          <th scope="row">Signed bootloader (SHA-256, epoch, RFC 6962, Ed25519)<span class="bt-sub">Slice 17</span></th>
+          <td>1-bit Merkle proof tamper</td>
+          <td class="mono">rc=-301</td>
+          <td class="mono" data-cell="obs">pending</td>
+          <td class="mono" data-cell="verdict">NOT RUN</td>
+          <td><button type="button" class="bt-inject" data-slug="buildos_signed_boot_zeroc" data-mode="3" aria-label="Inject attack 1-bit Merkle proof tamper into Signed bootloader (SHA-256, epoch, RFC 6962, Ed25519)">Inject</button></td>
+        </tr>
+        <tr data-slug="buildos_signed_boot_zeroc" data-mode="4">
+          <th scope="row">Signed bootloader (SHA-256, epoch, RFC 6962, Ed25519)<span class="bt-sub">Slice 17</span></th>
+          <td>1-bit Ed25519 signature tamper</td>
+          <td class="mono">rc=-401</td>
+          <td class="mono" data-cell="obs">pending</td>
+          <td class="mono" data-cell="verdict">NOT RUN</td>
+          <td><button type="button" class="bt-inject" data-slug="buildos_signed_boot_zeroc" data-mode="4" aria-label="Inject attack 1-bit Ed25519 signature tamper into Signed bootloader (SHA-256, epoch, RFC 6962, Ed25519)">Inject</button></td>
+        </tr>
+        <tr data-slug="buildos_cap_sched_zeroc" data-mode="1">
+          <th scope="row">Capability scheduler, W^X, code-page SHA-256<span class="bt-sub">Slice 18</span></th>
+          <td>W^X violation (RWX page)</td>
+          <td class="mono">rc=-101</td>
+          <td class="mono" data-cell="obs">pending</td>
+          <td class="mono" data-cell="verdict">NOT RUN</td>
+          <td><button type="button" class="bt-inject" data-slug="buildos_cap_sched_zeroc" data-mode="1" aria-label="Inject attack W^X violation (RWX page) into Capability scheduler, W^X, code-page SHA-256">Inject</button></td>
+        </tr>
+        <tr data-slug="buildos_cap_sched_zeroc" data-mode="2">
+          <th scope="row">Capability scheduler, W^X, code-page SHA-256<span class="bt-sub">Slice 18</span></th>
+          <td>Forged capability bit</td>
+          <td class="mono">rc=-201</td>
+          <td class="mono" data-cell="obs">pending</td>
+          <td class="mono" data-cell="verdict">NOT RUN</td>
+          <td><button type="button" class="bt-inject" data-slug="buildos_cap_sched_zeroc" data-mode="2" aria-label="Inject attack Forged capability bit into Capability scheduler, W^X, code-page SHA-256">Inject</button></td>
+        </tr>
+        <tr data-slug="buildos_cap_sched_zeroc" data-mode="3">
+          <th scope="row">Capability scheduler, W^X, code-page SHA-256<span class="bt-sub">Slice 18</span></th>
+          <td>1-bit code-page tamper before dispatch</td>
+          <td class="mono">rc=-301</td>
+          <td class="mono" data-cell="obs">pending</td>
+          <td class="mono" data-cell="verdict">NOT RUN</td>
+          <td><button type="button" class="bt-inject" data-slug="buildos_cap_sched_zeroc" data-mode="3" aria-label="Inject attack 1-bit code-page tamper before dispatch into Capability scheduler, W^X, code-page SHA-256">Inject</button></td>
+        </tr>
+        <tr data-slug="buildos_cap_sched_zeroc" data-mode="4">
+          <th scope="row">Capability scheduler, W^X, code-page SHA-256<span class="bt-sub">Slice 18</span></th>
+          <td>CPU budget overrun</td>
+          <td class="mono">rc=-401</td>
+          <td class="mono" data-cell="obs">pending</td>
+          <td class="mono" data-cell="verdict">NOT RUN</td>
+          <td><button type="button" class="bt-inject" data-slug="buildos_cap_sched_zeroc" data-mode="4" aria-label="Inject attack CPU budget overrun into Capability scheduler, W^X, code-page SHA-256">Inject</button></td>
+        </tr>
+        <tr data-slug="buildos_ipc_vfs_zeroc" data-mode="1">
+          <th scope="row">Zero-copy capability IPC and Merkle VFS<span class="bt-sub">Slice 19</span></th>
+          <td>Unauthorized sender (no capability)</td>
+          <td class="mono">rc=-101</td>
+          <td class="mono" data-cell="obs">pending</td>
+          <td class="mono" data-cell="verdict">NOT RUN</td>
+          <td><button type="button" class="bt-inject" data-slug="buildos_ipc_vfs_zeroc" data-mode="1" aria-label="Inject attack Unauthorized sender (no capability) into Zero-copy capability IPC and Merkle VFS">Inject</button></td>
+        </tr>
+        <tr data-slug="buildos_ipc_vfs_zeroc" data-mode="2">
+          <th scope="row">Zero-copy capability IPC and Merkle VFS<span class="bt-sub">Slice 19</span></th>
+          <td>Double send after transfer</td>
+          <td class="mono">rc=-201</td>
+          <td class="mono" data-cell="obs">pending</td>
+          <td class="mono" data-cell="verdict">NOT RUN</td>
+          <td><button type="button" class="bt-inject" data-slug="buildos_ipc_vfs_zeroc" data-mode="2" aria-label="Inject attack Double send after transfer into Zero-copy capability IPC and Merkle VFS">Inject</button></td>
+        </tr>
+        <tr data-slug="buildos_ipc_vfs_zeroc" data-mode="3">
+          <th scope="row">Zero-copy capability IPC and Merkle VFS<span class="bt-sub">Slice 19</span></th>
+          <td>1-bit silent block corruption</td>
+          <td class="mono">rc=-301</td>
+          <td class="mono" data-cell="obs">pending</td>
+          <td class="mono" data-cell="verdict">NOT RUN</td>
+          <td><button type="button" class="bt-inject" data-slug="buildos_ipc_vfs_zeroc" data-mode="3" aria-label="Inject attack 1-bit silent block corruption into Zero-copy capability IPC and Merkle VFS">Inject</button></td>
+        </tr>
+        <tr data-slug="buildos_ipc_vfs_zeroc" data-mode="4">
+          <th scope="row">Zero-copy capability IPC and Merkle VFS<span class="bt-sub">Slice 19</span></th>
+          <td>Ring sequence replay forgery</td>
+          <td class="mono">rc=-401</td>
+          <td class="mono" data-cell="obs">pending</td>
+          <td class="mono" data-cell="verdict">NOT RUN</td>
+          <td><button type="button" class="bt-inject" data-slug="buildos_ipc_vfs_zeroc" data-mode="4" aria-label="Inject attack Ring sequence replay forgery into Zero-copy capability IPC and Merkle VFS">Inject</button></td>
+        </tr>
+        <tr data-slug="buildos_e2e_triad_zeroc" data-mode="1">
+          <th scope="row">End-to-end boot, schedule, IPC and VFS triad<span class="bt-sub">Slice 20</span></th>
+          <td>Boot epoch rollback</td>
+          <td class="mono">rc=-101</td>
+          <td class="mono" data-cell="obs">pending</td>
+          <td class="mono" data-cell="verdict">NOT RUN</td>
+          <td><button type="button" class="bt-inject" data-slug="buildos_e2e_triad_zeroc" data-mode="1" aria-label="Inject attack Boot epoch rollback into End-to-end boot, schedule, IPC and VFS triad">Inject</button></td>
+        </tr>
+        <tr data-slug="buildos_e2e_triad_zeroc" data-mode="2">
+          <th scope="row">End-to-end boot, schedule, IPC and VFS triad<span class="bt-sub">Slice 20</span></th>
+          <td>Post-boot W^X escalation</td>
+          <td class="mono">rc=-201</td>
+          <td class="mono" data-cell="obs">pending</td>
+          <td class="mono" data-cell="verdict">NOT RUN</td>
+          <td><button type="button" class="bt-inject" data-slug="buildos_e2e_triad_zeroc" data-mode="2" aria-label="Inject attack Post-boot W^X escalation into End-to-end boot, schedule, IPC and VFS triad">Inject</button></td>
+        </tr>
+        <tr data-slug="buildos_e2e_triad_zeroc" data-mode="3">
+          <th scope="row">End-to-end boot, schedule, IPC and VFS triad<span class="bt-sub">Slice 20</span></th>
+          <td>IPC double-send ownership fault</td>
+          <td class="mono">rc=-301</td>
+          <td class="mono" data-cell="obs">pending</td>
+          <td class="mono" data-cell="verdict">NOT RUN</td>
+          <td><button type="button" class="bt-inject" data-slug="buildos_e2e_triad_zeroc" data-mode="3" aria-label="Inject attack IPC double-send ownership fault into End-to-end boot, schedule, IPC and VFS triad">Inject</button></td>
+        </tr>
+        <tr data-slug="buildos_e2e_triad_zeroc" data-mode="4">
+          <th scope="row">End-to-end boot, schedule, IPC and VFS triad<span class="bt-sub">Slice 20</span></th>
+          <td>VFS 1-bit block corruption</td>
+          <td class="mono">rc=-401</td>
+          <td class="mono" data-cell="obs">pending</td>
+          <td class="mono" data-cell="verdict">NOT RUN</td>
+          <td><button type="button" class="bt-inject" data-slug="buildos_e2e_triad_zeroc" data-mode="4" aria-label="Inject attack VFS 1-bit block corruption into End-to-end boot, schedule, IPC and VFS triad">Inject</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Integrity controls</h3>
+  <div class="bt-wrap bt-wrap-controls" tabindex="0" role="region" aria-label="Integrity controls">
+    <table class="bt-table">
+      <colgroup><col style="width:58%"><col style="width:22%"><col style="width:20%"></colgroup>
+      <thead>
+        <tr><th scope="col">Control</th><th scope="col">Observed</th><th scope="col">Verdict</th></tr>
+      </thead>
+      <tbody>
+        <tr data-control="byte_flip">
+          <th scope="row">1-byte binary tamper against the pinned SHA-256</th>
+          <td class="mono" data-cell="obs">pending</td>
+          <td class="mono" data-cell="verdict">NOT RUN</td>
+        </tr>
+        <tr data-control="bad_magic">
+          <th scope="row">Corrupted WebAssembly magic with a matching digest</th>
+          <td class="mono" data-cell="obs">pending</td>
+          <td class="mono" data-cell="verdict">NOT RUN</td>
+        </tr>
+        <tr data-control="extra_import">
+          <th scope="row">Binary declaring one import with a matching digest</th>
+          <td class="mono" data-cell="obs">pending</td>
+          <td class="mono" data-cell="verdict">NOT RUN</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="ds-sec" id="limits" aria-labelledby="h-limits">
+  <h2 id="h-limits">Honest scope</h2>
+  <p>The SHA-256, AEAD, and X25519 binaries are checked here against independent known answers (WebCrypto digests, the RFC 8439 tag, the RFC 7748 shared secret). The other six binaries are checked against pinned return codes and pinned SHA-256 transcripts recorded when their independent reference oracles passed. This page re-executes the binaries and compares against those pins. It does not re-derive Ed25519 or the boot chain in your browser. The SHA-256 attack is a page-side control: the binary's digest of one input is compared with WebCrypto's digest of the same input with one bit flipped.</p>
+</section>
+
+<footer class="ds-prov" aria-label="Sheet provenance">
+  <span><b>Sheet</b> playground/buildos-triad/index.html</span>
+  <span><b>Updated</b> 2026-11-27</span>
+  <span><b>Ground</b> Measured Drafting Sheet | Pure OSI MIT | 9 Zero-C binaries | 25 fail-closed attacks</span>
+</footer>
+</article>
+<script type="module" src="./buildos_triad.mjs"></script>
+</main>
+</body>
+</html>
