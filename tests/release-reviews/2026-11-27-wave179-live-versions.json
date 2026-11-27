@@ -1,7 +1,0 @@
-{
-  "date": "2026-11-27",
-  "note": "Wave 179: Sync live published versions (Flywheel 2.1.0 PyPI, Superframe 0.4.0, CMMNS 3.11.0; BuildLang 1.15.0 crates.io / v2.0.0 GitHub tag)",
-  "paths": {
-    "flywheel.html": "dd0f006f212adfb436b0fa52e1aabcfee39beca0b4151f9e800c3eb3f2bbbf13"
-  }
-}

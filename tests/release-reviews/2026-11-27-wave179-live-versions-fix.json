@@ -1,7 +1,0 @@
-{
-  "date": "2026-11-27",
-  "note": "Wave 179 live published version sync fix (Superframe 0.4.0 in discover.json and flywheel-verify ident span)",
-  "paths": {
-    "flywheel.html": "a868bd7aac104996dc137093a60f802c2c45854b549c155bc22dfa653cc431c7"
-  }
-}
