@@ -57,15 +57,21 @@ BuildLang core buildc and CMMNS remain AGPL-3.0-only; docs/essays CC BY 4.0):
   superoptimizer (buildlang #344), certified GPU polyhedral tiling + subgroup
   auto-vectorization (buildlang #346), buildlang #351 certified 2026 SOTA
   rewrites (-70.5% online-softmax op-cost, -42.1% Gated-DeltaNet, -33.3% FA4
-  Horner, GPU TV across WGSL/HLSL/MSL/SPIR-V, 14a5260c), Stage 2 == Stage 3
-  byte-identical self-hosting fixed point (catalogue #68483), universe
-  CHECK-FAILS burned down to 150 (126/276 passing via buildlang #349, bddba429),
-  native compiled benchmarks (Data Forge 283,687.3 rows/s, Articulate 27,606.0
-  docs/s, INV-01 194.59 M loops/s, N18 3DGS 323.60 FPS = 1.93x C++23, NTC610
-  -83.33% 4K PBR VRAM), 319 zero-FLAG verified formula kernels, 234 verified
-  author ideas enforced via Gate 6, discovery manifests & editors/vscode vsce
-  packaging (buildlang #348), 1.18M-record corpus engine, BuildDB (BDB),
-  BuildTeX, and live AGPL-3.0-only funding.json (buildlang #345).
+  Horner, live --superopt dogfood -70.31% MIR cost across 265 certified
+  rewrites, 0.0 drift, catalogue #68529), Stage 2 == Stage 3 byte-identical
+  self-hosting fixed point (#68483) + Zero-C direct .wasm self-host (202-376 B
+  .wasm passing 5/5 live in Node, #68517), F6 BDB query engine (73.45x sqlite3
+  on 68,500 rows, 500/500 fuzz caught, #68536), BuildOS-Core pure-BuildLang
+  capability microkernel + A/B state + supervisor (#68490/#68504/#68509),
+  clean-room CRE engine triad (207.75M BSA/s, 56.09x PEX AOT, 625x draw cut,
+  #68502/#68511/#68520), universe CHECK-FAILS burned down to 150 (126/276
+  passing via buildlang #349, bddba429), native compiled benchmarks (Data Forge
+  283,687.3 rows/s, Articulate 27,606.0 docs/s, INV-01 194.59 M loops/s, N18
+  3DGS 323.60 FPS = 1.93x C++23, NTC610 -83.33% 4K PBR VRAM), 370+ zero-FLAG
+  verified formula kernels, 95 built of 234 verified author ideas enforced via
+  Gate 6, discovery manifests & editors/vscode vsce packaging (buildlang #348),
+  1.18M-record corpus engine, BuildDB (BDB), BuildTeX, and live AGPL-3.0-only
+  funding.json (buildlang #345).
 - [The Flywheel](https://harperz9.github.io/flywheel.html): pure OSI MIT
   (flywheel #574, fb877d2e) self-hosted AI workstation consolidating 31
   packages (incl. articulate, accountable-surface, telos, and companion tools)
@@ -80,7 +86,8 @@ BuildLang core buildc and CMMNS remain AGPL-3.0-only; docs/essays CC BY 4.0):
   manifests (#570), accountable-surface C11/Win32 desktop surface + BuildLang
   FFI (#571), Win32 DPAPI/CredMan keystore + OAuth 2.0 PKCE/Device Flow + RFC
   9421 signer (#572), AgentWorkspace + DelegatedMandate + ApprovalValve (#573),
-  and EMET witnessing.
+  fsp TPM Stage L/F fail-safe governance protocol (#577, 1faa3deb: 180/180
+  tests, 29/29 red-team attacks caught, #68522), and EMET witnessing.
 - [The Commons (CMMNS)](https://harperz9.github.io/cmmns.html): local-first,
   account-free provenance and coordination overlay across 9 social platforms,
   offline Web/AI provenance CLI verifier (cmmns #130, 4/4 adversarial catches),
@@ -90,10 +97,12 @@ BuildLang core buildc and CMMNS remain AGPL-3.0-only; docs/essays CC BY 4.0):
   tests, 9/9 CI pass, 28/28 bit-exact proofs, 5/5 planted controls).
 - [Live receipt-verified experiment table (G9)](https://harperz9.github.io/experiments/index.html)
   and [receipt manifest JSON](https://harperz9.github.io/experiments/receipts/index.json):
-  90 preregistered null and refuted studies plus 10 live Wave 48-50 SHA-256
-  engine-receipt/1 JSON proofs (covering BuildLang Stage 2 == Stage 3
-  self-hosting, Data Forge, Articulate, INV-01, BuildLang #351, CMMNS #133, N18
-  3DGS, NTC610, J13 Model Epigenetics, and JFC3P v5/v2 null).
+  90 preregistered null and refuted studies plus 16 live Wave 48-55 SHA-256
+  engine-receipt/1 JSON proofs (covering Zero-C .wasm self-host, Stage 2 ==
+  Stage 3 self-hosting, -70.31% superopt dogfood, 73.45x F6 BDB, BuildOS-Core,
+  clean-room CRE triad, Flywheel #577 fsp TPM, Data Forge, Articulate, INV-01,
+  BuildLang #351, CMMNS #133, N18 3DGS, NTC610, J13 Model Epigenetics, and
+  JFC3P v5/v2 null).
 - [Biography & craft](https://harperz9.github.io/person.html),
   [Security practice](https://harperz9.github.io/security.html),
   [Hire & resumes](https://harperz9.github.io/hire.html), and

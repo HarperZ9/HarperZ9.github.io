@@ -25,7 +25,13 @@ const DATE = new Date(data.built + "T12:00:00Z").toLocaleDateString("en-GB", { d
 // G9 Live Receipt-Verified Experiment Table: every row links to a real SHA-256 engine-receipt/1 JSON file under experiments/receipts/
 const receiptsDir = path.join(site, "experiments/receipts");
 const RECEIPT_ORDER = [
+  "buildlang-zero-c-wasm-selfhost.json",
   "buildlang-selfhost-stage2-stage3.json",
+  "buildc-superopt-dogfood-proof.json",
+  "f6-buildlang-bdb-query-engine.json",
+  "buildos-core-cap-microkernel.json",
+  "cre-cleanroom-engine-triad.json",
+  "flywheel-pr577-fsp-tpm-failsafe.json",
   "data-forge-buildlang-sig058.json",
   "articulate-buildlang-sig057.json",
   "inv01-symplectic-loom-titan.json",
@@ -99,7 +105,7 @@ function receiptLedger() {
   }).join("\n");
   return `<section class="xl" id="receipt-ledger" aria-labelledby="h-receipt-ledger">
   <h2 id="h-receipt-ledger">Live receipt-verified benchmark ledger (G9)</h2>
-  <p>Alongside the 90 preregistered null and refuted studies below, ${receiptRows.length} live Wave 48-50 benchmarks and verification gates (backed by 319 zero-FLAG formula kernels and 234 verified author ideas enforced via Gate 6) link directly to their public <code>engine-receipt/1</code> JSON files, source code or pull requests, planted fail-closed controls or published negative results, and SHA-256 <code>claim_sha256</code> digests. Machine-readable manifest: <a href="/experiments/receipts/index.json"><code>/experiments/receipts/index.json</code></a>.</p>
+  <p>Alongside the 90 preregistered null and refuted studies below, ${receiptRows.length} live Wave 48-55 benchmarks and verification gates (backed by 370+ zero-FLAG verified formula kernels and 95 built of 234 verified author ideas enforced via Gate 6) link directly to their public <code>engine-receipt/1</code> JSON files, source code or pull requests, planted fail-closed controls or published negative results, and SHA-256 <code>claim_sha256</code> digests. Machine-readable manifest: <a href="/experiments/receipts/index.json"><code>/experiments/receipts/index.json</code></a>.</p>
   <div class="xl-wrap" tabindex="0" role="region" aria-label="Live receipt-verified benchmark ledger">
     <table class="xl-table">
       <thead>
@@ -154,7 +160,7 @@ function card(c) {
 
 const body = `<article class="tool xp">
 <h1>Experiments</h1>
-<p>Each study here was written down and locked before it ran, and is reported with whatever it found. Nulls stay on the record. ${cards.length} preregistered studies have cleared review so far, newest first, and ${receiptRows.length} live Wave 48-50 verification benchmarks sit in the <a href="#receipt-ledger">receipt-verified benchmark ledger</a> directly below.</p>
+<p>Each study here was written down and locked before it ran, and is reported with whatever it found. Nulls stay on the record. ${cards.length} preregistered studies have cleared review so far, newest first, and ${receiptRows.length} live Wave 48-55 verification benchmarks sit in the <a href="#receipt-ledger">receipt-verified benchmark ledger</a> directly below.</p>
 <p>Each card keeps its number in our findings ledger (F667 is the 667th finding). It gives the finding, the numbers behind it, the forecast against the outcome where the study made one, the verdict, the limits, and a Verified line saying what was checked. The full write-ups, signals and honest nulls together, are on <a href="/findings/">Findings</a>.</p>
 ${receiptLedger()}
 ${field()}

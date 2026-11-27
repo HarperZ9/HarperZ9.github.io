@@ -1,0 +1,41 @@
+{
+  "schema": "engine-receipt/1",
+  "in_toto_statement_type": "https://in-toto.io/Statement/v1",
+  "predicate_type": "https://flywheel.dev/EngineReceipt/v1",
+  "id": "f6-buildlang-bdb-query-engine",
+  "title": "F6 BuildLang BDB Query Engine (73.45x faster than sqlite3 on 68,500 rows, 500/500 fuzz caught)",
+  "platform": "BuildLang",
+  "domain": "computing",
+  "emitted_at": "2026-11-27T10:00:09Z",
+  "verdict": "MATCH",
+  "catalogue_id": 68536,
+  "source_url": "https://github.com/HarperZ9/buildlang",
+  "related_url": "https://harperz9.github.io/buildlang.html",
+  "digests": {
+    "claim_sha256": "sha256:a08106ae39358269ffc0ff1dfc97431063d455ba290e71f90f740d3ec318d2bd",
+    "envelope_sha256": "sha256:bdc431da5e52ed132e5ba717fa1096e18c08783b8c46e286795ee8402c80c9db",
+    "subject_sha256": "sha256:49637781712c6c8dd6aba2394331c6e216b3a19881f1b74f9d93283746a5966a"
+  },
+  "metrics": {
+    "query_speedup": "73.45x faster than sqlite3 on 68,500 catalogue rows (native buildc 1.15.0 --release)",
+    "integrity_fuzz": "500/500 planted corruption and fuzz queries caught fail-closed with exact row parity vs Python reference"
+  },
+  "null_or_control": "500/500 planted page-checksum, truncated-record, and malformed-query fuzz traps caught fail-closed without silent corruption.",
+  "subject": {
+    "engine": "buildlang",
+    "flagship": "buildlang",
+    "task_id": "wave54c-kernels-f6-e18-a7",
+    "artifacts": [
+      {
+        "rel_path": "bdb_query_bench.bld",
+        "bytes": 5927,
+        "sha256": "sha256:3368ebbbcd10b4cb33ea178fba5abdb030067a1e698d79a63c0e6473480224cf"
+      },
+      {
+        "rel_path": "verify_wave54c_kernels.py",
+        "bytes": 7081,
+        "sha256": "sha256:840921030efc57eb8b22d500b9c473844543feb5fc2b574feef62861a90d9b12"
+      }
+    ]
+  }
+}

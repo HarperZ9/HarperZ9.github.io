@@ -1,0 +1,41 @@
+{
+  "schema": "engine-receipt/1",
+  "in_toto_statement_type": "https://in-toto.io/Statement/v1",
+  "predicate_type": "https://flywheel.dev/EngineReceipt/v1",
+  "id": "buildlang-zero-c-wasm-selfhost",
+  "title": "BuildLang Zero-C Direct .wasm Self-Host Compiler (202-376 B .wasm, 5/5 live in Node)",
+  "platform": "BuildLang",
+  "domain": "computing",
+  "emitted_at": "2026-11-27T09:50:33Z",
+  "verdict": "MATCH",
+  "catalogue_id": 68517,
+  "source_url": "https://github.com/HarperZ9/buildlang",
+  "related_url": "https://harperz9.github.io/buildlang.html#superopt",
+  "digests": {
+    "claim_sha256": "sha256:898d45b37be79c0d7bee4c79888adf619f45bac7cbdccb2dbf234b6bd624bd19",
+    "envelope_sha256": "sha256:0211eb9b73de9fe6574806a276037c44544b56cfc9ab9b2bea595d39c96a0476",
+    "subject_sha256": "sha256:db418256ac9c2a55bc5e83b6f1f8e7c3a4c579f67cde4824ac897e5a9a4a1beb"
+  },
+  "metrics": {
+    "binary_size": "202-376 B direct binary .wasm modules emitted without any C compiler",
+    "execution_parity": "5/5 emitted .wasm programs execute live in Node.js WebAssembly with bit-exact stdout parity vs buildc 1.15.0"
+  },
+  "null_or_control": "Planted invalid syntax and unsupported opcode controls rejected fail-closed before WebAssembly emission. Honest scope: covers the self-hosting bootstrap arithmetic, control-flow, and recursion subset.",
+  "subject": {
+    "engine": "buildlang",
+    "flagship": "buildlang",
+    "task_id": "wave51j_selfhost_zero_c_wasm_2026_11_27",
+    "artifacts": [
+      {
+        "rel_path": "buildc_selfhost_wasm.bld",
+        "bytes": 98346,
+        "sha256": "sha256:96f9b7729e0d5ca3c479c6279e2d00b03a429311536c36b9301e25e355366dcc"
+      },
+      {
+        "rel_path": "SELF-HOST-SLICE4-ZERO-C-WASM-2026-11-27.md",
+        "bytes": 8250,
+        "sha256": "sha256:24f7feda3b36407262b8a2110b1dbc00ebf3de2742c9a6a13a6bbea33e2c5f23"
+      }
+    ]
+  }
+}
