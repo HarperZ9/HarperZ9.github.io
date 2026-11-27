@@ -90,12 +90,13 @@ new MutationObserver(s).observe(r,{attributes:true,attributeFilter:["data-theme"
 <header class="lp-head">
   <h1><span class="d-3d">Local Frontier Model Lab</span> <span class="pf-mark">RSRCH</span></h1>
   <p class="lp-lede lp-lede-1">Compact local models trained and evaluated on one workstation against external compilers, physics solvers, and planted-fault oracles. Models propose; independent checkers dispose.</p>
-  <p class="lp-rel">Every model below runs locally under a strict Tier-A evidence firewall: no benchmark number is accepted without an offline replay script, an honest null policy, and zero secret or private-data leakage.</p>
+  <p class="lp-rel">Every model below runs locally under a strict Tier-A evidence firewall: no benchmark number is accepted without an offline replay script, an honest null policy, and zero secret or private-data leakage. Try the live interactive demo on <a href="https://huggingface.co/spaces/zaindanaharper/jfc3p-oracle-demo" rel="noopener">Hugging Face Spaces (zaindanaharper/jfc3p-oracle-demo)</a>.</p>
   <nav class="lp-ways" aria-label="On this page">
     <a href="#evolution">Evolution &amp; honest nulls</a>
     <a href="#families">Model families</a>
     <a href="#firewall">Tier-A firewall</a>
     <a href="#datasets">Open datasets</a>
+    <a href="https://huggingface.co/spaces/zaindanaharper/jfc3p-oracle-demo" rel="noopener">Live HF Space</a>
     <a href="/flywheel.html">Flywheel</a>
     <a href="/buildlang.html">BuildLang</a>
     <a href="/architecture.html">Architecture</a>
@@ -104,14 +105,15 @@ new MutationObserver(s).observe(r,{attributes:true,attributeFilter:["data-theme"
 
 <section class="lp-sec" id="evolution" aria-labelledby="h-evolution">
   <h2 id="h-evolution"><span class="d-3d">Honest-nulls model evolution specimen</span></h2>
-  <p class="lp-lede">Every iteration stays on the same hairline ledger, including the caught v2 attention-drift regression that motivated freezing Q/K/V/O attention heads for v3.</p>
+  <p class="lp-lede">Every iteration stays on the same hairline ledger, including the caught v2 attention-drift regression that motivated freezing Q/K/V/O attention heads for v3 and scaling live oracle tool invocation to 31 calls in v4 (<a href="https://huggingface.co/spaces/zaindanaharper/jfc3p-oracle-demo" rel="noopener">live HF Space demo</a>).</p>
   <div class="rn-wrap"><table class="rn-table">
-    <caption>Sealed 84-item holdout evolution from unadapted Base through v1, caught v2 DRIFT, v3 PASS, and Flywheel #566 inference-time search &amp; trace compression.</caption>
+    <caption>Sealed 84-item holdout evolution from unadapted Base through v1, caught v2 DRIFT, v3 PASS, v4 PASS (63/84 Arm C, 75.0%), and Flywheel #566 inference-time search &amp; trace compression.</caption>
     <thead><tr><th scope="col">Checkpoint / Stage</th><th scope="col" class="num">Verified Score</th><th scope="col" class="num">longppl</th><th scope="col">Gate</th><th scope="col">Observed Mechanism</th></tr></thead>
-    <tbody><tr><th scope="row">Base (Qwen2.5-Coder-7B)</th><td class="num">43/84 (51.2%)</td><td class="num">15/15</td><td>Anchor</td><td>Unadapted base checkpoint on the sealed 84-item holdout.</td></tr>
+    <tbody><tr><th scope="row">Base (Qwen2.5-Coder-7B)</th><td class="num">49/84 Raw / 51/84 Arm C</td><td class="num">15/15</td><td>Anchor</td><td>Unadapted base checkpoint on the sealed 84-item holdout (prior harness baseline 43/84 Raw / 51.2%).</td></tr>
 <tr><th scope="row">JFC3P-7B-Oracle v1</th><td class="num">95.83% buildc Arm C</td><td class="num">n/a (buildc)</td><td class="verdict-pass">PASS</td><td>Live buildc compile-test-repair lift from 16.67% baseline (p=4e-6); Three-Plate Oracle 115/115 recall, 0 false accepts.</td></tr>
 <tr><th scope="row">JFC3P-7B-Oracle v2</th><td class="num">40/84 (47.6%)</td><td class="num">10/15</td><td class="verdict-drift">DRIFT (caught)</td><td>Full-layer LoRA degraded long-context attention (-5 on longppl); caught fail-closed and published as an honest negative result.</td></tr>
-<tr><th scope="row">JFC3P-7B-Oracle v3</th><td class="num">48/84 Raw / 49/84 Arm C</td><td class="num">15/15</td><td class="verdict-pass">PASS (+6)</td><td>MLP-only LoRA (Q/K/V/O attention frozen) + FRESCO orthogonal projection + 32.72 ms CUDA 151k Reverse-KL; A1..A5 all PASS.</td></tr>
+<tr><th scope="row">JFC3P-7B-Oracle v3</th><td class="num">48/84 Raw / 49/84 Arm C</td><td class="num">15/15</td><td class="verdict-pass">PASS (+6)</td><td>MLP-only LoRA (Q/K/V/O attention frozen) + FRESCO orthogonal projection + 32.72 ms CUDA 151k Reverse-KL; A1..A5 all PASS (1 tool call bottleneck).</td></tr>
+<tr><th scope="row">JFC3P-7B-Oracle v4</th><td class="num">53/84 Raw / 63/84 Arm C (75.0%)</td><td class="num">15/15</td><td class="verdict-pass">PASS (+12)</td><td>31 live tool calls (+12 over Base 51/84, +14 over v3 49/84): 13/15 BuildLang, 8/15 numeric f64, 19/24 trap resistance, 15/15 longppl zero drift, A1..A6 PASS, 22.2 ms / 16.47 MiB 151k Reverse-KL.</td></tr>
 <tr><th scope="row">Flywheel #566 Search &amp; Trace</th><td class="num">6/6 faults, 34.99x</td><td class="num">0 soundness loss</td><td class="verdict-pass">PASS</td><td>Execution-Oracle PUCT tree search (prunes planted high-prior wrong branch) + RFC 6962 Merkle trace compressor.</td></tr></tbody>
   </table></div>
 </section>
@@ -119,7 +121,7 @@ new MutationObserver(s).observe(r,{attributes:true,attributeFilter:["data-theme"
 <section class="lp-sec" id="families" aria-labelledby="h-families">
   <h2 id="h-families"><span class="d-3d">Model families &amp; verified runs</span></h2>
   <p class="lp-lede">Local research lines built to test whether small, verifiable models paired with real execution checks can close the reliability gap without opaque cloud dependencies.</p>
-  <ul class="figs"><li class="fig"><details open><summary><b class="fig-n d-fine">JFC3P-7B-Oracle (v3 PASS)</b> 48/84 Raw / 49/84 Arm C (+6 over Base), 15/15 longppl preserved, 32.72 ms CUDA 151k Reverse-KL, A1..A5 PASS</summary><p class="fig-src">MLP-only LoRA (Q/K/V/O attention frozen) + FRESCO orthogonal gradient projection + Three-Plate Verification Oracle coupled to live buildc/f64 execution. v2's attention-layer drift (40/84, 10/15 longppl) was caught fail-closed and stays published in the evolution table below.</p></details></li>
+  <ul class="figs"><li class="fig"><details open><summary><b class="fig-n d-fine">JFC3P-7B-Oracle (v4 PASS)</b> 63/84 (75.0%) Arm C (+12 over Base 51/84, +14 over v3 49/84), 31 tool calls, 13/15 BuildLang, 8/15 numeric f64, 19/24 trap resistance, 15/15 longppl zero drift, A1..A6 PASS, 22.2 ms / 16.47 MiB 151k Reverse-KL</summary><p class="fig-src">MLP-only LoRA (Q/K/V/O attention frozen) + true Base FRESCO orthogonal gradient projection + Three-Plate Verification Oracle coupled to live buildc/f64 execution (31x tool invocation lift over v3). v2's attention-layer drift (40/84, 10/15 longppl) was caught fail-closed and stays published in the evolution table above. Interactive Space: huggingface.co/spaces/zaindanaharper/jfc3p-oracle-demo.</p></details></li>
 <li class="fig"><details open><summary><b class="fig-n d-fine">PUCT Oracle Search &amp; Merkle Trace (flywheel#566)</b> 6/6 adversarial fault catch + 34.99x RFC 6962 proof-carrying trace compression (0 soundness loss)</summary><p class="fig-src">Execution-Oracle-Guided PUCT Verification Tree Search with hard Q_oracle pruning (beating planted high-prior wrong branches) paired with fail-closed Merkle trace compression that rejects any dropped witness or forged root.</p></details></li>
 <li class="fig"><details open><summary><b class="fig-n d-fine">NOH-4</b> 78.0x lower MSE against baseline neural operator surrogates</summary><p class="fig-src">Compact spectral neural operator trained on deterministic fluid, optical, and structural PDE trajectories for real-time physical surrogates inside The Playground.</p></details></li>
 <li class="fig"><details open><summary><b class="fig-n d-fine">Plato-Key</b> Deterministic geometric representation &amp; symmetry-manifold lookup</summary><p class="fig-src">Separates invariant geometric primitives from rendering skins, enabling continuous metamer detection across visual, structural, and acoustic projections.</p></details></li>
@@ -131,16 +133,16 @@ new MutationObserver(s).observe(r,{attributes:true,attributeFilter:["data-theme"
 <section class="lp-sec" id="firewall" aria-labelledby="h-firewall">
   <h2 id="h-firewall"><span class="d-3d">Tier-A evidence firewall</span></h2>
   <p class="lp-lede">Nothing self-warrants. Every fine-tuned checkpoint is scored head-to-head against its unadapted base model on the same harness, with McNemar paired intervals and retired-null disclosures kept public.</p>
-  <p class="lp-limit">Example honest nulls kept public: (1) JFC3P-7B-Oracle v2 regressed to 40/84 (10/15 longppl) under full-layer LoRA before v3 froze attention heads and recovered 15/15 longppl at 48/84 Raw / 49/84 Arm C; (2) Flywheel Local Coder 14B scored 136/164 (82.9%) vs Qwen 2.5 Coder 14B base at 141/164 (86.0%, p = 0.404) unguided, while coupling the same tier to live <code>buildc</code> lifted BuildLang pass rates from 16.67% to 95.83% (p = 4e-6).</p>
+  <p class="lp-limit">Example honest nulls kept public: (1) JFC3P-7B-Oracle v2 regressed to 40/84 (10/15 longppl) under full-layer LoRA before v3 froze attention heads (49/84 Arm C, 15/15 longppl) and v4 closed the tool-invocation gap to 63/84 Arm C (75.0%, 31 tool calls, 15/15 longppl); (2) Flywheel Local Coder 14B scored 136/164 (82.9%) vs Qwen 2.5 Coder 14B base at 141/164 (86.0%, p = 0.404) unguided, while coupling the same tier to live <code>buildc</code> lifted BuildLang pass rates from 16.67% to 95.83% (p = 4e-6).</p>
 </section>
 
 <section class="lp-sec" id="datasets" aria-labelledby="h-datasets">
   <h2 id="h-datasets"><span class="d-3d">Open datasets &amp; replay</span></h2>
   <p class="lp-lede">Seven open verifiable datasets (DS-01 through DS-07), 30 empirical studies (12 published nulls), and 13 DOI-indexed records anchor every model experiment.</p>
-  <p class="lp-ways-end"><a href="/architecture.html#datasets">Seven datasets</a> <a href="/findings/">30 Findings (12 nulls)</a> <a href="/analytics/flywheel-benchmark-record.html">Benchmark record</a> <a href="/tools.html">159 Public Repos</a></p>
+  <p class="lp-ways-end"><a href="https://huggingface.co/spaces/zaindanaharper/jfc3p-oracle-demo" rel="noopener">Live HF Space (jfc3p-oracle-demo)</a> <a href="/architecture.html#datasets">Seven datasets</a> <a href="/findings/">30 Findings (12 nulls)</a> <a href="/analytics/flywheel-benchmark-record.html">Benchmark record</a> <a href="/tools.html">159 Public Repos</a></p>
 </section>
 
-<p class="lp-verified"><b>Verified</b> 26 November 2026: JFC3P-7B-Oracle v3 (48/84 Raw / 49/84 Arm C, 15/15 longppl, 32.72 ms CUDA 151k Reverse-KL, A1..A5 PASS), caught v2 DRIFT (40/84, 10/15 longppl), Flywheel #566 PUCT + 34.99x Merkle trace compressor, Arm C buildc lift (16.67% to 95.83%, p=4e-6), and Three-Plate Oracle (115/115 recall, 0 false accepts).</p>
+<p class="lp-verified"><b>Verified</b> 26 November 2026: JFC3P-7B-Oracle v4 (53/84 Raw / 63/84 Arm C 75.0%, +12 over Base 51/84, +14 over v3 49/84, 31 tool calls, 13/15 BuildLang, 8/15 numeric f64, 19/24 trap resistance, 15/15 longppl zero drift, A1..A6 PASS, 22.2 ms / 16.47 MiB 151k Reverse-KL, live HF Space zaindanaharper/jfc3p-oracle-demo), caught v2 DRIFT (40/84, 10/15 longppl), Flywheel #566 PUCT + 34.99x Merkle trace compressor, Arm C buildc lift (16.67% to 95.83%, p=4e-6), and Three-Plate Oracle (115/115 recall, 0 false accepts).</p>
 </article>
 </main>
 </body>
