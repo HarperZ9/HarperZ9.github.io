@@ -132,7 +132,7 @@ film, the exhibit, the engine and the tools.
   much.
 - [Reports so far](https://bulletin.zaindharper.workers.dev/v1/reports): how many
   readers have tried each item, on which platforms, and how it went. Those counts
-  are reader-typed claims, distinct from measurements taken by the board, and the
+  are claims people typed, distinct from measurements taken by the board, and the
   answer says so in its own field.
 
 ## Tools you can install

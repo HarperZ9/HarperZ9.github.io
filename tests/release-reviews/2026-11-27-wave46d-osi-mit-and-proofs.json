@@ -3,7 +3,7 @@
   "note": "Wave 46D: Pure OSI MIT sync (Flywheel #574, Superframe #162, BuildLang universe/suite #350), Superframe 9 of 9 (#161), JFC3P-14B-Oracle v5 (66/84), JFC3P-Titan-1M v2, Data Forge, BuildLang #349 (CHECK-FAILS 150) + 8 SOTA native kernels",
   "paths": {
     "flywheel.html": "2b6c7cec179e80a503e442a738fef40fc95210f85467b4a94299684b2d1d4ad0",
-    "index.html": "8250454a370cb6cafc4fc24fb96b737fc762b14e47a3b9ec07a6d612cac288d3",
+    "index.html": "47a2b589037b865dc89084223d6344855584b176dde01278df0b10f5cb89ef74",
     "site-index.html": "82c8bef72828ff3516bd2f1f9fffbf5744bfa0a374c6eea4fdde7715d88ed815",
     "system/routes.js": "824c5ec6eca27fa163f843843266c2f4fb4110f065cb01e753a493d260cef88e"
   }
