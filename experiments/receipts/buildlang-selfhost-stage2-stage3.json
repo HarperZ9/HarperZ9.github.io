@@ -1,0 +1,30 @@
+{
+  "schema": "engine-receipt/1",
+  "in_toto_statement_type": "https://in-toto.io/Statement/v1",
+  "predicate_type": "https://flywheel.dev/EngineReceipt/v1",
+  "id": "buildlang-selfhost-stage2-stage3",
+  "title": "BuildLang Stage 2 == Stage 3 byte-identical self-hosting fixed point (buildc_mini.bld)",
+  "platform": "BuildLang",
+  "domain": "computing",
+  "emitted_at": "2026-11-27T09:29:12Z",
+  "verdict": "MATCH",
+  "catalogue_id": 68483,
+  "source_url": "https://github.com/HarperZ9/buildlang",
+  "related_url": "https://harperz9.github.io/buildlang.html#superopt",
+  "digests": {
+    "claim_sha256": "sha256:652bdca2cf929d5fa2bfbd18a20c6928638c8c3a95742568ea29a9fe5188036b",
+    "envelope_sha256": "sha256:a720d7b5443f02be5ab4b55fbc4cb568c07d5aeeffd16adef2ff404b05a3d796",
+    "subject_sha256": "sha256:22deff27cf1a38cc89efe3a1ac833b618e451d09f9b04039ffe6ee4b2a0b4684"
+  },
+  "metrics": {
+    "fixed_point": "Stage 2 C99 == Stage 3 C99 byte-identical (91,649 B, sha256:4ff5293dd8da257beef360ae341ab1bfcc4af05b45fa0d5d9d0ec853010488eb)",
+    "stage1_binary": "97,272 B native self-hosted bootstrap compiler compiled by buildc 1.15.0 --release",
+    "parity": "Bit-exact stdout parity across bootstrap test programs vs buildc 1.15.0"
+  },
+  "null_or_control": "Planted syntax-error and semantic-fault controls rejected fail-closed before code emission. Honest scope: covers the self-hosting bootstrap subset (functions, let, i64 arithmetic, control flow, recursion, println) while full Rust buildc remains the production compiler.",
+  "subject": {
+    "engine": "buildlang",
+    "flagship": "buildlang",
+    "task_id": "wave50e-buildlang-selfhost-fixed-point-stage2-stage3-2026-11-27"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "schema": "engine-receipt/1",
+  "in_toto_statement_type": "https://in-toto.io/Statement/v1",
+  "predicate_type": "https://flywheel.dev/EngineReceipt/v1",
+  "id": "ntc610-neural-texture-compression",
+  "title": "INV-06 / OPT-052 BuildLang-NTC610 neural texture compression (-83.33% 4K PBR VRAM)",
+  "platform": "The Playground + BuildLang",
+  "domain": "rendering",
+  "emitted_at": "2026-11-27T09:17:19Z",
+  "verdict": "MATCH",
+  "catalogue_id": 68470,
+  "source_url": "https://github.com/HarperZ9/superframe/tree/main/native",
+  "related_url": "https://harperz9.github.io/playground/#native",
+  "digests": {
+    "claim_sha256": "sha256:d031e04c53195b4d1c9a37bdf75ca4b09758be8759723015d12d18455523d026",
+    "envelope_sha256": "sha256:24e8c4ffec1a6dc6991d1560c4bbfb6bce8d5dd8936052a92fbba5ab3026963b",
+    "subject_sha256": "sha256:55ca2673727f3e51795809eadad3f3ced22bda7f18f889712bdad75b18547f9e"
+  },
+  "metrics": {
+    "vram_reduction": "-83.33% 4K PBR VRAM (10.67 MiB vs 64.0 MiB BC7 = 6.0x; vs 170.67 MiB RGBA8 = 16.0x)",
+    "shader_spec": "HLSL SM 6.10 cooperative vector + SM 6.6/6.9 scalar FMA parity fallback (880 B packed FP16 16->16->8 MLP)"
+  },
+  "null_or_control": "Fail-closed shader and CPU guards reject q_scale > 0.05, mip > 11, out-of-bounds UV coordinates, and non-unit normals (|n_len - 1| > 1e-4).",
+  "subject": {
+    "engine": "buildlang",
+    "flagship": "superframe",
+    "task_id": "wave48j-inv06-buildlang-ntc610"
+  }
+}

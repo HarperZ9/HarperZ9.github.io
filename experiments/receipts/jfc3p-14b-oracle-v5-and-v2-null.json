@@ -1,0 +1,52 @@
+{
+  "schema": "engine-receipt/1",
+  "in_toto_statement_type": "https://in-toto.io/Statement/v1",
+  "predicate_type": "https://flywheel.dev/EngineReceipt/v1",
+  "id": "jfc3p-14b-oracle-v5-and-v2-null",
+  "title": "JFC3P-Titan-1M v2 & JFC3P-14B-Oracle v5 (with published v2 DRIFT honest null)",
+  "platform": "Models + Flywheel",
+  "domain": "ai",
+  "emitted_at": "2026-11-27T08:29:13Z",
+  "verdict": "MATCH",
+  "catalogue_id": 68444,
+  "source_url": "https://huggingface.co/spaces/zaindanaharper/jfc3p-oracle-demo",
+  "related_url": "https://harperz9.github.io/models.html#evolution",
+  "digests": {
+    "claim_sha256": "sha256:8832da1c81769de7630f6efd0390c4aaed1ffe91e1c3a12b4ff5b997fa98612f",
+    "envelope_sha256": "sha256:5c46978a176dee9724b2231cccb8d47f89808b092927528c4366881fced2c336",
+    "subject_sha256": "sha256:59e19cb159ccec8b1145a2a8dbb7b4f4cbfa84c8427c944e515540e59247577b"
+  },
+  "metrics": {
+    "titan_1m_v2": "10.331 GB RTX 4090 / 5.747 GB Edge at 1,000,000 tokens (291.69x KV compression, 99.85 tok/s)",
+    "oracle_v5": "66/84 Arm C (78.57%, +21.43 pp over Base 14B 48/84), 15/15 long-context zero drift, 21/24 traps, 6/6 A1..A6 PASS",
+    "live_demo": "https://huggingface.co/spaces/zaindanaharper/jfc3p-oracle-demo"
+  },
+  "null_or_control": "Honest negative result kept public: JFC3P-7B-Oracle v2 full-layer LoRA regressed to 40/84 (47.6%) and 10/15 longppl (-5 attention drift), caught fail-closed before Q/K/V/O attention freezing in v3 (49/84), v4 (63/84), and 14B v5 (66/84).",
+  "subject": {
+    "engine": "flywheel",
+    "flagship": "models",
+    "task_id": "wave45f-jfc3p-titan-1m-v2-and-oracle-v5",
+    "artifacts": [
+      {
+        "rel_path": "JFC3P-TITAN-1M-V2-ARCHITECTURE-2026-11-27.md",
+        "bytes": 5439,
+        "sha256": "sha256:3140167e4edcb91e38bee761b7e3111e7611619d459ec81c4f786dbe3d8aee89"
+      },
+      {
+        "rel_path": "jfc3p_titan_1m_v2_prototype.py",
+        "bytes": 27616,
+        "sha256": "sha256:9cf304d1bca5d464df875d1d418cbf7dcff1428c2958ba6cba11709540b90a33"
+      },
+      {
+        "rel_path": "jfc3p_titan_1m_v2_report.json",
+        "bytes": 8534,
+        "sha256": "sha256:07dd691dc63ea56bf0710756ac176b02228eb2415f58b2f62866c6c4ba6f23a8"
+      },
+      {
+        "rel_path": "test_jfc3p_titan_1m_v2.py",
+        "bytes": 2447,
+        "sha256": "sha256:53850a9dd0e169d56d38d10ec65d708d5364ec0d3a05eca4f25ab5351753a939"
+      }
+    ]
+  }
+}

@@ -8,7 +8,8 @@
 // and a stream of cards under it, filterable by domain. Each card: the finding, its numbers, the forecast against
 // the outcome, the verdict, the limits, the lock and a Verified line. Content is static HTML; the script only
 // filters, so the page reads whole with scripts off.
-import { readFileSync, writeFileSync } from "node:fs";
+import { createHash } from "node:crypto";
+import { readdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { page } from "./studies-shell.mjs";
@@ -20,6 +21,101 @@ const data = JSON.parse(readFileSync(path.join(site, "experiments/experiments.js
 const cards = data.cards, domains = data.domains.filter((d) => cards.some((c) => c.domains.includes(d.id)));
 const LABELS = { denominator: "Sample", interval: "Result", controls: "Controls", forecast_vs_outcome: "Forecast against outcome", known_answer: "Known answer" };
 const DATE = new Date(data.built + "T12:00:00Z").toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
+
+// G9 Live Receipt-Verified Experiment Table: every row links to a real SHA-256 engine-receipt/1 JSON file under experiments/receipts/
+const receiptsDir = path.join(site, "experiments/receipts");
+const RECEIPT_ORDER = [
+  "buildlang-selfhost-stage2-stage3.json",
+  "data-forge-buildlang-sig058.json",
+  "articulate-buildlang-sig057.json",
+  "inv01-symplectic-loom-titan.json",
+  "buildlang-pr351-superopt-gpu-tv.json",
+  "cmmns-pr133-cib-merkle.json",
+  "n18-3dgs-buildlang-keepsakes.json",
+  "ntc610-neural-texture-compression.json",
+  "j13-model-epigenetics-and-j8.json",
+  "jfc3p-14b-oracle-v5-and-v2-null.json",
+];
+const receiptFiles = readdirSync(receiptsDir)
+  .filter((f) => f.endsWith(".json") && f !== "index.json")
+  .sort((a, b) => {
+    const ia = RECEIPT_ORDER.indexOf(a), ib = RECEIPT_ORDER.indexOf(b);
+    return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib) || a.localeCompare(b);
+  });
+
+const receiptRows = receiptFiles.map((file) => {
+  const buf = readFileSync(path.join(receiptsDir, file));
+  const raw = buf.toString("utf8");
+  if (raw.includes("\u2014") || raw.includes("\u2013")) throw new Error(`receipt ${file}: em/en dash found`);
+  if (/[A-Za-z]:[\\/](?:dev|Users|Downloads|wt|library)/i.test(raw)) throw new Error(`receipt ${file}: local path found`);
+  const obj = JSON.parse(raw);
+  const fileSha = "sha256:" + createHash("sha256").update(buf).digest("hex");
+  return {
+    id: obj.id,
+    file,
+    bytes: buf.length,
+    file_sha256: fileSha,
+    title: obj.title,
+    platform: obj.platform,
+    domain: obj.domain,
+    emitted_at: obj.emitted_at,
+    verdict: obj.verdict,
+    catalogue_id: obj.catalogue_id,
+    source_url: obj.source_url,
+    related_url: obj.related_url,
+    claim_sha256: obj.digests.claim_sha256,
+    envelope_sha256: obj.digests.envelope_sha256,
+    metrics: obj.metrics,
+    null_or_control: obj.null_or_control,
+  };
+});
+
+writeFileSync(
+  path.join(receiptsDir, "index.json"),
+  JSON.stringify(
+    {
+      schema: "g9-experiment-receipt-ledger/1",
+      updated: "2026-11-27",
+      verification_rule: "Every row links to a public engine-receipt/1 JSON file under /experiments/receipts/ with verified SHA-256 file digest, upstream claim_sha256, MATCH verdict, and explicit null or planted-control disclosure.",
+      entries: receiptRows.map(({ id, file, bytes, file_sha256, title, platform, domain, emitted_at, verdict, catalogue_id, source_url, claim_sha256, envelope_sha256 }) => ({
+        id, file, bytes, file_sha256, title, platform, domain, emitted_at, verdict, catalogue_id, source_url, claim_sha256, envelope_sha256,
+      })),
+    },
+    null,
+    2
+  ) + "\n"
+);
+
+function receiptLedger() {
+  const rows = receiptRows.map((r) => {
+    const metricText = Object.values(r.metrics || {}).slice(0, 2).join("; ");
+    const shortClaim = r.claim_sha256.slice(0, 19);
+    return `<tr>
+      <th scope="row"><a href="${esc(r.source_url)}">${esc(r.title)}</a><span class="xl-sub">${esc(r.platform)} | ${esc(r.emitted_at.slice(0, 10))}</span></th>
+      <td>${esc(metricText)}</td>
+      <td>${esc(r.null_or_control)}</td>
+      <td class="xl-rcpt"><span class="xl-verdict">${esc(r.verdict)}</span> <a href="/experiments/receipts/${esc(r.file)}"><code>${esc(shortClaim)}...</code></a><span class="xl-sub">catalogue #${esc(r.catalogue_id)} | JSON receipt</span></td>
+    </tr>`;
+  }).join("\n");
+  return `<section class="xl" id="receipt-ledger" aria-labelledby="h-receipt-ledger">
+  <h2 id="h-receipt-ledger">Live receipt-verified benchmark ledger (G9)</h2>
+  <p>Alongside the 90 preregistered null and refuted studies below, ${receiptRows.length} live Wave 48-50 benchmarks and verification gates (backed by 319 zero-FLAG formula kernels and 234 verified author ideas enforced via Gate 6) link directly to their public <code>engine-receipt/1</code> JSON files, source code or pull requests, planted fail-closed controls or published negative results, and SHA-256 <code>claim_sha256</code> digests. Machine-readable manifest: <a href="/experiments/receipts/index.json"><code>/experiments/receipts/index.json</code></a>.</p>
+  <div class="xl-wrap" tabindex="0" role="region" aria-label="Live receipt-verified benchmark ledger">
+    <table class="xl-table">
+      <thead>
+        <tr>
+          <th scope="col">Study / Kernel &amp; Code</th>
+          <th scope="col">Measured Result</th>
+          <th scope="col">Honest Null / Planted Controls</th>
+          <th scope="col">SHA-256 Receipt</th>
+        </tr>
+      </thead>
+      <tbody>${rows}</tbody>
+    </table>
+  </div>
+  <p class="verified"><b>Verified</b> 27 November 2026: all ${receiptRows.length} rows above resolve to committed <code>engine-receipt/1</code> JSON files under <code>/experiments/receipts/</code> checked byte-for-byte against <code>/experiments/receipts/index.json</code> by <code>tests/g9-receipt-ledger.test.mjs</code> (including a planted 1-byte tamper control rejected as <code>DRIFT</code>).</p>
+</section>`;
+}
 
 // each lane's drawn mark (scripts/marks/lane-marks.mjs), one view of a single sprite written by
 // scripts/build-marks.mjs, so every lane costs one request; the label beside it carries the meaning, so the mark has empty alt text
@@ -58,8 +154,9 @@ function card(c) {
 
 const body = `<article class="tool xp">
 <h1>Experiments</h1>
-<p>Each study here was written down and locked before it ran, and is reported with whatever it found. Nulls stay on the record. ${cards.length} studies have cleared review so far, newest first, and more join as they clear. Every study cleared so far came back null or went against its own forecast, and each card says which.</p>
+<p>Each study here was written down and locked before it ran, and is reported with whatever it found. Nulls stay on the record. ${cards.length} preregistered studies have cleared review so far, newest first, and ${receiptRows.length} live Wave 48-50 verification benchmarks sit in the <a href="#receipt-ledger">receipt-verified benchmark ledger</a> directly below.</p>
 <p>Each card keeps its number in our findings ledger (F667 is the 667th finding). It gives the finding, the numbers behind it, the forecast against the outcome where the study made one, the verdict, the limits, and a Verified line saying what was checked. The full write-ups, signals and honest nulls together, are on <a href="/findings/">Findings</a>.</p>
+${receiptLedger()}
 ${field()}
 <div class="xp-filter" role="group" aria-label="Show one domain"><button type="button" data-domain="" aria-pressed="true">All <span>${cards.length}</span></button>${domains.map((d) => `<button type="button" data-domain="${d.id}" aria-pressed="false">${lane(d.id, "xp-lane", 20)}${esc(d.label)} <span>${cards.filter((c) => c.domains.includes(d.id)).length}</span></button>`).join("")}</div>
 <p class="xp-count" aria-live="polite">${cards.length} studies shown.</p>

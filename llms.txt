@@ -30,11 +30,13 @@ BuildLang core buildc and CMMNS remain AGPL-3.0-only; docs/essays CC BY 4.0):
   v4 PASS (63/84 Arm C 75.0%, 31 tool calls, 22.2 ms / 16.47 MiB 151k Reverse-KL,
   caught v2 DRIFT 40/84 kept public), live interactive Space
   https://huggingface.co/spaces/zaindanaharper/jfc3p-oracle-demo, JFC3P-Titan-1M
-  v2 (10.331 GB RTX 4090 / 5.747 GB Edge at 1,000,000 tokens, 291.69x KV
-  compression, 99.85 tok/s), Data Forge proof-carrying distillation (1,792.8
-  rows/s, 9/9 planted controls, HIPAA Safe Harbor + Scientific SI +
-  Search-From-The-Start, RFC 6962 Merkle Dataset Cards), NOH-4 (78.0x lower
-  MSE), Plato-Key, AVTR-4R, and FRESCO/MoLT.
+  v2 & INV-01 Symplectic Loom-Titan-1M (194.59 M loops/s native BuildLang,
+  2.22e-16 parity vs C++23 AVX2+FMA, 0.0812 ms 1M-token PLATO/NSA + MoltKV query,
+  5/5 planted controls, 10.331 GB RTX 4090 / 5.747 GB Edge at 1,000,000 tokens,
+  291.69x KV compression, 99.85 tok/s), Data Forge proof-carrying distillation
+  (283,687.3 rows/s native BuildLang = 158.2x Python 1,792.8 rows/s, bit-exact
+  SHA-256 + RFC 6962 Merkle, 6/6 native + 9/9 pipeline controls), NOH-4 (78.0x
+  lower MSE), Plato-Key, AVTR-4R, and FRESCO/MoLT.
 - [The Playground](https://harperz9.github.io/playground/index.html): OSI MIT
   (superframe #162, 294f3f3e) unified 11-layer tactile live multimedia studio
   and creative field consolidating Low Water, Glass & Water, Fourier, Elements,
@@ -53,31 +55,45 @@ BuildLang core buildc and CMMNS remain AGPL-3.0-only; docs/essays CC BY 4.0):
   via buildlang #350, c3b2e5dd) with typed capability effects, 12 targets (C,
   HLSL, GLSL, WGSL, Metal, SPIR-V, x86-64, RISC-V, WASM), V5 certified e-graph
   superoptimizer (buildlang #344), certified GPU polyhedral tiling + subgroup
-  auto-vectorization (buildlang #346), universe CHECK-FAILS burned down to 150
-  (126/276 passing via buildlang #349, bddba429), 8 verified 2026 SOTA native
-  .bld kernels (FA4 2.05x, H_64 NVFP4 +19.66 dB rescue, 0.140 ms 1M-token
-  PLATO/NSA, 608 B O(1) Titans/KDA loop), discovery manifests & editors/vscode
-  vsce packaging (buildlang #348), 1.18M-record corpus engine, BuildDB (BDB),
+  auto-vectorization (buildlang #346), buildlang #351 certified 2026 SOTA
+  rewrites (-70.5% online-softmax op-cost, -42.1% Gated-DeltaNet, -33.3% FA4
+  Horner, GPU TV across WGSL/HLSL/MSL/SPIR-V, 14a5260c), Stage 2 == Stage 3
+  byte-identical self-hosting fixed point (catalogue #68483), universe
+  CHECK-FAILS burned down to 150 (126/276 passing via buildlang #349, bddba429),
+  native compiled benchmarks (Data Forge 283,687.3 rows/s, Articulate 27,606.0
+  docs/s, INV-01 194.59 M loops/s, N18 3DGS 323.60 FPS = 1.93x C++23, NTC610
+  -83.33% 4K PBR VRAM), 319 zero-FLAG verified formula kernels, 234 verified
+  author ideas enforced via Gate 6, discovery manifests & editors/vscode vsce
+  packaging (buildlang #348), 1.18M-record corpus engine, BuildDB (BDB),
   BuildTeX, and live AGPL-3.0-only funding.json (buildlang #345).
 - [The Flywheel](https://harperz9.github.io/flywheel.html): pure OSI MIT
   (flywheel #574, fb877d2e) self-hosted AI workstation consolidating 31
   packages (incl. articulate, accountable-surface, telos, and companion tools)
   behind offline cryptographic receipts, Rowan orchestration, Three-Plate
   Verification Oracle (115/115 recall, 0 false accepts), Data Forge
-  proof-carrying distillation (1,792.8 rows/s, 9/9 planted controls, HIPAA Safe
-  Harbor + Scientific SI + Search-From-The-Start, RFC 6962 Merkle Dataset
-  Cards), unified flywheel super-solver (6/6 fault catch via #565), PUCT oracle
-  tree search + 34.99x RFC 6962 Merkle trace compression (#566), full-track
-  4096-pt Hann Welch PSD audio oracle (#568), Official MCP Registry manifests
-  (#570), accountable-surface C11/Win32 desktop surface + BuildLang FFI (#571),
-  Win32 DPAPI/CredMan keystore + OAuth 2.0 PKCE/Device Flow + RFC 9421 signer
-  (#572), AgentWorkspace + DelegatedMandate + ApprovalValve (#573), EMET
-  witnessing, and Articulate linting.
+  proof-carrying distillation (283,687.3 rows/s native BuildLang = 158.2x Python
+  1,792.8 rows/s, bit-exact SHA-256 + RFC 6962 Merkle, 6/6 native + 9/9 pipeline
+  controls), Articulate native BuildLang core (27,606.0 docs/s, 4.19e-13 cadence
+  parity, 6/6 traps), unified flywheel super-solver (6/6 fault catch via #565),
+  PUCT oracle tree search + 34.99x RFC 6962 Merkle trace compression (#566),
+  full-track 4096-pt Hann Welch PSD audio oracle (#568), Official MCP Registry
+  manifests (#570), accountable-surface C11/Win32 desktop surface + BuildLang
+  FFI (#571), Win32 DPAPI/CredMan keystore + OAuth 2.0 PKCE/Device Flow + RFC
+  9421 signer (#572), AgentWorkspace + DelegatedMandate + ApprovalValve (#573),
+  and EMET witnessing.
 - [The Commons (CMMNS)](https://harperz9.github.io/cmmns.html): local-first,
   account-free provenance and coordination overlay across 9 social platforms,
   offline Web/AI provenance CLI verifier (cmmns #130, 4/4 adversarial catches),
-  live AGPL-3.0-only funding.json (cmmns #131), and Schema.org codemeta/CITATION/
-  llms.txt + store packaging kit (cmmns #132; GitHub profile HarperZ9 #36).
+  live AGPL-3.0-only funding.json (cmmns #131), Schema.org codemeta/CITATION/
+  llms.txt + store packaging kit (cmmns #132), and lawful public-record CIB RFC
+  6962 Merkle provenance & PII firewall (cmmns #133, ffb56129, 1,750/1,750
+  tests, 9/9 CI pass, 28/28 bit-exact proofs, 5/5 planted controls).
+- [Live receipt-verified experiment table (G9)](https://harperz9.github.io/experiments/index.html)
+  and [receipt manifest JSON](https://harperz9.github.io/experiments/receipts/index.json):
+  90 preregistered null and refuted studies plus 10 live Wave 48-50 SHA-256
+  engine-receipt/1 JSON proofs (covering BuildLang Stage 2 == Stage 3
+  self-hosting, Data Forge, Articulate, INV-01, BuildLang #351, CMMNS #133, N18
+  3DGS, NTC610, J13 Model Epigenetics, and JFC3P v5/v2 null).
 - [Biography & craft](https://harperz9.github.io/person.html),
   [Security practice](https://harperz9.github.io/security.html),
   [Hire & resumes](https://harperz9.github.io/hire.html), and

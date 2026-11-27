@@ -47,14 +47,18 @@ runtime dependencies.
   signing; flywheel #573 shipped AgentWorkspace, DelegatedMandate,
   ApprovalValve, and MCP workspace tools; flywheel #574 relicensed Flywheel
   and its consolidated packages from FSL-1.1-MIT to the pure OSI MIT License;
-  Data Forge shipped proof-carrying distillation (1,792.8 rows/s, 9/9 planted
-  controls, HIPAA Safe Harbor + Scientific SI + Search-From-The-Start, RFC 6962
-  Merkle Dataset Cards); JFC3P-14B-Oracle v5 reached 66/84 Arm C (78.57%,
-  +21.43 pp vs Base 14B 48/84, 15/15 long-context zero drift, 21/24 traps,
-  6/6 A1..A6 PASS, live HF Space
-  https://huggingface.co/spaces/zaindanaharper/jfc3p-oracle-demo); and
+  Data Forge shipped proof-carrying distillation (283,687.3 rows/s native
+  BuildLang = 158.2x Python 1,792.8 rows/s, bit-exact FIPS 180-4 SHA-256 + RFC
+  6962 Merkle, 6/6 native + 9/9 pipeline controls); Articulate native BuildLang
+  reached 27,606.0 docs/s (4.19e-13 cadence parity, 6/6 traps); INV-01
+  Symplectic Loom-Titan-1M reached 194.59 M loops/s native BuildLang (2.22e-16
+  parity vs C++23 AVX2+FMA, 0.0812 ms 1M-token PLATO/NSA + MoltKV query, 5/5
+  controls); JFC3P-14B-Oracle v5 reached 66/84 Arm C (78.57%, +21.43 pp vs Base
+  14B 48/84, 15/15 long-context zero drift, 21/24 traps, 6/6 A1..A6 PASS, live
+  HF Space https://huggingface.co/spaces/zaindanaharper/jfc3p-oracle-demo); and
   JFC3P-Titan-1M v2 verified 10.331 GB RTX 4090 / 5.747 GB Edge at 1,000,000
-  tokens (291.69x KV compression, 99.85 tok/s).
+  tokens (291.69x KV compression, 99.85 tok/s). Live SHA-256 receipts:
+  https://harperz9.github.io/experiments/#receipt-ledger .
 
 ## Articulate
 
@@ -101,12 +105,15 @@ Brave and Firefox 128 or later, plus a command line for saved threads.
 - Links: https://harperz9.github.io/cmmns.html ,
   https://harperz9.github.io/cmmns/install.html ,
   https://github.com/HarperZ9/cmmns
-- Recent verified milestones (2026-11-26): cmmns #130 added `cmmns provenance
+- Recent verified milestones (2026-11-27): cmmns #130 added `cmmns provenance
   verify` for offline Web/AI provenance verification (agent-card.json, llms.txt,
   JSON-LD, prompt-injection 4/4 catches, engine-receipt/1); cmmns #131 published
   the OSI/FSF AGPL-3.0-only funding.json manifest; cmmns #132 shipped Schema.org
   codemeta.json, llms.txt, CITATION.cff, REUSE SPDX metadata, and browser store
-  packaging checklists (9/9 CI pass).
+  packaging checklists (9/9 CI pass); cmmns #133 (ffb56129, 1,750/1,750 tests,
+  9/9 CI pass) shipped lawful public-record CIB RFC 6962 Merkle provenance and
+  PII firewall verification (`cmmns provenance cib-verify`, 28/28 bit-exact
+  proofs, 5/5 planted fail-closed controls).
 
 ## Superframe
 
@@ -187,9 +194,16 @@ Version 1.15.0. Licence AGPL-3.0-only. Written in Rust.
   buildlang #349 burned down `universe/CHECK-FAILS.txt` to 150 (126/276
   passing, bddba429); buildlang #350 migrated `universe/`, `suite/`,
   runtime/audio, and FSL registry packages to pure OSI MIT (c3b2e5dd) while
-  keeping core `buildc` AGPL-3.0-only; plus 8 verified 2026 SOTA native `.bld`
-  kernels (FA4 2.05x, H_64 NVFP4 +19.66 dB rescue, 0.140 ms 1M-token PLATO/NSA,
-  608 B O(1) Titans/KDA loop).
+  keeping core `buildc` AGPL-3.0-only; buildlang #351 (14a5260c, 15/15 CI green)
+  added certified 2026 SOTA kernel rewrites (-70.5% online-softmax op-cost,
+  -42.1% Gated-DeltaNet + block-scaled dot, -33.3% FA4 Horner exp2) and GPU TV
+  across WGSL, HLSL, MSL, and SPIR-V; Stage 2 == Stage 3 self-hosting reached a
+  byte-identical fixed point (91,649 B C99, catalogue #68483); plus native
+  compiled benchmarks (Data Forge 283,687.3 rows/s, Articulate 27,606.0 docs/s,
+  INV-01 194.59 M loops/s, N18 3DGS 323.60 FPS = 1.93x C++23, NTC610 -83.33% 4K
+  PBR VRAM), J13 Model Epigenetics (100% weights-only, catalogue #68474), 319
+  zero-FLAG verified formula kernels, and 234 verified author ideas enforced via
+  Gate 6.
 
 ## raw-native
 

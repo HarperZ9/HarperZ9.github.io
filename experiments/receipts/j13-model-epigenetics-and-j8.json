@@ -1,0 +1,29 @@
+{
+  "schema": "engine-receipt/1",
+  "in_toto_statement_type": "https://in-toto.io/Statement/v1",
+  "predicate_type": "https://flywheel.dev/EngineReceipt/v1",
+  "id": "j13-model-epigenetics-and-j8",
+  "title": "J13 Model Epigenetics (100% weights-only incentive detection) & J8 persistent memory",
+  "platform": "Models + Flywheel",
+  "domain": "ai",
+  "emitted_at": "2026-11-27T09:18:09Z",
+  "verdict": "MATCH",
+  "catalogue_id": 68474,
+  "source_url": "https://harperz9.github.io/models.html",
+  "related_url": "https://github.com/HarperZ9/flywheel",
+  "digests": {
+    "claim_sha256": "sha256:5098d5769bc58765616b0d6470b7a99f923dafd3d7da5c07fae75bada5d985e7",
+    "envelope_sha256": "sha256:d913c160377d4b933357cad17977da1884ee77892b75a4c139a6b1fc2ddbcc55",
+    "subject_sha256": "sha256:fa780630efd89e48da649602cfbdbdb7416cbb468ff2feffbb6fd967ebc6c8a3"
+  },
+  "metrics": {
+    "weights_only_detection": "100% training-incentive classification strictly from weight spectra without inference prompts",
+    "fast_weight_memory": "J8 restart-persistent fast-weight memory verified across cold process restarts"
+  },
+  "null_or_control": "Verified against planted isotropic random-weight null controls and tampered fast-weight checkpoint controls rejected fail-closed.",
+  "subject": {
+    "engine": "flywheel",
+    "flagship": "models",
+    "task_id": "wave49d-j13-model-epigenetics-and-j8-persistent-memory"
+  }
+}

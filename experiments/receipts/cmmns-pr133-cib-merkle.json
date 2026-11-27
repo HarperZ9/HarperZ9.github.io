@@ -1,0 +1,49 @@
+{
+  "schema": "engine-receipt/1",
+  "in_toto_statement_type": "https://in-toto.io/Statement/v1",
+  "predicate_type": "https://flywheel.dev/EngineReceipt/v1",
+  "id": "cmmns-pr133-cib-merkle",
+  "title": "CMMNS #133 lawful public-record CIB RFC 6962 Merkle provenance & PII firewall (commit ffb56129)",
+  "platform": "CMMNS",
+  "domain": "society",
+  "emitted_at": "2026-11-27T09:13:59Z",
+  "verdict": "MATCH",
+  "catalogue_id": 68464,
+  "source_url": "https://github.com/HarperZ9/cmmns/pull/133",
+  "related_url": "https://harperz9.github.io/cmmns.html#provenance",
+  "digests": {
+    "claim_sha256": "sha256:817153fd7f8a874a81f738621dd06a3613b1b92683eb7c05c1df6d76459bab86",
+    "envelope_sha256": "sha256:998df482fb1414e359aa648e23ecf3a9b839e5fe452ac3585e845f1d040c14eb",
+    "subject_sha256": "sha256:340635107315539513091906ccf4eda3d07f6b087cf76ed48ec67d568d6e5558"
+  },
+  "metrics": {
+    "tests_and_ci": "1,750/1,750 local tests PASS; 9/9 GitHub Actions CI green on Ubuntu, macOS, and Windows",
+    "merkle_parity": "28/28 bit-exact RFC 6962 inclusion proofs across n=1..7 against flywheel/harness/merkle.py",
+    "cli_command": "cmmns provenance cib-verify <bundle.json> [--json] (zero external deps, pure Web Crypto SHA-256)",
+    "license": "AGPL-3.0-only"
+  },
+  "null_or_control": "5/5 planted fail-closed controls caught: 1-byte source hash tamper, unredacted PII/secret token leak, broken citation chain, unlawful private-individual tracking/GPS target rejected (public_record_aggregate scope only), and forged Merkle inclusion proof.",
+  "subject": {
+    "engine": "cmmns",
+    "flagship": "cmmns",
+    "task_id": "wave48c-cmmns-cib-merkle-provenance-2026-11-27",
+    "git_commit": "ffb56129d26a50b5877f57ec766eecdb79aaf72c",
+    "artifacts": [
+      {
+        "rel_path": "src/core/cib-merkle-provenance.js",
+        "bytes": 14854,
+        "sha256": "sha256:50bcfccb748be2855bb6b75d7422648c3bf34e95c2b7048cc7ce730ca3f728cf"
+      },
+      {
+        "rel_path": "bin/lib/cib-provenance-verify.mjs",
+        "bytes": 1085,
+        "sha256": "sha256:9289703199a1f16e0ddcba76d9b0cded98e9c77186246829235b8676e694e1ac"
+      },
+      {
+        "rel_path": "tests/cib-merkle-provenance.test.js",
+        "bytes": 7965,
+        "sha256": "sha256:72e8e7c394cbd2fb89990b0927e9755e0ae988385d7529ec6a1637f9ec8b32cc"
+      }
+    ]
+  }
+}

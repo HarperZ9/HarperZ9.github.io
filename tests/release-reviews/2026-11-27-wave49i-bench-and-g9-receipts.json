@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-27",
+  "note": "Wave 49I: G9 live SHA-256 receipt-verified experiment table (10 engine-receipt/1 JSON proofs) + Wave 48-50 verified benchmarks (BuildLang Stage 2==Stage 3 self-hosting 68483, Data Forge 283,687.3 rows/s 68460, Articulate 27,606.0 docs/s 68455, INV-01 194.59 M loops/s & 2.22e-16 parity 68459, BuildLang #351 -70.5% online-softmax 68465, CMMNS #133 1,750/1,750 CIB Merkle 68464, N18 3DGS 323.60 FPS 68480, NTC610 -83.33% 4K PBR VRAM 68470, J13 Model Epigenetics 100% 68474, 319 zero-FLAG kernels, 234 verified author ideas)",
+  "paths": {
+    "flywheel.html": "0d2732ef510d49e4e25a138fcf1490d66997792ac289a2d868f11cda90b6420b",
+    "index.html": "834d314daf061822400968c5104b158cb1175f3d81a632816ef90dd36b4bfd5d",
+    "site-index.html": "bd2f71934744f30926808eba10a03dc48098b422b1f63fc87e459c3ffd8de4b8",
+    "system/routes.js": "4d1f1a8d94119a33b89456eabaa768e1fa60a2c6d2825c8da4fea41e8ccd485b"
+  }
+}

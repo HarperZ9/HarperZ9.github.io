@@ -1,0 +1,48 @@
+{
+  "schema": "engine-receipt/1",
+  "in_toto_statement_type": "https://in-toto.io/Statement/v1",
+  "predicate_type": "https://flywheel.dev/EngineReceipt/v1",
+  "id": "articulate-buildlang-sig057",
+  "title": "Articulate native BuildLang prose & cadence core (articulate_core.bld, SIG-057)",
+  "platform": "BuildLang + Articulate",
+  "domain": "language",
+  "emitted_at": "2026-11-27T09:05:48Z",
+  "verdict": "MATCH",
+  "catalogue_id": 68455,
+  "source_url": "https://github.com/HarperZ9/flywheel/tree/main/packages/articulate",
+  "related_url": "https://harperz9.github.io/articulate.html",
+  "digests": {
+    "claim_sha256": "sha256:62c1545708243839b5b63097ca9588b6d580d4ffb81ac3def4ed27ad94196fd2",
+    "envelope_sha256": "sha256:47adc3249f891faa258daecde3f3160a672ac002eb8f01330023f7e0a2889a79",
+    "subject_sha256": "sha256:0dd54843021ff5ad1fa7d891fab51e5c81202738823d0b97144fdbecaec7d94b"
+  },
+  "metrics": {
+    "throughput": "27,606.0 docs/s (12,000 prose and AI-email audits in 434.7 ms)",
+    "cadence_parity": "4.19e-13 max sentence-length CV error vs independent Python f64",
+    "human_replies": "6/6 real human replies PASS with 0 flags (CV 0.152 to 0.502)",
+    "compiler": "buildc 1.15.0 --release (buildc check PASS, buildc lint 0 issues)"
+  },
+  "null_or_control": "6/6 planted AI-email and slop controls caught fail-closed (filler intensifiers, uniform 10-word cadence CV=0.0, bulleted spec-list in short email, stiff corporate opener, symmetrical PR closer, dense parenthetical metric stuffing). Honest limit: flags style patterns only and makes no claim of authorship.",
+  "subject": {
+    "engine": "buildlang",
+    "flagship": "buildlang",
+    "task_id": "wave47d1-articulate-buildlang-core-2026-11-27",
+    "artifacts": [
+      {
+        "rel_path": "articulate_core.bld",
+        "bytes": 15017,
+        "sha256": "sha256:e0032496f7a5706d729c1d8570bfb40b09e91464574b437482b8ec476bfd8ea2"
+      },
+      {
+        "rel_path": "verify_articulate_buildlang.py",
+        "bytes": 6699,
+        "sha256": "sha256:2cfa137916022a11050b485cad636fcdee9b95651d50388c8d21eab0a323529d"
+      },
+      {
+        "rel_path": "ARTICULATE-BUILDLANG-CORE-2026-11-27.md",
+        "bytes": 4358,
+        "sha256": "sha256:d15cef277f4da36a269ac65b7bcb74762ab195d1f3cb886c643b23fc89c8b3e8"
+      }
+    ]
+  }
+}
