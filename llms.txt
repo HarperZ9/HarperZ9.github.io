@@ -37,64 +37,62 @@ BuildLang core buildc and CMMNS remain AGPL-3.0-only; docs/essays CC BY 4.0):
   (283,687.3 rows/s native BuildLang = 158.2x Python 1,792.8 rows/s, bit-exact
   SHA-256 + RFC 6962 Merkle, 6/6 native + 9/9 pipeline controls), NOH-4 (78.0x
   lower MSE), Plato-Key, AVTR-4R, and FRESCO/MoLT.
-- [The Playground](https://harperz9.github.io/playground/index.html): OSI MIT
-  (superframe #162, 294f3f3e) unified 11-layer tactile live multimedia studio
-  and creative field consolidating Low Water, Glass & Water, Fourier, Elements,
-  Distill, 3D Mesh, Estuary Perret-lantern metamers, Living Type, Retro 46 FX,
-  Loom, and Plotter with a docked 4-lane modal DAW and curved SHA-256 Patchbay,
-  backed by 63 historical creative surfaces and 16 native repositories,
-  Superframe 9 of 9 bit-exact C++ to BuildLang renderer parity (superframe
-  #161, 9ab3167f), Round 3 studio audio (superframe #156: 36/36 Welch PSD
-  pass), discovery manifests (superframe #157), Low Water 5-era coastal
-  civilization + bit-exact coastal_kernel.bld (superframe #158), and Native
-  RAW DX12/Vulkan/WebGPU (Waves 74-81, 4fd1af1: 96/96 live Skyrim SE
-  moving-camera pass, dark_mo=0.001633 all-time best, 79/79 DXC, 21/21 RTX 4090
-  GPU bench).
+- [The Playground](https://harperz9.github.io/playground/index.html) and
+  [18-module live WASM bench](https://harperz9.github.io/playground/wasm-bench/index.html):
+  OSI MIT (superframe #162, 294f3f3e) unified 11-layer tactile live multimedia
+  studio and creative field consolidating Low Water, Glass & Water, Fourier,
+  Elements, Distill, 3D Mesh, Estuary Perret-lantern metamers, Living Type,
+  Retro 46 FX, Loom, and Plotter with a docked 4-lane modal DAW and curved
+  SHA-256 Patchbay, backed by 63 historical creative surfaces, 16 native
+  repositories, 18 standalone zero-runtime pure-OSI MIT BuildLang .wasm kernels
+  (86.06 KB total, catalogue #68634), Superframe 11 of 11 bit-exact C++ to
+  BuildLang renderer parity (superframe #163, 17a9a4fc), Round 3 studio audio
+  (superframe #156: 36/36 Welch PSD pass), discovery manifests (superframe
+  #157), Low Water 5-era coastal civilization + bit-exact coastal_kernel.bld
+  (superframe #158), and Native RAW DX12/Vulkan/WebGPU (Waves 74-90: 96/96 live
+  Skyrim SE moving-camera pass, 158/158 RTX 4090 heuristics, dark_mo=0.001633
+  all-time best, 79/79 DXC).
 - [BuildLang](https://harperz9.github.io/buildlang.html): Rust-built compiled
   systems language (AGPL-3.0-only core buildc; pure OSI MIT universe/ and suite/
   via buildlang #350, c3b2e5dd) with typed capability effects, 12 targets (C,
-  HLSL, GLSL, WGSL, Metal, SPIR-V, x86-64, RISC-V, WASM), V5 certified e-graph
-  superoptimizer (buildlang #344), certified GPU polyhedral tiling + subgroup
-  auto-vectorization (buildlang #346), buildlang #351 certified 2026 SOTA
-  rewrites (-70.5% online-softmax op-cost, -42.1% Gated-DeltaNet, -33.3% FA4
-  Horner, live --superopt dogfood -70.31% MIR cost across 265 certified
-  rewrites, 0.0 drift, catalogue #68529), Stage 2 == Stage 3 byte-identical
-  self-hosting fixed point (#68483) + Zero-C direct .wasm self-host (202-376 B
-  .wasm passing 5/5 live in Node, #68517), F6 BDB query engine (73.45x sqlite3
-  on 68,500 rows, 500/500 fuzz caught, #68536), BuildOS-Core pure-BuildLang
-  capability microkernel + A/B state + supervisor (#68490/#68504/#68509),
-  clean-room CRE engine triad (207.75M BSA/s, 56.09x PEX AOT, 625x draw cut,
-  #68502/#68511/#68520), universe CHECK-FAILS burned down to 150 (126/276
-  passing via buildlang #349, bddba429), native compiled benchmarks (Data Forge
-  283,687.3 rows/s, Articulate 27,606.0 docs/s, INV-01 194.59 M loops/s, N18
-  3DGS 323.60 FPS = 1.93x C++23, NTC610 -83.33% 4K PBR VRAM), 370+ zero-FLAG
-  verified formula kernels, 95 built of 234 verified author ideas enforced via
-  Gate 6, discovery manifests & editors/vscode vsce packaging (buildlang #348),
+  HLSL, GLSL, WGSL, Metal, SPIR-V, x86-64, RISC-V, WASM, Verilog-2001 RTL),
+  merged buildlang #351..#362 covering V5 certified e-graph superoptimizer
+  (-70.5% online-softmax op-cost, live --superopt dogfood -70.31% MIR cost
+  across 265 certified rewrites, 0.0 drift, #68529), Zero-C 5-target quad-arch
+  self-hosting (x64-pe, x64-elf at 400.77x Python, rv64-elf, aarch64-elf, direct
+  .wasm 202-376 B modules, Stage 2 == Stage 3 fixed point), ReShade UV lowering
+  + Verilog-2001 RTL + String::as_bytes fix (#352), universe CHECK-FAILS burned
+  down to 135 (#353, f83db229), F6 BDB query engine (73.45x sqlite3 on 68,500
+  rows, 500/500 fuzz caught, #68536), BuildOS-Core capability microkernel
+  (#355), clean-room CRE engine triad (#356: 207.75M BSA/s, 56.09x PEX AOT,
+  625x draw cut), 18-module 86.06 KB live WASM bench, 485 zero-FLAG verified
+  formula kernels, 223/234 (95.30%) built author ideas enforced via Gate 6,
   1.18M-record corpus engine, BuildDB (BDB), BuildTeX, and live AGPL-3.0-only
   funding.json (buildlang #345).
 - [The Flywheel](https://harperz9.github.io/flywheel.html): pure OSI MIT
   (flywheel #574, fb877d2e) self-hosted AI workstation consolidating 31
   packages (incl. articulate, accountable-surface, telos, and companion tools)
-  behind offline cryptographic receipts, Rowan orchestration, Three-Plate
-  Verification Oracle (115/115 recall, 0 false accepts), Data Forge
-  proof-carrying distillation (283,687.3 rows/s native BuildLang = 158.2x Python
-  1,792.8 rows/s, bit-exact SHA-256 + RFC 6962 Merkle, 6/6 native + 9/9 pipeline
-  controls), Articulate native BuildLang core (27,606.0 docs/s, 4.19e-13 cadence
-  parity, 6/6 traps), unified flywheel super-solver (6/6 fault catch via #565),
-  PUCT oracle tree search + 34.99x RFC 6962 Merkle trace compression (#566),
-  full-track 4096-pt Hann Welch PSD audio oracle (#568), Official MCP Registry
-  manifests (#570), accountable-surface C11/Win32 desktop surface + BuildLang
-  FFI (#571), Win32 DPAPI/CredMan keystore + OAuth 2.0 PKCE/Device Flow + RFC
-  9421 signer (#572), AgentWorkspace + DelegatedMandate + ApprovalValve (#573),
-  fsp TPM Stage L/F fail-safe governance protocol (#577, 1faa3deb: 180/180
-  tests, 29/29 red-team attacks caught, #68522), and EMET witnessing.
+  behind offline cryptographic receipts, 10/10 MCP Registry mcp-name repos,
+  Rowan orchestration, Three-Plate Verification Oracle (115/115 recall, 0 false
+  accepts), Data Forge proof-carrying distillation (283,687.3 rows/s native
+  BuildLang = 158.2x Python 1,792.8 rows/s, bit-exact SHA-256 + RFC 6962 Merkle,
+  6/6 native + 9/9 pipeline controls), Articulate native BuildLang core
+  (27,606.0 docs/s, 4.19e-13 cadence parity, 6/6 traps), unified flywheel
+  super-solver (6/6 fault catch via #565), PUCT oracle tree search + 34.99x RFC
+  6962 Merkle trace compression (#566), Official MCP Registry manifests (#570),
+  accountable-surface C11/Win32 desktop surface + BuildLang FFI (#571), Win32
+  DPAPI/CredMan keystore + OAuth 2.0 PKCE/Device Flow + RFC 9421 signer (#572),
+  AgentWorkspace + DelegatedMandate + ApprovalValve (#573), fsp TPM Stage L/F
+  fail-safe governance protocol (#577, 1faa3deb: 180/180 tests, 29/29 red-team
+  attacks caught, #68522), and EMET witnessing.
 - [The Commons (CMMNS)](https://harperz9.github.io/cmmns.html): local-first,
   account-free provenance and coordination overlay across 9 social platforms,
   offline Web/AI provenance CLI verifier (cmmns #130, 4/4 adversarial catches),
   live AGPL-3.0-only funding.json (cmmns #131), Schema.org codemeta/CITATION/
-  llms.txt + store packaging kit (cmmns #132), and lawful public-record CIB RFC
-  6962 Merkle provenance & PII firewall (cmmns #133, ffb56129, 1,750/1,750
-  tests, 9/9 CI pass, 28/28 bit-exact proofs, 5/5 planted controls).
+  llms.txt + store packaging kit (cmmns #132), lawful public-record CIB RFC 6962
+  Merkle provenance & PII firewall (cmmns #133, ffb56129, 1,750/1,750 tests, 9/9
+  CI pass, 28/28 bit-exact proofs, 5/5 planted controls), and 9 graduated MIT
+  BuildLang verification kernels (cmmns #134 fdebc810 + #135 55ff87f3).
 - [Live receipt-verified experiment table (G9)](https://harperz9.github.io/experiments/index.html)
   and [receipt manifest JSON](https://harperz9.github.io/experiments/receipts/index.json):
   90 preregistered null and refuted studies plus 16 live Wave 48-55 SHA-256

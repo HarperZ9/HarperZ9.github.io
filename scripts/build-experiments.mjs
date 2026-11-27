@@ -105,7 +105,7 @@ function receiptLedger() {
   }).join("\n");
   return `<section class="xl" id="receipt-ledger" aria-labelledby="h-receipt-ledger">
   <h2 id="h-receipt-ledger">Live receipt-verified benchmark ledger (G9)</h2>
-  <p>Alongside the 90 preregistered null and refuted studies below, ${receiptRows.length} live Wave 48-55 benchmarks and verification gates (backed by 370+ zero-FLAG verified formula kernels and 95 built of 234 verified author ideas enforced via Gate 6) link directly to their public <code>engine-receipt/1</code> JSON files, source code or pull requests, planted fail-closed controls or published negative results, and SHA-256 <code>claim_sha256</code> digests. Machine-readable manifest: <a href="/experiments/receipts/index.json"><code>/experiments/receipts/index.json</code></a>.</p>
+  <p>Alongside the 90 preregistered null and refuted studies below, ${receiptRows.length} live Wave 48-77 benchmarks and verification gates (backed by 485 zero-FLAG verified formula kernels, 223/234 = 95.30% built author ideas enforced via Gate 6, and the live <a href="/playground/wasm-bench/">18-module 86.06 KB BuildLang WASM bench</a>) link directly to their public <code>engine-receipt/1</code> JSON files, source code or pull requests, planted fail-closed controls or published negative results, and SHA-256 <code>claim_sha256</code> digests. Machine-readable manifest: <a href="/experiments/receipts/index.json"><code>/experiments/receipts/index.json</code></a>.</p>
   <div class="xl-wrap" tabindex="0" role="region" aria-label="Live receipt-verified benchmark ledger">
     <table class="xl-table">
       <thead>

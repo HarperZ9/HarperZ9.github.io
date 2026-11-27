@@ -670,6 +670,7 @@
   {"path":"/career/v2/Zain-Dana-Harper-Resume-Graphics-Creative-Tech.html","kind":"leaf","surface":"unassigned","since":"2026-11-26"},
   {"path":"/career/v2/Zain-Dana-Harper-Resume-Systems-Director.html","kind":"leaf","surface":"unassigned","since":"2026-11-26"},
   {"path":"/models.html","kind":"leaf","surface":"unassigned","since":"2026-11-26"},
-  {"path":"/tools.html","kind":"leaf","surface":"unassigned","since":"2026-11-26"}
+  {"path":"/tools.html","kind":"leaf","surface":"unassigned","since":"2026-11-26"},
+  {"path":"/playground/wasm-bench/","kind":"leaf","surface":"playground","since":"2026-11-27"}
  ]
 }

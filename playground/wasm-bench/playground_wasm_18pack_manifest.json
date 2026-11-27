@@ -1,0 +1,584 @@
+{
+    "schema":  "playground-wasm-18pack/1",
+    "wave":  "74A",
+    "date":  "2026-11-27",
+    "license":  "MIT",
+    "compiler":  "buildc 1.15.0 (--release --target wasm)",
+    "runtime_verified":  "v25.2.1",
+    "pack1_module_count":  6,
+    "pack2_module_count":  6,
+    "pack3_module_count":  6,
+    "total_module_count":  18,
+    "pack1_bytes":  29970,
+    "pack2_bytes":  21125,
+    "pack3_bytes":  37028,
+    "pack3_kb":  36.16,
+    "total_18pack_bytes":  88123,
+    "total_18pack_kb":  86.06,
+    "max_module_bytes":  9526,
+    "max_module_kb":  9.3,
+    "all_under_16kb":  true,
+    "unified_under_100kb":  true,
+    "pack1_corrupted_magic_control":  {
+                                          "rejected_fail_closed":  true,
+                                          "error_name":  "CompileError",
+                                          "error_message":  "WebAssembly.instantiate(): expected magic word 00 61 73 6d, found de ad be ef @+0"
+                                      },
+    "pack2_corrupted_magic_control":  {
+                                          "rejected_fail_closed":  true,
+                                          "error_name":  "CompileError",
+                                          "error_message":  "WebAssembly.instantiate(): expected magic word 00 61 73 6d, found ba ad f0 0d @+0"
+                                      },
+    "pack3_corrupted_magic_control":  {
+                                          "rejected_fail_closed":  true,
+                                          "error_name":  "CompileError",
+                                          "error_msg":  "WebAssembly.instantiate(): expected magic word 00 61 73 6d, found de ad be ef @+0"
+                                      },
+    "modules":  [
+                    {
+                        "idea_id":  "N38",
+                        "slug":  "buoy_ocean_field",
+                        "wasm_path":  "wasm/buoy_ocean_field.wasm",
+                        "wasm_bytes":  6153,
+                        "wasm_kb":  6.01,
+                        "wasm_sha256":  "fbc66b979d6a7d6e13d61e2278b3b5b7a437de4489161fe0a7a0e150a0c63108",
+                        "source_bld":  "src/wasm_buoy_ocean_field.bld",
+                        "source_bld_sha256":  "1bd0dadd8a3ca76e72b74a03b04f2e45db31a63857c2745b55fc9b43241b47fb",
+                        "reference_native_bld":  "buoy_ocean_field.bld",
+                        "exports":  [
+                                        "i2f",
+                                        "abs_f",
+                                        "w_exp",
+                                        "w_ln",
+                                        "w_sqrt",
+                                        "wrap_pi",
+                                        "w_sin",
+                                        "w_cos",
+                                        "fmod_twopi",
+                                        "validate_buoy",
+                                        "jonswap_raw",
+                                        "compute_alpha",
+                                        "jonswap_hs_rec",
+                                        "gerstner_max_ak",
+                                        "gerstner_eval_checksum"
+                                    ],
+                        "node_elapsed_ms":  100.4,
+                        "parity":  {
+                                       "hs_err":  8.8817841970012523E-16,
+                                       "max_ak_err":  1.0073858414116899E-11,
+                                       "eta_csum_err":  3.0539126782969106E-11,
+                                       "traps_exact":  true
+                                   },
+                        "pack":  1
+                    },
+                    {
+                        "idea_id":  "N61",
+                        "slug":  "metamer_divergence",
+                        "wasm_path":  "wasm/metamer_divergence.wasm",
+                        "wasm_bytes":  9526,
+                        "wasm_kb":  9.3,
+                        "wasm_sha256":  "e58583f6c77e71bbe2a0a17b7651d6bfec552baff1f72b74ce86e1e7a8b75b86",
+                        "source_bld":  "src/wasm_metamer_divergence.bld",
+                        "source_bld_sha256":  "e30079099944f08fce8243139d828491462ab2b2c354c1f1213b3f3db6e98b1c",
+                        "reference_native_bld":  "metamer_divergence.bld",
+                        "exports":  [
+                                        "i2f",
+                                        "abs_f",
+                                        "w_sqrt",
+                                        "w_cbrt",
+                                        "w_exp",
+                                        "w_sin",
+                                        "pg",
+                                        "cmf_x",
+                                        "cmf_y",
+                                        "cmf_z",
+                                        "spd_d65",
+                                        "spd_alt",
+                                        "w1_at",
+                                        "w2_at",
+                                        "w3_at",
+                                        "v_at",
+                                        "lab_f",
+                                        "solve_metamer",
+                                        "metamer_d65_delta_xyz",
+                                        "metamer_alt_delta_e76",
+                                        "metamer_spec_rms",
+                                        "metamer_guard"
+                                    ],
+                        "node_elapsed_ms":  7.44,
+                        "parity":  {
+                                       "delta_xyz_d65":  2.5070079910501203E-16,
+                                       "d65_under_1e9":  true,
+                                       "de_alt_err_vs_printed":  1.8369289533026745E-05,
+                                       "rms_err_vs_printed":  1.5307893824756391E-07,
+                                       "guard_exact":  true
+                                   },
+                        "pack":  1
+                    },
+                    {
+                        "idea_id":  "E4",
+                        "slug":  "console_shader_stack",
+                        "wasm_path":  "wasm/console_shader_stack.wasm",
+                        "wasm_bytes":  4863,
+                        "wasm_kb":  4.75,
+                        "wasm_sha256":  "e81d3c934d489cb197478dc33adf3d958f3f13feb721d5944f5933ca2b91b3cf",
+                        "source_bld":  "src/wasm_console_shader_stack.bld",
+                        "source_bld_sha256":  "198b6b07664340dbb9883f431b5231aeeb441f2c1e81c811b9046066b3257231",
+                        "reference_native_bld":  "console_shader_stack.bld",
+                        "exports":  [
+                                        "i2f",
+                                        "clamp01",
+                                        "floor_nonneg",
+                                        "n64_barycentric",
+                                        "bayer4",
+                                        "dither_5bit",
+                                        "validate_radiance",
+                                        "eval_frame",
+                                        "shader_frame_checksum",
+                                        "shader_energy_ratio",
+                                        "shader_max_chan"
+                                    ],
+                        "node_elapsed_ms":  1.12,
+                        "parity":  {
+                                       "checksum_err":  3.4106051316484809E-13,
+                                       "max_chan_err":  4.1935566130746338E-11,
+                                       "traps_exact":  true
+                                   },
+                        "pack":  1
+                    },
+                    {
+                        "idea_id":  "K3",
+                        "slug":  "midcentury_synthesis_grid",
+                        "wasm_path":  "wasm/midcentury_synthesis_grid.wasm",
+                        "wasm_bytes":  4130,
+                        "wasm_kb":  4.03,
+                        "wasm_sha256":  "5d935f7341b3c35db688f9016f867c5b20907cf75ea8c5e024311e6ba0905b93",
+                        "source_bld":  "src/wasm_midcentury_synthesis_grid.bld",
+                        "source_bld_sha256":  "1151db9b61ca095c64b213bae191bcbeecffbcd36e2803d0bf827b062c0eaabc",
+                        "reference_native_bld":  "midcentury_synthesis_grid.bld",
+                        "exports":  [
+                                        "i2f",
+                                        "abs_f",
+                                        "w_sqrt",
+                                        "box_ratio",
+                                        "box_h",
+                                        "box_x",
+                                        "box_y",
+                                        "box_w",
+                                        "grid_total_area_mm2",
+                                        "grid_validate"
+                                    ],
+                        "node_elapsed_ms":  0.89,
+                        "parity":  {
+                                       "total_area_err":  2.1827872842550278E-11,
+                                       "traps_exact":  true
+                                   },
+                        "pack":  1
+                    },
+                    {
+                        "idea_id":  "N30",
+                        "slug":  "confidence_word_calib",
+                        "wasm_path":  "wasm/confidence_word_calib.wasm",
+                        "wasm_bytes":  1582,
+                        "wasm_kb":  1.54,
+                        "wasm_sha256":  "81e4c0422c5e46bbd4f7d1690826de59f6e6d9c440633d99057dc57c353b2648",
+                        "source_bld":  "src/wasm_confidence_word_calib.bld",
+                        "source_bld_sha256":  "d506d93b6de298ad3d06f1f61b56b3fd17d2d62d49889ea909ee5d26d246d408",
+                        "reference_native_bld":  "confidence_word_calib.bld",
+                        "exports":  [
+                                        "confidence_band",
+                                        "audit_claim"
+                                    ],
+                        "node_elapsed_ms":  0.552,
+                        "parity":  {
+                                       "bands_exact":  true,
+                                       "traps_exact":  true
+                                   },
+                        "pack":  1
+                    },
+                    {
+                        "idea_id":  "E5",
+                        "slug":  "living_type_bezier",
+                        "wasm_path":  "wasm/living_type_bezier.wasm",
+                        "wasm_bytes":  3716,
+                        "wasm_kb":  3.63,
+                        "wasm_sha256":  "ba7018cfc05cacae06b5d0424e236f69353fb8598d26450b3753479e7e4d09d8",
+                        "source_bld":  "src/wasm_living_type_bezier.bld",
+                        "source_bld_sha256":  "d6710427d6f262c942fe96fbfc576f18666f8d51d8da2390dcedc4f1cbb395c5",
+                        "reference_native_bld":  "living_type_bezier.bld",
+                        "exports":  [
+                                        "i2f",
+                                        "det_ln",
+                                        "cubic_eval",
+                                        "cross2d",
+                                        "segs_intersect",
+                                        "count_bezier_self_intersections",
+                                        "optical_contrast",
+                                        "kern_av_em",
+                                        "living_type_checksum"
+                                    ],
+                        "node_elapsed_ms":  0.815,
+                        "parity":  {
+                                       "kern_av_err":  0.0,
+                                       "checksum_err":  4.9831072601591586E-10,
+                                       "traps_exact":  true
+                                   },
+                        "pack":  1
+                    },
+                    {
+                        "idea_id":  "N25",
+                        "slug":  "honest_exit_valve",
+                        "pack":  2,
+                        "wasm_path":  "wasm/honest_exit_valve.wasm",
+                        "wasm_bytes":  2688,
+                        "wasm_kb":  2.62,
+                        "wasm_sha256":  "55d0c0fcb5528e645d629874666ed001e6a09ad4dc62bde7006f5b6fad87f60f",
+                        "source_bld":  "pack2/src/honest_exit_valve_wasm.bld",
+                        "source_bld_sha256":  "e10b4db52575fb58d9bca8ee170854e274ed6fa53244e8c60108026d458cc602",
+                        "reference_native_bld":  "honest_exit_valve.bld",
+                        "exports":  [
+                                        "i2f",
+                                        "w_exp",
+                                        "arm_metric",
+                                        "arm_reseats",
+                                        "audit_arm_safety"
+                                    ],
+                        "node_elapsed_ms":  0.602,
+                        "parity":  {
+                                       "hack_b_zero":  true,
+                                       "hack_c_zero":  true,
+                                       "hack_a_high":  true,
+                                       "reseats_exact":  true,
+                                       "traps_exact":  true
+                                   }
+                    },
+                    {
+                        "idea_id":  "N26",
+                        "slug":  "catastrophe_surge",
+                        "pack":  2,
+                        "wasm_path":  "wasm/catastrophe_surge.wasm",
+                        "wasm_bytes":  4763,
+                        "wasm_kb":  4.65,
+                        "wasm_sha256":  "7e247af46e7867a41cee1220e17b52120de1892fab70557a1c89fcb21750c84f",
+                        "source_bld":  "pack2/src/catastrophe_surge_wasm.bld",
+                        "source_bld_sha256":  "b51c05a53d2f437386f505df83b2ead2482808f7315dca218b2b6cce9869f5c0",
+                        "reference_native_bld":  "catastrophe_surge_sim.bld",
+                        "exports":  [
+                                        "abs_f",
+                                        "i2f",
+                                        "w_exp",
+                                        "w_ln",
+                                        "income_at",
+                                        "dem_at",
+                                        "solve_clearing_price",
+                                        "inc_sum_100",
+                                        "q_regime",
+                                        "eval_shock",
+                                        "surge_3shock_checksum",
+                                        "check_conservation"
+                                    ],
+                        "node_elapsed_ms":  88.854,
+                        "parity":  {
+                                       "checksum_err":  2.580728732937132E-07,
+                                       "traps_exact":  true
+                                   }
+                    },
+                    {
+                        "idea_id":  "N58",
+                        "slug":  "blackout_commons",
+                        "pack":  2,
+                        "wasm_path":  "wasm/blackout_commons.wasm",
+                        "wasm_bytes":  5875,
+                        "wasm_kb":  5.74,
+                        "wasm_sha256":  "52ff426ef5a2ddc6d98aa5dde7d6e833f627869c7dcd8776685cb46003be3c33",
+                        "source_bld":  "pack2/src/blackout_commons_wasm.bld",
+                        "source_bld_sha256":  "b37c268ed0b3dbdc588a2e4d89dc5094595f2f3c75f00581219476ad03c77462",
+                        "reference_native_bld":  "blackout_commons_sync.bld",
+                        "exports":  [
+                                        "gf_mul",
+                                        "gf_inv",
+                                        "rs_gen",
+                                        "rs_encode_shard",
+                                        "solve_4x4_gf",
+                                        "verify_all_15_blackouts",
+                                        "check_quorum"
+                                    ],
+                        "node_elapsed_ms":  1.293,
+                        "parity":  {
+                                       "recovered_15_exact":  true,
+                                       "traps_exact":  true
+                                   }
+                    },
+                    {
+                        "idea_id":  "N59",
+                        "slug":  "community_homeostasis",
+                        "pack":  2,
+                        "wasm_path":  "wasm/community_homeostasis.wasm",
+                        "wasm_bytes":  3760,
+                        "wasm_kb":  3.67,
+                        "wasm_sha256":  "a859417f0fa03fd9bffac32ff9104ce2a4e92ebe16f6e486c8dc1eb5b437b9bb",
+                        "source_bld":  "pack2/src/community_homeostasis_wasm.bld",
+                        "source_bld_sha256":  "8ccf0524f261eac3111e5e8d0aeb37fb61c79424cf96d03955e900646eb4af63",
+                        "reference_native_bld":  "community_homeostasis.bld",
+                        "exports":  [
+                                        "abs_f",
+                                        "sim_feedback",
+                                        "check_stability"
+                                    ],
+                        "node_elapsed_ms":  0.877,
+                        "parity":  {
+                                       "ise1_err":  1.5929517402923921E-05,
+                                       "ise10_err":  4.3609295971691608E-05,
+                                       "traps_exact":  true
+                                   }
+                    },
+                    {
+                        "idea_id":  "N71",
+                        "slug":  "disclosure_penalty",
+                        "pack":  2,
+                        "wasm_path":  "wasm/disclosure_penalty.wasm",
+                        "wasm_bytes":  2243,
+                        "wasm_kb":  2.19,
+                        "wasm_sha256":  "4bcf3b600e39fe61eee6cb6a1e07d4e4046ad3b772cad205eb24351cd76f09b7",
+                        "source_bld":  "pack2/src/disclosure_penalty_wasm.bld",
+                        "source_bld_sha256":  "388f42bf9f9ba066e6c13dcc506d96dd70dbc3172d614f86a6972361b587c798",
+                        "reference_native_bld":  "disclosure_penalty_game.bld",
+                        "exports":  [
+                                        "i2f",
+                                        "lcg_next_f",
+                                        "critical_audit_prob",
+                                        "check_prob_bounds",
+                                        "simulate_regime"
+                                    ],
+                        "node_elapsed_ms":  1.104,
+                        "parity":  {
+                                       "p_pun_err":  6.7634791411247735E-09,
+                                       "p_aud_err":  1.0000001937626735E-09,
+                                       "p_mix_err":  4.1481758839001515E-07,
+                                       "p_zero_err":  1.8530298637366708E-07,
+                                       "traps_exact":  true
+                                   }
+                    },
+                    {
+                        "idea_id":  "G4",
+                        "slug":  "tree_wind_root_rot",
+                        "pack":  2,
+                        "wasm_path":  "wasm/tree_wind_root_rot.wasm",
+                        "wasm_bytes":  1796,
+                        "wasm_kb":  1.75,
+                        "wasm_sha256":  "8413c53d40d705c67cb1c634d2616159f7140c468b2e1b8a31c209123541baf8",
+                        "source_bld":  "pack2/src/tree_wind_root_rot_wasm.bld",
+                        "source_bld_sha256":  "2faf783cfc12c6549a4aea832e8804691ae064690484e9b8069d246f658bcd24",
+                        "reference_native_bld":  "tree_wind_root_rot.bld",
+                        "exports":  [
+                                        "w_sqrt",
+                                        "validate_tree",
+                                        "solve_tree_metric"
+                                    ],
+                        "node_elapsed_ms":  0.432,
+                        "parity":  {
+                                       "sf_adapt_err":  1.5698587163548439E-07,
+                                       "sf_rot_err":  2.4785692120832259E-05,
+                                       "deflect_err":  4.0738225690617469E-05,
+                                       "traps_exact":  true
+                                   }
+                    },
+                    {
+                        "idea_id":  "N42",
+                        "slug":  "moat_egraph_cert_compress",
+                        "pack":  3,
+                        "wasm_path":  "wasm/moat_egraph_cert_compress.wasm",
+                        "wasm_bytes":  7769,
+                        "wasm_kb":  7.59,
+                        "wasm_sha256":  "4550a2da637442d6b53149900959058c6d54d0bc7add16431d6395fdb4a053fb",
+                        "source_bld":  "pack3/src/moat_egraph_cert_compress_wasm.bld",
+                        "source_bld_sha256":  "c020112592e4f85c34832a873c10212da136d677008ca455dcc60be4a18672ca",
+                        "reference_native_bld":  "moat_egraph_cert_compress.bld",
+                        "exports":  [
+                                        "i2f",
+                                        "eval_rule_lhs",
+                                        "eval_rule_rhs",
+                                        "check_step_sound",
+                                        "fnv1a_step",
+                                        "edge_src",
+                                        "edge_dst",
+                                        "edge_rule",
+                                        "edge_a",
+                                        "edge_b",
+                                        "edge_c",
+                                        "bfs_wave_mask",
+                                        "bfs_shortest_steps",
+                                        "bfs_path_edge_at",
+                                        "egraph_compress_metric",
+                                        "egraph_reduction_pct",
+                                        "__alloc",
+                                        "__str_new"
+                                    ],
+                        "node_elapsed_ms":  1.94,
+                        "parity":  {
+                                       "proof_hash_bit_exact":  true,
+                                       "reduction_pct_err":  0.0,
+                                       "steps_exact":  true,
+                                       "traps_exact":  true
+                                   }
+                    },
+                    {
+                        "idea_id":  "F2",
+                        "slug":  "moat_zerocopy_cap_ipc",
+                        "pack":  3,
+                        "wasm_path":  "wasm/moat_zerocopy_cap_ipc.wasm",
+                        "wasm_bytes":  2782,
+                        "wasm_kb":  2.72,
+                        "wasm_sha256":  "4d0abe3bc676f8df4a895d572746667be5c93790062595510207c0fd48724f15",
+                        "source_bld":  "pack3/src/moat_zerocopy_cap_ipc_wasm.bld",
+                        "source_bld_sha256":  "d80a6183e35e43e42c4155fc4eb01a46e39c6f578c3e93bc28f62595f1eca7c9",
+                        "reference_native_bld":  "moat_zerocopy_cap_ipc.bld",
+                        "exports":  [
+                                        "fnv1a_u32",
+                                        "slab_payload",
+                                        "ring_check_push",
+                                        "ipc_run_metric",
+                                        "__alloc",
+                                        "__str_new"
+                                    ],
+                        "node_elapsed_ms":  3.058,
+                        "parity":  {
+                                       "send_hash_bit_exact":  true,
+                                       "recv_hash_bit_exact":  true,
+                                       "zero_copy_zero_drop":  true,
+                                       "traps_exact":  true
+                                   }
+                    },
+                    {
+                        "idea_id":  "N49",
+                        "slug":  "moat_three_plate",
+                        "pack":  3,
+                        "wasm_path":  "wasm/moat_three_plate.wasm",
+                        "wasm_bytes":  4961,
+                        "wasm_kb":  4.84,
+                        "wasm_sha256":  "183dab189b39dcd51e8695565f6c12343108b354428da90eab3a2eaf58993291",
+                        "source_bld":  "pack3/src/moat_three_plate_wasm.bld",
+                        "source_bld_sha256":  "a1db8953bd7b4b2fe44be24798fb7bf4887869cebf8ed05ee4abb40f57644a62",
+                        "reference_native_bld":  "moat_three_plate_verifier.bld",
+                        "exports":  [
+                                        "plate1_surface",
+                                        "plate2_invariant",
+                                        "plate3_mutant_kill",
+                                        "verify_three_plate",
+                                        "fnv_mix",
+                                        "three_plate_sweep",
+                                        "__alloc",
+                                        "__str_new"
+                                    ],
+                        "node_elapsed_ms":  0.968,
+                        "parity":  {
+                                       "digest_bit_exact":  true,
+                                       "confusion_exact":  true,
+                                       "reject_codes_exact":  true,
+                                       "traps_exact":  true
+                                   }
+                    },
+                    {
+                        "idea_id":  "N41",
+                        "slug":  "moat_ntc_block",
+                        "pack":  3,
+                        "wasm_path":  "wasm/moat_ntc_block.wasm",
+                        "wasm_bytes":  8108,
+                        "wasm_kb":  7.92,
+                        "wasm_sha256":  "f762c4be308cc8c5d963425b60aa2257ec1d7477936228c36a8d4d5e7ee85ff2",
+                        "source_bld":  "pack3/src/moat_ntc_block_wasm.bld",
+                        "source_bld_sha256":  "64a370511486e0836266d2688a658a9dfb1be3c95dfc06db747df28adac94259",
+                        "reference_native_bld":  "moat_ntc_block_compress.bld",
+                        "exports":  [
+                                        "i2f",
+                                        "clamp01",
+                                        "floor_u8",
+                                        "quant8",
+                                        "w_sin",
+                                        "w_ln",
+                                        "validate_latent",
+                                        "micro_basis",
+                                        "pbr_texel",
+                                        "corner_q",
+                                        "ntc_comp_ratio",
+                                        "ntc_bpp_per_ch",
+                                        "ntc_eval_tile",
+                                        "ntc_check_traps",
+                                        "__alloc",
+                                        "__str_new"
+                                    ],
+                        "node_elapsed_ms":  9.733,
+                        "parity":  {
+                                       "psnr_err_db":  4.7328256869150209E-09,
+                                       "dec_checksum_err":  1.0004441719502211E-11,
+                                       "ratio_exact":  true,
+                                       "traps_exact":  true
+                                   }
+                    },
+                    {
+                        "idea_id":  "AC8",
+                        "slug":  "rsi_closed_loop",
+                        "pack":  3,
+                        "wasm_path":  "wasm/rsi_closed_loop.wasm",
+                        "wasm_bytes":  4787,
+                        "wasm_kb":  4.67,
+                        "wasm_sha256":  "4cfe7502d693c70d91773cd95e416dbba3267b57e044cc544c1a0dcc0758febc",
+                        "source_bld":  "pack3/src/rsi_closed_loop_wasm.bld",
+                        "source_bld_sha256":  "cc431f321278947a04f65653e7e9962e4154e91e03d1901b23dea35c4266fe2d",
+                        "reference_native_bld":  "rsi_closed_loop_engine.bld",
+                        "exports":  [
+                                        "i2f",
+                                        "rsi_run_metric",
+                                        "rsi_chain_seal",
+                                        "rsi_verify_all_controls",
+                                        "__alloc",
+                                        "__str_new"
+                                    ],
+                        "node_elapsed_ms":  1.023,
+                        "parity":  {
+                                       "arm_a_cap_err":  3.5527136788005009E-15,
+                                       "arm_b_cap_err":  0.0,
+                                       "arm_b_clean":  true,
+                                       "traps_exact":  true
+                                   }
+                    },
+                    {
+                        "idea_id":  "J13",
+                        "slug":  "epigenetics_audit",
+                        "pack":  3,
+                        "wasm_path":  "wasm/epigenetics_audit.wasm",
+                        "wasm_bytes":  8621,
+                        "wasm_kb":  8.42,
+                        "wasm_sha256":  "ff53a9aba4ef772f7ca79d012b07ea09db36258febb063ce872f8e799ca1a47f",
+                        "source_bld":  "pack3/src/epigenetics_audit_wasm.bld",
+                        "source_bld_sha256":  "7756e01dda84907dd589c9d455af19b426f58880ff386a58d776615dda8e0d6f",
+                        "reference_native_bld":  "epigenetics_schedule_study.bld",
+                        "exports":  [
+                                        "i2f",
+                                        "w_sqrt",
+                                        "w_sin",
+                                        "w_cos",
+                                        "w_ln",
+                                        "w_exp",
+                                        "det_gauss",
+                                        "hess_k",
+                                        "w_star_k",
+                                        "sim_coord",
+                                        "epi_feature",
+                                        "epi_mean_loss",
+                                        "epi_audit_gate",
+                                        "epi_heldout_acc",
+                                        "__alloc",
+                                        "__str_new"
+                                    ],
+                        "node_elapsed_ms":  1161.584,
+                        "parity":  {
+                                       "heldout_acc_err":  3.3339997429493451E-13,
+                                       "loss_adamw_err":  3.0354191382642171E-13,
+                                       "loss_sgd_err":  3.4229563627974358E-14,
+                                       "loss_hack_err":  4.5269343829090758E-14,
+                                       "traps_exact":  true
+                                   }
+                    }
+                ]
+}

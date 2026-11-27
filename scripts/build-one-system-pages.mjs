@@ -498,7 +498,7 @@ ${jsonLdMatch ? jsonLdMatch[0] : ""}`;
   <h1><span class="d-3d">Flywheel</span> <span class="pf-mark">THEFLYWHEEL</span></h1>
   <p class="lp-lede lp-lede-1">An OSI MIT-licensed AI workstation and coding harness for any model, with runs you can recheck offline. Consolidates 31 packages behind cryptographic receipts, Rowan orchestration, Three-Plate Verification Oracle (115/115 recall), Data Forge proof-carrying distillation (283,687.3 rows/s native BuildLang = 158.2x Python 1,792.8 rows/s, bit-exact SHA-256 + RFC 6962 Merkle, 6/6 native + 9/9 pipeline controls), Articulate native BuildLang core (27,606.0 docs/s, 4.19e-13 cadence parity, 6/6 traps), unified Super Solver (6/6 fault catch), PUCT oracle tree search, 34.99x Merkle trace compression, <span class="ident" translate="no">accountable-surface</span> native C11/Win32 actuation, OS keystore/OAuth/RFC 9421 signing, and delegated AgentWorkspace mandates.</p>
   <p class="lp-run"><code>irm https://raw.githubusercontent.com/HarperZ9/flywheel/main/install.ps1 | iex</code></p>
-  <p class="lp-rel">Fail-closed <code>SHA256SUMS</code> installer (macOS/Linux: <code>curl -fsSL https://raw.githubusercontent.com/HarperZ9/flywheel/main/install.sh | sh</code>; PyPI: <code>pip install <span class="ident" translate="no">flywheel-verify</span></code> on PyPI). Pure OSI <strong>MIT</strong> License (<a href="https://github.com/HarperZ9/flywheel/pull/574">flywheel #574</a>, <code>fb877d2e</code>); Version 2.0.0 on GitHub and PyPI; on main: <a href="https://github.com/HarperZ9/flywheel/pull/565">#565</a> (<code>super-solver</code> 6/6 fault catch), <a href="https://github.com/HarperZ9/flywheel/pull/566">#566</a> (PUCT + 34.99x Merkle trace), <a href="https://github.com/HarperZ9/flywheel/pull/570">#570</a> (MCP Registry manifests), <a href="https://github.com/HarperZ9/flywheel/pull/571">#571</a> (C11/Win32 surface + BuildLang FFI), <a href="https://github.com/HarperZ9/flywheel/pull/572">#572</a> (DPAPI/CredMan keystore, OAuth PKCE/Device Flow &amp; RFC 9421 signer), <a href="https://github.com/HarperZ9/flywheel/pull/573">#573</a> (<code>AgentWorkspace</code>, <code>DelegatedMandate</code> &amp; <code>ApprovalValve</code>), and <a href="https://github.com/HarperZ9/flywheel/pull/577">#577</a> (<code>fsp</code> TPM Stage L/F fail-safe governance protocol: 180/180 tests, 29/29 red-team attacks caught, <code>1faa3deb</code>). Local forge milestones: <a href="/models.html">JFC3P-14B-Oracle v5</a> (66/84 Arm C = 78.57%), INV-01 Symplectic Loom-Titan-1M (194.59 M loops/s, 2.22e-16 parity), and the <a href="/experiments/#receipt-ledger">G9 live 16-receipt SHA-256 ledger</a>.</p>
+  <p class="lp-rel">Fail-closed <code>SHA256SUMS</code> installer (macOS/Linux: <code>curl -fsSL https://raw.githubusercontent.com/HarperZ9/flywheel/main/install.sh | sh</code>; PyPI: <code>pip install <span class="ident" translate="no">flywheel-verify</span></code> on PyPI). Pure OSI <strong>MIT</strong> License (<a href="https://github.com/HarperZ9/flywheel/pull/574">flywheel #574</a>, <code>fb877d2e</code>); Version 2.0.0 on GitHub and PyPI; 10/10 MCP Registry <code>mcp-name</code> repos live; on main: <a href="https://github.com/HarperZ9/flywheel/pull/565">#565</a> (<code>super-solver</code> 6/6 fault catch), <a href="https://github.com/HarperZ9/flywheel/pull/566">#566</a> (PUCT + 34.99x Merkle trace), <a href="https://github.com/HarperZ9/flywheel/pull/570">#570</a> (MCP Registry manifests), <a href="https://github.com/HarperZ9/flywheel/pull/571">#571</a> (C11/Win32 surface + BuildLang FFI), <a href="https://github.com/HarperZ9/flywheel/pull/572">#572</a> (DPAPI/CredMan keystore, OAuth PKCE/Device Flow &amp; RFC 9421 signer), <a href="https://github.com/HarperZ9/flywheel/pull/573">#573</a> (<code>AgentWorkspace</code>, <code>DelegatedMandate</code> &amp; <code>ApprovalValve</code>), and <a href="https://github.com/HarperZ9/flywheel/pull/577">#577</a> (<code>fsp</code> TPM Stage L/F fail-safe governance protocol: 180/180 tests, 29/29 red-team attacks caught, <code>1faa3deb</code>). Local forge milestones: <a href="/models.html">JFC3P-14B-Oracle v5</a> (66/84 Arm C = 78.57%), INV-01 Symplectic Loom-Titan-1M (194.59 M loops/s, 2.22e-16 parity), <a href="/playground/wasm-bench/">18-Module Live WASM Bench (86.06 KB)</a>, and the <a href="/experiments/#receipt-ledger">G9 live 16-receipt SHA-256 ledger</a>.</p>
   <nav class="lp-ways" aria-label="On this page">
     <a href="#demo">Output check demo</a>
     <a href="#what">What Flywheel is</a>
@@ -530,8 +530,90 @@ document.addEventListener("click", async (ev) => {
   writeChecked("flywheel.html", html);
 }
 
+// 6. playground/wasm-bench/index.html - Measured Drafting Sheet (18-Module 86.06 KB Pure-OSI MIT BuildLang WASM Bench)
+function buildWasmBench() {
+  const scopedStyle = `<style>
+  .wb-toolbar { display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; padding: 0.85rem 0; border-bottom: 1px solid var(--line); }
+  .wb-toolbar button { background: transparent; color: var(--ink); border: 1px solid var(--line); padding: 0.4rem 0.8rem; min-height: 40px; font-family: var(--face-utility); font-size: 0.84rem; cursor: pointer; }
+  .wb-toolbar button:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .wb-toolbar button[aria-pressed="true"] { border-color: var(--ink); font-weight: 700; }
+  .wb-readout { padding: 0.85rem 0; border-bottom: 1px solid var(--line); font-family: var(--face-utility); font-size: 0.86rem; font-variant-numeric: tabular-nums; }
+  .wb-readout p { margin: 0.25rem 0; }
+  .wb-table-wrap { width: 100%; overflow-x: auto; margin-top: 0.5rem; }
+  .wb-table-wrap:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .wb-table { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
+  .wb-table th, .wb-table td { text-align: left; padding: 0.55rem 0.65rem 0.55rem 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .wb-table thead th { font-family: var(--face-utility); font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--soft); font-weight: 600; }
+  .wb-table .mono { font-family: var(--face-utility); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .wb-table .status-pass { font-family: var(--face-utility); font-weight: 700; }
+  .wb-table .status-fail { font-family: var(--face-utility); font-weight: 700; text-decoration: underline; }
+</style>`;
+
+  const body = `<article class="st" id="wasm-bench">
+<header class="ds-sheet-head">
+  <p class="ds-kicker">Measured Drafting Sheet / Live WebAssembly Verification Bench</p>
+  <h1>BuildLang 18-Module WASM Live Verification Bench</h1>
+  <p class="ds-lede">Eighteen standalone, zero-runtime pure-OSI MIT WebAssembly modules compiled directly by <code>buildc 1.15.0</code> (88,123 bytes / 86.06 KB total, max 9.30 KB per module, zero external CDN calls). Every module executes live in your browser against its SHA-256 digest and planted fail-closed controls.</p>
+  <p class="ds-meta"><span>86.06 KB total (18 modules)</span><span>Pure OSI MIT License</span><span>485 zero-FLAG kernels</span><span>223/234 (95.30%) built ideas</span></p>
+  <nav class="ds-ways" aria-label="Related pages">
+    <a href="/playground/">The Playground</a>
+    <a href="/experiments/#receipt-ledger">G9 SHA-256 Receipt Ledger</a>
+    <a href="/buildlang.html">BuildLang</a>
+    <a href="./playground_wasm_18pack_manifest.json">Manifest JSON</a>
+  </nav>
+</header>
+
+<section class="wb-toolbar" aria-label="Verification controls">
+  <button id="btn-run" type="button">Run All 18 Modules</button>
+  <button type="button" data-pack-filter="all" aria-pressed="true">All (18)</button>
+  <button type="button" data-pack-filter="1" aria-pressed="false">Pack 1 (6)</button>
+  <button type="button" data-pack-filter="2" aria-pressed="false">Pack 2 (6)</button>
+  <button type="button" data-pack-filter="3" aria-pressed="false">Pack 3 (6)</button>
+</section>
+
+<section class="wb-readout" aria-live="polite">
+  <p id="bench-summary">Ready to run 18 zero-runtime BuildLang WebAssembly modules.</p>
+  <p id="bench-controls">Planted controls pending: corrupted WASM magic CompileError + tampered manifest SHA-256 rejection.</p>
+</section>
+
+<div class="wb-table-wrap" tabindex="0" role="region" aria-label="18-module WebAssembly verification table">
+  <table class="wb-table">
+    <thead>
+      <tr>
+        <th scope="col">Pack</th>
+        <th scope="col">Idea</th>
+        <th scope="col">Module</th>
+        <th scope="col">Size</th>
+        <th scope="col">Latency</th>
+        <th scope="col">Checked Output</th>
+        <th scope="col">Planted Control</th>
+        <th scope="col">SHA-256</th>
+        <th scope="col">Status</th>
+      </tr>
+    </thead>
+    <tbody id="bench-rows"></tbody>
+  </table>
+</div>
+
+${provenance("playground/wasm-bench/index.html", "2026-11-27", "18/18 BuildLang buildc 1.15.0 MIT WASM modules (88,123 B) | catalogue #68634")}
+</article>
+<script type="module" src="./bench.mjs"></script>`;
+
+  const html = page({
+    path: "playground/wasm-bench/",
+    title: "BuildLang 18-Module WASM Live Verification Bench",
+    description: "Eighteen standalone zero-runtime pure-OSI MIT BuildLang WebAssembly modules (86.06 KB total) verified live in-browser against SHA-256 digests and planted fail-closed controls.",
+    body,
+    bodyClass: "reading ds-sheet",
+    extraHead: scopedStyle,
+    backdrop: false,
+  });
+  writeChecked("playground/wasm-bench/index.html", html);
+}
+
 buildModels();
 buildTools();
 buildPerson();
 buildSecurity();
 buildFlywheel();
+buildWasmBench();

@@ -115,7 +115,8 @@ Brave and Firefox 128 or later, plus a command line for saved threads.
   packaging checklists (9/9 CI pass); cmmns #133 (ffb56129, 1,750/1,750 tests,
   9/9 CI pass) shipped lawful public-record CIB RFC 6962 Merkle provenance and
   PII firewall verification (`cmmns provenance cib-verify`, 28/28 bit-exact
-  proofs, 5/5 planted fail-closed controls).
+  proofs, 5/5 planted fail-closed controls); cmmns #134 (fdebc810) and #135
+  (55ff87f3) graduated 9 pure-OSI MIT BuildLang verification kernels.
 
 ## Superframe
 
@@ -140,10 +141,11 @@ Node 24 or later. The JavaScript engine has no dependencies; the instruments in
   crossing. It is a creative tool and makes no claims about therapy.
 - Links: https://harperz9.github.io/playground/#superframe ,
   https://github.com/HarperZ9/superframe
-- Recent verified milestones (2026-11-27): superframe #161 advanced native/bld/
-  bit-exact C++ to BuildLang renderer parity to 9 of 9 modules (9ab3167f);
+- Recent verified milestones (2026-11-27): superframe #163 advanced native/bld/
+  bit-exact C++ to BuildLang renderer parity to 11 of 11 modules (17a9a4fc);
   superframe #162 relicensed Superframe from FSL-1.1-MIT to the pure OSI MIT
-  License (294f3f3e); superframe #156 shipped clean-room taste synths,
+  License (294f3f3e); live 18-module 86.06 KB pure-OSI MIT BuildLang WASM
+  verification bench shipped at https://harperz9.github.io/playground/wasm-bench/ ; superframe #156 shipped clean-room taste synths,
   Estuary-Space FX rack, Estuary Clock-Drift DAW, and Round 3 studio audio
   (36/36 Welch PSD pass); superframe #157 added CITATION.cff, codemeta.json,
   and llms.txt discovery manifests; superframe #158 shipped the Low Water 5-era
@@ -210,9 +212,12 @@ Version 1.15.0. Licence AGPL-3.0-only. Written in Rust.
   draw cut, #68502/#68511/#68520) passed fail-closed; plus native compiled
   benchmarks (Data Forge 283,687.3 rows/s, Articulate 27,606.0 docs/s, INV-01
   194.59 M loops/s, N18 3DGS 323.60 FPS = 1.93x C++23, NTC610 -83.33% 4K PBR
-  VRAM), J13 Model Epigenetics (100% weights-only, #68474), 370+ zero-FLAG
-  verified formula kernels, and 95 built of 234 verified author ideas enforced
-  via Gate 6.
+  VRAM), J13 Model Epigenetics (100% weights-only, #68474), buildlang #352
+  (ReShade UV fix, Verilog-2001 RTL backend, String::as_bytes fix, 304c4638),
+  buildlang #353 (CHECK-FAILS burned down to 135, f83db229), Zero-C 5-target
+  quad-arch self-hosting (400.77x Python on x64-elf), 18-module 86.06 KB live
+  WASM bench, 485 zero-FLAG verified formula kernels, and 223/234 (95.30%)
+  built author ideas enforced via Gate 6.
 
 ## raw-native
 
