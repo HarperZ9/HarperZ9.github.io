@@ -23,13 +23,13 @@
 <meta name="twitter:title" content="CMMNS | Zain Dana Harper">
 <meta name="twitter:description" content="CMMNS is a browser extension that shows where social media replies come from: place, coordination, posting, language, fact-checks.">
 <link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-cccc3f32de">
-<link rel="stylesheet" href="/studies/studies.css?v=world-cccc3f32de">
-<link rel="stylesheet" href="/world/site/depth.css?v=world-cccc3f32de">
-<script type="module" src="/world/ui/shell/shell.js?v=world-cccc3f32de"></script>
-<script type="module" src="/world/site/hand-scroll.js?v=world-cccc3f32de"></script>
-<link rel="stylesheet" href="/world/site/landmark.css?v=world-cccc3f32de">
-<script type="module" src="/world/site/home-field.js?v=world-cccc3f32de"></script>
+<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-995b8c2b6d">
+<link rel="stylesheet" href="/studies/studies.css?v=world-995b8c2b6d">
+<link rel="stylesheet" href="/world/site/depth.css?v=world-995b8c2b6d">
+<script type="module" src="/world/ui/shell/shell.js?v=world-995b8c2b6d"></script>
+<script type="module" src="/world/site/hand-scroll.js?v=world-995b8c2b6d"></script>
+<link rel="stylesheet" href="/world/site/landmark.css?v=world-995b8c2b6d">
+<script type="module" src="/world/site/home-field.js?v=world-995b8c2b6d"></script>
 <!-- structured-data:begin (tools/structured_data.py) -->
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareSourceCode","@id":"https://harperz9.github.io/cmmns.html#software","name":"CMMNS","description":"CMMNS is a browser extension that shows where social media replies come from: place, coordination, posting, language, fact-checks.","url":"https://harperz9.github.io/cmmns.html","codeRepository":"https://github.com/HarperZ9/cmmns","license":"https://www.gnu.org/licenses/agpl-3.0.html","programmingLanguage":["JavaScript","TypeScript"],"author":{"@id":"https://harperz9.github.io/#person","@type":"Person","name":"Zain Dana Harper"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://harperz9.github.io/"},{"@type":"ListItem","position":2,"name":"Catalog","item":"https://harperz9.github.io/catalog.html"},{"@type":"ListItem","position":3,"name":"CMMNS","item":"https://harperz9.github.io/cmmns.html"}]},{"@type":"SoftwareApplication","@id":"https://harperz9.github.io/cmmns.html#application","name":"CMMNS","url":"https://harperz9.github.io/cmmns.html","softwareVersion":"3.10.0","applicationCategory":"BrowserApplication","operatingSystem":"Chrome, Edge, Brave, Firefox","downloadUrl":"https://github.com/HarperZ9/cmmns/releases/latest","license":"https://spdx.org/licenses/AGPL-3.0-only.html","author":{"@id":"https://harperz9.github.io/#person","@type":"Person","name":"Zain Dana Harper"},"isAccessibleForFree":true,"sameAs":"https://github.com/HarperZ9/cmmns"}]}</script>
 <!-- structured-data:end -->
@@ -117,7 +117,7 @@ new MutationObserver(s).observe(r,{attributes:true,attributeFilter:["data-theme"
 <div class="ct-file-out" aria-live="polite"></div>
 <p class="ct-source">This panel runs the unmodified CMMNS core at commit 5f86ee7 (<a href="https://github.com/HarperZ9/cmmns/tree/5f86ee789c35a65d3043b4eb81ac0393ca751711/src/core">source</a>, AGPL-3.0-only): the 3.9.1 release plus the validation report from <a href="https://github.com/HarperZ9/cmmns/pull/112">pull request 112</a>. It loads only once you start.</p>
 </section>
-<script type="module" src="/world/site/commons-try.js?v=world-cccc3f32de"></script>
+<script type="module" src="/world/site/commons-try.js?v=world-995b8c2b6d"></script>
 
 <h2 id="provenance">Web &amp; AI provenance verifier (CLI)</h2>
 <p>On main via <a href="https://github.com/HarperZ9/cmmns/pull/130">cmmns #130</a> (commit <code>bb63366e</code>), the CLI verifies any static site or local build folder offline for <code>.well-known/agent-card.json</code>, <code>llms.txt</code>, canonical JSON-LD consistency, hidden prompt-injection lures (4/4 adversarial catches), and <code>engine-receipt/1</code> chains. Live OSI/FSF AGPL-3.0-only <a href="https://raw.githubusercontent.com/HarperZ9/cmmns/main/funding.json">funding.json</a> shipped in <a href="https://github.com/HarperZ9/cmmns/pull/131">cmmns #131</a>, Schema.org <code>codemeta.json</code>, <code>llms.txt</code>, <code>CITATION.cff</code>, REUSE SPDX metadata, and store packaging checklists shipped in <a href="https://github.com/HarperZ9/cmmns/pull/132">cmmns #132</a> (commit <code>62cf5cf</code>, 9/9 CI pass), <a href="https://github.com/HarperZ9/cmmns/pull/133">cmmns #133</a> (commit <code>ffb56129</code>, 1,750/1,750 tests, 9/9 CI pass) added the lawful public-record CIB RFC 6962 Merkle provenance and PII firewall verifier (<code>28/28</code> bit-exact proofs against Flywheel, 5/5 planted fail-closed controls), and <a href="https://github.com/HarperZ9/cmmns/pull/134">cmmns #134</a> (<code>fdebc810</code>) + <a href="https://github.com/HarperZ9/cmmns/pull/135">cmmns #135</a> (<code>55ff87f3</code>) graduated 9 pure-OSI MIT BuildLang verification kernels into CMMNS (<a href="/experiments/receipts/cmmns-pr133-cib-merkle.json">SHA-256 JSON receipt</a> in the <a href="/experiments/#receipt-ledger">G9 receipt ledger</a>).</p>

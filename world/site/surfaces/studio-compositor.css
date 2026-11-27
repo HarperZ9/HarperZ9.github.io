@@ -32,9 +32,17 @@
 .sx .sc-drawer-btn { min-height: 44px; padding: 6px 16px; border-radius: var(--sc-radius-pill); border: 1px solid var(--sc-rim); background: rgba(10, 23, 35, .64); font: 600 .8rem/1.1 var(--face-utility, monospace); color: #f4efe6; }
 .sx .sc-drawer-btn[aria-expanded="true"] { border-color: var(--sc-seaglass); background: rgba(78, 166, 184, .18); }
 
-/* Canvas-first stage (left >= 68% desktop, 100% when layer drawer tucked) */
-.sc-grid { display: grid; grid-template-columns: minmax(0, 1fr) var(--sc-rail-w); gap: var(--sc-gap-stage); align-items: start; }
-.sc-grid.is-rail-collapsed { grid-template-columns: minmax(0, 1fr); }
+/* 4-Zone Full-Frame Media Studio: Left Layer Stack | Center Composite Viewport | Right Contextual Inspector */
+.sc-grid { display: grid; grid-template-columns: 244px minmax(0, 1fr) 252px; gap: 18px; align-items: start; }
+.sc-grid.is-rail-collapsed { grid-template-columns: minmax(0, 1fr) 252px; }
+.sc-inspector { border: 1px solid var(--sc-rim); background: var(--sc-panel-bg); padding: 14px; display: grid; gap: 14px; min-width: 0; }
+.sc-insp-group { display: grid; gap: 8px; padding-top: 10px; border-top: 1px solid rgba(244, 239, 230, .14); }
+.sc-pal-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.sx .sc-pal-btns button { min-height: 36px; padding: 4px 8px; border: 1px solid var(--sc-rim); border-radius: 0; background: rgba(10, 23, 35, .52); color: #f4efe6; font: 600 .76rem/1.1 var(--face-utility, monospace); }
+.sx .sc-pal-btns button[aria-pressed="true"] { border-color: var(--sc-amber); background: rgba(215, 158, 53, .2); }
+.sc-insp-meta { margin: 0; font: 500 .76rem/1.4 var(--face-utility, monospace); color: var(--soft); }
+.sc-insp-links { display: flex; flex-wrap: wrap; gap: 8px 12px; font: 600 .78rem/1.2 var(--face-utility, monospace); }
+@media (max-width: 1080px) { .sc-grid, .sc-grid.is-rail-collapsed { grid-template-columns: 1fr; } .sc-stage-col { order: -1; } }
 .sc-stage-col { display: grid; gap: 16px; min-width: 0; }
 .sc-toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 14px; }
 .sc-exports { display: flex; flex-wrap: wrap; gap: 8px; }

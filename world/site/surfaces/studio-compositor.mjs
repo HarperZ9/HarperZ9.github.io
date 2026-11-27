@@ -99,26 +99,38 @@ export function mountUnifiedStudio(host) {
   ).join('');
 
   host.innerHTML = `<div class="sc-presets" id="sc-presets" role="toolbar" aria-label="Studio stack presets">
-<div class="sc-preset-left"><span class="sc-kicker">Presets (11 engines)</span><div class="sc-preset-row">${presetBtns}</div></div>
+<div class="sc-preset-left"><span class="sc-kicker">One Engine Studio &middot; Presets</span><div class="sc-preset-row">${presetBtns}</div></div>
 <button type="button" class="sc-drawer-btn" id="sc-rail-toggle" aria-expanded="true" aria-controls="sc-rail">Layers (8/11)</button></div>
 <div class="sc-grid" id="sc-grid">
+<aside class="sc-rail" id="sc-rail" aria-label="Layer stack">
+<div class="sc-rail-head"><span class="sc-kicker" id="sc-rail-count">Layer stack (8/11 active)</span></div>
+<ol class="sc-layers" id="sc-layers"></ol>
+<div class="sc-add-row"><select id="sc-add-sel" aria-label="Add studio layer">${STUDIO_LAYERS.map((l) => `<option value="${l.id}">${esc(l.name)}</option>`).join('')}</select><button type="button" id="sc-add-btn">Add layer</button></div>
+</aside>
 <div class="sc-stage-col">
 <div class="sc-toolbar" id="sc-toolbar" role="toolbar" aria-label="Studio exports and Distill file ingest">
-<span class="sc-kicker">Shared 11-layer stage &middot; Drag to stir or drop file</span>
+<span class="sc-kicker">Center composite viewport &middot; Drag to stir or drop file</span>
 <div class="sc-exports"><button type="button" id="sc-distill-btn">Drop / Load File</button><input type="file" id="sc-distill-file" hidden aria-label="Load local file into Distill layer"><button type="button" data-sc-export="png">PNG</button><button type="button" data-sc-export="wif">WIF</button><button type="button" data-sc-export="svg">SVG</button><button type="button" data-sc-export="receipt">Receipt</button></div>
 </div>
 <div class="sc-patch-panel" id="sc-hops" aria-label="Curved Patchbay signal flow"></div>
 <div class="sc-canvas-wrap" id="sc-dropzone"><canvas id="sc-canvas" class="sc-canvas" width="${W}" height="${H}" aria-label="Consolidated 11-layer multimedia studio composite. Drag to stir or drop any local file to Distill."></canvas>
 <div class="sc-hud" aria-hidden="true"><span id="sc-hud-mode">11-layer consolidated studio</span><span id="sc-hud-sha">patchbay: ready (6 hops)</span></div></div>
-<p class="sc-status" id="sc-status" role="status" aria-live="polite">Unified 11-layer studio ready: Multimedia Master preset active. Audio starts muted until Play is pressed.</p>
+<p class="sc-status" id="sc-status" role="status" aria-live="polite">4-Zone Media Studio live: Multimedia Master active. Audio starts muted until Play is pressed.</p>
 </div>
-<aside class="sc-rail" id="sc-rail" aria-label="Composite layer stack">
-<div class="sc-rail-head"><span class="sc-kicker" id="sc-rail-count">Layer stack (8/11 active)</span>
-<label class="sc-type-in"><span>Living Type / Fourier Word</span><input type="text" id="sc-type-text" value="${esc(state.text)}" maxlength="18" aria-label="Living Type text"></label></div>
-<ol class="sc-layers" id="sc-layers"></ol>
-<div class="sc-add-row"><select id="sc-add-sel" aria-label="Add studio layer">${STUDIO_LAYERS.map((l) => `<option value="${l.id}">${esc(l.name)}</option>`).join('')}</select><button type="button" id="sc-add-btn">Add layer</button></div>
+<aside class="sc-inspector" id="sc-inspector" aria-label="Contextual layer inspector">
+<div class="sc-rail-head"><span class="sc-kicker">Inspector</span></div>
+<label class="sc-type-in"><span>Living Type / Fourier Word</span><input type="text" id="sc-type-text" value="${esc(state.text)}" maxlength="18" aria-label="Living Type text"></label>
+<div class="sc-insp-group"><span class="sc-kicker">Field &amp; Optics</span>
+<label class="sc-op"><span>Stir X <output id="sc-ix-out">52%</output></span><input type="range" id="sc-insp-x" min="0" max="100" value="52" aria-label="Field stir X"></label>
+<label class="sc-op"><span>Stir Y <output id="sc-iy-out">46%</output></span><input type="range" id="sc-insp-y" min="0" max="100" value="46" aria-label="Field stir Y"></label>
+<label class="sc-op"><span>Energy <output id="sc-ie-out">35%</output></span><input type="range" id="sc-insp-energy" min="0" max="100" value="35" aria-label="Field energy"></label></div>
+<div class="sc-insp-group"><span class="sc-kicker">Palette Ground</span>
+<div class="sc-pal-btns" role="group" aria-label="Studio palette"><button type="button" data-sc-pal="estuary" aria-pressed="true">Estuary</button><button type="button" data-sc-pal="obsidian" aria-pressed="false">Obsidian</button><button type="button" data-sc-pal="parchment" aria-pressed="false">Parchment</button><button type="button" data-sc-pal="cobalt" aria-pressed="false">Cobalt</button></div></div>
+<div class="sc-insp-group"><span class="sc-kicker">Compute &amp; Verification</span>
+<p class="sc-insp-meta">BuildOS-2.2 &middot; 600/600 GPU FMA &middot; 112/112 MIT WASM &middot; 39/39 0-ULP</p>
+<div class="sc-insp-links"><a href="/playground/mir-assurance/">MIR Audit</a> <a href="/playground/gpu-560-fma/">GPU 600</a> <a href="/playground/wasm-bench/">WASM 112</a> <a href="/playground/renderer-35/">0-ULP</a></div></div>
 </aside></div>
-<div class="sc-daw" id="sc-daw" role="toolbar" aria-label="DAW sequencer and synthesizer">
+<div class="sc-daw" id="sc-daw" role="toolbar" aria-label="DAW transport and sequencer">
 <div class="sc-daw-top"><button type="button" class="sc-play" id="sc-play" aria-pressed="false">Play DAW</button>
 <label class="sc-scale"><span>Scale</span><select id="sc-scale" aria-label="DAW modal scale">${SCALES.map(([v, t]) => `<option value="${v}">${t}</option>`).join('')}</select></label>
 <div class="sc-meter" id="sc-meter" aria-hidden="true">${'<i></i>'.repeat(8)}</div>
@@ -143,6 +155,31 @@ export function mountUnifiedStudio(host) {
   const meters = [...host.querySelectorAll('#sc-meter i')];
   const stepBtns = [...host.querySelectorAll('.sc-step')];
   const fileInput = host.querySelector('#sc-distill-file');
+  const PALS = {
+    estuary: ['#132a3a', '#2b5f73', '#d79e35', '#ece5d6'],
+    obsidian: ['#0a0c10', '#1d2736', '#e0a943', '#f4efe6'],
+    parchment: ['#3d3528', '#6f5f47', '#c28428', '#f2ece1'],
+    cobalt: ['#0d1c38', '#254a82', '#64b8cf', '#eef4fa'],
+  };
+  host.querySelector('#sc-insp-x')?.addEventListener('input', (e) => {
+    state.stirX = +e.target.value / 100;
+    const o = host.querySelector('#sc-ix-out'); if (o) o.textContent = `${e.target.value}%`;
+  });
+  host.querySelector('#sc-insp-y')?.addEventListener('input', (e) => {
+    state.stirY = +e.target.value / 100;
+    const o = host.querySelector('#sc-iy-out'); if (o) o.textContent = `${e.target.value}%`;
+  });
+  host.querySelector('#sc-insp-energy')?.addEventListener('input', (e) => {
+    state.stirEnergy = +e.target.value / 100;
+    const o = host.querySelector('#sc-ie-out'); if (o) o.textContent = `${e.target.value}%`;
+  });
+  host.querySelectorAll('[data-sc-pal]').forEach((btn) => btn.addEventListener('click', () => {
+    const id = btn.dataset.scPal;
+    if (!PALS[id]) return;
+    state.palette = PALS[id].slice();
+    host.querySelectorAll('[data-sc-pal]').forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+    statusEl.textContent = `Studio palette switched to ${btn.textContent}.`;
+  }));
 
   const mk = (w = W, h = H) => { const c = document.createElement('canvas'); c.width = w; c.height = h; return [c, c.getContext('2d', { willReadFrequently: w < W })]; };
   const [layerBuf, gLayer] = mk();
