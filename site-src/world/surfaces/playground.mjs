@@ -8,8 +8,8 @@ export default {
   file: "playground/index.html",
   title: "The Playground",
   description: "The Playground: one unified creative field combining Estuary, Native DX12/WebGPU rendering, Low Water, Superframe, Loom, Thread, Posters, Studio, Fractals, Type, Shaders, and Sound.",
-  lede: 'One unified live multimedia studio turning a single seed into composite layers, weave, line, type, volume, world, and sound across <a href="#studio-canvas-shell">the 5-layer studio</a>, <a href="#m-exchange">the blend bench</a>, <a href="#estuary">Estuary</a>, <a href="#workbench">35 engines</a>, <a href="#native">Native RAW</a>, and <a href="#low-water">Low Water</a>.',
-  make: 'Composite Estuary, Living Type, Retro 46 FX, Loom Jacquard, and Plotter Contours live with the docked modal DAW and SHA-256 Patchbay, or launch any of the 35 individual engines below.',
+  lede: 'One unified 11-layer live multimedia studio consolidating <a href="#studio-canvas-shell">Low Water, Glass &amp; Water, Fourier, Elements, Distill, 3D Mesh, Estuary, Living Type, Retro 46 FX, Loom, and Plotter</a> onto one canvas with a docked modal DAW and SHA-256 Patchbay, plus <a href="#m-exchange">the blend bench</a> and <a href="#workbench">35 engines</a> below.',
+  make: 'Switch between 4 multi-discipline presets, reorder/blend all 11 simultaneous layers, drop any local file into Distill, or launch any of the 35 individual deep-dive engines below.',
   jump: [
     ["#studio-canvas-shell", "Unified Studio"],
     ["#m-exchange", "Blend Bench"],
