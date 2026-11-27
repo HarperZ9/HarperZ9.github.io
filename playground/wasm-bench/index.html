@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en" data-type="stock">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<title>BuildLang 18-Module WASM Live Verification Bench | Zain Dana Harper</title>
+<meta name="description" content="Eighteen standalone zero-runtime pure-OSI MIT BuildLang WebAssembly modules (86.06 KB total) verified live in-browser against SHA-256 digests and planted fail-closed controls.">
+<link rel="canonical" href="https://harperz9.github.io/playground/wasm-bench/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="BuildLang 18-Module WASM Live Verification Bench | Zain Dana Harper">
+<meta property="og:description" content="Eighteen standalone zero-runtime pure-OSI MIT BuildLang WebAssembly modules (86.06 KB total) verified live in-browser against SHA-256 digests and planted fail-closed controls.">
+<meta property="og:url" content="https://harperz9.github.io/playground/wasm-bench/">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/home.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="BuildLang 18-Module WASM Live Verification Bench | Zain Dana Harper">
+<meta name="twitter:description" content="Eighteen standalone zero-runtime pure-OSI MIT BuildLang WebAssembly modules (86.06 KB total) verified live in-browser against SHA-256 digests and planted fail-closed controls.">
+<link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-6218db2f12">
+<link rel="stylesheet" href="/studies/studies.css?v=world-6218db2f12">
+<link rel="stylesheet" href="/world/site/depth.css?v=world-6218db2f12">
+<script type="module" src="/world/ui/shell/shell.js?v=world-6218db2f12"></script>
+<script type="module" src="/world/site/hand-scroll.js?v=world-6218db2f12"></script>
+<style>
+  .wb-toolbar { display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; padding: 0.85rem 0; border-bottom: 1px solid var(--line); }
+  .wb-toolbar button { background: transparent; color: var(--ink); border: 1px solid var(--line); padding: 0.4rem 0.8rem; min-height: 40px; font-family: var(--face-utility); font-size: 0.84rem; cursor: pointer; }
+  .wb-toolbar button:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .wb-toolbar button[aria-pressed="true"] { border-color: var(--ink); font-weight: 700; }
+  .wb-readout { padding: 0.85rem 0; border-bottom: 1px solid var(--line); font-family: var(--face-utility); font-size: 0.86rem; font-variant-numeric: tabular-nums; }
+  .wb-readout p { margin: 0.25rem 0; }
+  .wb-table-wrap { width: 100%; overflow-x: auto; margin-top: 0.5rem; min-height: 860px; }
+  .wb-table-wrap:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .wb-table { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
+  .wb-table th, .wb-table td { text-align: left; padding: 0.55rem 0.65rem 0.55rem 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .wb-table thead th { font-family: var(--face-utility); font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--soft); font-weight: 600; }
+  .wb-table .mono { font-family: var(--face-utility); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .wb-table .status-pass { font-family: var(--face-utility); font-weight: 700; }
+  .wb-table .status-fail { font-family: var(--face-utility); font-weight: 700; text-decoration: underline; }
+</style></head>
+<body class="reading ds-sheet">
+
+<header class="o-hand o-said" aria-label="Site">
+  <a class="skip" href="#main">Skip to the page</a>
+  <a class="o-home" href="/">Zain Dana Harper</a>
+  <a data-o="band" href="/world/universe/proto/index.html"><span class="o-name">Map</span></a>
+  <button type="button" data-o="fold" aria-controls="o-menu" aria-keyshortcuts="m" aria-expanded="false" hidden><span class="o-name">Places</span><i></i><i></i><i></i></button>
+  <button type="button" data-o="lamp" data-theme-toggle aria-pressed="true"><span class="o-name">Day</span></button>
+  <span class="o-cell"><button type="button" data-o="peel" data-plain-toggle aria-pressed="false"><span class="o-name">Plain</span></button><span class="o-under" aria-hidden="true">Plain</span></span>
+</header>
+<dialog id="o-menu" data-o="menu" data-material="chladni" aria-label="Places">
+  <nav aria-label="Places">
+    <ul class="o-places">
+      <li><a href="/buildlang.html"><span class="o-word" data-display-on-open="glyphcell">BuildLang</span></a></li>
+      <li><a href="/flywheel.html"><span class="o-word" data-display-on-open="light">Flywheel</span></a><small class="o-sub"><a href="/cmmns.html">CMMNS</a> <a href="/articulate.html">Articulate</a></small></li>
+      <li><a href="/playground/"><span class="o-word" data-display-on-open="nightlights">The Playground</span></a><small class="o-sub"><a href="/playground/#estuary">Estuary</a> <a href="/playground/#native">Native renderer</a> <a href="/playground/#superframe">Superframe</a> <a href="/playground/#workbench">All creative engines</a> <a href="/playground/#low-water">Low Water</a></small></li>
+      <li><a href="/playground/#low-water"><span class="o-word" data-display-on-open="chladni">Game</span></a></li>
+      <li><a href="/#site"><span class="o-word" data-display-on-open="swarm">Site</span></a></li>
+      <li><a href="/floor.html"><span class="o-word" data-display-on-open="rope">Everything</span></a></li>
+      <li><a href="/models.html"><span class="o-word" data-display-on-open="rope">Models</span></a></li>
+      <li><a href="/tools.html"><span class="o-word" data-display-on-open="rope">Tools &amp; Repos</span></a></li>
+      <li><a href="/person.html"><span class="o-word" data-display-on-open="rope">About</span></a></li>
+      <li><a href="/architecture.html"><span class="o-word" data-display-on-open="rope">Architecture</span></a></li>
+      <li><a href="/world/universe/proto/index.html"><span class="o-word" data-display-on-open="rope">Map</span></a></li>
+      <li><a href="/publications.html"><span class="o-word" data-display-on-open="swarm">Writing</span></a></li>
+      <li><a href="/explainers.html"><span class="o-word" data-display-on-open="sound">Films</span></a></li>
+      <li><a href="/security.html"><span class="o-word" data-display-on-open="rope">Security</span></a></li>
+      <li><a href="/hire.html"><span class="o-word" data-display-on-open="rope">Work</span></a></li>
+      <li><a href="/cv.html"><span class="o-word" data-display-on-open="rope">CV</span></a></li>
+    </ul>
+  </nav>
+  <p class="o-menu-foot"><a href="/architecture.html">Architecture</a> <a href="/models.html">Models</a> <a href="/tools.html">Tools &amp; 159 Repos</a> <a href="/research.html">Research</a> <a href="/portfolio.html">Portfolio</a> <a href="/elements.html">Elements</a> <a href="/studies/">Studies</a> <a href="/site-index.html">Site index</a> <button type="button" class="o-close" data-qj-open onclick="this.closest('dialog').close()">Search (Ctrl+K)</button> <button type="button" class="o-close" onclick="this.closest('dialog').close()">Close (Esc)</button></p>
+</dialog>
+<main id="main" tabindex="-1">
+<article class="st" id="wasm-bench">
+<header class="ds-sheet-head">
+  <p class="ds-kicker">Measured Drafting Sheet / Live WebAssembly Verification Bench</p>
+  <h1>BuildLang 18-Module WASM Live Verification Bench</h1>
+  <p class="ds-lede">Eighteen standalone, zero-runtime pure-OSI MIT WebAssembly modules compiled directly by <code>buildc 1.15.0</code> (88,123 bytes / 86.06 KB total, max 9.30 KB per module, zero external CDN calls). Every module executes live in your browser against its SHA-256 digest and planted fail-closed controls.</p>
+  <p class="ds-meta"><span>86.06 KB total (18 modules)</span><span>Pure OSI MIT License</span><span>485 zero-FLAG kernels</span><span>223/234 (95.30%) built ideas</span></p>
+  <nav class="ds-ways" aria-label="Related pages">
+    <a href="/playground/">The Playground</a>
+    <a href="/experiments/#receipt-ledger">G9 SHA-256 Receipt Ledger</a>
+    <a href="/buildlang.html">BuildLang</a>
+    <a href="./playground_wasm_18pack_manifest.json">Manifest JSON</a>
+  </nav>
+</header>
+
+<section class="wb-toolbar" aria-label="Verification controls">
+  <button id="btn-run" type="button">Run All 18 Modules</button>
+  <button type="button" data-pack-filter="all" aria-pressed="true">All (18)</button>
+  <button type="button" data-pack-filter="1" aria-pressed="false">Pack 1 (6)</button>
+  <button type="button" data-pack-filter="2" aria-pressed="false">Pack 2 (6)</button>
+  <button type="button" data-pack-filter="3" aria-pressed="false">Pack 3 (6)</button>
+</section>
+
+<section class="wb-readout" aria-live="polite">
+  <p id="bench-summary">Ready to run 18 zero-runtime BuildLang WebAssembly modules.</p>
+  <p id="bench-controls">Planted controls pending: corrupted WASM magic CompileError + tampered manifest SHA-256 rejection.</p>
+</section>
+
+<div class="wb-table-wrap" tabindex="0" role="region" aria-label="18-module WebAssembly verification table">
+  <table class="wb-table">
+    <thead>
+      <tr>
+        <th scope="col">Pack</th>
+        <th scope="col">Idea</th>
+        <th scope="col">Module</th>
+        <th scope="col">Size</th>
+        <th scope="col">Latency</th>
+        <th scope="col">Checked Output</th>
+        <th scope="col">Planted Control</th>
+        <th scope="col">SHA-256</th>
+        <th scope="col">Status</th>
+      </tr>
+    </thead>
+    <tbody id="bench-rows"></tbody>
+  </table>
+</div>
+
+<footer class="ds-prov" aria-label="Sheet provenance">
+  <span><b>Sheet</b> playground/wasm-bench/index.html</span>
+  <span><b>Updated</b> 2026-11-27</span>
+  <span><b>Ground</b> 18/18 BuildLang buildc 1.15.0 MIT WASM modules (88,123 B) | catalogue #68634</span>
+</footer>
+</article>
+<script type="module" src="./bench.mjs"></script>
+</main>
+</body>
+</html>

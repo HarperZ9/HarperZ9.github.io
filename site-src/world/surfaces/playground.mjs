@@ -134,9 +134,10 @@ export default {
     {
       discipline: "Native Worlds, RAW & Inspection",
       engines: [
-        { name: "Native Renderer (RAW DX12 / WebGPU)", desc: "C++23 GPU renderer (Waves 74-81, 4fd1af1: 96/96 Skyrim SE, dark_mo=0.001633 best, 79/79 DXC, 21/21 RTX 4090 bench).", actions: [["section", "native", "RAW"], ["stage", "/media/raw-native/viewer-0.8.0/web/viewer/index.html", "3D Viewer"]] },
+        { name: "BuildLang 18-Module Live WASM Bench", desc: "Eighteen zero-runtime pure-OSI MIT BuildLang .wasm kernels (86.06 KB total, max 9.30 KB) verified live in-browser with SHA-256 and planted tamper controls.", actions: [["stage", "/playground/wasm-bench/", "Run Bench"]] },
+        { name: "Native Renderer (RAW DX12 / WebGPU)", desc: "C++23 GPU renderer (Waves 74-90: 96/96 Skyrim SE, 158/158 RTX 4090 heuristics, dark_mo=0.001633 best, 79/79 DXC).", actions: [["section", "native", "RAW"], ["stage", "/media/raw-native/viewer-0.8.0/web/viewer/index.html", "3D Viewer"]] },
         { name: "Low Water Island Walk & Flora Atlas", desc: "Walkable WebGPU 5-era coastal civilization (superframe #158, bit-exact coastal_kernel.bld) plus botanical flora atlas.", actions: [["stage", "/media/low-water/walk.html", "Walk"], ["stage", "/media/low-water/world-cac3416/walk/flora/atlas.html", "Flora"]] },
-        { name: "Superframe & Studio Engine Lineage", desc: "Deterministic multi-medium core (9 of 9 bit-exact native/bld parity, MIT #161/#162) and expression-algebra architecture.", actions: [["section", "superframe", "Core"], ["stage", "/systems/studio-engine.html", "Lineage"]] },
+        { name: "Superframe & Studio Engine Lineage", desc: "Deterministic multi-medium core (11 of 11 bit-exact native/bld parity via #163, MIT #162) and expression-algebra architecture.", actions: [["section", "superframe", "Core"], ["stage", "/systems/studio-engine.html", "Lineage"]] },
         { name: "Distill (Layer-0 File Dissector)", desc: "Take any file, archive, or folder apart locally in your browser with 0..EOF coverage.", actions: [["stage", "/playground/distill.html", "Open"]] },
         { name: "Discovery Lab & Orbits Showcase", desc: "Symbolic law discovery, Noether invariants, and symplectic orbit checks.", actions: [["stage", "/system/discovery/lab.html", "Open"]] },
       ],
@@ -156,8 +157,8 @@ export default {
     {
       group: "Native GPU & Games",
       repos: [
-        { name: "Superframe (The Playground)", meta: "500K+ LOC · 78 pkgs · OSI MIT (#161/#162)", url: "https://github.com/HarperZ9/superframe", desc: "Deterministic multi-medium platform rendering paint, living type, lines, optics, audio, and 3D worlds from one seed, relicensed pure OSI MIT (#162) with CITATION/codemeta/llms.txt manifests." },
-        { name: "Superframe Native Renderer (native/)", meta: "207.6k LOC · C++23/HLSL/WGSL · 9/9 bld parity (#161)", url: "https://github.com/HarperZ9/superframe/tree/main/native", desc: "Real-time DX12, Vulkan, and WebGPU GPU renderer certified against CPU path-traced references with 9 of 9 bit-exact C++ to BuildLang renderer modules (#161, 9ab3167f)." },
+        { name: "Superframe (The Playground)", meta: "500K+ LOC · 78 pkgs · OSI MIT (#162/#163)", url: "https://github.com/HarperZ9/superframe", desc: "Deterministic multi-medium platform rendering paint, living type, lines, optics, audio, and 3D worlds from one seed, relicensed pure OSI MIT (#162) with 11 of 11 bit-exact BuildLang renderer parity (#163, 17a9a4fc)." },
+        { name: "Superframe Native Renderer (native/)", meta: "207.6k LOC · C++23/HLSL/WGSL · 11/11 bld parity (#163)", url: "https://github.com/HarperZ9/superframe/tree/main/native", desc: "Real-time DX12, Vulkan, and WebGPU GPU renderer certified against CPU path-traced references with 11 of 11 bit-exact C++ to BuildLang renderer modules (#163, 17a9a4fc)." },
         { name: "RAW DX12 Graphics Engine", meta: "Wave 81 (4fd1af1) · 79/79 DXC · 96/96 Skyrim SE", url: "https://github.com/HarperZ9/raw", desc: "Direct3D 11/12 volumetric atmosphere, 2-slot ReSTIR-GI, L=8 hash radiance cache, thin-film iridescence/frost/halos, and ray-traced water (dark_mo=0.001633 all-time best)." },
         { name: "Low Water (games/low-water/)", meta: "110.2k LOC · ESM/BuildLang/WGSL · #158 coastal_kernel.bld", url: "https://github.com/HarperZ9/superframe/tree/main/games/low-water", desc: "5-era coastal civilization, settlement, and tide simulation with bit-exact BuildLang world/coastal kernels, physical sky, weather, water, and paint." },
         { name: "Elder ENB, Truth ENB & Skyrim Suite", meta: "6 repos · 1M+ Nexus lineage downloads", url: "https://github.com/HarperZ9/elder-enb", desc: "Production Skyrim graphics and 19-weather physical-atmosphere ecosystem with transactional profiles and clean-room validation." },
@@ -179,7 +180,7 @@ export default {
       repos: [
         { name: "Typeface, TypeEngine & Lettering", meta: "16.7k LOC · ESM/BuildLang · OFL 1.1", url: "https://github.com/HarperZ9/superframe/tree/main/typeengine", desc: "Original Accession OFL 1.1 type family, parametric font forge, Living Type engine, Fourier lettering, and generative composition." },
         { name: "Plot Sheet, Diagrams & Weave", meta: "12.2k LOC · BuildLang/JS · 57/57 plot tests", url: "https://github.com/HarperZ9/superframe/tree/main/packages/plot-sheet", desc: "Pure-BuildLang verified technical plot sheets, diagram engine, and Jacquard WIF textile drafting." },
-        { name: "BuildLang Compiler & BuildTeX", meta: "1.84M LOC · CHECK-FAILS 150 (#349) · AGPL core / MIT libs (#350)", url: "https://github.com/HarperZ9/buildlang", desc: "Effect-typed systems and 12-target GPU shader compiler (crates.io 1.15.0) with 8 verified 2026 SOTA native .bld kernels (FA4 2.05x, H_64 NVFP4 +19.66 dB, 0.140 ms 1M PLATO/NSA, 608 B Titans/KDA)." },
+        { name: "BuildLang Compiler & BuildTeX", meta: "1.84M LOC · CHECK-FAILS 135 (#353) · 485 zero-FLAG kernels", url: "https://github.com/HarperZ9/buildlang", desc: "Effect-typed systems and 12-target GPU shader compiler (crates.io 1.15.0, AGPL core / MIT libs #350, #351..#362 merged) with Zero-C 5-target quad-arch self-hosting (400.77x Python) and 18 live browser WASM kernels." },
         { name: "Cosmo, World PhysAI & Signal Kernels", meta: "31.1k LOC · C++/C/BuildLang · 39 tests", url: "https://github.com/HarperZ9/superframe/tree/main/packages/world", desc: "100 Hz 6-DOF rigid-body and tree biomechanics simulation, orbital mechanics, radiocarbon calibration, and signal kernels." },
         { name: "Decompose, GPU Trace Validator & Open Archives", meta: "9.4k LOC Python · 14 tests", url: "https://github.com/HarperZ9/superframe/tree/main/packages/decompose", desc: "74-feature visual/structural decomposition, deterministic GPU trace verification, and license-tagged cross-archive search." },
       ],
@@ -187,6 +188,7 @@ export default {
   ],
   placesHeading: "Direct engine routes",
   places: [
+    ["/playground/wasm-bench/", "18-Module WASM Bench", "Run 18 pure-OSI MIT BuildLang WebAssembly kernels (86.06 KB total) live in-browser with SHA-256 proofs."],
     ["/playground/distill.html", "Distill", "Take any file, archive or folder apart and read what it is made of."],
     ["/gaussian-splats.html", "Gaussian Splats", "Provenance-locked 3D splat worlds built from source photography."],
     ["/studio.html", "The Studio", "Full-window live media workstation for picture, fractals, shaders, loom and sound."],
