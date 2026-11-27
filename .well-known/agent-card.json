@@ -1,6 +1,6 @@
 {
   "schema": "harperz9-agent-card/v1",
-  "updated": "2026-11-26",
+  "updated": "2026-11-27",
   "name": "Zain Dana Harper",
   "url": "https://harperz9.github.io/",
   "description": "Independent systems engineer, toolmaker, and natural philosopher in Kent, Washington. Five connected open-source platforms spanning deterministic compilers, AI verification, local frontier models, multi-backend rendering, and civic provenance.",
@@ -36,21 +36,21 @@
       "name": "BuildLang",
       "url": "https://harperz9.github.io/buildlang.html",
       "repository": "https://github.com/HarperZ9/buildlang",
-      "summary": "Rust-built compiled systems language with typed capability effects, 12 targets (C, HLSL, GLSL, WGSL, Metal, SPIR-V, x86-64, RISC-V, WASM), V5 certified e-graph superoptimizer (--superopt/--emit-cert/verify-cert via #344), certified GPU polyhedral tiling + subgroup TV (--emit-gpu-cert across WGSL/HLSL/MSL/SPIR-V via #346), universe CHECK-FAILS burndown 170 -> 163 & universe/foundation Tier-1 MSVC green (#347), CITATION/codemeta/llms.txt + editors/vscode vsce packaging (#348), Universal Hourglass lowering, 1.18M-record corpus engine, BuildDB (BDB), BuildTeX, and live AGPL-3.0-only funding.json (#345)."
+      "summary": "Rust-built compiled systems language (AGPL-3.0-only core buildc; pure OSI MIT universe/ and suite/ via #350, c3b2e5dd) with typed capability effects, 12 targets (C, HLSL, GLSL, WGSL, Metal, SPIR-V, x86-64, RISC-V, WASM), V5 certified e-graph superoptimizer (#344), certified GPU polyhedral tiling + subgroup TV (#346), universe CHECK-FAILS burned down to 150 (126/276 via #349, bddba429), 8 verified 2026 SOTA native .bld kernels (FA4 2.05x, H_64 NVFP4 +19.66 dB rescue, 0.140 ms 1M-token PLATO/NSA, 608 B O(1) Titans/KDA loop), CITATION/codemeta/llms.txt + editors/vscode vsce packaging (#348), 1.18M-record corpus engine, BuildDB (BDB), BuildTeX, and live AGPL-3.0-only funding.json (#345)."
     },
     {
       "id": "flywheel",
       "name": "The Flywheel",
       "url": "https://harperz9.github.io/flywheel.html",
       "repository": "https://github.com/HarperZ9/flywheel",
-      "summary": "Self-hosted AI workstation and coding harness consolidating 31 packages behind cryptographic offline receipts, Rowan orchestration, Three-Plate Verification Oracle (115/115 recall, 0 false accepts), unified flywheel super-solver (6/6 adversarial fault catch via #565), PUCT oracle tree search + 34.99x RFC 6962 Merkle trace compression (#566), Official MCP Registry manifests (#570), accountable-surface C11/Win32 desktop surface + BuildLang FFI (#571), Win32 DPAPI/CredMan keystore + OAuth 2.0 PKCE/Device Flow + RFC 9421 signer (#572), AgentWorkspace + DelegatedMandate + ApprovalValve (#573), EMET witnessing, and Articulate prose linting."
+      "summary": "Pure OSI MIT-licensed (#574, fb877d2e) self-hosted AI workstation and coding harness consolidating 31 packages behind cryptographic offline receipts, Rowan orchestration, Three-Plate Verification Oracle (115/115 recall, 0 false accepts), Data Forge proof-carrying distillation (1,792.8 rows/s, 9/9 planted controls, HIPAA Safe Harbor + Scientific SI + Search-From-The-Start, RFC 6962 Merkle Dataset Cards), unified flywheel super-solver (6/6 fault catch via #565), PUCT oracle tree search + 34.99x RFC 6962 Merkle trace compression (#566), Official MCP Registry manifests (#570), accountable-surface C11/Win32 desktop surface + BuildLang FFI (#571), Win32 DPAPI/CredMan keystore + OAuth 2.0 PKCE/Device Flow + RFC 9421 signer (#572), AgentWorkspace + DelegatedMandate + ApprovalValve (#573), EMET witnessing, and Articulate prose linting."
     },
     {
       "id": "playground",
       "name": "The Playground",
       "url": "https://harperz9.github.io/playground/index.html",
       "repository": "https://github.com/HarperZ9/superframe",
-      "summary": "Unified 11-layer tactile live multimedia studio and rendering engine combining Estuary Perret-lantern metamers, 63 historical creative surfaces & 16 real native repositories, Native RAW DX12/Vulkan/WebGPU (Waves 74-81, 4fd1af1: 96/96 live Skyrim SE moving-camera pass, dark_mo=0.001633 all-time best, 79/79 DXC, 21/21 RTX 4090 GPU bench), Low Water 5-era coastal civilization + bit-exact coastal_kernel.bld (#158), discovery manifests (#157), Round 3 studio audio (#156: 36/36 Welch pass), and Superframe deterministic core (#153: 3/3 native/bld bit-exact C++ parity + 3-way 100 Hz/Deja-VAE)."
+      "summary": "Pure OSI MIT-licensed (#162, 294f3f3e) unified 11-layer tactile live multimedia studio and rendering engine combining Estuary Perret-lantern metamers, 63 historical creative surfaces & 16 real native repositories, Superframe 9 of 9 bit-exact C++ to BuildLang renderer parity (#161, 9ab3167f), Native RAW DX12/Vulkan/WebGPU (Waves 74-81, 4fd1af1: 96/96 live Skyrim SE moving-camera pass, dark_mo=0.001633 all-time best, 79/79 DXC, 21/21 RTX 4090 GPU bench), Low Water 5-era coastal civilization + bit-exact coastal_kernel.bld (#158), discovery manifests (#157), and Round 3 studio audio (#156: 36/36 Welch pass)."
     },
     {
       "id": "cmmns",
@@ -66,7 +66,7 @@
       "findingsUrl": "https://harperz9.github.io/findings/index.html",
       "securityUrl": "https://harperz9.github.io/security.html",
       "demoSpaceUrl": "https://huggingface.co/spaces/zaindanaharper/jfc3p-oracle-demo",
-      "summary": "30 reproducible empirical studies (12 published nulls), 13 DOI-indexed Zenodo preprints, Local Frontier Model Lab (JFC3P-7B-Oracle v4 PASS 53/84 Raw / 63/84 Arm C 75.0%, +12 over Base 51/84, +14 over v3 49/84, 31 tool calls, 13/15 BuildLang, 8/15 numeric f64, 19/24 trap resistance, 15/15 longppl zero drift, A1..A6 PASS, 22.2 ms / 16.47 MiB 151k Reverse-KL, live HF Space zaindanaharper/jfc3p-oracle-demo; caught v2 DRIFT 40/84 kept public; NOH-4, Plato-Key, AVTR-4R, FRESCO/MoLT), and capability-public security hierarchy."
+      "summary": "30 reproducible empirical studies (12 published nulls), 13 DOI-indexed Zenodo preprints, Local Frontier Model Lab (JFC3P-14B-Oracle v5 PASS 66/84 Arm C = 78.57%, +21.43 pp vs Base 14B 48/84, 15/15 long-context zero drift, 21/24 traps, 6/6 A1..A6 PASS; JFC3P-7B-Oracle v4 63/84 Arm C 75.0%, 31 tool calls; caught v2 DRIFT 40/84 kept public; live HF Space zaindanaharper/jfc3p-oracle-demo; JFC3P-Titan-1M v2 10.331 GB RTX 4090 / 5.747 GB Edge at 1M tokens, 291.69x KV compression, 99.85 tok/s; Data Forge 1,792.8 rows/s, 9/9 planted controls, RFC 6962 Merkle Dataset Cards; NOH-4, Plato-Key, AVTR-4R, FRESCO/MoLT), and capability-public security hierarchy."
     }
   ],
   "inventory": {

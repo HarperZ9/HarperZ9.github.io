@@ -144,7 +144,7 @@
       "registry": "github",
       "package": "HarperZ9/superframe",
       "downloadUrl": "https://github.com/HarperZ9/superframe/releases/latest",
-      "license": "https://spdx.org/licenses/FSL-1.1-MIT.html",
+      "license": "https://spdx.org/licenses/MIT.html",
       "os": "Node.js 24 or later",
       "category": "DesignApplication"
     }

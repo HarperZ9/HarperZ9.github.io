@@ -49,7 +49,9 @@ function provenance(name, date = "2026-11-26", note = "Measured Drafting Sheet")
 function buildModels() {
   const HF_SPACE = "https://huggingface.co/spaces/zaindanaharper/jfc3p-oracle-demo";
   const models = [
-    ["JFC3P-7B-Oracle (v4 PASS)", "63/84 (75.0%) Arm C (+12 over Base 51/84, +14 over v3 49/84), 31 tool calls, 13/15 BuildLang, 8/15 numeric f64, 19/24 trap resistance, 15/15 longppl zero drift, A1..A6 PASS, 22.2 ms / 16.47 MiB 151k Reverse-KL", "MLP-only LoRA (Q/K/V/O attention frozen) + true Base FRESCO orthogonal gradient projection + Three-Plate Verification Oracle coupled to live buildc/f64 execution (31x tool invocation lift over v3). v2's attention-layer drift (40/84, 10/15 longppl) was caught fail-closed and stays published in the evolution table above. Interactive Space: huggingface.co/spaces/zaindanaharper/jfc3p-oracle-demo."],
+    ["JFC3P-14B-Oracle (v5 PASS)", "66/84 Arm C (78.57%, +21.43 pp over Base 14B 48/84), 15/15 long-context zero drift, 21/24 traps, 6/6 A1..A6 PASS", "Latest 14B checkpoint coupled to live buildc, numeric f64, and Three-Plate verification oracles on one RTX 4090, improving over JFC3P-7B-Oracle v4 (63/84 Arm C = 75.0%, 31 tool calls, 22.2 ms / 16.47 MiB 151k Reverse-KL). v2's caught attention-layer drift (40/84, 10/15 longppl) remains published in the evolution table above. Interactive Space: huggingface.co/spaces/zaindanaharper/jfc3p-oracle-demo."],
+    ["JFC3P-Titan-1M v2", "10.331 GB RTX 4090 / 5.747 GB Edge at 1,000,000 tokens, 291.69x KV compression, 99.85 tok/s", "One-million-token long-context architecture paired with native BuildLang SOTA kernels (0.140 ms 1M-token PLATO/NSA sparse attention, 608 B O(1) Titans/KDA recurrence loop, FA4 2.05x, and H_64 NVFP4 +19.66 dB quantization rescue)."],
+    ["Data Forge (Proof-Carrying Distillation)", "1,792.8 rows/s, 9/9 planted controls caught, HIPAA Safe Harbor + Scientific SI + Search-From-The-Start, RFC 6962 Merkle Dataset Cards", "Air-gapped, oracle-verified distillation pipeline sealing every emitted corpus row behind fail-closed sanitization, SI unit validation, planted-fault trapping, and offline-verifiable RFC 6962 Merkle proofs."],
     ["PUCT Oracle Search & Merkle Trace (flywheel#566)", "6/6 adversarial fault catch + 34.99x RFC 6962 proof-carrying trace compression (0 soundness loss)", "Execution-Oracle-Guided PUCT Verification Tree Search with hard Q_oracle pruning (beating planted high-prior wrong branches) paired with fail-closed Merkle trace compression that rejects any dropped witness or forged root."],
     ["NOH-4", "78.0x lower MSE against baseline neural operator surrogates", "Compact spectral neural operator trained on deterministic fluid, optical, and structural PDE trajectories for real-time physical surrogates inside The Playground."],
     ["Plato-Key", "Deterministic geometric representation & symmetry-manifold lookup", "Separates invariant geometric primitives from rendering skins, enabling continuous metamer detection across visual, structural, and acoustic projections."],
@@ -59,11 +61,12 @@ function buildModels() {
   ];
 
   const evolution = [
-    ["Base (Qwen2.5-Coder-7B)", "49/84 Raw / 51/84 Arm C", "15/15", "Anchor", "", "Unadapted base checkpoint on the sealed 84-item holdout (prior harness baseline 43/84 Raw / 51.2%)."],
+    ["Base (Qwen2.5-Coder-7B)", "49/84 Raw / 51/84 Arm C", "15/15", "Anchor", "", "Unadapted 7B base checkpoint on the sealed 84-item holdout (prior harness baseline 43/84 Raw / 51.2%)."],
     ["JFC3P-7B-Oracle v1", "95.83% buildc Arm C", "n/a (buildc)", "PASS", "verdict-pass", "Live buildc compile-test-repair lift from 16.67% baseline (p=4e-6); Three-Plate Oracle 115/115 recall, 0 false accepts."],
     ["JFC3P-7B-Oracle v2", "40/84 (47.6%)", "10/15", "DRIFT (caught)", "verdict-drift", "Full-layer LoRA degraded long-context attention (-5 on longppl); caught fail-closed and published as an honest negative result."],
     ["JFC3P-7B-Oracle v3", "48/84 Raw / 49/84 Arm C", "15/15", "PASS (+6)", "verdict-pass", "MLP-only LoRA (Q/K/V/O attention frozen) + FRESCO orthogonal projection + 32.72 ms CUDA 151k Reverse-KL; A1..A5 all PASS (1 tool call bottleneck)."],
     ["JFC3P-7B-Oracle v4", "53/84 Raw / 63/84 Arm C (75.0%)", "15/15", "PASS (+12)", "verdict-pass", "31 live tool calls (+12 over Base 51/84, +14 over v3 49/84): 13/15 BuildLang, 8/15 numeric f64, 19/24 trap resistance, 15/15 longppl zero drift, A1..A6 PASS, 22.2 ms / 16.47 MiB 151k Reverse-KL."],
+    ["JFC3P-14B-Oracle v5", "66/84 Arm C (78.57%)", "15/15", "PASS (+21.43 pp)", "verdict-pass", "+21.43 pp over Base 14B (48/84), 15/15 long-context zero drift, 21/24 trap resistance, 6/6 A1..A6 PASS; live demo on Hugging Face Spaces."],
     ["Flywheel #566 Search & Trace", "6/6 faults, 34.99x", "0 soundness loss", "PASS", "verdict-pass", "Execution-Oracle PUCT tree search (prunes planted high-prior wrong branch) + RFC 6962 Merkle trace compressor."],
   ];
   const evoRows = evolution.map(([stage, score, lp, verdict, cls, notes]) =>
@@ -91,9 +94,9 @@ function buildModels() {
 
 <section class="lp-sec" id="evolution" aria-labelledby="h-evolution">
   <h2 id="h-evolution"><span class="d-3d">Honest-nulls model evolution specimen</span></h2>
-  <p class="lp-lede">Every iteration stays on the same hairline ledger, including the caught v2 attention-drift regression that motivated freezing Q/K/V/O attention heads for v3 and scaling live oracle tool invocation to 31 calls in v4 (<a href="${HF_SPACE}" rel="noopener">live HF Space demo</a>).</p>
+  <p class="lp-lede">Every iteration stays on the same hairline ledger, including the caught v2 attention-drift regression that motivated freezing Q/K/V/O attention heads for v3, scaling live tool calls in v4 (63/84), and advancing to JFC3P-14B-Oracle v5 at 66/84 Arm C (78.57%, <a href="${HF_SPACE}" rel="noopener">live HF Space demo</a>).</p>
   <div class="rn-wrap"><table class="rn-table">
-    <caption>Sealed 84-item holdout evolution from unadapted Base through v1, caught v2 DRIFT, v3 PASS, v4 PASS (63/84 Arm C, 75.0%), and Flywheel #566 inference-time search &amp; trace compression.</caption>
+    <caption>Sealed 84-item holdout evolution from unadapted Base through v1, caught v2 DRIFT, v3 PASS, v4 PASS (63/84 Arm C), v5 PASS (66/84 Arm C, 78.57%), and Flywheel #566 inference-time search &amp; trace compression.</caption>
     <thead><tr><th scope="col">Checkpoint / Stage</th><th scope="col" class="num">Verified Score</th><th scope="col" class="num">longppl</th><th scope="col">Gate</th><th scope="col">Observed Mechanism</th></tr></thead>
     <tbody>${evoRows}</tbody>
   </table></div>
@@ -108,7 +111,7 @@ function buildModels() {
 <section class="lp-sec" id="firewall" aria-labelledby="h-firewall">
   <h2 id="h-firewall"><span class="d-3d">Tier-A evidence firewall</span></h2>
   <p class="lp-lede">Nothing self-warrants. Every fine-tuned checkpoint is scored head-to-head against its unadapted base model on the same harness, with McNemar paired intervals and retired-null disclosures kept public.</p>
-  <p class="lp-limit">Example honest nulls kept public: (1) JFC3P-7B-Oracle v2 regressed to 40/84 (10/15 longppl) under full-layer LoRA before v3 froze attention heads (49/84 Arm C, 15/15 longppl) and v4 closed the tool-invocation gap to 63/84 Arm C (75.0%, 31 tool calls, 15/15 longppl); (2) Flywheel Local Coder 14B scored 136/164 (82.9%) vs Qwen 2.5 Coder 14B base at 141/164 (86.0%, p = 0.404) unguided, while coupling the same tier to live <code>buildc</code> lifted BuildLang pass rates from 16.67% to 95.83% (p = 4e-6).</p>
+  <p class="lp-limit">Example honest nulls kept public: (1) JFC3P-7B-Oracle v2 regressed to 40/84 (10/15 longppl) under full-layer LoRA before v3 froze attention heads (49/84 Arm C, 15/15 longppl), v4 closed the tool-invocation gap to 63/84 Arm C (75.0%, 31 tool calls), and JFC3P-14B-Oracle v5 reached 66/84 Arm C (78.57%, +21.43 pp vs Base 14B 48/84, 21/24 traps, 15/15 longppl); (2) Flywheel Local Coder 14B scored 136/164 (82.9%) vs Qwen 2.5 Coder 14B base at 141/164 (86.0%, p = 0.404) unguided, while coupling the same tier to live <code>buildc</code> lifted BuildLang pass rates from 16.67% to 95.83% (p = 4e-6).</p>
 </section>
 
 <section class="lp-sec" id="datasets" aria-labelledby="h-datasets">
@@ -117,7 +120,7 @@ function buildModels() {
   <p class="lp-ways-end"><a href="${HF_SPACE}" rel="noopener">Live HF Space (jfc3p-oracle-demo)</a> <a href="/architecture.html#datasets">Seven datasets</a> <a href="/findings/">30 Findings (12 nulls)</a> <a href="/analytics/flywheel-benchmark-record.html">Benchmark record</a> <a href="/tools.html">159 Public Repos</a></p>
 </section>
 
-<p class="lp-verified"><b>Verified</b> 26 November 2026: JFC3P-7B-Oracle v4 (53/84 Raw / 63/84 Arm C 75.0%, +12 over Base 51/84, +14 over v3 49/84, 31 tool calls, 13/15 BuildLang, 8/15 numeric f64, 19/24 trap resistance, 15/15 longppl zero drift, A1..A6 PASS, 22.2 ms / 16.47 MiB 151k Reverse-KL, live HF Space zaindanaharper/jfc3p-oracle-demo), caught v2 DRIFT (40/84, 10/15 longppl), Flywheel #566 PUCT + 34.99x Merkle trace compressor, Arm C buildc lift (16.67% to 95.83%, p=4e-6), and Three-Plate Oracle (115/115 recall, 0 false accepts).</p>
+<p class="lp-verified"><b>Verified</b> 27 November 2026: JFC3P-14B-Oracle v5 (66/84 Arm C = 78.57%, +21.43 pp vs Base 14B 48/84, 15/15 longppl zero drift, 21/24 traps, 6/6 A1..A6 PASS, live HF Space zaindanaharper/jfc3p-oracle-demo), JFC3P-7B-Oracle v4 (63/84 Arm C 75.0%, 31 tool calls, 22.2 ms / 16.47 MiB 151k Reverse-KL), caught v2 DRIFT (40/84, 10/15 longppl), JFC3P-Titan-1M v2 (10.331 GB RTX 4090 / 5.747 GB Edge at 1M tokens, 291.69x KV compression, 99.85 tok/s), Data Forge (1,792.8 rows/s, 9/9 planted controls, HIPAA Safe Harbor + Scientific SI + Search-From-The-Start, RFC 6962 Merkle Dataset Cards), Flywheel #566 PUCT + 34.99x Merkle trace compressor, and Three-Plate Oracle (115/115 recall, 0 false accepts).</p>
 </article>`;
 
   const html = page({
@@ -434,7 +437,15 @@ function buildFlywheel() {
     .replace(/href="raw\.html"/g, 'href="/playground/#native"')
     .replace(/href="low-water\.html"/g, 'href="/playground/#low-water"')
     .replace(/href="superframe\.html"/g, 'href="/playground/#superframe"')
-    .replace(/href="estuary\.html"/g, 'href="/playground/#estuary"');
+    .replace(/href="estuary\.html"/g, 'href="/playground/#estuary"')
+    .replace(
+      'Source-available under <span translate="no">FSL-1.1-MIT</span>.',
+      'Open-source under the OSI-approved <span translate="no">MIT</span> License (relicensed via flywheel #574).'
+    )
+    .replace(
+      '<td>Source-available under FSL-1.1-MIT.</td>',
+      '<td>Open-source under the OSI-approved MIT License (relicensed via flywheel #574).</td>'
+    );
 
   const ptr1x = readFileSync(path.join(site, "world/ui/shell/pointer/theflywheel-pressed.png")).toString("base64");
   const ptr2x = readFileSync(path.join(site, "world/ui/shell/pointer/theflywheel-pressed@2x.png")).toString("base64");
@@ -483,9 +494,9 @@ ${jsonLdMatch ? jsonLdMatch[0] : ""}`;
 <article class="lp fw-ocean" data-landmark="flywheel" data-hue="theflywheel">
 <header class="lp-head">
   <h1><span class="d-3d">Flywheel</span> <span class="pf-mark">THEFLYWHEEL</span></h1>
-  <p class="lp-lede lp-lede-1">An AI workstation and coding harness for any model, with runs you can recheck offline. Consolidates 31 packages behind cryptographic receipts, Rowan orchestration, Three-Plate Verification Oracle (115/115 recall), unified Super Solver (6/6 fault catch), PUCT oracle tree search, 34.99x Merkle trace compression, <span class="ident" translate="no">accountable-surface</span> native C11/Win32 actuation, OS keystore/OAuth/RFC 9421 signing, delegated AgentWorkspace mandates, and Articulate.</p>
+  <p class="lp-lede lp-lede-1">An OSI MIT-licensed AI workstation and coding harness for any model, with runs you can recheck offline. Consolidates 31 packages behind cryptographic receipts, Rowan orchestration, Three-Plate Verification Oracle (115/115 recall), Data Forge proof-carrying distillation (1,792.8 rows/s, 9/9 planted controls, RFC 6962 Merkle Dataset Cards), unified Super Solver (6/6 fault catch), PUCT oracle tree search, 34.99x Merkle trace compression, <span class="ident" translate="no">accountable-surface</span> native C11/Win32 actuation, OS keystore/OAuth/RFC 9421 signing, delegated AgentWorkspace mandates, and Articulate.</p>
   <p class="lp-run"><code>irm https://raw.githubusercontent.com/HarperZ9/flywheel/main/install.ps1 | iex</code></p>
-  <p class="lp-rel">Fail-closed <code>SHA256SUMS</code> installer (macOS/Linux: <code>curl -fsSL https://raw.githubusercontent.com/HarperZ9/flywheel/main/install.sh | sh</code>; PyPI: <code>pip install <span class="ident" translate="no">flywheel-verify</span></code> on PyPI). Version 2.0.0 on GitHub and PyPI; on main: <a href="https://github.com/HarperZ9/flywheel/pull/565">#565</a> (<code>super-solver</code> 6/6 fault catch), <a href="https://github.com/HarperZ9/flywheel/pull/566">#566</a> (PUCT + 34.99x Merkle trace), <a href="https://github.com/HarperZ9/flywheel/pull/570">#570</a> (MCP Registry manifests), <a href="https://github.com/HarperZ9/flywheel/pull/571">#571</a> (C11/Win32 surface + BuildLang FFI), <a href="https://github.com/HarperZ9/flywheel/pull/572">#572</a> (DPAPI/CredMan keystore, OAuth PKCE/Device Flow &amp; RFC 9421 signer), and <a href="https://github.com/HarperZ9/flywheel/pull/573">#573</a> (<code>AgentWorkspace</code>, <code>DelegatedMandate</code> &amp; <code>ApprovalValve</code>).</p>
+  <p class="lp-rel">Fail-closed <code>SHA256SUMS</code> installer (macOS/Linux: <code>curl -fsSL https://raw.githubusercontent.com/HarperZ9/flywheel/main/install.sh | sh</code>; PyPI: <code>pip install <span class="ident" translate="no">flywheel-verify</span></code> on PyPI). Pure OSI <strong>MIT</strong> License (<a href="https://github.com/HarperZ9/flywheel/pull/574">flywheel #574</a>, <code>fb877d2e</code>); Version 2.0.0 on GitHub and PyPI; on main: <a href="https://github.com/HarperZ9/flywheel/pull/565">#565</a> (<code>super-solver</code> 6/6 fault catch), <a href="https://github.com/HarperZ9/flywheel/pull/566">#566</a> (PUCT + 34.99x Merkle trace), <a href="https://github.com/HarperZ9/flywheel/pull/570">#570</a> (MCP Registry manifests), <a href="https://github.com/HarperZ9/flywheel/pull/571">#571</a> (C11/Win32 surface + BuildLang FFI), <a href="https://github.com/HarperZ9/flywheel/pull/572">#572</a> (DPAPI/CredMan keystore, OAuth PKCE/Device Flow &amp; RFC 9421 signer), and <a href="https://github.com/HarperZ9/flywheel/pull/573">#573</a> (<code>AgentWorkspace</code>, <code>DelegatedMandate</code> &amp; <code>ApprovalValve</code>). Local forge milestones: <a href="/models.html">JFC3P-14B-Oracle v5</a> (66/84 Arm C = 78.57%) and JFC3P-Titan-1M v2 (291.69x KV compression, 99.85 tok/s).</p>
   <nav class="lp-ways" aria-label="On this page">
     <a href="#demo">Output check demo</a>
     <a href="#what">What Flywheel is</a>
