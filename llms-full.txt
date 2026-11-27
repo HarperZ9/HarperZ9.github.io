@@ -39,7 +39,15 @@ runtime dependencies.
   accepts); flywheel #566 added Execution-Oracle PUCT verification tree search
   and a 34.99x RFC 6962 proof-carrying Merkle trace compressor (0 soundness loss);
   flywheel #568 shipped full-track 4096-pt Hann Welch PSD, spectral tilt, macro
-  DR, and <120 Hz phase verification in audio_deconstruct.py.
+  DR, and <120 Hz phase verification in audio_deconstruct.py; flywheel #570
+  published Official MCP Registry manifests plus codemeta.json/llms.txt/CITATION.cff;
+  flywheel #571 added the C11/Win32 native desktop surface, BuildLang FFI, and
+  operator workflows in accountable-surface; flywheel #572 shipped OS keystore
+  (Win32 DPAPI/CredMan), OAuth 2.0 PKCE/Device Flow, and RFC 9421 request
+  signing; flywheel #573 shipped AgentWorkspace, DelegatedMandate,
+  ApprovalValve, and MCP workspace tools; JFC3P-7B-Oracle v4 reached 63/84
+  (75.0%) Arm C (+12 over Base, 31 tool calls, 15/15 longppl, A1..A6 PASS,
+  live HF Space https://huggingface.co/spaces/zaindanaharper/jfc3p-oracle-demo).
 
 ## Articulate
 
@@ -119,7 +127,11 @@ Node 24 or later. The JavaScript engine has no dependencies; the instruments in
   BuildLang kernels with bit-exact C++ parity and 3-way 100 Hz/Deja-VAE checks;
   superframe #156 shipped clean-room taste synths, Estuary-Space FX rack,
   Estuary Clock-Drift DAW, and Round 3 studio audio (36/36 Welch PSD pass);
-  RAW DX12 Waves 74-80 pass 96/96 live moving-camera Skyrim SE checks (38/38 DXC,
+  superframe #157 added CITATION.cff, codemeta.json, and llms.txt discovery
+  manifests; superframe #158 shipped the Low Water 5-era deterministic coastal
+  civilization, settlement, and tide simulation layer plus bit-exact
+  coastal_kernel.bld; RAW DX12 Waves 74-81 (4fd1af1) pass 96/96 live
+  moving-camera Skyrim SE checks (dark_mo=0.001633 all-time best, 79/79 DXC,
   21/21 RTX 4090 GPU bench, 0 D3D12 errors).
 
 ## EMET
@@ -160,7 +172,11 @@ Version 1.15.0. Licence AGPL-3.0-only. Written in Rust.
   certified e-graph superoptimizer into buildc (`--superopt`, `--emit-cert`,
   `buildc verify-cert`); buildlang #346 added certified GPU polyhedral loop
   tiling + uniformity-safe subgroup auto-vectorization (`--emit-gpu-cert` across
-  WGSL, HLSL, MSL, SPIR-V); buildlang #345 published the AGPL-3.0-only funding.json.
+  WGSL, HLSL, MSL, SPIR-V); buildlang #345 published the AGPL-3.0-only
+  funding.json; buildlang #347 burned down `universe/CHECK-FAILS.txt` from 170
+  to 163 (113/276 passing) and graduated `universe/foundation` Tier-1 organism
+  to MSVC PASS; buildlang #348 shipped `CITATION.cff`, `codemeta.json`,
+  `llms.txt` discovery manifests and fixed `editors/vscode` `vsce` packaging.
 
 ## raw-native
 

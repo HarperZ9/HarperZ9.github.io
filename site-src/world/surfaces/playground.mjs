@@ -134,8 +134,8 @@ export default {
     {
       discipline: "Native Worlds, RAW & Inspection",
       engines: [
-        { name: "Native Renderer (RAW DX12 / WebGPU)", desc: "C++23 GPU renderer (Waves 74-80: 96/96 Skyrim SE, 38/38 DXC, 21/21 RTX 4090 bench).", actions: [["section", "native", "RAW"], ["stage", "/media/raw-native/viewer-0.8.0/web/viewer/index.html", "3D Viewer"]] },
-        { name: "Low Water Island Walk & Flora Atlas", desc: "Walkable WebGPU 5-era island plus procedural coastal botanical flora atlas.", actions: [["stage", "/media/low-water/walk.html", "Walk"], ["stage", "/media/low-water/world-cac3416/walk/flora/atlas.html", "Flora"]] },
+        { name: "Native Renderer (RAW DX12 / WebGPU)", desc: "C++23 GPU renderer (Waves 74-81, 4fd1af1: 96/96 Skyrim SE, dark_mo=0.001633 best, 79/79 DXC, 21/21 RTX 4090 bench).", actions: [["section", "native", "RAW"], ["stage", "/media/raw-native/viewer-0.8.0/web/viewer/index.html", "3D Viewer"]] },
+        { name: "Low Water Island Walk & Flora Atlas", desc: "Walkable WebGPU 5-era coastal civilization (superframe #158, bit-exact coastal_kernel.bld) plus botanical flora atlas.", actions: [["stage", "/media/low-water/walk.html", "Walk"], ["stage", "/media/low-water/world-cac3416/walk/flora/atlas.html", "Flora"]] },
         { name: "Superframe & Studio Engine Lineage", desc: "Deterministic multi-medium core (3/3 native/bld parity) and expression-algebra architecture.", actions: [["section", "superframe", "Core"], ["stage", "/systems/studio-engine.html", "Lineage"]] },
         { name: "Distill (Layer-0 File Dissector)", desc: "Take any file, archive, or folder apart locally in your browser with 0..EOF coverage.", actions: [["stage", "/playground/distill.html", "Open"]] },
         { name: "Discovery Lab & Orbits Showcase", desc: "Symbolic law discovery, Noether invariants, and symplectic orbit checks.", actions: [["stage", "/system/discovery/lab.html", "Open"]] },
@@ -156,10 +156,10 @@ export default {
     {
       group: "Native GPU & Games",
       repos: [
-        { name: "Superframe (The Playground)", meta: "500K+ LOC · 78 pkgs · FSL-1.1-MIT", url: "https://github.com/HarperZ9/superframe", desc: "Deterministic multi-medium platform rendering paint, living type, lines, optics, audio, and 3D worlds from one seed." },
+        { name: "Superframe (The Playground)", meta: "500K+ LOC · 78 pkgs · FSL-1.1-MIT (#157/#158)", url: "https://github.com/HarperZ9/superframe", desc: "Deterministic multi-medium platform rendering paint, living type, lines, optics, audio, and 3D worlds from one seed, with CITATION/codemeta/llms.txt manifests." },
         { name: "Superframe Native Renderer (native/)", meta: "207.6k LOC · C++23/HLSL/WGSL · 231 tests", url: "https://github.com/HarperZ9/superframe/tree/main/native", desc: "Real-time DX12, Vulkan, and WebGPU GPU renderer certified against CPU path-traced references (WGSL/HLSL DeltaE 0.0, #153)." },
-        { name: "RAW DX12 Graphics Engine", meta: "315.9k LOC Wave 80 · 214 tests", url: "https://github.com/HarperZ9/raw", desc: "Direct3D 11/12 volumetric atmosphere, 2-slot ReSTIR-GI, L=8 hash radiance cache, and ray-traced water (96/96 Skyrim SE, 38/38 DXC)." },
-        { name: "Low Water (games/low-water/)", meta: "110.2k LOC · ESM/BuildLang/WGSL · 161 tests", url: "https://github.com/HarperZ9/superframe/tree/main/games/low-water", desc: "Coastal 5-era narrative action game and deterministic BuildLang world generator with physical sky, weather, water, and paint." },
+        { name: "RAW DX12 Graphics Engine", meta: "Wave 81 (4fd1af1) · 79/79 DXC · 96/96 Skyrim SE", url: "https://github.com/HarperZ9/raw", desc: "Direct3D 11/12 volumetric atmosphere, 2-slot ReSTIR-GI, L=8 hash radiance cache, thin-film iridescence/frost/halos, and ray-traced water (dark_mo=0.001633 all-time best)." },
+        { name: "Low Water (games/low-water/)", meta: "110.2k LOC · ESM/BuildLang/WGSL · #158 coastal_kernel.bld", url: "https://github.com/HarperZ9/superframe/tree/main/games/low-water", desc: "5-era coastal civilization, settlement, and tide simulation with bit-exact BuildLang world/coastal kernels, physical sky, weather, water, and paint." },
         { name: "Elder ENB, Truth ENB & Skyrim Suite", meta: "6 repos · 1M+ Nexus lineage downloads", url: "https://github.com/HarperZ9/elder-enb", desc: "Production Skyrim graphics and 19-weather physical-atmosphere ecosystem with transactional profiles and clean-room validation." },
         { name: "BRender Archival & Engine Revival", meta: "2 repos · C/Python", url: "https://github.com/HarperZ9/brender-archival", desc: "Native 64-bit Windows/Linux revival of Argonaut's 1990s BRender 3D engine and catalogue of lost rendering engines." },
       ],
