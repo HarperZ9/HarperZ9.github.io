@@ -1,14 +1,14 @@
 {
   "outputs": [
     {
-      "byte_length": 26237,
+      "byte_length": 26278,
       "path": "career/Zain-Dana-Harper-CV.md",
-      "sha256": "1d131400dc8a3b05064faef30ecc7283c026a759da9087715c3907910459f123"
+      "sha256": "54f50fce4d109ca524e7217b06937eb8bda1df5ae9eb1b5c9e10cadcdb240eba"
     },
     {
-      "byte_length": 26088,
+      "byte_length": 26129,
       "path": "career/Zain-Dana-Harper-CV.txt",
-      "sha256": "31c1bf1672ded96f71ef7f9e4dcc9ca54b67467813b485902c0f66dfd4cad532"
+      "sha256": "0d9c0424f03fa20d0cea0a7d9268a6f07ae14c49f3dd7a3f774694e7d5ac073d"
     },
     {
       "byte_length": 3197,
@@ -61,14 +61,14 @@
       "sha256": "251a5cc5c3a9aab9a1d0133f5667ee0f7f07ae0d78145a3caaf6ef65fcc5954d"
     },
     {
-      "byte_length": 37349,
+      "byte_length": 37390,
       "path": "cv.html",
-      "sha256": "b520d7b3fb436b0edcd784a0e7349f65df55c396604fcca786c8e5c59c899e9c"
+      "sha256": "5c4b686cc62946c6b2333c7c7ef81fc3831cf2f461c27a225e71b07dd230f2be"
     },
     {
-      "byte_length": 26237,
+      "byte_length": 26278,
       "path": "cv.md",
-      "sha256": "1d131400dc8a3b05064faef30ecc7283c026a759da9087715c3907910459f123"
+      "sha256": "54f50fce4d109ca524e7217b06937eb8bda1df5ae9eb1b5c9e10cadcdb240eba"
     },
     {
       "byte_length": 20731,
@@ -121,6 +121,6 @@
   "schema": "harperz9-career-text-build/v1",
   "source": {
     "path": "career/resume-source.json",
-    "sha256": "02ba838469d49a03db0a41a8c6ad7c98454ed0c33f267410971c53df8895217b"
+    "sha256": "f4c70cd5309e3c097c2adc0a4b0d391fed716d5488d2adb74c13f1d8017eac72"
   }
 }

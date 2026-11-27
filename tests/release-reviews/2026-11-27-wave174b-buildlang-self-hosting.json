@@ -1,0 +1,19 @@
+{
+  "date": "2026-11-27",
+  "note": "Wave 174B: Scrub stale Rust-built/Written in Rust BuildLang copy to self-hosting BuildLang + Stage-0 Rust bootstrap across site and career surfaces",
+  "paths": {
+    "career/Zain-Dana-Harper-CV.docx": "bdc6a96a046f23b6c6fd46f482498fee8e902e0d8ffbfd296ca6d605a0b5a19c",
+    "career/Zain-Dana-Harper-CV.pdf": "19c170f1a5c26be2616efa9aefa8c89d27eee0ac27771b087c5dd40718b3dea6",
+    "career/career-artifacts.json": "a6c17d5a038049a7a2150b708dbdecff8bb8fd4ae397c86ff961c50d55792401",
+    "career/career-build-receipt.json": "8ffe9d56959f7bee25a9dbfdc888457f4865f1c4739c44beece82841ab2879ab",
+    "career/designed/Zain-Dana-Harper-CV.buildtex.json": "9603be33679c083eba2bb4e7a384454a50bbf962214743f4f5fb7f3897869694",
+    "career/designed/Zain-Dana-Harper-CV.pdf": "92c12397a89cba852ead9b9f6c6b565a9ed4ab132515642528adfe0020369e98",
+    "career/designed/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.buildtex.json": "7a26e533cad114a17afce27176bc8ea2f593cd3c86aaed83672335477b75887f",
+    "career/designed/Zain-Dana-Harper-Resume-Graphics-Developer-Tools.buildtex.json": "815a3fb9b5edb1b6297e995e6c1ad858a15c4935dff17a77258e2155d54e1152",
+    "career/designed/Zain-Dana-Harper-Resume-Grounds.buildtex.json": "7407030ecd7f1ed5a55389eca383fa559f6af6c3946223ea5670f0e8f00bfb9c",
+    "career/designed/Zain-Dana-Harper-Resume-Public-Operations.buildtex.json": "613d05b1dceebb6dcd4df73b82fc2f890c59ad2d373522cbd7e633eb2fd160d2",
+    "career/designed/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.buildtex.json": "f74892a0076cf6f391d3b659af58219583eda3dc9203ebb8df88fa04c348c61b",
+    "cv.html": "5c4b686cc62946c6b2333c7c7ef81fc3831cf2f461c27a225e71b07dd230f2be",
+    "cv.md": "54f50fce4d109ca524e7217b06937eb8bda1df5ae9eb1b5c9e10cadcdb240eba"
+  }
+}

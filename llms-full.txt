@@ -172,7 +172,7 @@ next release. Python 3.8 or newer, no dependencies. Ports in Rust, Node.js and G
 
 ## BuildLang
 
-Version 1.15.0. Licence AGPL-3.0-only. Written in Rust.
+Version 1.15.0 (crates.io Stage-0 Rust bootstrap). Licence AGPL-3.0-only core / MIT libs. Self-hosting compiler written in BuildLang with Stage-2 zero-C 5-ISA self-compilation.
 
 - What it does: a compiled language where a function's type lists its side
   effects, such as file, network and C access, so a call that reads a file

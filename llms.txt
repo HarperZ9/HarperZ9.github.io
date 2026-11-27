@@ -79,7 +79,7 @@ BuildLang core buildc and CMMNS remain AGPL-3.0-only; docs/essays CC BY 4.0):
   PyPI, CMMNS 3.10.0, Superframe 0.3.0, Articulate 0.19.1, and learn 2.3.0; newer
   verified milestones above are merged on origin/main ahead of the next release cut).
   best, 79/79 DXC).
-- [BuildLang](https://harperz9.github.io/buildlang.html): Rust-built compiled
+- [BuildLang](https://harperz9.github.io/buildlang.html): self-hosting compiled systems and GPU language written in BuildLang (Stage-2 zero-C 5-ISA self-compilation, Stage-0 Rust bootstrap 1.15.0 on crates.io),
   systems language (AGPL-3.0-only core buildc; pure OSI MIT universe/ and suite/
   via buildlang #350, c3b2e5dd) with typed capability effects, 12 targets (C,
   HLSL, GLSL, WGSL, Metal, SPIR-V, x86-64, RISC-V, WASM, Verilog-2001 RTL),
