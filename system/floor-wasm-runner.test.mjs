@@ -12,6 +12,11 @@ import {
   probeKernelExports,
   probeAllKernels,
 } from "./floor-wasm-runner.js";
+import {
+  TEN_DOMAINS,
+  createUnifiedStateBus,
+  computeStateDigestHex,
+} from "./studio-state-bus.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -41,9 +46,61 @@ test("FLOOR_WASM_KERNELS lists all 7 compiled BuildLang WASM kernels", () => {
   }
 });
 
+test("TEN_DOMAINS enforces exact 10 cohesive studio domains backed by the 7 BuildLang WASM kernels", () => {
+  assert.equal(TEN_DOMAINS.length, 10);
+  const labels = TEN_DOMAINS.map((d) => d.label);
+  assert.deepEqual(labels, [
+    "1. Tools",
+    "2. Engine",
+    "3. Exhibit",
+    "4. Motion & Film",
+    "5. Data & Visualizer",
+    "6. Sound",
+    "7. Ink & Water",
+    "8. Mosaic",
+    "9. Type & Lettering",
+    "10. Light & Glass",
+  ]);
+  const validKernelIds = new Set(FLOOR_WASM_KERNELS.map((k) => k.id));
+  for (const d of TEN_DOMAINS) {
+    assert.ok(d.kernels.length >= 2, `${d.id} must be backed by BuildLang WASM kernels`);
+    for (const kid of d.kernels) {
+      assert.ok(validKernelIds.has(kid), `${d.id} references unknown kernel ${kid}`);
+    }
+  }
+});
+
+test("createUnifiedStateBus propagates cross-domain updates reactively and updates WASM receiptSha256", async () => {
+  const kernels = await loadAllFloorKernels();
+  const stWasm = kernels.get("supertool_kernel");
+  const bus = createUnifiedStateBus({}, stWasm);
+  const seen = [];
+  const unsub = bus.subscribe((snap, origin) => seen.push({ domain: snap.activeDomain, origin, hash: snap.receiptSha256 }));
+
+  const h0 = bus.getState().receiptSha256;
+  assert.match(h0, /^[0-9a-f]{16}$/);
+
+  const s1 = bus.update({ activeDomain: "light-glass", optics: { iorA: 1.72, filmNm: 520 } }, "optics");
+  assert.equal(s1.activeDomain, "light-glass");
+  assert.equal(s1.optics.iorA, 1.72);
+  assert.notEqual(s1.receiptSha256, h0, "optics edit must update shared receipt digest");
+
+  const s2 = bus.update({ activeDomain: "ink-water", fluid: { wetness: 0.88 }, typeText: "Estuary" }, "fluid");
+  assert.equal(s2.fluid.wetness, 0.88);
+  assert.equal(s2.typeText, "Estuary");
+  assert.notEqual(s2.receiptSha256, s1.receiptSha256, "fluid/type edit must update shared receipt digest");
+  assert.equal(seen.length, 2);
+
+  // Deterministic digest verification
+  assert.equal(computeStateDigestHex(s2, stWasm), s2.receiptSha256);
+  unsub();
+  bus.update({ activeDomain: "sound" }, "after-unsub");
+  assert.equal(seen.length, 2, "unsubscribed listener should not fire");
+});
+
 test("probeAllKernels executes and passes all 7 real BuildLang WASM binaries", async () => {
   const kernels = await loadAllFloorKernels();
-  const report = probeAllKernels(kernels, { mix: 0.5, iorA: 1.5046, cutoff: 1800 });
+  const report = probeAllKernels(kernels, { mix: 0.5, iorA: 1.5046, cutoff: 1800, wetness: 0.45 });
   assert.equal(report.total, 7);
   assert.equal(report.passed, 7, JSON.stringify(report.results, null, 2));
   assert.equal(report.allOk, true);
@@ -56,9 +113,9 @@ test("probeAllKernels executes and passes all 7 real BuildLang WASM binaries", a
 test("probeAllKernels remains finite and passes across parameter sweep", async () => {
   const kernels = await loadAllFloorKernels();
   for (const params of [
-    { mix: 0.0, iorA: 1.33, cutoff: 400 },
-    { mix: 0.35, iorA: 1.62, cutoff: 1400 },
-    { mix: 0.95, iorA: 2.25, cutoff: 5400 },
+    { mix: 0.0, iorA: 1.33, cutoff: 400, wetness: 0.0 },
+    { mix: 0.35, iorA: 1.62, cutoff: 1400, wetness: 0.55 },
+    { mix: 0.95, iorA: 2.25, cutoff: 5400, wetness: 1.0 },
   ]) {
     const report = probeAllKernels(kernels, params);
     assert.equal(report.allOk, true, `sweep ${JSON.stringify(params)} failed: ${JSON.stringify(report.results)}`);

@@ -8,6 +8,9 @@ import { registerUnifiedExporters, mountUnifiedExportHub } from "./exporters-uni
 import { loadSupertoolWasm } from "./supertool-wasm.js";
 import { mountSandSource } from "./studio-sand.js";
 import { mountAllReposPanel } from "./studio-all-repos-panel.js";
+import { TEN_DOMAINS, getSharedStudioBus } from "./studio-state-bus.js";
+
+const STUDIO_BUS = getSharedStudioBus();
 
 const BRIDGE_SOURCES = new Set(["sand", "estuary", "elements", "shaders", "daw", "superframe"]);
 const NOOP_ENV_TARGET = {
@@ -280,9 +283,10 @@ async function mountBridgeSource(id) {
         const fx = fluidWasm.vorticity_confinement_fx(0.4, -0.3, 1.2, eps, 0.016);
         const fy = fluidWasm.vorticity_confinement_fy(0.4, -0.3, 1.2, eps, 0.016);
         const kmWet = fluidWasm.km_wet_well_blend(0.25, 1.0, 0.85, 0.65, 0.5, wetness);
+        const snap = STUDIO_BUS.update({ activeDomain: "ink-water", fluid: { curlFreq: freq, wetness, vorticity: eps, div } }, "studio-sand");
         badge.textContent =
           `BuildLang fluid_well_kernel.wasm: curl=(${vx.toFixed(3)}, ${vy.toFixed(3)}), div=${div.toExponential(1)}, ` +
-          `vort=(${fx.toFixed(3)}, ${fy.toFixed(3)}), KM_wet=${kmWet.toFixed(4)} | BK7 IOR(550nm)=${ior}`;
+          `vort=(${fx.toFixed(3)}, ${fy.toFixed(3)}), KM_wet=${kmWet.toFixed(4)} | BK7 IOR(550nm)=${ior} | bus:${snap.receiptSha256.slice(0, 8)}`;
       } else {
         const km = wasm ? wasm.km_reflectance(0.25, 1.0).toFixed(3) : "0.500";
         badge.textContent = `BuildLang WASM kernel live: BK7 IOR(550nm)=${ior}, KM(0.25)=${km}, thermal sand->glass active.`;
@@ -375,9 +379,10 @@ async function mountBridgeSource(id) {
         const blT = glassWasm.beer_lambert_transmittance(0.45, Math.max(0.1, kmK), 1.5).toFixed(4);
         const airyR = glassWasm.airy_thin_film_reflectance(1.38, filmNm, Math.max(0.05, cosT), 550.0, 0.04).toFixed(4);
         const tir = sinT < 0 ? "TIR" : `sin(t)=${sinT.toFixed(3)}`;
+        const snap = STUDIO_BUS.update({ activeDomain: "light-glass", optics: { iorA, kmK, angleDeg, filmNm, lensR } }, "studio-elements");
         status.textContent =
           `BuildLang glass_optics_kernel.wasm: IOR(550nm)=${ior550}, Luneburg n(${lensR.toFixed(2)})=${luneN}, ` +
-          `${tir}, Beer-Lambert T=${blT}, Airy R=${airyR}, KM R=${r}`;
+          `${tir}, Beer-Lambert T=${blT}, Airy R=${airyR}, KM R=${r} | bus:${snap.receiptSha256.slice(0, 8)}`;
       } else {
         status.textContent = `BuildLang WASM Optics: IOR(550nm)=${ior550}, KM R=${r}`;
       }
@@ -447,10 +452,14 @@ async function mountBridgeSource(id) {
       const res = Number(resRange.value) / 100;
       const damp = Number(dampRange.value) / 1000;
       const meter = renderDawOnCanvas(canvas, dawWasm, { mode, cutoff, res, damp });
+      const snap = STUDIO_BUS.update(
+        { activeDomain: "sound", audio: { mode, cutoff, resonance: res, damp, rms: meter.rms, lufs: meter.lufs } },
+        "studio-daw",
+      );
       status.textContent = dawWasm
         ? `BuildLang daw_synth_kernel.wasm (muted until Play): ${mode === 0 ? "Maj7/9" : "Min7/9"}, ` +
           `cutoff=${cutoff}Hz (alpha=${meter.alpha.toFixed(3)}), damp=${damp.toFixed(3)}, ` +
-          `RMS=${meter.rms.toFixed(3)}, ${meter.lufs.toFixed(1)} LUFS`
+          `RMS=${meter.rms.toFixed(3)}, ${meter.lufs.toFixed(1)} LUFS | bus:${snap.receiptSha256.slice(0, 8)}`
         : "BuildLang WASM FM Synth ready (muted until Play).";
     };
 
@@ -537,15 +546,69 @@ async function mountBridgeSource(id) {
   }
 }
 
+function mountTenDomainStrip(exportHost) {
+  if (!exportHost || document.getElementById("studio-ten-domain-bar")) return;
+  const nav = document.createElement("div");
+  nav.id = "studio-ten-domain-bar";
+  nav.className = "studio-ten-domain-bar";
+  nav.setAttribute("role", "region");
+  nav.setAttribute("aria-label", "10 unified studio domains");
+  nav.style.cssText = "display:flex;flex-wrap:wrap;align-items:center;gap:0.3rem;margin:0 0 0.55rem;padding:0.45rem 0;border-bottom:1px solid currentColor;font-size:0.78rem;";
+
+  const badge = document.createElement("span");
+  badge.id = "studio-bus-receipt";
+  badge.style.cssText = "font-family:ui-monospace,SFMono-Regular,Menlo,monospace;margin-left:auto;opacity:0.85;";
+
+  const buttons = [];
+  for (const d of TEN_DOMAINS) {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.dataset.unifiedDomain = d.id;
+    btn.textContent = d.label;
+    btn.style.cssText = "background:transparent;color:inherit;border:1px solid currentColor;padding:0.2rem 0.45rem;font:inherit;cursor:pointer;opacity:0.82;";
+    btn.addEventListener("click", () => {
+      STUDIO_BUS.update({ activeDomain: d.id }, "studio-domain-strip");
+      if (BRIDGE_SOURCES.has(d.studioSource)) {
+        mountBridgeSource(d.studioSource);
+      }
+    });
+    buttons.push(btn);
+    nav.appendChild(btn);
+  }
+  nav.appendChild(badge);
+  exportHost.prepend(nav);
+
+  const syncUi = (state) => {
+    badge.textContent = `10-domain bus:${state.receiptSha256.slice(0, 8)}`;
+    for (const b of buttons) {
+      const on = b.dataset.unifiedDomain === state.activeDomain;
+      b.setAttribute("aria-pressed", String(on));
+      b.style.opacity = on ? "1" : "0.75";
+      b.style.fontWeight = on ? "700" : "400";
+    }
+  };
+  STUDIO_BUS.subscribe(syncUi);
+  syncUi(STUDIO_BUS.getState());
+}
+
 function bootSupertoolBridge() {
   registerUnifiedExporters();
   const exportHost = document.getElementById("unified-export-mount");
   if (exportHost) {
-    mountUnifiedExportHub(exportHost, () => ({
-      source: activeSourceId,
-      canvas: document.getElementById("studio-canvas"),
-      extra: { source: activeSourceId, seed: `${activeSourceId}-live` },
-    }));
+    mountTenDomainStrip(exportHost);
+    mountUnifiedExportHub(exportHost, () => {
+      const state = STUDIO_BUS.getState();
+      return {
+        source: activeSourceId,
+        canvas: document.getElementById("studio-canvas"),
+        extra: {
+          source: activeSourceId,
+          seed: `${activeSourceId}-${state.activeDomain}`,
+          receiptSha256: state.receiptSha256,
+          stateBus: state,
+        },
+      };
+    });
   }
 
   const menu = document.getElementById("studio-source");

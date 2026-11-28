@@ -58,24 +58,31 @@ function studyPages() {
 function floorLiveRunner() {
   return `<section id="floor-live-runner" class="floor-live-runner" aria-labelledby="h-floor-runner">
 <div class="flr-head">
-  <h2 id="h-floor-runner">Live BuildLang WASM Super-Tool (7 Kernels)</h2>
+  <h2 id="h-floor-runner">Unified 10-Domain BuildLang WASM Workspace (7 Kernels)</h2>
   <span class="flr-status" data-flr-status role="status" aria-live="polite">Loading 7 BuildLang WASM kernels...</span>
 </div>
-<div class="flr-tabs" data-flr-tabs role="tablist" aria-label="Live BuildLang WASM views">
-  <button type="button" class="flr-tab" data-mode="all" role="tab" aria-selected="true"><span>All 7 Kernels</span></button>
-  <button type="button" class="flr-tab" data-mode="glass" role="tab" aria-selected="false"><span>Glass Optics</span></button>
-  <button type="button" class="flr-tab" data-mode="fluid" role="tab" aria-selected="false"><span>Fluid Well</span></button>
-  <button type="button" class="flr-tab" data-mode="craft" role="tab" aria-selected="false"><span>Estuary + Plotter + Type</span></button>
-  <button type="button" class="flr-tab" data-mode="daw" role="tab" aria-selected="false"><span>Coastal DAW</span></button>
-  <button type="button" class="flr-tab" data-mode="cockpit" role="tab" aria-selected="false"><span>5-Flagship Cockpit</span></button>
+<div class="flr-bus-bar" data-flr-bus>Shared state bus initializing...</div>
+<div class="flr-tabs" data-flr-tabs role="tablist" aria-label="10 unified studio domains">
+  <button type="button" class="flr-tab" data-domain="tools" role="tab" aria-selected="true"><span>1. Tools</span></button>
+  <button type="button" class="flr-tab" data-domain="engine" role="tab" aria-selected="false"><span>2. Engine</span></button>
+  <button type="button" class="flr-tab" data-domain="exhibit" role="tab" aria-selected="false"><span>3. Exhibit</span></button>
+  <button type="button" class="flr-tab" data-domain="motion" role="tab" aria-selected="false"><span>4. Motion &amp; Film</span></button>
+  <button type="button" class="flr-tab" data-domain="data" role="tab" aria-selected="false"><span>5. Data &amp; Visualizer</span></button>
+  <button type="button" class="flr-tab" data-domain="sound" role="tab" aria-selected="false"><span>6. Sound</span></button>
+  <button type="button" class="flr-tab" data-domain="ink-water" role="tab" aria-selected="false"><span>7. Ink &amp; Water</span></button>
+  <button type="button" class="flr-tab" data-domain="mosaic" role="tab" aria-selected="false"><span>8. Mosaic</span></button>
+  <button type="button" class="flr-tab" data-domain="type" role="tab" aria-selected="false"><span>9. Type &amp; Lettering</span></button>
+  <button type="button" class="flr-tab" data-domain="light-glass" role="tab" aria-selected="false"><span>10. Light &amp; Glass</span></button>
 </div>
 <div class="flr-grid">
   <div>
     <canvas id="floor-wasm-canvas" class="flr-canvas" width="720" height="260" aria-label="Live BuildLang WASM kernel visualization"></canvas>
     <div class="flr-controls">
-      <label>Mix / Sweep <input type="range" min="0" max="100" value="50" data-flr-mix></label>
+      <label>Mix / Mosaic <input type="range" min="0" max="100" value="50" data-flr-mix></label>
       <label>Glass IOR <input type="range" min="130" max="240" value="151" data-flr-ior></label>
+      <label>Wetness <input type="range" min="0" max="100" value="45" data-flr-wet></label>
       <label>DAW LPF (Hz) <input type="range" min="300" max="6000" value="1800" data-flr-cutoff></label>
+      <label>Type <input type="text" value="Accession" maxlength="28" data-flr-type></label>
     </div>
   </div>
   <table class="flr-matrix" aria-label="BuildLang WASM kernel status">
@@ -85,6 +92,7 @@ function floorLiveRunner() {
 </div>
 <div class="flr-actions">
   <button type="button" class="flr-btn" data-flr-play>Play Coastal Jazz Chord (Opt-In)</button>
+  <button type="button" class="flr-btn" data-flr-cockpit-toggle aria-expanded="false">5-Flagship Cockpit</button>
   <a class="flr-btn" href="/studio.html">Open Full Studio</a>
   <div id="floor-export-mount"></div>
 </div>

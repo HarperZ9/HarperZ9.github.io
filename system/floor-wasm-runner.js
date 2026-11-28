@@ -2,57 +2,25 @@
 // SPDX-License-Identifier: MIT
 //
 // system/floor-wasm-runner.js
-// Live Interactive All-Systems 7-Kernel BuildLang WASM Runner mounted on /floor.html.
-// Executes all 7 compiled BuildLang WASM binaries directly in the browser, integrates the
-// All-Repos flagship cockpit (Superframe, Flywheel, CMMNS, Articulate, BuildLang), and wires
-// the 13-format SHA-256 receipted export pipeline onto /floor.html with zero page errors.
+// Live Interactive 10-Domain Unified Studio & 7-Kernel BuildLang WASM Runner mounted on /floor.html.
+// Shares ONE live reactive state bus (system/studio-state-bus.js) across all 10 cohesive domains:
+// 1. Tools, 2. Engine, 3. Exhibit, 4. Motion & Film, 5. Data & Visualizer, 6. Sound,
+// 7. Ink & Water, 8. Mosaic, 9. Type & Lettering, 10. Light & Glass.
 
 import { mountAllReposPanel } from "./studio-all-repos-panel.js";
 import { registerUnifiedExporters, mountUnifiedExportHub } from "./exporters-unified.js";
+import { TEN_DOMAINS, getSharedStudioBus } from "./studio-state-bus.js";
+
+export { TEN_DOMAINS };
 
 export const FLOOR_WASM_KERNELS = Object.freeze([
-  {
-    id: "supertool_kernel",
-    label: "Supertool Core",
-    platform: "Superframe / Flywheel / CMMNS",
-    file: "supertool_kernel.wasm",
-  },
-  {
-    id: "estuary_kernel",
-    label: "Estuary Lantern",
-    platform: "Estuary / Topology",
-    file: "estuary_kernel.wasm",
-  },
-  {
-    id: "plotter_loom_kernel",
-    label: "Plotter + Loom",
-    platform: "Fabrication / WIF / G-code",
-    file: "plotter_loom_kernel.wasm",
-  },
-  {
-    id: "type_forge_kernel",
-    label: "Type Forge",
-    platform: "Accession / Bezier",
-    file: "type_forge_kernel.wasm",
-  },
-  {
-    id: "glass_optics_kernel",
-    label: "Glass Optics",
-    platform: "Luneburg / Snell / Airy",
-    file: "glass_optics_kernel.wasm",
-  },
-  {
-    id: "fluid_well_kernel",
-    label: "Fluid Well",
-    platform: "Curl Flow / Vorticity / KM",
-    file: "fluid_well_kernel.wasm",
-  },
-  {
-    id: "daw_synth_kernel",
-    label: "Coastal DAW",
-    platform: "Karplus-Strong / Jazz / LUFS",
-    file: "daw_synth_kernel.wasm",
-  },
+  { id: "supertool_kernel", label: "Supertool Core", platform: "Tools / Engine / Flywheel / CMMNS", file: "supertool_kernel.wasm" },
+  { id: "estuary_kernel", label: "Estuary Lantern", platform: "Exhibit / Motion / Data", file: "estuary_kernel.wasm" },
+  { id: "plotter_loom_kernel", label: "Plotter + Loom", platform: "Mosaic / Fabrication", file: "plotter_loom_kernel.wasm" },
+  { id: "type_forge_kernel", label: "Type Forge", platform: "Type & Lettering", file: "type_forge_kernel.wasm" },
+  { id: "glass_optics_kernel", label: "Glass Optics", platform: "Light & Glass", file: "glass_optics_kernel.wasm" },
+  { id: "fluid_well_kernel", label: "Fluid Well", platform: "Ink & Water", file: "fluid_well_kernel.wasm" },
+  { id: "daw_synth_kernel", label: "Coastal DAW", platform: "Sound", file: "daw_synth_kernel.wasm" },
 ]);
 
 const NOOP_ENV_TARGET = {
@@ -75,10 +43,10 @@ export function probeKernelExports(id, k, params = {}) {
   if (!k || typeof k !== "object") {
     return { id, ok: false, summary: "kernel not loaded", metrics: {} };
   }
-  const mix = Math.max(0, Math.min(1, Number(params.mix ?? 0.5)));
-  const iorA = Math.max(1.3, Math.min(2.4, Number(params.iorA ?? 1.5046)));
-  const cutoff = Math.max(300, Math.min(6000, Number(params.cutoff ?? 1800)));
-
+  const mix = Math.max(0, Math.min(1, Number(params.mix ?? params.mosaicMix ?? 0.5)));
+  const iorA = Math.max(1.3, Math.min(2.4, Number(params.iorA ?? params.optics?.iorA ?? 1.5046)));
+  const cutoff = Math.max(300, Math.min(6000, Number(params.cutoff ?? params.audio?.cutoff ?? 1800)));
+  const wetness = Math.max(0, Math.min(1, Number(params.wetness ?? params.fluid?.wetness ?? mix)));
   const selfCheck = typeof k.main === "function" ? k.main() : 0;
 
   if (id === "supertool_kernel") {
@@ -159,7 +127,7 @@ export function probeKernelExports(id, k, params = {}) {
     const vy = k.curl_noise_vy(0.35, 0.72, freq, 1.0);
     const div = k.curl_noise_divergence(0.35, 0.72, freq, 1.0);
     const fx = k.vorticity_confinement_fx(0.4, -0.3, 1.2, 0.8, 0.016);
-    const kmWet = k.km_wet_well_blend(0.25, 1.0, 0.85, 0.65, 0.5, mix);
+    const kmWet = k.km_wet_well_blend(0.25, 1.0, 0.85, 0.65, 0.5, wetness);
     const ok = selfCheck === 0 && Number.isFinite(vx) && Number.isFinite(vy) && Math.abs(div) < 1e-3 && kmWet >= 0;
     return {
       id,
@@ -213,15 +181,23 @@ function injectScopedStyles() {
   flex-wrap: wrap;
   align-items: baseline;
   justify-content: space-between;
-  gap: 0.5rem 1rem;
-  margin-bottom: 0.75rem;
+  gap: 0.4rem 1rem;
+  margin-bottom: 0.65rem;
 }
 .flr-head h2 { margin: 0; font-size: 1.05rem; letter-spacing: 0.04em; text-transform: uppercase; }
-.flr-status { font: 0.82rem/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; opacity: 0.85; }
+.flr-status { font: 0.8rem/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; opacity: 0.88; }
+.flr-bus-bar {
+  font: 0.78rem/1.4 ui-monospace, SFMono-Regular, Menlo, monospace;
+  padding: 0.35rem 0;
+  margin-bottom: 0.55rem;
+  border-top: 1px solid color-mix(in srgb, currentColor 20%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, currentColor 20%, transparent);
+  word-break: break-word;
+}
 .flr-tabs {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.35rem;
+  gap: 0.3rem;
   margin: 0 0 0.75rem;
   padding-bottom: 0.65rem;
   border-bottom: 1px solid color-mix(in srgb, currentColor 22%, transparent);
@@ -231,18 +207,15 @@ function injectScopedStyles() {
   background: transparent;
   color: inherit;
   border: 1px solid color-mix(in srgb, currentColor 35%, transparent);
-  padding: 0.3rem 0.65rem;
-  font: 0.82rem/1.2 inherit;
+  padding: 0.28rem 0.58rem;
+  font: 0.8rem/1.2 inherit;
   cursor: pointer;
 }
 .flr-tab[aria-selected="true"] {
   background: currentColor;
   border-color: currentColor;
 }
-.flr-tab[aria-selected="true"] span {
-  color: Canvas;
-  filter: invert(0);
-}
+.flr-tab[aria-selected="true"] span { color: Canvas; }
 .flr-grid {
   display: grid;
   grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
@@ -262,19 +235,27 @@ function injectScopedStyles() {
 .flr-controls {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.65rem 1rem;
+  gap: 0.55rem 0.9rem;
   margin-top: 0.6rem;
-  font-size: 0.84rem;
+  font-size: 0.82rem;
 }
-.flr-controls label { display: inline-flex; align-items: center; gap: 0.4rem; }
+.flr-controls label { display: inline-flex; align-items: center; gap: 0.35rem; }
+.flr-controls input[type="text"] {
+  background: transparent;
+  color: inherit;
+  border: 1px solid color-mix(in srgb, currentColor 38%, transparent);
+  padding: 0.2rem 0.4rem;
+  font: inherit;
+  width: 8.5rem;
+}
 .flr-matrix {
   width: 100%;
   border-collapse: collapse;
-  font: 0.78rem/1.35 ui-monospace, SFMono-Regular, Menlo, monospace;
+  font: 0.76rem/1.35 ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 .flr-matrix th, .flr-matrix td {
   text-align: left;
-  padding: 0.28rem 0.4rem;
+  padding: 0.26rem 0.36rem;
   border-bottom: 1px solid color-mix(in srgb, currentColor 18%, transparent);
   vertical-align: top;
 }
@@ -283,7 +264,7 @@ function injectScopedStyles() {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.5rem 0.85rem;
+  gap: 0.45rem 0.75rem;
   margin-top: 0.85rem;
   padding-top: 0.75rem;
   border-top: 1px solid color-mix(in srgb, currentColor 22%, transparent);
@@ -293,9 +274,10 @@ function injectScopedStyles() {
   background: transparent;
   color: inherit;
   border: 1px solid currentColor;
-  padding: 0.34rem 0.7rem;
-  font: 0.82rem/1.2 inherit;
+  padding: 0.32rem 0.65rem;
+  font: 0.8rem/1.2 inherit;
   cursor: pointer;
+  text-decoration: none;
 }
 .flr-cockpit {
   margin-top: 0.9rem;
@@ -307,28 +289,31 @@ function injectScopedStyles() {
   flex-wrap: wrap;
   align-items: center;
   gap: 0.45rem;
-  font-size: 0.82rem;
+  font-size: 0.8rem;
 }
 .unified-export-hub select, .unified-export-hub button {
   background: transparent;
   color: inherit;
   border: 1px solid color-mix(in srgb, currentColor 40%, transparent);
-  padding: 0.3rem 0.55rem;
+  padding: 0.28rem 0.52rem;
   font: inherit;
 }
 `;
   document.head.appendChild(style);
 }
 
-function drawRunnerCanvas(canvas, mode, kernels, params) {
+function drawDomainCanvas(canvas, domainId, kernels, state) {
   if (!canvas) return;
   const ctx = canvas.getContext("2d");
   if (!ctx) return;
   const w = canvas.width;
   const h = canvas.height;
-  const { mix, iorA, cutoff } = params;
+  const mix = state.mosaicMix;
+  const iorA = state.optics.iorA;
+  const cutoff = state.audio.cutoff;
+  const wetness = state.fluid.wetness;
 
-  ctx.fillStyle = "#09131d";
+  ctx.fillStyle = state.palette[0] || "#09131d";
   ctx.fillRect(0, 0, w, h);
 
   const st = kernels.get("supertool_kernel");
@@ -339,14 +324,14 @@ function drawRunnerCanvas(canvas, mode, kernels, params) {
   const fld = kernels.get("fluid_well_kernel");
   const daw = kernels.get("daw_synth_kernel");
 
-  if (mode === "glass") {
+  if (domainId === "light-glass") {
     const wls = [
       { um: 0.65, nm: 650, color: "#f26b5b" },
       { um: 0.55, nm: 550, color: "#76d18a" },
       { um: 0.45, nm: 450, color: "#58b7f0" },
     ];
     for (let r = 0; r < 7; r++) {
-      const y0 = 32 + r * 32;
+      const y0 = 30 + r * 33;
       const b = (r - 3) * 0.25;
       const bendL = gls ? gls.luneburg_ray_bend(b, 1.0) : b * 0.5;
       for (const wl of wls) {
@@ -366,12 +351,12 @@ function drawRunnerCanvas(canvas, mode, kernels, params) {
     ctx.strokeStyle = "#d79e35";
     ctx.lineWidth = 2;
     ctx.beginPath();
-    ctx.arc(w * 0.5, h * 0.5, 42 + (luneN - 1) * 70, 0, Math.PI * 2);
+    ctx.arc(w * 0.5, h * 0.5, 40 + (luneN - 1) * 70, 0, Math.PI * 2);
     ctx.stroke();
     return;
   }
 
-  if (mode === "fluid") {
+  if (domainId === "ink-water") {
     const freq = 1.0 + mix * 2.5;
     const cols = 22, rows = 9;
     for (let j = 0; j < rows; j++) {
@@ -381,9 +366,9 @@ function drawRunnerCanvas(canvas, mode, kernels, params) {
         const nx = i / cols, ny = j / rows;
         const vx = fld ? fld.curl_noise_vx(nx, ny, freq, 1.0) : Math.cos(nx * 6);
         const vy = fld ? fld.curl_noise_vy(nx, ny, freq, 1.0) : Math.sin(ny * 6);
-        const kmW = fld ? fld.km_wet_well_blend(0.25, 1.0, 0.85, 0.65, nx, mix) : 0.5;
-        ctx.strokeStyle = `rgb(${Math.round(60 + kmW * 185)}, ${Math.round(145 + kmW * 85)}, 220)`;
-        ctx.lineWidth = 1.5;
+        const kmW = fld ? fld.km_wet_well_blend(0.25, 1.0, 0.85, 0.65, nx, wetness) : 0.5;
+        ctx.strokeStyle = `rgb(${Math.round(50 + kmW * 195)}, ${Math.round(145 + kmW * 85)}, 225)`;
+        ctx.lineWidth = 1.6;
         ctx.beginPath();
         ctx.moveTo(x, y);
         ctx.lineTo(x + vx * 16, y + vy * 16);
@@ -393,38 +378,51 @@ function drawRunnerCanvas(canvas, mode, kernels, params) {
     return;
   }
 
-  if (mode === "craft") {
-    // Left: Estuary lantern bars, Middle: Plotter + Loom weave, Right: Type Forge Bezier
-    const segW = w / 3;
-    for (let i = 0; i < 30; i++) {
-      const lum = est ? est.perret_aperture_luminance(i * 2, mix * Math.PI * 2, 0.78, 555.0) : 0.5;
-      const bh = Math.max(6, Math.min(h - 36, lum * (h - 48)));
-      ctx.fillStyle = "#58b7f0";
-      ctx.fillRect(14 + i * ((segW - 28) / 30), h - 18 - bh, 5, bh);
-    }
+  if (domainId === "mosaic") {
     const modeIdx = Math.min(3, Math.floor(mix * 4));
-    for (let y = 0; y < 12; y++) {
-      for (let x = 0; x < 12; x++) {
+    const cols = 28, rows = 10;
+    const cw = (w - 40) / cols, ch = (h - 40) / rows;
+    for (let y = 0; y < rows; y++) {
+      for (let x = 0; x < cols; x++) {
         const lift = plt ? plt.weave_cell(x, y, modeIdx) : (x + y) % 2;
-        ctx.fillStyle = lift ? "#e3c584" : "#1a2b3d";
-        ctx.fillRect(segW + 24 + x * 16, 30 + y * 16, 14, 14);
+        const luma = (x / cols + y / rows) * 0.5;
+        const q = plt ? plt.relief_height_quantize(luma, 5, 1.0) : luma;
+        ctx.fillStyle = lift
+          ? `rgb(${Math.round(180 + q * 60)}, ${Math.round(145 + q * 65)}, ${Math.round(90 + q * 60)})`
+          : `rgb(${Math.round(18 + q * 38)}, ${Math.round(36 + q * 62)}, ${Math.round(58 + q * 82)})`;
+        ctx.fillRect(20 + x * cw + 1, 20 + y * ch + 1, cw - 2, ch - 2);
       }
     }
-    ctx.strokeStyle = "#76d18a";
-    ctx.lineWidth = 2.5;
-    ctx.beginPath();
-    for (let i = 0; i <= 48; i++) {
-      const t = i / 48;
-      const bx = typ ? typ.cubic_bezier(20, 40 + mix * 120, 180 - mix * 60, 200, t) : 20 + t * 180;
-      const by = typ ? typ.cubic_bezier(210, 30, 220 - mix * 140, 40, t) : 210 - t * 170;
-      if (i === 0) ctx.moveTo(segW * 2 + bx, by);
-      else ctx.lineTo(segW * 2 + bx, by);
-    }
-    ctx.stroke();
     return;
   }
 
-  if (mode === "daw") {
+  if (domainId === "type") {
+    ctx.strokeStyle = "rgba(255,255,255,0.16)";
+    ctx.beginPath(); ctx.moveTo(20, h * 0.72); ctx.lineTo(w - 20, h * 0.72); ctx.stroke();
+    ctx.strokeStyle = "#76d18a";
+    ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    for (let i = 0; i <= 64; i++) {
+      const t = i / 64;
+      const bx = typ ? typ.cubic_bezier(24, 140 + mix * 240, w - 180, w - 24, t) : 24 + t * (w - 48);
+      const by = typ ? typ.cubic_bezier(h - 32, 26, h - 24 - mix * 170, 36, t) : h - 32 - t * 180;
+      if (i === 0) ctx.moveTo(bx, by);
+      else ctx.lineTo(bx, by);
+    }
+    ctx.stroke();
+    const label = (state.typeText || "Accession").slice(0, 28);
+    ctx.fillStyle = "#e8f0f6";
+    ctx.font = "600 42px Georgia, serif";
+    ctx.fillText(label, 36, h * 0.58);
+    const kern = typ ? typ.kerning_pair_delta(65, 86) : -75;
+    const ratio = typ ? typ.counter_ratio(90.0, 600.0).toFixed(2) : "0.70";
+    ctx.fillStyle = "#d79e35";
+    ctx.font = "12px ui-monospace, SFMono-Regular, Menlo, monospace";
+    ctx.fillText(`type_forge_kernel.wasm | kern(AV)=${kern} | counter_ratio=${ratio}`, 36, h - 18);
+    return;
+  }
+
+  if (domainId === "sound") {
     const alpha = daw ? daw.one_pole_lpf_alpha(cutoff, 44100) : 0.2;
     let prev = 0;
     ctx.strokeStyle = "rgba(255,255,255,0.16)";
@@ -446,7 +444,38 @@ function drawRunnerCanvas(canvas, mode, kernels, params) {
     return;
   }
 
-  // Default "all": 7-kernel composite strip combining every compiled BuildLang kernel live
+  if (domainId === "exhibit" || domainId === "motion") {
+    const count = 60;
+    const bw = (w - 32) / count;
+    const sunAz = (domainId === "motion" ? mix * 2 : mix) * Math.PI * 2;
+    for (let i = 0; i < count; i++) {
+      const lum = est ? est.perret_aperture_luminance(i, sunAz, 0.35 + mix * 0.8, 460 + mix * 180) : 0.5;
+      const bh = Math.max(8, Math.min(h - 42, lum * (h - 52)));
+      ctx.fillStyle = domainId === "exhibit" ? "#58b7f0" : "#b89df6";
+      ctx.fillRect(16 + i * bw + 1, h - 22 - bh, Math.max(2, bw - 2), bh);
+    }
+    return;
+  }
+
+  if (domainId === "engine" || domainId === "data") {
+    const splitX = Math.round(w * (0.2 + mix * 0.6));
+    for (let x = 0; x < w; x += 6) {
+      const u = x / w;
+      const km = st ? st.km_reflectance(0.1 + u * 1.4, 1.0) : 0.5;
+      const bl = gls ? gls.beer_lambert_transmittance(0.45, 0.2 + u, 1.5) : 0.6;
+      const v = x < splitX ? km : bl;
+      ctx.fillStyle = x < splitX
+        ? `rgb(${Math.round(30 + v * 195)}, ${Math.round(75 + v * 135)}, ${Math.round(125 + v * 110)})`
+        : `rgb(${Math.round(25 + v * 165)}, ${Math.round(115 + v * 115)}, ${Math.round(90 + v * 130)})`;
+      ctx.fillRect(x, 16, 5, h - 32);
+    }
+    ctx.strokeStyle = "#f26b5b";
+    ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(splitX, 12); ctx.lineTo(splitX, h - 12); ctx.stroke();
+    return;
+  }
+
+  // Default "tools": 7-kernel live composite strip
   const bandW = (w - 32) / 7;
   const colors = ["#d79e35", "#58b7f0", "#e3c584", "#76d18a", "#f26b5b", "#64d2c3", "#b89df6"];
   for (let k = 0; k < 7; k++) {
@@ -485,15 +514,20 @@ export async function mountFloorWasmRunner(root) {
   injectScopedStyles();
   registerUnifiedExporters();
 
+  const bus = getSharedStudioBus();
   const statusEl = root.querySelector("[data-flr-status]");
+  const busBarEl = root.querySelector("[data-flr-bus]");
   const canvas = root.querySelector("#floor-wasm-canvas");
   const tbody = root.querySelector("[data-flr-tbody]");
   const tabsHost = root.querySelector("[data-flr-tabs]");
   const exportHost = root.querySelector("#floor-export-mount");
   const cockpitHost = root.querySelector("#floor-cockpit-mount");
+  const cockpitBtn = root.querySelector("[data-flr-cockpit-toggle]");
   const mixInput = root.querySelector("[data-flr-mix]");
   const iorInput = root.querySelector("[data-flr-ior]");
+  const wetInput = root.querySelector("[data-flr-wet]");
   const cutInput = root.querySelector("[data-flr-cutoff]");
+  const typeInput = root.querySelector("[data-flr-type]");
   const playBtn = root.querySelector("[data-flr-play]");
 
   const kernels = new Map();
@@ -504,83 +538,114 @@ export async function mountFloorWasmRunner(root) {
         if (!resp.ok) return;
         const { instance } = await WebAssembly.instantiate(await resp.arrayBuffer(), WASM_NOOP_ENV);
         kernels.set(meta.id, instance.exports);
-      } catch (_) {
-        // Leave unloaded so probe reports cleanly without throwing uncaught errors
-      }
+      } catch (_) {}
     }),
   );
 
-  let mode = "all";
+  if (kernels.has("supertool_kernel")) {
+    bus.setWasm(kernels.get("supertool_kernel"));
+  }
+
   let cockpitApi = null;
 
-  const getParams = () => ({
-    mix: Number(mixInput?.value ?? 50) / 100,
-    iorA: Number(iorInput?.value ?? 151) / 100,
-    cutoff: Number(cutInput?.value ?? 1800),
-  });
-
-  const render = () => {
-    const params = getParams();
-    const report = probeAllKernels(kernels, params);
+  const renderState = (state) => {
+    const dom = bus.domainById(state.activeDomain);
+    const report = probeAllKernels(kernels, {
+      mix: state.mosaicMix,
+      iorA: state.optics.iorA,
+      cutoff: state.audio.cutoff,
+      wetness: state.fluid.wetness,
+    });
     if (statusEl) {
-      statusEl.textContent = `${report.passed}/${report.total} BuildLang WASM kernels live`;
+      statusEl.textContent = `${report.passed}/${report.total} BuildLang WASM kernels live | 10 domains synced`;
+    }
+    if (busBarEl) {
+      busBarEl.textContent =
+        `Domain ${dom.label} | Bus Receipt ${state.receiptSha256} | ` +
+        `IOR=${state.optics.iorA.toFixed(2)} | Wet=${state.fluid.wetness.toFixed(2)} | ` +
+        `LPF=${state.audio.cutoff}Hz | Type="${state.typeText}"`;
     }
     if (tbody) {
       tbody.innerHTML = report.results
-        .map(
-          (r) =>
-            `<tr><td>${r.label}</td><td class="flr-ok">${r.ok ? "PASS" : "OFFLINE"}</td><td>${r.summary}</td></tr>`,
-        )
+        .map((r) => `<tr><td>${r.label}</td><td class="flr-ok">${r.ok ? "PASS" : "OFFLINE"}</td><td>${r.summary}</td></tr>`)
         .join("");
     }
-    drawRunnerCanvas(canvas, mode, kernels, params);
+    if (tabsHost) {
+      tabsHost.querySelectorAll("button[data-domain]").forEach((b) => {
+        b.setAttribute("aria-selected", String(b.dataset.domain === state.activeDomain));
+      });
+    }
+    drawDomainCanvas(canvas, state.activeDomain, kernels, state);
   };
+
+  const unsub = bus.subscribe((snap) => renderState(snap));
 
   if (tabsHost) {
     tabsHost.addEventListener("click", (ev) => {
-      const btn = ev.target?.closest?.("button[data-mode]");
+      const btn = ev.target?.closest?.("button[data-domain]");
       if (!btn) return;
-      mode = btn.dataset.mode;
-      tabsHost.querySelectorAll("button[data-mode]").forEach((b) => {
-        b.setAttribute("aria-selected", String(b === btn));
-      });
-      if (cockpitHost) {
-        if (mode === "cockpit") {
-          cockpitHost.removeAttribute("hidden");
-          if (!cockpitApi) {
-            cockpitApi = mountAllReposPanel(cockpitHost, {
-              canvas,
-              wasm: kernels.get("supertool_kernel") || null,
-            });
-          }
-        } else {
-          cockpitHost.setAttribute("hidden", "");
-        }
-      }
-      render();
+      bus.update({ activeDomain: btn.dataset.domain }, "floor-tab");
     });
   }
 
-  for (const el of [mixInput, iorInput, cutInput]) {
-    if (el) el.addEventListener("input", render);
+  if (cockpitBtn && cockpitHost) {
+    cockpitBtn.addEventListener("click", () => {
+      const isHidden = cockpitHost.hasAttribute("hidden");
+      if (isHidden) {
+        cockpitHost.removeAttribute("hidden");
+        cockpitBtn.setAttribute("aria-expanded", "true");
+        if (!cockpitApi) {
+          cockpitApi = mountAllReposPanel(cockpitHost, {
+            canvas,
+            wasm: kernels.get("supertool_kernel") || null,
+          });
+        }
+      } else {
+        cockpitHost.setAttribute("hidden", "");
+        cockpitBtn.setAttribute("aria-expanded", "false");
+      }
+    });
+  }
+
+  const pushControls = () => {
+    const mix = Number(mixInput?.value ?? 50) / 100;
+    const iorA = Number(iorInput?.value ?? 151) / 100;
+    const wetness = Number(wetInput?.value ?? 45) / 100;
+    const cutoff = Number(cutInput?.value ?? 1800);
+    const typeText = String(typeInput?.value ?? "Accession").trim() || "Accession";
+    bus.update(
+      {
+        mosaicMix: mix,
+        elements: { mix },
+        optics: { iorA },
+        fluid: { wetness },
+        audio: { cutoff },
+        typeText,
+      },
+      "floor-controls",
+    );
+  };
+
+  for (const el of [mixInput, iorInput, wetInput, cutInput, typeInput]) {
+    if (el) el.addEventListener("input", pushControls);
   }
 
   if (playBtn) {
     playBtn.addEventListener("click", () => {
       try {
         const daw = kernels.get("daw_synth_kernel");
-        const params = getParams();
+        const state = bus.getState();
         const ac = new (window.AudioContext || window.webkitAudioContext)();
         const sr = ac.sampleRate;
         const len = Math.floor(sr * 1.2);
         const buf = ac.createBuffer(1, len, sr);
         const ch = buf.getChannelData(0);
-        const alpha = daw ? daw.one_pole_lpf_alpha(params.cutoff, sr) : 0.2;
+        const alpha = daw ? daw.one_pole_lpf_alpha(state.audio.cutoff, sr) : 0.2;
         let prev = 0;
         for (let i = 0; i < len; i++) {
           const t = i / sr;
           const env = Math.min(1, t * 24) * Math.exp(-t * 2.1);
-          const raw = daw ? daw.coastal_jazz_chord_sample(t, 220.0, params.mix > 0.5 ? 1 : 0) : Math.sin(2 * Math.PI * 220 * t);
+          const raw = daw ? daw.coastal_jazz_chord_sample(t, 220.0, state.mosaicMix > 0.5 ? 1 : 0) : Math.sin(2 * Math.PI * 220 * t);
           const out = daw ? daw.resonant_lpf_step(raw, prev, prev * 0.4, 0.35, alpha) : raw;
           prev = out;
           ch[i] = Math.max(-0.9, Math.min(0.9, env * 0.35 * out));
@@ -594,18 +659,30 @@ export async function mountFloorWasmRunner(root) {
   }
 
   if (exportHost) {
-    mountUnifiedExportHub(exportHost, () => ({
-      source: `floor-${mode}`,
-      canvas,
-      extra: { source: `floor-${mode}`, seed: `everything-${mode}` },
-    }));
+    mountUnifiedExportHub(exportHost, () => {
+      const state = bus.getState();
+      return {
+        source: `floor-${state.activeDomain}`,
+        canvas,
+        extra: {
+          source: `floor-${state.activeDomain}`,
+          seed: `${state.seed}-${state.activeDomain}`,
+          receiptSha256: state.receiptSha256,
+          stateBus: state,
+        },
+      };
+    });
   }
 
-  render();
+  renderState(bus.getState());
   return {
+    bus,
     kernels,
-    render,
-    destroy: () => cockpitApi?.destroy?.(),
+    render: () => renderState(bus.getState()),
+    destroy: () => {
+      unsub();
+      cockpitApi?.destroy?.();
+    },
   };
 }
 
