@@ -1,8 +1,8 @@
 {
   "date": "2026-11-27",
-  "note": "Wave 180 All-Repo BuildLang WASM Super-Tool & 13-Format Export Pipeline",
+  "note": "Wave 180B 4 BuildLang WASM kernels + interactive all-repo cockpit + studio.html revision pin",
   "paths": {
     "index.html": "057dd22e03b36c6d22572082d58ba7fda0bdc18cacadb22b8532d7e0e69b788e",
-    "studio.html": "fbb01b6743171dffd8f90a702401f2a6558fca6bbf46248169de98df723b1f0b"
+    "studio.html": "32728f25803605609b87ef82b4f0b3e3fffc9a1e6689563513cbaec160225cb1"
   }
 }
