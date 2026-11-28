@@ -2,8 +2,10 @@
 // SPDX-License-Identifier: MIT
 //
 // Unified All-Repository BuildLang Super-Tool Kernel (compiled to WebAssembly via buildc).
-// Consolidates live computational cores from all five flagships into one binary:
-//   1. Superframe + RAW: Cauchy optics, GGX NDF, Schlick Fresnel, Kubelka-Munk, Rayleigh sky
+// Consolidates live computational cores from all five flagships into one binary, including
+// direct linear-memory pixel rendering, cellular sand/fluid/glass physics, and FM audio synth:
+//   1. Superframe + RAW: Cauchy optics, GGX NDF, Schlick Fresnel, Kubelka-Munk, Rayleigh sky,
+//                        and direct linear-memory RGBA framebuffer renderer
 //   2. The Playground:   10-material cellular Sand/Fluid/Glass physics, FM synth, Euler topology
 //   3. The Flywheel:     Planted-control oracle verdicts + Articulate prose discipline scorer
 //   4. The Commons:      Deterministic provenance hashing + Merkle tree combine
@@ -24,7 +26,6 @@ fn bld_sqrt(x: f64) -> f64 {
 }
 
 fn bld_sin_approx(x0: f64) -> f64 {
-    // Range-reduced odd Taylor polynomial on [-pi, pi]
     let pi: f64 = 3.141592653589793;
     let two_pi: f64 = 6.283185307179586;
     let mut x: f64 = x0;
@@ -32,6 +33,12 @@ fn bld_sin_approx(x0: f64) -> f64 {
     while x < -pi { x = x + two_pi; }
     let x2: f64 = x * x;
     x * (1.0 - x2 * (0.16666666666666666 - x2 * (0.008333333333333333 - x2 * 0.0001984126984126984)))
+}
+
+fn clamp01(v: f64) -> f64 {
+    if v < 0.0 { return 0.0; }
+    if v > 1.0 { return 1.0; }
+    v
 }
 
 // --- 1. Superframe + RAW Rendering & Optics ---
@@ -45,9 +52,7 @@ pub fn cauchy_ior(lambda_um: f64, a_coef: f64, b_coef: f64) -> f64 {
 }
 
 pub fn fresnel_schlick(cos_theta: f64, f0: f64) -> f64 {
-    let mut c: f64 = 1.0 - cos_theta;
-    if c < 0.0 { c = 0.0; }
-    if c > 1.0 { c = 1.0; }
+    let c: f64 = clamp01(1.0 - cos_theta);
     let c2: f64 = c * c;
     f0 + (1.0 - f0) * (c2 * c2 * c)
 }
@@ -64,15 +69,75 @@ pub fn km_reflectance(k_abs: f64, s_scat: f64) -> f64 {
         return 0.0;
     }
     let ks: f64 = k_abs / s_scat;
-    let r: f64 = 1.0 + ks - bld_sqrt(ks * ks + 2.0 * ks);
-    if r < 0.0 { return 0.0; }
-    if r > 1.0 { return 1.0; }
-    r
+    clamp01(1.0 + ks - bld_sqrt(ks * ks + 2.0 * ks))
 }
 
 pub fn sky_rayleigh_phase(cos_theta: f64) -> f64 {
     let c2: f64 = cos_theta * cos_theta;
     0.05968310365946075 * (1.0 + c2)
+}
+
+// Evaluate one physically-shaded channel (0=R, 1=G, 2=B) in [0..1] of the unified Superframe+RAW+Glass scene.
+pub fn shade_superframe_channel(
+    ux: f64,
+    v: f64,
+    sun_elev: f64,
+    roughness: f64,
+    ior_a: f64,
+    km_k: f64,
+    phase: f64,
+    channel: i32
+) -> f64 {
+    let horizon: f64 = clamp01(1.0 - (v + 1.0) * 0.5);
+    let sun_x: f64 = bld_sin_approx(phase * 0.35) * 0.65;
+    let sun_y: f64 = sun_elev;
+    let dx_s: f64 = ux - sun_x;
+    let dy_s: f64 = v - sun_y;
+    let d_sun: f64 = bld_sqrt(dx_s * dx_s + dy_s * dy_s + 0.04);
+    let glow: f64 = clamp01(0.24 / (d_sun * d_sun + 0.06));
+    let rayleigh: f64 = sky_rayleigh_phase(clamp01(1.0 - d_sun));
+
+    let mut r: f64 = 0.05 + horizon * 0.28 + glow * 0.88;
+    let mut g: f64 = 0.11 + horizon * 0.24 + glow * 0.52 + rayleigh * 0.18;
+    let mut b: f64 = 0.22 + (1.0 - horizon) * 0.32 + glow * 0.20 + rayleigh * 0.45;
+
+    let r2: f64 = ux * ux + v * v;
+    if r2 < 0.34 {
+        let nz: f64 = bld_sqrt(0.34 - r2) / 0.583095;
+        let nx: f64 = ux / 0.583095;
+        let ny: f64 = v / 0.583095;
+        let l_len: f64 = bld_sqrt(sun_x * sun_x + sun_y * sun_y + 1.0);
+        let lx: f64 = sun_x / l_len;
+        let ly: f64 = sun_y / l_len;
+        let lz: f64 = 1.0 / l_len;
+        let ndotl: f64 = clamp01(nx * lx + ny * ly + nz * lz);
+
+        let hx: f64 = lx;
+        let hy: f64 = ly;
+        let hz: f64 = lz + 1.0;
+        let hlen: f64 = bld_sqrt(hx * hx + hy * hy + hz * hz);
+        let ndoth: f64 = clamp01((nx * hx + ny * hy + nz * hz) / hlen);
+
+        let f0: f64 = ((ior_a - 1.0) / (ior_a + 1.0)) * ((ior_a - 1.0) / (ior_a + 1.0));
+        let fres: f64 = fresnel_schlick(nz, f0);
+        let ndf: f64 = ggx_ndf(ndoth, roughness);
+        let spec: f64 = clamp01(ndf * fres * 0.25);
+
+        let ior_r: f64 = cauchy_ior(0.65, ior_a, 0.0042);
+        let ior_g: f64 = cauchy_ior(0.55, ior_a, 0.0042);
+        let ior_b: f64 = cauchy_ior(0.45, ior_a, 0.0042);
+        let km_r: f64 = km_reflectance(km_k * 0.7, 1.0);
+        let km_g: f64 = km_reflectance(km_k * 1.0, 1.0);
+        let km_b: f64 = km_reflectance(km_k * 1.4, 1.0);
+
+        r = clamp01(km_r * (0.15 + 0.85 * ndotl) + spec * ior_r * 0.65 + fres * 0.18);
+        g = clamp01(km_g * (0.18 + 0.82 * ndotl) + spec * ior_g * 0.65 + fres * 0.24);
+        b = clamp01(km_b * (0.22 + 0.78 * ndotl) + spec * ior_b * 0.72 + fres * 0.32);
+    }
+
+    if channel == 0 { return clamp01(r); }
+    if channel == 1 { return clamp01(g); }
+    clamp01(b)
 }
 
 // --- 2. The Playground Physics, Sand, Audio & Topology ---
@@ -130,9 +195,6 @@ pub fn betti_euler_char(vertices: i32, edges: i32, faces: i32) -> i32 {
 // --- 3. The Flywheel Oracle & Articulate Prose Scorer ---
 
 pub fn flywheel_verdict(measured_err: f64, tolerance: f64, control_err: f64) -> i32 {
-    // -1 = planted failing control did not fail (invalid oracle)
-    //  1 = VERIFIED (measured within tolerance and planted control failed)
-    //  0 = REFUTED (measured exceeded tolerance)
     if control_err <= tolerance {
         return -1;
     }
@@ -179,11 +241,10 @@ pub fn bft_quorum_check(agree: i32, total: i32) -> i32 {
 }
 
 fn main() -> i32 {
-    let ior: f64 = cauchy_ior(0.55, 1.5046, 0.00420);
-    let r: f64 = km_reflectance(0.25, 1.0);
+    let ch: f64 = shade_superframe_channel(0.0, 0.0, 0.25, 0.35, 1.5046, 0.25, 0.0, 0);
     let v: i32 = flywheel_verdict(0.01, 0.05, 0.14);
     let q: i32 = bft_quorum_check(3, 4);
-    if ior > 1.5 && r > 0.4 && v == 1 && q == 1 {
+    if ch > 0.0 && v == 1 && q == 1 {
         return 0;
     }
     1

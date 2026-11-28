@@ -1,0 +1,204 @@
+// SPDX-FileCopyrightText: 2026 Zain Dana Harper
+// SPDX-License-Identifier: MIT
+//
+// Plotter & Loom Core Kernel (compiled to WebAssembly via buildc).
+// Pure BuildLang implementation of:
+//   1. Luminance-to-hatch pen spacing and line density
+//   2. Weave matrix evaluation (0=plain, 1=2/2 twill, 2=5-harness satin, 3=Jacquard diamond)
+//   3. Relief height quantization and discrete layer indexing
+
+fn bld_clamp01(v: f64) -> f64 {
+    if v < 0.0 { return 0.0; }
+    if v > 1.0 { return 1.0; }
+    v
+}
+
+fn bld_pos_mod(v: i32, m: i32) -> i32 {
+    if m <= 0 { return 0; }
+    let r: i32 = v % m;
+    if r < 0 { return r + m; }
+    r
+}
+
+fn bld_abs_i32(v: i32) -> i32 {
+    if v < 0 { return -v; }
+    v
+}
+
+fn bld_sqrt(x: f64) -> f64 {
+    if x <= 0.0 { return 0.0; }
+    let mut g: f64 = x;
+    if g < 1.0 { g = 1.0; }
+    let mut i: i32 = 0;
+    while i < 18 {
+        g = 0.5 * (g + x / g);
+        i = i + 1;
+    }
+    g
+}
+
+fn bld_gamma_curve(luma: f64, gamma: f64) -> f64 {
+    let x: f64 = bld_clamp01(luma);
+    if gamma <= 0.0 { return x; }
+    if gamma == 1.0 { return x; }
+    if gamma == 2.0 { return x * x; }
+    if gamma == 0.5 { return bld_sqrt(x); }
+    // Smooth rational approximation for general gamma > 0 on [0, 1]
+    // Uses x^gamma approx = exp(gamma * ln(x)) via atanh series for ln(x)
+    if x <= 1.0e-9 { return 0.0; }
+    if x >= 1.0 { return 1.0; }
+    let u: f64 = (x - 1.0) / (x + 1.0);
+    let u2: f64 = u * u;
+    let mut p: f64 = u;
+    let mut sum_ln: f64 = 0.0;
+    let mut k: i32 = 0;
+    let mut denom: f64 = 1.0;
+    while k < 12 {
+        sum_ln = sum_ln + p / denom;
+        p = p * u2;
+        k = k + 1;
+        denom = denom + 2.0;
+    }
+    let ln_x: f64 = 2.0 * sum_ln;
+    let z: f64 = gamma * ln_x;
+    // exp(z) with range reduction by 16
+    let y: f64 = z / 16.0;
+    let mut term: f64 = 1.0;
+    let mut acc: f64 = 1.0;
+    let mut j: i32 = 1;
+    let mut jf: f64 = 1.0;
+    while j <= 10 {
+        term = term * y / jf;
+        acc = acc + term;
+        j = j + 1;
+        jf = jf + 1.0;
+    }
+    if acc < 0.0 { acc = 0.0; }
+    let mut s: f64 = acc * acc;
+    s = s * s;
+    s = s * s;
+    s = s * s;
+    bld_clamp01(s)
+}
+
+// --- 1. Luma-to-Hatch Spacing ---
+
+pub fn luma_to_hatch_spacing(
+    luma: f64,
+    min_spacing_mm: f64,
+    max_spacing_mm: f64,
+    gamma: f64
+) -> f64 {
+    let lo: f64 = if min_spacing_mm < max_spacing_mm { min_spacing_mm } else { max_spacing_mm };
+    let hi: f64 = if max_spacing_mm > min_spacing_mm { max_spacing_mm } else { min_spacing_mm };
+    let t: f64 = bld_gamma_curve(luma, gamma);
+    lo + t * (hi - lo)
+}
+
+pub fn hatch_density_lines_per_cm(
+    luma: f64,
+    min_spacing_mm: f64,
+    max_spacing_mm: f64
+) -> f64 {
+    let spacing: f64 = luma_to_hatch_spacing(luma, min_spacing_mm, max_spacing_mm, 1.0);
+    if spacing <= 1.0e-6 { return 0.0; }
+    10.0 / spacing
+}
+
+// --- 2. Weave Matrix: 0=Plain, 1=Twill (2/2), 2=Satin (5-harness), 3=Jacquard (8x8 diamond) ---
+
+pub fn weave_cell(x: i32, y: i32, mode: i32) -> i32 {
+    if mode == 0 {
+        // Plain (tabby) 1/1 weave
+        let s: i32 = bld_pos_mod(x + y, 2);
+        if s == 0 { return 1; }
+        return 0;
+    }
+    if mode == 1 {
+        // 2/2 balanced twill
+        let s: i32 = bld_pos_mod(x + y, 4);
+        if s < 2 { return 1; }
+        return 0;
+    }
+    if mode == 2 {
+        // 5-harness satin with counter 2
+        let s: i32 = bld_pos_mod(x + 2 * y, 5);
+        if s == 0 { return 1; }
+        return 0;
+    }
+    if mode == 3 {
+        // Jacquard 8x8 diamond motif
+        let xm: i32 = bld_pos_mod(x, 8);
+        let ym: i32 = bld_pos_mod(y, 8);
+        let dx: i32 = bld_abs_i32(xm - 3);
+        let dy: i32 = bld_abs_i32(ym - 3);
+        let dist: i32 = dx + dy;
+        if dist == 3 || dist == 0 {
+            return 1;
+        }
+        if dist < 3 && bld_pos_mod(xm + ym, 2) == 0 {
+            return 1;
+        }
+        return 0;
+    }
+    // Fallback to plain weave for unknown mode
+    if bld_pos_mod(x + y, 2) == 0 { return 1; }
+    0
+}
+
+fn i32_to_f64(n: i32) -> f64 {
+    let neg: bool = n < 0;
+    let mut v: i32 = if neg { -n } else { n };
+    let mut acc: f64 = 0.0;
+    let mut bit: f64 = 1.0;
+    while v > 0 {
+        if (v & 1) != 0 {
+            acc = acc + bit;
+        }
+        v = v >> 1;
+        bit = bit * 2.0;
+    }
+    if neg { return -acc; }
+    acc
+}
+
+// --- 3. Relief Height Quantization ---
+
+pub fn relief_layer_index(norm_height: f64, levels: i32) -> i32 {
+    if levels <= 1 { return 0; }
+    let h: f64 = bld_clamp01(norm_height);
+    let max_idx: i32 = levels - 1;
+    let max_f: f64 = i32_to_f64(max_idx);
+    let scaled: f64 = h * max_f + 0.5;
+    let mut idx: i32 = 0;
+    let mut rem: f64 = scaled;
+    while rem >= 1.0 && idx < max_idx {
+        rem = rem - 1.0;
+        idx = idx + 1;
+    }
+    idx
+}
+
+pub fn relief_height_quantize(norm_height: f64, levels: i32, max_depth_mm: f64) -> f64 {
+    if levels <= 1 || max_depth_mm <= 0.0 {
+        return 0.0;
+    }
+    let idx: i32 = relief_layer_index(norm_height, levels);
+    let idxf: f64 = i32_to_f64(idx);
+    let denf: f64 = i32_to_f64(levels - 1);
+    (idxf / denf) * max_depth_mm
+}
+
+fn main() -> i32 {
+    let sp: f64 = luma_to_hatch_spacing(0.5, 0.4, 2.4, 1.0);
+    let p0: i32 = weave_cell(0, 0, 0);
+    let p1: i32 = weave_cell(1, 0, 0);
+    let tw: i32 = weave_cell(0, 1, 1);
+    let sa: i32 = weave_cell(0, 0, 2);
+    let jq: i32 = weave_cell(3, 3, 3);
+    let q: f64 = relief_height_quantize(0.5, 5, 4.0);
+    if sp > 1.39 && sp < 1.41 && p0 == 1 && p1 == 0 && tw == 1 && sa == 1 && jq == 1 && q > 1.99 && q < 2.01 {
+        return 0;
+    }
+    1
+}

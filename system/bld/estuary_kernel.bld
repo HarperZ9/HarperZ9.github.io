@@ -1,0 +1,219 @@
+// SPDX-FileCopyrightText: 2026 Zain Dana Harper
+// SPDX-License-Identifier: MIT
+//
+// Estuary Core Kernel (compiled to WebAssembly via buildc).
+// Pure BuildLang implementation of:
+//   1. 60-aperture Perret concrete lantern spectral luminance
+//   2. Spectral metamer mismatch delta under illuminant shift
+//   3. Betti homology (beta0 connected components, beta1 independent cycles, Euler char)
+//   4. Multi-sheeted monodromy winding index and branch-sheet phase
+
+fn bld_abs(x: f64) -> f64 {
+    if x < 0.0 { return -x; }
+    x
+}
+
+fn bld_clamp01(v: f64) -> f64 {
+    if v < 0.0 { return 0.0; }
+    if v > 1.0 { return 1.0; }
+    v
+}
+
+fn bld_sqrt(x: f64) -> f64 {
+    if x <= 0.0 {
+        return 0.0;
+    }
+    let mut g: f64 = x;
+    if g < 1.0 { g = 1.0; }
+    let mut i: i32 = 0;
+    while i < 20 {
+        g = 0.5 * (g + x / g);
+        i = i + 1;
+    }
+    g
+}
+
+fn bld_sin(x0: f64) -> f64 {
+    let pi: f64 = 3.141592653589793;
+    let two_pi: f64 = 6.283185307179586;
+    let mut x: f64 = x0;
+    while x > pi { x = x - two_pi; }
+    while x < -pi { x = x + two_pi; }
+    let x2: f64 = x * x;
+    x * (1.0 - x2 * (0.16666666666666666 - x2 * (0.008333333333333333 - x2 * (0.0001984126984126984 - x2 * 0.0000027557319223985893))))
+}
+
+fn bld_cos(x0: f64) -> f64 {
+    bld_sin(x0 + 1.5707963267948966)
+}
+
+fn bld_exp_neg(z: f64) -> f64 {
+    // Accurate exp(-z) for z >= 0 using range halving + Taylor series
+    if z <= 0.0 { return 1.0; }
+    if z > 40.0 { return 0.0; }
+    let mut y: f64 = z / 16.0;
+    let mut term: f64 = 1.0;
+    let mut sum: f64 = 1.0;
+    let mut k: i32 = 1;
+    let mut kf: f64 = 1.0;
+    while k <= 10 {
+        term = term * (-y) / kf;
+        sum = sum + term;
+        k = k + 1;
+        kf = kf + 1.0;
+    }
+    if sum < 0.0 { sum = 0.0; }
+    // Raise to 16th power via 4 squarings
+    let mut s: f64 = sum * sum;
+    s = s * s;
+    s = s * s;
+    s = s * s;
+    s
+}
+
+fn i32_to_f64(n: i32) -> f64 {
+    let neg: bool = n < 0;
+    let mut v: i32 = if neg { -n } else { n };
+    let mut acc: f64 = 0.0;
+    let mut bit: f64 = 1.0;
+    while v > 0 {
+        if (v & 1) != 0 {
+            acc = acc + bit;
+        }
+        v = v >> 1;
+        bit = bit * 2.0;
+    }
+    if neg { return -acc; }
+    acc
+}
+
+// --- 1. 60-Aperture Perret Lantern Spectral Luminance ---
+
+pub fn perret_aperture_luminance(
+    aperture_idx: i32,
+    sun_azimuth_rad: f64,
+    sun_elevation_rad: f64,
+    wavelength_nm: f64
+) -> f64 {
+    let mut idx: i32 = aperture_idx % 60;
+    if idx < 0 { idx = idx + 60; }
+    let two_pi: f64 = 6.283185307179586;
+    let idxf: f64 = i32_to_f64(idx);
+    let aperture_angle: f64 = two_pi * idxf / 60.0;
+
+    let cos_az: f64 = bld_cos(aperture_angle - sun_azimuth_rad);
+    let cos_el: f64 = bld_cos(sun_elevation_rad);
+    let sin_el: f64 = bld_sin(sun_elevation_rad);
+    if sin_el <= 0.0 {
+        return 0.0;
+    }
+
+    let direct: f64 = bld_clamp01(cos_az * cos_el);
+    // Concrete reveal depth factor + sky diffuse fill through each Perret claustra cell
+    let sky_fill: f64 = 0.12 * sin_el;
+    let geom_transmission: f64 = 0.88 * direct * sin_el + sky_fill;
+
+    // CIE photopic luminous efficiency V(lambda) centered at 555 nm
+    let d_lam: f64 = (wavelength_nm - 555.0) / 42.0;
+    let v_lambda: f64 = bld_exp_neg(0.5 * d_lam * d_lam);
+    geom_transmission * v_lambda
+}
+
+pub fn perret_lantern_total_luminance(
+    sun_azimuth_rad: f64,
+    sun_elevation_rad: f64,
+    wavelength_nm: f64
+) -> f64 {
+    let mut total: f64 = 0.0;
+    let mut i: i32 = 0;
+    while i < 60 {
+        total = total + perret_aperture_luminance(i, sun_azimuth_rad, sun_elevation_rad, wavelength_nm);
+        i = i + 1;
+    }
+    total
+}
+
+// --- 2. Spectral Metamer Mismatch Delta ---
+
+pub fn metamer_delta(
+    r1: f64,
+    g1: f64,
+    b1: f64,
+    r2: f64,
+    g2: f64,
+    b2: f64,
+    illum_shift: f64
+) -> f64 {
+    // Illuminant shift applies wavelength-dependent Planckian tilt across R/G/B channels
+    let w_r: f64 = 1.0 + 0.35 * illum_shift;
+    let w_g: f64 = 1.0 - 0.10 * illum_shift;
+    let w_b: f64 = 1.0 - 0.45 * illum_shift;
+
+    let dr: f64 = (r1 * w_r) - (r2 * (1.0 + 0.15 * illum_shift));
+    let dg: f64 = (g1 * w_g) - (g2 * (1.0 - 0.05 * illum_shift));
+    let db: f64 = (b1 * w_b) - (b2 * (1.0 - 0.20 * illum_shift));
+    bld_sqrt(dr * dr + dg * dg + db * db)
+}
+
+// --- 3. Betti Homology (beta0 / beta1) ---
+
+pub fn betti0_components(vertices: i32, spanning_edges: i32) -> i32 {
+    if vertices <= 0 {
+        return 0;
+    }
+    let mut s: i32 = spanning_edges;
+    if s < 0 { s = 0; }
+    let c: i32 = vertices - s;
+    if c < 1 { return 1; }
+    c
+}
+
+pub fn betti1_cycles(vertices: i32, edges: i32, components: i32) -> i32 {
+    if vertices <= 0 || edges <= 0 {
+        return 0;
+    }
+    let b1: i32 = edges - vertices + components;
+    if b1 < 0 { return 0; }
+    b1
+}
+
+pub fn euler_characteristic(vertices: i32, edges: i32, faces: i32) -> i32 {
+    vertices - edges + faces
+}
+
+// --- 4. Monodromy Winding ---
+
+pub fn monodromy_winding_index(total_angle_rad: f64) -> i32 {
+    let two_pi: f64 = 6.283185307179586;
+    let turns: f64 = total_angle_rad / two_pi;
+    let mut n: i32 = 0;
+    let mut rem: f64 = turns;
+    while rem >= 0.5 && n < 1000000 {
+        rem = rem - 1.0;
+        n = n + 1;
+    }
+    while rem <= -0.5 && n > -1000000 {
+        rem = rem + 1.0;
+        n = n - 1;
+    }
+    n
+}
+
+pub fn monodromy_sheet_phase(angle_rad: f64, sheet_order: i32) -> f64 {
+    let mut order: i32 = sheet_order;
+    if order <= 0 { order = 1; }
+    let orderf: f64 = i32_to_f64(order);
+    bld_sin(angle_rad / orderf)
+}
+
+fn main() -> i32 {
+    let lum: f64 = perret_lantern_total_luminance(0.0, 0.7853981633974483, 555.0);
+    let md0: f64 = metamer_delta(0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.0);
+    let b0: i32 = betti0_components(6, 4);
+    let b1: i32 = betti1_cycles(6, 7, b0);
+    let w: i32 = monodromy_winding_index(12.566370614359172);
+    if lum > 10.0 && bld_abs(md0) < 1.0e-9 && b0 == 2 && b1 == 3 && w == 2 {
+        return 0;
+    }
+    1
+}
