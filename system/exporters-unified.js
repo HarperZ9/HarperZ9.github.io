@@ -311,6 +311,12 @@ export function mountUnifiedExportHub(host, getContext) {
   status.className = "unified-export-status";
   status.setAttribute("role", "status");
   status.setAttribute("aria-live", "polite");
+  status.textContent = `Format: ${UNIFIED_FORMATS[0].label}`;
+
+  sel.addEventListener("change", () => {
+    const meta = UNIFIED_FORMATS.find((f) => f.id === sel.value);
+    status.textContent = `Format: ${meta ? meta.label : sel.value} (SHA-256 receipt ready)`;
+  });
 
   btn.addEventListener("click", async () => {
     const fmt = sel.value;
