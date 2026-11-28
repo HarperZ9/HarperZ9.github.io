@@ -11,7 +11,7 @@ author. Source for each is on GitHub under https://github.com/HarperZ9.
 
 ## Flywheel
 
-Version 2.0.0. Licence MIT (OSI-approved; relicensed from MIT via flywheel #574). Python 3.11 or newer, no third-party
+Version 2.1.0. Licence MIT (OSI-approved; relicensed from MIT via flywheel #574). Python 3.11 or newer, no third-party
 runtime dependencies.
 
 - What it is: an AI workstation and coding harness that you host yourself,
@@ -86,7 +86,7 @@ Version 0.19.1. Licence MIT (OSI-approved; relicensed from MIT). Python 3.9 or n
 ## CMMNS
 
 Formerly Daylight Commons, and Radar before that; spoken "commons".
-Version 3.10.0. Licence AGPL-3.0-only. A browser extension for Chrome, Edge,
+Version 3.11.0. Licence AGPL-3.0-only. A browser extension for Chrome, Edge,
 Brave and Firefox 128 or later, plus a command line for saved threads.
 
 - What it does: rest the pointer on a reply on X, YouTube, Reddit, Facebook,
@@ -121,7 +121,7 @@ Brave and Firefox 128 or later, plus a command line for saved threads.
 ## Superframe
 
 The core of The Playground.
-Version 0.3.0. Licence MIT (OSI-approved; relicensed from MIT via superframe #162); fonts under the SIL Open Font License 1.1.
+Version 0.4.0. Licence MIT (OSI-approved; relicensed from MIT via superframe #162); fonts under the SIL Open Font License 1.1.
 Node 24 or later. The JavaScript engine has no dependencies; the instruments in
 `packages/` pin their own Python dependencies, and the native renderer in
 `native/` is a separate C++23 build.
@@ -141,7 +141,7 @@ Node 24 or later. The JavaScript engine has no dependencies; the instruments in
   crossing. It is a creative tool and makes no claims about therapy.
 - Links: https://harperz9.github.io/playground/#superframe ,
   https://github.com/HarperZ9/superframe
-- Recent verified milestones (2026-11-27; published release Superframe 0.3.0, newer items merged on origin/main):
+- Recent verified milestones (2026-11-27; published release Superframe 0.4.0, newer items merged on origin/main):
   native/bld/ bit-exact 0-ULP C++23 to BuildLang renderer parity reached 39 of 39 modules;
   superframe #162 relicensed Superframe to the pure OSI MIT License (294f3f3e);
   112/112 pure-OSI MIT BuildLang WASM modules + 600/600 5-backend GPU shaders with live 5-way GLSL FMA parity (#68984);

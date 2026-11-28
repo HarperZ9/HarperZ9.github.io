@@ -75,8 +75,8 @@ BuildLang core buildc and CMMNS remain AGPL-3.0-only; docs/essays CC BY 4.0):
   coastal_kernel.bld (superframe #158), and Native RAW DX12/Vulkan/WebGPU
   (Waves 74-92: 96/96 live Skyrim SE moving-camera pass, 159/159 RTX 4090
   heuristics, CS-040 16 km fog shadow cache, dark_mo=0.001633 all-time
-  Note: registry releases remain BuildLang 1.15.0 on crates.io, Flywheel 2.0.0 on
-  PyPI, CMMNS 3.10.0, Superframe 0.3.0, Articulate 0.19.1, and learn 2.3.0; newer
+  Note: published releases are Flywheel 2.1.0 on PyPI, Superframe 0.4.0, CMMNS
+  3.11.0, Articulate 0.19.1, learn 2.3.0, and BuildLang 1.15.0 on crates.io (v2.0.0 tagged on GitHub); newer
   verified milestones above are merged on origin/main ahead of the next release cut).
   best, 79/79 DXC).
 - [BuildLang](https://harperz9.github.io/buildlang.html): self-hosting compiled systems and GPU language written in BuildLang (Stage-2 zero-C 5-ISA self-compilation, Stage-0 Rust bootstrap 1.15.0 on crates.io),
@@ -191,7 +191,7 @@ Current versions as of 2026-10-23. [llms-full.txt](https://harperz9.github.io/ll
 gives each one in plain terms: what it does, who it is for, how to try it, and
 what it does not do.
 
-- [Flywheel](https://harperz9.github.io/flywheel.html) 2.0.0: a self-hosted
+- [Flywheel](https://harperz9.github.io/flywheel.html) 2.1.0: a self-hosted
   AI workstation and coding harness. It runs any hosted or local model behind
   one interface, with a desktop assistant, a coding agent and connected tools
   for research, memory and writing. Every run leaves a record that can be
@@ -199,7 +199,7 @@ what it does not do.
 - [Articulate](https://harperz9.github.io/articulate.html) 0.19.1: a prose checker
   that runs on your computer and names each writing pattern and the line it is
   on. `python -m pip install articulate-writing`
-- [CMMNS](https://harperz9.github.io/cmmns.html) 3.10.0 (formerly Daylight Commons): a
+- [CMMNS](https://harperz9.github.io/cmmns.html) 3.11.0 (formerly Daylight Commons): a
   browser extension that shows where social media replies come from, signs of
   coordination, and whether a fact-checker has reviewed the claim.
 - [EMET](https://harperz9.github.io/emet.html) 1.3.1: checks whether a file still
