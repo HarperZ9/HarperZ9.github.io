@@ -277,6 +277,12 @@ export function mountUnifiedExportHub(host, getContext) {
   registerUnifiedExporters();
   host.dataset.unifiedExportMounted = "1";
 
+  const details = document.createElement("details");
+  details.className = "unified-export-details";
+  const summary = document.createElement("summary");
+  summary.textContent = `Unified Export (${UNIFIED_FORMATS.length} formats + SHA-256)`;
+  details.appendChild(summary);
+
   const bar = document.createElement("div");
   bar.className = "unified-export-hub";
   bar.setAttribute("role", "region");
@@ -339,5 +345,6 @@ export function mountUnifiedExportHub(host, getContext) {
   });
 
   bar.append(sel, btn, status);
-  host.appendChild(bar);
+  details.appendChild(bar);
+  host.appendChild(details);
 }

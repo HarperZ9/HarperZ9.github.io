@@ -46,7 +46,7 @@ const readout = (page) => page.evaluate(() => {
   const block = [...document.querySelectorAll('.src-block')].find((b) => !b.hidden);
   const parts = [];
   const pick = (root) => root && root.querySelectorAll('[aria-live],[role="status"],output,.status,.engine-status,[id$="-status"],[id$="-readout"],[id$="-rows"]').forEach((n) => parts.push(n.textContent.trim()));
-  pick(block); pick(document.getElementById('studio-viewport')); pick(document.getElementById('finish-group'));
+  pick(block); pick(document.getElementById('studio-viewport')); pick(document.getElementById('finish-group')); pick(document.querySelector('.unified-export-hub'));
   document.querySelectorAll('#viewport-stage [data-film]').forEach((n) => parts.push('film:' + n.dataset.film));
   const st = document.getElementById('viewport-stage'); parts.push(st ? st.getAttribute('aria-label') || '' : '');
   return parts.join('␞');
