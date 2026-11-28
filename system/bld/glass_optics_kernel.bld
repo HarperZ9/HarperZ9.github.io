@@ -1,0 +1,185 @@
+// SPDX-FileCopyrightText: 2026 Zain Dana Harper
+// SPDX-License-Identifier: MIT
+//
+// Glass Optics Core Kernel (compiled to WebAssembly via buildc).
+// Pure BuildLang implementation of:
+//   1. Luneburg graded-index lens profile and ray deflection
+//   2. Snell refraction and total internal reflection guard
+//   3. Beer-Lambert spectral absorption transmittance
+//   4. Airy thin-film interference iridescence reflectance
+
+fn bld_abs(x: f64) -> f64 {
+    if x < 0.0 { return -x; }
+    x
+}
+
+fn bld_clamp(v: f64, lo: f64, hi: f64) -> f64 {
+    if v < lo { return lo; }
+    if v > hi { return hi; }
+    v
+}
+
+fn bld_sqrt(x: f64) -> f64 {
+    if x <= 0.0 { return 0.0; }
+    let mut g: f64 = x;
+    if g < 1.0 { g = 1.0; }
+    let mut i: i32 = 0;
+    while i < 20 {
+        g = 0.5 * (g + x / g);
+        i = i + 1;
+    }
+    g
+}
+
+fn bld_sin(x0: f64) -> f64 {
+    let pi: f64 = 3.141592653589793;
+    let half_pi: f64 = 1.5707963267948966;
+    let two_pi: f64 = 6.283185307179586;
+    let mut x: f64 = x0;
+    while x > pi { x = x - two_pi; }
+    while x < -pi { x = x + two_pi; }
+    if x > half_pi { x = pi - x; }
+    if x < -half_pi { x = -pi - x; }
+    let x2: f64 = x * x;
+    x * (1.0 - x2 * (0.16666666666666666 - x2 * (0.008333333333333333 - x2 * (0.0001984126984126984 - x2 * 0.0000027557319223985893))))
+}
+
+fn bld_exp_neg(z: f64) -> f64 {
+    if z <= 0.0 { return 1.0; }
+    if z > 40.0 { return 0.0; }
+    let y: f64 = z / 16.0;
+    let mut term: f64 = 1.0;
+    let mut sum: f64 = 1.0;
+    let mut k: i32 = 1;
+    let mut kf: f64 = 1.0;
+    while k <= 10 {
+        term = term * (-y) / kf;
+        sum = sum + term;
+        k = k + 1;
+        kf = kf + 1.0;
+    }
+    if sum < 0.0 { sum = 0.0; }
+    let mut s: f64 = sum * sum;
+    s = s * s;
+    s = s * s;
+    s = s * s;
+    s
+}
+
+fn bld_asin(x0: f64) -> f64 {
+    let x: f64 = bld_clamp(x0, -1.0, 1.0);
+    let ax: f64 = bld_abs(x);
+    let half_pi: f64 = 1.5707963267948966;
+    if ax >= 1.0 {
+        if x < 0.0 { return -half_pi; }
+        return half_pi;
+    }
+    // Use complementary identity for |x| > 0.7071 for fast convergence
+    if ax > 0.7071067811865475 {
+        let comp: f64 = bld_sqrt(1.0 - ax * ax);
+        let a: f64 = half_pi - bld_asin(comp);
+        if x < 0.0 { return -a; }
+        return a;
+    }
+    // Power series: x + (1/2)x^3/3 + (1*3/2*4)x^5/5 + ...
+    let x2: f64 = x * x;
+    let mut term: f64 = x;
+    let mut sum: f64 = x;
+    let mut k: i32 = 1;
+    let mut num: f64 = 1.0;
+    let mut den: f64 = 2.0;
+    let mut odd: f64 = 3.0;
+    while k <= 12 {
+        term = term * x2 * (num / den);
+        sum = sum + term / odd;
+        num = num + 2.0;
+        den = den + 2.0;
+        odd = odd + 2.0;
+        k = k + 1;
+    }
+    sum
+}
+
+// --- 1. Luneburg Graded-Index Lens ---
+
+pub fn luneburg_ior(r_norm: f64) -> f64 {
+    let r: f64 = bld_abs(r_norm);
+    if r >= 1.0 { return 1.0; }
+    bld_sqrt(2.0 - r * r)
+}
+
+pub fn luneburg_ray_bend(impact_param: f64, radius: f64) -> f64 {
+    if radius <= 0.0 { return 0.0; }
+    let u: f64 = impact_param / radius;
+    if bld_abs(u) >= 1.0 { return 0.0; }
+    bld_asin(u)
+}
+
+// --- 2. Snell Refraction ---
+
+pub fn snell_sin_theta_t(sin_theta_i: f64, n1: f64, n2: f64) -> f64 {
+    if n1 <= 0.0 || n2 <= 0.0 { return -1.0; }
+    let st: f64 = (n1 / n2) * sin_theta_i;
+    if bld_abs(st) > 1.0 {
+        return -1.0; // Total internal reflection
+    }
+    st
+}
+
+pub fn snell_cos_theta_t(cos_theta_i: f64, n1: f64, n2: f64) -> f64 {
+    if n1 <= 0.0 || n2 <= 0.0 { return -1.0; }
+    let ci: f64 = bld_clamp(cos_theta_i, 0.0, 1.0);
+    let sin2_i: f64 = 1.0 - ci * ci;
+    let ratio: f64 = n1 / n2;
+    let sin2_t: f64 = ratio * ratio * sin2_i;
+    if sin2_t > 1.0 {
+        return -1.0; // Total internal reflection
+    }
+    bld_sqrt(1.0 - sin2_t)
+}
+
+// --- 3. Beer-Lambert Spectral Absorption ---
+
+pub fn beer_lambert_transmittance(sigma_abs: f64, concentration: f64, path_len_cm: f64) -> f64 {
+    if sigma_abs < 0.0 || concentration < 0.0 || path_len_cm < 0.0 {
+        return 0.0;
+    }
+    bld_exp_neg(sigma_abs * concentration * path_len_cm)
+}
+
+// --- 4. Airy Thin-Film Iridescence ---
+
+pub fn airy_thin_film_reflectance(
+    n_film: f64,
+    thickness_nm: f64,
+    cos_theta_t: f64,
+    wavelength_nm: f64,
+    r_single: f64
+) -> f64 {
+    if wavelength_nm <= 1.0 || n_film <= 0.0 || thickness_nm < 0.0 {
+        return 0.0;
+    }
+    let pi: f64 = 3.141592653589793;
+    let r: f64 = bld_clamp(bld_abs(r_single), 0.0, 0.999);
+    let r2: f64 = r * r;
+    let denom_f: f64 = (1.0 - r2) * (1.0 - r2);
+    let finesse: f64 = (4.0 * r2) / (denom_f + 1.0e-12);
+    // Half phase delay delta/2 = 2 * pi * n_film * d * cos(theta_t) / lambda
+    let half_delta: f64 = (2.0 * pi * n_film * thickness_nm * bld_clamp(cos_theta_t, 0.0, 1.0)) / wavelength_nm;
+    let s: f64 = bld_sin(half_delta);
+    let fs2: f64 = finesse * s * s;
+    fs2 / (1.0 + fs2)
+}
+
+fn main() -> i32 {
+    let n0: f64 = luneburg_ior(0.0);
+    let bend: f64 = luneburg_ray_bend(0.5, 1.0);
+    let st: f64 = snell_sin_theta_t(0.5, 1.0, 1.5);
+    let tir: f64 = snell_sin_theta_t(0.9, 1.5, 1.0);
+    let tr: f64 = beer_lambert_transmittance(1.0, 1.0, 1.0);
+    let airy_peak: f64 = airy_thin_film_reflectance(1.5, 100.0, 1.0, 600.0, 0.2);
+    if n0 > 1.414 && n0 < 1.415 && bend > 0.52 && bend < 0.53 && st > 0.33 && st < 0.34 && tir < 0.0 && tr > 0.367 && tr < 0.369 && airy_peak > 0.14 {
+        return 0;
+    }
+    1
+}

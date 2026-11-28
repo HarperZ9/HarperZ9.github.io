@@ -1,0 +1,8 @@
+{
+  "date": "2026-11-27",
+  "note": "Wave 183: Live 7-kernel BuildLang WASM runner on /floor.html + glass_optics/fluid_well/daw_synth WASM wiring in studio-supertool-bridge.js",
+  "paths": {
+    "site-index.html": "8de06d06cecd924fe5ef1bc80a42f3df1821ead91d544506f319ca4fafd5b1e2",
+    "system/routes.js": "89fc8a75969f7e8c03e629a7426a80c5e89d6d23d8a56b59d053723b5b1bbe4d"
+  }
+}

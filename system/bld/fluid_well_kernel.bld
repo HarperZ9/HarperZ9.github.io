@@ -1,0 +1,136 @@
+// SPDX-FileCopyrightText: 2026 Zain Dana Harper
+// SPDX-License-Identifier: MIT
+//
+// Fluid Well Core Kernel (compiled to WebAssembly via buildc).
+// Pure BuildLang implementation of:
+//   1. Divergence-free 2D curl-noise velocity field
+//   2. Navier-Stokes vorticity confinement force step
+//   3. Kubelka-Munk two-pigment wet-well optical blend
+
+fn bld_clamp01(v: f64) -> f64 {
+    if v < 0.0 { return 0.0; }
+    if v > 1.0 { return 1.0; }
+    v
+}
+
+fn bld_sqrt(x: f64) -> f64 {
+    if x <= 0.0 { return 0.0; }
+    let mut g: f64 = x;
+    if g < 1.0 { g = 1.0; }
+    let mut i: i32 = 0;
+    while i < 20 {
+        g = 0.5 * (g + x / g);
+        i = i + 1;
+    }
+    g
+}
+
+fn bld_sin(x0: f64) -> f64 {
+    let pi: f64 = 3.141592653589793;
+    let two_pi: f64 = 6.283185307179586;
+    let mut x: f64 = x0;
+    while x > pi { x = x - two_pi; }
+    while x < -pi { x = x + two_pi; }
+    let x2: f64 = x * x;
+    x * (1.0 - x2 * (0.16666666666666666 - x2 * (0.008333333333333333 - x2 * (0.0001984126984126984 - x2 * 0.0000027557319223985893))))
+}
+
+fn bld_cos(x0: f64) -> f64 {
+    bld_sin(x0 + 1.5707963267948966)
+}
+
+// --- 1. 2D Curl-Noise Velocity Field ---
+
+pub fn stream_potential(x: f64, y: f64, freq: f64, time: f64) -> f64 {
+    let fx: f64 = freq * x;
+    let fy: f64 = freq * y;
+    let p1: f64 = bld_sin(fx + 0.7 * time) * bld_cos(fy - 0.5 * time);
+    let p2: f64 = 0.5 * bld_sin(2.0 * fx - 0.3 * time) * bld_sin(2.0 * fy + 0.4 * time);
+    p1 + p2
+}
+
+pub fn curl_noise_vx(x: f64, y: f64, freq: f64, time: f64) -> f64 {
+    let eps: f64 = 0.0001;
+    let hi: f64 = stream_potential(x, y + eps, freq, time);
+    let lo: f64 = stream_potential(x, y - eps, freq, time);
+    (hi - lo) / (2.0 * eps)
+}
+
+pub fn curl_noise_vy(x: f64, y: f64, freq: f64, time: f64) -> f64 {
+    let eps: f64 = 0.0001;
+    let hi: f64 = stream_potential(x + eps, y, freq, time);
+    let lo: f64 = stream_potential(x - eps, y, freq, time);
+    -(hi - lo) / (2.0 * eps)
+}
+
+pub fn curl_noise_divergence(x: f64, y: f64, freq: f64, time: f64) -> f64 {
+    let eps: f64 = 0.0002;
+    let dvx_dx: f64 = (curl_noise_vx(x + eps, y, freq, time) - curl_noise_vx(x - eps, y, freq, time)) / (2.0 * eps);
+    let dvy_dy: f64 = (curl_noise_vy(x, y + eps, freq, time) - curl_noise_vy(x, y - eps, freq, time)) / (2.0 * eps);
+    dvx_dx + dvy_dy
+}
+
+// --- 2. Navier-Stokes Vorticity Confinement Step ---
+
+pub fn vorticity_confinement_fx(
+    grad_mag_x: f64,
+    grad_mag_y: f64,
+    omega_z: f64,
+    eps_conf: f64,
+    dt: f64
+) -> f64 {
+    let len: f64 = bld_sqrt(grad_mag_x * grad_mag_x + grad_mag_y * grad_mag_y);
+    if len <= 1.0e-12 { return 0.0; }
+    let ny: f64 = grad_mag_y / len;
+    eps_conf * (ny * omega_z) * dt
+}
+
+pub fn vorticity_confinement_fy(
+    grad_mag_x: f64,
+    grad_mag_y: f64,
+    omega_z: f64,
+    eps_conf: f64,
+    dt: f64
+) -> f64 {
+    let len: f64 = bld_sqrt(grad_mag_x * grad_mag_x + grad_mag_y * grad_mag_y);
+    if len <= 1.0e-12 { return 0.0; }
+    let nx: f64 = grad_mag_x / len;
+    -eps_conf * (nx * omega_z) * dt
+}
+
+// --- 3. Kubelka-Munk Two-Pigment Wet-Well Blend ---
+
+pub fn km_reflectance(k_abs: f64, s_scat: f64) -> f64 {
+    if s_scat <= 1.0e-9 { return 0.0; }
+    let ks: f64 = k_abs / s_scat;
+    if ks < 0.0 { return 1.0; }
+    bld_clamp01(1.0 + ks - bld_sqrt(ks * ks + 2.0 * ks))
+}
+
+pub fn km_wet_well_blend(
+    k1: f64,
+    s1: f64,
+    k2: f64,
+    s2: f64,
+    weight_a: f64,
+    wetness: f64
+) -> f64 {
+    let w: f64 = bld_clamp01(weight_a);
+    let wet: f64 = bld_clamp01(wetness);
+    let k_mix: f64 = w * k1 + (1.0 - w) * k2;
+    let s_mix: f64 = w * s1 + (1.0 - w) * s2;
+    let r_dry: f64 = km_reflectance(k_mix, s_mix);
+    // Wet surface internal reflection darkening factor (Saunderson approximation)
+    bld_clamp01(r_dry * (1.0 - 0.35 * wet))
+}
+
+fn main() -> i32 {
+    let div: f64 = curl_noise_divergence(0.7, 1.1, 1.5, 0.4);
+    let fx: f64 = vorticity_confinement_fx(0.0, 2.0, 3.0, 0.5, 0.1);
+    let r_dry: f64 = km_wet_well_blend(0.25, 1.0, 0.25, 1.0, 0.5, 0.0);
+    let r_wet: f64 = km_wet_well_blend(0.25, 1.0, 0.25, 1.0, 0.5, 1.0);
+    if div > -1.0e-5 && div < 1.0e-5 && fx > 0.149 && fx < 0.151 && r_dry > 0.499 && r_dry < 0.501 && r_wet < r_dry {
+        return 0;
+    }
+    1
+}

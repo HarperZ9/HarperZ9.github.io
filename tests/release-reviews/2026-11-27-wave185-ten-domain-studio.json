@@ -1,0 +1,8 @@
+{
+  "date": "2026-11-27",
+  "note": "Wave 185: 10-domain shared reactive state bus (system/studio-state-bus.js) unifying /floor.html and /studio.html across all 7 BuildLang WASM kernels",
+  "paths": {
+    "site-index.html": "dc53031d95872067dd46f824a8b68a517cef20f3dcb06593368041a73e488b6d",
+    "system/routes.js": "b364ef120e6cba368c0c6770bb0fba0a8bc8db0fef6b1c9192b4ad8f31c67f67"
+  }
+}
