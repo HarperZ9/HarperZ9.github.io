@@ -100,7 +100,7 @@ const unplant = (page) => page.evaluate(() => { const d = document.getElementByI
       });
       if (!first.inView || !first.pressable) fail(`${tag} the source on stage is ${first.inView ? 'covered' : 'out of view'} when the picker opens`);
       const picker = await page.evaluate(probe, '#studio-source button[data-source]');
-      assert.equal(picker.count, 28, `${tag} the picker lists 28 sources`);
+      assert.equal(picker.count, 34, `${tag} the picker lists 34 sources`);
       for (const b of picker.bad) fail(`${tag} picker entry ${b.name} (${b.block}): ${b.why}`);
       console.log(`${tag} picker: ${picker.count - new Set(picker.bad.map((b) => b.name)).size} of ${picker.count} entries reachable at both ends of the scroll`);
 

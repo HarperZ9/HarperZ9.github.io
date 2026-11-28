@@ -1,0 +1,101 @@
+// SPDX-FileCopyrightText: 2026 Zain Dana Harper
+// SPDX-License-Identifier: MIT
+//
+// Type Forge Core Kernel (compiled to WebAssembly via buildc).
+// Pure BuildLang implementation of:
+//   1. Parametric cubic Bezier evaluation and first derivative
+//   2. Optical stem-weight and counter integrity validation
+//   3. Kerning pair spacing with tracking adjustment
+
+fn bld_clamp(v: f64, lo: f64, hi: f64) -> f64 {
+    if v < lo { return lo; }
+    if v > hi { return hi; }
+    v
+}
+
+// --- 1. Parametric Cubic Bezier Evaluation ---
+
+pub fn cubic_bezier(p0: f64, p1: f64, p2: f64, p3: f64, t: f64) -> f64 {
+    let u: f64 = 1.0 - t;
+    let u2: f64 = u * u;
+    let u3: f64 = u2 * u;
+    let t2: f64 = t * t;
+    let t3: f64 = t2 * t;
+    u3 * p0 + 3.0 * u2 * t * p1 + 3.0 * u * t2 * p2 + t3 * p3
+}
+
+pub fn cubic_bezier_derivative(p0: f64, p1: f64, p2: f64, p3: f64, t: f64) -> f64 {
+    let u: f64 = 1.0 - t;
+    3.0 * u * u * (p1 - p0) + 6.0 * u * t * (p2 - p1) + 3.0 * t * t * (p3 - p2)
+}
+
+// --- 2. Stem-Weight & Counter Validation ---
+
+pub fn counter_ratio(stem: f64, width: f64) -> f64 {
+    if width <= 0.0 { return 0.0; }
+    let counter: f64 = width - 2.0 * stem;
+    bld_clamp(counter / width, 0.0, 1.0)
+}
+
+pub fn validate_counter_weight(stem: f64, width: f64) -> i32 {
+    if stem <= 0.0 || width <= 0.0 {
+        return 0;
+    }
+    let counter: f64 = width - 2.0 * stem;
+    if counter <= 0.0 {
+        return 0;
+    }
+    let ratio: f64 = stem / width;
+    // Require optically readable stem (4%..38% of glyph width) and open counter >= 24%
+    if ratio < 0.04 || ratio > 0.38 {
+        return 0;
+    }
+    1
+}
+
+// --- 3. Kerning Pair Spacing ---
+
+pub fn kerning_pair_delta(left_glyph: i32, right_glyph: i32) -> f64 {
+    // Classic Latin optical kerning adjustments in 1000-UPM units (ASCII codepoints)
+    // A(65), F(70), L(76), P(80), T(84), V(86), W(87), Y(89), a(97), o(111)
+    if left_glyph == 65 && right_glyph == 86 { return -75.0; } // AV
+    if left_glyph == 86 && right_glyph == 65 { return -75.0; } // VA
+    if left_glyph == 65 && right_glyph == 87 { return -55.0; } // AW
+    if left_glyph == 87 && right_glyph == 65 { return -55.0; } // WA
+    if left_glyph == 84 && right_glyph == 111 { return -65.0; } // To
+    if left_glyph == 84 && right_glyph == 97 { return -60.0; } // Ta
+    if left_glyph == 76 && right_glyph == 84 { return -70.0; } // LT
+    if left_glyph == 80 && right_glyph == 65 { return -65.0; } // PA
+    if left_glyph == 70 && right_glyph == 65 { return -55.0; } // FA
+    if left_glyph == 89 && right_glyph == 111 { return -60.0; } // Yo
+    if left_glyph == 84 && right_glyph == 65 { return -50.0; } // TA
+    0.0
+}
+
+pub fn kerning_pair_spacing(
+    left_glyph: i32,
+    right_glyph: i32,
+    base_advance: f64,
+    tracking_em: f64
+) -> f64 {
+    if base_advance <= 0.0 {
+        return 0.0;
+    }
+    let kern: f64 = kerning_pair_delta(left_glyph, right_glyph);
+    let track: f64 = tracking_em * base_advance;
+    let total: f64 = base_advance + kern + track;
+    let min_adv: f64 = base_advance * 0.1;
+    if total < min_adv { return min_adv; }
+    total
+}
+
+fn main() -> i32 {
+    let mid: f64 = cubic_bezier(0.0, 0.0, 1.0, 1.0, 0.5);
+    let ok_stem: i32 = validate_counter_weight(90.0, 600.0);
+    let bad_stem: i32 = validate_counter_weight(280.0, 600.0);
+    let av: f64 = kerning_pair_spacing(65, 86, 650.0, 0.0);
+    if mid > 0.49 && mid < 0.51 && ok_stem == 1 && bad_stem == 0 && av > 574.0 && av < 576.0 {
+        return 0;
+    }
+    1
+}

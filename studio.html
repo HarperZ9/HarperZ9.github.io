@@ -110,6 +110,12 @@
         <button type="button" role="tab" data-source="revival"   aria-selected="false" aria-controls="src-engine" tabindex="-1">Engine Revival</button>
         <button type="button" role="tab" data-source="raw"       aria-selected="false" aria-controls="src-engine" tabindex="-1">RAW</button>
         <button type="button" role="tab" data-source="viewer"    aria-selected="false" aria-controls="src-viewer" tabindex="-1">Verified viewer</button>
+        <button type="button" role="tab" data-source="sand"      aria-selected="false" aria-controls="src-sand" tabindex="-1">Sand &amp; Glass</button>
+        <button type="button" role="tab" data-source="estuary"   aria-selected="false" aria-controls="src-estuary" tabindex="-1">Estuary</button>
+        <button type="button" role="tab" data-source="elements"  aria-selected="false" aria-controls="src-elements" tabindex="-1">Elements &amp; Optics</button>
+        <button type="button" role="tab" data-source="shaders"   aria-selected="false" aria-controls="src-shaders" tabindex="-1">GLSL Shaders</button>
+        <button type="button" role="tab" data-source="daw"       aria-selected="false" aria-controls="src-daw" tabindex="-1">Instruments &amp; DAW</button>
+        <button type="button" role="tab" data-source="superframe" aria-selected="false" aria-controls="src-superframe" tabindex="-1">Superframe &amp; BuildLang</button>
       </div>
     </div>
 
@@ -122,6 +128,25 @@
       <!-- One action bar for every source that has joined the shell: the main action, Undo, Redo,
            Export and Pin, always in that order. Each button runs the control the source already had. -->
       <div class="inspector-actions" id="inspector-actions" role="toolbar" aria-label="Source actions" hidden></div>
+      <div id="unified-export-mount" class="unified-export-mount"></div>
+      <section class="src-block" id="src-sand" role="tabpanel" aria-label="Sand and Glass physics controls" hidden>
+        <div id="supertool-sand-mount"><p class="transform-note">Loading BuildLang WASM Sand &amp; Glass engine.</p></div>
+      </section>
+      <section class="src-block" id="src-estuary" role="tabpanel" aria-label="Estuary controls" hidden>
+        <div id="supertool-estuary-mount"><p class="transform-note">Loading Estuary Perret lantern.</p></div>
+      </section>
+      <section class="src-block" id="src-elements" role="tabpanel" aria-label="Elements and Optics controls" hidden>
+        <div id="supertool-elements-mount"><p class="transform-note">Loading Elements &amp; Optical Field.</p></div>
+      </section>
+      <section class="src-block" id="src-shaders" role="tabpanel" aria-label="GLSL Shaders controls" hidden>
+        <div id="supertool-shaders-mount"><p class="transform-note">Loading 254-preset GLSL Shaders.</p></div>
+      </section>
+      <section class="src-block" id="src-daw" role="tabpanel" aria-label="Instruments and DAW controls" hidden>
+        <div id="supertool-daw-mount"><p class="transform-note">Loading Coastal Jazz &amp; DAW.</p></div>
+      </section>
+      <section class="src-block" id="src-superframe" role="tabpanel" aria-label="Superframe and BuildLang WASM controls" hidden>
+        <div id="supertool-superframe-mount"><p class="transform-note">Loading Superframe &amp; BuildLang WASM runtime.</p></div>
+      </section>
       <!-- SOURCE: media engine surfaces (studio-engine.js). One block for all seven; the module
            fills #engine-mount with the active surface's controls, its page link, and "How we know". -->
       <!-- SOURCE: the full Retro Engine. studio-retro.js moves retro.html's own engine panel in
@@ -1883,6 +1908,7 @@
      Tweakpane v4.0.5: ESM named exports, lazy-imported by studio-surface.js. -->
 <script src="system/lib/vendor/panzoom-anvaka-9.4.3.min.js?v=20260902-creative-chassis"></script>
 <script type="module" src="system/studio.js?v=20261116-studio-reach"></script>
+<script type="module" src="system/studio-supertool-bridge.js?v=20260902-creative-chassis"></script>
 <!-- Music reactive engine (reactive.js + reactive-music-ui.js): lazy-loaded by studio.js on the
      first entry into the Music source, so it is no longer a static tag here. -->
 </body>
