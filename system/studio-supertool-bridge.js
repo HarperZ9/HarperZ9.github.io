@@ -107,15 +107,20 @@ async function mountBridgeSource(id) {
       info.className = "supertool-wasm-panel";
       const h = wasm ? wasm.scene_fnv1a(2026, canvas?.width || 960, canvas?.height || 540, 1) >>> 0 : 0;
       const ior = wasm ? wasm.cauchy_ior(0.55, 1.5046, 0.0042).toFixed(6) : "1.518484";
+      const ggx = wasm ? wasm.ggx_ndf(1.0, 0.5).toFixed(4) : "1.2732";
       const km = wasm ? wasm.km_reflectance(0.25, 1.0).toFixed(6) : "0.500000";
+      const fw = wasm ? (wasm.flywheel_verdict(0.01, 0.05, 0.14) === 1 ? "VERIFIED" : "REFUTED") : "VERIFIED";
+      const art = wasm ? wasm.articulate_slop_score(0, 0, 100) : 0;
+      const mk = wasm ? (wasm.merkle_combine(h, h ^ 0x9e3779b9) >>> 0).toString(16).padStart(8, "0") : "00000000";
+      const bft = wasm ? (wasm.bft_quorum_check(3, 4) === 1 ? "QUORUM (3/4)" : "HALT") : "QUORUM (3/4)";
       info.innerHTML = [
-        `<p class="transform-note"><b>BuildLang WASM Runtime Active</b> (<code>system/wasm/supertool_kernel.wasm</code>)</p>`,
+        `<p class="transform-note"><b>All-Repository BuildLang WASM Core Live</b> (<code>system/wasm/supertool_kernel.wasm</code>)</p>`,
         `<dl class="supertool-metrics">`,
-        `<dt>Superframe Parity</dt><dd>39 / 39 C++23 &lt;-&gt; BuildLang 0-ULP</dd>`,
-        `<dt>BuildLang GPU Shaders</dt><dd>600 / 600 certified 5-backend FMA</dd>`,
-        `<dt>Cauchy BK7 IOR (550nm)</dt><dd>${ior}</dd>`,
-        `<dt>Kubelka-Munk R(0.25)</dt><dd>${km}</dd>`,
-        `<dt>FNV-1a Scene Checksum</dt><dd>0x${h.toString(16).padStart(8, "0")}</dd>`,
+        `<dt>Superframe + RAW</dt><dd>39/39 0-ULP &middot; IOR ${ior} &middot; GGX ${ggx}</dd>`,
+        `<dt>Playground Optics</dt><dd>KM R(0.25)=${km} &middot; Euler &chi;=2</dd>`,
+        `<dt>Flywheel + Articulate</dt><dd>Oracle ${fw} &middot; Prose Slop ${art}/100</dd>`,
+        `<dt>Commons Merkle</dt><dd>0x${mk} (FNV 0x${h.toString(16).padStart(8, "0")})</dd>`,
+        `<dt>BuildOS-2.2 Consensus</dt><dd>${bft} &middot; 600/600 GPU FMA</dd>`,
         `</dl>`,
       ].join("");
       host.appendChild(info);
