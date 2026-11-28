@@ -55,11 +55,50 @@ function studyPages() {
   return json(f).pages.map((p) => [`/${p.path.replace(/index\.html$/, "")}`, p.title]);
 }
 
+function floorLiveRunner() {
+  return `<section id="floor-live-runner" class="floor-live-runner" aria-labelledby="h-floor-runner">
+<div class="flr-head">
+  <h2 id="h-floor-runner">Live BuildLang WASM Super-Tool (7 Kernels)</h2>
+  <span class="flr-status" data-flr-status role="status" aria-live="polite">Loading 7 BuildLang WASM kernels...</span>
+</div>
+<div class="flr-tabs" data-flr-tabs role="tablist" aria-label="Live BuildLang WASM views">
+  <button type="button" class="flr-tab" data-mode="all" role="tab" aria-selected="true"><span>All 7 Kernels</span></button>
+  <button type="button" class="flr-tab" data-mode="glass" role="tab" aria-selected="false"><span>Glass Optics</span></button>
+  <button type="button" class="flr-tab" data-mode="fluid" role="tab" aria-selected="false"><span>Fluid Well</span></button>
+  <button type="button" class="flr-tab" data-mode="craft" role="tab" aria-selected="false"><span>Estuary + Plotter + Type</span></button>
+  <button type="button" class="flr-tab" data-mode="daw" role="tab" aria-selected="false"><span>Coastal DAW</span></button>
+  <button type="button" class="flr-tab" data-mode="cockpit" role="tab" aria-selected="false"><span>5-Flagship Cockpit</span></button>
+</div>
+<div class="flr-grid">
+  <div>
+    <canvas id="floor-wasm-canvas" class="flr-canvas" width="720" height="260" aria-label="Live BuildLang WASM kernel visualization"></canvas>
+    <div class="flr-controls">
+      <label>Mix / Sweep <input type="range" min="0" max="100" value="50" data-flr-mix></label>
+      <label>Glass IOR <input type="range" min="130" max="240" value="151" data-flr-ior></label>
+      <label>DAW LPF (Hz) <input type="range" min="300" max="6000" value="1800" data-flr-cutoff></label>
+    </div>
+  </div>
+  <table class="flr-matrix" aria-label="BuildLang WASM kernel status">
+    <thead><tr><th>Kernel</th><th>State</th><th>Live Telemetry</th></tr></thead>
+    <tbody data-flr-tbody><tr><td colspan="3">Initializing WebAssembly kernels...</td></tr></tbody>
+  </table>
+</div>
+<div class="flr-actions">
+  <button type="button" class="flr-btn" data-flr-play>Play Coastal Jazz Chord (Opt-In)</button>
+  <a class="flr-btn" href="/studio.html">Open Full Studio</a>
+  <div id="floor-export-mount"></div>
+</div>
+<div id="floor-cockpit-mount" class="flr-cockpit" hidden></div>
+</section>
+<script type="module" src="/system/floor-wasm-runner.js?v=20260902-creative-chassis"></script>`;
+}
+
 function floor() {
   const wi = workIndex();
   write(wi.restPath, wi.rest);
   const body = `<article class="floor"><h1>Everything</h1>
-<p class="wi-lead">All the work, current and past: ${wi.count} pieces by platform, newest first, each with its status as its release or registry records it. The places and pages of the site follow.</p>
+<p class="wi-lead">All the work, current and past: ${wi.count} pieces by platform, newest first, each with its status as its release or registry records it. Run all 7 compiled BuildLang WASM kernels live below, or jump directly to any platform and page.</p>
+${floorLiveRunner()}
 ${wi.html}
 <h2 class="wi-rule">The site</h2>
 ${section("road", "The road", roadStops())}

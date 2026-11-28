@@ -1,0 +1,166 @@
+// SPDX-FileCopyrightText: 2026 Zain Dana Harper
+// SPDX-License-Identifier: MIT
+//
+// DAW Synth Core Kernel (compiled to WebAssembly via buildc).
+// Pure BuildLang implementation of:
+//   1. Karplus-Strong plucked string lowpass feedback step & coastal jazz chord voice
+//   2. 1-pole resonant lowpass filter (alpha + sample step)
+//   3. LUFS-style RMS loudness metering (ITU-R BS.1770 curve)
+
+fn bld_clamp(v: f64, lo: f64, hi: f64) -> f64 {
+    if v < lo { return lo; }
+    if v > hi { return hi; }
+    v
+}
+
+fn bld_sqrt(x: f64) -> f64 {
+    if x <= 0.0 { return 0.0; }
+    let mut g: f64 = x;
+    if g < 1.0 { g = 1.0; }
+    let mut i: i32 = 0;
+    while i < 20 {
+        g = 0.5 * (g + x / g);
+        i = i + 1;
+    }
+    g
+}
+
+fn bld_sin(x0: f64) -> f64 {
+    let pi: f64 = 3.141592653589793;
+    let two_pi: f64 = 6.283185307179586;
+    let mut x: f64 = x0;
+    while x > pi { x = x - two_pi; }
+    while x < -pi { x = x + two_pi; }
+    let x2: f64 = x * x;
+    x * (1.0 - x2 * (0.16666666666666666 - x2 * (0.008333333333333333 - x2 * (0.0001984126984126984 - x2 * 0.0000027557319223985893))))
+}
+
+fn bld_exp_neg(z: f64) -> f64 {
+    if z <= 0.0 { return 1.0; }
+    if z > 40.0 { return 0.0; }
+    let y: f64 = z / 16.0;
+    let mut term: f64 = 1.0;
+    let mut sum: f64 = 1.0;
+    let mut k: i32 = 1;
+    let mut kf: f64 = 1.0;
+    while k <= 10 {
+        term = term * (-y) / kf;
+        sum = sum + term;
+        k = k + 1;
+        kf = kf + 1.0;
+    }
+    if sum < 0.0 { sum = 0.0; }
+    let mut s: f64 = sum * sum;
+    s = s * s;
+    s = s * s;
+    s = s * s;
+    s
+}
+
+fn bld_ln(x0: f64) -> f64 {
+    if x0 <= 0.0 { return -100.0; }
+    let ln2: f64 = 0.6931471805599453;
+    let mut x: f64 = x0;
+    let mut k_f: f64 = 0.0;
+    while x > 1.4142135623730951 {
+        x = x * 0.5;
+        k_f = k_f + 1.0;
+    }
+    while x < 0.7071067811865476 {
+        x = x * 2.0;
+        k_f = k_f - 1.0;
+    }
+    let u: f64 = (x - 1.0) / (x + 1.0);
+    let u2: f64 = u * u;
+    let mut p: f64 = u;
+    let mut sum: f64 = 0.0;
+    let mut i: i32 = 0;
+    let mut denom: f64 = 1.0;
+    while i < 12 {
+        sum = sum + p / denom;
+        p = p * u2;
+        i = i + 1;
+        denom = denom + 2.0;
+    }
+    k_f * ln2 + 2.0 * sum
+}
+
+// --- 1. Karplus-Strong & Coastal Jazz Chord Voice ---
+
+pub fn karplus_strong_step(s_curr: f64, s_prev: f64, damping: f64) -> f64 {
+    let d: f64 = bld_clamp(damping, 0.0, 0.9999);
+    0.5 * d * (s_curr + s_prev)
+}
+
+pub fn coastal_jazz_chord_sample(time_s: f64, root_hz: f64, voicing_mode: i32) -> f64 {
+    if time_s < 0.0 || root_hz <= 0.0 {
+        return 0.0;
+    }
+    let two_pi: f64 = 6.283185307179586;
+    let env: f64 = bld_exp_neg(1.2 * time_s);
+    // voicing_mode 0 = Maj7/9 (1, 5/4, 3/2, 15/8); mode 1 = Min7/9 (1, 6/5, 3/2, 9/5)
+    let r2: f64 = if voicing_mode == 1 { 1.2 } else { 1.25 };
+    let r4: f64 = if voicing_mode == 1 { 1.8 } else { 1.875 };
+
+    let w1: f64 = two_pi * root_hz * time_s;
+    let w2: f64 = two_pi * (root_hz * r2) * time_s;
+    let w3: f64 = two_pi * (root_hz * 1.5) * time_s;
+    let w4: f64 = two_pi * (root_hz * r4) * time_s;
+
+    let v1: f64 = bld_sin(w1) + 0.2 * bld_sin(2.0 * w1);
+    let v2: f64 = bld_sin(w2) + 0.15 * bld_sin(2.0 * w2);
+    let v3: f64 = bld_sin(w3);
+    let v4: f64 = bld_sin(w4);
+    env * 0.22 * (v1 + v2 + v3 + v4)
+}
+
+// --- 2. 1-Pole Resonant Lowpass Filter ---
+
+pub fn one_pole_lpf_alpha(cutoff_hz: f64, sample_rate_hz: f64) -> f64 {
+    if cutoff_hz <= 0.0 || sample_rate_hz <= 0.0 {
+        return 0.0;
+    }
+    let two_pi: f64 = 6.283185307179586;
+    let z: f64 = two_pi * cutoff_hz / sample_rate_hz;
+    bld_clamp(1.0 - bld_exp_neg(z), 0.0, 1.0)
+}
+
+pub fn resonant_lpf_step(
+    input: f64,
+    prev_out: f64,
+    feedback_state: f64,
+    alpha: f64,
+    resonance: f64
+) -> f64 {
+    let a: f64 = bld_clamp(alpha, 0.0, 1.0);
+    let res: f64 = bld_clamp(resonance, 0.0, 0.95);
+    let driven: f64 = input - res * feedback_state;
+    prev_out + a * (driven - prev_out)
+}
+
+// --- 3. LUFS-Style RMS Loudness Meter ---
+
+pub fn rms_4_samples(s0: f64, s1: f64, s2: f64, s3: f64) -> f64 {
+    let mean_sq: f64 = 0.25 * (s0 * s0 + s1 * s1 + s2 * s2 + s3 * s3);
+    bld_sqrt(mean_sq)
+}
+
+pub fn lufs_from_rms(rms: f64) -> f64 {
+    if rms <= 0.0001 {
+        return -70.0;
+    }
+    let ln10: f64 = 2.302585092994046;
+    let db: f64 = 20.0 * (bld_ln(rms) / ln10);
+    -0.691 + db
+}
+
+fn main() -> i32 {
+    let ks: f64 = karplus_strong_step(1.0, 0.5, 0.99);
+    let alpha: f64 = one_pole_lpf_alpha(1000.0, 48000.0);
+    let rms: f64 = rms_4_samples(0.5, -0.5, 0.5, -0.5);
+    let lufs: f64 = lufs_from_rms(1.0);
+    if ks > 0.74 && ks < 0.75 && alpha > 0.12 && alpha < 0.13 && rms > 0.499 && rms < 0.501 && lufs > -0.70 && lufs < -0.68 {
+        return 0;
+    }
+    1
+}
